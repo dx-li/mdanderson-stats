@@ -2,8 +2,8 @@
 
 TDTASP version 1.1 (April 2003), by Barry W. Brown and Dan Serachitopol,
 plans transmission-disequilibrium (TDT) and affected-sibling-pair (ASP) studies.
-This catalog entry is **partial**. The genetic and ascertainment layers are implemented; sample-size/power
-calculations, template files, reports and the complete archive audit remain
+This catalog entry is **partial**. The genetic, ascertainment and power layers are implemented; sample-size
+searches, template files, reports and the complete archive audit remain
 outstanding.
 
 Source: [TDTASP catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/20)
@@ -174,3 +174,65 @@ and the genetic `legacy_asp` option. Separate tests explicitly enumerate the joi
 family/Poisson-count distribution to validate corrected selection, moments,
 contributions, test probabilities and screening counts, including rare-event,
 zero-probability-family and input-boundary cases.
+
+## Power
+
+```python
+from mdanderson_stats import tdtasp_fixed_power, tdtasp_power
+
+fixed = tdtasp_fixed_power([10, 20, 50], answer_probability=0.7, sides=2)
+study_power = tdtasp_power(selection, families=100, alpha=0.05, sides=2)
+```
+
+The fixed-observation calculation tests a binomial probability of one half.
+Inputs are nonnegative integer observation counts; scalar or array inputs are
+accepted. One-sided direction follows the specified alternative, using the
+lower tail at equality. Two-sided tests include both equal-alpha tails. The
+result provides inclusive lower and upper critical values, actual size and
+power. A cutoff of -1 or n+1 means the corresponding tail is absent. Zero
+observations and unattainable significance levels give empty regions and zero
+power. Degenerate alternatives zero and one are supported.
+
+For the study calculation, K, the number of eligible families, is binomial with
+`families` trials and the ascertainment eligibility probability. The observation
+count is the mean contribution per eligible family multiplied by K, rounded to
+the nearest integer with halves rounded upward. This matches the archived
+`power_bin1` routine's ANINT behavior; its comment claiming truncation is
+inconsistent with the code. Every possible K is evaluated and weighted by its
+binomial probability. `max_terms` (default 100,001) is checked before allocation;
+deterministic counts need only one term. The result exposes weights and all
+conditional fixed-observation results as immutable arrays, plus average size
+and power.
+
+This is the original **mean-contribution planning model**, not a full joint
+model of random contributions and dependent tests within families. The mixture
+is exact for that approximation, up to numerical arithmetic. The program's
+short-tail summation and large-variance normal/Hermite approximation are replaced
+by complete discrete averaging. Large studies therefore have explicit resource
+limits rather than an automatic normal approximation. Probabilities that
+underflow to zero at the ascertainment boundary raise an error, and observation
+counts must remain below 2**53.
+
+By default the scale uses `expected_contributions` from ascertainment. For
+all-child TDT, `legacy_scale=True` instead multiplies expected informative
+parents by `population_average_truncated_mean`, as the original statistics
+module does. The source's nominally two-sided calculation halves alpha but
+computes only one tail's power; `legacy_two_sided=True` reproduces that convention
+when sides=2. Genetic/ascertainment compatibility options remain separate so
+numerical differences can be isolated.
+
+`tools/reference_tdtasp_power.py` compiles six unmodified original numerical
+source files. Its fixture contains 52 successful fixed-observation cases and
+11 recorded source failures. In those failures the native continuous cutoff
+inversion produces an out-of-range count and aborts, although the correct result
+is an empty rejection region. Tests verify zero Python power for these cases;
+they are not relabeled as successful native references. Successful critical
+values and powers are compared directly, including n=1000.
+
+Independent rational binomial enumeration validates one-sided, two-sided and
+source-tail behavior, empty regions, and boundary probabilities. Explicit sums
+over binomial eligible-family probabilities validate the complete mixture.
+Tests also cover half-up rounding, null power equaling size, immutable output,
+input/resource limits and the original scale option. A regression example
+shows why power must not be assumed monotone in a future discrete sample-size
+search: adding an observation can move the rejection cutoff and reduce power.

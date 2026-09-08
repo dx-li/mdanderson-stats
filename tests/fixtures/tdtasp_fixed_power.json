@@ -1,0 +1,477 @@
+{
+  "provenance": {
+    "source_changes": "None; original source routines compiled with a separate driver.",
+    "source_sha256": {
+      "zero_finder.f90": "3df4e1b7c789d19a277baa7e16b3bc3e44c1ea48a6f0c28868836bec3699820f",
+      "cdf_aux_mod.f90": "c70b4f997347327416d47a007f928757f9383a8be0e24495a2c7488e5abba6cf",
+      "beta_gamma_mod.f90": "bedfd25f8951189af7d81358909d3da8d03662a00bef2a3be881ff123ccae93e",
+      "cdf_beta_mod.f90": "a2eb3a3b028bc0239845741ec6bfd4a321328000e80004463a971c7bf8792fda",
+      "cdf_binomial_mod.f90": "307df4d221cd1e2f7eb6fd1afd2b4d98972434f5f9e1051f7d89bd2de927d0cb",
+      "power_bin1_mod.f90": "294de7ae173c532bc69b1a32d6d2588128bcc56fb1512c85807fbd398c7fc5f7"
+    },
+    "build_command": [
+      "gfortran",
+      "-O0",
+      "-ffp-contract=off",
+      "-fcheck=all",
+      "/Users/dxli2/math stats/mdanderson-stats/research/raw/TDTASP/source/source/tdtasp_1.1/source/zero_finder.f90",
+      "/Users/dxli2/math stats/mdanderson-stats/research/raw/TDTASP/source/source/tdtasp_1.1/source/cdf_aux_mod.f90",
+      "/Users/dxli2/math stats/mdanderson-stats/research/raw/TDTASP/source/source/tdtasp_1.1/source/beta_gamma_mod.f90",
+      "/Users/dxli2/math stats/mdanderson-stats/research/raw/TDTASP/source/source/tdtasp_1.1/source/cdf_beta_mod.f90",
+      "/Users/dxli2/math stats/mdanderson-stats/research/raw/TDTASP/source/source/tdtasp_1.1/source/cdf_binomial_mod.f90",
+      "/Users/dxli2/math stats/mdanderson-stats/research/raw/TDTASP/source/source/tdtasp_1.1/source/power_bin1_mod.f90",
+      "/Users/dxli2/math stats/mdanderson-stats/research/raw/reference/tdtasp-power/driver.f90",
+      "-o",
+      "/Users/dxli2/math stats/mdanderson-stats/research/raw/reference/tdtasp-power/reference"
+    ],
+    "driver": "program reference\nuse power_bin1_mod\nimplicit none\nreal(8) n,pa,sig,result,critical\nread(*,*) n,pa,sig\nresult=power_bin1(.5d0,pa,n,sig)\nif(n>0)then\ncritical=crbin1(.5d0,pa,n,sig)\nelse\ncritical=-1\nend if\nwrite(*,'(2ES26.17E3)') result,critical\nend program reference\n",
+    "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+    "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/TDTASP/TDTASP%20%20_V1.tar.gz",
+    "archive_sha256": "5858f59dacd981a7639de8ceb06a1d3f22b65959ddbb900e68c5b5e0c1354784"
+  },
+  "cases": [
+    {
+      "observations": 0,
+      "answer_probability": 0.2,
+      "alpha": 0.01,
+      "power": 0.0,
+      "critical": -1.0
+    },
+    {
+      "observations": 0,
+      "answer_probability": 0.2,
+      "alpha": 0.05,
+      "power": 0.0,
+      "critical": -1.0
+    },
+    {
+      "observations": 0,
+      "answer_probability": 0.2,
+      "alpha": 0.25,
+      "power": 0.0,
+      "critical": -1.0
+    },
+    {
+      "observations": 0,
+      "answer_probability": 0.5,
+      "alpha": 0.01,
+      "power": 0.0,
+      "critical": -1.0
+    },
+    {
+      "observations": 0,
+      "answer_probability": 0.5,
+      "alpha": 0.05,
+      "power": 0.0,
+      "critical": -1.0
+    },
+    {
+      "observations": 0,
+      "answer_probability": 0.5,
+      "alpha": 0.25,
+      "power": 0.0,
+      "critical": -1.0
+    },
+    {
+      "observations": 0,
+      "answer_probability": 0.8,
+      "alpha": 0.01,
+      "power": 0.0,
+      "critical": -1.0
+    },
+    {
+      "observations": 0,
+      "answer_probability": 0.8,
+      "alpha": 0.05,
+      "power": 0.0,
+      "critical": -1.0
+    },
+    {
+      "observations": 0,
+      "answer_probability": 0.8,
+      "alpha": 0.25,
+      "power": 0.0,
+      "critical": -1.0
+    },
+    {
+      "observations": 5,
+      "answer_probability": 0.2,
+      "alpha": 0.05,
+      "power": 0.32768000000000014,
+      "critical": 0.0
+    },
+    {
+      "observations": 5,
+      "answer_probability": 0.2,
+      "alpha": 0.25,
+      "power": 0.7372799999999999,
+      "critical": 1.0
+    },
+    {
+      "observations": 5,
+      "answer_probability": 0.5,
+      "alpha": 0.05,
+      "power": 0.03125,
+      "critical": 0.0
+    },
+    {
+      "observations": 5,
+      "answer_probability": 0.5,
+      "alpha": 0.25,
+      "power": 0.18749999999999997,
+      "critical": 1.0
+    },
+    {
+      "observations": 5,
+      "answer_probability": 0.8,
+      "alpha": 0.01,
+      "power": 0.0,
+      "critical": -1.0
+    },
+    {
+      "observations": 5,
+      "answer_probability": 0.8,
+      "alpha": 0.05,
+      "power": 0.32768000000000014,
+      "critical": 5.0
+    },
+    {
+      "observations": 5,
+      "answer_probability": 0.8,
+      "alpha": 0.25,
+      "power": 0.73728,
+      "critical": 4.0
+    },
+    {
+      "observations": 10,
+      "answer_probability": 0.2,
+      "alpha": 0.01,
+      "power": 0.1073741824000001,
+      "critical": 0.0
+    },
+    {
+      "observations": 10,
+      "answer_probability": 0.2,
+      "alpha": 0.05,
+      "power": 0.37580963840000037,
+      "critical": 1.0
+    },
+    {
+      "observations": 10,
+      "answer_probability": 0.2,
+      "alpha": 0.25,
+      "power": 0.8791261183999999,
+      "critical": 3.0
+    },
+    {
+      "observations": 10,
+      "answer_probability": 0.5,
+      "alpha": 0.01,
+      "power": 0.0009765625000000002,
+      "critical": 0.0
+    },
+    {
+      "observations": 10,
+      "answer_probability": 0.5,
+      "alpha": 0.05,
+      "power": 0.010742187500000007,
+      "critical": 1.0
+    },
+    {
+      "observations": 10,
+      "answer_probability": 0.5,
+      "alpha": 0.25,
+      "power": 0.17187500000000006,
+      "critical": 3.0
+    },
+    {
+      "observations": 10,
+      "answer_probability": 0.8,
+      "alpha": 0.01,
+      "power": 0.10737418240000013,
+      "critical": 10.0
+    },
+    {
+      "observations": 10,
+      "answer_probability": 0.8,
+      "alpha": 0.05,
+      "power": 0.37580963840000053,
+      "critical": 9.0
+    },
+    {
+      "observations": 10,
+      "answer_probability": 0.8,
+      "alpha": 0.25,
+      "power": 0.8791261184,
+      "critical": 7.0
+    },
+    {
+      "observations": 25,
+      "answer_probability": 0.2,
+      "alpha": 0.01,
+      "power": 0.7800353305520673,
+      "critical": 6.0
+    },
+    {
+      "observations": 25,
+      "answer_probability": 0.2,
+      "alpha": 0.05,
+      "power": 0.8908772040049695,
+      "critical": 7.0
+    },
+    {
+      "observations": 25,
+      "answer_probability": 0.2,
+      "alpha": 0.25,
+      "power": 0.9944450795125251,
+      "critical": 10.0
+    },
+    {
+      "observations": 25,
+      "answer_probability": 0.5,
+      "alpha": 0.01,
+      "power": 0.007316648960113524,
+      "critical": 6.0
+    },
+    {
+      "observations": 25,
+      "answer_probability": 0.5,
+      "alpha": 0.05,
+      "power": 0.021642625331878683,
+      "critical": 7.0
+    },
+    {
+      "observations": 25,
+      "answer_probability": 0.5,
+      "alpha": 0.25,
+      "power": 0.21217811107635515,
+      "critical": 10.0
+    },
+    {
+      "observations": 25,
+      "answer_probability": 0.8,
+      "alpha": 0.01,
+      "power": 0.7800353305520673,
+      "critical": 19.0
+    },
+    {
+      "observations": 25,
+      "answer_probability": 0.8,
+      "alpha": 0.05,
+      "power": 0.8908772040049695,
+      "critical": 18.0
+    },
+    {
+      "observations": 25,
+      "answer_probability": 0.8,
+      "alpha": 0.25,
+      "power": 0.9944450795125253,
+      "critical": 15.0
+    },
+    {
+      "observations": 100,
+      "answer_probability": 0.2,
+      "alpha": 0.01,
+      "power": 0.9999750297852796,
+      "critical": 37.0
+    },
+    {
+      "observations": 100,
+      "answer_probability": 0.2,
+      "alpha": 0.05,
+      "power": 0.9999995552191245,
+      "critical": 41.0
+    },
+    {
+      "observations": 100,
+      "answer_probability": 0.2,
+      "alpha": 0.25,
+      "power": 0.9999999988072428,
+      "critical": 46.0
+    },
+    {
+      "observations": 100,
+      "answer_probability": 0.5,
+      "alpha": 0.01,
+      "power": 0.006016487862681737,
+      "critical": 37.0
+    },
+    {
+      "observations": 100,
+      "answer_probability": 0.5,
+      "alpha": 0.05,
+      "power": 0.04431304005703384,
+      "critical": 41.0
+    },
+    {
+      "observations": 100,
+      "answer_probability": 0.5,
+      "alpha": 0.25,
+      "power": 0.2420592068036459,
+      "critical": 46.0
+    },
+    {
+      "observations": 100,
+      "answer_probability": 0.8,
+      "alpha": 0.01,
+      "power": 0.9999750297852796,
+      "critical": 63.0
+    },
+    {
+      "observations": 100,
+      "answer_probability": 0.8,
+      "alpha": 0.05,
+      "power": 0.9999995552191245,
+      "critical": 59.0
+    },
+    {
+      "observations": 100,
+      "answer_probability": 0.8,
+      "alpha": 0.25,
+      "power": 0.9999999988072428,
+      "critical": 54.0
+    },
+    {
+      "observations": 1000,
+      "answer_probability": 0.2,
+      "alpha": 0.01,
+      "power": 1.0,
+      "critical": 462.0
+    },
+    {
+      "observations": 1000,
+      "answer_probability": 0.2,
+      "alpha": 0.05,
+      "power": 1.0,
+      "critical": 473.0
+    },
+    {
+      "observations": 1000,
+      "answer_probability": 0.2,
+      "alpha": 0.25,
+      "power": 1.0,
+      "critical": 488.0
+    },
+    {
+      "observations": 1000,
+      "answer_probability": 0.5,
+      "alpha": 0.01,
+      "power": 0.008831115667749311,
+      "critical": 462.0
+    },
+    {
+      "observations": 1000,
+      "answer_probability": 0.5,
+      "alpha": 0.05,
+      "power": 0.04684364573774832,
+      "critical": 473.0
+    },
+    {
+      "observations": 1000,
+      "answer_probability": 0.5,
+      "alpha": 0.25,
+      "power": 0.23352256082639325,
+      "critical": 488.0
+    },
+    {
+      "observations": 1000,
+      "answer_probability": 0.8,
+      "alpha": 0.01,
+      "power": 1.0,
+      "critical": 538.0
+    },
+    {
+      "observations": 1000,
+      "answer_probability": 0.8,
+      "alpha": 0.05,
+      "power": 1.0,
+      "critical": 527.0
+    },
+    {
+      "observations": 1000,
+      "answer_probability": 0.8,
+      "alpha": 0.25,
+      "power": 1.0,
+      "critical": 512.0
+    }
+  ],
+  "native_errors": [
+    {
+      "observations": 1,
+      "answer_probability": 0.2,
+      "alpha": 0.01,
+      "stdout": " Input argument out of range in routine: cdf_binomial                   \n Argument: s above upper bound\n The value of s is:  0.21474836E+10\n The upper bound on the value is:   1.0000000    \n The program is aborting\n",
+      "stderr": "Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG\nSTOP Bound error on cdf routine -- see output\n"
+    },
+    {
+      "observations": 1,
+      "answer_probability": 0.2,
+      "alpha": 0.05,
+      "stdout": " Input argument out of range in routine: cdf_binomial                   \n Argument: s above upper bound\n The value of s is:  0.21474836E+10\n The upper bound on the value is:   1.0000000    \n The program is aborting\n",
+      "stderr": "Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG\nSTOP Bound error on cdf routine -- see output\n"
+    },
+    {
+      "observations": 1,
+      "answer_probability": 0.2,
+      "alpha": 0.25,
+      "stdout": " Input argument out of range in routine: cdf_binomial                   \n Argument: s above upper bound\n The value of s is:  0.21474836E+10\n The upper bound on the value is:   1.0000000    \n The program is aborting\n",
+      "stderr": "Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG\nSTOP Bound error on cdf routine -- see output\n"
+    },
+    {
+      "observations": 1,
+      "answer_probability": 0.5,
+      "alpha": 0.01,
+      "stdout": " Input argument out of range in routine: cdf_binomial                   \n Argument: s above upper bound\n The value of s is:  0.21474836E+10\n The upper bound on the value is:   1.0000000    \n The program is aborting\n",
+      "stderr": "Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG\nSTOP Bound error on cdf routine -- see output\n"
+    },
+    {
+      "observations": 1,
+      "answer_probability": 0.5,
+      "alpha": 0.05,
+      "stdout": " Input argument out of range in routine: cdf_binomial                   \n Argument: s above upper bound\n The value of s is:  0.21474836E+10\n The upper bound on the value is:   1.0000000    \n The program is aborting\n",
+      "stderr": "Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG\nSTOP Bound error on cdf routine -- see output\n"
+    },
+    {
+      "observations": 1,
+      "answer_probability": 0.5,
+      "alpha": 0.25,
+      "stdout": " Input argument out of range in routine: cdf_binomial                   \n Argument: s above upper bound\n The value of s is:  0.21474836E+10\n The upper bound on the value is:   1.0000000    \n The program is aborting\n",
+      "stderr": "Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG\nSTOP Bound error on cdf routine -- see output\n"
+    },
+    {
+      "observations": 1,
+      "answer_probability": 0.8,
+      "alpha": 0.01,
+      "stdout": " Input argument out of range in routine: cdf_binomial                   \n Argument: s                               below lower bound\n The value of s                               is:  -1.0000000    \n The lower bound on the value is:   0.0000000    \n The program is aborting\n",
+      "stderr": "STOP Bound error on cdf routine -- see output\n"
+    },
+    {
+      "observations": 1,
+      "answer_probability": 0.8,
+      "alpha": 0.05,
+      "stdout": " Input argument out of range in routine: cdf_binomial                   \n Argument: s                               below lower bound\n The value of s                               is:  -1.0000000    \n The lower bound on the value is:   0.0000000    \n The program is aborting\n",
+      "stderr": "STOP Bound error on cdf routine -- see output\n"
+    },
+    {
+      "observations": 1,
+      "answer_probability": 0.8,
+      "alpha": 0.25,
+      "stdout": " Input argument out of range in routine: cdf_binomial                   \n Argument: s                               below lower bound\n The value of s                               is:  -1.0000000    \n The lower bound on the value is:   0.0000000    \n The program is aborting\n",
+      "stderr": "STOP Bound error on cdf routine -- see output\n"
+    },
+    {
+      "observations": 5,
+      "answer_probability": 0.2,
+      "alpha": 0.01,
+      "stdout": " Input argument out of range in routine: cdf_binomial                   \n Argument: s above upper bound\n The value of s is:  0.21474836E+10\n The upper bound on the value is:   5.0000000    \n The program is aborting\n",
+      "stderr": "Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG\nSTOP Bound error on cdf routine -- see output\n"
+    },
+    {
+      "observations": 5,
+      "answer_probability": 0.5,
+      "alpha": 0.01,
+      "stdout": " Input argument out of range in routine: cdf_binomial                   \n Argument: s above upper bound\n The value of s is:  0.21474836E+10\n The upper bound on the value is:   5.0000000    \n The program is aborting\n",
+      "stderr": "Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG\nSTOP Bound error on cdf routine -- see output\n"
+    }
+  ]
+}

@@ -145,8 +145,13 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 from .tdtasp_ascertainment import TDTASPAscertainment, tdtasp_ascertainment
 from .tdtasp_genetics import TDTASPGenetics, tdtasp_genetics, tdtasp_haplotype_frequencies
+from .tdtasp_power import TDTASPFixedPower, TDTASPPower, tdtasp_fixed_power, tdtasp_power
 
 __all__ = [
+    "TDTASPFixedPower",
+    "TDTASPPower",
+    "tdtasp_fixed_power",
+    "tdtasp_power",
     "TDTASPAscertainment",
     "tdtasp_ascertainment",
     "TDTASPGenetics",

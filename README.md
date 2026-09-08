@@ -313,3 +313,7 @@ probabilities, with explicit compatibility for the original ASP weighting.
 `tdtasp_ascertainment` adds family/individual selection, conditional offspring
 moments and contribution-weighted test probabilities. See [TDTASP](docs/tdtasp.md)
 for native validation and the remaining study-planning work.
+
+`tdtasp_fixed_power` and `tdtasp_power` calculate discrete binomial power and
+average it over eligible-family counts, with explicit mean-contribution and
+source-compatibility conventions described in the TDTASP notes.
