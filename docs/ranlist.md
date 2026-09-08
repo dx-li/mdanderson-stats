@@ -1,9 +1,9 @@
 # RANLIST randomization lists
 
 Catalog entry 29 is partial. The phrase-to-seed conversion and indexed random
-streams are implemented. Restricted/unrestricted allocations, fixed/random
-balance points, strata/list management, interactive assignment and reports
-remain pending.
+streams and unrestricted treatment allocation are implemented. Restricted
+allocation, fixed/random balance points, strata/list management, interactive
+assignment and reports remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/29)
 lists version 1, modified August 23, 2002. The archive filename contains two
@@ -64,8 +64,8 @@ follow the source formula, including its modulo arithmetic; seed validation is
 performed when the resulting pair is used to generate draws.
 
 These functions provide the numerical foundation for reproducing RANLIST.
-They do not yet perform its bounded-integer rejection sampling, treatment
-permutations or randomization-list allocation rules.
+Bounded-integer rejection sampling, treatment permutations and restricted
+allocation remain separate pending components.
 
 ## Validation
 
@@ -81,3 +81,61 @@ Further tests compare indexed results with an independent scalar recurrence,
 check stream-spacing and very large modular powers, preserve array shape and
 ordering, and validate inputs and float scaling. These comparisons validate
 only the named random-stream/seed routines, not the pending RANLIST workflows.
+
+## Unrestricted treatment allocation
+
+```python
+from mdanderson_stats import ranlist_seeds, ranlist_unrestricted
+
+fit = ranlist_unrestricted([1, 2, 1000], [1, 2, 3], seed=ranlist_seeds("trial 123"))
+print(fit.treatments)  # One-based treatment numbers, matching the patient shape
+source = ranlist_unrestricted([1, 2, 1000], [1, 2, 3], legacy=True)
+```
+
+`ranlist_unrestricted` implements IGTUT and the weight normalization used by
+GENLST and WRKLST. Supply one through 20 strictly positive relative treatment
+weights; their sum need not be one. Patient numbers and stream numbers follow
+the indexed generator's one-based convention. Each patient number refers to
+that position **within the selected stream**, not an overall cross-stratum
+arrival number. The kernel accepts all 32 generator streams; the archived
+interactive list interface limits its named strata to 20.
+
+The result retains copied patient numbers and weights, normalized probabilities,
+cumulative boundaries, uniforms, treatment assignments, seed, stream and legacy
+setting. Arrays are read-only. Requested patients may be unsorted, repeated or
+in any array shape. There is no shared patient counter: querying other patients
+or streams cannot change an assignment. This provides indexed assignments;
+interactive enrollment counters and saved lists are not yet implemented.
+
+Default normalization scales weights by their maximum before summing, preventing
+overflow for large finite weights. Cumulative probabilities are double precision,
+and the last boundary is set to one. Positive weights whose intervals cannot
+be represented distinctly in double precision are rejected. Assignment uses
+the first cumulative probability greater than or equal to the uniform draw,
+matching IGTUT's inclusive boundary. An exactly equal draw belongs to the lower
+numbered treatment.
+
+`legacy=True` first converts weights to float32, sums them sequentially, divides
+each by that total, and sequentially accumulates the cumulative probabilities.
+It also uses the original float32 uniforms. These details can change assignments
+near boundaries. Legacy preserves collapsed intervals from source rounding;
+weights and their total must still be representable as positive finite float32
+values. It does not silently force the final cumulative value to one. If a
+requested uniform exceeds that value, Python raises `ArithmeticError`: the
+source would continue beyond its valid treatment probabilities. For example,
+twelve equal float32 probabilities sum to 0.9999998807907104, below the largest
+RANF draw. Default normalization handles that case without the source defect.
+
+This numerical API accepts relative weights directly. It does not impose the
+archived parameter file's F6.3 text rounding; legacy file parsing is separate
+future work. Extreme probabilities are also subject to the finite resolution
+of the underlying random-number stream.
+
+`tools/reference_ranlist_unrestricted.py` compiles unchanged IGTUT and random
+routines with the source's weight-accumulation steps in a local driver. Forty
+cases cover five weight vectors, two seed pairs and four streams, including an
+engineered draw exactly on a cumulative boundary. All 520 retained assignments
+match exactly, as do the float32 cumulative probabilities. Independent tests
+use a scalar integer recurrence and rational weighted boundaries, check fixed
+large-sample allocation frequencies, weight scaling, indexed reproducibility,
+input snapshots and unsupported numerical cases.

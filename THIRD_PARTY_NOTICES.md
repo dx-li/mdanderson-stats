@@ -351,3 +351,6 @@ identifies copyright 1990 and is retained in
 are not replaced by a blanket package license. Original Fortran and executables
 are local validation material and are not bundled. The generator comments cite
 L'Ecuyer and Cote, ACM Transactions on Mathematical Software 17:98–111 (1991).
+
+`ranlist_unrestricted.py` independently expresses IGTUT weighted assignment
+and the GENLST/WRKLST cumulative-weight rules. The retained RANLIST notices apply.

@@ -7,6 +7,19 @@ import subprocess
 from pathlib import Path
 
 
+def extract_units(text: str, names: set[str]) -> str:
+    units = []
+    for match in re.finditer(
+        r"^      (?:SUBROUTINE|(?:INTEGER|REAL|LOGICAL) FUNCTION) (\w+)", text, re.MULTILINE
+    ):
+        if match[1] in names:
+            end = re.search(r"^      END\s*$", text[match.start() :], re.MULTILINE)
+            units.append(text[match.start() : match.start() + end.end()] + "\n")
+    if len(units) != len(names):
+        raise RuntimeError("missing native RNG units")
+    return "".join(units)
+
+
 def main():
     source = Path("research/raw/RANLIST/source/source/ranlist.f")
     work = Path("research/raw/reference/ranlist-random").resolve()
@@ -24,17 +37,8 @@ def main():
         "phrtsd",
         "lennob",
     }
-    units = []
-    for match in re.finditer(
-        r"^      (?:SUBROUTINE|(?:INTEGER|REAL|LOGICAL) FUNCTION) (\w+)", text, re.MULTILINE
-    ):
-        if match[1] in names:
-            end = re.search(r"^      END\s*$", text[match.start() :], re.MULTILINE)
-            units.append(text[match.start() : match.start() + end.end()] + "\n")
-    if len(units) != len(names):
-        raise RuntimeError("missing native RNG units")
     numerical = work / "numerical.f"
-    numerical.write_text("".join(units))
+    numerical.write_text(extract_units(text, names))
     driver = work / "driver.f90"
     driver.write_text("""program reference
 implicit none

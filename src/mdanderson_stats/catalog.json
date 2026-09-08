@@ -624,12 +624,15 @@
       "status": "partial",
       "implemented_features": [
         "ranlist_seeds: original ASCII phrase-to-seed mapping",
-        "ranlist_integers and ranlist_uniform: indexed 32-stream generator with vectorized modular jumps and original float32 scaling option"
+        "ranlist_integers and ranlist_uniform: indexed 32-stream generator with vectorized modular jumps and original float32 scaling option",
+        "ranlist_unrestricted: weighted indexed treatment assignment, one-based patient/stream coordinates, source float32 cumulative boundaries"
       ],
       "validation": [
         "tests/test_ranlist_random.py",
         "tests/fixtures/ranlist_random.json",
-        "docs/ranlist.md"
+        "docs/ranlist.md",
+        "tests/test_ranlist_unrestricted.py",
+        "tests/fixtures/ranlist_unrestricted.json"
       ]
     },
     {

@@ -262,3 +262,6 @@ mathematical checks and measured batch performance.
 `ranlist_seeds`, `ranlist_integers` and `ranlist_uniform` begin
 [RANLIST](docs/ranlist.md) with reproducible phrase seeds and indexed random
 streams, validated against the original Fortran.
+
+`ranlist_unrestricted` adds weighted treatment assignments by patient number
+and stream, with explicit source rounding compatibility.
