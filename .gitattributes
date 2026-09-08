@@ -1,0 +1,2 @@
+# Preserve original third-party notices verbatim, including their whitespace.
+notices/* -whitespace

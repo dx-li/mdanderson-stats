@@ -1,0 +1,25 @@
+# Third-party notices
+
+## RANGE2 and KWRANGE
+
+The optional legacy grouping procedure in `mdanderson_stats/ranges.py` is a
+modified Python adaptation of the RANGE2 and KWRANGE programs distributed by
+the University of Texas M. D. Anderson Cancer Center. The original catalog lists
+Dennis A. Johnston as contact for both programs. This adaptation is maintained
+independently; the original authors are not responsible for its changes.
+
+The original, identical LEGALITIES files from both distributions are preserved in
+[`notices/mdanderson-range-LEGALITIES.txt`](notices/mdanderson-range-LEGALITIES.txt).
+Those terms apply to the adapted portions; this project does not relicense them.
+In particular, the terms permit use and redistribution subject to preservation
+of notices and require written permission for incorporation into a commercial
+package that will be sold.
+
+Original archives:
+
+- https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/RANGE2/RANGE2_V1.tar.gz
+- https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/KWRANGE/KWRANGE_V1.tar.gz
+
+The source archive hashes are recorded in `tests/fixtures/ranges.json`.
+No original executable, Fortran source archive, or supporting numerical library
+is redistributed by this project.

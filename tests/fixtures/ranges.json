@@ -1,0 +1,2051 @@
+{
+  "sources": {
+    "RANGE2": {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/RANGE2/RANGE2_V1.tar.gz",
+      "sha256": "1ba1db8a2ab477b4e79f326d442578c9e74b25d0a0c115a9a8e96cae7458c423"
+    },
+    "KWRANGE": {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/KWRANGE/KWRANGE_V1.tar.gz",
+      "sha256": "c7a321bc157d365595c0d4d11ced49a4639ccd39c6f7e446af1e0c98ef729ada"
+    }
+  },
+  "cases": [
+    {
+      "program": "range2",
+      "values": [
+        1,
+        2,
+        4,
+        7
+      ],
+      "sizes": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "error_mean_square": 2,
+      "critical_value": 1.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [],
+      "reject": [
+        [
+          false,
+          true,
+          true,
+          true
+        ],
+        [
+          true,
+          false,
+          true,
+          true
+        ],
+        [
+          true,
+          true,
+          false,
+          true
+        ],
+        [
+          true,
+          true,
+          true,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        1,
+        2,
+        4,
+        7
+      ],
+      "sizes": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "error_mean_square": 2,
+      "critical_value": 3.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          true,
+          true
+        ],
+        [
+          false,
+          false,
+          true,
+          true
+        ],
+        [
+          true,
+          true,
+          false,
+          true
+        ],
+        [
+          true,
+          true,
+          true,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        1,
+        2,
+        4,
+        7
+      ],
+      "sizes": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "error_mean_square": 2,
+      "critical_value": 8,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          true
+        ],
+        [
+          false,
+          false,
+          false,
+          true
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          true,
+          true,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        9,
+        1,
+        4
+      ],
+      "sizes": [
+        3,
+        20,
+        5
+      ],
+      "error_mean_square": 2,
+      "critical_value": 1.5,
+      "rank_sums": false,
+      "order": [
+        1,
+        2,
+        0
+      ],
+      "similarity_groups": [],
+      "reject": [
+        [
+          false,
+          true,
+          true
+        ],
+        [
+          true,
+          false,
+          true
+        ],
+        [
+          true,
+          true,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        9,
+        1,
+        4
+      ],
+      "sizes": [
+        3,
+        20,
+        5
+      ],
+      "error_mean_square": 2,
+      "critical_value": 3.5,
+      "rank_sums": false,
+      "order": [
+        1,
+        2,
+        0
+      ],
+      "similarity_groups": [],
+      "reject": [
+        [
+          false,
+          true,
+          true
+        ],
+        [
+          true,
+          false,
+          true
+        ],
+        [
+          true,
+          true,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        9,
+        1,
+        4
+      ],
+      "sizes": [
+        3,
+        20,
+        5
+      ],
+      "error_mean_square": 2,
+      "critical_value": 8,
+      "rank_sums": false,
+      "order": [
+        1,
+        2,
+        0
+      ],
+      "similarity_groups": [
+        [
+          1,
+          2
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          true,
+          true
+        ],
+        [
+          true,
+          false,
+          false
+        ],
+        [
+          true,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        0,
+        0.2,
+        0.8,
+        1
+      ],
+      "sizes": [
+        1,
+        100,
+        100,
+        1
+      ],
+      "error_mean_square": 1,
+      "critical_value": 1.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        0,
+        0.2,
+        0.8,
+        1
+      ],
+      "sizes": [
+        1,
+        100,
+        100,
+        1
+      ],
+      "error_mean_square": 1,
+      "critical_value": 3.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        0,
+        0.2,
+        0.8,
+        1
+      ],
+      "sizes": [
+        1,
+        100,
+        100,
+        1
+      ],
+      "error_mean_square": 1,
+      "critical_value": 8,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        2,
+        2,
+        1,
+        5
+      ],
+      "sizes": [
+        5,
+        10,
+        20,
+        30
+      ],
+      "error_mean_square": 3,
+      "critical_value": 1.5,
+      "rank_sums": false,
+      "order": [
+        2,
+        1,
+        0,
+        3
+      ],
+      "similarity_groups": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          true,
+          true
+        ],
+        [
+          false,
+          false,
+          false,
+          true
+        ],
+        [
+          true,
+          false,
+          false,
+          true
+        ],
+        [
+          true,
+          true,
+          true,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        2,
+        2,
+        1,
+        5
+      ],
+      "sizes": [
+        5,
+        10,
+        20,
+        30
+      ],
+      "error_mean_square": 3,
+      "critical_value": 3.5,
+      "rank_sums": false,
+      "order": [
+        2,
+        1,
+        0,
+        3
+      ],
+      "similarity_groups": [
+        [
+          2,
+          1,
+          0
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          true
+        ],
+        [
+          false,
+          false,
+          false,
+          true
+        ],
+        [
+          false,
+          false,
+          false,
+          true
+        ],
+        [
+          true,
+          true,
+          true,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        2,
+        2,
+        1,
+        5
+      ],
+      "sizes": [
+        5,
+        10,
+        20,
+        30
+      ],
+      "error_mean_square": 3,
+      "critical_value": 8,
+      "rank_sums": false,
+      "order": [
+        2,
+        1,
+        0,
+        3
+      ],
+      "similarity_groups": [
+        [
+          2,
+          1,
+          0,
+          3
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sizes": [
+        20,
+        10,
+        5,
+        20,
+        5
+      ],
+      "error_mean_square": 4,
+      "critical_value": 1.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "similarity_groups": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        [
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        [
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        [
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        [
+          true,
+          true,
+          true,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sizes": [
+        20,
+        10,
+        5,
+        20,
+        5
+      ],
+      "error_mean_square": 4,
+      "critical_value": 3.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          2,
+          3,
+          4
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        [
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        [
+          true,
+          true,
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "range2",
+      "values": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sizes": [
+        20,
+        10,
+        5,
+        20,
+        5
+      ],
+      "error_mean_square": 4,
+      "critical_value": 8,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        3,
+        8,
+        13
+      ],
+      "sizes": [
+        5,
+        5,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 1.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [],
+      "reject": [
+        [
+          false,
+          true,
+          true
+        ],
+        [
+          true,
+          false,
+          true
+        ],
+        [
+          true,
+          true,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        15,
+        40,
+        65
+      ],
+      "sizes": [
+        5,
+        5,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 1.5,
+      "rank_sums": true,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [],
+      "reject": [
+        [
+          false,
+          true,
+          true
+        ],
+        [
+          true,
+          false,
+          true
+        ],
+        [
+          true,
+          true,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        3,
+        8,
+        13
+      ],
+      "sizes": [
+        5,
+        5,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 3.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          true
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          true,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        15,
+        40,
+        65
+      ],
+      "sizes": [
+        5,
+        5,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 3.5,
+      "rank_sums": true,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          true
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          true,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        3,
+        8,
+        13
+      ],
+      "sizes": [
+        5,
+        5,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 8,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        15,
+        40,
+        65
+      ],
+      "sizes": [
+        5,
+        5,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 8,
+      "rank_sums": true,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        17,
+        2,
+        8.5
+      ],
+      "sizes": [
+        7,
+        3,
+        10
+      ],
+      "error_mean_square": null,
+      "critical_value": 1.5,
+      "rank_sums": false,
+      "order": [
+        1,
+        2,
+        0
+      ],
+      "similarity_groups": [],
+      "reject": [
+        [
+          false,
+          true,
+          true
+        ],
+        [
+          true,
+          false,
+          true
+        ],
+        [
+          true,
+          true,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        119,
+        6,
+        85.0
+      ],
+      "sizes": [
+        7,
+        3,
+        10
+      ],
+      "error_mean_square": null,
+      "critical_value": 1.5,
+      "rank_sums": true,
+      "order": [
+        1,
+        2,
+        0
+      ],
+      "similarity_groups": [],
+      "reject": [
+        [
+          false,
+          true,
+          true
+        ],
+        [
+          true,
+          false,
+          true
+        ],
+        [
+          true,
+          true,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        17,
+        2,
+        8.5
+      ],
+      "sizes": [
+        7,
+        3,
+        10
+      ],
+      "error_mean_square": null,
+      "critical_value": 3.5,
+      "rank_sums": false,
+      "order": [
+        1,
+        2,
+        0
+      ],
+      "similarity_groups": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          true,
+          false
+        ],
+        [
+          true,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        119,
+        6,
+        85.0
+      ],
+      "sizes": [
+        7,
+        3,
+        10
+      ],
+      "error_mean_square": null,
+      "critical_value": 3.5,
+      "rank_sums": true,
+      "order": [
+        1,
+        2,
+        0
+      ],
+      "similarity_groups": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          true,
+          false
+        ],
+        [
+          true,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        17,
+        2,
+        8.5
+      ],
+      "sizes": [
+        7,
+        3,
+        10
+      ],
+      "error_mean_square": null,
+      "critical_value": 8,
+      "rank_sums": false,
+      "order": [
+        1,
+        2,
+        0
+      ],
+      "similarity_groups": [
+        [
+          1,
+          2,
+          0
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        119,
+        6,
+        85.0
+      ],
+      "sizes": [
+        7,
+        3,
+        10
+      ],
+      "error_mean_square": null,
+      "critical_value": 8,
+      "rank_sums": true,
+      "order": [
+        1,
+        2,
+        0
+      ],
+      "similarity_groups": [
+        [
+          1,
+          2,
+          0
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        5,
+        5,
+        5
+      ],
+      "sizes": [
+        3,
+        3,
+        3
+      ],
+      "error_mean_square": null,
+      "critical_value": 1.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        15,
+        15,
+        15
+      ],
+      "sizes": [
+        3,
+        3,
+        3
+      ],
+      "error_mean_square": null,
+      "critical_value": 1.5,
+      "rank_sums": true,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        5,
+        5,
+        5
+      ],
+      "sizes": [
+        3,
+        3,
+        3
+      ],
+      "error_mean_square": null,
+      "critical_value": 3.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        15,
+        15,
+        15
+      ],
+      "sizes": [
+        3,
+        3,
+        3
+      ],
+      "error_mean_square": null,
+      "critical_value": 3.5,
+      "rank_sums": true,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        5,
+        5,
+        5
+      ],
+      "sizes": [
+        3,
+        3,
+        3
+      ],
+      "error_mean_square": null,
+      "critical_value": 8,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        15,
+        15,
+        15
+      ],
+      "sizes": [
+        3,
+        3,
+        3
+      ],
+      "error_mean_square": null,
+      "critical_value": 8,
+      "rank_sums": true,
+      "order": [
+        0,
+        1,
+        2
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        2.5,
+        8,
+        13.5,
+        18
+      ],
+      "sizes": [
+        4,
+        7,
+        4,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 1.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          true,
+          true
+        ],
+        [
+          false,
+          false,
+          false,
+          true
+        ],
+        [
+          true,
+          false,
+          false,
+          false
+        ],
+        [
+          true,
+          true,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        10.0,
+        56,
+        54.0,
+        90
+      ],
+      "sizes": [
+        4,
+        7,
+        4,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 1.5,
+      "rank_sums": true,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          true,
+          true
+        ],
+        [
+          false,
+          false,
+          false,
+          true
+        ],
+        [
+          true,
+          false,
+          false,
+          false
+        ],
+        [
+          true,
+          true,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        2.5,
+        8,
+        13.5,
+        18
+      ],
+      "sizes": [
+        4,
+        7,
+        4,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 3.5,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          true
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          true,
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        10.0,
+        56,
+        54.0,
+        90
+      ],
+      "sizes": [
+        4,
+        7,
+        4,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 3.5,
+      "rank_sums": true,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          true
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          true,
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        2.5,
+        8,
+        13.5,
+        18
+      ],
+      "sizes": [
+        4,
+        7,
+        4,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 8,
+      "rank_sums": false,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ]
+    },
+    {
+      "program": "kwrange",
+      "values": [
+        10.0,
+        56,
+        54.0,
+        90
+      ],
+      "sizes": [
+        4,
+        7,
+        4,
+        5
+      ],
+      "error_mean_square": null,
+      "critical_value": 8,
+      "rank_sums": true,
+      "order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "similarity_groups": [
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "reject": [
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ],
+        [
+          false,
+          false,
+          false,
+          false
+        ]
+      ]
+    }
+  ],
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "build_flags": [
+    "-O2",
+    "-std=legacy"
+  ]
+}

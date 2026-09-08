@@ -16,6 +16,10 @@ dev = ["pytest>=8", "ruff>=0.12", "mypy>=1.15"]
 [tool.hatch.build.targets.wheel]
 packages = ["src/mdanderson_stats"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"THIRD_PARTY_NOTICES.md" = "mdanderson_stats/THIRD_PARTY_NOTICES.md"
+"notices" = "mdanderson_stats/notices"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 

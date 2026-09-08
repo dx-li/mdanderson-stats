@@ -44,3 +44,8 @@ Normal tail probabilities (`normal_tails`), chi-square goodness-of-fit tests
 (`chi_square_gof`), and monotone function inversion (`invert_monotone`) are also
 available. See [numerical methods](docs/numerical-methods.md) for examples,
 compatibility differences, and validation against the original programs.
+
+`range2` and `kwrange` provide group-mean and rank-based multiple-range comparisons.
+[Range-test documentation](docs/range-tests.md) explains the critical-value
+conventions and the optional original grouping behavior. Adapted portions carry
+the original [redistribution notices](THIRD_PARTY_NOTICES.md).

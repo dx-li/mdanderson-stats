@@ -866,9 +866,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "mdanderson_stats.kwrange: mean-rank or rank-sum inputs, original rank statistic, supplied cutoff, pairwise decisions and contiguous similarity groups, original sorting and envelope behavior via legacy=True"
+      ],
+      "validation": [
+        "tests/fixtures/ranges.json",
+        "tests/test_ranges.py",
+        "docs/range-tests.md"
+      ]
     },
     {
       "id": 49,
@@ -926,9 +932,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "mdanderson_stats.range2: group means/sizes, MSE and supplied cutoff, pairwise statistics/decisions and contiguous similarity groups, original sorting and envelope behavior via legacy=True"
+      ],
+      "validation": [
+        "tests/fixtures/ranges.json",
+        "tests/test_ranges.py",
+        "docs/range-tests.md"
+      ]
     },
     {
       "id": 54,
