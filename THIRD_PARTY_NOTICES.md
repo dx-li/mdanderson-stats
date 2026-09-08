@@ -182,3 +182,12 @@ significance, correcting the original summary's mixing of those quantities.
 The multistage region-report methods independently export exact decision sets
 as contiguous count ranges. They replace the original REGPRT display assumptions
 and formatting while preserving the complete reachable rejection/quitting sets.
+
+## SINGLE
+
+`single.py` independently implements fixed-design Fisher information and delta-method
+precision for SINGLE's logistic and log-log models. Original CPROB/CDPDB/MIX/GEXP
+are compiled only in a local reference build, with source/compiler provenance in
+`tests/fixtures/single.json`. No original source or binary is distributed. SINGLE's
+source requires permission for commercial source use; this implementation expresses
+the model formulas independently and documents its different numerical treatment.

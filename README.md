@@ -127,3 +127,7 @@ and study revision, keeping actual null probabilities separate from grid maxima.
 
 KSBIN2 decision grids and inclusive count-range reports can be inspected and
 exported with `decision_grid`, `region_report`, and `write_regions`.
+
+`single_design_precision` evaluates local slope and quantile precision for fixed
+logistic/log-log dose-response designs. [SINGLE coverage](docs/single.md) tracks
+the remaining prior-integration and optimization workflows.
