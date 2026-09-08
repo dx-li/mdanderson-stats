@@ -114,8 +114,7 @@ and report/design file output. See [KSBIN1 coverage and validation](docs/ksbin1.
 `ksbin2_statistic` and `ksbin2_ordering` provide vectorized two-sample binomial
 evidence scores and tied outcome groups. `ksbin2_probability_table` adds ordinary
 single-stage power and null-grid significance. [KSBIN2 coverage](docs/ksbin2.md)
-documents mid-p reporting and rejection-region selection, and tracks the remaining
-multistage-design workflows.
+documents its mid-p reporting, rejection-region selection and multistage workflows.
 
 `KStageTwoSampleBinomial` evaluates fixed KSBIN2 multistage designs, with cached
 surviving paths, broadcast probability pairs and expected sample sizes per group.
@@ -125,3 +124,6 @@ reference-completion power-loss tables for those multistage designs.
 
 `ksbin2_study` provides full null-grid scans, paired-hypothesis numerical reports,
 and study revision, keeping actual null probabilities separate from grid maxima.
+
+KSBIN2 decision grids and inclusive count-range reports can be inspected and
+exported with `decision_grid`, `region_report`, and `write_regions`.

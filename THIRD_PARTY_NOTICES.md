@@ -178,3 +178,7 @@ BRKARR reference and its provenance appear in `tests/fixtures/ksbin2_midp.json`.
 `ksbin2_study.py` independently implements study scans, revision and numerical
 reporting. It separates actual null-rate operating characteristics from grid-maximum
 significance, correcting the original summary's mixing of those quantities.
+
+The multistage region-report methods independently export exact decision sets
+as contiguous count ranges. They replace the original REGPRT display assumptions
+and formatting while preserving the complete reachable rejection/quitting sets.

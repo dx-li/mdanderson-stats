@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass, field
 from math import comb
+from pathlib import Path
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -155,6 +156,56 @@ class KStageTwoSampleBinomial:
         first = KStageBinomial([n1], [], []).stage_distribution(1, p1)
         second = KStageBinomial([n2], [], []).stage_distribution(1, p2)
         return first[..., :, None] * second[..., None, :] * self._survival_fraction[stage - 1]
+
+    def decision_grid(self, stage: int) -> np.ndarray:
+        """Return an exact event-count grid of reject/quit/continue/unreachable.
+
+        The first axis is group 1's count; the second is group 2's count. A fresh
+        array is returned so editing the display cannot change the design.
+        """
+        if (
+            isinstance(stage, bool)
+            or not isinstance(stage, (int, np.integer))
+            or not 1 <= stage <= len(self.cumulative_trials)
+        ):
+            raise ValueError("stage must be a valid one-based integer")
+        i = stage - 1
+        grid = np.full(self._reject[i].shape, "continue", dtype="<U11")
+        grid[self._reject[i]] = "reject"
+        grid[self._quit[i]] = "quit"
+        grid[self._survival_fraction[i] == 0] = "unreachable"
+        return grid
+
+    def region_report(self, stage: int) -> str:
+        """Exact inclusive count ranges, without assuming monotone region shapes.
+
+        Each row fixes group 1's count and gives a contiguous group 2 count range
+        with one decision. All possible pairs, including unreachable ones, appear.
+        """
+        grid = self.decision_grid(stage)
+        rows = [f"Stage {stage}", "Group 1 events\tGroup 2 from\tGroup 2 through\tDecision"]
+        for first, decisions in enumerate(grid):
+            starts = np.r_[0, np.flatnonzero(decisions[1:] != decisions[:-1]) + 1]
+            ends = np.r_[starts[1:] - 1, len(decisions) - 1]
+            rows.extend(
+                f"{first}\t{start}\t{end}\t{decisions[start]}"
+                for start, end in zip(starts, ends, strict=True)
+            )
+        return "\n".join(rows) + "\n"
+
+    def write_regions(self, path: str | Path) -> Path:
+        """Write all stages' exact regions as UTF-8, explicitly replacing path."""
+        content = (
+            "KSBIN2 decision regions\n"
+            + f"Direction\t{self.alternative}\n"
+            + "Criteria\t"
+            + " ".join(map(str, self.criteria))
+            + "\n"
+            + "".join(self.region_report(i + 1) for i in range(len(self.cumulative_trials)))
+        )
+        path = Path(path)
+        path.write_text(content, encoding="utf-8")
+        return path
 
     def operating_characteristics(
         self, probability1: ArrayLike, probability2: ArrayLike

@@ -1,13 +1,10 @@
 # KSBIN2 two-sample binomial designs
 
-Catalog entry 24 is partial. The outcome statistics and complete single-stage
-outcome ordering and ordinary single-stage probability tables are implemented.
-Source-convention mid-p significance and single-stage rejection-region selection
-and fixed multistage operating characteristics are also available. Ordinary
-multistage boundary-assistance and power-loss tables are implemented, with explicitly
-named mid-p display and pointwise values. Study scans, revision and numerical
-summary reports are implemented. Outcome-region display/export and a final
-original-workflow coverage audit remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
+Catalog entry 24 is implemented: outcome ordering, ordinary/mid-p probability
+tables, single-stage selection, multistage evaluation and boundary assistance,
+reference power-loss calculations, study scans, revision, numerical reports and
+exact decision-region display/export. Python calls replace terminal prompting,
+paging and help-level menus. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
 
 ```python
 from mdanderson_stats import ksbin2_ordering, ksbin2_statistic
@@ -374,3 +371,63 @@ null rates, checking the parsed numerical report and expected sample sizes. They
 also compare cumulative grid maxima to selected boundary-table entries, verify
 that changing PRH0 leaves the grid scan unchanged, and exercise broadcasting,
 revision, scan calls, report precision, file replacement and I/O errors.
+
+## Exact decision-region reports
+
+```python
+from mdanderson_stats import KStageTwoSampleBinomial
+
+design = KStageTwoSampleBinomial(
+    [[2, 3], [4, 5], [6, 6]],
+    [0, 0, 1],
+    [2, 2],
+    criteria=(1, 2),
+)
+print(design.decision_grid(stage=2))
+print(design.region_report(stage=2))
+design.write_regions("ksbin2-regions.tsv")
+```
+
+`decision_grid` indexes group 1 counts on the first axis and group 2 counts on the
+second. Entries are reject, quit, continue, or unreachable. Unreachable means no
+path survives earlier stopping decisions to that count pair, independent of the
+chosen probabilities. Probability-zero outcomes under a particular null or
+alternative are still classified by the design if structurally reachable.
+Returned grids are fresh arrays; editing one cannot modify the design.
+
+`region_report` fixes group 1's event count and compresses contiguous group 2 counts
+with the same decision into inclusive from/through ranges. Every count pair occurs
+exactly once, including unreachable outcomes. This exact representation supports
+holes and disconnected regions without inferring monotone threshold shapes. It
+replaces REGPRT's direction-dependent compressed display, which chooses a primary
+axis and assumes particular threshold shapes. It does not reproduce its screen
+formatting. `write_regions` exports every stage, direction and ordered criterion
+list as UTF-8, explicitly replacing the requested path and propagating I/O errors.
+
+Tests reconstruct every exported grid, checking an exact partition, reachable
+outcomes, and probabilities of each decision. They cover all four criteria plus
+weighted criteria, all three directions, three stages, unequal sizes, disabled
+boundaries, final decisions, mutation isolation, file output and invalid stages.
+
+## Original workflow coverage audit
+
+| Original operation/routines | Python replacement | Evidence |
+| --- | --- | --- |
+| GETSTG, GETHYP, GETSCR: sizes, hypotheses, criteria | Validated design constructors and study/probability calls | Invalid-domain tests; unequal sizes and all directions |
+| Incremental/equal-group input alternatives | Supply cumulative size pairs; use cumulative sums of increments when needed | Unequal and one-group-only increments; native transition cases |
+| SSSSRT, SSINIT, SSSORT: evidence and tied groups | `ksbin2_statistic`, `ksbin2_ordering`, reachable stage orderings | 54 native score grids; complete-space and tie tests |
+| SSSIG, SSPOW, SSUPDS: ordinary/cumulative rejection | Single-stage and boundary tables; study null scan | 18 native probability tables; exhaustive multistage paths |
+| BRKARR: complete ties and mid-p displays | Whole tied groups and explicitly named mid-p properties | Native ordinary/mid-p fixtures; pointwise path checks |
+| SETCRI/SETQUI: select rejection and quitting groups | Single-stage `select`/`select_group`; multistage group boundaries | All attainable levels, exact ties, empty/full and overlap tests |
+| SSTO1/SSPL: retain single-stage comparator and power loss | Explicit reference rejection region and boundary-table completion | Exhaustive reference-completion paths and maximum-size installed-wheel check |
+| SSUPD: advance surviving sample space | Cached separable coefficient convolutions | Nine native transition fixtures and exhaustive arrival probabilities |
+| REGPRT: critical/quitting region display and file output | Exact decision grids, compressed count-range reports and file export | Exact partition reconstruction and decision-probability agreement |
+| Stage/study summaries, report file selection | `ksbin2_study`, numerical report and explicit file writer | Parsed report values checked against exhaustive trials; I/O tests |
+| Revised inputs and repeated evaluations | New constructors, study revision and broadcast scans | Revision/fresh-evaluation equivalence and preserved original results |
+| Virtual display paging, expert/novice help menus | Returned arrays, ordinary Python inspection and this documentation | UI transport replaced; scientific outputs covered above |
+
+The implementation keeps the documented distinctions between grid maxima and
+continuous-null guarantees, between ordinary probabilities and mid-p displays,
+and between source display conventions and corrected probability calculations.
+No original terminal executable, exact prompt sequence or Fortran display-width
+compatibility is claimed.
