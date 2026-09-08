@@ -49,3 +49,9 @@ compatibility differences, and validation against the original programs.
 [Range-test documentation](docs/range-tests.md) explains the critical-value
 conventions and the optional original grouping behavior. Adapted portions carry
 the original [redistribution notices](THIRD_PARTY_NOTICES.md).
+
+MULTI's nine adjustment/threshold procedures, two sharpened procedures, Schweder
+line fitting and bootstrap are available through `multiple_testing`,
+`sharpened_testing`, `schweder_fit`, and `schweder_bootstrap`.
+See [multiple testing](docs/multiple-testing.md) for examples, historical naming
+differences, and the MULTI features that remain pending.

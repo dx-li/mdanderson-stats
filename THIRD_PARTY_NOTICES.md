@@ -23,3 +23,23 @@ Original archives:
 The source archive hashes are recorded in `tests/fixtures/ranges.json`.
 No original executable, Fortran source archive, or supporting numerical library
 is redistributed by this project.
+
+## MULTI
+
+`multiplicity.py` and `schweder.py` contain modified Python implementations of
+MULTI's adjustment, sharpened-testing and Schweder algorithms. The original code
+is copyright 1996 for The University of Texas M. D. Anderson Cancer Center.
+Barry W. Brown is the original contact. This adaptation is maintained independently.
+
+The original copyright and terms from section II of `multi.doc` are preserved in
+[`notices/mdanderson-multi-LEGALITIES.txt`](notices/mdanderson-multi-LEGALITIES.txt).
+They permit redistribution with the copyright section, permit noncommercial
+source use, and require written permission for commercial source use. Those
+terms are not replaced by a different project license.
+
+Source archive:
+https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MULTI/MULTI_V1.tar.gz
+
+The hash and reference-build provenance are recorded in `tests/fixtures/multi.json`.
+The port uses NumPy/SciPy in place of the original supporting numerical libraries;
+the original executable and numerical library sources are not redistributed.
