@@ -43,7 +43,9 @@ def single_design_correlation(
     doses: tuple[FloatArray, ...]
     subjects: tuple[FloatArray, ...]
     if comparison is None:
-        information = single_design_precision(x, n, parameters, model=model, form=form).information
+        information = single_design_precision(
+            x, n, parameters, model=model, form=form, quantile=None
+        ).information
         doses, subjects = (x,), (n,)
     else:
         midpoint = np.full(2, low / 2 + high / 2)

@@ -30,6 +30,9 @@ least two distinct informative dose values. Fractional allocations are allowed,
 as in the optimizer's approximate designs. Parameters end in two entries; their
 leading axes broadcast with the requested response quantile. A nonzero slope is
 required to identify the quantile dose. Quantiles lie strictly between zero and one.
+Set `quantile=None` for slope-only precision: quantile dose and variance are then
+`None`, and accessing `quantile_sd` raises an error. This permits identifiable
+linear zero-slope models. Centered zero-slope models remain singular.
 
 The result contains the expected Fisher information, response probabilities,
 quantile dose, slope variance and quantile variance, with standard-deviation
@@ -159,9 +162,9 @@ without a certified integration error. A finite quadrature result alone does not
 prove that an improper expectation exists: singularities between quadrature
 nodes require care. One-sample quantile criteria reject slope intervals touching
 or crossing zero. Other invalid or unidentifiable parameter values encountered
-at nodes propagate errors from the fixed-design APIs. The one-sample API's
-nonzero-slope restriction continues to apply at each node, including when
-requesting slope precision. No singular nodes are dropped or replaced.
+at nodes propagate errors from the fixed-design APIs. Slope criteria automatically
+request slope-only precision, so linear zero-slope nodes are valid. No singular
+nodes are dropped or replaced.
 
 `tools/reference_single_uniform.py` compiles unchanged RECGS, RECGSX and QNXTIX
 (with its entries), together with unchanged response/derivative routines. An
@@ -231,7 +234,8 @@ tensor dimensions. The result exposes transformed parameter nodes, weights, loca
 criteria, order and scaling mode. Allowed orders are 2–32 (the source tabulates
 2–8); increasing order assesses convergence but does not certify an error bound.
 Numerically invalid or singular nodes propagate errors. In particular, the
-one-sample fixed-design API still rejects a zero slope at a node. Exponentiation
+one-sample quantile criterion rejects a zero slope at a node; slope criteria
+permit it in linear form. Exponentiation
 overflow or underflow raises an error instead of clipping parameters.
 
 `tools/reference_single_normal.py` compiles unchanged RECHRM and QINIX (including
@@ -288,3 +292,9 @@ Tests verify closed-form one/two-sample logistic covariances, an independent 2×
 inverse-correlation identity for both models, batching and prior-input composition.
 These tests do not execute native DSTCOV or CGTCOV; response information is
 separately checked against original routines.
+
+
+Slope-only regression tests cover zero-slope information in both response models,
+unchanged precision at nonzero slopes, an analytic uniform-slope integral crossing
+zero, normal priors with zero-valued quadrature nodes, zero-slope reference-design
+correlations, and continued rejection of singular centered models.

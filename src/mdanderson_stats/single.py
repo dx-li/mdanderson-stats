@@ -13,9 +13,9 @@ from ._validation import FloatArray, finite
 class SingleDesignPrecision:
     information: FloatArray
     probability: FloatArray
-    quantile_dose: FloatArray
+    quantile_dose: FloatArray | None
     slope_variance: FloatArray
-    quantile_variance: FloatArray
+    quantile_variance: FloatArray | None
 
     @property
     def slope_sd(self) -> FloatArray:
@@ -23,6 +23,8 @@ class SingleDesignPrecision:
 
     @property
     def quantile_sd(self) -> FloatArray:
+        if self.quantile_variance is None:
+            raise ValueError("Quantile precision was not requested")
         return np.sqrt(self.quantile_variance)
 
 
@@ -33,7 +35,7 @@ def single_design_precision(
     *,
     model: str = "logistic",
     form: str = "linear",
-    quantile: ArrayLike = 0.05,
+    quantile: ArrayLike | None = 0.05,
 ) -> SingleDesignPrecision:
     """Evaluate a one-sample design at fixed parameters (SINGLE's point prior).
 
@@ -41,7 +43,9 @@ def single_design_precision(
     Parameters end in two entries: (intercept, slope) for linear form or
     (slope, center) for centered form. Leading parameter axes broadcast with
     quantile. Doses are supplied on the model's dose coordinate; no logarithm
-    is applied implicitly. Singular information raises ValueError.
+    is applied implicitly. Singular information raises ValueError. Set quantile=None
+    to request only slope precision; quantile outputs are then None and linear
+    zero-slope models remain valid.
     """
     if model not in ("logistic", "loglog") or form not in ("linear", "centered"):
         raise ValueError("model must be logistic/loglog and form linear/centered")
@@ -51,7 +55,7 @@ def single_design_precision(
             (doses, "doses"),
             (subjects, "subjects"),
             (parameters, "parameters"),
-            (quantile, "quantile"),
+            (0.5 if quantile is None else quantile, "quantile"),
         ]
     )
     if x.ndim != 1 or n.shape != x.shape or x.size < 2 or np.any(n < 0) or not np.any(n > 0):
@@ -62,7 +66,7 @@ def single_design_precision(
         raise ValueError("parameters must end in two entries and quantile must lie in (0,1)")
     first, second, q = np.broadcast_arrays(b[..., 0], b[..., 1], q)
     slope = second if form == "linear" else first
-    if np.any(slope == 0):
+    if quantile is not None and np.any(slope == 0):
         raise ValueError("Slope must be nonzero for quantile estimation")
     if form == "linear":
         u = first[..., None] + second[..., None] * x
@@ -80,14 +84,17 @@ def single_design_precision(
     if np.any(maximum <= minimum):
         raise ValueError("Design requires at least two distinct informative doses")
     information = np.swapaxes(gradient, -1, -2) @ (effective[..., None] * gradient)
-    if form == "linear":
+    dose: FloatArray | None
+    if quantile is None:
+        dose = None
+        target = np.zeros(first.shape + (2,))
+    elif form == "linear":
         dose = (link - first) / second
         target = np.stack([-1 / second, -dose / second], axis=-1)
-        slope_target = np.broadcast_to([0.0, 1.0], target.shape)
     else:
         dose = second + link / first
         target = np.stack([-link / first**2, np.ones_like(first)], axis=-1)
-        slope_target = np.broadcast_to([1.0, 0.0], target.shape)
+    slope_target = np.broadcast_to([0.0, 1.0] if form == "linear" else [1.0, 0.0], target.shape)
     try:
         factor = np.linalg.cholesky(information)
         quantile_solution = np.linalg.solve(factor, target[..., None])[..., 0]
@@ -96,9 +103,11 @@ def single_design_precision(
         raise ValueError(
             "Design information is not positive definite; use informative distinct doses"
         ) from error
-    variance = np.sum(quantile_solution**2, axis=-1)
+    variance = None if quantile is None else np.sum(quantile_solution**2, axis=-1)
     slope_variance = np.sum(slope_solution**2, axis=-1)
-    if not np.all(np.isfinite(variance)) or not np.all(np.isfinite(slope_variance)):
+    if (variance is not None and not np.all(np.isfinite(variance))) or not np.all(
+        np.isfinite(slope_variance)
+    ):
         raise ValueError("Design precision overflowed")
     return SingleDesignPrecision(information, p, dose, slope_variance, variance)
 

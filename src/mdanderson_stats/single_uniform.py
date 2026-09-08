@@ -101,7 +101,7 @@ def _local_criterion(
             parameters,
             model=model,
             form=form,
-            quantile=quantile,
+            quantile=None if criterion.startswith("slope") else quantile,
         )
         local = getattr(result, criterion)
     else:

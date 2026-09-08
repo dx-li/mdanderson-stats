@@ -1116,6 +1116,7 @@
       ],
       "validation": [
         "tests/test_single.py",
+        "tests/test_single_zero_slope.py",
         "tests/fixtures/single.json",
         "tools/reference_single.py",
         "tests/test_single_two_sample.py",
