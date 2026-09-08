@@ -10,30 +10,30 @@
     {
       "operation": "tails",
       "size": 128,
-      "batch_seconds": 0.00011208374053239822,
-      "scalar_seconds": 0.006226707715541124,
-      "speedup": 55.55406775295183
+      "batch_seconds": 0.00011008419096469879,
+      "scalar_seconds": 0.007022624835371971,
+      "speedup": 63.79321838885975
     },
     {
       "operation": "shape_a",
       "size": 128,
-      "batch_seconds": 0.0016406667418777943,
-      "scalar_seconds": 0.155564833432436,
-      "speedup": 94.8180574772834
+      "batch_seconds": 0.0020852498710155487,
+      "scalar_seconds": 0.2128952913917601,
+      "speedup": 102.09581803646238
     },
     {
       "operation": "tails",
       "size": 1024,
-      "batch_seconds": 0.00016037467867136002,
-      "scalar_seconds": 0.04881858313456178,
-      "speedup": 304.403310666024
+      "batch_seconds": 0.0001905001699924469,
+      "scalar_seconds": 0.05439849989488721,
+      "speedup": 285.5561750787101
     },
     {
       "operation": "shape_a",
       "size": 1024,
-      "batch_seconds": 0.005151541903614998,
-      "scalar_seconds": 1.2378829158842564,
-      "speedup": 240.29367110759503
+      "batch_seconds": 0.005959040950983763,
+      "scalar_seconds": 1.7281438340432942,
+      "speedup": 290.00368486442426
     }
   ]
 }

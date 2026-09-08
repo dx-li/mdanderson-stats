@@ -158,3 +158,20 @@ def test_native_exact_initial_shape_has_false_bound_status():
         which, p, q, x, cx, a, b = case["input"]
         assert which == 4 and b == 5 and case["status"] == -50
         assert float(cdf_beta(4, cum=p, ccum=q, x=x, cx=cx, a=a).b) == pytest.approx(5, rel=1e-10)
+
+
+@pytest.mark.parametrize("shape", [1e-10, 1e-6, 0.2, 1, 100, 1e6, 1e10])
+def test_symmetric_midpoint_is_exact_and_reusable(shape):
+    result = cdf_beta(x=0.5, a=shape, b=shape)
+    assert float(result.cum) == float(result.ccum) == 0.5
+    inverse = cdf_beta(3, x=0.5, b=shape, cum=result.cum, ccum=result.ccum)
+    assert float(inverse.a) == pytest.approx(shape, rel=1e-8)
+
+
+def test_large_shape_complements_can_be_reused_as_inputs():
+    a = np.array([1e-10, 0.1, 1, 1e3, 1e6, 1e10])[:, None]
+    b = np.array([1e-10, 0.1, 1, 1e3, 1e6, 1e10])[None, :]
+    result = cdf_beta(x=0.5, a=a, b=b)
+    np.testing.assert_array_equal(result.cum + result.ccum, np.ones((6, 6)))
+    inverse = cdf_beta(2, a=a, b=b, cum=result.cum, ccum=result.ccum)
+    assert np.all(np.isfinite(inverse.x))

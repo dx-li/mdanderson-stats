@@ -57,6 +57,10 @@ the actual archived implementation and this port use the standard definition.
 
 Forward evaluation reflects the beta parameters when the supplied complementary
 coordinate is smaller. SciPy `betainc` and `betaincc` evaluate both tails directly.
+The smaller computed tail is retained and the larger is reconstructed so the
+result is a consistent complementary pair. At x=cx=0.5 with a=b, symmetry gives
+exactly 0.5 for both tails. This also avoids platform-dependent kernel roundoff
+at very large symmetric shapes.
 Quantiles invert the smaller probability and compute both coordinates directly
 using `betaincinv` and the reflected `betainccinv`; the smaller coordinate is not
 obtained by subtracting a rounded larger coordinate from one.

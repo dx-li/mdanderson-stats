@@ -52,7 +52,11 @@ def _tails(
     p, q = np.where(left, lower, upper), np.where(left, upper, lower)
     if np.any(~np.isfinite(p) | ~np.isfinite(q) | (p < 0) | (p > 1) | (q < 0) | (q > 1)):
         raise ArithmeticError("beta tail evaluation failed")
-    return p, q
+    symmetric_midpoint = (a == b) & (x == cx)
+    p = np.where(symmetric_midpoint, 0.5, p)
+    q = np.where(symmetric_midpoint, 0.5, q)
+    # Independent kernel rounding must not produce an inconsistent output pair.
+    return np.where(p <= q, p, 1 - q), np.where(p <= q, 1 - p, q)
 
 
 @dataclass(frozen=True)
