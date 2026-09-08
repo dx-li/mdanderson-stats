@@ -87,3 +87,14 @@ Sources: [CUMNOR](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSo
 [GOFCHI](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/44),
 [INVMF](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/46).
 CUMNOR and INVMF are by Barry W. Brown; GOFCHI lists Dennis A. Johnston as contact.
+
+## Batch performance
+
+`uv run python tools/benchmark_numerics.py` measures three repetitions of two
+deterministic workloads and checks that batched and scalar results agree. The
+[recorded run](numerical-benchmark.json) measured about 128x speedup for 10,000
+pairs of normal log tails and 89x for 1,000 twenty-category goodness-of-fit tests.
+These compare one batched call with repeated scalar calls to the same Python
+API, not with original Fortran throughput. Both use compiled NumPy/SciPy kernels;
+the batched version also amortizes Python dispatch and input validation.
+Timing results are machine-specific and are not enforced as CI thresholds.

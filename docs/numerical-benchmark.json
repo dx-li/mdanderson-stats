@@ -1,0 +1,22 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "Same Python API called once on arrays versus once per scalar or row; not a comparison against the archived executables",
+  "results": {
+    "normal_tails": {
+      "workload": "10000 pairs of log normal tails, x evenly spaced from -100 to 100",
+      "batch_seconds": 0.00027754204347729683,
+      "scalar_seconds": 0.035566582810133696,
+      "speedup": 128.14845046366128
+    },
+    "chi_square_gof": {
+      "workload": "1000 Pearson goodness-of-fit tests, 20 categories, deterministic unequal counts and weights",
+      "batch_seconds": 0.00041908305138349533,
+      "scalar_seconds": 0.03743216721341014,
+      "speedup": 89.31921033274294
+    }
+  }
+}
