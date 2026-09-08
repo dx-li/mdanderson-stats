@@ -198,6 +198,23 @@ class MultiSession:
             ),
         )
 
+    def format_report(self, *, digits: int = 6) -> str:
+        """Return Markdown tables, retaining dataset, settings and failure history.
+
+        Observation/rank labels are one-based for reading. Rom critical alphas
+        and reciprocal-density scores are labeled separately from adjusted p-values.
+        """
+        from .multi_report import _format_report
+
+        return _format_report(self.report(), digits)
+
+    def write_text_report(self, path: str | Path, *, digits: int = 6) -> Path:
+        """Write the Markdown report as UTF-8, replacing path explicitly."""
+        path = Path(path)
+        content = self.format_report(digits=digits)
+        path.write_text(content, encoding="utf-8")
+        return path
+
     def write_report(self, path: str | Path) -> Path:
         """Write a complete JSON report, replacing path; propagate I/O failures."""
         path = Path(path)

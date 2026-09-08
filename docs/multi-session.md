@@ -33,7 +33,7 @@ change subsequent analyses.
 | fit_beta_mixture_k | Fit a specified mixture component count |
 | select_beta_mixture | Automatic mixture selection |
 | beta_mixture_testing | Reciprocal-density decisions |
-| beta_mixture_bootstrap | Simulated CVM and null-weight uncertainty |
+| beta_mixture_bootstrap | Simulated CVM goodness of fit |
 | nonparametric_testing | Desktop nonparametric decisions |
 | order_statistic_diagnostics | S order-statistic diagnostics |
 
@@ -89,5 +89,46 @@ Integration tests cover all ten procedure routes across the suite, full setting
 capture, file round trips, input-order preservation, immutable historical results,
 failed replacement/run handling, current-data null estimation, exact RNG replay,
 terminal quit handling, and nonfinite endpoint diagnostics. Underlying numerical
-validity is checked separately against the native fixtures. Human-readable report
-tables and the final procedure-specific native report audit remain pending.
+validity is checked separately against the native fixtures. Readable-report validation and source coverage are described below and in
+multi-coverage.md.
+
+
+## Readable reports
+
+```python
+text = session.format_report(digits=6)
+print(text)
+session.write_text_report("multi-report.md", digits=8)
+```
+
+The Markdown report follows session event order, keeping analyses attached to
+their original datasets. It prints data tables, parser diagnostics, effective
+settings, numerical results, failures and random state. digits selects 1–17
+significant digits, default 6. File writes replace existing paths explicitly;
+formatting completes first and I/O failures propagate.
+
+Decision tables show step, rank, original observation (one-based), p-value,
+method-specific numerical columns and an asterisk for rejection, plus a rejection
+count. Rank refers to sorted p-values; step follows the algorithm's sequence.
+They differ for entered-sequence mixture decisions. Rom uses Critical alpha,
+while other adjustments use Adjusted P-value. Mixture/nonparametric reciprocal
+densities use Reciprocal-density score, with no posterior-probability claim.
+
+Mixture tables include the uniform component (index 0, beta shapes 1 and 1),
+each beta weight/shape pair, and the beta-component count. Nested selected fits,
+candidates, bootstrap checks and failure messages remain visible. Other diagnostic
+vectors use one-based Index rows in their own API order: in particular,
+nonparametric density/bandwidths are fitted-rank vectors, while estimates and
+simulated_statistics index simulation replicates. Settings and nonfinite values
+are printed explicitly. User-supplied labels/diagnostics are escaped for table
+separators, HTML and embedded newlines.
+
+`tools/reference_multi_report.py` extracts original PDISP unchanged, substitutes
+only a completed terminal-navigation stub, and records 24 report cases using
+existing native adjustment fixtures. Tests compare displayed ranks, observation
+numbers, values and markers. Comparison tolerances account for the source's
+six-digit display. Additional tests validate Rom thresholds, entered-sequence
+step/rank mapping, model/candidate/simulation fields, nonfinite diagnostics,
+failures, escaping, precision validation and file output. A sample complete report
+was inspected for readable layout. The native report-content audit is maintained
+in multi-coverage.md.

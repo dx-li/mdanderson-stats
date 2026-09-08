@@ -912,9 +912,9 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
-        "mdanderson_stats.MultiSession: replaceable file/terminal-text datasets, ten procedure APIs, fresh null estimation, seed control and strict JSON reports with effective settings, data history, results/failures and RNG states; native text-report coverage audit pending",
+        "mdanderson_stats.MultiSession: replaceable file/terminal-text datasets, ten procedure APIs, fresh null estimation, seed control and strict JSON reports with effective settings, data history, results/failures and RNG states; human-readable Markdown tables and source report-content audit",
         "mdanderson_stats.parse_multi_data and read_multi_data: MULTI QLEX/RDDATA text import, sorted p-values with original indices, explicit token diagnostics, terminal quit semantics; corrected negative-integer signs and long-line handling",
         "mdanderson_stats.multiple_testing: desktop Bonferroni, Sidak, Holm, step-down Sidak, Finner, Hochberg, historical harmonic Hommel, step-up Simes and Rom; batched families, original-order results",
         "mdanderson_stats.rom_critical_values: stable log-domain recurrence for rank-specific Rom cutoffs",
@@ -937,6 +937,8 @@
         "mdanderson_stats.write_schweder_data: desktop SWFIT full coordinate export as round-trip CSV"
       ],
       "validation": [
+        "tests/test_multi_report.py",
+        "tests/fixtures/multi_report.json",
         "tests/test_multi_session.py",
         "docs/multi-session.md",
         "tests/test_multi_input.py",

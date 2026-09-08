@@ -89,5 +89,6 @@ six-family comparison; `compare_stukel` accepts supplied data. See
 `parse_multi_data` and `read_multi_data` import MULTI p-value text with explicit
 ignored-token diagnostics and original input indices.
 `MultiSession` runs procedures on replaceable data and writes structured reports
-with settings, results, diagnostics, and random-state provenance.
+with settings, results, diagnostics, and random-state provenance. Its
+`format_report` and `write_text_report` provide readable Markdown tables.
 [The MULTI coverage audit](docs/multi-coverage.md) records its remaining I/O gaps.

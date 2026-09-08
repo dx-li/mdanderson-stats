@@ -28,7 +28,8 @@ is redistributed by this project.
 
 `_multi_lexer.py` adapts the original QLEX state/action tables and token behavior;
 `multi_input.py` provides RDDATA input validation, diagnostics and sorting.
-`multi_session.py` coordinates the adapted procedures and exports their results.
+`multi_session.py` coordinates the adapted procedures and exports their results;
+`multi_report.py` renders their report tables.
 These adaptations are also subject to the original MULTI terms below.
 
 `multiplicity.py`, `schweder.py`, `pvalue_models.py`, `nonparametric.py`, and
