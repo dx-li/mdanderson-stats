@@ -208,3 +208,6 @@ and linked density/survival slider, including explicit empty-group handling.
 
 `plot_survival_alignment` adds EXPSURV's accelerated-failure and proportional-hazards
 alignment sliders, reusing fitted survival curves.
+
+`plot_survival_scatter` links EXPSURV covariate selections to a survival curve,
+with rectangle selection, Shift-add and programmatic original-row selection.

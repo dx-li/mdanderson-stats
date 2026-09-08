@@ -1,10 +1,9 @@
 # EXPSURV exploratory survival analysis
 
 Catalog entry 28 is partial. The survival-curve and inverse-survival core is
-implemented, together with interactive cut-point exploration. Linked scatterplot
-matrices, event charts,
-survival box plots, data generation and
-remaining input/output workflows are still pending.
+implemented, together with interactive cut-point exploration, model alignment
+and linked scatterplot/survival views. Event charts, survival box plots, data
+generation and remaining input/output workflows are still pending.
 
 The source is EXPSURV version 1 from the MD Anderson catalog, distributed as
 `EXPSURV_V1.tar.gz`. It contains an XLISP-STAT source file, a TeX user manual and
@@ -138,3 +137,44 @@ plotted coordinates, callbacks, zero endpoints, invalid-update preservation and
 cleanup. A time-alignment figure was rendered and visually inspected. These are
 exploratory alignment controls, not fitted regression coefficients or formal
 model tests.
+
+
+## Linked scatterplot selection
+
+```python
+from mdanderson_stats import plot_survival_scatter
+
+view = plot_survival_scatter(
+    [3, 1, 4, 2],
+    [1, 0, 1, 1],
+    [[2, 8], [1, 4], [2, 6], [3, 5]],
+    labels=["Covariate A", "Covariate B"],
+)
+view.select([0, 2])
+view.select([1], add=True)
+```
+
+`plot_survival_scatter` implements SCAT-KM with a covariate matrix figure and
+separate selected-sample survival figure. Covariates have one row per patient
+and one column per variable; a vector becomes a one-variable matrix. Input rows
+remain aligned and are copied into read-only arrays. Initially all rows are
+selected. Drag a rectangle in any matrix cell to replace the selection, hold
+Shift while dragging to add rows, and press Escape to clear it. Updates happen
+when a rectangle selection completes; continuous hover brushing is not supplied.
+Selected patients are highlighted in every cell, including diagonal cells.
+
+`select(indices, add=False)` accepts original, zero-based row indices and removes
+duplicates. `selected_indices` and `curve` expose the current selection and its
+survival fit; `legacy=True` retains the source's sequential tie convention.
+Empty selections have `curve=None` and an empty plotted line. This deliberately
+clears the source's stale curve after a brush finds no patients. `clear()` also
+removes rectangle outlines. Keep the controller alive for interaction and call
+`close()` to disconnect callbacks and close both figures. The optional plotting
+extra and an interactive Matplotlib backend are needed for mouse interaction;
+programmatic selection and export work with a noninteractive backend.
+
+Tests exercise real canvas press/move/release events, Shift-add and Escape,
+original row identity, independent selected-sample survival fits, highlights in
+every cell, empty selection, validation and cleanup. Matrix and survival figures
+were rendered and visually inspected. As with the other EXPSURV views, validation
+uses source inspection and independent checks, not an archived XLISP-STAT run.

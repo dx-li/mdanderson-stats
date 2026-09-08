@@ -276,3 +276,7 @@ kernel and bandwidth rule in place of the original runtime's implicit helper.
 `expsurv_alignment.py` independently implements the ACCEL-FAIL-PLOT and
 PROP-HAZ-PLOT coordinate transformations and slider ranges. No original Lisp
 source is bundled.
+
+`expsurv_scatter.py` independently implements SCAT-KM selection and linked
+survival views, using Matplotlib rectangle controls in place of XLISP-STAT
+mouse modes. Empty selections explicitly clear the survival curve.
