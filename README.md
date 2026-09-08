@@ -194,3 +194,6 @@ MSE diagnostics and evaluating the resulting variable-bandwidth hazard in chunks
 
 `muhaz_neighbor_bandwidths` provides failure-count and survival-mass radii;
 `muhaz_knn` selects the neighbor count, smooths bandwidths and fits the hazard.
+
+`summarize_muhaz` provides structured settings and results, significant-digit
+text reports, explicit bypass status and quadrature convergence counts.

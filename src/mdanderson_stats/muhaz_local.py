@@ -30,6 +30,8 @@ class MuhazLocal:
     legacy: bool
     n_observations: int
     n_events: int
+    pilot_bandwidth: float | None = None
+    n_min_grid: int | None = None
 
 
 def muhaz_local(
@@ -158,6 +160,8 @@ def muhaz_local(
         bool(legacy),
         t.size,
         int(d.sum()),
+        pilot_bandwidth=pilot,
+        n_min_grid=int(n_min_grid),
     )
 
 

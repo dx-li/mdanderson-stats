@@ -52,6 +52,7 @@ from .muhaz_knn import MuhazKNN, muhaz_knn
 from .muhaz_local import MuhazLocal, muhaz_local
 from .muhaz_mse import MuhazMSE, muhaz_mse
 from .muhaz_neighbors import NeighborBandwidths, muhaz_neighbor_bandwidths
+from .muhaz_summary import MuhazSummary, summarize_muhaz
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
 from .multiplicity import (
@@ -111,6 +112,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "MuhazSummary",
+    "summarize_muhaz",
     "MuhazKNN",
     "muhaz_knn",
     "NeighborBandwidths",

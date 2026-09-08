@@ -4,7 +4,7 @@ Catalog entry 49 is **partial**. The fixed-bandwidth kernel calculation is
 implemented, together with piecewise-exponential estimates and their numerical
 reports, and Nelson/product-limit failure-interval estimates. Global, local and
 nearest-neighbor bandwidth selection, bandwidth smoothing and candidate
-bias/variance/MSE diagnostics are implemented. Kernel summaries and remaining
+bias/variance/MSE diagnostics and structured summaries are implemented. Remaining
 plots still need implementation and a full coverage audit.
 
 Source: [MUHAZ version 1](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/49),
@@ -396,7 +396,7 @@ Independent tests check arithmetic-mean smoothing for an interior rectangle
 kernel, constant-bandwidth preservation, left-only correction, pointwise
 minimization, selected fixed-fit agreement, time scaling, shared defaults,
 subsetting, immutable arrays, undefined/negative smoothing, and variable-bandwidth
-evaluation across chunk boundaries. Remaining summaries/plots are still pending.
+evaluation across chunk boundaries. Remaining plots are still pending.
 
 
 ## Nearest-neighbor bandwidths and fitting
@@ -487,3 +487,46 @@ matrix/scalar agreement, selected-curve agreement, immutable arrays and input
 errors. A 25,001-observation case exceeds the original static buffer, and both
 bandwidth algorithms are checked across chunk boundaries. Remaining display
 workflows and the complete MUHAZ coverage audit are still pending.
+
+
+## Summaries and text reports
+
+```python
+from mdanderson_stats import muhaz_global, summarize_muhaz
+
+fit = muhaz_global(
+    [0.2, 0.7, 1.2, 1.8, 2.1, 2.6, 3.0],
+    [1, 0, 1, 1, 0, 1, 0],
+    bandwidths=[0.35, 0.8, 2.0],
+    pilot_bandwidth=0.65,
+    bounds=(0, 3),
+)
+summary = summarize_muhaz(fit)
+print(summary.report())
+summary.write_report("hazard-summary.txt")
+```
+
+`summarize_muhaz` accepts global, local and nearest-neighbor fits and returns an
+immutable `MuhazSummary`. It covers the archived `summary.muhaz` fields: selected
+sample and censoring counts, method, kernel, boundary correction, effective time
+bounds, grid sizes, pilot/smoothing settings, chosen constant bandwidth or
+neighbor count where applicable, and the minimization score. Results now retain
+pilot settings and the requested minimization-grid size even when MSE selection
+is bypassed. Older manually constructed result objects can omit this metadata;
+unknown grid sizes are reported as “not retained”.
+
+The report uses significant digits (`digits=6` by default, 1–17 supported), so
+small positive bandwidths are not printed as zero by rounding to two decimal
+places. It identifies legacy conventions and reports converged candidate/grid
+cells when MSE was computed. A single-candidate bypass is labeled explicitly and
+has no invented MSE score. A single-neighbor fit still reports its smoothing
+settings; a constant-bandwidth bypass has no smoothing operation.
+
+Scores retain their numerical meaning: a local score is the sum of pointwise
+minima before bandwidth smoothing; global and neighbor scores are summed grid
+MSE for the selected candidate. No report calls these quadrature-weighted
+integrals or treats them as the MSE of a final smoothed-bandwidth curve.
+`report()` returns text without printing; `write_report()` writes UTF-8 and
+propagates filesystem errors. Tests cover selected-data metadata, bound
+truncation, all three selectors, convergence exhaustion, bypasses, legacy
+sentinels, significant-digit output, immutability, and file round trips.

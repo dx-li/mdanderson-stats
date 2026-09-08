@@ -20,6 +20,8 @@ class MuhazGlobal:
     diagnostics: MuhazMSE | None
     n_observations: int
     n_events: int
+    pilot_bandwidth: float | None = None
+    n_min_grid: int | None = None
 
     @property
     def time(self) -> FloatArray:
@@ -113,7 +115,18 @@ def muhaz_global(
         legacy=legacy,
     )
     bw.flags.writeable = False
-    return MuhazGlobal(curve, bw, scores, selected, score, diagnostic, t.size, int(d.sum()))
+    return MuhazGlobal(
+        curve,
+        bw,
+        scores,
+        selected,
+        score,
+        diagnostic,
+        t.size,
+        int(d.sum()),
+        pilot_bandwidth=pilot,
+        n_min_grid=int(n_min_grid),
+    )
 
 
 def _prepare_selection(

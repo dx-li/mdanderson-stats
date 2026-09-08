@@ -253,3 +253,7 @@ nearest-neighbor methods and fitting workflow. Local oracles run unchanged
 KNNCEN/OLAFBW/KNNHAD and dependencies, with provenance recorded in
 `tests/fixtures/muhaz-neighbors.json` and `tests/fixtures/muhaz-knn.json`.
 No original Fortran code is bundled.
+
+`muhaz_summary.py` independently presents the fields described by the archived
+S `summary.muhaz`, adding explicit bypass, compatibility and convergence status.
+No original S function is bundled.
