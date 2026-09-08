@@ -914,6 +914,7 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
+        "mdanderson_stats.parse_multi_data and read_multi_data: MULTI QLEX/RDDATA text import, sorted p-values with original indices, explicit token diagnostics, terminal quit semantics; corrected negative-integer signs and long-line handling",
         "mdanderson_stats.multiple_testing: desktop Bonferroni, Sidak, Holm, step-down Sidak, Finner, Hochberg, historical harmonic Hommel, step-up Simes and Rom; batched families, original-order results",
         "mdanderson_stats.rom_critical_values: stable log-domain recurrence for rank-specific Rom cutoffs",
         "mdanderson_stats.sharpened_testing: original SHL and SHC rejection rules given a null-count estimate",
@@ -935,6 +936,9 @@
         "mdanderson_stats.write_schweder_data: desktop SWFIT full coordinate export as round-trip CSV"
       ],
       "validation": [
+        "tests/test_multi_input.py",
+        "tests/fixtures/multi_input.json",
+        "docs/multi-input.md",
         "tests/test_multiplicity.py",
         "tests/test_schweder.py",
         "tests/test_pvalue_models.py",

@@ -26,6 +26,10 @@ is redistributed by this project.
 
 ## MULTI
 
+`_multi_lexer.py` adapts the original QLEX state/action tables and token behavior;
+`multi_input.py` provides RDDATA input validation, diagnostics and sorting.
+These adaptations are also subject to the original MULTI terms below.
+
 `multiplicity.py`, `schweder.py`, `pvalue_models.py`, `nonparametric.py`, and
 `nonparametric_testing.py`, `beta_mixture.py`, `beta_mixture_fit.py`, and
 `beta_mixture_ml.py`, `beta_mixture_bootstrap.py`, `beta_mixture_selection.py`, and

@@ -1,0 +1,636 @@
+{
+  "source_sha256": "472d97767d4933a9ddeb6954ce14ab6ca400197c21391197bd1912c2a36d7bc2",
+  "notes": "Original QLEX extracted unchanged; IEEE binary64/single and 32-bit integer maximum machine constants. 212-character lines. Numeric value undefined when overflow=3. Integer sign bug retained.",
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "cases": [
+    {
+      "line": "0 .1 0.2 1",
+      "tokens": [
+        {
+          "kind": "IN",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "0"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.1,
+          "text": ".1"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.2,
+          "text": "0.2"
+        },
+        {
+          "kind": "IN",
+          "overflow": 0,
+          "value": 1.0,
+          "text": "1"
+        }
+      ]
+    },
+    {
+      "line": "0.1,0.2;0.3:0.4",
+      "tokens": [
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.1,
+          "text": "0.1"
+        },
+        {
+          "kind": "DL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": ","
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.2,
+          "text": "0.2"
+        },
+        {
+          "kind": "DL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": ";"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.30000000000000004,
+          "text": "0.3"
+        },
+        {
+          "kind": "DL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": ":"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.4,
+          "text": "0.4"
+        }
+      ]
+    },
+    {
+      "line": "1e-2 1.e-2 .1D+1 0.05E-1",
+      "tokens": [
+        {
+          "kind": "OS",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "1e-2"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.01,
+          "text": "1.e-2"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 1.0,
+          "text": ".1D+1"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.005,
+          "text": "0.05E-1"
+        }
+      ]
+    },
+    {
+      "line": "-1 -0 -0.1 + 0.2 +.3",
+      "tokens": [
+        {
+          "kind": "IN",
+          "overflow": 0,
+          "value": 1.0,
+          "text": "-1"
+        },
+        {
+          "kind": "IN",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "-0"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": -0.1,
+          "text": "-0.1"
+        },
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "+"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.2,
+          "text": "0.2"
+        },
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "+"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.30000000000000004,
+          "text": ".3"
+        }
+      ]
+    },
+    {
+      "line": "0.1 + .2 - .3 0.4",
+      "tokens": [
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.1,
+          "text": "0.1"
+        },
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "+"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.2,
+          "text": ".2"
+        },
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "-"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.30000000000000004,
+          "text": ".3"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.4,
+          "text": "0.4"
+        }
+      ]
+    },
+    {
+      "line": "\"0.2\" 'don''t' \"q\"",
+      "tokens": [
+        {
+          "kind": "QS",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "0.2"
+        },
+        {
+          "kind": "QS",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "don't"
+        },
+        {
+          "kind": "QS",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "q"
+        }
+      ]
+    },
+    {
+      "line": "p=.1 q=.2 a_b .3 $bad .4",
+      "tokens": [
+        {
+          "kind": "ID",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "p"
+        },
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "="
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.1,
+          "text": ".1"
+        },
+        {
+          "kind": "ID",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "q"
+        },
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "="
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.2,
+          "text": ".2"
+        },
+        {
+          "kind": "ID",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "a_b"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.30000000000000004,
+          "text": ".3"
+        },
+        {
+          "kind": "OS",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "$bad"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.4,
+          "text": ".4"
+        }
+      ]
+    },
+    {
+      "line": "0.1\t0.2 ! 0.3 @ 0.4",
+      "tokens": [
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.1,
+          "text": "0.1"
+        },
+        {
+          "kind": "UC",
+          "overflow": 0,
+          "value": 0.0,
+          "text": ""
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.2,
+          "text": "0.2"
+        },
+        {
+          "kind": "UC",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "!"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.30000000000000004,
+          "text": "0.3"
+        },
+        {
+          "kind": "UC",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "@"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.4,
+          "text": "0.4"
+        }
+      ]
+    },
+    {
+      "line": ". .e1 .e 0. .2",
+      "tokens": [
+        {
+          "kind": "OS",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "."
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": ".e1"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": ".e"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "0."
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.2,
+          "text": ".2"
+        }
+      ]
+    },
+    {
+      "line": "1.0e999 1.0e-999 2.0 -2.0",
+      "tokens": [
+        {
+          "kind": "RL",
+          "overflow": 3,
+          "value": 0.0,
+          "text": "1.0e999"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "1.0e-999"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 2.0,
+          "text": "2.0"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": -2.0,
+          "text": "-2.0"
+        }
+      ]
+    },
+    {
+      "line": "0.1 q 0.2 Quit 0.3",
+      "tokens": [
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.1,
+          "text": "0.1"
+        },
+        {
+          "kind": "ID",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "q"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.2,
+          "text": "0.2"
+        },
+        {
+          "kind": "ID",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "Quit"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.30000000000000004,
+          "text": "0.3"
+        }
+      ]
+    },
+    {
+      "line": "(0.1)[0.2]{0.3} / 0.4",
+      "tokens": [
+        {
+          "kind": "DL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "("
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.1,
+          "text": "0.1"
+        },
+        {
+          "kind": "DL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": ")"
+        },
+        {
+          "kind": "DL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "["
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.2,
+          "text": "0.2"
+        },
+        {
+          "kind": "DL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "]"
+        },
+        {
+          "kind": "DL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "{"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.30000000000000004,
+          "text": "0.3"
+        },
+        {
+          "kind": "DL",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "}"
+        },
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "/"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.4,
+          "text": "0.4"
+        }
+      ]
+    },
+    {
+      "line": "0.1234567890123456789012345 0.1.2 0.3",
+      "tokens": [
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.12345678901234568,
+          "text": "0.1234567890123456789012345"
+        },
+        {
+          "kind": "OS",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "0.1.2"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.30000000000000004,
+          "text": "0.3"
+        }
+      ]
+    },
+    {
+      "line": "0.1 'unfinished",
+      "tokens": [
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.1,
+          "text": "0.1"
+        },
+        {
+          "kind": "OS",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "unfinished"
+        }
+      ]
+    },
+    {
+      "line": "0.1 +",
+      "tokens": [
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.1,
+          "text": "0.1"
+        },
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "+"
+        }
+      ]
+    },
+    {
+      "line": "0.1 --0.2 ++0.3",
+      "tokens": [
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.1,
+          "text": "0.1"
+        },
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "--"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.2,
+          "text": "0.2"
+        },
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "++"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.30000000000000004,
+          "text": "0.3"
+        }
+      ]
+    },
+    {
+      "line": "- x + y 0.5",
+      "tokens": [
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "-"
+        },
+        {
+          "kind": "ID",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "x"
+        },
+        {
+          "kind": "OP",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "+"
+        },
+        {
+          "kind": "ID",
+          "overflow": 0,
+          "value": 0.0,
+          "text": "y"
+        },
+        {
+          "kind": "RL",
+          "overflow": 0,
+          "value": 0.5,
+          "text": "0.5"
+        }
+      ]
+    },
+    {
+      "line": "",
+      "tokens": []
+    }
+  ]
+}

@@ -13,6 +13,7 @@ from .beta_mixture_selection import BetaMixtureSelection, fit_beta_mixture_k, se
 from .beta_mixture_testing import BetaMixtureTestingResult, beta_mixture_testing
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .intervals import binomial_interval, bp1ci_poisson_interval, poisson_interval
+from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multiplicity import (
     MultipleTestingResult,
     multiple_testing,
@@ -90,6 +91,10 @@ __all__ = [
     "schweder_fit",
     "select_beta_mixture",
     "sharpened_testing",
+    "MultiData",
+    "MultiInputWarning",
+    "parse_multi_data",
+    "read_multi_data",
     "StukelComparison",
     "compare_stukel",
     "stukel_demo",

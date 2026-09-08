@@ -2,10 +2,12 @@
 
 Audited against `source/multi.doc`, the desktop MAIN menus, and
 `S/multi-1.0/README.library` in the archived MULTI download.
-Catalog entry 50 remains partial because input/report workflows are still missing.
+Catalog entry 50 remains partial because the change-data session and report-file
+workflow are still missing.
 
 | Original capability | Python implementation | Validation |
 | --- | --- | --- |
+| RDDATA / QLEX file and terminal text | parse_multi_data, read_multi_data | Native lexical fixtures, acceptance/warning comparisons, input-order and file tests |
 | SWFIT / schwed.fit | schweder_fit, schweder_bootstrap | Native desktop/S fits, bootstrap tests |
 | SWFIT coordinate file / schwed.plot | write_schweder_data, plot_schweder | Native coordinate comparisons, rendered PNG inspection |
 | BFFIT nine procedures / bonferroni / sidak | multiple_testing, rom_critical_values | Native adjustments and cutoffs; independent formula checks |
@@ -23,8 +25,8 @@ Documented numerical differences and corrected undefined behavior are detailed
 in multiple-testing.md and beta-mixtures.md. NumPy random draws and the new direct
 optimizer are not exact reproductions of the old RNG and optimization paths.
 
-Remaining: desktop RDDATA text parsing (including its token warnings), terminal
-entry/change-data workflow, and the report-file writer that records procedure
+Remaining: the interactive change-data/session workflow and the report-file
+writer that records procedure
 settings, observations, and result tables. Python arrays and result objects expose
 the numerical data, but those I/O capabilities have not yet been implemented.
 The main statistical groups being covered does not establish completion of the
