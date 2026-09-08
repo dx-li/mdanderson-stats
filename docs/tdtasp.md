@@ -2,9 +2,8 @@
 
 TDTASP version 1.1 (April 2003), by Barry W. Brown and Dan Serachitopol,
 plans transmission-disequilibrium (TDT) and affected-sibling-pair (ASP) studies.
-This catalog entry is **partial**. The genetic, ascertainment and power layers are implemented; sample-size
-searches, template files, reports and the complete archive audit remain
-outstanding.
+This catalog entry is **partial**. The genetic, ascertainment, power and sample-size layers are implemented;
+template files, reports and the complete archive audit remain outstanding.
 
 Source: [TDTASP catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/20)
 and its [version 1 archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/TDTASP/TDTASP%20%20_V1.tar.gz).
@@ -236,3 +235,56 @@ Tests also cover half-up rounding, null power equaling size, immutable output,
 input/resource limits and the original scale option. A regression example
 shows why power must not be assumed monotone in a future discrete sample-size
 search: adding an observation can move the rejection cutoff and reduce power.
+
+## Sample-size search
+
+```python
+from mdanderson_stats import tdtasp_fixed_sample_size, tdtasp_sample_size
+
+fixed_design = tdtasp_fixed_sample_size(0.7, target_power=0.8, sides=2)
+family_design = tdtasp_sample_size(selection, target_power=0.8, max_families=10000)
+print(family_design.design.families, family_design.design.power)
+```
+
+Both searches return the **first qualifying integer design within inclusive
+user bounds**. The target lies strictly between zero and one. If no design
+qualifies, the function raises `ValueError`; it does not return a clipped bound
+as a solution. The default maximum is 100,000 observations or screened families.
+Fixed-observation search uses ordered vectorized batches (default 512). This
+preserves nonmonotone discrete power: for example, at alternative 0.7 and alpha
+0.05, n=5 meets target 0.16 while n=6 does not.
+
+Family search caches the conditional power f(k) at each eligible-family count.
+Its prefix maximum g(k)=max(f(0), …, f(k)) bounds f and is nondecreasing.
+Since K~Binomial(n,q) increases stochastically with n, E[g(K)] is a monotone upper
+bound on actual power E[f(K)]. Bisection finds where this bound first permits a
+solution, then an ordered scan finds the first actual qualifying design. Counts
+skipped by the bound cannot qualify. A conservative 1e-12 upward cushion on the
+upper bound protects comparisons near numerical ties. The returned design is
+recomputed using the public forward function before being accepted.
+
+`TDTASPSampleSize` records that forward design, target, search bounds, first
+scanned count and number of mixture evaluations. This is a first-crossing
+criterion; it does not assert that every larger sample size also meets the
+target. The source's continuous root-finding and local adjustment algorithms
+are replaced by this explicitly discrete search.
+
+The conditional curve grows geometrically and reuses cached values. `max_terms`
+(default 100,001) bounds the cache before allocation, including when the forward
+mixture would have deterministic eligibility. Prefetch growth stops at the
+budget rather than rejecting an otherwise permitted count. A requested search
+that needs more terms raises a resource-limit error. The power model, rounding,
+and genetic/ascertainment/scale/tail compatibility options remain those described
+above; sample-size search does not remove the mean-contribution approximation.
+
+Validation compares both searches with exhaustive forward evaluation over the
+relevant bounded ranges, including all parental criteria, both sampling methods,
+TDT/ASP, one/two-sided tests, legacy choices, degenerate alternatives, equality
+bounds, resource limits and known downward power jumps. In one tested model the
+first design is 527 screened families with power about 0.800438; the upper bound
+starts direct scanning at 514, requiring 34 mixture evaluations overall.
+
+[Search benchmarks](tdtasp-search-benchmark.json) compare the bounded search with
+an ordered scan using the same Python forward API, verifying agreement on the
+first qualifying count. They report median-of-three local timings and include
+all model parameters. They are not comparisons with native Fortran.

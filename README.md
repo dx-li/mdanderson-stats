@@ -317,3 +317,8 @@ for native validation and the remaining study-planning work.
 `tdtasp_fixed_power` and `tdtasp_power` calculate discrete binomial power and
 average it over eligible-family counts, with explicit mean-contribution and
 source-compatibility conventions described in the TDTASP notes.
+
+`tdtasp_fixed_sample_size` and `tdtasp_sample_size` find the first qualifying
+integer design within specified bounds, preserving discrete power oscillations.
+The family search uses cached conditional powers and a monotone upper bound;
+[benchmarks](docs/tdtasp-search-benchmark.json) compare it with exhaustive scanning.

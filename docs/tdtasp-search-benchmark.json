@@ -1,0 +1,61 @@
+{
+  "comparison": "Prefix-maximum upper-bound search versus ordered calls to the same Python forward power API; median of three repeats. Not a native Fortran comparison.",
+  "python": "3.13.5",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "haplotype_frequencies": [
+    0.3,
+    0.2,
+    0.1,
+    0.4
+  ],
+  "penetrance": [
+    0.8,
+    0.5,
+    0.2
+  ],
+  "recombination": 0.1,
+  "mean_offspring": 2,
+  "cases": [
+    {
+      "eligibility": "father",
+      "target_power": 0.8,
+      "families": 702,
+      "power": 0.8003914765441933,
+      "search_start": 686,
+      "evaluations": 37,
+      "seconds": {
+        "bounded": 0.034247207920998335,
+        "exhaustive": 2.0507855000905693
+      },
+      "speedup": 59.881830507798874
+    },
+    {
+      "eligibility": "one",
+      "target_power": 0.8,
+      "families": 527,
+      "power": 0.8004379498165892,
+      "search_start": 514,
+      "evaluations": 34,
+      "seconds": {
+        "bounded": 0.027516458183526993,
+        "exhaustive": 1.1589705827645957
+      },
+      "speedup": 42.11917736776259
+    },
+    {
+      "eligibility": "both",
+      "target_power": 0.8,
+      "families": 1057,
+      "power": 0.8002347196561012,
+      "search_start": 1043,
+      "evaluations": 37,
+      "seconds": {
+        "bounded": 0.06066754087805748,
+        "exhaustive": 4.83377516688779
+      },
+      "speedup": 79.67646449694968
+    }
+  ]
+}

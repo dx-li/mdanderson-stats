@@ -145,22 +145,8 @@ def tdtasp_power(
             ascertainment.expected_heterozygous_parents
             * ascertainment.population_average_truncated_mean
         )
-    if q == 1 or n == 0:
-        eligible, weights = np.array([float(n)]), np.ones(1)
-    else:
-        if n + 1 > budget:
-            raise ValueError(f"mixture requires {n + 1} terms, exceeding max_terms={budget}")
-        eligible = np.arange(n + 1, dtype=float)
-        weights = binom.pmf(eligible, n, q)
-        total = float(np.sum(weights, dtype=np.longdouble))
-        if not np.isfinite(total) or abs(total - 1) > 1e-10:
-            raise ArithmeticError("binomial family-count probabilities do not sum to one")
-        weights /= total
-    raw_observations = eligible * scale
-    integral = np.floor(raw_observations)
-    observations = integral + (raw_observations - integral >= 0.5)
-    if np.any(~np.isfinite(observations)) or np.any(observations >= 2**53):
-        raise ValueError("rounded observation counts exceed the exact integer range")
+    eligible, weights = _family_count_distribution(n, q, budget)
+    observations = _rounded_observations(eligible, scale)
     conditional = tdtasp_fixed_power(
         observations,
         ascertainment.answer_probability,
@@ -179,3 +165,27 @@ def tdtasp_power(
         float(weights @ conditional.actual_size),
         float(weights @ conditional.power),
     )
+
+
+def _family_count_distribution(n: int, q: float, budget: int) -> tuple[FloatArray, FloatArray]:
+    if q == 1 or n == 0:
+        eligible, weights = np.array([float(n)]), np.ones(1)
+    else:
+        if n + 1 > budget:
+            raise ValueError(f"mixture requires {n + 1} terms, exceeding max_terms={budget}")
+        eligible = np.arange(n + 1, dtype=float)
+        weights = binom.pmf(eligible, n, q)
+        total = float(np.sum(weights, dtype=np.longdouble))
+        if not np.isfinite(total) or abs(total - 1) > 1e-10:
+            raise ArithmeticError("binomial family-count probabilities do not sum to one")
+        weights /= total
+    return eligible, weights
+
+
+def _rounded_observations(eligible: FloatArray, scale: float) -> FloatArray:
+    raw_observations = eligible * scale
+    integral = np.floor(raw_observations)
+    observations = integral + (raw_observations - integral >= 0.5)
+    if np.any(~np.isfinite(observations)) or np.any(observations >= 2**53):
+        raise ValueError("rounded observation counts exceed the exact integer range")
+    return observations
