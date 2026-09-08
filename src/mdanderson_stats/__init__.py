@@ -8,6 +8,7 @@ from .multiplicity import (
     rom_critical_values,
     sharpened_testing,
 )
+from .nonparametric import NonparametricFit, NonparametricFitError, nonparametric_pvalues
 from .numerics import invert_monotone, normal_tails
 from .pvalue_models import (
     OrderStatisticDiagnostics,
@@ -26,6 +27,8 @@ from .schweder import (
 __all__ = [
     "GoodnessOfFit",
     "MultipleTestingResult",
+    "NonparametricFit",
+    "NonparametricFitError",
     "OrderStatisticDiagnostics",
     "RangeComparisons",
     "SchwederBootstrap",
@@ -39,6 +42,7 @@ __all__ = [
     "kwrange",
     "multiple_testing",
     "normal_tails",
+    "nonparametric_pvalues",
     "order_statistic_diagnostics",
     "poisson_interval",
     "range2",

@@ -26,9 +26,9 @@ is redistributed by this project.
 
 ## MULTI
 
-`multiplicity.py`, `schweder.py`, and `pvalue_models.py` contain modified Python
-implementations of MULTI's adjustment, sharpened-testing, Schweder,
-order-statistic, and clustered-simulation algorithms. The original code
+`multiplicity.py`, `schweder.py`, `pvalue_models.py`, and `nonparametric.py` contain
+modified Python implementations of MULTI's adjustment, sharpened-testing, Schweder,
+order-statistic, clustered-simulation, and S nonparametric algorithms. The original code
 is copyright 1996 for The University of Texas M. D. Anderson Cancer Center.
 Barry W. Brown is the original contact. This adaptation is maintained independently.
 

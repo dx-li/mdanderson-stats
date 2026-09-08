@@ -55,5 +55,7 @@ line fitting and bootstrap are available through `multiple_testing`,
 `sharpened_testing`, `schweder_fit`, and `schweder_bootstrap`.
 `order_statistic_diagnostics` provides the S library's OSFIT diagnostics, and
 `clustered_pvalues` simulates dependent one-sided p-values with explicit random state.
+`nonparametric_pvalues` implements the S library's local-quadratic diagnostic with
+stable regression solves and explicit errors for undefined fits.
 See [multiple testing](docs/multiple-testing.md) for examples, historical naming
 differences, and the MULTI features that remain pending.

@@ -50,16 +50,33 @@ def build() -> Path:
         raise ValueError("CDFBET program unit not found")
     s_cdfbet = directory / "s-cdfbet.f"
     s_cdfbet.write_text(s_source[start : start + end_match.end()] + "\n")
+    nonparametric_sources = []
+    for declaration, name in [
+        ("      SUBROUTINE NPFIT(", "npfit"),
+        ("      DOUBLE PRECISION FUNCTION wdthmx(", "wdthmx"),
+        ("      SUBROUTINE cumbin(", "cumbin"),
+    ]:
+        start = s_source.index(declaration)
+        end_match = re.search(r"^      END\s*$", s_source[start:], flags=re.MULTILINE)
+        if end_match is None:
+            raise ValueError(f"{name} program unit not found")
+        unit = s_source[start : start + end_match.end()]
+        for symbol in ("npfit", "wdthmx"):
+            unit = re.sub(rf"\b{symbol}\b", f"s_{symbol}", unit, flags=re.IGNORECASE)
+        path = directory / f"s-{name}.f"
+        path.write_text(unit + "\n")
+        nonparametric_sources.append(path)
     driver = directory / "driver.f90"
     driver.write_text("""program multi_reference
   implicit none
-  integer :: mode,n,i,number,status,length
+  integer :: mode,n,i,number,status,length,lo,points
   integer, external :: shl,shc
   double precision :: alpha,nulls,beta,variance
-  double precision, allocatable :: x(:),p(:),q(:)
+  double precision, external :: s_wdthmx
+  double precision, allocatable :: x(:),p(:),q(:),w(:)
   integer, allocatable :: counts(:)
   read(*,*) mode,n,alpha,nulls
-  allocate(x(n),p(n),q(n),counts(n))
+  allocate(x(n),p(n),q(n),w(n),counts(n))
   read(*,*) x
   select case(mode)
   case(1)
@@ -107,6 +124,17 @@ def build() -> Path:
       write(*,'(2es26.17)') p(i),q(i)
     end do
     stop
+  case(15)
+    beta=s_wdthmx(x,n,3)
+    call s_npfit(x,p,n,q,w)
+    write(*,'(es26.17)') beta
+    do i=1,n
+      call wnfwd(x,n,x(i),beta,lo,points)
+      call wtbqwd(x(lo),points,x(i),beta,w)
+      call drvtv(x(lo),q(lo),w,x(i),points,2,variance,status)
+      write(*,'(2es26.17,3i8)') p(i),variance,status,lo,points
+    end do
+    stop
   end select
   do i=1,n
     write(*,'(es26.17)') p(i)
@@ -124,6 +152,7 @@ end program
         s_schweder,
         s_osfit,
         s_cdfbet,
+        *nonparametric_sources,
         driver,
     ]
     result = subprocess.run(

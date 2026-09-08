@@ -3,9 +3,10 @@
 Catalog entry 50 includes a desktop program and an S library. This port currently
 covers the desktop's nine adjustment/threshold procedures, two sharpened procedures,
 and Schweder line fitting, plus the S library's Schweder bootstrap,
-order-statistic diagnostics and clustered p-value generation. It remains
-**partial**: beta mixtures, nonparametric modeling, and plotting helpers still need
-implementations and validation. The catalog does not count this entry as complete.
+order-statistic diagnostics, clustered p-value generation, and S nonparametric
+fitting. It remains **partial**: beta mixtures, the desktop's iterative
+nonparametric procedure, and plotting helpers still need implementations and
+validation. The catalog does not count this entry as complete.
 
 ## Adjustment procedures
 
@@ -165,7 +166,72 @@ at this workload. The structured method avoids the dense covariance storage and
 its quadratic multiplication cost. These are Python implementation comparisons,
 not original Fortran throughput measurements or CI performance thresholds.
 
-## Validation and provenance
+## S nonparametric diagnostic
+
+```python
+from mdanderson_stats import nonparametric_pvalues
+
+fit = nonparametric_pvalues([i / 21 for i in range(1, 21)])
+print(fit.bandwidth)
+print(fit.density)
+print(fit.scores)
+```
+
+This implements the S library's `multi.np`/`NPFIT`, which differs from the
+desktop's iterative `NP1P` method. It accepts one vector with at least four
+distinct p-values. Tied observations retain separate empirical ordinates rank/n.
+Outputs retain input order, with sorted-rank indices in `order`.
+
+The port preserves these executable conventions:
+
+- The full bandwidth is the maximum width returned by the original nearest-point
+  expansion rule. Its internal expansion counter is not a correct count of
+  distinct points: some branches subtract an absolute coordinate from a distance.
+  The Python implementation follows those branches, while preventing out-of-bounds
+  reads. Do not interpret the bandwidth as a corrected nearest-neighbor estimate.
+- The S source resets its cross-validation minimum to zero for every candidate.
+  Since the squared-error objective cannot be negative, the initial width always
+  wins. The port returns that width directly, omitting the ineffective search.
+- Windows extend half the full width on each side. The source's binary search
+  includes the first tied observation at an exact upper endpoint, with a special
+  two-element bracket at the minimum. Those tie conventions are preserved.
+- Normalized kernel weights are proportional to `(1-((x-center)/width)**2)**2`.
+  The regression uses their **reciprocals**, as the original `LQBETA` does; it
+  does not use conventional kernel-weighted regression. Normalized weights at or
+  below 1e-10 are excluded.
+- A local quadratic derivative d is converted to `I_(1/n)(d+1, n-d)` when d<n,
+  and zero otherwise. d is not rounded to an integer. The source therefore uses
+  a fractional extension through the beta function, rather than an ordinary
+  discrete binomial tail. A running maximum enforces increasing scores by rank.
+
+`scores` are historical diagnostics, not calibrated posterior null probabilities
+or FDR estimates. The source's description as a probability of a true null does
+not by itself establish that interpretation. Local quadratic density estimates
+may be negative. Values at or below -1 make the beta shape invalid and raise
+`NonparametricFitError`; failed regression windows also raise instead of inserting
+the original -1 sentinel into an output described as a probability.
+
+The regression uses centered, scaled coordinates and a least-squares solve,
+avoiding inversion of uncentered normal equations. This preserves the fitted
+polynomial mathematically while materially improving numerical stability. On a
+grid with spacing 2^-30 near 0.75, the Python result recovers the known slope
+2^30/20; the original suffers large numerical error. Undefined original results
+are not a compatibility target. No corrected bandwidth-selection algorithm is
+silently substituted for the archived one.
+
+`tools/reference_nonparametric.py` records eleven original S fits in
+`tests/fixtures/nonparametric.json`. The NPFIT and WDTHMX symbols are renamed only
+to distinguish their desktop counterparts; CUMBIN is extracted unchanged. The
+shared smoothing helper bodies were verified identical to the S versions.
+The fixtures cover the published example, random families, ties, endpoints,
+linear/quadratic empirical CDFs, an ill-conditioned grid, and invalid beta shapes.
+Ordinary comparisons allow for precision lost by the original normal equations;
+independent known-polynomial tests verify the Python derivatives to near machine
+precision. Integer-density cases are also checked by explicit binomial-tail
+calculations. The narrow-grid and invalid-shape cases verify the documented
+stability/error differences rather than asserting equality with defective output.
+
+## Validation and provenance for other MULTI procedures
 
 `tools/reference_multi.py` compiles the original desktop numerical routines after
 removing only the interactive main program. The S SCHWED routine is compiled with
