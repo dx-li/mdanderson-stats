@@ -2,10 +2,10 @@
 
 Catalog entry 50 includes a desktop program and an S library. This port currently
 covers the desktop's nine adjustment/threshold procedures, two sharpened procedures,
-and Schweder line fitting, plus the S library's Schweder bootstrap. It remains
-**partial**: beta mixtures, nonparametric modeling, order-statistic diagnostics,
-clustered p-value generation, and plotting helpers still need implementations and
-validation. The catalog does not count this entry as complete.
+and Schweder line fitting, plus the S library's Schweder bootstrap,
+order-statistic diagnostics and clustered p-value generation. It remains
+**partial**: beta mixtures, nonparametric modeling, and plotting helpers still need
+implementations and validation. The catalog does not count this entry as complete.
 
 ## Adjustment procedures
 
@@ -99,11 +99,78 @@ the subsequent denominator update described in its comments is unreachable.
 variant follows the source's descending-rank thresholds. Neither returns fabricated
 adjusted p-values.
 
+## Order-statistic diagnostics
+
+```python
+from mdanderson_stats import order_statistic_diagnostics
+
+diagnostics = order_statistic_diagnostics([0.04, 0.001, 0.2, 0.03])
+print(diagnostics.cumulative)
+print(diagnostics.legacy_transformed_cdf)
+print(diagnostics.combined_score)
+```
+
+This ports the S library's `multi.os`/`OSFIT`. For sorted p-values x(i), the
+cumulative diagnostic is the Beta(i, n-i+1) CDF at x(i). Equivalently, it is
+the probability that at least i of n independent uniform draws are at most x(i).
+It is not a posterior probability that a particular null hypothesis is true.
+
+The second output deliberately uses the executable source's formula:
+Beta(1, n-i+1) CDF at min(x(i)/(1-x(i)), 1), except the first rank uses x(1)
+without transformation. The documentation and comments instead describe a
+denominator involving x(i-1); that is not what the archived code computes.
+`legacy_transformed_cdf` makes this discrepancy explicit and does not label the
+result as an ordinary multiple-testing adjusted p-value or spacing probability.
+Values at one are handled without division by zero, and small tails use
+`log1p`/`expm1` arithmetic.
+
+`combined_score` reproduces n*min(cumulative), including values above one.
+For example, three input values equal to one give a score of three. It must not
+be interpreted as a posterior probability. Output arrays retain input order;
+`order` gives ascending-rank indices. Leading axes provide independent batches,
+and `combined_score` has the shape of those leading axes.
+
+## Clustered simulation
+
+```python
+from mdanderson_stats import clustered_pvalues
+
+p = clustered_pvalues(100, 20, cluster_size=10, correlation=0.3, rng=123)
+assert p.shape == (120, 10)
+```
+
+This implements `rcpval`/`CLUSTP`: each row is an independent cluster of
+equicorrelated normal statistics converted to **one-sided upper-tail** p-values.
+The first 100 rows in this example have zero normal mean; the final 20 have
+`alternative_mean=1.96` by default. Flatten with `p.ravel()` to obtain the S
+function's cluster-major vector. Two zero cluster counts return an empty array
+with the requested cluster width. Counts must be nonnegative integers; invalid
+counts are rejected rather than truncated or silently changed to zero.
+
+`correlation` describes the latent normal statistics, not the p-values' Pearson
+correlation. For cluster size k>1, the covariance must be positive definite:
+-1/(k-1) < correlation < 1. For k=1, correlation is irrelevant but still must
+lie in [-1,1]. The source's 100-observation workspace limit is removed.
+NumPy's explicit seed/Generator replaces the global, single-precision Fortran
+random stream. The distribution is preserved; identical legacy random draws
+are not promised.
+
+Mean and contrast projections apply the covariance square root in O(clusters*k)
+work without constructing or factoring a k-by-k covariance matrix. The
+[recorded benchmark](pvalue-models-benchmark.json), reproducible with
+`uv run python tools/benchmark_pvalue_models.py`, compared 10,000 clusters of
+size 200 against a precomputed dense square root with identical normal draws.
+Both took about 0.042 seconds on that machine; no speed advantage was measured
+at this workload. The structured method avoids the dense covariance storage and
+its quadratic multiplication cost. These are Python implementation comparisons,
+not original Fortran throughput measurements or CI performance thresholds.
+
 ## Validation and provenance
 
 `tools/reference_multi.py` compiles the original desktop numerical routines after
 removing only the interactive main program. The S SCHWED routine is compiled with
-a distinct symbol name to compare its additional variance output. All numerical
+a distinct symbol name to compare its additional variance output. S OSFIT and
+its CDFBET driver are also extracted unchanged. All numerical
 routine bodies are retained. The source archive hash, compiler and compatibility
 flags are recorded in `tests/fixtures/multi.json`.
 
@@ -113,6 +180,15 @@ archive's 150-value example, ties, endpoints, fractional null-count estimates,
 and different significance levels. An additional 50 bootstrap samples generated
 by NumPy are fitted by the archived Fortran routine, allowing deterministic
 comparison of bootstrap estimates and their mean/variance.
+
+Ten additional OSFIT reference cases cover the published example, ties, endpoints,
+tiny p-values, and combined scores greater than one. Independent binomial-tail
+enumeration verifies the order CDF, and hand calculations verify the legacy
+transformation. Clustered simulation is checked against an independently computed
+dense eigendecomposition, analytic one-sided normal probabilities, and fixed-seed
+simulations of null uniformity, alternative means, latent covariance, transformed
+p-value correlation, and independence between clusters. No exact comparison of
+the two different random number streams is claimed.
 
 Independent checks include exhaustive closed Bonferroni testing for Holm,
 hand calculations for step-up adjustments and small Rom families, Decimal

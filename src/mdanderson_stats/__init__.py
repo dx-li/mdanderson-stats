@@ -9,6 +9,11 @@ from .multiplicity import (
     sharpened_testing,
 )
 from .numerics import invert_monotone, normal_tails
+from .pvalue_models import (
+    OrderStatisticDiagnostics,
+    clustered_pvalues,
+    order_statistic_diagnostics,
+)
 from .ranges import RangeComparisons, kwrange, range2
 from .schweder import (
     SchwederBootstrap,
@@ -21,6 +26,7 @@ from .schweder import (
 __all__ = [
     "GoodnessOfFit",
     "MultipleTestingResult",
+    "OrderStatisticDiagnostics",
     "RangeComparisons",
     "SchwederBootstrap",
     "SchwederFit",
@@ -28,10 +34,12 @@ __all__ = [
     "binomial_interval",
     "bp1ci_poisson_interval",
     "chi_square_gof",
+    "clustered_pvalues",
     "invert_monotone",
     "kwrange",
     "multiple_testing",
     "normal_tails",
+    "order_statistic_diagnostics",
     "poisson_interval",
     "range2",
     "rom_critical_values",

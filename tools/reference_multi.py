@@ -2,7 +2,8 @@
 
 The desktop main program is removed at a program-unit boundary. The S library's
 SCHWED routine is copied into the local build with only its name changed, to
-distinguish its extra variance output. Original numerical code is not bundled.
+distinguish its extra variance output. OSFIT and CDFBET are extracted unchanged.
+Original numerical code is not bundled.
 """
 
 import hashlib
@@ -37,16 +38,28 @@ def build() -> Path:
         )
         + "\n"
     )
+    start = s_source.index("      SUBROUTINE OSFIT(")
+    end_match = re.search(r"^      END\s*$", s_source[start:], flags=re.MULTILINE)
+    if end_match is None:
+        raise ValueError("OSFIT program unit not found")
+    s_osfit = directory / "s-osfit.f"
+    s_osfit.write_text(s_source[start : start + end_match.end()] + "\n")
+    start = s_source.index("      SUBROUTINE cdfbet(")
+    end_match = re.search(r"^      END\s*$", s_source[start:], flags=re.MULTILINE)
+    if end_match is None:
+        raise ValueError("CDFBET program unit not found")
+    s_cdfbet = directory / "s-cdfbet.f"
+    s_cdfbet.write_text(s_source[start : start + end_match.end()] + "\n")
     driver = directory / "driver.f90"
     driver.write_text("""program multi_reference
   implicit none
   integer :: mode,n,i,number,status,length
   integer, external :: shl,shc
   double precision :: alpha,nulls,beta,variance
-  double precision, allocatable :: x(:),p(:)
+  double precision, allocatable :: x(:),p(:),q(:)
   integer, allocatable :: counts(:)
   read(*,*) mode,n,alpha,nulls
-  allocate(x(n),p(n),counts(n))
+  allocate(x(n),p(n),q(n),counts(n))
   read(*,*) x
   select case(mode)
   case(1)
@@ -87,6 +100,13 @@ def build() -> Path:
       write(*,'(es26.17,i8)') p(i),counts(i)
     end do
     stop
+  case(14)
+    call osfit(x,p,q,beta,n)
+    write(*,'(es26.17)') beta
+    do i=1,n
+      write(*,'(2es26.17)') p(i),q(i)
+    end do
+    stop
   end select
   do i=1,n
     write(*,'(es26.17)') p(i)
@@ -102,6 +122,8 @@ end program
         SOURCE / "maccon.f",
         SOURCE / "lterm.f",
         s_schweder,
+        s_osfit,
+        s_cdfbet,
         driver,
     ]
     result = subprocess.run(
@@ -226,12 +248,32 @@ def main() -> None:
             "sampling": "NumPy Generator; each resample fitted by archived S SCHWED",
         },
     }
+    diagnostics = []
+    for family in families + [
+        [0.8, 0.9, 0.95],
+        [1, 1, 1],
+        [0, 0, 0],
+        [1e-12, 1e-9, 0.3, 0.5, 1],
+        [0.2, 0.3, 0.4],
+        [i / 41 for i in range(1, 41)],
+    ]:
+        rows = evaluate(executable, 14, family).splitlines()
+        diagnostics.append(
+            {
+                "pvalues": family,
+                "combined_score": float(rows[0]),
+                "sorted_cumulative": [float(row.split()[0]) for row in rows[1:]],
+                "sorted_legacy_transformed_cdf": [float(row.split()[1]) for row in rows[1:]],
+            }
+        )
+    result["order_statistics"] = diagnostics
     Path("tests/fixtures/multi.json").write_text(
         json.dumps(result, indent=2, allow_nan=False) + "\n"
     )
     print(
         f"Recorded {len(adjustments) * 8} adjustments, {len(rom)} Rom thresholds, "
-        f"{len(sharpened) * 2} sharpened tests and {len(fits) * 2} Schweder fits"
+        f"{len(sharpened) * 2} sharpened tests, {len(fits) * 2} Schweder fits "
+        f"and {len(diagnostics)} order-statistic diagnostics"
     )
 
 

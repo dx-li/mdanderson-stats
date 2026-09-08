@@ -918,11 +918,14 @@
         "mdanderson_stats.rom_critical_values: stable log-domain recurrence for rank-specific Rom cutoffs",
         "mdanderson_stats.sharpened_testing: original SHL and SHC rejection rules given a null-count estimate",
         "mdanderson_stats.schweder_fit: desktop/S origin-constrained line, tie handling, stopping rule, plot coordinates and S prediction-variance output",
-        "mdanderson_stats.schweder_bootstrap: bounded valid-fit resampling, mean and sample variance with explicit NumPy random state"
+        "mdanderson_stats.schweder_bootstrap: bounded valid-fit resampling, mean and sample variance with explicit NumPy random state",
+        "mdanderson_stats.order_statistic_diagnostics: S OSFIT cumulative and legacy transformed CDFs, uncapped combined score, batched original-order results",
+        "mdanderson_stats.clustered_pvalues: one-sided equicorrelated normal p-values, null/alternative clusters, linear-time covariance transform and explicit NumPy random state"
       ],
       "validation": [
         "tests/test_multiplicity.py",
         "tests/test_schweder.py",
+        "tests/test_pvalue_models.py",
         "tests/fixtures/multi.json",
         "docs/multiple-testing.md"
       ]

@@ -53,5 +53,7 @@ the original [redistribution notices](THIRD_PARTY_NOTICES.md).
 MULTI's nine adjustment/threshold procedures, two sharpened procedures, Schweder
 line fitting and bootstrap are available through `multiple_testing`,
 `sharpened_testing`, `schweder_fit`, and `schweder_bootstrap`.
+`order_statistic_diagnostics` provides the S library's OSFIT diagnostics, and
+`clustered_pvalues` simulates dependent one-sided p-values with explicit random state.
 See [multiple testing](docs/multiple-testing.md) for examples, historical naming
 differences, and the MULTI features that remain pending.

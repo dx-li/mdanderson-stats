@@ -1,0 +1,16 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "workload": {
+    "clusters": 10000,
+    "cluster_size": 200,
+    "correlation": 0.4,
+    "seed": 241
+  },
+  "repetitions": 5,
+  "structured_seconds": 0.042619707994163036,
+  "dense_seconds": 0.04221154237166047,
+  "speedup": 0.9904230779207013,
+  "comparison": "Same normal draws and covariance root; dense root precomputed; both include random generation and CDF conversion. Not original Fortran throughput."
+}
