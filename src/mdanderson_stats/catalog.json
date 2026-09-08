@@ -575,13 +575,15 @@
       "status": "partial",
       "implemented_features": [
         "exploratory_survival: grouped and source-sequential Kaplan-Meier curves, exact plotting corners, right-continuous queries and step/source-interpolated survival quantiles",
-        "survival_cutpoint/plot_cutpoint: aligned cut comparisons, original row IDs, empty groups and linked density/survival slider"
+        "survival_cutpoint/plot_cutpoint: aligned cut comparisons, original row IDs, empty groups and linked density/survival slider",
+        "plot_survival_alignment: accelerated-failure time scaling and proportional-hazards powers with linked sliders"
       ],
       "validation": [
         "tests/test_expsurv.py",
         "docs/expsurv.md",
         "tests/test_expsurv_cutpoint.py",
-        "tests/test_expsurv_cutpoint_plot.py"
+        "tests/test_expsurv_cutpoint_plot.py",
+        "tests/test_expsurv_alignment.py"
       ]
     },
     {

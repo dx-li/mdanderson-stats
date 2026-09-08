@@ -205,3 +205,6 @@ corners and inverse-survival queries; [remaining workflows](docs/expsurv.md) are
 
 `survival_cutpoint` and `plot_cutpoint` add EXPSURV's covariate split comparisons
 and linked density/survival slider, including explicit empty-group handling.
+
+`plot_survival_alignment` adds EXPSURV's accelerated-failure and proportional-hazards
+alignment sliders, reusing fitted survival curves.

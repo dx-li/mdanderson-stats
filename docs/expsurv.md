@@ -3,7 +3,7 @@
 Catalog entry 28 is partial. The survival-curve and inverse-survival core is
 implemented, together with interactive cut-point exploration. Linked scatterplot
 matrices, event charts,
-survival box plots, interactive model-alignment views, data generation and
+survival box plots, data generation and
 remaining input/output workflows are still pending.
 
 The source is EXPSURV version 1 from the MD Anderson catalog, distributed as
@@ -99,3 +99,42 @@ density normalization/symmetry and figure cleanup. Both an interior-cut figure
 and an empty-upper-group endpoint figure were rendered and visually inspected.
 This is exploratory group comparison, with no automatic cut optimization or
 inferential test added by the plotting workflow.
+
+
+## Model-alignment views
+
+```python
+from mdanderson_stats import exploratory_survival, plot_survival_alignment
+
+first = exploratory_survival([1, 2, 3, 4], [1, 0, 1, 1])
+second = exploratory_survival([2, 4, 6, 8], [1, 0, 1, 1])
+view = plot_survival_alignment(first, second, method="accelerated-failure")
+view.set_parameters(1.5, 1)
+```
+
+`plot_survival_alignment` covers ACCEL-FAIL-PLOT and PROP-HAZ-PLOT with two
+sliders on a shared figure. Keep the returned controller alive; use an interactive
+Matplotlib backend for dragging, `set_parameters` for programmatic updates,
+and `close()` to disconnect callbacks and close the figure. Plotting does not
+refit the samples or mutate their curves.
+
+For `method="accelerated-failure"`, each slider multiplies the plotted time
+coordinates. Its upper limit is the larger sample maximum divided by that
+sample's maximum, matching the executable source. Both start at their upper
+limits so the maximum times coincide. In function notation the transformed
+curve is S(t/m); the manual's S(k*t) uses the reciprocal parameter. A zero
+multiplier collapses the plotted curve onto time zero. Samples whose maximum
+time is zero have no defined time-scale ratio and are rejected for this view.
+
+For `method="proportional-hazards"` (the default), sliders raise the plotted
+survival values to powers from zero to one, initially one. This multiplies
+cumulative hazard by the power. At power zero the display is identically one,
+including the explicit plotting convention 0**0=1. Each slider offers 50 snapped
+positions as in the source; programmatic values may lie anywhere in its range.
+Both parameters are validated before either slider is changed.
+
+Tests verify alignment of rescaled samples, cumulative-hazard scaling, exact
+plotted coordinates, callbacks, zero endpoints, invalid-update preservation and
+cleanup. A time-alignment figure was rendered and visually inspected. These are
+exploratory alignment controls, not fitted regression coefficients or formal
+model tests.

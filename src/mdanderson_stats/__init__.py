@@ -25,6 +25,7 @@ from .cuminc_plot import plot_cuminc
 from .cuminc_study import CumIncStudy, cuminc
 from .cumulative_incidence import CumulativeIncidence, IncidenceSummary, cumulative_incidence
 from .expsurv import ExploratorySurvival, exploratory_survival
+from .expsurv_alignment import SurvivalAlignmentPlot, plot_survival_alignment
 from .expsurv_cutpoint import CutpointComparison, SurvivalCutpoint, survival_cutpoint
 from .expsurv_cutpoint_plot import CutpointPlot, plot_cutpoint
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
@@ -116,6 +117,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "SurvivalAlignmentPlot",
+    "plot_survival_alignment",
     "CutpointComparison",
     "SurvivalCutpoint",
     "survival_cutpoint",
