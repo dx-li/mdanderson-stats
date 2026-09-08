@@ -109,3 +109,9 @@ numerical routines were consulted for inclusive decision rules and expected-samp
 size definitions. Original source is extracted only into a local reference build;
 no original Fortran or binary is distributed. Source/archive hashes and compiler
 provenance are recorded in `tests/fixtures/ksbin1.json`.
+
+`binomial_design.py` independently searches discrete binomial critical regions
+and reports achieved power and adjacent alternatives, using KSBIN1's XBIN1 output
+semantics with explicit empty-region handling. The private reference build applies
+only the documented auxiliary success-status repair; its provenance is recorded
+in `tests/fixtures/binomial_power.json`.

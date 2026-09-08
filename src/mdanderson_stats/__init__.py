@@ -11,6 +11,7 @@ from .beta_mixture_fit import (
 from .beta_mixture_ml import fit_beta_mixture_ml
 from .beta_mixture_selection import BetaMixtureSelection, fit_beta_mixture_k, select_beta_mixture
 from .beta_mixture_testing import BetaMixtureTestingResult, beta_mixture_testing
+from .binomial_design import BinomialPower, binomial_power
 from .bp1ci import BP1CIResult, bp1ci
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .intervals import (
@@ -56,6 +57,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "BinomialPower",
+    "binomial_power",
     "KSBinomialOperatingCharacteristics",
     "ksbin1_operating_characteristics",
     "KStageBinomial",

@@ -1,7 +1,7 @@
 # KSBIN1 fixed-design operating characteristics
 
 Catalog entry 25 is partial. Fixed multistage design evaluation is implemented;
-the single-stage design solver, boundary-selection assistance tables, comparison
+the remaining single-stage inverse solve modes, boundary-selection assistance tables, comparison
 with a separately chosen single-stage trial, and original reporting/session
 workflows remain pending. Source: KSBIN1_V1.tar.gz, ksbin190_1.0.
 
@@ -78,8 +78,51 @@ check mass conservation, broadcasting, endpoints, disabled final rejection,
 conditional expectations with probability zero and invalid input. Existing KSB1CI
 native and exhaustive tests validate the shared probability-code extraction.
 
-Still pending: solve_binomial_one_sample_mod and ABIN1's five solve modes (null
-probability, alternative probability, sample size, significance and power),
+Still pending: solve_binomial_one_sample_mod and ABIN1's four inverse solve modes
+(null probability, alternative probability, sample size and significance),
 BINCUM-based power-contribution tables, separate single-stage comparison, report
 file dialogue and design revision workflow. These are required before this catalog
 entry can be marked implemented.
+
+## Single-stage power and adjacent critical regions
+
+```python
+from mdanderson_stats import binomial_power
+
+power = binomial_power(trials=50, null_probability=0.2, alternative_probability=0.06, alpha=0.05)
+print(power.critical, power.significance, power.power)
+print(power.next_critical, power.next_significance, power.next_power)
+```
+
+`binomial_power` provides the source solver's forward power calculation and XBIN1
+bracketing output. Direction follows the alternative probability. The selected
+region is the most permissive nonrandomized one-sided region whose achieved
+significance is at most alpha. The next region includes one more event count.
+Results retain the inputs and both critical counts, achieved significances and
+powers. All inputs broadcast, including mixed directions within an array.
+
+Integer bisection searches the number of included event counts, avoiding rounding
+a continuous binomial quantile. Probabilities and alpha must be strictly inside
+(0,1), null and alternative probabilities must differ, and trial counts must be
+positive integers smaller than 2**53. The source inconsistently rounds or truncates
+fractional sample sizes across helpers; Python rejects them. The comparison is
+against evaluated binary64 probabilities, without an added tie tolerance.
+
+An empty lower region has critical=-1; an empty upper region has critical=n+1.
+Both have significance and power zero. This replaces XBIN1's invalid numerical
+sentinels and its negative-count CDF call for empty upper regions. The next region
+is still reported. This is an explicit empty test, not a claim that the requested
+power has been reached.
+
+`tools/reference_binomial_power.py` compiles a private KSBIN1 source copy and calls
+XBIN1 for 36 inputs. As in the ONESAMPLE reference build, five cdf_aux success-status
+outputs are initialized at entry; statistical formulas remain unchanged. The
+fixture records the source hash, patched auxiliary hash, exact patch and compiler.
+It retains native diagnostics when XBIN1 cannot report an empty upper region.
+Tests compare valid native brackets, check empty-region behavior independently,
+enumerate binomial masses for well-separated attainable sizes, and verify exact
+size ties, adjacent regions, broadcasting and invalid inputs.
+
+The forward power mode is now available. Solving for null probability, alternative
+probability, sample size or significance remains pending; no continuous root search
+is substituted for those discrete design tasks.

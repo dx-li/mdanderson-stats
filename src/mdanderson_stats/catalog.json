@@ -451,13 +451,17 @@
       "status": "partial",
       "implemented_features": [
         "ksbin1_operating_characteristics: fixed-design stage rejection/quitting/continuation probabilities, significance/power and unconditional/decision-conditional expected sample sizes",
-        "KStageBinomial.stage_distribution: vectorized joint arrival probabilities reusing cached surviving-path coefficients"
+        "KStageBinomial.stage_distribution: vectorized joint arrival probabilities reusing cached surviving-path coefficients",
+        "binomial_power: vectorized single-stage critical count selection, achieved significance/power and adjacent more permissive region"
       ],
       "validation": [
         "tests/test_ksbin1.py",
         "tests/fixtures/ksbin1.json",
         "tools/reference_ksbin1.py",
-        "docs/ksbin1.md"
+        "docs/ksbin1.md",
+        "tests/test_binomial_power.py",
+        "tests/fixtures/binomial_power.json",
+        "tools/reference_binomial_power.py"
       ]
     },
     {
