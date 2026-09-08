@@ -5,8 +5,9 @@ covers the desktop's nine adjustment/threshold procedures, two sharpened procedu
 and Schweder line fitting, plus the S library's Schweder bootstrap,
 order-statistic diagnostics, clustered p-value generation, and S/desktop
 nonparametric fitting. [Beta-mixture evaluation, initialization, and EM/direct fitting](beta-mixtures.md)
-are also available. It remains **partial**: automatic component selection, simulation-based model checks, and remaining
-plotting/reporting workflows still need implementations and validation.
+are also available, along with sequential component selection and simulated model
+checks. It remains **partial**: remaining desktop and plotting/reporting workflows
+still require scope review, implementation, and validation.
 The catalog does not count this entry as complete.
 
 ## Adjustment procedures

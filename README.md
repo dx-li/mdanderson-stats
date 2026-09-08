@@ -63,6 +63,7 @@ local bandwidth selection, and rejection decisions.
 `fit_beta_mixture_ml` provide mixture evaluation, posterior null probabilities,
 initialization, EM fitting, and direct constrained likelihood fitting.
 See [beta mixtures](docs/beta-mixtures.md) for endpoint conventions, validation,
-and the fitting/model-selection features still pending.
+and model-selection semantics. `select_beta_mixture` implements the three S
+stopping rules; `beta_mixture_bootstrap` refits simulated samples for CVM checks.
 See [multiple testing](docs/multiple-testing.md) for examples, historical naming
 differences, and the MULTI features that remain pending.

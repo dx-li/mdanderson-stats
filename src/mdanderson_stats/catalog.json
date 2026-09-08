@@ -925,8 +925,10 @@
         "mdanderson_stats.nonparametric_testing: desktop NP1P polynomial and cross-validated local-quadratic fits, Schweder null-count integration, reciprocal scores and rejection masks; defined retain-all and failure behavior",
         "mdanderson_stats.BetaMixture: normalized uniform-plus-beta model, stable log densities and likelihoods, CDFs, conditional null posteriors and source-scaled Cramer-von Mises statistic; explicit legacy endpoint option",
         "mdanderson_stats.beta_mixture_start: S STBETA lower-tail component initialization with sample-variance beta moments",
-        "mdanderson_stats.fit_beta_mixture_em: EMBETA log-moment EM updates, positive Newton shape solves, source convergence distance and explicit fit failures; model selection and simulation calibration pending",
-        "mdanderson_stats.fit_beta_mixture_ml: direct constrained MLBETA likelihood with analytic gradients and L-BFGS-B, original shape/weight domain, explicit failures; solver paths differ from original"
+        "mdanderson_stats.fit_beta_mixture_em: EMBETA log-moment EM updates, positive Newton shape solves, source convergence distance and explicit fit failures",
+        "mdanderson_stats.fit_beta_mixture_ml: direct constrained MLBETA likelihood with analytic gradients and L-BFGS-B, original shape/weight domain, explicit failures; solver paths differ from original",
+        "mdanderson_stats.select_beta_mixture: S betamix sequential STBETA fits, data/lglk/pcvm stopping rules, candidate history and explicit failure/limit status",
+        "mdanderson_stats.beta_mixture_bootstrap: SIMCVM fixed-component parametric refitting, strict empirical CVM tail, bounded failed-fit retries; NumPy draws replace original RNG/inverse CDF"
       ],
       "validation": [
         "tests/test_multiplicity.py",
@@ -941,7 +943,9 @@
         "tests/test_beta_mixture_fit.py",
         "tests/fixtures/beta_mixture.json",
         "docs/beta-mixtures.md",
-        "tests/test_beta_mixture_ml.py"
+        "tests/test_beta_mixture_ml.py",
+        "tests/test_beta_mixture_selection.py",
+        "tests/fixtures/beta_selection.json"
       ]
     },
     {

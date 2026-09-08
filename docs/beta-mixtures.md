@@ -1,9 +1,10 @@
 # MULTI beta mixtures
 
 Implemented: the uniform-plus-beta model, density/CDF evaluation, posterior null
-probabilities, S STBETA initialization, EMBETA exponential-family EM fitting, and MLBETA direct likelihood fitting.
-MULTI remains **partial**: automatic component selection, simulation-based goodness of fit, and remaining
-plotting/reporting workflows are not yet ported.
+probabilities, STBETA initialization, EM/direct likelihood fitting, sequential
+component selection, and simulation-based goodness-of-fit checks.
+MULTI remains **partial**: remaining desktop and plotting/reporting workflows
+still require scope review, implementation, and validation.
 
 ## Specified models
 
@@ -119,6 +120,66 @@ original direct solver's 118.15971; it agrees with the independently ported EM
 solution. Tests also check analytic scores by finite differences at interior
 and boundary weights, normalization, likelihood progress, and explicit failures.
 
+## Component selection and simulated model checks
+
+```python
+from mdanderson_stats import select_beta_mixture, beta_mixture_bootstrap
+
+selection = select_beta_mixture(pvalues, criterion="data", algorithm="em")
+print(selection.status, selection.message)
+fit = selection.fit
+check = beta_mixture_bootstrap(pvalues, fit.model, algorithm="em", rng=123)
+print(check.pvalue, check.attempts, check.failures)
+```
+
+The S `betamix` sequence starts with the uniform model (k=0), adds components
+using STBETA on the preceding fitted CDF, and tests up to k=10. The default
+threshold is 0.05. The three original rules are:
+
+- `data`: when the newly added component's fitted weight is **less than** the
+  threshold, select the preceding model.
+- `lglk`: when `abs(new_LL-old_LL)/old_LL` is **less than** the threshold, select
+  the preceding model. At the initial zero likelihood, positive change is
+  treated as infinite; zero change stops. The latter explicitly resolves the
+  source's undefined 0/0. This is a heuristic, not a likelihood-ratio test.
+- `pcvm`: when the simulated CVM p-value is **greater than** the threshold,
+  select the current model, including k=0 when appropriate.
+
+`status="criterion_met"` means the requested rule stopped the sequence.
+`fit_failed`, `bootstrap_failed`, and `component_limit` return the preceding
+valid fit (or the last fit at the limit) with an explanatory `message`; these
+statuses do **not** claim successful selection. A failure at the uniform model
+raises. `candidates` retains successful fits, including a candidate rejected by
+a stopping rule; `bootstrap_checks` records completed simulation checks.
+`algorithm="ml"` uses the new direct optimizer, whose different local optima can
+change component selection relative to the archived David Gay solver.
+
+SIMCVM generates samples from the supplied fitted model, refits the **same k**
+starting from that model, and calculates CVM on each refitted sample. Its defaults
+are 100 successful replicates, at most 200 attempts, and refit tolerance 1e-3.
+The result's p-value is the fraction of simulated statistics **strictly greater**
+than the observed statistic, with no +1 correction; it can be zero. It is a
+Monte Carlo estimate with resolution 1/replicates, not an exact p-value or proof
+of fit. Refitting failures are recorded and retried; exhausting the bound raises.
+Discarding failed fits can affect the simulated distribution, so inspect failures.
+Component selection is not repeated within each replicate.
+
+Sampling uses NumPy categorical/beta draws instead of RANF and numerical CDF
+inversion. This preserves the intended distribution, not the original random
+stream or inverse-solver rounding. Samples rounded to endpoints are rejected
+explicitly rather than silently clipped; extreme shapes may exhaust retries.
+An integer seed or Generator provides explicit random state. Bootstrap input is
+a model already fitted to the observed data; the function does not establish
+that provenance automatically.
+
+`tools/reference_beta_selection.py` records three native sequential STBETA/EMBETA
+fits and four native SIMCVM-style EMBETA refits of fixed simulated samples.
+The published data select k=1 by weight and k=2 by likelihood change under EM.
+Tests compare the native fit chain and refitted CVM values, independently compute
+uniform CVM statistics and strict-tail counts, check sampled mixture CDFs, and
+exercise all three stopping rules, iteration limits, failed starts, and input
+validation. NumPy random draws are not claimed to reproduce archived draws.
+
 ## Validation and performance
 
 `tools/reference_beta_mixture.py` records 15 original model evaluations, three
@@ -135,8 +196,8 @@ cover polynomial beta formulas, Bayes' formula, CVM scaling, endpoint limits,
 zero weights, Decimal log-density calculations, single-beta likelihood score
 equations, likelihood progress within numerical precision, explicit failures,
 input immutability, and posterior calibration under a known generating model.
-These do not establish calibration for arbitrary fitted mixtures or complete
-the outstanding model-selection workflow.
+These do not establish calibration for arbitrary fitted mixtures or frequentist
+error control after selection.
 
 `uv run python tools/benchmark_beta_mixture.py` reproduces the
 [recorded benchmark](beta-mixture-benchmark.json). On that machine, 5,000 posterior

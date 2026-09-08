@@ -1,6 +1,7 @@
 """Independent Python implementations of MD Anderson catalog methods."""
 
 from .beta_mixture import BetaMixture
+from .beta_mixture_bootstrap import BetaMixtureBootstrap, beta_mixture_bootstrap
 from .beta_mixture_fit import (
     BetaMixtureFit,
     BetaMixtureFitError,
@@ -8,6 +9,7 @@ from .beta_mixture_fit import (
     fit_beta_mixture_em,
 )
 from .beta_mixture_ml import fit_beta_mixture_ml
+from .beta_mixture_selection import BetaMixtureSelection, select_beta_mixture
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .intervals import binomial_interval, bp1ci_poisson_interval, poisson_interval
 from .multiplicity import (
@@ -35,8 +37,10 @@ from .schweder import (
 
 __all__ = [
     "BetaMixture",
+    "BetaMixtureBootstrap",
     "BetaMixtureFit",
     "BetaMixtureFitError",
+    "BetaMixtureSelection",
     "GoodnessOfFit",
     "MultipleTestingResult",
     "NonparametricFit",
@@ -48,6 +52,7 @@ __all__ = [
     "SchwederFit",
     "SchwederFitError",
     "beta_mixture_start",
+    "beta_mixture_bootstrap",
     "binomial_interval",
     "bp1ci_poisson_interval",
     "chi_square_gof",
@@ -66,5 +71,6 @@ __all__ = [
     "rom_critical_values",
     "schweder_bootstrap",
     "schweder_fit",
+    "select_beta_mixture",
     "sharpened_testing",
 ]
