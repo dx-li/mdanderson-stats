@@ -996,7 +996,8 @@
         "muhaz_global: global bandwidth selection, ten-at-risk default bound, pilot/candidate defaults, subsetting, single-bandwidth bypass and complete MSE diagnostics",
         "muhaz_local: pointwise MSE bandwidth selection, kernel smoothing, chunked variable-bandwidth hazard and explicit legacy diagnostics",
         "muhaz_neighbor_bandwidths/muhaz_knn: failure-count and survival-mass radii, neighbor-count selection, smoothing, variable-bandwidth MSE and hazard with explicit source compatibility",
-        "summarize_muhaz: structured settings and results, significant-digit text/UTF-8 reports, explicit bypass and convergence status"
+        "summarize_muhaz: structured settings and results, significant-digit text/UTF-8 reports, explicit bypass and convergence status",
+        "plot_muhaz/plot_pehaz/plot_kphaz: optional kernel, piecewise and stratified hazard plots, overlays and explicit nonfinite gaps"
       ],
       "validation": [
         "tests/test_muhaz_fixed.py",
@@ -1024,7 +1025,8 @@
         "tests/test_muhaz_knn.py",
         "tests/fixtures/muhaz-knn.json",
         "tools/reference_muhaz_knn.py",
-        "tests/test_muhaz_summary.py"
+        "tests/test_muhaz_summary.py",
+        "tests/test_muhaz_plot.py"
       ]
     },
     {

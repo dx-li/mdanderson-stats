@@ -257,3 +257,7 @@ No original Fortran code is bundled.
 `muhaz_summary.py` independently presents the fields described by the archived
 S `summary.muhaz`, adding explicit bypass, compatibility and convergence status.
 No original S function is bundled.
+
+`muhaz_plot.py` independently implements the archived MUHAZ, PEHAZ and KPHAZ
+plot/overlay workflows using the optional Matplotlib dependency. Nonfinite
+estimates are consistently displayed as gaps. No original S source is bundled.

@@ -197,3 +197,6 @@ MSE diagnostics and evaluating the resulting variable-bandwidth hazard in chunks
 
 `summarize_muhaz` provides structured settings and results, significant-digit
 text reports, explicit bypass status and quadrature convergence counts.
+
+`plot_muhaz`, `plot_pehaz` and `plot_kphaz` provide optional hazard plots and
+overlays, including bin edges, strata and gaps for undefined estimates.

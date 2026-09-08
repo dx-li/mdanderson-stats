@@ -4,8 +4,9 @@ Catalog entry 49 is **partial**. The fixed-bandwidth kernel calculation is
 implemented, together with piecewise-exponential estimates and their numerical
 reports, and Nelson/product-limit failure-interval estimates. Global, local and
 nearest-neighbor bandwidth selection, bandwidth smoothing and candidate
-bias/variance/MSE diagnostics and structured summaries are implemented. Remaining
-plots still need implementation and a full coverage audit.
+bias/variance/MSE diagnostics and structured summaries are implemented. Kernel,
+piecewise and stratified plots are also implemented. A full coverage
+audit remains before this catalog entry is marked complete.
 
 Source: [MUHAZ version 1](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/49),
 distributed as `MUHAZ_V1.tar.gz`. Its archive contains `muhaz.f`, the S interface
@@ -130,8 +131,8 @@ A bin with no exposure and no events has NaN hazard, printed as NA because its
 hazard is unidentifiable. Events with zero exposure yield positive infinity,
 representing an unbounded likelihood. A finite hazard exceeding floating-point
 range raises a numerical error; it is not confused with the zero-exposure case.
-The data object retains these distinctions. Plotting will be added with the
-remaining MUHAZ display workflows.
+The data object retains these distinctions; `plot_pehaz` displays nonfinite
+bins as gaps.
 
 After sorting, binary searches locate each bin's observations and cumulative
 event counts supply totals. Person-time is accumulated from disjoint slices of
@@ -201,8 +202,8 @@ Sorting and aggregation take O(N log N) work. Consecutive event increments are
 summed with prefix arrays, using extended precision for finite terms and separate
 counts of infinite/NaN terms. This avoids subtracting infinite cumulative totals
 and repeated scans of all earlier subjects. Window evaluation takes O(M) work
-and storage for M distinct failure times, independently of q. Plotting remains
-part of the pending MUHAZ display work.
+and storage for M distinct failure times, independently of q. `plot_kphaz`
+provides stratified step plots with nonfinite estimates shown as gaps.
 
 ## Candidate-bandwidth diagnostics
 
@@ -325,7 +326,7 @@ bypasses, comparing selected bandwidths, all candidate scores, selected scores,
 and fitted hazards. Independent tests verify score minimization, selected-curve
 agreement, default formulas, risk-count interpolation, subsets, bound truncation,
 ties in scores, immutable candidates and input validation. A 1,001-point grid is
-also tested, exceeding the archived fixed pilot buffer. Remaining display workflows are still pending.
+also tested, exceeding the archived fixed pilot buffer. The complete coverage audit remains pending.
 
 
 ## Local bandwidth selection and smoothing
@@ -396,7 +397,7 @@ Independent tests check arithmetic-mean smoothing for an interior rectangle
 kernel, constant-bandwidth preservation, left-only correction, pointwise
 minimization, selected fixed-fit agreement, time scaling, shared defaults,
 subsetting, immutable arrays, undefined/negative smoothing, and variable-bandwidth
-evaluation across chunk boundaries. Remaining plots are still pending.
+evaluation across chunk boundaries. A complete coverage audit remains pending.
 
 
 ## Nearest-neighbor bandwidths and fitting
@@ -485,8 +486,7 @@ Independent checks cover distance order statistics, survival endpoint convention
 the terminal-time correction, scaling, subsetting, default candidates, MSE
 matrix/scalar agreement, selected-curve agreement, immutable arrays and input
 errors. A 25,001-observation case exceeds the original static buffer, and both
-bandwidth algorithms are checked across chunk boundaries. Remaining display
-workflows and the complete MUHAZ coverage audit are still pending.
+bandwidth algorithms are checked across chunk boundaries. The complete MUHAZ coverage audit is still pending.
 
 
 ## Summaries and text reports
@@ -530,3 +530,43 @@ integrals or treats them as the MSE of a final smoothed-bandwidth curve.
 propagates filesystem errors. Tests cover selected-data metadata, bound
 truncation, all three selectors, convergence exhaustion, bypasses, legacy
 sentinels, significant-digit output, immutability, and file round trips.
+
+
+## Hazard plots and overlays
+
+```python
+from mdanderson_stats import muhaz_global, pehaz, plot_muhaz, plot_pehaz
+
+times = [0.2, 0.4, 0.8, 1.1, 1.7, 2.1, 2.4, 2.8, 3.0]
+fit = muhaz_global(times, bounds=(0, 3))
+ax = plot_muhaz(fit, label="Kernel")
+plot_pehaz(pehaz(times, width=0.5), ax=ax, label="Piecewise")
+ax.legend()
+ax.figure.savefig("hazard.png")
+```
+
+The optional `plot` extra provides `plot_muhaz`, `plot_pehaz` and `plot_kphaz`.
+Each returns Matplotlib axes without showing or saving the figure or changing
+global style/backend. Supplying `ax` adds an overlay and retains its labels and
+manual axis limits. Returned artists/axes support further customization.
+`plot_muhaz` accepts fixed, global, local and nearest-neighbor kernel fits and
+plots their actual evaluation coordinates. `plot_pehaz` draws constant hazards
+between actual bin edges, including the corrected shortened final bin or legacy
+overshoot. It draws no artificial endpoint drop to zero. These overlays cover
+the archived `lines.muhaz` and `lines.pehaz` workflows.
+
+`plot_kphaz` draws a separate step curve for each stratum, with distinct line
+styles and an optional legend. As in the archived plot, a stratum with a finite
+first estimate at positive time starts at (0, 0). Nonfinite values become gaps
+for every stratum; they are not replaced by zero or joined across. This corrects
+the source plot's inconsistent filtering of infinite estimates in its first and
+subsequent strata. Strata without finite estimates are omitted, and an entirely
+nonfinite or empty result raises an explicit error. Piecewise nonfinite bins are
+likewise gaps. Newly created axes use a zero hazard baseline, with a valid range
+for all-zero estimates.
+
+Plot tests verify all kernel fit types, exact curve/bin coordinates, overlay
+preservation, gaps, stratified legends, empty/nonfinite rejection and all-zero
+limits. A rendered three-panel figure containing global/local overlays,
+piecewise bins and two-stratum failure-interval hazards was visually inspected.
+The complete MUHAZ source coverage audit remains pending.
