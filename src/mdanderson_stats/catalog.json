@@ -325,7 +325,9 @@
       ],
       "validation": [
         "tests/test_multinomial_power.py",
-        "docs/multinomial-power.md"
+        "docs/multinomial-power.md",
+        "tests/test_multinomial_power_native.py",
+        "tests/fixtures/multinompow_native.json"
       ]
     },
     {

@@ -2,8 +2,8 @@
 
 `multinomial_power` implements exact nonrandomized one-sample multinomial
 power with Pearson chi-square and likelihood-ratio ordering. This entry is
-**partial**: native comparison, original report workflow coverage, full archive
-audit, and performance measurements remain outstanding.
+**partial**: original report workflow coverage, full archive audit, and
+performance measurements remain outstanding.
 
 ```python
 from mdanderson_stats import multinomial_power
@@ -75,6 +75,27 @@ Source inspection identified these differences in `mp_setup_mod.f90`:
 Cartesian enumeration and rational factorial probabilities for small examples.
 Additional checks cover binary ties, null power equaling actual size, degenerate
 alternatives, category permutations, repeated/unsorted levels, immutable results,
-input validation, preallocation budgets, and numerical overflow. Native results
-have not yet been compared; this implementation does not promise reproduction
-of the original undefined memory or single-precision behavior.
+input validation, preallocation budgets, and numerical overflow.
+
+`tools/reference_multinompow.py` compiles two explicitly repaired native profiles
+and records 52 studies in `tests/fixtures/multinompow_native.json`. Both initialize
+the omitted first null probability and translate empty-region sentinels at the
+driver boundary. The `corrected_double` profile additionally promotes the two
+single-precision return types. All other numerical routines are unchanged.
+The fixture records the archive/source hashes, compiler, build commands, driver,
+and exact repairs. It is not an unmodified-native reference.
+
+The 26 double-precision studies cover n=3, 7, 20, 60, 999, 1000, and 1001;
+2–4 categories; three alternatives; and five significance levels. The larger
+binary studies cross the original log-factorial table/gamma-function boundary.
+Maximum observed size/power difference from Python is 5.8e-13. The profile retaining
+single precision differs by up to 0.000244 and has null-total error up to 0.000237;
+these diagnostic results are recorded but are not Python compatibility targets.
+`tests/test_multinomial_power_native.py` checks critical values, sizes, powers,
+and native null totals against the corrected-double profile.
+
+The native comparisons exclude alpha one because the archived boundary loop
+omits the final tie group. Each study runs in a fresh process to avoid the
+original repeated-deallocation defect. Independent tests cover alpha one and
+zero-probability alternatives. Python does not reproduce undefined memory or
+single-precision behavior.
