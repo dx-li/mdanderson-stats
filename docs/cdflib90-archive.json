@@ -1,0 +1,2126 @@
+{
+  "archive_sha256": "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b",
+  "regular_file_count": 106,
+  "directory_members": [
+    "CDFLIB90",
+    "CDFLIB90/source",
+    "CDFLIB90/source/cdflib90_1.2",
+    "CDFLIB90/source/cdflib90_1.2/doc",
+    "CDFLIB90/source/cdflib90_1.2/source",
+    "source",
+    "source/dcdflib.c",
+    "source/dcdflib.c/doc",
+    "source/dcdflib.c/src",
+    "source/dcdflib.f",
+    "source/dcdflib.f/doc",
+    "source/dcdflib.f/src"
+  ],
+  "role_counts": {
+    "documentation": 17,
+    "source_backup": 1,
+    "f95_support": 7,
+    "f95_distribution": 12,
+    "build": 2,
+    "c_header": 1,
+    "c_source": 2,
+    "f77_source": 64
+  },
+  "distribution_interfaces": [
+    {
+      "name": "beta",
+      "f95_public_interfaces": [
+        "ccum_beta",
+        "cdf_beta",
+        "cum_beta",
+        "inv_beta"
+      ],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_beta.py",
+        "tests/test_cdflib_beta.py",
+        "tests/fixtures/cdflib_beta.json"
+      ],
+      "legacy_distribution_names": [
+        "cdfbet",
+        "cumbet"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    },
+    {
+      "name": "binomial",
+      "f95_public_interfaces": [
+        "ccum_binomial",
+        "cdf_binomial",
+        "cum_binomial",
+        "inv_binomial"
+      ],
+      "python_status": "pending_distribution",
+      "evidence": [],
+      "legacy_distribution_names": [
+        "cdfbin",
+        "cumbin"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    },
+    {
+      "name": "chisq",
+      "f95_public_interfaces": [
+        "ccum_chisq",
+        "cdf_chisq",
+        "cum_chisq",
+        "inv_chisq"
+      ],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_chisq.py",
+        "tests/test_cdflib_chisq.py",
+        "tests/fixtures/cdflib_chisq.json"
+      ],
+      "legacy_distribution_names": [
+        "cdfchi",
+        "cumchi"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    },
+    {
+      "name": "f",
+      "f95_public_interfaces": [
+        "ccum_f",
+        "cdf_f",
+        "cum_f",
+        "inv_f"
+      ],
+      "python_status": "pending_distribution",
+      "evidence": [],
+      "legacy_distribution_names": [
+        "cdff",
+        "cumf"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    },
+    {
+      "name": "gamma",
+      "f95_public_interfaces": [
+        "ccum_gamma",
+        "cdf_gamma",
+        "cum_gamma",
+        "inv_gamma"
+      ],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_gamma.py",
+        "tests/test_cdflib_gamma.py",
+        "tests/fixtures/cdflib_gamma.json"
+      ],
+      "legacy_distribution_names": [
+        "cdfgam",
+        "cumgam"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    },
+    {
+      "name": "nc_chisq",
+      "f95_public_interfaces": [
+        "ccum_nc_chisq",
+        "cdf_nc_chisq",
+        "cum_nc_chisq",
+        "inv_nc_chisq"
+      ],
+      "python_status": "pending_distribution",
+      "evidence": [],
+      "legacy_distribution_names": [
+        "cdfchn",
+        "cumchn"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    },
+    {
+      "name": "nc_f",
+      "f95_public_interfaces": [
+        "ccum_nc_f",
+        "cdf_nc_f",
+        "cum_nc_f",
+        "inv_nc_f"
+      ],
+      "python_status": "pending_distribution",
+      "evidence": [],
+      "legacy_distribution_names": [
+        "cdffnc",
+        "cumfnc"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    },
+    {
+      "name": "nc_t",
+      "f95_public_interfaces": [
+        "ccum_nc_t",
+        "cdf_nc_t",
+        "cum_nc_t",
+        "inv_nc_t"
+      ],
+      "python_status": "pending_distribution",
+      "evidence": [],
+      "legacy_distribution_names": [
+        "cdftnc",
+        "cumtnc"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    },
+    {
+      "name": "neg_binomial",
+      "f95_public_interfaces": [
+        "ccum_neg_binomial",
+        "cdf_neg_binomial",
+        "cum_neg_binomial",
+        "inv_neg_binomial"
+      ],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_neg_binomial.py",
+        "tests/test_cdflib_neg_binomial.py",
+        "tests/fixtures/cdflib_neg_binomial.json"
+      ],
+      "legacy_distribution_names": [
+        "cdfnbn",
+        "cumnbn"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    },
+    {
+      "name": "normal",
+      "f95_public_interfaces": [
+        "ccum_normal",
+        "cdf_normal",
+        "cum_normal",
+        "inv_normal"
+      ],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_normal.py",
+        "tests/test_cdflib_normal.py",
+        "tests/fixtures/cdflib_normal.json"
+      ],
+      "legacy_distribution_names": [
+        "cdfnor",
+        "cumnor"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    },
+    {
+      "name": "poisson",
+      "f95_public_interfaces": [
+        "ccum_poisson",
+        "cdf_poisson",
+        "cum_poisson",
+        "inv_poisson"
+      ],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_poisson.py",
+        "tests/test_cdflib_poisson.py",
+        "tests/fixtures/cdflib_poisson.json"
+      ],
+      "legacy_distribution_names": [
+        "cdfpoi",
+        "cumpoi"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    },
+    {
+      "name": "t",
+      "f95_public_interfaces": [
+        "ccum_t",
+        "cdf_t",
+        "cum_t",
+        "inv_t"
+      ],
+      "python_status": "pending_distribution",
+      "evidence": [],
+      "legacy_distribution_names": [
+        "cdft",
+        "cumt"
+      ],
+      "legacy_contract_status": "not_yet_independently_validated"
+    }
+  ],
+  "f77_declared_entry_count": 66,
+  "f77_names_not_in_c_header": [
+    "erf",
+    "gamma"
+  ],
+  "c_names_not_in_f77": [
+    "Xgamm",
+    "erf1",
+    "fifdint",
+    "fifdmax1",
+    "fifdmin1",
+    "fifdsign",
+    "fifidint",
+    "fifmod",
+    "ftnstop"
+  ],
+  "c_header_external_count": 73,
+  "c_header_without_detected_definition": [],
+  "c_definitions_without_header_prototype": [],
+  "backup_identical_to_primary": false,
+  "inventory_limits": "Declaration extraction is an inventory, not a compiler/export or numerical equivalence proof. Public support and legacy contracts remain open.",
+  "members": [
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/doc/cdflib90_doc.pdf",
+      "size": 213853,
+      "sha256": "c57bce0b986231b18c2cc1ef699b6e5e46ce70a3fd24d20aa90a02942796fb47",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "F95 methods, installation and retained legal terms"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/doc/cdflib90_doc.ps",
+      "size": 197520,
+      "sha256": "7817b2b574a6433e0bcd37f9b92c3da3f6cdeda141eb706af4398bbac074cd2c",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "F95 methods, installation and retained legal terms"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/doc/cdflib90_doc.tex",
+      "size": 42337,
+      "sha256": "39d55cc094e5b178de5dc6a5a724a2309f2c7adc1285b7fecef2f31b94f98719",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "F95 methods, installation and retained legal terms"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/doc/cdflib90_doc.txt",
+      "size": 56562,
+      "sha256": "58db6654e7b5c16ba37999443c46b328d1820a791dd15692908d8f4670903442",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "F95 methods, installation and retained legal terms"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/DOC.TEX",
+      "size": 46078,
+      "sha256": "a36945d06c8d83f52af691e17cb8d787e2c49733aa85fb0f3f3356bdc1e2eec3",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "F95 methods, installation and retained legal terms"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/INSTALL",
+      "size": 3925,
+      "sha256": "771353b3387a406f4314aa8853e73d1a402d4a1ff8866b4bf80c76660b421070",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "F95 methods, installation and retained legal terms"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/LEGALITIES",
+      "size": 4284,
+      "sha256": "b4ceda52fb94d8cd273e2ae184ae4aacbb6040c0200d45d12b49508a535823cd",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "F95 methods, installation and retained legal terms"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/readme",
+      "size": 2922,
+      "sha256": "2f3ecded1334c88d1f1980a0b036659d708bf7206cb150b47e294da7d0dc5313",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "F95 methods, installation and retained legal terms"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/#cdf_binomial_mod.f90#",
+      "size": 16425,
+      "sha256": "90ef9756fedf9cce0a558053d153acca214fdd20a0499e1e3b83e86f4e929ad7",
+      "role": "source_backup",
+      "coverage_status": "alternate_source_review",
+      "scope": "Distinct binomial backup; not compiled by the archived Makefile",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_binomial",
+          "cdf_binomial",
+          "cum_binomial",
+          "inv_binomial",
+          "local_cum_binomial"
+        ],
+        "explicit_public_names": [
+          "ccum_binomial",
+          "cdf_binomial",
+          "cum_binomial",
+          "inv_binomial"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/biomath_constants_mod.f90",
+      "size": 1624,
+      "sha256": "2b0cfd2020e5221bc97edf80d1204ea074f7d82d0427dd912c96c357bcc7ba61",
+      "role": "f95_support",
+      "coverage_status": "public_support_review",
+      "scope": "Kind declarations and numeric constants",
+      "declarations": {
+        "routine_declarations_including_entries": [],
+        "explicit_public_names": [],
+        "first_default_access_statement": "public"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/biomath_interface_mod.f90",
+      "size": 80228,
+      "sha256": "3ede16fa9d9b4e5e157a7eae1fc36d1f321863f9f74dcf56d4893655de564ed9",
+      "role": "f95_support",
+      "coverage_status": "public_support_review",
+      "scope": "Public console input/output and message controls",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "approx_equal",
+          "clear_screen",
+          "edit_format",
+          "edit_message_format",
+          "get_character",
+          "get_double_array",
+          "get_double_scalar",
+          "get_integer_array",
+          "get_integer_scalar",
+          "get_list_double",
+          "get_real_array",
+          "get_real_scalar",
+          "get_string",
+          "get_yn",
+          "hold",
+          "print_format",
+          "print_message_format",
+          "prompt",
+          "write_array",
+          "write_error",
+          "write_message"
+        ],
+        "explicit_public_names": [
+          "always_print",
+          "clear_screen",
+          "get_character",
+          "get_list_double",
+          "get_numbers",
+          "get_string",
+          "get_yn",
+          "hold",
+          "message_format",
+          "num_subs",
+          "print_message_format",
+          "print_off",
+          "prompt",
+          "report_unit",
+          "write_array",
+          "write_error",
+          "write_message"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/biomath_mathlib_mod.f90",
+      "size": 99384,
+      "sha256": "be776a552418b614d1fa37f19111adebdbbfc56cd057893845a84f8a04601609",
+      "role": "f95_support",
+      "coverage_status": "public_support_review",
+      "scope": "Default-public mathematical functions and numerical kernels",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "algdiv",
+          "alngam",
+          "alnrel",
+          "apser",
+          "basym",
+          "bcorr",
+          "betaln",
+          "bfrac",
+          "bgrat",
+          "bpser",
+          "bratio",
+          "brcmp1",
+          "brcomp",
+          "bup",
+          "erf",
+          "erfc1",
+          "esum",
+          "evaluate_polynomial",
+          "exparg",
+          "fpser",
+          "gam1",
+          "gamln",
+          "gamln1",
+          "gamma",
+          "grat1",
+          "gratio",
+          "gsumln",
+          "log_beta",
+          "log_bicoef",
+          "log_gamma",
+          "psi",
+          "rcomp",
+          "rexp",
+          "rlog",
+          "rlog1"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": "public"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/biomath_sort_mod.f90",
+      "size": 22353,
+      "sha256": "ab3d0939124dcdeadfbbe8950ae7b1207258ece5feb120da5c84da645d0530dc",
+      "role": "f95_support",
+      "coverage_status": "public_support_review",
+      "scope": "Public sort_list generic and character/real/integer overloads",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "a_gt_b",
+          "qgr",
+          "sort_list_char",
+          "sort_list_dbl",
+          "sort_list_integer",
+          "sort_list_single",
+          "swap_elements"
+        ],
+        "explicit_public_names": [
+          "sort_list"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/biomath_strings_mod.f90",
+      "size": 43329,
+      "sha256": "c66814a0eec34c25283f0c71da41fc93969fc2cc0dba7f26146952adce70b8aa",
+      "role": "f95_support",
+      "coverage_status": "public_support_review",
+      "scope": "Public character/string case conversion and lexical comparison",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "accum",
+          "get_action",
+          "lower_case_char",
+          "lower_case_string",
+          "ncqlex",
+          "next_state",
+          "qlex",
+          "set_numeric_values",
+          "upper_case_char",
+          "upper_case_string"
+        ],
+        "explicit_public_names": [
+          "lower_case_char",
+          "lower_case_string",
+          "qlex",
+          "upper_case_char",
+          "upper_case_string"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_aux_mod.f90",
+      "size": 18781,
+      "sha256": "62aa44bf1319c6ef5ba02df10e24fca6c9f31d21d7f4bd5e5c6a1820721ff8da",
+      "role": "f95_support",
+      "coverage_status": "public_support_review",
+      "scope": "Default-public validation, distribution metadata and solver adapters",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "add_to_one",
+          "cdf_finalize_status",
+          "cdf_set_zero_finder",
+          "check_complements",
+          "dbl_in_range",
+          "int_in_range",
+          "validate_parameters",
+          "which_miss"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": "public"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_beta_mod.f90",
+      "size": 11797,
+      "sha256": "c73c3b081815cc1795d9f820c24c24f0aaeb50f50978ab522e1406a2c43b6099",
+      "role": "f95_distribution",
+      "coverage_status": "implemented_distribution",
+      "scope": "beta",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_beta",
+          "cdf_beta",
+          "cum_beta",
+          "inv_beta",
+          "local_cum_beta"
+        ],
+        "explicit_public_names": [
+          "ccum_beta",
+          "cdf_beta",
+          "cum_beta",
+          "inv_beta"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_binomial_mod.f90",
+      "size": 17498,
+      "sha256": "f3122ed01df9f327f8f432dbeced3d826ab67d3b0fb1239fe9c2cac869642fad",
+      "role": "f95_distribution",
+      "coverage_status": "pending_distribution",
+      "scope": "binomial",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_binomial",
+          "cdf_binomial",
+          "cum_binomial",
+          "inv_binomial",
+          "local_cum_binomial"
+        ],
+        "explicit_public_names": [
+          "ccum_binomial",
+          "cdf_binomial",
+          "cum_binomial",
+          "inv_binomial"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_chisq_mod.f90",
+      "size": 10132,
+      "sha256": "572b5d26dbd452ea4cf74689bbb2943dbe8f2b0ee0fb28e31f4ab01654cf9b7b",
+      "role": "f95_distribution",
+      "coverage_status": "implemented_distribution",
+      "scope": "chisq",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_chisq",
+          "cdf_chisq",
+          "cum_chisq",
+          "inv_chisq",
+          "local_cum_chisq"
+        ],
+        "explicit_public_names": [
+          "ccum_chisq",
+          "cdf_chisq",
+          "cum_chisq",
+          "inv_chisq"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_f_mod.f90",
+      "size": 11147,
+      "sha256": "8b7f97c3f1446c80b6af0809e5d2b9a05f091e3266d03f910288832dc9765d92",
+      "role": "f95_distribution",
+      "coverage_status": "pending_distribution",
+      "scope": "f",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_f",
+          "cdf_f",
+          "cum_f",
+          "inv_f",
+          "local_cum_f"
+        ],
+        "explicit_public_names": [
+          "ccum_f",
+          "cdf_f",
+          "cum_f",
+          "inv_f"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_gamma_mod.f90",
+      "size": 22489,
+      "sha256": "e3d3851278421b194b897f17aed26267c4ac408460e30ed27d79afe96b195d7f",
+      "role": "f95_distribution",
+      "coverage_status": "implemented_distribution",
+      "scope": "gamma",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_gamma",
+          "cdf_gamma",
+          "cum_gamma",
+          "gamma_inverse",
+          "inv_gamma",
+          "local_cum_gamma"
+        ],
+        "explicit_public_names": [
+          "ccum_gamma",
+          "cdf_gamma",
+          "cum_gamma",
+          "inv_gamma"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_nc_chisq_mod.f90",
+      "size": 16220,
+      "sha256": "11f92499fae67e3b817930084cbb83da0c39887c0f33891e50372a970710f916",
+      "role": "f95_distribution",
+      "coverage_status": "pending_distribution",
+      "scope": "nc_chisq",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_nc_chisq",
+          "cdf_nc_chisq",
+          "cum_nc_chisq",
+          "dg",
+          "inv_nc_chisq",
+          "local_cum_nc_chisq",
+          "qsmall"
+        ],
+        "explicit_public_names": [
+          "ccum_nc_chisq",
+          "cdf_nc_chisq",
+          "cum_nc_chisq",
+          "inv_nc_chisq"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_nc_f_mod.f90",
+      "size": 14439,
+      "sha256": "34be5e1366fd609929ae8628bd6e0c790286b96a8533405658ea4461f2ec1da0",
+      "role": "f95_distribution",
+      "coverage_status": "pending_distribution",
+      "scope": "nc_f",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_nc_f",
+          "cdf_nc_f",
+          "cum_nc_f",
+          "inv_nc_f",
+          "local_cum_nc_f",
+          "qsmall"
+        ],
+        "explicit_public_names": [
+          "ccum_nc_f",
+          "cdf_nc_f",
+          "cum_nc_f",
+          "inv_nc_f"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_nc_t_mod.f90",
+      "size": 17060,
+      "sha256": "3af14474847efbd23382eb7bb380ecfa6013b9ca527649264398f593d1c57faa",
+      "role": "f95_distribution",
+      "coverage_status": "pending_distribution",
+      "scope": "nc_t",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_nc_t",
+          "cdf_nc_t",
+          "cum_nc_t",
+          "inv_nc_t",
+          "local_cum_nc_t"
+        ],
+        "explicit_public_names": [
+          "ccum_nc_t",
+          "cdf_nc_t",
+          "cum_nc_t",
+          "inv_nc_t"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_neg_binomial_mod.f90",
+      "size": 14941,
+      "sha256": "f2d30c706264a4af776d55409996a0d6cdc25ecfaaf8e058072b49fa7bca060e",
+      "role": "f95_distribution",
+      "coverage_status": "implemented_distribution",
+      "scope": "neg_binomial",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_neg_binomial",
+          "cdf_neg_binomial",
+          "cum_neg_binomial",
+          "inv_neg_binomial",
+          "local_cum_neg_binomial"
+        ],
+        "explicit_public_names": [
+          "ccum_neg_binomial",
+          "cdf_neg_binomial",
+          "cum_neg_binomial",
+          "inv_neg_binomial"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_normal_mod.f90",
+      "size": 21563,
+      "sha256": "f5e66f66150f8983ab2cbd2d71463064ca85287a4634fb57a2d5d90dc4d9e985",
+      "role": "f95_distribution",
+      "coverage_status": "implemented_distribution",
+      "scope": "normal",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_normal",
+          "cdf_normal",
+          "cum_normal",
+          "inv_normal",
+          "local_cum_normal",
+          "local_inv_normal"
+        ],
+        "explicit_public_names": [
+          "ccum_normal",
+          "cdf_normal",
+          "cum_normal",
+          "inv_normal"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_poisson_mod.f90",
+      "size": 7310,
+      "sha256": "d74bd82c9733b667a883028b565c62b18b507312ec3a904ee58df9d8e44adb58",
+      "role": "f95_distribution",
+      "coverage_status": "implemented_distribution",
+      "scope": "poisson",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_poisson",
+          "cdf_poisson",
+          "cum_poisson",
+          "inv_poisson"
+        ],
+        "explicit_public_names": [
+          "ccum_poisson",
+          "cdf_poisson",
+          "cum_poisson",
+          "inv_poisson"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/cdf_t_mod.f90",
+      "size": 12362,
+      "sha256": "360fb24b24b91c4d86711983558cc0e6db6d4eb065dd6518c9472b89d6eda848",
+      "role": "f95_distribution",
+      "coverage_status": "pending_distribution",
+      "scope": "t",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_t",
+          "cdf_t",
+          "cum_t",
+          "dt1",
+          "inv_t",
+          "local_cum_t"
+        ],
+        "explicit_public_names": [
+          "ccum_t",
+          "cdf_t",
+          "cum_t",
+          "inv_t"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/compile.cdflib90",
+      "size": 946,
+      "sha256": "e64e01cdd8be51953143e3b6507cde520331d8d8f8e5fdd634da19395a76813a",
+      "role": "build",
+      "coverage_status": "build_replaced",
+      "scope": "pyproject.toml, uv build and existing CI"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/Makefile",
+      "size": 2606,
+      "sha256": "28b1c380bf29b16800a76cb73ea0e69efac933e22ed5d2a766c0ac490a1066e0",
+      "role": "build",
+      "coverage_status": "build_replaced",
+      "scope": "pyproject.toml, uv build and existing CI"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/source/zero_finder.f90",
+      "size": 41697,
+      "sha256": "18300a0ebbcd15d7b1f96277a256fa6997349f3e0ee953b33db38be819470827",
+      "role": "f95_support",
+      "coverage_status": "public_support_review",
+      "scope": "Public direct/reverse-communication root finding and solver state",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "adjust_c",
+          "bracket",
+          "f",
+          "final_zf_state",
+          "ftol",
+          "has_converged",
+          "ifabde",
+          "iisign",
+          "interval_zf",
+          "newton_quadratic",
+          "pzero",
+          "qxmon",
+          "rc_interval_local_zf",
+          "rc_interval_zf",
+          "rc_step_local_zf",
+          "rc_step_zf",
+          "set_zero_finder",
+          "step_zf"
+        ],
+        "explicit_public_names": [
+          "final_zf_state",
+          "interval_zf",
+          "rc_interval_zf",
+          "rc_step_zf",
+          "set_zero_finder",
+          "step_zf",
+          "zf_bound_high",
+          "zf_bound_low",
+          "zf_crash_hi",
+          "zf_crash_left",
+          "zf_current_status",
+          "zf_locals"
+        ],
+        "first_default_access_statement": "private"
+      }
+    },
+    {
+      "path": "source/dcdflib.c/doc/dcdflib.chs",
+      "size": 6099,
+      "sha256": "36e6909aad25124587e2c906eaecb37a5a6cc13f7329d320118fcaae674a0ed4",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
+    },
+    {
+      "path": "source/dcdflib.c/doc/dcdflib.fdoc",
+      "size": 35157,
+      "sha256": "4c24d4ad49c2f3bb3f213c20165f33b77549b35c3069737627903a1472b9d9c8",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
+    },
+    {
+      "path": "source/dcdflib.c/doc/dcdflib.h",
+      "size": 977,
+      "sha256": "01796df29163de465a8429c12cf7ced98b4840b7859fda31ce93cfad65180cac",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
+    },
+    {
+      "path": "source/dcdflib.c/HOWTOGET",
+      "size": 1223,
+      "sha256": "91fb9bcfaa5fb25c0bb048ad0ee11c2e8b44d8bcf1d2c98b56e07d9626d4f880",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
+    },
+    {
+      "path": "source/dcdflib.c/readme",
+      "size": 14617,
+      "sha256": "1007be43e39e9ecd2063348f0d86686fc3d27176f47f04036c17f1adaa539f79",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
+    },
+    {
+      "path": "source/dcdflib.c/src/cdflib.h",
+      "size": 3758,
+      "sha256": "6bdb5838eb4de58ba298b086901ef604194c86271eb46eb45ec8e236476dccce",
+      "role": "c_header",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Public C prototypes, including numerical helpers and solver setup",
+      "declarations": {
+        "external_function_names": [
+          "Xgamm",
+          "algdiv",
+          "alngam",
+          "alnrel",
+          "apser",
+          "basym",
+          "bcorr",
+          "betaln",
+          "bfrac",
+          "bgrat",
+          "bpser",
+          "bratio",
+          "brcmp1",
+          "brcomp",
+          "bup",
+          "cdfbet",
+          "cdfbin",
+          "cdfchi",
+          "cdfchn",
+          "cdff",
+          "cdffnc",
+          "cdfgam",
+          "cdfnbn",
+          "cdfnor",
+          "cdfpoi",
+          "cdft",
+          "cdftnc",
+          "cumbet",
+          "cumbin",
+          "cumchi",
+          "cumchn",
+          "cumf",
+          "cumfnc",
+          "cumgam",
+          "cumnbn",
+          "cumnor",
+          "cumpoi",
+          "cumt",
+          "cumtnc",
+          "devlpl",
+          "dinvnr",
+          "dinvr",
+          "dstinv",
+          "dstzr",
+          "dt1",
+          "dzror",
+          "erf1",
+          "erfc1",
+          "esum",
+          "exparg",
+          "fifdint",
+          "fifdmax1",
+          "fifdmin1",
+          "fifdsign",
+          "fifidint",
+          "fifmod",
+          "fpser",
+          "ftnstop",
+          "gam1",
+          "gaminv",
+          "gamln",
+          "gamln1",
+          "grat1",
+          "gratio",
+          "gsumln",
+          "ipmpar",
+          "psi",
+          "rcomp",
+          "rexp",
+          "rlog",
+          "rlog1",
+          "spmpar",
+          "stvaln"
+        ],
+        "static_function_names": [
+          "E0000",
+          "E0001"
+        ]
+      }
+    },
+    {
+      "path": "source/dcdflib.c/src/dcdflib.c",
+      "size": 226348,
+      "sha256": "818f03e7286890836d34c0da32a95e193093a6cf2d4fb8d7fabda446f8cf2081",
+      "role": "c_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy C implementation; retain header-to-definition inventory",
+      "declarations": {
+        "external_function_names": [
+          "Xgamm",
+          "algdiv",
+          "alngam",
+          "alnrel",
+          "apser",
+          "basym",
+          "bcorr",
+          "betaln",
+          "bfrac",
+          "bgrat",
+          "bpser",
+          "bratio",
+          "brcmp1",
+          "brcomp",
+          "bup",
+          "cdfbet",
+          "cdfbin",
+          "cdfchi",
+          "cdfchn",
+          "cdff",
+          "cdffnc",
+          "cdfgam",
+          "cdfnbn",
+          "cdfnor",
+          "cdfpoi",
+          "cdft",
+          "cdftnc",
+          "cumbet",
+          "cumbin",
+          "cumchi",
+          "cumchn",
+          "cumf",
+          "cumfnc",
+          "cumgam",
+          "cumnbn",
+          "cumnor",
+          "cumpoi",
+          "cumt",
+          "cumtnc",
+          "devlpl",
+          "dinvnr",
+          "dinvr",
+          "dstinv",
+          "dstzr",
+          "dt1",
+          "dzror",
+          "erf1",
+          "erfc1",
+          "esum",
+          "exparg",
+          "fifdint",
+          "fifdmax1",
+          "fifdmin1",
+          "fifdsign",
+          "fifidint",
+          "fifmod",
+          "fpser",
+          "ftnstop",
+          "gam1",
+          "gaminv",
+          "gamln",
+          "gamln1",
+          "grat1",
+          "gratio",
+          "gsumln",
+          "psi",
+          "rcomp",
+          "rexp",
+          "rlog",
+          "rlog1",
+          "spmpar",
+          "stvaln"
+        ],
+        "static_function_names": [
+          "E0000",
+          "E0001"
+        ]
+      }
+    },
+    {
+      "path": "source/dcdflib.c/src/ipmpar.c",
+      "size": 9425,
+      "sha256": "559e88f3da35fad7115000a2a8eb89f0c074e1798c792bfbdd0a7ba1abde45c2",
+      "role": "c_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy C implementation; retain header-to-definition inventory",
+      "declarations": {
+        "external_function_names": [
+          "ipmpar"
+        ],
+        "static_function_names": []
+      }
+    },
+    {
+      "path": "source/dcdflib.f/doc/dcdflib.chs",
+      "size": 5424,
+      "sha256": "7c62aad37766ae0f78efaf7ee612f1d8764f8ebc8068cee2edf83047bf55dad7",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
+    },
+    {
+      "path": "source/dcdflib.f/doc/dcdflib.fdoc",
+      "size": 38656,
+      "sha256": "16dc1e30e31297844980a25b631a49108ef0f73cf9875eb2d419a42fe5fb813f",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
+    },
+    {
+      "path": "source/dcdflib.f/HOWTOGET",
+      "size": 1223,
+      "sha256": "91fb9bcfaa5fb25c0bb048ad0ee11c2e8b44d8bcf1d2c98b56e07d9626d4f880",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
+    },
+    {
+      "path": "source/dcdflib.f/readme",
+      "size": 12147,
+      "sha256": "8f34f9a4863ad9600fbd2c89077f9dc7cc98779b316ccd5dff305f256daa870b",
+      "role": "documentation",
+      "coverage_status": "reference_documentation",
+      "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
+    },
+    {
+      "path": "source/dcdflib.f/src/algdiv.f",
+      "size": 1850,
+      "sha256": "9d297f5fc7bc42d847974f5bf09149911430c0ba6d8d5750aed328a4cdb44d9d",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "algdiv"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/alngam.f",
+      "size": 3365,
+      "sha256": "001bfe36ede5c23fb69e87005ce3dbb4e82891c80ca29f59d6e3f1ba4830b7c7",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "alngam"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/alnrel.f",
+      "size": 1015,
+      "sha256": "d3275e639e8bc56655983a5d85cbfb51bfa4249d992b02a035336a543db06d54",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "alnrel"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/apser.f",
+      "size": 1213,
+      "sha256": "3db7ab44be06ea33cc995b645ef8ee23a3bfea5b6fc57835a4f7e6495914f62a",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "apser"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/basym.f",
+      "size": 3368,
+      "sha256": "81551ffe05a8c234bce9e35762c92da7cf6fae0a5cb3ce4a78734a8ff25686a7",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "basym"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/bcorr.f",
+      "size": 1549,
+      "sha256": "b6df2ee289e74a7835d2a203bbd8c1d552260836cc0f71f879d322d64472438c",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "bcorr"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/betaln.f",
+      "size": 2969,
+      "sha256": "a6b33f1e2e30c709b8c66acc43a8332d805da2605f8149f02e7046570e8b2816",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "betaln"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/bfrac.f",
+      "size": 1747,
+      "sha256": "b0ded0016136daa0189ae08d92a42c74573cf9291c18bd47128fde5a43d0715d",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "bfrac"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/bgrat.f",
+      "size": 2482,
+      "sha256": "e691caa74dc141f7d97f0a0e2243d1e5318ae8150ca660dcb462b7d2955d2c73",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "bgrat"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/bpser.f",
+      "size": 2741,
+      "sha256": "c8a55b4b05d5b219994ed6f4c034fcbf645eb32ee87b768bb8598400b302bd93",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "bpser"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/bratio.f",
+      "size": 5717,
+      "sha256": "91057618abc5d93e36cdcadadfd098dfa18c189cc37912d1bfe44d708c0a5bde",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "bratio"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/brcmp1.f",
+      "size": 3422,
+      "sha256": "f7c03f406cbf0c4243b034dfd05d11d61dddaf3f0b8a66cd155b7369a2019f64",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "brcmp1"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/brcomp.f",
+      "size": 3430,
+      "sha256": "59415e5dede52b9843f8edfd68975e0a03ece8250dd16fd515339a614474254e",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "brcomp"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/bup.f",
+      "size": 1932,
+      "sha256": "5d502174b7fa90eaf710ed6e0d39ce7016ef824b5e659031f1fe23df36504952",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "bup"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdfbet.f",
+      "size": 8472,
+      "sha256": "599a209cc814b0023701ec6ecce3cfb528b6b37a3b2cc1d3eba0238038db0cbf",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdfbet"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdfbin.f",
+      "size": 8616,
+      "sha256": "87a93ebd92dbb0e805374fbe5a57f4d6d669fbe92f4444e3322a8f057e6113a8",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdfbin"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdfchi.f",
+      "size": 6534,
+      "sha256": "f38c727e4f72cf365c800af7d88cf4610848d8052d443cf9b945a17c4bdbaa25",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdfchi"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdfchn.f",
+      "size": 6665,
+      "sha256": "6e71075599c8beaa1f19e5cbbe132d23fa3826bd1ba4eeefaa3f763de1a73c20",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdfchn"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdff.f",
+      "size": 7465,
+      "sha256": "b0ef08fb74be17f6ec2546936aff54f598737f7bd6b8dc40ab103f631e85575b",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdff"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdffnc.f",
+      "size": 8047,
+      "sha256": "1a3a8eb7bbe3a68de16061ee10ce09f30633a1bd451e3e3f385ec233397bb39a",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdffnc"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdfgam.f",
+      "size": 7121,
+      "sha256": "d13cf72da91889ee687e7df6e0a45f6c9ac6b7e55ca1c5f346ea91c7f2b247f2",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdfgam"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdfnbn.f",
+      "size": 8889,
+      "sha256": "7f1e83a2c5ad8ce26d8ac268adea3542f65dff5df4931b164ce23abb1cf40a69",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdfnbn"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdfnor.f",
+      "size": 5198,
+      "sha256": "c6c81c9a42ee0f4eadde645f1f0ba07ca926b2ceb80ff727d168d2eb11a0a927",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdfnor"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdfpoi.f",
+      "size": 6103,
+      "sha256": "c0e82d9d49dfa7366fd930d38789036c6e0370cdadaa32714b5525e15f18bdb1",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdfpoi"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdft.f",
+      "size": 5997,
+      "sha256": "50efe4e2a311b3a6a7502db9a7699fdcbbace89aa61b5bb7ff120c1ce5564bfd",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdft"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cdftnc.f",
+      "size": 5984,
+      "sha256": "b5a578bf20ccd237f9d8a45f90be160d72d67eb61d205a870f85cea9c159b245",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cdftnc"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumbet.f",
+      "size": 2110,
+      "sha256": "3d95859e4ee780e524e43b748789dbf242eb971e711009541678d9bedd161321",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumbet"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumbin.f",
+      "size": 1895,
+      "sha256": "e691e7b0eb8e0866bffc5dbc8f776e26699544b1de24ee6307a8dd01a9da3811",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumbin"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumchi.f",
+      "size": 1463,
+      "sha256": "5b781d5aa7bdf263f845a7a6cbace76af821c1c4e635ebb6071aafff4a829213",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumchi"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumchn.f",
+      "size": 6020,
+      "sha256": "fa88fdd4ace9315308cd629bc42562cb0f3f162570a74be61d34141d131c880c",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumchn"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumf.f",
+      "size": 2394,
+      "sha256": "7d0ccf43329b7bf1945c89d3b0d688700dd5931ef4d1ec1dd23723cf56f3ae6c",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumf"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumfnc.f",
+      "size": 4711,
+      "sha256": "dad1d938447527150f64df0877cb3cfbfaac4fdbbf1be439e9af1c911cad626b",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumfnc"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumgam.f",
+      "size": 1686,
+      "sha256": "250cd3d7506ee815cea5c65fa25e48c6a6d925729960fda329a206dd1f3dea0a",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumgam"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumnbn.f",
+      "size": 2012,
+      "sha256": "c7e42ff77432a67ffae6055dd6e0772e2d8d8fa05109cb624f28a4bb3c36dcd4",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumnbn"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumnor.f",
+      "size": 8282,
+      "sha256": "d3ffb0a6e95e58554e8fb9412474607b072974fc8ab54cb41b24ef531ab75db8",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumnor"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumpoi.f",
+      "size": 1578,
+      "sha256": "9c9d260b6eefe2cbf7f1d0fe7e960a19a9d7651aad7f3af066fba5d9365e280e",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumpoi"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumt.f",
+      "size": 1702,
+      "sha256": "0f36b6aa3310d69649468815579d93aa91e5acae08f7d5d64fb8dbe2c5646c08",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumt"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/cumtnc.f",
+      "size": 6134,
+      "sha256": "f985eb8a3dcffb9483d87a997c516a950468d4618867ee556e744e228c685f90",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "cumtnc"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/devlpl.f",
+      "size": 1209,
+      "sha256": "e77fa5d42ccc7f89242f0a174423f132446f187235f01cd68a6a95650b1d0aa9",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "devlpl"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/dinvnr.f",
+      "size": 2446,
+      "sha256": "69aa662f1f154670a21bea1d051e44f5ca007a5b5bdb5ada106ed31e831ad02c",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "dinvnr"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/dinvr.f",
+      "size": 10245,
+      "sha256": "5c49b2aea6e98a421da138754ee5b9b119e8ae84d69d4eb05d97f5a329a9eec6",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "dinvr",
+          "dstinv"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/dt1.f",
+      "size": 2078,
+      "sha256": "5a5659368b35c736159e195cd95a1f5a18e7dde5bd54774b31ffa25d7574aae6",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "dt1"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/dzror.f",
+      "size": 7759,
+      "sha256": "d2f2681c5fd4fb1394f973602c1bfe9194850da408e4bd20f23920af9a996bba",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "dstzr",
+          "dzror"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/erf.f",
+      "size": 2756,
+      "sha256": "a3bedebbc571be2b4b3cee11c35f8a262e49e1206aca861a9cd9483a2f3c4a80",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "erf"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/erfc1.f",
+      "size": 3633,
+      "sha256": "e709ae34ef1a400ac22fad59f2281b59bd493f106635112f9163058f74fb019d",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "erfc1"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/esum.f",
+      "size": 791,
+      "sha256": "0951dbca70f77c8694a27786e4f502349e872ab12e12accfff0a6e4e1d371edc",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "esum"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/exparg.f",
+      "size": 1233,
+      "sha256": "c2553a869ab9da17d5a3fdfb5c6c7bd9df697d593f9bd36cd8097fd83c834417",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "exparg"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/fpser.f",
+      "size": 1154,
+      "sha256": "9c5bbfb7de959d5b28f2e27f4095be1fa79b921841964aa6ec660becf1e69ef6",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "fpser"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/gam1.f",
+      "size": 2099,
+      "sha256": "d1e65f34862c9044d5e262dc5258b76667f55d912d28b5dbbd595f26226e1bac",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "gam1"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/gaminv.f",
+      "size": 10511,
+      "sha256": "91e27d56e3d3f5b3714ceb257a0659b5f4f9d401288e35831bade060a10c11d5",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "gaminv"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/gamln.f",
+      "size": 1664,
+      "sha256": "8e293f0c5ebc21d289570b89f09f171d898a75d8cf9cec4ca5028f0b70f0eb2c",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "gamln"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/gamln1.f",
+      "size": 1699,
+      "sha256": "762206be3a21955727a4ffd6f45b50cf7a768af2e7b75dfba0694f8ae07a8409",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "gamln1"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/gamma.f",
+      "size": 4212,
+      "sha256": "469a8c8f060eebeeac2a72433416129851c9d6f66addca4ea4e67a2018c67c6c",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "gamma"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/grat1.f",
+      "size": 2500,
+      "sha256": "d154bcf5d9d6cfcbaa03264d4e3e366b322b4c955b8ae72ef4ebb388af9c233e",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "grat1"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/gratio.f",
+      "size": 12418,
+      "sha256": "ef262202a5c2b82959c9701bd6075bdccd367c54ad85afba548d4f57c9a8c015",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "gratio"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/gsumln.f",
+      "size": 901,
+      "sha256": "0da882dce02c98828a712e7a893cf512d07a2bf2b8f8a57bb124105a21fe16ba",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "gsumln"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/ipmpar.f",
+      "size": 12380,
+      "sha256": "68b6fa2cb4178b894b3878428d5f45bf3dde2a28ed887da94adc1636cbb3fb4a",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ipmpar"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/psi.f",
+      "size": 7352,
+      "sha256": "a2e815ebe9c88a39b85d320135efbc636810a47259131369fbf00a8b83c0b202",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "psi"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/rcomp.f",
+      "size": 1069,
+      "sha256": "af32325468ffa353705155972dcba36f7c5625264397379bd6ad59473a29c15d",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "rcomp"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/rexp.f",
+      "size": 1009,
+      "sha256": "868ce4c0002f2d3aa7bd27acb30cffd33dfc66b0b619cf1d43f84a6991ef86ef",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "rexp"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/rlog.f",
+      "size": 1318,
+      "sha256": "88fcabe47d6008e9ec32d28172ccce0d65f458b86ee3c92e28ccd1131bb0bcbd",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "rlog"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/rlog1.f",
+      "size": 1422,
+      "sha256": "20efe393c38482a5284b3ca6d11b2367ddc78b6453b9b7f33146b116746bf800",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "rlog1"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/spmpar.f",
+      "size": 2128,
+      "sha256": "f4d99ace0d95f75dc2389d4067d9e3f005abc52edabfd8bbd60c056c8d7ebd83",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "spmpar"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    },
+    {
+      "path": "source/dcdflib.f/src/stvaln.f",
+      "size": 1787,
+      "sha256": "9fa1a0b15f30623a51ee0487f9c5d098f66705548ffc083a9bbb7e465af179a3",
+      "role": "f77_source",
+      "coverage_status": "legacy_contract_review",
+      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "stvaln"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null
+      }
+    }
+  ]
+}

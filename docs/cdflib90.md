@@ -3,10 +3,11 @@
 CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
-The entry is **partial**: the beta, normal, gamma, chi-square, Poisson and negative-binomial distributions'
-four public interfaces
-are implemented. The other six distribution modules, the remaining archived library
-interfaces and the complete 106-file archive audit remain outstanding.
+The entry is **partial**. All four public interfaces are implemented for beta,
+normal, gamma, chi-square, Poisson and negative-binomial distributions. Six other
+distribution modules and the remaining archived library interfaces are outstanding.
+The [106-file inventory](cdflib90-coverage.md) identifies the legacy entry points
+and public support APIs that still need contract review and validation.
 
 Source: [catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/21)
 and [archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CDFLIB90/CDFLIB90%20%20_V90.tar.gz).

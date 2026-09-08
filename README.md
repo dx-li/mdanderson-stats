@@ -359,3 +359,7 @@ CDFLIB90's fractional-count Poisson extension, with count and mean inversions.
 `cdf_neg_binomial`, `cum_neg_binomial`, `ccum_neg_binomial` and
 `inv_neg_binomial` add fractional failure/success counts and probability inversion,
 including explicit zero-success behavior and preserved small complements.
+
+
+The [CDFLIB90 inventory](docs/cdflib90-coverage.md) accounts for all 106 archived
+files and tracks the remaining distribution, legacy-library and public-support scope.
