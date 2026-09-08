@@ -1081,15 +1081,18 @@
       "status": "partial",
       "implemented_features": [
         "mdanderson_stats.stukel_log_odds and stukel_probability: stable broadcast generalized logistic link, corrected Fortran alpha1<0 branch and explicit S prediction compatibility",
-        "mdanderson_stats.predict_stukel: prediction from supplied coefficients, optional intercept and batched design matrices; fitting and inference pending",
-        "mdanderson_stats.stukel_objective: grouped-binomial objective, analytic gradient and observed Hessian for six shape families; stable tails/series, explicit branch conventions and corrected opposite-shape chain rule"
+        "mdanderson_stats.predict_stukel: prediction from supplied coefficients, optional intercept and batched design matrices",
+        "mdanderson_stats.stukel_objective: grouped-binomial objective, analytic gradient and observed Hessian for six shape families; stable tails/series, explicit branch conventions and corrected opposite-shape chain rule",
+        "mdanderson_stats.fit_stukel: six-family bounded regression with analytic-gradient L-BFGS-B, separation/rank checks, deviance, Pearson/fixed dispersion, observed-information covariance and prediction; scanning/reporting pending"
       ],
       "validation": [
         "tests/test_stukel.py",
         "tests/fixtures/stukel.json",
         "docs/stukel.md",
         "tests/test_stukel_objective.py",
-        "tests/fixtures/stukel_objective.json"
+        "tests/fixtures/stukel_objective.json",
+        "tests/test_stukel_fit.py",
+        "tests/fixtures/stukel_fit.json"
       ]
     },
     {

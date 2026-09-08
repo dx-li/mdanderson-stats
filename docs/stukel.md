@@ -2,8 +2,8 @@
 
 Catalog entry 58 is partial. Implemented: the two-shape inverse link, transformed
 log odds, prediction from supplied coefficients, and grouped-binomial likelihood,
-gradient and observed Hessian for all six parameter families. Regression estimation,
-covariance and dispersion estimates, optimization constraints, model scanning, and
+gradient and observed Hessian, bounded regression estimation, covariance and
+dispersion estimates for all six parameter families. Model scanning and
 plotting/reporting remain pending.
 
 The model is described in Thérèse A. Stukel, “Generalized Logistic Models,”
@@ -100,3 +100,71 @@ families, negative/zero/positive/near-zero shapes, and the corrected family-4
 projection. Tests compare objective, gradient and Hessian; independently difference
 the objective and scores away from branch boundaries; recover ordinary logistic
 information; and check saturated tails and invalid inputs.
+
+## Regression fitting
+
+```python
+from mdanderson_stats import fit_stukel
+
+fit = fit_stukel(x, successes, trials, family=5)
+print(fit.coefficients, fit.alpha, fit.deviance, fit.dispersion)
+print(fit.standard_errors, fit.inference_message)
+predicted = fit.predict(new_x)
+```
+
+`fit_stukel` accepts an observations-by-covariates matrix or a one-dimensional
+single covariate, and adds an intercept unless intercept=False. It requires a
+full-rank design and positive residual degrees of freedom (rows minus number
+of estimated coefficients). Missing/nonfinite data and invalid counts raise;
+rows are not silently deleted as in the original S wrapper.
+
+All six families use the parameter order described above. Free shapes are bounded
+by +/-shape_bound (default 10); beta coefficients by +/-1e20, matching minimize.S.
+The default start is beta=0 with start_alpha=(0,0). `initial` can provide the whole
+coefficient vector. Fixed shape parameters are supplied separately in fixed_alpha.
+
+L-BFGS-B with analytic gradients replaces David Gay DRMNHB. Columns are scaled
+by their maximum absolute values (at least one), with bounds transformed exactly;
+the optimizer uses negative log likelihood per trial. Defaults are relative
+function tolerance 1e-12, projected-gradient tolerance 1e-8 in scaled coordinates,
+and 2,000 iterations. Either convergence criterion may stop optimization. Solver
+paths and local optima can differ, especially after correcting family-4 derivatives.
+Convergence does not establish a global maximum. A numerical trial exceeding the
+objective's range fails explicitly rather than supplying a fabricated derivative.
+
+A bounded linear program checks complete/quasi-complete separation before fitting:
+pure response groups admit nonnegative signed margins while mixed groups require
+zero margins. A positive feasible margin means no finite interior maximum. This
+check has numerical tolerances; it is not proof of global identification for all
+shape families. Rank deficiency, separation, iteration failure, and numerical
+failure are explicit errors.
+
+The result includes coefficients, the two effective shapes, the full objective
+and derivatives, deviance, residual_df, dispersion, covariance, standard_errors,
+active_bounds, iterations, and inference_message. `null_deviance` and
+`null_dispersion` describe the intercept-only empirical-frequency model from the
+original raw-data summary; its degrees of freedom are rows minus one.
+
+Default scale="pearson" estimates dispersion as Pearson chi-square/residual_df,
+without flooring at one. scale="fixed" uses dispersion one. Deviance is computed
+from stable log probabilities. Covariance is dispersion times the inverse observed
+Hessian, obtained by a linear solve after checking positive definiteness. At active
+bounds or detected nonregular zero branches, or when curvature is not positive
+definite, covariance and standard_errors are None and inference_message explains
+why. Such a fit is not silently presented as an ordinary interior Wald estimate.
+These local approximations do not replace model checking or account for selecting
+a family from the data.
+
+The original minimize.S uses untransformed eta for family-0 fitted probabilities,
+even when fixed shapes are nonzero. This port consistently uses the fitted
+transformed link. It also avoids the source's substitution of a unit denominator
+for a rounded zero binomial variance in Pearson calculations.
+
+`tools/reference_stukel_fit.py` runs the archived FGH/DRMNHB optimizer on both
+beetles and Warsaw data for all families. Only machine constants are replaced for
+the current IEEE binary64 platform. Ten successful native fits agree in likelihood
+within 1e-6. The two native family-4 fits report false convergence; their coefficients
+are not treated as successful-fit oracles. The corrected fits improve their
+likelihoods and pass stationarity and curvature checks. Tests additionally cover
+closed-form intercept-only covariance/dispersion, fixed shapes, prediction,
+separation, active bounds, rank deficiency, and failed convergence.
