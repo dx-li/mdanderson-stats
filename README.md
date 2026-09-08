@@ -82,5 +82,6 @@ its generalized logistic link and prediction from supplied coefficients.
 `stukel_objective` evaluates its likelihood and analytic derivatives for all six
 parameter families. `fit_stukel` fits those families with bounds, dispersion and
 observed-information covariance. `scan_stukel` profiles likelihood over fixed-shape grids.
-[STUKEL plotting and reporting remain pending](docs/stukel.md).
+`plot_stukel` provides dose/link plots with the plot extra; `format_stukel` returns
+regression tables. [STUKEL coverage and remaining demo workflow](docs/stukel.md).
 [The MULTI coverage audit](docs/multi-coverage.md) records its remaining I/O gaps.

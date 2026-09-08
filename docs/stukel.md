@@ -4,7 +4,8 @@ Catalog entry 58 is partial. Implemented: the two-shape inverse link, transforme
 log odds, prediction from supplied coefficients, and grouped-binomial likelihood,
 gradient and observed Hessian, bounded regression estimation, covariance and
 dispersion estimates for all six parameter families, and fixed-shape likelihood
-scanning. Plotting/reporting remain pending.
+scanning, individual-fit plots and regression tables. The bundled six-family
+demo comparison workflow remains pending.
 
 The model is described in Thérèse A. Stukel, “Generalized Logistic Models,”
 JASA 83(402), 426–431 (1988),
@@ -212,3 +213,67 @@ examples converge natively and agree with the Python profiles within 1e-7.
 Independent tests check shape-invariant intercept-only likelihoods, saturated
 models, analytically known separated fits at finite bounds, axis ordering,
 repeated shapes, input validation and explicit failed-cell handling.
+
+
+## Regression output
+
+```python
+from mdanderson_stats import format_stukel, plot_stukel
+
+print(format_stukel(fit, digits=6))
+dose, link = plot_stukel(fit, x, successes, trials, plot_dose=True)
+dose.figure.savefig("stukel.png")
+```
+
+`format_stukel` returns text rather than writing to a global output sink. It
+includes effective shapes, named coefficients, standard errors, Wald z statistics,
+two-sided normal-tail p-values, and the raw-data/regression deviance, degrees of
+freedom, and scale table from glim.p.S. `digits` is 1–17 significant digits
+(default 4). It does not alter global printing options. P-values use erfc instead
+of subtracting the chi-square CDF from one, preserving small tails. Unavailable
+covariance or zero standard errors yields NA inference, and the fit's inference
+message is included. These are local Wald approximations with the limitations
+already described above; fitting a shape family does not validate that model.
+
+`plot_stukel` requires the optional plot extra and returns a tuple of Matplotlib
+axes, ordered dose then link. It defaults to link only, following plot.stukel.S;
+at least one of plot_dose/plot_link must be true. It creates its own figure,
+without showing it, saving it, changing the backend/style, or requiring a mouse
+click to place a legend. Predictions use the supplied x and fitted coefficients,
+so the supplied observations may be training or new data with matching covariates.
+
+Dose plots require one covariate and connect fitted probabilities at the supplied
+doses. Observed successes/trials and predictions are sorted together. The source
+sorts successes but leaves trial counts unsorted, producing wrong observed
+fractions when unequal trials are supplied out of dose order; this is corrected.
+Link plots sort the full design's linear predictors and plot transformed log odds
+against them, with the ordinary-logistic identity line for comparison. They
+support multiple covariates, correcting the source's flattening of the design
+matrix. Fixed nonzero shapes consistently use the transformed link. Nonfinite
+plot coordinates and invalid observations fail before allocating a figure.
+
+Tests verify report statistics, small tails and unavailable inference; plotted
+coordinates on unsorted data with unequal trials; multiple covariates; and invalid
+inputs. Both panels were rendered and visually inspected on the archived beetles
+example. Plot geometry is validated against the mathematical coordinates, not
+against the known sorting defects of the original plotting code.
+
+## Source coverage audit
+
+| Original component | Python coverage |
+| --- | --- |
+| all.f FGH and link/derivative helpers | stukel link, objective and derivative APIs; native fixtures |
+| glr.stukel.S, minimize.S | fit_stukel, all six families, observed information and raw-data summary |
+| covar.S | covariance via a full-Hessian linear solve with explicit unavailable inference |
+| dev.logit.S, scale.logit.S | stable deviance and dispersion in fit_stukel |
+| predict.glr.S | predict_stukel and fit.predict, with documented optional prediction compatibility |
+| scan.stukel.S, minim.S | scan_stukel, original bounds/starts, native grid fixtures |
+| plot.stukel.S | plot_stukel dose and link panels with corrected row pairing |
+| glim.p.S | format_stukel coefficient and comparison tables |
+| dgay.f | replaced by validated SciPy bounded optimization; not a generic port of the optimizer library |
+| data.S, demos.S | both datasets used in native validation; six-family combined demo plots/report workflow still pending |
+
+Missing-row deletion, terminal prompts, S installation steps, global graphics
+state and byte-identical S formatting are replaced by explicit Python APIs as
+noted above. Catalog status remains partial until the remaining demonstration
+workflow is provided and checked.

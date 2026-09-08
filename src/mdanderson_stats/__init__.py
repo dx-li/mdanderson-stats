@@ -39,6 +39,7 @@ from .schweder_output import plot_schweder, write_schweder_data
 from .stukel import predict_stukel, stukel_log_odds, stukel_probability
 from .stukel_fit import StukelFit, StukelFitError, fit_stukel
 from .stukel_objective import StukelObjective, stukel_objective
+from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
@@ -89,6 +90,8 @@ __all__ = [
     "select_beta_mixture",
     "sharpened_testing",
     "scan_stukel",
+    "format_stukel",
+    "plot_stukel",
     "stukel_log_odds",
     "stukel_objective",
     "stukel_probability",
