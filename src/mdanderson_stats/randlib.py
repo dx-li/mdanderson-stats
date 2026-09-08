@@ -1,5 +1,6 @@
 """Explicit RANDLIB generator banks with original stream/block controls."""
 
+from datetime import datetime
 from typing import Literal
 
 import numpy as np
@@ -16,6 +17,7 @@ from ._randlib_negative_binomial import sample_negative_binomial
 from ._randlib_normal import legacy_normal
 from ._randlib_poisson import sample_poisson
 from ._randlib_sampling import bounded, raw_batch
+from ._randlib_seeding import phrase_seeds
 from ._validation import scalar
 from .randlib_multivariate import RandlibMultivariateNormal, sample_multivariate_normal
 from .ranlist_random import _DEFAULT, _M1, _M2, _stream_seeds
@@ -71,6 +73,32 @@ class RandlibGenerator:
         self._initial = initial
         self._block = initial.copy()
         self._current = initial.copy()
+
+    def set_phrase(
+        self, phrase: str, *, stream: int = 1, source: Literal["fortran", "c"] = "fortran"
+    ) -> tuple[int, int]:
+        """Reset all streams from PHRTSD, select stream, and return the base seeds."""
+        stream = _integer(stream, "stream", 1, 32)
+        seed = phrase_seeds(phrase, source)
+        self.set_all_seeds(seed)
+        self._stream = stream
+        return seed
+
+    def set_time(self, moment: datetime | None = None) -> tuple[int, int]:
+        """Seed from HHMMSS.mmm wall time, retaining the selected stream.
+
+        An explicit datetime makes this reproducible; otherwise read the local
+        clock once. Return the base seed pair so callers can record/replay it.
+        """
+        if moment is None:
+            moment = datetime.now()
+        if not isinstance(moment, datetime):
+            raise ValueError("moment must be a datetime or None")
+        phrase = (
+            f"{moment.hour:02d}{moment.minute:02d}{moment.second:02d}."
+            f"{moment.microsecond // 1000:03d}"
+        )
+        return self.set_phrase(phrase, stream=self._stream)
 
     def set_antithetic(self, enabled: bool) -> None:
         """Complement selected stream's future raw draws as M1-z (SETANT)."""

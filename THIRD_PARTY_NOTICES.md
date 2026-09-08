@@ -442,3 +442,8 @@ the archived LINPACK SPOFA and BLAS SDOT arithmetic; SPOFA credits Cleve
 Moler, University of New Mexico and Argonne National Laboratory (08/14/1978).
 Sampling reuses the attributed normal generator above. Original source and
 executables are not bundled; retained RANDLIB notices remain available.
+
+RANDLIB phrase seeding reuses the PHRTSD arithmetic already attributed for
+RANLIST, with the archived C character table and its defined final-character
+behavior available explicitly. Time seeding expresses the Fortran 95
+USER_SET_GENERATOR time-of-day formatting and hash composition.

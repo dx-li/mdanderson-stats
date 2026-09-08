@@ -336,3 +336,7 @@ and checks of category totals, marginal distributions and covariances.
 RANDLIB multivariate-normal sampling adds immutable reusable covariance
 factors, batched matrix transforms, and native C/Fortran 77/95 factor, vector
 and generator-state validation.
+
+RANDLIB phrase and time seeding now reset all streams explicitly and return
+base seeds for replay, with validated Fortran/C character mappings and guards
+for undefined C lookup inputs.

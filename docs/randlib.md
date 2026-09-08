@@ -772,3 +772,56 @@ model per run and compares 10,000 batched observations with repeated calls
 to the same Python API, reusing the model in both cases.
 
 RANDLIB's final archive coverage/performance audit remains pending.
+
+## Phrase and clock seeding
+
+```python
+from datetime import datetime
+from mdanderson_stats import RandlibGenerator
+
+bank = RandlibGenerator()
+base_seed = bank.set_phrase("study A", stream=1)
+clock_seed = bank.set_time(datetime(2026, 9, 8, 12, 34, 56, 789000))
+replay = RandlibGenerator(clock_seed, stream=bank.stream)
+```
+
+`set_phrase(phrase, *, stream=1, source="fortran")` hashes the full ASCII
+phrase, resets all 32 initial/block/current states, selects the requested
+stream and returns the base seed pair. Antithetic flags are retained.
+Trailing spaces are ignored; an empty/all-space phrase uses the source default
+pair. The noninteractive API accepts full phrases rather than truncating to
+the legacy interactive dialog's 80-character buffer. The Fortran hash reuses
+`ranlist_seeds`; unsupported ASCII characters use its original fallback code.
+
+C's PHRTSD has a different table, including an extra backslash before the
+quotation mark. This changes punctuation hashes, including time strings with
+a decimal point. `source="c"` preserves the C mapping and its special handling
+of the final table character `/`. The source reads beyond its lookup table
+for unknown characters. Python rejects those C-mode inputs instead of
+reproducing undefined memory access; this includes internal spaces, tabs,
+NUL and `~`. Trailing spaces are still removed first. Use the default Fortran
+mapping for arbitrary ASCII text.
+
+`set_time(moment=None)` hashes `HHMMSS.mmm`, matching the Fortran time-of-day
+seeding helper. With no argument it reads the local clock once. An explicit
+`datetime` makes this deterministic: its displayed hour/minute/second fields
+are used as supplied, microseconds are truncated to milliseconds, and neither
+the date nor timezone offset enters the hash. The method retains the selected
+stream and antithetic flags, resets all streams, and returns the base seed
+pair for recording/replay. The same time of day produces the same seeds;
+this is the archived reproducibility convention, not an entropy guarantee.
+
+The Fortran 95 `user_set_generator` module marks its documented convenience
+routines private. Its interactive phrase routine computes the hash but omits
+the call that applies it to the generator. Python provides explicit methods
+and applies the reset correctly. The reference driver exposes only the private
+hash routine for measurement, keeping its body unchanged; fixture provenance
+records the modification and original source hashes.
+
+`tools/reference_randlib_seeding.py` validates 180 phrase/stream cases across
+C, Fortran 77 and Fortran 95: base seeds plus 1,800 raw values and component
+states. Cases include punctuation, clock strings, long phrases, trailing
+spaces, streams 1 and 32 and antithetic flags. Undefined C lookup inputs are
+excluded from native execution and tested as Python errors. Additional tests
+verify all-stream/block reset, stream retention, actual-clock replay,
+millisecond formatting, immutable failure state and shared Fortran hashing.

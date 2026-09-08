@@ -1,5 +1,7 @@
 """Indexed reproduction of the integer streams embedded in RANLIST."""
 
+from collections.abc import Iterable
+
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
@@ -21,9 +23,14 @@ def ranlist_seeds(phrase: str) -> tuple[int, int]:
     table = (
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[];:'\"<>?,./"
     )
+    return _phrase_seed_codes(
+        (table.find(character) + 1) % 64 or 63 for character in phrase.rstrip(" ")
+    )
+
+
+def _phrase_seed_codes(codes: Iterable[int]) -> tuple[int, int]:
     first, second = _DEFAULT
-    for character in phrase.rstrip(" "):
-        code = (table.find(character) + 1) % 64 or 63
+    for code in codes:
         values = [(code - j - 1) % 63 + 1 for j in range(1, 6)]
         for j in range(5):
             first = (first + 64**j * values[j]) % 2**30
