@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 
 
-def main():
+def build_native(*, scan=False):
     source = Path("research/raw/STUKEL/S/stukel")
     directory = Path("research/raw/reference/stukel")
     directory.mkdir(parents=True, exist_ok=True)
@@ -81,7 +81,14 @@ write(*,'(es27.17e3)') fx
 write(*,'(*(es27.17e3,1x))') b
 end program
 """)
-    executable = directory / "fit"
+    if scan:
+        text = driver.read_text()
+        text = text.replace("fixed=0d0", "read(*,*) fixed")
+        text = text.replace("1d20", "1000d0")
+        text = text.replace("v(32)=1d-6\nv(33)=1d-6\n", "")
+        driver = directory / "scan.f90"
+        driver.write_text(text)
+    executable = directory / ("scan" if scan else "fit")
     subprocess.run(
         [
             "gfortran",
@@ -98,6 +105,12 @@ end program
         check=True,
         capture_output=True,
     )
+    return executable
+
+
+def main():
+    source = Path("research/raw/STUKEL/S/stukel")
+    executable = build_native()
     cases = []
     for dataset in ("beetles", "warsaw"):
         values = np.loadtxt(source / f"{dataset}.dat")

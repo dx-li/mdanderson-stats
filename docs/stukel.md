@@ -3,8 +3,8 @@
 Catalog entry 58 is partial. Implemented: the two-shape inverse link, transformed
 log odds, prediction from supplied coefficients, and grouped-binomial likelihood,
 gradient and observed Hessian, bounded regression estimation, covariance and
-dispersion estimates for all six parameter families. Model scanning and
-plotting/reporting remain pending.
+dispersion estimates for all six parameter families, and fixed-shape likelihood
+scanning. Plotting/reporting remain pending.
 
 The model is described in Thérèse A. Stukel, “Generalized Logistic Models,”
 JASA 83(402), 426–431 (1988),
@@ -168,3 +168,47 @@ are not treated as successful-fit oracles. The corrected fits improve their
 likelihoods and pass stationarity and curvature checks. Tests additionally cover
 closed-form intercept-only covariance/dispersion, fixed shapes, prediction,
 separation, active bounds, rank deficiency, and failed convergence.
+
+
+## Fixed-shape likelihood scanning
+
+```python
+from mdanderson_stats import scan_stukel
+
+negative_log_likelihood = scan_stukel(
+    x, successes, trials, alpha1=[-0.2, 0, 0.2], alpha2=[-0.3, 0, 0.3]
+)
+```
+
+The returned matrix has alpha1 along rows and alpha2 along columns, exactly as
+scan.stukel.S. Each cell independently refits beta from zero with both shapes
+fixed. Values are negative log likelihoods without binomial combinatorial
+constants; smaller values indicate better fits. Input grid order and duplicates
+are preserved. Grids must be finite, nonempty one-dimensional arrays; a single
+shape value is supplied as a one-element array.
+
+The beta bounds default to +/-1000, following minim.S (ordinary regression uses
++/-1e20). `beta_bound` can change this constraint. The scan shares the regression
+optimizer's scaled coordinates, analytic gradient, tolerances and iteration limit.
+It does not warm-start from adjacent cells, which could change the source's
+behavior on nonconvex objectives. Its local optimization does not guarantee a
+global profile minimum. Original David Gay solver paths and stopping criteria
+can differ from L-BFGS-B.
+
+An intercept is added by default; one-dimensional x means one covariate. Counts
+and finite inputs follow the regression contract. Full column rank is required,
+but positive residual degrees of freedom and absence of separation are not:
+this routine computes a bounded likelihood profile without covariance or
+interior-MLE claims. In particular, changing beta_bound can change the profile
+for separated data. Numerical or convergence failure raises StukelFitError with
+the failing grid indices and shape pair, preserving its cause. No failed cell is
+silently returned as a successful number or a missing value.
+
+`tools/reference_stukel_scan.py` runs original FGH/DRMNHB with minim.S bounds,
+zero starts, default DIVSET tolerances, and its 500-function-evaluation limit.
+The fixture records source hashes, compiler version and native convergence
+statuses. All 24 points on rectangular grids for the archived beetles and Warsaw
+examples converge natively and agree with the Python profiles within 1e-7.
+Independent tests check shape-invariant intercept-only likelihoods, saturated
+models, analytically known separated fits at finite bounds, axis ordering,
+repeated shapes, input validation and explicit failed-cell handling.

@@ -70,6 +70,61 @@ def _check_separation(x: FloatArray, y: FloatArray, n: FloatArray) -> None:
         raise StukelFitError("Complete or quasi-complete separation: no finite interior maximum")
 
 
+def _optimize_stukel(
+    design: FloatArray,
+    y: FloatArray,
+    n: FloatArray,
+    coef: FloatArray,
+    bound: FloatArray,
+    family: int,
+    fixed: FloatArray,
+    tolerance: float,
+    gradient_tolerance: float,
+    max_iterations: int,
+) -> tuple[FloatArray, StukelObjective, int]:
+    """Shared bounded optimizer for regression and fixed-shape profiling."""
+    tolerance = scalar(tolerance, "tolerance")
+    gradient_tolerance = scalar(gradient_tolerance, "gradient_tolerance")
+    if not 0 < tolerance < 1 or not 0 < gradient_tolerance < 1:
+        raise ValueError("tolerances must lie in (0,1)")
+    if (
+        isinstance(max_iterations, bool)
+        or not isinstance(max_iterations, int)
+        or max_iterations < 1
+    ):
+        raise ValueError("max_iterations must be a positive integer")
+    initial_result = stukel_objective(design, y, n, coef, family=family, fixed_alpha=fixed)
+    extra = coef.size - design.shape[1]
+    # Column scaling improves optimization units while preserving exact beta bounds.
+    units = np.r_[np.maximum(np.max(np.abs(design), axis=0), 1), np.ones(extra)]
+    total = float(n.sum())
+
+    def objective(theta: FloatArray) -> tuple[float, FloatArray]:
+        result = stukel_objective(design, y, n, theta / units, family=family, fixed_alpha=fixed)
+        return result.negative_log_likelihood / total, result.gradient / units / total
+
+    result = minimize(
+        objective,
+        coef * units,
+        jac=True,
+        method="L-BFGS-B",
+        bounds=list(zip(-bound * units, bound * units, strict=True)),
+        options={
+            "ftol": tolerance,
+            "gtol": gradient_tolerance,
+            "maxiter": max_iterations,
+            "maxls": 40,
+        },
+    )
+    if not result.success:
+        raise StukelFitError(f"STUKEL optimizer failed: {result.message}")
+    coef = result.x / units
+    evaluated = stukel_objective(design, y, n, coef, family=family, fixed_alpha=fixed)
+    if evaluated.negative_log_likelihood > initial_result.negative_log_likelihood + 1e-8:
+        raise StukelFitError("STUKEL fit worsened the initial likelihood")
+    return coef, evaluated, int(result.nit)
+
+
 def fit_stukel(
     x: ArrayLike,
     successes: ArrayLike,
@@ -112,57 +167,32 @@ def fit_stukel(
     starts = [] if not extra else start.tolist() if extra == 2 else [start[int(family == 2)]]
     coef = np.r_[np.zeros(p), starts] if initial is None else finite(initial, "initial")
     shape_bound = scalar(shape_bound, "shape_bound")
-    tolerance, gradient_tolerance = (
-        scalar(tolerance, "tolerance"),
-        scalar(gradient_tolerance, "gradient_tolerance"),
-    )
-    if shape_bound <= 0 or not 0 < tolerance < 1 or not 0 < gradient_tolerance < 1:
-        raise ValueError("shape_bound must be positive; tolerances must lie in (0,1)")
+    if shape_bound <= 0:
+        raise ValueError("shape_bound must be positive")
     if scale not in ("pearson", "fixed"):
         raise ValueError("scale must be 'pearson' or 'fixed'")
-    if (
-        isinstance(max_iterations, bool)
-        or not isinstance(max_iterations, int)
-        or max_iterations < 1
-    ):
-        raise ValueError("max_iterations must be a positive integer")
     bound = np.r_[np.full(p, 1e20), np.full(extra, shape_bound)]
     if coef.shape != bound.shape or np.any(np.abs(coef) > bound):
         raise ValueError("Initial coefficients must have the required size and lie within bounds")
-    initial_result = stukel_objective(design, y, n, coef, family=family, fixed_alpha=fixed)
+    stukel_objective(design, y, n, coef, family=family, fixed_alpha=fixed)
     df = design.shape[0] - coef.size
     if df <= 0 or np.linalg.matrix_rank(design) < p:
         raise StukelFitError(
             "Fit requires positive residual degrees of freedom and full-rank design"
         )
     _check_separation(design, y, n)
-    # Column scaling improves optimization units while preserving exact beta bounds.
-    units = np.r_[np.maximum(np.max(np.abs(design), axis=0), 1), np.ones(extra)]
-    total = float(n.sum())
-
-    def objective(theta: FloatArray) -> tuple[float, FloatArray]:
-        result = stukel_objective(design, y, n, theta / units, family=family, fixed_alpha=fixed)
-        return result.negative_log_likelihood / total, result.gradient / units / total
-
-    result = minimize(
-        objective,
-        coef * units,
-        jac=True,
-        method="L-BFGS-B",
-        bounds=list(zip(-bound * units, bound * units, strict=True)),
-        options={
-            "ftol": tolerance,
-            "gtol": gradient_tolerance,
-            "maxiter": max_iterations,
-            "maxls": 40,
-        },
+    coef, evaluated, iterations = _optimize_stukel(
+        design,
+        y,
+        n,
+        coef,
+        bound,
+        family,
+        fixed,
+        tolerance,
+        gradient_tolerance,
+        max_iterations,
     )
-    if not result.success:
-        raise StukelFitError(f"STUKEL optimizer failed: {result.message}")
-    coef = result.x / units
-    evaluated = stukel_objective(design, y, n, coef, family=family, fixed_alpha=fixed)
-    if evaluated.negative_log_likelihood > initial_result.negative_log_likelihood + 1e-8:
-        raise StukelFitError("STUKEL fit worsened the initial likelihood")
     shapes, _ = _family_shapes(coef, p, family, fixed)
     h = evaluated.log_odds
     entropy = float(np.sum(xlogy(y, y / n) + xlogy(n - y, (n - y) / n)))
@@ -219,7 +249,7 @@ def fit_stukel(
         covariance,
         message,
         active,
-        int(result.nit),
+        iterations,
         family,
         intercept,
     )
