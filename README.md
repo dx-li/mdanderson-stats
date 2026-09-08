@@ -199,3 +199,6 @@ text reports, explicit bypass status and quadrature convergence counts.
 
 `plot_muhaz`, `plot_pehaz` and `plot_kphaz` provide optional hazard plots and
 overlays, including bin edges, strata and gaps for undefined estimates.
+
+`exploratory_survival` starts the EXPSURV port with survival curves, plotting
+corners and inverse-survival queries; [remaining workflows](docs/expsurv.md) are tracked explicitly.

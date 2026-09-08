@@ -261,3 +261,10 @@ No original S function is bundled.
 `muhaz_plot.py` independently implements the archived MUHAZ, PEHAZ and KPHAZ
 plot/overlay workflows using the optional Matplotlib dependency. Nonfinite
 estimates are consistently displayed as gaps. No original S source is bundled.
+
+## EXPSURV
+
+`expsurv.py` independently implements survival-curve and quantile calculations
+from E. Neely Atkinson's EXPSURV XLISP-STAT package. Its source readme permits
+redistribution. Original code is used as local reference material and is not
+bundled; the source hash and validation limits are recorded in `docs/expsurv.md`.

@@ -572,9 +572,14 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "exploratory_survival: grouped and source-sequential Kaplan-Meier curves, exact plotting corners, right-continuous queries and step/source-interpolated survival quantiles"
+      ],
+      "validation": [
+        "tests/test_expsurv.py",
+        "docs/expsurv.md"
+      ]
     },
     {
       "id": 29,
