@@ -922,7 +922,10 @@
         "mdanderson_stats.order_statistic_diagnostics: S OSFIT cumulative and legacy transformed CDFs, uncapped combined score, batched original-order results",
         "mdanderson_stats.clustered_pvalues: one-sided equicorrelated normal p-values, null/alternative clusters, linear-time covariance transform and explicit NumPy random state",
         "mdanderson_stats.nonparametric_pvalues: S NPFIT local-quadratic diagnostic with original bandwidth, reciprocal weights and fractional beta tails; stable scaled least squares and explicit failure handling",
-        "mdanderson_stats.nonparametric_testing: desktop NP1P polynomial and cross-validated local-quadratic fits, Schweder null-count integration, reciprocal scores and rejection masks; defined retain-all and failure behavior"
+        "mdanderson_stats.nonparametric_testing: desktop NP1P polynomial and cross-validated local-quadratic fits, Schweder null-count integration, reciprocal scores and rejection masks; defined retain-all and failure behavior",
+        "mdanderson_stats.BetaMixture: normalized uniform-plus-beta model, stable log densities and likelihoods, CDFs, conditional null posteriors and source-scaled Cramer-von Mises statistic; explicit legacy endpoint option",
+        "mdanderson_stats.beta_mixture_start: S STBETA lower-tail component initialization with sample-variance beta moments",
+        "mdanderson_stats.fit_beta_mixture_em: EMBETA log-moment EM updates, positive Newton shape solves, source convergence distance and explicit fit failures; direct optimizer, model selection and simulation calibration pending"
       ],
       "validation": [
         "tests/test_multiplicity.py",
@@ -932,7 +935,11 @@
         "docs/multiple-testing.md",
         "tests/test_nonparametric.py",
         "tests/fixtures/nonparametric.json",
-        "tests/test_nonparametric_testing.py"
+        "tests/test_nonparametric_testing.py",
+        "tests/test_beta_mixture.py",
+        "tests/test_beta_mixture_fit.py",
+        "tests/fixtures/beta_mixture.json",
+        "docs/beta-mixtures.md"
       ]
     },
     {

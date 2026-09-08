@@ -74,13 +74,18 @@ def build() -> Path:
         ("      SUBROUTINE NPFIT(", "npfit"),
         ("      DOUBLE PRECISION FUNCTION wdthmx(", "wdthmx"),
         ("      SUBROUTINE cumbin(", "cumbin"),
+        ("      SUBROUTINE INITLN(", "initln"),
+        ("      SUBROUTINE BPVAL(", "bpval"),
+        ("      SUBROUTINE CALCVM(", "calcvm"),
+        ("      SUBROUTINE STBETA(", "stbeta"),
+        ("      SUBROUTINE EMBETA(", "embeta"),
     ]:
         start = s_source.index(declaration)
         end_match = re.search(r"^      END\s*$", s_source[start:], flags=re.MULTILINE)
         if end_match is None:
             raise ValueError(f"{name} program unit not found")
         unit = s_source[start : start + end_match.end()]
-        for symbol in ("npfit", "wdthmx"):
+        for symbol in ("npfit", "wdthmx", "embeta"):
             unit = re.sub(rf"\b{symbol}\b", f"s_{symbol}", unit, flags=re.IGNORECASE)
         path = directory / f"s-{name}.f"
         path.write_text(unit + "\n")
@@ -88,10 +93,11 @@ def build() -> Path:
     driver = directory / "driver.f90"
     driver.write_text("""program multi_reference
   implicit none
-  integer :: mode,n,i,number,status,length,lo,points
+  integer :: mode,n,i,number,status,length,lo,points,k
   integer, external :: shl,shc
-  double precision :: alpha,nulls,beta,variance
-  double precision, external :: s_wdthmx
+  double precision :: alpha,nulls,beta,variance,p0,likelihood,cvm
+  double precision, external :: s_wdthmx,mixbet,mixprb,lglk
+  double precision, allocatable :: mp(:),ar(:),br(:),phi1(:),phi2(:)
   double precision, allocatable :: x(:),p(:),q(:),w(:)
   logical, allocatable :: rejected(:)
   integer, allocatable :: counts(:)
@@ -178,6 +184,45 @@ def build() -> Path:
       end if
       write(*,'(3es26.17,3i8)') p(i),w(i),q(i),merge(1,0,rejected(i)),lo,points
     end do
+    stop
+  case(17,18,19)
+    read(*,*) k,p0
+    allocate(mp(k+1),ar(k+1),br(k+1),phi1(k+1),phi2(k+1))
+    if (k > 0) then
+      read(*,*) mp(:k)
+      read(*,*) ar(:k)
+      read(*,*) br(:k)
+    end if
+    call initln(x,p,q,n)
+    status=0
+    if (mode == 18) then
+      k=k+1
+      call stbeta(x,n,k,p0,mp,ar,br,status,rejected)
+    else if (mode == 19 .and. k > 0) then
+      do i=1,k
+        call swppar(.true.,phi1(i),phi2(i),ar(i),br(i),status)
+      end do
+      call s_embeta(p,q,n,k,p0,mp,ar,br,phi1,phi2,alpha,likelihood,status)
+    end if
+    if (mode /= 17) then
+      write(*,*) status
+      if (status /= 0) stop
+    end if
+    likelihood=lglk(p,q,n,k,p0,mp,ar,br)
+    call calcvm(x,n,k,p0,mp,ar,br,cvm)
+    if (mode == 17) then
+      call bpval(p,q,n,k,p0,mp,ar,br,w)
+      write(*,'(2es27.17e3)') likelihood,cvm
+      do i=1,n
+        write(*,'(3es27.17e3)') mixbet(p(i),q(i),k,p0,mp,ar,br), &
+                              mixprb(x(i),k,p0,mp,ar,br),w(i)
+      end do
+    else
+      write(*,'(3es27.17e3)') p0,likelihood,cvm
+      do i=1,k
+        write(*,'(3es27.17e3)') mp(i),ar(i),br(i)
+      end do
+    end if
     stop
   end select
   do i=1,n

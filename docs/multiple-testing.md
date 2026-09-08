@@ -4,9 +4,11 @@ Catalog entry 50 includes a desktop program and an S library. This port currentl
 covers the desktop's nine adjustment/threshold procedures, two sharpened procedures,
 and Schweder line fitting, plus the S library's Schweder bootstrap,
 order-statistic diagnostics, clustered p-value generation, and S/desktop
-nonparametric fitting. It remains **partial**: beta mixtures and plotting helpers
-still need implementations and validation. The catalog does not count this entry
-as complete.
+nonparametric fitting. [Beta-mixture evaluation, initialization, and EM fitting](beta-mixtures.md)
+are also available. It remains **partial**: the direct likelihood optimizer,
+automatic component selection, simulation-based model checks, and remaining
+plotting/reporting workflows still need implementations and validation.
+The catalog does not count this entry as complete.
 
 ## Adjustment procedures
 

@@ -27,9 +27,10 @@ is redistributed by this project.
 ## MULTI
 
 `multiplicity.py`, `schweder.py`, `pvalue_models.py`, `nonparametric.py`, and
-`nonparametric_testing.py` contain
+`nonparametric_testing.py`, `beta_mixture.py`, and `beta_mixture_fit.py` contain
 modified Python implementations of MULTI's adjustment, sharpened-testing, Schweder,
-order-statistic, clustered-simulation, and S/desktop nonparametric algorithms. The original code
+order-statistic, clustered-simulation, S/desktop nonparametric, and beta-mixture
+evaluation/initialization/EM algorithms. The original code
 is copyright 1996 for The University of Texas M. D. Anderson Cancer Center.
 Barry W. Brown is the original contact. This adaptation is maintained independently.
 
