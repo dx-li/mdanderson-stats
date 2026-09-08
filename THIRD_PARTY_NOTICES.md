@@ -139,3 +139,12 @@ boundary-assistance probability definitions, study summaries, revision workflow
 and numeric design-export semantics. The table corrects the original lower-cutoff
 exclusion. Native table provenance is recorded in `tests/fixtures/ksbin1_table.json`;
 original source remains confined to local reference builds.
+
+## KSBIN2
+
+`ksbin2.py` independently implements evidence-statistic formulas and weighted
+outcome ordering described by KSBIN2's numerical source and executable menu.
+Original Fortran routines are extracted only into a local reference build and
+are not shipped. Source and extracted-code hashes and compiler provenance are
+recorded in `tests/fixtures/ksbin2.json`. Documentation records the source's
+criterion-description inconsistency and the exact-zero likelihood correction.

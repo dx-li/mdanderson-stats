@@ -110,3 +110,7 @@ See [KSB1CI definitions, validation and examples](docs/ksb1ci.md).
 including rejection/quitting probabilities and expected sample sizes.
 `ksbin1_study` adds single-stage comparison, boundary assistance, design revision,
 and report/design file output. See [KSBIN1 coverage and validation](docs/ksbin1.md).
+
+`ksbin2_statistic` and `ksbin2_ordering` provide vectorized two-sample binomial
+evidence scores and tied outcome groups. [KSBIN2 coverage](docs/ksbin2.md) tracks
+the remaining probability and multistage-design workflows.
