@@ -45,7 +45,10 @@ end program
     )
     executable = directory / "reference"
     subprocess.run(
-        ["gfortran", "-O2", str(driver), "-o", str(executable)], check=True, capture_output=True
+        ["gfortran", "-O2", str(driver), "-o", str(executable)],
+        check=True,
+        capture_output=True,
+        cwd=directory,
     )
     cases = []
     for alternative in ["less", "greater", "two-sided"]:
