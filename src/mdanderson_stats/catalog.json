@@ -1090,10 +1090,15 @@
         "SeqBinDesign: sequential/group-sequential beta-posterior one/two-sided boundaries with explicit original endpoint clamping",
         "SeqBinDesign.operating_characteristics: batched exact stopping probabilities and unconditional/conditional expected sample sizes",
         "seqbin_prior: beta mean/total-shape-mass inputs with exact and original conversions",
-        "seqbin_calibrate/seqbin_calibrate_tails: conservative or nearest frequentist calibration with attainable-level brackets and common or separate two-sided cutoffs"
+        "seqbin_calibrate/seqbin_calibrate_tails: conservative or nearest frequentist calibration with attainable-level brackets and common or separate two-sided cutoffs",
+        "seqbin_boundary_table: compact/verbose null continuation and stopping-probability tables without mutating the design",
+        "SeqBinStudySpecification/SeqBinStudy: complete numerical reports, prior/design/calibration inputs, revision and JSON replay"
       ],
       "validation": [
         "tests/test_seqbin.py",
+        "tests/test_seqbin_study.py",
+        "tests/fixtures/seqbin_table.json",
+        "tools/reference_seqbin_table.py",
         "tests/test_seqbin_calibration.py",
         "tests/fixtures/seqbin_calibration.json",
         "tools/reference_seqbin_calibration.py",

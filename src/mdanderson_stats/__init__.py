@@ -77,6 +77,8 @@ from .seqbin_calibration import (
     seqbin_calibrate_tails,
 )
 from .seqbin_prior import seqbin_prior
+from .seqbin_study import SeqBinStudy, SeqBinStudySpecification
+from .seqbin_table import SeqBinBoundaryTable, seqbin_boundary_table
 from .single import SingleDesignPrecision, single_design_precision
 from .single_allocation import SingleAllocation, single_optimize_allocations
 from .single_correlation import SingleDesignCorrelation, single_design_correlation
@@ -97,6 +99,10 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "SeqBinBoundaryTable",
+    "SeqBinStudy",
+    "SeqBinStudySpecification",
+    "seqbin_boundary_table",
     "SeqBinTailCalibration",
     "seqbin_calibrate_tails",
     "SeqBinCalibration",

@@ -2,8 +2,9 @@
 
 Catalog entry 54 is **partial**. Bayesian boundary construction and exact
 operating characteristics, prior mean/effective-sample-size input and frequentist
-calibration are implemented. Compact boundary tables, full study reports and
-interactive revision equivalents remain pending.
+calibration are implemented, along with compact/verbose boundary tables, complete
+numerical reports, study revision and JSON replay. The entry remains partial
+pending the final source/manual coverage audit.
 
 Source: [SEQBIN 1.5](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/54),
 Barry W. Brown, distributed in `SEQBIN_V1.5.zip`. Original files remain local
@@ -159,3 +160,85 @@ root finder's precision. Separate exhaustive six-subject tests enumerate rationa
 beta/binomial tail thresholds and all outcome paths to verify every attainable
 level independently. Additional tests check out-of-range targets, ties, separate
 tail composition, invalid inputs and prior conversion.
+
+
+## Boundary tables and complete studies
+
+`seqbin_boundary_table(design, compact=False)` returns a read-only table with
+columns exposed as `columns` and numerical values in `rows`. The nine columns
+are subject count, low continuation boundary, low stopping probability,
+cumulative low probability, high continuation boundary, high stopping
+probability, cumulative high probability, total stopping probability, and
+cumulative total probability. All probabilities assume the null event rate.
+Continuation bounds are inclusive; these are not inclusive rejection cutoffs.
+
+Verbose tables include every subject count up to the maximum. At unscheduled
+looks, both continuation bounds permit all outcomes, stopping probability is
+zero, and cumulative probability stays unchanged. Compact tables omit rows
+with exactly zero computed null stopping probability. An entirely nonrejecting
+design has a valid empty compact table. Compaction never changes the design.
+
+```python
+from mdanderson_stats import SeqBinStudySpecification
+
+study = SeqBinStudySpecification(
+    50,
+    prior=[0.5, 0.5],
+    alternative="two-sided",
+    significance=[0.025, 0.025],
+    probabilities=[0.1, 0.2, 0.4],
+).run()
+print(study.report(compact=True))
+study.write_report("seqbin.tsv", digits=17, compact=True)
+study.write_specification("seqbin.json")
+revised = study.revise(max_subjects=60)
+```
+
+Specify either `tail_probability` or `significance`; with neither, the tail
+cutoff is 0.05. A scalar significance requests common-cutoff calibration, and a
+[low, high] pair requests separate calibration with `alternative="two-sided"`.
+To change a posterior-threshold study into a calibrated one, explicitly clear
+the stored cutoff, e.g. `study.revise(tail_probability=None, significance=0.05)`.
+When changing an explicit schedule, supply updated `looks`; an implicit
+sequential schedule follows the new `max_subjects` automatically.
+
+The specification stores actual beta shapes, requested calibration settings or
+posterior cutoffs, the schedule and up to 101 alternative probabilities. It does
+not infer whether beta shapes came from raw input or either mean/size conversion.
+`run()` snapshots input arrays independently. `from_json(text).run()` reconstructs
+the study; unknown fields and invalid numerical settings raise. JSON is input
+data, not executable code. Revision returns a new study and preserves the original.
+
+The report contains all specification settings, actual tail cutoffs, calibration
+chosen/lower/upper levels where applicable, the null boundary table, and an
+operating-characteristic row for the null and each alternative in input order.
+Rows include rejection/completion probabilities, unconditional expected subject
+count, side-specific rejection probabilities and conditional expected subject
+counts. Undefined conditional expectations print as `NA`. An empty alternative
+list produces a null-only study. `properties` has the same probability axis:
+null first, followed by the specified alternatives. All scheduled-look stopping
+probabilities remain accessible there even when the report is compact.
+
+Reports support 1–17 significant digits; 17 preserves binary64 table values on
+numeric parsing. Settings and JSON inputs retain full precision. File methods
+write UTF-8, replace the named destination and propagate I/O errors.
+
+### Corrected original report state
+
+The original main program calls COMPACT_TABLE before recomputing the null
+operating characteristics, and restores its boundary arrays only before the
+alternative-probability loop. The recomputation therefore indexes compacted
+boundaries as if they still referred to all subject counts. The Python report
+uses display-only compaction and retains the correct null calculations.
+
+Six native cases execute unchanged COMPACT_TABLE and probability routines in an
+independent driver. They cover all alternatives and sequential/group schedules;
+the compact table rows match. Each also records the correct pre-compaction null
+level and the different value obtained by the source's subsequent recomputation.
+Regression tests ensure reporting cannot introduce that mutation. The source's
+two-sided table also leaves its first per-look total uninitialized; Python
+calculates low+high for every row, tested with a design stopping at its first look.
+The fixture is a numerical table comparison, not a byte-for-byte terminal-format
+comparison. Additional tests parse complete reports, replay all design modes,
+revise studies, preserve snapshots, handle empty compact tables, verify unscheduled
+verbose rows and exercise serialization/file failures.

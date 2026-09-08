@@ -161,4 +161,6 @@ audit, validation evidence and documented numerical/solver substitutions.
 binomial boundaries and computes exact stopping probabilities and expected sample
 sizes. `seqbin_prior` converts prior mean/size inputs; `seqbin_calibrate` and
 `seqbin_calibrate_tails` choose attainable frequentist error levels.
-[SEQBIN coverage](docs/seqbin.md) tracks remaining reporting workflows.
+`SeqBinStudySpecification` adds full numerical reports, compact tables, revision
+and JSON replay. [SEQBIN coverage](docs/seqbin.md) records validation and the
+remaining coverage audit.
