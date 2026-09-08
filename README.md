@@ -341,3 +341,8 @@ describe native validation, corrected source defects and the remaining scope.
 `cdf_normal`, `cum_normal`, `ccum_normal` and `inv_normal` add CDFLIB90's normal
 location/scale calculations, including mean and standard-deviation inversion,
 small complementary probabilities and explicit rejection of unidentified scales.
+
+
+`cdf_gamma`, `cum_gamma`, `ccum_gamma` and `inv_gamma` provide gamma tails,
+quantiles, shape and rate inversions. The explicit `rate` argument preserves the
+archived implementation's convention: its parameter named SCALE multiplies x.

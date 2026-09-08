@@ -22,6 +22,7 @@ from .binomial_null import BinomialNull, binomial_null
 from .binomial_sample_size import binomial_sample_size
 from .bp1ci import BP1CIResult, bp1ci
 from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
+from .cdflib_gamma import CDFGamma, ccum_gamma, cdf_gamma, cum_gamma, inv_gamma
 from .cdflib_normal import CDFNormal, ccum_normal, cdf_normal, cum_normal, inv_normal
 from .cta import ContingencyChiSquare, contingency_chi_square
 from .cta_binomial import BinomialComparison, binomial_comparison
@@ -153,6 +154,11 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "CDFGamma",
+    "cdf_gamma",
+    "cum_gamma",
+    "ccum_gamma",
+    "inv_gamma",
     "CDFNormal",
     "cdf_normal",
     "cum_normal",

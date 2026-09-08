@@ -3,8 +3,8 @@
 CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
-The entry is **partial**: the beta and normal distributions' four public interfaces
-are implemented. The other 10 distribution modules, the remaining archived library
+The entry is **partial**: the beta, normal and gamma distributions' four public interfaces
+are implemented. The other nine distribution modules, the remaining archived library
 interfaces and the complete 106-file archive audit remain outstanding.
 
 Source: [catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/21)
@@ -177,3 +177,77 @@ location/scale inversion, extreme-tail reflection at z=37, defaults, broadcastin
 immutable ownership, strict inputs and computed boundary round trips. The manual's
 normal-density illustration omits the negative sign in the exponent; the actual
 source and this implementation use the standard exp(-z²/2) density.
+
+
+## Gamma distribution
+
+```python
+from mdanderson_stats import cdf_gamma, cum_gamma, ccum_gamma, inv_gamma
+
+lower = cum_gamma([0.1, 1, 5], shape=2, rate=3)
+upper = ccum_gamma([0.1, 1, 5], shape=2, rate=3)
+quantile = inv_gamma(None, shape=1, rate=3, ccum=1e-100)
+shape = cdf_gamma(3, x=1, rate=2, ccum=0.1353352832366127).shape  # 1
+rate = cdf_gamma(4, x=1, shape=1, ccum=0.1353352832366127).rate  # 2
+```
+
+`cdf_gamma` computes group 1 (cum/ccum), 2 (x), 3 (shape), or 4 (rate).
+Supply the input groups and omit the output group. Input rate defaults to one;
+shape has no default. The immutable `CDFGamma` contains `which` and all five
+broadcast arrays. Convenience tails accept `(x, shape, rate=1)` and the quantile
+accepts `(cum, shape, rate=1, *, ccum=None)`. Pass `cum=None` to supply only ccum.
+
+**The archived argument named SCALE is a rate**, despite a conflicting density
+illustration in the source header. Its actual forward routine evaluates the
+incomplete gamma at x*SCALE; its inverses divide the unit-rate quantile by SCALE
+or by x. Python calls this argument `rate` to make its meaning explicit. The
+implemented density is rate**shape * x**(shape-1) * exp(-rate*x) / Gamma(shape).
+For a conventional scale parameter theta, supply rate=1/theta.
+
+The original inclusive domains are retained: x in [0,1e100], shape and rate in
+[1e-10,1e100]. Probability pairs follow the beta interface, accepting either or
+both members and preserving the smaller. Inversion extends the source's upper-tail
+1e-10 cutoff to any positive representable upper probability. Lower probability
+zero has quantile zero. Upper probability zero has no finite quantile and fails.
+Shape/rate inversions require positive x and both probabilities, excluding
+unidentified endpoint requests. Out-of-domain solutions raise `ValueError`.
+Computed x/rate bounds allow the same eight-epsilon endpoint rounding allowance
+as the normal interface; input bounds remain strict.
+
+SciPy `gammainc` and `gammaincc` evaluate the tails directly at x*rate. The smaller
+tail is retained and the larger reconstructed for pair consistency. Quantiles
+invert the smaller probability using `gammaincinv` or `gammainccinv`, then divide
+by rate; rate inversion divides that unit-rate quantile by x. Shape inversion
+uses a 64-step batched bisection in log shape over the original domain. It checks
+the result against the requested smaller probability with relative tolerance
+1e-7 plus 32 smallest-subnormal units. Unattainable brackets raise `ValueError`;
+failed numerical kernels or forward verification raise `ArithmeticError`.
+
+Double-precision tails and very small quantiles can underflow to zero. Extremely
+large shapes make probability inversion sensitive to tiny shape differences;
+a shape answer that cannot meet the forward tolerance fails explicitly. This
+interface does not promise arbitrary precision throughout the original domain.
+
+`tools/reference_cdflib_gamma.py` compiles eight unmodified archived Fortran files
+with a separate driver and records hashes, compiler, command and **219 cases**:
+75 forward evaluations and 48 each of quantile, shape and rate inversion.
+Generating parameters are retained, allowing inverse checks even when the native
+routine fails. The captured source defects are:
+
+- 36 rate inversions report status 10 because `cdf_gamma(which=4)` treats every
+  nonzero `gamma_inverse` status as an error. That inner routine documents positive
+  status as successful convergence with an iteration count; quantile inversion
+  correctly treats only negative status as failure.
+- Nine shape inversions report status -50 at the exact initial solution shape=5.
+- Twelve shape-25 forward cases (x*rate equal to 0.01, 0.2, 1 or 5) overstate the
+  lower tail by about 0.67%. These are checked against an independent 150-digit
+  Decimal evaluation of the integer-shape Poisson-sum identity, not treated as
+  correct native references. Other captured forward cases agree directly.
+
+Tests additionally use independent integer-shape identities, exponential tails
+and quantiles down to 1e-300, shape/rate recovery, broadcast ownership, empty
+arrays, endpoints, strict bounds and invalid or unidentified inversions.
+[Gamma batching measurements](cdflib-gamma-benchmark.json) compare array calls
+with repeated scalar calls to this same Python API for tails and shape inversion.
+Both paths are checked against exponential identities; median-of-three timings
+and environment/input details are recorded. These are not Fortran speed ratios.

@@ -1,0 +1,39 @@
+{
+  "python": "3.13.5",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "repetitions": 3,
+  "inputs": "x=geomspace(.01,100,n); rate=geomspace(10,.01,n); shape=1; p=-expm1(-x*rate); q=exp(-x*rate)",
+  "comparison": "One broadcast call versus n scalar calls to the same Python API; not native Fortran",
+  "cases": [
+    {
+      "operation": "tails",
+      "size": 128,
+      "batch_seconds": 8.1624835729599e-05,
+      "scalar_seconds": 0.0039007081650197506,
+      "speedup": 47.78825133494592
+    },
+    {
+      "operation": "shape",
+      "size": 128,
+      "batch_seconds": 0.002651417162269354,
+      "scalar_seconds": 0.11148933321237564,
+      "speedup": 42.04895962767009
+    },
+    {
+      "operation": "tails",
+      "size": 1024,
+      "batch_seconds": 0.00016412511467933655,
+      "scalar_seconds": 0.03105204226449132,
+      "speedup": 189.19738350318906
+    },
+    {
+      "operation": "shape",
+      "size": 1024,
+      "batch_seconds": 0.012487208005040884,
+      "scalar_seconds": 0.9094682498835027,
+      "speedup": 72.8319933099829
+    }
+  ]
+}
