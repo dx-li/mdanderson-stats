@@ -148,3 +148,21 @@ def test_invalid_report_precision(digits):
 def test_report_requires_study():
     with pytest.raises(TypeError, match="TDTASPStudy"):
         format_tdtasp_study(None)
+
+
+def test_report_preserves_population_and_separate_parent_summaries():
+    study = tdtasp_study(
+        FREQUENCIES, PENETRANCE, 2, 0.1, families=50, eligibility="father", sampling="individual"
+    )
+    report = format_tdtasp_study(study, digits=17)
+    values = dict(line.split(": ", 1) for line in report.splitlines() if ": " in line)
+    assert float(values["Marker allele A frequency"]) == 0.5
+    assert float(values["Disease allele D frequency"]) == 0.4
+    assert float(values["Linkage disequilibrium D"]) == pytest.approx(0.1)
+    father = float(values["Father heterozygosity probability among eligible families"])
+    mother = float(values["Mother heterozygosity probability among eligible families"])
+    assert father == pytest.approx(1)
+    assert father + mother == pytest.approx(
+        study.design.ascertainment.expected_heterozygous_parents
+    )
+    assert "repeated selection of a family is negligible" in report

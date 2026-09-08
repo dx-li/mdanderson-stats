@@ -2,9 +2,9 @@
 
 TDTASP version 1.1 (April 2003), by Barry W. Brown and Dan Serachitopol,
 plans transmission-disequilibrium (TDT) and affected-sibling-pair (ASP) studies.
-This catalog entry is **partial**. The genetic, ascertainment, power and sample-size layers are implemented;
-study orchestration, reports and template files are also available. The complete
-archive audit remains outstanding.
+The genetic, ascertainment, power, sample-size, study/report and template workflows
+are implemented. The [archive coverage audit](tdtasp-coverage.md) accounts for all
+44 regular files and explains the numerical replacements and compatibility scope.
 
 Source: [TDTASP catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/20)
 and its [version 1 archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/TDTASP/TDTASP%20%20_V1.tar.gz).
@@ -148,7 +148,7 @@ population-weighted average of within-family truncated means, assigning zero
 when affected probability is zero. It is not the expected count in the selected
 sample; the original program labels and uses this different quantity as `exp_n`.
 Keeping these quantities distinct avoids silently substituting one for the other
-when the study-planning layer is added.
+in study planning.
 
 `log_list_mass` and `log_eligible_mass` preserve rare list weights. For individual
 sampling these masses represent expected affected counts per population family,
@@ -234,7 +234,7 @@ source-tail behavior, empty regions, and boundary probabilities. Explicit sums
 over binomial eligible-family probabilities validate the complete mixture.
 Tests also cover half-up rounding, null power equaling size, immutable output,
 input/resource limits and the original scale option. A regression example
-shows why power must not be assumed monotone in a future discrete sample-size
+shows why power must not be assumed monotone in a discrete sample-size
 search: adding an observation can move the rejection cutoff and reduce power.
 
 ## Sample-size search
@@ -327,7 +327,8 @@ behavior is enabled implicitly. Like the numerical API, study calls allow
 two-sided ASP, extending the original console's one-sided restriction.
 
 `format_tdtasp_study` returns text for callers to print or save. It includes
-population inputs, selection rules, moments, list masses, the screening factor,
+population inputs and allele marginals, selection rules, separate parental
+heterozygosity probabilities, moments, list masses, the screening factor,
 all compatibility flags, contribution scaling, screened and expected eligible
 family counts, actual significance and power. Search reports add the target,
 bounds, diagnostics and fixed-observation comparison, including its critical

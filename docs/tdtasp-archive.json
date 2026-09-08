@@ -1,0 +1,560 @@
+{
+  "archive_sha256": "5858f59dacd981a7639de8ceb06a1d3f22b65959ddbb900e68c5b5e0c1354784",
+  "counts": {
+    "documentation": 11,
+    "source": 30,
+    "build": 2,
+    "binary": 1
+  },
+  "members": [
+    {
+      "path": "source/tdtasp_1.1/doc/LEGALITIES.txt",
+      "sha256": "928c89e1ece7bfa762916eb13054a4799e8ecc353a3614ac31b61105fdfbade8",
+      "role": "documentation",
+      "replacement": "Method/usage/compatibility docs and retained legal terms",
+      "routines": []
+    },
+    {
+      "path": "source/tdtasp_1.1/doc/readme",
+      "sha256": "4e193253c582f1de1b31ac347c1f6c7e10090c5ecaa1d4bd002f4e739ed2fa97",
+      "role": "documentation",
+      "replacement": "Method/usage/compatibility docs and retained legal terms",
+      "routines": []
+    },
+    {
+      "path": "source/tdtasp_1.1/doc/tdtasp_1.1_doc.pdf",
+      "sha256": "95f72c1ecd8fe31f82dfdfb356254b522a9a9f024b6d7f7a304d20fab7360b28",
+      "role": "documentation",
+      "replacement": "Method/usage/compatibility docs and retained legal terms",
+      "routines": []
+    },
+    {
+      "path": "source/tdtasp_1.1/doc/tdtasp_1.1_doc.ps",
+      "sha256": "fdff37d8df9c454e6dad6067cae5ee95fc850653403de731354b08f7993ce07d",
+      "role": "documentation",
+      "replacement": "Method/usage/compatibility docs and retained legal terms",
+      "routines": []
+    },
+    {
+      "path": "source/tdtasp_1.1/doc/tdtasp_1.1_doc.tex",
+      "sha256": "f283984f44d8cbbbacbb12665f1d883b113182bc0a8ebfca605995b1d86aa8e1",
+      "role": "documentation",
+      "replacement": "Method/usage/compatibility docs and retained legal terms",
+      "routines": []
+    },
+    {
+      "path": "source/tdtasp_1.1/source/ascertain_mod.f90",
+      "sha256": "d91d17b4cb6c4b211ae6276fc5d74e828fb71067fb579189f47da15de8e258ed",
+      "role": "source",
+      "replacement": "Family/individual list selection, parent eligibility, contribution probabilities and moments",
+      "routines": [
+        "ascertain_properties",
+        "calc_ascertain",
+        "calc_exp_n_given_k",
+        "collect_ascertain_parameters",
+        "enter_ascertain_parameters",
+        "exp_n_given_k",
+        "n_1_examine_for_k",
+        "one_family_exp_n_given_k",
+        "perform_ascertain_step",
+        "print_ascertain",
+        "print_naff_table",
+        "process_ascertain_input",
+        "read_ascertain_parameters",
+        "set_module_variables"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/beta_gamma_mod.f90",
+      "sha256": "bedfd25f8951189af7d81358909d3da8d03662a00bef2a3be881ff123ccae93e",
+      "role": "source",
+      "replacement": "SciPy special functions replace archived beta/gamma support; original ACM code not bundled",
+      "routines": [
+        "algdiv",
+        "alnrel",
+        "bcorr",
+        "betaln",
+        "brcomp",
+        "erf",
+        "erfc1",
+        "exparg",
+        "gam1",
+        "gamln",
+        "gamln1",
+        "gsumln",
+        "log_beta",
+        "log_bicoef",
+        "log_gamma",
+        "rexp",
+        "rlog1"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/bin1_ss_pow_mod.f90",
+      "sha256": "fc99d1df7d833360a2717cdd1ae0d19bb0e27d479493ea7963ba81776d976645",
+      "role": "source",
+      "replacement": "First qualifying fixed integer sample-size search; generic internal inversions not public workflows",
+      "routines": [
+        "arcinv",
+        "arctr",
+        "bin1_ss_pow",
+        "dinvnr",
+        "fbin1",
+        "find_value",
+        "qrange",
+        "sbin1"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/bin1_vn_ss_pow_mod.f90",
+      "sha256": "bc13834ff0ee466ccd40d5c263bad2ef5d870ce0bd41403e90fa0c1a00ee3aa1",
+      "role": "source",
+      "replacement": "Cached first-crossing family search with monotone upper bound; no assumed monotonic actual power",
+      "routines": [
+        "bin1_vn_ss_pow",
+        "fbin1",
+        "find_value",
+        "qrange"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/cdf_aux_mod.f90",
+      "sha256": "c70b4f997347327416d47a007f928757f9383a8be0e24495a2c7488e5abba6cf",
+      "role": "source",
+      "replacement": "SciPy numerical support replaces archived CDF internals; original code not bundled",
+      "routines": [
+        "add_to_one",
+        "alngam",
+        "cdf_set_zero_finder",
+        "check_complements",
+        "dbl_in_range",
+        "error_out",
+        "evaluate_polynomial",
+        "int_in_range",
+        "set_bound",
+        "validateparameters",
+        "which_miss"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/cdf_beta_mod.f90",
+      "sha256": "a2eb3a3b028bc0239845741ec6bfd4a321328000e80004463a971c7bf8792fda",
+      "role": "source",
+      "replacement": "SciPy binomial distribution calculations replace archived beta-CDF support",
+      "routines": [
+        "apser",
+        "basym",
+        "bfrac",
+        "bgrat",
+        "bpser",
+        "bratio",
+        "brcmp1",
+        "bup",
+        "ccum_beta",
+        "cdf_beta",
+        "cum_beta",
+        "esum",
+        "fpser",
+        "grat1",
+        "inv_beta",
+        "local_cum_beta",
+        "psi"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/cdf_binomial_mod.f90",
+      "sha256": "307df4d221cd1e2f7eb6fd1afd2b4d98972434f5f9e1051f7d89bd2de927d0cb",
+      "role": "source",
+      "replacement": "SciPy binomial pmf/cdf/sf and integer critical-region evaluation",
+      "routines": [
+        "ccum_binomial",
+        "cdf_binomial",
+        "cum_binomial",
+        "inv_binomial",
+        "local_cum_binomial"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/cdf_normal_mod.f90",
+      "sha256": "068a1505c88d1827f6731145fb2e579a14f58f0245248a51c1ef5577cccf0f30",
+      "role": "source",
+      "replacement": "Normal approximation removed from family mixtures; exact discrete averaging",
+      "routines": [
+        "ccum_normal",
+        "cdf_normal",
+        "cum_normal",
+        "inv_normal",
+        "local_cum_normal",
+        "local_inv_normal"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/compile.tdtasp",
+      "sha256": "877b31721fba00e141e84303e8103f703a20ef8bcbff34e3f4c31e142dfd4b07",
+      "role": "build",
+      "replacement": "pyproject.toml, uv build and Python 3.12/3.13/3.14 CI",
+      "routines": []
+    },
+    {
+      "path": "source/tdtasp_1.1/source/create_write_form_mod.f90",
+      "sha256": "1ef7b672863c9af092acb216f5b29ca74b6bdd99753da1aee4da952f8ec4bc91",
+      "role": "source",
+      "replacement": "format_tdtasp_template blank and filled forms in source field order",
+      "routines": [
+        "fill_in_form",
+        "write_blank_form"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/exp_n_given_k.f90",
+      "sha256": "3d1daef9b44577c0b4d2a7d7e1ae2517d28f2ffd03c6f4d4243f16104d2c4957",
+      "role": "source",
+      "replacement": "Duplicate Poisson truncated-mean helper replaced by stable series ratios",
+      "routines": [
+        "exp_n_given_k"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/families_mod.f90",
+      "sha256": "eb61b29f90e8dea5a63202d5919fe2d7cbea47828e72ab4f06af54829c502ec3",
+      "role": "source",
+      "replacement": "Immutable vectorized 256-parental-family enumeration and outputs",
+      "routines": [
+        "families"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/genetics_mod.f90",
+      "sha256": "00e1693ea8e9e298ddae9403adb454e90051240b7ee1080477d3077e92cca5e6",
+      "role": "source",
+      "replacement": "Validated direct/disequilibrium frequencies and all population inputs",
+      "routines": [
+        "bound_delta",
+        "collect_genetic_parameters",
+        "enter_genetic_parameters",
+        "haplotype_frequencies",
+        "perform_genetic_step",
+        "population_frequencies",
+        "print_genetic_parameters",
+        "read_genetic_parameters"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/get_numbers_mod.f90",
+      "sha256": "8d2c18e21f8c11c6d0be198b52542804ad73c9e9868021c09a37ce38ca1d23e2",
+      "role": "source",
+      "replacement": "Validated arguments replace console numeric prompts and retry loops",
+      "routines": [
+        "get_double_array",
+        "get_double_scalar",
+        "get_integer_array",
+        "get_integer_scalar",
+        "get_real_array",
+        "get_real_scalar",
+        "prompt"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/intro_mod.f90",
+      "sha256": "226ba7268cd04756cc0acfac795938c5a8a02670c129095324e97df281149be0",
+      "role": "source",
+      "replacement": "Method/model/ascertainment/exact-test tutorial in docs/tdtasp.md",
+      "routines": [
+        "ascertain",
+        "asp_intro",
+        "exact",
+        "holdq",
+        "print_asp_intro",
+        "print_tdt_intro",
+        "tdt_intro"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/Makefile",
+      "sha256": "d532ceef7475b92713ffc923bd6dc30bab39c1ca91bdc6814e5c09a8e6fbe5f3",
+      "role": "build",
+      "replacement": "pyproject.toml, uv build and Python 3.12/3.13/3.14 CI",
+      "routines": []
+    },
+    {
+      "path": "source/tdtasp_1.1/source/normal_integrate.f90",
+      "sha256": "5de68ff9aab331aef004c4e0cb0c5e50299c06f025bfa2d72db44fa7755ef18d",
+      "role": "source",
+      "replacement": "Hermite integration is unnecessary after complete discrete family-count averaging",
+      "routines": [
+        "rc_normal_integral"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/offspring_mod.f90",
+      "sha256": "0593049c032d841462b4fab217b3bd1b92128fa81b5f7f4b56ec99651d405b5b",
+      "role": "source",
+      "replacement": "Mendelian transmission, recombination, affected offspring and corrected/legacy ASP",
+      "routines": [
+        "calc_exp_p_same",
+        "calc_exp_p_trans",
+        "generate_all_offspring",
+        "generate_haplotypes",
+        "is_hetero",
+        "offspring",
+        "prob_same",
+        "prob_trans"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/open_file_mod.f90",
+      "sha256": "96f18707756f84caa79978243608c897e407ad78601af523a1b3259fb38356f5",
+      "role": "source",
+      "replacement": "Caller-controlled Path.read_text/write_text replaces file dialogs",
+      "routines": [
+        "close_or_new_unit",
+        "get_character",
+        "get_free_unit_number",
+        "get_yn",
+        "handle_error",
+        "low_case",
+        "low_case_string",
+        "open_file",
+        "prompt"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/param_defn_mod.f90",
+      "sha256": "afad0e98318c1f88068dacff96efd62509c08d74a1e3b55b56003f77d8ace7c6",
+      "role": "source",
+      "replacement": "Typed immutable template and calculation inputs with validated mathematical domains",
+      "routines": []
+    },
+    {
+      "path": "source/tdtasp_1.1/source/param_io.f90",
+      "sha256": "4be615df8cfc6633398e13f634d89c0f1c494fe769adafe22154e98a32086cb5",
+      "role": "source",
+      "replacement": "Explicit component validation and canonical immutable specification values",
+      "routines": [
+        "check_parameter_range",
+        "get_parameter",
+        "present_parameters_list",
+        "put_parameter",
+        "read_some_parameters",
+        "validate_parameters"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/parser_mod.f90",
+      "sha256": "3949699e7f8b15ce9039db2287354bbbcc3558032893b809b45f73cacd0387f8",
+      "role": "source",
+      "replacement": "Strict template numeric, list, assignment and choice parsing",
+      "routines": [
+        "accum",
+        "get_action",
+        "ncqlex",
+        "next_state",
+        "qlex",
+        "set_numeric_values"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/power_bin1_mod.f90",
+      "sha256": "294de7ae173c532bc69b1a32d6d2588128bcc56fb1512c85807fbd398c7fc5f7",
+      "role": "source",
+      "replacement": "Discrete fixed-observation critical values, size and power; half-up rounding",
+      "routines": [
+        "crbin1",
+        "power_bin1"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/power_bin1_vn_mod.f90",
+      "sha256": "cee8f12c47fb96978099b4886b26816c03b077be01f5a13dbfbd23fe3d9a495a",
+      "role": "source",
+      "replacement": "Complete eligible-family binomial mixture replaces short-tail/normal approximations",
+      "routines": [
+        "minimal_test_ss",
+        "power_bin1_vn",
+        "power_bin1_vn_large",
+        "power_bin1_vn_small",
+        "rc_bin_sum_power",
+        "rc_bin_sum_power_forward",
+        "tweak_power_bin1_vn"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/print_array.f90",
+      "sha256": "8c08adba5129d25e5162ee1a6e1e020cffab357dfc5a5393bb09955b93c47ed9",
+      "role": "source",
+      "replacement": "Immutable full family arrays and readable study summaries",
+      "routines": [
+        "print_array"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/print_it.f90",
+      "sha256": "04874235d6b9126cead169990244f19320da7b62f2d675148ff05a8727c24546",
+      "role": "source",
+      "replacement": "Returned reports and exceptions replace terminal formatting, paging and prompts",
+      "routines": [
+        "clear_screen",
+        "edit_format",
+        "edit_message_format",
+        "get_character",
+        "get_yn",
+        "hold",
+        "igtfun",
+        "low_case",
+        "low_case_string",
+        "print_format",
+        "print_message_format",
+        "prompt"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/readme",
+      "sha256": "1d086d431ded59f29c7e80b4074ed6f6dcccaf0ccd7434fb968d85a189e7f030",
+      "role": "documentation",
+      "replacement": "Method/usage/compatibility docs and retained legal terms",
+      "routines": []
+    },
+    {
+      "path": "source/tdtasp_1.1/source/statistics_mod.f90",
+      "sha256": "f13c9defc02bf6ba5c135fa732b54b84db10139e51363d4b78ecf015025852e4",
+      "role": "source",
+      "replacement": "Power/sample-size study calls, fixed comparison and complete reports",
+      "routines": [
+        "collect_statistics_parameters",
+        "do_statistics",
+        "enter_statistics_parameters",
+        "perform_statistics_step",
+        "print_statistics",
+        "read_statistics_parameters",
+        "set_module_variables"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/tail_poisson_mod.f90",
+      "sha256": "12f98ec7543118b4ff510dd289223230c1e551faa47ea302c4d96ae8f1a97947",
+      "role": "source",
+      "replacement": "Positive-series log Poisson tails, checked convergence and rare-event normalization",
+      "routines": []
+    },
+    {
+      "path": "source/tdtasp_1.1/source/tdtasp.f90",
+      "sha256": "04ce3b31d2eedad9896bb44b4ca0e0860a14cee460caa7ad2a344814a7c26880",
+      "role": "source",
+      "replacement": "tdtasp_study and TDTASPTemplate.run; independent repeated studies",
+      "routines": [
+        "perform_test"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/user_dialogues_mod.f90",
+      "sha256": "faaf6437d63576c53b02aa695da30f7da574b0da41d8f1f0449672b07b6a5f53",
+      "role": "source",
+      "replacement": "Python calls, template workflows and caller-managed report/form files",
+      "routines": [
+        "blank_form_dialogue",
+        "display_banner",
+        "fill_in_form_dialogue",
+        "get_test_dialogue",
+        "get_user_action",
+        "help_dialogue",
+        "report_file_dialogue",
+        "run_again",
+        "template_file_dialogue"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/user_interface_mod.f90",
+      "sha256": "e818b4e077af4bcaf64fbd1e6bfaf0082d81f90f33849a7b51e4c73bb8ea25fd",
+      "role": "source",
+      "replacement": "Template comments/lists/choices plus Python exceptions and caller-controlled I/O",
+      "routines": [
+        "display_error",
+        "display_warning",
+        "extract_info_from_line",
+        "extract_token",
+        "get_info_line",
+        "gtstio",
+        "parameter_match",
+        "replacecharacters"
+      ]
+    },
+    {
+      "path": "source/tdtasp_1.1/source/zero_finder.f90",
+      "sha256": "3df4e1b7c789d19a277baa7e16b3bc3e44c1ea48a6f0c28868836bec3699820f",
+      "role": "source",
+      "replacement": "Discrete ordered/bounded searches replace continuous reverse-communication inversion",
+      "routines": [
+        "adjust_c",
+        "bracket",
+        "f",
+        "final_zf_state",
+        "ftol",
+        "has_converged",
+        "ifabde",
+        "iisign",
+        "interval_zf",
+        "newton_quadratic",
+        "pzero",
+        "qxmon",
+        "rc_interval_local_zf",
+        "rc_interval_zf",
+        "rc_step_local_zf",
+        "rc_step_zf",
+        "set_zero_finder",
+        "step_zf"
+      ]
+    },
+    {
+      "path": "win32/tdtasp_1.1/doc/LEGALITIES.txt",
+      "sha256": "928c89e1ece7bfa762916eb13054a4799e8ecc353a3614ac31b61105fdfbade8",
+      "role": "documentation",
+      "replacement": "Method/usage/compatibility docs and retained legal terms",
+      "routines": []
+    },
+    {
+      "path": "win32/tdtasp_1.1/doc/readme",
+      "sha256": "1eed3a6afa82a1b5eb12e32e0e4e0f5ba251b5cc44335e55cd2bae568a9a3f31",
+      "role": "documentation",
+      "replacement": "Method/usage/compatibility docs and retained legal terms",
+      "routines": []
+    },
+    {
+      "path": "win32/tdtasp_1.1/doc/tdtasp_1.1_doc.pdf",
+      "sha256": "95f72c1ecd8fe31f82dfdfb356254b522a9a9f024b6d7f7a304d20fab7360b28",
+      "role": "documentation",
+      "replacement": "Method/usage/compatibility docs and retained legal terms",
+      "routines": []
+    },
+    {
+      "path": "win32/tdtasp_1.1/doc/tdtasp_1.1_doc.ps",
+      "sha256": "fdff37d8df9c454e6dad6067cae5ee95fc850653403de731354b08f7993ce07d",
+      "role": "documentation",
+      "replacement": "Method/usage/compatibility docs and retained legal terms",
+      "routines": []
+    },
+    {
+      "path": "win32/tdtasp_1.1/doc/tdtasp_1.1_doc.tex",
+      "sha256": "f283984f44d8cbbbacbb12665f1d883b113182bc0a8ebfca605995b1d86aa8e1",
+      "role": "documentation",
+      "replacement": "Method/usage/compatibility docs and retained legal terms",
+      "routines": []
+    },
+    {
+      "path": "win32/tdtasp_1.1/executable/tdtasp.exe",
+      "sha256": "3aeecfb0fc2cabf91079898664f95328d4a60d7dff442e17ee5cd68714d1b370",
+      "role": "binary",
+      "replacement": "Historical Windows executable replaced by Python package",
+      "routines": []
+    }
+  ],
+  "evidence": [
+    "docs/tdtasp.md",
+    "docs/tdtasp-coverage.md",
+    "tests/test_tdtasp_genetics.py",
+    "tests/test_tdtasp_ascertainment.py",
+    "tests/test_tdtasp_power.py",
+    "tests/test_tdtasp_sample_size.py",
+    "tests/test_tdtasp_study.py",
+    "tests/test_tdtasp_template.py"
+  ]
+}

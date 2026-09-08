@@ -137,6 +137,9 @@ def format_tdtasp_study(study: TDTASPStudy, *, digits: int = 8) -> str:
     a = d.ascertainment
     g = a.genetics
     c = d.conditional
+    ad, a_d, bd, b_d = map(float, g.haplotype_frequencies)
+    father = float(a.family_probability @ g.father_heterozygous)
+    mother = float(a.family_probability @ g.mother_heterozygous)
     lines = [
         f"TDTASP {a.test.upper()} study",
         "Calculation: " + ("sample size" if study.search is not None else "power"),
@@ -144,11 +147,16 @@ def format_tdtasp_study(study: TDTASPStudy, *, digits: int = 8) -> str:
         + ", ".join(number(float(x)) for x in g.haplotype_frequencies),
         "Penetrances (DD, Dd, dd): " + ", ".join(number(float(x)) for x in g.penetrance),
         f"Recombination: {number(g.recombination)}",
+        f"Marker allele A frequency: {number(ad + a_d)}",
+        f"Disease allele D frequency: {number(ad + bd)}",
+        f"Linkage disequilibrium D: {number(ad * b_d - a_d * bd)}",
         f"Population affected probability: {number(g.population_affected_probability)}",
         f"Mean offspring: {number(a.mean_offspring)}",
         f"Sampling list: {a.sampling}; parental eligibility: {a.eligibility}",
         f"Minimum affected offspring: {a.minimum_affected}; all affected: {a.all_affected}",
         f"Eligibility probability within list: {number(a.selection_probability)}",
+        f"Father heterozygosity probability among eligible families: {number(father)}",
+        f"Mother heterozygosity probability among eligible families: {number(mother)}",
         f"Expected affected offspring per eligible family: {number(a.expected_affected)}",
         "Expected heterozygous parents per eligible family: "
         f"{number(a.expected_heterozygous_parents)}",
@@ -170,6 +178,10 @@ def format_tdtasp_study(study: TDTASPStudy, *, digits: int = 8) -> str:
         f"Actual significance: {number(d.actual_size)}",
         f"Power: {number(d.power)}",
     ]
+    if a.sampling == "individual":
+        lines.append(
+            "Individual-list sampling assumes repeated selection of a family is negligible."
+        )
     if study.search is not None:
         s = study.search
         lines.extend(

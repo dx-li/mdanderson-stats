@@ -351,7 +351,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "TDTASP genetic layer: haplotype input/conversion, random-mating family probabilities, recombination, affected-child probabilities and marker-heterozygous transmission/sharing",
         "Corrected affected-sibling probabilities with explicit original double-weighting/cutoff compatibility; immutable vectorized 256-family results",
@@ -359,7 +359,8 @@
         "Fixed-observation binomial tests and full eligible-family-count power mixtures, two-sided tail accounting, mean-contribution rounding, source scale/tail options and empty-region repairs",
         "First qualifying integer fixed-observation and screened-family sample sizes, preserving power oscillations with cached conditional curves and a monotone upper-bound search",
         "Complete study orchestration with genetic/ascertainment options, forward power or paired family/fixed sample-size searches, and reproducible plain-text reports",
-        "Validated immutable template specifications, archived direct/disequilibrium input parsing, blank/filled forms and complete file-to-study workflow"
+        "Validated immutable template specifications, archived direct/disequilibrium input parsing, blank/filled forms and complete file-to-study workflow",
+        "All 44 archive members audited, including complete genetic/parental reports, tutorial and file/repeat-study workflow replacements"
       ],
       "validation": [
         "tests/test_tdtasp_genetics.py",
@@ -373,7 +374,9 @@
         "docs/tdtasp-search-benchmark.json",
         "tests/test_tdtasp_study.py",
         "tests/test_tdtasp_template.py",
-        "tests/fixtures/tdtasp_template.json"
+        "tests/fixtures/tdtasp_template.json",
+        "docs/tdtasp-coverage.md",
+        "docs/tdtasp-archive.json"
       ]
     },
     {

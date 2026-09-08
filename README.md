@@ -312,7 +312,7 @@ complete archive and report coverage.
 probabilities, with explicit compatibility for the original ASP weighting.
 `tdtasp_ascertainment` adds family/individual selection, conditional offspring
 moments and contribution-weighted test probabilities. See [TDTASP](docs/tdtasp.md)
-for native validation and the remaining study-planning work.
+for native validation, model assumptions and archive coverage.
 
 `tdtasp_fixed_power` and `tdtasp_power` calculate discrete binomial power and
 average it over eligible-family counts, with explicit mean-contribution and
@@ -325,6 +325,8 @@ The family search uses cached conditional powers and a monotone upper bound;
 
 `tdtasp_study` runs genetics, ascertainment and either power or sample-size
 calculations in one call. Search results include a fixed-observation comparison;
-`format_tdtasp_study` produces a reproducible text report. TDTASP remains partial
-pending the final archive audit. `TDTASPTemplate`, `parse_tdtasp_template` and
+`format_tdtasp_study` produces a reproducible text report.
+`TDTASPTemplate`, `parse_tdtasp_template` and
 `format_tdtasp_template` support validated legacy forms and file-to-study workflows.
+
+The [TDTASP archive audit](docs/tdtasp-coverage.md) covers all 44 archived files.
