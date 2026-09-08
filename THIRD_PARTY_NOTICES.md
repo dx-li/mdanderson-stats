@@ -372,3 +372,11 @@ Random Number Package with Splitting Facilities,” ACM Transactions on
 Mathematical Software 17(1), 98–111 (1991). The retained ACM policy addresses
 use, attribution and redistribution, including direct commercial advantage.
 This package does not replace those terms with a blanket license.
+
+
+RANDLIB's exponential sampler also follows the documented algorithm SA of
+J. H. Ahrens and U. Dieter, “Computer Methods for Sampling From the Exponential
+and Normal Distributions,” Communications of the ACM 15(10), 873–882 (1972).
+The archived attribution and ACM policy are retained in the RANDLIB notices
+linked above; the original native implementations are used only as local
+validation references.

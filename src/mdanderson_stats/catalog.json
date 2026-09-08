@@ -555,13 +555,16 @@
       "status": "partial",
       "implemented_features": [
         "RandlibGenerator: independent 32-stream bank, batched raw/uniform draws, antithetic control, seed replacement, block reset and power-of-two advancement",
-        "RANDLIB bounded real/integer uniforms and forward permutations: unbiased defaults, Fortran/C compatibility and transactional rejection limits"
+        "RANDLIB bounded real/integer uniforms and forward permutations: unbiased defaults, Fortran/C compatibility and transactional rejection limits",
+        "RANDLIB exponential sampling: vectorized inverse-transform default and original float32 Ahrens-Dieter algorithm with state-validated Fortran/C compatibility"
       ],
       "validation": [
         "tests/test_randlib.py",
         "tests/fixtures/randlib_streams.json",
         "tests/test_randlib_sampling.py",
         "tests/fixtures/randlib_sampling.json",
+        "tests/test_randlib_exponential.py",
+        "tests/fixtures/randlib_exponential.json",
         "docs/randlib.md"
       ]
     },

@@ -5,6 +5,7 @@ from typing import Literal
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
+from ._randlib_distributions import DistributionStream, legacy_exponential
 from ._randlib_sampling import bounded, raw_batch
 from ._validation import scalar
 from .ranlist_random import _DEFAULT, _M1, _M2, _stream_seeds
@@ -242,6 +243,62 @@ class RandlibGenerator:
             j = int(draw[0])
             result[i], result[j] = result[j], result[i]
             used += attempts
+        self._current[self._stream - 1] = state
+        result.flags.writeable = False
+        return result
+
+    def exponential(
+        self,
+        size: int = 1,
+        *,
+        mean: float = 1.0,
+        legacy: bool = False,
+        source: Literal["fortran", "c"] = "fortran",
+        max_attempts: int | None = None,
+    ) -> NDArray[np.float64]:
+        """Exponential samples with nonnegative mean (GENEXP/SEXPO).
+
+        Modern uses vectorized inverse transformation and one raw draw per
+        result. Legacy implements the original float32 Ahrens-Dieter sampler,
+        including variable draw consumption. Mean zero still consumes draws.
+        Failure leaves the selected stream unchanged.
+        """
+        size = _integer(size, "size", 0, self._max_draws)
+        mean = scalar(mean, "mean")
+        if mean < 0:
+            raise ValueError("mean must be nonnegative")
+        if not isinstance(legacy, (bool, np.bool_)):
+            raise ValueError("legacy must be boolean")
+        if not isinstance(source, str) or source not in ("fortran", "c"):
+            raise ValueError("source must be fortran or c")
+        if not legacy and source != "fortran":
+            raise ValueError("source selection requires legacy=True")
+        budget = _integer(
+            max(100_000, 4 * size) if max_attempts is None else max_attempts,
+            "max_attempts",
+            1,
+            2**53 - 1,
+        )
+        state = self.get_seeds()
+        antithetic = self._antithetic[self._stream - 1]
+        if legacy:
+            with np.errstate(over="ignore", under="ignore"):
+                source_mean = np.float32(mean)
+            if not np.isfinite(source_mean) or mean > 0 and source_mean == 0:
+                raise ValueError("legacy mean must be representable in float32")
+            sampler = DistributionStream(state, antithetic, source, budget)
+            result = legacy_exponential(sampler, size, source_mean)
+            state = sampler.state
+        else:
+            if size > budget:
+                raise ArithmeticError(
+                    "distribution sampling exceeded max_attempts; state unchanged"
+                )
+            raw, state = raw_batch(state, size, antithetic)
+            with np.errstate(over="ignore", under="ignore"):
+                result = -np.log(raw / _M1) * mean
+            if not np.all(np.isfinite(result)):
+                raise ArithmeticError("exponential samples overflow float64; state unchanged")
         self._current[self._stream - 1] = state
         result.flags.writeable = False
         return result

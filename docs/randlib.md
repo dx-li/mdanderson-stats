@@ -1,9 +1,9 @@
 # RANDLIB
 
 Catalog entry 27 is partial. The 32-stream generator bank and state controls are
-implemented, along with bounded real/integer uniforms and random permutations.
-Non-uniform distribution samplers and the final archive coverage/performance
-audit remain pending.
+implemented, along with bounded uniforms, permutations and exponential sampling.
+Normal, gamma, beta, chi-square, F, count and multivariate samplers and the final
+archive coverage/performance audit remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27)
 lists version 90, modified September 27, 2002. RANDLIB_V90.tar.gz contains
@@ -74,7 +74,7 @@ rather than preserving unsafe or accidental source behavior.
 
 `get_seeds` is a snapshot of the selected current pair, not a serialized bank;
 restoring it with `set_seeds` intentionally replaces the reset anchors. Full bank
-serialization and non-uniform distribution sampling are not yet implemented.
+serialization and the remaining non-uniform samplers are not yet implemented.
 
 ## Validation
 
@@ -89,7 +89,7 @@ Independent tests check split versus combined batches, interleaved streams,
 antithetic complements, block-start semantics, ADVNST anchor replacement,
 prime-modulus assumptions, large powers, read-only outputs and invalid-operation
 state preservation. These comparisons validate the bank foundation. The bounded samplers below
-have additional native checks; non-uniform samplers remain pending.
+have additional native checks; exponential sampling is validated separately below.
 
 
 ## Bounded uniforms and permutations
@@ -148,3 +148,47 @@ rejections, constant bounds and a wide range with roughly half of draws rejected
 All values and states match their selected source arithmetic. Independent tests
 cover unbiased rejection, exact batch/scalar state agreement, full-range behavior,
 transactional budget failures, multiset preservation and extreme real bounds.
+
+
+## Exponential sampling
+
+```python
+bank = RandlibGenerator()
+values = bank.exponential(10000, mean=2.5)
+source_values = bank.exponential(100, mean=2.5, legacy=True)
+c_values = bank.exponential(100, mean=2.5, legacy=True, source="c")
+```
+
+`exponential(size=1, mean=1, legacy=False, source="fortran", max_attempts=None)`
+implements GENEXP, with mean one corresponding to SEXPO. Means must be finite
+and nonnegative. Zero is the original routine's degenerate case and still
+consumes random draws. Default uses a vectorized `-log(U) * mean` transformation
+with one double-precision unit uniform per result. It follows the selected
+stream's antithetic setting and has the finite resolution of the base generator.
+The default targets the exponential distribution with this finite-resolution
+uniform stream. Its sample sequence differs from SEXPO.
+
+Legacy implements the archived Ahrens–Dieter algorithm SA with its float32 table,
+doubling steps, running minima and arithmetic. It can consume multiple uniforms
+per sample; `source="c"` uses C's distinct uniform conversion. Mean-one and scaled
+results follow the same path, including zero mean. The source's exact-0.5
+uniform branch returns zero, following the corrected strict comparison in all
+three archived implementations. Legacy means must be representable in float32;
+positive means that underflow to zero are rejected.
+
+The attempt budget defaults to `max(100_000, 4 * size)` and counts raw draws.
+Budget failures, overflow and invalid inputs leave bank state unchanged.
+Returned arrays are read-only. Mean multiplication may underflow small individual
+samples to zero at the selected precision; overflow raises `ArithmeticError`.
+C's unit-uniform rounding can yield one, which would overrun SEXPO's eight-entry
+table. Python detects that case and raises `ArithmeticError` without committing
+state, rather than reading past the table. Fortran's maximum uniform follows the
+valid final table branch.
+
+`tools/reference_randlib_exponential.py` compiles unchanged C, Fortran 77 and
+Fortran 95 routines. Its 110 cases record 20 values and corresponding component
+states each, covering mean zero/one/2.3, three streams, antithetic mode, an exact
+half-uniform seed and the Fortran final-table branch. Values and states match
+exactly in the selected legacy mode. Batch calls match repeated scalar calls.
+Independent tests verify the modern inverse transform, mean/variance/CDF on
+50,000 draws, degenerate means, source boundary behavior, limits and rollback.

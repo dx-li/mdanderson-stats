@@ -295,3 +295,7 @@ non-uniform distribution samplers remain pending.
 RANDLIB now includes bounded uniform sampling and forward random permutations,
 with explicit Fortran/C float compatibility and bounded rejection sampling.
 Native comparisons cover all three archived language implementations.
+
+RANDLIB exponential sampling now supports a vectorized default and original
+Ahrens–Dieter sampling with Fortran/C rounding compatibility. Native fixtures
+verify both values and generator-state consumption.
