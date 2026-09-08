@@ -3,7 +3,7 @@
 Implemented: the uniform-plus-beta model, density/CDF evaluation, posterior null
 probabilities, STBETA initialization, EM/direct likelihood fitting, sequential
 component selection, simulation-based goodness-of-fit checks, and desktop
-reciprocal-density rejection decisions.
+reciprocal-density rejection decisions, and manual component-count fitting.
 MULTI remains **partial**: remaining desktop and plotting/reporting workflows
 still require scope review, implementation, and validation.
 
@@ -174,6 +174,31 @@ check = beta_mixture_bootstrap(pvalues, fit.model, algorithm="em", rng=123)
 print(check.pvalue, check.attempts, check.failures)
 ```
 
+For manual component selection, `fit_beta_mixture_k` provides the S `betamix.k`
+workflow and the numerical steps behind desktop BMFIT's user-selected k:
+
+```python
+from mdanderson_stats import fit_beta_mixture_k
+
+fit0 = fit_beta_mixture_k(pvalues, 0, algorithm="em")
+fit1 = fit_beta_mixture_k(pvalues, 1, algorithm="em")
+fit2 = fit_beta_mixture_k(pvalues, 2, previous=fit1, algorithm="em")
+```
+
+The count must be an integer from zero to ten. k=0 is uniform; k=1 starts from
+uniform; higher counts require the preceding successful (k-1) fit from the same
+data. The function validates component count, not data provenance. It returns
+a fit without selecting a count, and raises on failure. Retain these fit objects
+to compare likelihoods, CVM statistics, parameters, or simulated model checks.
+
+`select_beta_mixture(..., workflow="desktop")` preserves BMFIT's relative
+likelihood denominator `max(old_LL, 100*np.finfo(float).tiny)`. The default
+`workflow="s"` retains the S denominator described below. The result records
+which workflow was requested. Both use the same lower-tail moment initialization,
+component-weight rule, and CVM stopping rule. Source inspection verified that
+BMFIT's inline initialization scales weights and calls the same MOMBET routine
+as S STBETA; there is no separate initialization algorithm to duplicate.
+
 The S `betamix` sequence starts with the uniform model (k=0), adds components
 using STBETA on the preceding fitted CDF, and tests up to k=10. The default
 threshold is 0.05. The three original rules are:
@@ -215,7 +240,8 @@ a model already fitted to the observed data; the function does not establish
 that provenance automatically.
 
 `tools/reference_beta_selection.py` records three native sequential STBETA/EMBETA
-fits and four native SIMCVM-style EMBETA refits of fixed simulated samples.
+fits, three desktop EMBETA fits at the same starting values, and four native
+SIMCVM-style EMBETA refits of fixed simulated samples.
 The published data select k=1 by weight and k=2 by likelihood change under EM.
 Tests compare the native fit chain and refitted CVM values, independently compute
 uniform CVM statistics and strict-tail counts, check sampled mixture CDFs, and

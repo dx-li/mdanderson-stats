@@ -1,4 +1,4 @@
-"""MULTI S betamix sequential component selection; see the MULTI notice."""
+"""MULTI S/desktop beta-mixture fitting workflows; see the MULTI notice."""
 
 from dataclasses import dataclass
 
@@ -26,12 +26,57 @@ class BetaMixtureSelection:
     criterion: str
     status: str
     message: str
+    workflow: str = "s"
+
+
+def fit_beta_mixture_k(
+    pvalues: ArrayLike,
+    k: int,
+    previous: BetaMixtureFit | None = None,
+    *,
+    algorithm: str = "ml",
+    tolerance: float = 1e-6,
+    max_iterations: int = 10000,
+    legacy_endpoints: bool = False,
+) -> BetaMixtureFit:
+    """Fit a specified component count, as betamix.k/manual BMFIT selection.
+
+    k=0 returns the uniform model; k=1 starts from uniform. For k>1 supply the
+    preceding successful (k-1) fit. STBETA adds a lower-tail moment component
+    and the optimizer refits all parameters. Failures raise, never choose k.
+    The previous fit must come from the same data; that provenance is caller-owned.
+    """
+    x = _pvalues(pvalues)
+    if x.ndim != 1:
+        raise ValueError("Mixture fitting accepts one p-value vector")
+    if isinstance(k, bool) or not isinstance(k, int) or not 0 <= k <= 10:
+        raise ValueError("k must be an integer from zero to ten")
+    tolerance = _controls(algorithm, tolerance, max_iterations)
+    if x.size <= 3 * k + 1:
+        raise BetaMixtureFitError("Mixture fitting requires n>3*k+1")
+    if previous is not None and (k == 0 or previous.model.weights.size != k - 1):
+        raise ValueError("previous must be the (k-1) fit and is not accepted for k=0")
+    if k > 1 and previous is None:
+        raise ValueError("previous is required for k>1")
+    model = BetaMixture(1) if previous is None else previous.model
+    if k:
+        model = beta_mixture_start(x, model)
+    return _fit(x, model, algorithm, tolerance, max_iterations, legacy_endpoints)
+
+
+def _relative_likelihood_change(old: float, new: float, workflow: str) -> float:
+    gain = abs(new - old)
+    if workflow == "desktop":
+        return gain / max(old, 100 * float(np.finfo(float).tiny))
+    # Resolve S's undefined 0/0, retaining positive/0 as infinite change.
+    return gain / old if old != 0 else (np.inf if gain > 0 else 0.0)
 
 
 def select_beta_mixture(
     pvalues: ArrayLike,
     *,
     criterion: str = "data",
+    workflow: str = "s",
     threshold: float = 0.05,
     algorithm: str = "ml",
     tolerance: float = 1e-6,
@@ -47,12 +92,16 @@ def select_beta_mixture(
     pcvm selects the current model when its simulated p-value exceeds threshold.
     Nonconvergence returns the preceding valid fit with explicit status/message,
     matching the source's warning-bearing return rather than claiming selection.
+    desktop uses BMFIT's likelihood denominator max(old_LL,100*tiny); s retains
+    betamix's denominator old_LL, with explicit zero-likelihood handling.
     """
     x = _pvalues(pvalues)
     if x.ndim != 1:
         raise ValueError("Selection accepts one p-value vector")
     if criterion not in ("data", "lglk", "pcvm"):
         raise ValueError("criterion must be 'data', 'lglk', or 'pcvm'")
+    if workflow not in ("s", "desktop"):
+        raise ValueError("workflow must be 's' or 'desktop'")
     threshold = scalar(threshold, "threshold")
     if not 0 < threshold < 1:
         raise ValueError("threshold must lie strictly between zero and one")
@@ -70,7 +119,7 @@ def select_beta_mixture(
 
     def result(fit: BetaMixtureFit, status: str, message: str) -> BetaMixtureSelection:
         return BetaMixtureSelection(
-            fit, tuple(candidates), tuple(checks), criterion, status, message
+            fit, tuple(candidates), tuple(checks), criterion, status, message, workflow
         )
 
     for k in range(max_components + 1):
@@ -78,13 +127,14 @@ def select_beta_mixture(
             current = (
                 previous
                 if k == 0
-                else _fit(
+                else fit_beta_mixture_k(
                     x,
-                    beta_mixture_start(x, previous.model),
-                    algorithm,
-                    tolerance,
-                    max_iterations,
-                    legacy_endpoints,
+                    k,
+                    previous,
+                    algorithm=algorithm,
+                    tolerance=tolerance,
+                    max_iterations=max_iterations,
+                    legacy_endpoints=legacy_endpoints,
                 )
             )
         except BetaMixtureFitError as error:
@@ -111,13 +161,8 @@ def select_beta_mixture(
             if criterion == "data":
                 change = float(current.model.weights[-1])
             else:
-                gain = abs(current.log_likelihood - previous.log_likelihood)
-                # Uniform log likelihood is exactly zero. Avoid the source's
-                # undefined 0/0 while preserving positive/0 as infinite change.
-                change = (
-                    gain / previous.log_likelihood
-                    if previous.log_likelihood != 0
-                    else (np.inf if gain > 0 else 0.0)
+                change = _relative_likelihood_change(
+                    previous.log_likelihood, current.log_likelihood, workflow
                 )
             if change < threshold:
                 return result(previous, "criterion_met", f"{criterion} change below {threshold}")

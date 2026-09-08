@@ -10,7 +10,7 @@
     ],
     "notes": "Original S INITLN, BPVAL, CALCVM, STBETA and EMBETA; EMBETA renamed to distinguish its extra likelihood argument. Desktop MIXBET/MIXPRB/LGLK and identical MOMBET/SWPPAR helpers reused. Desktop MLBETA uses CONCRI=1e-6. INITLN endpoint approximation applied."
   },
-  "notes": "Original STBETA/EMBETA sequential fits; fixed NumPy samples refitted with original EMBETA at SIMCVM CONCRI=1e-3. This does not reproduce RANF draws.",
+  "notes": "Original STBETA/EMBETA sequential fits and desktop EMBETA at matching starts; fixed NumPy samples refitted with original EMBETA at SIMCVM CONCRI=1e-3. This does not reproduce RANF draws.",
   "published": [
     0.64845940901977,
     0.461172501351596,
@@ -164,6 +164,68 @@
     0.000933781121232546
   ],
   "em_chain": [
+    {
+      "status": 0,
+      "model": {
+        "null_weight": 0.6494077162087408,
+        "weights": [
+          0.3505922837912593
+        ],
+        "a": [
+          0.44049477806818654
+        ],
+        "b": [
+          29.58377437759372
+        ]
+      },
+      "log_likelihood": 109.51587355231419,
+      "cramer_von_mises": 0.0002559175198740725
+    },
+    {
+      "status": 0,
+      "model": {
+        "null_weight": 0.6491450950111752,
+        "weights": [
+          0.3083847903030713,
+          0.042470114685753645
+        ],
+        "a": [
+          0.5323225867751583,
+          135.38445253513805
+        ],
+        "b": [
+          31.200992317225694,
+          809921.3519639564
+        ]
+      },
+      "log_likelihood": 119.04669967180307,
+      "cramer_von_mises": 0.00021616212846584042
+    },
+    {
+      "status": 0,
+      "model": {
+        "null_weight": 0.6528614391601245,
+        "weights": [
+          0.2865566701302198,
+          0.037495048387394134,
+          0.02308684232226165
+        ],
+        "a": [
+          0.6325646666373347,
+          146.71654104216117,
+          6.595997175017995
+        ],
+        "b": [
+          36.9459355910747,
+          875017.9596614367,
+          54232.00433483518
+        ]
+      },
+      "log_likelihood": 120.4224814951099,
+      "cramer_von_mises": 0.0002086632602568836
+    }
+  ],
+  "desktop_em_fits": [
     {
       "status": 0,
       "model": {

@@ -6,7 +6,8 @@ and Schweder line fitting, plus the S library's Schweder bootstrap,
 order-statistic diagnostics, clustered p-value generation, and S/desktop
 nonparametric fitting. [Beta-mixture evaluation, initialization, and EM/direct fitting](beta-mixtures.md)
 are also available, along with sequential component selection and simulated model
-checks and desktop reciprocal-density decisions. It remains **partial**: remaining desktop and plotting/reporting workflows
+checks, manual component-count fits, desktop likelihood stopping, and desktop
+reciprocal-density decisions. It remains **partial**: remaining desktop and plotting/reporting workflows
 still require scope review, implementation, and validation.
 The catalog does not count this entry as complete.
 

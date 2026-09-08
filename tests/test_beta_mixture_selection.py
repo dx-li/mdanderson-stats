@@ -8,17 +8,23 @@ from mdanderson_stats import (
     BetaMixture,
     BetaMixtureFitError,
     beta_mixture_bootstrap,
+    fit_beta_mixture_k,
     select_beta_mixture,
 )
 from mdanderson_stats.beta_mixture_bootstrap import _sample
+from mdanderson_stats.beta_mixture_selection import _relative_likelihood_change
 
 REFERENCE = json.loads((Path(__file__).parent / "fixtures/beta_selection.json").read_text())
 
 
 @pytest.mark.parametrize("criterion, selected, count", [("data", 1, 2), ("lglk", 2, 3)])
-def test_em_selection_matches_native_sequential_fits(criterion, selected, count):
-    result = select_beta_mixture(REFERENCE["published"], criterion=criterion, algorithm="em")
+@pytest.mark.parametrize("workflow", ["s", "desktop"])
+def test_em_selection_matches_native_sequential_fits(criterion, selected, count, workflow):
+    result = select_beta_mixture(
+        REFERENCE["published"], criterion=criterion, algorithm="em", workflow=workflow
+    )
     assert result.status == "criterion_met"
+    assert result.workflow == workflow
     assert len(result.fit.model.weights) == selected
     assert len(result.candidates) == count + 1
     for candidate, reference in zip(result.candidates[1:], REFERENCE["em_chain"], strict=False):
@@ -27,6 +33,47 @@ def test_em_selection_matches_native_sequential_fits(criterion, selected, count)
         np.testing.assert_allclose(
             candidate.model.weights, reference["model"]["weights"], rtol=1e-6
         )
+
+
+def test_manual_component_fits_match_desktop_em():
+    previous = fit_beta_mixture_k(REFERENCE["published"], 0, algorithm="em")
+    assert previous.model.null_weight == 1 and previous.iterations == 0
+    for k, reference in enumerate(REFERENCE["desktop_em_fits"], 1):
+        fit = fit_beta_mixture_k(REFERENCE["published"], k, previous, algorithm="em")
+        assert fit.log_likelihood == pytest.approx(reference["log_likelihood"], abs=2e-7)
+        np.testing.assert_allclose(fit.model.weights, reference["model"]["weights"], rtol=1e-6)
+        previous = fit
+
+
+def test_desktop_likelihood_denominator_floor():
+    floor = 100 * np.finfo(float).tiny
+    assert _relative_likelihood_change(0, 0, "desktop") == 0
+    assert _relative_likelihood_change(0, floor, "desktop") == 1
+    assert np.isinf(_relative_likelihood_change(0, floor, "s"))
+    assert _relative_likelihood_change(-1, 0, "desktop") == pytest.approx(1 / floor)
+    assert _relative_likelihood_change(-1, 0, "s") == -1
+    assert _relative_likelihood_change(100, 104, "desktop") == pytest.approx(0.04)
+
+
+@pytest.mark.parametrize("k", [-1, 11, True, 1.5])
+def test_invalid_manual_component_count(k):
+    with pytest.raises(ValueError, match="integer"):
+        fit_beta_mixture_k(REFERENCE["published"], k)
+
+
+def test_manual_fit_requires_the_correct_preceding_model():
+    x = REFERENCE["published"]
+    uniform = fit_beta_mixture_k(x, 0)
+    with pytest.raises(ValueError, match="required"):
+        fit_beta_mixture_k(x, 2)
+    with pytest.raises(ValueError, match="previous"):
+        fit_beta_mixture_k(x, 2, uniform)
+    with pytest.raises(ValueError, match="previous"):
+        fit_beta_mixture_k(x, 0, uniform)
+    with pytest.raises(BetaMixtureFitError, match="n>3"):
+        fit_beta_mixture_k([0.01, 0.02, 0.03], 1)
+    with pytest.raises(ValueError, match="workflow"):
+        select_beta_mixture(x, workflow="unknown")
 
 
 @pytest.mark.parametrize("algorithm", ["em", "ml"])
