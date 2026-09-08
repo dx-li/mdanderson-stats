@@ -230,3 +230,6 @@ toggles mode, +/- resizes the brush, Shift adds selections and Escape clears.
 
 `contingency_chi_square` starts [CTA](docs/cta.md) with batched contingency-table
 statistics, native Fortran comparisons and explicit correction conventions.
+
+`mcnemar_analysis` adds CTA paired-category statistics and its pooled/heterogeneity
+decomposition, with explicit handling of pairs without discordant observations.

@@ -306,3 +306,7 @@ allows use and redistribution subject to its terms and requires permission for
 incorporation of its code into a commercial package sold to others. This Python
 implementation is explicitly independent; no broader license is asserted here.
 Source provenance and native-reference validation are documented in `docs/cta.md`.
+
+`cta_mcnemar.py` independently implements CTA MCNEMAR pairwise and aggregate
+formulas. Zero-discordance cases are defined explicitly and accurate gamma tails
+replace the source's forced approximation; the same CTA notice applies.

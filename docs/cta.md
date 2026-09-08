@@ -1,8 +1,9 @@
 # CTA contingency-table analysis
 
 Catalog entry 30 is partial. CHISQT expected counts, percentages, Pearson,
-Yates and source-specific Cochran statistics are implemented. Fisher probabilities,
-McNemar/extended McNemar, Cohen kappa and its variances, sensitivity/specificity,
+Yates and source-specific Cochran statistics, and the McNemar decomposition are
+implemented. Fisher probabilities,
+Cohen kappa and its variances, sensitivity/specificity,
 relative odds, binomial comparison, reports and interactive study orchestration
 remain pending.
 
@@ -76,3 +77,56 @@ corrected independence, batch/scalar and transpose/permutation equality, thresho
 equality, immutable input snapshots, and counts large enough to overflow a naive
 squared-count implementation. Other CTA routines are compiled as dependencies
 but are not claimed to have been exercised or ported in this increment.
+
+
+## McNemar and heterogeneity decomposition
+
+```python
+from mdanderson_stats import mcnemar_analysis
+
+fit = mcnemar_analysis([[3, 1, 7], [2, 6, 3], [4, 8, 9]])
+print(fit.pairs, fit.pair_statistic, fit.pair_pvalue)
+print(fit.summed_statistic, fit.summed_pvalue)
+print(fit.pooled_statistic, fit.heterogeneity_statistic)
+```
+
+`mcnemar_analysis` implements MCNEMAR for square tables, with optional leading
+batch axes. Diagonal cells do not enter the calculation. For each i<j, above=b
+and below=a give statistic (b-a)²/(a+b), with one degree of freedom. The summed
+statistic adds these contributions. The pooled directional statistic is
+(sum(b-a))²/sum(a+b), with one degree of freedom. Heterogeneity is the difference
+between summed and pooled statistics, with one fewer degree of freedom than the
+summed test. Pooled direction and heterogeneity depend on the supplied category
+ordering; this is the source decomposition, not a Stuart-Maxwell marginal-
+homogeneity test. No continuity correction is used.
+
+To avoid cancellation near homogeneous pair contrasts, heterogeneity is evaluated
+as sum(w*(r-rbar)²), where w=a+b, r=(b-a)/w, and rbar=sum(b-a)/sum(w). Raw large
+counts are not squared. The result retains zero-based category pairs, above/below
+counts, all three aggregate statistics/p-values/dfs and individual statistics.
+All result arrays are read-only.
+
+Pairs with no discordant observations contribute zero and are excluded from the
+summed degrees of freedom; their individual p-values are NaN. With no discordance,
+all statistics and dfs are zero and all p-values are NaN. A 2x2 table has no
+heterogeneity degrees of freedom, so that p-value is NaN. The archived routine
+instead divides by zero on empty pairs and prints p=1 for zero heterogeneity with
+df=0. Python defines those no-information cases explicitly. Nonnegative fractional
+counts are supported; nonsquare/negative/nonfinite inputs and overflowing totals
+are rejected.
+
+Seven native MCNEMAR runs cover 2x2, 3x3 and 4x4 tables, symmetry, fractional
+counts and differing pair contrasts. `tools/reference_cta_mcnemar.py` records them
+in `tests/fixtures/cta_mcnemar.json`, using unchanged archived subroutines. Aggregate
+statistics agree within float32 tolerances. The source's OVERFL routine always
+returns 1, forcing its Wilson–Hilferty approximation in the x>=df integer-df
+branch above df=2. In the recorded 3x3 and 4x4 cases this changes the summed
+p-value by about 5e-5 and 3.08e-4 respectively. Tests explicitly reproduce that
+approximation to explain native output, and independently check the Python
+p-values using finite gamma recurrences from exp/erfc. The implementation uses
+accurate gamma tails, not the source overflow stub's forced approximation.
+
+Further checks cover rational decomposition, transpose/orientation, zero/one
+active pair, batch scaling to enormous counts and stable positive heterogeneity
+for nearly homogeneous contrasts. Fisher, kappa and the other pending CTA
+workflows are still tracked above; this does not complete catalog entry 30.
