@@ -150,5 +150,7 @@ Optimized SINGLE results provide `report` and `write_report` for TSV design and
 convergence summaries.
 `single_search_design` scans starting doses, adds dose entries, and retains a
 reviewable history under SINGLE's relative-improvement stopping rule.
+`SingleStudySpecification` adds complete settings/prior reports, study revision
+and JSON input replay.
 [SINGLE coverage](docs/single.md) tracks
 the remaining prior-integration and optimization workflows.

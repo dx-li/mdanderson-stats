@@ -1118,7 +1118,8 @@
         "single_optimize_two_sample_allocations: allocation of a shared total across two groups under point or weighted priors with shared-parameter location/slope comparisons",
         "single_optimize_design: joint local dose/allocation optimization for fixed support counts, one/two samples and point/weighted priors, with analytic derivatives",
         "SingleOptimizedDesign.report/write_report: numerical TSV design, group totals, criterion and convergence diagnostics",
-        "single_search_design: grid initialization and incremental dose-point search with relative-improvement stopping, accepted/rejected stages and failure counts"
+        "single_search_design: grid initialization and incremental dose-point search with relative-improvement stopping, accepted/rejected stages and failure counts",
+        "SingleStudySpecification/SingleStudy: model/prior/search specifications, revision, full numerical reports and JSON input replay"
       ],
       "validation": [
         "tests/test_single.py",
@@ -1129,6 +1130,7 @@
         "tests/test_single_optimize.py",
         "tests/test_single_report.py",
         "tests/test_single_search.py",
+        "tests/test_single_study.py",
         "tests/fixtures/single.json",
         "tools/reference_single.py",
         "tests/test_single_two_sample.py",

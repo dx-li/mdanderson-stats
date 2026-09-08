@@ -76,6 +76,7 @@ from .single_optimize import SingleOptimizedDesign, single_optimize_design
 from .single_prior import single_prior_parameters
 from .single_prior_allocation import SinglePriorAllocation, single_optimize_prior_allocations
 from .single_search import SingleDesignSearch, SingleSearchStep, single_search_design
+from .single_study import SingleStudy, SingleStudySpecification
 from .single_two_allocation import SingleTwoSampleAllocation, single_optimize_two_sample_allocations
 from .single_two_sample import SingleTwoSamplePrecision, single_two_sample_precision
 from .single_uniform import SingleUniformCriterion, single_uniform_criterion
@@ -87,6 +88,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "SingleStudy",
+    "SingleStudySpecification",
     "SingleDesignSearch",
     "SingleSearchStep",
     "single_search_design",

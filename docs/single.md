@@ -5,9 +5,9 @@ implemented for logistic and log-log models, with linear or centered predictors.
 Independent uniform and correlated normal/log-normal prior criterion averaging
 and design-derived prior correlations are implemented. Fixed-dose, one- and two-sample
 point- and uncertain-prior allocation optimization is implemented, along with joint
-dose/allocation optimization and automatic dose-point addition. Complete model/prior
-workflow reporting remains pending.
-Optimized numerical design reports are available.
+dose/allocation optimization and automatic dose-point addition. Study configuration,
+revision, JSON replay and complete numerical reporting are available. Original
+fixed-per-group subject totals remain pending for two-sample optimization.
 
 ```python
 from mdanderson_stats import single_design_precision
@@ -559,3 +559,55 @@ third-dose improvement, accept substantial improvements for a broad three-node
 prior, retain a better but sub-threshold rejected design in history, verify
 one/two-sample totals and limits, independently recompute criteria, and check
 failed-search behavior. The original search executable is not run by these tests.
+
+
+## Study configuration, revision and replay
+
+`SingleStudySpecification` records every search input: the response model and
+parameterization, criterion/comparison, objective aggregation, dose bounds, total
+subjects, quantile, search limits, stopping threshold and solver controls, as well
+as the actual parameter nodes and weights. `run()` validates the inputs, executes
+the search and returns a `SingleStudy` with an independent, read-only copy of the
+parameter arrays and a complete search result.
+
+```python
+from mdanderson_stats import SingleStudySpecification
+
+study = SingleStudySpecification(
+    parameters=[0, 1], dose_bounds=[-10, 10], criterion="quantile", max_doses=4
+).run()
+study.write_report("single-study.tsv", digits=17)
+study.write_specification("single-inputs.json")
+slope_study = study.revise(criterion="slope")
+```
+
+For uncertain priors, supply the nodes and weights from the existing uniform or
+normal-prior evaluator and select the corresponding aggregation. The saved measure
+is explicitly the weighted model-parameter node set; the report does not guess
+whether it originated from a uniform, normal or another discrete prior. This
+preserves the actual numerical approximation, including any prior transformation
+or legacy scaling already applied, rather than relying on a distribution label.
+
+`study.report()` includes settings, dose bounds, every weighted parameter node,
+search stopping reason and failure counts, accepted/rejected stage summaries, the
+selected design and every attempted optimized stage. `write_report` exports UTF-8
+TSV. `write_specification` exports full-precision JSON input; replay uses
+`SingleStudySpecification.from_json(text).run()`. These files replace their explicit
+destinations and propagate I/O errors. JSON is data only and unknown input fields
+are rejected. Numerical/model validation occurs at `run()`. Replaying with changed
+numerical libraries can change floating-point trajectories; no cross-version
+bitwise identity is promised.
+
+`revise(**changes)` reruns with changed specification fields and leaves the earlier
+study intact, covering the original menu's design/model/criterion/prior changes.
+Tests verify independent snapshots, model/prior/search report coverage, retained
+rejected stages, exact JSON inputs, one/two-sample replay, revision and invalid
+input behavior.
+
+### Remaining two-sample compatibility constraint
+
+A source audit of DCPPAR shows that the original optimizer separately normalizes
+each group's counts to ANIMLS. The current two-sample optimization APIs instead
+optimize a shared experiment total across both groups. This additional flexibility
+does not yet reproduce the original fixed-per-group feasible set. Fixed group-total
+constraints must be added before catalog entry 55 is considered fully implemented.
