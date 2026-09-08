@@ -154,5 +154,5 @@ convergence summaries.
 reviewable history under SINGLE's relative-improvement stopping rule.
 `SingleStudySpecification` adds complete settings/prior reports, study revision
 and JSON input replay.
-[SINGLE coverage](docs/single.md) tracks
-the remaining prior-integration and optimization workflows.
+[SINGLE coverage](docs/single-coverage.md) records the completed source/manual
+audit, validation evidence and documented numerical/solver substitutions.

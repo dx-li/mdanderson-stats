@@ -1,6 +1,7 @@
 # SINGLE dose-response design precision
 
-Catalog entry 55 is partial. Fixed one- and two-sample designs under point priors are
+Catalog entry 55 is implemented with the documented compatibility and solver
+substitutions; see the [coverage audit](single-coverage.md). Fixed one- and two-sample designs under point priors are
 implemented for logistic and log-log models, with linear or centered predictors.
 Independent uniform and correlated normal/log-normal prior criterion averaging
 and design-derived prior correlations are implemented. Fixed-dose, one- and two-sample
@@ -9,7 +10,7 @@ dose/allocation optimization and automatic dose-point addition. Study configurat
 revision, JSON replay and complete numerical reporting are available. Original
 fixed-per-group subject totals are supported throughout two-sample optimization.
 Original support-stopping checks are available as an explicit search option.
-The entry remains partial pending the final source/manual coverage audit.
+
 
 ```python
 from mdanderson_stats import single_design_precision
@@ -647,3 +648,8 @@ group. Tests check analytic slope-contrast precision, unequal totals, sample-siz
 scaling, joint optimal doses, search history, report settings and JSON replay.
 These tests validate the constrained mathematical problem; they do not execute
 the original optimizer or establish a global optimum for the dose search.
+
+The original PEIGEN routine sets normal-prior Hermite order to **8**. Use
+`order=8` with the legacy conversion/scaling options to reproduce the uncertain-
+prior examples in the manual. The Python default is 6; the uniform-prior default
+is also 6. Full raw-prior-to-search regressions are in `test_single_manual.py`.

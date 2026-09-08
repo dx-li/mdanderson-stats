@@ -1,0 +1,22 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "Same Python API, one batched call versus 1000 scalar calls; not a comparison with archived executables or full design search",
+  "results": {
+    "one_sample": {
+      "workload": "1000 logistic linear parameter nodes, four fixed doses, 5% quantile variance",
+      "batch_seconds": 0.0009238328784704208,
+      "scalar_seconds": 0.07301562512293458,
+      "speedup": 79.03553426657177
+    },
+    "two_sample": {
+      "workload": "1000 logistic linear parameter nodes, four doses per group, location contrast variance",
+      "batch_seconds": 0.0030462918803095818,
+      "scalar_seconds": 0.07809820771217346,
+      "speedup": 25.63713878403427
+    }
+  }
+}
