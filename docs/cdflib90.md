@@ -3,8 +3,8 @@
 CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
-The entry is **partial**: the beta, normal, gamma and chi-square distributions' four public interfaces
-are implemented. The other eight distribution modules, the remaining archived library
+The entry is **partial**: the beta, normal, gamma, chi-square and Poisson distributions' four public interfaces
+are implemented. The other seven distribution modules, the remaining archived library
 interfaces and the complete 106-file archive audit remain outstanding.
 
 Source: [catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/21)
@@ -304,3 +304,59 @@ rather than blessing those outputs. Independent tests use the df=1 squared-norma
 identity and df=2 exponential identity, extreme tails, boundary round trips,
 broadcast ownership, empty arrays and invalid requests. Gamma numerical fixes
 also apply to chi-square because they share the same kernels.
+
+
+## Poisson distribution
+
+```python
+from mdanderson_stats import cdf_poisson, cum_poisson, ccum_poisson, inv_poisson
+
+lower = cum_poisson([0, 0.5, 3], mean=2)
+upper = ccum_poisson([0, 0.5, 3], mean=2)
+count = inv_poisson(0.8, mean=2)  # a real count, not an integer PPF
+mean = cdf_poisson(3, s=0, cum=0.1353352832366127).mean  # 2
+```
+
+`cdf_poisson` computes group 1 (cum/ccum), 2 (s), or 3 (mean). Supply all input
+groups and omit the computed group. Its immutable `CDFPoisson` contains `which`,
+`cum`, `ccum`, `s` and `mean`, with arrays broadcast together. The Python `mean`
+argument corresponds to the source's LAMBDA. Counts retain [0,1e100] and means
+[1e-10,1e100]; neither has a default. Tail conveniences accept `(s, mean)` and the
+count inverse accepts `(cum, mean, *, ccum=None)`.
+
+This preserves CDFLIB90's explicitly continuous extension to real counts:
+Poisson cum is the upper gamma ratio Q(s+1,mean), and ccum is P(s+1,mean).
+At integer s this equals the ordinary inclusive Poisson cumulative probability.
+At fractional s it is the gamma extension. `inv_poisson` returns the real solution
+of that equation, without integer rounding. It is not the minimum integer count
+whose discrete CDF exceeds the requested probability.
+
+Both tails use the shared gamma kernels directly. Count inversion swaps the
+probability tails and searches gamma shape over [1,1e100], then subtracts one.
+Mean inversion uses the swapped-tail gamma quantile. Complement validation,
+small-tail preservation, the 64-step batched log-shape search and its forward
+accuracy check follow the gamma interface. Count inversion requires positive
+probabilities in both tails. A probability below exp(-mean), apart from endpoint
+roundoff, would require a negative count and raises `ValueError`. Probabilities
+within 32 machine epsilons relative to the smaller s=0 endpoint tail retain that
+boundary root. The original validated pair is returned unchanged.
+
+Computed count/mean bounds allow eight-epsilon relative endpoint roundoff;
+input bounds remain strict. Zero/one probabilities do not identify an admissible
+positive finite mean in this domain and fail. Plain tails can underflow and
+large probabilities round to one. Forming s+1 and subtracting one limits relative
+accuracy for very small counts; very large counts can make shape inversion
+ill-conditioned. The port retains double-precision arithmetic and fails forward
+verification when the shared search cannot meet its documented tolerance.
+
+`tools/reference_cdflib_poisson.py` compiles nine unmodified archived files and
+records source/archive hashes, compiler, build command, driver and **61 cases**:
+25 forward evaluations plus 18 each of count and mean inversion. Counts include
+0.2 as well as integers. Forward tails agree directly; inverse tests recover
+known generating parameters. Three native count inversions report -50.
+Two additional native cases request probabilities below exp(-mean); both return
+success and count zero because the source clamps a negative solution with MAX.
+Python rejects these unattainable requests, with explicit regression tests.
+Independent tests use 150-digit Decimal Poisson sums, the half-integer gamma
+identity at s=0.5, extreme mean inversion, broadcasting, immutable ownership,
+empty arrays and strict domain validation.

@@ -350,3 +350,7 @@ archived implementation's convention: its parameter named SCALE multiplies x.
 
 `cdf_chisq`, `cum_chisq`, `ccum_chisq` and `inv_chisq` add chi-square tails,
 quantiles and inversion for real degrees of freedom, with the original df bounds.
+
+
+`cdf_poisson`, `cum_poisson`, `ccum_poisson` and `inv_poisson` preserve
+CDFLIB90's fractional-count Poisson extension, with count and mean inversions.
