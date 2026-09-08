@@ -1,9 +1,9 @@
 # KSBIN2 two-sample binomial designs
 
 Catalog entry 24 is partial. The outcome statistics and complete single-stage
-outcome ordering are implemented; probability calculations, multistage transitions,
-rejection/quitting selection, power-loss tables, probability scans and report/design
-workflows remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
+outcome ordering and ordinary single-stage probability tables are implemented.
+Mid-p calculations, multistage transitions, rejection/quitting selection, power-loss
+tables, study probability scans and report/design workflows remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
 
 ```python
 from mdanderson_stats import ksbin2_ordering, ksbin2_statistic
@@ -56,5 +56,64 @@ Python matches at 2e-12 relative / 1e-13 absolute tolerance. Independent identit
 endpoint cases, direction symmetry, weighted combinations, complete-space coverage,
 tied groups and invalid inputs are tested in `tests/test_ksbin2.py`.
 
-These scores order evidence; they are not p-values. No significance, power or
-multistage design validity is claimed by this component alone.
+These scores order evidence; they are not p-values. The ordering component alone
+does not calculate significance or power. The probability-table API below adds
+those quantities for single-stage rejection regions.
+
+## Single-stage probability tables
+
+```python
+from mdanderson_stats import ksbin2_probability_table
+
+table = ksbin2_probability_table(
+    20,
+    15,
+    probability1=0.6,
+    probability2=0.2,
+    criteria=(1, 2),
+    alternative="greater",
+)
+print(table.significance, table.power)
+print(table.null_grid, table.null_rejection)
+```
+
+Each last-axis entry represents an inclusive rejection region ending at a complete
+tied group in `ordering.group_end`. Regions grow from the strongest evidence to
+the entire outcome space. `power` sums their probabilities under the supplied
+alternative probabilities, which broadcast with a final group axis. For a one-sided
+test, the supplied probabilities must follow the indicated direction. Endpoints
+are supported. Two-sided calculations also allow equal probabilities.
+
+`null_rejection` has shape (grid points, groups), evaluating p1 = p2 at every
+null grid point. `significance` is its column maximum. The accompanying
+`maximizing_null_probability` identifies the first maximizing grid point; it is
+not a fitted continuous maximizer. Defaults reproduce the source's 51-point grid:
+0 through 1 by 0.02 for one-sided tests, or 0 through 0.5 by 0.01 for two-sided
+tests. The latter exploits complement symmetry of two-sided regions. A custom
+strictly increasing grid in [0,1] can be supplied, including a full-range grid.
+
+This grid maximum does not establish the supremum over every possible common null
+probability. It should not be reported as a guaranteed continuous-nuisance size
+bound. The routine calculates the complete table instead of truncating the source
+SSSIG computation above its display significance limit. Ordinary regions include
+all outcomes in their terminal tied group; no mid-p adjustment or boundary
+randomization is applied.
+
+Binomial probabilities reuse the shared cached-combinatorial/log-weighted kernel.
+The two independent group distributions are multiplied in sorted outcome order,
+and cumulative sums evaluate every complete rejection region together. The
+calculation uses NumPy across both outcomes and probability cases.
+
+`tools/reference_ksbin2_probability.py` extracts unchanged SSSIG, SSPOW, PQTAB,
+PQTAB1 and QEQDBL routines. Its independent driver supplies explicit sorted count
+pairs, exact-combinatorial scaled coefficients and tied-group endpoints. This
+validates the original probability routines separately from the ordering tests;
+it is not a native main-program session. Eighteen tables span three sample-size
+pairs, all directions and two criterion lists. Source/extracted hashes and compiler
+provenance accompany `tests/fixtures/ksbin2_probability.json`. Comparisons pass at
+3e-12 relative / 2e-14 absolute tolerance.
+
+Independent tests enumerate all binary paths for two groups of sizes 2 and 3,
+including endpoint probabilities, and check every region's null rejection and
+power. Other tests check broadcasting, complete tied regions, complement symmetry,
+custom grids, the maximum 100-by-100 design, and a power of 1e-300.

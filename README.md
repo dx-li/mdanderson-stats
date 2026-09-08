@@ -112,5 +112,6 @@ including rejection/quitting probabilities and expected sample sizes.
 and report/design file output. See [KSBIN1 coverage and validation](docs/ksbin1.md).
 
 `ksbin2_statistic` and `ksbin2_ordering` provide vectorized two-sample binomial
-evidence scores and tied outcome groups. [KSBIN2 coverage](docs/ksbin2.md) tracks
-the remaining probability and multistage-design workflows.
+evidence scores and tied outcome groups. `ksbin2_probability_table` adds ordinary
+single-stage power and null-grid significance. [KSBIN2 coverage](docs/ksbin2.md)
+tracks the remaining mid-p and multistage-design workflows.

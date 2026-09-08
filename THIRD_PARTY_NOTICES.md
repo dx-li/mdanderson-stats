@@ -148,3 +148,8 @@ Original Fortran routines are extracted only into a local reference build and
 are not shipped. Source and extracted-code hashes and compiler provenance are
 recorded in `tests/fixtures/ksbin2.json`. Documentation records the source's
 criterion-description inconsistency and the exact-zero likelihood correction.
+
+`ksbin2_probability.py` independently computes ordinary single-stage power and
+null-grid significance using shared Python binomial masses. The source probability
+routines are consulted and compiled locally for reference; the fixture provenance
+is in `tests/fixtures/ksbin2_probability.json`. No original routines are shipped.
