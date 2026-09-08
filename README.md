@@ -156,3 +156,7 @@ reviewable history under SINGLE's relative-improvement stopping rule.
 and JSON input replay.
 [SINGLE coverage](docs/single-coverage.md) records the completed source/manual
 audit, validation evidence and documented numerical/solver substitutions.
+
+`SeqBinDesign` constructs SEQBIN beta-posterior sequential or group-sequential
+binomial boundaries and computes exact stopping probabilities and expected sample
+sizes. [SEQBIN coverage](docs/seqbin.md) tracks calibration and reporting work.

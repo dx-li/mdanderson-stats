@@ -191,3 +191,14 @@ are compiled only in a local reference build, with source/compiler provenance in
 `tests/fixtures/single.json`. No original source or binary is distributed. SINGLE's
 source requires permission for commercial source use; this implementation expresses
 the model formulas independently and documents its different numerical treatment.
+
+## SEQBIN
+
+`seqbin.py` independently implements beta-posterior boundary searches and forward
+Bernoulli stopping probabilities. SEQBIN 1.5 source routines are compiled only
+for local reference tests; source/compiler hashes appear in
+`tests/fixtures/seqbin.json`. Original source, binaries and documentation are not
+bundled. The archive's LEGALITIES file permits use and redistribution subject
+to preserved notices and separate conditions for incorporating original code in
+commercial packages; its original beta and root-finding dependencies also carry
+ACM notices. These original routines are not incorporated into the Python package.

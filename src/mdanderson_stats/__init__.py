@@ -68,6 +68,7 @@ from .schweder import (
     schweder_fit,
 )
 from .schweder_output import plot_schweder, write_schweder_data
+from .seqbin import SeqBinDesign, SeqBinProperties
 from .single import SingleDesignPrecision, single_design_precision
 from .single_allocation import SingleAllocation, single_optimize_allocations
 from .single_correlation import SingleDesignCorrelation, single_design_correlation
@@ -88,6 +89,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "SeqBinDesign",
+    "SeqBinProperties",
     "SingleStudy",
     "SingleStudySpecification",
     "SingleDesignSearch",

@@ -1085,9 +1085,17 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "SeqBinDesign: sequential/group-sequential beta-posterior one/two-sided boundaries with explicit original endpoint clamping",
+        "SeqBinDesign.operating_characteristics: batched exact stopping probabilities and unconditional/conditional expected sample sizes"
+      ],
+      "validation": [
+        "tests/test_seqbin.py",
+        "tests/fixtures/seqbin.json",
+        "tools/reference_seqbin.py",
+        "docs/seqbin.md"
+      ]
     },
     {
       "id": 55,
