@@ -65,12 +65,7 @@ def binomial_power(
         )
     lower_tail = pa < p0
 
-    lo, hi = np.zeros(n.shape), n + 1
-    while np.any(hi - lo > 1):
-        mid = lo + np.floor((hi - lo) / 2)
-        _, size = _binomial_region(n, lower_tail, mid, p0)
-        acceptable = size <= level
-        lo, hi = np.where(acceptable, mid, lo), np.where(acceptable, hi, mid)
+    lo = _maximum_region(n, p0, lower_tail, level)
     critical, significance = _binomial_region(n, lower_tail, lo, p0)
     _, power = _binomial_region(n, lower_tail, lo, pa)
     next_critical, next_significance = _binomial_region(n, lower_tail, lo + 1, p0)
@@ -174,3 +169,15 @@ def binomial_significance(
         previous_significance,
         previous_power,
     )
+
+
+def _maximum_region(
+    n: FloatArray, p0: FloatArray, lower_tail: NDArray[np.bool_], level: FloatArray
+) -> FloatArray:
+    lo, hi = np.zeros(n.shape), n + 1
+    while np.any(hi - lo > 1):
+        mid = lo + np.floor((hi - lo) / 2)
+        _, size = _binomial_region(n, lower_tail, mid, p0)
+        acceptable = size <= level
+        lo, hi = np.where(acceptable, mid, lo), np.where(acceptable, hi, mid)
+    return lo

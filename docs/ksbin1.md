@@ -78,8 +78,8 @@ check mass conservation, broadcasting, endpoints, disabled final rejection,
 conditional expectations with probability zero and invalid input. Existing KSB1CI
 native and exhaustive tests validate the shared probability-code extraction.
 
-Still pending: solve_binomial_one_sample_mod and ABIN1's three remaining inverse solve modes
-(null probability, alternative probability and sample size),
+Still pending: solve_binomial_one_sample_mod and ABIN1's two remaining inverse solve modes
+(null probability and sample size),
 BINCUM-based power-contribution tables, separate single-stage comparison, report
 file dialogue and design revision workflow. These are required before this catalog
 entry can be marked implemented.
@@ -123,8 +123,8 @@ Tests compare valid native brackets, check empty-region behavior independently,
 enumerate binomial masses for well-separated attainable sizes, and verify exact
 size ties, adjacent regions, broadcasting and invalid inputs.
 
-The forward power and significance modes are now available. Solving for null
-probability, alternative probability and sample size remains pending.
+The forward power, significance and alternative-probability modes are now
+available. Solving for null probability and sample size remains pending.
 
 ## Solve significance for a requested power
 
@@ -163,3 +163,44 @@ choice and is independently verified for the expanded Python domain. The fixture
 retains source/auxiliary hashes, status repair and compiler provenance. Tests also
 cover enumerated attainable power steps, exact ties, full regions, mixed-direction
 broadcasting, very small target power, sample sizes up to 1e10 and invalid inputs.
+
+## Solve the alternative probability
+
+```python
+from mdanderson_stats import binomial_alternative
+
+result = binomial_alternative(50, 0.2, alpha=0.05, target_power=0.8, alternative="less")
+print(result.alternative_probability, result.critical, result.power)
+```
+
+This holds the size-controlled test fixed and finds the closest alternative
+probability in the requested direction that attains the target power. Direction
+is explicit ("less" or "greater"); all numerical inputs broadcast. Null probability,
+alpha and target_power are interior probabilities, with target_power>=alpha.
+The remaining count rules match binomial_power. An empty critical region raises:
+its power is zero for every possible alternative. If the requested power already
+equals the attained significance at the null, the returned probability is the
+null itself, an explicit boundary solution.
+
+An inverse regularized beta function seeds the search for the selected critical
+count. The bracket is then refined using the package's inclusive binomial tails
+until its endpoints are adjacent binary64 values (or coincide at the null).
+The endpoint on the alternative side is returned and its attained power checked.
+The result includes probability_lower and probability_upper for inspection, as
+well as the input parameters, critical count, significance and achieved power.
+These brackets reflect evaluated floating-point tails, not interval-arithmetic
+bounds on numerical error in the special functions. Rounding can make a power
+curve locally flat; the bracket locates the crossing of that evaluated curve.
+
+The search has a finite cap of 1076 halvings to cover subnormal probabilities;
+ordinary cases finish in far fewer iterations. It avoids a fixed absolute stopping
+tolerance that would erase roots near zero. Nonfinite inverse results or failure
+to converge/attain the target raise rather than returning an unverified solution.
+
+`tools/reference_binomial_alternative.py` records 27 native mode-2 solves using
+the shared documented reference build and auxiliary status repair. The solved
+probabilities agree within the original solver's accuracy. Native mode 2 nudges
+its solution outward by a relative correction; its reported power is verified at
+that actual probability. Separate tests check the tighter Python root, closed-form
+zero/all-event formulas, adjacent brackets, broadcasting, null-boundary equality,
+empty regions, invalid inputs and a representable probability near 1e-310.

@@ -453,7 +453,8 @@
         "ksbin1_operating_characteristics: fixed-design stage rejection/quitting/continuation probabilities, significance/power and unconditional/decision-conditional expected sample sizes",
         "KStageBinomial.stage_distribution: vectorized joint arrival probabilities reusing cached surviving-path coefficients",
         "binomial_power: vectorized single-stage critical count selection, achieved significance/power and adjacent more permissive region",
-        "binomial_significance: discrete minimum-significance solve for target power, with adjacent less permissive region and explicit full-region results"
+        "binomial_significance: discrete minimum-significance solve for target power, with adjacent less permissive region and explicit full-region results",
+        "binomial_alternative: vectorized alternative-probability solve for fixed size and target power, with adjacent floating-point brackets"
       ],
       "validation": [
         "tests/test_ksbin1.py",
@@ -465,7 +466,10 @@
         "tools/reference_binomial_power.py",
         "tests/test_binomial_significance.py",
         "tests/fixtures/binomial_significance.json",
-        "tools/reference_binomial_significance.py"
+        "tools/reference_binomial_significance.py",
+        "tests/test_binomial_alternative.py",
+        "tests/fixtures/binomial_alternative.json",
+        "tools/reference_binomial_alternative.py"
       ]
     },
     {

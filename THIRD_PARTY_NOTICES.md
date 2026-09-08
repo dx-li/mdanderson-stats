@@ -120,3 +120,7 @@ in `tests/fixtures/binomial_power.json`.
 count search, with its original alpha search floor removed. Native mode-4 reference
 provenance and the shared auxiliary status repair are recorded in
 `tests/fixtures/binomial_significance.json`.
+
+`binomial_alternative.py` independently expresses KSBIN1's alternative-probability
+solve using inverse beta initialization and checked probability brackets. Mode-2
+reference provenance is recorded in `tests/fixtures/binomial_alternative.json`.

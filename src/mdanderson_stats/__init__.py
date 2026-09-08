@@ -11,6 +11,7 @@ from .beta_mixture_fit import (
 from .beta_mixture_ml import fit_beta_mixture_ml
 from .beta_mixture_selection import BetaMixtureSelection, fit_beta_mixture_k, select_beta_mixture
 from .beta_mixture_testing import BetaMixtureTestingResult, beta_mixture_testing
+from .binomial_alternative import BinomialAlternative, binomial_alternative
 from .binomial_design import (
     BinomialPower,
     BinomialSignificance,
@@ -62,6 +63,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "BinomialAlternative",
+    "binomial_alternative",
     "BinomialSignificance",
     "binomial_significance",
     "BinomialPower",
