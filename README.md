@@ -277,3 +277,7 @@ inquiries. Sessions return immutable updates after successful allocation.
 RANLIST sessions can now be saved and resumed as validated JSON snapshots, or
 exchanged with the original program through fixed-width parameter files.
 Four complete native Fortran enrollment/inquiry/save workflows match Python.
+
+`ranlist_summary` and `ranlist_report` provide parameter/enrollment summaries and
+paginated treatment lists for enrolled or planned patients. Eight native print
+workflows validate assignments and page boundaries.

@@ -99,6 +99,7 @@ from .ranlist_files import (
     save_ranlist_session,
 )
 from .ranlist_random import ranlist_integers, ranlist_seeds, ranlist_uniform
+from .ranlist_report import ranlist_report, ranlist_summary
 from .ranlist_restricted import RestrictedAllocation, ranlist_restricted
 from .ranlist_session import RanlistAssignments, RanlistSession, RanlistSpecification
 from .ranlist_unrestricted import UnrestrictedAllocation, ranlist_unrestricted
@@ -145,6 +146,8 @@ __all__ = [
     "RestrictedAllocation",
     "load_ranlist_session",
     "ranlist_parameter_text",
+    "ranlist_report",
+    "ranlist_summary",
     "read_ranlist_parameters",
     "save_ranlist_session",
     "RanlistAssignments",

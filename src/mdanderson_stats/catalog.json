@@ -628,7 +628,8 @@
         "ranlist_unrestricted: weighted indexed treatment assignment, one-based patient/stream coordinates, source float32 cumulative boundaries",
         "ranlist_restricted: fixed/random balance blocks with exact treatment counts, unbiased default refill sampling and indexed Fortran compatibility",
         "RanlistSpecification and RanlistSession: named lists, batched per-stratum enrollment, immutable counters and enrolled-patient inquiries",
-        "RANLIST persistence: atomic full-precision JSON snapshots and original fixed-width parameter import/export with explicit rounding"
+        "RANLIST persistence: atomic full-precision JSON snapshots and original fixed-width parameter import/export with explicit rounding",
+        "ranlist_summary and ranlist_report: parameter/enrollment summaries and paginated enrolled/planned treatment lists"
       ],
       "validation": [
         "tests/test_ranlist_random.py",
@@ -640,7 +641,9 @@
         "tests/fixtures/ranlist_restricted.json",
         "tests/test_ranlist_session.py",
         "tests/test_ranlist_files.py",
-        "tests/fixtures/ranlist_parameters.json"
+        "tests/fixtures/ranlist_parameters.json",
+        "tests/test_ranlist_report.py",
+        "tests/fixtures/ranlist_reports.json"
       ]
     },
     {

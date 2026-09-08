@@ -3,8 +3,8 @@
 Catalog entry 29 is partial. The phrase-to-seed conversion and indexed random
 streams, unrestricted allocation and restricted allocation with fixed/random
 balance points, named list specifications and per-stratum enrollment/inquiry
-and file persistence are implemented. Reports and the final workflow audit
-remain pending.
+file persistence and printable reports are implemented. The final coverage
+and performance audit remains pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/29)
 lists version 1, modified August 23, 2002. The archive filename contains two
@@ -333,3 +333,48 @@ patient, and exits through WRKLST's save path. Assignments, the inquiry result,
 updated counters and rewritten file bytes all match Python exactly. Tests also
 cover full-precision JSON save/resume, malformed input, explicit rounding and
 real filesystem replacement failure. The Windows 1.2 executable remains untested.
+
+
+## Printable reports
+
+```python
+from pathlib import Path
+from mdanderson_stats import ranlist_report, ranlist_summary
+
+print(ranlist_summary(state))
+Path("enrolled.txt").write_text(ranlist_report(state), encoding="ascii")
+Path("planned.txt").write_text(ranlist_report(state, 100), encoding="ascii")
+```
+
+`ranlist_summary` lists titles, authoritative seeds, descriptive phrase, algorithm,
+restricted balance settings, treatment counts/weights, stratum names and enrolled
+counts. It does not generate assignments. Unrestricted summaries omit balance
+settings because those settings do not affect their allocations. Both seed and
+phrase are shown when available, avoiding ambiguity when the metadata and seed
+were supplied independently.
+
+`ranlist_report(session, patients=None, max_rows=100_000)` adds treatment lists.
+The default lists the enrolled patients in each stratum. A scalar requests that
+many patients in every stratum, including future assignments; a vector specifies
+a separate count for each stratum. Zero produces no assignment pages for that
+stratum. Printing never changes enrollment counters. Requested counts are shown
+separately from enrolled counts in the summary.
+
+Form-feed characters separate pages. Each stratum starts at page one, with
+patient number, treatment number/name and a dotted space for patient information.
+Page capacity is `27 - number_of_title_lines`, matching the row boundaries of
+GENLST's 60-line pagination. The Python report uses simpler header spacing and
+retains complete titles/names and full numerical values rather than duplicating
+the original's truncation and frequency rounding. It reproduces assignments and
+page boundaries, not byte-for-byte typography. The total row limit is validated
+before allocation; the specification's `max_blocks` limit also applies. Format
+the report before opening its destination for writing, as in the examples, so
+validation failures do not replace an existing report.
+
+`tools/reference_ranlist_reports.py` executes the complete archived program for
+eight print workflows: restricted/unrestricted allocation, named/unnamed strata
+and treatments, and enrolled/requested patient counts. One-line and nine-line
+titles exercise different page capacities, with requested lists spanning multiple
+pages and an enrolled stratum containing zero patients. Every printed assignment
+and page boundary matches Python. Additional tests cover modern random refills,
+separate counts per stratum, complete labels, empty lists and resource limits.
