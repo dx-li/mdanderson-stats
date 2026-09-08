@@ -83,5 +83,7 @@ its generalized logistic link and prediction from supplied coefficients.
 parameter families. `fit_stukel` fits those families with bounds, dispersion and
 observed-information covariance. `scan_stukel` profiles likelihood over fixed-shape grids.
 `plot_stukel` provides dose/link plots with the plot extra; `format_stukel` returns
-regression tables. [STUKEL coverage and remaining demo workflow](docs/stukel.md).
+regression tables. `stukel_demo("beetles")` or `stukel_demo("warsaw")` runs the bundled
+six-family comparison; `compare_stukel` accepts supplied data. See
+[STUKEL coverage, examples, and compatibility differences](docs/stukel.md).
 [The MULTI coverage audit](docs/multi-coverage.md) records its remaining I/O gaps.

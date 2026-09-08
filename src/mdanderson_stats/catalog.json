@@ -1078,14 +1078,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "mdanderson_stats.stukel_log_odds and stukel_probability: stable broadcast generalized logistic link, corrected Fortran alpha1<0 branch and explicit S prediction compatibility",
         "mdanderson_stats.predict_stukel: prediction from supplied coefficients, optional intercept and batched design matrices",
         "mdanderson_stats.stukel_objective: grouped-binomial objective, analytic gradient and observed Hessian for six shape families; stable tails/series, explicit branch conventions and corrected opposite-shape chain rule",
-        "mdanderson_stats.fit_stukel: six-family bounded regression with analytic-gradient L-BFGS-B, separation/rank checks, deviance, Pearson/fixed dispersion, observed-information covariance and prediction; demo comparison workflow pending",
+        "mdanderson_stats.fit_stukel: six-family bounded regression with analytic-gradient L-BFGS-B, separation/rank checks, deviance, Pearson/fixed dispersion, observed-information covariance and prediction",
         "mdanderson_stats.scan_stukel: rectangular fixed-shape negative-log-likelihood profiles, independent zero starts and original minim.S beta bounds, explicit failed-cell errors",
-        "mdanderson_stats.plot_stukel and format_stukel: observed-dose and modified-link plots, corrected row pairing/multicovariate handling, coefficient/Wald and raw-data/regression tables"
+        "mdanderson_stats.plot_stukel and format_stukel: observed-dose and modified-link plots, corrected row pairing/multicovariate handling, coefficient/Wald and raw-data/regression tables",
+        "mdanderson_stats.compare_stukel and stukel_demo: all six families on supplied or bundled beetles/Warsaw data, full reports and paired dose-response/common-baseline-log-odds comparison plots"
       ],
       "validation": [
         "tests/test_stukel.py",
@@ -1097,7 +1098,9 @@
         "tests/fixtures/stukel_fit.json",
         "tests/test_stukel_scan.py",
         "tests/fixtures/stukel_scan.json",
-        "tests/test_stukel_output.py"
+        "tests/test_stukel_output.py",
+        "tests/test_stukel_comparison.py",
+        "src/mdanderson_stats/stukel_examples.json"
       ]
     },
     {

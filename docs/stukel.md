@@ -1,11 +1,12 @@
 # STUKEL generalized logistic models
 
-Catalog entry 58 is partial. Implemented: the two-shape inverse link, transformed
+Catalog entry 58 is implemented with the documented numerical and API differences
+below. Covered: the two-shape inverse link, transformed
 log odds, prediction from supplied coefficients, and grouped-binomial likelihood,
 gradient and observed Hessian, bounded regression estimation, covariance and
 dispersion estimates for all six parameter families, and fixed-shape likelihood
-scanning, individual-fit plots and regression tables. The bundled six-family
-demo comparison workflow remains pending.
+scanning, individual-fit plots, regression tables, and the six-family comparison
+workflow on supplied data or either bundled example.
 
 The model is described in Thérèse A. Stukel, “Generalized Logistic Models,”
 JASA 83(402), 426–431 (1988),
@@ -271,9 +272,58 @@ against the known sorting defects of the original plotting code.
 | plot.stukel.S | plot_stukel dose and link panels with corrected row pairing |
 | glim.p.S | format_stukel coefficient and comparison tables |
 | dgay.f | replaced by validated SciPy bounded optimization; not a generic port of the optimizer library |
-| data.S, demos.S | both datasets used in native validation; six-family combined demo plots/report workflow still pending |
+| data.S, demos.S | stukel_demo and compare_stukel, bundled numeric datasets, six-family reports and combined plots |
 
 Missing-row deletion, terminal prompts, S installation steps, global graphics
 state and byte-identical S formatting are replaced by explicit Python APIs as
-noted above. Catalog status remains partial until the remaining demonstration
-workflow is provided and checked.
+noted above. All named STUKEL statistical and demonstration components are covered;
+the generic supporting Fortran optimizer is replaced rather than exposed as an
+independent numerical-library API.
+
+
+## Six-family comparison and bundled examples
+
+```python
+from pathlib import Path
+from mdanderson_stats import stukel_demo, compare_stukel
+
+comparison = stukel_demo("beetles")  # or "warsaw"
+Path("results.txt").write_text(comparison.report(digits=6))
+dose, link = comparison.plot()
+dose.figure.savefig("comparison.png")
+
+# Apply the same workflow to one supplied dose covariate:
+comparison = compare_stukel(x, successes, trials)
+```
+
+`stukel_demo` loads the archived numeric example data from the installed package;
+it does not require a network connection or the original source archive. Dataset
+names are exactly "beetles" and "warsaw", with beetles the default. The local JSON
+records the original data-file SHA256 hashes and archive paths. No original S or
+Fortran code is bundled.
+
+`compare_stukel` accepts one covariate (vector or single-column matrix), fits all
+six families in order 0 through 5 with intercepts, zero starts, and the regression
+bounds, and returns a StukelComparison. The same observations are used for every
+family. Its fits tuple exposes each full fit, while x, successes and trials are
+read-only copies of the supplied observations. Optional scale, tolerance,
+gradient_tolerance and max_iterations follow fit_stukel. Any failed model raises
+with its family number and original cause; no model is silently skipped and no
+best model is automatically selected.
+
+The report concatenates all six coefficient and raw-data/regression tables,
+replacing the demo's global `sink("results")` with an explicit returned string.
+The optional plot method connects six fitted dose-response curves over observed
+fractions and compares the six transformed log-odds vectors against family 0's
+fitted log odds. This common horizontal axis follows demos.S and differs from the
+individual-fit modified-link plot's own linear predictor. Coordinates are sorted
+with their paired observations. Families have consistent colors and line styles
+across panels. Plotting returns axes without automatically opening a window or
+writing files. The example's explicit file writes replace existing paths.
+
+End-to-end tests run both bundled examples, verify the data against the native
+fixtures, compare successful-family likelihoods to archived FGH/DRMNHB results,
+and check the corrected opposite-shape fits improve on the source's false
+convergence. Tests verify all six reports, both panels' numerical coordinates,
+input snapshots, solver failures and invalid data. Both complete comparison
+figures were rendered and visually inspected.

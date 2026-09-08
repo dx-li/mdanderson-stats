@@ -51,10 +51,14 @@ the original executable and numerical library sources are not redistributed.
 
 ## STUKEL
 
-`stukel.py`, `stukel_objective.py`, `stukel_fit.py`, `stukel_scan.py`, and `stukel_output.py` implement the generalized logistic formulas described by Thérèse A.
+`stukel.py`, `stukel_objective.py`, `stukel_fit.py`, `stukel_scan.py`, `stukel_output.py`, and `stukel_comparison.py` implement the generalized logistic formulas described by Thérèse A.
 Stukel (1988), Generalized Logistic Models, JASA 83(402), 426–431,
 DOI 10.1080/01621459.1988.10478613. The MD Anderson STUKEL archive was used to
 validate numerical results and identify the S prediction branch discrepancy.
 Its README identifies dansera@odin.mda.uth.tmc.edu as the software contact.
 No explicit license statement was found in the inspected archive files. No
 original STUKEL source or supporting optimizer is redistributed by this package.
+
+`stukel_examples.json` includes the numeric beetles and Warsaw example data from
+that archive, with source paths and file hashes. These data reproduce the archived
+demonstration and are also checked against the native regression fixtures.
