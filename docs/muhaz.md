@@ -2,8 +2,9 @@
 
 Catalog entry 49 is **partial**. The fixed-bandwidth kernel calculation is
 implemented, together with piecewise-exponential estimates and their numerical
-reports. Automatic global/local/nearest-neighbor bandwidth selection, MSE
-diagnostics, Kaplan–Meier-type estimates, kernel summaries and plots remain pending.
+reports, and Nelson/product-limit failure-interval estimates. Automatic
+global/local/nearest-neighbor bandwidth selection, MSE diagnostics, kernel
+summaries and plots remain pending.
 
 Source: [MUHAZ version 1](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/49),
 distributed as `MUHAZ_V1.tar.gz`. Its archive contains `muhaz.f`, the S interface
@@ -145,3 +146,59 @@ hashes and R version record provenance. Independent tests check person-time
 conservation, individual bin counts, final-boundary semantics, permutation and
 time scaling, precision at large time origins, extreme width/domain ratios,
 report round trips, undefined/infinite hazards and invalid inputs.
+
+## Failure-interval hazard estimates
+
+```python
+from mdanderson_stats import kphaz
+
+fit = kphaz([1, 2, 3, 4, 5], [1, 1, 1, 1, 1], q=2, method="nelson")
+print(fit.time, fit.hazard, fit.variance)
+```
+
+`kphaz` implements the archive's `kphaz.fit` workflow. Within each stratum,
+let t[j] denote the sorted distinct failure times. The estimate at the midpoint
+of t[j] and t[j+q] is the cumulative-hazard increment over that interval divided
+by its duration. Its variance is the corresponding cumulative-variance increment
+divided by squared duration. The event at the interval's left endpoint is excluded;
+there is no initial interval from zero to the first failure. A stratum with at
+most q distinct failure times has no output rows. All-censored input is rejected,
+while an all-censored stratum within a dataset with events remains listed with
+no rows.
+
+The default Nelson event increment is d/r with variance increment d/r². The
+product-limit increment is −log(1−d/r), with Greenwood increment d/[r(r−d)].
+Here d counts tied failures and r includes all subjects at risk immediately
+before the time, including tied censoring. These grouped increments are invariant
+to input order within ties. If the entire remaining risk set fails, the
+product-limit hazard and variance are infinite, and that result is retained.
+
+`legacy=True` uses the source's sequential risk denominators after stable time
+sorting. It also retains the product-limit variance's 0/0 term when the final
+observation is a censor tied with a failure, producing NaN in the affected
+interval. The default grouped estimator avoids this artifact. Status must be
+exactly 0/1 and q a positive integer; the source's coercion of other status values
+and truncation of fractional q are not performed. Missing stratum labels are
+rejected instead of relying on the archive's inconsistent NA indexing behavior.
+Method names must be complete, without implicit partial matching.
+
+The immutable result contains midpoint times, hazard, variance, a zero-based
+`stratum_index` into its `strata` label tuple, q, method and compatibility mode.
+Strata can be numeric or string labels, following the package's existing label
+validation. Within each stratum, output is ordered by interval start time.
+
+`tools/reference_kphaz.py` executes the source numerical calculation in R after
+two documented S syntax adaptations: `is.inf` becomes `is.infinite`, and
+multi-value `return` expressions become named lists. Fixtures record source,
+extracted/adapted code and driver hashes plus the R runtime. Twenty-four cases
+cover both methods, three q values, stratification, ties, terminal failures,
+terminal tied censoring, and empty output. Independent tests verify reciprocal
+Nelson hazards, log-survival ratios, Greenwood increments, grouped ties,
+permutation/time scaling and immutable outputs.
+
+Sorting and aggregation take O(N log N) work. Consecutive event increments are
+summed with prefix arrays, using extended precision for finite terms and separate
+counts of infinite/NaN terms. This avoids subtracting infinite cumulative totals
+and repeated scans of all earlier subjects. Window evaluation takes O(M) work
+and storage for M distinct failure times, independently of q. Plotting remains
+part of the pending MUHAZ display work.

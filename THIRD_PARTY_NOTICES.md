@@ -226,3 +226,8 @@ provenance is recorded in `tests/fixtures/muhaz-fixed.json`.
 ratios. The archived S function is executed unchanged in R only for local
 validation; its source/extraction/driver hashes and runtime are recorded in
 `tests/fixtures/pehaz.json`. No archived S code is bundled.
+
+`kphaz.py` independently expresses Nelson/product-limit hazard differences and
+variance increments. The archived S numerical calculation is run locally in R
+with documented syntax adapters; source and adapter provenance are recorded in
+`tests/fixtures/kphaz.json`. No archived S code is bundled.

@@ -32,6 +32,7 @@ from .intervals import (
     bp1ci_poisson_interval,
     poisson_interval,
 )
+from .kphaz import KPHazard, kphaz
 from .ksbin1 import KSBinomialOperatingCharacteristics, ksbin1_operating_characteristics
 from .ksbin1_study import KSBinomialStudy, ksbin1_study
 from .ksbin1_table import KSBinomialBoundaryTable, ksbin1_boundary_table
@@ -105,6 +106,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "KPHazard",
+    "kphaz",
     "PiecewiseHazard",
     "pehaz",
     "MuhazFixed",

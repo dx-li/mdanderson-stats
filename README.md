@@ -179,3 +179,6 @@ bandwidth selection and companion workflows.
 
 `pehaz` adds MUHAZ's piecewise-exponential estimator, including bin event counts,
 person-time, risk counts and numerical reports, with explicit legacy bin semantics.
+
+`kphaz` adds stratified Nelson and product-limit hazard/variance estimates over
+consecutive failure-time intervals, with explicit source compatibility.
