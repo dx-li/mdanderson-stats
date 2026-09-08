@@ -74,6 +74,7 @@ from .muhaz_plot import plot_kphaz, plot_muhaz, plot_pehaz
 from .muhaz_summary import MuhazSummary, summarize_muhaz
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
+from .multinomial_power import MultinomialPower, multinomial_power
 from .multiplicity import (
     MultipleTestingResult,
     multiple_testing,
@@ -144,6 +145,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "MultinomialPower",
+    "multinomial_power",
     "RandlibGenerator",
     "RandlibMultivariateNormal",
     "UnrestrictedAllocation",

@@ -302,3 +302,8 @@ The [archive audit](docs/randlib-coverage.md) accounts for all 88 members and
 documents repairs, compatibility limits and the treatment of demonstration
 programs. [Benchmarks](docs/randlib-benchmark.json) compare batched draws with
 repeated scalar calls to the same Python API.
+
+`multinomial_power` provides exact one-sample multinomial power with Pearson
+chi-square and likelihood-ratio ordering, multiple alternatives, and complete
+tie groups. See [MULTINOMPOW](docs/multinomial-power.md) for validation and the
+remaining work on this partially implemented catalog entry.

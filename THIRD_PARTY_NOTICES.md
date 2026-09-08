@@ -447,3 +447,14 @@ RANDLIB phrase seeding reuses the PHRTSD arithmetic already attributed for
 RANLIST, with the archived C character table and its defined final-character
 behavior available explicitly. Time seeding expresses the Fortran 95
 USER_SET_GENERATOR time-of-day formatting and hash composition.
+
+## MULTINOMPOW
+
+The exact multinomial power implementation independently expresses the
+Pearson and likelihood-ratio ordering methods in MULTINOMPOW version 1,
+Barry W. Brown, MD Anderson Department of Biomathematics (May 2003;
+source banner copyright 2002). Original redistribution and warranty terms
+are retained in [LEGALITITES](notices/mdanderson-multinompow-LEGALITITES.txt).
+The archived ACM `gamln` implementation is not copied or bundled; Python
+uses SciPy special functions. Source defects and numerical differences are
+identified in [the implementation notes](docs/multinomial-power.md).

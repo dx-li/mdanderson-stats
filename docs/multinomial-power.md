@@ -1,0 +1,80 @@
+# MULTINOMPOW exact multinomial power
+
+`multinomial_power` implements exact nonrandomized one-sample multinomial
+power with Pearson chi-square and likelihood-ratio ordering. This entry is
+**partial**: native comparison, original report workflow coverage, full archive
+audit, and performance measurements remain outstanding.
+
+```python
+from mdanderson_stats import multinomial_power
+
+result = multinomial_power(
+    3, null=[0.5, 0.5], alternatives=[[0.8, 0.2], [0.5, 0.5]], alpha=[0.05, 0.25]
+)
+# Both statistics: actual sizes [0, 0.25].
+# Alternative [0.8, 0.2]: powers [0, 0.52].
+```
+
+The implementation enumerates all weak compositions of n into k categories.
+It sorts statistics in descending order and adds complete tie groups while
+cumulative null probability fits the requested alpha. Adjacent statistics are
+tied when their difference is at most `1e-12 * max(abs(a) + abs(b), 1e-20)`,
+as in the source. This is a nonrandomized test; its actual size can be much
+smaller than its nominal significance level.
+
+The result contains immutable probability inputs, statistic names, critical
+values and actual sizes (statistic × alpha), powers (statistic × alternative ×
+alpha), and sample-space size. Empty regions have infinite critical values and
+zero size/power. Alpha one includes the whole sample space. Critical values
+summarize the enumerated regions; use the documented tie convention when
+comparing newly computed statistics at a boundary.
+
+Inputs accept n from 1 through 10000 and 2–10 categories. The original interactive
+program starts at n=3. Null probabilities must be strictly positive; alternatives
+may include zero probabilities. Each probability row must sum to one within
+1e-12, after which it is normalized. Scalar or vector alpha values lie in [0, 1];
+duplicate and unsorted levels are preserved. These strict probability checks
+replace the source interface's 0.99–1.01 sum acceptance window.
+
+The point count is `comb(n + k - 1, k - 1)`, checked before allocation against
+`max_points` (default 1,000,000). Large problems still have combinatorial cost.
+Statistics and log probabilities use NumPy and SciPy compiled operations.
+Alternatives are processed separately, avoiding a three-dimensional probability
+array. This is an implementation choice, not yet a measured speedup claim.
+
+Probabilities use double-precision log factorials and zero-safe log products.
+Each enumerated distribution must sum to one within 1e-8 before normalization;
+otherwise calculation fails. Significance comparisons allow relative rounding
+error of 32 machine epsilons; alpha zero explicitly excludes all points.
+Extremely small masses can underflow double precision. Statistic overflow raises
+an error. “Exact” describes enumeration rather than arbitrary-precision arithmetic.
+
+## Source findings and validation
+
+Source: [MULTINOMPOW version 1](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/19),
+Barry W. Brown, MD Anderson Department of Biomathematics, May 2003.
+Archive: [MULTINOMPOW _V1.tar.gz](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MULTINOMPOW/MULTINOMPOW%20_V1.tar.gz).
+Archive SHA-256: `c420cd6e346f41c7990c88db884c00af697ab95ca745b9a250596f8a4b7ff453`.
+Original notices are retained in
+[LEGALITITES](../notices/mdanderson-multinompow-LEGALITITES.txt).
+The original ACM gamma routine is not copied; this implementation uses SciPy.
+
+Source inspection identified these differences in `mp_setup_mod.f90`:
+
+- `traverse_points` does not initialize `point_prob(1)`. Python evaluates every
+  null probability, including the first point.
+- `chi_sq` and `log_multinom_con` return default REAL, with repeated
+  single-precision rounding in the multinomial coefficient. Python uses doubles.
+- `set_crit` leaves a -1 sentinel when no complete tail group fits. The power
+  routine subsequently includes all nonnegative statistics. Python returns an
+  empty region, with zero size and power.
+- The final tie group is not considered by the native boundary loop. Python
+  explicitly supports alpha one and includes all outcomes.
+
+`tests/test_multinomial_power.py` compares both statistics with independent
+Cartesian enumeration and rational factorial probabilities for small examples.
+Additional checks cover binary ties, null power equaling actual size, degenerate
+alternatives, category permutations, repeated/unsorted levels, immutable results,
+input validation, preallocation budgets, and numerical overflow. Native results
+have not yet been compared; this implementation does not promise reproduction
+of the original undefined memory or single-precision behavior.

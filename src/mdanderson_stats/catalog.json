@@ -319,9 +319,14 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Exact nonrandomized multinomial power with Pearson and likelihood-ratio ordering, whole tie groups, multiple alternatives/levels, immutable results and preallocation sample-space limits"
+      ],
+      "validation": [
+        "tests/test_multinomial_power.py",
+        "docs/multinomial-power.md"
+      ]
     },
     {
       "id": 20,
