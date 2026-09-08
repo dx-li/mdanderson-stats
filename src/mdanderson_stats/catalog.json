@@ -357,7 +357,8 @@
         "Corrected affected-sibling probabilities with explicit original double-weighting/cutoff compatibility; immutable vectorized 256-family results",
         "Family/individual ascertainment with parental eligibility, conditional offspring moments, contribution-weighted TDT/ASP probabilities, rare-event log masses and explicit legacy moments",
         "Fixed-observation binomial tests and full eligible-family-count power mixtures, two-sided tail accounting, mean-contribution rounding, source scale/tail options and empty-region repairs",
-        "First qualifying integer fixed-observation and screened-family sample sizes, preserving power oscillations with cached conditional curves and a monotone upper-bound search"
+        "First qualifying integer fixed-observation and screened-family sample sizes, preserving power oscillations with cached conditional curves and a monotone upper-bound search",
+        "Complete study orchestration with genetic/ascertainment options, forward power or paired family/fixed sample-size searches, and reproducible plain-text reports"
       ],
       "validation": [
         "tests/test_tdtasp_genetics.py",
@@ -368,7 +369,8 @@
         "tests/test_tdtasp_power.py",
         "tests/fixtures/tdtasp_fixed_power.json",
         "tests/test_tdtasp_sample_size.py",
-        "docs/tdtasp-search-benchmark.json"
+        "docs/tdtasp-search-benchmark.json",
+        "tests/test_tdtasp_study.py"
       ]
     },
     {

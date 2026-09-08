@@ -3,7 +3,8 @@
 TDTASP version 1.1 (April 2003), by Barry W. Brown and Dan Serachitopol,
 plans transmission-disequilibrium (TDT) and affected-sibling-pair (ASP) studies.
 This catalog entry is **partial**. The genetic, ascertainment, power and sample-size layers are implemented;
-template files, reports and the complete archive audit remain outstanding.
+study orchestration and reports are also available. Template files and the complete
+archive audit remain outstanding.
 
 Source: [TDTASP catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/20)
 and its [version 1 archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/TDTASP/TDTASP%20%20_V1.tar.gz).
@@ -288,3 +289,56 @@ starts direct scanning at 514, requiring 34 mixture evaluations overall.
 an ordered scan using the same Python forward API, verifying agreement on the
 first qualifying count. They report median-of-three local timings and include
 all model parameters. They are not comparisons with native Fortran.
+
+
+## Complete study calls and reports
+
+```python
+from pathlib import Path
+from mdanderson_stats import tdtasp_study, format_tdtasp_study
+
+study = tdtasp_study(
+    [0.3, 0.2, 0.1, 0.4],
+    [0.8, 0.5, 0.2],
+    mean_offspring=2,
+    recombination=0.1,
+    target_power=0.8,
+    max_families=1000,
+)
+Path("tdtasp-report.txt").write_text(format_tdtasp_study(study))
+```
+
+Supply exactly one of `families` (forward power, including zero) and
+`target_power` (sample-size design). The function computes genetics and
+ascertainment once, then calls the validated statistical components. Search mode
+returns both the first qualifying family design and the fixed-observation
+comparison printed by the original program. Both must succeed; an insufficient
+bound or resource limit raises an error rather than returning a partial study.
+Separate inclusive `min_families`/`max_families` and
+`min_observations`/`max_observations` constrain the searches. Search bounds and
+`batch_size` are inactive for a forward calculation.
+
+`TDTASPStudy.design` provides the full family-power result, including its
+ascertainment and genetic inputs. In search mode, `search` contains the family
+search diagnostics, `fixed_design` contains the fixed-observation result, and
+`fixed_search_bounds` retains its bounds. These fields are `None` in forward
+mode. All four compatibility options are explicit and independent; no legacy
+behavior is enabled implicitly. Like the numerical API, study calls allow
+two-sided ASP, extending the original console's one-sided restriction.
+
+`format_tdtasp_study` returns text for callers to print or save. It includes
+population inputs, selection rules, moments, list masses, the screening factor,
+all compatibility flags, contribution scaling, screened and expected eligible
+family counts, actual significance and power. Search reports add the target,
+bounds, diagnostics and fixed-observation comparison, including its critical
+values. Rare-event masses and screening factors remain on the natural-log scale.
+The report identifies the mean-contribution approximation and the first-crossing
+search criterion. `digits=1` through `17` changes displayed significant figures
+only; it does not change the underlying calculation.
+
+Integration tests compare complete forward calls with real component calls
+across TDT/ASP, both sampling schemes, all parental criteria, one/two-sided tests
+and both compatibility settings. They also validate searched designs, separate
+inclusive bounds, zero-family studies, propagated failures, input ownership and
+report saving. The numerical component validations above remain the statistical
+correctness evidence.
