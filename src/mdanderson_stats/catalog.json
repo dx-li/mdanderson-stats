@@ -577,7 +577,8 @@
         "exploratory_survival: grouped and source-sequential Kaplan-Meier curves, exact plotting corners, right-continuous queries and step/source-interpolated survival quantiles",
         "survival_cutpoint/plot_cutpoint: aligned cut comparisons, original row IDs, empty groups and linked density/survival slider",
         "plot_survival_alignment: accelerated-failure time scaling and proportional-hazards powers with linked sliders",
-        "plot_survival_scatter: linked covariate matrix selection, original row IDs, additive rectangles and selected-sample survival"
+        "plot_survival_scatter: linked covariate matrix selection, original row IDs, additive rectangles and selected-sample survival",
+        "plot_event_scatter: linked duration/arrival event chart with failure/censoring endpoints and empty selection handling"
       ],
       "validation": [
         "tests/test_expsurv.py",
@@ -585,7 +586,8 @@
         "tests/test_expsurv_cutpoint.py",
         "tests/test_expsurv_cutpoint_plot.py",
         "tests/test_expsurv_alignment.py",
-        "tests/test_expsurv_scatter.py"
+        "tests/test_expsurv_scatter.py",
+        "tests/test_expsurv_event.py"
       ]
     },
     {

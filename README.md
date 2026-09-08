@@ -211,3 +211,6 @@ alignment sliders, reusing fitted survival curves.
 
 `plot_survival_scatter` links EXPSURV covariate selections to a survival curve,
 with rectangle selection, Shift-add and programmatic original-row selection.
+
+`plot_event_scatter` links covariate selection to EXPSURV event charts, showing
+follow-up segments at arrival times with failure and censoring endpoints.

@@ -2,7 +2,7 @@
 
 Catalog entry 28 is partial. The survival-curve and inverse-survival core is
 implemented, together with interactive cut-point exploration, model alignment
-and linked scatterplot/survival views. Event charts, survival box plots, data
+and linked scatterplot/survival and event-chart views. Survival box plots, data
 generation and remaining input/output workflows are still pending.
 
 The source is EXPSURV version 1 from the MD Anderson catalog, distributed as
@@ -178,3 +178,45 @@ original row identity, independent selected-sample survival fits, highlights in
 every cell, empty selection, validation and cleanup. Matrix and survival figures
 were rendered and visually inspected. As with the other EXPSURV views, validation
 uses source inspection and independent checks, not an archived XLISP-STAT run.
+
+
+## Linked event charts
+
+```python
+from mdanderson_stats import plot_event_scatter
+
+view = plot_event_scatter(
+    arrival=[7, 1, 4],
+    duration=[3, 8, 0],
+    status=[1, 0, 1],
+    covariates=[[0, 0], [1, 1], [2, 2]],
+)
+view.select([0, 1])
+```
+
+`plot_event_scatter` implements SCAT-EVENT with the same matrix controls and
+original-row selection API as `plot_survival_scatter`. The event chart plots
+horizontal segments from (0, arrival) to (duration, arrival). Duration is observed
+follow-up, not the calendar endpoint arrival+duration. A plus marks failure
+(status=1); an open diamond marks censoring (status=0). Zero-duration observations
+retain an endpoint marker. Arrival and duration must be finite, nonnegative and
+aligned with binary status and covariate rows. Inputs are copied and read-only.
+
+The controller exposes `event_figure`, `event_axes`, a `segments` LineCollection,
+and separate `failures` and `censored` endpoint collections. Updates replace
+collection coordinates in batches rather than creating a line artist per patient.
+Axes retain the full-sample ranges while selecting; zero maxima use a display
+range of 0 to 1. Matplotlib supplies tick placement instead of XLISP-STAT's
+get-nice-range routine. The event chart initially shows all patients, making it
+consistent with the initial matrix highlights; the source leaves this chart blank
+until the first selection. Empty selections clear all segments and markers,
+including after a rectangle finds no observations. This fixes the source's stale
+empty-brush display. Continuous hover brushing is not implemented.
+
+`clear()` clears both selection and rectangles; `close()` disconnects matrix
+callbacks and closes both windows. Tests check exact source coordinates, failure
+and censoring partitions, unsorted original rows, additive selection, fixed axes,
+zero times, immutable inputs, invalid input and update preservation, and actual
+canvas selection/Escape events. An event chart was rendered and visually inspected.
+These are source-formula checks, not native XLISP-STAT execution or a measured
+rendering-speed comparison.

@@ -280,3 +280,7 @@ source is bundled.
 `expsurv_scatter.py` independently implements SCAT-KM selection and linked
 survival views, using Matplotlib rectangle controls in place of XLISP-STAT
 mouse modes. Empty selections explicitly clear the survival curve.
+
+`expsurv_event.py` independently implements SCAT-EVENT geometry and status
+markers, sharing matrix controls with SCAT-KM. Initial and empty selections are
+explicitly rendered; no original code is bundled.
