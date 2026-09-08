@@ -33,6 +33,8 @@ class CumIncStudy:
     group_counts: Mapping[Label, int]
     n_dropped: int
     confidence: float
+    rho: float = 0
+    censor: Label = 0
 
     def summaries(
         self,
@@ -56,6 +58,8 @@ class CumIncStudy:
         IncidenceSummary(np.empty((0, 5)), self.confidence).report(digits=digits)
         lines = [
             f"CUMINC\nDropped observations: {self.n_dropped}",
+            f"Censor label: {self.censor}; rho: {self.rho}; confidence: {self.confidence}",
+            f"Strata: {self.strata}",
             "\nGroup counts",
             "group\tobservations" + "".join(f"\tevents {c}" for c in self.causes),
         ]
@@ -167,4 +171,6 @@ def cuminc(
         MappingProxyType(dict(zip(groups, map(int, counts), strict=True))),
         dropped,
         level,
+        power,
+        censor,
     )

@@ -1,8 +1,8 @@
 # CUMINC cumulative-incidence curves
 
-Catalog entry 39 is **partial**. Curve estimation, Aalen variance,
-multi-group/stratified Gray tests, pointwise confidence intervals and combined
-numerical summaries are implemented. Plots remain pending.
+Catalog entry 39 is **implemented**. Curve estimation, Aalen variance,
+multi-group/stratified Gray tests, pointwise confidence intervals, combined
+numerical summaries and plots are covered by the [source audit](cuminc-coverage.md).
 
 Source: [CUMINC](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/39),
 contact Ken Hess, distributed as `CUMINC_V1.tar.gz`. Its S-PLUS interface calls
@@ -171,5 +171,39 @@ Combined-interface tests compare 48 native Gray cases through string cause/group
 labels and native CINC curves through the single-group interface. Additional
 checks cover time-zero and duplicate queries, interval nesting, extreme confidence,
 selection, all-censored data, missing-data policy, stratification, immutable results,
-precision, file replacement and report round trips. Plot overlays, grids and
-confidence-limit rendering remain pending.
+precision, file replacement and report round trips.
+
+## Plots
+
+With the optional `plot` extra installed:
+
+```python
+from mdanderson_stats import plot_cuminc
+
+axes = plot_cuminc(study)  # all cause/group curves on one axis
+panels = plot_cuminc(study, overlay=False)  # pointwise confidence limits
+selected = plot_cuminc(study, causes="relapse", groups="A", overlay=False)
+# axes[0].figure.savefig("cuminc.png", dpi=150)
+```
+
+Overlay plots omit confidence limits, as in the original. Individual panels show
+the fitted incidence and both pointwise confidence limits using the study's
+confidence level. Rows are causes and columns are groups; a single selected group
+uses one horizontal row of cause panels. Selection uses exact labels and preserves
+requested order. `xlabel` and `ylabel` customize labels. `legend_at=(x, y)` places
+the overlay legend's upper-left corner in data coordinates. Empty selections and
+all-censored studies raise an explicit no-curves error before creating a figure.
+
+Returned axes allow font, color, size and other Matplotlib customization, replacing
+S-PLUS graphical keyword forwarding. Plotting does not show or save automatically,
+change the global backend/style, or recompute the statistical fits. Curves retain
+the native step corners, including time-zero jumps. Constant-zero curves and
+zero-time datasets use nondegenerate axis limits. Overlay legends use automatic
+placement by default; colors, line styles and constrained layout replace the
+original device settings. These are functional plots, not pixel reproductions.
+
+Plot tests check exact curve and confidence-limit coordinates, panel ordering,
+selection, legend placement, labels, unchanged global style and PNG/SVG export.
+Both layouts were also rendered and visually inspected on the supplied dataset.
+Study reports retain censor label, rho, confidence and stratum labels, including
+single-group analyses with no Gray test.

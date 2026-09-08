@@ -130,3 +130,11 @@ def test_invalid_inputs(overrides):
     arguments.update(overrides)
     with pytest.raises(ValueError):
         cuminc(**arguments)
+
+
+def test_report_retains_analysis_settings_even_without_group_tests():
+    result = cuminc([1, 2], ["a", "c"], censor="c", rho=0.5, strata=["x", "x"])
+    assert result.censor == "c"
+    assert result.rho == 0.5
+    assert "Censor label: c; rho: 0.5; confidence: 0.95" in result.report()
+    assert "Strata: ('x',)" in result.report()

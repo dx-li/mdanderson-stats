@@ -168,5 +168,6 @@ source/manual audit, compatibility differences and batch benchmarks.
 `cumulative_incidence` estimates competing-risk incidence curves and Aalen
 variances; `gray_test` compares groups with optional stratification and weighted
 Gray tests. `cuminc` combines all causes and groups with pointwise confidence
-intervals and numerical reports. [CUMINC coverage](docs/cuminc.md) tracks the
-remaining plotting workflows.
+intervals and numerical reports. `plot_cuminc` adds overlays and confidence-limit
+panels. [CUMINC coverage](docs/cuminc-coverage.md) records the completed source audit
+and compatibility differences.
