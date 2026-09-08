@@ -312,3 +312,7 @@ changes of shape between consecutive draws.
 RANDLIB now includes central/noncentral chi-square and F sampling. Vectorized
 defaults check inverse-CDF accuracy; legacy modes preserve the reference
 builds' draw order, near-one rules and warned F truncation.
+
+RANDLIB beta sampling adds vectorized inverse-CDF draws and original Cheng
+BB/BC algorithms, with C/Fortran rounding, source minimum-shape checks,
+overflow guards and transactional rejection limits.

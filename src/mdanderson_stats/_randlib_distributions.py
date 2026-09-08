@@ -70,3 +70,9 @@ def legacy_exponential(
     if not np.all(np.isfinite(result)):
         raise ArithmeticError("exponential samples overflow float32; state unchanged")
     return result
+
+
+def source_log(value: np.float32 | np.float64, source: str) -> np.float32 | np.float64:
+    """Evaluate a logarithm in double precision, then apply source rounding."""
+    result = np.log(np.float64(value))
+    return np.float32(result) if source == "fortran" else np.float64(result)

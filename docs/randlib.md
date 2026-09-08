@@ -2,7 +2,7 @@
 
 Catalog entry 27 is partial. The 32-stream generator bank and state controls are
 implemented, along with bounded uniforms, permutations, exponential, normal, gamma,
-central/noncentral chi-square and F sampling. Beta, count and multivariate samplers and the final
+central/noncentral chi-square, F and beta sampling. Count and multivariate samplers and the final
 archive coverage/performance audit remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27)
@@ -302,7 +302,7 @@ scalar/batch equivalence, underflow, invalid arguments and rollback.
 
 The batching benchmark includes 10,000 gamma draws with shape 2.5 and rate 1.7;
 its measured times and comparison limits are recorded in
-[randlib-benchmark.json](randlib-benchmark.json). Beta, count and multivariate distributions and RANDLIB's final coverage audit
+[randlib-benchmark.json](randlib-benchmark.json). Count and multivariate distributions and RANDLIB's final coverage audit
 remain pending.
 
 ## Chi-square and F sampling
@@ -382,5 +382,67 @@ parameters below one, zero-noncentrality identity, invalid arguments, probabilit
 validation and transactional failures. The batching benchmark includes all four
 methods; its comparison remains against repeated calls to the same Python API.
 
-Beta, count and multivariate samplers and the final RANDLIB coverage/performance
+Count and multivariate samplers and the final RANDLIB coverage/performance
+audit remain pending.
+
+## Beta sampling
+
+```python
+bank = RandlibGenerator()
+x = bank.beta(1000, a=2, b=3)
+original = bank.beta(1000, a=2, b=3, legacy=True)
+original_c = bank.beta(1000, a=2, b=3, legacy=True, source="c")
+```
+
+`beta(size=1, *, a=1, b=1, legacy=False, source="fortran",
+max_attempts=None)` returns a read-only float64 vector. Both shapes must be
+finite and positive. Mean is `a/(a+b)` and variance is
+`a*b/((a+b)**2*(a+b+1))`. The default uses SciPy's vectorized inverse
+regularized incomplete beta function, with one raw uniform per output.
+The uniform special case `a=b=1` reproduces default uniform draws. Zero-size
+requests do not consume draws. Floating-point rounding can produce 0 or 1,
+especially for tiny shapes; no artificial clipping moves those endpoints.
+
+Legacy mode implements GENBET's BB algorithm when both rounded shapes exceed
+1 and BC otherwise. It preserves shape ordering, rejection tests, coefficient
+rounding, two-uniform trials and the source's exponential and logarithm guards.
+Shape-dependent state belongs to the request, so alternating or swapping
+shapes cannot reuse stale constants. `source="c"` requires `legacy=True` and
+selects the C expression promotions and squared-uniform calculation. Shared
+logarithm evaluation uses double precision followed by source rounding, as in
+the gamma sampler, to avoid CPU-dependent float32 logarithm approximations.
+
+Legacy shapes must fit float32 and satisfy the source minimum check. The code
+rejects values **below** `1e-37`, although its argument comments say strictly
+greater. Fortran compares to a float32 constant; C compares its rounded float32
+argument to a double constant. Thus the float32 representation of `1e-37` is
+accepted by Fortran and rejected by C; the next larger float32 is accepted by
+both. Default mode accepts smaller positive shapes.
+
+GENBET uses `expmax=87.49823`, an internal `1e38` sentinel for large weights,
+and a `1e-37` guard on a logarithm argument. For shapes at most one it can
+combine `v+log(a)` before exponentiation to avoid intermediate overflow.
+These are internal source guards, not a final-result truncation warning.
+Nonfinite coefficients or zero rejection scale raise `ArithmeticError` rather
+than sampling with invalid arithmetic. Nonfinite/out-of-range outputs also
+raise an error. Finite precision still limits the accuracy of extreme legacy
+parameter combinations; compatibility is with the source arithmetic.
+
+The total draw budget is `max(100000, 8*size)` unless `max_attempts` is supplied.
+Budget exhaustion and all other failures leave generator state unchanged.
+Other streams and reset anchors are untouched. Parameter failures are reported
+before draws; invalid derived legacy coefficients are reported before sampling.
+
+`tools/reference_randlib_beta.py` compiles unchanged C, Fortran 77 and Fortran
+95 sources with recorded hashes, compiler versions and flags. Its fixture
+contains 231 cases / 4,620 values and states: BB/BC, the shape-one boundary,
+swapped and mixed shapes, tiny and large shapes, source minimum boundaries,
+two streams, antithetic flags and engineered maximal-uniform cases exercising
+overflow guards. Tests require exact native states and values within `6e-6`
+relative plus two float32 subnormal units for transcendental rounding. They
+also check empirical moments/CDFs, inverse-CDF round trips, scalar/batch
+identity, uniform and reflection identities, endpoints, invalid inputs and
+rollback. The benchmark includes 10,000 default beta draws with shapes 2 and 3.
+
+Count and multivariate samplers and the final RANDLIB coverage/performance
 audit remain pending.

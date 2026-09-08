@@ -8,45 +8,51 @@
   "results": {
     "normal": {
       "workload": "10,000 consecutive default-mode draws; default seeds; default parameters",
-      "batch_seconds": 0.001902750227600336,
-      "scalar_seconds": 0.35020587500184774,
-      "speedup": 184.05246780262473
+      "batch_seconds": 0.0018439162522554398,
+      "scalar_seconds": 0.35305308317765594,
+      "speedup": 191.46915308426225
     },
     "exponential": {
       "workload": "10,000 consecutive default-mode draws; default seeds; default parameters",
-      "batch_seconds": 0.0017221253365278244,
-      "scalar_seconds": 0.322695417329669,
-      "speedup": 187.382074048276
+      "batch_seconds": 0.0018219170160591602,
+      "scalar_seconds": 0.32477370789274573,
+      "speedup": 178.25933071048274
+    },
+    "beta": {
+      "workload": "10,000 consecutive default-mode draws; default seeds; {'a': 2.0, 'b': 3.0}",
+      "batch_seconds": 0.01007875008508563,
+      "scalar_seconds": 0.3751243748702109,
+      "speedup": 37.21933490793802
     },
     "gamma": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'shape': 2.5, 'rate': 1.7}",
-      "batch_seconds": 0.006440583150833845,
-      "scalar_seconds": 0.3506097919307649,
-      "speedup": 54.437584876980026
+      "batch_seconds": 0.006370957940816879,
+      "scalar_seconds": 0.36051279166713357,
+      "speedup": 56.586904986051266
     },
     "chi_square": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'df': 5}",
-      "batch_seconds": 0.008184874895960093,
-      "scalar_seconds": 1.1722337501123548,
-      "speedup": 143.21950732453448
+      "batch_seconds": 0.00809470796957612,
+      "scalar_seconds": 1.174520167056471,
+      "speedup": 145.09728719935217
     },
     "noncentral_chi_square": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'df': 5, 'noncentrality': 2.3}",
-      "batch_seconds": 0.022986166179180145,
-      "scalar_seconds": 1.6162244589067996,
-      "speedup": 70.31291979306685
+      "batch_seconds": 0.02466987492516637,
+      "scalar_seconds": 1.6071123331785202,
+      "speedup": 65.1447296775333
     },
     "f": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'dfn': 5, 'dfd': 12}",
-      "batch_seconds": 0.017791958060115576,
-      "scalar_seconds": 1.3131117499433458,
-      "speedup": 73.8036671122198
+      "batch_seconds": 0.01804866688326001,
+      "scalar_seconds": 1.2920346250757575,
+      "speedup": 71.5861527852846
     },
     "noncentral_f": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'dfn': 5, 'dfd': 12, 'noncentrality': 2.3}",
-      "batch_seconds": 0.047930624801665545,
-      "scalar_seconds": 1.4215842080302536,
-      "speedup": 29.65920460900929
+      "batch_seconds": 0.04607329238206148,
+      "scalar_seconds": 1.371617625001818,
+      "speedup": 29.770340995553724
     }
   }
 }

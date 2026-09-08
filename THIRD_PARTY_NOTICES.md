@@ -402,3 +402,10 @@ GENCHI, GENNCH, GENF and GENNF's gamma/normal composition and source rounding
 rules. They reuse the attributed GS/GD and FL algorithms above. Native reference
 executables are compiled locally from unchanged archived source and are not
 bundled; the original RANDLIB attribution and terms remain retained.
+
+RANDLIB's beta sampler independently expresses Cheng algorithms BB and BC,
+including the archive's numerical coefficients and overflow corrections.
+The source attributes them to R. C. H. Cheng, “Generating Beta Variates with
+Nonintegral Shape Parameters,” Communications of the ACM 21, 317–322 (1978).
+The retained RANDLIB notices include the applicable source attribution and ACM
+policy; this package does not replace those terms with a blanket license.

@@ -3,7 +3,7 @@
 import numpy as np
 from numpy.typing import NDArray
 
-from ._randlib_distributions import DistributionStream
+from ._randlib_distributions import DistributionStream, source_log
 from ._randlib_normal import standard_normal
 
 _Q = np.array(
@@ -30,6 +30,7 @@ class GammaSampler:
     """Shape-specific constants, without the source's process-global cache."""
 
     def __init__(self, shape: np.float32, source: str) -> None:
+        self.source = source
         self.shape = shape
         self.k = np.float64 if source == "c" else np.float32
         k = self.k
@@ -59,7 +60,7 @@ class GammaSampler:
         families; GS amplifies that discrepancy by dividing by a small shape.
         The argument is already rounded according to the source expression.
         """
-        return self.k(np.log(np.float64(value)))
+        return source_log(value, self.source)
 
     def quotient(self, t: np.float32) -> np.float32:
         k = self.k

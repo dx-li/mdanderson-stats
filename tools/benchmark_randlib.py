@@ -11,6 +11,7 @@ from benchmark_numerics import measure
 from mdanderson_stats import RandlibGenerator
 
 PARAMETERS = {
+    "beta": {"a": 2.0, "b": 3.0},
     "gamma": {"shape": 2.5, "rate": 1.7},
     "chi_square": {"df": 5},
     "noncentral_chi_square": {"df": 5, "noncentrality": 2.3},
