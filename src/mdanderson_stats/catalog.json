@@ -650,7 +650,8 @@
         "odds_ratio: batched RELRISK odds, stable log-Wald limits and explicit source CDF multiplier",
         "fisher_exact: fixed-margin two-sided and one-sided probabilities, batched tables, source direction and truncation compatibility",
         "binomial_comparison: conditional Poisson-model comparison, batched event selection, inclusive tails and corrected/source two-sided conventions",
-        "CTAStudySpecification: reusable analysis settings, automatic Fisher decisions, independent study snapshots and consolidated UTF-8 numerical reports"
+        "CTAStudySpecification: reusable analysis settings, automatic Fisher decisions, independent study snapshots and consolidated UTF-8 numerical reports",
+        "CTA detailed reports: cellwise Pearson/Yates contributions, selected Fisher tables and binomial tail terms with bounded output"
       ],
       "validation": [
         "tests/test_cta.py",
@@ -668,7 +669,8 @@
         "tests/fixtures/cta_fisher.json",
         "tests/test_cta_binomial.py",
         "tests/fixtures/cta_binomial.json",
-        "tests/test_cta_study.py"
+        "tests/test_cta_study.py",
+        "tests/test_cta_detail_report.py"
       ]
     },
     {

@@ -159,12 +159,16 @@ class CTAStudy:
     binomial: BinomialComparison | None
     fisher_note: str
 
-    def report(self, *, digits: int = 6) -> str:
+    def report(self, *, digits: int = 6, details: bool = False, max_terms: int = 100_000) -> str:
         """Return settings, observations, margins and every selected result."""
         from .cta_report import format_cta
 
-        return format_cta(self, digits=digits)
+        return format_cta(self, digits=digits, details=details, max_terms=max_terms)
 
-    def write_report(self, path: str | Path, *, digits: int = 6) -> None:
+    def write_report(
+        self, path: str | Path, *, digits: int = 6, details: bool = False, max_terms: int = 100_000
+    ) -> None:
         """Write the complete UTF-8 summary, replacing an existing destination."""
-        Path(path).write_text(self.report(digits=digits), encoding="utf-8")
+        Path(path).write_text(
+            self.report(digits=digits, details=details, max_terms=max_terms), encoding="utf-8"
+        )

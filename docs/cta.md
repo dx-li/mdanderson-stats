@@ -5,8 +5,8 @@ Yates and source-specific Cochran statistics, the McNemar decomposition, and
 Cohen kappa with variances, sensitivity/specificity and predictive values are
 implemented, along with odds ratios, confidence limits and Fisher probabilities.
 Binomial comparison, reusable study settings and consolidated numerical reports
-are also implemented. Detailed probability-enumeration reports and the final
-source-coverage audit remain pending.
+and detailed cell/probability listings are also implemented. The final
+source-coverage audit remains pending.
 
 The [official catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/30)
 lists version 1, modified March 19, 1992; the downloadable CTA_V1.tar.gz contains
@@ -464,10 +464,8 @@ zero-based. Diagnostic error-vector order and the log scale of odds-ratio
 standard errors are stated in the report. `write_report` writes UTF-8 to the
 chosen path, replacing an existing file only after formatting succeeds.
 
-These summaries consolidate numerical results but do not yet reproduce the
-source's optional per-term Fisher/binomial probability listings or per-cell
-Yates listings. Console pagination and prompt text are intentionally replaced
-by ordinary Python calls and report files.
+Optional detailed listings are described below. Console pagination and prompt
+text are replaced by ordinary Python calls and report files.
 
 `tests/test_cta_study.py` exercises every analysis together, reuses and revises
 settings, verifies independent snapshots and native-compatible options, and
@@ -475,3 +473,47 @@ checks automatic Fisher decisions and explicitly requested failures. Real
 report-file tests cover replacement, fractional observations, undefined values,
 all selected result sections and preservation of an existing file when report
 validation fails.
+
+## Detailed numerical listings
+
+```python
+settings = CTAStudySpecification(binomial=True, legacy=True)
+study = settings.run([[1, 9], [5, 15]])
+print(study.report(details=True, digits=12))
+study.write_report("cta-details.txt", details=True, max_terms=100_000)
+```
+
+`details=True` appends the original workflow's numerical listings:
+
+- **Cell details:** row/column indices, observed and expected counts, Pearson
+  and Yates contributions, row percentages and column percentages. Yates cells
+  use the selected correction convention; an inapplicable correction is `NA`.
+- **Fisher terms:** all four cells of each included fixed-margin table, its
+  probability, and the running sum. Standard two-sided terms appear in ascending
+  upper-left-count order. One-sided and legacy terms start at the observed table
+  and move outward. Legacy includes its cutoff-triggering term. The same
+  selection implementation supplies both the p-value and this report.
+- **Binomial terms:** group index, event count, probability and running sum for
+  each reported tail. Lower-tail counts ascend from zero; upper-tail counts
+  descend from the total event count. Legacy switches groups as in BINOP,
+  expressing the same event through complementary counts. Standard mode uses
+  distinct lower and upper tails for group zero.
+
+Detailed probabilities use vectorized distribution evaluation; no log-factorial
+loops or single-precision rounding are reproduced. Cumulative listing totals
+can differ from the summary in final floating-point digits because summation
+order differs. Printed precision also affects reconstruction from a text file.
+Use `digits=17` when comparing numerical listings.
+
+`max_terms` limits the combined number of cell and probability rows (default
+100,000). The report checks the required count before allocating detailed arrays
+and raises an explicit error if it would exceed the limit. Increase the limit
+explicitly for a larger listing. It never silently truncates requested details;
+a failed report request leaves an existing destination file untouched. Summary
+reports remain available without enumerating large binomial supports.
+
+`tests/test_cta_detail_report.py` checks every printed probability against
+integer-combination/fraction calculations, verifies all cumulative sums and
+summary totals, checks legacy traversal and the included cutoff term, and
+compares summed cell contributions with reported statistics. Real-file tests
+exercise the exact row-limit boundary and preservation on failure.

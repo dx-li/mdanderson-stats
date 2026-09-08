@@ -69,9 +69,10 @@ def contingency_chi_square(
     yates = yates_p = cochran = cochran_p = None
     is_two = ob.shape[-2:] == (2, 2)
     if is_two or legacy:
-        corrected = delta - 0.5 if legacy else np.maximum(delta - 0.5, 0)
         with np.errstate(over="ignore"):
-            yates = np.asarray(((corrected / np.sqrt(expected)) ** 2).sum(axis=(-2, -1)))
+            yates = np.asarray(
+                _yates_contributions(delta, expected, bool(legacy)).sum(axis=(-2, -1))
+            )
         yates_p = np.asarray(gammaincc(df / 2, yates / 2))
     if is_two:
         index = expected.reshape(*ob.shape[:-2], 4).argmin(axis=-1)
@@ -129,3 +130,9 @@ def contingency_chi_square(
         threshold,
         bool(legacy),
     )
+
+
+def _yates_contributions(delta: FloatArray, expected: FloatArray, legacy: bool) -> FloatArray:
+    corrected = delta - 0.5 if legacy else np.maximum(delta - 0.5, 0)
+    with np.errstate(over="ignore"):
+        return (corrected / np.sqrt(expected)) ** 2

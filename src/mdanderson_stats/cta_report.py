@@ -20,7 +20,9 @@ def _value(value: object, digits: int) -> str:
     return str(value)
 
 
-def format_cta(study: "CTAStudy", *, digits: int = 6) -> str:
+def format_cta(
+    study: "CTAStudy", *, digits: int = 6, details: bool = False, max_terms: int = 100_000
+) -> str:
     """Format all result fields, with zero-based indices and explicit omissions."""
     if (
         isinstance(digits, (bool, np.bool_))
@@ -28,6 +30,14 @@ def format_cta(study: "CTAStudy", *, digits: int = 6) -> str:
         or not 1 <= digits <= 17
     ):
         raise ValueError("digits must be an integer from one through 17")
+    if not isinstance(details, (bool, np.bool_)):
+        raise ValueError("details must be boolean")
+    if (
+        isinstance(max_terms, (bool, np.bool_))
+        or not isinstance(max_terms, (int, np.integer))
+        or max_terms < 1
+    ):
+        raise ValueError("max_terms must be a positive integer")
     lines = [
         "CTA contingency-table study",
         "Indices are zero-based; NA denotes an undefined quantity.",
@@ -67,4 +77,8 @@ def format_cta(study: "CTAStudy", *, digits: int = 6) -> str:
                 lines.extend([field.name + ":", _value(value, digits)])
             else:
                 lines.append(f"{field.name}: {_value(value, digits)}")
+    if details:
+        from .cta_detail_report import detail_lines
+
+        lines.extend(detail_lines(study, digits, int(max_terms)))
     return "\n".join(lines) + "\n"

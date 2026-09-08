@@ -251,3 +251,6 @@ explicit event selection, inclusive tails and corrected/source two-sided convent
 
 `CTAStudySpecification` combines the CTA analyses with reusable settings,
 automatic Fisher selection, independent study snapshots and UTF-8 summary reports.
+
+CTA study reports also provide optional per-cell and per-probability listings,
+with explicit output-size limits and source-compatible term traversal.

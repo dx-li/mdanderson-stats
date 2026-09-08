@@ -57,35 +57,14 @@ def fisher_exact(
     # Supports differ across tables; vectorize the probability calculation
     # within each support without allocating a batch-by-maximum-support array.
     for i, table in enumerate(ob.reshape(-1, 4)):
+        support, probabilities, selected, stopped = _fisher_support(
+            table, alternative, bool(legacy)
+        )
         a, b, c, d = map(int, table)
-        total, row, col = a + b + c + d, a + b, a + c
-        lo, hi = max(0, row + col - total), min(row, col)
-        support = np.arange(lo, hi + 1)
-        probabilities = np.ones(1) if total == 0 else hypergeom.pmf(support, total, row, col)
-        if not np.all(np.isfinite(probabilities)):
-            raise RuntimeError("nonfinite hypergeometric probabilities")
-        at = a - lo
-        observed_probability.flat[i] = probabilities[at]
+        observed_probability.flat[i] = probabilities[a - support[0]]
         source_lower.flat[i] = a * d < b * c
         support_size.flat[i] = len(support)
-        if alternative == "two-sided":
-            # Relative tolerance includes theoretically equal masses despite
-            # floating-point evaluation of symmetric tables.
-            if probabilities[at] > 0:
-                selected = np.flatnonzero(probabilities <= probabilities[at] * (1 + 1e-12))
-            else:
-                logs = hypergeom.logpmf(support, total, row, col)
-                selected = np.flatnonzero(logs <= logs[at] + 1e-10)
-        else:
-            lower = alternative == "less" or (alternative == "source" and a * d < b * c)
-            selected = np.arange(at, -1, -1) if lower else np.arange(at, len(support))
-            if legacy and len(selected) > 1:
-                logs = hypergeom.logpmf(support[selected], total, row, col)
-                stop = np.flatnonzero(logs - logs[0] < np.log(1e-5))
-                if len(stop):
-                    end = int(stop[0]) + 1  # Source includes the triggering term.
-                    truncated.flat[i] = end < len(selected)
-                    selected = selected[:end]
+        truncated.flat[i] = stopped
         terms.flat[i] = len(selected)
         pvalue.flat[i] = min(1.0, float(np.sum(probabilities[selected])))
     for value in (pvalue, observed_probability, terms, support_size, source_lower, truncated):
@@ -100,3 +79,37 @@ def fisher_exact(
         alternative,
         bool(legacy),
     )
+
+
+def _fisher_support(
+    table: FloatArray, alternative: str, legacy: bool
+) -> tuple[NDArray[np.int64], FloatArray, NDArray[np.int64], bool]:
+    """Enumerate a validated table once for both tests and detailed reports."""
+    truncated = False
+    a, b, c, d = map(int, table)
+    total, row, col = a + b + c + d, a + b, a + c
+    lo, hi = max(0, row + col - total), min(row, col)
+    support = np.arange(lo, hi + 1)
+    probabilities = np.ones(1) if total == 0 else hypergeom.pmf(support, total, row, col)
+    if not np.all(np.isfinite(probabilities)):
+        raise RuntimeError("nonfinite hypergeometric probabilities")
+    at = a - lo
+    if alternative == "two-sided":
+        # Relative tolerance includes theoretically equal masses despite
+        # floating-point evaluation of symmetric tables.
+        if probabilities[at] > 0:
+            selected = np.flatnonzero(probabilities <= probabilities[at] * (1 + 1e-12))
+        else:
+            logs = hypergeom.logpmf(support, total, row, col)
+            selected = np.flatnonzero(logs <= logs[at] + 1e-10)
+    else:
+        lower = alternative == "less" or (alternative == "source" and a * d < b * c)
+        selected = np.arange(at, -1, -1) if lower else np.arange(at, len(support))
+        if legacy and len(selected) > 1:
+            logs = hypergeom.logpmf(support[selected], total, row, col)
+            stop = np.flatnonzero(logs - logs[0] < np.log(1e-5))
+            if len(stop):
+                end = int(stop[0]) + 1  # Source includes the triggering term.
+                truncated = end < len(selected)
+                selected = selected[:end]
+    return support, probabilities, selected, truncated

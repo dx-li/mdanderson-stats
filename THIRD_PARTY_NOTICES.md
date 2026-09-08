@@ -334,3 +334,7 @@ reporting are retained explicitly. The retained CTA notice applies.
 `cta_study.py` and `cta_report.py` independently replace the CTA program
 selection loop and consolidated numerical output with reusable Python settings
 and explicit report files. The retained CTA notice applies.
+
+`cta_detail_report.py` independently supplies CHISQT cell listings and
+FISHXT/BINOP term listings using shared numerical calculations. The retained
+CTA notice applies.
