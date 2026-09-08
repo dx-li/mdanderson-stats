@@ -28,6 +28,7 @@ from .cta_fisher import FisherExact, fisher_exact
 from .cta_kappa import CohenKappa, cohen_kappa
 from .cta_mcnemar import McNemarAnalysis, mcnemar_analysis
 from .cta_odds import OddsRatio, odds_ratio
+from .cta_study import CTAStudy, CTAStudySpecification
 from .cuminc_plot import plot_cuminc
 from .cuminc_study import CumIncStudy, cuminc
 from .cumulative_incidence import CumulativeIncidence, IncidenceSummary, cumulative_incidence
@@ -130,6 +131,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "CTAStudy",
+    "CTAStudySpecification",
     "BinomialComparison",
     "binomial_comparison",
     "FisherExact",

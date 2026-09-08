@@ -248,3 +248,6 @@ alternatives and explicit compatibility for the original selected, truncated tai
 
 `binomial_comparison` adds CTA conditional Poisson-model comparisons with
 explicit event selection, inclusive tails and corrected/source two-sided conventions.
+
+`CTAStudySpecification` combines the CTA analyses with reusable settings,
+automatic Fisher selection, independent study snapshots and UTF-8 summary reports.

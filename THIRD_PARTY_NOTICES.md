@@ -330,3 +330,7 @@ The retained CTA notice applies.
 `cta_binomial.py` independently implements BINCOMP using the existing binomial
 tail engine in place of BINOP/BLFEW loops. Source event selection and duplicate-tail
 reporting are retained explicitly. The retained CTA notice applies.
+
+`cta_study.py` and `cta_report.py` independently replace the CTA program
+selection loop and consolidated numerical output with reusable Python settings
+and explicit report files. The retained CTA notice applies.

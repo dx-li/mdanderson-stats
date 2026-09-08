@@ -4,8 +4,9 @@ Catalog entry 30 is partial. CHISQT expected counts, percentages, Pearson,
 Yates and source-specific Cochran statistics, the McNemar decomposition, and
 Cohen kappa with variances, sensitivity/specificity and predictive values are
 implemented, along with odds ratios, confidence limits and Fisher probabilities.
-Binomial comparison is also implemented. Reports and interactive study
-orchestration remain pending.
+Binomial comparison, reusable study settings and consolidated numerical reports
+are also implemented. Detailed probability-enumeration reports and the final
+source-coverage audit remain pending.
 
 The [official catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/30)
 lists version 1, modified March 19, 1992; the downloadable CTA_V1.tar.gz contains
@@ -410,3 +411,67 @@ and reported probabilities are checked. Independent tests use rational binomial
 masses for every nonempty-group table with cells zero through three, both axes
 and both explicit event categories. Batching, symmetry, invalid inputs and
 ambiguous automatic category selection are covered separately.
+
+## Combined studies and reports
+
+```python
+from dataclasses import replace
+from mdanderson_stats import CTAStudySpecification
+
+settings = CTAStudySpecification(
+    kappa=True, mcnemar=True, diagnostic=True, odds=True, binomial=True
+)
+first = settings.run([[1, 9], [5, 15]])
+second = settings.run([[2, 8], [4, 16]])
+print(first.report())
+first.write_report("cta-results.txt", digits=12)
+source_settings = replace(settings, legacy=True)
+source = source_settings.run([[1, 9], [5, 15]])
+```
+
+`CTAStudySpecification` replaces the interactive program's retained yes/no
+choices with immutable, validated settings. `run` accepts one table and returns
+an independent `CTAStudy`; reuse the specification to analyze another table,
+or use `dataclasses.replace` to revise choices. The numerical functions remain
+available separately for batched analysis. No terminal input or global output
+file is required. Observations are copied and retained read-only; running a new
+study or changing the original input cannot alter an earlier result.
+
+Chi-square analysis is enabled by default. Kappa, McNemar, diagnostic accuracy,
+odds ratios and binomial comparison are opt-in. Each selected analysis receives
+its relevant orientation, class, threshold and legacy options from the
+specification. An explicitly requested analysis rejects incompatible inputs,
+such as kappa on a rectangular table or odds ratios with a zero cell. Unselected
+results are `None`, and no substitute numerical result is invented.
+
+`fisher="auto"` reproduces the original trigger: chi-square analysis must be
+selected, the table must be 2x2, and the minimum expected count must be strictly
+below `fisher_threshold` (default 10). Auto mode records an explicit skip reason
+for totals above 50,000 or fractional counts. The latter avoids the source's
+invalid integer truncation. `fisher="always"` requests the calculation
+independently and raises on unsupported inputs; `fisher="never"` disables it.
+`fisher_note` records the decision, and `fisher_alternative` controls the exact
+tail convention. `expected_threshold` separately controls the chi-square
+small-expected-count diagnostic, defaulting to five.
+
+`report(digits=6)` includes all settings, the input table with fractional counts preserved, row and
+column totals, the Fisher-selection decision, and every returned field of each
+selected analysis. Significant-digit precision is configurable from one through
+17; input counts are not rounded to integers as in the source's marginal table.
+Undefined quantities are labeled `NA`, inapplicable corrections are identified,
+and omitted analyses are explicitly marked. Pair and category indices are
+zero-based. Diagnostic error-vector order and the log scale of odds-ratio
+standard errors are stated in the report. `write_report` writes UTF-8 to the
+chosen path, replacing an existing file only after formatting succeeds.
+
+These summaries consolidate numerical results but do not yet reproduce the
+source's optional per-term Fisher/binomial probability listings or per-cell
+Yates listings. Console pagination and prompt text are intentionally replaced
+by ordinary Python calls and report files.
+
+`tests/test_cta_study.py` exercises every analysis together, reuses and revises
+settings, verifies independent snapshots and native-compatible options, and
+checks automatic Fisher decisions and explicitly requested failures. Real
+report-file tests cover replacement, fractional observations, undefined values,
+all selected result sections and preservation of an existing file when report
+validation fails.
