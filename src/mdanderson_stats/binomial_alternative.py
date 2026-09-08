@@ -7,7 +7,7 @@ from numpy.typing import ArrayLike
 from scipy.special import betainccinv, betaincinv
 
 from ._validation import FloatArray, count, finite
-from .binomial_design import _binomial_region, _maximum_region
+from .binomial_design import _binomial_region, _maximum_region, _probability_bracket
 
 
 @dataclass(frozen=True)
@@ -68,25 +68,16 @@ def binomial_alternative(
         guess = betainccinv(critical + 1, n - critical, target)
     else:
         guess = betaincinv(critical, n - critical + 1, target)
-    if np.any(~np.isfinite(guess)):
-        raise ArithmeticError("Inverse beta could not produce a finite probability")
-    lo, hi = np.where(lower, 0, p0), np.where(lower, p0, 1)
-    guess = np.clip(guess, lo, hi)
-    _, achieved = _binomial_region(n, lower, included, guess)
-    move_right = np.where(lower, achieved >= target, achieved < target)
-    lo, hi = np.where(move_right, guess, lo), np.where(move_right, hi, guess)
-    # A binary64 interval can require up to 1075 halvings near subnormal zero.
-    for _ in range(1076):
-        mid = lo + (hi - lo) / 2
-        active = (mid > lo) & (mid < hi)
-        if not np.any(active):
-            break
-        _, achieved = _binomial_region(n, lower, included, mid)
-        move_right = np.where(lower, achieved >= target, achieved < target)
-        lo = np.where(active & move_right, mid, lo)
-        hi = np.where(active & ~move_right, mid, hi)
-    else:
-        raise ArithmeticError("Binomial alternative bracket failed to converge")
+    lo, hi = _probability_bracket(
+        n,
+        lower,
+        included,
+        target,
+        np.where(lower, 0, p0),
+        np.where(lower, p0, 1),
+        guess,
+        equality_right=alternative == "less",
+    )
     pa = np.where(lower, lo, hi)
     # If the requested power already equals the null tail, the closest point is p0.
     pa = np.where(size >= target, p0, pa)

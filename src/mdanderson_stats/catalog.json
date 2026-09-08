@@ -454,7 +454,8 @@
         "KStageBinomial.stage_distribution: vectorized joint arrival probabilities reusing cached surviving-path coefficients",
         "binomial_power: vectorized single-stage critical count selection, achieved significance/power and adjacent more permissive region",
         "binomial_significance: discrete minimum-significance solve for target power, with adjacent less permissive region and explicit full-region results",
-        "binomial_alternative: vectorized alternative-probability solve for fixed size and target power, with adjacent floating-point brackets"
+        "binomial_alternative: vectorized alternative-probability solve for fixed size and target power, with adjacent floating-point brackets",
+        "binomial_null: vectorized closest-null solve satisfying significance and target power, with adjacent probability brackets and impossible-design errors"
       ],
       "validation": [
         "tests/test_ksbin1.py",
@@ -469,7 +470,10 @@
         "tools/reference_binomial_significance.py",
         "tests/test_binomial_alternative.py",
         "tests/fixtures/binomial_alternative.json",
-        "tools/reference_binomial_alternative.py"
+        "tools/reference_binomial_alternative.py",
+        "tests/test_binomial_null.py",
+        "tests/fixtures/binomial_null.json",
+        "tools/reference_binomial_null.py"
       ]
     },
     {

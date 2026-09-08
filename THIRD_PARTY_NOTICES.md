@@ -124,3 +124,7 @@ provenance and the shared auxiliary status repair are recorded in
 `binomial_alternative.py` independently expresses KSBIN1's alternative-probability
 solve using inverse beta initialization and checked probability brackets. Mode-2
 reference provenance is recorded in `tests/fixtures/binomial_alternative.json`.
+
+`binomial_null.py` independently expresses KSBIN1's null-probability solve through
+discrete region selection and checked probability inversion. Mode-1 reference
+provenance is recorded in `tests/fixtures/binomial_null.json`.

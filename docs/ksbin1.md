@@ -78,8 +78,7 @@ check mass conservation, broadcasting, endpoints, disabled final rejection,
 conditional expectations with probability zero and invalid input. Existing KSB1CI
 native and exhaustive tests validate the shared probability-code extraction.
 
-Still pending: solve_binomial_one_sample_mod and ABIN1's two remaining inverse solve modes
-(null probability and sample size),
+Still pending: solve_binomial_one_sample_mod and ABIN1's remaining sample-size solve mode,
 BINCUM-based power-contribution tables, separate single-stage comparison, report
 file dialogue and design revision workflow. These are required before this catalog
 entry can be marked implemented.
@@ -123,8 +122,8 @@ Tests compare valid native brackets, check empty-region behavior independently,
 enumerate binomial masses for well-separated attainable sizes, and verify exact
 size ties, adjacent regions, broadcasting and invalid inputs.
 
-The forward power, significance and alternative-probability modes are now
-available. Solving for null probability and sample size remains pending.
+The forward power, significance, alternative-probability and null-probability
+modes are now available. Solving for sample size remains pending.
 
 ## Solve significance for a requested power
 
@@ -204,3 +203,45 @@ its solution outward by a relative correction; its reported power is verified at
 that actual probability. Separate tests check the tighter Python root, closed-form
 zero/all-event formulas, adjacent brackets, broadcasting, null-boundary equality,
 empty regions, invalid inputs and a representable probability near 1e-310.
+
+## Solve the null probability
+
+```python
+from mdanderson_stats import binomial_null
+
+result = binomial_null(
+    50, alternative_probability=0.06, alpha=0.05, target_power=0.8, alternative="less"
+)
+print(result.null_probability, result.critical, result.significance, result.power)
+```
+
+This finds the closest null to the supplied alternative for which a nonrandomized
+one-sided test satisfies both constraints. It first chooses the least permissive
+critical region attaining the target power at that alternative, then inverts the
+region's null tail at alpha. A more restrictive region fails the power constraint;
+a more permissive one requires a null farther from the alternative. previous_power
+reports the first fact explicitly for the immediately smaller region.
+
+Direction is explicit and numerical inputs broadcast. Input alternative probability
+is interior, trials are positive integers, and 0<alpha<=target_power<1. If only the
+full rejection region attains the target, the function raises because that region
+has significance one for every null. If the requested power and attained size
+already coincide at the supplied alternative, the null equals that alternative.
+
+The result includes trials, alternative_probability, alpha, target_power, direction,
+null_probability, critical count, significance, achieved power and previous_power.
+probability_lower and probability_upper bracket the evaluated null-tail crossing
+at adjacent binary64 values; the returned endpoint satisfies significance<=alpha.
+The inverse-beta initialization and refinement are shared with binomial_alternative,
+including its explicit convergence checks and floating-point interpretation.
+As with the other Python solve modes, the original SRANGE/BRANGE probability
+search restrictions are removed, permitting representable near-boundary solutions.
+
+`tools/reference_binomial_null.py` records 27 calls to the original mode-1 solver
+using the same documented reference build and auxiliary status initialization.
+Solved nulls and powers agree within native accuracy; its reported significance is
+verified at the native null, accounting for the source's outward correction.
+Independent checks cover zero/all-event closed forms, adjacent brackets (moving
+the null closer violates alpha), mixed target/sample-size broadcasting, equality
+at the null, impossible full-region cases, invalid inputs and subnormal nulls.
+The existing alternative/significance/power tests verify the shared search extraction.

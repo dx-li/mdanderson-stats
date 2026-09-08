@@ -147,12 +147,7 @@ def binomial_significance(
             "Require positive integral trials, distinct interior probabilities and 0<target_power<1"
         )
     lower_tail = pa < p0
-    lo, hi = np.zeros(n.shape), n + 1
-    while np.any(hi - lo > 1):
-        mid = lo + np.floor((hi - lo) / 2)
-        _, power = _binomial_region(n, lower_tail, mid, pa)
-        adequate = power >= target
-        lo, hi = np.where(adequate, lo, mid), np.where(adequate, mid, hi)
+    hi = _minimum_region(n, pa, lower_tail, target)
     critical, significance = _binomial_region(n, lower_tail, hi, p0)
     _, power = _binomial_region(n, lower_tail, hi, pa)
     previous_critical, previous_significance = _binomial_region(n, lower_tail, hi - 1, p0)
@@ -181,3 +176,45 @@ def _maximum_region(
         acceptable = size <= level
         lo, hi = np.where(acceptable, mid, lo), np.where(acceptable, hi, mid)
     return lo
+
+
+def _minimum_region(
+    n: FloatArray, pa: FloatArray, lower_tail: NDArray[np.bool_], target: FloatArray
+) -> FloatArray:
+    lo, hi = np.zeros(n.shape), n + 1
+    while np.any(hi - lo > 1):
+        mid = lo + np.floor((hi - lo) / 2)
+        _, power = _binomial_region(n, lower_tail, mid, pa)
+        adequate = power >= target
+        lo, hi = np.where(adequate, lo, mid), np.where(adequate, mid, hi)
+    return hi
+
+
+def _probability_bracket(
+    n: FloatArray,
+    lower: NDArray[np.bool_],
+    included: FloatArray,
+    target: FloatArray,
+    lo: FloatArray,
+    hi: FloatArray,
+    guess: FloatArray,
+    equality_right: bool,
+) -> tuple[FloatArray, FloatArray]:
+    """Refine a monotone binomial-tail crossing, choosing which side owns equality."""
+    if np.any(~np.isfinite(guess)):
+        raise ArithmeticError("Inverse beta could not produce a finite probability")
+    guess = np.clip(guess, lo, hi)
+    _, value = _binomial_region(n, lower, included, guess)
+    right = np.where(lower, value > target, value < target) | ((value == target) & equality_right)
+    lo, hi = np.where(right, guess, lo), np.where(right, hi, guess)
+    for _ in range(1076):
+        mid = lo + (hi - lo) / 2
+        active = (mid > lo) & (mid < hi)
+        if not np.any(active):
+            return lo, hi
+        _, value = _binomial_region(n, lower, included, mid)
+        right = np.where(lower, value > target, value < target) | (
+            (value == target) & equality_right
+        )
+        lo, hi = np.where(active & right, mid, lo), np.where(active & ~right, mid, hi)
+    raise ArithmeticError("Binomial probability bracket failed to converge")
