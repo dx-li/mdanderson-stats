@@ -11,6 +11,7 @@ from ._randlib_binomial import sample_binomial
 from ._randlib_chi_f import sample_chi_f
 from ._randlib_distributions import DistributionStream, legacy_exponential
 from ._randlib_gamma import legacy_gamma
+from ._randlib_multinomial import probabilities, sample_multinomial
 from ._randlib_negative_binomial import sample_negative_binomial
 from ._randlib_normal import legacy_normal
 from ._randlib_poisson import sample_poisson
@@ -694,6 +695,47 @@ class RandlibGenerator:
             2**53 - 1,
         )
         result, state = sample_negative_binomial(
+            self.get_seeds(),
+            self._antithetic[self._stream - 1],
+            size,
+            n,
+            p,
+            legacy,
+            source,
+            budget,
+        )
+        self._current[self._stream - 1] = state
+        return result
+
+    def multinomial(
+        self,
+        size: int = 1,
+        *,
+        n: int = 1,
+        p: ArrayLike = (0.5, 0.5),
+        legacy: bool = False,
+        source: Literal["fortran", "c"] = "fortran",
+        max_attempts: int | None = None,
+    ) -> NDArray[np.int64]:
+        """Multinomial category counts (GENMUL); p includes every category."""
+        n = _integer(n, "n", 0, 2**53 - 1)
+        size = _integer(size, "size", 0, self._max_draws)
+        if not isinstance(legacy, (bool, np.bool_)):
+            raise ValueError("legacy must be boolean")
+        if not isinstance(source, str) or source not in ("fortran", "c"):
+            raise ValueError("source must be fortran or c")
+        if not legacy and source != "fortran":
+            raise ValueError("source selection requires legacy=True")
+        p = probabilities(p, self._max_draws)
+        if size * len(p) > self._max_draws:
+            raise ValueError("size * number of categories must be <= max_draws")
+        budget = _integer(
+            max(100_000, 8 * size * (len(p) - 1)) if max_attempts is None else max_attempts,
+            "max_attempts",
+            1,
+            2**53 - 1,
+        )
+        result, state = sample_multinomial(
             self.get_seeds(),
             self._antithetic[self._stream - 1],
             size,

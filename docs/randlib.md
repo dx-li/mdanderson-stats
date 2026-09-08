@@ -2,9 +2,9 @@
 
 Catalog entry 27 is partial. The 32-stream generator bank and state controls are
 implemented, along with bounded uniforms, permutations, exponential, normal, gamma,
-central/noncentral chi-square, F, beta, binomial, Poisson and negative-binomial
-sampling. Remaining count and multivariate samplers and the final archive coverage/performance audit
-remain pending.
+central/noncentral chi-square, F, beta, binomial, Poisson, negative-binomial
+and multinomial sampling. Multivariate-normal sampling and the final archive
+coverage/performance audit remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27)
 lists version 90, modified September 27, 2002. RANDLIB_V90.tar.gz contains
@@ -637,5 +637,68 @@ zero counts at `p=1`, parameter limits and overflow/budget rollback. The
 benchmark measures 10,000 default draws at `n=10, p=0.3` against repeated
 scalar calls to the same Python API.
 
-Multinomial and multivariate-normal sampling and
+## Multinomial sampling
+
+```python
+from mdanderson_stats import RandlibGenerator
+
+bank = RandlibGenerator()
+counts = bank.multinomial(1000, n=100, p=[0.2, 0.3, 0.5])
+original = bank.multinomial(1000, n=100, p=[0.2, 0.3, 0.5], legacy=True)
+original_c = bank.multinomial(1000, n=100, p=[0.2, 0.3, 0.5], legacy=True, source="c")
+```
+
+`multinomial(size=1, *, n=1, p=(0.5, 0.5), legacy=False,
+source="fortran", max_attempts=None)` returns a read-only `int64` array with
+shape `(size, K)`. Each row contains nonnegative category counts summing to
+`n`. `p` supplies **all K category probabilities**, each finite and in `[0, 1]`,
+with their sum within `1e-12` of one. Default mode treats the accepted vector
+as normalized probabilities through ratios to the remaining probability mass;
+it does not accept arbitrary unnormalized weights. `n` is a nonnegative integer
+at most `2**53 - 1`. Both `K` and `size*K` are bounded by the generator's
+`max_draws` limit to constrain memory use.
+
+Default mode samples conditional binomial quantiles, vectorizing across rows.
+For each category except the last, it draws from a binomial with the remaining
+trial count and probability `p[j]/sum(p[j:])`. Reverse cumulative sums retain
+small remaining tails without subtracting them from one. The final category
+receives the leftover count. Each conditional quantile is checked for bounds,
+integrality and its probability bracket before committing generator state.
+
+The uniform schedule is row-major: `K-1` consecutive uniforms per observation,
+even after all trials have already been assigned or when `n=0`. This preserves
+scalar/batch equality while allowing vectorization across observations. A single
+category is supported in default mode: it receives all `n` events and consumes
+no randomness. Zero-probability categories and a zero-probability final category
+are also supported. Empty batches consume no randomness.
+
+Legacy mode follows GENMUL / RANDOM_MULTINOMIAL and reuses the validated
+source binomial sampler. It requires at least two categories and
+`n <= 2147483646`, the common safe range of the underlying IGNBIN arithmetic.
+The first `K-1` probabilities are converted to float32 and added sequentially;
+their sum must be at most `float32(0.99999)`, matching the source restriction.
+The last category is the implicit residual after those source-rounded
+probabilities; the full Python input vector must still pass its sum-to-one
+check. Positive probabilities that underflow float32 are rejected.
+
+Source conditional probabilities use sequential float32 subtraction from one.
+Legacy sampling stops a row as soon as its remaining count reaches zero, so
+consumption is variable. With zero trials it still calls the first binomial
+sampler before stopping; the source C unit-uniform restart can consume extra
+draws even then. Binomial inversion/BTPE rounding limitations and overflow/work
+guards remain applicable. A numerical failure or exhausted budget rolls back
+the entire batch, including earlier successful rows. `max_attempts` defaults
+to `max(100000, 8*size*(K-1))` and counts every underlying uniform.
+
+`tools/reference_randlib_multinomial.py` compiles unchanged C, Fortran 77 and
+Fortran 95 sources. Its 288 cases record 5,760 multinomial vectors and component
+states, requiring exact agreement. They cover two through ten categories,
+zero categories, residual-boundary probabilities, tiny probabilities with
+large trial counts, inversion and BTPE, zero trials, stream selection,
+antithetic starts and maximum uniforms. Additional tests verify row totals,
+means, covariances, binomial marginals, scalar/batch identity, draw schedules,
+resource limits and rollback. The benchmark uses 10,000 default observations
+with `n=100, p=[0.2, 0.3, 0.5]` against repeated scalar calls to this Python API.
+
+Multivariate-normal sampling and
 RANDLIB's final archive coverage/performance audit remain pending.

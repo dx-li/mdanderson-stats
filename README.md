@@ -328,3 +328,7 @@ repair for the archived Fortran cumulative table’s lifetime.
 RANDLIB negative-binomial sampling adds vectorized quantiles and validated
 gamma–Poisson composition, with explicit failures-before-successes counts
 and a shared transactional budget for all nested draws.
+
+RANDLIB multinomial sampling adds batched conditional binomials, full
+probability-vector validation, exact native vectors and generator states,
+and checks of category totals, marginal distributions and covariances.

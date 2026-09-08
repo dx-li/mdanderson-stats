@@ -429,3 +429,9 @@ RANDOM_NEGATIVE_BINOMIAL gamma–Poisson mixture. The source cites Luc Devroye,
 Non-Uniform Random Variate Generation, Springer-Verlag, New York (1986),
 page 480. It reuses the gamma and Poisson algorithms attributed above;
 the retained RANDLIB source notices remain available.
+
+RANDLIB’s multinomial sampler independently expresses GENMUL /
+RANDOM_MULTINOMIAL’s conditional binomial algorithm. The source cites Luc
+Devroye, Non-Uniform Random Variate Generation, Springer-Verlag, New York
+(1986), page 559. It reuses the binomial algorithm attributed above and
+retains source residual-category and early-exit rules in legacy mode.

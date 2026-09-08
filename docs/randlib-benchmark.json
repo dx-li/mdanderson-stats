@@ -8,69 +8,75 @@
   "results": {
     "normal": {
       "workload": "10,000 consecutive default-mode draws; default seeds; default parameters",
-      "batch_seconds": 0.0018837908282876015,
-      "scalar_seconds": 0.34272437496110797,
-      "speedup": 181.93334940092598
+      "batch_seconds": 0.0018482920713722706,
+      "scalar_seconds": 0.4268637499772012,
+      "speedup": 230.95037661459793
     },
     "exponential": {
       "workload": "10,000 consecutive default-mode draws; default seeds; default parameters",
-      "batch_seconds": 0.0017242501489818096,
-      "scalar_seconds": 0.31642429204657674,
-      "speedup": 183.51414511022608
+      "batch_seconds": 0.001719917170703411,
+      "scalar_seconds": 0.3648572498932481,
+      "speedup": 212.13652384435983
+    },
+    "multinomial": {
+      "workload": "10,000 consecutive default-mode draws; default seeds; {'n': 100, 'p': [0.2, 0.3, 0.5]}",
+      "batch_seconds": 0.029247833881527185,
+      "scalar_seconds": 2.8741264170967042,
+      "speedup": 98.26800947854093
     },
     "negative_binomial": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'n': 10, 'p': 0.3}",
-      "batch_seconds": 0.009400791954249144,
-      "scalar_seconds": 1.9010120001621544,
-      "speedup": 202.21828218450256
+      "batch_seconds": 0.009397582616657019,
+      "scalar_seconds": 2.2090231250040233,
+      "speedup": 235.06291086907564
     },
     "poisson": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'mu': 20.0}",
-      "batch_seconds": 0.02503183390945196,
-      "scalar_seconds": 1.8161503341980278,
-      "speedup": 72.55362674455321
+      "batch_seconds": 0.02594945812597871,
+      "scalar_seconds": 1.7918389169499278,
+      "speedup": 69.05111113499781
     },
     "binomial": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'n': 1000, 'p': 0.3}",
-      "batch_seconds": 0.026932834181934595,
-      "scalar_seconds": 1.4490783750079572,
-      "speedup": 53.80341204417089
+      "batch_seconds": 0.027331790886819363,
+      "scalar_seconds": 1.428240166977048,
+      "speedup": 52.255637872079966
     },
     "beta": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'a': 2.0, 'b': 3.0}",
-      "batch_seconds": 0.00910087488591671,
-      "scalar_seconds": 0.3810791247524321,
-      "speedup": 41.87280118993163
+      "batch_seconds": 0.009168290998786688,
+      "scalar_seconds": 0.39904020773246884,
+      "speedup": 43.52394658778577
     },
     "gamma": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'shape': 2.5, 'rate': 1.7}",
-      "batch_seconds": 0.006459333002567291,
-      "scalar_seconds": 0.36242120806127787,
-      "speedup": 56.108147376398136
+      "batch_seconds": 0.006448833271861076,
+      "scalar_seconds": 0.34309312514960766,
+      "speedup": 53.20235625359779
     },
     "chi_square": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'df': 5}",
-      "batch_seconds": 0.00811983272433281,
-      "scalar_seconds": 1.2113260407932103,
-      "speedup": 149.18115704073725
+      "batch_seconds": 0.008249333128333092,
+      "scalar_seconds": 1.215860249940306,
+      "speedup": 147.38891387042213
     },
     "noncentral_chi_square": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'df': 5, 'noncentrality': 2.3}",
-      "batch_seconds": 0.023340958170592785,
-      "scalar_seconds": 1.6998534169979393,
-      "speedup": 72.827062392819
+      "batch_seconds": 0.023585166782140732,
+      "scalar_seconds": 1.706415541935712,
+      "speedup": 72.35121793702353
     },
     "f": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'dfn': 5, 'dfd': 12}",
-      "batch_seconds": 0.0179173331707716,
-      "scalar_seconds": 1.3680294593796134,
-      "speedup": 76.35229229376996
+      "batch_seconds": 0.018140458036214113,
+      "scalar_seconds": 1.378507792018354,
+      "speedup": 75.99079302553523
     },
     "noncentral_f": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'dfn': 5, 'dfd': 12, 'noncentrality': 2.3}",
-      "batch_seconds": 0.04637804115191102,
-      "scalar_seconds": 1.4118686253204942,
-      "speedup": 30.442610128701343
+      "batch_seconds": 0.04831766616553068,
+      "scalar_seconds": 1.4852313329465687,
+      "speedup": 30.738888088227185
     }
   }
 }
