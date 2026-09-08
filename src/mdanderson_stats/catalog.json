@@ -952,7 +952,8 @@
         "tests/fixtures/beta_selection.json",
         "tests/test_beta_mixture_testing.py",
         "tests/fixtures/beta_testing.json",
-        "tests/test_schweder_output.py"
+        "tests/test_schweder_output.py",
+        "docs/multi-coverage.md"
       ]
     },
     {
@@ -1077,9 +1078,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "mdanderson_stats.stukel_log_odds and stukel_probability: stable broadcast generalized logistic link, corrected Fortran alpha1<0 branch and explicit S prediction compatibility",
+        "mdanderson_stats.predict_stukel: prediction from supplied coefficients, optional intercept and batched design matrices; fitting and inference pending"
+      ],
+      "validation": [
+        "tests/test_stukel.py",
+        "tests/fixtures/stukel.json",
+        "docs/stukel.md"
+      ]
     },
     {
       "id": 59,

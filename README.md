@@ -76,3 +76,8 @@ differences, and the MULTI features that remain pending.
 (`uv sync --extra plot` in this checkout). `write_schweder_data(fit, path)` exports
 all plot coordinates as CSV without requiring Matplotlib. See the
 [Schweder output example](docs/multiple-testing.md#schweder-plot-and-coordinate-export).
+
+STUKEL's `stukel_log_odds`, `stukel_probability`, and `predict_stukel` provide
+its generalized logistic link and prediction from supplied coefficients.
+[STUKEL fitting remains pending](docs/stukel.md).
+[The MULTI coverage audit](docs/multi-coverage.md) records its remaining I/O gaps.

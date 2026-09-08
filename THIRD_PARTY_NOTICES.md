@@ -48,3 +48,13 @@ https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MULTI/MULTI_
 The hash and reference-build provenance are recorded in `tests/fixtures/multi.json`.
 The port uses NumPy/SciPy in place of the original supporting numerical libraries;
 the original executable and numerical library sources are not redistributed.
+
+## STUKEL
+
+`stukel.py` implements the generalized logistic formulas described by Thérèse A.
+Stukel (1988), Generalized Logistic Models, JASA 83(402), 426–431,
+DOI 10.1080/01621459.1988.10478613. The MD Anderson STUKEL archive was used to
+validate numerical results and identify the S prediction branch discrepancy.
+Its README identifies dansera@odin.mda.uth.tmc.edu as the software contact.
+No explicit license statement was found in the inspected archive files. No
+original STUKEL source or supporting optimizer is redistributed by this package.

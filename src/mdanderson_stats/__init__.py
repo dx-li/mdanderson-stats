@@ -36,6 +36,7 @@ from .schweder import (
     schweder_fit,
 )
 from .schweder_output import plot_schweder, write_schweder_data
+from .stukel import predict_stukel, stukel_log_odds, stukel_probability
 
 __all__ = [
     "BetaMixture",
@@ -72,6 +73,7 @@ __all__ = [
     "nonparametric_testing",
     "order_statistic_diagnostics",
     "poisson_interval",
+    "predict_stukel",
     "plot_schweder",
     "range2",
     "rom_critical_values",
@@ -79,5 +81,7 @@ __all__ = [
     "schweder_fit",
     "select_beta_mixture",
     "sharpened_testing",
+    "stukel_log_odds",
+    "stukel_probability",
     "write_schweder_data",
 ]
