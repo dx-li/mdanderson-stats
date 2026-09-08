@@ -2,8 +2,8 @@
 
 Catalog entry 55 is partial. Fixed one- and two-sample designs under point priors are
 implemented for logistic and log-log models, with linear or centered predictors.
-Independent uniform-prior criterion averaging is also implemented. Correlated
-normal/log-normal priors, design optimization,
+Independent uniform and correlated normal/log-normal prior criterion averaging
+are also implemented. The original raw-moment prior-entry conveniences, design optimization,
 dose-point addition and original reporting workflows remain pending.
 
 ```python
@@ -173,3 +173,70 @@ quadrature constants. Further tests use an analytic uniform-intercept integral,
 point-prior reduction, allocation scaling, order convergence and Jensen's inequality
 for SD versus variance averaging. NumPy's quadrature contract is documented in
 the [leggauss reference](https://numpy.org/doc/stable/reference/generated/numpy.polynomial.legendre.leggauss.html).
+
+## Normal and log-normal priors
+
+`single_normal_criterion` uses tensor Gauss-Hermite quadrature and SINGLE's
+reciprocal aggregation: `1 / E[1 / local_criterion]`. This is a harmonic average
+of the chosen SD or variance, whereas uniform priors use arithmetic averaging.
+The choices of criterion, response model, form and two-sample comparison follow
+`single_uniform_criterion`.
+
+```python
+from mdanderson_stats import single_normal_criterion
+
+result = single_normal_criterion(
+    doses=[-1, 0, 2],
+    subjects=[20, 30, 50],
+    mean=[0.2, 0.0],
+    covariance=[[0.02, 0.01], [0.01, 0.03]],
+    lognormal=[False, True],
+    criterion="quantile_sd",
+    order=8,
+)
+print(result.value)
+```
+
+Here the intercept is normal and log(slope) is normal. `mean` and `covariance`
+always describe the **latent normal vector**, before exponentiating coordinates
+selected by the boolean `lognormal` vector. For a logged coordinate with latent
+mean m and variance v, the actual parameter mean is exp(m+v/2), and its variance
+is exp(2m+v)·(exp(v)−1). Cross-covariances are likewise specified in latent space.
+Logged parameters are positive. Negative signed log-normal priors are not defined
+by the original PARRAW routine and are not added here.
+
+SINGLE's ALNTON input conversion uses log(raw mean) and raw variance/raw mean²,
+a first-order approximation rather than exact log-normal moment matching. This
+API bypasses that conversion. Reproducing that input convention requires passing
+those approximated latent moments explicitly. Raw-moment convenience input and
+the source's design-derived prior-correlation option remain pending.
+
+The default node scaling correctly reproduces the supplied latent covariance.
+The original RECHRM divides physicists' Hermite nodes by √2, then TORAW applies
+the covariance square root; this produces covariance/4. Set `legacy_scale=True`
+to reproduce that scaling deliberately. The original constants for π and √2 are
+rounded, so comparisons allow their small numerical discrepancy. This option
+does not reintroduce CPROB's probability clipping, GEXP's exponent caps, or CRIT's
+1e-10 local-criterion floor. NumPy's weight convention is documented in the
+[hermgauss reference](https://numpy.org/doc/stable/reference/generated/numpy.polynomial.hermite.hermgauss.html).
+
+Covariance must be symmetric and positive semidefinite. Eigen-directions within
+32 machine epsilons times the largest absolute covariance entry are treated as
+zero to handle numerical rank deficiency; larger negative eigenvalues raise an
+error. Integration operates only over positive eigen-directions. Thus zero
+covariance reduces to a point prior and rank-deficient covariance avoids redundant
+tensor dimensions. The result exposes transformed parameter nodes, weights, local
+criteria, order and scaling mode. Allowed orders are 2–32 (the source tabulates
+2–8); increasing order assesses convergence but does not certify an error bound.
+Numerically invalid or singular nodes propagate errors. In particular, the
+one-sample fixed-design API still rejects a zero slope at a node. Exponentiation
+overflow or underflow raises an error instead of clipping parameters.
+
+`tools/reference_single_normal.py` compiles unchanged RECHRM and QINIX (including
+entries) and the original response/derivative routines. Its independent callback
+applies diagonal latent-prior transformations and computes the reciprocal local
+criterion. The 64 reference cases cover both models/forms, one/two samples,
+normal/log-normal priors and SD/variance criteria using original node scaling.
+PRCOMP, ALNTON, PARRAW and CRIT are not executed by this driver. Independent tests
+verify correlated normal moments, mixed normal/log-normal moments, the factor-of-four
+scaling discrepancy, rank-one and point priors, allocation scaling and convergence.

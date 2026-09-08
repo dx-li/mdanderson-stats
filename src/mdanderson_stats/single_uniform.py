@@ -75,6 +75,25 @@ def single_uniform_criterion(
             masses.append(weights / 2)
     parameters = np.stack(np.meshgrid(*axes, indexing="ij"), axis=-1).reshape(-1, count)
     probability = np.prod(np.stack(np.meshgrid(*masses, indexing="ij"), axis=-1), axis=-1).ravel()
+    local = _local_criterion(
+        doses, subjects, parameters, criterion, model, form, comparison, quantile
+    )
+    value = float(probability @ local)
+    if not np.isfinite(value):
+        raise ValueError("Prior-averaged criterion overflowed")
+    return SingleUniformCriterion(value, parameters, probability, local, int(order))
+
+
+def _local_criterion(
+    doses: ArrayLike | tuple[ArrayLike, ArrayLike],
+    subjects: ArrayLike | tuple[ArrayLike, ArrayLike],
+    parameters: FloatArray,
+    criterion: str,
+    model: str,
+    form: str,
+    comparison: str | None,
+    quantile: float,
+) -> FloatArray:
     if comparison is None:
         result = single_design_precision(
             np.asarray(doses, dtype=float),
@@ -101,7 +120,4 @@ def single_uniform_criterion(
             comparison=comparison,
         )
         local = getattr(two_sample, criterion)
-    value = float(probability @ local)
-    if not np.isfinite(value):
-        raise ValueError("Prior-averaged criterion overflowed")
-    return SingleUniformCriterion(value, parameters, probability, local, int(order))
+    return local

@@ -1,0 +1,1321 @@
+{
+  "source": "Unchanged RECHRM, QINIX (including entries), CPROB, CDPDB, MIX, GEXP; independent diagonal-prior transformation and criterion callback",
+  "source_sha256": "e28dd3bb8c51d02a667a1f12995e4f591bea7ecfb706e3160b7bcf02f565c8c2",
+  "extracted_sha256": "78340f9df1ff73cf15cc66c7a2e74f62591ae8c6ef9089fa6596cdf0e38ee338",
+  "driver_sha256": "76e3838deed8c8e7117ba2b204fab7651e86d1877b28b6ebb5717aed4ba6c366",
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "cases": [
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 0.19629119634453465
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 0.19912220392591848
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 0.3865770630646655
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 0.39934372185896594
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 0.03852465498893203
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 0.039644599834906535
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 0.1492920832902479
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 0.15931272452333983
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "sd",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.2790629236116646
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "sd",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.2811277761417057
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "sd",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.2313508596513625
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "sd",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.2369290613091521
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "variance",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.0778717987290775
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "variance",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.07902992264508674
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "variance",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.053514628029942675
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "variance",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.05612954847984774
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 0.13153035408458824
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 0.13350790853841177
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 1.6184441176645086
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 1.1043659283444165
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 0.01730009127118667
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 0.017824312620823693
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 2.593006546540817
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 1.2185345030401544
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "sd",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.6529392600409125
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "sd",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.5373546893707688
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "sd",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.19137827074180233
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "sd",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.19234485737095092
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "variance",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.425226224721245
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "variance",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.288683670461791
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "variance",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.03662355479180025
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "variance",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.03699591271304537
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 0.26052052827235145
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 0.26305211975265785
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 1.0361444412209238
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 1.0569316115228347
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 0.06786421795857486
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 0.0691897852833264
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 1.0723959484179992
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 1.1158619649699641
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "sd",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.36691238161976336
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "sd",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.3688823212662688
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "sd",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.27695247200538514
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "sd",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.2824103149292919
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "variance",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.13461758307657762
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "variance",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.13606818678593788
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "variance",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.07669347133048743
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "variance",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.07974861710627593
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 0.20492909695772568
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 0.2073731178747288
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 6.730665609811714
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 4.5537700653606095
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 0.04199566621303513
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 0.04300354917923778
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "mean": [
+        0.3,
+        1.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        false,
+        false
+      ],
+      "value": 44.835666628202105
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "mean": [
+        -1.0,
+        0.0
+      ],
+      "variance": [
+        0.001,
+        0.002
+      ],
+      "lognormal": [
+        true,
+        true
+      ],
+      "value": 20.717844932548694
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "sd",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.9822488408762405
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "sd",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.8052780701033894
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "sd",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.2958350075805547
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "sd",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.2973607614205276
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "variance",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.9622336114158799
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "variance",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.6483151065207153
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "variance",
+      "mean": [
+        0.3,
+        1.0,
+        0.5
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        false,
+        false,
+        false
+      ],
+      "value": 0.0875170600032806
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "variance",
+      "mean": [
+        -1.0,
+        0.0,
+        -0.7
+      ],
+      "variance": [
+        0.001,
+        0.002,
+        0.003
+      ],
+      "lognormal": [
+        true,
+        true,
+        true
+      ],
+      "value": 0.08842302816896608
+    }
+  ]
+}

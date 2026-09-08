@@ -133,5 +133,7 @@ logistic/log-log dose-response designs. `single_two_sample_precision` evaluates
 location or slope differences with the other parameter shared across groups.
 `single_uniform_criterion` averages these precision criteria over independent
 uniform parameter priors using batched quadrature.
+`single_normal_criterion` handles correlated normal/log-normal latent priors,
+with an explicit option to reproduce SINGLE's original covariance scaling.
 [SINGLE coverage](docs/single.md) tracks
 the remaining prior-integration and optimization workflows.
