@@ -2,8 +2,8 @@
 
 Catalog entry 27 is partial. The 32-stream generator bank and state controls are
 implemented, along with bounded uniforms, permutations, exponential, normal, gamma,
-central/noncentral chi-square, F, beta, binomial and Poisson sampling. Remaining count
-and multivariate samplers and the final archive coverage/performance audit
+central/noncentral chi-square, F, beta, binomial, Poisson and negative-binomial
+sampling. Remaining count and multivariate samplers and the final archive coverage/performance audit
 remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27)
@@ -579,5 +579,63 @@ scalar/batch agreement, quantile brackets, parameter validation, count-range
 failures and rollback. The benchmark includes 10,000 default draws at `mu=20`
 compared with repeated calls to the same Python API.
 
-Negative-binomial, multinomial and multivariate-normal sampling and
+## Negative-binomial sampling
+
+```python
+from mdanderson_stats import RandlibGenerator
+
+bank = RandlibGenerator()
+failures = bank.negative_binomial(1000, n=10, p=0.3)
+original = bank.negative_binomial(1000, n=10, p=0.3, legacy=True)
+original_c = bank.negative_binomial(1000, n=10, p=0.3, legacy=True, source="c")
+```
+
+`negative_binomial(size=1, *, n=1, p=0.5, legacy=False,
+source="fortran", max_attempts=None)` returns read-only `int64` counts of
+**failures before `n` successes**, where each trial succeeds with probability
+`p`. The mean is `n*(1-p)/p` and variance is `n*(1-p)/p**2`. This resolves the
+archived C description's ambiguous reference to the number of trials:
+the implemented gamma–Poisson mixture counts failures, not total trials.
+`n` must be a positive integer at most `2**53 - 1`; default `p` is in `(0, 1]`.
+
+Default mode uses vectorized SciPy negative-binomial quantiles with checks on
+the discrete probability bracket using the smaller tail. It consumes one
+basic uniform per output, including the `p=1` extension that always returns
+zero. Nonfinite quantiles, results outside `[0, 2**53 - 1]`, or inaccurate
+probability brackets raise `ArithmeticError` without advancing the generator.
+As with the other default samplers, the uniform generator's finite grid limits
+reachable tails.
+
+Legacy mode implements IGNNBN / RANDOM_NEGATIVE_BINOMIAL: draw a standard gamma
+with shape `float32(n)`, divide by the float32 rate `p/(1-p)`, then draw a Poisson
+count with that random mean. Both original C and Fortran use float32 arithmetic
+for the rate. Nested gamma and Poisson algorithms retain their source-specific
+rounding and consume a variable number of uniforms from the selected stream.
+The implementation reuses their validated primitives with one local state and
+one budget for the entire requested batch.
+
+Legacy `n` is at most `2147483647`; legacy `p` must remain strictly between zero
+and one after float32 conversion. A nonfinite or out-of-range Poisson mean,
+count overflow, or inherited source guard raises `ArithmeticError` and rolls
+back the entire request. Source single-precision approximations, loss of
+resolution at large parameters, and the repaired Poisson table lifetime
+(described above) remain applicable. Fortran reference builds retain local
+storage with `-fno-automatic`; the native source itself is unchanged.
+
+`max_attempts` defaults to `max(100000, 8*size)` and limits every underlying
+uniform, including rejected gamma/Poisson proposals and their normal and
+exponential subdraws. Empty batches consume no randomness. Parameter failures
+and unsuccessful batches leave generator state unchanged.
+
+`tools/reference_randlib_negative_binomial.py` records 336 native cases from
+C, Fortran 77 and Fortran 95: 6,720 exact counts and component states. Cases
+cover gamma coefficient regimes, small/large Poisson means, near-endpoint
+probabilities, streams 1 and 32, antithetic and maximum-uniform starts, and
+alternating parameters. Additional tests check moments, distribution CDFs,
+scalar/batch identity, the independent geometric inverse formula at `n=1`,
+zero counts at `p=1`, parameter limits and overflow/budget rollback. The
+benchmark measures 10,000 default draws at `n=10, p=0.3` against repeated
+scalar calls to the same Python API.
+
+Multinomial and multivariate-normal sampling and
 RANDLIB's final archive coverage/performance audit remain pending.

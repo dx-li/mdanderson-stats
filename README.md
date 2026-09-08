@@ -324,3 +324,7 @@ validation and explicit legacy rounding and integer-range limits.
 RANDLIB Poisson sampling adds vectorized quantiles, source inversion and
 modified-normal rejection, with native count/state checks and an explicit
 repair for the archived Fortran cumulative table’s lifetime.
+
+RANDLIB negative-binomial sampling adds vectorized quantiles and validated
+gamma–Poisson composition, with explicit failures-before-successes counts
+and a shared transactional budget for all nested draws.

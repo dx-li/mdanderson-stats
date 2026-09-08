@@ -423,3 +423,9 @@ Deviates From Modified Normal Distributions,” ACM Transactions on Mathematical
 Software 8(2), 163–179 (1982). Source coefficients, factorials and rejection
 rules are retained. The RANDLIB notices and ACM terms referenced above remain
 applicable; original native source and executables are not bundled.
+
+RANDLIB’s negative-binomial sampler independently expresses the IGNNBN /
+RANDOM_NEGATIVE_BINOMIAL gamma–Poisson mixture. The source cites Luc Devroye,
+Non-Uniform Random Variate Generation, Springer-Verlag, New York (1986),
+page 480. It reuses the gamma and Poisson algorithms attributed above;
+the retained RANDLIB source notices remain available.

@@ -8,63 +8,69 @@
   "results": {
     "normal": {
       "workload": "10,000 consecutive default-mode draws; default seeds; default parameters",
-      "batch_seconds": 0.0019698329269886017,
-      "scalar_seconds": 0.37835962511599064,
-      "speedup": 192.07701319848024
+      "batch_seconds": 0.0018837908282876015,
+      "scalar_seconds": 0.34272437496110797,
+      "speedup": 181.93334940092598
     },
     "exponential": {
       "workload": "10,000 consecutive default-mode draws; default seeds; default parameters",
-      "batch_seconds": 0.001726625021547079,
-      "scalar_seconds": 0.3465018752031028,
-      "speedup": 200.68160189908085
+      "batch_seconds": 0.0017242501489818096,
+      "scalar_seconds": 0.31642429204657674,
+      "speedup": 183.51414511022608
+    },
+    "negative_binomial": {
+      "workload": "10,000 consecutive default-mode draws; default seeds; {'n': 10, 'p': 0.3}",
+      "batch_seconds": 0.009400791954249144,
+      "scalar_seconds": 1.9010120001621544,
+      "speedup": 202.21828218450256
     },
     "poisson": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'mu': 20.0}",
-      "batch_seconds": 0.02520724991336465,
-      "scalar_seconds": 1.8421462909318507,
-      "speedup": 73.08001853685602
+      "batch_seconds": 0.02503183390945196,
+      "scalar_seconds": 1.8161503341980278,
+      "speedup": 72.55362674455321
     },
     "binomial": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'n': 1000, 'p': 0.3}",
-      "batch_seconds": 0.027015834115445614,
-      "scalar_seconds": 1.471943374723196,
-      "speedup": 54.484468938963836
+      "batch_seconds": 0.026932834181934595,
+      "scalar_seconds": 1.4490783750079572,
+      "speedup": 53.80341204417089
     },
     "beta": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'a': 2.0, 'b': 3.0}",
-      "batch_seconds": 0.009162834379822016,
-      "scalar_seconds": 0.4001274579204619,
-      "speedup": 43.668524534461156
+      "batch_seconds": 0.00910087488591671,
+      "scalar_seconds": 0.3810791247524321,
+      "speedup": 41.87280118993163
     },
     "gamma": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'shape': 2.5, 'rate': 1.7}",
-      "batch_seconds": 0.006485250312834978,
-      "scalar_seconds": 0.3502437500283122,
-      "speedup": 54.00620379064533
+      "batch_seconds": 0.006459333002567291,
+      "scalar_seconds": 0.36242120806127787,
+      "speedup": 56.108147376398136
     },
     "chi_square": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'df': 5}",
-      "batch_seconds": 0.008173416834324598,
-      "scalar_seconds": 1.195173874963075,
-      "speedup": 146.22695736547942
+      "batch_seconds": 0.00811983272433281,
+      "scalar_seconds": 1.2113260407932103,
+      "speedup": 149.18115704073725
     },
     "noncentral_chi_square": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'df': 5, 'noncentrality': 2.3}",
-      "batch_seconds": 0.023410040885210037,
-      "scalar_seconds": 1.673240375239402,
-      "speedup": 71.47532904551737
+      "batch_seconds": 0.023340958170592785,
+      "scalar_seconds": 1.6998534169979393,
+      "speedup": 72.827062392819
     },
     "f": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'dfn': 5, 'dfd': 12}",
-      "batch_seconds": 0.018011916894465685,
-      "scalar_seconds": 1.3338013337925076,
-      "speedup": 74.05104862560906
+      "batch_seconds": 0.0179173331707716,
+      "scalar_seconds": 1.3680294593796134,
+      "speedup": 76.35229229376996
     },
     "noncentral_f": {
       "workload": "10,000 consecutive default-mode draws; default seeds; {'dfn': 5, 'dfd': 12, 'noncentrality': 2.3}",
-      "batch_seconds": 0.04715795814990997,
-      "scalar_seconds": 1.404045583680272,
-      "speedup": 29.7732480108016
+      "batch_seconds": 0.04637804115191102,
+      "scalar_seconds": 1.4118686253204942,
+      "speedup": 30.442610128701343
     }
   }
 }
