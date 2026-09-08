@@ -379,9 +379,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "mdanderson_stats.binomial_test and poisson_test: vectorized inclusive one-sided tests, stable complementary tails and explicit ONESAMPLE cutoff compatibility",
+        "Existing binomial_interval and poisson_interval verified against ONESAMPLE confidence calculations; entry/report workflow pending"
+      ],
+      "validation": [
+        "tests/test_onesample.py",
+        "tests/fixtures/onesample.json",
+        "docs/onesample.md"
+      ]
     },
     {
       "id": 23,

@@ -77,3 +77,12 @@ the input/output conventions in `bp1ci.py` were checked against BP1CI 2.0
 The archived program and manual provide numerical validation and provenance;
 no BP1CI Fortran, binary or supporting numerical library is redistributed.
 Native reference fixtures record source/archive and executable hashes.
+
+## ONESAMPLE
+
+`onesample.py` independently expresses binomial/Poisson distribution-tail formulas
+for the archived ONESAMPLE software. The calculation module and manual were used
+for validation and identifying legacy tail cutoffs. No original source or
+supporting distribution-library code is bundled. Archive and source hashes and
+the reference-only success-status initialization patch are recorded in
+`tests/fixtures/onesample.json` and `tools/reference_onesample.py`.

@@ -96,3 +96,7 @@ ignored-token diagnostics and original input indices.
 with settings, results, diagnostics, and random-state provenance. Its
 `format_report` and `write_text_report` provide readable Markdown tables.
 [The MULTI coverage audit](docs/multi-coverage.md) records its remaining I/O gaps.
+
+ONESAMPLE's `binomial_test` and `poisson_test` return inclusive one-sided p-values,
+with explicit compatibility cutoffs. See [ONESAMPLE validation and remaining
+workflow](docs/onesample.md).

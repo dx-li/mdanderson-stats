@@ -1,0 +1,548 @@
+{
+  "archive_sha256": "4d14e6fee3e373061484805d118e5eabfa2126971efdcf2cf050d1e783102a39",
+  "source_sha256": "e492ab7cdba62a3df64171100548e36234da43a40175aa211cf58112d512c0b1",
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "notes": "Unmodified one_sample_calc_mod, compiled -O2 -std=legacy. Reference-only cdf_aux_mod patch initializes optional status outputs to zero on entry to add_to_one, check_complements, dbl_in_range, int_in_range and validate_parameters; source success branches otherwise leave them undefined. Numerical algorithms and cutoffs unchanged.",
+  "cases": [
+    {
+      "distribution": "binomial",
+      "events": 0,
+      "failures": 30,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.8,
+      "estimate": 0.0,
+      "bounds": [
+        0.0,
+        0.07388127187120655
+      ],
+      "p_less": 2.2539340290692226e-05,
+      "p_greater": 1.0
+    },
+    {
+      "distribution": "binomial",
+      "events": 1,
+      "failures": 29,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.8,
+      "estimate": 0.03333333333333333,
+      "bounds": [
+        0.003505857269584871,
+        0.1235699906752562
+      ],
+      "p_less": 0.00031233085831387824,
+      "p_greater": 0.9999774606597094
+    },
+    {
+      "distribution": "binomial",
+      "events": 12,
+      "failures": 18,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.8,
+      "estimate": 0.4,
+      "bounds": [
+        0.27733216899528745,
+        0.5334337194881015
+      ],
+      "p_less": 0.9155299396398491,
+      "p_greater": 0.15932179468792504
+    },
+    {
+      "distribution": "binomial",
+      "events": 30,
+      "failures": 0,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.8,
+      "estimate": 1.0,
+      "bounds": [
+        0.9261187281287935,
+        1.0
+      ],
+      "p_less": 1.0,
+      "p_greater": 2.058911320946486e-16
+    },
+    {
+      "distribution": "binomial",
+      "events": 1,
+      "failures": 29,
+      "null": 1e-12,
+      "exposure": 1,
+      "confidence": 0.8,
+      "estimate": 0.03333333333333333,
+      "bounds": [
+        0.003505857269584871,
+        0.1235699906752562
+      ],
+      "p_less": 1.0,
+      "p_greater": 0.0
+    },
+    {
+      "distribution": "binomial",
+      "events": 29,
+      "failures": 1,
+      "null": 0.999999999999,
+      "exposure": 1,
+      "confidence": 0.8,
+      "estimate": 0.9666666666666667,
+      "bounds": [
+        0.8764300093247438,
+        0.9964941427304151
+      ],
+      "p_less": 0.0,
+      "p_greater": 1.0
+    },
+    {
+      "distribution": "poisson",
+      "events": 0,
+      "failures": 0,
+      "null": 2,
+      "exposure": 1,
+      "confidence": 0.8,
+      "estimate": 0.0,
+      "bounds": [
+        0.0,
+        2.302585092994046
+      ],
+      "p_less": 0.1353352832366127,
+      "p_greater": 1.0
+    },
+    {
+      "distribution": "poisson",
+      "events": 1,
+      "failures": 0,
+      "null": 2,
+      "exposure": 1,
+      "confidence": 0.8,
+      "estimate": 1.0,
+      "bounds": [
+        0.1053605156578263,
+        3.8897201698674295
+      ],
+      "p_less": 0.4060058497098381,
+      "p_greater": 0.8646647167633873
+    },
+    {
+      "distribution": "poisson",
+      "events": 10,
+      "failures": 0,
+      "null": 2,
+      "exposure": 5,
+      "confidence": 0.8,
+      "estimate": 2.0,
+      "bounds": [
+        1.2442609210450062,
+        3.0813282343953032
+      ],
+      "p_less": 0.5830397501929849,
+      "p_greater": 0.5420702855281477
+    },
+    {
+      "distribution": "poisson",
+      "events": 10000,
+      "failures": 0,
+      "null": 2,
+      "exposure": 5000,
+      "confidence": 0.8,
+      "estimate": 2.0,
+      "bounds": [
+        1.9744121750099473,
+        2.0258747562734434
+      ],
+      "p_less": 0.5026595812190082,
+      "p_greater": 0.5013298083399552
+    },
+    {
+      "distribution": "poisson",
+      "events": 1,
+      "failures": 0,
+      "null": 1e-10,
+      "exposure": 1,
+      "confidence": 0.8,
+      "estimate": 1.0,
+      "bounds": [
+        0.1053605156578263,
+        3.8897201698674295
+      ],
+      "p_less": 1.0,
+      "p_greater": 0.0
+    },
+    {
+      "distribution": "poisson",
+      "events": 10,
+      "failures": 0,
+      "null": 1,
+      "exposure": 100,
+      "confidence": 0.8,
+      "estimate": 0.1,
+      "bounds": [
+        0.06221304605225031,
+        0.15406641171976518
+      ],
+      "p_less": 1.1376879516953014e-30,
+      "p_greater": 1.0
+    },
+    {
+      "distribution": "binomial",
+      "events": 0,
+      "failures": 30,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.95,
+      "estimate": 0.0,
+      "bounds": [
+        0.0,
+        0.11570330822202782
+      ],
+      "p_less": 2.2539340290692226e-05,
+      "p_greater": 1.0
+    },
+    {
+      "distribution": "binomial",
+      "events": 1,
+      "failures": 29,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.95,
+      "estimate": 0.03333333333333333,
+      "bounds": [
+        0.0008435709266304792,
+        0.1721694556334127
+      ],
+      "p_less": 0.00031233085831387824,
+      "p_greater": 0.9999774606597094
+    },
+    {
+      "distribution": "binomial",
+      "events": 12,
+      "failures": 18,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.95,
+      "estimate": 0.4,
+      "bounds": [
+        0.22655764882859358,
+        0.5939650699481813
+      ],
+      "p_less": 0.9155299396398491,
+      "p_greater": 0.15932179468792504
+    },
+    {
+      "distribution": "binomial",
+      "events": 30,
+      "failures": 0,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.95,
+      "estimate": 1.0,
+      "bounds": [
+        0.8842966917779722,
+        1.0
+      ],
+      "p_less": 1.0,
+      "p_greater": 2.058911320946486e-16
+    },
+    {
+      "distribution": "binomial",
+      "events": 1,
+      "failures": 29,
+      "null": 1e-12,
+      "exposure": 1,
+      "confidence": 0.95,
+      "estimate": 0.03333333333333333,
+      "bounds": [
+        0.0008435709266304792,
+        0.1721694556334127
+      ],
+      "p_less": 1.0,
+      "p_greater": 0.0
+    },
+    {
+      "distribution": "binomial",
+      "events": 29,
+      "failures": 1,
+      "null": 0.999999999999,
+      "exposure": 1,
+      "confidence": 0.95,
+      "estimate": 0.9666666666666667,
+      "bounds": [
+        0.8278305443665873,
+        0.9991564290733695
+      ],
+      "p_less": 0.0,
+      "p_greater": 1.0
+    },
+    {
+      "distribution": "poisson",
+      "events": 0,
+      "failures": 0,
+      "null": 2,
+      "exposure": 1,
+      "confidence": 0.95,
+      "estimate": 0.0,
+      "bounds": [
+        0.0,
+        3.6888794541139354
+      ],
+      "p_less": 0.1353352832366127,
+      "p_greater": 1.0
+    },
+    {
+      "distribution": "poisson",
+      "events": 1,
+      "failures": 0,
+      "null": 2,
+      "exposure": 1,
+      "confidence": 0.95,
+      "estimate": 1.0,
+      "bounds": [
+        0.025317807984289894,
+        5.571643390938897
+      ],
+      "p_less": 0.4060058497098381,
+      "p_greater": 0.8646647167633873
+    },
+    {
+      "distribution": "poisson",
+      "events": 10,
+      "failures": 0,
+      "null": 2,
+      "exposure": 5,
+      "confidence": 0.95,
+      "estimate": 2.0,
+      "bounds": [
+        0.9590777392264853,
+        3.678071208403555
+      ],
+      "p_less": 0.5830397501929849,
+      "p_greater": 0.5420702855281477
+    },
+    {
+      "distribution": "poisson",
+      "events": 10000,
+      "failures": 0,
+      "null": 2,
+      "exposure": 5000,
+      "confidence": 0.95,
+      "estimate": 2.0,
+      "bounds": [
+        1.9609904934520364,
+        2.0395903249322944
+      ],
+      "p_less": 0.5026595812190082,
+      "p_greater": 0.5013298083399552
+    },
+    {
+      "distribution": "poisson",
+      "events": 1,
+      "failures": 0,
+      "null": 1e-10,
+      "exposure": 1,
+      "confidence": 0.95,
+      "estimate": 1.0,
+      "bounds": [
+        0.025317807984289894,
+        5.571643390938897
+      ],
+      "p_less": 1.0,
+      "p_greater": 0.0
+    },
+    {
+      "distribution": "poisson",
+      "events": 10,
+      "failures": 0,
+      "null": 1,
+      "exposure": 100,
+      "confidence": 0.95,
+      "estimate": 0.1,
+      "bounds": [
+        0.047953886961324264,
+        0.18390356042017775
+      ],
+      "p_less": 1.1376879516953014e-30,
+      "p_greater": 1.0
+    },
+    {
+      "distribution": "binomial",
+      "events": 0,
+      "failures": 30,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.99,
+      "estimate": 0.0,
+      "bounds": [
+        0.0,
+        0.16189390280673963
+      ],
+      "p_less": 2.2539340290692226e-05,
+      "p_greater": 1.0
+    },
+    {
+      "distribution": "binomial",
+      "events": 1,
+      "failures": 29,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.99,
+      "estimate": 0.03333333333333333,
+      "bounds": [
+        0.00016707076957579584,
+        0.22275106502443381
+      ],
+      "p_less": 0.00031233085831387824,
+      "p_greater": 0.9999774606597094
+    },
+    {
+      "distribution": "binomial",
+      "events": 12,
+      "failures": 18,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.99,
+      "estimate": 0.4,
+      "bounds": [
+        0.18502814039625962,
+        0.6469808261123368
+      ],
+      "p_less": 0.9155299396398491,
+      "p_greater": 0.15932179468792504
+    },
+    {
+      "distribution": "binomial",
+      "events": 30,
+      "failures": 0,
+      "null": 0.3,
+      "exposure": 1,
+      "confidence": 0.99,
+      "estimate": 1.0,
+      "bounds": [
+        0.8381060971932603,
+        1.0
+      ],
+      "p_less": 1.0,
+      "p_greater": 2.058911320946486e-16
+    },
+    {
+      "distribution": "binomial",
+      "events": 1,
+      "failures": 29,
+      "null": 1e-12,
+      "exposure": 1,
+      "confidence": 0.99,
+      "estimate": 0.03333333333333333,
+      "bounds": [
+        0.00016707076957579584,
+        0.22275106502443381
+      ],
+      "p_less": 1.0,
+      "p_greater": 0.0
+    },
+    {
+      "distribution": "binomial",
+      "events": 29,
+      "failures": 1,
+      "null": 0.999999999999,
+      "exposure": 1,
+      "confidence": 0.99,
+      "estimate": 0.9666666666666667,
+      "bounds": [
+        0.7772489349755662,
+        0.9998329292304242
+      ],
+      "p_less": 0.0,
+      "p_greater": 1.0
+    },
+    {
+      "distribution": "poisson",
+      "events": 0,
+      "failures": 0,
+      "null": 2,
+      "exposure": 1,
+      "confidence": 0.99,
+      "estimate": 0.0,
+      "bounds": [
+        0.0,
+        5.298317366548035
+      ],
+      "p_less": 0.1353352832366127,
+      "p_greater": 1.0
+    },
+    {
+      "distribution": "poisson",
+      "events": 1,
+      "failures": 0,
+      "null": 2,
+      "exposure": 1,
+      "confidence": 0.99,
+      "estimate": 1.0,
+      "bounds": [
+        0.005012541823544285,
+        7.430129500280121
+      ],
+      "p_less": 0.4060058497098381,
+      "p_greater": 0.8646647167633873
+    },
+    {
+      "distribution": "poisson",
+      "events": 10,
+      "failures": 0,
+      "null": 2,
+      "exposure": 5,
+      "confidence": 0.99,
+      "estimate": 2.0,
+      "bounds": [
+        0.7433844262934236,
+        4.279565499930854
+      ],
+      "p_less": 0.5830397501929849,
+      "p_greater": 0.5420702855281477
+    },
+    {
+      "distribution": "poisson",
+      "events": 10000,
+      "failures": 0,
+      "null": 2,
+      "exposure": 5000,
+      "confidence": 0.99,
+      "estimate": 2.0,
+      "bounds": [
+        1.948859121914591,
+        2.052094765374724
+      ],
+      "p_less": 0.5026595812190082,
+      "p_greater": 0.5013298083399552
+    },
+    {
+      "distribution": "poisson",
+      "events": 1,
+      "failures": 0,
+      "null": 1e-10,
+      "exposure": 1,
+      "confidence": 0.99,
+      "estimate": 1.0,
+      "bounds": [
+        0.005012541823544285,
+        7.430129500280121
+      ],
+      "p_less": 1.0,
+      "p_greater": 0.0
+    },
+    {
+      "distribution": "poisson",
+      "events": 10,
+      "failures": 0,
+      "null": 1,
+      "exposure": 100,
+      "confidence": 0.99,
+      "estimate": 0.1,
+      "bounds": [
+        0.03716922131467118,
+        0.2139782749965427
+      ],
+      "p_less": 1.1376879516953014e-30,
+      "p_greater": 1.0
+    }
+  ]
+}

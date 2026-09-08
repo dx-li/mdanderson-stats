@@ -30,6 +30,7 @@ from .multiplicity import (
 from .nonparametric import NonparametricFit, NonparametricFitError, nonparametric_pvalues
 from .nonparametric_testing import NonparametricTestingResult, nonparametric_testing
 from .numerics import invert_monotone, normal_tails
+from .onesample import OneSampleTest, binomial_test, poisson_test
 from .pvalue_models import (
     OrderStatisticDiagnostics,
     clustered_pvalues,
@@ -98,6 +99,9 @@ __all__ = [
     "schweder_fit",
     "select_beta_mixture",
     "sharpened_testing",
+    "OneSampleTest",
+    "binomial_test",
+    "poisson_test",
     "BP1CIResult",
     "bp1ci",
     "bp1ci_binomial_interval",
