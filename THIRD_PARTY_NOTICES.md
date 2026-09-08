@@ -314,3 +314,7 @@ replace the source's forced approximation; the same CTA notice applies.
 `cta_kappa.py` independently implements CTA KAPPA, retaining source variance
 indices through an explicit legacy option. Default variances use the multinomial
 delta method; source provenance and corrections are documented in `docs/cta.md`.
+
+`cta_diagnostic.py` independently implements SENSPEC probabilities. Probability
+standard errors are the default; the source count-standard-deviation formula is
+available explicitly. The retained CTA notice applies.

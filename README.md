@@ -236,3 +236,6 @@ decomposition, with explicit handling of pairs without discordant observations.
 
 `cohen_kappa` adds CTA agreement coefficients and variances, with corrected
 multinomial calculations and an explicit legacy-formula option.
+
+`diagnostic_accuracy` adds CTA sensitivity, specificity and predictive values
+with explicit table orientation and probability standard errors.

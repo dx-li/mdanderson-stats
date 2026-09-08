@@ -2,8 +2,9 @@
 
 Catalog entry 30 is partial. CHISQT expected counts, percentages, Pearson,
 Yates and source-specific Cochran statistics, the McNemar decomposition, and
-Cohen kappa with variances are implemented. Fisher probabilities, sensitivity/specificity,
-relative odds, binomial comparison, reports and interactive study orchestration
+Cohen kappa with variances, sensitivity/specificity and predictive values are
+implemented. Fisher probabilities, relative odds, binomial comparison, reports
+and interactive study orchestration
 remain pending.
 
 The [official catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/30)
@@ -186,3 +187,55 @@ Other tests cover transpose symmetry, sample-size scaling, batches, perfect and
 undefined agreement, input immutability and extremely rare agreeing categories.
 The original routine writes marginal totals into its input workspace; Python
 returns new proportions and leaves caller data intact.
+
+
+## Diagnostic accuracy and predictive values
+
+```python
+from mdanderson_stats import diagnostic_accuracy
+
+fit = diagnostic_accuracy([[80, 10], [20, 90]], standard="columns", positive_index=0)
+print(fit.sensitivity, fit.specificity)
+print(fit.positive_predictive_value, fit.negative_predictive_value)
+print(fit.standard_errors, fit.denominators)
+```
+
+`diagnostic_accuracy` implements SENSPEC for final 2x2 table axes, with optional
+leading batch dimensions. `standard="columns"` means columns are the reference
+classification and rows are the test; `standard="rows"` reverses these roles.
+`positive_index` is zero or one and identifies the positive class on both axes.
+These explicit options replace the source's two prompts; Python indices are
+zero-based. Frequencies may be fractional, as in the source.
+
+The four probabilities are sensitivity TP/(TP+FN), specificity TN/(TN+FP),
+positive predictive value TP/(TP+FP), and negative predictive value TN/(TN+FN).
+`standard_errors` and `denominators` have a final axis in that same order.
+Default standard errors are conditional binomial probability errors
+sqrt(p*(1-p)/n). They describe each conditional proportion, not uncertainty from
+estimated prevalence or other sampling designs.
+
+`legacy=True` preserves the source's sqrt(n*p*(1-p)), which is a count standard
+deviation, despite being labeled “Standard Error” beside probabilities in its
+report. Thus the legacy output is n times the default probability standard error.
+It is not used as the default. Complementary probabilities are evaluated from the
+opposite cells rather than 1-p, preserving rare errors when p rounds to one;
+square-root factors also avoid unnecessary variance-product overflow. Legacy
+mode preserves the mathematical formula, not float32 rounding artifacts.
+
+A zero conditioning margin gives NaN for only that probability and error. With
+all counts zero, all four probabilities/errors are NaN and denominators are zero.
+Nonnegative finite data are required and overflowing margins are rejected.
+Results are read-only and caller arrays are not mutated. Changing the designated
+positive class swaps sensitivity/specificity and PPV/NPV; transposing the table
+while swapping the standard axis leaves the results unchanged.
+
+Sixteen unchanged native SENSPEC runs cover both standard axes and both positive
+indices across ordinary, fractional and perfect-classification tables. Fixtures
+in `tests/fixtures/cta_diagnostic.json` are reproducible with
+`tools/reference_cta_diagnostic.py`. Sensitivity/specificity and their source
+errors are captured from routine outputs; predictive values/errors are read from
+the original five-decimal report. Tests allow 5.1e-6 absolute difference for this
+report precision. Independent checks cover conditional binomial formulas,
+transpose/class reversal, batch sample-size scaling, local undefined margins,
+rare-error precision, immutability and invalid arguments. Remaining CTA workflows
+are listed at the top of this document.
