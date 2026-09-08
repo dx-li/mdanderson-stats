@@ -227,3 +227,6 @@ follow-up with sample-standardized survival and study-end censoring.
 
 EXPSURV linked matrices now support point clicks and continuous brushing: B
 toggles mode, +/- resizes the brush, Shift adds selections and Escape clears.
+
+`contingency_chi_square` starts [CTA](docs/cta.md) with batched contingency-table
+statistics, native Fortran comparisons and explicit correction conventions.

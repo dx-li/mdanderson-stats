@@ -641,9 +641,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "contingency_chi_square: batched CHISQT expected counts, percentages, Pearson, default/source Yates, source Cochran and small-cell diagnostics"
+      ],
+      "validation": [
+        "tests/test_cta.py",
+        "tests/fixtures/cta_chisqt.json",
+        "docs/cta.md"
+      ]
     },
     {
       "id": 31,

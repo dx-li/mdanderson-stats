@@ -296,3 +296,13 @@ GEN-EXPO-EXAMPLE distributions using NumPy random streams.
 `generate_exploratory_data` independently implements GEN-DATA. Its sample-SD
 convention was also checked against XLISP-STAT stats.lsp at revision
 f1bea6053df658ee48612bf1f63c35de99e2c649; reference runtime code is not bundled.
+
+## CTA
+
+`cta.py` independently implements the CHISQT formulas in the CTA archive,
+whose Fortran source is dated February 2, 1998. Original source and executables
+are not bundled. [The retained LEGALITIES notice](notices/mdanderson-cta-LEGALITIES.txt)
+allows use and redistribution subject to its terms and requires permission for
+incorporation of its code into a commercial package sold to others. This Python
+implementation is explicitly independent; no broader license is asserted here.
+Source provenance and native-reference validation are documented in `docs/cta.md`.

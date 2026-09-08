@@ -1,0 +1,58 @@
+                                 D. LEGALITIES
+     
+                                 Individual Use
+     
+     We  want our  computer programs  to   be as widely used  as  possible,
+     consequently  unrestricted use      of  them within   a   computer  is
+     permissible.   Use  within  commercial    enterprises  for  commercial
+     purposes  is  explicitly   allowed  as  is    academic,  research, and
+     government or any other use.
+     
+     Copies of any   form of  the   code (source  or  executable)  and  the
+     documentation can  be made and   redistributed  freely.  You may  give
+     copies  to students, coworkers, friends,  and  enemies.  We do require
+     that   the  copyright   and  LEGALITIES  section   of   the code   and
+     documentation be preserved in  such copies.
+     
+     Modifications   and improvements to the  code  can similarly be freely
+     copied and  distributed.  Modified code be clearly   marked as such so
+     that we are not  requested to fix it.   We would appreciate a copy  of
+     any improvements   for   incorporation into  later   versions  of  our
+     programs.
+     
+     Inclusion of  our code in   software archives and its distribution  as
+     freeware is encouraged.
+     
+                     Incorporation into Commercial Packages
+     
+     Incorporation of our code into a commercial package  that will be sold
+     requires   written permission  from  an administrative  officer of the
+     Department of Biomathematics.   Our  current policy is to  grant  such
+     permission without payment providing:
+     
+     (1)  We are informed  of and approve  the nature of  the product being
+     developed or prepared for   distribution.  
+     
+     (2) Appropriate  acknowledgment    of  our   code   is   made   in the
+     documentation accompanying the product.
+     
+                                  NO WARRANTY
+     
+     WE PROVIDE ABSOLUTELY  NO WARRANTY  OF ANY  KIND  EITHER  EXPRESSED OR
+     IMPLIED,  INCLUDING BUT   NOT LIMITED TO,  THE  IMPLIED  WARRANTIES OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK
+     AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS  WITH YOU.  SHOULD
+     THIS PROGRAM PROVE  DEFECTIVE, YOU ASSUME  THE COST  OF  ALL NECESSARY
+     SERVICING, REPAIR OR CORRECTION.
+     
+     IN NO  EVENT  SHALL THE UNIVERSITY  OF TEXAS OR  ANY  OF ITS COMPONENT
+     INSTITUTIONS INCLUDING M. D.   ANDERSON HOSPITAL BE LIABLE  TO YOU FOR
+     DAMAGES, INCLUDING ANY  LOST PROFITS, LOST MONIES,   OR OTHER SPECIAL,
+     INCIDENTAL   OR  CONSEQUENTIAL DAMAGES   ARISING   OUT  OF  THE USE OR
+     INABILITY TO USE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA OR
+     ITS ANALYSIS BEING  RENDERED INACCURATE OR  LOSSES SUSTAINED  BY THIRD
+     PARTIES) THE PROGRAM.
+     
+     (Above NO WARRANTY modified from the GNU NO WARRANTY statement.)
+
+
