@@ -32,6 +32,26 @@ tails directly; the implementation avoids subtracting a nearly-one CDF to recove
 a small tail. Boundary cases are explicit and produce valid probabilities at null
 probability 0/1 or null mean zero.
 
+## Extreme binomial tails
+
+SciPy's Boost incomplete-beta backend can lose relative accuracy or return zero
+prematurely for extremely small binomial tails. The package now reevaluates tails
+below 1e-250 with SciPy's independent Cephes `bdtr`/`bdtrc` routines when trials
+fit a signed 32-bit integer, for greater tails at p<=0.5 and less tails at p>=0.5.
+The opposite orientations retain the original evaluation: Cephes would form 1-p
+and can lose precision amplified by large trial counts. The ordinary vectorized
+path and larger-count domain remain available; this fallback makes no additional accuracy guarantee beyond the
+Cephes count limit. Legacy forced-zero cutoffs are applied afterwards.
+
+For example, P(Binomial(200,0.02)>=190) is about 2.881774153016122e-307, whereas
+the local SciPy 1.18.1 incomplete-beta call returned about 2.218453989e-307.
+At 191 events it returned zero for a representable probability near 3.0788e-310.
+Regression tests sum exact integer binomial coefficients and probabilities using
+100-digit Decimal arithmetic, covering both tails, broadcasting, true underflow,
+subnormal results, compatibility cutoffs and the fallback's integer boundary.
+Subnormal comparisons allow two units of the smallest representable float because
+relative accuracy is limited by their spacing.
+
 ## Original cutoffs and validation
 
 Default legacy_cutoffs=False evaluates the mathematical tails. True reproduces

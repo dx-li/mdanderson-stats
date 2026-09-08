@@ -93,8 +93,10 @@ broadcasting, unreachable observations, file output and validation are tested.
 A 100-digit Decimal mass sum independently verifies the representable tail
 P(Binomial(200,0.02)>=190) = approximately 2.881774153016122e-307. In the local
 SciPy 1.18.1 build, the incomplete-beta call used by the separate `binomial_test`
-API returns about 2.218453989e-307 for this extreme case. That pre-existing
-limitation is not used as a reference for this test and is not fixed by this port.
+API originally returned about 2.218453989e-307 for this extreme case. A subsequent
+fix in `binomial_test` uses the independent Cephes implementation for extreme
+tails within its integer domain; see [ONESAMPLE numerical handling](onesample.md).
+This KSB1CI test continues to use the independent Decimal reference.
 
 A local Python 3.13 / NumPy 2.5.3 check evaluated 5,000 probabilities from 0.001 to
 0.999 for the example design at stage 3, count 3: one vector call took 0.0075 s

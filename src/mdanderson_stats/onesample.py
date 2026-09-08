@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 from numpy.typing import ArrayLike
-from scipy.special import betainc, betaincc, gammainc, gammaincc
+from scipy.special import bdtr, bdtrc, betainc, betaincc, gammainc, gammaincc
 
 from ._validation import FloatArray, count, finite
 
@@ -46,6 +46,18 @@ def binomial_test(
     positive, below = k > 0, k < n
     greater[positive] = betainc(k[positive], n[positive] - k[positive] + 1, p[positive])
     less[below] = betaincc(k[below] + 1, n[below] - k[below], p[below])
+    # Boost's incomplete beta can lose accuracy before a tiny tail underflows.
+    # Cephes evaluates these cases independently, but its C-int n parameter
+    # must not receive the larger counts accepted by this public API.
+    cephes_domain = n <= np.iinfo(np.int32).max
+    # For the opposite orientations Cephes forms 1-p; at small p that
+    # subtraction can lose precision amplified by a large number of trials.
+    tiny_greater = positive & cephes_domain & (p <= 0.5) & (greater < 1e-250)
+    tiny_less = below & cephes_domain & (p >= 0.5) & (less < 1e-250)
+    greater[tiny_greater] = bdtrc(
+        k[tiny_greater] - 1, n[tiny_greater].astype(np.int64), p[tiny_greater]
+    )
+    less[tiny_less] = bdtr(k[tiny_less], n[tiny_less].astype(np.int64), p[tiny_less])
     if legacy_cutoffs:
         greater[positive & (p <= 1e-10)] = 0
         less[below & (p >= 1 - 1e-10)] = 0
