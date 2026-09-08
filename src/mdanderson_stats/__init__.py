@@ -37,6 +37,7 @@ from .schweder import (
 )
 from .schweder_output import plot_schweder, write_schweder_data
 from .stukel import predict_stukel, stukel_log_odds, stukel_probability
+from .stukel_objective import StukelObjective, stukel_objective
 
 __all__ = [
     "BetaMixture",
@@ -55,6 +56,7 @@ __all__ = [
     "SchwederBootstrap",
     "SchwederFit",
     "SchwederFitError",
+    "StukelObjective",
     "beta_mixture_start",
     "beta_mixture_bootstrap",
     "beta_mixture_testing",
@@ -82,6 +84,7 @@ __all__ = [
     "select_beta_mixture",
     "sharpened_testing",
     "stukel_log_odds",
+    "stukel_objective",
     "stukel_probability",
     "write_schweder_data",
 ]

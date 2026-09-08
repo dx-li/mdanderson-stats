@@ -51,7 +51,7 @@ the original executable and numerical library sources are not redistributed.
 
 ## STUKEL
 
-`stukel.py` implements the generalized logistic formulas described by Thérèse A.
+`stukel.py` and `stukel_objective.py` implement the generalized logistic formulas described by Thérèse A.
 Stukel (1988), Generalized Logistic Models, JASA 83(402), 426–431,
 DOI 10.1080/01621459.1988.10478613. The MD Anderson STUKEL archive was used to
 validate numerical results and identify the S prediction branch discrepancy.
