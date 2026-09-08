@@ -51,6 +51,29 @@ def build() -> Path:
     s_cdfbet = directory / "s-cdfbet.f"
     s_cdfbet.write_text(s_source[start : start + end_match.end()] + "\n")
     nonparametric_sources = []
+    # Preserve the original desktop decision loop, replacing only its UI shell.
+    desktop1 = (SOURCE / "multi1.f").read_text()
+    block = desktop1[desktop1.index("      SUBROUTINE BMPVPB(") :]
+    loop = block[block.index("      DO 10 I=1,N") : block.index(" 10   CONTINUE") + 14]
+    interactive = desktop1[desktop1.index("      SUBROUTINE BMURPB(") :]
+    other = interactive[
+        interactive.index("      DO 40 I=1,NPV") : interactive.index(" 40   CONTINUE") + 14
+    ]
+    other = other.replace("LNPV", "LNX").replace("LNOMPV", "LNOMX")
+    other = other.replace("40", "10").replace("NPV", "N")
+    if loop != other:
+        raise ValueError("Desktop beta decision loops differ; review before extracting")
+    decision = directory / "trace-bmtest.f"
+    decision.write_text(
+        "      SUBROUTINE TRACE_BMTEST(LNX,LNOMX,N,K,P0,P,R,S,ALPHA,\n"
+        "     +     PROB,QREJ)\n"
+        "      INTEGER N,K,I\n"
+        "      DOUBLE PRECISION LNX(*),LNOMX(*),P0,P(*),R(*),S(*),\n"
+        "     +     ALPHA,PROB(*),MIXBET\n"
+        "      LOGICAL QREJ(*)\n"
+        "      EXTERNAL MIXBET\n" + loop + "\n      END\n"
+    )
+    nonparametric_sources.append(decision)
     desktop = (SOURCE / "multi4.f").read_text()
     start = desktop.index("      SUBROUTINE SMOOTH(")
     end_match = re.search(r"^      END\s*$", desktop[start:], flags=re.MULTILINE)
@@ -185,7 +208,7 @@ def build() -> Path:
       write(*,'(3es26.17,3i8)') p(i),w(i),q(i),merge(1,0,rejected(i)),lo,points
     end do
     stop
-  case(17,18,19,20)
+  case(17,18,19,20,21)
     read(*,*) k,p0
     allocate(mp(k+1),ar(k+1),br(k+1),phi1(k+1),phi2(k+1))
     if (k > 0) then
@@ -194,6 +217,13 @@ def build() -> Path:
       read(*,*) br(:k)
     end if
     call initln(x,p,q,n)
+    if (mode == 21) then
+      call trace_bmtest(p,q,n,k,p0,mp,ar,br,alpha,w,rejected)
+      do i=1,n
+        write(*,'(es27.17e3,i3)') w(i),merge(1,0,rejected(i))
+      end do
+      stop
+    end if
     status=0
     if (mode == 18) then
       k=k+1

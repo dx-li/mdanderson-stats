@@ -928,7 +928,8 @@
         "mdanderson_stats.fit_beta_mixture_em: EMBETA log-moment EM updates, positive Newton shape solves, source convergence distance and explicit fit failures",
         "mdanderson_stats.fit_beta_mixture_ml: direct constrained MLBETA likelihood with analytic gradients and L-BFGS-B, original shape/weight domain, explicit failures; solver paths differ from original",
         "mdanderson_stats.select_beta_mixture: S betamix sequential STBETA fits, data/lglk/pcvm stopping rules, candidate history and explicit failure/limit status",
-        "mdanderson_stats.beta_mixture_bootstrap: SIMCVM fixed-component parametric refitting, strict empirical CVM tail, bounded failed-fit retries; NumPy draws replace original RNG/inverse CDF"
+        "mdanderson_stats.beta_mixture_bootstrap: SIMCVM fixed-component parametric refitting, strict empirical CVM tail, bounded failed-fit retries; NumPy draws replace original RNG/inverse CDF",
+        "mdanderson_stats.beta_mixture_testing: desktop BMPVPB/BMURPB capped prefix reciprocal-density scores and inclusive rejection decisions, independent batched families, rank/input sequence and explicit endpoint conventions"
       ],
       "validation": [
         "tests/test_multiplicity.py",
@@ -945,7 +946,9 @@
         "docs/beta-mixtures.md",
         "tests/test_beta_mixture_ml.py",
         "tests/test_beta_mixture_selection.py",
-        "tests/fixtures/beta_selection.json"
+        "tests/fixtures/beta_selection.json",
+        "tests/test_beta_mixture_testing.py",
+        "tests/fixtures/beta_testing.json"
       ]
     },
     {

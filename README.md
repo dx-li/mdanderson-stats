@@ -65,5 +65,7 @@ initialization, EM fitting, and direct constrained likelihood fitting.
 See [beta mixtures](docs/beta-mixtures.md) for endpoint conventions, validation,
 and model-selection semantics. `select_beta_mixture` implements the three S
 stopping rules; `beta_mixture_bootstrap` refits simulated samples for CVM checks.
+`beta_mixture_testing` returns the desktop reciprocal-density scores and decisions,
+with explicit rank-order or entered-order processing.
 See [multiple testing](docs/multiple-testing.md) for examples, historical naming
 differences, and the MULTI features that remain pending.

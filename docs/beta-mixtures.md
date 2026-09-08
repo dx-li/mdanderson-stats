@@ -2,7 +2,8 @@
 
 Implemented: the uniform-plus-beta model, density/CDF evaluation, posterior null
 probabilities, STBETA initialization, EM/direct likelihood fitting, sequential
-component selection, and simulation-based goodness-of-fit checks.
+component selection, simulation-based goodness-of-fit checks, and desktop
+reciprocal-density rejection decisions.
 MULTI remains **partial**: remaining desktop and plotting/reporting workflows
 still require scope review, implementation, and validation.
 
@@ -42,6 +43,47 @@ as batches. `cramer_von_mises` sorts each family on that axis and returns CALCVM
 This is the usual Cramér–von Mises W-squared statistic **divided by n**. It is a
 statistic, not a goodness-of-fit p-value. Fitting parameters changes its null
 distribution and requires appropriate calibration.
+
+## Desktop rejection scores
+
+```python
+from mdanderson_stats import beta_mixture_testing
+
+result = beta_mixture_testing(pvalues, model, alpha=0.05)
+print(result.scores, result.reject)
+```
+
+The desktop BMPVPB/BMURPB routines differ from S BPVAL. They compute
+`min(1, prefix_max(1 / density))`, without multiplying by the null weight.
+These are historical diagnostic scores, **not** posterior null probabilities
+or calibrated multiple-testing adjusted p-values. The desktop table's title
+calls them null probabilities, but its numerical code implements the reciprocal.
+Use `model.null_posterior` for the model's conditional null probabilities.
+
+`sequence="rank"` (default) processes ascending p-values as BMPVPB does.
+`sequence="input"` preserves entered order as BMURPB does, including its
+order-dependent running maximum. In both modes the returned `scores`, `reject`,
+and `log_density` retain input order; `order` contains zero-based indices of
+the sequence used. Leading dimensions are independent families, processed
+along the last axis. Ties use a stable sort.
+
+A hypothesis is rejected when its score is **less than or equal to** alpha.
+The numerical source includes equality despite a comment saying strictly less.
+A capped running maximum makes the source's additional stop-after-first-retain
+condition redundant. Alpha may range from zero to one, inclusive.
+
+Reciprocal capping is performed in log space. With mathematical endpoint limits,
+zero density yields score one and infinite density yields score zero before the
+running maximum. `legacy_endpoints=True` requests archived INITLN rounding,
+which may change endpoint decisions at alpha zero.
+
+`tools/reference_beta_testing.py` records 90 native cases in
+`tests/fixtures/beta_testing.json`: five models, three input families, both
+sequence modes, and three thresholds. The native harness extracts the unchanged
+BMPVPB numerical loop and verifies it equals BMURPB after local variable/label
+renaming; only the interactive/report shell is replaced. Tests compare scores
+and decisions and independently check polynomial densities, posterior-versus-score
+semantics, nonmonotone densities, threshold equality, batching, and endpoint limits.
 
 ## Endpoints and arithmetic
 

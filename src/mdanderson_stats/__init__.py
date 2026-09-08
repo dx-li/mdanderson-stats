@@ -10,6 +10,7 @@ from .beta_mixture_fit import (
 )
 from .beta_mixture_ml import fit_beta_mixture_ml
 from .beta_mixture_selection import BetaMixtureSelection, select_beta_mixture
+from .beta_mixture_testing import BetaMixtureTestingResult, beta_mixture_testing
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .intervals import binomial_interval, bp1ci_poisson_interval, poisson_interval
 from .multiplicity import (
@@ -41,6 +42,7 @@ __all__ = [
     "BetaMixtureFit",
     "BetaMixtureFitError",
     "BetaMixtureSelection",
+    "BetaMixtureTestingResult",
     "GoodnessOfFit",
     "MultipleTestingResult",
     "NonparametricFit",
@@ -53,6 +55,7 @@ __all__ = [
     "SchwederFitError",
     "beta_mixture_start",
     "beta_mixture_bootstrap",
+    "beta_mixture_testing",
     "binomial_interval",
     "bp1ci_poisson_interval",
     "chi_square_gof",
