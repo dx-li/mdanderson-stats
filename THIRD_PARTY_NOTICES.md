@@ -100,3 +100,12 @@ noncommercial source use and require written permission for commercial source us
 Original numerical routines are extracted only for a local reference build; no
 original Fortran or binary is bundled. Reference hashes and compiler provenance
 appear in `tests/fixtures/ksb1ci.json`.
+
+## KSBIN1
+
+`ksbin1.py` independently evaluates fixed-design operating characteristics using
+shared Python surviving-path calculations. The KSBIN1 main program and auxiliary
+numerical routines were consulted for inclusive decision rules and expected-sample-
+size definitions. Original source is extracted only into a local reference build;
+no original Fortran or binary is distributed. Source/archive hashes and compiler
+provenance are recorded in `tests/fixtures/ksbin1.json`.

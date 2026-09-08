@@ -105,3 +105,7 @@ operations, both binomial entry modes, and readable reports with file output. Se
 `KStageBinomial` implements KSB1CI confidence intervals for binomial trials with
 early stopping, including vectorized stage-ordered tails and design reports.
 See [KSB1CI definitions, validation and examples](docs/ksb1ci.md).
+
+`ksbin1_operating_characteristics` evaluates fixed multistage binomial designs,
+including rejection/quitting probabilities and expected sample sizes.
+[KSBIN1 coverage](docs/ksbin1.md) tracks its pending design solver and workflows.

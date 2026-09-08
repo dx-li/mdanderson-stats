@@ -87,6 +87,35 @@ class KStageBinomial:
             raise ValueError("Observed count is unreachable under earlier stopping boundaries")
         return k
 
+    def _stage_mass(self, i: int, p: FloatArray) -> FloatArray:
+        n = self.cumulative_trials[i]
+        indices = np.arange(n + 1)
+        # Evaluate complete weighted terms in log space so tiny powers do
+        # not underflow before large path counts can scale them back up.
+        with np.errstate(divide="ignore", invalid="ignore"):
+            successes = np.where(indices == 0, 0, indices * np.log(p[..., None]))
+            failures = np.where(n == indices, 0, (n - indices) * np.log1p(-p[..., None]))
+            mass = np.exp(np.log(self._coefficients[i]) + successes + failures)
+        return mass
+
+    def stage_distribution(self, stage: int, probability: ArrayLike) -> FloatArray:
+        """Joint probabilities of reaching stage and observing each event count.
+
+        The last axis runs from zero to the stage's cumulative sample size.
+        Earlier stopping removes probability mass; this is not conditional on
+        reaching the stage. Leading dimensions follow probability's shape.
+        """
+        if (
+            isinstance(stage, bool)
+            or not isinstance(stage, (int, np.integer))
+            or not 1 <= stage <= len(self.cumulative_trials)
+        ):
+            raise ValueError("stage must be an integer from 1 to the number of stages")
+        p = finite(probability, "probability")
+        if np.any((p < 0) | (p > 1)):
+            raise ValueError("probability must lie in [0,1]")
+        return self._stage_mass(stage - 1, p)
+
     def _tails(
         self, stage: int, events: FloatArray, p: FloatArray
     ) -> tuple[FloatArray, FloatArray]:
@@ -95,12 +124,7 @@ class KStageBinomial:
         for i in range(stage):
             n = self.cumulative_trials[i]
             indices = np.arange(n + 1)
-            # Evaluate complete weighted terms in log space so tiny powers do
-            # not underflow before large path counts can scale them back up.
-            with np.errstate(divide="ignore", invalid="ignore"):
-                successes = np.where(indices == 0, 0, indices * np.log(p[..., None]))
-                failures = np.where(n == indices, 0, (n - indices) * np.log1p(-p[..., None]))
-                mass = np.exp(np.log(self._coefficients[i]) + successes + failures)
+            mass = self._stage_mass(i, p)
             if i == stage - 1:
                 less += np.sum(np.where(indices <= k[..., None], mass, 0), axis=-1)
                 greater += np.sum(np.where(indices >= k[..., None], mass, 0), axis=-1)
