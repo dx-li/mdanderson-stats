@@ -35,6 +35,7 @@ from .schweder import (
     schweder_bootstrap,
     schweder_fit,
 )
+from .schweder_output import plot_schweder, write_schweder_data
 
 __all__ = [
     "BetaMixture",
@@ -71,10 +72,12 @@ __all__ = [
     "nonparametric_testing",
     "order_statistic_diagnostics",
     "poisson_interval",
+    "plot_schweder",
     "range2",
     "rom_critical_values",
     "schweder_bootstrap",
     "schweder_fit",
     "select_beta_mixture",
     "sharpened_testing",
+    "write_schweder_data",
 ]

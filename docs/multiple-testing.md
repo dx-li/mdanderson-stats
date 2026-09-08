@@ -7,7 +7,7 @@ order-statistic diagnostics, clustered p-value generation, and S/desktop
 nonparametric fitting. [Beta-mixture evaluation, initialization, and EM/direct fitting](beta-mixtures.md)
 are also available, along with sequential component selection and simulated model
 checks, manual component-count fits, desktop likelihood stopping, and desktop
-reciprocal-density decisions. It remains **partial**: remaining desktop and plotting/reporting workflows
+reciprocal-density decisions. It remains **partial**: remaining workflow coverage
 still require scope review, implementation, and validation.
 The catalog does not count this entry as complete.
 
@@ -64,6 +64,38 @@ log-domain binomial terms to avoid coefficient overflow; it does not mistake tho
 cutoffs for adjusted p-values. A qualifying larger rank also rejects smaller ranks,
 even when a smaller rank does not meet its own cutoff. The Sidak/Finner transforms
 use `log1p` and `expm1` so p-values below machine epsilon do not round to zero.
+
+## Schweder plot and coordinate export
+
+Install the `plot` extra for Matplotlib; it is not required for numerical work
+or CSV export. In a checkout, use `uv sync --extra plot`.
+
+```python
+from mdanderson_stats import schweder_fit, plot_schweder, write_schweder_data
+
+fit = schweder_fit(pvalues, alpha=0.1)
+write_schweder_data(fit, "schweder.csv")
+ax = plot_schweder(fit)
+ax.figure.savefig("schweder.png", dpi=150)
+```
+
+The plot follows S `schwed.plot`: all distinct `(1-p, Np)` points, a line from
+`(0,0)` to `(1,null_estimate)`, horizontal limits [0,1], and vertical ticks on
+both sides. Vertical limits come from observations before the line is overlaid.
+Colors and layout follow Matplotlib rather than the original S graphics device.
+Supply `ax=` to use an existing axes; the function returns it for customization
+and does not call `show` or change the global style/backend.
+
+`write_schweder_data` exports the same full coordinate set as desktop SWFIT,
+including points excluded from line fitting. CSV columns are `1-p,Np`; float
+coordinates retain round-trip precision instead of original fixed-width rounding.
+The path is replaced if it exists. Counts include values equal to each p-value,
+matching the numerical source despite its description as strictly greater.
+
+Export tests compare coordinates to native desktop fixtures, and plotting tests
+render a PNG and verify the observations and fitted line. The published 150-value
+example was also rendered and visually inspected. Run the full suite with
+`uv run --extra plot pytest`; without that extra, the rendering test is skipped.
 
 ## Schweder fitting and sharpened decisions
 

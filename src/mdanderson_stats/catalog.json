@@ -930,7 +930,9 @@
         "mdanderson_stats.select_beta_mixture: S/desktop sequential STBETA fits, data/lglk/pcvm stopping rules, desktop denominator floor, candidate history and explicit failure/limit status",
         "mdanderson_stats.beta_mixture_bootstrap: SIMCVM fixed-component parametric refitting, strict empirical CVM tail, bounded failed-fit retries; NumPy draws replace original RNG/inverse CDF",
         "mdanderson_stats.beta_mixture_testing: desktop BMPVPB/BMURPB capped prefix reciprocal-density scores and inclusive rejection decisions, independent batched families, rank/input sequence and explicit endpoint conventions",
-        "mdanderson_stats.fit_beta_mixture_k: specified zero-to-ten component fits, required preceding-model initialization, manual model comparison and explicit fit failures"
+        "mdanderson_stats.fit_beta_mixture_k: specified zero-to-ten component fits, required preceding-model initialization, manual model comparison and explicit fit failures",
+        "mdanderson_stats.plot_schweder: S schwed.plot observations, fitted line, fixed horizontal limits and dual vertical ticks; optional Matplotlib axes output",
+        "mdanderson_stats.write_schweder_data: desktop SWFIT full coordinate export as round-trip CSV"
       ],
       "validation": [
         "tests/test_multiplicity.py",
@@ -949,7 +951,8 @@
         "tests/test_beta_mixture_selection.py",
         "tests/fixtures/beta_selection.json",
         "tests/test_beta_mixture_testing.py",
-        "tests/fixtures/beta_testing.json"
+        "tests/fixtures/beta_testing.json",
+        "tests/test_schweder_output.py"
       ]
     },
     {

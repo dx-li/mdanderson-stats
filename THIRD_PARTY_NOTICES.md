@@ -29,7 +29,7 @@ is redistributed by this project.
 `multiplicity.py`, `schweder.py`, `pvalue_models.py`, `nonparametric.py`, and
 `nonparametric_testing.py`, `beta_mixture.py`, `beta_mixture_fit.py`, and
 `beta_mixture_ml.py`, `beta_mixture_bootstrap.py`, `beta_mixture_selection.py`, and
-`beta_mixture_testing.py` contain
+`beta_mixture_testing.py` and `schweder_output.py` contain
 modified Python implementations of MULTI's adjustment, sharpened-testing, Schweder,
 order-statistic, clustered-simulation, S/desktop nonparametric, and beta-mixture
 evaluation/initialization/EM/direct-likelihood/selection/simulation/decision algorithms. The original code

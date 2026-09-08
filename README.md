@@ -12,8 +12,8 @@ project and is not an MD Anderson release.
 ## Development
 
 ```
-uv sync --group dev
-uv run pytest
+uv sync --group dev --extra plot
+uv run --extra plot pytest
 uv run ruff check .
 uv run mypy src
 uv build
@@ -71,3 +71,8 @@ for CVM checks.
 with explicit rank-order or entered-order processing.
 See [multiple testing](docs/multiple-testing.md) for examples, historical naming
 differences, and the MULTI features that remain pending.
+
+`plot_schweder(fit)` reproduces the S plot; install the optional `plot` extra
+(`uv sync --extra plot` in this checkout). `write_schweder_data(fit, path)` exports
+all plot coordinates as CSV without requiring Matplotlib. See the
+[Schweder output example](docs/multiple-testing.md#schweder-plot-and-coordinate-export).
