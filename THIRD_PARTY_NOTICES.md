@@ -82,7 +82,9 @@ Native reference fixtures record source/archive and executable hashes.
 
 `onesample.py` independently expresses binomial/Poisson distribution-tail formulas
 for the archived ONESAMPLE software. The calculation module and manual were used
-for validation and identifying legacy tail cutoffs. No original source or
+for validation and identifying legacy tail cutoffs. `onesample_workflow.py`
+independently exposes the four calculations, entry conventions and report content
+from the main program and output module as Python calls. No original source or
 supporting distribution-library code is bundled. Archive and source hashes and
 the reference-only success-status initialization patch are recorded in
 `tests/fixtures/onesample.json` and `tools/reference_onesample.py`.

@@ -98,5 +98,6 @@ with settings, results, diagnostics, and random-state provenance. Its
 [The MULTI coverage audit](docs/multi-coverage.md) records its remaining I/O gaps.
 
 ONESAMPLE's `binomial_test` and `poisson_test` return inclusive one-sided p-values,
-with explicit compatibility cutoffs. See [ONESAMPLE validation and remaining
-workflow](docs/onesample.md).
+with explicit compatibility cutoffs. `one_sample` exposes all four test/interval
+operations, both binomial entry modes, and readable reports with file output. See
+[ONESAMPLE coverage and validation](docs/onesample.md).

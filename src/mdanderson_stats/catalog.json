@@ -379,13 +379,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "mdanderson_stats.binomial_test and poisson_test: vectorized inclusive one-sided tests, stable complementary tails and explicit ONESAMPLE cutoff compatibility",
-        "Existing binomial_interval and poisson_interval verified against ONESAMPLE confidence calculations; entry/report workflow pending"
+        "binomial_interval and poisson_interval verified against ONESAMPLE confidence calculations",
+        "one_sample and OneSampleResult: all four operations, failures/trials entry, original interface ranges with strict count validation, broadcast TSV reports and explicit file output"
       ],
       "validation": [
         "tests/test_onesample.py",
+        "tests/test_onesample_workflow.py",
         "tests/fixtures/onesample.json",
         "docs/onesample.md"
       ]

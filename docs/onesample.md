@@ -1,9 +1,8 @@
-# ONESAMPLE one-sided tests
+# ONESAMPLE tests, confidence intervals and reports
 
-Catalog entry 22 is partial. Implemented: binomial and Poisson inclusive one-sided
-tests; the source confidence formulas are also verified against the existing
-binomial_interval and poisson_interval APIs. Input-mode and report workflows remain
-pending. Source: ONESAMPLE_V1.tar.gz, one_sample_1.0, from the catalog download.
+Catalog entry 22 is implemented. All four calculations, both binomial entry modes,
+input validation and readable results are available as vectorized Python calls.
+Source: ONESAMPLE_V1.tar.gz, one_sample_1.0, from the catalog download.
 
 ```python
 from mdanderson_stats import binomial_test, poisson_test
@@ -61,6 +60,44 @@ tails, explicit cutoffs, broadcasting, exposure and input errors. The original
 Poisson confidence routine uses the correct Garwood lower shape, unlike BP1CI's
 historical lower-bound formula; ONESAMPLE validation uses poisson_interval.
 
-Numerical calculation coverage does not establish completion of the interactive
-entry modes, output-file routing and formatted results in one_sample.f90,
-get_numbers_mod and write_output_mod. These remain tracked as pending for this entry.
+## Input and report workflow
+
+```python
+from mdanderson_stats import one_sample
+
+result = one_sample("binomial_confidence", [0, 12, 30], 0.95, second=30, entry="trials")
+print(result.report())
+result.write_report("intervals.tsv", digits=12)
+
+result = one_sample("binomial_test", 12, 0.3, second=18)  # second is failures
+result = one_sample("poisson_confidence", 10, 0.95, exposure=5)
+result = one_sample("poisson_test", 10, 2, exposure=5)  # null rate, not null mean
+```
+
+The second positional value after events is a confidence fraction for confidence
+calculations, or a null probability/rate for tests. Named calculations replace
+menu choices 1–4. Calls replace the original prompt/retry loop; ending the caller's
+session replaces menu choice 0. Results contain the inputs, estimate, interval or
+both inclusive tails, and the compatibility setting.
+
+The wrapper preserves the interface's entered-count limit of 1e9, confidence and
+null-probability range [1e-10, 1-1e-10], and exposure/null-rate range [1e-10, 1e9].
+Failures entry can yield a total of 2e9. Fractional counts, empty binomial totals
+and successes exceeding trials raise rather than undergoing the source's silent
+integer conversion or reaching undefined calculations. The lower-level APIs
+remain available for their broader mathematical domains. Legacy tail cutoffs are
+opt-in for tests and rejected as irrelevant for confidence calculations.
+
+Reports echo counts, trials or exposure, confidence or null value, estimates and
+results. Broadcast cases appear in C order as TSV rows. Precision is configurable
+from 1 to 17 significant digits, avoiding the original fixed-width fields' overflow
+asterisks. write_report explicitly replaces a UTF-8 file and propagates I/O errors.
+The original main program prints to the terminal; optional unit routing exists in
+a general printing helper but is not exposed by its menu. Python file output is
+an explicit convenience rather than a reproduction of an additional source menu.
+
+The coverage audit follows one_sample.f90, get_numbers_mod, write_output_mod and
+the four calculation routines. Tests exercise all operations, both entry modes,
+broadcast reports, file replacement, invalid precision/I/O, interface limits and
+agreement with the same native reference fixture. The terminal prompt syntax and
+fixed-width whitespace are intentionally replaced by the API and TSV format.
