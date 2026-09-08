@@ -987,7 +987,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "muhaz_fixed: four fixed-bandwidth hazard kernels, three boundary corrections, grouped ties and explicit source-compatible mode",
         "pehaz: piecewise-exponential hazard, bin events/risk/person-time, default and source-compatible cut conventions, numerical reports",
@@ -1026,7 +1026,10 @@
         "tests/fixtures/muhaz-knn.json",
         "tools/reference_muhaz_knn.py",
         "tests/test_muhaz_summary.py",
-        "tests/test_muhaz_plot.py"
+        "tests/test_muhaz_plot.py",
+        "tests/test_muhaz_bounds.py",
+        "docs/muhaz-coverage.md",
+        "docs/muhaz-benchmark.json"
       ]
     },
     {

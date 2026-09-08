@@ -1,12 +1,13 @@
 # MUHAZ kernel hazard estimation
 
-Catalog entry 49 is **partial**. The fixed-bandwidth kernel calculation is
+Catalog entry 49 is **implemented**. The fixed-bandwidth kernel calculation is
 implemented, together with piecewise-exponential estimates and their numerical
 reports, and Nelson/product-limit failure-interval estimates. Global, local and
 nearest-neighbor bandwidth selection, bandwidth smoothing and candidate
 bias/variance/MSE diagnostics and structured summaries are implemented. Kernel,
-piecewise and stratified plots are also implemented. A full coverage
-audit remains before this catalog entry is marked complete.
+piecewise and stratified plots are also implemented. The completed
+[source coverage audit](muhaz-coverage.md) maps the archive to implementation and
+validation evidence.
 
 Source: [MUHAZ version 1](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/49),
 distributed as `MUHAZ_V1.tar.gz`. Its archive contains `muhaz.f`, the S interface
@@ -326,7 +327,7 @@ bypasses, comparing selected bandwidths, all candidate scores, selected scores,
 and fitted hazards. Independent tests verify score minimization, selected-curve
 agreement, default formulas, risk-count interpolation, subsets, bound truncation,
 ties in scores, immutable candidates and input validation. A 1,001-point grid is
-also tested, exceeding the archived fixed pilot buffer. The complete coverage audit remains pending.
+also tested, exceeding the archived fixed pilot buffer.
 
 
 ## Local bandwidth selection and smoothing
@@ -397,7 +398,7 @@ Independent tests check arithmetic-mean smoothing for an interior rectangle
 kernel, constant-bandwidth preservation, left-only correction, pointwise
 minimization, selected fixed-fit agreement, time scaling, shared defaults,
 subsetting, immutable arrays, undefined/negative smoothing, and variable-bandwidth
-evaluation across chunk boundaries. A complete coverage audit remains pending.
+evaluation across chunk boundaries.
 
 
 ## Nearest-neighbor bandwidths and fitting
@@ -486,7 +487,7 @@ Independent checks cover distance order statistics, survival endpoint convention
 the terminal-time correction, scaling, subsetting, default candidates, MSE
 matrix/scalar agreement, selected-curve agreement, immutable arrays and input
 errors. A 25,001-observation case exceeds the original static buffer, and both
-bandwidth algorithms are checked across chunk boundaries. The complete MUHAZ coverage audit is still pending.
+bandwidth algorithms are checked across chunk boundaries.
 
 
 ## Summaries and text reports
@@ -569,4 +570,39 @@ Plot tests verify all kernel fit types, exact curve/bin coordinates, overlay
 preservation, gaps, stratified legends, empty/nonfinite rejection and all-zero
 limits. A rendered three-panel figure containing global/local overlays,
 piecewise bins and two-stratum failure-interval hazards was visually inspected.
-The complete MUHAZ source coverage audit remains pending.
+
+
+
+## Independent time bounds and diagnostic plots
+
+For the three bandwidth selectors, either endpoint in `bounds` can be None.
+`bounds=(1, None)` uses lower time 1 and the ten-at-risk default upper time;
+`bounds=(None, 5)` uses lower time zero and upper time 5, clamped to maximum
+follow-up. `bounds=None` and `(None, None)` use both defaults. These settings
+match the archived independently optional min/max arguments.
+
+The help's bandwidth-function and candidate-score diagnostics use the retained
+arrays. For example, after fitting `local_fit`, `global_fit` and `neighbor_fit`:
+
+```python
+from matplotlib import pyplot as plt
+
+fig, axes = plt.subplots(1, 3, layout="constrained")
+axes[0].plot(local_fit.diagnostics.time, local_fit.local_bandwidth, label="Selected")
+axes[0].plot(local_fit.time, local_fit.bandwidth, label="Smoothed")
+axes[0].set(xlabel="Follow-up time", ylabel="Bandwidth")
+axes[0].legend()
+axes[1].plot(global_fit.bandwidths, global_fit.scores)
+axes[1].set(xlabel="Bandwidth", ylabel="Summed grid MSE")
+axes[2].plot(neighbor_fit.neighbor_bandwidths.neighbors, neighbor_fit.scores)
+axes[2].set(xlabel="Neighbor count", ylabel="Summed grid MSE")
+```
+
+For the neighbor bandwidth-function plot, replace the first panel's selected
+curve with `neighbor_fit.neighbor_bandwidths.time` and
+`neighbor_fit.neighbor_bandwidths.bandwidth[neighbor_fit.selected_index]`, and
+use `neighbor_fit.time`/`neighbor_fit.bandwidth` for the smoothed curve. MSE score
+plots require multiple candidates; constant-bandwidth bypasses do not compute
+local bandwidth diagnostics. Candidate scores can span many orders of magnitude;
+choose appropriate axis scales when examining the minimum. Rerun with a refined
+candidate grid/count range or a different smoothing bandwidth as needed.

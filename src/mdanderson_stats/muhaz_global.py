@@ -42,7 +42,7 @@ def muhaz_global(
     *,
     bandwidths: ArrayLike | None = None,
     pilot_bandwidth: float | None = None,
-    bounds: tuple[float, float] | None = None,
+    bounds: tuple[float | None, float | None] | None = None,
     subset: ArrayLike | None = None,
     n_min_grid: int = 51,
     n_est_grid: int = 101,
@@ -134,7 +134,7 @@ def _prepare_selection(
     delta: ArrayLike | None,
     bandwidths: ArrayLike | None,
     pilot_bandwidth: float | None,
-    bounds: tuple[float, float] | None,
+    bounds: tuple[float | None, float | None] | None,
     subset: ArrayLike | None,
     n_min_grid: int,
     n_est_grid: int,
@@ -158,20 +158,20 @@ def _prepare_selection(
     for n, name in [(n_min_grid, "n_min_grid"), (n_est_grid, "n_est_grid")]:
         if isinstance(n, (bool, np.bool_)) or not isinstance(n, (int, np.integer)) or n < 1:
             raise ValueError(f"{name} must be a positive integer")
-    if bounds is None:
+    limits = np.asarray((None, None) if bounds is None else bounds, dtype=object)
+    if limits.shape != (2,):
+        raise ValueError("bounds must contain two values")
+    left = 0.0 if limits[0] is None else scalar(limits[0], "lower bound")
+    if limits[1] is None:
         unique, starts = np.unique(np.sort(t), return_index=True)
         risk = t.size - starts
         if not risk[-1] <= 10 <= risk[0]:
             raise ValueError("Ten-at-risk upper bound is undefined; provide explicit bounds")
-        interval = np.array([0, float(np.interp(10, risk[::-1], unique[::-1]))])
+        right = float(np.interp(10, risk[::-1], unique[::-1]))
     else:
-        interval = finite(bounds, "bounds").copy()
-        if interval.shape != (2,):
-            raise ValueError("bounds must contain two values")
-        interval[1] = min(interval[1], float(t.max()))
-    if not 0 <= interval[0] < interval[1]:
+        right = min(scalar(limits[1], "upper bound"), float(t.max()))
+    if not 0 <= left < right:
         raise ValueError("Effective bounds must be increasing and nonnegative")
-    left, right = map(float, interval)
     bw = None if bandwidths is None else finite(bandwidths, "bandwidths")
     if bw is not None:
         if bw.ndim > 1 or bw.size == 0 or np.any(bw <= 0):

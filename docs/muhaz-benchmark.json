@@ -1,0 +1,27 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One batched call versus 501 single-point calls to the same Python API; not a Fortran comparison or full selection benchmark",
+  "results": {
+    "fixed_hazard": {
+      "workload": "2000 observations, 25% censoring, 501 hazard grid points",
+      "batch_seconds": 0.008619084022939205,
+      "scalar_seconds": 0.07752675004303455,
+      "speedup": 8.994778312486742
+    },
+    "failures": {
+      "workload": "2000 observations, 25% censoring, counts 5/10/20, 501 query points",
+      "batch_seconds": 0.004272709134966135,
+      "scalar_seconds": 0.036549416836351156,
+      "speedup": 8.554155146496027
+    },
+    "survival": {
+      "workload": "2000 observations, 25% censoring, counts 5/10/20, 501 query points",
+      "batch_seconds": 0.0021299999207258224,
+      "scalar_seconds": 0.13131095794960856,
+      "speedup": 61.64833935996712
+    }
+  }
+}

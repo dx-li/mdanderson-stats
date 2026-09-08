@@ -41,7 +41,7 @@ def muhaz_local(
     bandwidths: ArrayLike | None = None,
     pilot_bandwidth: float | None = None,
     smoothing_bandwidth: float | None = None,
-    bounds: tuple[float, float] | None = None,
+    bounds: tuple[float | None, float | None] | None = None,
     subset: ArrayLike | None = None,
     n_min_grid: int = 51,
     n_est_grid: int = 101,

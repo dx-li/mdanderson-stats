@@ -173,9 +173,8 @@ panels. [CUMINC coverage](docs/cuminc-coverage.md) records the completed source 
 and compatibility differences.
 
 `muhaz_fixed` adds fixed-bandwidth censored-data hazard smoothing with four
-kernels and boundary corrections. [MUHAZ coverage](docs/muhaz.md) distinguishes
-validated source compatibility from default tie handling and tracks pending
-bandwidth selection and companion workflows.
+kernels and boundary corrections. [MUHAZ coverage](docs/muhaz-coverage.md) records the completed numerical,
+reporting and plotting audit, compatibility differences and batching benchmarks.
 
 `pehaz` adds MUHAZ's piecewise-exponential estimator, including bin event counts,
 person-time, risk counts and numerical reports, with explicit legacy bin semantics.
