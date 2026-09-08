@@ -57,6 +57,77 @@ def muhaz_global(
     are required when that interpolation is undefined. Bounds above observed
     follow-up are truncated to it, as in the archived interface.
     """
+    t, d, bw, pilot, (left, right) = _prepare_selection(
+        times,
+        delta,
+        bandwidths,
+        pilot_bandwidth,
+        bounds,
+        subset,
+        n_min_grid,
+        n_est_grid,
+        legacy,
+    )
+    diagnostic = None
+    scores = None
+    selected = 0
+    score = None
+    if bw.size > 1:
+        assert pilot is not None
+        diagnostic = muhaz_mse(
+            t,
+            d,
+            bandwidths=bw,
+            pilot_bandwidth=pilot,
+            grid=np.linspace(left, right, n_min_grid),
+            bounds=(left, right),
+            kernel=kernel,
+            boundary=boundary,
+            legacy=legacy,
+            rtol=rtol,
+            max_refinements=max_refinements,
+        )
+        scores = diagnostic.mse.sum(axis=1)
+        if not np.all(np.isfinite(scores)):
+            raise RuntimeError("Summed MSE exceeds numerical range")
+        if legacy:
+            eligible = (scores > 0) & (scores < 1e30)
+            selected = (
+                int(np.argmin(np.where(eligible, scores, np.inf)))
+                if eligible.any()
+                else bw.size - 1
+            )
+            score = float(scores[selected]) if eligible.any() else 1e30
+        else:
+            selected = int(np.argmin(scores))
+            score = float(scores[selected])
+        scores.flags.writeable = False
+    curve = muhaz_fixed(
+        t,
+        d,
+        bandwidth=float(bw[selected]),
+        grid=np.linspace(left, right, n_est_grid),
+        bounds=(left, right),
+        kernel=kernel,
+        boundary=boundary,
+        legacy=legacy,
+    )
+    bw.flags.writeable = False
+    return MuhazGlobal(curve, bw, scores, selected, score, diagnostic, t.size, int(d.sum()))
+
+
+def _prepare_selection(
+    times: ArrayLike,
+    delta: ArrayLike | None,
+    bandwidths: ArrayLike | None,
+    pilot_bandwidth: float | None,
+    bounds: tuple[float, float] | None,
+    subset: ArrayLike | None,
+    n_min_grid: int,
+    n_est_grid: int,
+    legacy: bool,
+) -> tuple[FloatArray, FloatArray, FloatArray, float | None, tuple[float, float]]:
+    """Shared archived local/global input, default and subset conventions."""
     t = np.asarray(times, dtype=float)
     d = np.ones(t.size) if delta is None else np.asarray(delta, dtype=float)
     if t.ndim != 1 or t.size == 0 or d.shape != t.shape:
@@ -105,49 +176,4 @@ def muhaz_global(
     if bw is None:
         assert pilot is not None
         bw = np.linspace(0.2 * pilot, 20 * pilot, 25)
-    diagnostic = None
-    scores = None
-    selected = 0
-    score = None
-    if bw.size > 1:
-        assert pilot is not None
-        diagnostic = muhaz_mse(
-            t,
-            d,
-            bandwidths=bw,
-            pilot_bandwidth=pilot,
-            grid=np.linspace(left, right, n_min_grid),
-            bounds=(left, right),
-            kernel=kernel,
-            boundary=boundary,
-            legacy=legacy,
-            rtol=rtol,
-            max_refinements=max_refinements,
-        )
-        scores = diagnostic.mse.sum(axis=1)
-        if not np.all(np.isfinite(scores)):
-            raise RuntimeError("Summed MSE exceeds numerical range")
-        if legacy:
-            eligible = (scores > 0) & (scores < 1e30)
-            selected = (
-                int(np.argmin(np.where(eligible, scores, np.inf)))
-                if eligible.any()
-                else bw.size - 1
-            )
-            score = float(scores[selected]) if eligible.any() else 1e30
-        else:
-            selected = int(np.argmin(scores))
-            score = float(scores[selected])
-        scores.flags.writeable = False
-    curve = muhaz_fixed(
-        t,
-        d,
-        bandwidth=float(bw[selected]),
-        grid=np.linspace(left, right, n_est_grid),
-        bounds=(left, right),
-        kernel=kernel,
-        boundary=boundary,
-        legacy=legacy,
-    )
-    bw.flags.writeable = False
-    return MuhazGlobal(curve, bw, scores, selected, score, diagnostic, t.size, int(d.sum()))
+    return t, d, bw, pilot, (left, right)

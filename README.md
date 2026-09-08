@@ -188,3 +188,6 @@ bandwidths, with per-cell quadrature convergence diagnostics.
 
 `muhaz_global` selects a common hazard bandwidth using the MSE grid, with
 documented default settings, complete diagnostics and a single-bandwidth bypass.
+
+`muhaz_local` selects and smooths pointwise bandwidths, retaining full candidate
+MSE diagnostics and evaluating the resulting variable-bandwidth hazard in chunks.

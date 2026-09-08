@@ -2,10 +2,9 @@
 
 Catalog entry 49 is **partial**. The fixed-bandwidth kernel calculation is
 implemented, together with piecewise-exponential estimates and their numerical
-reports, and Nelson/product-limit failure-interval estimates. Automatic
-local/nearest-neighbor bandwidth selection, kernel summaries and plots remain
-pending. Global bandwidth selection and candidate bias/variance/MSE diagnostics
-are implemented.
+reports, and Nelson/product-limit failure-interval estimates. Nearest-neighbor bandwidth selection, kernel summaries and plots remain pending.
+Global and local bandwidth selection, bandwidth smoothing and candidate
+bias/variance/MSE diagnostics are implemented.
 
 Source: [MUHAZ version 1](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/49),
 distributed as `MUHAZ_V1.tar.gz`. Its archive contains `muhaz.f`, the S interface
@@ -264,8 +263,8 @@ integrals, empty queries, zero-event convergence, explicit refinement exhaustion
 MSE decomposition, candidate ordering and inverse time scaling. All earlier fixed
 hazard tests also pass after extracting the shared prepared evaluator. Quadrature
 samples and pilot hazard kernels are evaluated in chunks to avoid a full
-bandwidth-by-time-by-quadrature-by-subject allocation. Local bandwidth smoothing and nearest-neighbor selection remain
-pending.
+bandwidth-by-time-by-quadrature-by-subject allocation. Global and local selection use these diagnostics; nearest-neighbor
+selection remains pending.
 
 ## Global bandwidth selection
 
@@ -326,5 +325,77 @@ bypasses, comparing selected bandwidths, all candidate scores, selected scores,
 and fitted hazards. Independent tests verify score minimization, selected-curve
 agreement, default formulas, risk-count interpolation, subsets, bound truncation,
 ties in scores, immutable candidates and input validation. A 1,001-point grid is
-also tested, exceeding the archived fixed pilot buffer. Local bandwidth smoothing,
-nearest-neighbor selection and remaining display workflows are still pending.
+also tested, exceeding the archived fixed pilot buffer. Nearest-neighbor selection
+and remaining display workflows are still pending.
+
+
+## Local bandwidth selection and smoothing
+
+```python
+from mdanderson_stats import muhaz_local
+
+fit = muhaz_local(
+    [0.2, 0.7, 1.2, 1.8, 2.1, 2.6, 3.0],
+    [1, 0, 1, 1, 0, 1, 0],
+    bandwidths=[0.35, 0.8, 2.0],
+    pilot_bandwidth=0.65,
+    smoothing_bandwidth=0.8,
+    bounds=(0, 3),
+)
+print(fit.local_bandwidth)  # Selected at fit.diagnostics.time
+print(fit.bandwidth)  # Smoothed bandwidth used at fit.time
+print(fit.hazard)
+```
+
+`muhaz_local` selects the first candidate attaining the smallest MSE separately
+at each minimization-grid point. `minimum_mse`, `selected_bias`, and
+`selected_variance` describe those selected candidates; `selected_index` indexes
+the candidate rows in `diagnostics`. `score` is the sum of these pointwise minima,
+not the MSE of the final smoothed-bandwidth curve. The full candidate diagnostics
+retain quadrature refinement counts and convergence flags.
+
+The selected bandwidths undergo kernel regression onto the estimation grid,
+using the same kernel family and a smoothing bandwidth defaulting to five times
+the pilot. The resulting bandwidth at each estimation point is used in its
+hazard calculation. NumPy evaluates varying bandwidths across both time and event
+axes in bounded chunks; it does not repeatedly sort the sample or call the public
+fixed estimator for each point. Smoothing also bounds intermediate storage.
+
+Subsets, effective bounds, ten-at-risk interpolation, pilot defaults, candidate
+defaults, and grid sizes are shared with `muhaz_global`. A single supplied
+candidate bypasses both selection and smoothing: `bandwidth` is constant and
+local-selection fields, `score`, `diagnostics`, and `smoothing_bandwidth` are
+None. No pilot is required in that case.
+
+By default, zero MSE is eligible and “left” correction affects only the left
+boundary. `legacy=True` retains two executable source conventions:
+
+- LOCLMN accepts only `0 < MSE < 1e30`. If none qualify at a point, it chooses the
+  last candidate and records the sentinel minimum 1e30. Its bias and variance
+  outputs are uninitialized; Python reports NaN for those unavailable entries.
+  The source's apparent zero-score assignment is overwritten by the sentinel.
+- BSMOTH applies both boundary corrections when requested to correct only the
+  left boundary. This differs from HAZDEN's handling of the same setting.
+
+Both modes retain left-boundary precedence when correction regions overlap.
+Boundary kernels may have negative weights, so smoothed bandwidths are not
+necessarily confined to the candidate range. An uncovered smoothing point,
+zero denominator, nonfinite arithmetic, or nonpositive resulting bandwidth
+raises a clear RuntimeError. Python does not replace it with an invented
+bandwidth or silently clip it. Revise the smoothing bandwidth or grid settings.
+
+`tools/reference_muhaz_local.py` runs unchanged NEW_HAD, LOCLMN and BSMOTH with the
+recorded non-fused compiler flags. Its 117 native cases cover all four kernels,
+three boundary settings, censored and tied samples, no-event fallback, the
+single-candidate bypass, and three smoothing widths including overlapping
+boundary regions. All defined local bandwidth, smoothed bandwidth, score,
+bias/variance and hazard outputs are compared. The driver emits zero placeholders
+for uninitialized bias/variance cells; tests exclude those placeholders and
+separately require Python's explicit NaNs.
+
+Independent tests check arithmetic-mean smoothing for an interior rectangle
+kernel, constant-bandwidth preservation, left-only correction, pointwise
+minimization, selected fixed-fit agreement, time scaling, shared defaults,
+subsetting, immutable arrays, undefined/negative smoothing, and variable-bandwidth
+evaluation across chunk boundaries. Nearest-neighbor bandwidth selection and
+remaining summaries/plots are still pending.

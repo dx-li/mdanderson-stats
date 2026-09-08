@@ -241,3 +241,9 @@ oracle; source/driver hashes, compiler and floating-point flags are recorded in
 estimation. Local validation invokes unchanged NEW_HAD/GLMIN and dependencies;
 source/driver hashes and compiler flags are recorded in
 `tests/fixtures/muhaz-global.json`. No original Fortran code is bundled.
+
+`muhaz_local.py` independently implements pointwise bandwidth selection and
+kernel regression smoothing. Unchanged NEW_HAD/LOCLMN/BSMOTH are used only in the
+local oracle, whose driver explicitly handles undefined source diagnostics.
+Source/driver hashes and compiler flags are in `tests/fixtures/muhaz-local.json`.
+No original Fortran code is bundled.

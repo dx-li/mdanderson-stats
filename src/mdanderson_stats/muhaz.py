@@ -96,7 +96,7 @@ def _hazard_values(
     weights: FloatArray,
     last_time: float,
     z: FloatArray,
-    b: float,
+    b: float | FloatArray,
     left: float,
     right: float,
     kernel: Kernel,
@@ -106,6 +106,7 @@ def _hazard_values(
     """Evaluate a prepared sample, including off-grid pilot convolution points."""
     shape = z.shape
     z = z.ravel()
+    bandwidth = np.broadcast_to(b, shape).ravel()
     hazard = np.zeros(z.size)
     # Bound intermediate storage while vectorizing both grid and event axes.
     chunk = max(1, 262144 // max(1, event_time.size))
@@ -113,6 +114,7 @@ def _hazard_values(
         with np.errstate(over="raise", invalid="raise", divide="raise"):
             for start in range(0, z.size, chunk):
                 points = z[start : start + chunk, None]
+                b = bandwidth[start : start + chunk, None]
                 u = (points - event_time) / b
                 if legacy:
                     support = (event_time > points - b) & (
@@ -134,7 +136,7 @@ def _hazard_values(
                 q = np.where(np.any(support, axis=1, keepdims=True), q, 1)
                 values = _kernel(np.where(support, u, 0), q, _KERNELS.index(kernel))
                 hazard[start : start + chunk] = np.maximum(
-                    0, np.sum(np.where(support, values, 0) * weights, axis=1) / b
+                    0, np.sum(np.where(support, values, 0) * weights, axis=1) / b[:, 0]
                 )
     except FloatingPointError as exc:
         raise RuntimeError("MUHAZ kernel calculation exceeds numerical range") from exc
