@@ -44,6 +44,9 @@ def muhaz_mse(
 ) -> MuhazMSE:
     """Pilot-convolution MSE over candidate bandwidths (rows) and times (columns).
 
+    A scalar/vector gives constant candidates; a matrix supplies a varying
+    bandwidth for every candidate and grid point.
+
     Uses the archived survival factor 1 - events_at_or_before/(N+1), which is
     neither Kaplan-Meier survival nor a survival estimate conditional on failure.
     Trapezoid refinement stops when both integrals meet relative tolerance, or
@@ -51,9 +54,11 @@ def muhaz_mse(
     No bandwidth is selected by this function.
     """
     candidates = finite(bandwidths, "bandwidths")
-    if candidates.ndim > 1 or candidates.size == 0 or np.any(candidates <= 0):
-        raise ValueError("bandwidths must be a positive scalar or nonempty vector")
-    candidates = candidates.reshape(-1).copy()
+    if candidates.ndim > 2 or candidates.size == 0 or np.any(candidates <= 0):
+        raise ValueError(
+            "bandwidths must be positive: a scalar, vector, or candidate-by-time matrix"
+        )
+    candidates = candidates.reshape(-1).copy() if candidates.ndim < 2 else candidates.copy()
     tolerance = scalar(rtol, "rtol")
     if tolerance < 0:
         raise ValueError("rtol must be nonnegative")
@@ -81,7 +86,11 @@ def muhaz_mse(
     event_time, weights = _event_weights(t, status, bool(legacy))
     failed = t[status == 1]
     left, right = pilot.bounds
-    z, b = np.broadcast_arrays(pilot.time[None, :], candidates[:, None])
+    if candidates.ndim == 2 and candidates.shape[1] != pilot.time.size:
+        raise ValueError("Bandwidth matrix columns must match the evaluation grid")
+    z, b = np.broadcast_arrays(
+        pilot.time[None, :], candidates[:, None] if candidates.ndim == 1 else candidates
+    )
     shape = z.shape
     z, b = z.ravel(), b.ravel()
     left_edge = (z < left + b) & (boundary != "none")
@@ -106,6 +115,17 @@ def muhaz_mse(
             stop = min(start + chunk, selected.size)
             indices = selected[start:stop]
             u = lower[indices, None] + (upper - lower)[indices, None] * fraction
+            if legacy:
+                if fraction[0] == 0:
+                    u = np.column_stack((lower[indices], upper[indices]))
+                else:
+                    # TRY advances xx by repeated addition, which matters when
+                    # rounding moves a pilot query across a discontinuity.
+                    step = (upper - lower)[indices] / fraction.size
+                    increments = np.broadcast_to(step[:, None], u.shape).copy()
+                    increments[:, 0] = lower[indices] + 0.5 * step
+                    u = np.cumsum(increments, axis=1)
+
             at = z[indices, None] - b[indices, None] * u
             h = _hazard_values(
                 event_time,

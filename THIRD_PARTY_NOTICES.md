@@ -247,3 +247,9 @@ kernel regression smoothing. Unchanged NEW_HAD/LOCLMN/BSMOTH are used only in th
 local oracle, whose driver explicitly handles undefined source diagnostics.
 Source/driver hashes and compiler flags are in `tests/fixtures/muhaz-local.json`.
 No original Fortran code is bundled.
+
+`muhaz_neighbors.py` and `muhaz_knn.py` independently implement the archived
+nearest-neighbor methods and fitting workflow. Local oracles run unchanged
+KNNCEN/OLAFBW/KNNHAD and dependencies, with provenance recorded in
+`tests/fixtures/muhaz-neighbors.json` and `tests/fixtures/muhaz-knn.json`.
+No original Fortran code is bundled.

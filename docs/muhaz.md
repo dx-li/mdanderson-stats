@@ -2,9 +2,10 @@
 
 Catalog entry 49 is **partial**. The fixed-bandwidth kernel calculation is
 implemented, together with piecewise-exponential estimates and their numerical
-reports, and Nelson/product-limit failure-interval estimates. Nearest-neighbor bandwidth selection, kernel summaries and plots remain pending.
-Global and local bandwidth selection, bandwidth smoothing and candidate
-bias/variance/MSE diagnostics are implemented.
+reports, and Nelson/product-limit failure-interval estimates. Global, local and
+nearest-neighbor bandwidth selection, bandwidth smoothing and candidate
+bias/variance/MSE diagnostics are implemented. Kernel summaries and remaining
+plots still need implementation and a full coverage audit.
 
 Source: [MUHAZ version 1](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/49),
 distributed as `MUHAZ_V1.tar.gz`. Its archive contains `muhaz.f`, the S interface
@@ -263,8 +264,7 @@ integrals, empty queries, zero-event convergence, explicit refinement exhaustion
 MSE decomposition, candidate ordering and inverse time scaling. All earlier fixed
 hazard tests also pass after extracting the shared prepared evaluator. Quadrature
 samples and pilot hazard kernels are evaluated in chunks to avoid a full
-bandwidth-by-time-by-quadrature-by-subject allocation. Global and local selection use these diagnostics; nearest-neighbor
-selection remains pending.
+bandwidth-by-time-by-quadrature-by-subject allocation. Global, local and nearest-neighbor selection use these diagnostics.
 
 ## Global bandwidth selection
 
@@ -325,8 +325,7 @@ bypasses, comparing selected bandwidths, all candidate scores, selected scores,
 and fitted hazards. Independent tests verify score minimization, selected-curve
 agreement, default formulas, risk-count interpolation, subsets, bound truncation,
 ties in scores, immutable candidates and input validation. A 1,001-point grid is
-also tested, exceeding the archived fixed pilot buffer. Nearest-neighbor selection
-and remaining display workflows are still pending.
+also tested, exceeding the archived fixed pilot buffer. Remaining display workflows are still pending.
 
 
 ## Local bandwidth selection and smoothing
@@ -397,5 +396,94 @@ Independent tests check arithmetic-mean smoothing for an interior rectangle
 kernel, constant-bandwidth preservation, left-only correction, pointwise
 minimization, selected fixed-fit agreement, time scaling, shared defaults,
 subsetting, immutable arrays, undefined/negative smoothing, and variable-bandwidth
-evaluation across chunk boundaries. Nearest-neighbor bandwidth selection and
-remaining summaries/plots are still pending.
+evaluation across chunk boundaries. Remaining summaries/plots are still pending.
+
+
+## Nearest-neighbor bandwidths and fitting
+
+```python
+from mdanderson_stats import muhaz_knn, muhaz_neighbor_bandwidths
+
+times = [0.2, 0.4, 0.8, 1.1, 1.7, 2.1, 2.4, 2.8, 3.0]
+radii = muhaz_neighbor_bandwidths(times, neighbors=[2, 3, 4], grid=[0, 1, 2, 3], method="failures")
+fit = muhaz_knn(
+    times,
+    neighbors=[2, 3, 4],
+    pilot_bandwidth=0.65,
+    smoothing_bandwidth=1.3,
+    bounds=(0, 3),
+)
+print(fit.neighbors, fit.scores)
+print(fit.bandwidth, fit.hazard)
+```
+
+`muhaz_neighbor_bandwidths` exposes both archived bandwidth constructions without
+fitting a hazard. Rows correspond to requested neighbor counts, preserving order
+and duplicates; columns correspond to `grid`:
+
+- `method="failures"` returns the kth smallest absolute distance to an observed
+  failure. Censored records do not enter this distance order statistic. Tied
+  failures can give zero bandwidth. Counts cannot exceed the number of failures.
+- `method="survival"` uses the ONEOLF survival-mass radius rule and is the default,
+  matching the S interface's choice. It builds a Kaplan–Meier table at distinct
+  follow-up times, including censor-only times. Trials are sorted distances in
+  the archived index window around each grid point. It compares
+  `S(z-r)-S(z+r)` against `1.00001*(k-1)/N`, then applies the archived radius
+  adjustments by factors 1.00001 and 0.99999. Both survival lookups are right
+  continuous: the interval excludes its left endpoint and includes its right.
+  The source comment's left-limit notation at the right endpoint does not match
+  its GETS implementation. User-supplied counts may be at most N.
+
+The survival method retains the executable search-window and perturbation rules;
+it does not claim to solve a continuous, unrestricted radius optimization.
+`legacy=True` additionally reproduces KAPMEI's omission of the last observation
+when its time is unique. The default includes that terminal time. A terminal tie
+is included in both modes. The archived one-subject table is empty and raises an
+explicit error in legacy mode. Both methods require at least one failure.
+Zero radii are valid outputs of the bandwidth-only function; negative or nonfinite
+outcomes are rejected.
+
+Distance selection uses NumPy partitioning in the failure-count method. The
+survival method constructs its Kaplan–Meier table once, then batches distance
+sorting, survival lookups and radius decisions. Both bound intermediate storage
+by processing grid chunks and have no 20,000-observation source-buffer limit.
+
+`muhaz_knn` fits the complete curve. Its default neighbor candidates are the
+integers from 2 through `floor(events/2)`; fewer than four failures require an
+explicit count or candidate vector. It shares bounds, subsetting, grid and pilot
+conventions with the other selectors. For each candidate count, it scores that
+count's varying bandwidths by summed MSE over the minimization grid, chooses the
+first minimum, and smooths the chosen radii before estimating the hazard.
+`neighbor_bandwidths` retains every candidate radius; `diagnostics` retains every
+MSE and convergence flag. `scores` describe the unsmoothed candidate curves.
+The smoothing bandwidth defaults to five times the pilot.
+
+A single neighbor count bypasses MSE selection, with `score`, `scores` and
+`diagnostics` set to None, but still smooths the radii. With multiple candidates,
+zero radii are rejected before MSE division; revise the count candidates or grid.
+The existing smoothing errors apply to negative or undefined smoothed radii.
+The legacy selector's initial score cutoff is 1e5; if no candidate beats it,
+Python raises an error instead of using the source's uninitialized optimal count.
+The default has no arbitrary cutoff.
+
+`muhaz_mse` also accepts a candidate-by-time bandwidth matrix for these varying
+candidates; a scalar or vector keeps the existing constant-bandwidth meaning.
+Legacy quadrature reproduces TRY's repeated addition of quadrature abscissas,
+including direct use of the interval endpoints. This matters when rounding
+moves a pilot query across a discontinuity. Default mode uses direct abscissa
+formulas. Existing fixed, global and local reference comparisons still pass.
+
+`tools/reference_muhaz_neighbors.py` records 24 native KNNCEN/OLAFBW grids,
+including ties, censoring, endpoint queries and extrapolation. The complete
+KNNHAD oracle in `tools/reference_muhaz_knn.py` records 96 fits across both methods,
+four kernels, three boundary settings, two samples, and selection/bypass cases.
+Ninety-two produce valid positive smoothed bandwidths and match selected counts,
+radii, scores and fitted hazards. Four produce negative smoothed bandwidths;
+tests verify explicit rejection instead of treating those source hazards as valid.
+Source/driver hashes and compiler flags accompany both fixture files.
+Independent checks cover distance order statistics, survival endpoint conventions,
+the terminal-time correction, scaling, subsetting, default candidates, MSE
+matrix/scalar agreement, selected-curve agreement, immutable arrays and input
+errors. A 25,001-observation case exceeds the original static buffer, and both
+bandwidth algorithms are checked across chunk boundaries. Remaining display
+workflows and the complete MUHAZ coverage audit are still pending.
