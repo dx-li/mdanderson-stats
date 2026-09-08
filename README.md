@@ -245,3 +245,6 @@ compatibility for the source confidence-limit formula.
 
 `fisher_exact` adds CTA fixed-margin probabilities, standard exact-test
 alternatives and explicit compatibility for the original selected, truncated tail.
+
+`binomial_comparison` adds CTA conditional Poisson-model comparisons with
+explicit event selection, inclusive tails and corrected/source two-sided conventions.

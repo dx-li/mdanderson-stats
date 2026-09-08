@@ -4,9 +4,8 @@ Catalog entry 30 is partial. CHISQT expected counts, percentages, Pearson,
 Yates and source-specific Cochran statistics, the McNemar decomposition, and
 Cohen kappa with variances, sensitivity/specificity and predictive values are
 implemented, along with odds ratios, confidence limits and Fisher probabilities.
-Binomial comparison, reports
-and interactive study orchestration
-remain pending.
+Binomial comparison is also implemented. Reports and interactive study
+orchestration remain pending.
 
 The [official catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/30)
 lists version 1, modified March 19, 1992; the downloadable CTA_V1.tar.gz contains
@@ -348,3 +347,66 @@ relative tolerance. Further tests exhaustively enumerate all 625 tables whose
 cells range from zero through four for all four alternatives, using integer
 combinations and fractions as an independent oracle. The 50,000-count boundary,
 underflow, batching, symmetry and invalid inputs are covered separately.
+
+## Conditional binomial comparison
+
+```python
+from mdanderson_stats import binomial_comparison
+
+fit = binomial_comparison([[1, 9], [5, 15]], groups="rows")
+print(fit.events, fit.p_less, fit.p_greater, fit.pvalue)
+source = binomial_comparison([[4, 6], [5, 95]], legacy=True)
+explicit = binomial_comparison([[1, 9], [9, 1]], event_index=0)
+```
+
+`binomial_comparison` implements BINCOMP and its BINOP/BLFEW probability
+calculation. The two groups are rows by default, or columns with `groups`.
+The opposite axis identifies event/non-event categories. Inputs are nonnegative
+integer counts on final 2x2 axes, with positive group sizes and table totals
+smaller than 2^53. Leading dimensions form a batch.
+
+By default `event_index=None` reproduces CTA's selection rule: use category zero
+when it is strictly smaller in both groups; otherwise use category one when
+category zero is at least as large in both groups. Ties therefore belong to
+category one. Inconsistent directions raise a clear error, replacing the
+source's return without initialized results. Specifying `event_index=0` or `1`
+selects events explicitly and permits tables with inconsistent minority
+categories. Group sizes and selected event counts are retained in the result.
+
+Under CTA's Poisson approximation, independent group event counts have equal
+rates under the null, with group sizes as exposures. Conditional on their sum
+m=m1+m2, the first count has Binomial(m, N1/(N1+N2)) distribution. The binomial
+calculation is exact for this conditional Poisson model; it is not Fisher's
+fixed-margin test or an exact comparison of two binomial proportions. The
+Poisson approximation motivates the source's preference for a minority event
+category. Automatic category selection is inherited for reproducibility;
+use an explicitly defined event category for a planned analysis.
+
+`p_less` and `p_greater` always mean the inclusive probabilities P(X<=m1) and
+P(X>=m1) for the first group. Default `pvalue` is the central two-sided value
+min(1, 2*min(p_less,p_greater)), not probability ordering. `reported_tails`
+contains these two distinct first-group tails in default mode.
+
+CTA instead chooses the group with fewer **raw events**, disregarding exposure
+when choosing direction. If m1<m2, it reports P(X<=m1) and P(m-X>=m2), the
+same event expressed twice. Otherwise it reports the analogous lower tail for
+group two and upper tail for group one. It adds these duplicate probabilities
+without capping the result. `legacy=True` retains that rule in `reported_tails`
+and `pvalue`; the explicitly named `p_less`/`p_greater` retain their mathematical
+meaning. Legacy `pvalue` can exceed one. For [[4,6],[5,95]], legacy exceeds 1.9,
+while the default value is below 0.02. With no events, both inclusive tails are
+one, giving a default value one and a legacy value two.
+
+The implementation uses the package's existing vectorized incomplete-beta
+binomial engine, avoiding the source's repeated nested log-combination sums.
+Zero-event distributions are handled explicitly. Source single-precision
+rounding is not reproduced. Returned arrays are read-only, including group
+sizes, events, chosen category and the null allocation probability.
+
+`tools/reference_cta_binomial.py` compiles unchanged BINCOMP, BINOP and BLFEW
+locally and records 32 cases spanning group axes, group swaps, minority-category
+choices, ties, zero events and the source's above-one result. All event choices
+and reported probabilities are checked. Independent tests use rational binomial
+masses for every nonempty-group table with cells zero through three, both axes
+and both explicit event categories. Batching, symmetry, invalid inputs and
+ambiguous automatic category selection are covered separately.

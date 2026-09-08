@@ -648,7 +648,8 @@
         "cohen_kappa: batched agreement, multinomial and independence variances, explicit source theta-index compatibility",
         "diagnostic_accuracy: batched sensitivity, specificity, predictive values, explicit axes/class and corrected/source error formulas",
         "odds_ratio: batched RELRISK odds, stable log-Wald limits and explicit source CDF multiplier",
-        "fisher_exact: fixed-margin two-sided and one-sided probabilities, batched tables, source direction and truncation compatibility"
+        "fisher_exact: fixed-margin two-sided and one-sided probabilities, batched tables, source direction and truncation compatibility",
+        "binomial_comparison: conditional Poisson-model comparison, batched event selection, inclusive tails and corrected/source two-sided conventions"
       ],
       "validation": [
         "tests/test_cta.py",
@@ -663,7 +664,9 @@
         "tests/test_cta_odds.py",
         "tests/fixtures/cta_odds.json",
         "tests/test_cta_fisher.py",
-        "tests/fixtures/cta_fisher.json"
+        "tests/fixtures/cta_fisher.json",
+        "tests/test_cta_binomial.py",
+        "tests/fixtures/cta_binomial.json"
       ]
     },
     {
