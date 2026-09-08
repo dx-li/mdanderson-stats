@@ -4,7 +4,8 @@ Catalog entry 55 is partial. Fixed one- and two-sample designs under point prior
 implemented for logistic and log-log models, with linear or centered predictors.
 Independent uniform and correlated normal/log-normal prior criterion averaging
 and design-derived prior correlations are implemented. Fixed-dose, one- and two-sample
-point- and uncertain-prior allocation optimization is implemented. Dose-location optimization,
+point- and uncertain-prior allocation optimization is implemented, along with joint
+dose/allocation optimization for a fixed number of dose entries. Automatic
 dose-point addition and original reporting workflows remain pending.
 
 ```python
@@ -338,7 +339,7 @@ Tests reproduce the supplied SINGLE allocation/SD example, compare two-point
 solutions to analytic optimal splits, verify zero allocations at inferior doses,
 and exercise scaling, permutation, initialization, failure reporting and zero
 slopes. The original allocation optimizer itself is not compiled in these tests.
-Dose movement and automatic support-point addition remain pending.
+Automatic support-point addition remains pending.
 
 
 ## Allocation optimization under uncertain priors
@@ -426,3 +427,59 @@ Tests verify analytic between-group allocation splits, unequal-slope formulas,
 symmetric prior optima, both response models, both parameterizations, group swaps,
 sample-size scaling, independent precision recomputation and explicit failures.
 The original two-sample allocation optimizer is not compiled by these tests.
+
+
+## Joint dose-location and allocation optimization
+
+`single_optimize_design` moves dose locations within a shared interval while
+optimizing continuous allocations. It supports one/two samples, point/weighted
+priors, both response models and parameterizations, and arithmetic/harmonic
+averaging of SD or variance. Two-sample comparisons use the same three-parameter
+conventions as the fixed-design APIs. Total subjects is shared across groups.
+
+```python
+from mdanderson_stats import single_optimize_design
+
+result = single_optimize_design(
+    initial_doses=[-1.111111, 3.333333],
+    parameters=[0, 1],
+    dose_bounds=[-10, 10],
+    total_subjects=100,
+    criterion="quantile",
+    quantile=0.05,
+)
+print(result.doses, result.subjects, result.value)
+# Approximately [-2.39936, 2.39937], [90.744, 9.256], 0.444280.
+```
+
+For two samples, provide two initial dose vectors and `comparison="location"` or
+`"slope"`. A parameter vector represents a point prior; a node matrix requires
+positive `prior_weights` summing to one. These can be reused from the prior
+quadrature evaluators. Default initial allocations are equal across all dose
+entries. Custom initial counts must match each dose vector and the shared total.
+Dose/count pairs retain their group and entry correspondence; they are not sorted
+or rounded after optimization.
+
+The number of dose entries stays fixed, although allocations may become zero.
+This is a local SLSQP search, not an automatic support-point search or guarantee
+of a global optimum. Different initial designs can lead to different solutions.
+Full-rank information is required at each positive-weight prior node; singular
+trial designs are infeasible. Convergence failure raises an error. Results contain
+final dose/count vectors, final and initial criterion values, iterations and a
+`stationarity` diagnostic. This combines normalized projected dose gradients and
+the relative allocation sensitivity gap; it is reported separately from SLSQP's
+termination decision and is not a certified optimization error bound.
+
+Dose derivatives include both the change in response-information weight and the
+change in the predictor's parameter gradient. For logistic response, dw/du is
+w·(1−2p); for log-log it is w·(t/(1−exp(−t))−2), t=exp(−u). The implementation
+uses stable limiting expressions and analytic derivatives for both dose and
+allocation variables, including SD and reciprocal prior averaging. Dose variables
+are normalized to the interval and the objective to its initial value.
+
+Validation reproduces the original printed two-dose slope and quantile designs,
+checks bounded optima and a symmetric two-sample optimum, recomputes weighted-prior
+objectives independently, and checks sample-size scaling and failure behavior.
+Forty-eight finite-difference checks inspect the objective/gradient contract passed
+to the external solver across both models/forms, one/two samples and all aggregation
+choices. The original joint optimizer is not executed by these tests.

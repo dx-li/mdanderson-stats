@@ -144,5 +144,7 @@ points for one-sample point-prior slope or quantile precision.
 SD/variance using explicit quadrature nodes and analytic gradients.
 `single_optimize_two_sample_allocations` allocates a shared subject total across
 both groups under point or weighted priors.
+`single_optimize_design` jointly moves dose locations and allocations for a fixed
+number of dose entries, supporting one/two samples and weighted priors.
 [SINGLE coverage](docs/single.md) tracks
 the remaining prior-integration and optimization workflows.
