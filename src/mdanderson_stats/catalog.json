@@ -400,7 +400,8 @@
         "Beta distribution lower/upper tails, quantile/complement and both shape inversions; broadcast immutable results and all four CDFLIB90 beta public interfaces",
         "Explicit complementary coordinates/probabilities, smaller-tail numerical evaluation, batched bounded log-shape searches and clear invalid/out-of-bound errors",
         "Normal distribution lower/upper tails, quantiles, mean and standard-deviation inversions with defaults, immutable broadcasting, small complementary probabilities and explicit invalid-scale handling",
-        "Gamma lower/upper tails, quantiles, shape and rate inversions; explicit source SCALE-to-rate mapping, batched shape search and independent repairs of native tail/status defects"
+        "Gamma lower/upper tails, quantiles, shape and rate inversions; explicit source SCALE-to-rate mapping, batched shape search and independent repairs of native tail/status defects",
+        "Chi-square lower/upper tails, quantiles and bounded real degrees-of-freedom inversion through shared gamma kernels; immutable broadcasting and native status/root defect validation"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -411,7 +412,9 @@
         "tests/fixtures/cdflib_normal.json",
         "tests/test_cdflib_gamma.py",
         "tests/fixtures/cdflib_gamma.json",
-        "docs/cdflib-gamma-benchmark.json"
+        "docs/cdflib-gamma-benchmark.json",
+        "tests/test_cdflib_chisq.py",
+        "tests/fixtures/cdflib_chisq.json"
       ]
     },
     {

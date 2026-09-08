@@ -3,8 +3,8 @@
 CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
-The entry is **partial**: the beta, normal and gamma distributions' four public interfaces
-are implemented. The other nine distribution modules, the remaining archived library
+The entry is **partial**: the beta, normal, gamma and chi-square distributions' four public interfaces
+are implemented. The other eight distribution modules, the remaining archived library
 interfaces and the complete 106-file archive audit remain outstanding.
 
 Source: [catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/21)
@@ -251,3 +251,56 @@ arrays, endpoints, strict bounds and invalid or unidentified inversions.
 with repeated scalar calls to this same Python API for tails and shape inversion.
 Both paths are checked against exponential identities; median-of-three timings
 and environment/input details are recorded. These are not Fortran speed ratios.
+
+
+## Chi-square distribution
+
+```python
+from mdanderson_stats import cdf_chisq, cum_chisq, ccum_chisq, inv_chisq
+
+lower = cum_chisq([0.1, 1, 10], df=3)
+upper = ccum_chisq([0.1, 1, 10], df=3)
+quantile = inv_chisq(None, df=2, ccum=1e-100)
+degrees = cdf_chisq(3, x=2, ccum=0.36787944117144233).df  # 2
+```
+
+`cdf_chisq` computes group 1 (cum/ccum), 2 (x), or 3 (df). Omit the
+computed group and supply the others. Its immutable `CDFChiSquare` contains
+`which`, `cum`, `ccum`, `x` and `df`, all arrays broadcast together. Convenience
+tails accept `(x, df)`; the quantile accepts `(cum, df, *, ccum=None)`.
+Degrees of freedom are real, retaining the source domain [1e-3,1e10]; x retains
+[0,1e100]. No default degrees of freedom are assumed.
+
+The source defines chi-square through a gamma distribution with shape=df/2 and
+unit-rate coordinate x/2. Python reuses the gamma tails, quantile kernel and
+batched shape search. Degrees-of-freedom inversion searches only shapes
+[0.0005,5e9] and doubles the answer, preserving the chi-square bounds rather
+than relying on a much broader gamma search. The gamma search was extracted
+without changing its algorithm so both interfaces use the same numerical logic.
+
+Probability-pair validation, preservation of the smaller tail, quantile zero,
+rejection of upper probability zero, and numerical underflow limits follow the
+gamma interface. Inverting df requires positive x and both tails. Unattainable
+bounds raise `ValueError`; failed forward verification raises `ArithmeticError`.
+To preserve boundary roots across small kernel-rounding differences, a requested
+smaller probability within 32 machine epsilons relative to an endpoint's tail is
+matched to that endpoint. Returned probabilities retain the caller's validated
+pair. Computed df permits eight-epsilon relative endpoint rounding; input df
+bounds remain strict. Other shape-search answers use the gamma forward tolerance.
+
+`tools/reference_cdflib_chisq.py` compiles nine unmodified source files and records
+**80 cases** with archive/source hashes, compiler, command and driver. Thirty
+forward cases cover fractional and integer df, including the lower bound; 25
+each exercise x and df inversion from the recorded native probabilities.
+All captured forward probabilities agree with Python. Forward status values are
+not reliable: the source unconditionally finalizes a zero-finder structure that
+is unused in the forward path. This build recorded status 50 for all 30 forward
+cases; that undefined-state result is not a portable expected status.
+
+Six native x inversions and five df inversions report -50. Some status-zero
+inversions also return incorrect answers: at x=5 with generating df=0.001, one
+returns df approximately 2.5. Tests recover the known generating parameters
+rather than blessing those outputs. Independent tests use the df=1 squared-normal
+identity and df=2 exponential identity, extreme tails, boundary round trips,
+broadcast ownership, empty arrays and invalid requests. Gamma numerical fixes
+also apply to chi-square because they share the same kernels.

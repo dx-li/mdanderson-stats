@@ -346,3 +346,7 @@ small complementary probabilities and explicit rejection of unidentified scales.
 `cdf_gamma`, `cum_gamma`, `ccum_gamma` and `inv_gamma` provide gamma tails,
 quantiles, shape and rate inversions. The explicit `rate` argument preserves the
 archived implementation's convention: its parameter named SCALE multiplies x.
+
+
+`cdf_chisq`, `cum_chisq`, `ccum_chisq` and `inv_chisq` add chi-square tails,
+quantiles and inversion for real degrees of freedom, with the original df bounds.

@@ -31,6 +31,34 @@ def _tails(shape: FloatArray, z: FloatArray) -> tuple[FloatArray, FloatArray]:
     return np.where(p <= q, p, 1 - q), np.where(p <= q, 1 - p, q)
 
 
+def _invert_shape(p: FloatArray, q: FloatArray, z: FloatArray, lo: float, hi: float) -> FloatArray:
+    """Batched monotone gamma-shape inversion inside explicit search bounds."""
+    lower, target = p <= q, np.minimum(p, q)
+
+    def evaluate(a: FloatArray) -> FloatArray:
+        lp, uq = _tails(a, z)
+        return np.where(lower, lp, uq)
+
+    low, high = np.full(p.shape, lo), np.full(p.shape, hi)
+    low_value, high_value = evaluate(low), evaluate(high)
+    if np.any(
+        (target < np.minimum(low_value, high_value)) | (target > np.maximum(low_value, high_value))
+    ):
+        raise ValueError(f"gamma shape solution lies outside [{lo:g},{hi:g}]")
+    log_low, log_high = np.log(low), np.log(high)
+    for _ in range(64):
+        middle = (log_low + log_high) / 2
+        value = evaluate(np.exp(middle))
+        move_low = np.where(lower, value > target, value < target)
+        log_low = np.where(move_low, middle, log_low)
+        log_high = np.where(move_low, log_high, middle)
+    aa = np.exp((log_low + log_high) / 2)
+    aa = np.where(target == low_value, low, np.where(target == high_value, high, aa))
+    if np.any(np.abs(evaluate(aa) - target) > 1e-7 * target + 32 * np.nextafter(0.0, 1.0)):
+        raise ArithmeticError("gamma shape search failed forward verification")
+    return aa
+
+
 @dataclass(frozen=True)
 class CDFGamma:
     """Computed group and five independently owned, immutable broadcast arrays."""
@@ -92,30 +120,7 @@ def cdf_gamma(
                 with np.errstate(over="ignore"):
                     rr = _bounded(z / xx, "rate", computed=True)
         else:
-            lower, target, z = p <= q, np.minimum(p, q), xx * rr
-
-            def evaluate(a: FloatArray) -> FloatArray:
-                lp, uq = _tails(a, z)
-                return np.where(lower, lp, uq)
-
-            low, high = np.full(p.shape, 1e-10), np.full(p.shape, 1e100)
-            low_value, high_value = evaluate(low), evaluate(high)
-            if np.any(
-                (target < np.minimum(low_value, high_value))
-                | (target > np.maximum(low_value, high_value))
-            ):
-                raise ValueError("gamma shape solution lies outside [1e-10,1e100]")
-            log_low, log_high = np.log(low), np.log(high)
-            for _ in range(64):
-                middle = (log_low + log_high) / 2
-                value = evaluate(np.exp(middle))
-                move_low = np.where(lower, value > target, value < target)
-                log_low = np.where(move_low, middle, log_low)
-                log_high = np.where(move_low, log_high, middle)
-            aa = np.exp((log_low + log_high) / 2)
-            aa = np.where(target == low_value, low, np.where(target == high_value, high, aa))
-            if np.any(np.abs(evaluate(aa) - target) > 1e-7 * target + 32 * np.nextafter(0.0, 1.0)):
-                raise ArithmeticError("gamma shape search failed forward verification")
+            aa = _invert_shape(p, q, xx * rr, 1e-10, 1e100)
     return CDFGamma(int(which), *map(_freeze, (p, q, xx, aa, rr)))
 
 
