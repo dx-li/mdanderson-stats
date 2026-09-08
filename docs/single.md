@@ -3,7 +3,7 @@
 Catalog entry 55 is partial. Fixed one- and two-sample designs under point priors are
 implemented for logistic and log-log models, with linear or centered predictors.
 Independent uniform and correlated normal/log-normal prior criterion averaging
-and design-derived prior correlations are implemented. Fixed-dose, one-sample
+and design-derived prior correlations are implemented. Fixed-dose, one- and two-sample
 point- and uncertain-prior allocation optimization is implemented. Dose-location optimization,
 dose-point addition and original reporting workflows remain pending.
 
@@ -338,8 +338,7 @@ Tests reproduce the supplied SINGLE allocation/SD example, compare two-point
 solutions to analytic optimal splits, verify zero allocations at inferior doses,
 and exercise scaling, permutation, initialization, failure reporting and zero
 slopes. The original allocation optimizer itself is not compiled in these tests.
-Two-sample allocation optimization, dose movement and automatic support-point
-addition remain pending.
+Dose movement and automatic support-point addition remain pending.
 
 
 ## Allocation optimization under uncertain priors
@@ -386,3 +385,44 @@ models, both criteria, both measures and uniform/normal averaging, and compare
 against a dense two-dose allocation search. Further checks cover point-prior
 reduction, sample-size scaling, centered models, discarded interior doses and
 explicit failure reporting. These tests do not compile the original optimizer.
+
+
+## Two-sample allocation optimization
+
+`single_optimize_two_sample_allocations` distributes `total_subjects` across both
+sample groups and their candidate doses. This total is for the whole experiment,
+not a separate total per group. Group dose vectors may differ in length, and each
+returned subject vector corresponds to its input dose vector.
+
+```python
+from mdanderson_stats import single_optimize_two_sample_allocations
+
+result = single_optimize_two_sample_allocations(
+    doses=([-1, 1], [0]),
+    parameters=[0, 1, 0],
+    comparison="location",
+    total_subjects=100,
+)
+print(result.subjects, result.value)
+```
+
+A three-entry parameter vector defines a point prior. For an uncertain prior,
+supply `(nodes,3)` parameters and positive `prior_weights` summing to one, such as
+nodes and weights from the two-sample prior evaluator. Shared-parameter conventions
+follow `single_two_sample_precision`. `measure` defaults to SD; variance is also
+available. Choose arithmetic aggregation for uniform priors or harmonic aggregation
+for SINGLE's normal-prior convention. The result's `value` is that chosen aggregate.
+Optional initial subject vectors must match the group dose vectors and sum to the
+shared total. Default initialization distributes subjects equally across all dose
+entries, rather than forcing equal group totals.
+
+The common prior-allocation solver uses analytic derivatives and checks
+identifiability at every positive-weight prior node. Its returned first-order
+stationarity gap applies to allocation over both groups. It does not certify a
+global optimum for arbitrary aggregated objectives. Allocation counts remain
+continuous, dose locations stay fixed, and convergence failure raises an error.
+
+Tests verify analytic between-group allocation splits, unequal-slope formulas,
+symmetric prior optima, both response models, both parameterizations, group swaps,
+sample-size scaling, independent precision recomputation and explicit failures.
+The original two-sample allocation optimizer is not compiled by these tests.

@@ -101,11 +101,28 @@ def single_optimize_prior_allocations(
             else np.stack([-link / first**2, np.ones_like(first)], axis=-1)
         )
 
+    return _optimize_prior_information(
+        x, n, gradient, weight, target, prior, total, power, aggregation, tol, int(max_iterations)
+    )
+
+
+def _optimize_prior_information(
+    x: FloatArray,
+    n: FloatArray,
+    gradient: FloatArray,
+    weight: FloatArray,
+    target: FloatArray,
+    prior: FloatArray,
+    total: float,
+    power: float,
+    aggregation: str,
+    tol: float,
+    max_iterations: int,
+) -> SinglePriorAllocation:
     def evaluate(fractions: FloatArray) -> tuple[float, FloatArray]:
         effective = fractions * weight
-        low = np.min(np.where(effective > 0, x, np.inf), axis=-1)
-        high = np.max(np.where(effective > 0, x, -np.inf), axis=-1)
-        if np.any(high <= low):
+        active = np.where(effective[..., None] > 0, gradient, 0)
+        if np.any(np.linalg.matrix_rank(active) < gradient.shape[-1]):
             return np.inf, np.zeros_like(x)
         information = np.swapaxes(gradient, -1, -2) @ (effective[..., None] * gradient)
         try:

@@ -142,5 +142,7 @@ with exact and original log-normal conversion options.
 points for one-sample point-prior slope or quantile precision.
 `single_optimize_prior_allocations` optimizes arithmetic or harmonic prior-averaged
 SD/variance using explicit quadrature nodes and analytic gradients.
+`single_optimize_two_sample_allocations` allocates a shared subject total across
+both groups under point or weighted priors.
 [SINGLE coverage](docs/single.md) tracks
 the remaining prior-integration and optimization workflows.

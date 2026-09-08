@@ -74,6 +74,7 @@ from .single_correlation import SingleDesignCorrelation, single_design_correlati
 from .single_normal import SingleNormalCriterion, single_normal_criterion
 from .single_prior import single_prior_parameters
 from .single_prior_allocation import SinglePriorAllocation, single_optimize_prior_allocations
+from .single_two_allocation import SingleTwoSampleAllocation, single_optimize_two_sample_allocations
 from .single_two_sample import SingleTwoSamplePrecision, single_two_sample_precision
 from .single_uniform import SingleUniformCriterion, single_uniform_criterion
 from .stukel import predict_stukel, stukel_log_odds, stukel_probability
@@ -84,6 +85,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "SingleTwoSampleAllocation",
+    "single_optimize_two_sample_allocations",
     "SinglePriorAllocation",
     "single_optimize_prior_allocations",
     "SingleAllocation",
