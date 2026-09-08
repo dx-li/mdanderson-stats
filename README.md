@@ -290,4 +290,8 @@ performance. `ranlist_starting_seeds` reproduces original setup phrase handling.
 `RandlibGenerator` begins [RANDLIB](docs/randlib.md) with 32 independent stream
 states, antithetic draws, block resets, seed controls and efficient jumps.
 Fortran 77 and Fortran 95 comparisons validate the generator foundation;
-distribution samplers remain pending.
+non-uniform distribution samplers remain pending.
+
+RANDLIB now includes bounded uniform sampling and forward random permutations,
+with explicit Fortran/C float compatibility and bounded rejection sampling.
+Native comparisons cover all three archived language implementations.

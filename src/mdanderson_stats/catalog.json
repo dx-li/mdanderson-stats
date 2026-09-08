@@ -554,11 +554,14 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "RandlibGenerator: independent 32-stream bank, batched raw/uniform draws, antithetic control, seed replacement, block reset and power-of-two advancement"
+        "RandlibGenerator: independent 32-stream bank, batched raw/uniform draws, antithetic control, seed replacement, block reset and power-of-two advancement",
+        "RANDLIB bounded real/integer uniforms and forward permutations: unbiased defaults, Fortran/C compatibility and transactional rejection limits"
       ],
       "validation": [
         "tests/test_randlib.py",
         "tests/fixtures/randlib_streams.json",
+        "tests/test_randlib_sampling.py",
+        "tests/fixtures/randlib_sampling.json",
         "docs/randlib.md"
       ]
     },

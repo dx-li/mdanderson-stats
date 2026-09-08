@@ -1,8 +1,9 @@
 # RANDLIB
 
 Catalog entry 27 is partial. The 32-stream generator bank and state controls are
-implemented; distribution samplers, random permutations and the final archive
-coverage/performance audit remain pending.
+implemented, along with bounded real/integer uniforms and random permutations.
+Non-uniform distribution samplers and the final archive coverage/performance
+audit remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27)
 lists version 90, modified September 27, 2002. RANDLIB_V90.tar.gz contains
@@ -87,5 +88,63 @@ every value exactly. Fixtures include source hashes, compiler and flags.
 Independent tests check split versus combined batches, interleaved streams,
 antithetic complements, block-start semantics, ADVNST anchor replacement,
 prime-modulus assumptions, large powers, read-only outputs and invalid-operation
-state preservation. These validate the bank foundation only; the C distribution
-library and higher-level samplers remain pending.
+state preservation. These comparisons validate the bank foundation. The bounded samplers below
+have additional native checks; non-uniform samplers remain pending.
+
+
+## Bounded uniforms and permutations
+
+```python
+bank = RandlibGenerator()
+continuous = bank.uniform(100, low=-2.3, high=9.7)
+discrete = bank.integer_uniform(-3, 7, 100)
+shuffled = bank.permutation([10, 20, 30, 40])
+source_fortran = bank.uniform(100, low=-2.3, high=9.7, legacy=True)
+source_c = bank.uniform(100, low=-2.3, high=9.7, legacy=True, source="c")
+```
+
+`uniform` now accepts finite scalar bounds. Default arithmetic avoids overflow
+from subtracting opposite extreme bounds and returns exactly the requested
+constant for equal bounds. Equal real bounds still consume the requested draws,
+matching GENUNF. Floating-point rounding may reach a bound. Legacy requires the
+bounds and their difference to fit float32 and follows the archived arithmetic.
+`source="fortran"` (default) rounds the raw integer and scale constant to float32
+before multiplication. `source="c"` uses the C source's double-precision scaling
+then rounds to float32; it requires `legacy=True`. Both subsequently perform
+the bounded affine transformation in float32. C's rounding can produce an
+exact uniform of one, despite the original endpoint-exclusion comment. Modern
+unit uniforms stay strictly below one. Compiler contraction is disabled in C
+reference checks so intermediate arithmetic is explicit.
+
+`integer_uniform(low, high, size=1, legacy=False, max_attempts=None)` returns
+inclusive integer values. Bounds are signed 32-bit integers and the interval
+width must be at most 2,147,483,562, the raw generator's range. Equal integer
+bounds consume no draws. Default rejection sampling accepts an exact multiple
+of the interval width, eliminating modulo bias. Legacy uses IGNUIN's inclusive
+rejection endpoint, which gives an extra accepted residue zero. At the full raw
+range width, that source rule accepts only zero; it can take an impractical
+number of draws. A finite attempt budget prevents unbounded execution.
+
+`permutation(values, legacy=False, max_attempts=None)` copies a one-dimensional
+signed-32-bit integer array and performs GENPRM's forward Fisher–Yates swaps.
+Repeated and negative values are allowed; empty and singleton inputs consume
+no draws. Legacy selects swap positions with the archived IGNUIN rule. Modern
+uses unbiased positions. The input is unchanged and the returned array is
+read-only. The bank's `max_draws` also limits permutation length.
+
+Integer/permutation attempt budgets default to `max(100_000, 4 * output_size)`.
+An explicit positive `max_attempts` overrides this. The budget counts raw draws,
+including accepted draws, and covers the entire operation. Exceeding it raises
+`ArithmeticError` and leaves the bank state unchanged. Batched rejection sampling
+never consumes unused trailing draws: each chunk contains at most the number of
+outputs still needed. Small tails and permutation swaps use scalar integer
+recurrences to avoid allocating a NumPy batch for every single draw.
+
+`tools/reference_randlib_sampling.py` compiles unchanged C, Fortran 77 and
+Fortran 95 routines. Its 144 cases compare bounded integer draws, real uniforms,
+permutations and their resulting component states across two seed pairs, three
+streams, both antithetic settings and four integer ranges. These include forced
+rejections, constant bounds and a wide range with roughly half of draws rejected.
+All values and states match their selected source arithmetic. Independent tests
+cover unbiased rejection, exact batch/scalar state agreement, full-range behavior,
+transactional budget failures, multiset preservation and extreme real bounds.

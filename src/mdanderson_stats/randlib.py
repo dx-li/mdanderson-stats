@@ -1,9 +1,13 @@
 """Explicit RANDLIB generator banks with original stream/block controls."""
 
-import numpy as np
-from numpy.typing import NDArray
+from typing import Literal
 
-from .ranlist_random import _DEFAULT, _M1, _M2, _mod_power, _stream_seeds
+import numpy as np
+from numpy.typing import ArrayLike, NDArray
+
+from ._randlib_sampling import bounded, raw_batch
+from ._validation import scalar
+from .ranlist_random import _DEFAULT, _M1, _M2, _stream_seeds
 
 
 def _integer(value: int, name: str, lower: int, upper: int) -> int:
@@ -100,28 +104,144 @@ class RandlibGenerator:
         once. max_draws bounds each batch before allocating memory.
         """
         size = _integer(size, "size", 0, self._max_draws)
-        positions = np.arange(1, size + 1, dtype=np.int64)
-        a, b = self.get_seeds()
-        first = a * _mod_power(40014, positions, _M1) % _M1
-        second = b * _mod_power(40692, positions, _M2) % _M2
-        difference = first - second
-        result = np.where(difference < 1, difference + _M1 - 1, difference)
-        if self._antithetic[self._stream - 1]:
-            result = _M1 - result
-        if size:
-            self._current[self._stream - 1] = (int(first[-1]), int(second[-1]))
+        result, final = raw_batch(self.get_seeds(), size, self._antithetic[self._stream - 1])
+        self._current[self._stream - 1] = final
         result.flags.writeable = False
         return result
 
-    def uniform(self, size: int = 1, *, legacy: bool = False) -> NDArray[np.float64]:
-        """Consume uniforms; legacy reproduces original RANF float32 scaling."""
+    def uniform(
+        self,
+        size: int = 1,
+        *,
+        low: float = 0.0,
+        high: float = 1.0,
+        legacy: bool = False,
+        source: Literal["fortran", "c"] = "fortran",
+    ) -> NDArray[np.float64]:
+        """GENUNF bounded uniforms; equal bounds still consume draws.
+
+        Modern uses overflow-resistant interpolation. Legacy applies float32 bound,
+        difference, product and sum rounding. Select Fortran or C raw-uniform
+        scaling with source; C scaling can round to one. Floating-point rounding can reach
+        a bound even though the underlying raw uniforms are strictly interior.
+        """
         if not isinstance(legacy, (bool, np.bool_)):
             raise ValueError("legacy must be boolean")
+        if not isinstance(source, str) or source not in ("fortran", "c"):
+            raise ValueError("source must be fortran or c")
+        if not legacy and source != "fortran":
+            raise ValueError("source selection requires legacy=True")
+        low, high = scalar(low, "low"), scalar(high, "high")
+        if low > high:
+            raise ValueError("low must not exceed high")
+        if legacy:
+            with np.errstate(over="ignore", invalid="ignore"):
+                lower, upper = np.float32(low), np.float32(high)
+                width = upper - lower
+            if not np.isfinite(lower) or not np.isfinite(upper) or not np.isfinite(width):
+                raise ValueError("legacy bounds and their difference must fit float32")
         raw = self.integers(size)
-        result = (
-            (raw.astype(np.float32) * np.float32(4.656613057e-10)).astype(np.float64)
-            if legacy
-            else raw / _M1
+        if legacy:
+            u = (
+                (raw.astype(np.float64) * 4.656613057e-10).astype(np.float32)
+                if source == "c"
+                else raw.astype(np.float32) * np.float32(4.656613057e-10)
+            )
+            result = (lower + width * u).astype(np.float64)
+        else:
+            u = raw / _M1
+            if low == high:
+                result = np.full(size, low, dtype=np.float64)
+            elif low >= 0 or high <= 0:
+                result = low + (high - low) * u
+            else:
+                result = (1.0 - u) * low + u * high
+        result.flags.writeable = False
+        return result
+
+    def integer_uniform(
+        self,
+        low: int,
+        high: int,
+        size: int = 1,
+        *,
+        legacy: bool = False,
+        max_attempts: int | None = None,
+    ) -> NDArray[np.int64]:
+        """Inclusive bounded integers, with unbiased sampling by default.
+
+        Legacy preserves IGNUIN's biased inclusive rejection boundary. Failed
+        rejection budgets leave state unchanged. Equal bounds consume no draws.
+        Bounds are signed 32-bit integers with width at most 2147483562.
+        """
+        low = _integer(low, "low", -(2**31), 2**31 - 1)
+        high = _integer(high, "high", low, 2**31 - 1)
+        if high - low + 1 > _M1 - 1:
+            raise ValueError("integer interval width cannot exceed 2147483562")
+        size = _integer(size, "size", 0, self._max_draws)
+        if not isinstance(legacy, (bool, np.bool_)):
+            raise ValueError("legacy must be boolean")
+        budget = _integer(
+            max(100_000, 4 * size) if max_attempts is None else max_attempts,
+            "max_attempts",
+            1,
+            2**53 - 1,
         )
+        result, state, _ = bounded(
+            self.get_seeds(),
+            size,
+            low,
+            high,
+            self._antithetic[self._stream - 1],
+            bool(legacy),
+            budget,
+        )
+        self._current[self._stream - 1] = state
+        result.flags.writeable = False
+        return result
+
+    def permutation(
+        self,
+        values: ArrayLike,
+        *,
+        legacy: bool = False,
+        max_attempts: int | None = None,
+    ) -> NDArray[np.int64]:
+        """Forward GENPRM shuffle of a one-dimensional signed-32-bit integer array.
+
+        Input is copied. Empty/singleton inputs consume no draws. Rejection
+        budgets cover the complete permutation; failure leaves state unchanged.
+        """
+        array = np.asarray(values, dtype=object)
+        if array.ndim != 1:
+            raise ValueError("values must be a one-dimensional integer array")
+        size = _integer(len(array), "size", 0, min(self._max_draws, _M1 - 1))
+        result = np.array(
+            [_integer(value, "values", -(2**31), 2**31 - 1) for value in array], dtype=np.int64
+        )
+        if not isinstance(legacy, (bool, np.bool_)):
+            raise ValueError("legacy must be boolean")
+        budget = _integer(
+            max(100_000, 4 * size) if max_attempts is None else max_attempts,
+            "max_attempts",
+            1,
+            2**53 - 1,
+        )
+        state = self.get_seeds()
+        used = 0
+        for i in range(size - 1):
+            draw, state, attempts = bounded(
+                state,
+                1,
+                i,
+                size - 1,
+                self._antithetic[self._stream - 1],
+                bool(legacy),
+                budget - used,
+            )
+            j = int(draw[0])
+            result[i], result[j] = result[j], result[i]
+            used += attempts
+        self._current[self._stream - 1] = state
         result.flags.writeable = False
         return result
