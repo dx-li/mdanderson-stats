@@ -1107,12 +1107,16 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "single_design_precision: fixed one-sample point-prior logistic/log-log Fisher information and slope/quantile variance or standard deviation in linear/centered parameterizations"
+        "single_design_precision: fixed one-sample point-prior logistic/log-log Fisher information and slope/quantile variance or standard deviation in linear/centered parameterizations",
+        "single_two_sample_precision: fixed two-sample point-prior location or slope differences with the other parameter shared; joint information and contrast variance/standard deviation"
       ],
       "validation": [
         "tests/test_single.py",
         "tests/fixtures/single.json",
         "tools/reference_single.py",
+        "tests/test_single_two_sample.py",
+        "tests/fixtures/single_two_sample.json",
+        "tools/reference_single_two_sample.py",
         "docs/single.md"
       ]
     },

@@ -1,8 +1,8 @@
 # SINGLE dose-response design precision
 
-Catalog entry 55 is partial. Fixed one-sample designs under point priors are
+Catalog entry 55 is partial. Fixed one- and two-sample designs under point priors are
 implemented for logistic and log-log models, with linear or centered predictors.
-Uncertain normal/log-normal/uniform priors, two-sample criteria, design optimization,
+Uncertain normal/log-normal/uniform priors, design optimization,
 dose-point addition and original reporting workflows remain pending.
 
 ```python
@@ -60,3 +60,59 @@ values from the supplied test.out, verify a closed-form symmetric logistic desig
 check equivalence of parameterizations and inverse allocation scaling, exercise
 quantile broadcasting, and confirm stable information at probabilities rounded to
 one. Source: SINGLE_V1.tar.gz, source/single, version 2.0 (August 1997).
+
+## Two-sample comparisons
+
+`single_two_sample_precision` implements the two comparisons offered by SINGLE's
+CINIT menu: a location difference with a common slope, or a slope difference with
+a common location parameter. Each group has separate dose and allocation vectors;
+these may have different lengths. Parameters end in three entries, with any leading
+axes evaluated together. The parameter order follows the original MIX routine:
+
+| Form | Comparison | Parameters | Group 1 minus group 2 |
+| --- | --- | --- | --- |
+| linear | location | (a1, b, a2) | a1 − a2 |
+| linear | slope | (a, b1, b2) | b1 − b2 |
+| centered | location | (b, d01, d02) | d01 − d02 |
+| centered | slope | (b1, d0, b2) | b1 − b2 |
+
+For linear form, “location” means the intercept. In centered form it means the
+center dose. In particular, the linear location criterion is the precision of an
+intercept difference, not a transformed dose difference. Changing forms can also
+change the shared-parameter constraint, so these comparisons are not automatically
+equivalent under reparameterization.
+
+```python
+from mdanderson_stats import single_two_sample_precision
+
+comparison = single_two_sample_precision(
+    doses=([-1, 1], [-0.5, 0, 1.5]),
+    subjects=([20, 30], [30, 20, 50]),
+    parameters=[1.2, 0.3, 0.7],
+    form="centered",
+    comparison="location",
+)
+print(comparison.difference)  # -0.4
+print(comparison.sd)
+```
+
+The result includes the joint 3×3 Fisher information, each group's response
+probabilities, parameter difference, variance and standard deviation. It uses a
+Cholesky solve for the contrast variance, including the covariance induced by the
+shared parameter. It does not return a hypothesis-test p-value or test power.
+Each group needs positive informative allocation, and the joint design must
+identify all three parameters. One group can have a single informative dose if
+the other group's doses provide the remaining information. Singular designs
+raise errors; zero slopes are permitted when the chosen parameterization remains
+identifiable. Numerically rank-deficient gradient matrices are also rejected.
+
+`tools/reference_single_two_sample.py` compiles unchanged CPROB, CDPDB, MIX and
+GEXP routines and assembles the joint information in an independent driver. The
+16 native cases cover both models, both forms, both comparisons and two parameter
+triples. The fixture records source, extracted-code and driver hashes and compiler
+provenance. Tests compare probabilities and information, then check the contrast
+formula used by CRIT against that native-derived information. CRIT itself is not
+executed by this reference driver. Additional tests check closed-form symmetric
+logistic variances, group swapping, batch evaluation, allocation scaling, and
+identifiable versus singular designs. The unused power criterion commented out
+in the source menu is not exposed.

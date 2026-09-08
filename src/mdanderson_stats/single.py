@@ -72,20 +72,8 @@ def single_design_precision(
         gradient = np.stack(np.broadcast_arrays(x - second[..., None], -first[..., None]), axis=-1)
     if not np.all(np.isfinite(u)):
         raise ValueError("Linear predictor overflowed")
-    if model == "logistic":
-        p = expit(u)
-        weight = expit(u) * expit(-u)
-        link = np.log(q) - np.log1p(-q)
-    else:
-        with np.errstate(over="ignore", under="ignore", invalid="ignore", divide="ignore"):
-            t = np.exp(-u)
-            p = np.exp(-t)
-            ratio = np.ones_like(t)
-            np.divide(np.expm1(t), t, out=ratio, where=t > 0)
-            small = t / ratio
-            large = np.exp(2 * np.log(t) - t - np.log(-np.expm1(-t)))
-            weight = np.where(t < 1, small, np.where(np.isinf(t), 0, large))
-        link = -np.log(-np.log(q))
+    p, weight = _response_information(u, model)
+    link = np.log(q) - np.log1p(-q) if model == "logistic" else -np.log(-np.log(q))
     effective = n * weight
     minimum = np.min(np.where(effective > 0, x, np.inf), axis=-1)
     maximum = np.max(np.where(effective > 0, x, -np.inf), axis=-1)
@@ -113,3 +101,19 @@ def single_design_precision(
     if not np.all(np.isfinite(variance)) or not np.all(np.isfinite(slope_variance)):
         raise ValueError("Design precision overflowed")
     return SingleDesignPrecision(information, p, dose, slope_variance, variance)
+
+
+def _response_information(u: FloatArray, model: str) -> tuple[FloatArray, FloatArray]:
+    if model == "logistic":
+        p = expit(u)
+        weight = expit(u) * expit(-u)
+    else:
+        with np.errstate(over="ignore", under="ignore", invalid="ignore", divide="ignore"):
+            t = np.exp(-u)
+            p = np.exp(-t)
+            ratio = np.ones_like(t)
+            np.divide(np.expm1(t), t, out=ratio, where=t > 0)
+            small = t / ratio
+            large = np.exp(2 * np.log(t) - t - np.log(-np.expm1(-t)))
+            weight = np.where(t < 1, small, np.where(np.isinf(t), 0, large))
+    return p, weight
