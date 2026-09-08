@@ -254,3 +254,7 @@ automatic Fisher selection, independent study snapshots and UTF-8 summary report
 
 CTA study reports also provide optional per-cell and per-probability listings,
 with explicit output-size limits and source-compatible term traversal.
+
+CTA is complete, including all analysis workflows and detailed reports. Its
+[source audit](docs/cta-coverage.md) records native comparisons, independent
+mathematical checks and measured batch performance.

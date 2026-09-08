@@ -1,12 +1,10 @@
 # CTA contingency-table analysis
 
-Catalog entry 30 is partial. CHISQT expected counts, percentages, Pearson,
-Yates and source-specific Cochran statistics, the McNemar decomposition, and
-Cohen kappa with variances, sensitivity/specificity and predictive values are
-implemented, along with odds ratios, confidence limits and Fisher probabilities.
-Binomial comparison, reusable study settings and consolidated numerical reports
-and detailed cell/probability listings are also implemented. The final
-source-coverage audit remains pending.
+Catalog entry 30 is implemented: contingency-table statistics, agreement,
+paired-category analysis, diagnostic accuracy, odds ratios, Fisher probabilities,
+conditional binomial comparison, reusable studies and detailed reports. The
+[source-coverage audit](cta-coverage.md) maps all 22 archived program units and
+records native, independent and performance validation.
 
 The [official catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/30)
 lists version 1, modified March 19, 1992; the downloadable CTA_V1.tar.gz contains
@@ -129,8 +127,8 @@ accurate gamma tails, not the source overflow stub's forced approximation.
 
 Further checks cover rational decomposition, transpose/orientation, zero/one
 active pair, batch scaling to enormous counts and stable positive heterogeneity
-for nearly homogeneous contrasts. Fisher, kappa and the other pending CTA
-workflows are still tracked above; this does not complete catalog entry 30.
+for nearly homogeneous contrasts. Coverage of the other analyses is documented
+in their sections below and in the source-coverage audit.
 
 
 ## Cohen kappa and variances
@@ -288,7 +286,7 @@ only sets it on failure. `tests/test_cta_odds.py` compares all four returned
 native quantities, independently checks corrected intervals using standard
 normal quantiles, and covers batching, reversal, scaling, validation and
 extreme floating-point inputs. Original Fortran and executables remain outside
-the package. These checks do not validate CTA's remaining routines.
+the package. These checks specifically validate RELRISK; other routines have separate tests.
 
 ## Fisher fixed-margin probabilities
 

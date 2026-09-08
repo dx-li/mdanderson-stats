@@ -1,0 +1,28 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "Same Python API called on arrays versus once per table; not the Fortran executable or report formatting",
+  "results": {
+    "chi_square": {
+      "workload": "10000 positive 2x2 integer tables; compare statistic",
+      "batch_seconds": 0.0027472092770040035,
+      "scalar_seconds": 0.5859685419127345,
+      "speedup": 213.29592427402122
+    },
+    "diagnostic": {
+      "workload": "10000 positive 2x2 integer tables; compare standard_errors",
+      "batch_seconds": 0.00040016695857048035,
+      "scalar_seconds": 0.21281762514263391,
+      "speedup": 531.8220822200914
+    },
+    "binomial": {
+      "workload": "10000 positive 2x2 integer tables; compare pvalue",
+      "batch_seconds": 0.0018643750809133053,
+      "scalar_seconds": 0.6518242498859763,
+      "speedup": 349.62076921059565
+    }
+  }
+}

@@ -641,7 +641,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "contingency_chi_square: batched CHISQT expected counts, percentages, Pearson, default/source Yates, source Cochran and small-cell diagnostics",
         "mcnemar_analysis: batched pairwise, pooled directional and stable heterogeneity statistics with explicit zero-discordance handling",
@@ -670,7 +670,11 @@
         "tests/test_cta_binomial.py",
         "tests/fixtures/cta_binomial.json",
         "tests/test_cta_study.py",
-        "tests/test_cta_detail_report.py"
+        "tests/test_cta_detail_report.py",
+        "tests/test_cta_workflow.py",
+        "tests/fixtures/cta_workflow.json",
+        "docs/cta-coverage.md",
+        "docs/cta-benchmark.json"
       ]
     },
     {
