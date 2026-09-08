@@ -164,3 +164,8 @@ from the original adjustment after maximization.
 separable binomial-coefficient convolution. The original SSUPD transition/repacking
 block is compiled only in a local reference build, with independent scaled-binomial
 helpers; its provenance is recorded in `tests/fixtures/ksbin2_transition.json`.
+
+`ksbin2_assistance.py` independently evaluates multistage cumulative rejection
+probabilities and reference-completion power loss, following the source SSSIG,
+SSPOW and SSPL definitions. It uses Python arrival masses and binomial transition
+matrices; exhaustive paired trial paths validate its probabilities.

@@ -3,9 +3,9 @@
 Catalog entry 24 is partial. The outcome statistics and complete single-stage
 outcome ordering and ordinary single-stage probability tables are implemented.
 Source-convention mid-p significance and single-stage rejection-region selection
-and fixed multistage operating characteristics are also available. Multistage
-design-assistance tables, power-loss tables, study probability scans and
-report/design workflows remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
+and fixed multistage operating characteristics are also available. Ordinary
+multistage boundary-assistance and power-loss tables are implemented. Multistage
+mid-p reporting, study probability scans and report/design workflows remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
 
 ```python
 from mdanderson_stats import ksbin2_ordering, ksbin2_statistic
@@ -222,3 +222,67 @@ transition fixtures use the unchanged coefficient update/repacking block from
 SSUPD, with independently calculated scaled binomial inputs and helpers. Native
 sorting is not invoked in this reference; ordering is validated separately.
 Source, kernel and driver hashes accompany `tests/fixtures/ksbin2_transition.json`.
+
+## Multistage boundary assistance and power loss
+
+```python
+from mdanderson_stats import (
+    KStageTwoSampleBinomial,
+    ksbin2_boundary_table,
+    ksbin2_probability_table,
+)
+
+design = KStageTwoSampleBinomial(
+    [[2, 2], [3, 3], [4, 4]],
+    [0, 0, 1],
+    [2, 2],
+    criteria=(1,),
+)
+reference = ksbin2_probability_table(4, 4, 0.6, 0.2, criteria=(1,)).select_group(2)
+table = ksbin2_boundary_table(design, 2, 0.6, 0.2, reference=reference)
+print(table.significance, table.cumulative_power, table.power_loss)
+```
+
+The table evaluates every complete tied rejection region reachable at the requested
+stage. `stage_power` and `stage_null_rejection` are the current stage's contributions;
+`previous_power` and `previous_null_rejection` sum earlier rejections. Cumulative
+values add these before taking the null-grid maximum, so `significance` is the
+maximum cumulative rejection probability across the grid, not a sum of separate
+stage maxima. Future stopping decisions do not affect these quantities. As with
+the fixed-design evaluator, supplied probabilities may represent nulls, endpoints,
+or effects opposite to the design direction.
+
+Default and custom null grids follow the single-stage table conventions. All
+significance values here use ordinary inclusive regions. Multistage mid-p display
+semantics remain pending; this table does not silently apply the single-stage
+mid-p formula to a nonzero prior rejection probability.
+
+An optional `reference` supplies a fixed single-stage rejection region with the
+same final sample sizes. Its explicit event pairs define rejection; its stored
+probabilities are not reused. Reference completion is evaluated at the probability
+pairs supplied to the boundary-table call. The reference can have a different
+ordering or direction, since its complete fixed event region is unambiguous.
+
+`conditional_reference_power` has one last-axis entry per reachable **outcome row**,
+representing its probability of eventually landing in that reference region if
+all remaining observations are collected. This uses independent binomial transition
+matrices and sums over the reference event mask. Counts outside the feasible
+increment range contribute zero; zero remaining observations give an identity
+transition. Earlier stopping affects arrival probabilities, while future stopping
+is deliberately ignored in reference completion.
+
+`power_loss` has one last-axis entry per tied **group**. It sums alternative arrival
+mass times conditional reference power over that group's inclusive futility region
+(the group and all weaker-evidence groups). This is absolute probability, not a
+fraction of reference power or a randomized decision. With no reference, both
+reference-completion fields are None. These are design-assistance quantities, not
+an exact power difference between arbitrary multistage designs.
+
+Validation independently enumerates all paired four-observation sequences in 27
+cases spanning stages, directions and probability endpoints. Every candidate
+region's stage/cumulative probabilities and reference power loss are checked.
+Additional checks cover the native-validated first-stage table, empty/full reference
+regions, broadcasting, a known conditional completion probability, no new data in
+one group, and invalid arguments. The implementation follows the SSSIG/SSPOW/SSPL
+probability definitions; these tests are exhaustive probability checks rather than
+a native main-program session or a separate native SSPL reference build.

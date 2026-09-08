@@ -119,3 +119,6 @@ multistage-design workflows.
 
 `KStageTwoSampleBinomial` evaluates fixed KSBIN2 multistage designs, with cached
 surviving paths, broadcast probability pairs and expected sample sizes per group.
+
+`ksbin2_boundary_table` adds cumulative rejection-boundary assistance and optional
+reference-completion power-loss tables for those multistage designs.
