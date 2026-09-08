@@ -1,9 +1,10 @@
 # KSBIN1 binomial trial design and operating characteristics
 
-Catalog entry 25 is partial. Fixed multistage design evaluation and all five
-single-stage calculation modes and boundary-selection assistance tables are
-implemented. A consolidated comparison with a separately chosen single-stage
-trial and original reporting/session workflows remain pending. Source: KSBIN1_V1.tar.gz, ksbin190_1.0.
+Catalog entry 25 is implemented: all five single-stage calculation modes,
+multistage operating characteristics, boundary-selection tables, single-stage
+comparison, design revision, readable reports and original numeric design export.
+Python calls replace the original terminal dialogue; screen paging and exact
+terminal formatting are not reproduced. Source: KSBIN1_V1.tar.gz, ksbin190_1.0.
 
 ```python
 from mdanderson_stats import ksbin1_operating_characteristics
@@ -62,7 +63,7 @@ Probabilities include 0 and 1, beyond the original input menu's interior range.
 No stopping-boundary search or statistical optimization is inferred from these
 operating characteristics.
 
-## Validation and remaining coverage
+## Validation
 
 `tools/reference_ksbin1.py` extracts the complete NXTSTG, BINDEN, EXPCOR and EXPOV
 routines unchanged into an isolated module with equivalent binary64 constants.
@@ -78,9 +79,8 @@ check mass conservation, broadcasting, endpoints, disabled final rejection,
 conditional expectations with probability zero and invalid input. Existing KSB1CI
 native and exhaustive tests validate the shared probability-code extraction.
 
-Still pending: consolidated single-stage comparison, report file dialogue and
-design revision workflow. These are required before this catalog
-entry can be marked implemented.
+The workflow coverage audit below maps the remaining original menu actions to
+validated Python calls.
 
 ## Single-stage power and adjacent critical regions
 
@@ -122,8 +122,8 @@ enumerate binomial masses for well-separated attainable sizes, and verify exact
 size ties, adjacent regions, broadcasting and invalid inputs.
 
 All five calculation modes are available through the forward power, significance,
-alternative-probability, null-probability and sample-size APIs. Interactive design
-assistance and the remaining workflows below are still pending.
+alternative-probability, null-probability and sample-size APIs. Boundary assistance
+and study reporting/revision are described below.
 
 ## Solve significance for a requested power
 
@@ -366,3 +366,80 @@ with bounds checking. Twelve native first-stage tables are preserved in
 `tests/fixtures/ksbin1_table.json`: upper-tail tables match directly; lower-tail
 tables match after adding the independently calculated omitted path probability.
 Source and extracted-driver hashes and compiler settings accompany the fixture.
+
+## Study comparison, reports and revision
+
+```python
+from mdanderson_stats import ksbin1_study
+
+study = ksbin1_study(
+    [14, 28, 42],
+    [0, 1, 3],
+    [3, 4],
+    null_probability=0.2,
+    alternative_probability=0.06,
+    single_stage_critical=4,
+)
+print(study.report())
+study.write_report("study.tsv", include_tables=True)
+study.write_design("design.dat")
+revised = study.revise(alternative_probability=0.08, critical=[0, 1, 4])
+print(revised.boundary_table(stage=2).power_loss)
+```
+
+The comparator uses the final planned sample size and its own explicit inclusive
+critical count. For this example, single-stage significance/power are approximately
+0.0580108/0.894778; multistage significance/power are 0.0610041/0.792488. Expected
+savings are approximately 20.7791 observations under the null and 16.0208 under
+the alternative. These are expected savings, not a reduction in maximum sample size.
+
+Null and alternative probabilities broadcast. Study significance/power have the
+broadcast shape. The nested characteristics result has a leading hypothesis axis
+(null, alternative), followed by case axes and, for stage quantities, a final
+stage axis. The direction and boundaries are shared across cases. The alternative
+must lie on the specified side of the null. Endpoints are allowed. Revision
+revalidates and recalculates; it leaves the preceding result unchanged. Changing
+the number of stages requires compatible boundary arrays. A direction change
+requires suitable explicit cutoffs and probabilities.
+
+Reports contain per-stage decisions, totals, single-stage comparisons, cumulative
+decisions, expected observations given a correct decision, unconditional expected
+observations, their difference, and expected savings. Optional boundary tables
+appear for every stage. Broadcast cases are flattened in C order and retain their
+hypothesis probabilities. Precision is configurable from 1 to 17 significant
+digits. Undefined conditional expectations appear as `nan` with an explanation.
+The source's displayed single-stage quitting columns are placeholders of zero;
+the Python comparator reports its actual significance/power without those placeholders.
+
+`design_text` and `write_design` reproduce the source's numeric export semantics:
+first the number of stages, then one `increment quit critical` row per stage.
+The final quit is -1. For the example the content is:
+
+```text
+3
+14 3 0
+14 4 1
+14 -1 3
+```
+
+This format omits hypothesis probabilities and direction; retain the study report
+for context. It is not a complete session serialization. UTF-8 file writers
+explicitly replace the requested path and propagate I/O errors.
+
+### Original workflow coverage audit
+
+| Original operation | Python replacement | Verification |
+| --- | --- | --- |
+| ABIN1 modes 1–5; achieved values and critical brackets | Five binomial solver APIs; `binomial_power` provides adjacent critical regions for any solved parameters | Native mode fixtures, independent mass sums, inversion brackets and exhaustive integer sample-size checks |
+| Enter stages, cumulative sizes, probabilities and rejection/quit cutoffs | `ksbin1_study` and `KStageBinomial` validation | Native and exhaustive multistage cases; invalid-boundary tests |
+| Page through boundary-selection tables | `boundary_table(stage)` or `report(include_tables=True)` | Twelve native tables with documented correction; exhaustive trial paths |
+| Compare to separately selected single-stage cutoff at the final sample size | Study single-stage significance/power and report comparison | Independent binomial mass sums for all 18 native design cases |
+| Stage, cumulative and expected-observation summaries | Study `report` / `write_report` | Parsed report numbers checked against 18 native numerical cases |
+| Change hypotheses; try other boundaries with the same stages; restart | `revise` or a new study call | Revision versus fresh evaluation, changed stage count/direction, and preserved original result |
+| Report file selection and final numeric design export | Explicit report/design file writers | Temporary-file replacement, failure propagation, exact numeric column order and both directions |
+
+The Python implementation intentionally corrects documented source numerical and
+boundary defects. It does not reproduce the original prompting, terminal paging,
+Fortran formatting widths or error-prone source index behavior. KSBIN1's scientific
+calculations, decision summaries and design/report outputs are covered by the
+listed APIs and tests.

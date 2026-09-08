@@ -448,7 +448,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "ksbin1_operating_characteristics: fixed-design stage rejection/quitting/continuation probabilities, significance/power and unconditional/decision-conditional expected sample sizes",
         "KStageBinomial.stage_distribution: vectorized joint arrival probabilities reusing cached surviving-path coefficients",
@@ -457,7 +457,8 @@
         "binomial_alternative: vectorized alternative-probability solve for fixed size and target power, with adjacent floating-point brackets",
         "binomial_null: vectorized closest-null solve satisfying significance and target power, with adjacent probability brackets and impossible-design errors",
         "binomial_sample_size: minimum integer sample-size solve using a randomized power upper bound and ordered vectorized search, preserving nonmonotone nonrandomized power",
-        "ksbin1_boundary_table: vectorized stage significance/power and reference-completion power-loss assistance with corrected inclusive lower cutoff"
+        "ksbin1_boundary_table: vectorized stage significance/power and reference-completion power-loss assistance with corrected inclusive lower cutoff",
+        "ksbin1_study: paired hypothesis evaluation, explicit single-stage comparison, study revision, readable stage/cumulative/expectation reports and original numeric design export"
       ],
       "validation": [
         "tests/test_ksbin1.py",
@@ -481,7 +482,8 @@
         "tools/reference_binomial_sample_size.py",
         "tests/test_ksbin1_table.py",
         "tests/fixtures/ksbin1_table.json",
-        "tools/reference_ksbin1_table.py"
+        "tools/reference_ksbin1_table.py",
+        "tests/test_ksbin1_study.py"
       ]
     },
     {

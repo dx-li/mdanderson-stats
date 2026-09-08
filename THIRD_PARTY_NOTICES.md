@@ -133,3 +133,9 @@ provenance is recorded in `tests/fixtures/binomial_null.json`.
 randomized-power bound and ordered integer search, replacing the original
 continuous-search/local-lookback heuristic. Mode-3 reference provenance and its
 original outputs are recorded in `tests/fixtures/binomial_sample_size.json`.
+
+`ksbin1_table.py` and `ksbin1_study.py` independently implement the source's
+boundary-assistance probability definitions, study summaries, revision workflow
+and numeric design-export semantics. The table corrects the original lower-cutoff
+exclusion. Native table provenance is recorded in `tests/fixtures/ksbin1_table.json`;
+original source remains confined to local reference builds.

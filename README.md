@@ -108,4 +108,5 @@ See [KSB1CI definitions, validation and examples](docs/ksb1ci.md).
 
 `ksbin1_operating_characteristics` evaluates fixed multistage binomial designs,
 including rejection/quitting probabilities and expected sample sizes.
-[KSBIN1 coverage](docs/ksbin1.md) tracks its design solvers, boundary tables and remaining workflows.
+`ksbin1_study` adds single-stage comparison, boundary assistance, design revision,
+and report/design file output. See [KSBIN1 coverage and validation](docs/ksbin1.md).
