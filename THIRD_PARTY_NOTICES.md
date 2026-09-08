@@ -469,3 +469,16 @@ M.D. Anderson Cancer Center, Department of Biomathematics. Original
 The explicit ASP compatibility option preserves the original duplicate
 transmission weighting and cutoff; the default corrects that behavior.
 Original source, executables and archived ACM numerical code are not bundled.
+
+
+## CDFLIB90
+
+The beta CDF and inversion interfaces independently express CDFLIB90 1.2,
+by Barry W. Brown, James Lovato and Kathy Russell, with the Fortran 95
+conversion by Dan Serachitopol. The manual credits copyright 2002 to the
+University of Texas M.D. Anderson Cancer Center, Department of Biomathematics.
+Original [LEGALITIES](notices/mdanderson-cdflib90-LEGALITIES.txt) are retained.
+The archived Fortran/C sources, binaries and ACM implementations are not
+bundled. Python uses SciPy special functions and independently written
+array-based searches. Numerical differences and recorded native defects are
+explained in [the implementation notes](docs/cdflib90.md).

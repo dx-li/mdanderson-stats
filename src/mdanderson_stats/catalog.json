@@ -395,9 +395,17 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Beta distribution lower/upper tails, quantile/complement and both shape inversions; broadcast immutable results and all four CDFLIB90 beta public interfaces",
+        "Explicit complementary coordinates/probabilities, smaller-tail numerical evaluation, batched bounded log-shape searches and clear invalid/out-of-bound errors"
+      ],
+      "validation": [
+        "tests/test_cdflib_beta.py",
+        "tests/fixtures/cdflib_beta.json",
+        "docs/cdflib90.md",
+        "docs/cdflib-beta-benchmark.json"
+      ]
     },
     {
       "id": 22,

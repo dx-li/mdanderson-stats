@@ -330,3 +330,9 @@ calculations in one call. Search results include a fixed-observation comparison;
 `format_tdtasp_template` support validated legacy forms and file-to-study workflows.
 
 The [TDTASP archive audit](docs/tdtasp-coverage.md) covers all 44 archived files.
+
+
+`cdf_beta`, `cum_beta`, `ccum_beta` and `inv_beta` begin the CDFLIB90 port with
+beta tails, quantiles and shape inversions. They broadcast arrays and retain
+small probability/coordinate complements. [CDFLIB90 notes](docs/cdflib90.md)
+describe native validation, corrected source defects and the remaining scope.

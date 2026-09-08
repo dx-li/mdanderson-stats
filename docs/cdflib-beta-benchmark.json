@@ -1,0 +1,39 @@
+{
+  "python": "3.13.5",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "repetitions": 3,
+  "inputs": "x=linspace(.05,.9,n); a=geomspace(.2,20,n); b=1; p=x**a; q=-expm1(a*log(x))",
+  "comparison": "One broadcast call versus n scalar calls to the same Python API; not native Fortran",
+  "cases": [
+    {
+      "operation": "tails",
+      "size": 128,
+      "batch_seconds": 0.00011208374053239822,
+      "scalar_seconds": 0.006226707715541124,
+      "speedup": 55.55406775295183
+    },
+    {
+      "operation": "shape_a",
+      "size": 128,
+      "batch_seconds": 0.0016406667418777943,
+      "scalar_seconds": 0.155564833432436,
+      "speedup": 94.8180574772834
+    },
+    {
+      "operation": "tails",
+      "size": 1024,
+      "batch_seconds": 0.00016037467867136002,
+      "scalar_seconds": 0.04881858313456178,
+      "speedup": 304.403310666024
+    },
+    {
+      "operation": "shape_a",
+      "size": 1024,
+      "batch_seconds": 0.005151541903614998,
+      "scalar_seconds": 1.2378829158842564,
+      "speedup": 240.29367110759503
+    }
+  ]
+}
