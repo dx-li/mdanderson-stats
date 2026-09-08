@@ -43,7 +43,8 @@ def main() -> None:
     gof = measure(
         lambda: chi_square_gof(observations, weights).pvalue,
         lambda: np.array([chi_square_gof(row, weights).pvalue for row in observations]),
-        "1000 Pearson goodness-of-fit tests, 20 categories, deterministic unequal counts and weights",
+        "1000 Pearson goodness-of-fit tests, 20 categories, "
+        "deterministic unequal counts and weights",
     )
     result = {
         "python": platform.python_version(),
