@@ -318,3 +318,7 @@ delta method; source provenance and corrections are documented in `docs/cta.md`.
 `cta_diagnostic.py` independently implements SENSPEC probabilities. Probability
 standard errors are the default; the source count-standard-deviation formula is
 available explicitly. The retained CTA notice applies.
+
+`cta_odds.py` independently implements RELRISK odds ratios. Corrected log-Wald
+limits are default; the source CDF multiplier is available explicitly. The
+retained CTA notice applies.

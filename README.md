@@ -239,3 +239,6 @@ multinomial calculations and an explicit legacy-formula option.
 
 `diagnostic_accuracy` adds CTA sensitivity, specificity and predictive values
 with explicit table orientation and probability standard errors.
+
+`odds_ratio` adds CTA relative odds and log-Wald limits, with explicit
+compatibility for the source confidence-limit formula.

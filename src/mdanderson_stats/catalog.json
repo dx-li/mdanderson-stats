@@ -646,7 +646,8 @@
         "contingency_chi_square: batched CHISQT expected counts, percentages, Pearson, default/source Yates, source Cochran and small-cell diagnostics",
         "mcnemar_analysis: batched pairwise, pooled directional and stable heterogeneity statistics with explicit zero-discordance handling",
         "cohen_kappa: batched agreement, multinomial and independence variances, explicit source theta-index compatibility",
-        "diagnostic_accuracy: batched sensitivity, specificity, predictive values, explicit axes/class and corrected/source error formulas"
+        "diagnostic_accuracy: batched sensitivity, specificity, predictive values, explicit axes/class and corrected/source error formulas",
+        "odds_ratio: batched RELRISK odds, stable log-Wald limits and explicit source CDF multiplier"
       ],
       "validation": [
         "tests/test_cta.py",
@@ -657,7 +658,9 @@
         "tests/test_cta_kappa.py",
         "tests/fixtures/cta_kappa.json",
         "tests/test_cta_diagnostic.py",
-        "tests/fixtures/cta_diagnostic.json"
+        "tests/fixtures/cta_diagnostic.json",
+        "tests/test_cta_odds.py",
+        "tests/fixtures/cta_odds.json"
       ]
     },
     {

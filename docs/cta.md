@@ -3,7 +3,8 @@
 Catalog entry 30 is partial. CHISQT expected counts, percentages, Pearson,
 Yates and source-specific Cochran statistics, the McNemar decomposition, and
 Cohen kappa with variances, sensitivity/specificity and predictive values are
-implemented. Fisher probabilities, relative odds, binomial comparison, reports
+implemented, along with odds ratios and confidence limits. Fisher probabilities,
+binomial comparison, reports
 and interactive study orchestration
 remain pending.
 
@@ -239,3 +240,52 @@ report precision. Independent checks cover conditional binomial formulas,
 transpose/class reversal, batch sample-size scaling, local undefined margins,
 rare-error precision, immutability and invalid arguments. Remaining CTA workflows
 are listed at the top of this document.
+
+## Odds ratios and confidence limits
+
+```python
+from mdanderson_stats import odds_ratio
+
+fit = odds_ratio([[80, 10], [20, 90]], risk_factor="columns", response_index=0)
+print(fit.odds_ratio, fit.lower, fit.upper)
+source = odds_ratio([[80, 10], [20, 90]], legacy=True)
+```
+
+`odds_ratio` implements RELRISK. Despite the source report's “relative risk”
+label, this is an **odds ratio**, not a ratio of response probabilities.
+`risk_factor` selects the grouping axis, and `response_index` (zero or one)
+selects the response on the other axis. The comparison is always the response
+odds in risk group zero divided by those in risk group one. Transposing the
+table and changing the risk-factor axis preserves the result. Reversing the
+response or exchanging risk groups reciprocates the ratio and interval.
+
+Final input axes must be 2x2, with strictly positive finite cells; fractional
+counts are allowed. Leading dimensions form a batch. Zero cells are rejected,
+as in RELRISK, with no implicit continuity correction. The returned arrays are
+read-only. `odds` contains the two group odds, and `standard_error` is the
+standard error of the **log** odds ratio: sqrt(sum(1/cell)).
+
+The default confidence limits are exp(log(OR) ± z * SE), where
+z = Phi-inverse(1-alpha/2). `alpha` is a scalar strictly between zero and one,
+with default 0.05. These are asymptotic log-Wald intervals, not exact intervals.
+The source incorrectly calls its normal **CDF** PHI(alpha/2) instead of an
+inverse CDF. `legacy=True` explicitly retains that formula, using an accurate
+double-precision CDF rather than reproducing every single-precision rounding.
+At alpha=0.05 its multiplier is about 0.50997 rather than 1.95996, producing
+much narrower limits. Legacy limits are provided for reproduction only.
+
+Logarithms avoid intermediate odds overflow. Reciprocal square roots and a
+scaled Euclidean norm keep log standard errors finite even for subnormal cells.
+The default quantile is evaluated from log(alpha)-log(2), retaining even the
+smallest positive floating-point alpha. Exponentiation can still yield zero or
+infinity when a result exceeds floating-point range; `log_odds_ratio`,
+`log_lower`, and `log_upper` retain the corresponding finite log values.
+
+`tools/reference_cta_odds.py` compiles unchanged RELRISK locally and records 48
+native cases across four tables, both risk-factor axes, both response indices,
+and three alpha values. The driver initializes the success flag because RELRISK
+only sets it on failure. `tests/test_cta_odds.py` compares all four returned
+native quantities, independently checks corrected intervals using standard
+normal quantiles, and covers batching, reversal, scaling, validation and
+extreme floating-point inputs. Original Fortran and executables remain outside
+the package. These checks do not validate CTA's remaining routines.
