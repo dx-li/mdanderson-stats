@@ -32,7 +32,11 @@ from .ksbin1 import KSBinomialOperatingCharacteristics, ksbin1_operating_charact
 from .ksbin1_study import KSBinomialStudy, ksbin1_study
 from .ksbin1_table import KSBinomialBoundaryTable, ksbin1_boundary_table
 from .ksbin2 import KSBinomialOrdering, ksbin2_ordering, ksbin2_statistic
-from .ksbin2_probability import KSBinomialProbabilityTable, ksbin2_probability_table
+from .ksbin2_probability import (
+    KSBinomialProbabilityTable,
+    KSBinomialRejectionRegion,
+    ksbin2_probability_table,
+)
 from .kstage_binomial import KStageBinomial
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
@@ -78,6 +82,7 @@ __all__ = [
     "binomial_significance",
     "BinomialPower",
     "binomial_power",
+    "KSBinomialRejectionRegion",
     "KSBinomialProbabilityTable",
     "ksbin2_probability_table",
     "KSBinomialOrdering",

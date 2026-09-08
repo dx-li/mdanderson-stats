@@ -29,6 +29,87 @@ class KSBinomialProbabilityTable:
     maximizing_null_probability: FloatArray
     power: FloatArray
 
+    @property
+    def midp_significance(self) -> FloatArray:
+        """Source BRKARR mid-p convention: average adjacent grid maxima.
+
+        This is not the maximum of pointwise mid-p values, nor the actual
+        rejection probability of the inclusive region.
+        """
+        return (self.significance + np.r_[0.0, self.significance[:-1]]) / 2
+
+    @property
+    def null_midp(self) -> FloatArray:
+        """Pointwise strict-tail probability plus half the terminal tied mass."""
+        previous = np.concatenate(
+            [np.zeros((len(self.null_grid), 1)), self.null_rejection[:, :-1]], axis=1
+        )
+        return (self.null_rejection + previous) / 2
+
+    @property
+    def pointwise_midp_significance(self) -> FloatArray:
+        """Maximum over the grid after the pointwise mid-p adjustment."""
+        return self.null_midp.max(axis=0)
+
+    def select(
+        self, alpha: float = 0.05, *, method: str = "ordinary"
+    ) -> "KSBinomialRejectionRegion":
+        """Largest complete tied region within the chosen reported level.
+
+        method='midp' uses KSBIN2's source convention. The returned ordinary
+        significance exposes the inclusive region's actual grid-maximum size.
+        alpha is scalar; alternative-power cases retain their broadcast shape.
+        """
+        level = finite(alpha, "alpha")
+        if level.ndim != 0 or not 0 <= level <= 1:
+            raise ValueError("alpha must be a scalar in [0,1]")
+        if method not in ("ordinary", "midp"):
+            raise ValueError("method must be ordinary or midp")
+        values = self.significance if method == "ordinary" else self.midp_significance
+        group = int(np.searchsorted(values, level, side="right")) - 1
+        return self.select_group(group, method=method)
+
+    def select_group(self, group: int, *, method: str = "ordinary") -> "KSBinomialRejectionRegion":
+        """Choose a zero-based tied group explicitly; -1 selects the empty region."""
+        if (
+            isinstance(group, bool)
+            or not isinstance(group, (int, np.integer))
+            or not -1 <= group < len(self.significance)
+        ):
+            raise ValueError("group must be -1 or a valid zero-based tied group index")
+        if method not in ("ordinary", "midp"):
+            raise ValueError("method must be ordinary or midp")
+        end = -1 if group == -1 else int(self.ordering.group_end[group])
+        empty = group == -1
+        return KSBinomialRejectionRegion(
+            self,
+            int(group),
+            end,
+            method,
+            0.0
+            if empty
+            else float(
+                self.significance[group] if method == "ordinary" else self.midp_significance[group]
+            ),
+            0.0 if empty else float(self.significance[group]),
+            np.zeros(self.power.shape[:-1]) if empty else self.power[..., group].copy(),
+            self.ordering.events[: end + 1].copy(),
+        )
+
+
+@dataclass(frozen=True)
+class KSBinomialRejectionRegion:
+    """An inclusive region; mid-p reporting never randomizes its terminal group."""
+
+    table: KSBinomialProbabilityTable
+    group: int
+    last_row: int
+    method: str
+    reported_significance: float
+    significance: float
+    power: FloatArray
+    events: np.ndarray
+
 
 def ksbin2_probability_table(
     trials1: int,

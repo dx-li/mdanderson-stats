@@ -153,3 +153,9 @@ criterion-description inconsistency and the exact-zero likelihood correction.
 null-grid significance using shared Python binomial masses. The source probability
 routines are consulted and compiled locally for reference; the fixture provenance
 is in `tests/fixtures/ksbin2_probability.json`. No original routines are shipped.
+
+The KSBIN2 probability table also independently implements the source BRKARR
+mid-p reporting convention and selection of complete tied rejection regions.
+The native probability fixture includes unchanged BRKARR outputs. Pointwise
+mid-p values are separately named to distinguish adjustment before maximization
+from the original adjustment after maximization.

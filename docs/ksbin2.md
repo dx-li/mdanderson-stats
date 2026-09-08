@@ -2,8 +2,9 @@
 
 Catalog entry 24 is partial. The outcome statistics and complete single-stage
 outcome ordering and ordinary single-stage probability tables are implemented.
-Mid-p calculations, multistage transitions, rejection/quitting selection, power-loss
-tables, study probability scans and report/design workflows remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
+Source-convention mid-p significance and single-stage rejection-region selection
+are also available. Multistage transitions, quitting selection, power-loss tables,
+study probability scans and report/design workflows remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
 
 ```python
 from mdanderson_stats import ksbin2_ordering, ksbin2_statistic
@@ -117,3 +118,48 @@ Independent tests enumerate all binary paths for two groups of sizes 2 and 3,
 including endpoint probabilities, and check every region's null rejection and
 power. Other tests check broadcasting, complete tied regions, complement symmetry,
 custom grids, the maximum 100-by-100 design, and a power of 1e-300.
+
+## Mid-p convention and rejection-region selection
+
+```python
+from mdanderson_stats import ksbin2_probability_table
+
+table = ksbin2_probability_table(20, 15, 0.6, 0.2)
+region = table.select(alpha=0.05)
+print(region.events, region.significance, region.power)
+midp_region = table.select(alpha=0.05, method="midp")
+print(midp_region.reported_significance, midp_region.significance)
+```
+
+`select` returns the largest complete tied rejection region whose reported level
+is at most alpha. Exact equality is included; every group in a qualifying plateau
+is included. `select_group` allows explicit zero-based group selection, matching
+the source's requirement that a critical boundary end on a whole tied group.
+Group -1 denotes the empty region and yields no event pairs, zero significance,
+and zero power. Alpha is scalar in [0,1]; alternative-power arrays preserve their
+broadcast shape. The returned event pairs describe the complete inclusive region.
+
+The ordinary method uses the existing grid-maximum significance. The `midp` method
+reproduces the original BRKARR convention: average the current and preceding
+groups' ordinary grid maxima, with zero preceding the first group. It leaves power
+and the actual rejection region unchanged, as the source does. The result exposes
+both `reported_significance` (the selected convention) and `significance` (ordinary
+grid-maximum rejection probability). For one observation per group, selecting the
+first greater-tail group at mid-p alpha 0.125 gives reported significance 0.125
+but ordinary significance 0.25. Its power is p1*(1-p2), without halving.
+
+For clarity, the table also exposes `null_midp`: at each null probability, the
+strict-tail rejection probability plus half the probability of the terminal tied
+group. `pointwise_midp_significance` takes the grid maximum of those pointwise
+values. This generally differs from `midp_significance`, which adjusts after
+maximization. The latter is at least as large because the two adjacent ordinary
+maxima may occur at different grid points. These are distinct conventions; the
+selection method named `midp` deliberately follows the original executable.
+Neither changes the grid's finite coverage into a continuous-null size guarantee.
+
+The native reference tool additionally extracts unchanged BRKARR and records its
+mid-p output for all 18 probability-table cases. Independent tests sum strict and
+half-weight terminal masses at every grid point in a small design. Selection tests
+cover every attainable level (including exact ties), empty/full regions, both
+one-sided directions and two-sided tests, explicit groups, broadcast power, and
+independent binomial-mass power sums for the chosen inclusive regions.

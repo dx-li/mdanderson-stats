@@ -18,6 +18,7 @@ def main():
     blocks = []
     for name, kind in [
         ("SSPOW", "SUBROUTINE"),
+        ("BRKARR", "SUBROUTINE"),
         ("SSSIG", "SUBROUTINE"),
         ("PQTAB", "FUNCTION"),
         ("PQTAB1", "FUNCTION"),
@@ -37,7 +38,7 @@ def main():
         """module numerical
 implicit none
 integer,parameter::dpkind=kind(1d0),mxprob=51
-real(dpkind),parameter::zero=0d0,one=1d0,two=2d0
+real(dpkind),parameter::zero=0d0,one=1d0,two=2d0,half=.5d0
 integer npts,nptgrp(2),side12,s1(10201),s2(10201)
 real(dpkind) pa(2),bincof(10201),sig(10201),pow(10201)
 contains
@@ -60,6 +61,8 @@ old=zero
 call sssig(old,one)
 call sspow(zero)
 write(*,'(*(ES27.17E3,1X))') sig(ends(:ng)),pow(ends(:ng))
+call brkarr(ends,ng,sig,.true.,.true.)
+write(*,'(*(ES27.17E3,1X))') sig(ends(:ng))
 end program
 """)
     executable = directory / "reference"
@@ -100,12 +103,13 @@ end program
                         criteria=criteria,
                         probabilities=[p1, p2],
                         significance=values[:ng],
-                        power=values[ng:],
+                        power=values[ng : 2 * ng],
+                        midp_significance=values[2 * ng :],
                     )
                 )
     fixture = dict(
         source=(
-            "Unchanged SSSIG, SSPOW, PQTAB, PQTAB1, QEQDBL; Python supplies ordered "
+            "Unchanged SSSIG, SSPOW, BRKARR, PQTAB, PQTAB1, QEQDBL; Python supplies ordered "
             "count pairs, exact-combinatorial scaled coefficients and tied group ends"
         ),
         source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
