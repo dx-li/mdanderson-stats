@@ -3,8 +3,9 @@
 Catalog entry 24 is partial. The outcome statistics and complete single-stage
 outcome ordering and ordinary single-stage probability tables are implemented.
 Source-convention mid-p significance and single-stage rejection-region selection
-are also available. Multistage transitions, quitting selection, power-loss tables,
-study probability scans and report/design workflows remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
+and fixed multistage operating characteristics are also available. Multistage
+design-assistance tables, power-loss tables, study probability scans and
+report/design workflows remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
 
 ```python
 from mdanderson_stats import ksbin2_ordering, ksbin2_statistic
@@ -163,3 +164,61 @@ half-weight terminal masses at every grid point in a small design. Selection tes
 cover every attainable level (including exact ties), empty/full regions, both
 one-sided directions and two-sided tests, explicit groups, broadcast power, and
 independent binomial-mass power sums for the chosen inclusive regions.
+
+## Fixed multistage designs
+
+```python
+from mdanderson_stats import KStageTwoSampleBinomial
+
+design = KStageTwoSampleBinomial(
+    cumulative_trials=[[2, 2], [3, 3], [4, 4]],
+    reject_group=[0, 0, 1],
+    quit_group=[2, 2],
+    criteria=(1,),
+    alternative="greater",
+)
+result = design.operating_characteristics(probability1=[0.5, 0.6], probability2=[0.5, 0.2])
+print(result.rejection_probability, result.expected_sample_size)
+```
+
+Each stage's rejection and quitting boundaries index its **reachable** tied score
+groups, numbered from zero in strongest-to-weakest evidence order. `reject_group`
+includes all groups up through that index; `quit_group` includes that group and
+all later groups. -1 disables a boundary. Supply a rejection entry per stage and
+quitting entries only for interim stages. Final nonrejections always quit.
+`orderings[stage-1]` exposes the corresponding reachable count pairs and tied groups.
+Changing earlier stopping decisions can change later group indices.
+
+Cumulative sizes have shape (stages, 2), with 1–10 stages and 1–100 observations
+per group. Sizes cannot decrease; each stage adds observations to at least one
+group. The other group's increment may be zero. Overlapping regions, out-of-range
+group indices, and designs eliminating every path to a planned stage raise errors.
+
+The constructor counts surviving paths through separable binomial-coefficient
+convolutions. It caches the fraction of paths reaching each cumulative outcome,
+then weights the two binomial distributions for each evaluation. This avoids
+recomputing transitions for each hypothesis or probability scan. Binary64 path
+counts fit within the original total-200-observation domain.
+
+`stage_distribution(stage, p1, p2)` returns joint arrival probabilities with final
+axes indexing the two cumulative event counts. Its sum is the probability of
+reaching the stage, not a conditional distribution summing to one. Probability
+pairs broadcast and may include endpoints, equal probabilities, or effects in the
+opposite direction to the design. Stage numbers start at one.
+
+`operating_characteristics` returns rejection, quitting and continuation arrays
+with a final stage axis, total rejection probability, and unconditional expected
+sample sizes with a final two-group axis. Expected sizes weight cumulative group
+sizes by the probability of terminating at each stage. This is evaluation of a
+fixed design; it does not search for optimal boundaries or maximize multistage
+significance over the nuisance probability.
+
+Validation includes exhaustive enumeration of paired binary sequences in a
+three-stage design, comparing every stage's arrival distribution and decisions,
+probability conservation and expected sample sizes. Tests cover three directions,
+seven probability pairs including endpoints, disabled boundaries, one-group-only
+increments, broadcasting, one-stage agreement and invalid designs. Nine native
+transition fixtures use the unchanged coefficient update/repacking block from
+SSUPD, with independently calculated scaled binomial inputs and helpers. Native
+sorting is not invoked in this reference; ordering is validated separately.
+Source, kernel and driver hashes accompany `tests/fixtures/ksbin2_transition.json`.

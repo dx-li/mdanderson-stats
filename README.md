@@ -116,3 +116,6 @@ evidence scores and tied outcome groups. `ksbin2_probability_table` adds ordinar
 single-stage power and null-grid significance. [KSBIN2 coverage](docs/ksbin2.md)
 documents mid-p reporting and rejection-region selection, and tracks the remaining
 multistage-design workflows.
+
+`KStageTwoSampleBinomial` evaluates fixed KSBIN2 multistage designs, with cached
+surviving paths, broadcast probability pairs and expected sample sizes per group.

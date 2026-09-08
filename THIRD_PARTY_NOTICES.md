@@ -159,3 +159,8 @@ mid-p reporting convention and selection of complete tied rejection regions.
 The native probability fixture includes unchanged BRKARR outputs. Pointwise
 mid-p values are separately named to distinguish adjustment before maximization
 from the original adjustment after maximization.
+
+`ksbin2_multistage.py` independently evaluates surviving-path probabilities by
+separable binomial-coefficient convolution. The original SSUPD transition/repacking
+block is compiled only in a local reference build, with independent scaled-binomial
+helpers; its provenance is recorded in `tests/fixtures/ksbin2_transition.json`.

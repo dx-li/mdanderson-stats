@@ -433,7 +433,8 @@
         "ksbin2_statistic: vectorized four-criterion weighted evidence scores with one/two-sided direction and original zero-variance sentinel",
         "ksbin2_ordering: complete two-sample outcome grid, stable score ordering and source-tolerance tied groups",
         "ksbin2_probability_table: vectorized ordinary single-stage power, full null-grid rejection probabilities, grid-maximum significance and maximizing grid point for complete tied regions",
-        "KSBinomialProbabilityTable: source BRKARR mid-p significance, separately named pointwise mid-p values, and complete tied rejection-region selection by level or group with actual ordinary size and inclusive power"
+        "KSBinomialProbabilityTable: source BRKARR mid-p significance, separately named pointwise mid-p values, and complete tied rejection-region selection by level or group with actual ordinary size and inclusive power",
+        "KStageTwoSampleBinomial: fixed multistage tied-group rejection/quitting designs, cached surviving-path coefficients, vectorized arrival/decision probabilities and expected sample sizes per group"
       ],
       "validation": [
         "tests/test_ksbin2.py",
@@ -443,7 +444,10 @@
         "tests/test_ksbin2_probability.py",
         "tests/fixtures/ksbin2_probability.json",
         "tools/reference_ksbin2_probability.py",
-        "tests/test_ksbin2_selection.py"
+        "tests/test_ksbin2_selection.py",
+        "tests/test_ksbin2_multistage.py",
+        "tests/fixtures/ksbin2_transition.json",
+        "tools/reference_ksbin2_transition.py"
       ]
     },
     {
