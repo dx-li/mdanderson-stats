@@ -1,0 +1,19 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "holm": {
+    "workload": "2000 independent testing families, 100 p-values each, NumPy seed 821",
+    "batch_seconds": 0.013482084032148123,
+    "row_seconds": 0.04697237489745021,
+    "speedup": 3.484058902573538,
+    "comparison": "One batched call versus 2000 calls to the same Python API"
+  },
+  "rom": {
+    "workload": "2000-test threshold vector at alpha=0.05",
+    "seconds": 0.10459966724738479,
+    "smallest_threshold": 2.5646318156811414e-05
+  }
+}

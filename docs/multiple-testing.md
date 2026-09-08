@@ -126,3 +126,11 @@ The implementation uses NumPy broadcasting and prefix/suffix accumulations;
 Rom's recurrence has quadratic work instead of repeatedly forming coefficients
 by inner product loops. Original copyright and redistribution terms are retained
 in [the notices](../THIRD_PARTY_NOTICES.md).
+
+`uv run python tools/benchmark_multiplicity.py` reproduces the
+[recorded benchmark](multiplicity-benchmark.json). On the recorded machine,
+2,000 families of 100 p-values took about 0.0135 seconds in one batched Holm call
+versus 0.0470 seconds in separate row calls, about 3.5x faster. A 2,000-test Rom
+threshold vector took about 0.105 seconds and stayed finite and monotone. These
+timings compare Python call patterns, not original Fortran throughput, and are
+not CI performance thresholds.
