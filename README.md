@@ -217,3 +217,6 @@ follow-up segments at arrival times with failure and censoring endpoints.
 
 `censored_box` and `plot_censored_box` add EXPSURV life-table box geometry and
 linked selection, including unreached quartiles and all-censored samples.
+
+`ExploratoryTable` supplies EXPSURV numeric file round trips and stable aligned
+sorting; `generate_exponential_samples` supplies reproducible two-group examples.

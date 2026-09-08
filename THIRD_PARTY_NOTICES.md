@@ -288,3 +288,7 @@ explicitly rendered; no original code is bundled.
 `expsurv_box.py` and `expsurv_box_plot.py` independently implement SCAT-BOX
 life-table geometry and linked display. Source interpolation is explicit,
 and selections without failures have defined empty geometry.
+
+`expsurv_data.py` replaces EXPSURV file/global-assignment helpers with explicit
+named tables. `expsurv_simulation.py` independently implements GEN-EXPO-DATA and
+GEN-EXPO-EXAMPLE distributions using NumPy random streams.

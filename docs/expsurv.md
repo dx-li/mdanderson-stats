@@ -2,8 +2,9 @@
 
 Catalog entry 28 is partial. The survival-curve and inverse-survival core is
 implemented, together with interactive cut-point exploration, model alignment
-and linked scatterplot/survival, event-chart and censored-box views. Data
-generation and remaining input/output workflows are still pending.
+and linked scatterplot/survival, event-chart and censored-box views. Named
+table input/output and two-sample exponential generation are available. GEN-DATA
+covariate/arrival simulation and remaining interaction behavior are still pending.
 
 The source is EXPSURV version 1 from the MD Anderson catalog, distributed as
 `EXPSURV_V1.tar.gz`. It contains an XLISP-STAT source file, a TeX user manual and
@@ -272,3 +273,56 @@ immutable outputs, actual canvas selection, invalid-update preservation,
 all-censored/empty transitions and cleanup. Partial and all-censored figures
 were rendered and visually inspected. Validation remains source inspection and
 mathematical checks, not execution of the archived XLISP-STAT interpreter.
+
+
+## Named tables and exponential examples
+
+```python
+from mdanderson_stats import ExploratoryTable, generate_exponential_samples
+
+table = ExploratoryTable.read("patients.txt", ["time", "status", "age"])
+ordered = table.cosort("time")
+ordered.write("patients-sorted.txt")
+first, second = generate_exponential_samples(rng=42)
+```
+
+`ExploratoryTable` replaces GET-DATA, ASSIGN-VARS/MYSET, COSORT and SAVE-DATA's
+PRINT-LINE/PRINT-LIST path with explicit names and a copied read-only numeric
+matrix. `column(name)` retrieves an aligned read-only column; unknown names raise
+KeyError. `cosort(name)` returns a new table, with stable ties. No Python globals
+are assigned and no file dialogs are opened. Names must be unique and nonempty.
+
+Files have no header, one observation per nonblank line, and whitespace-separated
+numbers. Missing/nonfinite values, ragged rows and nonnumeric text are rejected;
+parse errors identify the line. Blank lines are ignored, and empty files are
+rejected. Names are supplied separately, matching the original GET-DATA arguments.
+`write` uses 17 significant digits for float64 round trips, UTF-8 and newline
+separators; it replaces the requested file. This preserves the numeric format
+rather than Lisp's exact whitespace or number-printing defaults. It does not
+interpret Lisp expressions or silently treat comments as data.
+
+`generate_exponential_samples` covers GEN-EXPO-DATA; its defaults (100 and 50
+observations, censoring probability .1, rates 1 and 10) cover GEN-EXPO-EXAMPLE.
+It returns two sorted tables with `time` and binary `status` columns. Exponential
+parameters are **rates**; NumPy receives their reciprocal scales. Status is drawn
+independently of latent lifetime. For status zero, observed follow-up is a
+uniform fraction of that latent lifetime. Consequently this illustrative source
+mechanism is not ordinary independent censoring-time simulation. The expected
+observed time is (1-p/2)/rate and its second moment is (2-4p/3)/rate².
+
+An integer `rng` seed replays results in the same NumPy environment; a supplied
+Generator advances its state, and None creates a fresh generator. NumPy replaces
+the XLISP-STAT random stream, so source seed equivalence and cross-version bitwise
+stability are not promised. See the [NumPy generator documentation](https://numpy.org/doc/stable/reference/random/generator.html)
+and [exponential parameterization](https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.exponential.html).
+Inputs are validated before drawing. Sample sizes and rates must be positive;
+nonrepresentable scales and generated overflow fail explicitly. Random draws,
+censoring transformations and sorting are batched with NumPy; no speedup against
+the archived interpreter is claimed.
+
+Tests exercise real file round trips at float64 precision, whitespace, single-row
+and single-column files, malformed input, stable ties and input immutability.
+Generator checks cover replay, state advancement, rate scaling, no/all censoring,
+invalid-input state preservation, and fixed-seed large samples against independent
+analytic moments. These are mathematical and integration checks, not archived
+XLISP-STAT runs. GEN-DATA's separate covariate/arrival mechanism remains pending.

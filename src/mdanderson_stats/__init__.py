@@ -30,8 +30,10 @@ from .expsurv_box import CensoredBox, censored_box
 from .expsurv_box_plot import CensoredBoxPlot, plot_censored_box
 from .expsurv_cutpoint import CutpointComparison, SurvivalCutpoint, survival_cutpoint
 from .expsurv_cutpoint_plot import CutpointPlot, plot_cutpoint
+from .expsurv_data import ExploratoryTable
 from .expsurv_event import EventScatterPlot, plot_event_scatter
 from .expsurv_scatter import SurvivalScatterPlot, plot_survival_scatter
+from .expsurv_simulation import generate_exponential_samples
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .gray_test import GrayTest, gray_test
 from .intervals import (
@@ -121,6 +123,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "ExploratoryTable",
+    "generate_exponential_samples",
     "CensoredBox",
     "censored_box",
     "CensoredBoxPlot",
