@@ -621,9 +621,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "ranlist_seeds: original ASCII phrase-to-seed mapping",
+        "ranlist_integers and ranlist_uniform: indexed 32-stream generator with vectorized modular jumps and original float32 scaling option"
+      ],
+      "validation": [
+        "tests/test_ranlist_random.py",
+        "tests/fixtures/ranlist_random.json",
+        "docs/ranlist.md"
+      ]
     },
     {
       "id": 30,

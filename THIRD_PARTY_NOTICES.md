@@ -338,3 +338,16 @@ and explicit report files. The retained CTA notice applies.
 `cta_detail_report.py` independently supplies CHISQT cell listings and
 FISHXT/BINOP term listings using shared numerical calculations. The retained
 CTA notice applies.
+
+## RANLIST
+
+`ranlist_random.py` independently implements the phrase mapping and modular
+random-stream equations used by RANLIST, whose source credits Barry W. Brown,
+James Lovato and Benjamen Rundell and identifies copyright 1988/1992 for the
+University of Texas M. D. Anderson Cancer Center. The manual's legal section
+identifies copyright 1990 and is retained in
+`notices/mdanderson-ranlist-LEGALITIES.txt`; the original readme is retained in
+`notices/mdanderson-ranlist-readme.txt`. Their commercial-source-use conditions
+are not replaced by a blanket package license. Original Fortran and executables
+are local validation material and are not bundled. The generator comments cite
+L'Ecuyer and Cote, ACM Transactions on Mathematical Software 17:98–111 (1991).

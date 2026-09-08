@@ -258,3 +258,7 @@ with explicit output-size limits and source-compatible term traversal.
 CTA is complete, including all analysis workflows and detailed reports. Its
 [source audit](docs/cta-coverage.md) records native comparisons, independent
 mathematical checks and measured batch performance.
+
+`ranlist_seeds`, `ranlist_integers` and `ranlist_uniform` begin
+[RANLIST](docs/ranlist.md) with reproducible phrase seeds and indexed random
+streams, validated against the original Fortran.

@@ -92,6 +92,7 @@ from .pvalue_models import (
     order_statistic_diagnostics,
 )
 from .ranges import RangeComparisons, kwrange, range2
+from .ranlist_random import ranlist_integers, ranlist_seeds, ranlist_uniform
 from .schweder import (
     SchwederBootstrap,
     SchwederFit,
@@ -131,6 +132,9 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "ranlist_integers",
+    "ranlist_seeds",
+    "ranlist_uniform",
     "CTAStudy",
     "CTAStudySpecification",
     "BinomialComparison",
