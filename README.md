@@ -306,4 +306,4 @@ repeated scalar calls to the same Python API.
 `multinomial_power` provides exact one-sample multinomial power with Pearson
 chi-square and likelihood-ratio ordering, multiple alternatives, and complete
 tie groups. See [MULTINOMPOW](docs/multinomial-power.md) for validation and the
-remaining work on this partially implemented catalog entry.
+complete archive and report coverage.

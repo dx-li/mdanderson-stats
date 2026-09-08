@@ -8,7 +8,6 @@ import json
 import subprocess
 from pathlib import Path
 
-
 DRIVER = """program reference
 use mp_struct_mod
 use mp_setup_mod

@@ -1,9 +1,9 @@
 # MULTINOMPOW exact multinomial power
 
 `multinomial_power` implements exact nonrandomized one-sample multinomial
-power with Pearson chi-square and likelihood-ratio ordering. This entry is
-**partial**: original report workflow coverage, full archive audit, and
-performance measurements remain outstanding.
+power with Pearson chi-square and likelihood-ratio ordering. The
+[archive audit](multinompow-coverage.md) accounts for all original files and the
+complete study/report workflow.
 
 ```python
 from mdanderson_stats import multinomial_power
@@ -40,7 +40,8 @@ The point count is `comb(n + k - 1, k - 1)`, checked before allocation against
 `max_points` (default 1,000,000). Large problems still have combinatorial cost.
 Statistics and log probabilities use NumPy and SciPy compiled operations.
 Alternatives are processed separately, avoiding a three-dimensional probability
-array. This is an implementation choice, not yet a measured speedup claim.
+array. Joint evaluation measured 11.7–12.8 times faster than 15 repeated calls
+for the tested workloads; see the [benchmark scope](multinompow-coverage.md).
 
 Probabilities use double-precision log factorials and zero-safe log products.
 Each enumerated distribution must sum to one within 1e-8 before normalization;
@@ -99,3 +100,19 @@ omits the final tie group. Each study runs in a fresh process to avoid the
 original repeated-deallocation defect. Independent tests cover alpha one and
 zero-probability alternatives. Python does not reproduce undefined memory or
 single-precision behavior.
+
+## Reports
+
+```python
+from pathlib import Path
+from mdanderson_stats import format_multinomial_power
+
+text = format_multinomial_power(result, digits=8)
+print(text)
+Path("multinomial-power.txt").write_text(text)
+```
+
+The report includes every alternative and requested level, all critical values,
+actual sizes and powers, and explicitly labels empty regions. It uses readable
+text rather than reproducing historical terminal spacing. Printing and file
+writing remain under the caller's control.

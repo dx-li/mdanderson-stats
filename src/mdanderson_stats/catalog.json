@@ -319,15 +319,20 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
-        "Exact nonrandomized multinomial power with Pearson and likelihood-ratio ordering, whole tie groups, multiple alternatives/levels, immutable results and preallocation sample-space limits"
+        "Exact nonrandomized multinomial power with Pearson and likelihood-ratio ordering, whole tie groups, multiple alternatives/levels, immutable results and preallocation sample-space limits",
+        "Complete problem, critical-value and power reports with independent repeated studies",
+        "All 37 archive files mapped, declared native repairs validated and joint-evaluation speedup measured"
       ],
       "validation": [
         "tests/test_multinomial_power.py",
         "docs/multinomial-power.md",
         "tests/test_multinomial_power_native.py",
-        "tests/fixtures/multinompow_native.json"
+        "tests/fixtures/multinompow_native.json",
+        "docs/multinompow-coverage.md",
+        "docs/multinompow-archive.json",
+        "docs/multinompow-benchmark.json"
       ]
     },
     {

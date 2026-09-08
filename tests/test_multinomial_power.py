@@ -148,3 +148,49 @@ def test_normalization_and_numerical_overflow():
     np.testing.assert_array_equal(result.power, 1)
     with pytest.raises(ArithmeticError, match="overflow"):
         multinomial_power(3, [1e-320, 1], [0.5, 0.5])
+
+
+def test_complete_report_and_repeat_studies(tmp_path):
+    from mdanderson_stats import format_multinomial_power
+
+    first = multinomial_power(3, [0.5, 0.5], [[0.8, 0.2], [0.5, 0.5]], [0.05, 0.25])
+    text = format_multinomial_power(first)
+    assert "Sample size: 3\nCategories: 2\nPossible outcomes: 4" in text
+    assert "Null probabilities: 0.5 0.5" in text
+    assert "Nominal significance levels: 0.05 0.25" in text
+    assert "Pearson chi-square" in text and "Likelihood ratio" in text
+    assert text.count("Alternative 1: 0.8 0.2") == 2
+    assert text.count("Alternative 2: 0.5 0.5") == 2
+    assert "0.05\t0\tempty region" in text
+    assert "0.25\t0.25\t0.52" in text
+    path = tmp_path / "power.txt"
+    path.write_text(text)
+    other = multinomial_power(7, [0.2, 0.8], [0.5, 0.5], statistic="pearson")
+    assert "Likelihood ratio" not in format_multinomial_power(other)
+    assert format_multinomial_power(first) == path.read_text()
+
+
+@pytest.mark.parametrize("digits", [True, 0, 18, 1.5])
+def test_report_precision_validation(digits):
+    from mdanderson_stats import format_multinomial_power
+
+    with pytest.raises(ValueError, match="digits"):
+        format_multinomial_power(multinomial_power(3, [0.5, 0.5], [0.8, 0.2]), digits=digits)
+
+
+def test_manual_example_critical_values_and_valid_probabilities():
+    # Manual pages print single-precision powers above one; compare critical
+    # values at their printed precision and independently enforce probability bounds.
+    result = multinomial_power(
+        100,
+        [0.25, 0.25, 0.5],
+        [[0.4, 0.3, 0.3], [0.25, 0.25, 0.5], [0.8, 0.1, 0.1]],
+        [0.001, 0.01, 0.05],
+    )
+    assert result.sample_space_size == 5151
+    np.testing.assert_allclose(
+        result.critical_values, [[13.82, 9.34, 6], [13.9741, 9.2972, 6.0749]], atol=5e-5, rtol=0
+    )
+    assert np.all((result.power >= 0) & (result.power <= 1))
+    np.testing.assert_allclose(result.power[:, 1], result.actual_size, atol=1e-15)
+    assert np.all(np.diff(result.power, axis=2) >= 0)

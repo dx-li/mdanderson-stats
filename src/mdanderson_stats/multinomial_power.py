@@ -183,3 +183,55 @@ def multinomial_power(
         _freeze(powers),
         size,
     )
+
+
+def format_multinomial_power(result: MultinomialPower, *, digits: int = 8) -> str:
+    """Render the problem, critical values, sizes and every alternative's power.
+
+    Returns text for printing or saving with ``Path.write_text``. Category and
+    alternative numbers are one-based. Empty regions are explicitly labeled.
+    """
+    if not isinstance(result, MultinomialPower):
+        raise TypeError("result must be a MultinomialPower")
+    if isinstance(digits, (bool, np.bool_)) or not isinstance(digits, (int, np.integer)):
+        raise ValueError("digits must be an integer from 1 through 17")
+    if not 1 <= digits <= 17:
+        raise ValueError("digits must be an integer from 1 through 17")
+
+    def number(value: float) -> str:
+        return f"{value:.{digits}g}"
+
+    lines = [
+        "MULTINOMPOW exact multinomial power",
+        f"Sample size: {result.n}",
+        f"Categories: {result.null.size}",
+        f"Possible outcomes: {result.sample_space_size}",
+        "Null probabilities: " + " ".join(number(p) for p in result.null),
+        "Nominal significance levels: " + " ".join(number(p) for p in result.alpha),
+    ]
+    labels = {"pearson": "Pearson chi-square", "likelihood_ratio": "Likelihood ratio"}
+    for method, name in enumerate(result.statistics):
+        lines.extend(["", labels[name], "Nominal alpha\tActual size\tCritical value"])
+        for j, alpha in enumerate(result.alpha):
+            critical = result.critical_values[method, j]
+            label = "empty region" if np.isinf(critical) else number(critical)
+            lines.append(f"{number(alpha)}\t{number(result.actual_size[method, j])}\t{label}")
+        for alternative, probabilities in enumerate(result.alternatives):
+            lines.extend(
+                [
+                    f"Alternative {alternative + 1}: " + " ".join(number(p) for p in probabilities),
+                    "Nominal alpha\tActual size\tPower",
+                ]
+            )
+            for j, alpha in enumerate(result.alpha):
+                lines.append(
+                    "\t".join(
+                        number(value)
+                        for value in (
+                            alpha,
+                            result.actual_size[method, j],
+                            result.power[method, alternative, j],
+                        )
+                    )
+                )
+    return "\n".join(lines) + "\n"

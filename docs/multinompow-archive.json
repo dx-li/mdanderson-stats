@@ -1,0 +1,364 @@
+{
+  "archive_sha256": "c420cd6e346f41c7990c88db884c00af697ab95ca745b9a250596f8a4b7ff453",
+  "members": [
+    {
+      "path": "source/multinom_pow.1.0/doc/multinom_pow_doc.pdf",
+      "sha256": "700b6a04f78df5a724536f7bd93c4990b78a9d110bd4e0e908c0d1d4f6d99f0b",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "source/multinom_pow.1.0/doc/multinom_pow_doc.ps",
+      "sha256": "a18f8518b968f2702f7429e4f3fbb3da62660f81dcb7d5e716b50af8f0dddfbe",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "source/multinom_pow.1.0/doc/multinom_pow_doc.tex",
+      "sha256": "712a4f1a0576de2db284b48fac15a59c0b11cfa910cd1af2ea2bebb572546ecb",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "source/multinom_pow.1.0/doc/symbols.tex",
+      "sha256": "fbd1157e3e3236133b9cebcdd74ecd4f8b039c24da4b313cf498f3b6ddcb473a",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "source/multinom_pow.1.0/HOWTOGET",
+      "sha256": "6a9da6cec1b89374769c9e56f3e80ada725da6ce7b1ef0fd890cc3e8a925c069",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "source/multinom_pow.1.0/INSTALL",
+      "sha256": "9e1ea424a6d63f6337fba5e99e35c567aceff1191d374e6462cf08a17cbf1d5a",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "source/multinom_pow.1.0/LEGALITITES",
+      "sha256": "c7293a339674d81b507030329cd5a047902a255011772e6fc28d07e04b4c40a0",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "source/multinom_pow.1.0/readme",
+      "sha256": "69790d9c9a332fad55fc2af346636d13b446850517c69ad4c7cd753730a6f075",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/calc_point_prob_mod.f90",
+      "sha256": "c1775171254897b4d2317b1637519fc843e218c807b3548a8184bee305d58335",
+      "role": "source",
+      "replacement": "Duplicate probability helper replaced by _mass and gammaln",
+      "routines": [
+        "log_multinom_con",
+        "prob_point"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/compile.multinom_pow",
+      "sha256": "035cf7f9d68b22c48b1fa31c6303a12c54bcbc4b6290357422820bc3611bab4e",
+      "role": "build",
+      "replacement": "Repository pyproject.toml, uv build and three-version CI",
+      "routines": []
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/gamma_mod.f90",
+      "sha256": "0692466f969ecd445a0a3f714ccaf4e109ad6baa97e53640e39e07eb9695dcd1",
+      "role": "source",
+      "replacement": "SciPy gammaln replaces archived ACM gamma support; original code not bundled",
+      "routines": [
+        "evaluate_polynomial",
+        "gamln",
+        "gamln1"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/get_numbers_mod.f90",
+      "sha256": "78d35fafdd9170208e5e5bd1cef7b5ca5681f1cd9634584f34e2333b3dfa5573",
+      "role": "source",
+      "replacement": "Explicit Python numeric validation replaces interactive input loops",
+      "routines": [
+        "get_double_array",
+        "get_double_scalar",
+        "get_integer_array",
+        "get_integer_scalar",
+        "get_real_array",
+        "get_real_scalar",
+        "prompt"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/log_factorial_mod.f90",
+      "sha256": "892dea7c2aa900c5d72aa3a5c986a68a5b2312f553bd4054098c43c8885aa826",
+      "role": "source",
+      "replacement": "SciPy gammaln; native tests cross original table boundary at 1001",
+      "routines": [
+        "log_factorial"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/Makefile",
+      "sha256": "7a9a04bef2f019ef00b72ef5a259c150fa51dd7439de0e150c612f91c3d7f7ba",
+      "role": "build",
+      "replacement": "Repository pyproject.toml, uv build and three-version CI",
+      "routines": []
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/mp_main.f90",
+      "sha256": "fd9ee00d7925e2e58ce4053e8115b504aaf438f3074c78a784617e8d87e8ee50",
+      "role": "source",
+      "replacement": "Validated multinomial_power arguments and independent repeated calls",
+      "routines": [
+        "banner",
+        "get_probs",
+        "report_file_dialogue"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/mp_setup_mod.f90",
+      "sha256": "17c2689dedf5ac6190f9da807447682686c5db3442fad292b88227d510274449",
+      "role": "source",
+      "replacement": "Statistics, whole-group critical regions and immutable result allocation",
+      "routines": [
+        "allocate_all",
+        "allocation_failed",
+        "allocation_failure",
+        "chi_sq",
+        "deallocate_all",
+        "descending",
+        "eq_dbl",
+        "log_likelihood_ratio",
+        "log_multinom_con",
+        "prob_point",
+        "problem_computations",
+        "set_crit",
+        "setup_mp_power",
+        "traverse_points"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/mp_struct_mod.f90",
+      "sha256": "e5a6d8ff3efa7cd43c7086ddc2afd025b650460f56fece45300746518c90ed43",
+      "role": "source",
+      "replacement": "MultinomialPower result and local function state",
+      "routines": []
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/n_partitions_mod.f90",
+      "sha256": "7a6eb61546174c85631a214354b53837862e424740d543caa89538d39ea05004",
+      "role": "source",
+      "replacement": "Exact integer math.comb sample-space count",
+      "routines": [
+        "n_partitions"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/open_file_mod.f90",
+      "sha256": "96f18707756f84caa79978243608c897e407ad78601af523a1b3259fb38356f5",
+      "role": "source",
+      "replacement": "Caller-controlled Path.write_text for returned report text",
+      "routines": [
+        "close_or_new_unit",
+        "get_character",
+        "get_free_unit_number",
+        "get_yn",
+        "handle_error",
+        "low_case",
+        "low_case_string",
+        "open_file",
+        "prompt"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/partial_sums_mod.f90",
+      "sha256": "948ac1f1186fa2859458c57bf842e0980127b3d451c377dad90dbb5407729aac",
+      "role": "source",
+      "replacement": "Support for original partition count replaced by math.comb",
+      "routines": [
+        "add_value_to_sums",
+        "initialize_sums",
+        "kill_sums",
+        "return_sums_answer"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/perm_sort_array_mod.f90",
+      "sha256": "f0885318014d7cb060622907397315aac22d010f0d81f90e85ba5a3c9df9e513",
+      "role": "source",
+      "replacement": "NumPy argsort; unused generic sort overloads are internal support",
+      "routines": [
+        "check_qgr",
+        "perm_sort_double_array",
+        "perm_sort_integer_array",
+        "perm_sort_real_array",
+        "qgr",
+        "swap",
+        "user_qgr"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/power_mod.f90",
+      "sha256": "6db48bf88f3e26430062dadb96f8f46a40b46ae5aca09b2f4e4de23aa0a4ecc7",
+      "role": "source",
+      "replacement": "Batched alternative probabilities and ordered cumulative powers",
+      "routines": [
+        "calculate_power",
+        "cs_calc",
+        "lr_calc"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/print_array_mod.f90",
+      "sha256": "b08d531f5fbbd35483789eea69f641c56b72b63fb2b2b5c9bed74668a5979541",
+      "role": "source",
+      "replacement": "Explicit probability vectors in format_multinomial_power",
+      "routines": [
+        "print_array"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/print_it.f90",
+      "sha256": "4d6bbf2f70db25935ee06b45f9e402f1f4bb78779face7af2a8a9d9146229d97",
+      "role": "source",
+      "replacement": "Python calls/exceptions replace console prompts, holds and format editing",
+      "routines": [
+        "clear_screen",
+        "edit_format",
+        "edit_message_format",
+        "get_character",
+        "get_yn",
+        "hold",
+        "igtfun",
+        "low_case",
+        "low_case_string",
+        "print_format",
+        "print_message_format",
+        "prompt"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/summation_mod.f90",
+      "sha256": "f5b8d61e67ecbfd37200535abb6f68351f2b76d7c5ad1cf550999d448f8f28d5",
+      "role": "source",
+      "replacement": "NumPy longdouble probability accumulation and checked normalization",
+      "routines": [
+        "sum_add",
+        "sum_init",
+        "sum_sum"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/update_partition_mod.f90",
+      "sha256": "dcc5811c19a419a1aaf49190bf560cdd61e343a3b9364cd1e7dd92feaab5e069",
+      "role": "source",
+      "replacement": "Stars-and-bars weak compositions, validated by exact/native powers",
+      "routines": [
+        "update_partition"
+      ]
+    },
+    {
+      "path": "source/multinom_pow.1.0/source/write_answers_mod.f90",
+      "sha256": "11a8a7964bb1b5ecd537da6c5e1756653cb94df8c734e2d3102d5d4e8b8e60a0",
+      "role": "source",
+      "replacement": "format_multinomial_power problem, critical-region and power tables",
+      "routines": [
+        "blank_line",
+        "put_equals",
+        "put_minus",
+        "put_period",
+        "write_power",
+        "write_problem",
+        "write_setup"
+      ]
+    },
+    {
+      "path": "win32/multinom_pow_1.0/doc/multinom_pow_doc.pdf",
+      "sha256": "700b6a04f78df5a724536f7bd93c4990b78a9d110bd4e0e908c0d1d4f6d99f0b",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "win32/multinom_pow_1.0/doc/multinom_pow_doc.ps",
+      "sha256": "a18f8518b968f2702f7429e4f3fbb3da62660f81dcb7d5e716b50af8f0dddfbe",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "win32/multinom_pow_1.0/doc/multinom_pow_doc.tex",
+      "sha256": "386e28737018e02796ea5adfc313311d88b0cb7415327c1c793d597b842f6ef9",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "win32/multinom_pow_1.0/doc/symbols.tex",
+      "sha256": "abb95bfad5ef7feceb2e23bcfed50564e8c8364eddcc9464bd3a34fdf710ce57",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "win32/multinom_pow_1.0/HOWTOGET",
+      "sha256": "fcb4f61603f16e4a3d4721a95c57588f49374c4f5234ed6b5d1cd37381cd3f51",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "win32/multinom_pow_1.0/LEGALITITES",
+      "sha256": "49fa4f420256d13bb94c0bf921187809ee4a660a360d5f386aa6cf49364a0880",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "win32/multinom_pow_1.0/multinom_pow.exe",
+      "sha256": "94ee5b8ed1310604f268709d47292c3a2bac2af971d55905b992e232d162725e",
+      "role": "binary",
+      "replacement": "Historical Windows build/installer replaced by Python package",
+      "routines": []
+    },
+    {
+      "path": "win32/multinom_pow_1.0/readme",
+      "sha256": "7519e608a639bbca1f3ebf0b49ec6afe2ac7405f6bdb715158c908fc6106d08e",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "win32/multinom_pow_1.0/README~",
+      "sha256": "62b8f17a5104520d48caba41b00c29ba4a9df1a233a762e2859a1ef0a29c04ea",
+      "role": "documentation",
+      "replacement": "Method, notices, usage and compatibility documented",
+      "routines": []
+    },
+    {
+      "path": "win32/multinom_pow_1.0_se.exe",
+      "sha256": "42346a1e97b9968e038dccfba924ddfbeddec3c6c707b0b6fd15b6a26bfdb416",
+      "role": "binary",
+      "replacement": "Historical Windows build/installer replaced by Python package",
+      "routines": []
+    }
+  ],
+  "evidence": [
+    "src/mdanderson_stats/multinomial_power.py",
+    "tests/test_multinomial_power.py",
+    "tests/test_multinomial_power_native.py",
+    "docs/multinomial-power.md"
+  ]
+}

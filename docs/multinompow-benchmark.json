@@ -1,0 +1,123 @@
+{
+  "comparison": "Joint call versus 15 repeated calls to the same Python API; both statistics. Not a comparison with native Fortran. Median of five repeats after correctness checks.",
+  "python": "3.13.5",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "workloads": [
+    {
+      "n": 60,
+      "null": [
+        0.2,
+        0.3,
+        0.5
+      ],
+      "alternatives": [
+        [
+          0.2,
+          0.3,
+          0.5
+        ],
+        [
+          0.5,
+          0.3,
+          0.2
+        ],
+        [
+          0.9,
+          0.05,
+          0.05
+        ]
+      ],
+      "alpha": [
+        0.001,
+        0.01,
+        0.05,
+        0.2,
+        0.8
+      ],
+      "points": 1891,
+      "seconds": {
+        "joint": 0.0010140002705156803,
+        "repeated": 0.01293900003656745
+      },
+      "speedup": 12.760351661432189
+    },
+    {
+      "n": 60,
+      "null": [
+        0.1,
+        0.2,
+        0.3,
+        0.4
+      ],
+      "alternatives": [
+        [
+          0.1,
+          0.2,
+          0.3,
+          0.4
+        ],
+        [
+          0.4,
+          0.3,
+          0.2,
+          0.1
+        ],
+        [
+          0.9,
+          0.03333333333333333,
+          0.03333333333333333,
+          0.03333333333333333
+        ]
+      ],
+      "alpha": [
+        0.001,
+        0.01,
+        0.05,
+        0.2,
+        0.8
+      ],
+      "points": 39711,
+      "seconds": {
+        "joint": 0.02466287510469556,
+        "repeated": 0.28793987492099404
+      },
+      "speedup": 11.675032764779855
+    },
+    {
+      "n": 1000,
+      "null": [
+        0.3,
+        0.7
+      ],
+      "alternatives": [
+        [
+          0.3,
+          0.7
+        ],
+        [
+          0.7,
+          0.3
+        ],
+        [
+          0.9,
+          0.1
+        ]
+      ],
+      "alpha": [
+        0.001,
+        0.01,
+        0.05,
+        0.2,
+        0.8
+      ],
+      "points": 1001,
+      "seconds": {
+        "joint": 0.0004858337342739105,
+        "repeated": 0.006021125242114067
+      },
+      "speedup": 12.393386496952038
+    }
+  ]
+}
