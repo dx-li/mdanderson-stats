@@ -149,3 +149,18 @@ def test_verbose_group_table_includes_unscheduled_subject_counts():
     assert_array_equal(table[nonlooks, 4], table[nonlooks, 0])
     assert_array_equal(table[nonlooks, 7], 0)
     assert_allclose(table[-1, 8], design.operating_characteristics(0.2).rejection_probability)
+
+
+@pytest.mark.parametrize("looks", [[5, 10], []])
+def test_unanalysed_completion_rows_and_study_replay(looks):
+    study = SeqBinStudySpecification(20, looks=looks).run()
+    table = study.boundary_table().rows
+    assert_array_equal(table[:, 0], np.arange(1, 21))
+    assert_array_equal(table[10:, 7], 0)
+    assert_allclose(table[-1, 8], study.properties.rejection_probability[0])
+    assert study.design.max_subjects == 20
+    replay = SeqBinStudySpecification.from_json(study.specification.to_json()).run()
+    assert_allclose(replay.properties.expected_subjects, study.properties.expected_subjects)
+    assert replay.design.max_subjects == 20
+    assert replay.design.looks.tolist() == looks
+    study.report(compact=True)

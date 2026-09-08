@@ -30,7 +30,7 @@ def _boundary_table(
 ) -> SeqBinBoundaryTable:
     if not isinstance(compact, (bool, np.bool_)):
         raise ValueError("compact must be boolean")
-    subjects = np.arange(1, int(design.looks[-1]) + 1)
+    subjects = np.arange(1, design.max_subjects + 1)
     lower, upper = np.zeros_like(subjects), subjects.copy()
     lower[design.looks - 1], upper[design.looks - 1] = design.continue_low, design.continue_high
     quit_low, quit_high = np.zeros(subjects.size), np.zeros(subjects.size)

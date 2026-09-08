@@ -30,9 +30,11 @@ class SeqBinDesign:
 
     Stop for fewer than continue_low events or more than continue_high events.
     Boundary values n+1 / -1 permit all outcomes to stop on that side. At the
-    final look, remaining paths complete without rejecting. Arrays are read-only.
+    maximum sample size, remaining paths complete without rejecting. No final
+    analysis is required; an empty look schedule never rejects. Arrays are read-only.
     """
 
+    max_subjects: int
     looks: NDArray[np.int64]
     continue_low: NDArray[np.int64]
     continue_high: NDArray[np.int64]
@@ -75,14 +77,8 @@ class SeqBinDesign:
         if not isinstance(legacy_bounds, (bool, np.bool_)):
             raise ValueError("legacy_bounds must be boolean")
         n = np.arange(1, max_subjects + 1) if looks is None else count(looks, "looks")
-        if (
-            n.ndim != 1
-            or n.size == 0
-            or n[0] < 1
-            or n[-1] != max_subjects
-            or np.any(np.diff(n) <= 0)
-        ):
-            raise ValueError("looks must increase strictly from a positive size to max_subjects")
+        if n.ndim != 1 or np.any(n < 1) or np.any(n > max_subjects) or np.any(np.diff(n) <= 0):
+            raise ValueError("looks must increase strictly within [1, max_subjects]")
         n = n.astype(np.int64)
         a, b = map(float, parameters)
 
@@ -110,6 +106,7 @@ class SeqBinDesign:
             value.flags.writeable = False
             object.__setattr__(self, name, value)
         for name, setting in (
+            ("max_subjects", int(max_subjects)),
             ("prior", (a, b)),
             ("null_probability", p0),
             ("alternative", alternative),
@@ -135,11 +132,14 @@ class SeqBinDesign:
         high = np.zeros_like(low)
         surviving = np.ones(p.shape + (1,))
         look_index = 0
-        for n in range(1, int(self.looks[-1]) + 1):
+        # After the final scheduled analysis all surviving paths complete at
+        # max_subjects, so further Bernoulli convolution cannot affect outputs.
+        last_analysis = int(self.looks[-1]) if self.looks.size else 0
+        for n in range(1, last_analysis + 1):
             arriving = np.zeros(p.shape + (n + 1,))
             arriving[..., :-1] = surviving * (1 - p[..., None])
             arriving[..., 1:] += surviving * p[..., None]
-            if n == self.looks[look_index]:
+            if look_index < self.looks.size and n == self.looks[look_index]:
                 lo, hi = self.continue_low[look_index], self.continue_high[look_index]
                 low[..., look_index] = arriving[..., :lo].sum(axis=-1)
                 arriving[..., :lo] = 0
@@ -150,7 +150,7 @@ class SeqBinDesign:
         complete = surviving.sum(axis=-1)
         low_total, high_total = low.sum(axis=-1), high.sum(axis=-1)
         low_n, high_n = low @ self.looks, high @ self.looks
-        expected = low_n + high_n + complete * self.looks[-1]
+        expected = low_n + high_n + complete * self.max_subjects
         low_cond = np.divide(low_n, low_total, out=np.full_like(p, np.nan), where=low_total > 0)
         high_cond = np.divide(high_n, high_total, out=np.full_like(p, np.nan), where=high_total > 0)
         return SeqBinProperties(p.copy(), low, high, complete, expected, low_cond, high_cond)

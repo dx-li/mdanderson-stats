@@ -39,19 +39,19 @@ def main():
     driver.write_text("""program reference
 use design_properties_module
 implicit none
-integer n,side,i,k,step
+integer n,side,i,k,step,last_look
 real(8) a,b,p0,cut,p
-read(*,*) n,side,step,a,b,p0,cut,p
+read(*,*) n,side,step,last_look,a,b,p0,cut,p
 if(step>1) then
  is_look_list=.true.
- length_look_list=n/step
+ length_look_list=last_look/step
  allocate(look_list(length_look_list))
- look_list=[(i,i=step,n,step)]
+ look_list=[(i,i=step,last_look,step)]
 endif
 call calculate_design(n,side,a,b,p0,cut,cut)
 call calculate_properties(p)
 do i=1,n
- if(mod(i,step)/=0) cycle
+ if(mod(i,step)/=0.or.i>last_look) cycle
  k=0
  if(side/=1) k=continue_low(i)
  write(*,*) k
@@ -93,10 +93,10 @@ end program
     cases = []
     for prior in [[1, 1], [2, 8], [30, 1]]:
         for side, alternative in [(-1, "less"), (1, "greater"), (2, "two-sided")]:
-            for step in [1, 5]:
+            for step, last_look in [(1, 20), (5, 20), (5, 15), (5, 0)]:
                 output = subprocess.run(
                     [str(executable)],
-                    input=f"20 {side} {step} {prior[0]} {prior[1]} .2 .05 .2\n",
+                    input=f"20 {side} {step} {last_look} {prior[0]} {prior[1]} .2 .05 .2\n",
                     text=True,
                     capture_output=True,
                     check=True,
@@ -108,7 +108,7 @@ end program
                     dict(
                         prior=prior,
                         alternative=alternative,
-                        looks=list(range(step, 21, step)),
+                        looks=list(range(step, last_look + 1, step)),
                         continue_low=[int(r[0]) for r in rows],
                         continue_high=[int(r[1]) for r in rows],
                         quit_low=[r[2] for r in rows],

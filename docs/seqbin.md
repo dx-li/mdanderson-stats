@@ -38,18 +38,21 @@ significance level; obtain the latter by evaluating rejection probability at p0.
 
 `max_subjects` supports 2–10,000, matching the source interface. Without `looks`,
 the trial checks after every subject. Explicit looks must be strictly increasing
-positive integers ending at the maximum. Returned read-only continuation bounds
+positive integers no greater than the maximum; the last analysis may be earlier.
+An empty schedule performs no analyses and never rejects. The design retains
+`max_subjects` separately from its analysis schedule. Returned read-only continuation bounds
 are inclusive: stop low for `k < continue_low`, stop high for
-`k > continue_high`. At the final look, paths within those bounds complete
-without rejecting. Bounds may include outcomes made unreachable by earlier
+`k > continue_high`. Paths surviving the last analysis complete at the maximum
+sample size without further rejection. Bounds may include outcomes made unreachable by earlier
 stopping; operating characteristics account for that earlier stopping exactly.
 
 The boundary search uses vectorized monotone integer bisection across all looks,
 requiring O(L log N) beta evaluations for L looks and maximum N. Direct beta
 complement evaluation avoids subtracting a tail from one. Operating
 characteristics propagate surviving Bernoulli paths and broadcast over true
-probabilities. They use O(B N²) arithmetic and O(B(N+L)) working/output storage
-for B probabilities; they do not allocate a subject-by-event-by-probability cube.
+probabilities. They stop propagation at the last analysis M, then assign remaining
+paths to completion at N. They use O(B M²) arithmetic and O(B(M+L)) working/output
+storage for B probabilities; they do not allocate a subject-by-event-by-probability cube.
 This is a deterministic probability recursion, not simulation.
 
 `quit_low` and `quit_high` have the probability input shape followed by the look
@@ -74,8 +77,9 @@ expectation whenever the probability is positive and returns NaN only when it
 is zero. Neither method forces final nonrejecting outcomes to reject.
 
 `tools/reference_seqbin.py` builds unchanged boundary and forward-probability
-routines with their original beta dependencies in an independent driver. Eighteen
+routines with their original beta dependencies in an independent driver. Thirty-six
 native cases cover three beta priors, all alternatives, sequential/group looks,
+schedules ending before completion and schedules with no analyses,
 continuation boundaries, stopping mass and expected sample size. Fixture hashes
 record the source, extracted module, driver and compiler. Comparisons of native
 conditional expectations exclude its documented <=1e-8 fallback region.

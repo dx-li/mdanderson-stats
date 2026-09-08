@@ -7,7 +7,7 @@
     "cdf_beta_mod.f90": "a83706f4c8d67a0b67e15b19fe1a5312f58e799b91a8d71e5db2a01a98dd0093"
   },
   "extracted_sha256": "b07ecf9af732143efd1b5f9c7f7fd82721ce4d9a949fb9d5ed82a869de88f14c",
-  "driver_sha256": "235c1d242009b3e94b83cb0dcc193bc915dcef808f2b379bbcbf4d9a05ee6a70",
+  "driver_sha256": "4d7e6b1fe2f3a1d3d173c99235e8f3aa8c58483e6638fc939333632009f24210",
   "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
   "cases": [
     {
@@ -177,6 +177,58 @@
         1,
         1
       ],
+      "alternative": "less",
+      "looks": [
+        5,
+        10,
+        15
+      ],
+      "continue_low": [
+        0,
+        0,
+        1
+      ],
+      "continue_high": [
+        5,
+        10,
+        15
+      ],
+      "quit_low": [
+        0.0,
+        0.0,
+        0.03518437208883203
+      ],
+      "quit_high": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rejection": 0.03518437208883203,
+      "expected_subjects": 19.824078139555837,
+      "expected_low": 14.999999999999998,
+      "expected_high": -1.0
+    },
+    {
+      "prior": [
+        1,
+        1
+      ],
+      "alternative": "less",
+      "looks": [],
+      "continue_low": [],
+      "continue_high": [],
+      "quit_low": [],
+      "quit_high": [],
+      "rejection": 0.0,
+      "expected_subjects": 20.0,
+      "expected_low": 20.0,
+      "expected_high": -1.0
+    },
+    {
+      "prior": [
+        1,
+        1
+      ],
       "alternative": "greater",
       "looks": [
         1,
@@ -333,6 +385,58 @@
       "expected_subjects": 18.834584902860797,
       "expected_low": -1.0,
       "expected_high": 11.413081345736144
+    },
+    {
+      "prior": [
+        1,
+        1
+      ],
+      "alternative": "greater",
+      "looks": [
+        5,
+        10,
+        15
+      ],
+      "continue_low": [
+        0,
+        0,
+        0
+      ],
+      "continue_high": [
+        2,
+        4,
+        5
+      ],
+      "quit_low": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quit_high": [
+        0.05792000000000003,
+        0.01471938560000001,
+        0.029884248227840027
+      ],
+      "rejection": 0.10252363382784006,
+      "expected_subjects": 18.8345849028608,
+      "expected_low": -1.0,
+      "expected_high": 8.632717612251325
+    },
+    {
+      "prior": [
+        1,
+        1
+      ],
+      "alternative": "greater",
+      "looks": [],
+      "continue_low": [],
+      "continue_high": [],
+      "quit_low": [],
+      "quit_high": [],
+      "rejection": 0.0,
+      "expected_subjects": 20.0,
+      "expected_low": -1.0,
+      "expected_high": 20.0
     },
     {
       "prior": [
@@ -498,6 +602,58 @@
     },
     {
       "prior": [
+        1,
+        1
+      ],
+      "alternative": "two-sided",
+      "looks": [
+        5,
+        10,
+        15
+      ],
+      "continue_low": [
+        0,
+        0,
+        1
+      ],
+      "continue_high": [
+        2,
+        4,
+        5
+      ],
+      "quit_low": [
+        0.0,
+        0.0,
+        0.03518437208883203
+      ],
+      "quit_high": [
+        0.05792000000000003,
+        0.01471938560000001,
+        0.029884248227840027
+      ],
+      "rejection": 0.1377080059166721,
+      "expected_subjects": 18.658663042416638,
+      "expected_low": 14.999999999999998,
+      "expected_high": 8.632717612251325
+    },
+    {
+      "prior": [
+        1,
+        1
+      ],
+      "alternative": "two-sided",
+      "looks": [],
+      "continue_low": [],
+      "continue_high": [],
+      "quit_low": [],
+      "quit_high": [],
+      "rejection": 0.0,
+      "expected_subjects": 20.0,
+      "expected_low": 20.0,
+      "expected_high": 20.0
+    },
+    {
+      "prior": [
         2,
         8
       ],
@@ -656,6 +812,58 @@
       "rejection": 0.03518437208883203,
       "expected_subjects": 19.824078139555837,
       "expected_low": 14.999999999999998,
+      "expected_high": -1.0
+    },
+    {
+      "prior": [
+        2,
+        8
+      ],
+      "alternative": "less",
+      "looks": [
+        5,
+        10,
+        15
+      ],
+      "continue_low": [
+        0,
+        0,
+        1
+      ],
+      "continue_high": [
+        5,
+        10,
+        15
+      ],
+      "quit_low": [
+        0.0,
+        0.0,
+        0.03518437208883203
+      ],
+      "quit_high": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rejection": 0.03518437208883203,
+      "expected_subjects": 19.824078139555837,
+      "expected_low": 14.999999999999998,
+      "expected_high": -1.0
+    },
+    {
+      "prior": [
+        2,
+        8
+      ],
+      "alternative": "less",
+      "looks": [],
+      "continue_low": [],
+      "continue_high": [],
+      "quit_low": [],
+      "quit_high": [],
+      "rejection": 0.0,
+      "expected_subjects": 20.0,
+      "expected_low": 20.0,
       "expected_high": -1.0
     },
     {
@@ -825,6 +1033,58 @@
         2,
         8
       ],
+      "alternative": "greater",
+      "looks": [
+        5,
+        10,
+        15
+      ],
+      "continue_low": [
+        0,
+        0,
+        0
+      ],
+      "continue_high": [
+        3,
+        5,
+        6
+      ],
+      "quit_low": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quit_high": [
+        0.006720000000000002,
+        0.004472832000000004,
+        0.012655590899712011
+      ],
+      "rejection": 0.023848422899712018,
+      "expected_subjects": 19.79119372550144,
+      "expected_low": -1.0,
+      "expected_high": 11.244440968837331
+    },
+    {
+      "prior": [
+        2,
+        8
+      ],
+      "alternative": "greater",
+      "looks": [],
+      "continue_low": [],
+      "continue_high": [],
+      "quit_low": [],
+      "quit_high": [],
+      "rejection": 0.0,
+      "expected_subjects": 20.0,
+      "expected_low": -1.0,
+      "expected_high": 20.0
+    },
+    {
+      "prior": [
+        2,
+        8
+      ],
       "alternative": "two-sided",
       "looks": [
         1,
@@ -984,6 +1244,58 @@
     },
     {
       "prior": [
+        2,
+        8
+      ],
+      "alternative": "two-sided",
+      "looks": [
+        5,
+        10,
+        15
+      ],
+      "continue_low": [
+        0,
+        0,
+        1
+      ],
+      "continue_high": [
+        3,
+        5,
+        6
+      ],
+      "quit_low": [
+        0.0,
+        0.0,
+        0.03518437208883203
+      ],
+      "quit_high": [
+        0.006720000000000002,
+        0.004472832000000004,
+        0.012655590899712011
+      ],
+      "rejection": 0.059032794988544045,
+      "expected_subjects": 19.61527186505728,
+      "expected_low": 14.999999999999998,
+      "expected_high": 11.244440968837331
+    },
+    {
+      "prior": [
+        2,
+        8
+      ],
+      "alternative": "two-sided",
+      "looks": [],
+      "continue_low": [],
+      "continue_high": [],
+      "quit_low": [],
+      "quit_high": [],
+      "rejection": 0.0,
+      "expected_subjects": 20.0,
+      "expected_low": 20.0,
+      "expected_high": 20.0
+    },
+    {
+      "prior": [
         30,
         1
       ],
@@ -1139,6 +1451,58 @@
         0.0,
         0.0
       ],
+      "rejection": 0.0,
+      "expected_subjects": 20.0,
+      "expected_low": 20.0,
+      "expected_high": -1.0
+    },
+    {
+      "prior": [
+        30,
+        1
+      ],
+      "alternative": "less",
+      "looks": [
+        5,
+        10,
+        15
+      ],
+      "continue_low": [
+        0,
+        0,
+        0
+      ],
+      "continue_high": [
+        5,
+        10,
+        15
+      ],
+      "quit_low": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quit_high": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rejection": 0.0,
+      "expected_subjects": 20.0,
+      "expected_low": 20.0,
+      "expected_high": -1.0
+    },
+    {
+      "prior": [
+        30,
+        1
+      ],
+      "alternative": "less",
+      "looks": [],
+      "continue_low": [],
+      "continue_high": [],
+      "quit_low": [],
+      "quit_high": [],
       "rejection": 0.0,
       "expected_subjects": 20.0,
       "expected_low": 20.0,
@@ -1311,6 +1675,58 @@
         30,
         1
       ],
+      "alternative": "greater",
+      "looks": [
+        5,
+        10,
+        15
+      ],
+      "continue_low": [
+        0,
+        0,
+        0
+      ],
+      "continue_high": [
+        0,
+        0,
+        0
+      ],
+      "quit_low": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quit_high": [
+        0.6723200000000004,
+        0.22030581760000015,
+        0.07218981031116804
+      ],
+      "rejection": 0.9648156279111685,
+      "expected_subjects": 7.351192772444154,
+      "expected_low": -1.0,
+      "expected_high": 6.889922943163154
+    },
+    {
+      "prior": [
+        30,
+        1
+      ],
+      "alternative": "greater",
+      "looks": [],
+      "continue_low": [],
+      "continue_high": [],
+      "quit_low": [],
+      "quit_high": [],
+      "rejection": 0.0,
+      "expected_subjects": 20.0,
+      "expected_low": -1.0,
+      "expected_high": 20.0
+    },
+    {
+      "prior": [
+        30,
+        1
+      ],
       "alternative": "two-sided",
       "looks": [
         1,
@@ -1467,6 +1883,58 @@
       "expected_subjects": 7.351192772444155,
       "expected_low": 20.0,
       "expected_high": 7.203661028640977
+    },
+    {
+      "prior": [
+        30,
+        1
+      ],
+      "alternative": "two-sided",
+      "looks": [
+        5,
+        10,
+        15
+      ],
+      "continue_low": [
+        0,
+        0,
+        0
+      ],
+      "continue_high": [
+        0,
+        0,
+        0
+      ],
+      "quit_low": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quit_high": [
+        0.6723200000000004,
+        0.22030581760000015,
+        0.07218981031116804
+      ],
+      "rejection": 0.9648156279111685,
+      "expected_subjects": 7.351192772444154,
+      "expected_low": 20.0,
+      "expected_high": 6.889922943163154
+    },
+    {
+      "prior": [
+        30,
+        1
+      ],
+      "alternative": "two-sided",
+      "looks": [],
+      "continue_low": [],
+      "continue_high": [],
+      "quit_low": [],
+      "quit_high": [],
+      "rejection": 0.0,
+      "expected_subjects": 20.0,
+      "expected_low": 20.0,
+      "expected_high": 20.0
     }
   ]
 }

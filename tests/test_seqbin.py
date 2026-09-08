@@ -131,8 +131,8 @@ def test_look_snapshot_and_maximum_size():
         {"tail_probability": 1},
         {"tail_probability": np.nan},
         {"looks": [5, 4, 10]},
-        {"looks": [2, 5]},
-        {"looks": []},
+        {"looks": [2, 11]},
+        {"looks": [-1, 10]},
         {"looks": [1.5, 10]},
         {"alternative": "invalid"},
         {"legacy_bounds": 1},
@@ -180,3 +180,27 @@ def test_separate_tail_cutoffs_and_overlap_precedence():
     high = SeqBinDesign(20, alternative="greater", tail_probability=0.1)
     assert_array_equal(asymmetric.continue_low, low.continue_low)
     assert_array_equal(asymmetric.continue_high, high.continue_high)
+
+
+def test_last_analysis_precedes_completion_size():
+    design = SeqBinDesign(20, looks=[5, 10])
+    result = design.operating_characteristics([0, 0.2, 0.5, 1])
+    at_last = SeqBinDesign(10, looks=[5, 10]).operating_characteristics([0, 0.2, 0.5, 1])
+    assert design.max_subjects == 20
+    assert_array_equal(result.quit_low, at_last.quit_low)
+    assert_array_equal(result.quit_high, at_last.quit_high)
+    assert_array_equal(result.complete, at_last.complete)
+    assert_allclose(result.expected_subjects, at_last.expected_subjects + 10 * at_last.complete)
+    assert_allclose(result.expected_subjects_quit_high, at_last.expected_subjects_quit_high)
+
+
+def test_no_scheduled_analyses_completes_without_rejection():
+    design = SeqBinDesign(10000, looks=[], alternative="two-sided")
+    result = design.operating_characteristics([0, 0.2, 1])
+    assert result.quit_low.shape == (3, 0)
+    assert result.quit_high.shape == (3, 0)
+    assert_array_equal(result.rejection_probability, 0)
+    assert_array_equal(result.complete, 1)
+    assert_array_equal(result.expected_subjects, 10000)
+    assert np.all(np.isnan(result.expected_subjects_quit_low))
+    assert np.all(np.isnan(result.expected_subjects_quit_high))
