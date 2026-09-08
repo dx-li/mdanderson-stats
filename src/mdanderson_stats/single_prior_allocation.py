@@ -6,6 +6,7 @@ import numpy as np
 from numpy.typing import ArrayLike
 from scipy.optimize import minimize
 
+from ._single_constraints import allocation_constraints, allocation_gap
 from ._validation import FloatArray, finite, scalar
 from .single import _response_information, single_design_precision
 
@@ -118,7 +119,12 @@ def _optimize_prior_information(
     aggregation: str,
     tol: float,
     max_iterations: int,
+    constraints: tuple[FloatArray, FloatArray] | None = None,
 ) -> SinglePriorAllocation:
+    matrix, shares = (
+        constraints if constraints is not None else allocation_constraints([x.size], None, total)
+    )
+
     def evaluate(fractions: FloatArray) -> tuple[float, FloatArray]:
         effective = fractions * weight
         active = np.where(effective[..., None] > 0, gradient, 0)
@@ -158,21 +164,21 @@ def _optimize_prior_information(
         bounds=[(0.0, 1.0)] * x.size,
         constraints={
             "type": "eq",
-            "fun": lambda f: np.sum(f) - 1,
-            "jac": lambda f: np.ones_like(f),
+            "fun": lambda f: matrix @ f - shares,
+            "jac": lambda f: matrix,
         },
         options={"maxiter": int(max_iterations), "ftol": tol},
     )
     if not result.success:
         raise RuntimeError(f"Allocation optimization failed: {result.message}")
     f = result.x
-    if np.any(f < 0) or abs(np.sum(f) - 1) > 1e-8:
+    if np.any(f < 0) or np.max(np.abs(matrix @ f - shares)) > 1e-8:
         raise RuntimeError("Allocation optimizer returned an infeasible design")
-    f = f / np.sum(f)
+    f = f * (matrix.T @ (shares / (matrix @ f)))
     value, derivative = evaluate(f)
     if not np.isfinite(value) or value <= 0 or not np.all(np.isfinite(derivative)):
         raise RuntimeError("Allocation optimizer returned invalid precision or sensitivity")
-    gap = float(max(0.0, np.max(-derivative) / (power * value) - 1))
+    gap = allocation_gap(f, derivative, matrix, power * value)
     if not np.isfinite(value) or not np.isfinite(gap) or gap > max(1e-5, 10 * np.sqrt(tol)):
         raise RuntimeError("Allocation optimizer failed the finite-dose stationarity check")
     return SinglePriorAllocation(

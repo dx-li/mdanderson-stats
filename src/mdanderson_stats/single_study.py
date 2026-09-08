@@ -36,6 +36,7 @@ class SingleStudySpecification:
     relative_improvement: float = 0.01
     tolerance: float = 1e-10
     max_iterations: int = 1000
+    group_totals: ArrayLike | None = None
 
     def run(self) -> "SingleStudy":
         arguments = asdict(self)
@@ -52,13 +53,26 @@ class SingleStudySpecification:
         weights /= weights.sum()
         for array in (parameters, bounds, weights):
             array.flags.writeable = False
-        snapshot = replace(self, parameters=parameters, dose_bounds=bounds, prior_weights=weights)
+        totals = (
+            None
+            if arguments["group_totals"] is None
+            else np.asarray(arguments["group_totals"], dtype=float).copy()
+        )
+        if totals is not None:
+            totals.flags.writeable = False
+        snapshot = replace(
+            self,
+            parameters=parameters,
+            dose_bounds=bounds,
+            prior_weights=weights,
+            group_totals=totals,
+        )
         return SingleStudy(snapshot, search)
 
     def to_json(self) -> str:
         """Serialize all search settings, including explicit parameter nodes."""
         values = asdict(self)
-        for name in ("parameters", "dose_bounds", "prior_weights"):
+        for name in ("parameters", "dose_bounds", "prior_weights", "group_totals"):
             if values[name] is not None:
                 values[name] = np.asarray(values[name]).tolist()
         for name, value in values.items():
@@ -93,7 +107,13 @@ class SingleStudy:
         parameters = np.asarray(specification.pop("parameters"), dtype=float)
         bounds = np.asarray(specification.pop("dose_bounds"), dtype=float)
         weights = np.asarray(specification.pop("prior_weights"), dtype=float)
-        rows = ["SINGLE study", "Setting\tValue"]
+        totals = specification.pop("group_totals")
+        rows = [
+            "SINGLE study",
+            "Setting\tValue",
+            "group_totals\t"
+            + ("none" if totals is None else ",".join(f"{v:.{digits}g}" for v in totals)),
+        ]
         for name, value in specification.items():
             rendered = (
                 f"{value:.{digits}g}"

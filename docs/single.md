@@ -7,7 +7,8 @@ and design-derived prior correlations are implemented. Fixed-dose, one- and two-
 point- and uncertain-prior allocation optimization is implemented, along with joint
 dose/allocation optimization and automatic dose-point addition. Study configuration,
 revision, JSON replay and complete numerical reporting are available. Original
-fixed-per-group subject totals remain pending for two-sample optimization.
+fixed-per-group subject totals are supported throughout two-sample optimization.
+The entry remains partial pending the final source/manual coverage audit.
 
 ```python
 from mdanderson_stats import single_design_precision
@@ -415,8 +416,8 @@ follow `single_two_sample_precision`. `measure` defaults to SD; variance is also
 available. Choose arithmetic aggregation for uniform priors or harmonic aggregation
 for SINGLE's normal-prior convention. The result's `value` is that chosen aggregate.
 Optional initial subject vectors must match the group dose vectors and sum to the
-shared total. Default initialization distributes subjects equally across all dose
-entries, rather than forcing equal group totals.
+experiment total. Set `group_totals` to fix each group size. Without that option,
+default initialization distributes subjects equally across all dose entries.
 
 The common prior-allocation solver uses analytic derivatives and checks
 identifiability at every positive-weight prior node. Its returned first-order
@@ -436,7 +437,8 @@ The original two-sample allocation optimizer is not compiled by these tests.
 optimizing continuous allocations. It supports one/two samples, point/weighted
 priors, both response models and parameterizations, and arithmetic/harmonic
 averaging of SD or variance. Two-sample comparisons use the same three-parameter
-conventions as the fixed-design APIs. Total subjects is shared across groups.
+conventions as the fixed-design APIs. By default total subjects is shared across
+groups; `group_totals` instead fixes the size of each group.
 
 ```python
 from mdanderson_stats import single_optimize_design
@@ -456,8 +458,9 @@ print(result.doses, result.subjects, result.value)
 For two samples, provide two initial dose vectors and `comparison="location"` or
 `"slope"`. A parameter vector represents a point prior; a node matrix requires
 positive `prior_weights` summing to one. These can be reused from the prior
-quadrature evaluators. Default initial allocations are equal across all dose
-entries. Custom initial counts must match each dose vector and the shared total.
+quadrature evaluators. Default initial allocations are equal within each fixed
+group, or across all entries when group totals are omitted. Custom initial counts must match each dose vector and the experiment
+total, plus each group total when specified.
 Dose/count pairs retain their group and entry correspondence; they are not sorted
 or rounded after optimization.
 
@@ -604,10 +607,23 @@ Tests verify independent snapshots, model/prior/search report coverage, retained
 rejected stages, exact JSON inputs, one/two-sample replay, revision and invalid
 input behavior.
 
-### Remaining two-sample compatibility constraint
+### Fixed group totals
 
-A source audit of DCPPAR shows that the original optimizer separately normalizes
-each group's counts to ANIMLS. The current two-sample optimization APIs instead
-optimize a shared experiment total across both groups. This additional flexibility
-does not yet reproduce the original fixed-per-group feasible set. Fixed group-total
-constraints must be added before catalog entry 55 is considered fully implemented.
+The original DCPPAR separately normalizes each group's counts to ANIMLS.
+To reproduce that feasible set with 100 subjects per group, supply
+`total_subjects=200, group_totals=[100, 100]`. Unequal positive group totals are
+also supported. Their sum must match the experiment total. Omitting `group_totals`
+retains the shared-total optimization, allowing subjects to move between groups.
+
+This option is available in `single_optimize_two_sample_allocations`,
+`single_optimize_design`, `single_search_design`, and `SingleStudySpecification`.
+Initialization distributes each fixed total equally across that group's dose
+entries. Custom initial allocations must already satisfy both totals. Search
+extensions and local optimization preserve them, as do JSON replay and revision.
+One-sample workflows reject this two-group option.
+
+Allocation stationarity compares dose sensitivities within each constrained
+group. Tests check analytic slope-contrast precision, unequal totals, sample-size
+scaling, joint optimal doses, search history, report settings and JSON replay.
+These tests validate the constrained mathematical problem; they do not execute
+the original optimizer or establish a global optimum for the dose search.

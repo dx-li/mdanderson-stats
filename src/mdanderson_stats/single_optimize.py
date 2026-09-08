@@ -7,6 +7,7 @@ import numpy as np
 from numpy.typing import ArrayLike
 from scipy.optimize import minimize
 
+from ._single_constraints import allocation_constraints, allocation_gap
 from ._validation import FloatArray, finite, scalar
 from .single import _response_information
 from .single_uniform import _local_criterion
@@ -70,6 +71,7 @@ def single_optimize_design(
     *,
     prior_weights: ArrayLike | None = None,
     total_subjects: float = 100,
+    group_totals: ArrayLike | None = None,
     initial_subjects: ArrayLike | tuple[ArrayLike, ArrayLike] | None = None,
     criterion: str = "quantile",
     comparison: str | None = None,
@@ -85,7 +87,8 @@ def single_optimize_design(
 
     Supply a point parameter vector or weighted parameter nodes. One sample
     uses a dose vector; two samples use a pair of vectors and comparison=location
-    or slope. Total subjects is shared by both groups. The number of supplied
+    or slope. group_totals optionally fixes each group size and must sum to
+    total_subjects. Otherwise subjects may move across groups. The number of supplied
     dose entries stays fixed; zero allocations are allowed. Try multiple starts
     to assess local minima. Singular trial information is infeasible.
     """
@@ -148,8 +151,9 @@ def single_optimize_design(
     def unpack(v: FloatArray) -> DesignVectors:
         return v if comparison is None else (v[: lengths[0]], v[lengths[0] :])
 
+    matrix, shares = allocation_constraints(lengths, group_totals, total)
     if initial_subjects is None:
-        n = np.full(size, total / size)
+        n = total * (matrix.T @ (shares / matrix.sum(axis=1)))
     elif comparison is None:
         n = finite(np.asarray(initial_subjects), "initial_subjects")
     else:
@@ -164,6 +168,8 @@ def single_optimize_design(
         n = np.concatenate(counts)
     if n.shape != x.shape or np.any(n < 0) or not np.isclose(n.sum(), total, rtol=1e-12, atol=0):
         raise ValueError("Initial subjects must match doses, be nonnegative and sum to total")
+    if not np.allclose(matrix @ (n / total), shares, rtol=1e-12, atol=0):
+        raise ValueError("Initial subjects must match group_totals")
     _local_criterion(
         unpack(x),
         unpack(n),
@@ -272,17 +278,17 @@ def single_optimize_design(
         bounds=[(0.0, 1.0)] * (2 * size),
         constraints={
             "type": "eq",
-            "fun": lambda z: np.sum(z[size:]) - 1,
-            "jac": lambda z: np.concatenate([np.zeros(size), np.ones(size)]),
+            "fun": lambda z: matrix @ z[size:] - shares,
+            "jac": lambda z: np.hstack([np.zeros_like(matrix), matrix]),
         },
         options={"maxiter": int(max_iterations), "ftol": tol},
     )
     if not result.success:
         raise RuntimeError(f"Joint design optimization failed: {result.message}")
     z = result.x
-    if np.any((z < 0) | (z > 1)) or abs(z[size:].sum() - 1) > 1e-8:
+    if np.any((z < 0) | (z > 1)) or np.max(np.abs(matrix @ z[size:] - shares)) > 1e-8:
         raise RuntimeError("Joint optimizer returned an infeasible design")
-    z[size:] /= z[size:].sum()
+    z[size:] *= matrix.T @ (shares / (matrix @ z[size:]))
     value, derivative = evaluate(z)
     if not np.isfinite(value) or value <= 0 or not np.all(np.isfinite(derivative)):
         raise RuntimeError("Joint optimizer returned invalid precision or derivatives")
@@ -292,7 +298,7 @@ def single_optimize_design(
     stationarity = float(
         max(
             np.max(np.abs(dose_residual)) / value,
-            np.max(-derivative[size:]) / (power * value) - 1,
+            allocation_gap(z[size:], derivative[size:], matrix, power * value),
             0,
         )
     )

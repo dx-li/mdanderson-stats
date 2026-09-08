@@ -5,6 +5,7 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import ArrayLike
 
+from ._single_constraints import allocation_constraints
 from ._validation import FloatArray, finite, scalar
 from .single import _response_information
 from .single_prior_allocation import _optimize_prior_information
@@ -27,6 +28,7 @@ def single_optimize_two_sample_allocations(
     *,
     prior_weights: ArrayLike | None = None,
     total_subjects: float = 100,
+    group_totals: ArrayLike | None = None,
     comparison: str = "location",
     model: str = "logistic",
     form: str = "linear",
@@ -36,10 +38,11 @@ def single_optimize_two_sample_allocations(
     max_iterations: int = 500,
     tolerance: float = 1e-10,
 ) -> SingleTwoSampleAllocation:
-    """Allocate a shared subject total across both groups and their fixed doses.
+    """Allocate subjects across fixed doses, optionally fixing each group total.
 
     Supply a three-entry point prior, or (nodes,3) parameters with positive
     prior_weights summing to one. Parameter order follows single_two_sample_precision.
+    group_totals optionally fixes two positive group sizes summing to total_subjects.
     Counts are continuous. The result passes local first-order stationarity checks,
     without a general claim of global optimality for aggregated prior objectives.
     """
@@ -78,8 +81,10 @@ def single_optimize_two_sample_allocations(
         raise ValueError("max_iterations must be a positive integer")
     if measure not in ("sd", "variance") or aggregation not in ("arithmetic", "harmonic"):
         raise ValueError("Require measure sd/variance and aggregation arithmetic/harmonic")
+    matrix, shares = allocation_constraints([x1.size, x2.size], group_totals, total)
     if initial_subjects is None:
-        n1, n2 = np.full(x1.size, total / x.size), np.full(x2.size, total / x.size)
+        initial = total * (matrix.T @ (shares / matrix.sum(axis=1)))
+        n1, n2 = initial[: x1.size], initial[x1.size :]
     else:
         if len(initial_subjects) != 2:
             raise ValueError("Require two initial subject vectors")
@@ -90,6 +95,8 @@ def single_optimize_two_sample_allocations(
     n = np.concatenate([n1, n2])
     if not np.isclose(n.sum(), total, rtol=1e-12, atol=0):
         raise ValueError("Initial allocations must sum to total_subjects across both groups")
+    if not np.allclose(matrix @ (n / total), shares, rtol=1e-12, atol=0):
+        raise ValueError("Initial allocations must match group_totals")
     compared = 0 if (form == "linear") == (comparison == "location") else 1
     gradients, weights = [], []
     for group, points in enumerate((x1, x2)):
@@ -122,6 +129,7 @@ def single_optimize_two_sample_allocations(
         aggregation,
         tol,
         int(max_iterations),
+        constraints=(matrix, shares),
     )
     return SingleTwoSampleAllocation(
         (x1.copy(), x2.copy()),

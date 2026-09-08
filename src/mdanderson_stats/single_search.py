@@ -6,6 +6,7 @@ from itertools import combinations
 import numpy as np
 from numpy.typing import ArrayLike
 
+from ._single_constraints import allocation_constraints
 from ._validation import FloatArray, finite, scalar
 from .single_optimize import DesignVectors, SingleOptimizedDesign, single_optimize_design
 from .single_uniform import _local_criterion
@@ -34,6 +35,7 @@ def single_search_design(
     *,
     prior_weights: ArrayLike | None = None,
     total_subjects: float = 100,
+    group_totals: ArrayLike | None = None,
     criterion: str = "quantile",
     comparison: str | None = None,
     model: str = "logistic",
@@ -164,6 +166,7 @@ def single_search_design(
                     bounds,
                     prior_weights=prior,
                     total_subjects=total,
+                    group_totals=group_totals,
                     initial_subjects=n,
                     criterion=criterion,
                     comparison=comparison,
@@ -179,10 +182,12 @@ def single_search_design(
                 failures += 1
         raise RuntimeError("All feasible grid starts failed joint optimization")
 
+    matrix, shares = allocation_constraints([2] * groups, group_totals, total)
+    initial = total * (matrix.T @ (shares / matrix.sum(axis=1)))
     seeds: list[tuple[float, DesignVectors, DesignVectors]] = []
     for pair in combinations(grid, 2):
         x = packed(tuple(np.array(pair) for _ in range(groups)))
-        n = packed(tuple(np.full(2, total / (2 * groups)) for _ in range(groups)))
+        n = packed(tuple(initial[2 * g : 2 * g + 2].copy() for g in range(groups)))
         value = score(x, n)
         if np.isfinite(value):
             seeds.append((value, x, n))
