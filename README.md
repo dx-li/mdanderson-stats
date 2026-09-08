@@ -307,3 +307,8 @@ repeated scalar calls to the same Python API.
 chi-square and likelihood-ratio ordering, multiple alternatives, and complete
 tie groups. See [MULTINOMPOW](docs/multinomial-power.md) for validation and the
 complete archive and report coverage.
+
+`tdtasp_genetics` provides TDTASP's vectorized two-locus family and offspring
+probabilities, with explicit compatibility for the original ASP weighting.
+See [TDTASP](docs/tdtasp.md) for native validation and the remaining study-planning
+work on this partially implemented entry.

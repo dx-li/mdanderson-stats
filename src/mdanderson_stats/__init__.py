@@ -143,8 +143,12 @@ from .stukel_fit import StukelFit, StukelFitError, fit_stukel
 from .stukel_objective import StukelObjective, stukel_objective
 from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
+from .tdtasp_genetics import TDTASPGenetics, tdtasp_genetics, tdtasp_haplotype_frequencies
 
 __all__ = [
+    "TDTASPGenetics",
+    "tdtasp_genetics",
+    "tdtasp_haplotype_frequencies",
     "MultinomialPower",
     "format_multinomial_power",
     "multinomial_power",

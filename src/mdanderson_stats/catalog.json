@@ -351,9 +351,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "TDTASP genetic layer: haplotype input/conversion, random-mating family probabilities, recombination, affected-child probabilities and marker-heterozygous transmission/sharing",
+        "Corrected affected-sibling probabilities with explicit original double-weighting/cutoff compatibility; immutable vectorized 256-family results"
+      ],
+      "validation": [
+        "tests/test_tdtasp_genetics.py",
+        "tests/fixtures/tdtasp_genetics.json",
+        "docs/tdtasp.md"
+      ]
     },
     {
       "id": 21,

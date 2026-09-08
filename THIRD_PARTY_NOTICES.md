@@ -458,3 +458,14 @@ are retained in [LEGALITITES](notices/mdanderson-multinompow-LEGALITITES.txt).
 The archived ACM `gamln` implementation is not copied or bundled; Python
 uses SciPy special functions. Source defects and numerical differences are
 identified in [the implementation notes](docs/multinomial-power.md).
+
+## TDTASP
+
+The TDTASP genetic model independently expresses two-locus Mendelian
+transmission and the family calculations in version 1.1 (April 2003),
+Barry W. Brown and Dan Serachitopol. Copyright 2003, The University of Texas
+M.D. Anderson Cancer Center, Department of Biomathematics. Original
+[LEGALITIES](notices/mdanderson-tdtasp-LEGALITIES.txt) are retained.
+The explicit ASP compatibility option preserves the original duplicate
+transmission weighting and cutoff; the default corrects that behavior.
+Original source, executables and archived ACM numerical code are not bundled.
