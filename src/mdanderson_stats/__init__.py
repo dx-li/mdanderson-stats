@@ -23,6 +23,7 @@ from .binomial_sample_size import binomial_sample_size
 from .bp1ci import BP1CIResult, bp1ci
 from .cta import ContingencyChiSquare, contingency_chi_square
 from .cta_diagnostic import DiagnosticAccuracy, diagnostic_accuracy
+from .cta_fisher import FisherExact, fisher_exact
 from .cta_kappa import CohenKappa, cohen_kappa
 from .cta_mcnemar import McNemarAnalysis, mcnemar_analysis
 from .cta_odds import OddsRatio, odds_ratio
@@ -128,6 +129,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "FisherExact",
+    "fisher_exact",
     "DiagnosticAccuracy",
     "diagnostic_accuracy",
     "OddsRatio",

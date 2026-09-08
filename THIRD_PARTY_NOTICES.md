@@ -322,3 +322,7 @@ available explicitly. The retained CTA notice applies.
 `cta_odds.py` independently implements RELRISK odds ratios. Corrected log-Wald
 limits are default; the source CDF multiplier is available explicitly. The
 retained CTA notice applies.
+
+`cta_fisher.py` independently expresses FISHXT fixed-margin probabilities with
+accurate hypergeometric evaluation and explicit source tail/cutoff compatibility.
+The retained CTA notice applies.

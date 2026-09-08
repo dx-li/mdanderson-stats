@@ -3,8 +3,8 @@
 Catalog entry 30 is partial. CHISQT expected counts, percentages, Pearson,
 Yates and source-specific Cochran statistics, the McNemar decomposition, and
 Cohen kappa with variances, sensitivity/specificity and predictive values are
-implemented, along with odds ratios and confidence limits. Fisher probabilities,
-binomial comparison, reports
+implemented, along with odds ratios, confidence limits and Fisher probabilities.
+Binomial comparison, reports
 and interactive study orchestration
 remain pending.
 
@@ -289,3 +289,62 @@ native quantities, independently checks corrected intervals using standard
 normal quantiles, and covers batching, reversal, scaling, validation and
 extreme floating-point inputs. Original Fortran and executables remain outside
 the package. These checks do not validate CTA's remaining routines.
+
+## Fisher fixed-margin probabilities
+
+```python
+from mdanderson_stats import fisher_exact
+
+fit = fisher_exact([[1, 9], [11, 3]])  # Probability-ordered two-sided test
+lower = fisher_exact([[1, 9], [11, 3]], alternative="less")
+source = fisher_exact([[1, 9], [11, 3]], legacy=True)
+full_source_tail = fisher_exact([[1, 9], [11, 3]], alternative="source")
+```
+
+`fisher_exact` implements FISHXT and standard exact-test alternatives. Final
+axes must be 2x2 with nonnegative integer counts. Leading dimensions form a
+batch; each table may total at most 50,000, the original CTA workspace limit.
+Zero margins, including an all-zero table, yield the degenerate probability
+one. Fractional counts are rejected: the original implicitly truncates them
+inside factorial loops, which does not define a valid fixed-margin test.
+
+For a table [[a,b],[c,d]], the upper-left count has a hypergeometric distribution
+with population a+b+c+d, first-row size a+b, and first-column size a+c. The
+observed table is included in every tail:
+
+- The default `two-sided` sums all table probabilities no greater than the
+  observed probability; equal masses are included with relative tolerance 1e-12.
+- `less` sums upper-left counts at most a; `greater` sums counts at least a.
+- `source` selects `less` when a*d < b*c and `greater` otherwise, including
+  the equality case. This is CTA's direction chosen from the data, not a
+  pre-specified one-sided alternative or a two-sided p-value.
+
+`legacy=True` defaults to `source` and cannot be combined with another explicit
+alternative. It also reproduces CTA's early stop: start at the observed table,
+move outward in the selected tail, and stop **after including** the first term
+less than 1e-5 times the observed table's probability. Without legacy, the full
+selected tail is summed. For [[100,100],[100,100]], legacy includes 25 terms;
+the full upper tail includes 101. Standard two-sided inference does not use
+this truncation.
+
+Results contain `pvalue`, `observed_probability`, the number of included `terms`,
+`support_size`, a Boolean `source_lower_tail` describing CTA's direction, and
+`truncated` indicating whether the early stop actually omitted any terms.
+Arrays are read-only. Supports are evaluated using vectorized hypergeometric
+probabilities, one table at a time to bound batch memory use. Relative cutoffs
+use log probabilities so they remain meaningful even when the probability
+itself underflows to zero. Two-sided ordering of underflowed masses uses log
+probabilities with an absolute log tolerance of 1e-10. Probabilities below the
+floating-point range return zero.
+
+`tools/reference_cta_fisher.py` compiles unchanged FISHXT and ROTCAF locally,
+using the original 50,000-element work buffer. Its 40 fixtures exercise table
+transposition, row reversal, zero margins, independence and tail truncation.
+All source term counts match. Native probability comparisons allow 7e-4 relative
+error: CTA's repeated single-precision log-factorial sums differ from the exact
+rational result by about 6.28e-4 at total 400. Python does not reproduce that
+roundoff. Every native case is also checked against rational sums to 2e-13
+relative tolerance. Further tests exhaustively enumerate all 625 tables whose
+cells range from zero through four for all four alternatives, using integer
+combinations and fractions as an independent oracle. The 50,000-count boundary,
+underflow, batching, symmetry and invalid inputs are covered separately.

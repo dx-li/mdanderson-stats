@@ -242,3 +242,6 @@ with explicit table orientation and probability standard errors.
 
 `odds_ratio` adds CTA relative odds and log-Wald limits, with explicit
 compatibility for the source confidence-limit formula.
+
+`fisher_exact` adds CTA fixed-margin probabilities, standard exact-test
+alternatives and explicit compatibility for the original selected, truncated tail.
