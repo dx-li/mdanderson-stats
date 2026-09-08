@@ -4,7 +4,7 @@ Catalog entry 55 is partial. Fixed one- and two-sample designs under point prior
 implemented for logistic and log-log models, with linear or centered predictors.
 Independent uniform and correlated normal/log-normal prior criterion averaging
 and design-derived prior correlations are implemented. Fixed-dose, one-sample
-point-prior allocation optimization is implemented. Dose-location optimization,
+point- and uncertain-prior allocation optimization is implemented. Dose-location optimization,
 dose-point addition and original reporting workflows remain pending.
 
 ```python
@@ -338,5 +338,51 @@ Tests reproduce the supplied SINGLE allocation/SD example, compare two-point
 solutions to analytic optimal splits, verify zero allocations at inferior doses,
 and exercise scaling, permutation, initialization, failure reporting and zero
 slopes. The original allocation optimizer itself is not compiled in these tests.
-Uncertain-prior and two-sample allocation optimization, dose movement and automatic
-support-point addition remain pending.
+Two-sample allocation optimization, dose movement and automatic support-point
+addition remain pending.
+
+
+## Allocation optimization under uncertain priors
+
+`single_optimize_prior_allocations` takes a `(nodes, 2)` parameter array and
+positive weights summing to one. Nodes and weights can be taken directly from a
+`single_uniform_criterion` or `single_normal_criterion` result, preserving the
+chosen quadrature order, transformation and covariance scaling. The nodes are
+held fixed during optimization and per-node dose information is precomputed.
+
+```python
+from mdanderson_stats import single_normal_criterion, single_optimize_prior_allocations
+
+prior = single_normal_criterion([-1, 2], [50, 50], [0.3, 0.9], [[0.01, 0.002], [0.002, 0.01]])
+optimized = single_optimize_prior_allocations(
+    [-1, 2],
+    prior.parameters,
+    prior.weights,
+    criterion="quantile",
+    measure="sd",
+    aggregation="harmonic",
+)
+print(optimized.subjects, optimized.value)
+```
+
+Use arithmetic aggregation for SINGLE's uniform-prior convention and harmonic
+aggregation for its normal-prior convention. `measure` chooses `variance` or `sd`;
+these are distinct objectives under uncertain priors. The return fields `value`
+and `initial_value` always describe that selected aggregate. Subject counts are
+continuous and the dose vector stays fixed. The same source node set can be
+reused across candidate dose sets without repeating prior construction.
+
+The analytic gradient includes the SD transformation and reciprocal averaging.
+The reported `optimality_gap` is a relative finite-dose first-order stationarity
+gap, using the objective's allocation scaling exponent (one for variance, one-half
+for SD). Successful termination and the gap threshold are both required. For
+these general aggregated objectives this is not asserted to prove a global
+minimum. Different starts and higher prior quadrature orders can assess solution
+and integration sensitivity. Singular information at any positive-weight node
+makes that trial allocation infeasible; no prior nodes are silently discarded.
+
+Tests compare optimized values with separate prior evaluators for both response
+models, both criteria, both measures and uniform/normal averaging, and compare
+against a dense two-dose allocation search. Further checks cover point-prior
+reduction, sample-size scaling, centered models, discarded interior doses and
+explicit failure reporting. These tests do not compile the original optimizer.

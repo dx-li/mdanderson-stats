@@ -1113,12 +1113,14 @@
         "single_normal_criterion: correlated latent-normal/log-normal reciprocal criterion averaging with Hermite quadrature, semidefinite covariance and explicit original quarter-covariance scaling",
         "single_prior_parameters: raw marginal moment input with exact or original ALNTON log-normal conversion and validated latent correlations",
         "single_design_correlation: DSTCOV reference-design covariance and correlation for one or two samples, with explicit model evaluation parameters",
-        "single_optimize_allocations: one-sample point-prior allocation optimization on fixed dose points, analytic gradients and finite-dose sensitivity optimality check"
+        "single_optimize_allocations: one-sample point-prior allocation optimization on fixed dose points, analytic gradients and finite-dose sensitivity optimality check",
+        "single_optimize_prior_allocations: fixed-dose one-sample weighted-prior allocation optimization for arithmetic/harmonic SD or variance, with analytic gradients and stationarity checks"
       ],
       "validation": [
         "tests/test_single.py",
         "tests/test_single_zero_slope.py",
         "tests/test_single_allocation.py",
+        "tests/test_single_prior_allocation.py",
         "tests/fixtures/single.json",
         "tools/reference_single.py",
         "tests/test_single_two_sample.py",

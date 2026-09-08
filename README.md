@@ -140,5 +140,7 @@ with exact and original log-normal conversion options.
 `single_design_correlation` supplies reference-design prior correlations.
 `single_optimize_allocations` chooses continuous subject counts at fixed dose
 points for one-sample point-prior slope or quantile precision.
+`single_optimize_prior_allocations` optimizes arithmetic or harmonic prior-averaged
+SD/variance using explicit quadrature nodes and analytic gradients.
 [SINGLE coverage](docs/single.md) tracks
 the remaining prior-integration and optimization workflows.
