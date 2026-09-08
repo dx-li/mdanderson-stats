@@ -11,6 +11,7 @@ from benchmark_numerics import measure
 from mdanderson_stats import RandlibGenerator
 
 PARAMETERS = {
+    "poisson": {"mu": 20.0},
     "binomial": {"n": 1000, "p": 0.3},
     "beta": {"a": 2.0, "b": 3.0},
     "gamma": {"shape": 2.5, "rate": 1.7},

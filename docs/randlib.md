@@ -2,7 +2,7 @@
 
 Catalog entry 27 is partial. The 32-stream generator bank and state controls are
 implemented, along with bounded uniforms, permutations, exponential, normal, gamma,
-central/noncentral chi-square, F, beta and binomial sampling. Remaining count
+central/noncentral chi-square, F, beta, binomial and Poisson sampling. Remaining count
 and multivariate samplers and the final archive coverage/performance audit
 remain pending.
 
@@ -512,5 +512,72 @@ quantile brackets, scalar/batch identity, endpoint consumption, source overflow
 protection and rollback. The benchmark includes 10,000 default binomial draws
 with 1,000 trials and probability 0.3.
 
-Poisson, negative-binomial, multinomial and multivariate-normal sampling and
+## Poisson sampling
+
+```python
+from mdanderson_stats import RandlibGenerator
+
+bank = RandlibGenerator()
+counts = bank.poisson(1000, mu=20)
+original = bank.poisson(1000, mu=20, legacy=True)
+original_c = bank.poisson(1000, mu=20, legacy=True, source="c")
+```
+
+`poisson(size=1, *, mu=1.0, legacy=False, source="fortran",
+max_attempts=None)` returns a read-only `int64` array. `mu` is the nonnegative
+mean and variance. Default mode uses vectorized SciPy Poisson quantiles and
+checks the probability bracket using the smaller tail. Each output consumes
+one basic generator draw, including `mu=0`. The finite underlying uniform
+grid limits the tails that can be reached. Means must be finite and at most
+`2**53 - 1`; a quantile outside that exact-integer range, a nonfinite result,
+or an invalid probability bracket raises `ArithmeticError` without advancing
+the public generator.
+
+Legacy mode expresses IGNPOI / RANDOM_POISSON's Ahrens–Dieter modified-normal
+algorithm. Below a float32 mean of 10 it uses cumulative Poisson probabilities
+through count 35, restarting with another uniform if the table is exhausted.
+At or above 10 it uses the source normal proposal, immediate and squeeze
+acceptance, quotient tests, and exponential hat rejection. It reuses the
+validated source normal/exponential primitives and preserves C/Fortran
+constant promotion, factorial powers, polynomial coefficients, and uniform
+rounding. Source logarithms and exponentials are evaluated in double precision
+then rounded to float32 for Fortran mode to avoid known platform-dependent
+single-precision vector-library rounding differences.
+
+The original Fortran sources save the table's length and cumulative mass but
+omit `SAVE` for `pp(35)`. With automatic local storage, native repeated calls
+in the reference driver produced incorrect increasing counts. The recorded
+reference builds use gfortran's `-fno-automatic` to retain that table without
+editing the archived source. C already declares the table static. Python
+constructs the table per request and retains it for the whole batch, making
+scalar, batched and alternating-mean calls independent of process-global
+cache or stack contents. This deliberately repairs the table lifetime;
+compatibility refers to the recorded builds with that storage setting.
+
+Legacy means must round to float32 values in `[0, 2**31)` without positive
+underflow to zero. Counts outside the common signed 32-bit native range
+raise `ArithmeticError` and roll back the entire request. Float32 rounding
+remains visible: at `mu=1e-8`, the initial probability rounds to one and
+legacy sampling always returns zero, while default mode retains a nonzero
+chance of a positive count. Large legacy means also lose count resolution.
+Use default mode for the mathematical distribution instead of reproducing
+these single-precision limitations.
+
+`max_attempts` bounds all underlying uniforms, including those used in nested
+normal and exponential sampling. It defaults to `max(100000, 8*size)`.
+Exceeding it, overflowing the count, or reaching an inherited source-table
+guard leaves the selected generator unchanged. Empty batches consume no
+randomness; zero-mean batches still consume one uniform per result.
+
+`tools/reference_randlib_poisson.py` compiles the archived C, Fortran 77 and
+Fortran 95 implementations. Its fixture records compiler flags, storage
+settings and source hashes for 336 cases containing 6,720 counts and component
+states. Tests require exact agreement, covering means around the algorithm
+boundary, tiny and zero means, streams 1 and 32, antithetic draws, maximum
+uniforms and alternating means. Additional tests check moments and CDFs,
+scalar/batch agreement, quantile brackets, parameter validation, count-range
+failures and rollback. The benchmark includes 10,000 default draws at `mu=20`
+compared with repeated calls to the same Python API.
+
+Negative-binomial, multinomial and multivariate-normal sampling and
 RANDLIB's final archive coverage/performance audit remain pending.

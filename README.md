@@ -320,3 +320,7 @@ overflow guards and transactional rejection limits.
 RANDLIB binomial sampling adds vectorized quantiles with probability-bracket
 checks and original inversion/BTPE sampling, including native count/state
 validation and explicit legacy rounding and integer-range limits.
+
+RANDLIB Poisson sampling adds vectorized quantiles, source inversion and
+modified-normal rejection, with native count/state checks and an explicit
+repair for the archived Fortran cumulative table’s lifetime.

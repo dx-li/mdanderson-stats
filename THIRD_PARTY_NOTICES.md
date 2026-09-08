@@ -416,3 +416,10 @@ BTPE algorithms, attributed to V. Kachitvichyanukul and B. W. Schmeiser,
 216–222 (1988). Source coefficients, acceptance tests and inversion restart
 rules are retained. The RANDLIB source attribution and ACM terms referenced
 above remain available; original native source/executables are not bundled.
+
+RANDLIB’s Poisson sampler independently expresses IGNPOI / RANDOM_POISSON,
+attributed to J. H. Ahrens and U. Dieter, “Computer Generation of Poisson
+Deviates From Modified Normal Distributions,” ACM Transactions on Mathematical
+Software 8(2), 163–179 (1982). Source coefficients, factorials and rejection
+rules are retained. The RANDLIB notices and ACM terms referenced above remain
+applicable; original native source and executables are not bundled.

@@ -12,6 +12,7 @@ from ._randlib_chi_f import sample_chi_f
 from ._randlib_distributions import DistributionStream, legacy_exponential
 from ._randlib_gamma import legacy_gamma
 from ._randlib_normal import legacy_normal
+from ._randlib_poisson import sample_poisson
 from ._randlib_sampling import bounded, raw_batch
 from ._validation import scalar
 from .ranlist_random import _DEFAULT, _M1, _M2, _stream_seeds
@@ -624,6 +625,41 @@ class RandlibGenerator:
             size,
             n,
             p,
+            legacy,
+            source,
+            budget,
+        )
+        self._current[self._stream - 1] = state
+        return result
+
+    def poisson(
+        self,
+        size: int = 1,
+        *,
+        mu: float = 1.0,
+        legacy: bool = False,
+        source: Literal["fortran", "c"] = "fortran",
+        max_attempts: int | None = None,
+    ) -> NDArray[np.int64]:
+        """Poisson counts (IGNPOI), using quantiles or source rejection sampling."""
+        size = _integer(size, "size", 0, self._max_draws)
+        if not isinstance(legacy, (bool, np.bool_)):
+            raise ValueError("legacy must be boolean")
+        if not isinstance(source, str) or source not in ("fortran", "c"):
+            raise ValueError("source must be fortran or c")
+        if not legacy and source != "fortran":
+            raise ValueError("source selection requires legacy=True")
+        budget = _integer(
+            max(100_000, 8 * size) if max_attempts is None else max_attempts,
+            "max_attempts",
+            1,
+            2**53 - 1,
+        )
+        result, state = sample_poisson(
+            self.get_seeds(),
+            self._antithetic[self._stream - 1],
+            size,
+            mu,
             legacy,
             source,
             budget,
