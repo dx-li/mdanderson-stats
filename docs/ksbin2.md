@@ -4,8 +4,9 @@ Catalog entry 24 is partial. The outcome statistics and complete single-stage
 outcome ordering and ordinary single-stage probability tables are implemented.
 Source-convention mid-p significance and single-stage rejection-region selection
 and fixed multistage operating characteristics are also available. Ordinary
-multistage boundary-assistance and power-loss tables are implemented. Multistage
-mid-p reporting, study probability scans and report/design workflows remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
+multistage boundary-assistance and power-loss tables are implemented, with explicitly
+named mid-p display and pointwise values. Study probability scans and report/design
+workflows remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
 
 ```python
 from mdanderson_stats import ksbin2_ordering, ksbin2_statistic
@@ -253,9 +254,8 @@ the fixed-design evaluator, supplied probabilities may represent nulls, endpoint
 or effects opposite to the design direction.
 
 Default and custom null grids follow the single-stage table conventions. All
-significance values here use ordinary inclusive regions. Multistage mid-p display
-semantics remain pending; this table does not silently apply the single-stage
-mid-p formula to a nonzero prior rejection probability.
+significance values in the base fields use ordinary inclusive regions. Additional
+mid-p properties have distinct semantics, described below.
 
 An optional `reference` supplies a fixed single-stage rejection region with the
 same final sample sizes. Its explicit event pairs define rejection; its stored
@@ -286,3 +286,35 @@ regions, broadcasting, a known conditional completion probability, no new data i
 one group, and invalid arguments. The implementation follows the SSSIG/SSPOW/SSPL
 probability definitions; these tests are exhaustive probability checks rather than
 a native main-program session or a separate native SSPL reference build.
+
+## Multistage mid-p reporting
+
+The boundary table's `midp_significance` preserves the source BRKARR display
+convention. Its first entry is half the first group's cumulative grid maximum,
+including all earlier rejections. Subsequent entries average adjacent cumulative
+grid maxima. This first-group behavior differs from retaining earlier rejections
+at their ordinary probabilities.
+
+`null_midp` instead includes every earlier rejection in full, every stronger current
+outcome in full, and half the current terminal tied group's probability, separately
+at each null grid point. `pointwise_midp_significance` maximizes those pointwise
+values across the grid. With a nonzero prior rejection probability, there is no
+general ordering between this value and the source's displayed mid-p value.
+Neither changes the cumulative power, actual rejection region, ordinary significance,
+or the finite-grid limitation.
+
+For example, consider cumulative sizes (2,2), (3,3), criterion 1 and a greater-tail
+design. At the first stage reject tied group 0 and quit from group 2. Under a
+common probability of 0.5, earlier rejection has probability 1/16. The first
+reachable tied group at stage two adds another 1/16. Its ordinary cumulative
+rejection probability is 1/8. Source mid-p reporting gives 1/16, whereas the
+pointwise current-group adjustment gives 3/32.
+
+`tools/reference_ksbin2_midp.py` compiles unchanged BRKARR and records nine
+adjustments, spanning all three stages and directions of a small design. Python
+supplies already-validated cumulative group maxima to isolate the display routine.
+Source/driver hashes and compiler settings accompany `tests/fixtures/ksbin2_midp.json`.
+The exhaustive path tests also verify every pointwise value, preserving earlier
+rejection probabilities explicitly. A closed-form regression covers the example
+above, and broadcast-power checks verify that accessing mid-p values changes no
+ordinary probabilities.

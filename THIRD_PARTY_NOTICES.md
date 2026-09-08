@@ -169,3 +169,8 @@ helpers; its provenance is recorded in `tests/fixtures/ksbin2_transition.json`.
 probabilities and reference-completion power loss, following the source SSSIG,
 SSPOW and SSPL definitions. It uses Python arrival masses and binomial transition
 matrices; exhaustive paired trial paths validate its probabilities.
+
+The multistage boundary table preserves the original BRKARR mid-p display
+behavior, including its treatment of prior rejections in the first group.
+The pointwise current-group adjustment is separately named. An unchanged native
+BRKARR reference and its provenance appear in `tests/fixtures/ksbin2_midp.json`.

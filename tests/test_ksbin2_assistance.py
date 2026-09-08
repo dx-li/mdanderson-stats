@@ -1,6 +1,8 @@
 """Exhaustive path validation of stage assistance and reference power loss."""
 
 import itertools
+import json
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -68,6 +70,10 @@ def test_exhaustive_paths(alternative, stage, pair):
     assert_allclose(t.cumulative_null_rejection, expected[:4] + previous[:4, None], atol=4e-14)
     assert_allclose(t.significance, (expected[:4] + previous[:4, None]).max(axis=0), atol=4e-14)
     assert_allclose(t.power_loss, lost, atol=4e-14)
+    strict = np.concatenate([np.zeros((4, 1)), expected[:4, :-1]], axis=1)
+    pointwise = previous[:4, None] + (strict + expected[:4]) / 2
+    assert_allclose(t.null_midp, pointwise, atol=4e-14)
+    assert_allclose(t.pointwise_midp_significance, pointwise.max(axis=0), atol=4e-14)
 
 
 def test_first_stage_matches_native_validated_probability_table():
@@ -137,3 +143,36 @@ def test_wrong_reference_size():
             0.2,
             reference=ksbin2_probability_table(3, 3, 0.6, 0.2).select(0.05),
         )
+
+
+NATIVE_MIDP = json.loads((Path(__file__).parent / "fixtures/ksbin2_midp.json").read_text())["cases"]
+
+
+@pytest.mark.parametrize("case", NATIVE_MIDP)
+def test_native_multistage_midp_display(case):
+    design = KStageTwoSampleBinomial(
+        [[2, 2], [3, 3], [4, 4]], [0, 0, 1], [2, 2], criteria=(1,), alternative=case["alternative"]
+    )
+    table = ksbin2_boundary_table(design, case["stage"], 0.6, 0.2)
+    assert_allclose(table.significance, case["input"], atol=2e-14)
+    assert_allclose(table.midp_significance, case["midp"], atol=2e-14)
+
+
+def test_first_group_preserves_prior_rejections_only_in_pointwise_method():
+    d = KStageTwoSampleBinomial([[2, 2], [3, 3]], [0, -1], [2], criteria=(1,))
+    t = ksbin2_boundary_table(d, 2, 0.6, 0.2, null_grid=[0.5])
+    # Prior rejection (2,0) has probability 1/16. New first-group rejection
+    # arrives via (1,0) or (2,1), then a success/failure increment: 1/16.
+    assert_allclose(t.previous_null_rejection, [1 / 16])
+    assert_allclose(t.stage_null_rejection[0, 0], 1 / 16)
+    assert_allclose(t.midp_significance[0], 1 / 16)
+    assert_allclose(t.null_midp[0, 0], 3 / 32)
+    assert_allclose(t.significance[0], 1 / 8)
+
+
+def test_multistage_midp_does_not_change_power_or_inclusive_regions():
+    d = KStageTwoSampleBinomial([[2, 2], [3, 3]], [0, -1], [2])
+    t = ksbin2_boundary_table(d, 2, [[0.5], [0.6]], [0.1, 0.2])
+    before = t.cumulative_power.copy()
+    _ = t.midp_significance, t.null_midp, t.pointwise_midp_significance
+    assert_allclose(t.cumulative_power, before)

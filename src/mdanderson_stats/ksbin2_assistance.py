@@ -27,6 +27,33 @@ class KSTwoSampleBoundaryTable:
     conditional_reference_power: FloatArray | None
     power_loss: FloatArray | None
 
+    @property
+    def midp_significance(self) -> FloatArray:
+        """Original BRKARR display convention, including its first-group behavior.
+
+        The first value halves the entire cumulative grid maximum, including
+        earlier rejections. Later values average adjacent cumulative maxima.
+        These displayed levels do not equal ordinary rejection probabilities.
+        """
+        return (self.significance + np.r_[0.0, self.significance[:-1]]) / 2
+
+    @property
+    def null_midp(self) -> FloatArray:
+        """Pointwise adjustment of the current terminal group only.
+
+        All earlier rejections retain full probability. This differs from the
+        original displayed mid-p convention when prior rejection is nonzero.
+        """
+        preceding = np.concatenate(
+            [self.previous_null_rejection[:, None], self.cumulative_null_rejection[:, :-1]], axis=1
+        )
+        return (self.cumulative_null_rejection + preceding) / 2
+
+    @property
+    def pointwise_midp_significance(self) -> FloatArray:
+        """Grid maximum of current-group-only pointwise mid-p values."""
+        return self.null_midp.max(axis=0)
+
 
 def ksbin2_boundary_table(
     design: KStageTwoSampleBinomial,
