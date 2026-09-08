@@ -21,14 +21,14 @@ def evaluate(executable, mode, values, model, tolerance=1e-6):
     return run(executable, data).splitlines()
 
 
-def fitted_output(rows):
+def fitted_output(rows, success_statuses=(0,)):
     status = int(rows[0])
-    if status:
+    if status not in success_statuses:
         return {"status": status}
     p0, likelihood, cvm = map(float, rows[1].split())
     parameters = [list(map(float, line.split())) for line in rows[2:]]
     return {
-        "status": 0,
+        "status": status,
         "model": {
             "null_weight": p0,
             "weights": [p[0] for p in parameters],
@@ -130,16 +130,30 @@ def main():
         "flags": ["-O2", "-std=legacy", "-fallow-argument-mismatch"],
         "notes": "Original S INITLN, BPVAL, CALCVM, STBETA and EMBETA; EMBETA renamed "
         "to distinguish its extra likelihood argument. Desktop MIXBET/MIXPRB/LGLK "
-        "and identical MOMBET/SWPPAR helpers reused. INITLN endpoint approximation applied.",
+        "and identical MOMBET/SWPPAR helpers reused. Desktop MLBETA uses CONCRI=1e-6. "
+        "INITLN endpoint approximation applied.",
         "evaluations": evaluations,
         "starts": starts,
         "em_fits": fits,
     }
+    ml_fits = []
+    for case in fits:
+        rows = evaluate(executable, 20, case["pvalues"], case["initial"])
+        ml_fits.append(
+            {
+                "pvalues": case["pvalues"],
+                "initial": case["initial"],
+                "legacy_endpoints": case.get("legacy_endpoints", False),
+                "reference": fitted_output(rows, success_statuses=(0, 3, 4, 5, 6)),
+            }
+        )
+    result["ml_fits"] = ml_fits
     Path("tests/fixtures/beta_mixture.json").write_text(
         json.dumps(result, indent=2, allow_nan=False) + "\n"
     )
     print(
-        f"Recorded {len(evaluations)} model evaluations, {len(starts)} starts, {len(fits)} EM fits"
+        f"Recorded {len(evaluations)} evaluations, {len(starts)} starts, "
+        f"{len(fits)} EM fits, {len(ml_fits)} ML fits"
     )
 
 

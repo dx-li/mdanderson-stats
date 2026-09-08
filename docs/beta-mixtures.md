@@ -1,9 +1,8 @@
 # MULTI beta mixtures
 
 Implemented: the uniform-plus-beta model, density/CDF evaluation, posterior null
-probabilities, S STBETA initialization, and EMBETA exponential-family EM fitting.
-MULTI remains **partial**: its separate direct likelihood optimizer, automatic
-component selection, simulation-based goodness of fit, and remaining
+probabilities, S STBETA initialization, EMBETA exponential-family EM fitting, and MLBETA direct likelihood fitting.
+MULTI remains **partial**: automatic component selection, simulation-based goodness of fit, and remaining
 plotting/reporting workflows are not yet ported.
 
 ## Specified models
@@ -50,7 +49,7 @@ negative or positive infinity for zero or infinite density. The null posterior
 raises at zero mixture density, where it is undefined. At a singular beta
 endpoint with positive null weight, the posterior is zero.
 
-`logpdf`, `log_likelihood`, `null_posterior`, and EM fitting accept
+`logpdf`, `log_likelihood`, `null_posterior`, and both fitters accept
 `legacy_endpoints=True` for the archived INITLN convention. For x or 1-x at or
 below the smallest positive normal double, it substitutes that number's log and
 uses **positive** tiny for the complementary logarithm, as the source does.
@@ -95,6 +94,30 @@ no failed fit is relabeled as uniform.
 Results include `model`, `log_likelihood`, `cramer_von_mises`, `iterations`, and
 `log_likelihood_history`, including the initial model. Concentrated components
 can cause tiny likelihood fluctuations at floating-point precision.
+
+## Direct likelihood fitting
+
+`fit_beta_mixture_ml(pvalues, initial=None)` returns the same result type as EM
+and uses the same default initialization, sample-size rule, and endpoint policy.
+It retains MLBETA's shape bounds [1e-10,1e9] and nonnegative normalized weights.
+Successive conditional weight fractions represent the simplex, including exact
+zero/one boundaries; log shapes improve numerical scaling. Evaluation and analytic
+scores use NumPy arrays and stable logarithmic mixture calculations.
+
+SciPy L-BFGS-B replaces the original David Gay finite-difference optimizer.
+Defaults are relative average-negative-likelihood tolerance 1e-9, transformed
+projected-gradient tolerance 1e-6, 1,000 iterations, and 15,000 evaluations.
+Either convergence criterion can stop the solver. Limits and nonfinite gradients
+raise `BetaMixtureFitError`; extreme shapes and boundary weights can exceed
+numerical range. Different solver paths can select different local optima.
+Convergence does not certify a global maximum or select component count.
+
+Five archived MLBETA fits are recorded alongside EM fixtures. Single-component
+likelihoods agree within 4e-5, including legacy endpoints. On the published
+two-component data, the new solver reaches likelihood 119.04670 versus the
+original direct solver's 118.15971; it agrees with the independently ported EM
+solution. Tests also check analytic scores by finite differences at interior
+and boundary weights, normalization, likelihood progress, and explicit failures.
 
 ## Validation and performance
 

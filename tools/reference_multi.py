@@ -185,7 +185,7 @@ def build() -> Path:
       write(*,'(3es26.17,3i8)') p(i),w(i),q(i),merge(1,0,rejected(i)),lo,points
     end do
     stop
-  case(17,18,19)
+  case(17,18,19,20)
     read(*,*) k,p0
     allocate(mp(k+1),ar(k+1),br(k+1),phi1(k+1),phi2(k+1))
     if (k > 0) then
@@ -203,10 +203,13 @@ def build() -> Path:
         call swppar(.true.,phi1(i),phi2(i),ar(i),br(i),status)
       end do
       call s_embeta(p,q,n,k,p0,mp,ar,br,phi1,phi2,alpha,likelihood,status)
+    else if (mode == 20 .and. k > 0) then
+      call mlbeta(p,q,n,k,alpha,p0,mp,ar,br,likelihood,status)
     end if
     if (mode /= 17) then
       write(*,*) status
-      if (status /= 0) stop
+      if (mode /= 20 .and. status /= 0) stop
+      if (mode == 20 .and. status /= 0 .and. (status < 3 .or. status > 6)) stop
     end if
     likelihood=lglk(p,q,n,k,p0,mp,ar,br)
     call calcvm(x,n,k,p0,mp,ar,br,cvm)

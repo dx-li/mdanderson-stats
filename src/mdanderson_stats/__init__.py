@@ -7,6 +7,7 @@ from .beta_mixture_fit import (
     beta_mixture_start,
     fit_beta_mixture_em,
 )
+from .beta_mixture_ml import fit_beta_mixture_ml
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .intervals import binomial_interval, bp1ci_poisson_interval, poisson_interval
 from .multiplicity import (
@@ -52,6 +53,7 @@ __all__ = [
     "chi_square_gof",
     "clustered_pvalues",
     "fit_beta_mixture_em",
+    "fit_beta_mixture_ml",
     "invert_monotone",
     "kwrange",
     "multiple_testing",

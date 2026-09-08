@@ -59,8 +59,9 @@ line fitting and bootstrap are available through `multiple_testing`,
 stable regression solves and explicit errors for undefined fits.
 `nonparametric_testing` provides the desktop's separate subset fitting,
 local bandwidth selection, and rejection decisions.
-`BetaMixture`, `beta_mixture_start`, and `fit_beta_mixture_em` provide mixture
-evaluation, posterior null probabilities, initialization, and EM fitting.
+`BetaMixture`, `beta_mixture_start`, `fit_beta_mixture_em`, and
+`fit_beta_mixture_ml` provide mixture evaluation, posterior null probabilities,
+initialization, EM fitting, and direct constrained likelihood fitting.
 See [beta mixtures](docs/beta-mixtures.md) for endpoint conventions, validation,
 and the fitting/model-selection features still pending.
 See [multiple testing](docs/multiple-testing.md) for examples, historical naming
