@@ -185,3 +185,6 @@ consecutive failure-time intervals, with explicit source compatibility.
 
 `muhaz_mse` computes pilot-based bias, variance and MSE across candidate
 bandwidths, with per-cell quadrature convergence diagnostics.
+
+`muhaz_global` selects a common hazard bandwidth using the MSE grid, with
+documented default settings, complete diagnostics and a single-bandwidth bypass.

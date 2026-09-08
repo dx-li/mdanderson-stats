@@ -47,6 +47,7 @@ from .ksbin2_probability import (
 from .ksbin2_study import KSTwoSampleStudy, ksbin2_study
 from .kstage_binomial import KStageBinomial
 from .muhaz import MuhazFixed, muhaz_fixed
+from .muhaz_global import MuhazGlobal, muhaz_global
 from .muhaz_mse import MuhazMSE, muhaz_mse
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
@@ -107,6 +108,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "MuhazGlobal",
+    "muhaz_global",
     "MuhazMSE",
     "muhaz_mse",
     "KPHazard",

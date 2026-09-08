@@ -3,8 +3,9 @@
 Catalog entry 49 is **partial**. The fixed-bandwidth kernel calculation is
 implemented, together with piecewise-exponential estimates and their numerical
 reports, and Nelson/product-limit failure-interval estimates. Automatic
-global/local/nearest-neighbor bandwidth selection, kernel summaries and plots
-remain pending. Candidate-bandwidth bias, variance and MSE diagnostics are implemented.
+local/nearest-neighbor bandwidth selection, kernel summaries and plots remain
+pending. Global bandwidth selection and candidate bias/variance/MSE diagnostics
+are implemented.
 
 Source: [MUHAZ version 1](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/49),
 distributed as `MUHAZ_V1.tar.gz`. Its archive contains `muhaz.f`, the S interface
@@ -263,5 +264,67 @@ integrals, empty queries, zero-event convergence, explicit refinement exhaustion
 MSE decomposition, candidate ordering and inverse time scaling. All earlier fixed
 hazard tests also pass after extracting the shared prepared evaluator. Quadrature
 samples and pilot hazard kernels are evaluated in chunks to avoid a full
-bandwidth-by-time-by-quadrature-by-subject allocation. Automatic minimization,
-local bandwidth smoothing and nearest-neighbor selection remain pending.
+bandwidth-by-time-by-quadrature-by-subject allocation. Local bandwidth smoothing and nearest-neighbor selection remain
+pending.
+
+## Global bandwidth selection
+
+```python
+from mdanderson_stats import muhaz_global
+
+fit = muhaz_global(
+    [0.2, 0.7, 1.2, 1.8, 2.1, 2.6, 3.0],
+    [1, 0, 1, 1, 0, 1, 0],
+    bandwidths=[0.35, 0.8, 2.0],
+    pilot_bandwidth=0.65,
+    bounds=(0, 3),
+)
+print(fit.bandwidth, fit.scores)
+print(fit.diagnostics.converged)
+```
+
+`muhaz_global` connects the MSE criterion to one bandwidth shared across the
+estimated curve. Candidate scores are **sums of MSE at minimization-grid points**,
+as in GLMIN. They are not quadrature-weighted integrals and depend on the number
+of grid points. The default chooses the first candidate attaining the minimum,
+including zero. Both the selected index and full scores are retained, together
+with the complete MSE/convergence diagnostics. The final curve is evaluated at
+the selected bandwidth; selection does not imply that quadrature converged.
+
+`legacy=True` reproduces the original positive-score rule: only scores strictly
+between zero and 1e30 qualify. If none qualify, it selects the last candidate and
+reports the source sentinel score 1e30, even if that candidate's computed score
+is zero. Actual score arrays remain available. Contrary to its comment, GLMIN's
+executable code does not discard a minimum at the first bandwidth; Python follows
+the executable behavior. These are grid minima, not continuous global optima.
+
+A single candidate bypasses MSE, matching NEW_HAD. `scores`, `score` and
+`diagnostics` are then None, rather than exposing the source's uninitialized
+outputs. The bandwidth is used directly, and no pilot bandwidth is required.
+
+With bounds omitted, the upper time is linearly interpolated at a risk count of
+ten across distinct observed follow-up times. Counts include both events and
+censoring. If ten is outside the available risk-count range (for example, fewer
+than ten observations), explicit bounds are required. The lower time is zero.
+An explicit upper bound beyond maximum follow-up is truncated to that maximum,
+as in the S interface, and effective bounds remain accessible in `fit.curve`.
+An optional boolean `subset` is applied jointly before selected-data validation.
+
+Without a supplied pilot, the default is `(right-left)/(8*events**0.2)`; legacy
+mode uses the S code's `right/(8*events**0.2)`, which differs for a nonzero lower
+bound. Without supplied candidates, 25 equally spaced values from 0.2 to 20 times
+the pilot are generated. Twenty-five follows the executable S code, whose help
+text instead says 21. The default grids have 51 minimization and 101 estimation
+points; positive integer `n_min_grid` and `n_est_grid` control their sizes. An
+all-censored sample needs an explicit pilot for multiple-candidate selection.
+No smoothing is applied to the selected common bandwidth.
+
+`tools/reference_muhaz_global.py` calls unchanged NEW_HAD and GLMIN with the
+recorded non-fused compiler flags. Thirty-nine native fits cover all kernel and
+boundary combinations, censoring, ties, zero-score fallback and single-candidate
+bypasses, comparing selected bandwidths, all candidate scores, selected scores,
+and fitted hazards. Independent tests verify score minimization, selected-curve
+agreement, default formulas, risk-count interpolation, subsets, bound truncation,
+ties in scores, immutable candidates and input validation. A 1,001-point grid is
+also tested, exceeding the archived fixed pilot buffer. Local bandwidth smoothing,
+nearest-neighbor selection and remaining display workflows are still pending.

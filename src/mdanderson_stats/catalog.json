@@ -992,7 +992,8 @@
         "muhaz_fixed: four fixed-bandwidth hazard kernels, three boundary corrections, grouped ties and explicit source-compatible mode",
         "pehaz: piecewise-exponential hazard, bin events/risk/person-time, default and source-compatible cut conventions, numerical reports",
         "kphaz: stratified Nelson/product-limit failure-interval hazard and variance, q-gap aggregation and explicit legacy tie/terminal behavior",
-        "muhaz_mse: candidate-bandwidth pilot convolution bias, variance and MSE with quadrature convergence diagnostics and source-compatible mode"
+        "muhaz_mse: candidate-bandwidth pilot convolution bias, variance and MSE with quadrature convergence diagnostics and source-compatible mode",
+        "muhaz_global: global bandwidth selection, ten-at-risk default bound, pilot/candidate defaults, subsetting, single-bandwidth bypass and complete MSE diagnostics"
       ],
       "validation": [
         "tests/test_muhaz_fixed.py",
@@ -1007,7 +1008,10 @@
         "tools/reference_kphaz.py",
         "tests/test_muhaz_mse.py",
         "tests/fixtures/muhaz-mse.json",
-        "tools/reference_muhaz_mse.py"
+        "tools/reference_muhaz_mse.py",
+        "tests/test_muhaz_global.py",
+        "tests/fixtures/muhaz-global.json",
+        "tools/reference_muhaz_global.py"
       ]
     },
     {

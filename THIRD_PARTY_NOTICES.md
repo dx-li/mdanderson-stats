@@ -236,3 +236,8 @@ with documented syntax adapters; source and adapter provenance are recorded in
 criterion. Unchanged MSEMSE and its dependencies are run only in a local Fortran
 oracle; source/driver hashes, compiler and floating-point flags are recorded in
 `tests/fixtures/muhaz-mse.json`. No original Fortran code is bundled.
+
+`muhaz_global.py` independently combines candidate scoring and fixed-bandwidth
+estimation. Local validation invokes unchanged NEW_HAD/GLMIN and dependencies;
+source/driver hashes and compiler flags are recorded in
+`tests/fixtures/muhaz-global.json`. No original Fortran code is bundled.
