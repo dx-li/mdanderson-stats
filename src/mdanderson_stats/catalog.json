@@ -706,9 +706,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "mdanderson_stats.normal_tails: scalar and array CDF/survival probabilities, natural-log output across the documented extreme range"
+      ],
+      "validation": [
+        "tests/fixtures/numerics.json",
+        "tests/test_numerics.py",
+        "docs/numerical-methods.md"
+      ]
     },
     {
       "id": 41,
@@ -788,9 +794,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "mdanderson_stats.chi_square_gof: relative frequency normalization, expected frequencies, category contributions, statistic and p-value, specified degrees of freedom, explicit legacy zero-expected handling"
+      ],
+      "validation": [
+        "tests/fixtures/numerics.json",
+        "tests/test_goodness_of_fit.py",
+        "docs/numerical-methods.md"
+      ]
     },
     {
       "id": 46,
@@ -808,9 +820,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "mdanderson_stats.invert_monotone: bounded scalar inversion, initial guess, geometric bracket expansion, named parameters, step and tolerance controls, increasing/decreasing functions"
+      ],
+      "validation": [
+        "tests/fixtures/numerics.json",
+        "tests/test_numerics.py",
+        "docs/numerical-methods.md"
+      ]
     },
     {
       "id": 47,

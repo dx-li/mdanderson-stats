@@ -23,7 +23,7 @@ Refresh the catalog with `uv run python tools/inventory.py`. Original downloads
 and research snapshots are kept under the ignored `research/raw/` directory;
 source URLs and validation evidence are recorded separately.
 
-## Initial numerical API
+## Numerical API
 
 ```python
 from mdanderson_stats import binomial_interval, poisson_interval
@@ -39,3 +39,8 @@ must be positive, and confidence must be strictly between zero and one.
 BP1CI 2.0 output, `bp1ci_poisson_interval` uses its documented implementation's
 different lower-tail inversion. That compatibility function is not presented as
 a corrected exact interval; see `docs/validation.md`.
+
+Normal tail probabilities (`normal_tails`), chi-square goodness-of-fit tests
+(`chi_square_gof`), and monotone function inversion (`invert_monotone`) are also
+available. See [numerical methods](docs/numerical-methods.md) for examples,
+compatibility differences, and validation against the original programs.

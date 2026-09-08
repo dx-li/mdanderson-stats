@@ -7,24 +7,12 @@ no legacy numerical library code is embedded.
 from __future__ import annotations
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
+from numpy.typing import ArrayLike
 from scipy.special import betainccinv, betaincinv, gammainccinv, gammaincinv
 
-FloatArray = NDArray[np.float64]
-
-
-def _finite(value: ArrayLike, name: str) -> FloatArray:
-    array = np.asarray(value, dtype=np.float64)
-    if not np.all(np.isfinite(array)):
-        raise ValueError(f"{name} must contain only finite values")
-    return array
-
-
-def _count(value: ArrayLike, name: str) -> FloatArray:
-    array = _finite(value, name)
-    if np.any((array < 0) | (array != np.floor(array)) | (array >= 2**53)):
-        raise ValueError(f"{name} must contain nonnegative integers smaller than 2**53")
-    return array
+from ._validation import FloatArray
+from ._validation import count as _count
+from ._validation import finite as _finite
 
 
 def _tail(confidence: ArrayLike) -> FloatArray:

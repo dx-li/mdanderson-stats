@@ -1,0 +1,320 @@
+{
+  "sources": {
+    "CUMNOR": {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CUMNOR/CUMNOR_V1.tar.gz",
+      "sha256": "5897bede28b8edfd884d7a74a608f0f27d9ff3656baa5bbcc2ea7ea06a92bbd1"
+    },
+    "GOFCHI": {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/GOFCHI/GOFCHI_V1.tar.gz",
+      "sha256": "2f3e78d96a841954406745ebbe90414a44c9cd85cee3313e0b6600c872fff346"
+    },
+    "INVMF": {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/INVMF/INVMF_V1.tar.gz",
+      "sha256": "d93e4d9ec1a93520a594855d6bfd556426900e4624b4527d1f3109c9b280aa3a"
+    }
+  },
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "build_flags": [
+    "-O2",
+    "-std=legacy"
+  ],
+  "normal": [
+    {
+      "x": -67861400.0,
+      "log_cdf": -2302584804980019.0,
+      "log_sf": 0.0
+    },
+    {
+      "x": -10000000.0,
+      "log_cdf": -50000000000017.04,
+      "log_sf": 0.0
+    },
+    {
+      "x": -10000.0,
+      "log_cdf": -50000010.12927891,
+      "log_sf": 0.0
+    },
+    {
+      "x": -100.0,
+      "log_cdf": -5005.524208694205,
+      "log_sf": 0.0
+    },
+    {
+      "x": -38.0,
+      "log_cdf": -726.5572160188202,
+      "log_sf": 0.0
+    },
+    {
+      "x": -30.0,
+      "log_cdf": -454.32124395634315,
+      "log_sf": 0.0
+    },
+    {
+      "x": -29.9,
+      "log_cdf": -451.32291245852866,
+      "log_sf": 0.0
+    },
+    {
+      "x": -8.0,
+      "log_cdf": -35.01343715991455,
+      "log_sf": -6.661338147750941e-16
+    },
+    {
+      "x": -3.0,
+      "log_cdf": -6.607726221510349,
+      "log_sf": -0.0013508099647482027
+    },
+    {
+      "x": -1.0,
+      "log_cdf": -1.8410216450092636,
+      "log_sf": -0.1727537790234499
+    },
+    {
+      "x": 0.0,
+      "log_cdf": -0.6931471805599453,
+      "log_sf": -0.6931471805599453
+    },
+    {
+      "x": 1.0,
+      "log_cdf": -0.1727537790234499,
+      "log_sf": -1.8410216450092636
+    },
+    {
+      "x": 3.0,
+      "log_cdf": -0.0013508099647482027,
+      "log_sf": -6.607726221510349
+    },
+    {
+      "x": 8.0,
+      "log_cdf": -6.661338147750941e-16,
+      "log_sf": -35.01343715991455
+    },
+    {
+      "x": 29.9,
+      "log_cdf": 0.0,
+      "log_sf": -451.32291245852866
+    },
+    {
+      "x": 30.0,
+      "log_cdf": 0.0,
+      "log_sf": -454.32124395634315
+    },
+    {
+      "x": 38.0,
+      "log_cdf": 0.0,
+      "log_sf": -726.5572160188202
+    },
+    {
+      "x": 100.0,
+      "log_cdf": 0.0,
+      "log_sf": -5005.524208694205
+    },
+    {
+      "x": 10000.0,
+      "log_cdf": 0.0,
+      "log_sf": -50000010.12927891
+    },
+    {
+      "x": 10000000.0,
+      "log_cdf": 0.0,
+      "log_sf": -50000000000017.04
+    },
+    {
+      "x": 67861400.0,
+      "log_cdf": 0.0,
+      "log_sf": -2302584804980019.0
+    }
+  ],
+  "gof": [
+    {
+      "observed": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "degrees_of_freedom": 3,
+      "statistic": 20.0,
+      "pvalue": 0.0002
+    },
+    {
+      "observed": [
+        6,
+        9,
+        5
+      ],
+      "weights": [
+        2,
+        3,
+        5
+      ],
+      "degrees_of_freedom": 2,
+      "statistic": 5.0,
+      "pvalue": 0.0821
+    },
+    {
+      "observed": [
+        8,
+        12
+      ],
+      "weights": [
+        1,
+        1
+      ],
+      "degrees_of_freedom": 1,
+      "statistic": 0.8,
+      "pvalue": 0.3711
+    },
+    {
+      "observed": [
+        4.5,
+        10.5,
+        15
+      ],
+      "weights": [
+        1,
+        2,
+        3
+      ],
+      "degrees_of_freedom": 2,
+      "statistic": 0.08,
+      "pvalue": 0.9632
+    },
+    {
+      "observed": [
+        25,
+        25,
+        25,
+        25
+      ],
+      "weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "degrees_of_freedom": 3,
+      "statistic": 0.0,
+      "pvalue": 1.0
+    },
+    {
+      "observed": [
+        4,
+        8,
+        12,
+        6
+      ],
+      "weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "degrees_of_freedom": 2,
+      "statistic": 4.67,
+      "pvalue": 0.097
+    },
+    {
+      "observed": [
+        0,
+        12,
+        8
+      ],
+      "weights": [
+        0,
+        3,
+        2
+      ],
+      "degrees_of_freedom": 1,
+      "statistic": 0.0,
+      "pvalue": 1.0
+    },
+    {
+      "observed": [
+        5,
+        10,
+        15
+      ],
+      "weights": [
+        0,
+        1,
+        1
+      ],
+      "degrees_of_freedom": 2,
+      "statistic": 1.67,
+      "pvalue": 0.4346
+    }
+  ],
+  "inverse": [
+    {
+      "kind": 1,
+      "initial": 4,
+      "target": 4,
+      "lower": 0,
+      "upper": 100,
+      "root": 16.000000292398095
+    },
+    {
+      "kind": 1,
+      "initial": 90,
+      "target": 3,
+      "lower": 0,
+      "upper": 100,
+      "root": 9.0000010672193
+    },
+    {
+      "kind": 2,
+      "initial": 0,
+      "target": 10,
+      "lower": -100,
+      "upper": 100,
+      "root": 2.302585094270686
+    },
+    {
+      "kind": 2,
+      "initial": 8,
+      "target": 0.01,
+      "lower": -100,
+      "upper": 100,
+      "root": -4.60517009623937
+    },
+    {
+      "kind": 3,
+      "initial": 0,
+      "target": 13,
+      "lower": -100,
+      "upper": 100,
+      "root": -2.0
+    },
+    {
+      "kind": 3,
+      "initial": 90,
+      "target": 300,
+      "lower": -100,
+      "upper": 100,
+      "root": -97.66666666666667
+    },
+    {
+      "kind": 4,
+      "initial": 0,
+      "target": -8,
+      "lower": -100,
+      "upper": 100,
+      "root": -1.999999695395559
+    },
+    {
+      "kind": 4,
+      "initial": -20,
+      "target": 27,
+      "lower": -100,
+      "upper": 100,
+      "root": 2.9999994932137914
+    }
+  ]
+}
