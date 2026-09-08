@@ -48,6 +48,7 @@ def single_search_design(
     relative_improvement: float = 0.01,
     tolerance: float = 1e-10,
     max_iterations: int = 1000,
+    support_stopping: str = "none",
 ) -> SingleDesignSearch:
     """Scan seeds, jointly optimize, and add doses until improvement is too small.
 
@@ -56,7 +57,11 @@ def single_search_design(
     max_doses is per group. The original 1% stopping rule is the default; a
     rejected larger design remains in steps. This is a local heuristic search,
     not a proof of the globally best design or support size.
+    support_stopping="original" also stops on negligible first-group counts or
+    overlapping first-group doses, reverting to the previous design after extension.
     """
+    if support_stopping not in ("none", "original"):
+        raise ValueError("support_stopping must be none or original")
     for limit_value, name, maximum in [
         (max_doses, "max_doses", 10),
         (scan_points, "scan_points", 20),
@@ -193,13 +198,16 @@ def single_search_design(
             seeds.append((value, x, n))
     best = optimize(seeds)
     steps.append(SingleSearchStep(best, None, True))
+    reason = _original_support_stop(best) if support_stopping == "original" else None
+    if reason is not None:
+        return SingleDesignSearch(best, tuple(steps), reason, evaluations, infeasible, failures)
     for _ in range(3, max_doses + 1):
         xs = best.doses if isinstance(best.doses, tuple) else (best.doses,)
         ns = best.subjects if isinstance(best.subjects, tuple) else (best.subjects,)
         seeds = []
         for denominator in (1, 2, 4, 8, 16, 32, 64):
             # Preserve each group's existing total during seed construction;
-            # joint optimization can subsequently redistribute across groups.
+            # joint optimization may redistribute unless group totals are fixed.
             counts = []
             for n in ns:
                 added = np.min(n[n > 0]) / denominator
@@ -212,11 +220,35 @@ def single_search_design(
                     seeds.append((value, proposed_x, proposed_n))
         candidate = optimize(seeds)
         improvement = (best.value - candidate.value) / best.value
-        accepted = improvement >= threshold
+        reason = (
+            "relative_improvement"
+            if improvement < threshold
+            else _original_support_stop(candidate)
+            if support_stopping == "original"
+            else None
+        )
+        accepted = reason is None
         steps.append(SingleSearchStep(candidate, improvement, accepted))
-        if not accepted:
-            return SingleDesignSearch(
-                best, tuple(steps), "relative_improvement", evaluations, infeasible, failures
-            )
+        if reason is not None:
+            return SingleDesignSearch(best, tuple(steps), reason, evaluations, infeasible, failures)
         best = candidate
     return SingleDesignSearch(best, tuple(steps), "max_doses", evaluations, infeasible, failures)
+
+
+def _original_support_stop(design: SingleOptimizedDesign) -> str | None:
+    """SINGLE main-loop support checks, including its first-group-only convention.
+
+    The source comment says 1%, but its actual relative threshold is 0.001.
+    Use a multiplication comparison to avoid the source's division by zero.
+    """
+    doses = design.doses[0] if isinstance(design.doses, tuple) else design.doses
+    subjects = design.subjects[0] if isinstance(design.subjects, tuple) else design.subjects
+    count_threshold = 1e-5
+    dose_threshold = 1e-3
+    if np.any(subjects < count_threshold):
+        return "zero_subjects"
+    for i in range(doses.size - 1):
+        distance = np.abs(doses[i] - doses[i + 1 :])
+        if np.any((distance <= dose_threshold) | (distance <= dose_threshold * abs(doses[i]))):
+            return "dose_overlap"
+    return None

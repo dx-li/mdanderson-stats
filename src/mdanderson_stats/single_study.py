@@ -37,6 +37,7 @@ class SingleStudySpecification:
     tolerance: float = 1e-10
     max_iterations: int = 1000
     group_totals: ArrayLike | None = None
+    support_stopping: str = "none"
 
     def run(self) -> "SingleStudy":
         arguments = asdict(self)

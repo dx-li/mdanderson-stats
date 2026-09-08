@@ -8,6 +8,7 @@ point- and uncertain-prior allocation optimization is implemented, along with jo
 dose/allocation optimization and automatic dose-point addition. Study configuration,
 revision, JSON replay and complete numerical reporting are available. Original
 fixed-per-group subject totals are supported throughout two-sample optimization.
+Original support-stopping checks are available as an explicit search option.
 The entry remains partial pending the final source/manual coverage audit.
 
 ```python
@@ -550,12 +551,31 @@ This is a deterministic heuristic, not an exhaustive search of all local optima.
 An extension is accepted when `(previous − candidate) / previous` is at least
 `relative_improvement` (default 0.01, matching SINGLE). Otherwise the previous
 design remains best and the rejected larger design stays in `steps`. The reasons
-are `relative_improvement` or `max_doses`; the latter limit is 2–10 entries **per
+are normally `relative_improvement` or `max_doses`; the latter limit is 2–10 entries **per
 group**, including zero allocations and coincident entries. `scan_evaluations`,
 `infeasible_seeds` and `failed_local_starts` expose attempted work. A stage with no
 feasible seeds or no successful local optimization raises an error; it is not
 reported as convergence. A finite grid and local stopping rule do not prove that
 no larger or differently initialized design would improve the criterion.
+
+Set `support_stopping="original"` to enable the original main-loop support
+checks after the improvement check. A count strictly below `1e-5` stops with
+`zero_subjects`. Two dose entries stop with `dose_overlap` if their absolute
+separation is at most `0.001`, or is at most `0.001` times the absolute value of
+the earlier entry. These are the double-precision constants in the executable
+source; its comment incorrectly describes the relative threshold as 1%.
+The relative rule depends on entry order, and the original checks only the first
+sample group. Both conventions are preserved by this option. The zero-count
+check takes precedence over overlap. A two-entry design is retained; for a later
+stage, the previous design is restored and the rejected candidate stays in
+history. `support_stopping="none"` is the existing package default.
+
+The study specification records this option for JSON replay and revision.
+Thirteen native cases exercise the unchanged source predicates, including
+threshold boundaries, zero doses, entry ordering and overlapping entries.
+Separate end-to-end tests check minimum-support retention, unused-dose rejection,
+improvement-check precedence, reporting and replay. The native fixture runs an
+independent driver around those predicates, not the complete optimizer.
 
 Tests reproduce the printed two-dose quantile optimum and reject a negligible
 third-dose improvement, accept substantial improvements for a broad three-node

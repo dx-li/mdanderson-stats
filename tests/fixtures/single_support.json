@@ -1,0 +1,159 @@
+{
+  "source": "Unchanged main-loop count predicate and pairwise overlap loop; independent driver, not the full optimizer",
+  "source_sha256": "e28dd3bb8c51d02a667a1f12995e4f591bea7ecfb706e3160b7bcf02f565c8c2",
+  "driver_sha256": "fae1261e5703690054f2036ce637a729e4b1fe1b4093f42c6f585acfa2d22331",
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "cases": [
+    {
+      "doses": [
+        -1,
+        1
+      ],
+      "subjects": [
+        50,
+        50
+      ],
+      "stop_reason": null
+    },
+    {
+      "doses": [
+        -1,
+        0,
+        1
+      ],
+      "subjects": [
+        50,
+        0,
+        50
+      ],
+      "stop_reason": "zero_subjects"
+    },
+    {
+      "doses": [
+        -1,
+        0,
+        1
+      ],
+      "subjects": [
+        50,
+        1e-05,
+        50
+      ],
+      "stop_reason": null
+    },
+    {
+      "doses": [
+        -1,
+        0,
+        1
+      ],
+      "subjects": [
+        50,
+        9.999999e-06,
+        50
+      ],
+      "stop_reason": "zero_subjects"
+    },
+    {
+      "doses": [
+        0,
+        0.001
+      ],
+      "subjects": [
+        50,
+        50
+      ],
+      "stop_reason": "dose_overlap"
+    },
+    {
+      "doses": [
+        0,
+        0.00100000002
+      ],
+      "subjects": [
+        50,
+        50
+      ],
+      "stop_reason": null
+    },
+    {
+      "doses": [
+        0,
+        0.0010000001
+      ],
+      "subjects": [
+        50,
+        50
+      ],
+      "stop_reason": null
+    },
+    {
+      "doses": [
+        0,
+        0
+      ],
+      "subjects": [
+        50,
+        50
+      ],
+      "stop_reason": "dose_overlap"
+    },
+    {
+      "doses": [
+        100,
+        100.1
+      ],
+      "subjects": [
+        50,
+        50
+      ],
+      "stop_reason": "dose_overlap"
+    },
+    {
+      "doses": [
+        100,
+        100.10001
+      ],
+      "subjects": [
+        50,
+        50
+      ],
+      "stop_reason": null
+    },
+    {
+      "doses": [
+        -100,
+        -99.9
+      ],
+      "subjects": [
+        50,
+        50
+      ],
+      "stop_reason": "dose_overlap"
+    },
+    {
+      "doses": [
+        1,
+        1,
+        2
+      ],
+      "subjects": [
+        50,
+        0,
+        50
+      ],
+      "stop_reason": "zero_subjects"
+    },
+    {
+      "doses": [
+        99.9,
+        100
+      ],
+      "subjects": [
+        50,
+        50
+      ],
+      "stop_reason": null
+    }
+  ]
+}
