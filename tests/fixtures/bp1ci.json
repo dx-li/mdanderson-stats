@@ -1,0 +1,272 @@
+{
+  "source_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BP1CI/BP1CI_V2.0x.zip",
+  "archive_sha256": "9d46ed6ed404fa9e93b9c80a167807f8a947631cf940fc4f38db2e1d22871363",
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "build": "make F90=gfortran F90FLAGS='-O2 -std=legacy'",
+  "cases": [
+    {
+      "distribution": "binomial",
+      "events": 0,
+      "trials": 30,
+      "confidence": 0.8,
+      "bounds": [
+        0.0,
+        0.0739
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "events": 1,
+      "trials": 30,
+      "confidence": 0.8,
+      "bounds": [
+        0.0035,
+        0.1236
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "events": 12,
+      "trials": 30,
+      "confidence": 0.8,
+      "bounds": [
+        0.2773,
+        0.5334
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "events": 30,
+      "trials": 30,
+      "confidence": 0.8,
+      "bounds": [
+        0.9261,
+        1.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "events": 0.5,
+      "trials": null,
+      "confidence": 0.8,
+      "bounds": [
+        0.29219,
+        3.1257
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "events": 1,
+      "trials": null,
+      "confidence": 0.8,
+      "bounds": [
+        0.53181,
+        3.8897
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "events": 10,
+      "trials": null,
+      "confidence": 0.8,
+      "bounds": [
+        7.0207,
+        15.407
+      ],
+      "atol": 0.000500000001
+    },
+    {
+      "distribution": "poisson",
+      "events": 10000,
+      "trials": null,
+      "confidence": 0.8,
+      "bounds": [
+        9873.1,
+        10129.0
+      ],
+      "atol": 0.500000000001
+    },
+    {
+      "distribution": "binomial",
+      "events": 0,
+      "trials": 30,
+      "confidence": 0.95,
+      "bounds": [
+        0.0,
+        0.1157
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "events": 1,
+      "trials": 30,
+      "confidence": 0.95,
+      "bounds": [
+        0.0008,
+        0.1722
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "events": 12,
+      "trials": 30,
+      "confidence": 0.95,
+      "bounds": [
+        0.2266,
+        0.594
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "events": 30,
+      "trials": 30,
+      "confidence": 0.95,
+      "bounds": [
+        0.8843,
+        1.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "events": 0.5,
+      "trials": null,
+      "confidence": 0.95,
+      "bounds": [
+        0.1079,
+        4.6742
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "events": 1,
+      "trials": null,
+      "confidence": 0.95,
+      "bounds": [
+        0.24221,
+        5.5716
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "events": 10,
+      "trials": null,
+      "confidence": 0.95,
+      "bounds": [
+        5.4912,
+        18.39
+      ],
+      "atol": 0.000500000001
+    },
+    {
+      "distribution": "poisson",
+      "events": 10000,
+      "trials": null,
+      "confidence": 0.95,
+      "bounds": [
+        9805.9,
+        10198.0
+      ],
+      "atol": 0.500000000001
+    },
+    {
+      "distribution": "binomial",
+      "events": 0,
+      "trials": 30,
+      "confidence": 0.99,
+      "bounds": [
+        0.0,
+        0.1619
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "events": 1,
+      "trials": 30,
+      "confidence": 0.99,
+      "bounds": [
+        0.0002,
+        0.2228
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "events": 12,
+      "trials": 30,
+      "confidence": 0.99,
+      "bounds": [
+        0.185,
+        0.647
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "events": 30,
+      "trials": 30,
+      "confidence": 0.99,
+      "bounds": [
+        0.8381,
+        1.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "events": 0.5,
+      "trials": null,
+      "confidence": 0.99,
+      "bounds": [
+        0.035861,
+        6.4191
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "events": 1,
+      "trials": null,
+      "confidence": 0.99,
+      "bounds": [
+        0.10349,
+        7.4301
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "events": 10,
+      "trials": null,
+      "confidence": 0.99,
+      "bounds": [
+        4.3214,
+        21.398
+      ],
+      "atol": 0.000500000001
+    },
+    {
+      "distribution": "poisson",
+      "events": 10000,
+      "trials": null,
+      "confidence": 0.99,
+      "bounds": [
+        9745.3,
+        10260.0
+      ],
+      "atol": 0.500000000001
+    }
+  ]
+}

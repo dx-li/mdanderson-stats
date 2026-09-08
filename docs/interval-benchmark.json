@@ -1,0 +1,11 @@
+{
+  "workload": "10000 Clopper-Pearson intervals, n=100, k cycles through 0..100",
+  "repetitions": 3,
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "vectorized_seconds": 0.012359041720628738,
+  "scalar_seconds": 0.3711009593680501,
+  "speedup": 30.026677452559905,
+  "comparison": "same Python API called once on arrays versus 10000 scalar calls; not a legacy executable comparison"
+}

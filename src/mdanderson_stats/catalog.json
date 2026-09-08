@@ -1,0 +1,2588 @@
+{
+  "retrieved_at": "2026-09-08T03:29:25.016783+00:00",
+  "source_snapshots": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/api/Softwares/GetAll?IsOnline=false",
+      "sha256": "b2c3bdc6558c026a803c73123bb3a5107c4ef5ecdaef58f2fb7d40c260b47a33"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/api/Softwares/GetAll?IsOnline=true",
+      "sha256": "c7926e4eda95585b5d012f04c949b1a17332e2bbe9dd40a3dbb59ca67fd0ccea"
+    }
+  ],
+  "entries": [
+    {
+      "id": 2,
+      "name": "EffTox",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2",
+      "application_url": "https://insidebiostat.mdanderson.edu",
+      "references": [
+        "http://faculty.mdanderson.org/Peter_Thall/Default.asp?SNID=2132787092",
+        "http://get.adobe.com/reader/",
+        "http://msdn.microsoft.com/vcsharp/default.aspx",
+        "http://www.johndcook.com/articles.html",
+        "http://www.seattlecca.org/doctor/elihu-estey.cfm",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EffTox/EfftoxTutorial.html",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EffTox/NewTradeOffFunctions.pdf",
+        "https://onlinelibrary.wiley.com/journal/15410420",
+        "https://www.tandfonline.com/loi/lbps20"
+      ],
+      "downloads": [
+        {
+          "id": 482,
+          "version_id": 207,
+          "filename": "EffTox_V5.2.3.0.zip",
+          "notes": "Zip file containing Windows installer for a desktop program."
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 3,
+      "name": "Multc99",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/3",
+      "application_url": null,
+      "references": [
+        "http://www.mdanderson.org/departments/biostats/display.cfm?id=D63DFB15-01E4-4B33-9281487F92B524B8&pn=6832B127-872E-4F70-8A72649501265C63&method=displayfull",
+        "http://www.mdanderson.org/departments/leukemia/display.cfm?id=a8427c4f-d0ff-11d4-80fd00508b603a14&method=displayfull&pn=0f815fdc-c623-11d4-80fb00508b603a14",
+        "http://www.mdanderson.org/pdf/utmdabtr-014-04.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/index/339"
+      ],
+      "downloads": [
+        {
+          "id": 394,
+          "version_id": 136,
+          "filename": "Multc99_V2.1.zip",
+          "notes": "Version 2.1 fixes several bugs present in the previous version."
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 6,
+      "name": "ParameterSolver",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/6",
+      "application_url": "",
+      "references": [
+        "http://get.adobe.com/reader/",
+        "http://msdn.microsoft.com/vcsharp/default.aspx",
+        "http://www.johndcook.com/articles.html",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/9",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ParameterSolver/ParameterSolverUsersGuide.pdf",
+        "https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481",
+        "https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-supported-redistributable-version",
+        "https://www.microsoft.com/en-us/microsoft-365/outlook/outlook-for-windows"
+      ],
+      "downloads": [
+        {
+          "id": 479,
+          "version_id": 205,
+          "filename": "ParameterSolver_V3.2.2.zip",
+          "notes": "Zip file containing Windows installer for a desktop program."
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 7,
+      "name": "PerfectMatch",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/7",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PerfectMatch/PerfectMatchManual.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PerfectMatch/nat-biotech-published_online.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 229,
+          "version_id": 132,
+          "filename": "PerfectMatchv2.1.zip",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 9,
+      "name": "Inequality Calculator",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/9",
+      "application_url": "",
+      "references": [
+        "http://get.adobe.com/reader/",
+        "http://msdn.microsoft.com/vcsharp/default.aspx",
+        "http://www.johndcook.com/articles.html",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/10",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/InequalityCalculator/IneqCalcUsersGuide.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 480,
+          "version_id": 206,
+          "filename": "InequalityCalculator_v3.2.0.zip",
+          "notes": "Zip file containing Windows installer for a desktop program."
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 10,
+      "name": "Predictive Probabilities",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/10",
+      "application_url": null,
+      "references": [
+        "http://get.adobe.com/reader/",
+        "http://msdn.microsoft.com/en-us/vstudio/default.aspx",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/411",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PredictiveProbabilit/PredictiveInterimAnalysis.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PredictiveProbabilit/PredictiveProbabilitiesUsersGuide.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 415,
+          "version_id": 113,
+          "filename": "PredictiveProbabilit_V1.5.0_WithFX4.0.zip",
+          "notes": "Includes Microsoft .Net Framework 4.0"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 12,
+      "name": "Multc Lean",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12",
+      "application_url": null,
+      "references": [
+        "http://faculty.mdanderson.org/Peter_Thall/Default.asp?SNID=2132787092",
+        "http://get.adobe.com/reader/",
+        "http://linus.nci.nih.gov/~brb/rsimon.htm",
+        "http://msdn.microsoft.com/vcsharp/default.aspx",
+        "http://www.johndcook.com/articles.html",
+        "http://www.seattlecca.org/doctor/elihu-estey.cfm",
+        "http://www.wiley.com/WileyCDA/WileyTitle/productCd-SIM.html",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/334",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/Multc99vsMultcLean.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcExampleProtocolMemo.docx",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcLogistics.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcTutorial.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcUsersGuide.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 410,
+          "version_id": 138,
+          "filename": "MultcLean_V2.1.0_WithFX4.0.zip",
+          "notes": "Includes Microsoft .Net Framework 4.0"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 14,
+      "name": "ToxFinder",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14",
+      "application_url": null,
+      "references": [
+        "http://www.mdanderson.org/care_centers/genito/display.cfm?id=25da0a87-dbfb-11d4-810100508b603a14&pn=04d14483-79e8-11d4-aec700508bdcce3a&method=displayfull",
+        "http://www.mdanderson.org/departments/biostats/display.cfm?id=D114DD6D-7489-4CF7-A17BC3B5794541DD&pn=6832B127-872E-4F70-8A72649501265C63&method=displayfull",
+        "http://www.mdanderson.org/departments/biostats/display.cfm?id=D63DFB15-01E4-4B33-9281487F92B524B8&pn=6832B127-872E-4F70-8A72649501265C63&method=displayfull",
+        "http://www.tessella.com/",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ToxFinder/ToxFinder-SUG-case-study-v1.r2.m1.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ToxFinder/ToxFinder-SUG-install-guide-v1.r3.m0.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ToxFinder/ToxFinder-SUG-simulation-guide-v1.r4.m1.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ToxFinder/ToxFinder-SUG-trial-guide-v1.r2.m1.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 278,
+          "version_id": 95,
+          "filename": "ToxFinder_V1.1.1.zip",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 15,
+      "name": "bCRM",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/15",
+      "application_url": null,
+      "references": [
+        "http://www.tessella.com/",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/bCRM/bCRM-SUG-Installation-Guide-v1r2m0.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/bCRM/bCRM-SUG-Running-a-trial-v1r2m0.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/bCRM/bCRM-Test-Results-v1r3m0.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/bCRM/bCrm-SUG-Defining-and-Running-Simulations-v1r4m0.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 172,
+          "version_id": 96,
+          "filename": "bCRM_V1.1.3.zip",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 16,
+      "name": "ACCFLF",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/16",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 235,
+          "version_id": 2,
+          "filename": "ACCFLF_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 18,
+      "name": "SYNERGY",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 293,
+          "version_id": 154,
+          "filename": "SYNERGY_V3.zip",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 19,
+      "name": "MULTINOMPOW",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/19",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 233,
+          "version_id": 5,
+          "filename": "MULTINOMPOW _V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 20,
+      "name": "TDTASP",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/20",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 232,
+          "version_id": 6,
+          "filename": "TDTASP  _V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 21,
+      "name": "CDFLIB90",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/21",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 234,
+          "version_id": 188,
+          "filename": "CDFLIB90  _V90.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 22,
+      "name": "ONESAMPLE",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/22",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 230,
+          "version_id": 7,
+          "filename": "ONESAMPLE_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 23,
+      "name": "STATTAB",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/23",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 300,
+          "version_id": 106,
+          "filename": "STATTAB      _V1.3.zip",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 24,
+      "name": "KSBIN2",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/24",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 236,
+          "version_id": 9,
+          "filename": "KSBIN2_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 25,
+      "name": "KSBIN1",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/25",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 238,
+          "version_id": 10,
+          "filename": "KSBIN1_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 26,
+      "name": "SPPCR",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/26",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 372,
+          "version_id": 11,
+          "filename": "SPPCR   _V1zip.zip",
+          "notes": "Zip file"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 27,
+      "name": "RANDLIB",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27",
+      "application_url": null,
+      "references": [
+        "http://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/389",
+        "http://www.cpan.org/modules/by-module/Math/Math-Random-0.67.readme"
+      ],
+      "downloads": [
+        {
+          "id": 240,
+          "version_id": 189,
+          "filename": "RANDLIB_V90.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 28,
+      "name": "EXPSURV",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/28",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 241,
+          "version_id": 12,
+          "filename": "EXPSURV_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 29,
+      "name": "RANLIST",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/29",
+      "application_url": null,
+      "references": [
+        "http://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/389"
+      ],
+      "downloads": [
+        {
+          "id": 242,
+          "version_id": 13,
+          "filename": "RANLIST  _V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 30,
+      "name": "CTA",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/30",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 264,
+          "version_id": 14,
+          "filename": "CTA_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 31,
+      "name": "DRDIST",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/31",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 244,
+          "version_id": 15,
+          "filename": "DRDIST     _V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 32,
+      "name": "EVENTCHART",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/32",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 245,
+          "version_id": 16,
+          "filename": "EVENTCHART_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 33,
+      "name": "ASYPOW",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/33",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 256,
+          "version_id": 17,
+          "filename": "ASYPOW   _V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 35,
+      "name": "BERDS",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/35",
+      "application_url": null,
+      "references": [
+        "http://www.mdanderson.org/departments/biostats/display.cfm?id=D63DFB15-01E4-4B33-9281487F92B524B8&pn=6832B127-872E-4F70-8A72649501265C63&method=displayfull"
+      ],
+      "downloads": [
+        {
+          "id": 255,
+          "version_id": 19,
+          "filename": "BERDS_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 36,
+      "name": "BLIP",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/36",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 254,
+          "version_id": 20,
+          "filename": "BLIP_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 38,
+      "name": "CID2BP",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/38",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 461,
+          "version_id": 190,
+          "filename": "CID2BP_V1.2.zip",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 39,
+      "name": "CUMINC",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/39",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 249,
+          "version_id": 23,
+          "filename": "CUMINC_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 40,
+      "name": "CUMNOR",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/40",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 252,
+          "version_id": 24,
+          "filename": "CUMNOR_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 41,
+      "name": "STPLAN",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/41",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/DSTPLAN/stplan.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 376,
+          "version_id": 180,
+          "filename": "DSTPLAN_V4.5v.zip",
+          "notes": "Please read the disclaimer at the bottom of this  page."
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 42,
+      "name": "EXTSIG",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/42",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 386,
+          "version_id": 109,
+          "filename": "EXTSIG_V1.4.zip",
+          "notes": "Source code, documentation, and executables for Mac and Windows"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 43,
+      "name": "FLECS90",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/43",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 260,
+          "version_id": 27,
+          "filename": "FLECS90_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 44,
+      "name": "GOFCHI",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/44",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 209,
+          "version_id": 28,
+          "filename": "GOFCHI_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 46,
+      "name": "INVMF",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/46",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 211,
+          "version_id": 30,
+          "filename": "INVMF_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 47,
+      "name": "KSB1CI",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/47",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 263,
+          "version_id": 31,
+          "filename": "KSB1CI_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 48,
+      "name": "KWRANGE",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/48",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 247,
+          "version_id": 32,
+          "filename": "KWRANGE_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 49,
+      "name": "MUHAZ",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/49",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 214,
+          "version_id": 33,
+          "filename": "MUHAZ_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 50,
+      "name": "MULTI",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/50",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 257,
+          "version_id": 34,
+          "filename": "MULTI_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 53,
+      "name": "RANGE2",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/53",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 218,
+          "version_id": 37,
+          "filename": "RANGE2_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 54,
+      "name": "SEQBIN",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/54",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 387,
+          "version_id": 112,
+          "filename": "SEQBIN_V1.5.zip",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 55,
+      "name": "SINGLE",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/55",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 220,
+          "version_id": 39,
+          "filename": "SINGLE_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 56,
+      "name": "SOGS",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/56",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 221,
+          "version_id": 40,
+          "filename": "SOGS_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 57,
+      "name": "SORTF90",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/57",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 266,
+          "version_id": 41,
+          "filename": "SORTF90_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 58,
+      "name": "STUKEL",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/58",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 223,
+          "version_id": 42,
+          "filename": "STUKEL_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 59,
+      "name": "SURVAN",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/59",
+      "application_url": null,
+      "references": [
+        "http://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/338",
+        "http://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/389",
+        "http://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/390"
+      ],
+      "downloads": [
+        {
+          "id": 224,
+          "version_id": 43,
+          "filename": "SURVAN_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 60,
+      "name": "TRAX",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/60",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 248,
+          "version_id": 44,
+          "filename": "TRAX_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 61,
+      "name": "WINDOWS",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/61",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 265,
+          "version_id": 45,
+          "filename": "WINDOWS_V1.tar.gz",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 62,
+      "name": "Adaptive Randomization",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/338",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/417",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ARAND/ARandUsersGuide.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 454,
+          "version_id": 186,
+          "filename": "AdaptiveRandomization_V5.2.2.zip",
+          "notes": "Window7 installer."
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 63,
+      "name": "TTEConduct",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/63",
+      "application_url": null,
+      "references": [
+        "http://biostatistics.mdanderson.org/SoftwareDownload/ViewSingleProductDetail.aspx?Software_Id=73",
+        "http://odin.mdacc.tmc.edu/~leiko",
+        "http://www.bepress.com/mdandersonbiostat/paper16/",
+        "http://www.johndcook.com/articles.html",
+        "http://www.mdanderson.org/care_centers/genito/display.cfm?id=3daf4558-d80b-11d4-810100508b603a14&pn=04d14483-79e8-11d4-aec700508bdcce3a&method=displayfull",
+        "http://www.mdanderson.org/departments/biostats/display.cfm?id=D63DFB15-01E4-4B33-9281487F92B524B8&pn=6832B127-872E-4F70-8A72649501265C63&method=displayfull",
+        "http://www.mdanderson.org/pdf/biostats_utmdabtr_006_05.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/TTEConduct/TTEConductUsersGuide.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 390,
+          "version_id": 130,
+          "filename": "TTEConduct_V2.0.2_NoFX2.0.exe",
+          "notes": "Runs on WindowsXP SP3, and Windows7. <br> No Microsoft .Net Framework included. Assumes you already have the .NET 2.0 Framework installed"
+        },
+        {
+          "id": 391,
+          "version_id": 130,
+          "filename": "TTEConduct_V2.0.2_WithFX2.0.exe",
+          "notes": "Runs on WindowsXP SP3, and Windows7. <br> Includes Microsoft .Net Framework 2.0"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 64,
+      "name": "CONFINT",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/64",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 385,
+          "version_id": 118,
+          "filename": "CONFINT_V2.0.zip",
+          "notes": "Source code, documentation, and executables for Mac and Windows"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 65,
+      "name": "CI of Interaction Index",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/65",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CIInteractionIndex/ReadmeCI.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 357,
+          "version_id": 126,
+          "filename": "CIInteractionIndex_V2.0.1source.zip",
+          "notes": "Source files and documentation"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 66,
+      "name": "Bayesian Chi Square TTE fit",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/66",
+      "application_url": null,
+      "references": [
+        "http://biostatistics.mdanderson.org/SoftwareDownload/SiteAux/FAQ.htm#dos",
+        "http://www.johndcook.com/articles.html",
+        "http://www.mdanderson.org/departments/biostats/display.cfm?id=0742d471-2efd-4cf1-917d6f95df445640&method=displayfull&pn=6832b127-872e-4f70-8a72649501265c63",
+        "http://www.projecteuclid.org/Dienst/UI/1.0/Summarize/euclid.aos/1107794872",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BCSTTE/BCSTTE_UsersGuide.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 316,
+          "version_id": 51,
+          "filename": "BCSTTE_V1.0.exe",
+          "notes": ""
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 67,
+      "name": "ANOVA DDP",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/67",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ANOVADDP/AnovaDDPUsersGuide.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ANOVADDP/anovaddp_preprint.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 334,
+          "version_id": 68,
+          "filename": "anovaddp_1.0.zip",
+          "notes": "Windows binary"
+        },
+        {
+          "id": 335,
+          "version_id": 68,
+          "filename": "anovaddp_1.0.tar.gz",
+          "notes": "Source code for all platforms"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 69,
+      "name": "PRT",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/69",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PRT/readme_conduct.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PRT/readme_sims.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 337,
+          "version_id": 67,
+          "filename": "PRT_V1.0.exe",
+          "notes": "Self-extracting file"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 70,
+      "name": "WFMM",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/70",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/Accelerometer2006.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/ImageAnalysis2011.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/MassSpect2008.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/Morris&Carroll2006.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/wfmm_Users_Guide.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/wfmm_v3_1_ReleaseNotes.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 430,
+          "version_id": 169,
+          "filename": "wfmm_v3_1Win64.zip",
+          "notes": "For windows 7, 64bit (wfmm v3.1)"
+        },
+        {
+          "id": 431,
+          "version_id": 169,
+          "filename": "wfmm_v3_1_Example.zip",
+          "notes": "Examples"
+        },
+        {
+          "id": 432,
+          "version_id": 169,
+          "filename": "wfmm_v3_1_linux_x86_64.tar.gz",
+          "notes": "For Linux, 64bit (wfmm v3.1)"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 72,
+      "name": "Toxicity Probability Intervals",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/72",
+      "application_url": null,
+      "references": [
+        "http://faculty.mdanderson.org/Yisheng_Li/Default.asp?SNID=318487510",
+        "http://odin.mdacc.tmc.edu/~yuanj/index.html",
+        "http://odin.mdacc.tmc.edu/~yuanj/upm-3.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 403,
+          "version_id": 137,
+          "filename": "TPI_V2.1PID439.zip",
+          "notes": "Zip file containing manuscript, Excel files, and R code. "
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 74,
+      "name": "BP1CI",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/74",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BP1CI/bp1ci_doc.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 355,
+          "version_id": 120,
+          "filename": "BP1CI_V2.0x.zip",
+          "notes": "Includes source and executables for Windows and OS X"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "partial",
+      "implemented_features": [
+        "mdanderson_stats.binomial_interval: integer counts",
+        "mdanderson_stats.bp1ci_poisson_interval: original lower-tail formula",
+        "mdanderson_stats.poisson_interval: corrected exact interval"
+      ],
+      "validation": [
+        "tests/test_intervals.py",
+        "tests/fixtures/bp1ci.json",
+        "docs/validation.md"
+      ]
+    },
+    {
+      "id": 75,
+      "name": "Dose Schedule Finder",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75",
+      "application_url": null,
+      "references": [
+        "http://ctj.sagepub.com/cgi/content/abstract/4/2/113",
+        "http://msdn.microsoft.com/vcsharp/default.aspx"
+      ],
+      "downloads": [
+        {
+          "id": 359,
+          "version_id": 142,
+          "filename": "DoseScheduleFinder_V2.2.0_WithFX2.0.zip",
+          "notes": "Includes Microsoft .Net Framework 2.0"
+        },
+        {
+          "id": 360,
+          "version_id": 142,
+          "filename": "DoseScheduleFinder_V2.2.0_NoFX2.0.zip",
+          "notes": "No Microsoft .Net Framework included. Assumes you already have the .NET 2.0 Framework installed "
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 77,
+      "name": "U2OET",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/77",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 440,
+          "version_id": 114,
+          "filename": "U2OET_V1.8.zip",
+          "notes": "Zip file containing program, documentation, and example input files."
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 78,
+      "name": "Proportional density",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/78",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 364,
+          "version_id": 64,
+          "filename": "PropDen_V1.00.zip",
+          "notes": "Zip file containing 2 R files."
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 80,
+      "name": "ESS Regresssion",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/80",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ESSRegression/ESS_Method_Readme.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ESSRegression/ReadMe_FIRST.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 366,
+          "version_id": 72,
+          "filename": "ESSRegression_V1.0.0.zip",
+          "notes": "Includes R source and instructions"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 81,
+      "name": "BMA CRM",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/81",
+      "application_url": null,
+      "references": [
+        "http://web.hku.hk/~gyin/",
+        "http://www.johndcook.com/CRM_prior_mean_median.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BMACRM/BMA-CRMSimulatorHelp.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BMACRM/BMA-CRM_Description.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BMACRM/DA-CRM_Description.pdf",
+        "https://faculty.mdanderson.org/profiles/suyu_liu.html",
+        "https://faculty.mdanderson.org/profiles/ying_yuan.html"
+      ],
+      "downloads": [
+        {
+          "id": 452,
+          "version_id": 146,
+          "filename": "BMA-CRMSimulator_V2.2.4.zip",
+          "notes": "Windows installer"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 82,
+      "name": "Response and Survival",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/82",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ResponseSurvival/ResponseSurvivalArticle.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 368,
+          "version_id": 46,
+          "filename": "ResponseSurvival_V1R.zip",
+          "notes": "It is a R program"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 84,
+      "name": "Phase II Predictive Probability",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/84",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/Pid535/PPUserGuide.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 377,
+          "version_id": 63,
+          "filename": "Pid535_V1.0_WithFX2.0.zip",
+          "notes": "Includes Microsoft .Net Framework 2.0"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 85,
+      "name": "Parallel phase I and II design",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/P12Xuelin/Biometrics_2007_comb_design.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 378,
+          "version_id": 61,
+          "filename": "P12Xuelin_V1.0_.zip",
+          "notes": "C and C++ code, including libraries"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 86,
+      "name": "CiBolus",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 380,
+          "version_id": 89,
+          "filename": "CIBOLUS_V1.1.zip",
+          "notes": "Includes Microsoft Visual C++ 2005 Runtime libraries."
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 87,
+      "name": "Misclib",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/87",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/Misclib/misclib.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 381,
+          "version_id": 56,
+          "filename": "misclib_V1.0f.zip",
+          "notes": "Fortran source"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 89,
+      "name": "Bayes Factor TTE",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/89",
+      "application_url": null,
+      "references": [
+        "http://www.bepress.com/mdandersonbiostat/paper47/",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/421",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BayesFactorTTE/UsersGuide_BayesFactorTTE.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 401,
+          "version_id": 88,
+          "filename": "BayesFactorTTE_V1.1_NoFX4.0.zip",
+          "notes": "No Microsoft .Net Framework included. Assumes you already have the .NET 4.0 Framework installed "
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 90,
+      "name": "BlockARAND",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/90",
+      "application_url": null,
+      "references": [
+        "http://www.bepress.com/mdandersonbiostat/paper63/",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/389",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BlockARAND/UsersGuide.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 400,
+          "version_id": 58,
+          "filename": "BlockARAND_V1.0_NoFX4.0.zip",
+          "notes": "No Microsoft .Net Framework included. Assumes you already have the .NET 4.0 Framework installed "
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 92,
+      "name": "UAROET",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/92",
+      "application_url": null,
+      "references": [],
+      "downloads": [
+        {
+          "id": 442,
+          "version_id": 115,
+          "filename": "UAROET_V1.8.zip",
+          "notes": "ZIP package containing executable and supporting text files."
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 94,
+      "name": "Bayes Factor Binary",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/94",
+      "application_url": null,
+      "references": [
+        "http://www.bepress.com/mdandersonbiostat/paper47/",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/416",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BayesFactorBinary/UsersGuide_BayesFactorBinary.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 409,
+          "version_id": 73,
+          "filename": "BayesFactorBinary_V1.0.0_NoFX4.0.zip",
+          "notes": "No Microsoft .Net Framework included. Assumes you already have the .NET 4.0 Framework installed "
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 95,
+      "name": "Pinnacle",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/95",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/Pinnacle/Pinnacle detailed demo and specifications.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 419,
+          "version_id": 104,
+          "filename": "Pinnacle_V1.2.6_v.zip",
+          "notes": "This software was developed by Dr. Jeffrey S. Morris, and the GUI was developed by Ebiotics"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 96,
+      "name": "Beta Binomial Distribution Demo",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/96",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BBDD/BetaBinomialDistributionDemoUsersGuide.pdf"
+      ],
+      "downloads": [
+        {
+          "id": 425,
+          "version_id": 66,
+          "filename": "BBDD_V1.0_.zip",
+          "notes": "Windows program installer. Unzip the archive, then run setup.exe"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 97,
+      "name": "CATBUB Design",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/97",
+      "application_url": null,
+      "references": [
+        "http://www.cran.r-project.org/"
+      ],
+      "downloads": [
+        {
+          "id": 433,
+          "version_id": 90,
+          "filename": "CATBUBDesign.zip",
+          "notes": "Contains R code, examples, documents. (This program was formerly called \"BUB Design\")"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 98,
+      "name": "One Arm Time to Event Simulator",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/98",
+      "application_url": null,
+      "references": [
+        "http://faculty.mdanderson.org/Nizar_Tannir",
+        "http://faculty.mdanderson.org/Peter_Thall"
+      ],
+      "downloads": [
+        {
+          "id": 470,
+          "version_id": 198,
+          "filename": "One_Arm_Time_to_Event_Simulator_V3.0.9.zip",
+          "notes": "Windows installer and documents"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 99,
+      "name": "BOIN Design Desktop Program",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99",
+      "application_url": "",
+      "references": [
+        "http://clincancerres.aacrjournals.org/content/22/17/4291.long",
+        "http://clincancerres.aacrjournals.org/content/early/2018/04/14/1078-0432.CCR-18-0168",
+        "http://clincancerres.aacrjournals.org/content/early/2018/05/16/1078-0432.CCR-18-0246",
+        "http://odin.mdacc.tmc.edu/~yyuan/index_code.html",
+        "http://onlinelibrary.wiley.com/doi/10.1002/sim.7095/abstract",
+        "http://onlinelibrary.wiley.com/doi/10.1111/rssc.12089/abstract",
+        "http://smm.sagepub.com/content/early/2015/07/14/0962280215594494.long",
+        "https://cran.r-project.org/web/packages/BOIN/index.html",
+        "https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7674"
+      ],
+      "downloads": [
+        {
+          "id": 476,
+          "version_id": 202,
+          "filename": "BOIN_V1.1.0.zip",
+          "notes": "Zip file containing Windows installer for a desktop program."
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 100,
+      "name": "Bayesian Toxicity Monitoring",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BTOX/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BTOX/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 101,
+      "name": "Bayesian Update for a Beta-Binomial Distribution",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BU1BB/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BU1BB/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 102,
+      "name": "Bayesian Update for Two Beta-Binomial Distributions",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BU2BB/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BU2BB/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 103,
+      "name": "Bayesian Update for a Normal Distribution with Known and Unknown Variance",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BNORM/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BNORM/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 104,
+      "name": "Parameter Estimation for A Diagnostic Test",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/DIAG/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/DIAG/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 105,
+      "name": "Varying Cut-Point and Parameter Estimation of the ROC Curve Analysis",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/DTROC/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/DTROC/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 106,
+      "name": "Bayesian Hierarchical Model - Binomial Data",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BHM-BLN/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BHM-BLN/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 107,
+      "name": "Bayesian Hierarchical Model - Normal Data",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BHM-NN/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BHM-NN/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 109,
+      "name": "Bayesian Efficacy Monitoring Via Posterior Probability",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BEMPO/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BEMPO/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 110,
+      "name": "Bayesian Efficacy Monitoring Via Predictive Probability",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BEMPR/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BEMPR/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 112,
+      "name": "BOP2: Bayesian Optimal Phase II Design with Simple and Complex Endpoints",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BOP2",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BOP2",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 113,
+      "name": "Simon's Two-Stage Design",
+      "kind": "online",
+      "detail_url": " https://biostatistics.mdanderson.org/shinyapps/Simon2S/",
+      "application_url": " https://biostatistics.mdanderson.org/shinyapps/Simon2S/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 114,
+      "name": "A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents",
+      "kind": "online",
+      "detail_url": " https://biostatistics.mdanderson.org/shinyapps/MTADF/",
+      "application_url": " https://biostatistics.mdanderson.org/shinyapps/MTADF/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 119,
+      "name": "Sample Size Calculation - Continuous Endpoint",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/Nnormal/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/Nnormal/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 120,
+      "name": "Bayesian Optimal Interval (BOIN) Design for Phase I Clinical Trials",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BOIN/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BOIN/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 121,
+      "name": "KeyboardComb: the Keyboard Design for Drug Combination Trials",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 127,
+      "name": "Keyboard: a novel Bayesian toxicity probability interval design for phase I clinical trial",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/Keyboard",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/Keyboard",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 128,
+      "name": "Bayesian Optimal Interval Design (BOIN) for Drug Combination Trials",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BOINComb/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BOINComb/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 129,
+      "name": "Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 130,
+      "name": "Bayesian Adaptive Randomization and Efficacy Monitoring with Posterior Probability",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BARPO/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BARPO/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 132,
+      "name": "CRM Suite",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132",
+      "application_url": null,
+      "references": [
+        "http://faculty.mdanderson.org/Ying_Yuan/Default.asp?SNID=395735344",
+        "http://web.hku.hk/~gyin/",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/BMA-CRMSimulatorHelp.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/BMA-CRM_Description.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/DA-CRM_Description.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/WhatsNewInOldBMA-CRM.htm",
+        "https://www4.mdanderson.org/peoplefinder/person.cfm?id=3D5ADAD6CD16"
+      ],
+      "downloads": [
+        {
+          "id": 459,
+          "version_id": 74,
+          "filename": "CRM-Suite_v1.0.0.zip",
+          "notes": "Installer for Windows program"
+        }
+      ],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 133,
+      "name": "Bayesian Model Averaging Continuous Reassessment Method",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BMACRM",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BMACRM",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 134,
+      "name": "TOP: Time-to-Event Bayesian Optimal Phase II Trial Design",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/TOP2",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/TOP2",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 135,
+      "name": "Time-to-Event Keyboard Design for Phase I Clinical Trials",
+      "kind": "online",
+      "detail_url": " https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD",
+      "application_url": " https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 137,
+      "name": "Platform Design of Bayesian Adaptive Randomization with Posterior Probability",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/PLBARPO/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/PLBARPO/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 138,
+      "name": "Sample Size Calculation - Time-to-event Endpoint",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/Nsurvival",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/Nsurvival",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 139,
+      "name": "Sample Size Calculation - Binary Endpoint",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/Nbinary",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/Nbinary",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 140,
+      "name": "A Bayesian Phase II Platform Trial Design for Drug Combinations",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/ComPAS",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/ComPAS",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 141,
+      "name": "Bayesian Phase 2 Design with Delayed Outcomes",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/Phase2Delay",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/Phase2Delay",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 142,
+      "name": "Find optimal biological dose (OBD) for targeted and immune therapies",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/UBOIN",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/UBOIN",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 143,
+      "name": "Single arm phase II monitoring using Bayes factor with iMOM prior for binary outcome",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BFMonitor",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BFMonitor",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 144,
+      "name": "BOP2 Desktop - Bayesian Optimal Phase II Design",
+      "kind": "desktop",
+      "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/144",
+      "application_url": null,
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/BOP2/"
+      ],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 145,
+      "name": "Bayesian Optimal Interval Design with Informative Prior (iBOIN) for Phase I Clinical Trials",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/iBOIN",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/iBOIN",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 146,
+      "name": "Bayesian Survival Function Posterior Estimates",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BayesianSurvival",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BayesianSurvival",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 147,
+      "name": "aPCoA: Covariate Adjusted Principal Coordinates Analysis",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/aPCoA",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/aPCoA",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 148,
+      "name": "BOIN12: Bayesian Optimal Interval Phase I/II Trial Design for Utility-Based Dose Finding",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BOIN12",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BOIN12",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 149,
+      "name": "Predicting survival for patients with malignant pleural effusions using the BLESS models",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BLESS",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BLESS",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 150,
+      "name": "Two-arm BOP2: Bayesian Optimal Phase II two-arm Design",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 151,
+      "name": "IPDfromKM: Reconstruct Individual Patient Data (IPD) From Kaplan-Meier Survival Curve",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/IPDfromKM",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/IPDfromKM",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 152,
+      "name": "TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 153,
+      "name": "Bayesian hierarchical classification and information sharing for clinical trials with subgroups and binary outcomes",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BaCIS",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BaCIS",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 154,
+      "name": "Bayesian Effective Sample Size Calculator",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BayesESS",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BayesESS",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 156,
+      "name": "BOP2 design with decision making on dual criteria",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BOP2-DC",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BOP2-DC",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 157,
+      "name": "CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/CondiS/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/CondiS/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 158,
+      "name": "Bayesian Cluster Hierarchical Model for Subgroup Borrowing",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BCHM/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BCHM/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 159,
+      "name": "EasyCellType: Automatic annotation tool designed for Sing-cell RNA sequencing data",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/EasyCellType/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/EasyCellType/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 160,
+      "name": "MERIT: Multiple-dose Randomized Phase II Trial Design for Dose Optimization and Sample Size Determination",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/MERIT/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/MERIT/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 161,
+      "name": "Risk of CNS Metastasis in Clinically Localized Melanoma",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/CNSRISK",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/CNSRISK",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 162,
+      "name": "Backfill Bayesian Optimal Interval (BF-BOIN) Design for Phase I Clinical Trials",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BF-BOIN/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BF-BOIN/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 164,
+      "name": "Sample Size Determination for Decentralized Clinical Trials (DCTs)",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/DCTs",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/DCTs",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 165,
+      "name": "Dose Optimization with Backfill and Adaptive Randomization (BARD)",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BARD",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/BARD",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 166,
+      "name": "SurvivalContour: Show Survival Prediction in Contour Plot",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/survivalContour/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/survivalContour/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 168,
+      "name": "ROSE: randomized optimal selection design for dose optimization",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/ROSE",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/ROSE",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 169,
+      "name": "K-COMPASS: Estimate systemic-therapy free survival following MDT for oligometastatic clear cell RCC",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/K-COMPASS/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/K-COMPASS/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 170,
+      "name": "MDS-DPSS: An Interactive Dynamic Prognostic Scoring System Tool for MDS",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/MDS-DPSS/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/MDS-DPSS/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 171,
+      "name": "MDS-HOPE: An interactive risk assessment tool for patients treated with HMA",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 172,
+      "name": "1+2+3: to find the optimal biological dose for rare diseases",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/1plus2plus3",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/1plus2plus3",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 173,
+      "name": "Calibration of Bayesian Success Criteria for Clinical Trials",
+      "kind": "online",
+      "detail_url": "https://www.trialdesign.org/one-page-shell.html#BayesianCalibration",
+      "application_url": "https://www.trialdesign.org/one-page-shell.html#BayesianCalibration",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 174,
+      "name": "RMC-COMPASS: Renal Medullary Carcinoma - Clinical and Outcomes Model for Prognostic Assessment and Survival Stratification",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/RMC-COMPASS/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/RMC-COMPASS/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    },
+    {
+      "id": 175,
+      "name": "Posterior Predictive Design for Phase I Clinical Trials",
+      "kind": "online",
+      "detail_url": "https://biostatistics.mdanderson.org/shinyapps/PoPdesign/",
+      "application_url": "https://biostatistics.mdanderson.org/shinyapps/PoPdesign/",
+      "references": [],
+      "downloads": [],
+      "retrieval_error": null,
+      "status": "pending",
+      "implemented_features": [],
+      "validation": []
+    }
+  ]
+}
