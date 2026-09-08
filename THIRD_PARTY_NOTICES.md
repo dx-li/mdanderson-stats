@@ -212,3 +212,12 @@ recorded in `tests/fixtures/cuminc.json` and `tests/fixtures/gray.json`. No
 original source, binaries or documentation are bundled. The downloaded archive
 contains no explicit redistribution license notice. Its cited statistical
 references include Aalen (1978), Kalbfleisch and Prentice (1980), and Gray (1988).
+
+## MUHAZ
+
+`muhaz.py` independently expresses the kernel hazard estimator and polynomial
+boundary kernels attributed to H. G. Mueller and J. L. Wang (1994). The archive's
+Fortran routines carry their copyright notice, with later modifications credited
+to Dan M. Serachitopol. No original source or binaries are incorporated; unchanged
+HAZDEN/IBNDS/KERNEL are used only in a local reference build. Numerical fixture
+provenance is recorded in `tests/fixtures/muhaz-fixed.json`.

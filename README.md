@@ -171,3 +171,8 @@ Gray tests. `cuminc` combines all causes and groups with pointwise confidence
 intervals and numerical reports. `plot_cuminc` adds overlays and confidence-limit
 panels. [CUMINC coverage](docs/cuminc-coverage.md) records the completed source audit
 and compatibility differences.
+
+`muhaz_fixed` adds fixed-bandwidth censored-data hazard smoothing with four
+kernels and boundary corrections. [MUHAZ coverage](docs/muhaz.md) distinguishes
+validated source compatibility from default tie handling and tracks pending
+bandwidth selection and companion workflows.

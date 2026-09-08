@@ -987,9 +987,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "muhaz_fixed: four fixed-bandwidth hazard kernels, three boundary corrections, grouped ties and explicit source-compatible mode"
+      ],
+      "validation": [
+        "tests/test_muhaz_fixed.py",
+        "tests/fixtures/muhaz-fixed.json",
+        "tools/reference_muhaz_fixed.py",
+        "docs/muhaz.md"
+      ]
     },
     {
       "id": 50,

@@ -45,6 +45,7 @@ from .ksbin2_probability import (
 )
 from .ksbin2_study import KSTwoSampleStudy, ksbin2_study
 from .kstage_binomial import KStageBinomial
+from .muhaz import MuhazFixed, muhaz_fixed
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
 from .multiplicity import (
@@ -103,6 +104,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "MuhazFixed",
+    "muhaz_fixed",
     "plot_cuminc",
     "CumIncStudy",
     "cuminc",
