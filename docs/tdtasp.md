@@ -3,8 +3,8 @@
 TDTASP version 1.1 (April 2003), by Barry W. Brown and Dan Serachitopol,
 plans transmission-disequilibrium (TDT) and affected-sibling-pair (ASP) studies.
 This catalog entry is **partial**. The genetic, ascertainment, power and sample-size layers are implemented;
-study orchestration and reports are also available. Template files and the complete
-archive audit remain outstanding.
+study orchestration, reports and template files are also available. The complete
+archive audit remains outstanding.
 
 Source: [TDTASP catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/20)
 and its [version 1 archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/TDTASP/TDTASP%20%20_V1.tar.gz).
@@ -342,3 +342,72 @@ and both compatibility settings. They also validate searched designs, separate
 inclusive bounds, zero-family studies, propagated failures, input ownership and
 report saving. The numerical component validations above remain the statistical
 correctness evidence.
+
+
+## Template files
+
+```python
+from pathlib import Path
+from mdanderson_stats import format_tdtasp_template, parse_tdtasp_template
+
+Path("blank-tdtasp.in").write_text(format_tdtasp_template())
+# After filling the active fields:
+specification = parse_tdtasp_template(Path("problem.in").read_text())
+study = specification.run(max_families=10000)
+Path("filled-tdtasp.in").write_text(format_tdtasp_template(specification))
+```
+
+`TDTASPTemplate` is a validated, immutable specification that can also be
+constructed directly. Its frequencies and penetrances become owned tuples.
+`run()` performs the complete study calculation. Numerical compatibility flags
+and search/resource bounds are explicit run arguments; the legacy form cannot
+store them. Reading a legacy file does **not** implicitly enable legacy numerical
+defects. Use the study report to retain the calculation's compatibility choices.
+
+The parser supports direct haplotype frequencies or population disease/marker
+frequencies plus relative disequilibrium. It recognizes all 17 archived field
+names, including the original misspelling `mininum_n_affected`; the correctly
+spelled `minimum_n_affected` is also accepted. Lists may span lines and may be
+positional or named. Named genetic labels preserve case because DD and dd (or
+AD and Ad) have different meanings; dD and Dd both denote heterozygosity.
+Numeric values accept scientific notation, including Fortran D exponents.
+Trailing asterisks are ignored. **Any line containing `#` is discarded in full**,
+including a line that begins with otherwise valid input.
+
+Inactive values can remain unfilled or their fields can be omitted. ASP ignores
+all-child, minimum-count and sided inputs and uses one pair (k=2), one side.
+One-child TDT ignores the minimum-count field and uses k=1. These rules mirror
+the original template reader; the broader numerical APIs still permit two-sided
+ASP and one-child TDT with k>1. Such studies are not representable by this
+legacy-template specification and are rejected by its constructor.
+
+Python permits arbitrary field order and reordered named lists. Field names
+and unambiguous choice prefixes are case-insensitive. This is more flexible
+than the native reader's sequential fields and exact named-label comparisons,
+which contradict the manual's blanket case-insensitivity statement. Ambiguous
+`d` for direct/diseq is rejected; use `direct`, `diseq`, or an unambiguous prefix.
+Duplicate and unknown fields, malformed lists, active placeholders, trailing
+junk and fractional counts fail clearly. Integer text is checked in decimal
+arithmetic before conversion, so a value just above an integer cannot silently
+round to it. Mathematical input ranges follow the corrected Python components,
+including negative disequilibrium, zero screened families and strict probability
+validation; they do not preserve the source's inconsistent range restrictions
+or fractional-count truncation.
+
+Filled forms always use direct haplotype frequencies and 17 significant digits,
+with all original fields in original order and inactive fields present. This
+preserves the numerical specification rather than the original formatting or
+choice of population-frequency entry method. Blank forms document which fields
+are active and the corrected bounds. Callers control file reading and writing;
+there are no console prompts or implicit overwrites.
+
+`tools/reference_tdtasp_template.py` compiles the original genetic, ascertainment
+and statistical readers with a separate driver. Only PUBLIC declarations expose
+the private readers and their existing state setters; routine bodies are unchanged.
+The fixture records all 23 native parameters for the manual's filled form and
+48 combinations of test, frequency entry, sampling, parent eligibility and
+calculation mode. It includes the input text, source/archive/manual hashes,
+compiler, build command and driver. Tests compare active interpreted values,
+then verify filled-form round trips. Additional tests cover complete file-to-study
+and report workflows, inactive inputs, comments, multiline/named/positional lists,
+precision, malformed inputs, ownership and explicit compatibility/resource controls.

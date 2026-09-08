@@ -326,4 +326,5 @@ The family search uses cached conditional powers and a monotone upper bound;
 `tdtasp_study` runs genetics, ascertainment and either power or sample-size
 calculations in one call. Search results include a fixed-observation comparison;
 `format_tdtasp_study` produces a reproducible text report. TDTASP remains partial
-pending template-file support and the final archive audit.
+pending the final archive audit. `TDTASPTemplate`, `parse_tdtasp_template` and
+`format_tdtasp_template` support validated legacy forms and file-to-study workflows.
