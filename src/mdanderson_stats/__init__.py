@@ -39,6 +39,7 @@ from .ksbin2_probability import (
     KSBinomialRejectionRegion,
     ksbin2_probability_table,
 )
+from .ksbin2_study import KSTwoSampleStudy, ksbin2_study
 from .kstage_binomial import KStageBinomial
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
@@ -84,6 +85,8 @@ __all__ = [
     "binomial_significance",
     "BinomialPower",
     "binomial_power",
+    "KSTwoSampleStudy",
+    "ksbin2_study",
     "KSTwoSampleBoundaryTable",
     "ksbin2_boundary_table",
     "KStageTwoSampleBinomial",

@@ -5,8 +5,9 @@ outcome ordering and ordinary single-stage probability tables are implemented.
 Source-convention mid-p significance and single-stage rejection-region selection
 and fixed multistage operating characteristics are also available. Ordinary
 multistage boundary-assistance and power-loss tables are implemented, with explicitly
-named mid-p display and pointwise values. Study probability scans and report/design
-workflows remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
+named mid-p display and pointwise values. Study scans, revision and numerical
+summary reports are implemented. Outcome-region display/export and a final
+original-workflow coverage audit remain pending. Source: KSBIN2_V1.tar.gz, ksbin290_2.1.
 
 ```python
 from mdanderson_stats import ksbin2_ordering, ksbin2_statistic
@@ -318,3 +319,58 @@ The exhaustive path tests also verify every pointwise value, preserving earlier
 rejection probabilities explicitly. A closed-form regression covers the example
 above, and broadcast-power checks verify that accessing mid-p values changes no
 ordinary probabilities.
+
+## Study summaries, null scans and revision
+
+```python
+from mdanderson_stats import KStageTwoSampleBinomial, ksbin2_study
+
+design = KStageTwoSampleBinomial(
+    [[2, 2], [3, 3], [4, 4]],
+    [0, 0, 1],
+    [2, 2],
+    criteria=(1,),
+)
+study = ksbin2_study(design, probability1=0.6, probability2=0.2, null_probability=0.2)
+print(study.report())
+study.write_report("ksbin2-study.tsv")
+scan = study.scan(probability1=[0.2, 0.4, 0.6], probability2=0.2)
+revised = study.revise(probability1=0.7)
+```
+
+The study stores actual null and alternative operating characteristics, the full
+null-grid scan, and cumulative grid-maximum significance at each stage. The grid
+maxima are computed after accumulating rejection probabilities under each fixed
+common null rate. `maximizing_null_probability` gives the first grid maximizer at
+each stage. These retain the finite-grid limitation described above.
+
+The default common null probability is the mean of the two alternative rates,
+matching the source PRH0 default. A supplied null probability broadcasts with the
+alternative rates. It controls actual null decisions and expected sample sizes;
+it does not replace the grid used for significance. `scan` evaluates arbitrary
+broadcast probability pairs with the existing fixed design. `revise` recomputes
+specified changes and retains all other inputs, including the prior null rate and
+grid. To recompute the default mean null for changed alternatives, create a new
+study. Passing a new validated design supports changing boundaries or stage sizes.
+
+The TSV report includes cumulative group sample sizes, rejection/quitting group
+indices and scores, cumulative grid maxima, and their maximizing grid rates. Each
+broadcast case then reports actual stage/cumulative rejection and quitting,
+continuation, and expected sample sizes under both its specified null and alternative.
+Cases appear in C order; precision is 1–17 significant digits. File output explicitly
+replaces the target and propagates I/O errors.
+
+This corrects an inconsistency in the original study summary: its null section
+uses differences of cumulative grid-maximized significance as stage rejection
+probabilities while using quitting probabilities at PRH0. Its final null quitting
+probability is then set to one minus the grid maximum. The Python report separates
+the grid-maximized significance table from actual probabilities evaluated at PRH0.
+Expected sample sizes use the latter consistently; no mid-p level is substituted
+for a rejection probability. Display-convention mid-p values remain available in
+the boundary tables.
+
+Tests independently enumerate paired trial paths for three directions and four
+null rates, checking the parsed numerical report and expected sample sizes. They
+also compare cumulative grid maxima to selected boundary-table entries, verify
+that changing PRH0 leaves the grid scan unchanged, and exercise broadcasting,
+revision, scan calls, report precision, file replacement and I/O errors.

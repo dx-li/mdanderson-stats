@@ -436,7 +436,8 @@
         "KSBinomialProbabilityTable: source BRKARR mid-p significance, separately named pointwise mid-p values, and complete tied rejection-region selection by level or group with actual ordinary size and inclusive power",
         "KStageTwoSampleBinomial: fixed multistage tied-group rejection/quitting designs, cached surviving-path coefficients, vectorized arrival/decision probabilities and expected sample sizes per group",
         "ksbin2_boundary_table: ordinary multistage cumulative null-grid significance/power assistance and reference-completion futility power-loss tables",
-        "KSTwoSampleBoundaryTable: source multistage BRKARR mid-p display plus separately named pointwise current-group adjustment retaining prior rejections"
+        "KSTwoSampleBoundaryTable: source multistage BRKARR mid-p display plus separately named pointwise current-group adjustment retaining prior rejections",
+        "ksbin2_study: full null-grid scans, cumulative grid maxima, actual paired-hypothesis summaries, expected sample sizes, study revision and UTF-8 numerical report output"
       ],
       "validation": [
         "tests/test_ksbin2.py",
@@ -452,7 +453,8 @@
         "tools/reference_ksbin2_transition.py",
         "tests/test_ksbin2_assistance.py",
         "tests/fixtures/ksbin2_midp.json",
-        "tools/reference_ksbin2_midp.py"
+        "tools/reference_ksbin2_midp.py",
+        "tests/test_ksbin2_study.py"
       ]
     },
     {

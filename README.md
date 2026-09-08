@@ -122,3 +122,6 @@ surviving paths, broadcast probability pairs and expected sample sizes per group
 
 `ksbin2_boundary_table` adds cumulative rejection-boundary assistance and optional
 reference-completion power-loss tables for those multistage designs.
+
+`ksbin2_study` provides full null-grid scans, paired-hypothesis numerical reports,
+and study revision, keeping actual null probabilities separate from grid maxima.
