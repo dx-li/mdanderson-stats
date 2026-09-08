@@ -1,0 +1,21 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "Python scalar references, not the archived XLISP-STAT executable; no GUI timing claim",
+  "results": {
+    "sequential_km": {
+      "workload": "20000 sorted observations, 25% censored; full NumPy fit versus scalar Python KM recurrence",
+      "batch_seconds": 0.0005108327604830265,
+      "scalar_seconds": 0.003328874707221985,
+      "speedup": 6.51656464646925
+    },
+    "survival_queries": {
+      "workload": "10000 right-continuous queries on a precomputed 20000-observation curve",
+      "batch_seconds": 0.0002503329887986183,
+      "scalar_seconds": 0.054224582854658365,
+      "speedup": 216.60981684790897
+    }
+  }
+}

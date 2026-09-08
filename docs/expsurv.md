@@ -1,11 +1,10 @@
 # EXPSURV exploratory survival analysis
 
-Catalog entry 28 is partial. The survival-curve and inverse-survival core is
-implemented, together with interactive cut-point exploration, model alignment
-and linked scatterplot/survival, event-chart and censored-box views. Named
-table input/output, two-sample exponential examples and GEN-DATA covariate/arrival
-simulation are available. Click/rectangle selection and continuous brushing are
-available across the linked views. The full coverage audit is still pending.
+Catalog entry 28 is implemented. The survival core, cut-point and model-alignment
+controls, three linked scatterplot displays, click/rectangle/brush interactions,
+named file workflows and both simulation families are covered. See the
+[coverage audit](expsurv-coverage.md) for all source routines, validation evidence
+and explicit runtime replacements.
 
 The source is EXPSURV version 1 from the MD Anderson catalog, distributed as
 `EXPSURV_V1.tar.gz`. It contains an XLISP-STAT source file, a TeX user manual and
