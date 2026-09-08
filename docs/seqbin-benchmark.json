@@ -1,0 +1,22 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One batched call versus 101 scalar calls to the same Python API; not a comparison against archived executables or calibration",
+  "results": {
+    "sequential": {
+      "workload": "101 true probabilities from 0 to 1; maximum 500 subjects; analyses after every subject",
+      "batch_seconds": 0.035709541756659746,
+      "scalar_seconds": 0.30489470809698105,
+      "speedup": 8.538185960902702
+    },
+    "early_final_look": {
+      "workload": "101 true probabilities from 0 to 1; maximum 500 subjects; analyses at 50,100,150,200",
+      "batch_seconds": 0.0053157503716647625,
+      "scalar_seconds": 0.06946599995717406,
+      "speedup": 13.067957503696514
+    }
+  }
+}

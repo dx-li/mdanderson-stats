@@ -1,10 +1,10 @@
 # SEQBIN sequential binomial designs
 
-Catalog entry 54 is **partial**. Bayesian boundary construction and exact
+Catalog entry 54 is **implemented**, with documented numerical and interface
+substitutions; see the [coverage audit](seqbin-coverage.md). Bayesian boundary construction and exact
 operating characteristics, prior mean/effective-sample-size input and frequentist
 calibration are implemented, along with compact/verbose boundary tables, complete
-numerical reports, study revision and JSON replay. The entry remains partial
-pending the final source/manual coverage audit.
+numerical reports, study revision and JSON replay.
 
 Source: [SEQBIN 1.5](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/54),
 Barry W. Brown, distributed in `SEQBIN_V1.5.zip`. Original files remain local

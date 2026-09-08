@@ -162,5 +162,5 @@ binomial boundaries and computes exact stopping probabilities and expected sampl
 sizes. `seqbin_prior` converts prior mean/size inputs; `seqbin_calibrate` and
 `seqbin_calibrate_tails` choose attainable frequentist error levels.
 `SeqBinStudySpecification` adds full numerical reports, compact tables, revision
-and JSON replay. [SEQBIN coverage](docs/seqbin.md) records validation and the
-remaining coverage audit.
+and JSON replay. [SEQBIN coverage](docs/seqbin-coverage.md) records the completed
+source/manual audit, compatibility differences and batch benchmarks.
