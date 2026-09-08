@@ -268,3 +268,7 @@ estimates are consistently displayed as gaps. No original S source is bundled.
 from E. Neely Atkinson's EXPSURV XLISP-STAT package. Its source readme permits
 redistribution. Original code is used as local reference material and is not
 bundled; the source hash and validation limits are recorded in `docs/expsurv.md`.
+
+`expsurv_cutpoint.py` and `expsurv_cutpoint_plot.py` independently implement
+EXPSURV's CHOOSE-CUT-PLOT workflow. The density guide has an explicit Gaussian
+kernel and bandwidth rule in place of the original runtime's implicit helper.

@@ -202,3 +202,6 @@ overlays, including bin edges, strata and gaps for undefined estimates.
 
 `exploratory_survival` starts the EXPSURV port with survival curves, plotting
 corners and inverse-survival queries; [remaining workflows](docs/expsurv.md) are tracked explicitly.
+
+`survival_cutpoint` and `plot_cutpoint` add EXPSURV's covariate split comparisons
+and linked density/survival slider, including explicit empty-group handling.

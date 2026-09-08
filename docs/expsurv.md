@@ -1,7 +1,8 @@
 # EXPSURV exploratory survival analysis
 
 Catalog entry 28 is partial. The survival-curve and inverse-survival core is
-implemented. Linked scatterplot matrices, cut-point exploration, event charts,
+implemented, together with interactive cut-point exploration. Linked scatterplot
+matrices, event charts,
 survival box plots, interactive model-alignment views, data generation and
 remaining input/output workflows are still pending.
 
@@ -51,3 +52,50 @@ in this environment, so these are source-formula and independent mathematical
 checks, not claims of executing the archived program. Curve construction uses
 NumPy sorting/aggregation/products and queries use binary searches; no measured
 speedup is claimed for this increment.
+
+
+## Cut-point exploration
+
+```python
+from matplotlib import pyplot as plt
+from mdanderson_stats import survival_cutpoint, plot_cutpoint
+
+data = survival_cutpoint([3, 1, 4, 2], [1, 0, 1, 1], [2, 1, 2, 3])
+comparison = data.compare(2)
+print(comparison.lower_indices, comparison.upper_indices)
+view = plot_cutpoint(data, cut=2)
+plt.show()
+```
+
+`survival_cutpoint` retains copied, aligned observations. `.compare(cut)` fits
+separate survival curves for `covariate <= cut` and `covariate > cut`, preserving
+original row indices. The comparison is immutable and has no plotting dependency.
+An empty group has a None curve and an empty index array, rather than invented
+survival estimates. Any finite cut is allowed for numerical comparisons.
+
+With the optional plot extra, `plot_cutpoint` returns a controller containing a
+figure, linked density/survival axes and a Matplotlib slider. Keep the controller
+alive while interacting. The slider has 50 positions from the minimum to maximum
+covariate, initially at index 25 as in the archived function. An explicit initial
+cut or `view.set_cut(value)` may use any value inside the observed range. Updates
+change the density marker, both curves, and group-count labels together. Empty
+groups remain visible as n=0 labels with no curve. `view.close()` disconnects the
+callback and closes the figure. No global backend is changed; use an interactive
+Matplotlib backend for dragging, or call `set_cut` programmatically and export
+with `view.figure.savefig(...)`.
+
+The two linked panels replace the source's separate windows. The covariate
+density guide uses a Gaussian kernel with `std(ddof=1)*n**(-1/5)` bandwidth,
+or an explicit positive `bandwidth`. It is evaluated once in bounded chunks and
+reused when moving the cut. This is an explicit replacement for XLISP-STAT's
+implicit `kernel-dens` runtime dependency, not a claim of identical density
+defaults. A constant covariate cannot support a varying slider and raises an
+explicit error; the numerical `compare` method still supports it.
+
+Tests verify equality at the cut, unsorted row alignment, exact group membership,
+empty endpoints, immutable snapshots, source tie mode, callback updates to all
+artists, initial slider synchronization, invalid-update state preservation,
+density normalization/symmetry and figure cleanup. Both an interior-cut figure
+and an empty-upper-group endpoint figure were rendered and visually inspected.
+This is exploratory group comparison, with no automatic cut optimization or
+inferential test added by the plotting workflow.
