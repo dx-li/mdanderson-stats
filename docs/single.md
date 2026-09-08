@@ -3,7 +3,8 @@
 Catalog entry 55 is partial. Fixed one- and two-sample designs under point priors are
 implemented for logistic and log-log models, with linear or centered predictors.
 Independent uniform and correlated normal/log-normal prior criterion averaging
-and design-derived prior correlations are implemented. Design optimization,
+and design-derived prior correlations are implemented. Fixed-dose, one-sample
+point-prior allocation optimization is implemented. Dose-location optimization,
 dose-point addition and original reporting workflows remain pending.
 
 ```python
@@ -298,3 +299,44 @@ Slope-only regression tests cover zero-slope information in both response models
 unchanged precision at nonzero slopes, an analytic uniform-slope integral crossing
 zero, normal priors with zero-valued quadrature nodes, zero-slope reference-design
 correlations, and continued rejection of singular centered models.
+
+
+## Fixed-dose allocation optimization
+
+`single_optimize_allocations` minimizes one-sample local slope or quantile variance
+at supplied dose points under a point prior. Minimizing SD gives the same allocation.
+Dose locations stay fixed, and allocations are nonnegative continuous subject
+counts summing to `total_subjects`; no integer rounding is performed.
+
+```python
+from mdanderson_stats import single_optimize_allocations
+
+optimized = single_optimize_allocations(
+    [-2.399239, 2.399495], [0, 1], total_subjects=100, criterion="quantile"
+)
+print(optimized.subjects)  # approximately [90.7414, 9.2586]
+print(optimized.sd)  # approximately 0.444280
+```
+
+The result includes doses, counts, variance/SD, initial variance, iteration count
+and a relative finite-dose optimality gap. Defaults initialize equally; optional
+`initial_subjects` must match the dose vector and total. The solver uses SLSQP
+with analytic allocation derivatives and a normalized variance objective. Per-dose
+response information is computed once. Trials with singular information are
+infeasible, and failure to converge raises an error rather than returning an
+apparently optimized result.
+
+For unit-total information M and criterion gradient c, the variance is cᵀM⁻¹c.
+The derivative for dose i is −wᵢ(gᵢᵀM⁻¹c)². At the finite-dose convex optimum,
+the maximum sensitivity divided by variance is at most one; active doses attain
+one. `optimality_gap` is the positive part of this ratio minus one. The return
+check requires a gap no larger than max(1e-5, 10√tolerance). This checks allocation
+optimality on the supplied dose set, not optimal dose locations. Full-rank
+information is required; a singular limiting optimum may cause failure.
+
+Tests reproduce the supplied SINGLE allocation/SD example, compare two-point
+solutions to analytic optimal splits, verify zero allocations at inferior doses,
+and exercise scaling, permutation, initialization, failure reporting and zero
+slopes. The original allocation optimizer itself is not compiled in these tests.
+Uncertain-prior and two-sample allocation optimization, dose movement and automatic
+support-point addition remain pending.
