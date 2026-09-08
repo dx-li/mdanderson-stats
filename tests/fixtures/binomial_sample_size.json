@@ -1,0 +1,378 @@
+{
+  "source": "KSBIN1 solve_binomial_one_sample mode 3; unchanged statistical routines",
+  "status_patch": {
+    "helpers": [
+      "add_to_one",
+      "check_complements",
+      "dbl_in_range",
+      "int_in_range",
+      "validate_parameters"
+    ],
+    "change": "Initialize optional status=0 at entry"
+  },
+  "source_sha256": "b8ba9be25804c6a513e4dc13141f299ee352453e5c747a82530a92e10a2ff04c",
+  "auxiliary_sha256": "84f2a92626e28c457be165f4050224190656b00b032197c46648cac0f262bfa6",
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "cases": [
+    {
+      "null": 0.2,
+      "alternative": 0.06,
+      "alpha": 0.01,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 39.0,
+      "significance": 0.00948113406368459,
+      "power": 0.5827185551125642
+    },
+    {
+      "null": 0.2,
+      "alternative": 0.06,
+      "alpha": 0.01,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 62.0,
+      "significance": 0.009046916935372856,
+      "power": 0.8330389055457359
+    },
+    {
+      "null": 0.2,
+      "alternative": 0.06,
+      "alpha": 0.01,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 89.0,
+      "significance": 0.009762946912870019,
+      "power": 0.9593018315360418
+    },
+    {
+      "null": 0.2,
+      "alternative": 0.06,
+      "alpha": 0.05,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 22.0,
+      "significance": 0.04796153459164484,
+      "power": 0.6163016986596777
+    },
+    {
+      "null": 0.2,
+      "alternative": 0.06,
+      "alpha": 0.05,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 37.0,
+      "significance": 0.04498638450089945,
+      "power": 0.8203330862436071
+    },
+    {
+      "null": 0.2,
+      "alternative": 0.06,
+      "alpha": 0.05,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 63.0,
+      "significance": 0.047319496347150374,
+      "power": 0.9657857354578439
+    },
+    {
+      "null": 0.2,
+      "alternative": 0.06,
+      "alpha": 0.1,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 11.0,
+      "significance": 0.08589934592000006,
+      "power": 0.5062982072492057
+    },
+    {
+      "null": 0.2,
+      "alternative": 0.06,
+      "alpha": 0.1,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 25.0,
+      "significance": 0.09822522284368858,
+      "power": 0.8128945667277203
+    },
+    {
+      "null": 0.2,
+      "alternative": 0.06,
+      "alpha": 0.1,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 51.0,
+      "significance": 0.0923240258365199,
+      "power": 0.9681529158815332
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.6,
+      "alpha": 0.01,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 16.0,
+      "significance": 0.007129522436836493,
+      "power": 0.5271741135912955
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.6,
+      "alpha": 0.01,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 26.0,
+      "significance": 0.009436713466490252,
+      "power": 0.800652207959023
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.6,
+      "alpha": 0.01,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 44.0,
+      "significance": 0.009993598942839781,
+      "power": 0.964104498461044
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.6,
+      "alpha": 0.05,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 10.0,
+      "significance": 0.04734898739999995,
+      "power": 0.6331032575999996
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.6,
+      "alpha": 0.05,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 17.0,
+      "significance": 0.04027693605425461,
+      "power": 0.801063510324019
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.6,
+      "alpha": 0.05,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 28.0,
+      "significance": 0.04910380108663411,
+      "power": 0.9500505007030616
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.6,
+      "alpha": 0.1,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 2.0,
+      "significance": 0.51,
+      "power": 0.84
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.6,
+      "alpha": 0.1,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 2.0,
+      "significance": 0.51,
+      "power": 0.84
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.6,
+      "alpha": 0.1,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 25.0,
+      "significance": 0.09780001112173188,
+      "power": 0.9656084819093214
+    },
+    {
+      "null": 0.8,
+      "alternative": 0.94,
+      "alpha": 0.01,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 39.0,
+      "significance": 0.00948113406368462,
+      "power": 0.5827185551125628
+    },
+    {
+      "null": 0.8,
+      "alternative": 0.94,
+      "alpha": 0.01,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 62.0,
+      "significance": 0.009046916935372878,
+      "power": 0.8330389055457352
+    },
+    {
+      "null": 0.8,
+      "alternative": 0.94,
+      "alpha": 0.01,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 89.0,
+      "significance": 0.009762946912870068,
+      "power": 0.9593018315360415
+    },
+    {
+      "null": 0.8,
+      "alternative": 0.94,
+      "alpha": 0.05,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 22.0,
+      "significance": 0.047961534591644914,
+      "power": 0.616301698659677
+    },
+    {
+      "null": 0.8,
+      "alternative": 0.94,
+      "alpha": 0.05,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 37.0,
+      "significance": 0.0449863845008995,
+      "power": 0.8203330862436066
+    },
+    {
+      "null": 0.8,
+      "alternative": 0.94,
+      "alpha": 0.05,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 63.0,
+      "significance": 0.04731949634715045,
+      "power": 0.9657857354578436
+    },
+    {
+      "null": 0.8,
+      "alternative": 0.94,
+      "alpha": 0.1,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 11.0,
+      "significance": 0.08589934592000006,
+      "power": 0.5062982072492054
+    },
+    {
+      "null": 0.8,
+      "alternative": 0.94,
+      "alpha": 0.1,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 25.0,
+      "significance": 0.09822522284368874,
+      "power": 0.8128945667277196
+    },
+    {
+      "null": 0.8,
+      "alternative": 0.94,
+      "alpha": 0.1,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 51.0,
+      "significance": 0.09232402583652008,
+      "power": 0.968152915881533
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.35,
+      "alpha": 0.01,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 476.0,
+      "significance": 0.009571896684012865,
+      "power": 0.5019142491715504
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.35,
+      "alpha": 0.01,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 885.0,
+      "significance": 0.009986237469518234,
+      "power": 0.8057699460340216
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.35,
+      "alpha": 0.01,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 1403.0,
+      "significance": 0.009424084722157357,
+      "power": 0.9514541845390023
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.35,
+      "alpha": 0.05,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 245.0,
+      "significance": 0.048658377649053446,
+      "power": 0.5106783974243092
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.35,
+      "alpha": 0.05,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 549.0,
+      "significance": 0.049708194398207464,
+      "power": 0.8057432123625526
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.35,
+      "alpha": 0.05,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 960.0,
+      "significance": 0.04974074073611372,
+      "power": 0.9519557294290895
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.35,
+      "alpha": 0.1,
+      "target_power": 0.5,
+      "status": 0,
+      "trials": 2.0,
+      "significance": 0.51,
+      "power": 0.5774999999999999
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.35,
+      "alpha": 0.1,
+      "target_power": 0.8,
+      "status": 0,
+      "trials": 411.0,
+      "significance": 0.09536945796405694,
+      "power": 0.8057056597628985
+    },
+    {
+      "null": 0.3,
+      "alternative": 0.35,
+      "alpha": 0.1,
+      "target_power": 0.95,
+      "status": 0,
+      "trials": 764.0,
+      "significance": 0.09964001288715718,
+      "power": 0.9523710507909806
+    }
+  ]
+}

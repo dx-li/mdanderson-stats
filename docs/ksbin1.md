@@ -1,9 +1,9 @@
-# KSBIN1 fixed-design operating characteristics
+# KSBIN1 binomial trial design and operating characteristics
 
-Catalog entry 25 is partial. Fixed multistage design evaluation is implemented;
-the remaining single-stage inverse solve modes, boundary-selection assistance tables, comparison
-with a separately chosen single-stage trial, and original reporting/session
-workflows remain pending. Source: KSBIN1_V1.tar.gz, ksbin190_1.0.
+Catalog entry 25 is partial. Fixed multistage design evaluation and all five
+single-stage calculation modes are implemented. Boundary-selection assistance
+tables, comparison with a separately chosen single-stage trial, and original
+reporting/session workflows remain pending. Source: KSBIN1_V1.tar.gz, ksbin190_1.0.
 
 ```python
 from mdanderson_stats import ksbin1_operating_characteristics
@@ -78,8 +78,7 @@ check mass conservation, broadcasting, endpoints, disabled final rejection,
 conditional expectations with probability zero and invalid input. Existing KSB1CI
 native and exhaustive tests validate the shared probability-code extraction.
 
-Still pending: solve_binomial_one_sample_mod and ABIN1's remaining sample-size solve mode,
-BINCUM-based power-contribution tables, separate single-stage comparison, report
+Still pending: BINCUM-based power-contribution tables, separate single-stage comparison, report
 file dialogue and design revision workflow. These are required before this catalog
 entry can be marked implemented.
 
@@ -122,8 +121,9 @@ Tests compare valid native brackets, check empty-region behavior independently,
 enumerate binomial masses for well-separated attainable sizes, and verify exact
 size ties, adjacent regions, broadcasting and invalid inputs.
 
-The forward power, significance, alternative-probability and null-probability
-modes are now available. Solving for sample size remains pending.
+All five calculation modes are available through the forward power, significance,
+alternative-probability, null-probability and sample-size APIs. Interactive design
+assistance and the remaining workflows below are still pending.
 
 ## Solve significance for a requested power
 
@@ -245,3 +245,60 @@ Independent checks cover zero/all-event closed forms, adjacent brackets (moving
 the null closer violates alpha), mixed target/sample-size broadcasting, equality
 at the null, impossible full-region cases, invalid inputs and subnormal nulls.
 The existing alternative/significance/power tests verify the shared search extraction.
+
+## Solve the minimum sample size
+
+```python
+from mdanderson_stats import binomial_sample_size
+
+result = binomial_sample_size(0.3, 0.35, alpha=0.05, target_power=0.5)
+print(result.trials)  # 236
+print(result.critical, result.significance, result.power)
+```
+
+Numerical inputs broadcast. The returned BinomialPower contains the smallest
+qualifying sample size in the requested inclusive bounds and both candidate
+critical regions. Defaults are min_trials=2 (the source solver's lower bound),
+max_trials=1e10, and batch_size=256. One trial may be explicitly allowed. Bounds
+and batch size must be positive integers, max_trials cannot exceed 1e10, and
+alpha<=target_power<1. Other probability rules match binomial_power. An error means
+no qualifying design was found within the supplied bounds, not that all conceivable
+sample sizes are infeasible.
+
+Nonrandomized power can decrease as sample size increases because the critical
+count changes. At null=0.3, alternative=0.35 and alpha=0.05, size 236 reaches power
+0.5 while size 237 does not. A direct root finder or binary search on that power
+curve can miss the first feasible size.
+
+The search uses the randomized most-powerful test only as an upper bound. If the
+selected and adjacent regions have (size, power) pairs (s0,w0) and (s1,w1), its
+power is w0 + (alpha-s0)/(s1-s0)*(w1-w0). Randomization includes part of the next
+boundary mass. Its optimality follows from the [Neyman–Pearson lemma](https://stat210a.berkeley.edu/fall-2024/reader/hypothesis-testing.html).
+Our search argument is that its power cannot decrease with sample size: a test
+could always ignore additional observations. Thus a randomized-power crossing
+bounds the earliest possible nonrandomized design.
+
+Geometric expansion and binary search locate that crossing. Ordered vectorized
+batches then examine integer sizes starting one before the bound, finding the
+first actual nonrandomized test reaching target_power. The returned test uses no
+randomization. The bound calculation adds 1e-12 upward near floating-point ties;
+if boundary mass cannot be resolved it uses the safe upper bound one. This is a
+numerical search with the package's evaluated binomial tails, not interval-arithmetic
+certification. Degenerate tails or near-equal significance/power requirements can
+cause a longer ordered search. Memory is bounded by the input case count times
+the configured batch size, rather than the search's upper sample-size limit.
+
+`tools/reference_binomial_sample_size.py` records 36 native mode-3 solves with the
+shared reference build and auxiliary status repair. Thirty match the Python
+minimum. In three cases the original heuristic returns larger feasible samples
+(e.g. 245 instead of 236, and 1403 instead of 1385). Three others report n=2 and
+significance 0.51 despite a requested limit of 0.1. The original results remain in
+the fixture; Python enforces the requested limit. Every reference case is checked
+against all smaller integer sample sizes using the forward evaluator. Independent
+binomial mass sums, a power-dip regression, batch-size invariance, inclusive bounds,
+no-solution cases and invalid inputs provide additional checks.
+
+A local Python 3.13 / NumPy 2.5.3 run for null=0.3, alternative=0.301, alpha=0.05 and
+target_power=0.8 returned n=1,299,497, significance approximately 0.0499948 and power
+0.800002 in 0.060 seconds. This is one workload-specific timing, not a universal
+runtime guarantee.

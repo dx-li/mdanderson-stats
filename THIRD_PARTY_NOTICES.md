@@ -128,3 +128,8 @@ reference provenance is recorded in `tests/fixtures/binomial_alternative.json`.
 `binomial_null.py` independently expresses KSBIN1's null-probability solve through
 discrete region selection and checked probability inversion. Mode-1 reference
 provenance is recorded in `tests/fixtures/binomial_null.json`.
+
+`binomial_sample_size.py` independently implements the sample-size solve using a
+randomized-power bound and ordered integer search, replacing the original
+continuous-search/local-lookback heuristic. Mode-3 reference provenance and its
+original outputs are recorded in `tests/fixtures/binomial_sample_size.json`.

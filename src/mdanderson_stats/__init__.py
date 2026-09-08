@@ -19,6 +19,7 @@ from .binomial_design import (
     binomial_significance,
 )
 from .binomial_null import BinomialNull, binomial_null
+from .binomial_sample_size import binomial_sample_size
 from .bp1ci import BP1CIResult, bp1ci
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .intervals import (
@@ -64,6 +65,7 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "binomial_sample_size",
     "BinomialNull",
     "binomial_null",
     "BinomialAlternative",

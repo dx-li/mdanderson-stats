@@ -455,7 +455,8 @@
         "binomial_power: vectorized single-stage critical count selection, achieved significance/power and adjacent more permissive region",
         "binomial_significance: discrete minimum-significance solve for target power, with adjacent less permissive region and explicit full-region results",
         "binomial_alternative: vectorized alternative-probability solve for fixed size and target power, with adjacent floating-point brackets",
-        "binomial_null: vectorized closest-null solve satisfying significance and target power, with adjacent probability brackets and impossible-design errors"
+        "binomial_null: vectorized closest-null solve satisfying significance and target power, with adjacent probability brackets and impossible-design errors",
+        "binomial_sample_size: minimum integer sample-size solve using a randomized power upper bound and ordered vectorized search, preserving nonmonotone nonrandomized power"
       ],
       "validation": [
         "tests/test_ksbin1.py",
@@ -473,7 +474,10 @@
         "tools/reference_binomial_alternative.py",
         "tests/test_binomial_null.py",
         "tests/fixtures/binomial_null.json",
-        "tools/reference_binomial_null.py"
+        "tools/reference_binomial_null.py",
+        "tests/test_binomial_sample_size.py",
+        "tests/fixtures/binomial_sample_size.json",
+        "tools/reference_binomial_sample_size.py"
       ]
     },
     {
