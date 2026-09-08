@@ -380,3 +380,11 @@ and Normal Distributions,” Communications of the ACM 15(10), 873–882 (1972).
 The archived attribution and ACM policy are retained in the RANDLIB notices
 linked above; the original native implementations are used only as local
 validation references.
+
+RANDLIB's normal sampler independently expresses algorithm FL (M=5), using the
+archived numerical tables, attributed to J. H. Ahrens and U. Dieter,
+“Extensions of Forsythe's Method for Random Sampling from the Normal
+Distribution,” Mathematics of Computation 27(124), 927–937 (1973).
+The C and Fortran tables differ in several printed constants; this package
+retains both numerical variants for explicit source compatibility. The original
+source attribution and terms remain available in the RANDLIB notices above.

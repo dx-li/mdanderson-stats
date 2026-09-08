@@ -1,8 +1,8 @@
 # RANDLIB
 
 Catalog entry 27 is partial. The 32-stream generator bank and state controls are
-implemented, along with bounded uniforms, permutations and exponential sampling.
-Normal, gamma, beta, chi-square, F, count and multivariate samplers and the final
+implemented, along with bounded uniforms, permutations, exponential and normal sampling.
+Gamma, beta, chi-square, F, count and multivariate samplers and the final
 archive coverage/performance audit remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27)
@@ -192,3 +192,56 @@ half-uniform seed and the Fortran final-table branch. Values and states match
 exactly in the selected legacy mode. Batch calls match repeated scalar calls.
 Independent tests verify the modern inverse transform, mean/variance/CDF on
 50,000 draws, degenerate means, source boundary behavior, limits and rollback.
+
+## Normal sampling
+
+```python
+bank = RandlibGenerator()
+z = bank.normal(1000)  # mean 0, standard deviation 1
+x = bank.normal(1000, mean=-2.3, sd=3.7)
+original = bank.normal(1000, legacy=True)  # Fortran 77 / 95 SNORM + GENNOR
+original_c = bank.normal(1000, legacy=True, source="c")
+```
+
+`normal(size=1, *, mean=0, sd=1, legacy=False, source="fortran",
+max_attempts=None)` returns a read-only float64 vector. Mean must be finite;
+standard deviation must be finite and nonnegative. Empty requests consume
+nothing. A zero standard deviation returns the mean but still consumes the
+same draws as a nondegenerate request in that mode.
+
+The default applies SciPy's standard-normal inverse CDF to batched raw uniforms,
+then scales and shifts the result. It consumes exactly one raw draw per result,
+with identical scalar/batch sequences and no hidden cached spare variate.
+The finite uniform grid limits the accessible quantiles; it is not an
+infinite-resolution continuous normal generator. Its sequence differs from FL.
+
+Legacy mode implements the archive's Ahrens–Dieter FL (M=5) center/tail rejection
+algorithm in single precision, including variable draw consumption. C and
+Fortran have different printed table constants, uniform conversion and threshold
+arithmetic. `source="c"` selects those C details; it requires `legacy=True`.
+Results are widened to float64 only after source rounding. Legacy parameters
+must fit float32 without rounding a nonzero parameter to zero. Individual small
+results may underflow during source arithmetic.
+
+`max_attempts` bounds raw draws across the entire request, defaulting to
+`max(100000, 4*size)`. Budget exhaustion, table-bound failure or nonfinite
+arithmetic raises `ArithmeticError` without committing any generator state.
+Overflow is reported even if a different ordering of scale/shift arithmetic
+could have avoided an intermediate overflow. Invalid parameters raise
+`ValueError` before sampling. Other streams and reset anchors are untouched.
+
+`tools/reference_randlib_normal.py` compiles the unchanged original C, Fortran
+77 and Fortran 95 implementations with recorded compiler flags and source
+hashes. Its fixture contains 450 cases / 9,000 values and component states:
+ordinary seeds, all 31 central intervals, both tails, exact-half and extreme
+uniforms, antithetic flags, selected streams and zero/nontrivial scale and mean.
+Tests compare every native value and state exactly, and additionally check
+scalar/batch equivalence, inverse-CDF round trips, antithetic symmetry, empirical
+moments/CDF, parameter validation and failed-request rollback.
+
+`tools/benchmark_randlib.py` measures 10,000 normal and exponential draws in
+one batch versus repeated scalar calls to the same default-mode Python API.
+The environment and measured times are in [randlib-benchmark.json](randlib-benchmark.json).
+This comparison measures Python batching, not speed relative to original native
+programs or legacy rejection sampling. RANDLIB's remaining distributions and
+final whole-archive audit are still pending.

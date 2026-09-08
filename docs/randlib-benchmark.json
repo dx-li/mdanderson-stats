@@ -1,0 +1,22 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "Same Python API batched versus repeated scalar calls; not native C/Fortran or legacy sampling",
+  "results": {
+    "normal": {
+      "workload": "10,000 consecutive default-mode draws; default seeds and parameters",
+      "batch_seconds": 0.0018473337404429913,
+      "scalar_seconds": 0.3447657087817788,
+      "speedup": 186.6288160249289
+    },
+    "exponential": {
+      "workload": "10,000 consecutive default-mode draws; default seeds and parameters",
+      "batch_seconds": 0.0017663748003542423,
+      "scalar_seconds": 0.3200522502884269,
+      "speedup": 181.19158528769836
+    }
+  }
+}
