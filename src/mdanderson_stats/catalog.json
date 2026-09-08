@@ -354,12 +354,15 @@
       "status": "partial",
       "implemented_features": [
         "TDTASP genetic layer: haplotype input/conversion, random-mating family probabilities, recombination, affected-child probabilities and marker-heterozygous transmission/sharing",
-        "Corrected affected-sibling probabilities with explicit original double-weighting/cutoff compatibility; immutable vectorized 256-family results"
+        "Corrected affected-sibling probabilities with explicit original double-weighting/cutoff compatibility; immutable vectorized 256-family results",
+        "Family/individual ascertainment with parental eligibility, conditional offspring moments, contribution-weighted TDT/ASP probabilities, rare-event log masses and explicit legacy moments"
       ],
       "validation": [
         "tests/test_tdtasp_genetics.py",
         "tests/fixtures/tdtasp_genetics.json",
-        "docs/tdtasp.md"
+        "docs/tdtasp.md",
+        "tests/test_tdtasp_ascertainment.py",
+        "tests/fixtures/tdtasp_ascertainment.json"
       ]
     },
     {

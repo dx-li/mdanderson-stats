@@ -310,5 +310,6 @@ complete archive and report coverage.
 
 `tdtasp_genetics` provides TDTASP's vectorized two-locus family and offspring
 probabilities, with explicit compatibility for the original ASP weighting.
-See [TDTASP](docs/tdtasp.md) for native validation and the remaining study-planning
-work on this partially implemented entry.
+`tdtasp_ascertainment` adds family/individual selection, conditional offspring
+moments and contribution-weighted test probabilities. See [TDTASP](docs/tdtasp.md)
+for native validation and the remaining study-planning work.
