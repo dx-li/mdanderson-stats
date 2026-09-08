@@ -69,6 +69,17 @@ def muhaz_fixed(
         raise ValueError("grid must be a vector within bounds")
     order = np.argsort(t, kind="stable")
     t, status = t[order], status[order]
+    event_time, weights = _event_weights(t, status, bool(legacy))
+    hazard = _hazard_values(
+        event_time, weights, t[-1], z, b, left, right, kernel, boundary, bool(legacy)
+    )
+    z.flags.writeable = hazard.flags.writeable = False
+    return MuhazFixed(z, hazard, b, (left, right), kernel, boundary, bool(legacy))
+
+
+def _event_weights(
+    t: FloatArray, status: FloatArray, legacy: bool
+) -> tuple[FloatArray, FloatArray]:
     if legacy:
         weights = status / np.arange(t.size, 0, -1)
         event_time, weights = t[status == 1], weights[status == 1]
@@ -77,6 +88,24 @@ def muhaz_fixed(
         deaths = np.add.reduceat(status, starts)
         event_time = unique[deaths > 0]
         weights = (deaths / (t.size - starts))[deaths > 0]
+    return event_time, weights
+
+
+def _hazard_values(
+    event_time: FloatArray,
+    weights: FloatArray,
+    last_time: float,
+    z: FloatArray,
+    b: float,
+    left: float,
+    right: float,
+    kernel: Kernel,
+    boundary: Boundary,
+    legacy: bool,
+) -> FloatArray:
+    """Evaluate a prepared sample, including off-grid pilot convolution points."""
+    shape = z.shape
+    z = z.ravel()
     hazard = np.zeros(z.size)
     # Bound intermediate storage while vectorizing both grid and event axes.
     chunk = max(1, 262144 // max(1, event_time.size))
@@ -87,13 +116,14 @@ def muhaz_fixed(
                 u = (points - event_time) / b
                 if legacy:
                     support = (event_time > points - b) & (
-                        (event_time < points + b) | (points + b >= t[-1])
+                        (event_time < points + b) | (points + b >= last_time)
                     )
                 else:
                     support = np.abs(u) <= 1
                 q = np.ones_like(points)
-                left_edge = (points < left + b) & (boundary != "none")
-                right_edge = (~left_edge) & (points > right - b) & (boundary == "both")
+                left_edge = (points >= left) & (points < left + b) & (boundary != "none")
+                interior = (points >= left + b) & (points <= right - b)
+                right_edge = (~left_edge) & (~interior) & (boundary == "both")
                 q = np.where(left_edge, (points - left) / b, q)
                 q = np.where(right_edge, (right - points) / b, q)
                 u = np.where(right_edge, -u, u)
@@ -101,14 +131,14 @@ def muhaz_fixed(
                 if not legacy:
                     support &= (~left_edge) | (u <= q)
                 # Values outside support do not contribute and must not overflow.
+                q = np.where(np.any(support, axis=1, keepdims=True), q, 1)
                 values = _kernel(np.where(support, u, 0), q, _KERNELS.index(kernel))
                 hazard[start : start + chunk] = np.maximum(
                     0, np.sum(np.where(support, values, 0) * weights, axis=1) / b
                 )
     except FloatingPointError as exc:
         raise RuntimeError("MUHAZ kernel calculation exceeds numerical range") from exc
-    z.flags.writeable = hazard.flags.writeable = False
-    return MuhazFixed(z, hazard, b, (left, right), kernel, boundary, bool(legacy))
+    return hazard.reshape(shape)
 
 
 def _kernel(u: FloatArray, q: FloatArray, shape: int) -> FloatArray:

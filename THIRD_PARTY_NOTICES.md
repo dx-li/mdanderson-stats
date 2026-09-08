@@ -231,3 +231,8 @@ validation; its source/extraction/driver hashes and runtime are recorded in
 variance increments. The archived S numerical calculation is run locally in R
 with documented syntax adapters; source and adapter provenance are recorded in
 `tests/fixtures/kphaz.json`. No archived S code is bundled.
+
+`muhaz_mse.py` independently expresses the archived pilot-convolution diagnostic
+criterion. Unchanged MSEMSE and its dependencies are run only in a local Fortran
+oracle; source/driver hashes, compiler and floating-point flags are recorded in
+`tests/fixtures/muhaz-mse.json`. No original Fortran code is bundled.

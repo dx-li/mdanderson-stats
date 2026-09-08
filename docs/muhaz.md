@@ -3,8 +3,8 @@
 Catalog entry 49 is **partial**. The fixed-bandwidth kernel calculation is
 implemented, together with piecewise-exponential estimates and their numerical
 reports, and Nelson/product-limit failure-interval estimates. Automatic
-global/local/nearest-neighbor bandwidth selection, MSE diagnostics, kernel
-summaries and plots remain pending.
+global/local/nearest-neighbor bandwidth selection, kernel summaries and plots
+remain pending. Candidate-bandwidth bias, variance and MSE diagnostics are implemented.
 
 Source: [MUHAZ version 1](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/49),
 distributed as `MUHAZ_V1.tar.gz`. Its archive contains `muhaz.f`, the S interface
@@ -202,3 +202,66 @@ counts of infinite/NaN terms. This avoids subtracting infinite cumulative totals
 and repeated scans of all earlier subjects. Window evaluation takes O(M) work
 and storage for M distinct failure times, independently of q. Plotting remains
 part of the pending MUHAZ display work.
+
+## Candidate-bandwidth diagnostics
+
+```python
+from mdanderson_stats import muhaz_mse
+
+comparison = muhaz_mse(
+    [0.2, 0.7, 1.2, 1.8, 2.1, 2.6, 3.0],
+    [1, 0, 1, 1, 0, 1, 0],
+    bandwidths=[0.35, 0.8, 2.0],
+    pilot_bandwidth=0.65,
+)
+print(comparison.mse)  # bandwidth rows, evaluation-time columns
+print(comparison.converged)
+```
+
+`muhaz_mse` implements the archived MSEMSE convolution calculation. Its pilot
+hazard and candidate kernel give a convolution bias and variance estimate;
+MSE is squared bias plus variance. The source survival factor is exactly
+`1 - number_of_events_at_or_before_time/(N+1)`. This differs from Kaplan–Meier
+survival and from survival conditional on being uncensored. It is retained as
+part of this specific bandwidth-selection criterion.
+
+The default quadrature uses successively refined trapezoids, stopping when both
+integrals meet relative tolerance 0.001 or after six refinement levels (at most
+33 quadrature points). These match the archived settings. `max_refinements`
+can be 1–16, and `rtol` can be any finite nonnegative value. The read-only result
+exposes bias, variance, MSE, the pilot hazard, refinement counts and per-cell
+convergence flags, plus the numerical settings. Reaching the refinement cap is
+reported as unconverged, rather than being silently treated as accurate. This
+relative-change check is a numerical heuristic, not a rigorous error bound.
+
+`bandwidths` accepts a positive scalar or nonempty vector, preserving order and
+duplicates. Grid/bounds/pilot validation follows `muhaz_fixed`; the default grid
+is 101 points and default upper bound is maximum observed follow-up. This is
+explicit diagnostic input, not yet the archived high-level selector's default
+minimization grid or ten-at-risk bound. No bandwidth is selected here.
+
+Default tie/support conventions follow `muhaz_fixed`. `legacy=True` reproduces
+archived sequential weights, support endpoints, and FUNC's unconditional kernel
+reflection near the right boundary even when an overlapping left correction
+was chosen. The default reflects only when right correction is selected.
+Candidate and pilot bandwidths remain separate. Pilot convolutions can require
+queries outside the output grid; the prepared hazard evaluator handles these
+without repeatedly sorting the input or reconstructing risk sets.
+
+`tools/reference_muhaz_mse.py` invokes unchanged Fortran MSEMSE and dependencies.
+Twenty-four grids cover all four kernels, all three boundary settings, tied and
+untied samples, three candidate bandwidths and nine time points: 648 comparisons
+of bias, variance and MSE. Source/driver hashes, compiler and flags are recorded.
+The oracle uses `-ffp-contract=off`: fused multiply-subtract operations can place
+an exact-boundary quadrature point on a different side of a discontinuity and
+materially change the archived correction. NumPy's separate operations are
+compared to separate Fortran operations. This documents reproducibility limits;
+it does not promise agreement with every compiler's fused-arithmetic output.
+
+Independent checks include a constant-pilot rectangular convolution with known
+integrals, empty queries, zero-event convergence, explicit refinement exhaustion,
+MSE decomposition, candidate ordering and inverse time scaling. All earlier fixed
+hazard tests also pass after extracting the shared prepared evaluator. Quadrature
+samples and pilot hazard kernels are evaluated in chunks to avoid a full
+bandwidth-by-time-by-quadrature-by-subject allocation. Automatic minimization,
+local bandwidth smoothing and nearest-neighbor selection remain pending.

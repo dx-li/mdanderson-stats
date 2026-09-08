@@ -182,3 +182,6 @@ person-time, risk counts and numerical reports, with explicit legacy bin semanti
 
 `kphaz` adds stratified Nelson and product-limit hazard/variance estimates over
 consecutive failure-time intervals, with explicit source compatibility.
+
+`muhaz_mse` computes pilot-based bias, variance and MSE across candidate
+bandwidths, with per-cell quadrature convergence diagnostics.
