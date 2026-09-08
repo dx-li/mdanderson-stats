@@ -223,3 +223,6 @@ sorting; `generate_exponential_samples` supplies reproducible two-group examples
 
 `generate_exploratory_data` supplies EXPSURV covariates, arrival times and
 follow-up with sample-standardized survival and study-end censoring.
+
+EXPSURV linked matrices now support point clicks and continuous brushing: B
+toggles mode, +/- resizes the brush, Shift adds selections and Escape clears.

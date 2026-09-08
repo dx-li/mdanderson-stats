@@ -4,8 +4,8 @@ Catalog entry 28 is partial. The survival-curve and inverse-survival core is
 implemented, together with interactive cut-point exploration, model alignment
 and linked scatterplot/survival, event-chart and censored-box views. Named
 table input/output, two-sample exponential examples and GEN-DATA covariate/arrival
-simulation are available. Remaining interaction behavior and the full coverage
-audit are still pending.
+simulation are available. Click/rectangle selection and continuous brushing are
+available across the linked views. The full coverage audit is still pending.
 
 The source is EXPSURV version 1 from the MD Anderson catalog, distributed as
 `EXPSURV_V1.tar.gz`. It contains an XLISP-STAT source file, a TeX user manual and
@@ -162,7 +162,7 @@ and one column per variable; a vector becomes a one-variable matrix. Input rows
 remain aligned and are copied into read-only arrays. Initially all rows are
 selected. Drag a rectangle in any matrix cell to replace the selection, hold
 Shift while dragging to add rows, and press Escape to clear it. Updates happen
-when a rectangle selection completes; continuous hover brushing is not supplied.
+when a rectangle selection completes; continuous brush mode is described below.
 Selected patients are highlighted in every cell, including diagonal cells.
 
 `select(indices, add=False)` accepts original, zero-based row indices and removes
@@ -213,7 +213,7 @@ get-nice-range routine. The event chart initially shows all patients, making it
 consistent with the initial matrix highlights; the source leaves this chart blank
 until the first selection. Empty selections clear all segments and markers,
 including after a rectangle finds no observations. This fixes the source's stale
-empty-brush display. Continuous hover brushing is not implemented.
+empty-brush display. Continuous brush mode is described below.
 
 `clear()` clears both selection and rectangles; `close()` disconnects matrix
 callbacks and closes both windows. Tests check exact source coordinates, failure
@@ -265,8 +265,8 @@ an annotation of survival at the last failure. All observations start selected;
 summary and displays “No observed failures”; an empty selection has summary=None
 and displays “No selection”. `close()` disconnects callbacks and closes both
 figures. Fixed full-sample vertical limits include zero and a small top margin;
-Matplotlib supplies ticks instead of the source runtime. No continuous hover
-brushing is supplied.
+Matplotlib supplies ticks instead of the source runtime. Continuous brushing
+uses the common controls described below.
 
 Tests independently cover all source drawing branches, plateau quartiles,
 explicit step mode, first/last failure survival with ties, zero-time events,
@@ -373,3 +373,38 @@ check invariance under an enormous latent scale change, exercise the exact
 study-close boundary, reject undefined sample variation, verify seeded replay,
 uniform covariate moments, z=x*y, censoring endpoints, immutable rows and aligned
 sorting, and preserve RNG state on invalid sample sizes.
+
+
+## Common selection and continuous brushing controls
+
+All three matrix controllers support the source's selection and brushing modes.
+The initial mode is `select`: click a patient or drag a rectangle to replace the
+selection; hold Shift to add. Clicking blank space clears it. Clicks select all
+points within six display pixels, including coincident points; motion of at most
+three pixels is treated as a click. This explicit tolerance replaces runtime
+point-hit defaults. Press Escape to clear the selection.
+
+Press B to toggle continuous brushing, or call
+`view.set_selection_mode("brush")` / `view.set_selection_mode("select")`.
+In brush mode a dashed rectangle follows the mouse inside any matrix cell and
+replaces selection on every motion event. No mouse button is required. Moving
+into an empty region clears the linked display. Leaving the matrix hides the
+brush while retaining the latest selection. Returning to selection mode restores
+rectangle controls. The brush is clipped visually to its current axes.
+
+The default brush is 40 by 40 display pixels. `view.set_brush_size(width, height)`
+sets finite positive dimensions independently of covariate scales. Plus (or =)
+and minus enlarge/shrink both dimensions, with keyboard sizes bounded to 1–4096
+pixels. Resizing hides the old outline; the next motion uses the new size.
+These controls replace the source's mouse-mode and brush-resize menu dialogs.
+No browser or global Matplotlib backend is required or changed.
+
+Selection uses transformed covariate coordinates in a NumPy batch. If the row
+set is unchanged, the linked fit and point colors are reused, avoiding repeated
+survival calculations as the brush moves within the same group. `close()` removes
+all added mouse/key callbacks and closes both figures. Tests drive actual mouse
+and keyboard events across survival, event and censored-box controllers, covering
+hover replacement, empty regions, mode switching, resize, click, Shift-add,
+blank clicks, invalid controls, repeated-row-set reuse and cleanup. A rendered
+brush selection was visually inspected. These controls require an interactive
+Matplotlib backend for live use; automated canvas tests use Agg.

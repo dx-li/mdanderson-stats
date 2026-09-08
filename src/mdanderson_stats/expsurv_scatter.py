@@ -7,7 +7,7 @@ from functools import partial
 import numpy as np
 from numpy.typing import ArrayLike
 
-from ._validation import count, finite
+from ._validation import count, finite, scalar
 from .expsurv import ExploratorySurvival, exploratory_survival
 
 
@@ -32,6 +32,7 @@ class _ScatterSelection:
             raise ValueError("labels must contain one nonempty string per covariate")
         from matplotlib import pyplot as plt
         from matplotlib.backend_bases import MouseButton
+        from matplotlib.patches import Rectangle
         from matplotlib.widgets import RectangleSelector
 
         self.covariates = x
@@ -41,12 +42,30 @@ class _ScatterSelection:
         self.figure, self.axes = plt.subplots(
             p, p, squeeze=False, figsize=(max(4, 2.5 * p), max(4, 2.5 * p)), layout="constrained"
         )
-        self.figure.suptitle("Drag to select; Shift-drag to add; Escape to clear")
+        self.figure.suptitle(
+            "Click/drag; Shift adds; Esc clears\nB toggles brush; +/- resizes", fontsize=10
+        )
+        self.selection_mode = "select"
+        self.brush_size = (40.0, 40.0)
+        self._press_event = None
+        self._brushes = []
         self.points = []
         self.selectors = []
         for row in range(p):
             for col in range(p):
                 ax = self.axes[row, col]
+                brush = Rectangle(
+                    (0, 0),
+                    0,
+                    0,
+                    fill=False,
+                    edgecolor="black",
+                    linestyle="--",
+                    visible=False,
+                    transform=ax.transAxes,
+                )
+                ax.add_patch(brush)
+                self._brushes.append(brush)
                 self.points.append(ax.scatter(x[:, col], x[:, row], s=22))
                 if row == p - 1:
                     ax.set_xlabel(names[col])
@@ -62,6 +81,12 @@ class _ScatterSelection:
                     )
                 )
         self._key_callback = self.figure.canvas.mpl_connect("key_press_event", self._key)
+        self._mouse_callbacks = [
+            self.figure.canvas.mpl_connect("button_press_event", self._press),
+            self.figure.canvas.mpl_connect("button_release_event", self._release),
+            self.figure.canvas.mpl_connect("motion_notify_event", self._motion),
+            self.figure.canvas.mpl_connect("figure_leave_event", self._leave),
+        ]
 
     def select(self, indices: ArrayLike, *, add: bool = False) -> None:
         """Select original input row indices, replacing or adding to the current set."""
@@ -73,6 +98,8 @@ class _ScatterSelection:
         chosen = np.unique(values.astype(np.int64))
         if add:
             chosen = np.union1d(chosen, self.selected_indices)
+        if np.array_equal(chosen, self.selected_indices):
+            return
         self._update_selection(chosen)
         chosen.flags.writeable = False
         self.selected_indices = chosen
@@ -96,12 +123,90 @@ class _ScatterSelection:
         selected = np.flatnonzero((x >= xmin) & (x <= xmax) & (y >= ymin) & (y <= ymax))
         self.select(selected, add=press.key is not None and "shift" in press.key)
 
+    def set_selection_mode(self, mode: str) -> None:
+        """Choose select (click/drag) or brush (continuous replacement on motion)."""
+        if mode not in ("select", "brush"):
+            raise ValueError("mode must be select or brush")
+        self.selection_mode = mode
+        self._press_event = None
+        for selector in self.selectors:
+            selector.set_active(mode == "select")
+            selector.clear()
+        self._leave(None)
+
+    def set_brush_size(self, width: float, height: float) -> None:
+        """Set brush width and height in display pixels, independent of data scale."""
+        w, h = scalar(width, "width"), scalar(height, "height")
+        if w <= 0 or h <= 0:
+            raise ValueError("brush dimensions must be positive")
+        self.brush_size = w, h
+        self._leave(None)
+
+    def _cell(self, event):
+        for index, ax in enumerate(self.axes.flat):
+            if event.inaxes is ax:
+                return index, ax
+        return None
+
+    def _pixels(self, index: int, ax):
+        row, col = divmod(index, self.axes.shape[0])
+        return ax.transData.transform(self.covariates[:, [col, row]])
+
+    def _press(self, event) -> None:
+        if self.selection_mode == "select" and event.button == 1 and self._cell(event) is not None:
+            self._press_event = event
+
+    def _release(self, event) -> None:
+        press, self._press_event = self._press_event, None
+        if press is None or self.selection_mode != "select" or event.button != 1:
+            return
+        cell = self._cell(event)
+        if cell is None or event.inaxes is not press.inaxes:
+            return
+        if abs(event.x - press.x) > 3 or abs(event.y - press.y) > 3:
+            return
+        index, ax = cell
+        delta = self._pixels(index, ax) - [event.x, event.y]
+        selected = np.flatnonzero(np.sum(delta * delta, axis=1) <= 36)
+        self.select(selected, add=event.key is not None and "shift" in event.key)
+
+    def _motion(self, event) -> None:
+        if self.selection_mode != "brush":
+            return
+        cell = self._cell(event)
+        if cell is None:
+            self._leave(event)
+            return
+        index, ax = cell
+        width, height = self.brush_size
+        lower = np.array([event.x - width / 2, event.y - height / 2])
+        upper = np.array([event.x + width / 2, event.y + height / 2])
+        pixels = self._pixels(index, ax)
+        chosen = np.flatnonzero(np.all((pixels >= lower) & (pixels <= upper), axis=1))
+        for i, brush in enumerate(self._brushes):
+            brush.set_visible(i == index)
+        bounds = ax.transAxes.inverted().transform([lower, upper])
+        self._brushes[index].set_bounds(*bounds[0], *(bounds[1] - bounds[0]))
+        self.select(chosen)
+        self.figure.canvas.draw_idle()
+
+    def _leave(self, event) -> None:
+        for brush in self._brushes:
+            brush.set_visible(False)
+        self.figure.canvas.draw_idle()
+
     def _key(self, event) -> None:
         if event.key == "escape":
             self.clear()
+        elif event.key in ("b", "B"):
+            self.set_selection_mode("brush" if self.selection_mode == "select" else "select")
+        elif event.key in ("+", "=", "-"):
+            factor = 0.8 if event.key == "-" else 1.25
+            self.set_brush_size(*(max(1, min(4096, v * factor)) for v in self.brush_size))
 
     def clear(self) -> None:
         self.select([])
+        self._leave(None)
         for selector in self.selectors:
             selector.clear()
 
@@ -111,6 +216,8 @@ class _ScatterSelection:
         for selector in self.selectors:
             selector.disconnect_events()
         self.figure.canvas.mpl_disconnect(self._key_callback)
+        for callback in self._mouse_callbacks:
+            self.figure.canvas.mpl_disconnect(callback)
         plt.close(self.figure)
 
 

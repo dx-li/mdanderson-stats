@@ -582,7 +582,8 @@
         "censored_box/plot_censored_box: life-table quartiles, incomplete box geometry, failure-survival metadata and linked matrix selection",
         "ExploratoryTable: named read-only numeric tables, strict whitespace files and stable aligned sorting",
         "generate_exponential_samples: source two-sample exponential/censoring mechanism and default example with explicit RNG",
-        "generate_exploratory_data: covariates, sample-SD-normalized latent survival, arrivals and fixed study-end censoring"
+        "generate_exploratory_data: covariates, sample-SD-normalized latent survival, arrivals and fixed study-end censoring",
+        "shared matrix controls: point clicks, Shift-add, continuous pixel-sized brushing, keyboard resize and unchanged-selection fit reuse"
       ],
       "validation": [
         "tests/test_expsurv.py",
@@ -596,7 +597,8 @@
         "tests/test_expsurv_box_plot.py",
         "tests/test_expsurv_data.py",
         "tests/test_expsurv_simulation.py",
-        "tests/test_expsurv_covariates.py"
+        "tests/test_expsurv_covariates.py",
+        "tests/test_expsurv_brushing.py"
       ]
     },
     {
