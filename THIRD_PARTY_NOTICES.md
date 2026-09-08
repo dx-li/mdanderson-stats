@@ -310,3 +310,7 @@ Source provenance and native-reference validation are documented in `docs/cta.md
 `cta_mcnemar.py` independently implements CTA MCNEMAR pairwise and aggregate
 formulas. Zero-discordance cases are defined explicitly and accurate gamma tails
 replace the source's forced approximation; the same CTA notice applies.
+
+`cta_kappa.py` independently implements CTA KAPPA, retaining source variance
+indices through an explicit legacy option. Default variances use the multinomial
+delta method; source provenance and corrections are documented in `docs/cta.md`.

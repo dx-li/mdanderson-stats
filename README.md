@@ -233,3 +233,6 @@ statistics, native Fortran comparisons and explicit correction conventions.
 
 `mcnemar_analysis` adds CTA paired-category statistics and its pooled/heterogeneity
 decomposition, with explicit handling of pairs without discordant observations.
+
+`cohen_kappa` adds CTA agreement coefficients and variances, with corrected
+multinomial calculations and an explicit legacy-formula option.

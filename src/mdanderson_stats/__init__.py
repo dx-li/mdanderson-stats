@@ -22,6 +22,7 @@ from .binomial_null import BinomialNull, binomial_null
 from .binomial_sample_size import binomial_sample_size
 from .bp1ci import BP1CIResult, bp1ci
 from .cta import ContingencyChiSquare, contingency_chi_square
+from .cta_kappa import CohenKappa, cohen_kappa
 from .cta_mcnemar import McNemarAnalysis, mcnemar_analysis
 from .cuminc_plot import plot_cuminc
 from .cuminc_study import CumIncStudy, cuminc
@@ -125,6 +126,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "CohenKappa",
+    "cohen_kappa",
     "McNemarAnalysis",
     "mcnemar_analysis",
     "ContingencyChiSquare",

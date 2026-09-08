@@ -1,9 +1,8 @@
 # CTA contingency-table analysis
 
 Catalog entry 30 is partial. CHISQT expected counts, percentages, Pearson,
-Yates and source-specific Cochran statistics, and the McNemar decomposition are
-implemented. Fisher probabilities,
-Cohen kappa and its variances, sensitivity/specificity,
+Yates and source-specific Cochran statistics, the McNemar decomposition, and
+Cohen kappa with variances are implemented. Fisher probabilities, sensitivity/specificity,
 relative odds, binomial comparison, reports and interactive study orchestration
 remain pending.
 
@@ -130,3 +129,60 @@ Further checks cover rational decomposition, transpose/orientation, zero/one
 active pair, batch scaling to enormous counts and stable positive heterogeneity
 for nearly homogeneous contrasts. Fisher, kappa and the other pending CTA
 workflows are still tracked above; this does not complete catalog entry 30.
+
+
+## Cohen kappa and variances
+
+```python
+from mdanderson_stats import cohen_kappa
+
+fit = cohen_kappa([[20, 2], [9, 1]])
+print(fit.kappa, fit.variance, fit.null_variance)
+source = cohen_kappa([[20, 2], [9, 1]], legacy=True)
+```
+
+`cohen_kappa` implements unweighted two-rater agreement for square tables, with
+leading batch dimensions and finite nonnegative fractional frequencies allowed.
+Proportions, observed/chance agreement, kappa, large-sample variance and variance
+under independence are returned as read-only arrays. Input is not mutated.
+There are no weighted-kappa, confidence-interval or hypothesis-test additions in
+this workflow; the source returns the coefficient and these two variances.
+
+Let p_ij be joint proportions, r_i row margins, c_i column margins,
+po=sum(p_ii), and pe=sum(r_i*c_i). Kappa=(po-pe)/(1-pe). The default large-sample
+variance uses the multinomial delta method: g_ij=[I(i=j)*(1-pe) -
+(1-po)*(c_i+r_j)]/(1-pe)^2, and variance=[sum(p*g²)-sum(p*g)²]/n.
+The implementation evaluates the centered squared gradients for numerical
+stability. The null variance evaluates the same delta method at independent
+joint probabilities r_i*c_j, with po=pe. This calculation is symmetric when
+swapping the two raters.
+
+The archived KAPPA code instead computes theta4=sum(p_ij*(r_i+c_j)^2) and
+theta5=sum(c_i²*(c_i+r_i)). The corrected terms are
+sum(p_ij*(c_i+r_j)^2) and sum(r_i*c_i*(r_i+c_i)), respectively. `legacy=True`
+retains the executable's original theta indices and expanded variance formulas.
+It does not clip negative legacy values or reinterpret them as standard errors.
+For [[20,2],[9,1]], kappa is .01123596 in both modes, while default variances
+are .01948056 and .01887782; source variances are .06786340 and -.06065759.
+The source null variance can also change when the raters are swapped. These are
+explicit source-compatibility outputs, not valid negative variance estimates.
+
+Chance disagreement is summed from off-diagonal independent probabilities rather
+than subtracting an almost-one agreement from one. Kappa is computed as
+1-observed_disagreement/chance_disagreement. Default variance terms multiply
+square-root probabilities before squaring to reduce overflow. If chance
+disagreement is zero (both raters always use the same single category), kappa
+and both variances are undefined NaN. Perfect agreement across multiple occupied
+categories has kappa one and zero large-sample variance. Empty tables, invalid
+shapes, negative/nonfinite counts and nonrepresentable totals are rejected.
+
+Nine native KAPPA cases, including transposed unequal margins and a negative
+legacy null variance, are captured in `tests/fixtures/cta_kappa.json` by
+`tools/reference_cta_kappa.py`. The unchanged archived routine matches legacy
+results within relative 1e-5/absolute 1e-8 tolerances for its float32 arithmetic.
+Independent Fraction-based derivatives and multinomial covariance calculations
+check default coefficients and both variances, including independent null tables.
+Other tests cover transpose symmetry, sample-size scaling, batches, perfect and
+undefined agreement, input immutability and extremely rare agreeing categories.
+The original routine writes marginal totals into its input workspace; Python
+returns new proportions and leaves caller data intact.

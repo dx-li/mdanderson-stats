@@ -644,14 +644,17 @@
       "status": "partial",
       "implemented_features": [
         "contingency_chi_square: batched CHISQT expected counts, percentages, Pearson, default/source Yates, source Cochran and small-cell diagnostics",
-        "mcnemar_analysis: batched pairwise, pooled directional and stable heterogeneity statistics with explicit zero-discordance handling"
+        "mcnemar_analysis: batched pairwise, pooled directional and stable heterogeneity statistics with explicit zero-discordance handling",
+        "cohen_kappa: batched agreement, multinomial and independence variances, explicit source theta-index compatibility"
       ],
       "validation": [
         "tests/test_cta.py",
         "tests/fixtures/cta_chisqt.json",
         "docs/cta.md",
         "tests/test_cta_mcnemar.py",
-        "tests/fixtures/cta_mcnemar.json"
+        "tests/fixtures/cta_mcnemar.json",
+        "tests/test_cta_kappa.py",
+        "tests/fixtures/cta_kappa.json"
       ]
     },
     {
