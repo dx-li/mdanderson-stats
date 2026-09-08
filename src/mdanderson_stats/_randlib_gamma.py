@@ -52,12 +52,21 @@ class GammaSampler:
             self.b, self.si = np.float32(1.77), np.float32(0.75)
             self.c = np.float32(k(0.1515) / self.s)
 
+    def log(self, value: np.float32 | np.float64) -> np.float32 | np.float64:
+        """Round a double-precision logarithm to the selected source precision.
+
+        Float32 NumPy log implementations can differ by one ULP across CPU
+        families; GS amplifies that discrepancy by dividing by a small shape.
+        The argument is already rounded according to the source expression.
+        """
+        return self.k(np.log(np.float64(value)))
+
     def quotient(self, t: np.float32) -> np.float32:
         k = self.k
         v = t / (self.s + self.s)
         if abs(v) > 0.25:
             q = np.float32(
-                self.q0 - self.s * t + k(0.25) * t * t + (self.s2 + self.s2) * np.log(k(1) + v)
+                self.q0 - self.s * t + k(0.25) * t * t + (self.s2 + self.s2) * self.log(k(1) + v)
             )
         else:
             # The final multiplication by v belongs after the t factors.
@@ -75,12 +84,12 @@ class GammaSampler:
             while True:
                 p = self.b0 * stream.uniform()
                 if p < 1:
-                    value = np.float32(np.exp(np.log(k(p)) / a))
+                    value = np.float32(np.exp(self.log(k(p)) / a))
                     if stream.standard_exponential() >= value:
                         return value
                 else:
-                    value = np.float32(-np.log(k((self.b0 - p) / a)))
-                    if stream.standard_exponential() >= (k(1) - a) * np.log(k(value)):
+                    value = np.float32(-self.log(k((self.b0 - p) / a)))
+                    if stream.standard_exponential() >= (k(1) - a) * self.log(k(value)):
                         return value
         t = standard_normal(stream)
         x = np.float32(self.s + k(0.5) * t)
@@ -90,7 +99,7 @@ class GammaSampler:
         u = stream.uniform()
         if self.d * u <= t * t * t:
             return value
-        if x > 0 and np.log(k(1) - u) <= self.quotient(t):
+        if x > 0 and self.log(k(1) - u) <= self.quotient(t):
             return value
         while True:
             e = stream.standard_exponential()

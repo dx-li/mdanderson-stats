@@ -273,6 +273,9 @@ Legacy mode uses GS below shape 1 and GD at or above 1, including the original
 normal/exponential primitives, coefficient tables, squeeze/quotient/hat tests
 and the large-quotient overflow correction. C and Fortran constant promotion,
 transcendental precision and comparison thresholds are selected explicitly.
+Logarithms use double-precision evaluation followed by rounding to the selected
+source precision. This avoids CPU-dependent float32 logarithm approximations
+whose one-unit rounding differences GS amplifies for small shapes.
 Shape-dependent constants are local to a sampling request, preserving behavior
 when callers alternate between shapes without sharing process-global caches.
 Legacy parameters must remain positive and finite after float32 conversion.
