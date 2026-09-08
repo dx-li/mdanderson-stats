@@ -3,7 +3,7 @@
 Catalog entry 55 is partial. Fixed one- and two-sample designs under point priors are
 implemented for logistic and log-log models, with linear or centered predictors.
 Independent uniform and correlated normal/log-normal prior criterion averaging
-are also implemented. The original raw-moment prior-entry conveniences, design optimization,
+are also implemented. Design-derived prior correlations, design optimization,
 dose-point addition and original reporting workflows remain pending.
 
 ```python
@@ -206,10 +206,12 @@ Logged parameters are positive. Negative signed log-normal priors are not define
 by the original PARRAW routine and are not added here.
 
 SINGLE's ALNTON input conversion uses log(raw mean) and raw variance/raw mean²,
-a first-order approximation rather than exact log-normal moment matching. This
-API bypasses that conversion. Reproducing that input convention requires passing
-those approximated latent moments explicitly. Raw-moment convenience input and
-the source's design-derived prior-correlation option remain pending.
+a first-order approximation rather than exact log-normal moment matching. Use
+`single_prior_parameters` to convert raw marginal inputs explicitly. Its
+`conversion="exact"` default matches log-normal marginal means and variances;
+`conversion="legacy"` reproduces ALNTON. Correlations always describe latent normal
+coordinates, including when the marginal means and variances are supplied on the
+raw scale. The source's design-derived prior-correlation option remains pending.
 
 The default node scaling correctly reproduces the supplied latent covariance.
 The original RECHRM divides physicists' Hermite nodes by √2, then TORAW applies
@@ -240,3 +242,24 @@ normal/log-normal priors and SD/variance criteria using original node scaling.
 PRCOMP, ALNTON, PARRAW and CRIT are not executed by this driver. Independent tests
 verify correlated normal moments, mixed normal/log-normal moments, the factor-of-four
 scaling discrepancy, rank-one and point priors, allocation scaling and convergence.
+
+
+```python
+from mdanderson_stats import single_prior_parameters
+
+latent_mean, latent_covariance = single_prior_parameters(
+    mean=[0.2, 1.2],
+    variance=[0.02, 0.03],
+    correlation=[[1, 0.4], [0.4, 1]],
+    lognormal=[False, True],
+)
+# Pass these arrays to single_normal_criterion with the same lognormal mask.
+```
+
+The input helper supports two or three parameters, nonnegative marginal variances,
+fixed parameters, and positive semidefinite latent correlation matrices. It rejects
+nonpositive log-normal means and inconsistent correlations. Exact log-normal
+conversion works in log space to avoid overflowing the variance-to-squared-mean
+ratio. Tests verify raw moments through quadrature, the original ALNTON algebra,
+latent correlations, fixed parameters and extreme moment ratios. These helper
+checks use mathematical identities; they do not execute native ALNTON.

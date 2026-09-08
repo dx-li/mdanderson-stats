@@ -135,5 +135,7 @@ location or slope differences with the other parameter shared across groups.
 uniform parameter priors using batched quadrature.
 `single_normal_criterion` handles correlated normal/log-normal latent priors,
 with an explicit option to reproduce SINGLE's original covariance scaling.
+`single_prior_parameters` converts marginal moments and latent correlations,
+with exact and original log-normal conversion options.
 [SINGLE coverage](docs/single.md) tracks
 the remaining prior-integration and optimization workflows.
