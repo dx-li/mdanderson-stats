@@ -1,9 +1,9 @@
 # RANLIST randomization lists
 
 Catalog entry 29 is partial. The phrase-to-seed conversion and indexed random
-streams and unrestricted treatment allocation are implemented. Restricted
-allocation, fixed/random balance points, strata/list management, interactive
-assignment and reports remain pending.
+streams, unrestricted allocation and restricted allocation with fixed/random
+balance points are implemented. Strata/list management, saved parameter files,
+interactive assignment and reports remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/29)
 lists version 1, modified August 23, 2002. The archive filename contains two
@@ -63,9 +63,8 @@ encoding into the original single-byte interface is ambiguous. Returned values
 follow the source formula, including its modulo arithmetic; seed validation is
 performed when the resulting pair is used to generate draws.
 
-These functions provide the numerical foundation for reproducing RANLIST.
-Bounded-integer rejection sampling, treatment permutations and restricted
-allocation remain separate pending components.
+These functions also supply the integer streams used by the treatment
+allocation APIs below.
 
 ## Validation
 
@@ -139,3 +138,63 @@ match exactly, as do the float32 cumulative probabilities. Independent tests
 use a scalar integer recurrence and rational weighted boundaries, check fixed
 large-sample allocation frequencies, weight scaling, indexed reproducibility,
 input snapshots and unsupported numerical cases.
+
+
+## Restricted treatment allocation
+
+```python
+from mdanderson_stats import ranlist_restricted
+
+fixed = ranlist_restricted([1, 2, 3, 4, 5, 6], [1, 2], balance=(2, 2))
+random = ranlist_restricted([1, 20, 100], [1, 2], balance=(1, 4))
+source = ranlist_restricted([1, 20, 100], [1, 2], balance=(1, 4), legacy=True)
+```
+
+`counts` contains one through 20 positive integers. The natural block lists
+one-based treatment numbers in order, repeated by their counts: `[1, 2]`
+produces `[1, 2, 2]`. Each balance block repeats that natural block K times
+before a forward Fisher–Yates permutation. Every completed balance block thus
+has exactly K times the requested treatment counts. A partial block need not
+have the target proportions. Inclusive ordered `balance=(minimum, maximum)`
+bounds control K; equal bounds fix it. The largest possible balance block must
+contain at most 500 assignments, matching the archived buffer limit.
+
+Default mode draws a new K on every refill, as described by the manual, and
+uses unbiased rejection sampling for each permutation swap. Legacy mode
+reproduces three details of IGTRT, GENPRM and IGNUIN:
+
+- IGTRT resets the stream and chooses K once at the start of every patient
+  query, so all blocks in a stratum have the same K. This differs from the
+  manual's random-refill description.
+- IGNUIN accepts its upper rejection boundary inclusively. Its accepted
+  integer range contains one extra residue zero, producing a small bias
+  toward the lower bound. Default sampling uses an exclusive boundary over
+  an exact multiple of the requested range width.
+- IGTRT skips exactly block-length-minus-one raw draws per preceding block.
+  A rejected permutation draw would consume additional randomness, so this
+  indexed source behavior can reuse draws across adjacent blocks. Default
+  mode advances through actual permutations, including rejected draws.
+
+The result includes read-only patient numbers, treatment counts, assignments,
+one-based inclusive `block_start`/`block_end`, and K in `multiplier` for each
+requested patient, plus seed, stream, balance bounds and legacy mode. Scalar,
+empty, repeated, unsorted and multidimensional requests are supported. Calls
+are independent and deterministic. Stream numbers are 1..32; patient numbers
+are positive integers below 2^53.
+
+Legacy mode jumps directly to each distinct requested block with modular
+exponentiation and permutes it once, avoiding patient-by-patient replay.
+Default mode generates all preceding blocks to locate random balance points
+and preserve rejection consumption. `max_blocks=10_000` caps generated blocks,
+including preceding blocks in default mode; requests requiring more raise
+`ValueError`. Increase the limit deliberately for larger lists. This is a
+computation limit, not a truncation of the returned assignments.
+
+`tools/reference_ranlist_restricted.py` compiles unchanged IGTRT, GENPRM,
+IGNUIN and their RNG dependencies. Forty-eight native cases cover fixed and
+random bounds, one and 20 treatments, unequal counts, four streams, and a seed
+that forces the source's rejection boundary. All retained assignments match
+exactly. Independent tests check complete-block balance, the manual's refill
+rule, forward shuffling, source draw reuse after rejection, distant indexed
+queries, shape/order preservation and computation limits. This validates the
+restricted numerical kernel; the remaining list workflows are still pending.

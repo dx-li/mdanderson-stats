@@ -93,6 +93,7 @@ from .pvalue_models import (
 )
 from .ranges import RangeComparisons, kwrange, range2
 from .ranlist_random import ranlist_integers, ranlist_seeds, ranlist_uniform
+from .ranlist_restricted import RestrictedAllocation, ranlist_restricted
 from .ranlist_unrestricted import UnrestrictedAllocation, ranlist_unrestricted
 from .schweder import (
     SchwederBootstrap,
@@ -134,6 +135,8 @@ from .stukel_scan import scan_stukel
 
 __all__ = [
     "UnrestrictedAllocation",
+    "RestrictedAllocation",
+    "ranlist_restricted",
     "ranlist_unrestricted",
     "ranlist_integers",
     "ranlist_seeds",

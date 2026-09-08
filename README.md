@@ -265,3 +265,7 @@ streams, validated against the original Fortran.
 
 `ranlist_unrestricted` adds weighted treatment assignments by patient number
 and stream, with explicit source rounding compatibility.
+
+`ranlist_restricted` adds fixed and random balance blocks, with exact treatment
+counts per completed block and an explicit mode for the archived source's
+sampling and indexed allocation behavior.

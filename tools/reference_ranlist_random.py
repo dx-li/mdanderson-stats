@@ -13,7 +13,7 @@ def extract_units(text: str, names: set[str]) -> str:
         r"^      (?:SUBROUTINE|(?:INTEGER|REAL|LOGICAL) FUNCTION) (\w+)", text, re.MULTILINE
     ):
         if match[1] in names:
-            end = re.search(r"^      END\s*$", text[match.start() :], re.MULTILINE)
+            end = re.search(r"^[ 0-9]{5} END[ \t]*$", text[match.start() :], re.MULTILINE)
             units.append(text[match.start() : match.start() + end.end()] + "\n")
     if len(units) != len(names):
         raise RuntimeError("missing native RNG units")
