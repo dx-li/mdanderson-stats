@@ -205,9 +205,10 @@ ACM notices. These original routines are not incorporated into the Python packag
 
 ## CUMINC
 
-`cumulative_incidence.py` independently expresses competing-risk incidence and
-Aalen variance calculations. Original CINC is used only in a local native
-reference build; provenance is recorded in `tests/fixtures/cuminc.json`. No
+`cumulative_incidence.py` and `gray_test.py` independently express competing-risk
+incidence, Aalen variance and Gray score/covariance calculations. Original CINC,
+CRSTM and CRST are used only in local native reference builds; provenance is
+recorded in `tests/fixtures/cuminc.json` and `tests/fixtures/gray.json`. No
 original source, binaries or documentation are bundled. The downloaded archive
 contains no explicit redistribution license notice. Its cited statistical
 references include Aalen (1978), Kalbfleisch and Prentice (1980), and Gray (1988).

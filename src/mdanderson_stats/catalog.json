@@ -758,13 +758,17 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "cumulative_incidence: one-cause competing-risk incidence and CINC/Aalen variance, tied-event risk sets, step curves and right-continuous evaluation"
+        "cumulative_incidence: one-cause competing-risk incidence and CINC/Aalen variance, tied-event risk sets, step curves and right-continuous evaluation",
+        "gray_test: weighted multi-group and stratified Gray scores/covariance, chi-square p-values and explicit singular-test results"
       ],
       "validation": [
         "tests/test_cumulative_incidence.py",
         "tests/fixtures/cuminc.json",
         "tools/reference_cuminc.py",
-        "docs/cuminc.md"
+        "docs/cuminc.md",
+        "tests/test_gray_test.py",
+        "tests/fixtures/gray.json",
+        "tools/reference_gray.py"
       ]
     },
     {

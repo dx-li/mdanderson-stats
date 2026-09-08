@@ -166,5 +166,6 @@ and JSON replay. [SEQBIN coverage](docs/seqbin-coverage.md) records the complete
 source/manual audit, compatibility differences and batch benchmarks.
 
 `cumulative_incidence` estimates competing-risk incidence curves and Aalen
-variances. [CUMINC coverage](docs/cuminc.md) tracks the remaining group tests,
-confidence intervals and plotting workflows.
+variances; `gray_test` compares groups with optional stratification and weighted
+Gray tests. [CUMINC coverage](docs/cuminc.md) tracks the remaining multi-curve
+summaries, confidence intervals and plotting workflows.

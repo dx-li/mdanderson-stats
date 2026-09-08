@@ -1,8 +1,8 @@
 # CUMINC cumulative-incidence curves
 
 Catalog entry 39 is **partial**. One-cause curve estimation and the original
-Aalen variance convention are implemented. Multi-group/stratified Gray tests,
-confidence intervals, full summaries and plots remain pending.
+Aalen variance convention and multi-group/stratified Gray tests are implemented.
+Confidence intervals, full multi-curve summaries and plots remain pending.
 
 Source: [CUMINC](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/39),
 contact Ken Hess, distributed as `CUMINC_V1.tar.gz`. Its S-PLUS interface calls
@@ -22,7 +22,8 @@ nonnegative. Event codes are nonnegative integers; the default censoring code is
 0 and the event of interest is 1. All other noncensoring codes are competing
 events. Input order need not be sorted. Missing values are rejected explicitly;
 this core API does not silently apply the S-PLUS interface's complete-case deletion.
-String cause/group labels will be addressed in the pending multi-curve interface.
+String cause labels will be addressed in the pending multi-curve interface;
+`gray_test` already supports string group and stratum labels.
 
 At each distinct time, the risk set includes all observations whose follow-up
 ends at that time, including tied censored observations. Overall survival falls
@@ -63,8 +64,51 @@ censoring, risk-set treatment of tied censoring, the first-jump variance formula
 competing-event handling, permutation, time scaling, code remapping and invalid
 inputs. A 10,000-observation uncensored curve was also evaluated successfully.
 
-The archived S wrapper computes group-test p-values using a normal tail of a
-quadratic statistic and counts distinct event times in some summaries. Those
-interface behaviors need explicit review during the remaining group-test and
-reporting conversion; they are not implemented or implicitly endorsed by this
-curve-only increment.
+## Group comparisons
+
+```python
+from mdanderson_stats import gray_test
+
+result = gray_test(
+    [1, 1, 2, 2, 2, 2, 2, 2],
+    [1, 1, 0, 0, 0, 0, 0, 0],
+    ["treatment"] * 4 + ["control"] * 4,
+)
+print(result.statistic, result.pvalue)  # approximately 2.33333, 0.12663
+```
+
+`gray_test` compares one selected cause across two or more groups. Optional
+`strata` defines separate risk sets; scores and covariance matrices are summed
+across strata before testing. A stratum may omit some groups. Event/censor codes
+follow `cumulative_incidence`; group and stratum labels may each be all strings
+or all finite numbers. Labels are sorted, and the final group is the reference
+for the exposed score vector and covariance matrix. Changing that reference
+preserves the test statistic. Missing labels or observations are rejected.
+
+`rho` is a finite real number controlling the weight `(1 - pooled_incidence)**rho`;
+the default is zero. The test uses Gray's pooled incidence estimator, which need
+not equal the incidence curve obtained by merging all groups. Risk-set and
+influence-moment updates are vectorized over groups. For U distinct times and G
+groups, dense covariance accumulation is O(U G³) work and O(G²) working storage,
+in addition to O(N) input/sorting storage; strata are processed separately.
+
+The statistic is computed by a linear solve as `score @ solve(covariance, score)`.
+The p-value uses the chi-square upper tail with G−1 degrees of freedom, as
+explicitly specified in CRSTM and in the method's reference,
+[Gray (1988)](https://doi.org/10.1214/aos/1176350951). This corrects the archived
+S wrapper's use of a normal tail of the squared statistic. This is an asymptotic
+test, not an exact finite-sample test. If covariance lacks full numerical rank,
+`statistic` and `pvalue` are `None`; `rank`, scores and covariance remain available.
+The implementation does not silently discard a group or change degrees of freedom.
+Materially indefinite covariance or nonfinite arithmetic raises a numerical error.
+Extreme rho values can exceed floating-point range.
+
+`tools/reference_gray.py` builds unchanged CRSTM/CRST with an independent driver.
+Fifty-seven native cases cover 2–4 groups, rho −0.5/0/1/2, ties, censoring,
+stratification, absent groups within strata, degenerate events, and the supplied
+sample's two causes with and without strata. Group and stratum labels are recoded
+to consecutive integers for the Fortran contract. Fixtures record source,
+extraction, driver, supplied-data hashes and compiler version. Independent tests
+cover a hypergeometric first-event variance, chi-square tail identities, stratum
+addition, reference-group/row/time/code transformations, fully and partially
+singular comparisons, and input validation.
