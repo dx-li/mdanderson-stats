@@ -131,5 +131,7 @@ exported with `decision_grid`, `region_report`, and `write_regions`.
 `single_design_precision` evaluates local slope and quantile precision for fixed
 logistic/log-log dose-response designs. `single_two_sample_precision` evaluates
 location or slope differences with the other parameter shared across groups.
+`single_uniform_criterion` averages these precision criteria over independent
+uniform parameter priors using batched quadrature.
 [SINGLE coverage](docs/single.md) tracks
 the remaining prior-integration and optimization workflows.

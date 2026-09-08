@@ -1108,7 +1108,8 @@
       "status": "partial",
       "implemented_features": [
         "single_design_precision: fixed one-sample point-prior logistic/log-log Fisher information and slope/quantile variance or standard deviation in linear/centered parameterizations",
-        "single_two_sample_precision: fixed two-sample point-prior location or slope differences with the other parameter shared; joint information and contrast variance/standard deviation"
+        "single_two_sample_precision: fixed two-sample point-prior location or slope differences with the other parameter shared; joint information and contrast variance/standard deviation",
+        "single_uniform_criterion: independent uniform-prior arithmetic averaging of one- or two-sample criteria using tensor Gauss-Legendre quadrature, with fixed-parameter support"
       ],
       "validation": [
         "tests/test_single.py",
@@ -1117,6 +1118,9 @@
         "tests/test_single_two_sample.py",
         "tests/fixtures/single_two_sample.json",
         "tools/reference_single_two_sample.py",
+        "tests/test_single_uniform.py",
+        "tests/fixtures/single_uniform.json",
+        "tools/reference_single_uniform.py",
         "docs/single.md"
       ]
     },

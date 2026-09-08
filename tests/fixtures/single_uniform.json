@@ -1,0 +1,521 @@
+{
+  "source": "Unchanged RECGS, RECGSX, QNXTIX (including entries), CPROB, CDPDB, MIX, GEXP; independent criterion callback",
+  "source_sha256": "e28dd3bb8c51d02a667a1f12995e4f591bea7ecfb706e3160b7bcf02f565c8c2",
+  "extracted_sha256": "3cc85478978c60a0e128ca25ca441e8c472a1fbdb9d56788e9ee8658351f1c4b",
+  "driver_sha256": "a14ff4da46856b5a862cc21e108d4a3dbb3e609a20c5a72d393bc1cc26378a6f",
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "cases": [
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 0.1972517585468155
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 0.3979385922537267
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 0.039054547611195645
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 0.16272771379889997
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "sd",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.2793393931416287
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "sd",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.23213970457847036
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "variance",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.07811158877010214
+    },
+    {
+      "model": "loglog",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "variance",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.05405632004250387
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 0.13184279693257922
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 1.8201339002109813
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 0.01738467144278809
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 3.828224487198996
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "sd",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.6792735342203381
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "sd",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.19118649875960217
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "variance",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.47898485966438425
+    },
+    {
+      "model": "loglog",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "variance",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.0365657288867593
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 0.261352390204465
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 1.0670299399979226
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 0.06848097667340788
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 1.1741352951265336
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "sd",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.3671709858217625
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "sd",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.277913061044607
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "location",
+      "criterion": "variance",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.13497250607836178
+    },
+    {
+      "model": "logistic",
+      "form": "linear",
+      "comparison": "slope",
+      "criterion": "variance",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.07742328021724307
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_sd",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 0.20512272286812233
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_sd",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 7.565234037456754
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "slope_variance",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 0.042079035357376345
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": null,
+      "criterion": "quantile_variance",
+      "lower": [
+        0.2,
+        0.8
+      ],
+      "upper": [
+        0.4,
+        1.2
+      ],
+      "value": 66.26238734574137
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "sd",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 1.0225177446606835
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "sd",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.29457388855602185
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "location",
+      "criterion": "variance",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 1.0866873149139749
+    },
+    {
+      "model": "logistic",
+      "form": "centered",
+      "comparison": "slope",
+      "criterion": "variance",
+      "lower": [
+        0.2,
+        0.8,
+        0.4
+      ],
+      "upper": [
+        0.4,
+        1.2,
+        0.6
+      ],
+      "value": 0.0867842966167222
+    }
+  ]
+}

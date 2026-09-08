@@ -2,7 +2,8 @@
 
 Catalog entry 55 is partial. Fixed one- and two-sample designs under point priors are
 implemented for logistic and log-log models, with linear or centered predictors.
-Uncertain normal/log-normal/uniform priors, design optimization,
+Independent uniform-prior criterion averaging is also implemented. Correlated
+normal/log-normal priors, design optimization,
 dose-point addition and original reporting workflows remain pending.
 
 ```python
@@ -116,3 +117,59 @@ executed by this reference driver. Additional tests check closed-form symmetric
 logistic variances, group swapping, batch evaluation, allocation scaling, and
 identifiable versus singular designs. The unused power criterion commented out
 in the source menu is not exposed.
+
+## Uniform-prior criterion averaging
+
+`single_uniform_criterion` integrates a selected local precision criterion over
+independent uniform parameter intervals. The default six-point Gauss-Legendre
+rule per varying parameter follows CEVAL/RECGS in SINGLE. Computation evaluates
+all tensor nodes in a NumPy batch. Equal interval endpoints represent fixed
+parameters and consume one node; this also permits a fully fixed point prior.
+
+```python
+from mdanderson_stats import single_uniform_criterion
+
+averaged = single_uniform_criterion(
+    doses=[-1, 0, 2],
+    subjects=[20, 30, 50],
+    lower=[0.2, 0.8],
+    upper=[0.4, 1.2],
+    criterion="quantile_sd",
+    quantile=0.05,
+)
+print(averaged.value)
+```
+
+One-sample criteria are `slope_sd`, `slope_variance`, `quantile_sd` and
+`quantile_variance`. For two samples, supply the two groups' dose/allocation
+vectors, three parameter intervals, `comparison="location"` or `"slope"`, and
+`criterion="sd"` or `"variance"`. The two-sample variance option extends the
+original menu's standard-deviation criterion by averaging its square.
+
+The returned value is the arithmetic average of the selected local criterion.
+In particular, average SD is neither square root of average variance nor the
+SD computed from average information. The result also exposes quadrature
+parameters, normalized weights, local criteria and order for inspection.
+Normal-prior integration in the source uses a reciprocal aggregation and is
+not substituted for this uniform-prior calculation.
+
+`order` may be increased from 6 up to 32 to assess convergence (cost grows as
+order to the number of varying parameters). These are quadrature approximations,
+without a certified integration error. A finite quadrature result alone does not
+prove that an improper expectation exists: singularities between quadrature
+nodes require care. One-sample quantile criteria reject slope intervals touching
+or crossing zero. Other invalid or unidentifiable parameter values encountered
+at nodes propagate errors from the fixed-design APIs. The one-sample API's
+nonzero-slope restriction continues to apply at each node, including when
+requesting slope precision. No singular nodes are dropped or replaced.
+
+`tools/reference_single_uniform.py` compiles unchanged RECGS, RECGSX and QNXTIX
+(with its entries), together with unchanged response/derivative routines. An
+independent callback assembles information, inverts its small matrix, and evaluates
+the criterion. It does not execute the original CRIT/CEVAL routines. Thirty-two
+cases cover both response models, both parameterizations, one/two samples, and
+SD/variance criteria. Reference tolerances allow the source's partly default-REAL
+quadrature constants. Further tests use an analytic uniform-intercept integral,
+point-prior reduction, allocation scaling, order convergence and Jensen's inequality
+for SD versus variance averaging. NumPy's quadrature contract is documented in
+the [leggauss reference](https://numpy.org/doc/stable/reference/generated/numpy.polynomial.legendre.leggauss.html).

@@ -70,6 +70,7 @@ from .schweder import (
 from .schweder_output import plot_schweder, write_schweder_data
 from .single import SingleDesignPrecision, single_design_precision
 from .single_two_sample import SingleTwoSamplePrecision, single_two_sample_precision
+from .single_uniform import SingleUniformCriterion, single_uniform_criterion
 from .stukel import predict_stukel, stukel_log_odds, stukel_probability
 from .stukel_comparison import StukelComparison, compare_stukel, stukel_demo
 from .stukel_fit import StukelFit, StukelFitError, fit_stukel
@@ -78,6 +79,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "SingleUniformCriterion",
+    "single_uniform_criterion",
     "SingleTwoSamplePrecision",
     "single_two_sample_precision",
     "SingleDesignPrecision",
