@@ -1,9 +1,9 @@
 # KSBIN1 binomial trial design and operating characteristics
 
 Catalog entry 25 is partial. Fixed multistage design evaluation and all five
-single-stage calculation modes are implemented. Boundary-selection assistance
-tables, comparison with a separately chosen single-stage trial, and original
-reporting/session workflows remain pending. Source: KSBIN1_V1.tar.gz, ksbin190_1.0.
+single-stage calculation modes and boundary-selection assistance tables are
+implemented. A consolidated comparison with a separately chosen single-stage
+trial and original reporting/session workflows remain pending. Source: KSBIN1_V1.tar.gz, ksbin190_1.0.
 
 ```python
 from mdanderson_stats import ksbin1_operating_characteristics
@@ -78,8 +78,8 @@ check mass conservation, broadcasting, endpoints, disabled final rejection,
 conditional expectations with probability zero and invalid input. Existing KSB1CI
 native and exhaustive tests validate the shared probability-code extraction.
 
-Still pending: BINCUM-based power-contribution tables, separate single-stage comparison, report
-file dialogue and design revision workflow. These are required before this catalog
+Still pending: consolidated single-stage comparison, report file dialogue and
+design revision workflow. These are required before this catalog
 entry can be marked implemented.
 
 ## Single-stage power and adjacent critical regions
@@ -302,3 +302,67 @@ A local Python 3.13 / NumPy 2.5.3 run for null=0.3, alternative=0.301, alpha=0.0
 target_power=0.8 returned n=1,299,497, significance approximately 0.0499948 and power
 0.800002 in 0.060 seconds. This is one workload-specific timing, not a universal
 runtime guarantee.
+
+## Boundary-selection assistance
+
+```python
+from mdanderson_stats import KStageBinomial, ksbin1_boundary_table
+
+# Previously selected boundaries apply; future boundaries can remain disabled.
+design = KStageBinomial([14, 28, 42], low=[0, -1], high=[3, -1])
+table = ksbin1_boundary_table(
+    design,
+    stage=2,
+    null_probability=0.2,
+    alternative_probability=0.06,
+    single_stage_critical=4,
+    alternative="less",
+)
+print(table.events, table.significance, table.power, table.power_loss)
+```
+
+The reference single-stage trial has the design's final sample size and an
+explicit inclusive critical count. The returned single_stage_significance and
+single_stage_power give its operating characteristics. Probabilities broadcast;
+the last array axis always runs through ascending event counts, including counts
+made unreachable by earlier stopping. Stage numbers start at one.
+
+At each candidate count, significance and power sum the joint arrival mass in
+that count's rejection region. They are this stage's contributions, so earlier
+rejection contributions must be added to obtain cumulative rejection probability.
+For "less", rejection includes counts at or below the candidate; for "greater",
+it includes counts at or above it.
+
+conditional_reference_power is the chance of rejecting in the reference trial
+given the current event count and completion of all remaining observations.
+power_contribution multiplies this by the alternative's joint arrival mass.
+power_loss accumulates these contributions over the candidate's inclusive
+futility region: at or above the count for "less", at or below for "greater".
+This is absolute lost probability, not a percentage of reference power. Future
+stopping boundaries do not enter this reference-completion calculation. It is
+design assistance, not an exact power difference between arbitrary multistage
+designs. Selecting overlapping rejection and futility regions is invalid; the
+KStageBinomial constructor validates the resulting chosen boundaries.
+
+The Python table corrects a source boundary error: the lower-tail contribution
+loop sets the conditional probability to zero when the current count equals the
+reference cutoff. It should include the probability of zero additional events.
+For example, after one stage of 2 observations in a 4-observation trial with
+alternative probability 0.2 and reference cutoff 1, the corrected power_loss at
+count 1 is 0.2048; the original gives zero. This also affects the original manual's
+first-stage table at count 4 and every cumulative loss entry preceding it.
+
+The source's BINCUM array holds only 100 remaining observations, and some cutoff
+values can index outside its initialized range. Python supports all remaining
+sizes within the shared total-200 limit and explicitly handles thresholds beyond
+the remaining count range, including the final stage with no observations left.
+
+Validation includes 54 exhaustive six-observation path cases spanning both
+directions, all three stages, cutoff endpoints and probability endpoints.
+Broadcasting, disabled boundaries, the exact-cutoff regression and 199 remaining
+observations are also tested. `tools/reference_ksbin1_table.py` compiles unchanged
+BINCUM/BINDEN routines and the original main-program contribution/cumulation loop
+with bounds checking. Twelve native first-stage tables are preserved in
+`tests/fixtures/ksbin1_table.json`: upper-tail tables match directly; lower-tail
+tables match after adding the independently calculated omitted path probability.
+Source and extracted-driver hashes and compiler settings accompany the fixture.

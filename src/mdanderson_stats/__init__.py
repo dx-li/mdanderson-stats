@@ -29,6 +29,7 @@ from .intervals import (
     poisson_interval,
 )
 from .ksbin1 import KSBinomialOperatingCharacteristics, ksbin1_operating_characteristics
+from .ksbin1_table import KSBinomialBoundaryTable, ksbin1_boundary_table
 from .kstage_binomial import KStageBinomial
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
@@ -74,6 +75,8 @@ __all__ = [
     "binomial_significance",
     "BinomialPower",
     "binomial_power",
+    "KSBinomialBoundaryTable",
+    "ksbin1_boundary_table",
     "KSBinomialOperatingCharacteristics",
     "ksbin1_operating_characteristics",
     "KStageBinomial",
