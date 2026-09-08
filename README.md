@@ -57,5 +57,7 @@ line fitting and bootstrap are available through `multiple_testing`,
 `clustered_pvalues` simulates dependent one-sided p-values with explicit random state.
 `nonparametric_pvalues` implements the S library's local-quadratic diagnostic with
 stable regression solves and explicit errors for undefined fits.
+`nonparametric_testing` provides the desktop's separate subset fitting,
+local bandwidth selection, and rejection decisions.
 See [multiple testing](docs/multiple-testing.md) for examples, historical naming
 differences, and the MULTI features that remain pending.

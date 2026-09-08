@@ -9,6 +9,7 @@ from .multiplicity import (
     sharpened_testing,
 )
 from .nonparametric import NonparametricFit, NonparametricFitError, nonparametric_pvalues
+from .nonparametric_testing import NonparametricTestingResult, nonparametric_testing
 from .numerics import invert_monotone, normal_tails
 from .pvalue_models import (
     OrderStatisticDiagnostics,
@@ -29,6 +30,7 @@ __all__ = [
     "MultipleTestingResult",
     "NonparametricFit",
     "NonparametricFitError",
+    "NonparametricTestingResult",
     "OrderStatisticDiagnostics",
     "RangeComparisons",
     "SchwederBootstrap",
@@ -43,6 +45,7 @@ __all__ = [
     "multiple_testing",
     "normal_tails",
     "nonparametric_pvalues",
+    "nonparametric_testing",
     "order_statistic_diagnostics",
     "poisson_interval",
     "range2",

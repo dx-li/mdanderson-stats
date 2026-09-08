@@ -3,10 +3,10 @@
 Catalog entry 50 includes a desktop program and an S library. This port currently
 covers the desktop's nine adjustment/threshold procedures, two sharpened procedures,
 and Schweder line fitting, plus the S library's Schweder bootstrap,
-order-statistic diagnostics, clustered p-value generation, and S nonparametric
-fitting. It remains **partial**: beta mixtures, the desktop's iterative
-nonparametric procedure, and plotting helpers still need implementations and
-validation. The catalog does not count this entry as complete.
+order-statistic diagnostics, clustered p-value generation, and S/desktop
+nonparametric fitting. It remains **partial**: beta mixtures and plotting helpers
+still need implementations and validation. The catalog does not count this entry
+as complete.
 
 ## Adjustment procedures
 
@@ -178,7 +178,7 @@ print(fit.scores)
 ```
 
 This implements the S library's `multi.np`/`NPFIT`, which differs from the
-desktop's iterative `NP1P` method. It accepts one vector with at least four
+desktop's `NP1P` method described below. It accepts one vector with at least four
 distinct p-values. Tied observations retain separate empirical ordinates rank/n.
 Outputs retain input order, with sorted-rank indices in `order`.
 
@@ -230,6 +230,80 @@ independent known-polynomial tests verify the Python derivatives to near machine
 precision. Integer-density cases are also checked by explicit binomial-tail
 calculations. The narrow-grid and invalid-shape cases verify the documented
 stability/error differences rather than asserting equality with defective output.
+
+## Desktop nonparametric decisions
+
+```python
+from mdanderson_stats import nonparametric_testing
+
+result = nonparametric_testing([i / 1000 for i in range(1, 21)], null_estimate=8.7)
+print(result.fitted_points)  # 20 - int(8.7) = 12
+print(result.scores)
+print(result.reject)
+```
+
+`nonparametric_testing` implements desktop `NP1P`, `FUNCFT`, and `SMOOTH`.
+It fits the smallest `n-int(null_estimate)` p-values, using the original integer
+truncation. If the estimate is omitted, it uses `schweder_fit` at its default
+alpha of 0.05, independently of the decision alpha, as the original interface
+does. Invalid/negative estimates are rejected; failed Schweder fits propagate.
+An estimate above the family size retains all hypotheses.
+
+The fitted subset determines the regression branch:
+
+| Fitted points | Model |
+|---|---|
+| Fewer than 2 | Retain all; no density fit |
+| 2–5 | One least-squares line |
+| 6–10 | One least-squares quadratic |
+| More than 10 | Local quadratic windows with pointwise bandwidth selection |
+
+Empirical ordinates are rank divided by the **full family size**, including when
+only a subset is fitted. Polynomial fits use equal weights. Local fits retain
+the same reciprocal biquartic weighting and historical window-bound rules as the
+S version. Their initial bandwidth is computed separately at each fitted point.
+When it is smaller than one quarter of the fitted range, the desktop evaluates
+ten equally spaced widths, including the initial width and excluding that upper
+limit. Each point selects the smallest leave-one-out weighted-mean squared error,
+retaining the earlier width on exact ties. Floating-point summation can choose
+different numerically tied widths than the original, as on exact linear grids;
+the resulting density agrees on those validation cases. Unlike S NPFIT, this
+bandwidth search
+is active; it is not replaced by a common global width. Both branches use stable,
+centered/scaled least-squares solves rather than inverses of normal equations.
+
+Fitted densities become reciprocal scores. Zero density gives one; reciprocal
+values are clipped to [0,1] and made nondecreasing by rank. The source therefore
+assigns zero to a negative initial reciprocal, which may lead to rejection; this
+historical rule is preserved and is not evidence of posterior calibration.
+Fitted hypotheses are rejected when their score is at most alpha. Unfitted
+hypotheses are always retained, including when alpha is one.
+
+`scores` and `reject` retain original input order. `density` contains only the
+fitted points in ascending-rank order, corresponding to
+`order[:fitted_points]`. For window fits, `bandwidths` has that same order;
+it is `None` for polynomial or retain-all results. This avoids inventing density
+estimates outside the fitted subset. The original early-return branch leaves its
+arrays uninitialized; the Python API implements its documented retain-all intent
+with scores of one, false decisions, and an empty density vector. Singular fits
+and invalid windows raise `NonparametricFitError` rather than using undefined
+regression results.
+
+The reference fixture additionally contains 48 original desktop runs across the
+branch boundaries, fractional null estimates, ties/endpoints, the published
+example, and two significance levels. Ordinary density/score comparisons allow
+for the original normal-equation precision loss; rejection masks agree exactly
+on these cases. Fitting all 150 published values reveals larger original density
+errors (up to about 0.25%) in narrow windows near the upper end. A traced copy of
+SMOOTH records its selected bandwidths without changing the numerical operations.
+Independent 70-digit Decimal regressions at those original windows verify the
+Python densities to near double precision; those tests replace an inaccurate
+original density as the numerical oracle. Independent tests also check
+full-family rank normalization, exact
+linear/quadratic derivatives, narrow-coordinate stability, inclusive thresholds,
+input permutations, automatic Schweder wiring, and failed-fit propagation.
+The original untouched-output sentinel is recorded for the early-return branch
+to distinguish the Python repair from an exact reproduction of undefined data.
 
 ## Validation and provenance for other MULTI procedures
 

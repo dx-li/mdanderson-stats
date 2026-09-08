@@ -921,7 +921,8 @@
         "mdanderson_stats.schweder_bootstrap: bounded valid-fit resampling, mean and sample variance with explicit NumPy random state",
         "mdanderson_stats.order_statistic_diagnostics: S OSFIT cumulative and legacy transformed CDFs, uncapped combined score, batched original-order results",
         "mdanderson_stats.clustered_pvalues: one-sided equicorrelated normal p-values, null/alternative clusters, linear-time covariance transform and explicit NumPy random state",
-        "mdanderson_stats.nonparametric_pvalues: S NPFIT local-quadratic diagnostic with original bandwidth, reciprocal weights and fractional beta tails; stable scaled least squares and explicit failure handling; desktop NP1P remains pending"
+        "mdanderson_stats.nonparametric_pvalues: S NPFIT local-quadratic diagnostic with original bandwidth, reciprocal weights and fractional beta tails; stable scaled least squares and explicit failure handling",
+        "mdanderson_stats.nonparametric_testing: desktop NP1P polynomial and cross-validated local-quadratic fits, Schweder null-count integration, reciprocal scores and rejection masks; defined retain-all and failure behavior"
       ],
       "validation": [
         "tests/test_multiplicity.py",
@@ -930,7 +931,8 @@
         "tests/fixtures/multi.json",
         "docs/multiple-testing.md",
         "tests/test_nonparametric.py",
-        "tests/fixtures/nonparametric.json"
+        "tests/fixtures/nonparametric.json",
+        "tests/test_nonparametric_testing.py"
       ]
     },
     {

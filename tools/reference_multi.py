@@ -51,6 +51,25 @@ def build() -> Path:
     s_cdfbet = directory / "s-cdfbet.f"
     s_cdfbet.write_text(s_source[start : start + end_match.end()] + "\n")
     nonparametric_sources = []
+    desktop = (SOURCE / "multi4.f").read_text()
+    start = desktop.index("      SUBROUTINE SMOOTH(")
+    end_match = re.search(r"^      END\s*$", desktop[start:], flags=re.MULTILINE)
+    if end_match is None:
+        raise ValueError("SMOOTH program unit not found")
+    traced = desktop[start : start + end_match.end()]
+    traced = traced.replace(
+        "SUBROUTINE SMOOTH(X,N,NFIT,DERIV,IERR)",
+        "SUBROUTINE TRACE_SMOOTH(X,N,NFIT,DERIV,IERR,WIDTHS)",
+        1,
+    ).replace("DOUBLE PRECISION X(*),DERIV(*)", "DOUBLE PRECISION X(*),DERIV(*),WIDTHS(*)", 1)
+    traced = traced.replace(
+        "         CALL WNFWD(X,NFIT,XCEN,WIDTH,IXLO,NPTWI)",
+        "         WIDTHS(I) = WIDTH\n         CALL WNFWD(X,NFIT,XCEN,WIDTH,IXLO,NPTWI)",
+        1,
+    )
+    trace_path = directory / "trace-smooth.f"
+    trace_path.write_text(traced + "\n")
+    nonparametric_sources.append(trace_path)
     for declaration, name in [
         ("      SUBROUTINE NPFIT(", "npfit"),
         ("      DOUBLE PRECISION FUNCTION wdthmx(", "wdthmx"),
@@ -74,9 +93,10 @@ def build() -> Path:
   double precision :: alpha,nulls,beta,variance
   double precision, external :: s_wdthmx
   double precision, allocatable :: x(:),p(:),q(:),w(:)
+  logical, allocatable :: rejected(:)
   integer, allocatable :: counts(:)
   read(*,*) mode,n,alpha,nulls
-  allocate(x(n),p(n),q(n),w(n),counts(n))
+  allocate(x(n),p(n),q(n),w(n),counts(n),rejected(n))
   read(*,*) x
   select case(mode)
   case(1)
@@ -133,6 +153,30 @@ def build() -> Path:
       call wtbqwd(x(lo),points,x(i),beta,w)
       call drvtv(x(lo),q(lo),w,x(i),points,2,variance,status)
       write(*,'(2es26.17,3i8)') p(i),variance,status,lo,points
+    end do
+    stop
+  case(16)
+    p=-999d0
+    w=-999d0
+    q=-999d0
+    rejected=.false.
+    status=0
+    call np1p(x,p,rejected,n,nulls,length,alpha,status)
+    if (length >= 2 .and. status == 0) then
+      if (length <= 10) then
+        call funcft(x,n,length,w,status)
+      else
+        call trace_smooth(x,n,length,w,status,q)
+      end if
+    end if
+    write(*,'(2i8)') length,status
+    do i=1,n
+      lo=0
+      points=0
+      if (length > 10 .and. i <= length .and. status == 0) then
+        call wnfwd(x,length,x(i),q(i),lo,points)
+      end if
+      write(*,'(3es26.17,3i8)') p(i),w(i),q(i),merge(1,0,rejected(i)),lo,points
     end do
     stop
   end select
