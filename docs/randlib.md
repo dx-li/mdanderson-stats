@@ -1,8 +1,8 @@
 # RANDLIB
 
 Catalog entry 27 is partial. The 32-stream generator bank and state controls are
-implemented, along with bounded uniforms, permutations, exponential, normal and gamma sampling.
-Beta, chi-square, F, count and multivariate samplers and the final
+implemented, along with bounded uniforms, permutations, exponential, normal, gamma,
+central/noncentral chi-square and F sampling. Beta, count and multivariate samplers and the final
 archive coverage/performance audit remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27)
@@ -302,5 +302,85 @@ scalar/batch equivalence, underflow, invalid arguments and rollback.
 
 The batching benchmark includes 10,000 gamma draws with shape 2.5 and rate 1.7;
 its measured times and comparison limits are recorded in
-[randlib-benchmark.json](randlib-benchmark.json). Beta, chi-square, F, count and
-multivariate distributions and RANDLIB's final coverage audit remain pending.
+[randlib-benchmark.json](randlib-benchmark.json). Beta, count and multivariate distributions and RANDLIB's final coverage audit
+remain pending.
+
+## Chi-square and F sampling
+
+```python
+bank = RandlibGenerator()
+central = bank.chi_square(1000, df=5)
+noncentral = bank.noncentral_chi_square(1000, df=5, noncentrality=2.3)
+ratio = bank.f(1000, dfn=5, dfd=12)
+noncentral_ratio = bank.noncentral_f(1000, dfn=5, dfd=12, noncentrality=2.3)
+original = bank.noncentral_f(1000, dfn=5, dfd=12, noncentrality=2.3, legacy=True)
+```
+
+All four methods accept `size=1`, `legacy=False`, `source="fortran"` and
+`max_attempts=None`. Degrees of freedom default to 1 and noncentrality defaults
+to 0. Degrees of freedom must be finite and positive; noncentrality must be
+finite and nonnegative. Legacy noncentral methods additionally require the
+numerator degrees of freedom to be at least 1. Default noncentral methods
+support all positive degrees of freedom. `source="c"` requires `legacy=True`.
+Results are read-only float64 vectors. Empty batches do not advance the stream.
+
+Defaults evaluate SciPy quantiles on a vector of raw uniforms, consuming one
+draw per output. Noncentrality zero explicitly uses the central distribution,
+so the corresponding default central and noncentral sequences are identical.
+Positive results are checked against the smaller CDF/survival tail with absolute
+tolerance `64*float64_epsilon + 1e-7*min(u, 1-u)`. This catches extreme F quantiles
+that a library returns as a finite limiting value even though their implied
+probability is incorrect. Nonfinite/negative results or failed probability
+checks raise `ArithmeticError` and leave state unchanged. Finite-resolution
+uniforms limit attainable tails; underflow to zero remains allowed.
+
+Legacy methods compose the original single-precision gamma and normal samplers.
+Central chi-square doubles a gamma draw with shape `df/2`. Central F draws
+numerator and denominator gamma components in that order, normalizes by their
+degrees of freedom, then divides. Noncentral chi-square adds a gamma component
+with shape `(df-1)/2` to a squared normal shifted by `sqrt(noncentrality)`.
+Noncentral F uses that numerator and a central denominator.
+
+The reference gfortran builds evaluate the normal term before the gamma term
+in noncentral expressions; the reference C build evaluates gamma first.
+Legacy modes preserve those recorded orders, including in batch calls.
+Fortran does not guarantee expression evaluation order across compilers;
+these sequence comparisons refer to the tool's recorded builds, not every
+possible native compiler/optimization setting.
+
+The archived noncentral routines use the normal-only branch when the rounded
+degrees of freedom are below `1.000001`, ignoring the small residual gamma
+component. GENNF also omits division by the numerator degrees of freedom in
+that branch. The threshold itself is single precision in Fortran and double
+precision in C, so their behavior differs at a representable boundary near 1.
+Default mode uses the actual parameter values without this approximation.
+
+Legacy F routines return float32 `1e37` when the normalized denominator is no
+greater than `1e-37` times the numerator, including the original zero/zero case.
+Python emits one `RuntimeWarning` per affected request, rather than printing
+one message per value. Those intentionally capped results consume the native
+draws. Treating the warning as an exception prevents state commitment.
+Default mode does not apply that cap. Other nonfinite legacy results raise an
+error. Legacy parameters and derived gamma shapes must remain representable
+and valid in float32; silent parameter underflow is rejected.
+
+The total raw-draw budget defaults to `max(100000, 8*size)` and includes nested
+gamma, normal and exponential rejection draws. Exhaustion rolls back the entire
+request. Selected-stream initial/block states and other streams are untouched.
+The source-compatible exponential endpoint guard remains in force when called
+by a nested sampler.
+
+`tools/reference_randlib_chi_f.py` compiles the unchanged C, Fortran 77 and
+Fortran 95 routines and records source hashes, compiler versions and flags.
+Its fixture contains 552 cases / 11,040 values and component states, covering
+all four routines, two streams, antithetic draws, fractional/integer and near-one
+degrees of freedom, zero/positive noncentrality and intentional F truncation.
+Tests require exact states and source warning behavior, with value tolerance
+`5e-6` relative plus two float32 subnormal units for transcendental rounding.
+They also check scalar/batch identity, moments and CDFs, default noncentral
+parameters below one, zero-noncentrality identity, invalid arguments, probability
+validation and transactional failures. The batching benchmark includes all four
+methods; its comparison remains against repeated calls to the same Python API.
+
+Beta, count and multivariate samplers and the final RANDLIB coverage/performance
+audit remain pending.

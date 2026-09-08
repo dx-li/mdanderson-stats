@@ -6,6 +6,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 from scipy.special import gammaincinv, ndtri
 
+from ._randlib_chi_f import sample_chi_f
 from ._randlib_distributions import DistributionStream, legacy_exponential
 from ._randlib_gamma import legacy_gamma
 from ._randlib_normal import legacy_normal
@@ -432,4 +433,119 @@ class RandlibGenerator:
                 raise ArithmeticError("gamma samples overflow float64; state unchanged")
         self._current[self._stream - 1] = state
         result.flags.writeable = False
+        return result
+
+    def chi_square(
+        self,
+        size: int = 1,
+        *,
+        df: float = 1.0,
+        legacy: bool = False,
+        source: Literal["fortran", "c"] = "fortran",
+        max_attempts: int | None = None,
+    ) -> NDArray[np.float64]:
+        """Central chi-square samples (GENCHI), with positive df.
+
+        Default inverse-CDF sampling consumes one raw draw per result.
+        Legacy preserves source arithmetic and nested draw consumption.
+        """
+        return self._chi_f(size, df, None, None, legacy, source, max_attempts)
+
+    def noncentral_chi_square(
+        self,
+        size: int = 1,
+        *,
+        df: float = 1.0,
+        noncentrality: float = 0.0,
+        legacy: bool = False,
+        source: Literal["fortran", "c"] = "fortran",
+        max_attempts: int | None = None,
+    ) -> NDArray[np.float64]:
+        """Noncentral chi-square samples (GENNCH); legacy requires df >= 1.
+
+        Default inverse-CDF sampling consumes one raw draw per result.
+        Legacy preserves source arithmetic and nested draw consumption.
+        """
+        return self._chi_f(
+            size, df, None, scalar(noncentrality, "noncentrality"), legacy, source, max_attempts
+        )
+
+    def f(
+        self,
+        size: int = 1,
+        *,
+        dfn: float = 1.0,
+        dfd: float = 1.0,
+        legacy: bool = False,
+        source: Literal["fortran", "c"] = "fortran",
+        max_attempts: int | None = None,
+    ) -> NDArray[np.float64]:
+        """Central F samples (GENF), with positive numerator/denominator df.
+
+        Default inverse-CDF sampling consumes one raw draw per result.
+        Legacy preserves source arithmetic and nested draw consumption.
+        """
+        return self._chi_f(size, dfn, scalar(dfd, "dfd"), None, legacy, source, max_attempts)
+
+    def noncentral_f(
+        self,
+        size: int = 1,
+        *,
+        dfn: float = 1.0,
+        dfd: float = 1.0,
+        noncentrality: float = 0.0,
+        legacy: bool = False,
+        source: Literal["fortran", "c"] = "fortran",
+        max_attempts: int | None = None,
+    ) -> NDArray[np.float64]:
+        """Noncentral F samples (GENNF); legacy requires numerator df >= 1.
+
+        Default inverse-CDF sampling consumes one raw draw per result.
+        Legacy preserves source arithmetic and nested draw consumption.
+        """
+        return self._chi_f(
+            size,
+            dfn,
+            scalar(dfd, "dfd"),
+            scalar(noncentrality, "noncentrality"),
+            legacy,
+            source,
+            max_attempts,
+        )
+
+    def _chi_f(
+        self,
+        size: int,
+        dfn: float,
+        dfd: float | None,
+        nc: float | None,
+        legacy: bool,
+        source: str,
+        max_attempts: int | None,
+    ) -> NDArray[np.float64]:
+        size = _integer(size, "size", 0, self._max_draws)
+        if not isinstance(legacy, (bool, np.bool_)):
+            raise ValueError("legacy must be boolean")
+        if not isinstance(source, str) or source not in ("fortran", "c"):
+            raise ValueError("source must be fortran or c")
+        if not legacy and source != "fortran":
+            raise ValueError("source selection requires legacy=True")
+        budget = _integer(
+            max(100_000, 8 * size) if max_attempts is None else max_attempts,
+            "max_attempts",
+            1,
+            2**53 - 1,
+        )
+        result, state = sample_chi_f(
+            self.get_seeds(),
+            self._antithetic[self._stream - 1],
+            size,
+            dfn,
+            dfd,
+            nc,
+            legacy,
+            source,
+            budget,
+        )
+        self._current[self._stream - 1] = state
         return result

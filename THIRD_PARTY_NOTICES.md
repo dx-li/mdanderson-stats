@@ -396,3 +396,9 @@ by a Modified Rejection Technique,” Communications of the ACM 25(1), 47–54
 Binomial Distributions,” Computing 12, 223–246 (1974). The archived numerical
 coefficients and source corrections are reflected in the Python implementation;
 the retained RANDLIB notices and their ACM provisions apply as described above.
+
+RANDLIB's central/noncentral chi-square and F samplers independently express
+GENCHI, GENNCH, GENF and GENNF's gamma/normal composition and source rounding
+rules. They reuse the attributed GS/GD and FL algorithms above. Native reference
+executables are compiled locally from unchanged archived source and are not
+bundled; the original RANDLIB attribution and terms remain retained.

@@ -308,3 +308,7 @@ RANDLIB gamma sampling adds a vectorized default and the archived GS/GD
 algorithms, with explicit shape/rate parameters, C/Fortran arithmetic and
 transactional draw limits. Native fixtures cover both shape regimes and
 changes of shape between consecutive draws.
+
+RANDLIB now includes central/noncentral chi-square and F sampling. Vectorized
+defaults check inverse-CDF accuracy; legacy modes preserve the reference
+builds' draw order, near-one rules and warned F truncation.

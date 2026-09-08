@@ -10,11 +10,19 @@ from benchmark_numerics import measure
 
 from mdanderson_stats import RandlibGenerator
 
+PARAMETERS = {
+    "gamma": {"shape": 2.5, "rate": 1.7},
+    "chi_square": {"df": 5},
+    "noncentral_chi_square": {"df": 5, "noncentrality": 2.3},
+    "f": {"dfn": 5, "dfd": 12},
+    "noncentral_f": {"dfn": 5, "dfd": 12, "noncentrality": 2.3},
+}
+
 
 def samples(name: str, size: int, batch: bool) -> np.ndarray:
     bank = RandlibGenerator()
     method = getattr(bank, name)
-    options = {"shape": 2.5, "rate": 1.7} if name == "gamma" else {}
+    options = PARAMETERS.get(name, {})
     return (
         method(size, **options) if batch else np.array([method(**options)[0] for _ in range(size)])
     )
@@ -22,12 +30,12 @@ def samples(name: str, size: int, batch: bool) -> np.ndarray:
 
 def main():
     results = {}
-    for name in ["normal", "exponential", "gamma"]:
+    for name in ["normal", "exponential", *PARAMETERS]:
         results[name] = measure(
             lambda: samples(name, 10000, True),
             lambda: samples(name, 10000, False),
             "10,000 consecutive default-mode draws; default seeds; "
-            + ("shape=2.5, rate=1.7" if name == "gamma" else "default parameters"),
+            + str(PARAMETERS.get(name, "default parameters")),
         )
     report = dict(
         python=platform.python_version(),
