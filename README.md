@@ -273,3 +273,7 @@ sampling and indexed allocation behavior.
 `RanlistSpecification` and `RanlistSession` add named strata, reusable list
 definitions, batch enrollment with per-stratum counters and prior-patient
 inquiries. Sessions return immutable updates after successful allocation.
+
+RANLIST sessions can now be saved and resumed as validated JSON snapshots, or
+exchanged with the original program through fixed-width parameter files.
+Four complete native Fortran enrollment/inquiry/save workflows match Python.

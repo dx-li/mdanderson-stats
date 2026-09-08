@@ -3,7 +3,7 @@
 Catalog entry 29 is partial. The phrase-to-seed conversion and indexed random
 streams, unrestricted allocation and restricted allocation with fixed/random
 balance points, named list specifications and per-stratum enrollment/inquiry
-are implemented. Saved parameter files, reports and the full workflow audit
+and file persistence are implemented. Reports and the final workflow audit
 remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/29)
@@ -106,7 +106,7 @@ setting. Arrays are read-only. Requested patients may be unsorted, repeated or
 in any array shape. There is no shared patient counter: querying other patients
 or streams cannot change an assignment. This provides indexed assignments;
 enrollment counters are provided by `RanlistSession` below; saved parameter
-files remain pending.
+files are supported by the persistence APIs below.
 
 Default normalization scales weights by their maximum before summing, preventing
 overflow for large finite weights. Cumulative probabilities are double precision,
@@ -239,7 +239,7 @@ be present or all blank within each category, avoiding the source file's blank
 first-name sentinel ambiguity. Empty treatment names default to an unnamed
 entry per weight. The seed pair is authoritative; a phrase is metadata and is
 not silently rehashed. Supply `ranlist_seeds(phrase)` when creating a list from
-a phrase. These specifications do not yet serialize the original file format.
+a phrase. Persistence APIs below serialize these specifications and their session counters.
 
 `RanlistSession` holds one nonnegative enrollment counter per stratum, initially
 zero. `enroll(strata)` processes arrivals in array C order, assigns successive
@@ -249,7 +249,8 @@ unchanged, including when any part of a batch fails. Treatment evaluation is
 batched once per participating stratum rather than repeated for each arrival.
 Counters may be supplied explicitly to resume known state, subject to the
 numerical patient limit below 2^53. This immutable API provides in-process
-state transitions; durable or concurrent enrollment storage is not implemented.
+state transitions; JSON snapshots provide durable file storage, while concurrent
+enrollment coordination is not implemented.
 
 `inquire(patients, strata=...)` accepts only already-enrolled patients and does
 not advance counters, matching WRKLST's inquiry rule. The specification's
@@ -263,5 +264,72 @@ Session tests exercise interleaved and sequential enrollment, resumed counters,
 queries, immutable input snapshots, failures without counter advancement,
 broadcasting, boundary counts and metadata validation. Restricted/unrestricted
 assignments in both modes are compared with the independently native-validated
-kernels. The source counter and inquiry branches were inspected; this is not
-yet an execution comparison of the complete interactive WRKLST program.
+kernels. The persistence validation below additionally executes the complete archived
+program for four enrollment, inquiry and file-update workflows.
+
+
+## Save, resume and exchange parameter files
+
+```python
+from pathlib import Path
+from mdanderson_stats import (
+    load_ranlist_session,
+    ranlist_parameter_text,
+    read_ranlist_parameters,
+    save_ranlist_session,
+)
+
+save_ranlist_session(state, "trial.json")
+resumed = load_ranlist_session("trial.json")
+
+# Original files always use the archived allocation behavior.
+archived = read_ranlist_parameters(Path("original.par").read_text(encoding="ascii"))
+Path("export.par").write_text(ranlist_parameter_text(archived), encoding="ascii")
+```
+
+JSON snapshots use the versioned `mdanderson-stats/ranlist` format and retain
+full numerical precision, every specification field, algorithm mode, computation
+limit and per-stratum counters. Loading validates the complete schema and
+numerical contract. Missing/extra fields, duplicate keys, unknown versions,
+nonfinite weights and invalid counters are rejected. Saving serializes first,
+writes and flushes a temporary file in the destination directory, then atomically
+replaces the destination. A failed replacement removes the temporary file and
+leaves the existing destination intact. The parent directory must exist. These
+files do not coordinate concurrent writers; callers must serialize enrollment
+and storage when sharing a list.
+
+`read_ranlist_parameters(text, max_blocks=10_000)` imports the original ASCII
+records: header, title count and lines, phrase/seed/settings, optional names,
+treatment counts or weights, balance bounds, and patient counters. It retains
+the explicit seed pair rather than recomputing it from the descriptive phrase.
+The imported session uses `legacy=True`. Blank first-name records denote unnamed
+categories. CRLF and omitted trailing padding are accepted; malformed fields,
+truncation, overflow asterisks and extra nonblank records are rejected. The parser
+supports the canonical decimal F6.3 records written by RANLIST, including their
+implied three decimal places when the decimal point is absent. Weights are
+converted to float32, matching the source READ. Unrestricted balance fields
+are parsed and normalized to `(1, 1)` because MKLST did not initialize them and
+they do not affect unrestricted assignment. Non-numeric garbage in those fields
+is rejected. Computation limits are not stored in the original format and must
+be supplied when importing if a larger value is needed.
+
+`ranlist_parameter_text(session, allow_rounding=False)` exports source-compatible
+sessions. Modern sessions must use JSON because the original records cannot
+identify their algorithm. The source's I1 counts must be at most nine; I6 counters
+must be at most 999999. F6.3 weights must fit six characters and remain positive
+after rounding. By default, export rejects any decimal rounding that changes an
+effective float32 weight. `allow_rounding=True` explicitly permits that change;
+it may change subsequent treatment assignments after re-import. It does not
+permit zero weights, overflow or unrepresentable counts. Already representable
+source weights, such as 0.1, can be exported without opting into further rounding.
+Use JSON to preserve precision and all Python options.
+
+`tools/reference_ranlist_parameters.py` generates two native Fortran fixed-width
+record fixtures, including decimal midpoint rounding, then compiles and executes
+the entire unchanged archived program. Four workflows cover named/unnamed strata
+and restricted/unrestricted allocation. Each opens a Python-exported file with
+existing counters, enrolls five interleaved arrivals, inquires about an enrolled
+patient, and exits through WRKLST's save path. Assignments, the inquiry result,
+updated counters and rewritten file bytes all match Python exactly. Tests also
+cover full-precision JSON save/resume, malformed input, explicit rounding and
+real filesystem replacement failure. The Windows 1.2 executable remains untested.
