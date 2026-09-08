@@ -564,7 +564,8 @@
         "RANDLIB binomial sampling: vectorized quantiles with probability-bracket checks and original inversion/BTPE, exact native counts/states, parameter-cache independence and numerical/work guards",
         "RANDLIB Poisson sampling: vectorized quantiles with probability-bracket checks, source inversion/modified-normal rejection, retained Fortran table lifetime, exact native counts/states and transactional limits",
         "RANDLIB negative-binomial sampling: vectorized quantiles and source gamma-Poisson composition, exact native counts/states, explicit failures-before-successes convention and transactional numerical limits",
-        "RANDLIB multinomial sampling: vectorized conditional binomial draws, source early exit and residual-category arithmetic, exact native vectors/states, full probability-vector validation and transactional resource limits"
+        "RANDLIB multinomial sampling: vectorized conditional binomial draws, source early exit and residual-category arithmetic, exact native vectors/states, full probability-vector validation and transactional resource limits",
+        "RANDLIB multivariate-normal sampling: immutable reusable SETGMN parameters, vectorized double-precision draws, C/Fortran 77/95 Cholesky accumulation, native factors/vectors/states and transactional resource limits"
       ],
       "validation": [
         "tests/test_randlib.py",
@@ -590,7 +591,9 @@
         "tests/test_randlib_negative_binomial.py",
         "tests/fixtures/randlib_negative_binomial.json",
         "tests/test_randlib_multinomial.py",
-        "tests/fixtures/randlib_multinomial.json"
+        "tests/fixtures/randlib_multinomial.json",
+        "tests/test_randlib_multivariate_normal.py",
+        "tests/fixtures/randlib_multivariate_normal.json"
       ]
     },
     {

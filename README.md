@@ -332,3 +332,7 @@ and a shared transactional budget for all nested draws.
 RANDLIB multinomial sampling adds batched conditional binomials, full
 probability-vector validation, exact native vectors and generator states,
 and checks of category totals, marginal distributions and covariances.
+
+RANDLIB multivariate-normal sampling adds immutable reusable covariance
+factors, batched matrix transforms, and native C/Fortran 77/95 factor, vector
+and generator-state validation.

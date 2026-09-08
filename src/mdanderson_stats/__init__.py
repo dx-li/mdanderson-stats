@@ -92,6 +92,7 @@ from .pvalue_models import (
     order_statistic_diagnostics,
 )
 from .randlib import RandlibGenerator
+from .randlib_multivariate import RandlibMultivariateNormal
 from .ranges import RangeComparisons, kwrange, range2
 from .ranlist_files import (
     load_ranlist_session,
@@ -144,6 +145,7 @@ from .stukel_scan import scan_stukel
 
 __all__ = [
     "RandlibGenerator",
+    "RandlibMultivariateNormal",
     "UnrestrictedAllocation",
     "RestrictedAllocation",
     "load_ranlist_session",

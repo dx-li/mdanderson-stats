@@ -2,9 +2,9 @@
 
 Catalog entry 27 is partial. The 32-stream generator bank and state controls are
 implemented, along with bounded uniforms, permutations, exponential, normal, gamma,
-central/noncentral chi-square, F, beta, binomial, Poisson, negative-binomial
-and multinomial sampling. Multivariate-normal sampling and the final archive
-coverage/performance audit remain pending.
+central/noncentral chi-square, F, beta, binomial, Poisson, negative-binomial,
+multinomial and multivariate-normal sampling. The final archive
+coverage/performance audit remains pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27)
 lists version 90, modified September 27, 2002. RANDLIB_V90.tar.gz contains
@@ -700,5 +700,75 @@ means, covariances, binomial marginals, scalar/batch identity, draw schedules,
 resource limits and rollback. The benchmark uses 10,000 default observations
 with `n=100, p=[0.2, 0.3, 0.5]` against repeated scalar calls to this Python API.
 
-Multivariate-normal sampling and
-RANDLIB's final archive coverage/performance audit remain pending.
+## Multivariate-normal sampling
+
+```python
+from mdanderson_stats import RandlibGenerator, RandlibMultivariateNormal
+
+model = RandlibMultivariateNormal([1, -2], [[4, -1], [-1, 2]])
+bank = RandlibGenerator()
+vectors = bank.multivariate_normal(model, 1000)
+more_vectors = bank.multivariate_normal(model, 1000)
+
+original = RandlibMultivariateNormal([1, -2], [[4, -1], [-1, 2]], legacy=True, source="fortran95")
+source_vectors = bank.multivariate_normal(original, 1000)
+```
+
+`RandlibMultivariateNormal(mean, covariance, *, legacy=False,
+source="fortran", max_dimension=256)` prepares the SETGMN parameters once.
+It owns immutable snapshots of the mean and lower triangular Cholesky factor;
+inputs are not mutated and later input edits cannot affect the model. Multiple
+models can be interleaved without replacing global parameters. The configurable
+`max_dimension` bounds factorization memory and work; dimensions must be positive.
+
+`bank.multivariate_normal(parameters, size=1, *, max_attempts=None)` returns a
+read-only float64 array of shape `(size, dimension)`. The product
+`size*dimension` must not exceed the bank's `max_draws`. Default mode requires
+a finite, exactly symmetric, positive-definite covariance matrix, computes
+its double-precision lower factor `L`, and produces `Z @ L.T + mean` with
+vectorized inverse-normal draws. One uniform is consumed per component, in
+row-major order. Reusing parameters avoids repeating the factorization.
+Scalar and batched results can differ by final floating-point rounding in
+matrix multiplication, but consume identical generator states.
+
+Legacy mode preserves SETGMN / GENMN's float32 factorization and transform.
+As in the source, only the upper covariance triangle is used; lower entries
+are ignored, including nonfinite lower entries. Nonzero mean/upper-covariance
+values must fit float32 without underflow. Matrices that lose positive
+definiteness after conversion or fail a Cholesky pivot are rejected.
+Singular positive-semidefinite covariances are not supported by either mode.
+
+The `source` choices are `"fortran"` (Fortran 77), `"fortran95"`, and `"c"`,
+and nondefault source selection requires legacy mode. They retain the recorded
+builds' different SDOT accumulation: sequential additions for Fortran 77,
+five-term grouped additions for C, and a prefix plus remaining DOT_PRODUCT
+for Fortran 95. Source normal tables and arithmetic are reused, followed by
+sequential float32 multiplication/addition for each transformed component.
+Legacy factors and vectors are matched exactly after float32 conversion
+against the reference builds; no claim is made about all compiler optimization
+or floating-point contraction settings.
+
+The archived Fortran 95 setter writes to the module's public allocatable
+`param` without allocating it, causing the initial reference call to crash.
+The reference driver allocates that workspace before calling the unchanged
+setter. Python manages storage inside the prepared object and needs no manual
+workspace or initialization. The fixture records this driver requirement.
+
+An empty batch consumes no randomness. `max_attempts` defaults to
+`max(100000, 4*size*dimension)` and includes all rejected source normal draws.
+Budget exhaustion or nonfinite sampled output leaves the bank unchanged.
+Invalid parameters are rejected when constructing the prepared object, before
+sampling can change generator state.
+
+`tools/reference_randlib_multivariate_normal.py` records 240 native cases:
+4,800 vectors and component states plus their packed means/Cholesky factors.
+They include dimensions 1, 2, 3, 7, 8 and 12, positive and negative correlations,
+near-singular covariance, small/large scales, antithetic samples, streams 1 and
+32, and maximum uniforms. Tests compare native factors, vectors and states;
+also verify empirical means/covariances, reconstructed covariance, independent
+immutable models, normal identity, scalar/batch behavior, resource limits,
+parameter errors and rollback. The benchmark prepares one three-dimensional
+model per run and compares 10,000 batched observations with repeated calls
+to the same Python API, reusing the model in both cases.
+
+RANDLIB's final archive coverage/performance audit remains pending.

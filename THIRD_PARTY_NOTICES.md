@@ -435,3 +435,10 @@ RANDOM_MULTINOMIAL’s conditional binomial algorithm. The source cites Luc
 Devroye, Non-Uniform Random Variate Generation, Springer-Verlag, New York
 (1986), page 559. It reuses the binomial algorithm attributed above and
 retains source residual-category and early-exit rules in legacy mode.
+
+RANDLIB multivariate-normal preparation and sampling independently express
+SETGMN / GENMN and the Fortran 95 equivalents. Legacy factorization retains
+the archived LINPACK SPOFA and BLAS SDOT arithmetic; SPOFA credits Cleve
+Moler, University of New Mexico and Argonne National Laboratory (08/14/1978).
+Sampling reuses the attributed normal generator above. Original source and
+executables are not bundled; retained RANDLIB notices remain available.

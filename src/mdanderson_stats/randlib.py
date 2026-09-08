@@ -17,6 +17,7 @@ from ._randlib_normal import legacy_normal
 from ._randlib_poisson import sample_poisson
 from ._randlib_sampling import bounded, raw_batch
 from ._validation import scalar
+from .randlib_multivariate import RandlibMultivariateNormal, sample_multivariate_normal
 from .ranlist_random import _DEFAULT, _M1, _M2, _stream_seeds
 
 
@@ -744,6 +745,32 @@ class RandlibGenerator:
             legacy,
             source,
             budget,
+        )
+        self._current[self._stream - 1] = state
+        return result
+
+    def multivariate_normal(
+        self,
+        parameters: RandlibMultivariateNormal,
+        size: int = 1,
+        *,
+        max_attempts: int | None = None,
+    ) -> NDArray[np.float64]:
+        """Draw vectors from reusable SETGMN parameters, with transactional state."""
+        if not isinstance(parameters, RandlibMultivariateNormal):
+            raise ValueError("parameters must be RandlibMultivariateNormal")
+        size = _integer(size, "size", 0, self._max_draws)
+        draws = size * len(parameters.mean)
+        if draws > self._max_draws:
+            raise ValueError("size * dimension must be <= max_draws")
+        budget = _integer(
+            max(100_000, 4 * draws) if max_attempts is None else max_attempts,
+            "max_attempts",
+            1,
+            2**53 - 1,
+        )
+        result, state = sample_multivariate_normal(
+            self.get_seeds(), self._antithetic[self._stream - 1], size, parameters, budget
         )
         self._current[self._stream - 1] = state
         return result
