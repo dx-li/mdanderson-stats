@@ -159,4 +159,6 @@ audit, validation evidence and documented numerical/solver substitutions.
 
 `SeqBinDesign` constructs SEQBIN beta-posterior sequential or group-sequential
 binomial boundaries and computes exact stopping probabilities and expected sample
-sizes. [SEQBIN coverage](docs/seqbin.md) tracks calibration and reporting work.
+sizes. `seqbin_prior` converts prior mean/size inputs; `seqbin_calibrate` and
+`seqbin_calibrate_tails` choose attainable frequentist error levels.
+[SEQBIN coverage](docs/seqbin.md) tracks remaining reporting workflows.

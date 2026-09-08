@@ -69,6 +69,14 @@ from .schweder import (
 )
 from .schweder_output import plot_schweder, write_schweder_data
 from .seqbin import SeqBinDesign, SeqBinProperties
+from .seqbin_calibration import (
+    SeqBinCalibration,
+    SeqBinCalibrationPoint,
+    SeqBinTailCalibration,
+    seqbin_calibrate,
+    seqbin_calibrate_tails,
+)
+from .seqbin_prior import seqbin_prior
 from .single import SingleDesignPrecision, single_design_precision
 from .single_allocation import SingleAllocation, single_optimize_allocations
 from .single_correlation import SingleDesignCorrelation, single_design_correlation
@@ -89,6 +97,12 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "SeqBinTailCalibration",
+    "seqbin_calibrate_tails",
+    "SeqBinCalibration",
+    "SeqBinCalibrationPoint",
+    "seqbin_calibrate",
+    "seqbin_prior",
     "SeqBinDesign",
     "SeqBinProperties",
     "SingleStudy",

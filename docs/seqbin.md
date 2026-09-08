@@ -1,10 +1,9 @@
 # SEQBIN sequential binomial designs
 
 Catalog entry 54 is **partial**. Bayesian boundary construction and exact
-operating characteristics are implemented. Frequentist calibration to a desired
-significance level, prior mean/effective-sample-size input, compact boundary
-tables, full study reports and interactive
-revision equivalents remain pending.
+operating characteristics, prior mean/effective-sample-size input and frequentist
+calibration are implemented. Compact boundary tables, full study reports and
+interactive revision equivalents remain pending.
 
 Source: [SEQBIN 1.5](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/54),
 Barry W. Brown, distributed in `SEQBIN_V1.5.zip`. Original files remain local
@@ -83,6 +82,80 @@ conditional expectations exclude its documented <=1e-8 fallback region.
 Independent tests check integer-beta/binomial identities at every count,
 threshold equality, strong-prior empty continuation, zero/one true probabilities,
 all paths of six-subject trials, batched probabilities, rare-event conditional
-expectations, input snapshots, and the 10,000-subject boundary limit. Calibration
-and the original full executable's input/report flow are not covered by this
-increment.
+expectations, input snapshots, and the 10,000-subject boundary limit. The original full executable's input/report flow is not covered by these core
+tests. Calibration validation is described below.
+
+
+## Prior inputs
+
+Pass `(0.5, 0.5)` to `SeqBinDesign` for the source's noninformative prior,
+`(1, 1)` for its uniform prior, or any two positive beta shape parameters.
+`seqbin_prior(mean, effective_subjects)` provides the alternative mean/size
+entry convention. By default it returns a=m·N and b=(1−m)·N, so a/(a+b)=m
+and a+b=N.
+
+`conversion="legacy"` instead uses the executable's a=m·(N+1)−0.5 and b=N−a.
+For example, m=0.2 and N=10 gives (1.7,8.3), whose actual beta mean is 0.17.
+This differs from the source prompt's description of its mean input. Some small
+N values produce a zero or negative shape; Python rejects them instead of
+passing an improper beta distribution to the probability routines. Tests verify
+both formulas, the resulting beta mean and mass, and invalid boundary cases.
+
+## Frequentist calibration
+
+```python
+from mdanderson_stats import seqbin_calibrate, seqbin_calibrate_tails
+
+calibration = seqbin_calibrate(
+    50,
+    0.05,
+    prior=[0.5, 0.5],
+    null_probability=0.2,
+    alternative="greater",
+    selection="conservative",
+)
+print(calibration.chosen.significance)
+design = calibration.chosen.design
+print(design.tail_probability)
+
+separate = seqbin_calibrate_tails(50, [0.025, 0.025], prior=[0.5, 0.5])
+print(separate.null_properties.quit_low.sum(), separate.null_properties.quit_high.sum())
+```
+
+`seqbin_calibrate` varies a common posterior tail cutoff and evaluates exact
+forward-recursion rejection probability at the null event probability.
+`selection="conservative"` chooses the largest computed attainable level at most
+the target; `"nearest"` chooses the closest, selecting the smaller level on a
+tie. A two-sided call calibrates total rejection probability, not equal tail errors.
+
+The result contains `chosen`, `lower` and `upper` calibration points, each with
+its complete design and achieved `significance`, plus the requested target,
+selection rule and number of distinct design evaluations. If the allowed cutoff
+range lies entirely below the target, `upper` is None. If it lies entirely above,
+`lower` is None; conservative selection then raises, while nearest chooses the
+least-rejecting endpoint. `tail_bounds` defaults to (1e-6, 1−1e-6), the original
+FIND_STOP search range, and may be changed explicitly.
+
+Unlike the original continuous root finder with finite absolute/relative stopping
+tolerances, the Python search bisects ordered binary64 cutoff bit patterns until
+the two bracketing cutoffs are adjacent. Thus it does not interpolate an
+unattainable significance inside a jump. Repeated integer boundary configurations
+reuse their evaluated rejection probabilities. This is a discrete search over the
+computed floating-point posterior rules; it is not a claim of exact real-number
+beta evaluation. For original endpoint clamping, pass `legacy_bounds=True`.
+
+`seqbin_calibrate_tails` accepts [low, high] target levels. It separately calibrates
+the two one-sided designs, combines their cutoffs, and returns both calibration
+results, the combined design, and its actual null operating characteristics.
+Opposite-boundary stopping can reduce the achieved error on each side below its
+one-sided value. The source's separate-tail dialog assigns `cstop_lo` on both
+sides even after requesting nearest selection. Python honors the requested
+selection; choose conservative to reproduce that source behavior.
+
+Twelve native FIND_STOP fixtures cover all alternatives, sequential/group looks,
+and conservative/nearest choices for 50 subjects, a Beta(0.5,0.5) prior and null
+probability 0.2. Achieved bracket levels agree; cutoffs are compared at the source
+root finder's precision. Separate exhaustive six-subject tests enumerate rational
+beta/binomial tail thresholds and all outcome paths to verify every attainable
+level independently. Additional tests check out-of-range targets, ties, separate
+tail composition, invalid inputs and prior conversion.
