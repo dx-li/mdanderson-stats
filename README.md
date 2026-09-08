@@ -137,5 +137,6 @@ uniform parameter priors using batched quadrature.
 with an explicit option to reproduce SINGLE's original covariance scaling.
 `single_prior_parameters` converts marginal moments and latent correlations,
 with exact and original log-normal conversion options.
+`single_design_correlation` supplies reference-design prior correlations.
 [SINGLE coverage](docs/single.md) tracks
 the remaining prior-integration and optimization workflows.

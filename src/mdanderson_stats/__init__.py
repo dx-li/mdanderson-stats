@@ -69,6 +69,7 @@ from .schweder import (
 )
 from .schweder_output import plot_schweder, write_schweder_data
 from .single import SingleDesignPrecision, single_design_precision
+from .single_correlation import SingleDesignCorrelation, single_design_correlation
 from .single_normal import SingleNormalCriterion, single_normal_criterion
 from .single_prior import single_prior_parameters
 from .single_two_sample import SingleTwoSamplePrecision, single_two_sample_precision
@@ -81,6 +82,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "SingleDesignCorrelation",
+    "single_design_correlation",
     "single_prior_parameters",
     "SingleNormalCriterion",
     "single_normal_criterion",

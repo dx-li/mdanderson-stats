@@ -1111,7 +1111,8 @@
         "single_two_sample_precision: fixed two-sample point-prior location or slope differences with the other parameter shared; joint information and contrast variance/standard deviation",
         "single_uniform_criterion: independent uniform-prior arithmetic averaging of one- or two-sample criteria using tensor Gauss-Legendre quadrature, with fixed-parameter support",
         "single_normal_criterion: correlated latent-normal/log-normal reciprocal criterion averaging with Hermite quadrature, semidefinite covariance and explicit original quarter-covariance scaling",
-        "single_prior_parameters: raw marginal moment input with exact or original ALNTON log-normal conversion and validated latent correlations"
+        "single_prior_parameters: raw marginal moment input with exact or original ALNTON log-normal conversion and validated latent correlations",
+        "single_design_correlation: DSTCOV reference-design covariance and correlation for one or two samples, with explicit model evaluation parameters"
       ],
       "validation": [
         "tests/test_single.py",
@@ -1124,6 +1125,7 @@
         "tests/fixtures/single_uniform.json",
         "tools/reference_single_uniform.py",
         "tests/test_single_prior.py",
+        "tests/test_single_correlation.py",
         "tests/test_single_normal.py",
         "tests/fixtures/single_normal.json",
         "tools/reference_single_normal.py",

@@ -3,7 +3,7 @@
 Catalog entry 55 is partial. Fixed one- and two-sample designs under point priors are
 implemented for logistic and log-log models, with linear or centered predictors.
 Independent uniform and correlated normal/log-normal prior criterion averaging
-are also implemented. Design-derived prior correlations, design optimization,
+and design-derived prior correlations are implemented. Design optimization,
 dose-point addition and original reporting workflows remain pending.
 
 ```python
@@ -211,7 +211,7 @@ a first-order approximation rather than exact log-normal moment matching. Use
 `conversion="exact"` default matches log-normal marginal means and variances;
 `conversion="legacy"` reproduces ALNTON. Correlations always describe latent normal
 coordinates, including when the marginal means and variances are supplied on the
-raw scale. The source's design-derived prior-correlation option remains pending.
+raw scale. `single_design_correlation` provides the reference-design correlation heuristic.
 
 The default node scaling correctly reproduces the supplied latent covariance.
 The original RECHRM divides physicists' Hermite nodes by √2, then TORAW applies
@@ -263,3 +263,28 @@ conversion works in log space to avoid overflowing the variance-to-squared-mean
 ratio. Tests verify raw moments through quadrature, the original ALNTON algebra,
 latent correlations, fixed parameters and extreme moment ratios. These helper
 checks use mathematical identities; they do not execute native ALNTON.
+
+
+## Reference-design prior correlations
+
+`single_design_correlation(dose_bounds, parameters, ...)` constructs the DSTCOV
+reference design and converts its inverse expected information to correlations.
+Group 1 receives 50 subjects at each interior third of the dose interval. With
+`comparison="location"` or `"slope"`, group 2 receives two 50-subject allocations
+at the same midpoint. This follows the executable source despite its introductory
+comment describing an evenly spaced design.
+
+The result contains dose/subject vectors, covariance and correlation. The latter
+can be passed to `single_prior_parameters`. Model/form/comparison conventions and
+parameter batching follow the fixed-design APIs. Parameters are actual model
+values, so callers using log-normal priors explicitly choose the evaluation point.
+These correlations are a prior-elicitation heuristic, not an estimate from observed
+data. Explicit evaluation parameters avoid the original CGTCOV/CCRIT dependency
+on mutable prior-transformation state.
+
+Covariance uses triangular solves. Singular designs raise errors: for example,
+the second group's slope cannot be identified from a zero midpoint in linear form.
+Tests verify closed-form one/two-sample logistic covariances, an independent 2×2
+inverse-correlation identity for both models, batching and prior-input composition.
+These tests do not execute native DSTCOV or CGTCOV; response information is
+separately checked against original routines.
