@@ -59,6 +59,7 @@ from .nonparametric_testing import NonparametricTestingResult, nonparametric_tes
 from .numerics import invert_monotone, normal_tails
 from .onesample import OneSampleTest, binomial_test, poisson_test
 from .onesample_workflow import OneSampleResult, one_sample
+from .pehaz import PiecewiseHazard, pehaz
 from .pvalue_models import (
     OrderStatisticDiagnostics,
     clustered_pvalues,
@@ -104,6 +105,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "PiecewiseHazard",
+    "pehaz",
     "MuhazFixed",
     "muhaz_fixed",
     "plot_cuminc",

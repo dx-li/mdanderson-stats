@@ -1,9 +1,9 @@
 # MUHAZ kernel hazard estimation
 
 Catalog entry 49 is **partial**. The fixed-bandwidth kernel calculation is
-implemented; automatic global/local/nearest-neighbor bandwidth selection,
-MSE diagnostics, piecewise-exponential and Kaplan–Meier-type estimates,
-high-level summaries and plots remain pending.
+implemented, together with piecewise-exponential estimates and their numerical
+reports. Automatic global/local/nearest-neighbor bandwidth selection, MSE
+diagnostics, Kaplan–Meier-type estimates, kernel summaries and plots remain pending.
 
 Source: [MUHAZ version 1](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/49),
 distributed as `MUHAZ_V1.tar.gz`. Its archive contains `muhaz.f`, the S interface
@@ -85,3 +85,63 @@ intermediate memory instead of allocating the entire grid-by-subject matrix.
 For M grid points and D distinct event times (individual events in legacy mode),
 smoothing takes O(MD) work after sorting; working storage is O(N+D+M) plus a
 bounded number of grid rows by D. No measured speedup over Fortran is claimed.
+
+## Piecewise-exponential estimates
+
+```python
+from mdanderson_stats import pehaz
+
+bins = pehaz([0.5, 1, 2, 2.5, 3], width=1, bounds=(0, 2.5))
+print(bins.report())
+# bins.write_report("piecewise-hazard.tsv", digits=17)
+```
+
+`pehaz` calculates constant hazard in each bin as the number of events divided
+by total person-time. All subjects are observed from time zero until their
+recorded event/censoring time; delayed entry is not an input. `delta` is optional
+and defaults to all events. Bounds default to zero and maximum follow-up. The
+result retains requested bounds, width, actual bin cuts, hazard, event counts,
+left-endpoint risk counts and person-time in read-only arrays. Bin summaries
+and UTF-8 file reports expose these sufficient statistics without refitting.
+
+With `width=None`, the source formula is `(right-left)/(8*events**0.2)`, using all
+input events. An all-censored dataset therefore requires explicit width rather
+than inventing a default. Every width must be positive and finite; bounds must
+have positive length. Widths too small to produce distinct floating-point cuts
+are rejected.
+
+Default bins are left-closed/right-open, except that the final bin includes its
+right endpoint and stops exactly at the requested maximum. An event at an
+interior cut belongs to the bin starting there. Risk counts include subjects
+ending at the left cut, even though those subjects contribute zero person-time
+to that bin. Subjects continuing beyond the final cut contribute exposure up to
+that cut. Data before the requested lower bound contribute neither events nor
+exposure within the analysis window.
+
+`legacy=True` reproduces the archived `pehaz` bin conventions: equal-width bins
+can extend beyond the requested maximum, and every right endpoint is excluded.
+Consequently, events beyond the requested maximum can enter an overshooting
+last bin, while an event exactly on the final cut is omitted. These behaviors
+are documented compatibility choices rather than the default.
+
+A bin with no exposure and no events has NaN hazard, printed as NA because its
+hazard is unidentifiable. Events with zero exposure yield positive infinity,
+representing an unbounded likelihood. A finite hazard exceeding floating-point
+range raises a numerical error; it is not confused with the zero-exposure case.
+The data object retains these distinctions. Plotting will be added with the
+remaining MUHAZ display workflows.
+
+After sorting, binary searches locate each bin's observations and cumulative
+event counts supply totals. Person-time is accumulated from disjoint slices of
+ending observations plus the full-bin exposure of continuing subjects. This
+uses O(N+B) storage and O(N log N + B log N + N + B) work for N observations and
+B bins, rather than an N-by-B matrix. Local time differences avoid cancellation
+from subtracting large cumulative follow-up sums.
+
+`tools/reference_pehaz.py` executes the unchanged archived S function in R;
+10 fixtures cover censoring, ties, endpoint events, nonzero lower bounds,
+overshooting bins, no-exposure bins and automatic width. Source/extraction/driver
+hashes and R version record provenance. Independent tests check person-time
+conservation, individual bin counts, final-boundary semantics, permutation and
+time scaling, precision at large time origins, extreme width/domain ratios,
+report round trips, undefined/infinite hazards and invalid inputs.

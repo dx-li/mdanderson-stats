@@ -221,3 +221,8 @@ Fortran routines carry their copyright notice, with later modifications credited
 to Dan M. Serachitopol. No original source or binaries are incorporated; unchanged
 HAZDEN/IBNDS/KERNEL are used only in a local reference build. Numerical fixture
 provenance is recorded in `tests/fixtures/muhaz-fixed.json`.
+
+`pehaz.py` independently calculates piecewise-exponential event/person-time
+ratios. The archived S function is executed unchanged in R only for local
+validation; its source/extraction/driver hashes and runtime are recorded in
+`tests/fixtures/pehaz.json`. No archived S code is bundled.
