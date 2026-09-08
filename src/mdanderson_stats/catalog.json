@@ -855,9 +855,17 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "KStageBinomial: cached surviving-path coefficients, vectorized inclusive stage-ordered tails and equal-tailed KSB1CI confidence intervals",
+        "Cumulative design entry with inclusive low/high stopping boundaries, repeated confidence/observation changes, readable design/results and UTF-8 report files"
+      ],
+      "validation": [
+        "tests/test_kstage_binomial.py",
+        "tests/fixtures/ksb1ci.json",
+        "tools/reference_ksb1ci.py",
+        "docs/ksb1ci.md"
+      ]
     },
     {
       "id": 48,

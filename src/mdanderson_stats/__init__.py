@@ -19,6 +19,7 @@ from .intervals import (
     bp1ci_poisson_interval,
     poisson_interval,
 )
+from .kstage_binomial import KStageBinomial
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
 from .multiplicity import (
@@ -54,6 +55,7 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "KStageBinomial",
     "BetaMixture",
     "BetaMixtureBootstrap",
     "BetaMixtureFit",

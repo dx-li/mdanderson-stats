@@ -88,3 +88,15 @@ from the main program and output module as Python calls. No original source or
 supporting distribution-library code is bundled. Archive and source hashes and
 the reference-only success-status initialization patch are recorded in
 `tests/fixtures/onesample.json` and `tools/reference_onesample.py`.
+
+## KSB1CI
+
+`kstage_binomial.py` independently implements the surviving-path probability
+recurrence, stage ordering and confidence inversion described by Barry W. Brown's
+KSB1CI source and manual, with Python design/report interfaces. The original
+[legalities and warranty notice](notices/mdanderson-ksb1ci-LEGALITIES.txt) is preserved;
+this project does not relicense the original work. Those terms permit
+noncommercial source use and require written permission for commercial source use.
+Original numerical routines are extracted only for a local reference build; no
+original Fortran or binary is bundled. Reference hashes and compiler provenance
+appear in `tests/fixtures/ksb1ci.json`.

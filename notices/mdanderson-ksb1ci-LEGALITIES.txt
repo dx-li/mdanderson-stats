@@ -1,0 +1,67 @@
+                          Legalities of Use of KSB1CI
+     
+     
+     This code is copyright 1990 for:
+     
+                    The University of Texas M. D. Anderson Cancer Center
+                    1515 Holcombe Boulevard
+                    Houston, TX 77096
+     
+     Correspondence concerning the code should be addressed to:
+     
+                    Barry W. Brown
+                    Chief, Section of Computer Science
+                    Department of Biomathematics, Box 237
+     
+     at the above address.
+     
+     
+         We  want to make  this  program as widely  available  as possible.
+     Hence, executable  code derived  from the  source provided, the source
+     itself,  and the accompanying documentation  may  be freely copied and
+     distributed  provided  that this   copyright section accompanies  such
+     copies.  We encourage the distribution of this code on bulletin boards
+     and as shareware.
+     
+         Modifications and improvements to the code can similarly be freely
+     copied and distributed.  Barry Brown  would appreciate  a copy of  any
+     such improvements for incorporation into later versions of KSB1CI.
+
+
+
+
+
+     
+         Source  code   may be extracted   and used  for any non-commercial
+     purpose.  Non-commercial means that at most  a modest distribution fee
+     is charged, as shareware.  We would appreciate acknowledgment  of such
+     use of our code.
+     
+         Commercial use of the source code requires written permission from
+     the Department of Biomathematics at the above address.  Our  policy is
+     generally to grant such   permission  provided appropriate  credit  is
+     given to us in the documentation.
+
+
+
+
+
+     
+                                  NO WARRANTY
+     
+         WE PROVIDE ABSOLUTELY NO WARRANTY  OF ANY KIND EITHER EXPRESSED OR
+     IMPLIED,  INCLUDING BUT NOT   LIMITED  TO, THE IMPLIED  WARRANTIES  OF
+     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK
+     AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS  WITH YOU.  SHOULD
+     THIS PROGRAM  PROVE DEFECTIVE, YOU  ASSUME THE  COST  OF ALL NECESSARY
+     SERVICING, REPAIR OR CORRECTION.
+     
+         IN NO EVENT SHALL THE UNIVERSITY OF TEXAS OR ANY  OF ITS COMPONENT
+     INSTITUTIONS INCLUDING  M. D.  ANDERSON HOSPITAL BE  LIABLE TO YOU FOR
+     DAMAGES, INCLUDING  ANY LOST PROFITS,  LOST MONIES, OR  OTHER SPECIAL,
+     INCIDENTAL  OR CONSEQUENTIAL  DAMAGES  ARISING OUT   OF  THE  USE   OR
+     INABILITY TO USE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA OR
+     ITS ANALYSIS  BEING RENDERED  INACCURATE  OR LOSSES SUSTAINED BY THIRD
+     PARTIES) THE PROGRAM.
+     
+     (Above NO WARRANTY modified from the GNU NO WARRANTY statement.)

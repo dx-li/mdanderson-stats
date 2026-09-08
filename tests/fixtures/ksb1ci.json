@@ -1,0 +1,691 @@
+{
+  "source": "KSB1CI Version 1.1; numerical routines extracted unchanged",
+  "archive_sha256": "1ec64cbdcfe40d31a6b537d0451e93fdbb335de601cd897bddd26de5eff17aea",
+  "source_sha256": "343d0ee78c89af0fa6b94b5ab7cabe68c9cd2868566d15e77e09b590b03e4ede",
+  "numerical_sha256": "83bcd6d84d91d4d606ad339df5568c177d501d579ad8f09525c46124927cef58",
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "flags": [
+    "-O2",
+    "-std=legacy"
+  ],
+  "cases": [
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 0,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.2901059091091156,
+      "lower": 0.0,
+      "upper": 0.10872401297092438
+    },
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 0,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 0.011529209092259407,
+      "lower": 0.0,
+      "upper": 0.1684090793132782
+    },
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 0,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 3.486783431427831e-11,
+      "lower": 0.0,
+      "upper": 0.23270642757415771
+    },
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 5,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.9991302490234375,
+      "lower": 0.12690141797065735,
+      "upper": 0.41491538286209106
+    },
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 5,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 0.8042078018188477,
+      "lower": 0.08654554188251495,
+      "upper": 0.4910210967063904
+    },
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 5,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 4.294000245863572e-05,
+      "lower": 0.058329444378614426,
+      "upper": 0.5597289800643921
+    },
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 10,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.9999988079071045,
+      "lower": 0.33818578720092773,
+      "upper": 0.6618138551712036
+    },
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 10,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 0.999436616897583,
+      "lower": 0.2719815969467163,
+      "upper": 0.7280174493789673
+    },
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 10,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 0.04796191304922104,
+      "lower": 0.21777236461639404,
+      "upper": 0.7822772264480591
+    },
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 19,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.9999988079071045,
+      "lower": 0.8190145492553711,
+      "upper": 0.9947707653045654
+    },
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 19,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 1.0,
+      "lower": 0.7512427568435669,
+      "upper": 0.9987596273422241
+    },
+    {
+      "sizes": [
+        20
+      ],
+      "low": [],
+      "high": [],
+      "stage": 1,
+      "events": 19,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 0.9992015957832336,
+      "lower": 0.6828345060348511,
+      "upper": 0.9997355937957764
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 1,
+      "events": 2,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.9522214531898499,
+      "lower": 0.03868225961923599,
+      "upper": 0.3371894955635071
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 1,
+      "events": 2,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 0.44805100560188293,
+      "lower": 0.01780235767364502,
+      "upper": 0.4281512200832367
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 1,
+      "events": 2,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 2.530718302296009e-05,
+      "lower": 0.007647236343473196,
+      "upper": 0.512299656867981
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 2,
+      "events": 6,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.9520334601402283,
+      "lower": 0.07946521788835526,
+      "upper": 0.302698016166687
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 2,
+      "events": 6,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 0.40882256627082825,
+      "lower": 0.04625999927520752,
+      "upper": 0.3727412819862366
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 2,
+      "events": 6,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 1.0025114960399151e-07,
+      "lower": 0.02566327527165413,
+      "upper": 0.4371888339519501
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 3,
+      "events": 3,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.7924880981445312,
+      "lower": 0.03205845132470131,
+      "upper": 0.17710036039352417
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 3,
+      "events": 3,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 0.06100418046116829,
+      "lower": 0.017944667488336563,
+      "upper": 0.2414574921131134
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 3,
+      "events": 3,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 4.782975437933601e-08,
+      "lower": 0.00977548398077488,
+      "upper": 0.3173685669898987
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 3,
+      "events": 5,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.8952627182006836,
+      "lower": 0.05437588691711426,
+      "upper": 0.2040005326271057
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 3,
+      "events": 5,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 0.10947883129119873,
+      "lower": 0.03419938683509827,
+      "upper": 0.26108434796333313
+    },
+    {
+      "sizes": [
+        14,
+        14,
+        14
+      ],
+      "low": [
+        0,
+        1
+      ],
+      "high": [
+        3,
+        4
+      ],
+      "stage": 3,
+      "events": 5,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 4.782975793204969e-08,
+      "lower": 0.02073478139936924,
+      "upper": 0.32548120617866516
+    },
+    {
+      "sizes": [
+        3,
+        4,
+        5
+      ],
+      "low": [
+        -1,
+        1
+      ],
+      "high": [
+        3,
+        -1
+      ],
+      "stage": 2,
+      "events": 2,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.9937059283256531,
+      "lower": 0.0788351446390152,
+      "upper": 0.5961552858352661
+    },
+    {
+      "sizes": [
+        3,
+        4,
+        5
+      ],
+      "low": [
+        -1,
+        1
+      ],
+      "high": [
+        3,
+        -1
+      ],
+      "stage": 2,
+      "events": 2,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 0.851967990398407,
+      "lower": 0.036681290715932846,
+      "upper": 0.7095617055892944
+    },
+    {
+      "sizes": [
+        3,
+        4,
+        5
+      ],
+      "low": [
+        -1,
+        1
+      ],
+      "high": [
+        3,
+        -1
+      ],
+      "stage": 2,
+      "events": 2,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 0.028795506805181503,
+      "lower": 0.01582542434334755,
+      "upper": 0.7970037460327148
+    },
+    {
+      "sizes": [
+        3,
+        4,
+        5
+      ],
+      "low": [
+        -1,
+        1
+      ],
+      "high": [
+        3,
+        -1
+      ],
+      "stage": 3,
+      "events": 4,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.9993926286697388,
+      "lower": 0.1606285572052002,
+      "upper": 0.5642033815383911
+    },
+    {
+      "sizes": [
+        3,
+        4,
+        5
+      ],
+      "low": [
+        -1,
+        1
+      ],
+      "high": [
+        3,
+        -1
+      ],
+      "stage": 3,
+      "events": 4,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 0.9264882802963257,
+      "lower": 0.10305406153202057,
+      "upper": 0.658155083656311
+    },
+    {
+      "sizes": [
+        3,
+        4,
+        5
+      ],
+      "low": [
+        -1,
+        1
+      ],
+      "high": [
+        3,
+        -1
+      ],
+      "stage": 3,
+      "events": 4,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 0.011264453642070293,
+      "lower": 0.06456658244132996,
+      "upper": 0.736352801322937
+    },
+    {
+      "sizes": [
+        10,
+        10
+      ],
+      "low": [
+        -1
+      ],
+      "high": [
+        -1
+      ],
+      "stage": 2,
+      "events": 5,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.9991298317909241,
+      "lower": 0.12690100073814392,
+      "upper": 0.4149152338504791
+    },
+    {
+      "sizes": [
+        10,
+        10
+      ],
+      "low": [
+        -1
+      ],
+      "high": [
+        -1
+      ],
+      "stage": 2,
+      "events": 5,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 0.804206371307373,
+      "lower": 0.08654512465000153,
+      "upper": 0.49102097749710083
+    },
+    {
+      "sizes": [
+        10,
+        10
+      ],
+      "low": [
+        -1
+      ],
+      "high": [
+        -1
+      ],
+      "stage": 2,
+      "events": 5,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 4.2939867853419855e-05,
+      "lower": 0.05832989513874054,
+      "upper": 0.5597288608551025
+    },
+    {
+      "sizes": [
+        10,
+        10
+      ],
+      "low": [
+        -1
+      ],
+      "high": [
+        -1
+      ],
+      "stage": 2,
+      "events": 15,
+      "probability": 0.06,
+      "confidence": 0.8,
+      "cdf": 0.9999983906745911,
+      "lower": 0.5850834846496582,
+      "upper": 0.8730983734130859
+    },
+    {
+      "sizes": [
+        10,
+        10
+      ],
+      "low": [
+        -1
+      ],
+      "high": [
+        -1
+      ],
+      "stage": 2,
+      "events": 15,
+      "probability": 0.2,
+      "confidence": 0.95,
+      "cdf": 0.999998152256012,
+      "lower": 0.5089706182479858,
+      "upper": 0.9134036302566528
+    },
+    {
+      "sizes": [
+        10,
+        10
+      ],
+      "low": [
+        -1
+      ],
+      "high": [
+        -1
+      ],
+      "stage": 2,
+      "events": 15,
+      "probability": 0.7,
+      "confidence": 0.99,
+      "cdf": 0.7624900937080383,
+      "lower": 0.4401955306529999,
+      "upper": 0.9416664838790894
+    }
+  ]
+}

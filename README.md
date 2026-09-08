@@ -101,3 +101,7 @@ ONESAMPLE's `binomial_test` and `poisson_test` return inclusive one-sided p-valu
 with explicit compatibility cutoffs. `one_sample` exposes all four test/interval
 operations, both binomial entry modes, and readable reports with file output. See
 [ONESAMPLE coverage and validation](docs/onesample.md).
+
+`KStageBinomial` implements KSB1CI confidence intervals for binomial trials with
+early stopping, including vectorized stage-ordered tails and design reports.
+See [KSB1CI definitions, validation and examples](docs/ksb1ci.md).
