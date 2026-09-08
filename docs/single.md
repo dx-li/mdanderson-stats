@@ -5,8 +5,8 @@ implemented for logistic and log-log models, with linear or centered predictors.
 Independent uniform and correlated normal/log-normal prior criterion averaging
 and design-derived prior correlations are implemented. Fixed-dose, one- and two-sample
 point- and uncertain-prior allocation optimization is implemented, along with joint
-dose/allocation optimization for a fixed number of dose entries. Automatic
-dose-point addition and complete model/prior workflow reporting remain pending.
+dose/allocation optimization and automatic dose-point addition. Complete model/prior
+workflow reporting remains pending.
 Optimized numerical design reports are available.
 
 ```python
@@ -340,7 +340,7 @@ Tests reproduce the supplied SINGLE allocation/SD example, compare two-point
 solutions to analytic optimal splits, verify zero allocations at inferior doses,
 and exercise scaling, permutation, initialization, failure reporting and zero
 slopes. The original allocation optimizer itself is not compiled in these tests.
-Automatic support-point addition remains pending.
+`single_search_design` adds the incremental support-point search.
 
 
 ## Allocation optimization under uncertain priors
@@ -503,3 +503,59 @@ not serialize model/prior configuration or constitute a complete reproducible
 study file; callers must retain their optimization inputs separately. Tests parse
 one/two-sample optimization reports back into values and check totals, ordering,
 zero counts, explicit replacement and I/O errors.
+
+
+## Automatic dose-point search
+
+`single_search_design(parameters, dose_bounds, ...)` begins with two dose entries
+per group, scans candidate starting doses, jointly optimizes them, then adds one
+entry per group until the improvement rule stops the search or `max_doses` is
+reached. It supports the same models, priors, comparisons and objectives as the
+joint optimizer. Returned `best` is a `SingleOptimizedDesign`, including its report
+methods. `steps` retains every optimized stage, its relative improvement and
+whether it was accepted.
+
+```python
+from mdanderson_stats import single_search_design
+
+search = single_search_design(
+    [[-3, 1], [0, 1], [3, 1]],
+    [-8, 8],
+    prior_weights=[1 / 3] * 3,
+    criterion="slope",
+    max_doses=4,
+)
+print(search.stop_reason, search.best.doses, search.best.value)
+```
+
+The default grid has 10 points including endpoints (`scan_points` supports 2–20).
+Initial seeds are all distinct grid pairs with equal allocations. As in DQSCAN,
+two-sample seeds initially use the same pair in both groups. Extension seeds append
+a common grid point in each group; joint optimization subsequently permits the
+groups' doses and allocations to differ. Seeds assign the minimum positive group
+allocation divided by 1, 2, 4, 8, 16, 32 or 64 to each new entry and proportionally
+reduce previous group counts, preserving the experiment's total.
+
+These seeds reflect DIQSCN's halving scheme, with explicit differences: all seven
+fractions are scored, existing zero counts are excluded from the minimum, group
+totals are preserved under the shared-total API, and extensions start from the
+previous jointly optimized design. The original also retains an equal-allocation
+intermediate design and may stop scanning fractions early. Feasible seeds are
+ranked by initial criterion and passed to the local optimizer until one converges.
+This is a deterministic heuristic, not an exhaustive search of all local optima.
+
+An extension is accepted when `(previous − candidate) / previous` is at least
+`relative_improvement` (default 0.01, matching SINGLE). Otherwise the previous
+design remains best and the rejected larger design stays in `steps`. The reasons
+are `relative_improvement` or `max_doses`; the latter limit is 2–10 entries **per
+group**, including zero allocations and coincident entries. `scan_evaluations`,
+`infeasible_seeds` and `failed_local_starts` expose attempted work. A stage with no
+feasible seeds or no successful local optimization raises an error; it is not
+reported as convergence. A finite grid and local stopping rule do not prove that
+no larger or differently initialized design would improve the criterion.
+
+Tests reproduce the printed two-dose quantile optimum and reject a negligible
+third-dose improvement, accept substantial improvements for a broad three-node
+prior, retain a better but sub-threshold rejected design in history, verify
+one/two-sample totals and limits, independently recompute criteria, and check
+failed-search behavior. The original search executable is not run by these tests.
