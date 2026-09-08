@@ -220,3 +220,6 @@ linked selection, including unreached quartiles and all-censored samples.
 
 `ExploratoryTable` supplies EXPSURV numeric file round trips and stable aligned
 sorting; `generate_exponential_samples` supplies reproducible two-group examples.
+
+`generate_exploratory_data` supplies EXPSURV covariates, arrival times and
+follow-up with sample-standardized survival and study-end censoring.

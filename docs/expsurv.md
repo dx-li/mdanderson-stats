@@ -3,8 +3,9 @@
 Catalog entry 28 is partial. The survival-curve and inverse-survival core is
 implemented, together with interactive cut-point exploration, model alignment
 and linked scatterplot/survival, event-chart and censored-box views. Named
-table input/output and two-sample exponential generation are available. GEN-DATA
-covariate/arrival simulation and remaining interaction behavior are still pending.
+table input/output, two-sample exponential examples and GEN-DATA covariate/arrival
+simulation are available. Remaining interaction behavior and the full coverage
+audit are still pending.
 
 The source is EXPSURV version 1 from the MD Anderson catalog, distributed as
 `EXPSURV_V1.tar.gz`. It contains an XLISP-STAT source file, a TeX user manual and
@@ -325,4 +326,50 @@ and single-column files, malformed input, stable ties and input immutability.
 Generator checks cover replay, state advancement, rate scaling, no/all censoring,
 invalid-input state preservation, and fixed-seed large samples against independent
 analytic moments. These are mathematical and integration checks, not archived
-XLISP-STAT runs. GEN-DATA's separate covariate/arrival mechanism remains pending.
+XLISP-STAT runs.
+
+
+## Covariate and arrival simulation
+
+```python
+from mdanderson_stats import generate_exploratory_data, plot_event_scatter
+
+data = generate_exploratory_data(200, rng=12)
+view = plot_event_scatter(
+    data.column("arrive"),
+    data.column("length"),
+    data.column("status"),
+    data.values[:, 3:],
+    labels=["x", "y", "z"],
+)
+```
+
+`generate_exploratory_data(n, rng=...)` implements GEN-DATA. It draws independent
+uniform x and y, sets z=x*y, and draws latent exponential survival with rate
+10*x+y. Lifetimes are divided by their sample standard deviation. Independent
+arrival times are uniform on [0,2); observed follow-up ends at death or the fixed
+study close at 2. Deaths exactly at 2 are censored, matching the executable source's
+strict comparison. The returned `ExploratoryTable` contains `length`, `arrive`,
+`status`, `x`, `y`, `z`, stably sorted by length with all columns aligned.
+
+The sample standard deviation uses denominator n−1, verified in
+[XLISP-STAT stats.lsp](https://github.com/jhbadger/xlispstat/blob/f1bea6053df658ee48612bf1f63c35de99e2c649/src/lsp/stats.lsp#L146).
+NumPy uses the corresponding `ddof=1`. To avoid overflow from squaring large
+latent lifetimes, the implementation first divides them by their maximum and
+then divides by that scaled sample's standard deviation. This yields the same
+normalized lifetimes mathematically. Degenerate or nonfinite lifetimes raise an
+explicit error. At least two observations are required. Rescaling by a statistic
+of the whole sample makes the normalized lifetimes dependent; these are the
+source's exploratory examples, not an independent exponential sample after
+normalization.
+
+The RNG contract is the same as the two-sample generator: explicit seed or
+Generator, with NumPy streams replacing XLISP-STAT streams. Uniform generators
+may produce zero; a generated zero rate fails rather than fabricating a lifetime.
+No original interpreter or random sequence is bundled or claimed to have run.
+
+Tests compare normalization and censoring to independent scalar calculations,
+check invariance under an enormous latent scale change, exercise the exact
+study-close boundary, reject undefined sample variation, verify seeded replay,
+uniform covariate moments, z=x*y, censoring endpoints, immutable rows and aligned
+sorting, and preserve RNG state on invalid sample sizes.

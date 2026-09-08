@@ -1,4 +1,4 @@
-"""EXPSURV two-sample exponential examples with explicit random state."""
+"""EXPSURV exponential and covariate examples with explicit random state."""
 
 import numpy as np
 
@@ -49,3 +49,44 @@ def generate_exponential_samples(
             ExploratoryTable(("time", "status"), np.column_stack((time, status))).cosort("time")
         )
     return result[0], result[1]
+
+
+def _study_followup(lifetime: np.ndarray, arrival: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Scale by sample SD without squaring potentially extreme latent lifetimes."""
+    if not np.all(np.isfinite(lifetime)) or lifetime.max() <= 0:
+        raise RuntimeError("latent lifetimes must be finite with positive variation")
+    relative = lifetime / lifetime.max()
+    deviation = np.std(relative, ddof=1)
+    if not np.isfinite(deviation) or deviation <= 0:
+        raise RuntimeError("latent lifetimes have no representable sample standard deviation")
+    death = arrival + relative / deviation
+    return np.minimum(2, death) - arrival, (death < 2).astype(float)
+
+
+def generate_exploratory_data(
+    n: int,
+    *,
+    rng: int | np.random.Generator | None = None,
+) -> ExploratoryTable:
+    """Generate EXPSURV GEN-DATA covariates, arrivals and study-end follow-up.
+
+    X,Y are independent uniform draws, Z=X*Y. Latent survival has rate 10X+Y,
+    then is divided by its sample SD. Arrival is uniform on [0,2); deaths at
+    or after 2 are censored at 2. Returns duration-sorted aligned columns.
+    NumPy streams replace XLISP-STAT; no source seed equivalence is promised.
+    """
+    size = count(n, "n")
+    if size.ndim != 0 or size < 2:
+        raise ValueError("n must be an integer of at least two for sample standard deviation")
+    generator = np.random.default_rng(rng)
+    x, y = generator.random(int(size)), generator.random(int(size))
+    rates = 10 * x + y
+    if np.any(rates <= 0):
+        raise RuntimeError("generated covariates imply a zero exponential rate")
+    lifetime = generator.exponential(1 / rates)
+    arrival = 2 * generator.random(int(size))
+    duration, status = _study_followup(lifetime, arrival)
+    return ExploratoryTable(
+        ("length", "arrive", "status", "x", "y", "z"),
+        np.column_stack((duration, arrival, status, x, y, x * y)),
+    ).cosort("length")

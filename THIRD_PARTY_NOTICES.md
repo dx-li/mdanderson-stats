@@ -292,3 +292,7 @@ and selections without failures have defined empty geometry.
 `expsurv_data.py` replaces EXPSURV file/global-assignment helpers with explicit
 named tables. `expsurv_simulation.py` independently implements GEN-EXPO-DATA and
 GEN-EXPO-EXAMPLE distributions using NumPy random streams.
+
+`generate_exploratory_data` independently implements GEN-DATA. Its sample-SD
+convention was also checked against XLISP-STAT stats.lsp at revision
+f1bea6053df658ee48612bf1f63c35de99e2c649; reference runtime code is not bundled.
