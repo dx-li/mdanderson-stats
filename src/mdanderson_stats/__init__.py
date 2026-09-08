@@ -91,6 +91,7 @@ from .pvalue_models import (
     clustered_pvalues,
     order_statistic_diagnostics,
 )
+from .randlib import RandlibGenerator
 from .ranges import RangeComparisons, kwrange, range2
 from .ranlist_files import (
     load_ranlist_session,
@@ -142,6 +143,7 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "RandlibGenerator",
     "UnrestrictedAllocation",
     "RestrictedAllocation",
     "load_ranlist_session",

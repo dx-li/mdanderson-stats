@@ -552,9 +552,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "RandlibGenerator: independent 32-stream bank, batched raw/uniform draws, antithetic control, seed replacement, block reset and power-of-two advancement"
+      ],
+      "validation": [
+        "tests/test_randlib.py",
+        "tests/fixtures/randlib_streams.json",
+        "docs/randlib.md"
+      ]
     },
     {
       "id": 28,

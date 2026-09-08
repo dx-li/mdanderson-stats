@@ -286,3 +286,8 @@ RANLIST is complete for the archived source/manual workflows. Its
 [source audit](docs/ranlist-coverage.md) covers creation, enrollment, inquiry,
 persistence and printing, including native source defects and measured batch
 performance. `ranlist_starting_seeds` reproduces original setup phrase handling.
+
+`RandlibGenerator` begins [RANDLIB](docs/randlib.md) with 32 independent stream
+states, antithetic draws, block resets, seed controls and efficient jumps.
+Fortran 77 and Fortran 95 comparisons validate the generator foundation;
+distribution samplers remain pending.

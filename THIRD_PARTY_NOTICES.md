@@ -354,3 +354,21 @@ L'Ecuyer and Cote, ACM Transactions on Mathematical Software 17:98–111 (1991).
 
 `ranlist_unrestricted.py` independently expresses IGTUT weighted assignment
 and the GENLST/WRKLST cumulative-weight rules. The retained RANLIST notices apply.
+
+
+## RANDLIB
+
+The RANDLIB generator implementation is an independent Python implementation
+of the documented L'Ecuyer–Cote modular recurrence and stream controls. The
+archived Fortran 77 and Fortran 95 sources are compiled locally for comparison;
+original source and compiled reference programs are not bundled.
+
+The archive distinguishes the authors' public-domain contributions from code
+associated with ACM publications. Its original terms and references are retained
+in [RANDLIB90 LEGALITIES](notices/mdanderson-randlib90-LEGALITIES.txt) and the
+[Fortran readme](notices/mdanderson-randlib-fortran-readme.txt). In particular,
+the base generator is attributed to P. L'Ecuyer and S. Cote, “Implementing a
+Random Number Package with Splitting Facilities,” ACM Transactions on
+Mathematical Software 17(1), 98–111 (1991). The retained ACM policy addresses
+use, attribution and redistribution, including direct commercial advantage.
+This package does not replace those terms with a blanket license.
