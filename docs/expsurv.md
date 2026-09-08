@@ -2,7 +2,7 @@
 
 Catalog entry 28 is partial. The survival-curve and inverse-survival core is
 implemented, together with interactive cut-point exploration, model alignment
-and linked scatterplot/survival and event-chart views. Survival box plots, data
+and linked scatterplot/survival, event-chart and censored-box views. Data
 generation and remaining input/output workflows are still pending.
 
 The source is EXPSURV version 1 from the MD Anderson catalog, distributed as
@@ -220,3 +220,55 @@ zero times, immutable inputs, invalid input and update preservation, and actual
 canvas selection/Escape events. An event chart was rendered and visually inspected.
 These are source-formula checks, not native XLISP-STAT execution or a measured
 rendering-speed comparison.
+
+
+## Censored survival boxes
+
+```python
+from mdanderson_stats import censored_box, plot_censored_box
+
+box = censored_box([1, 2, 3, 4], [1, 1, 0, 0])
+print(box.quartiles, box.last_failure_survival)
+view = plot_censored_box([1, 2, 3, 4], [1, 1, 0, 0], [0, 1, 2, 3])
+view.select([0, 2])
+```
+
+`censored_box` implements the numerical SCAT-BOX geometry without requiring
+Matplotlib. Quartiles are returned in ascending cumulative-probability order
+(.25, .5, .75), obtained from survival levels (.75, .5, .25). The default
+`quantile_method="source"` preserves QUANT interpolation and last-plateau
+semantics; `quantile_method="step"` selects ordinary step-curve inverse queries.
+`legacy=True` independently selects sequential, rather than grouped, ties.
+
+The immutable result retains its fitted curve, read-only quartiles and line
+segments, and the first/last failure times with survival immediately after those
+failures. Unreached quartiles are NaN. Horizontal bars mark available quartiles;
+side walls span the lower to upper quartile when all exist, otherwise extend to
+the last failure. If no quartile is available, walls span first to last failure.
+The source's horizontal coordinates (.667, 1.33) are preserved. For all-censored
+samples the failure metadata is None and segments are empty, handling a case
+where the archived code indexes an empty death-time list.
+
+An exact survival plateau can put a source-interpolated quartile beyond the last
+failure. For failures at 1, 2, 3, 4 followed by censoring at 5, 6, 7, 8, the source
+median is 8 while the unfinished walls stop at 4. This unusual geometry is
+preserved deliberately; step mode gives median 4. The plot does not substitute
+raw-data quantiles, extrapolate unreached quartiles, or add ordinary-boxplot
+outlier fences.
+
+`plot_censored_box` links the common rectangle/Shift-add/Escape matrix controls
+to this geometry. It exposes `summary`, `box_figure`, `box_axes`, `segments` and
+an annotation of survival at the last failure. All observations start selected;
+`select` accepts original row indices. A selection with no failures retains a
+summary and displays “No observed failures”; an empty selection has summary=None
+and displays “No selection”. `close()` disconnects callbacks and closes both
+figures. Fixed full-sample vertical limits include zero and a small top margin;
+Matplotlib supplies ticks instead of the source runtime. No continuous hover
+brushing is supplied.
+
+Tests independently cover all source drawing branches, plateau quartiles,
+explicit step mode, first/last failure survival with ties, zero-time events,
+immutable outputs, actual canvas selection, invalid-update preservation,
+all-censored/empty transitions and cleanup. Partial and all-censored figures
+were rendered and visually inspected. Validation remains source inspection and
+mathematical checks, not execution of the archived XLISP-STAT interpreter.

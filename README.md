@@ -214,3 +214,6 @@ with rectangle selection, Shift-add and programmatic original-row selection.
 
 `plot_event_scatter` links covariate selection to EXPSURV event charts, showing
 follow-up segments at arrival times with failure and censoring endpoints.
+
+`censored_box` and `plot_censored_box` add EXPSURV life-table box geometry and
+linked selection, including unreached quartiles and all-censored samples.

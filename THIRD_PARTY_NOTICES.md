@@ -284,3 +284,7 @@ mouse modes. Empty selections explicitly clear the survival curve.
 `expsurv_event.py` independently implements SCAT-EVENT geometry and status
 markers, sharing matrix controls with SCAT-KM. Initial and empty selections are
 explicitly rendered; no original code is bundled.
+
+`expsurv_box.py` and `expsurv_box_plot.py` independently implement SCAT-BOX
+life-table geometry and linked display. Source interpolation is explicit,
+and selections without failures have defined empty geometry.
