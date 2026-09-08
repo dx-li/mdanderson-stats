@@ -85,3 +85,28 @@ def bp1ci_poisson_interval(
     if np.any(time <= 0):
         raise ValueError("exposure must be positive")
     return gammaincinv(k + 1, tail) / time, gammainccinv(k + 1, tail) / time
+
+
+def bp1ci_binomial_interval(
+    successes: ArrayLike,
+    trials: ArrayLike,
+    confidence: ArrayLike = 0.95,
+) -> tuple[FloatArray, FloatArray]:
+    """BP1CI beta-tail formulas for fractional as well as integer counts.
+
+    This is not a frequentist coverage claim for fractional observations. The
+    formula extends the source's undefined lower-bound result for 0<successes<1.
+    Zero trials returns [0,1]; use binomial_interval for ordinary integer counts.
+    """
+    k, n, tail = np.broadcast_arrays(
+        _finite(successes, "successes"),
+        _finite(trials, "trials"),
+        _tail(confidence),
+    )
+    if np.any((k < 0) | (n < 0) | (k > n) | (n >= 2**53)):
+        raise ValueError("Require 0 <= successes <= trials < 2**53")
+    lower, upper = np.zeros(k.shape), np.ones(k.shape)
+    positive, below = k > 0, k < n
+    lower[positive] = betaincinv(k[positive], n[positive] - k[positive] + 1, tail[positive])
+    upper[below] = betainccinv(k[below] + 1, n[below] - k[below], tail[below])
+    return lower, upper

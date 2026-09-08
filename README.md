@@ -40,6 +40,10 @@ BP1CI 2.0 output, `bp1ci_poisson_interval` uses its documented implementation's
 different lower-tail inversion. That compatibility function is not presented as
 a corrected exact interval; see `docs/validation.md`.
 
+`bp1ci_binomial_interval` extends the beta-tail formulas to fractional counts.
+`bp1ci` provides the original percentage and success/failure or total-trial entry
+conventions, plus a readable result table. See [BP1CI coverage](docs/bp1ci.md).
+
 Normal tail probabilities (`normal_tails`), chi-square goodness-of-fit tests
 (`chi_square_gof`), and monotone function inversion (`invert_monotone`) are also
 available. See [numerical methods](docs/numerical-methods.md) for examples,

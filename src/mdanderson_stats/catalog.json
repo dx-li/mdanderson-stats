@@ -1436,13 +1436,18 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
+        "mdanderson_stats.bp1ci_binomial_interval: fractional-count beta-tail intervals, correcting the source undefined lower bound for successes below one",
+        "mdanderson_stats.bp1ci: percentage limits, success/failure and success/total input modes, Poisson exposure scaling, estimates and readable result tables",
         "mdanderson_stats.binomial_interval: integer counts",
         "mdanderson_stats.bp1ci_poisson_interval: original lower-tail formula",
         "mdanderson_stats.poisson_interval: corrected exact interval"
       ],
       "validation": [
+        "tests/test_bp1ci.py",
+        "tests/fixtures/bp1ci_extended.json",
+        "docs/bp1ci.md",
         "tests/test_intervals.py",
         "tests/fixtures/bp1ci.json",
         "docs/validation.md"

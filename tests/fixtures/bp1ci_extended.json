@@ -1,0 +1,440 @@
+{
+  "source_sha256": "dff936bcef8c6304b06148c164b566cc714c83bb41e977e67c746b11e042fabe",
+  "executable_sha256": "8eb76e878a9213a7fcb84ca7c842ddd16b567a2bd18e71e6c52ed68110b58ec7",
+  "notes": "Unmodified BP1CI executable, native menu percentage limits and both binomial entry modes. Printed precision determines tolerance; very narrow/extreme bounds may be indistinguishable in source output.",
+  "cases": [
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 1.5,
+      "second": 30.5,
+      "confidence_percent": 0.1,
+      "bounds": [
+        0.0383,
+        0.0706
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 29.5,
+      "second": 30.5,
+      "confidence_percent": 0.1,
+      "bounds": [
+        0.9455,
+        0.9776
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 1.25,
+      "second": 2.75,
+      "confidence_percent": 0.1,
+      "bounds": [
+        0.2151,
+        0.4431
+      ],
+      "atol": 5.0000001000000005e-05,
+      "source_issue": "Native lower bound disagrees with independent beta-tail evaluation"
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 0,
+      "second": 2.5,
+      "confidence_percent": 0.1,
+      "bounds": [
+        0.0,
+        0.2424
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 2.5,
+      "second": 0,
+      "confidence_percent": 0.1,
+      "bounds": [
+        0.7576,
+        1.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 1,
+      "second": 10000000000.0,
+      "confidence_percent": 0.1,
+      "bounds": [
+        0.0,
+        0.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 9999999999.0,
+      "second": 10000000000.0,
+      "confidence_percent": 0.1,
+      "bounds": [
+        1.0,
+        1.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 10000000000.0,
+      "second": 10000000000.0,
+      "confidence_percent": 0.1,
+      "bounds": [
+        0.5,
+        0.5
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 1e-06,
+      "second": null,
+      "confidence_percent": 0.1,
+      "bounds": [
+        0.69215,
+        0.69415
+      ],
+      "atol": 5.000001000000001e-06
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 1.25,
+      "second": null,
+      "confidence_percent": 0.1,
+      "bounds": [
+        1.9252,
+        1.9286
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 1000000.0,
+      "second": null,
+      "confidence_percent": 0.1,
+      "bounds": [
+        1000000.0,
+        1000000.0
+      ],
+      "atol": 50.000000000001
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 10000000000.0,
+      "second": null,
+      "confidence_percent": 0.1,
+      "bounds": [
+        10000000000.0,
+        10000000000.0
+      ],
+      "atol": 500000.0
+    },
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 1.5,
+      "second": 30.5,
+      "confidence_percent": 95,
+      "bounds": [
+        0.0036,
+        0.1941
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 29.5,
+      "second": 30.5,
+      "confidence_percent": 95,
+      "bounds": [
+        0.8304,
+        0.9992
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 1.25,
+      "second": 2.75,
+      "confidence_percent": 95,
+      "bounds": [
+        0.0152,
+        0.8437
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 0,
+      "second": 2.5,
+      "confidence_percent": 95,
+      "bounds": [
+        0.0,
+        0.7713
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 2.5,
+      "second": 0,
+      "confidence_percent": 95,
+      "bounds": [
+        0.2287,
+        1.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 1,
+      "second": 10000000000.0,
+      "confidence_percent": 95,
+      "bounds": [
+        0.0,
+        0.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 9999999999.0,
+      "second": 10000000000.0,
+      "confidence_percent": 95,
+      "bounds": [
+        1.0,
+        1.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 10000000000.0,
+      "second": 10000000000.0,
+      "confidence_percent": 95,
+      "bounds": [
+        0.5,
+        0.5
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 1e-06,
+      "second": null,
+      "confidence_percent": 95,
+      "bounds": [
+        0.025318,
+        3.6889
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 1.25,
+      "second": null,
+      "confidence_percent": 95,
+      "bounds": [
+        0.32469,
+        5.9993
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 1000000.0,
+      "second": null,
+      "confidence_percent": 95,
+      "bounds": [
+        998040.0,
+        1002000.0
+      ],
+      "atol": 50.000000000001
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 10000000000.0,
+      "second": null,
+      "confidence_percent": 95,
+      "bounds": [
+        9999800000.0,
+        10000000000.0
+      ],
+      "atol": 500000.0
+    },
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 1.5,
+      "second": 30.5,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        0.0,
+        0.4671
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 29.5,
+      "second": 30.5,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        0.5592,
+        1.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 1.25,
+      "second": 2.75,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        0.0,
+        0.9971
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 0,
+      "second": 2.5,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        0.0,
+        0.997
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 2.5,
+      "second": 0,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        0.003,
+        1.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 1,
+      "second": 10000000000.0,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        0.0,
+        0.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "trials",
+      "events": 9999999999.0,
+      "second": 10000000000.0,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        1.0,
+        1.0
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "binomial",
+      "entry": "failures",
+      "events": 10000000000.0,
+      "second": 10000000000.0,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        0.5,
+        0.5
+      ],
+      "atol": 5.0000001000000005e-05
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 1e-06,
+      "second": null,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        5.0001e-07,
+        14.509
+      ],
+      "atol": 0.000500000001
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 1.25,
+      "second": null,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        0.0024015,
+        18.069
+      ],
+      "atol": 0.000500000001
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 1000000.0,
+      "second": null,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        995120.0,
+        1004900.0
+      ],
+      "atol": 50.000000000001
+    },
+    {
+      "distribution": "poisson",
+      "entry": "failures",
+      "events": 10000000000.0,
+      "second": null,
+      "confidence_percent": 99.9999,
+      "bounds": [
+        9999500000.0,
+        10000000000.0
+      ],
+      "atol": 500000.0
+    }
+  ]
+}

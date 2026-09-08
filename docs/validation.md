@@ -31,9 +31,13 @@ The guide's final bread-example scaling sentence has a decimal-place error;
 the reported bounds on 10,000 events divided by 100 are about 97.45 and 102.60.
 The test oracle uses the executable's unscaled output, not that sentence.
 
-Remaining BP1CI compatibility work: generalized fractional binomial inputs,
-interactive confidence-range restrictions, and a wider extreme-input comparison.
-The Python API is not an emulation of the original menus or executable.
+BP1CI coverage now includes fractional binomial input, both entry modes,
+percentage restrictions and readable output through `bp1ci`. An additional
+36-case native comparison spans fractional counts, interface endpoints and counts
+up to 1e10; 35 cases match printed precision. One native lower-bound discrepancy
+is checked against an independent high-precision beta integral instead. See
+[bp1ci.md](bp1ci.md) for the completed source audit and corrected undefined cases.
+The Python APIs replace menus with explicit arguments.
 
 ## Implementation strategy
 

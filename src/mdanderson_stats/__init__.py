@@ -11,8 +11,14 @@ from .beta_mixture_fit import (
 from .beta_mixture_ml import fit_beta_mixture_ml
 from .beta_mixture_selection import BetaMixtureSelection, fit_beta_mixture_k, select_beta_mixture
 from .beta_mixture_testing import BetaMixtureTestingResult, beta_mixture_testing
+from .bp1ci import BP1CIResult, bp1ci
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
-from .intervals import binomial_interval, bp1ci_poisson_interval, poisson_interval
+from .intervals import (
+    binomial_interval,
+    bp1ci_binomial_interval,
+    bp1ci_poisson_interval,
+    poisson_interval,
+)
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
 from .multiplicity import (
@@ -92,6 +98,9 @@ __all__ = [
     "schweder_fit",
     "select_beta_mixture",
     "sharpened_testing",
+    "BP1CIResult",
+    "bp1ci",
+    "bp1ci_binomial_interval",
     "MultiSession",
     "MultiData",
     "MultiInputWarning",

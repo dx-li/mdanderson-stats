@@ -68,3 +68,12 @@ original STUKEL source or supporting optimizer is redistributed by this package.
 `stukel_examples.json` includes the numeric beetles and Warsaw example data from
 that archive, with source paths and file hashes. These data reproduce the archived
 demonstration and are also checked against the native regression fixtures.
+
+## BP1CI
+
+The independently expressed beta/gamma quantile formulas in `intervals.py` and
+the input/output conventions in `bp1ci.py` were checked against BP1CI 2.0
+(May 2008), by Barry W. Brown, Floyd M. Spears and Dan M. Serachitopol.
+The archived program and manual provide numerical validation and provenance;
+no BP1CI Fortran, binary or supporting numerical library is redistributed.
+Native reference fixtures record source/archive and executable hashes.
