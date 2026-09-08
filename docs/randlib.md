@@ -1,10 +1,10 @@
 # RANDLIB
 
-Catalog entry 27 is partial. The 32-stream generator bank and state controls are
+Catalog entry 27 is implemented. The 32-stream generator bank and state controls are
 implemented, along with bounded uniforms, permutations, exponential, normal, gamma,
 central/noncentral chi-square, F, beta, binomial, Poisson, negative-binomial,
-multinomial and multivariate-normal sampling. The final archive
-coverage/performance audit remains pending.
+multinomial and multivariate-normal sampling. Phrase/clock seeding and the
+[complete archive audit](randlib-coverage.md) are also available.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27)
 lists version 90, modified September 27, 2002. RANDLIB_V90.tar.gz contains
@@ -771,7 +771,7 @@ parameter errors and rollback. The benchmark prepares one three-dimensional
 model per run and compares 10,000 batched observations with repeated calls
 to the same Python API, reusing the model in both cases.
 
-RANDLIB's final archive coverage/performance audit remains pending.
+The [archive coverage audit](randlib-coverage.md) accounts for all library and support files.
 
 ## Phrase and clock seeding
 

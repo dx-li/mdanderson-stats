@@ -552,7 +552,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "RandlibGenerator: independent 32-stream bank, batched raw/uniform draws, antithetic control, seed replacement, block reset and power-of-two advancement",
         "RANDLIB bounded real/integer uniforms and forward permutations: unbiased defaults, Fortran/C compatibility and transactional rejection limits",
@@ -566,7 +566,8 @@
         "RANDLIB negative-binomial sampling: vectorized quantiles and source gamma-Poisson composition, exact native counts/states, explicit failures-before-successes convention and transactional numerical limits",
         "RANDLIB multinomial sampling: vectorized conditional binomial draws, source early exit and residual-category arithmetic, exact native vectors/states, full probability-vector validation and transactional resource limits",
         "RANDLIB multivariate-normal sampling: immutable reusable SETGMN parameters, vectorized double-precision draws, C/Fortran 77/95 Cholesky accumulation, native factors/vectors/states and transactional resource limits",
-        "RANDLIB phrase/time seeding: full Fortran and defined C character mappings, native seed/state checks, all-stream resets, clock replay and rejection of undefined C table reads"
+        "RANDLIB phrase/time seeding: full Fortran and defined C character mappings, native seed/state checks, all-stream resets, clock replay and rejection of undefined C table reads",
+        "Complete archive audit: all 88 members mapped, all library routines accounted for, native support/program files classified and performance/compatibility limits documented"
       ],
       "validation": [
         "tests/test_randlib.py",
@@ -596,7 +597,9 @@
         "tests/test_randlib_multivariate_normal.py",
         "tests/fixtures/randlib_multivariate_normal.json",
         "tests/test_randlib_seeding.py",
-        "tests/fixtures/randlib_seeding.json"
+        "tests/fixtures/randlib_seeding.json",
+        "docs/randlib-coverage.md",
+        "docs/randlib-archive.json"
       ]
     },
     {

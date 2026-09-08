@@ -11,6 +11,9 @@ from benchmark_numerics import measure
 from mdanderson_stats import RandlibGenerator, RandlibMultivariateNormal
 
 PARAMETERS = {
+    "integers": {},
+    "uniform": {},
+    "integer_uniform": {"low": 0, "high": 99},
     "multivariate_normal": {
         "mean": [1, -2, 0.5],
         "covariance": [[4, -1, 0.2], [-1, 2, 0.5], [0.2, 0.5, 1]],
@@ -40,7 +43,9 @@ def samples(name: str, size: int, batch: bool) -> np.ndarray:
             else np.array([bank.multivariate_normal(parameters)[0] for _ in range(size)])
         )
     return (
-        method(size, **options) if batch else np.array([method(**options)[0] for _ in range(size)])
+        method(size=size, **options)
+        if batch
+        else np.array([method(**options)[0] for _ in range(size)])
     )
 
 

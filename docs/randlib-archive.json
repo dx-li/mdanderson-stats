@@ -1,0 +1,1066 @@
+{
+  "archive": "RANDLIB_V90.tar.gz",
+  "archive_sha256": "c90251cc129ed21616d80df7bc87acefcce57d1a9e7fe7a2dd23e6d119bed466",
+  "file_count": 88,
+  "files": [
+    {
+      "path": "RANDLIB90/source/randlib90/INSTALL",
+      "sha256": "d22c3ead11b76f526195e91bbffc9b2286ec19d4bb1804c3fce591c3f041f582",
+      "role": "native build instructions",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/LEGALITIES",
+      "sha256": "0548922df6b915afc67cc63e640e9f8208b38975bb57223cea736d9c5185fca9",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/doc/randlib90_doc.pdf",
+      "sha256": "077830bff7544cb83a7ca9f013a4e04229802719ecc7998f1478362374fbb729",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/doc/randlib90_doc.ps",
+      "sha256": "a1eab219a4d618973548b34c3604038c0cc5ed247fe27288aeb7f6e3a9f0e0ee",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/doc/randlib90_doc.tex",
+      "sha256": "687d2c55731262cfeb16a87980974196906eb6474dbb596f6041840425ef16e5",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/doc/randlib90_doc.txt",
+      "sha256": "6cfbb89e85ea4c62d1d6a0e4535f5fd87312badbafeefe4b0feb09c180b0c211",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/readme",
+      "sha256": "30d4d326bf2cd962c0dfa71bfcec70aa56bde9e8687be7485b7f7fadf353de51",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/Makefile",
+      "sha256": "6d9fd71887fc21d2e9d36839460d64f69e6c98e854e1c28bd7bbc1e96f13ecc4",
+      "role": "native build instructions",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/compile.randlib90",
+      "sha256": "1c7d08559b70f16d53c06a7a786e052bf4620781c9106a4360d71093686ca3f0",
+      "role": "native build instructions",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/ecuyer_cote_mod.f90",
+      "sha256": "61de4b11fb1a523573a2ce1a7f6d3ab4386cd87e9ecc25914775aa453001b205",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_beta_mod.f90",
+      "sha256": "f51577877d647432635cb3a125f2d0c88af7040c8c758c8ef1ccbe5f4f0180c8",
+      "role": "library",
+      "groups": [
+        "beta"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_beta.py",
+        "tests/test_randlib_beta.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_binomial_mod.f90",
+      "sha256": "c9d4257131409fffba6a35b5630b1b80fe31bf7033397049d746446897348997",
+      "role": "library",
+      "groups": [
+        "binomial"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_binomial.py",
+        "tests/test_randlib_binomial.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_chisq_mod.f90",
+      "sha256": "5f55487a1bb9f21f7dd22c055957a281453e0124ee78827856d98d8bf82558da",
+      "role": "library",
+      "groups": [
+        "chi_f"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_chi_f.py",
+        "tests/test_randlib_chi_f.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_exponential_mod.f90",
+      "sha256": "f701ad1f6d5009df8b89536f64af02e880fa01f399c70c9ab5162068a626677c",
+      "role": "library",
+      "groups": [
+        "exponential"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_distributions.py",
+        "tests/test_randlib_exponential.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_f_mod.f90",
+      "sha256": "58d545a2abf80bdb72ac145b55a976dd7efad94af70c8e1db3f79e371592ed59",
+      "role": "library",
+      "groups": [
+        "chi_f"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_chi_f.py",
+        "tests/test_randlib_chi_f.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_gamma_mod.f90",
+      "sha256": "afeb31a13e80711f3d6c17f4871e93d0e55c761c83ead418f339ac744f962d63",
+      "role": "library",
+      "groups": [
+        "gamma"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_gamma.py",
+        "tests/test_randlib_gamma.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_multinomial_mod.f90",
+      "sha256": "334b9bdeed52be191739e0b7b258666adc6b512e919b1ae55af62036d9f9a45c",
+      "role": "library",
+      "groups": [
+        "multinomial"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_multinomial.py",
+        "tests/test_randlib_multinomial.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_multivariate_normal_mod.f90",
+      "sha256": "108730ef2fc4bdc7bd4054b4fc5847e366be4a74fcc8514c0d270387eb02284b",
+      "role": "library",
+      "groups": [
+        "multivariate_normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib_multivariate.py",
+        "tests/test_randlib_multivariate_normal.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_nc_chisq_mod.f90",
+      "sha256": "85dcfbd82b95923ab9c9e05e17ec38f44949a18c3faac82810c9af26ce8e9056",
+      "role": "library",
+      "groups": [
+        "chi_f"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_chi_f.py",
+        "tests/test_randlib_chi_f.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_nc_f_mod.f90",
+      "sha256": "6adfc697e856b5d9c50bf3450520b7c5924e8a2bf6dc59baadb45d785613ba00",
+      "role": "library",
+      "groups": [
+        "chi_f"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_chi_f.py",
+        "tests/test_randlib_chi_f.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_negative_binomial_mod.f90",
+      "sha256": "69dcd043973de193416bd479c0b24be3494a7737f9d0f7d0d12e0c21984ac644",
+      "role": "library",
+      "groups": [
+        "negative_binomial"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_negative_binomial.py",
+        "tests/test_randlib_negative_binomial.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_normal_mod.f90",
+      "sha256": "4192022ab56b7caedca7fbb2cdcd930fb5f64b2de296af94cf4889ee73b48111",
+      "role": "library",
+      "groups": [
+        "normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_normal.py",
+        "tests/test_randlib_normal.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_permutation_mod.f90",
+      "sha256": "ec27129815ad43e22bbb12caa0e937961a09cb7e0e0fed84d5bf68707c2ccbd5",
+      "role": "library",
+      "groups": [
+        "sampling"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_sampling.py",
+        "tests/test_randlib_sampling.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_poisson_mod.f90",
+      "sha256": "df82957c2a03e19a9b4fb9551a5721b147090fb5ab1f295f96ae1be6d8fafe18",
+      "role": "library",
+      "groups": [
+        "poisson"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_poisson.py",
+        "tests/test_randlib_poisson.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_standard_exponential_mod.f90",
+      "sha256": "762f60afc3ec5b9335aa55751198cf3ab68f4c218b770b6db5cbf803c23df80d",
+      "role": "library",
+      "groups": [
+        "exponential"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_distributions.py",
+        "tests/test_randlib_exponential.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_standard_gamma_mod.f90",
+      "sha256": "0ef9ebf28d635ea31424d132cba0a3c56c11a0b4ebed29e4fea561d289c659e2",
+      "role": "library",
+      "groups": [
+        "gamma"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_gamma.py",
+        "tests/test_randlib_gamma.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_standard_normal_mod.f90",
+      "sha256": "971526db2fa739da99cae677d2a54c42ca22d89a3d3fe38b609fd670ae19929c",
+      "role": "library",
+      "groups": [
+        "normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_normal.py",
+        "tests/test_randlib_normal.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_standard_uniform_mod.f90",
+      "sha256": "983fb8224149c4d86cd0cfad792b4443a97eecf44ea868e0017fdf10afe57135",
+      "role": "library",
+      "groups": [
+        "sampling"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_sampling.py",
+        "tests/test_randlib_sampling.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_uniform_integer_mod.f90",
+      "sha256": "b17aae3d8363002127d0da9f0b2017b94131a66df255e22e075b0acdaa007ecc",
+      "role": "library",
+      "groups": [
+        "sampling"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_sampling.py",
+        "tests/test_randlib_sampling.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/random_uniform_mod.f90",
+      "sha256": "8991f767ad24e81c19e24401606078f1099301401db2eb5b622510d108d7efbd",
+      "role": "library",
+      "groups": [
+        "sampling"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_sampling.py",
+        "tests/test_randlib_sampling.py"
+      ]
+    },
+    {
+      "path": "RANDLIB90/source/randlib90/source/user_set_generator.f90",
+      "sha256": "c673c4524d43c08653fb1d5d61711519d876b42f4e1b7fcd7f9bbd1fe18a8998",
+      "role": "library",
+      "groups": [
+        "seeding"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_seeding.py",
+        "tests/test_randlib_seeding.py"
+      ]
+    },
+    {
+      "path": "source/randlib.c/HOWTOGET",
+      "sha256": "91fb9bcfaa5fb25c0bb048ad0ee11c2e8b44d8bcf1d2c98b56e07d9626d4f880",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.c/doc/Basegen.c.doc",
+      "sha256": "79ef2060a9171f7ef184aea32052157431ee3cd7219eb2da9a36a4ffd7d48146",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.c/doc/randlib.c.chs",
+      "sha256": "2e9fc86d338f2be53fc2f0f43b38a2c81256223342317573897f3f43a3427f9b",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.c/doc/randlib.c.fdoc",
+      "sha256": "9a46fa3e9237de67eb51816005dfda8fce797b1b3835ea5c42832eceb70f9143",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.c/readme",
+      "sha256": "4f766b4e82beccd3b6f0eceff56e6d84d1063d90bcd95174ae4995dc049ec347",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.c/src/com.c",
+      "sha256": "21b7702d04e1252f2d10f36cecedd197113cb4f3c31702d102a9ad560a107f58",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.c/src/linpack.c",
+      "sha256": "d5c3cd20034c505b3fd60db3d795727b6110e1682596972682097ef168439198",
+      "role": "library",
+      "groups": [
+        "multivariate_normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib_multivariate.py",
+        "tests/test_randlib_multivariate_normal.py"
+      ]
+    },
+    {
+      "path": "source/randlib.c/src/randlib.c",
+      "sha256": "33ba817c689e1ca828d561b7598398819546f85182fc01ff6dd5a98839827b55",
+      "role": "library",
+      "groups": [
+        "streams",
+        "seeding",
+        "sampling",
+        "exponential",
+        "normal",
+        "gamma",
+        "chi_f",
+        "beta",
+        "binomial",
+        "poisson",
+        "negative_binomial",
+        "multinomial",
+        "multivariate_normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_beta.py",
+        "src/mdanderson_stats/_randlib_binomial.py",
+        "src/mdanderson_stats/_randlib_chi_f.py",
+        "src/mdanderson_stats/_randlib_distributions.py",
+        "src/mdanderson_stats/_randlib_gamma.py",
+        "src/mdanderson_stats/_randlib_multinomial.py",
+        "src/mdanderson_stats/_randlib_negative_binomial.py",
+        "src/mdanderson_stats/_randlib_normal.py",
+        "src/mdanderson_stats/_randlib_poisson.py",
+        "src/mdanderson_stats/_randlib_sampling.py",
+        "src/mdanderson_stats/_randlib_seeding.py",
+        "src/mdanderson_stats/randlib.py",
+        "src/mdanderson_stats/randlib_multivariate.py",
+        "tests/test_randlib.py",
+        "tests/test_randlib_beta.py",
+        "tests/test_randlib_binomial.py",
+        "tests/test_randlib_chi_f.py",
+        "tests/test_randlib_exponential.py",
+        "tests/test_randlib_gamma.py",
+        "tests/test_randlib_multinomial.py",
+        "tests/test_randlib_multivariate_normal.py",
+        "tests/test_randlib_negative_binomial.py",
+        "tests/test_randlib_normal.py",
+        "tests/test_randlib_poisson.py",
+        "tests/test_randlib_sampling.py",
+        "tests/test_randlib_seeding.py"
+      ]
+    },
+    {
+      "path": "source/randlib.c/src/randlib.h",
+      "sha256": "e0c509a32dcd42f42dfcb1a67ea033211557a3c76d3dd2ebb819f7c6a2eb7a4b",
+      "role": "native declarations",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.c/test/randlib.h",
+      "sha256": "e0c509a32dcd42f42dfcb1a67ea033211557a3c76d3dd2ebb819f7c6a2eb7a4b",
+      "role": "native declarations",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.c/test/tstbot.c",
+      "sha256": "f6c3bda751d5dd8a3cc92651bf58b45931275a362859fb499fedcf299d29e4e7",
+      "role": "demonstration",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.c/test/tstgmn.c",
+      "sha256": "34c60e2dca648c6a15e7865e04c5dbf0b1b57ce2afdd8881e0d822d333c269c5",
+      "role": "demonstration",
+      "groups": [
+        "multivariate_normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib_multivariate.py",
+        "tests/test_randlib_multivariate_normal.py"
+      ]
+    },
+    {
+      "path": "source/randlib.c/test/tstmid.c",
+      "sha256": "dc73b55404f9111dc3f292eafa3fe9c9939e99d823e7f1f37d74cb80f27fa07c",
+      "role": "demonstration",
+      "groups": [
+        "streams",
+        "seeding",
+        "sampling",
+        "exponential",
+        "normal",
+        "gamma",
+        "chi_f",
+        "beta",
+        "binomial",
+        "poisson",
+        "negative_binomial",
+        "multinomial",
+        "multivariate_normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_beta.py",
+        "src/mdanderson_stats/_randlib_binomial.py",
+        "src/mdanderson_stats/_randlib_chi_f.py",
+        "src/mdanderson_stats/_randlib_distributions.py",
+        "src/mdanderson_stats/_randlib_gamma.py",
+        "src/mdanderson_stats/_randlib_multinomial.py",
+        "src/mdanderson_stats/_randlib_negative_binomial.py",
+        "src/mdanderson_stats/_randlib_normal.py",
+        "src/mdanderson_stats/_randlib_poisson.py",
+        "src/mdanderson_stats/_randlib_sampling.py",
+        "src/mdanderson_stats/_randlib_seeding.py",
+        "src/mdanderson_stats/randlib.py",
+        "src/mdanderson_stats/randlib_multivariate.py",
+        "tests/test_randlib.py",
+        "tests/test_randlib_beta.py",
+        "tests/test_randlib_binomial.py",
+        "tests/test_randlib_chi_f.py",
+        "tests/test_randlib_exponential.py",
+        "tests/test_randlib_gamma.py",
+        "tests/test_randlib_multinomial.py",
+        "tests/test_randlib_multivariate_normal.py",
+        "tests/test_randlib_negative_binomial.py",
+        "tests/test_randlib_normal.py",
+        "tests/test_randlib_poisson.py",
+        "tests/test_randlib_sampling.py",
+        "tests/test_randlib_seeding.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/HOWTOGET",
+      "sha256": "91fb9bcfaa5fb25c0bb048ad0ee11c2e8b44d8bcf1d2c98b56e07d9626d4f880",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.f/doc/Basegen.doc",
+      "sha256": "3816fd4a11bc7d84fe608fdde42cd1edb727e8605f2d84d1a0dc5d769af87034",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.f/doc/randlib.chs",
+      "sha256": "d1077ede6a56591ee289fcbeeb1ce8e4ddd971e1e3f2a58920413fe7da4744b2",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.f/doc/randlib.fdoc",
+      "sha256": "a9b46b2ed297a7546da7fd007af97ddf5b9210914cea6cf578dbe49b6773551b",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.f/readme",
+      "sha256": "b6b100bf82ec1a44e4f8daad06ece5b2ecf8e2afd6ed18fe14084989f3c3124f",
+      "role": "documentation/terms",
+      "groups": [],
+      "evidence": []
+    },
+    {
+      "path": "source/randlib.f/src/advnst.f",
+      "sha256": "ecd74fcae28e5cdbe4176de79b2cc7e8295d0b0506cb9539f085f0b06e7d48af",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/genbet.f",
+      "sha256": "9735fb7009ed01d0eb3fbebe78ed6243493530cf4f71f4fa55596ede65f21269",
+      "role": "library",
+      "groups": [
+        "beta"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_beta.py",
+        "tests/test_randlib_beta.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/genchi.f",
+      "sha256": "82716e1ff2feb13c4125798c7cc2c03c280d237cb40bfae84a9120d70377669c",
+      "role": "library",
+      "groups": [
+        "chi_f"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_chi_f.py",
+        "tests/test_randlib_chi_f.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/genexp.f",
+      "sha256": "d7672b2694f64cdbbff0f446407d144594c7c514de5a17b5e41fe7e4c3029c2e",
+      "role": "library",
+      "groups": [
+        "exponential"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_distributions.py",
+        "tests/test_randlib_exponential.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/genf.f",
+      "sha256": "2711386b4b0afaba1fcc85feb1063d6a22af86c98ee67458b7d21f35964ec473",
+      "role": "library",
+      "groups": [
+        "chi_f"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_chi_f.py",
+        "tests/test_randlib_chi_f.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/gengam.f",
+      "sha256": "4cb765f812f9b4b284e59a67a8c73d59e366512db16f5d31ae2b07ba86f6369b",
+      "role": "library",
+      "groups": [
+        "gamma"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_gamma.py",
+        "tests/test_randlib_gamma.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/genmn.f",
+      "sha256": "b299a752f76d18fc34c6c23723279fd001bf4289b388163fb47bde194ed23aaa",
+      "role": "library",
+      "groups": [
+        "multivariate_normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib_multivariate.py",
+        "tests/test_randlib_multivariate_normal.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/genmul.f",
+      "sha256": "1633763090147c00afeb8edf4147d8913615b81703eb1fa6d116e1e8311ceb3c",
+      "role": "library",
+      "groups": [
+        "multinomial"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_multinomial.py",
+        "tests/test_randlib_multinomial.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/gennch.f",
+      "sha256": "337d903280c7b55bab1c24f015020cdaf9069d7be10a5afaca6bf71c66277760",
+      "role": "library",
+      "groups": [
+        "chi_f"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_chi_f.py",
+        "tests/test_randlib_chi_f.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/gennf.f",
+      "sha256": "7bb5a8192493590f9da8871593dbd9529c49dd89d39cf2c318c2e45422e55510",
+      "role": "library",
+      "groups": [
+        "chi_f"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_chi_f.py",
+        "tests/test_randlib_chi_f.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/gennor.f",
+      "sha256": "a6336d9be66e996febfdd07462c497f1da43297520e97e24516941e193c68737",
+      "role": "library",
+      "groups": [
+        "normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_normal.py",
+        "tests/test_randlib_normal.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/genprm.f",
+      "sha256": "231bc62838a6f1be16b3d96bed89c21d665739c0aade4291154bafcc281344be",
+      "role": "library",
+      "groups": [
+        "sampling"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_sampling.py",
+        "tests/test_randlib_sampling.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/genunf.f",
+      "sha256": "cb89ae4a9a820c43823b2bf22af6c979e7b74b71a8978a346f93e65210b83fab",
+      "role": "library",
+      "groups": [
+        "sampling"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_sampling.py",
+        "tests/test_randlib_sampling.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/getcgn.f",
+      "sha256": "c6ef57d6d50ffff043e2ee59206182e9669e1ab9c2d6d1385faa92df67af624c",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/getsd.f",
+      "sha256": "27260914694e1e1de97d0851e1d3e8bb1a4c6f83437b42a3b29bebe82fc117cb",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/ignbin.f",
+      "sha256": "42c70cf2600dde4e0dae64218887a047ae66ac64ddacb5276e2fe3a28f0dbf6f",
+      "role": "library",
+      "groups": [
+        "binomial"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_binomial.py",
+        "tests/test_randlib_binomial.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/ignlgi.f",
+      "sha256": "fbafad05b0b9c215f89c7336bf0fa9e5c9fff436de0f65e00911152325fd2f7e",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/ignnbn.f",
+      "sha256": "41b70c7d74cfdc14587791050f93164caf8d4228ed1472e78a284b51338e000e",
+      "role": "library",
+      "groups": [
+        "negative_binomial"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_negative_binomial.py",
+        "tests/test_randlib_negative_binomial.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/ignpoi.f",
+      "sha256": "f2f9c7601ac14808ada84da4dc6d540bc37ec021e50690fc4d6152fb9f43c91e",
+      "role": "library",
+      "groups": [
+        "poisson"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_poisson.py",
+        "tests/test_randlib_poisson.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/ignuin.f",
+      "sha256": "426843d0bb01d86421c5c96e1fa4917e660a3463a3f85ba968ee1b2258a7898e",
+      "role": "library",
+      "groups": [
+        "sampling"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_sampling.py",
+        "tests/test_randlib_sampling.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/initgn.f",
+      "sha256": "ba7872133952aa782a9129e01bee0ca61b2774901f5611e5d649dee1cd9d0691",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/inrgcm.f",
+      "sha256": "fcd1e21aaa5963ad19dde980c81d359c1d42b7152d9deee2bc1753198f9546f7",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/lennob.f",
+      "sha256": "d01d45da1bbecfbbff45497c6c07ad825ac3efa8f7980627d8d85bc71e469e41",
+      "role": "library",
+      "groups": [
+        "seeding"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_seeding.py",
+        "tests/test_randlib_seeding.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/mltmod.f",
+      "sha256": "f6bc2139feb0cba520ededc90f0f1bc82e1f4100efbcbf5aa07286befa6b4bca",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/phrtsd.f",
+      "sha256": "9ea08b358398dd9a06c784d70d7281ef121d3ddecf93ecbdec78d94b7e61d372",
+      "role": "library",
+      "groups": [
+        "seeding"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_seeding.py",
+        "tests/test_randlib_seeding.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/qrgnin.f",
+      "sha256": "8715aa1e0e883544a96d329a97070c621d0e1d272ac8be2ff8370692f9178bab",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/ranf.f",
+      "sha256": "eec69e5558ee444bd842407e318f0d086799f85b078caca93bcc5d480d2e4120",
+      "role": "library",
+      "groups": [
+        "sampling"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_sampling.py",
+        "tests/test_randlib_sampling.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/sdot.f",
+      "sha256": "c1705bd5d4d702379edfd988e4d2fa49b53ef9f72c73e279a9ffc88040bd6cc4",
+      "role": "library",
+      "groups": [
+        "multivariate_normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib_multivariate.py",
+        "tests/test_randlib_multivariate_normal.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/setall.f",
+      "sha256": "3de3725e0cc37acf7e6005551d82c15cbbc023d6cc4bdc2c8fbd8eb373098842",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/setant.f",
+      "sha256": "8eb256ccaf884f3f1b7b9145a26a11fb231fc2932aea08b20677b59bbaf9930f",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/setgmn.f",
+      "sha256": "b5f5e3a03ce2d38a37fc221e2db82ed4df03bd1959bea890c58e8a590ad1190a",
+      "role": "library",
+      "groups": [
+        "multivariate_normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib_multivariate.py",
+        "tests/test_randlib_multivariate_normal.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/setsd.f",
+      "sha256": "e4423ec42b8954a9025aae648fc3e9cb884c086a3ccb0b1a1b0e629474e32b59",
+      "role": "library",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/sexpo.f",
+      "sha256": "3d7946e1cdd81a7efa28d3bb19f5e9d7abeb1d06aaeeeae2b0852ede64a81862",
+      "role": "library",
+      "groups": [
+        "exponential"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_distributions.py",
+        "tests/test_randlib_exponential.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/sgamma.f",
+      "sha256": "c9f8f56ddb54e91af86c5029a1a20fb33e643d8fb50bb3a522b4b1f9ef16cfa3",
+      "role": "library",
+      "groups": [
+        "gamma"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_gamma.py",
+        "tests/test_randlib_gamma.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/snorm.f",
+      "sha256": "dd5adcfcce50a87582306fe8d46af915796fc08c0eff65198849bb94785b5b83",
+      "role": "library",
+      "groups": [
+        "normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_normal.py",
+        "tests/test_randlib_normal.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/src/spofa.f",
+      "sha256": "722c76d7d00fabc0e44610ee5c2e4cc8833cdd41d7e6394e320760e40e924447",
+      "role": "library",
+      "groups": [
+        "multivariate_normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib_multivariate.py",
+        "tests/test_randlib_multivariate_normal.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/test/tstbot.f",
+      "sha256": "c507dbf43a36998c2bf08c453a38b0fdbed633310df8f386ad972efc9250c40a",
+      "role": "demonstration",
+      "groups": [
+        "streams"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib.py",
+        "tests/test_randlib.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/test/tstgmn.f",
+      "sha256": "e730670c67f5e3a2faddac895b16d5445ec28d2a712bfb59965c1773ff2499a0",
+      "role": "demonstration",
+      "groups": [
+        "multivariate_normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/randlib_multivariate.py",
+        "tests/test_randlib_multivariate_normal.py"
+      ]
+    },
+    {
+      "path": "source/randlib.f/test/tstmid.f",
+      "sha256": "af01762fd063f98bdcc52e2aca9008026f55572727c870bceda2b5f05015f1de",
+      "role": "demonstration",
+      "groups": [
+        "streams",
+        "seeding",
+        "sampling",
+        "exponential",
+        "normal",
+        "gamma",
+        "chi_f",
+        "beta",
+        "binomial",
+        "poisson",
+        "negative_binomial",
+        "multinomial",
+        "multivariate_normal"
+      ],
+      "evidence": [
+        "src/mdanderson_stats/_randlib_beta.py",
+        "src/mdanderson_stats/_randlib_binomial.py",
+        "src/mdanderson_stats/_randlib_chi_f.py",
+        "src/mdanderson_stats/_randlib_distributions.py",
+        "src/mdanderson_stats/_randlib_gamma.py",
+        "src/mdanderson_stats/_randlib_multinomial.py",
+        "src/mdanderson_stats/_randlib_negative_binomial.py",
+        "src/mdanderson_stats/_randlib_normal.py",
+        "src/mdanderson_stats/_randlib_poisson.py",
+        "src/mdanderson_stats/_randlib_sampling.py",
+        "src/mdanderson_stats/_randlib_seeding.py",
+        "src/mdanderson_stats/randlib.py",
+        "src/mdanderson_stats/randlib_multivariate.py",
+        "tests/test_randlib.py",
+        "tests/test_randlib_beta.py",
+        "tests/test_randlib_binomial.py",
+        "tests/test_randlib_chi_f.py",
+        "tests/test_randlib_exponential.py",
+        "tests/test_randlib_gamma.py",
+        "tests/test_randlib_multinomial.py",
+        "tests/test_randlib_multivariate_normal.py",
+        "tests/test_randlib_negative_binomial.py",
+        "tests/test_randlib_normal.py",
+        "tests/test_randlib_poisson.py",
+        "tests/test_randlib_sampling.py",
+        "tests/test_randlib_seeding.py"
+      ]
+    }
+  ]
+}

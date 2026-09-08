@@ -287,56 +287,18 @@ RANLIST is complete for the archived source/manual workflows. Its
 persistence and printing, including native source defects and measured batch
 performance. `ranlist_starting_seeds` reproduces original setup phrase handling.
 
-`RandlibGenerator` begins [RANDLIB](docs/randlib.md) with 32 independent stream
-states, antithetic draws, block resets, seed controls and efficient jumps.
-Fortran 77 and Fortran 95 comparisons validate the generator foundation;
-additional non-uniform distribution samplers remain pending.
+`RandlibGenerator` implements [RANDLIB](docs/randlib.md): 32 independent
+streams, antithetic control, block reset/advancement, phrase/time seeding,
+uniform and bounded-integer draws, permutations, and exponential, normal,
+gamma, beta, chi-square, F, binomial, Poisson, negative-binomial, multinomial
+and multivariate-normal sampling. Noncentral chi-square and F are included.
+`RandlibMultivariateNormal` prepares immutable reusable covariance factors.
 
-RANDLIB now includes bounded uniform sampling and forward random permutations,
-with explicit Fortran/C float compatibility and bounded rejection sampling.
-Native comparisons cover all three archived language implementations.
-
-RANDLIB exponential sampling now supports a vectorized default and original
-Ahrens–Dieter sampling with Fortran/C rounding compatibility. Native fixtures
-verify both values and generator-state consumption.
-
-RANDLIB normal sampling adds a vectorized inverse-CDF default and original
-FL sampling with separate C and Fortran constants and rounding. Native fixtures
-verify 9,000 normal values and their component states.
-
-RANDLIB gamma sampling adds a vectorized default and the archived GS/GD
-algorithms, with explicit shape/rate parameters, C/Fortran arithmetic and
-transactional draw limits. Native fixtures cover both shape regimes and
-changes of shape between consecutive draws.
-
-RANDLIB now includes central/noncentral chi-square and F sampling. Vectorized
-defaults check inverse-CDF accuracy; legacy modes preserve the reference
-builds' draw order, near-one rules and warned F truncation.
-
-RANDLIB beta sampling adds vectorized inverse-CDF draws and original Cheng
-BB/BC algorithms, with C/Fortran rounding, source minimum-shape checks,
-overflow guards and transactional rejection limits.
-
-RANDLIB binomial sampling adds vectorized quantiles with probability-bracket
-checks and original inversion/BTPE sampling, including native count/state
-validation and explicit legacy rounding and integer-range limits.
-
-RANDLIB Poisson sampling adds vectorized quantiles, source inversion and
-modified-normal rejection, with native count/state checks and an explicit
-repair for the archived Fortran cumulative table’s lifetime.
-
-RANDLIB negative-binomial sampling adds vectorized quantiles and validated
-gamma–Poisson composition, with explicit failures-before-successes counts
-and a shared transactional budget for all nested draws.
-
-RANDLIB multinomial sampling adds batched conditional binomials, full
-probability-vector validation, exact native vectors and generator states,
-and checks of category totals, marginal distributions and covariances.
-
-RANDLIB multivariate-normal sampling adds immutable reusable covariance
-factors, batched matrix transforms, and native C/Fortran 77/95 factor, vector
-and generator-state validation.
-
-RANDLIB phrase and time seeding now reset all streams explicitly and return
-base seeds for replay, with validated Fortran/C character mappings and guards
-for undefined C lookup inputs.
+Vectorized defaults provide mathematical distribution sampling with numerical
+checks. Legacy modes retain recorded C/Fortran algorithms, rounding and draw
+consumption. Native fixtures validate values, factors and generator states;
+additional tests cover moments, tails, covariance, resource limits and rollback.
+The [archive audit](docs/randlib-coverage.md) accounts for all 88 members and
+documents repairs, compatibility limits and the treatment of demonstration
+programs. [Benchmarks](docs/randlib-benchmark.json) compare batched draws with
+repeated scalar calls to the same Python API.
