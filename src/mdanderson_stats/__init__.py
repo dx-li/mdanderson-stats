@@ -21,7 +21,8 @@ from .binomial_design import (
 from .binomial_null import BinomialNull, binomial_null
 from .binomial_sample_size import binomial_sample_size
 from .bp1ci import BP1CIResult, bp1ci
-from .cumulative_incidence import CumulativeIncidence, cumulative_incidence
+from .cuminc_study import CumIncStudy, cuminc
+from .cumulative_incidence import CumulativeIncidence, IncidenceSummary, cumulative_incidence
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .gray_test import GrayTest, gray_test
 from .intervals import (
@@ -101,6 +102,9 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "CumIncStudy",
+    "cuminc",
+    "IncidenceSummary",
     "GrayTest",
     "gray_test",
     "CumulativeIncidence",

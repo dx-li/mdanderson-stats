@@ -1,8 +1,8 @@
 # CUMINC cumulative-incidence curves
 
-Catalog entry 39 is **partial**. One-cause curve estimation and the original
-Aalen variance convention and multi-group/stratified Gray tests are implemented.
-Confidence intervals, full multi-curve summaries and plots remain pending.
+Catalog entry 39 is **partial**. Curve estimation, Aalen variance,
+multi-group/stratified Gray tests, pointwise confidence intervals and combined
+numerical summaries are implemented. Plots remain pending.
 
 Source: [CUMINC](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/39),
 contact Ken Hess, distributed as `CUMINC_V1.tar.gz`. Its S-PLUS interface calls
@@ -22,8 +22,8 @@ nonnegative. Event codes are nonnegative integers; the default censoring code is
 0 and the event of interest is 1. All other noncensoring codes are competing
 events. Input order need not be sorted. Missing values are rejected explicitly;
 this core API does not silently apply the S-PLUS interface's complete-case deletion.
-String cause labels will be addressed in the pending multi-curve interface;
-`gray_test` already supports string group and stratum labels.
+`cuminc` supports string cause, group and stratum labels; `gray_test` supports
+string group and stratum labels.
 
 At each distinct time, the risk set includes all observations whose follow-up
 ends at that time, including tied censored observations. Overall survival falls
@@ -112,3 +112,64 @@ extraction, driver, supplied-data hashes and compiler version. Independent tests
 cover a hypergeometric first-event variance, chi-square tail identities, stratum
 addition, reference-group/row/time/code transformations, fully and partially
 singular comparisons, and input validation.
+
+## Combined analyses and reports
+
+```python
+from mdanderson_stats import cuminc
+
+study = cuminc(
+    [0, 1, 2, 3],
+    ["relapse", "relapse", "death", "censored"],
+    ["A", "A", "B", "B"],
+    censor="censored",
+    confidence=0.9,
+)
+print(study.report(times=[0, 1, 2, 3]))
+selected = study.summaries([0, 1, 3], causes="relapse", groups="A")
+# study.write_report("cuminc.txt", times=[0, 1, 2, 3])
+```
+
+`cuminc` fits every observed noncensoring cause within every group and computes
+one Gray test per cause when multiple groups exist. Optional `strata` only changes
+the tests; descriptive curves still use the full group. The result exposes
+immutable `curves[(cause, group)]`, `tests[cause]` and `group_counts` mappings.
+Curve objects use internal consecutive event codes; mapping keys preserve the
+original labels. Each label vector must contain all strings or all finite numbers.
+An omitted group represents one group. All-censored input has group counts and
+empty cause, curve and test collections.
+
+Missing observations are rejected by default. `missing="drop"` explicitly enables
+the archived interface's joint complete-case deletion over time, cause, group and
+stratum. `None` and numeric NaN are missing; infinity remains invalid. `n_dropped`
+records the excluded row count. Removing every row raises an error.
+
+`curve.summary(times=None, confidence=0.95)` returns an `IncidenceSummary` containing
+five read-only columns: time, incidence, standard error, lower limit, upper limit.
+Intervals follow the archive's normal approximation, clipped to [0, 1]. They are
+pointwise asymptotic intervals, not simultaneous confidence bands. The quantile
+uses the small tail to avoid rounding the upper probability to one at confidence
+levels near 100%. Zero variance stays finite at these levels.
+
+Omitting summary times preserves all stored step corners, including left/right
+limits. Explicit scalar or vector times use right-continuous evaluation, preserve
+input order and duplicates, and extend the last observed value past follow-up.
+The archive delegates time selection to the unavailable S-PLUS `survindex2` routine;
+these Python selection semantics are explicit and tested. `study.summaries`
+selects exact cause/group labels; ambiguous partial matching is not used.
+
+`summary.report` and `study.report` return text; `write_report` writes UTF-8 files
+and propagates filesystem errors. Significant-digit precision is configurable
+from 1 to 17. Interval column labels reflect the actual confidence level, fixing
+the archive's unconditional “95%” labels. Study reports include individual event
+counts, Gray statistics/p-values/rank (NA for singular tests), and curve summaries.
+Formatting and interval evaluation do not recompute the fits.
+
+Validation applies the archived interval formula to all 13 native CINC fixtures
+at two confidence levels using an independent standard-library normal quantile.
+Combined-interface tests compare 48 native Gray cases through string cause/group
+labels and native CINC curves through the single-group interface. Additional
+checks cover time-zero and duplicate queries, interval nesting, extreme confidence,
+selection, all-censored data, missing-data policy, stratification, immutable results,
+precision, file replacement and report round trips. Plot overlays, grids and
+confidence-limit rendering remain pending.

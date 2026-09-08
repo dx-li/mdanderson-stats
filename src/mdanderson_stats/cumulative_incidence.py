@@ -1,11 +1,42 @@
 """Competing-risk cumulative incidence curves and Aalen variance estimates."""
 
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
 from numpy.typing import ArrayLike
+from scipy.special import ndtri
 
-from ._validation import FloatArray, count, finite
+from ._validation import FloatArray, count, finite, scalar
+
+
+@dataclass(frozen=True)
+class IncidenceSummary:
+    """Read-only time, incidence, standard error and pointwise interval columns."""
+
+    rows: FloatArray
+    confidence: float
+
+    @property
+    def columns(self) -> tuple[str, ...]:
+        percent = str(100 * self.confidence).removesuffix(".0")
+        return ("time", "incidence", "std.err", f"lower {percent}% CI", f"upper {percent}% CI")
+
+    def report(self, *, digits: int = 6) -> str:
+        """Tab-separated summary using the requested significant-digit precision."""
+        if (
+            isinstance(digits, (bool, np.bool_))
+            or not isinstance(digits, (int, np.integer))
+            or not 1 <= digits <= 17
+        ):
+            raise ValueError("digits must be an integer from 1 to 17")
+        lines = ["\t".join(self.columns)]
+        lines.extend("\t".join(f"{value:.{digits}g}" for value in row) for row in self.rows)
+        return "\n".join(lines) + "\n"
+
+    def write_report(self, path: str | Path, *, digits: int = 6) -> None:
+        """Write a UTF-8 tab-separated report, replacing an existing destination."""
+        Path(path).write_text(self.report(digits=digits), encoding="utf-8")
 
 
 @dataclass(frozen=True)
@@ -32,6 +63,42 @@ class CumulativeIncidence:
             raise ValueError("times must be nonnegative")
         index = np.searchsorted(self.time, t, side="right") - 1
         return self.estimate[index], self.variance[index]
+
+    def summary(
+        self, times: ArrayLike | None = None, *, confidence: float = 0.95
+    ) -> IncidenceSummary:
+        """Pointwise normal intervals clipped to [0, 1], as in archived CUMINC.
+
+        Omitted times preserve every step corner, including left/right limits.
+        Explicit scalar or vector times use right-continuous values in the given
+        order. Values after maximum follow-up follow the curve's flat extension.
+        These are pointwise asymptotic intervals, not simultaneous bands.
+        """
+        level = scalar(confidence, "confidence")
+        if not 0 < level < 1:
+            raise ValueError("confidence must be strictly between 0 and 1")
+        if times is None:
+            t, estimate, variance = self.time, self.estimate, self.variance
+        else:
+            t = finite(times, "times")
+            if t.ndim > 1:
+                raise ValueError("summary times must be a scalar or vector")
+            t = t.reshape(-1)
+            estimate, variance = self.at(t)
+        standard_error = np.sqrt(variance)
+        # Inverting the small tail avoids rounding the upper probability to 1.
+        half_width = -ndtri((1 - level) / 2) * standard_error
+        rows = np.column_stack(
+            [
+                t,
+                estimate,
+                standard_error,
+                np.clip(estimate - half_width, 0, 1),
+                np.clip(estimate + half_width, 0, 1),
+            ]
+        )
+        rows.flags.writeable = False
+        return IncidenceSummary(rows, level)
 
 
 def cumulative_incidence(
