@@ -756,9 +756,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "cumulative_incidence: one-cause competing-risk incidence and CINC/Aalen variance, tied-event risk sets, step curves and right-continuous evaluation"
+      ],
+      "validation": [
+        "tests/test_cumulative_incidence.py",
+        "tests/fixtures/cuminc.json",
+        "tools/reference_cuminc.py",
+        "docs/cuminc.md"
+      ]
     },
     {
       "id": 40,

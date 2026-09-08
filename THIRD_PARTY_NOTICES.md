@@ -202,3 +202,12 @@ bundled. The archive's LEGALITIES file permits use and redistribution subject
 to preserved notices and separate conditions for incorporating original code in
 commercial packages; its original beta and root-finding dependencies also carry
 ACM notices. These original routines are not incorporated into the Python package.
+
+## CUMINC
+
+`cumulative_incidence.py` independently expresses competing-risk incidence and
+Aalen variance calculations. Original CINC is used only in a local native
+reference build; provenance is recorded in `tests/fixtures/cuminc.json`. No
+original source, binaries or documentation are bundled. The downloaded archive
+contains no explicit redistribution license notice. Its cited statistical
+references include Aalen (1978), Kalbfleisch and Prentice (1980), and Gray (1988).

@@ -21,6 +21,7 @@ from .binomial_design import (
 from .binomial_null import BinomialNull, binomial_null
 from .binomial_sample_size import binomial_sample_size
 from .bp1ci import BP1CIResult, bp1ci
+from .cumulative_incidence import CumulativeIncidence, cumulative_incidence
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .intervals import (
     binomial_interval,
@@ -99,6 +100,8 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 
 __all__ = [
+    "CumulativeIncidence",
+    "cumulative_incidence",
     "SeqBinBoundaryTable",
     "SeqBinStudy",
     "SeqBinStudySpecification",

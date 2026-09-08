@@ -164,3 +164,7 @@ sizes. `seqbin_prior` converts prior mean/size inputs; `seqbin_calibrate` and
 `SeqBinStudySpecification` adds full numerical reports, compact tables, revision
 and JSON replay. [SEQBIN coverage](docs/seqbin-coverage.md) records the completed
 source/manual audit, compatibility differences and batch benchmarks.
+
+`cumulative_incidence` estimates competing-risk incidence curves and Aalen
+variances. [CUMINC coverage](docs/cuminc.md) tracks the remaining group tests,
+confidence intervals and plotting workflows.
