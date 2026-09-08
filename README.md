@@ -336,3 +336,8 @@ The [TDTASP archive audit](docs/tdtasp-coverage.md) covers all 44 archived files
 beta tails, quantiles and shape inversions. They broadcast arrays and retain
 small probability/coordinate complements. [CDFLIB90 notes](docs/cdflib90.md)
 describe native validation, corrected source defects and the remaining scope.
+
+
+`cdf_normal`, `cum_normal`, `ccum_normal` and `inv_normal` add CDFLIB90's normal
+location/scale calculations, including mean and standard-deviation inversion,
+small complementary probabilities and explicit rejection of unidentified scales.

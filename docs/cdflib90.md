@@ -3,8 +3,8 @@
 CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
-The entry is **partial**: the beta distribution's four public interfaces are
-implemented. The other 11 distribution modules, the remaining archived library
+The entry is **partial**: the beta and normal distributions' four public interfaces
+are implemented. The other 10 distribution modules, the remaining archived library
 interfaces and the complete 106-file archive audit remain outstanding.
 
 Source: [catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/21)
@@ -124,3 +124,56 @@ inversion. Both results are checked against one another and analytic beta
 identities. The artifact records median-of-three timings, environment versions
 and all input-generation parameters. It measures amortized Python overhead and
 vectorized numerical work; it is not a comparison against native Fortran.
+
+
+## Normal distribution
+
+```python
+from mdanderson_stats import cdf_normal, cum_normal, ccum_normal, inv_normal
+
+lower = cum_normal([-2, 0, 3], mean=1, sd=2)
+upper = ccum_normal([-2, 0, 3], mean=1, sd=2)
+quantile = inv_normal(ccum=1e-100, mean=1, sd=2)
+location = cdf_normal(3, x=5, cum=0.5, sd=2).mean  # 5
+scale = cdf_normal(4, x=3, cum=0.9, mean=1).sd
+```
+
+`cdf_normal` computes group 1 (cum/ccum), 2 (x), 3 (mean), or 4 (sd).
+The result is an immutable `CDFNormal` containing the computed-group index and
+all five broadcast arrays. Omit the computed group; input mean and SD default
+to zero and one. Inputs and outputs retain the source's location domain
+[-1e100,1e100] and SD domain [1e-10,1e100]. Inversion accepts any positive
+representable pair of probability tails, extending the archived 1e-10 cutoff.
+Probability-pair consistency and preservation of small complements follow the
+beta interface. Zero tails are rejected for inversion because they do not
+identify a finite normal quantile.
+
+The standardization is z=(x-mean)/sd. Forward tails reuse the package's validated
+`normal_tails` kernel. Inversion computes z from the smaller probability with
+SciPy `ndtri`, changing sign for an upper-tail request. It then calculates
+x=mean+sd*z, mean=x-sd*z, or sd=(x-mean)/z directly. There is no iterative search
+and no loop over individual observations. This retains upper-tail accuracy when
+the lower CDF rounds to one. Plain forward probabilities can underflow; callers
+needing log tails can use `normal_tails(..., log=True)` with standardized inputs.
+
+SD inversion rejects median probability: z=0 gives either no solution or an
+unidentified scale, depending on x and mean. It also rejects negative, zero or
+out-of-domain answers. Input bounds remain strict. A computed answer only a few
+rounding units beyond a domain endpoint is placed on that endpoint: the maximum
+allowance is eight machine epsilons times the absolute endpoint. Larger excursions
+raise `ValueError`. This allows a boundary SD to survive CDF/inverse round trips
+without accepting genuinely out-of-range input values. Ordinary double-precision
+location/scale arithmetic can also lose small offsets relative to large means;
+these interfaces do not provide arbitrary-precision reconstruction.
+
+`tools/reference_cdflib_normal.py` compiles eight unmodified original source
+files with a separate driver. The fixture records all source/archive hashes,
+compiler, command, driver and 243 forward/inverse cases across standardized
+positions, means and scales. All five Python outputs are compared with the native
+results. Three additional source cases return success while producing a negative,
+infinite or NaN SD; tests verify that Python rejects those invalid requests.
+Independent tests use the complementary-error-function identity for normal tails,
+location/scale inversion, extreme-tail reflection at z=37, defaults, broadcasting,
+immutable ownership, strict inputs and computed boundary round trips. The manual's
+normal-density illustration omits the negative sign in the exponent; the actual
+source and this implementation use the standard exp(-z²/2) density.
