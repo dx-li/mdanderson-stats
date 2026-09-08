@@ -2,8 +2,9 @@
 
 Catalog entry 29 is partial. The phrase-to-seed conversion and indexed random
 streams, unrestricted allocation and restricted allocation with fixed/random
-balance points are implemented. Strata/list management, saved parameter files,
-interactive assignment and reports remain pending.
+balance points, named list specifications and per-stratum enrollment/inquiry
+are implemented. Saved parameter files, reports and the full workflow audit
+remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/29)
 lists version 1, modified August 23, 2002. The archive filename contains two
@@ -104,7 +105,8 @@ cumulative boundaries, uniforms, treatment assignments, seed, stream and legacy
 setting. Arrays are read-only. Requested patients may be unsorted, repeated or
 in any array shape. There is no shared patient counter: querying other patients
 or streams cannot change an assignment. This provides indexed assignments;
-interactive enrollment counters and saved lists are not yet implemented.
+enrollment counters are provided by `RanlistSession` below; saved parameter
+files remain pending.
 
 Default normalization scales weights by their maximum before summing, preventing
 overflow for large finite weights. Cumulative probabilities are double precision,
@@ -198,3 +200,68 @@ exactly. Independent tests check complete-block balance, the manual's refill
 rule, forward shuffling, source draw reuse after rejection, distant indexed
 queries, shape/order preservation and computation limits. This validates the
 restricted numerical kernel; the remaining list workflows are still pending.
+
+
+## Lists and per-stratum enrollment
+
+```python
+from mdanderson_stats import RanlistSession, RanlistSpecification, ranlist_seeds
+
+specification = RanlistSpecification(
+    weights=(1, 2),
+    restricted=True,
+    balance=(1, 4),
+    strata=("North", "South"),
+    treatments=("Control", "Experimental"),
+    title=("Example trial",),
+    phrase="trial 123",
+    seed=ranlist_seeds("trial 123"),
+)
+state = RanlistSession(specification)
+state, assignments = state.enroll([2, 1, 2])
+# Patients 1 in South, 1 in North, and 2 in South.
+assert state.current_patients == (1, 2)
+previous = state.inquire([1, 2], strata=2)
+future = specification.allocate([10, 11], strata=1)
+```
+
+`RanlistSpecification` retains an immutable, validated list definition.
+`weights` supplies integer counts for restricted lists and relative frequencies
+for unrestricted lists. The numerical kernels' defaults and legacy behavior
+remain unchanged. Unrestricted lists use `balance=(1, 1)` because they have no
+balance blocks. Each of the 1..20 strata maps to its corresponding RNG stream.
+Queries use one-based numeric stratum indices; names are descriptive labels.
+
+Labels follow the source's field widths: 1..9 nonblank title lines of at most
+80 characters, stratum/treatment names of at most 30, and a phrase of at most
+31. They must be printable ASCII; trailing spaces are removed. Names must all
+be present or all blank within each category, avoiding the source file's blank
+first-name sentinel ambiguity. Empty treatment names default to an unnamed
+entry per weight. The seed pair is authoritative; a phrase is metadata and is
+not silently rehashed. Supply `ranlist_seeds(phrase)` when creating a list from
+a phrase. These specifications do not yet serialize the original file format.
+
+`RanlistSession` holds one nonnegative enrollment counter per stratum, initially
+zero. `enroll(strata)` processes arrivals in array C order, assigns successive
+patient numbers within each stratum, and returns `(updated_session, assignments)`.
+Retain the updated session for subsequent enrollment. The original session is
+unchanged, including when any part of a batch fails. Treatment evaluation is
+batched once per participating stratum rather than repeated for each arrival.
+Counters may be supplied explicitly to resume known state, subject to the
+numerical patient limit below 2^53. This immutable API provides in-process
+state transitions; durable or concurrent enrollment storage is not implemented.
+
+`inquire(patients, strata=...)` accepts only already-enrolled patients and does
+not advance counters, matching WRKLST's inquiry rule. The specification's
+`allocate` method may also query future positions for list generation. Patient
+and stratum inputs broadcast together, preserving scalar/array shape, repeats
+and ordering. Results contain read-only `patients`, `strata` and `treatments`.
+Empty enrollment batches preserve the counters. Invalid strata, unsupported
+patient numbers and resource-limit failures raise before returning new state.
+
+Session tests exercise interleaved and sequential enrollment, resumed counters,
+queries, immutable input snapshots, failures without counter advancement,
+broadcasting, boundary counts and metadata validation. Restricted/unrestricted
+assignments in both modes are compared with the independently native-validated
+kernels. The source counter and inquiry branches were inspected; this is not
+yet an execution comparison of the complete interactive WRKLST program.

@@ -269,3 +269,7 @@ and stream, with explicit source rounding compatibility.
 `ranlist_restricted` adds fixed and random balance blocks, with exact treatment
 counts per completed block and an explicit mode for the archived source's
 sampling and indexed allocation behavior.
+
+`RanlistSpecification` and `RanlistSession` add named strata, reusable list
+definitions, batch enrollment with per-stratum counters and prior-patient
+inquiries. Sessions return immutable updates after successful allocation.
