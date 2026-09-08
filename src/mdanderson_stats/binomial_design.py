@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 
 import numpy as np
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 
 from ._validation import FloatArray, count, finite
 from .onesample import binomial_test
@@ -65,23 +65,16 @@ def binomial_power(
         )
     lower_tail = pa < p0
 
-    def evaluate(included: FloatArray, p: FloatArray) -> tuple[FloatArray, FloatArray]:
-        critical = np.where(lower_tail, included - 1, n - included + 1)
-        result = binomial_test(np.clip(critical, 0, n), n, p)
-        tail = np.where(lower_tail, result.p_less, result.p_greater)
-        tail = np.where(included == 0, 0, np.where(included == n + 1, 1, tail))
-        return critical, tail
-
     lo, hi = np.zeros(n.shape), n + 1
     while np.any(hi - lo > 1):
         mid = lo + np.floor((hi - lo) / 2)
-        _, size = evaluate(mid, p0)
+        _, size = _binomial_region(n, lower_tail, mid, p0)
         acceptable = size <= level
         lo, hi = np.where(acceptable, mid, lo), np.where(acceptable, hi, mid)
-    critical, significance = evaluate(lo, p0)
-    _, power = evaluate(lo, pa)
-    next_critical, next_significance = evaluate(lo + 1, p0)
-    _, next_power = evaluate(lo + 1, pa)
+    critical, significance = _binomial_region(n, lower_tail, lo, p0)
+    _, power = _binomial_region(n, lower_tail, lo, pa)
+    next_critical, next_significance = _binomial_region(n, lower_tail, lo + 1, p0)
+    _, next_power = _binomial_region(n, lower_tail, lo + 1, pa)
     return BinomialPower(
         n,
         p0,
@@ -93,4 +86,91 @@ def binomial_power(
         next_critical,
         next_significance,
         next_power,
+    )
+
+
+def _binomial_region(
+    n: FloatArray, lower_tail: NDArray[np.bool_], included: FloatArray, p: FloatArray
+) -> tuple[FloatArray, FloatArray]:
+    critical = np.where(lower_tail, included - 1, n - included + 1)
+    result = binomial_test(np.clip(critical, 0, n), n, p)
+    tail = np.where(lower_tail, result.p_less, result.p_greater)
+    tail = np.where(included == 0, 0, np.where(included == n + 1, 1, tail))
+    return critical, tail
+
+
+@dataclass(frozen=True)
+class BinomialSignificance:
+    """Least permissive test reaching target_power, with its previous candidate.
+
+    previous_* excludes one more event count and has power below target_power.
+    A full rejection region has significance=power=1; it is reported explicitly.
+    The direction is determined by alternative_probability versus null_probability.
+    """
+
+    trials: FloatArray
+    null_probability: FloatArray
+    alternative_probability: FloatArray
+    target_power: FloatArray
+    critical: FloatArray
+    significance: FloatArray
+    power: FloatArray
+    previous_critical: FloatArray
+    previous_significance: FloatArray
+    previous_power: FloatArray
+
+
+def binomial_significance(
+    trials: ArrayLike,
+    null_probability: ArrayLike,
+    alternative_probability: ArrayLike,
+    target_power: ArrayLike = 0.8,
+) -> BinomialSignificance:
+    """Find the minimum achieved significance that attains target_power.
+
+    Inputs broadcast. The direction follows the alternative; probabilities and
+    target_power must lie strictly in (0,1), and null and alternative must differ.
+    Uses discrete count bisection, including empty/full candidate regions.
+    """
+    n, p0, pa, target = np.broadcast_arrays(
+        count(trials, "trials"),
+        finite(null_probability, "null_probability"),
+        finite(alternative_probability, "alternative_probability"),
+        finite(target_power, "target_power"),
+    )
+    if np.any(
+        (n < 1)
+        | (p0 <= 0)
+        | (p0 >= 1)
+        | (pa <= 0)
+        | (pa >= 1)
+        | (p0 == pa)
+        | (target <= 0)
+        | (target >= 1)
+    ):
+        raise ValueError(
+            "Require positive integral trials, distinct interior probabilities and 0<target_power<1"
+        )
+    lower_tail = pa < p0
+    lo, hi = np.zeros(n.shape), n + 1
+    while np.any(hi - lo > 1):
+        mid = lo + np.floor((hi - lo) / 2)
+        _, power = _binomial_region(n, lower_tail, mid, pa)
+        adequate = power >= target
+        lo, hi = np.where(adequate, lo, mid), np.where(adequate, mid, hi)
+    critical, significance = _binomial_region(n, lower_tail, hi, p0)
+    _, power = _binomial_region(n, lower_tail, hi, pa)
+    previous_critical, previous_significance = _binomial_region(n, lower_tail, hi - 1, p0)
+    _, previous_power = _binomial_region(n, lower_tail, hi - 1, pa)
+    return BinomialSignificance(
+        n,
+        p0,
+        pa,
+        target,
+        critical,
+        significance,
+        power,
+        previous_critical,
+        previous_significance,
+        previous_power,
     )

@@ -115,3 +115,8 @@ and reports achieved power and adjacent alternatives, using KSBIN1's XBIN1 outpu
 semantics with explicit empty-region handling. The private reference build applies
 only the documented auxiliary success-status repair; its provenance is recorded
 in `tests/fixtures/binomial_power.json`.
+
+`binomial_significance` provides KSBIN1's significance solve mode through discrete
+count search, with its original alpha search floor removed. Native mode-4 reference
+provenance and the shared auxiliary status repair are recorded in
+`tests/fixtures/binomial_significance.json`.

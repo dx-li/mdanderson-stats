@@ -1,0 +1,261 @@
+{
+  "source": "KSBIN1 solve_binomial_one_sample mode 4; unchanged statistical routines",
+  "status_patch": {
+    "helpers": [
+      "add_to_one",
+      "check_complements",
+      "dbl_in_range",
+      "int_in_range",
+      "validate_parameters"
+    ],
+    "change": "Initialize optional status=0 at entry"
+  },
+  "source_sha256": "b8ba9be25804c6a513e4dc13141f299ee352453e5c747a82530a92e10a2ff04c",
+  "auxiliary_sha256": "84f2a92626e28c457be165f4050224190656b00b032197c46648cac0f262bfa6",
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "cases": [
+    {
+      "trials": 20,
+      "null": 0.2,
+      "alternative": 0.06,
+      "target_power": 0.5,
+      "status": 0,
+      "significance": 0.0691752902764108,
+      "power": 0.660454634065243
+    },
+    {
+      "trials": 20,
+      "null": 0.2,
+      "alternative": 0.06,
+      "target_power": 0.8,
+      "status": 0,
+      "significance": 0.2060847189484738,
+      "power": 0.8850275957378549
+    },
+    {
+      "trials": 20,
+      "null": 0.2,
+      "alternative": 0.06,
+      "target_power": 0.95,
+      "status": 0,
+      "significance": 0.4114488619565685,
+      "power": 0.9710342619103445
+    },
+    {
+      "trials": 20,
+      "null": 0.3,
+      "alternative": 0.6,
+      "target_power": 0.5,
+      "status": 0,
+      "significance": 0.005138161535121396,
+      "power": 0.5955987253122245
+    },
+    {
+      "trials": 20,
+      "null": 0.3,
+      "alternative": 0.6,
+      "target_power": 0.8,
+      "status": 0,
+      "significance": 0.047961897331343435,
+      "power": 0.8724787538527833
+    },
+    {
+      "trials": 20,
+      "null": 0.3,
+      "alternative": 0.6,
+      "target_power": 0.95,
+      "status": 0,
+      "significance": 0.22772820258183943,
+      "power": 0.9789710725222289
+    },
+    {
+      "trials": 20,
+      "null": 0.8,
+      "alternative": 0.94,
+      "target_power": 0.5,
+      "status": 0,
+      "significance": 0.06917529027641092,
+      "power": 0.6604546340652424
+    },
+    {
+      "trials": 20,
+      "null": 0.8,
+      "alternative": 0.94,
+      "target_power": 0.8,
+      "status": 0,
+      "significance": 0.2060847189484742,
+      "power": 0.8850275957378545
+    },
+    {
+      "trials": 20,
+      "null": 0.8,
+      "alternative": 0.94,
+      "target_power": 0.95,
+      "status": 0,
+      "significance": 0.4114488619565687,
+      "power": 0.9710342619103444
+    },
+    {
+      "trials": 50,
+      "null": 0.2,
+      "alternative": 0.06,
+      "target_power": 0.5,
+      "status": 0,
+      "significance": 0.005656361012155303,
+      "power": 0.647303372096317
+    },
+    {
+      "trials": 50,
+      "null": 0.2,
+      "alternative": 0.06,
+      "target_power": 0.8,
+      "status": 0,
+      "significance": 0.01849601506020934,
+      "power": 0.8205960468596495
+    },
+    {
+      "trials": 50,
+      "null": 0.2,
+      "alternative": 0.06,
+      "target_power": 0.95,
+      "status": 0,
+      "significance": 0.10339822745296659,
+      "power": 0.9710759059501985
+    },
+    {
+      "trials": 50,
+      "null": 0.3,
+      "alternative": 0.6,
+      "target_power": 0.5,
+      "status": 0,
+      "significance": 1.058933183235479e-05,
+      "power": 0.5610349320400672
+    },
+    {
+      "trials": 50,
+      "null": 0.3,
+      "alternative": 0.6,
+      "target_power": 0.8,
+      "status": 0,
+      "significance": 0.0003412692023797446,
+      "power": 0.8438316691000456
+    },
+    {
+      "trials": 50,
+      "null": 0.3,
+      "alternative": 0.6,
+      "target_power": 0.95,
+      "status": 0,
+      "significance": 0.005592169563752766,
+      "power": 0.9685944469007797
+    },
+    {
+      "trials": 50,
+      "null": 0.8,
+      "alternative": 0.94,
+      "target_power": 0.5,
+      "status": 0,
+      "significance": 0.0056563610121553205,
+      "power": 0.6473033720963166
+    },
+    {
+      "trials": 50,
+      "null": 0.8,
+      "alternative": 0.94,
+      "target_power": 0.8,
+      "status": 0,
+      "significance": 0.01849601506020939,
+      "power": 0.8205960468596492
+    },
+    {
+      "trials": 50,
+      "null": 0.8,
+      "alternative": 0.94,
+      "target_power": 0.95,
+      "status": 0,
+      "significance": 0.10339822745296667,
+      "power": 0.9710759059501983
+    },
+    {
+      "trials": 100,
+      "null": 0.2,
+      "alternative": 0.06,
+      "target_power": 0.5,
+      "status": 0,
+      "significance": 7.796360205412954e-05,
+      "power": 0.6063540325796792
+    },
+    {
+      "trials": 100,
+      "null": 0.2,
+      "alternative": 0.06,
+      "target_power": 0.8,
+      "status": 0,
+      "significance": 0.0008553983622184314,
+      "power": 0.8537130531091499
+    },
+    {
+      "trials": 100,
+      "null": 0.2,
+      "alternative": 0.06,
+      "target_power": 0.95,
+      "status": 0,
+      "significance": 0.005696380955793506,
+      "power": 0.9623932274327925
+    },
+    {
+      "trials": 100,
+      "null": 0.3,
+      "alternative": 0.6,
+      "target_power": 0.5,
+      "status": 0,
+      "significance": 5.9322928193593264e-09,
+      "power": 0.6967398701565546
+    },
+    {
+      "trials": 100,
+      "null": 0.3,
+      "alternative": 0.6,
+      "target_power": 0.8,
+      "status": 0,
+      "significance": 5.8505106333502574e-08,
+      "power": 0.8210983672768943
+    },
+    {
+      "trials": 100,
+      "null": 0.3,
+      "alternative": 0.6,
+      "target_power": 0.95,
+      "status": 0,
+      "significance": 3.5614815186427923e-06,
+      "power": 0.9576985798108621
+    },
+    {
+      "trials": 100,
+      "null": 0.8,
+      "alternative": 0.94,
+      "target_power": 0.5,
+      "status": 0,
+      "significance": 7.796360205412999e-05,
+      "power": 0.6063540325796772
+    },
+    {
+      "trials": 100,
+      "null": 0.8,
+      "alternative": 0.94,
+      "target_power": 0.8,
+      "status": 0,
+      "significance": 0.0008553983622184359,
+      "power": 0.8537130531091495
+    },
+    {
+      "trials": 100,
+      "null": 0.8,
+      "alternative": 0.94,
+      "target_power": 0.95,
+      "status": 0,
+      "significance": 0.005696380955793533,
+      "power": 0.9623932274327922
+    }
+  ]
+}

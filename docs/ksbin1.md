@@ -78,8 +78,8 @@ check mass conservation, broadcasting, endpoints, disabled final rejection,
 conditional expectations with probability zero and invalid input. Existing KSB1CI
 native and exhaustive tests validate the shared probability-code extraction.
 
-Still pending: solve_binomial_one_sample_mod and ABIN1's four inverse solve modes
-(null probability, alternative probability, sample size and significance),
+Still pending: solve_binomial_one_sample_mod and ABIN1's three remaining inverse solve modes
+(null probability, alternative probability and sample size),
 BINCUM-based power-contribution tables, separate single-stage comparison, report
 file dialogue and design revision workflow. These are required before this catalog
 entry can be marked implemented.
@@ -123,6 +123,43 @@ Tests compare valid native brackets, check empty-region behavior independently,
 enumerate binomial masses for well-separated attainable sizes, and verify exact
 size ties, adjacent regions, broadcasting and invalid inputs.
 
-The forward power mode is now available. Solving for null probability, alternative
-probability, sample size or significance remains pending; no continuous root search
-is substituted for those discrete design tasks.
+The forward power and significance modes are now available. Solving for null
+probability, alternative probability and sample size remains pending.
+
+## Solve significance for a requested power
+
+```python
+from mdanderson_stats import binomial_significance
+
+result = binomial_significance(50, 0.2, 0.06, target_power=0.8)
+print(result.critical, result.significance, result.power)
+print(result.previous_critical, result.previous_significance, result.previous_power)
+```
+
+The result selects the least permissive nonrandomized one-sided region whose
+power reaches the target. previous_* reports the region with one fewer included
+event count; its power is below the target. This solves the significance mode
+without treating its step function as continuous. Inputs and direction conventions
+match binomial_power; target_power is strictly inside (0,1). Inputs broadcast.
+A full rejection region is reported with significance=power=1 when needed, rather
+than fabricating a less permissive test that fails to reach the target.
+
+The integer search uses logarithmically many count evaluations and shares its
+region evaluator with binomial_power. It compares binary64 tails directly, without
+an arbitrary tolerance around the requested target. The result retains trials,
+null/alternative probabilities and target_power as well as both candidate regions.
+
+The original significance solve searches its alpha parameter only from SRANGE=1e-8
+upward. Python allows smaller attained sizes. At n=100, null=0.3, alternative=0.6,
+and target power=0.5, Python rejects at count 60 or above: significance approximately
+5.12995e-10 and power 0.543294. The original search floor selects a more permissive
+region with size 5.93229e-9 and power 0.696740. Direct binomial mass sums verify the
+Python result and show that excluding count 60 drops power below the target.
+
+`tools/reference_binomial_significance.py` reuses the documented private source
+build and records 27 calls to solve_binomial_one_sample mode 4. The native results
+agree in 26 cases; the remaining case agrees with the original floor-constrained
+choice and is independently verified for the expanded Python domain. The fixture
+retains source/auxiliary hashes, status repair and compiler provenance. Tests also
+cover enumerated attainable power steps, exact ties, full regions, mixed-direction
+broadcasting, very small target power, sample sizes up to 1e10 and invalid inputs.
