@@ -1,6 +1,7 @@
 """Joint dose and allocation optimization for SINGLE response designs."""
 
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -21,6 +22,45 @@ class SingleOptimizedDesign:
     initial_value: float
     stationarity: float
     iterations: int
+
+    def report(self, *, digits: int = 8) -> str:
+        """Return a TSV design and numerical summary with significant-digit formatting.
+
+        Criterion values retain the objective chosen by the caller (SD/variance,
+        arithmetic/harmonic). Zero allocations and original entry ordering are
+        preserved. This report does not serialize the model or prior configuration.
+        """
+        if isinstance(digits, (bool, np.bool_)) or not isinstance(digits, (int, np.integer)):
+            raise ValueError("digits must be an integer from 1 to 17")
+        if not 1 <= digits <= 17:
+            raise ValueError("digits must be an integer from 1 to 17")
+        doses = self.doses if isinstance(self.doses, tuple) else (self.doses,)
+        subjects = self.subjects if isinstance(self.subjects, tuple) else (self.subjects,)
+        rows = ["SINGLE optimized design", "Group\tEntry\tDose\tSubjects"]
+        for group, (x, n) in enumerate(zip(doses, subjects, strict=True), start=1):
+            for entry, (dose, count) in enumerate(zip(x, n, strict=True), start=1):
+                rows.append(f"{group}\t{entry}\t{dose:.{digits}g}\t{count:.{digits}g}")
+        rows.extend(["", "Group\tTotal subjects"])
+        for group, n in enumerate(subjects, start=1):
+            rows.append(f"{group}\t{np.sum(n):.{digits}g}")
+        rows.extend(
+            [
+                f"Overall total subjects\t{sum(float(np.sum(n)) for n in subjects):.{digits}g}",
+                "",
+                "Metric\tValue",
+                f"Initial criterion\t{self.initial_value:.{digits}g}",
+                f"Final criterion\t{self.value:.{digits}g}",
+                f"Stationarity diagnostic\t{self.stationarity:.{digits}g}",
+                f"Iterations\t{self.iterations}",
+            ]
+        )
+        return "\n".join(rows) + "\n"
+
+    def write_report(self, path: str | Path, *, digits: int = 8) -> Path:
+        """Write the UTF-8 report, replacing the explicit destination if it exists."""
+        destination = Path(path)
+        destination.write_text(self.report(digits=digits), encoding="utf-8")
+        return destination
 
 
 def single_optimize_design(

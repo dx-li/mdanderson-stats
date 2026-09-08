@@ -6,7 +6,8 @@ Independent uniform and correlated normal/log-normal prior criterion averaging
 and design-derived prior correlations are implemented. Fixed-dose, one- and two-sample
 point- and uncertain-prior allocation optimization is implemented, along with joint
 dose/allocation optimization for a fixed number of dose entries. Automatic
-dose-point addition and original reporting workflows remain pending.
+dose-point addition and complete model/prior workflow reporting remain pending.
+Optimized numerical design reports are available.
 
 ```python
 from mdanderson_stats import single_design_precision
@@ -483,3 +484,22 @@ objectives independently, and checks sample-size scaling and failure behavior.
 Forty-eight finite-difference checks inspect the objective/gradient contract passed
 to the external solver across both models/forms, one/two samples and all aggregation
 choices. The original joint optimizer is not executed by these tests.
+
+
+## Numerical design reports
+
+An optimized result provides `report(digits=8)` and
+`write_report("design.tsv", digits=8)`. TSV sections contain one row per dose,
+with one-based group/entry numbers, dose and continuous subject allocation; group
+and overall subject totals; initial/final criterion values; the stationarity
+diagnostic; and iteration count. Input entry ordering and zero allocations are
+retained. The criterion value represents the SD/variance and arithmetic/harmonic
+objective selected for optimization; it is not relabeled as a different metric.
+
+`digits` controls significant digits from 1 through 17. Seventeen digits preserve
+binary64 values when parsed back. File export writes UTF-8, replaces the explicitly
+supplied destination, and propagates filesystem errors. The numerical report does
+not serialize model/prior configuration or constitute a complete reproducible
+study file; callers must retain their optimization inputs separately. Tests parse
+one/two-sample optimization reports back into values and check totals, ordering,
+zero counts, explicit replacement and I/O errors.

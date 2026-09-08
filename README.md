@@ -146,5 +146,7 @@ SD/variance using explicit quadrature nodes and analytic gradients.
 both groups under point or weighted priors.
 `single_optimize_design` jointly moves dose locations and allocations for a fixed
 number of dose entries, supporting one/two samples and weighted priors.
+Optimized SINGLE results provide `report` and `write_report` for TSV design and
+convergence summaries.
 [SINGLE coverage](docs/single.md) tracks
 the remaining prior-integration and optimization workflows.
