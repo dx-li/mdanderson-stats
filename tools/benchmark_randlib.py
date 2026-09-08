@@ -14,16 +14,20 @@ from mdanderson_stats import RandlibGenerator
 def samples(name: str, size: int, batch: bool) -> np.ndarray:
     bank = RandlibGenerator()
     method = getattr(bank, name)
-    return method(size) if batch else np.array([method()[0] for _ in range(size)])
+    options = {"shape": 2.5, "rate": 1.7} if name == "gamma" else {}
+    return (
+        method(size, **options) if batch else np.array([method(**options)[0] for _ in range(size)])
+    )
 
 
 def main():
     results = {}
-    for name in ["normal", "exponential"]:
+    for name in ["normal", "exponential", "gamma"]:
         results[name] = measure(
             lambda: samples(name, 10000, True),
             lambda: samples(name, 10000, False),
-            "10,000 consecutive default-mode draws; default seeds and parameters",
+            "10,000 consecutive default-mode draws; default seeds; "
+            + ("shape=2.5, rate=1.7" if name == "gamma" else "default parameters"),
         )
     report = dict(
         python=platform.python_version(),

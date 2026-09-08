@@ -303,3 +303,8 @@ verify both values and generator-state consumption.
 RANDLIB normal sampling adds a vectorized inverse-CDF default and original
 FL sampling with separate C and Fortran constants and rounding. Native fixtures
 verify 9,000 normal values and their component states.
+
+RANDLIB gamma sampling adds a vectorized default and the archived GS/GD
+algorithms, with explicit shape/rate parameters, C/Fortran arithmetic and
+transactional draw limits. Native fixtures cover both shape regimes and
+changes of shape between consecutive draws.

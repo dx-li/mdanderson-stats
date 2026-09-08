@@ -4,9 +4,10 @@ from typing import Literal
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
-from scipy.special import ndtri
+from scipy.special import gammaincinv, ndtri
 
 from ._randlib_distributions import DistributionStream, legacy_exponential
+from ._randlib_gamma import legacy_gamma
 from ._randlib_normal import legacy_normal
 from ._randlib_sampling import bounded, raw_batch
 from ._validation import scalar
@@ -365,6 +366,70 @@ class RandlibGenerator:
                 result = ndtri(raw / _M1) * sd + mean
             if not np.all(np.isfinite(result)):
                 raise ArithmeticError("normal samples overflow float64; state unchanged")
+        self._current[self._stream - 1] = state
+        result.flags.writeable = False
+        return result
+
+    def gamma(
+        self,
+        size: int = 1,
+        *,
+        shape: float = 1.0,
+        rate: float = 1.0,
+        legacy: bool = False,
+        source: Literal["fortran", "c"] = "fortran",
+        max_attempts: int | None = None,
+    ) -> NDArray[np.float64]:
+        """Gamma samples (GENGAM), parameterized by positive shape and rate.
+
+        Modern uses vectorized inverse-CDF sampling, one raw draw per result.
+        Legacy preserves GS/GD rejection sampling and source rounding.
+        Failure leaves the stream unchanged; numerical underflow may yield zero.
+        """
+        size = _integer(size, "size", 0, self._max_draws)
+        shape = scalar(shape, "shape")
+        rate = scalar(rate, "rate")
+        if shape <= 0 or rate <= 0:
+            raise ValueError("shape and rate must be positive")
+        if not isinstance(legacy, (bool, np.bool_)):
+            raise ValueError("legacy must be boolean")
+        if not isinstance(source, str) or source not in ("fortran", "c"):
+            raise ValueError("source must be fortran or c")
+        if not legacy and source != "fortran":
+            raise ValueError("source selection requires legacy=True")
+        budget = _integer(
+            max(100_000, 4 * size) if max_attempts is None else max_attempts,
+            "max_attempts",
+            1,
+            2**53 - 1,
+        )
+        state = self.get_seeds()
+        antithetic = self._antithetic[self._stream - 1]
+        if legacy:
+            with np.errstate(over="ignore", under="ignore"):
+                source_shape, source_rate = np.float32(shape), np.float32(rate)
+            if (
+                not np.isfinite(source_shape)
+                or not np.isfinite(source_rate)
+                or shape != 0
+                and source_shape == 0
+                or rate > 0
+                and source_rate == 0
+            ):
+                raise ValueError("legacy shape and rate must be representable in float32")
+            sampler = DistributionStream(state, antithetic, source, budget)
+            result = legacy_gamma(sampler, size, source_shape, source_rate)
+            state = sampler.state
+        else:
+            if size > budget:
+                raise ArithmeticError(
+                    "distribution sampling exceeded max_attempts; state unchanged"
+                )
+            raw, state = raw_batch(state, size, antithetic)
+            with np.errstate(over="ignore", under="ignore"):
+                result = gammaincinv(shape, raw / _M1) / rate
+            if not np.all(np.isfinite(result)):
+                raise ArithmeticError("gamma samples overflow float64; state unchanged")
         self._current[self._stream - 1] = state
         result.flags.writeable = False
         return result

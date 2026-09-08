@@ -388,3 +388,11 @@ Distribution,” Mathematics of Computation 27(124), 927–937 (1973).
 The C and Fortran tables differ in several printed constants; this package
 retains both numerical variants for explicit source compatibility. The original
 source attribution and terms remain available in the RANDLIB notices above.
+
+RANDLIB's gamma sampler independently expresses the archived algorithms GD
+and GS, attributed to J. H. Ahrens and U. Dieter: “Generating Gamma Variates
+by a Modified Rejection Technique,” Communications of the ACM 25(1), 47–54
+(1982), and “Computer Methods for Sampling from Gamma, Beta, Poisson and
+Binomial Distributions,” Computing 12, 223–246 (1974). The archived numerical
+coefficients and source corrections are reflected in the Python implementation;
+the retained RANDLIB notices and their ACM provisions apply as described above.

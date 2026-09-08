@@ -1,8 +1,8 @@
 # RANDLIB
 
 Catalog entry 27 is partial. The 32-stream generator bank and state controls are
-implemented, along with bounded uniforms, permutations, exponential and normal sampling.
-Gamma, beta, chi-square, F, count and multivariate samplers and the final
+implemented, along with bounded uniforms, permutations, exponential, normal and gamma sampling.
+Beta, chi-square, F, count and multivariate samplers and the final
 archive coverage/performance audit remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27)
@@ -239,9 +239,65 @@ Tests compare every native value and state exactly, and additionally check
 scalar/batch equivalence, inverse-CDF round trips, antithetic symmetry, empirical
 moments/CDF, parameter validation and failed-request rollback.
 
-`tools/benchmark_randlib.py` measures 10,000 normal and exponential draws in
+`tools/benchmark_randlib.py` measures 10,000 normal, exponential and gamma draws in
 one batch versus repeated scalar calls to the same default-mode Python API.
 The environment and measured times are in [randlib-benchmark.json](randlib-benchmark.json).
 This comparison measures Python batching, not speed relative to original native
 programs or legacy rejection sampling. RANDLIB's remaining distributions and
 final whole-archive audit are still pending.
+
+## Gamma sampling
+
+```python
+bank = RandlibGenerator()
+x = bank.gamma(1000, shape=2.5, rate=1.7)
+original = bank.gamma(1000, shape=2.5, rate=1.7, legacy=True)
+original_c = bank.gamma(1000, shape=2.5, rate=1.7, legacy=True, source="c")
+```
+
+`gamma(size=1, *, shape=1, rate=1, legacy=False, source="fortran",
+max_attempts=None)` samples the density
+`rate**shape * x**(shape-1) * exp(-rate*x) / Gamma(shape)`.
+Both parameters must be finite and strictly positive. Mean is `shape/rate`
+and variance is `shape/rate**2`. RANDLIB calls its first argument “location”
+(and the Fortran 95 argument is named `scale`), but its density and division
+by that argument make it a **rate**. Python names the parameter accordingly.
+
+Default mode uses SciPy's vectorized inverse regularized incomplete gamma
+function, followed by division by rate. It consumes one raw uniform per output.
+The finite uniform grid and floating-point underflow limit attainable values;
+very small shapes may produce zero. It has a different sample sequence from
+legacy GS/GD, and shape 1 is not required to match the sequence of `exponential`.
+
+Legacy mode uses GS below shape 1 and GD at or above 1, including the original
+normal/exponential primitives, coefficient tables, squeeze/quotient/hat tests
+and the large-quotient overflow correction. C and Fortran constant promotion,
+transcendental precision and comparison thresholds are selected explicitly.
+Shape-dependent constants are local to a sampling request, preserving behavior
+when callers alternate between shapes without sharing process-global caches.
+Legacy parameters must remain positive and finite after float32 conversion.
+
+Results are read-only float64 arrays (legacy results are first calculated in
+float32). Zero-size calls do not consume draws. Underflow to zero is allowed;
+nonfinite outputs or nonfinite legacy quotients raise `ArithmeticError`.
+`max_attempts`, default `max(100000, 4*size)`, bounds the total number of raw draws
+including rejection trials and nested normal/exponential calls. Every failure
+leaves the bank unchanged. Source exponential-table guards also apply when
+GS/GD calls that primitive. Invalid arguments raise `ValueError` before sampling.
+
+`tools/reference_randlib_gamma.py` compiles unchanged C, Fortran 77 and
+Fortran 95 code and records hashes, compiler versions and flags. Its fixture
+has 180 cases / 3,600 values and states, covering shapes below/at/above 1,
+3.686 and 13.022 regime boundaries, small and large shapes, nonunit rates,
+multiple streams/seeds, antithetic draws, mixed 5 / 0.5 / 5 shape sequences,
+and a targeted large-quotient GD acceptance case.
+Native state comparisons are exact. Value comparisons allow relative error
+`4e-6` plus two float32 subnormal units for cross-platform transcendental
+rounding; on the reference-generation machine these values matched exactly.
+Additional tests check empirical moments/CDFs, inverse-CDF round trips,
+scalar/batch equivalence, underflow, invalid arguments and rollback.
+
+The batching benchmark includes 10,000 gamma draws with shape 2.5 and rate 1.7;
+its measured times and comparison limits are recorded in
+[randlib-benchmark.json](randlib-benchmark.json). Beta, chi-square, F, count and
+multivariate distributions and RANDLIB's final coverage audit remain pending.

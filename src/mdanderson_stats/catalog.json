@@ -557,7 +557,8 @@
         "RandlibGenerator: independent 32-stream bank, batched raw/uniform draws, antithetic control, seed replacement, block reset and power-of-two advancement",
         "RANDLIB bounded real/integer uniforms and forward permutations: unbiased defaults, Fortran/C compatibility and transactional rejection limits",
         "RANDLIB exponential sampling: vectorized inverse-transform default and original float32 Ahrens-Dieter algorithm with state-validated Fortran/C compatibility",
-        "RANDLIB normal sampling: vectorized inverse-CDF default and original FL algorithm with separate C/Fortran tables and arithmetic, validated values and state consumption"
+        "RANDLIB normal sampling: vectorized inverse-CDF default and original FL algorithm with separate C/Fortran tables and arithmetic, validated values and state consumption",
+        "RANDLIB gamma sampling: vectorized inverse-CDF default and original GS/GD algorithms, explicit shape/rate parameters, C/Fortran arithmetic and transactional nested draw limits"
       ],
       "validation": [
         "tests/test_randlib.py",
@@ -569,7 +570,9 @@
         "docs/randlib.md",
         "tests/test_randlib_normal.py",
         "tests/fixtures/randlib_normal.json",
-        "docs/randlib-benchmark.json"
+        "docs/randlib-benchmark.json",
+        "tests/test_randlib_gamma.py",
+        "tests/fixtures/randlib_gamma.json"
       ]
     },
     {
