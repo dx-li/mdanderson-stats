@@ -1,10 +1,10 @@
 # RANLIST randomization lists
 
-Catalog entry 29 is partial. The phrase-to-seed conversion and indexed random
-streams, unrestricted allocation and restricted allocation with fixed/random
-balance points, named list specifications and per-stratum enrollment/inquiry
-file persistence and printable reports are implemented. The final coverage
-and performance audit remains pending.
+Catalog entry 29 is implemented: random streams, restricted/unrestricted
+allocation, fixed/random balance points, named lists, enrollment/inquiry,
+file persistence and printable reports. The [coverage audit](ranlist-coverage.md)
+records source mapping, native workflows, deliberate corrections and measured
+batch performance.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/29)
 lists version 1, modified August 23, 2002. The archive filename contains two
@@ -80,7 +80,7 @@ and unknown characters.
 Further tests compare indexed results with an independent scalar recurrence,
 check stream-spacing and very large modular powers, preserve array shape and
 ordering, and validate inputs and float scaling. These comparisons validate
-only the named random-stream/seed routines, not the pending RANLIST workflows.
+only the named random-stream/seed routines, not by themselves the higher-level workflows validated below.
 
 ## Unrestricted treatment allocation
 
@@ -199,7 +199,7 @@ that forces the source's rejection boundary. All retained assignments match
 exactly. Independent tests check complete-block balance, the manual's refill
 rule, forward shuffling, source draw reuse after rejection, distant indexed
 queries, shape/order preservation and computation limits. This validates the
-restricted numerical kernel; the remaining list workflows are still pending.
+restricted numerical kernel; separate tests below validate the list workflows.
 
 
 ## Lists and per-stratum enrollment
@@ -310,7 +310,9 @@ implied three decimal places when the decimal point is absent. Weights are
 converted to float32, matching the source READ. Unrestricted balance fields
 are parsed and normalized to `(1, 1)` because MKLST did not initialize them and
 they do not affect unrestricted assignment. Non-numeric garbage in those fields
-is rejected. Computation limits are not stored in the original format and must
+is rejected by default. Native MKLST can produce overflow asterisks there because
+the fields were not initialized. `repair_unrestricted_balance=True` explicitly
+ignores these unused fields; it never bypasses restricted balance validation. Computation limits are not stored in the original format and must
 be supplied when importing if a larger value is needed.
 
 `ranlist_parameter_text(session, allow_rounding=False)` exports source-compatible
@@ -378,3 +380,19 @@ titles exercise different page capacities, with requested lists spanning multipl
 pages and an enrolled stratum containing zero patients. Every printed assignment
 and page boundary matches Python. Additional tests cover modern random refills,
 separate counts per stratum, complete labels, empty lists and resource limits.
+
+
+## Original setup phrase behavior
+
+`ranlist_starting_seeds(phrase)` reproduces GTSEED's phrase-entry path: validate
+ASCII, truncate to the first 31 characters, apply PHRTSD, replace a zero first
+seed by one and a zero second seed by twelve. `ranlist_seeds` remains the raw
+hash without truncation or zero replacement. When using the setup helper with
+`RanlistSpecification`, retain `phrase[:31]` as its descriptive phrase and pass
+the returned seed pair explicitly. Six native MKLST runs validate numeric seeds,
+ordinary phrases and overlong phrases under both allocation modes. They also
+expose the uninitialized unrestricted balance-field defect documented above.
+
+The [audit](ranlist-coverage.md) accounts for all source units and the Windows
+archive contents. [Recorded benchmarks](ranlist-benchmark.json) measure batch
+allocation versus repeated calls of the same Python APIs.

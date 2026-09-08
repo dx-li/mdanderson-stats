@@ -98,7 +98,7 @@ from .ranlist_files import (
     read_ranlist_parameters,
     save_ranlist_session,
 )
-from .ranlist_random import ranlist_integers, ranlist_seeds, ranlist_uniform
+from .ranlist_random import ranlist_integers, ranlist_seeds, ranlist_starting_seeds, ranlist_uniform
 from .ranlist_report import ranlist_report, ranlist_summary
 from .ranlist_restricted import RestrictedAllocation, ranlist_restricted
 from .ranlist_session import RanlistAssignments, RanlistSession, RanlistSpecification
@@ -157,6 +157,7 @@ __all__ = [
     "ranlist_unrestricted",
     "ranlist_integers",
     "ranlist_seeds",
+    "ranlist_starting_seeds",
     "ranlist_uniform",
     "CTAStudy",
     "CTAStudySpecification",

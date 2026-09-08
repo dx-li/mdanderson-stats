@@ -1,0 +1,27 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "Same Python API batched versus repeated scalar calls; not native Fortran or I/O",
+  "results": {
+    "unrestricted": {
+      "workload": "10000 consecutive patients; treatment counts/weights 1:2:3; default seeds",
+      "batch_seconds": 0.0017695832066237926,
+      "scalar_seconds": 1.8617334580048919,
+      "speedup": 1052.074551248095
+    },
+    "restricted_legacy": {
+      "workload": "2000 consecutive patients; treatment counts/weights 1:2:3; default seeds",
+      "batch_seconds": 0.004079792182892561,
+      "scalar_seconds": 0.11984816659241915,
+      "speedup": 29.376046920960356
+    },
+    "restricted_modern": {
+      "workload": "500 consecutive patients; treatment counts/weights 1:2:3; default seeds",
+      "batch_seconds": 0.0008669169619679451,
+      "scalar_seconds": 0.1956557920202613,
+      "speedup": 225.6915028817902
+    }
+  }
+}

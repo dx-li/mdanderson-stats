@@ -107,3 +107,16 @@ def ranlist_uniform(
     )
     result.flags.writeable = False
     return result
+
+
+def ranlist_starting_seeds(phrase: str) -> tuple[int, int]:
+    """Apply GTSEED's phrase entry behavior: 31 ASCII characters and zero repair.
+
+    The original input field truncates longer phrases before PHRTSD. A zero
+    first seed is replaced by 1, and a zero second seed by 12. Use ranlist_seeds
+    for the unmodified hash of an arbitrary-length ASCII phrase instead.
+    """
+    if not isinstance(phrase, str) or not phrase.isascii():
+        raise ValueError("phrase must be an ASCII string")
+    first, second = ranlist_seeds(phrase[:31])
+    return first or 1, second or 12

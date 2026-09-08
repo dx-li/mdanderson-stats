@@ -281,3 +281,8 @@ Four complete native Fortran enrollment/inquiry/save workflows match Python.
 `ranlist_summary` and `ranlist_report` provide parameter/enrollment summaries and
 paginated treatment lists for enrolled or planned patients. Eight native print
 workflows validate assignments and page boundaries.
+
+RANLIST is complete for the archived source/manual workflows. Its
+[source audit](docs/ranlist-coverage.md) covers creation, enrollment, inquiry,
+persistence and printing, including native source defects and measured batch
+performance. `ranlist_starting_seeds` reproduces original setup phrase handling.

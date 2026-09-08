@@ -59,14 +59,20 @@ def ranlist_parameter_text(session: RanlistSession, *, allow_rounding: bool = Fa
     return "\n".join(lines) + "\n"
 
 
-def read_ranlist_parameters(text: str, *, max_blocks: int = 10_000) -> RanlistSession:
+def read_ranlist_parameters(
+    text: str, *, max_blocks: int = 10_000, repair_unrestricted_balance: bool = False
+) -> RanlistSession:
     """Parse canonical original records into a source-compatible session.
 
     Trailing padding and CRLF are accepted. Malformed, truncated, overflowing
     or additional nonblank records are rejected. Unrestricted balance fields
     are read but normalized to (1,1), since MKLST did not initialize them.
+    Explicit repair_unrestricted_balance permits ignoring corrupt unused balance
+    fields from MKLST. Restricted balance fields are always validated.
     The file's explicit seed pair is authoritative, irrespective of its phrase.
     """
+    if not isinstance(repair_unrestricted_balance, bool):
+        raise ValueError("repair_unrestricted_balance must be boolean")
     if not isinstance(text, str) or not text.isascii():
         raise ValueError("parameter text must be ASCII")
     if any(ord(char) < 32 and char not in "\r\n" or ord(char) == 127 for char in text):
@@ -125,8 +131,12 @@ def read_ranlist_parameters(text: str, *, max_blocks: int = 10_000) -> RanlistSe
             weights.append(float(np.float32(value)))
     balance_record = record(6, "balance")
     balance = (
-        integer(balance_record[:3], "minimum balance"),
-        integer(balance_record[3:], "maximum balance"),
+        (1, 1)
+        if not restricted and repair_unrestricted_balance
+        else (
+            integer(balance_record[:3], "minimum balance"),
+            integer(balance_record[3:], "maximum balance"),
+        )
     )
     counters = tuple(
         integer(record(6, "patient counter"), "patient counter") for _ in range(nstrata)

@@ -621,7 +621,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "ranlist_seeds: original ASCII phrase-to-seed mapping",
         "ranlist_integers and ranlist_uniform: indexed 32-stream generator with vectorized modular jumps and original float32 scaling option",
@@ -629,7 +629,8 @@
         "ranlist_restricted: fixed/random balance blocks with exact treatment counts, unbiased default refill sampling and indexed Fortran compatibility",
         "RanlistSpecification and RanlistSession: named lists, batched per-stratum enrollment, immutable counters and enrolled-patient inquiries",
         "RANLIST persistence: atomic full-precision JSON snapshots and original fixed-width parameter import/export with explicit rounding",
-        "ranlist_summary and ranlist_report: parameter/enrollment summaries and paginated enrolled/planned treatment lists"
+        "ranlist_summary and ranlist_report: parameter/enrollment summaries and paginated enrolled/planned treatment lists",
+        "ranlist_starting_seeds: GTSEED phrase truncation/zero repair; complete source workflow audit and measured batch performance"
       ],
       "validation": [
         "tests/test_ranlist_random.py",
@@ -643,7 +644,11 @@
         "tests/test_ranlist_files.py",
         "tests/fixtures/ranlist_parameters.json",
         "tests/test_ranlist_report.py",
-        "tests/fixtures/ranlist_reports.json"
+        "tests/fixtures/ranlist_reports.json",
+        "tests/test_ranlist_creation.py",
+        "tests/fixtures/ranlist_creation.json",
+        "docs/ranlist-coverage.md",
+        "docs/ranlist-benchmark.json"
       ]
     },
     {
