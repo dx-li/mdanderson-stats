@@ -2,8 +2,9 @@
 
 Catalog entry 27 is partial. The 32-stream generator bank and state controls are
 implemented, along with bounded uniforms, permutations, exponential, normal, gamma,
-central/noncentral chi-square, F and beta sampling. Count and multivariate samplers and the final
-archive coverage/performance audit remain pending.
+central/noncentral chi-square, F, beta and binomial sampling. Remaining count
+and multivariate samplers and the final archive coverage/performance audit
+remain pending.
 
 The [official entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27)
 lists version 90, modified September 27, 2002. RANDLIB_V90.tar.gz contains
@@ -302,7 +303,7 @@ scalar/batch equivalence, underflow, invalid arguments and rollback.
 
 The batching benchmark includes 10,000 gamma draws with shape 2.5 and rate 1.7;
 its measured times and comparison limits are recorded in
-[randlib-benchmark.json](randlib-benchmark.json). Count and multivariate distributions and RANDLIB's final coverage audit
+[randlib-benchmark.json](randlib-benchmark.json). Remaining count and multivariate distributions and RANDLIB's final coverage audit
 remain pending.
 
 ## Chi-square and F sampling
@@ -382,7 +383,7 @@ parameters below one, zero-noncentrality identity, invalid arguments, probabilit
 validation and transactional failures. The batching benchmark includes all four
 methods; its comparison remains against repeated calls to the same Python API.
 
-Count and multivariate samplers and the final RANDLIB coverage/performance
+Remaining count and multivariate samplers and the final RANDLIB coverage/performance
 audit remain pending.
 
 ## Beta sampling
@@ -447,5 +448,69 @@ also check empirical moments/CDFs, inverse-CDF round trips, scalar/batch
 identity, uniform and reflection identities, endpoints, invalid inputs and
 rollback. The benchmark includes 10,000 default beta draws with shapes 2 and 3.
 
-Count and multivariate samplers and the final RANDLIB coverage/performance
+Remaining count and multivariate samplers and the final RANDLIB coverage/performance
 audit remain pending.
+
+## Binomial sampling
+
+```python
+bank = RandlibGenerator()
+counts = bank.binomial(1000, n=100, p=0.3)
+original = bank.binomial(1000, n=100, p=0.3, legacy=True)
+original_c = bank.binomial(1000, n=100, p=0.3, legacy=True, source="c")
+```
+
+`binomial(size=1, *, n=1, p=0.5, legacy=False, source="fortran",
+max_attempts=None)` returns read-only int64 counts. Trial count `n` must be an
+integer in `0..2**53-1`; probability must be finite in `[0,1]`. Mean is `n*p`
+and variance is `n*p*(1-p)`. Default mode uses SciPy's vectorized binomial
+quantiles and one raw uniform per output. It verifies that each result is an
+integer in range and brackets the uniform between `CDF(k-1)` and `CDF(k)`,
+allowing numerical tolerance `64*float64_epsilon + 1e-10*min(u,1-u)`.
+Invalid quantiles or probability brackets raise `ArithmeticError` without
+committing state.
+
+Legacy mode implements IGNBIN's inversion when `n*min(p,1-p) < 30`, and BTPE
+otherwise. BTPE uses triangular/parallelogram/exponential regions, explicit
+PMF ratios, squeeze bounds and the source's final Stirling expression.
+Probability reflection and float32 rounding follow the archived code. C and
+Fortran differ in promoted constants, tail-expression evaluation and `q**n`:
+C evaluates a double power and rounds; Fortran uses single-precision integer
+exponentiation. The shared logarithm helper avoids CPU-specific float32 log
+approximations. Constants are local, so changes in trials or probability do
+not retain stale setup state.
+
+Zero trials and probabilities 0 or 1 still consume uniforms. Legacy inversion
+uses a strict `u < f` acceptance and restarts after its index exceeds 110.
+Consequently, when C RANF rounds a raw draw to exactly 1, even a degenerate
+request can consume an extra uniform. Empty batches consume nothing.
+
+Legacy `n` is limited to `0..2147483646` so `n+1` fits the common signed-32-bit
+source contract. Probabilities that round to an endpoint from an interior
+value are rejected. Other source rounding remains visible: for example,
+`n=1_000_000_000, p=1e-8` rounds the complement to 1 and yields only zeros in
+Fortran legacy mode, despite a mathematical mean of 10. Default mode uses the requested
+probability. Legacy compatibility is not a promise of numerical accuracy for
+extreme source parameters.
+
+The source Fortran squeeze expression squares an integer distance. Python
+raises before that signed-32-bit square would overflow, rather than reproducing
+undefined integer overflow. Explicit PMF evaluation is capped at 100,000 steps
+per proposal. The total raw-draw budget defaults to `max(100000, 8*size)`;
+`max_attempts` may override it. These guards, invalid results and all other
+failures leave generator state unchanged. Default mode does not use the legacy
+integer-square or explicit-PMF paths.
+
+`tools/reference_randlib_binomial.py` compiles unchanged C, Fortran 77 and
+Fortran 95 implementations, with source hashes and compiler/flag provenance.
+The fixture contains 387 cases / 7,740 counts and component states: inversion,
+the mean-30 switch, BTPE, a targeted final-Stirling case, reflection, mixed
+parameter sequences, degenerate laws, large trial counts, small probabilities,
+maximal raw uniforms, two streams and antithetic flags. Tests require exact
+native counts and states. Additional tests check moments/CDFs, discrete
+quantile brackets, scalar/batch identity, endpoint consumption, source overflow
+protection and rollback. The benchmark includes 10,000 default binomial draws
+with 1,000 trials and probability 0.3.
+
+Poisson, negative-binomial, multinomial and multivariate-normal sampling and
+RANDLIB's final archive coverage/performance audit remain pending.

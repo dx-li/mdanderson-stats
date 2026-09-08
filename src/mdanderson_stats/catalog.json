@@ -560,7 +560,8 @@
         "RANDLIB normal sampling: vectorized inverse-CDF default and original FL algorithm with separate C/Fortran tables and arithmetic, validated values and state consumption",
         "RANDLIB gamma sampling: vectorized inverse-CDF default and original GS/GD algorithms, explicit shape/rate parameters, C/Fortran arithmetic and transactional nested draw limits",
         "RANDLIB central/noncentral chi-square and F sampling: vectorized quantiles with probability checks, native composition/order, near-one compatibility and warned F truncation",
-        "RANDLIB beta sampling: vectorized inverse-CDF default and Cheng BB/BC algorithms, source rounding/minimum-shape checks, overflow guards and transactional rejection limits"
+        "RANDLIB beta sampling: vectorized inverse-CDF default and Cheng BB/BC algorithms, source rounding/minimum-shape checks, overflow guards and transactional rejection limits",
+        "RANDLIB binomial sampling: vectorized quantiles with probability-bracket checks and original inversion/BTPE, exact native counts/states, parameter-cache independence and numerical/work guards"
       ],
       "validation": [
         "tests/test_randlib.py",
@@ -578,7 +579,9 @@
         "tests/test_randlib_chi_f.py",
         "tests/fixtures/randlib_chi_f.json",
         "tests/test_randlib_beta.py",
-        "tests/fixtures/randlib_beta.json"
+        "tests/fixtures/randlib_beta.json",
+        "tests/test_randlib_binomial.py",
+        "tests/fixtures/randlib_binomial.json"
       ]
     },
     {

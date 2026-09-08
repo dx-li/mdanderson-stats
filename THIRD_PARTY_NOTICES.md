@@ -409,3 +409,10 @@ The source attributes them to R. C. H. Cheng, “Generating Beta Variates with
 Nonintegral Shape Parameters,” Communications of the ACM 21, 317–322 (1978).
 The retained RANDLIB notices include the applicable source attribution and ACM
 policy; this package does not replace those terms with a blanket license.
+
+RANDLIB's binomial sampler independently expresses IGNBIN's inversion and
+BTPE algorithms, attributed to V. Kachitvichyanukul and B. W. Schmeiser,
+“Binomial Random Variate Generation,” Communications of the ACM 31(2),
+216–222 (1988). Source coefficients, acceptance tests and inversion restart
+rules are retained. The RANDLIB source attribution and ACM terms referenced
+above remain available; original native source/executables are not bundled.
