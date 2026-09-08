@@ -2,11 +2,13 @@
 
 Audited against `source/multi.doc`, the desktop MAIN menus, and
 `S/multi-1.0/README.library` in the archived MULTI download.
-Catalog entry 50 remains partial because the change-data session and report-file
-workflow are still missing.
+Catalog entry 50 remains partial pending human-readable report tables and a
+final comparison against the original procedure-specific report outputs.
 
 | Original capability | Python implementation | Validation |
 | --- | --- | --- |
+| MAIN data changes, procedure execution and seeds | MultiSession | Data replacement, fresh null estimates, all groups dispatched, RNG replay |
+| Session report file | MultiSession.write_report | Strict JSON snapshots, effective settings, returned values/failures and data provenance |
 | RDDATA / QLEX file and terminal text | parse_multi_data, read_multi_data | Native lexical fixtures, acceptance/warning comparisons, input-order and file tests |
 | SWFIT / schwed.fit | schweder_fit, schweder_bootstrap | Native desktop/S fits, bootstrap tests |
 | SWFIT coordinate file / schwed.plot | write_schweder_data, plot_schweder | Native coordinate comparisons, rendered PNG inspection |
@@ -25,9 +27,9 @@ Documented numerical differences and corrected undefined behavior are detailed
 in multiple-testing.md and beta-mixtures.md. NumPy random draws and the new direct
 optimizer are not exact reproductions of the old RNG and optimization paths.
 
-Remaining: the interactive change-data/session workflow and the report-file
-writer that records procedure
-settings, observations, and result tables. Python arrays and result objects expose
-the numerical data, but those I/O capabilities have not yet been implemented.
+Remaining: human-readable procedure-specific report tables and a final native
+report coverage audit. The session currently writes a complete structured JSON
+report containing observations, effective settings, result fields and diagnostic
+arrays. This is not yet a checked replacement for every original printed table.
 The main statistical groups being covered does not establish completion of the
 whole catalog entry or the other 137 catalog entries.
