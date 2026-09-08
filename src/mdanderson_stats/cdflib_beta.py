@@ -35,6 +35,67 @@ def _tails(
     return np.where(p <= q, p, 1 - q), np.where(p <= q, 1 - p, q)
 
 
+def _quantiles(
+    p: FloatArray, q: FloatArray, aa: FloatArray, bb: FloatArray
+) -> tuple[FloatArray, FloatArray]:
+    # Invert the smaller probability and compute both coordinates directly.
+    left = p <= q
+    first, second, probability = (
+        np.where(left, aa, bb),
+        np.where(left, bb, aa),
+        np.minimum(p, q),
+    )
+    z = betaincinv(first, second, probability)
+    cz = betainccinv(second, first, probability)
+    xx, yy = np.where(left, z, cz), np.where(left, cz, z)
+    if np.any(~np.isfinite(xx) | ~np.isfinite(yy)):
+        raise ArithmeticError("beta quantile evaluation failed")
+    return xx, yy
+
+
+def _invert_shape(
+    p: FloatArray,
+    q: FloatArray,
+    xx: FloatArray,
+    yy: FloatArray,
+    aa: FloatArray,
+    bb: FloatArray,
+    *,
+    solve_a: bool,
+    lo: float,
+    hi: float,
+) -> FloatArray:
+    """Invert a beta shape inside explicit positive bounds using both input pairs."""
+    lower_tail = p <= q
+    target = np.minimum(p, q)
+    increasing = ~lower_tail if solve_a else lower_tail
+
+    def evaluate(shape: FloatArray) -> FloatArray:
+        lp, uq = _tails(xx, yy, shape if solve_a else aa, shape if not solve_a else bb)
+        return np.where(lower_tail, lp, uq)
+
+    low, high = np.full(p.shape, lo), np.full(p.shape, hi)
+    low_value, high_value = evaluate(low), evaluate(high)
+    if np.any(
+        (target < np.minimum(low_value, high_value)) | (target > np.maximum(low_value, high_value))
+    ):
+        raise ValueError(f"beta shape solution lies outside [{lo:g},{hi:g}]")
+    log_low, log_high = np.log(low), np.log(high)
+    # A monotone batched search in log shape retains extreme complements.
+    for _ in range(64):
+        middle = (log_low + log_high) / 2
+        value = evaluate(np.exp(middle))
+        move_low = np.where(increasing, value < target, value > target)
+        log_low = np.where(move_low, middle, log_low)
+        log_high = np.where(move_low, log_high, middle)
+    shape = np.exp((log_low + log_high) / 2)
+    shape = np.where(target == low_value, low, np.where(target == high_value, high, shape))
+    matched = evaluate(shape)
+    if np.any(np.abs(matched - target) > 1e-7 * target + 32 * np.nextafter(0.0, 1.0)):
+        raise ArithmeticError("beta shape search failed forward verification")
+    return shape
+
+
 @dataclass(frozen=True)
 class CDFBeta:
     """All six broadcast arrays; which identifies the computed parameter group."""
@@ -83,49 +144,11 @@ def cdf_beta(
     if which == 1:
         p, q = _tails(xx, yy, aa, bb)
     elif which == 2:
-        # Invert the smaller probability and compute both coordinates directly.
-        left = p <= q
-        first, second, probability = (
-            np.where(left, aa, bb),
-            np.where(left, bb, aa),
-            np.minimum(p, q),
-        )
-        z = betaincinv(first, second, probability)
-        cz = betainccinv(second, first, probability)
-        xx, yy = np.where(left, z, cz), np.where(left, cz, z)
-        if np.any(~np.isfinite(xx) | ~np.isfinite(yy)):
-            raise ArithmeticError("beta quantile evaluation failed")
+        xx, yy = _quantiles(p, q, aa, bb)
     else:
         if np.any((xx <= 0) | (yy <= 0) | (p <= 0) | (q <= 0)):
             raise ValueError("shape inversion requires interior x/cx and cum/ccum")
-        lower_tail = p <= q
-        target = np.minimum(p, q)
-        increasing = ~lower_tail if which == 3 else lower_tail
-
-        def evaluate(shape: FloatArray) -> FloatArray:
-            lp, uq = _tails(xx, yy, shape if which == 3 else aa, shape if which == 4 else bb)
-            return np.where(lower_tail, lp, uq)
-
-        low, high = np.full(p.shape, 1e-10), np.full(p.shape, 1e10)
-        low_value, high_value = evaluate(low), evaluate(high)
-        if np.any(
-            (target < np.minimum(low_value, high_value))
-            | (target > np.maximum(low_value, high_value))
-        ):
-            raise ValueError("beta shape solution lies outside [1e-10,1e10]")
-        log_low, log_high = np.log(low), np.log(high)
-        # A monotone batched search in log shape retains extreme complements.
-        for _ in range(64):
-            middle = (log_low + log_high) / 2
-            value = evaluate(np.exp(middle))
-            move_low = np.where(increasing, value < target, value > target)
-            log_low = np.where(move_low, middle, log_low)
-            log_high = np.where(move_low, log_high, middle)
-        shape = np.exp((log_low + log_high) / 2)
-        shape = np.where(target == low_value, low, np.where(target == high_value, high, shape))
-        matched = evaluate(shape)
-        if np.any(np.abs(matched - target) > 1e-7 * target + 32 * np.nextafter(0.0, 1.0)):
-            raise ArithmeticError("beta shape search failed forward verification")
+        shape = _invert_shape(p, q, xx, yy, aa, bb, solve_a=which == 3, lo=1e-10, hi=1e10)
         if which == 3:
             aa = shape
         else:

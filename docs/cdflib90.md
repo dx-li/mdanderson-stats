@@ -3,8 +3,9 @@
 CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
-The entry is **partial**: the beta, normal, gamma, chi-square and Poisson distributions' four public interfaces
-are implemented. The other seven distribution modules, the remaining archived library
+The entry is **partial**: the beta, normal, gamma, chi-square, Poisson and negative-binomial distributions'
+four public interfaces
+are implemented. The other six distribution modules, the remaining archived library
 interfaces and the complete 106-file archive audit remain outstanding.
 
 Source: [catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/21)
@@ -360,3 +361,76 @@ Python rejects these unattainable requests, with explicit regression tests.
 Independent tests use 150-digit Decimal Poisson sums, the half-integer gamma
 identity at s=0.5, extreme mean inversion, broadcasting, immutable ownership,
 empty arrays and strict domain validation.
+
+
+## Negative-binomial distribution
+
+```python
+from mdanderson_stats import cdf_neg_binomial, cum_neg_binomial, ccum_neg_binomial, inv_neg_binomial
+
+lower = cum_neg_binomial([0, 0.5, 3], s=2, pr=0.4)
+upper = ccum_neg_binomial([0, 0.5, 3], s=2, pr=0.4)
+failures = inv_neg_binomial(0.8, s=2, pr=0.4)
+successes = cdf_neg_binomial(3, f=0, pr=0.5, cum=0.25).s  # 2
+chance = cdf_neg_binomial(4, f=0, s=1, ccum=1e-100)
+# chance.pr rounds to 1; chance.cpr retains 1e-100.
+```
+
+`cdf_neg_binomial` computes group 1 (cum/ccum), 2 (f), 3 (s), or 4 (pr/cpr).
+Supply all input groups and omit the output group. `CDFNegativeBinomial` contains
+`which` and six owned immutable arrays: `cum`, `ccum`, `f`, `s`, `pr`, `cpr`.
+They broadcast together. Tail conveniences take `(f, s, pr, *, cpr=None)` and
+the failure-count inverse takes `(cum, s, pr, *, ccum=None, cpr=None)`.
+Use `None` for a positional probability when supplying only its complement.
+
+The distribution counts failures f before s successes, each trial having success
+probability pr and failure probability cpr. Both counts are **real** in [0,1e10],
+matching the source parameter table. The CDF is I_pr(s,f+1), the continuous beta
+extension of the inclusive discrete negative-binomial CDF. The manual's reference
+to failures before the “F'th success” is a typo; the shape is the success count s.
+No count inversion rounds to an integer.
+
+Zero required successes are already achieved, so the forward result is cum=1,
+ccum=0 for every nonnegative f and any pr, including pr=0. This explicitly defines
+the otherwise ambiguous beta corner with zero shape and zero coordinate.
+For positive s, pr=0 gives cum=0 and pr=1 gives cum=1. Probability inversion with
+positive s supports both probability endpoints. Zero successes cannot identify
+pr or a failure count uniquely, so those inverse requests fail.
+
+Count inversion requires positive pr and cpr. Failure inversion also requires
+positive s and both probability tails; targets below the f=0 CDF are unattainable.
+Success inversion accepts cum=1 as the unique s=0 solution at interior pr; its
+other targets require positive tails. Invalid or out-of-range requests raise
+`ValueError`. There is no unsafe input-check bypass or ignored numeric status.
+
+The implementation shares the existing beta tail, complementary quantile and
+batched log-shape search kernels. The latter two were extracted without changing
+the public beta algorithms or bounds. Negative-binomial failure inversion searches
+beta shape b in [1,1e10+1] and subtracts one. Success inversion searches positive
+shape a from the smallest positive double to 1e10, treating exact zero separately.
+This preserves the source's wider count domain, including s below the public
+beta interface's 1e-10 minimum and f+1 above its 1e10 maximum.
+
+As in the other CDFLIB interfaces, both complementary inputs can be supplied;
+the smaller is retained. Endpoint probability differences within 32 machine
+epsilons relative to the endpoint tail retain the corresponding root. Other
+count answers undergo the beta search's forward check, with relative tolerance
+1e-7 plus 32 smallest-subnormal units. Failed kernels or verification raise
+`ArithmeticError`. Tiny quantile coordinates or tails may underflow, and forming
+f+1 limits relative accuracy when f is very close to zero. These are ordinary
+double-precision calculations, not arbitrary-precision guarantees.
+
+`tools/reference_cdflib_neg_binomial.py` compiles nine unmodified source files
+with a separate driver and records archive/source hashes, compiler and command.
+The **144 native cases** comprise 36 forward evaluations and 36 each of f, s and
+probability inversion, including fractional counts. Forward probabilities agree
+directly. The source finalizes an unused zero finder in its forward path; this
+build recorded status -50 for all 36 forward cases, which is not a portable
+expected status. Nine f inversions and twelve s inversions also report -50.
+Inverse validation uses the known generating parameters rather than trusting
+these status codes or the archived root-finder's accuracy.
+
+Independent tests use exact rational binomial sums, geometric identities,
+pr**s at f=0, success counts down to 1e-300, both count upper bounds, probability
+endpoints, tiny complements, mixed zero/nonzero success inversions, broadcasting,
+immutable ownership, empty inputs and strict validation.

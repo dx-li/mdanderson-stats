@@ -354,3 +354,8 @@ quantiles and inversion for real degrees of freedom, with the original df bounds
 
 `cdf_poisson`, `cum_poisson`, `ccum_poisson` and `inv_poisson` preserve
 CDFLIB90's fractional-count Poisson extension, with count and mean inversions.
+
+
+`cdf_neg_binomial`, `cum_neg_binomial`, `ccum_neg_binomial` and
+`inv_neg_binomial` add fractional failure/success counts and probability inversion,
+including explicit zero-success behavior and preserved small complements.

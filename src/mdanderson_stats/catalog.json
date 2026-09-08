@@ -402,7 +402,8 @@
         "Normal distribution lower/upper tails, quantiles, mean and standard-deviation inversions with defaults, immutable broadcasting, small complementary probabilities and explicit invalid-scale handling",
         "Gamma lower/upper tails, quantiles, shape and rate inversions; explicit source SCALE-to-rate mapping, batched shape search and independent repairs of native tail/status defects",
         "Chi-square lower/upper tails, quantiles and bounded real degrees-of-freedom inversion through shared gamma kernels; immutable broadcasting and native status/root defect validation",
-        "Poisson continuous-count lower/upper tails, count and mean inversions using complementary gamma ratios; immutable broadcasting and rejection of native negative-count clamping"
+        "Poisson continuous-count lower/upper tails, count and mean inversions using complementary gamma ratios; immutable broadcasting and rejection of native negative-count clamping",
+        "Negative-binomial tails, real failure/success inversions and complementary success-probability inversion; full count bounds, zero-success semantics and shared beta kernels"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -417,7 +418,9 @@
         "tests/test_cdflib_chisq.py",
         "tests/fixtures/cdflib_chisq.json",
         "tests/test_cdflib_poisson.py",
-        "tests/fixtures/cdflib_poisson.json"
+        "tests/fixtures/cdflib_poisson.json",
+        "tests/test_cdflib_neg_binomial.py",
+        "tests/fixtures/cdflib_neg_binomial.json"
       ]
     },
     {
