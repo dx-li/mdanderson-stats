@@ -76,3 +76,9 @@ def source_log(value: np.float32 | np.float64, source: str) -> np.float32 | np.f
     """Evaluate a logarithm in double precision, then apply source rounding."""
     result = np.log(np.float64(value))
     return np.float32(result) if source == "fortran" else np.float64(result)
+
+
+def source_exp(value: np.float32 | np.float64, source: str) -> np.float32 | np.float64:
+    """Evaluate an exponential in double precision, then apply source rounding."""
+    result = np.exp(np.float64(value))
+    return np.float32(result) if source == "fortran" else np.float64(result)

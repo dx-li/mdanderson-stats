@@ -4,7 +4,7 @@ import numpy as np
 from numpy.typing import NDArray
 from scipy.special import betaincinv
 
-from ._randlib_distributions import DistributionStream, source_log
+from ._randlib_distributions import DistributionStream, source_exp, source_log
 from ._randlib_sampling import raw_batch
 from ._validation import scalar
 from .ranlist_random import _M1
@@ -43,12 +43,12 @@ class BetaSampler:
         a, k = self.a, self.k
         if a <= 1:
             if v <= k(87.49823):
-                return np.float32(a * np.exp(k(v)))
+                return np.float32(a * source_exp(v, self.source))
             w = np.float32(v + source_log(a, self.source))
-            return np.float32(1e38) if w > k(87.49823) else np.float32(np.exp(k(w)))
+            return np.float32(1e38) if w > k(87.49823) else np.float32(source_exp(w, self.source))
         if v > k(87.49823):
             return np.float32(1e38)
-        w = np.float32(np.exp(k(v)))
+        w = np.float32(source_exp(v, self.source))
         return np.float32(1e38) if w > k(1e38) / a else a * w
 
     def sample(self, stream: DistributionStream) -> np.float32:

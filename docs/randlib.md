@@ -408,9 +408,12 @@ Legacy mode implements GENBET's BB algorithm when both rounded shapes exceed
 rounding, two-uniform trials and the source's exponential and logarithm guards.
 Shape-dependent state belongs to the request, so alternating or swapping
 shapes cannot reuse stale constants. `source="c"` requires `legacy=True` and
-selects the C expression promotions and squared-uniform calculation. Shared
-logarithm evaluation uses double precision followed by source rounding, as in
-the gamma sampler, to avoid CPU-dependent float32 logarithm approximations.
+selects the C expression promotions and squared-uniform calculation. Logarithm
+and exponential evaluation use double precision followed by source
+rounding to avoid CPU-dependent float32 approximations. This matters for draw
+consumption as well as values: a one-unit exponential difference can flip a
+rejection test for extremely unbalanced shapes. The logarithm helper is shared
+with the gamma sampler.
 
 Legacy shapes must fit float32 and satisfy the source minimum check. The code
 rejects values **below** `1e-37`, although its argument comments say strictly
