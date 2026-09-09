@@ -162,13 +162,27 @@
         "cum_nc_f",
         "inv_nc_f"
       ],
-      "python_status": "pending_distribution",
-      "evidence": [],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_nc_f.py",
+        "tests/test_cdflib_nc_f.py",
+        "tests/fixtures/cdflib_nc_f.json"
+      ],
       "legacy_distribution_names": [
         "cdffnc",
         "cumfnc"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "not_yet_independently_validated",
+      "f95_computed_groups": [
+        "cum/ccum",
+        "f",
+        "pnonc"
+      ],
+      "legacy_additional_computed_groups_pending": [
+        "dfn",
+        "dfd"
+      ],
+      "legacy_pnonc_which": 5
     },
     {
       "name": "nc_t",
@@ -719,7 +733,7 @@
       "size": 14439,
       "sha256": "34be5e1366fd609929ae8628bd6e0c790286b96a8533405658ea4461f2ec1da0",
       "role": "f95_distribution",
-      "coverage_status": "pending_distribution",
+      "coverage_status": "implemented_distribution",
       "scope": "nc_f",
       "declarations": {
         "routine_declarations_including_entries": [

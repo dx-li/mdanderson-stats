@@ -382,3 +382,7 @@ separately in the CDFLIB90 checklist.
 noncentral chi-square tails, quantiles and bounded degrees-of-freedom/noncentrality
 inversions. Validation includes high-precision Poisson mixtures, native source
 profiles and explicit detection of inconsistent extreme-tail inverse results.
+
+`cdf_nc_f`, `cum_nc_f`, `ccum_nc_f` and `inv_nc_f` add noncentral F tails,
+quantiles and noncentrality inversion, with central-case correction and bounded
+refinement for failed inverse kernels. Legacy df inversions remain tracked.

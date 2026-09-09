@@ -4,8 +4,8 @@ CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
 The entry is **partial**. All four public interfaces are implemented for beta,
-binomial, normal, gamma, chi-square, Poisson, negative-binomial, Student's t, F and noncentral chi-square
-distributions. Two other distribution modules and the remaining archived library interfaces are outstanding.
+binomial, normal, gamma, chi-square, Poisson, negative-binomial, Student's t, F, noncentral chi-square and noncentral F
+distributions. The noncentral t module and the remaining archived library interfaces are outstanding.
 The [106-file inventory](cdflib90-coverage.md) identifies the legacy entry points
 and public support APIs that still need contract review and validation.
 
@@ -726,3 +726,110 @@ repeated calls to the same Python API, with result agreement checked each time.
 On the recorded machine, batches of 64/256 were about 36/105 times faster for
 tails and 45/97 times faster for df inversion. These are median-of-three Python
 batching measurements, not speedups over native Fortran.
+
+## Noncentral F distribution (F95 interface)
+
+```python
+from mdanderson_stats import cdf_nc_f, cum_nc_f, ccum_nc_f, inv_nc_f
+
+lower = cum_nc_f([0.1, 1, 10], dfn=2, dfd=10, pnonc=4)
+upper = ccum_nc_f([0.1, 1, 10], dfn=2, dfd=10, pnonc=4)
+quantile = inv_nc_f(None, dfn=2, dfd=2, pnonc=4, ccum=1e-80)
+noncentrality = cdf_nc_f(3, f=1, dfn=2, dfd=10, cum=lower[1]).pnonc
+```
+
+`cdf_nc_f` computes group 1 (cum/ccum), 2 (f) or 3 (pnonc), matching the F95
+executable branches and parameter table. Its header lists only two modes, but
+the third is implemented in the source. Omit the computed group and supply all
+other parameters. `CDFNoncentralF` contains `which` and six immutable owned
+broadcast arrays: `cum`, `ccum`, `f`, `dfn`, `dfd`, `pnonc`. Tail conveniences take
+`(f, dfn, dfd, pnonc)`; the quantile takes
+`(cum, dfn, dfd, pnonc, *, ccum=None)`.
+
+The source domains remain f in [0,1e100], both df in [1e-3,1e10], and pnonc in
+[0,1e4]. The distribution is the ratio of a noncentral chi-square divided by dfn
+to an independent central chi-square divided by dfd. Noncentrality belongs to
+the numerator. Equivalently its CDF is the Poisson(pnonc/2) weighted sum of
+I_z(dfn/2+j,dfd/2), with z=dfn*f/(dfd+dfn*f). This retains the original numerator
+scale as j changes; simply mixing central F distributions at the same f would
+use the wrong scaling.
+
+**Legacy degrees-of-freedom inversions remain outstanding.** F95 explicitly
+excludes those nonmonotone inversions, while older C/F77 `cdffnc` provides dfn
+and dfd at which=3/4 and noncentrality at which=5. The inventory records the
+extra modes and the noncentrality mode-number difference. Implementing the four
+F95 interfaces does not close the legacy contracts.
+
+Python uses public [SciPy ncf methods](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ncf.html)
+for positive noncentrality, with the installed 1.18.1 source inspected. The
+exact central case uses the package's validated F routines for both tails and
+quantiles: SciPy 1.18.1 `ncf.sf(1,2,2,0)` returns -0.5. Small positive
+noncentralities are retained, rather than applying the archive's <1e-10 central
+approximation. Both tails are evaluated directly, the smaller retained and its
+complement reconstructed. Invalid kernel probabilities raise `ArithmeticError`.
+
+Quantiles use PPF or ISF according to the smaller probability. A finite result
+must satisfy the source coordinate bounds and reproduce the requested smaller
+tail. Invalid or inconsistent kernel guesses are refined by 64 batched bisections
+in log-f, retaining the candidate with smallest probability error. The initial
+reciprocal bracket [1e-100,1e100] is widened to the smallest positive float when
+needed. Kernel `OverflowError` invokes this same bounded search; other unexpected
+exceptions propagate. Zero lower probability retains f=0 even in a mixed batch
+whose other rows require refinement. Zero upper probability has no finite
+quantile. Out-of-domain roots fail explicitly.
+
+The refinement is necessary within the archived domain: at dfn=dfd=1e10,
+pnonc=1e4, the direct inverse of the CDF at f=1 misses the forward tolerance.
+The CDF itself fluctuates slightly at neighboring coordinates, so a last
+midpoint is not necessarily the most accurate evaluated candidate. The refined
+answer passes forward verification. At dfn=1e10, dfd=2, pnonc=4, the kernel also
+reports overflow for a representable quantile near 1e80; the bounded search
+recovers it. These checks establish the tested cases, not uniform relative
+accuracy for all tails and parameter combinations.
+
+Noncentrality monotonically decreases the CDF at positive f. Its inverse uses
+64 batched linear bisections on [0,1e4], with a 32-epsilon smaller-tail allowance
+for endpoint roots. Zero f, endpoint probabilities and numerically indistinguishable
+boundary probabilities cannot identify this parameter and raise `ValueError`.
+All inversions undergo final forward verification at relative tolerance 1e-7
+plus 32 smallest subnormals; failures raise `ArithmeticError`. Positive tails
+below the original ccum>=1e-10 limit are accepted where kernels and floating
+point permit. A finite returned inverse is checked, but forward consistency
+alone cannot establish accuracy beyond the forward kernel's own limits.
+
+### Native evidence and independent validation
+
+`tools/reference_cdflib_nc_f.py` compiles eleven archived files into two profiles,
+recording their original hashes, compiler, command, driver and any exact patch.
+Each profile contains **190 cases**: 72 forward, 68 quantile and 50 noncentrality
+inversions. The original profile changes no source bytes. It records status 10
+for 18 central quantile requests and all 50 noncentrality inversions: the central
+F dependency finalizes unused root-finder state, including at noncentrality zero
+when establishing a search bound.
+
+The second profile guards only that central F status finalization with which>1.
+No probability or inversion algorithm changes. All 118 inverse requests then
+return status zero. The outer noncentral F forward finalization still operates
+on unused root-finder state (status 50 in this build); that status is not a
+portable validity check. Native forward values on this grid agree within the
+source summation's 1e-4 absolute scale, but the series' additional early stop
+when its accumulated sum is below 1e-20 can discard almost the entire result.
+At f=.1, dfn=.5, dfd=10, pnonc=20, it returns about 3.31e-22 instead of 2.38e-5.
+A 120-digit independent beta mixture verifies this defect. Another recorded
+native probability shifts its noncentrality inverse from generating value 4
+to approximately 4.01438 under the accurate CDF; tests identify that discrepancy
+and verify the actual input probability is solved.
+
+Independent tests use 120-digit Poisson mixtures with finite beta identities,
+including fractional numerator df. When dfd=2, the exact CDF is
+z**(dfn/2)*exp(-(pnonc/2)*(1-z)); log1p/expm1 forms provide independent small-tail
+checks for df up to 1e10 and coordinates through 1e80. Other tests cover zero
+noncentrality in mixed arrays, small positive noncentrality, both df bounds,
+noncentrality 1e4, zero f, f=1e100, overflow refinement, immutable ownership,
+broadcasting, empty batches and invalid/unidentified requests.
+
+[Batch timings](cdflib-nc-f-benchmark.json) compare one broadcast call against
+repeated scalar calls to the same Python API, with agreement checked each time.
+Batches of 64/256 were about 35/130 times faster for tails and 49/116 times faster
+for noncentrality inversion on the recorded machine. These median-of-three
+measurements describe Python batching, not speedup over native Fortran.

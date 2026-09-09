@@ -14,7 +14,7 @@ all its domains, inversions, endpoint policies or errors.
 
 | Archive material | Files | Coverage disposition |
 |---|---:|---|
-| F95 distribution modules | 12 | Ten implemented and validated; two pending |
+| F95 distribution modules | 12 | Eleven implemented and validated; one pending |
 | F95 support modules | 7 | Public/support contract review remains open |
 | Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
@@ -40,7 +40,7 @@ contracts and numerical behavior still need comparison with the F95 port.
 | F | `f` | `cdff`, `cumf` | F95 tails/quantiles implemented; legacy df inversion pending |
 | Gamma | `gamma` | `cdfgam`, `cumgam` | Implemented |
 | Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | Implemented |
-| Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | Pending |
+| Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | F95 tails/quantiles/noncentrality implemented; legacy df inversion pending |
 | Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | Pending |
 | Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | Implemented |
 | Normal | `normal` | `cdfnor`, `cumnor` | Implemented |
@@ -60,6 +60,11 @@ accepts which=3 (dfn) and which=4 (dfd). Those **additional legacy F modes remai
 unimplemented**, beyond independent validation of the shared tail/quantile modes.
 The inventory records them separately so implementing the F95 module cannot
 silently close the older library's wider interface.
+
+The noncentral F F95 code additionally computes pnonc with which=3, despite
+its header listing only two modes. Legacy C/F77 `cdffnc` uses which=5 for pnonc
+and supports additional dfn/dfd modes at which=3/4. Those additional legacy
+inversions also remain outstanding and are recorded separately in the inventory.
 
 The archived DCDFLIB readme explicitly warns that F and noncentral-F CDFs need
 not be monotone in either degrees-of-freedom parameter and may have multiple
@@ -120,7 +125,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Implement and validate the two pending distribution modules and all their
+- Implement and validate the remaining noncentral t distribution module and all its
   parameter-inversion modes, including multiple-root and endpoint behavior.
 - Compare the 24 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.

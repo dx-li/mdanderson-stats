@@ -408,7 +408,8 @@
         "Student's t lower/upper tails, quantiles and bounded degrees-of-freedom inversion using complementary beta coordinates and batched search",
         "Binomial tails, real success/trial-count inversion and complementary probability inversion; explicit degenerate boundaries and dual primary/backup native validation",
         "F95 F-distribution tails and quantiles with direct complementary beta coordinates; additional legacy C/F77 df inversion modes explicitly remain outstanding",
-        "Noncentral chi-square lower/upper tails and bounded x, df and noncentrality inversions; independent high-precision Poisson mixtures and original/status-repaired native evidence"
+        "Noncentral chi-square lower/upper tails and bounded x, df and noncentrality inversions; independent high-precision Poisson mixtures and original/status-repaired native evidence",
+        "F95 noncentral F tails, quantiles and noncentrality inversion; validated central reduction, selective bounded quantile refinement and independent beta mixtures; additional legacy df inversions remain outstanding"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -436,7 +437,10 @@
         "tests/fixtures/cdflib_f.json",
         "tests/test_cdflib_nc_chisq.py",
         "tests/fixtures/cdflib_nc_chisq.json",
-        "docs/cdflib-nc-chisq-benchmark.json"
+        "docs/cdflib-nc-chisq-benchmark.json",
+        "tests/test_cdflib_nc_f.py",
+        "tests/fixtures/cdflib_nc_f.json",
+        "docs/cdflib-nc-f-benchmark.json"
       ]
     },
     {

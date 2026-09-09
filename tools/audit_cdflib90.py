@@ -30,6 +30,7 @@ IMPLEMENTED = {
     "f",
     "gamma",
     "nc_chisq",
+    "nc_f",
     "neg_binomial",
     "normal",
     "poisson",
@@ -229,6 +230,10 @@ def main():
     f_distribution = next(row for row in distributions if row["name"] == "f")
     f_distribution["f95_computed_groups"] = ["cum/ccum", "f"]
     f_distribution["legacy_additional_computed_groups_pending"] = ["dfn", "dfd"]
+    noncentral_f = next(row for row in distributions if row["name"] == "nc_f")
+    noncentral_f["f95_computed_groups"] = ["cum/ccum", "f", "pnonc"]
+    noncentral_f["legacy_additional_computed_groups_pending"] = ["dfn", "dfd"]
+    noncentral_f["legacy_pnonc_which"] = 5
     header = next(row for row in members if row["role"] == "c_header")["declarations"]
     definitions = {
         name
