@@ -104,7 +104,7 @@ F95 support also has an explicit public surface:
 
 | Module | Public/support scope and status |
 |---|---|
-| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), [three gamma-ratio helpers](cdflib-gamma-ratios.md), [three beta/combinatorial helpers](cdflib-beta-support.md), the [gamma scaling factor](cdflib-gamma-factor.md), [two incomplete-gamma helpers](cdflib-incomplete-gamma.md), [two beta factors](cdflib-beta-factors.md), the [beta shape shift](cdflib-beta-shift.md), [fpser](cdflib-fpser.md), and [apser](cdflib-apser.md) implemented; remaining default-public numerical procedures and imported constants still open |
+| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), [three gamma-ratio helpers](cdflib-gamma-ratios.md), [three beta/combinatorial helpers](cdflib-beta-support.md), the [gamma scaling factor](cdflib-gamma-factor.md), [two incomplete-gamma helpers](cdflib-incomplete-gamma.md), [two beta factors](cdflib-beta-factors.md), the [beta shape shift](cdflib-beta-shift.md), [fpser](cdflib-fpser.md), [apser](cdflib-apser.md), and [bpser](cdflib-bpser.md) implemented; remaining default-public numerical procedures and imported constants still open |
 | `zero_finder` | Direct and reverse-communication interval/step solvers, setup, final-state reporting, bounds and solver-state type |
 | `biomath_constants_mod` | Default-public kind and numeric constants |
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
@@ -246,7 +246,7 @@ The [beta-series audit](cdflib-beta-series-reference.md) records 116 unchanged
 F95 calls to `apser`, `fpser` and `bpser`. Independent beta-integral checks expose
 endpoint errors, an overflowing digamma intermediate, a lost subnormal result
 and valid-domain timeouts. The [fpser](cdflib-fpser.md) and
-[apser](cdflib-apser.md) ports are implemented; `bpser` remains pending.
+[apser](cdflib-apser.md) and [bpser](cdflib-bpser.md) ports are implemented.
 
 The shared beta-tail kernel includes a [small-coordinate correction](cdflib90.md#numerics-and-failure-behavior)
 validated against independent 800-digit integrals, legacy beta and negative-binomial

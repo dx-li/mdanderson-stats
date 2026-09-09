@@ -597,6 +597,7 @@ def main():
                 "bup",
                 "fpser",
                 "apser",
+                "bpser",
             ],
             "python_interfaces": [
                 "alnrel",
@@ -629,6 +630,7 @@ def main():
                 "bup",
                 "fpser",
                 "apser",
+                "bpser",
             ],
             "status": "partial",
             "remaining_scope": "Other mathematical procedures and imported constants",
@@ -721,6 +723,9 @@ def main():
                 "tests/test_cdflib_apser.py",
                 "docs/cdflib-apser.md",
                 "docs/cdflib-apser-benchmark.json",
+                "tests/test_cdflib_bpser.py",
+                "docs/cdflib-bpser.md",
+                "docs/cdflib-bpser-benchmark.json",
             ],
         }
     )

@@ -489,3 +489,6 @@ with strict source-domain checks, full normalization and subnormal recovery.
 
 The [CDFLIB small-first-shape upper beta tail](docs/cdflib-apser.md) adds
 `apser`, preserving tiny complements and repairing native endpoint/overflow failures.
+
+The [CDFLIB beta power series](docs/cdflib-bpser.md) adds `bpser`, with bounded
+signed sums, stable near-one evaluation and extreme-shape normalization.

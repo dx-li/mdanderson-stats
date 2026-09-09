@@ -11,6 +11,7 @@ from .cdflib_beta_shift import _normalized
 from .cdflib_beta_support import _small_binomial
 from .cdflib_gamma_support import psi
 from .cdflib_incomplete_gamma import gratio
+from .dcdflib_beta import cumbet
 
 
 def _product_bound(
@@ -41,8 +42,10 @@ def _integral_series(
         numerator = 1 if divided else a[active]
         add = term[active] * (numerator / (a[active] + n))
         series[active] += add
-        # Positive successive integral terms have ratio at most x <= 1/2.
-        bound = add * x[active] / (1 - x[active])
+        # Every future absolute term ratio is at most max(x,b*x/(n+1)).
+        # This also bounds signed terms when b>1 and b*x<=0.7.
+        ratio = np.maximum(x[active], b[active] * x[active] / (n + 1))
+        bound = np.abs(add) * ratio / (1 - ratio)
         active[active] = bound > eps[active] * (1 + series[active])
         if not np.any(active):
             break
@@ -160,4 +163,57 @@ def apser(a: ArrayLike, b: ArrayLike, x: ArrayLike, eps: ArrayLike = 5e-15) -> F
             result[regular] = _tails(xx[regular], 1 - xx[regular], aa[regular], bb[regular])[1]
     if np.any(~np.isfinite(result) | (result < 0) | (result > 1)):
         raise ArithmeticError("beta upper-tail evaluation produced an invalid probability")
+    return _freeze(result.reshape(shape))
+
+
+def bpser(a: ArrayLike, b: ArrayLike, x: ArrayLike, eps: ArrayLike = 5e-15) -> FloatArray:
+    """Compute I_x(a,b) for b<=1 or b*x<=0.7, with positive shapes and eps.
+
+    Coordinates lie in [0,1]. A bounded beta-integral series evaluates small
+    coordinates/products; the legacy beta adapter handles b<=1 near x=1.
+    eps controls truncation, capped at 5e-15 and floored at four machine epsilons.
+    Broadcast outputs are independently owned and immutable.
+    """
+    aa, bb, xx, ee = np.broadcast_arrays(
+        finite(a, "a"), finite(b, "b"), finite(x, "x"), finite(eps, "eps")
+    )
+    shape = aa.shape
+    aa, bb, xx, ee = (v.ravel() for v in (aa, bb, xx, ee))
+    if np.any((aa <= 0) | (bb <= 0) | (ee <= 0) | (xx < 0) | (xx > 1)):
+        raise ValueError("positive a, b and eps and 0 <= x <= 1 are required")
+    bounded = (bb > 1) & (xx > 0)
+    if np.any(_product_bound(np.full(np.count_nonzero(bounded), 0.7), bb[bounded], xx[bounded])):
+        raise ValueError("bpser requires b<=1 or b*x<=0.7")
+    tolerance = np.maximum(4 * np.finfo(float).eps, np.minimum(ee, 5e-15))
+    result = np.zeros(aa.shape)
+    result[xx == 1] = 1
+    interior = (xx > 0) & (xx < 1)
+    with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
+        unit_a = interior & (aa == 1)
+        result[unit_a] = -np.expm1(bb[unit_a] * np.log1p(-xx[unit_a]))
+        unit_b = interior & (bb == 1) & ~unit_a
+        result[unit_b] = np.exp(aa[unit_b] * np.log(xx[unit_b]))
+        # At the exact half-subnormal tie with b<1, the positive quadratic
+        # beta correction makes the true probability round up, not to zero.
+        for i in np.flatnonzero(unit_a & (result == 0) & (bb < 1)):
+            bn, bd = float(bb[i]).as_integer_ratio()
+            xn, xd = float(xx[i]).as_integer_ratio()
+            mn, md = float(np.nextafter(0.0, 1.0)).as_integer_ratio()
+            if 2 * bn * xn * md == mn * bd * xd:
+                result[i] = np.nextafter(0.0, 1.0)
+        active = interior & ~unit_a & ~unit_b
+        # The beta-to-gamma relative correction is O((a*a+a)/b) in this domain.
+        # Avoid subtracting huge nearly equal logarithms in the normalization.
+        gamma_limit = active & (bb >= 1e15) & (2 * np.log(aa) - np.log(bb) <= np.log(1e-14))
+        if np.any(gamma_limit):
+            result[gamma_limit] = gratio(aa[gamma_limit], bb[gamma_limit] * xx[gamma_limit])[0]
+        active &= ~gamma_limit
+        series = active & ((xx <= 0.5) | (bb > 1))
+        if np.any(series):
+            result[series] = _lower_series(aa[series], bb[series], xx[series], tolerance[series])
+        near_one = active & ~series
+        if np.any(near_one):
+            result[near_one] = cumbet(xx[near_one], aa[near_one], bb[near_one])[0]
+    if np.any(~np.isfinite(result) | (result < 0) | (result > 1)):
+        raise ArithmeticError("beta power series produced an invalid probability")
     return _freeze(result.reshape(shape))
