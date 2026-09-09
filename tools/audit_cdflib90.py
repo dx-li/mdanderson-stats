@@ -616,6 +616,12 @@ def main():
                 "gam1",
                 "gamma",
                 "psi",
+                "algdiv",
+                "bcorr",
+                "betaln",
+                "log_beta",
+                "gsumln",
+                "log_bicoef",
             ],
             "evidence": [
                 "src/mdanderson_stats/cdflib_elementary.py",
@@ -640,6 +646,10 @@ def main():
                 "tests/test_cdflib_gamma_support.py",
                 "docs/cdflib-gamma-support.md",
                 "docs/cdflib-gamma-support-benchmark.json",
+                "tools/reference_cdflib_beta_support.py",
+                "tests/fixtures/cdflib_beta_support.json",
+                "tests/test_cdflib_beta_support_reference.py",
+                "docs/cdflib-beta-support-reference.md",
             ],
         }
     )

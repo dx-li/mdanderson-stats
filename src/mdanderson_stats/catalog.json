@@ -545,7 +545,10 @@
         "docs/cdflib-gamma-support-reference.md",
         "tests/test_cdflib_gamma_support.py",
         "docs/cdflib-gamma-support.md",
-        "docs/cdflib-gamma-support-benchmark.json"
+        "docs/cdflib-gamma-support-benchmark.json",
+        "tests/fixtures/cdflib_beta_support.json",
+        "tests/test_cdflib_beta_support_reference.py",
+        "docs/cdflib-beta-support-reference.md"
       ]
     },
     {

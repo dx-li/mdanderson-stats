@@ -220,3 +220,9 @@ separates the different negative-argument contracts and documents intermediate
 overflow, lost subnormal tails, inaccurate logarithmic roots and a nonterminating
 recurrence. The [Python port](cdflib-gamma-support.md) now implements all seven, preserving
 valid negative intervals and repairing the audited numerical failures.
+
+The [beta/gamma-ratio support audit](cdflib-beta-support-reference.md) records
+192 calls to `algdiv`, `bcorr`, `betaln`, `log_beta`, `gsumln` and `log_bicoef`.
+Independent 800-digit checks document fractional domains, close-sum and quotient
+underflow failures, and valid extreme-range results. These six Python interfaces
+remain pending.

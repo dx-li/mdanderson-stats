@@ -599,7 +599,13 @@
         "gamln1",
         "gam1",
         "gamma",
-        "psi"
+        "psi",
+        "algdiv",
+        "bcorr",
+        "betaln",
+        "log_beta",
+        "gsumln",
+        "log_bicoef"
       ],
       "evidence": [
         "src/mdanderson_stats/cdflib_elementary.py",
@@ -623,7 +629,11 @@
         "src/mdanderson_stats/cdflib_gamma_support.py",
         "tests/test_cdflib_gamma_support.py",
         "docs/cdflib-gamma-support.md",
-        "docs/cdflib-gamma-support-benchmark.json"
+        "docs/cdflib-gamma-support-benchmark.json",
+        "tools/reference_cdflib_beta_support.py",
+        "tests/fixtures/cdflib_beta_support.json",
+        "tests/test_cdflib_beta_support_reference.py",
+        "docs/cdflib-beta-support-reference.md"
       ]
     }
   ],
