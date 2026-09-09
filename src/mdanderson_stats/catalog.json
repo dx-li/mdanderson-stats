@@ -479,7 +479,10 @@
         "tests/test_dcdflib_poisson.py",
         "tests/fixtures/dcdflib_poisson.json",
         "docs/dcdflib-poisson.md",
-        "docs/dcdflib-poisson-benchmark.json"
+        "docs/dcdflib-poisson-benchmark.json",
+        "tests/fixtures/dcdflib_neg_binomial.json",
+        "tests/test_dcdflib_neg_binomial_reference.py",
+        "docs/dcdflib-neg-binomial-reference.md"
       ]
     },
     {

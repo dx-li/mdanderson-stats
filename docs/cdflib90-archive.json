@@ -280,7 +280,14 @@
         "cdfnbn",
         "cumnbn"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "not_yet_independently_validated",
+      "legacy_reference_evidence": [
+        "tools/reference_dcdflib_neg_binomial.py",
+        "tests/fixtures/dcdflib_neg_binomial.json",
+        "tests/test_dcdflib_neg_binomial_reference.py",
+        "docs/dcdflib-neg-binomial-reference.md"
+      ],
+      "legacy_review_notes": "Unchanged C/F77 references audited on the F95 overlap; wider legacy Python interface remains pending, including zero-success semantics and inverse repairs."
     },
     {
       "name": "normal",

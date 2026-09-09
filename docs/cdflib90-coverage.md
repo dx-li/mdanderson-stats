@@ -162,3 +162,8 @@ subnormal half-value rounding and bounded x/df inversions.
 The [legacy Poisson port](dcdflib-poisson.md) validates paired tails and both
 inversions against unchanged C/F77 sources, with explicit zero-mean semantics,
 wide finite inputs and independent small-tail checks.
+
+The [negative-binomial reference audit](dcdflib-neg-binomial-reference.md) records
+unchanged C/F77 behavior, independent ordinary-domain validation, boundary
+conflicts, false-success inversions and wide-input timeouts. Its separate legacy
+Python interface remains pending; this reference work does not reduce that scope.

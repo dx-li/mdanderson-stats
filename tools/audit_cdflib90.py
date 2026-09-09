@@ -353,6 +353,19 @@ def main():
     ]
     if any(not Path(path).is_file() for path in poisson["legacy_evidence"]):
         raise RuntimeError("missing legacy Poisson implementation evidence")
+    neg_binomial = next(row for row in distributions if row["name"] == "neg_binomial")
+    neg_binomial["legacy_reference_evidence"] = [
+        "tools/reference_dcdflib_neg_binomial.py",
+        "tests/fixtures/dcdflib_neg_binomial.json",
+        "tests/test_dcdflib_neg_binomial_reference.py",
+        "docs/dcdflib-neg-binomial-reference.md",
+    ]
+    neg_binomial["legacy_review_notes"] = (
+        "Unchanged C/F77 references audited on the F95 overlap; wider legacy Python "
+        "interface remains pending, including zero-success semantics and inverse repairs."
+    )
+    if any(not Path(path).is_file() for path in neg_binomial["legacy_reference_evidence"]):
+        raise RuntimeError("missing legacy negative-binomial reference evidence")
     header = next(row for row in members if row["role"] == "c_header")["declarations"]
     definitions = {
         name
