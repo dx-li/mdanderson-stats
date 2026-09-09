@@ -75,9 +75,9 @@ Fortran transcript reproductions and are not copied to the report stream.
 The source's `report_unit` maps to `report_stream`. These methods implement
 `clear_screen`, `get_character`, `get_string`, `get_yn`, `hold`, `prompt`,
 `write_error`, `write_message` and the six `get_numbers` overloads. **Console support
-remains partial:** `get_list_double`, `write_array`, `print_message_format` and its
-message-format/control state remain to be implemented. They are not approximated
-by the input methods.
+remains partial:** `write_array`, `print_message_format` and its
+message-format/control state remain to be implemented. The [list editor](cdflib-number-list.md) is implemented separately using these
+input methods.
 
 The [reference generator](../tools/reference_cdflib_console.py) compiles four
 unchanged source modules from the hash-verified archive. The [31 transcripts](../tests/fixtures/cdflib_console.json)
@@ -89,8 +89,8 @@ results and independently exercise repaired error handling and output ownership.
 The fixture also establishes cases for the remaining console work: string EOF
 causes a native runtime exit, numeric bounds accept NaN, and the list editor's
 relative comparison merges distinct `1e308` and `1.5e308` values when its denominator
-overflows. List-editing transcripts cover all eight menu actions, including the
-pause after printing; they do not imply an implemented Python list editor.
+overflows. The [Python list editor](cdflib-number-list.md) now implements all eight menu
+actions with explicit state and corrected numerical behavior.
 
 Parsing and interactive I/O are scalar control flow; conversion and vector bounds
 use NumPy. No speedup over native console I/O is claimed. CDFLIB90 and the full

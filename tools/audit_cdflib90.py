@@ -879,11 +879,11 @@ def main():
                 "write_error",
                 "write_message",
                 "get_numbers",
+                "get_list_double",
                 "report_unit",
             ],
-            "python_interfaces": ["CDFConsole", "CDFConsoleError"],
+            "python_interfaces": ["CDFConsole", "CDFConsoleError", "CDFNumberList"],
             "remaining_public_names": [
-                "get_list_double",
                 "write_array",
                 "print_message_format",
                 "message_format",
@@ -897,6 +897,9 @@ def main():
                 "tests/fixtures/cdflib_console.json",
                 "tests/test_cdflib_console.py",
                 "docs/cdflib-console.md",
+                "src/mdanderson_stats/cdflib_number_list.py",
+                "tests/test_cdflib_number_list.py",
+                "docs/cdflib-number-list.md",
             ],
         }
     )

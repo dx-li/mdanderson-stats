@@ -519,3 +519,6 @@ descriptors, batched validation, complement/range helpers and root-state adapter
 
 The [CDFLIB console](docs/cdflib-console.md) adds reentrant typed numeric and text
 input with explicit streams, finite-value validation and bounded retries.
+
+The [CDFLIB numeric list editor](docs/cdflib-number-list.md) adds all eight native
+actions, persistent state, stable spacing and corrected duplicate removal.

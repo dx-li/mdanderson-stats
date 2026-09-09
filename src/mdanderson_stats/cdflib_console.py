@@ -7,12 +7,17 @@ from typing import NoReturn, TextIO
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
-from ._validation import finite
+from ._validation import FloatArray, finite
+from .cdflib_number_list import CDFNumberList, _ListEditError
 from .cdflib_strings import _MANTISSA, _NUMBER, lower_case_char
 
 
 class CDFConsoleError(RuntimeError):
     """A console operation failed or exhausted its input allowance."""
+
+
+class _NumericAttemptsExhausted(CDFConsoleError):
+    """A complete numeric input operation exhausted its retry allowance."""
 
 
 class _InvalidEntry(ValueError):
@@ -265,4 +270,89 @@ class CDFConsole:
             return np.frombuffer(array.tobytes(), dtype=kind).reshape(
                 () if size is None else (count,)
             )
-        raise CDFConsoleError("Too many invalid numeric responses")
+        raise _NumericAttemptsExhausted("Too many invalid numeric responses")
+
+    def get_list_double(
+        self,
+        state: CDFNumberList,
+        *,
+        message: str = "",
+        max_actions: int = 10000,
+        max_failures: int = 3,
+        page_size: int = 21,
+    ) -> FloatArray:
+        """Run the source's eight-action list editor on explicit persistent state.
+
+        Successful edits remain in state after errors/EOF. Rejected actions are
+        atomic. As in the source, the fourth rejected action exceeds the default
+        allowance of three; exhausted menu input ends the session immediately.
+        """
+        max_actions = _positive(max_actions, "max_actions")
+        max_failures = _positive(max_failures, "max_failures", allow_zero=True)
+        page_size = _positive(page_size, "page_size", allow_zero=True)
+        failures = 0
+        menu = (
+            "1 Add values; 2 Linear spacing; 3 Log spacing; 4 Print; "
+            "5 Delete one; 6 Delete range; 7 Sort/deduplicate; 8 Quit"
+        )
+        for _ in range(max_actions):
+            if message:
+                self._write_output(message)
+            self.output.write(f"List: {state.size}/{state.max_size} values.\n{menu}\n")
+            choice = int(self.get_numbers(dtype="int32", lo=1, hi=8))
+            if choice == 8:
+                return state.values
+            try:
+                remaining = state.max_size - state.size
+                if choice in (1, 2, 3) and remaining == 0:
+                    raise _ListEditError("The list is full")
+                if choice == 1:
+                    count = int(
+                        self.get_numbers(
+                            dtype="int32", lo=0, hi=remaining, message="How many values?"
+                        )
+                    )
+                    if count:
+                        values = self.get_numbers(
+                            count,
+                            lo=state.lo,
+                            hi=state.hi,
+                            lo_eq_ok=state.lo_eq_ok,
+                            hi_eq_ok=state.hi_eq_ok,
+                            message="Enter values",
+                        )
+                        state.append(values)
+                elif choice in (2, 3):
+                    start, stop, intervals = self.get_numbers(
+                        3, message="Enter start, stop, intervals"
+                    )
+                    if intervals < 1 or intervals != np.floor(intervals):
+                        raise _ListEditError("Intervals must be a positive integer")
+                    if intervals >= remaining:
+                        raise _ListEditError("List capacity exceeded")
+                    state.append_spaced(float(start), float(stop), int(intervals), log=choice == 3)
+                elif choice == 4:
+                    values = state.values
+                    for i, value in enumerate(values, 1):
+                        self.output.write(f"{i:10d}  {value:.6e}\n")
+                        if page_size and (i % page_size == 0 or i == state.size):
+                            self.hold()
+                elif choice in (5, 6):
+                    if not state.size:
+                        raise _ListEditError("Cannot delete from an empty list")
+                    positions = self.get_numbers(
+                        1 if choice == 5 else 2,
+                        dtype="int32",
+                        lo=1,
+                        hi=state.size,
+                        message="Enter deletion position(s)",
+                    )
+                    state.delete(int(positions[0]), int(positions[-1]))
+                else:
+                    state.sort_unique()
+            except (_ListEditError, _NumericAttemptsExhausted) as error:
+                failures += 1
+                if failures > max_failures:
+                    raise CDFConsoleError("Too many failed list actions") from error
+                self.output.write(f"{error}. Please try again.\n")
+        raise CDFConsoleError("List editing exhausted max_actions")

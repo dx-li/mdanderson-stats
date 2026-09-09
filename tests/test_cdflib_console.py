@@ -54,7 +54,7 @@ def test_native_input_transcripts_with_defined_python_errors(case):
             np.testing.assert_array_equal(result, expected)
 
 
-def test_audit_records_known_unported_list_and_format_behavior():
+def test_audit_records_native_list_and_input_defects():
     cases = REFERENCE["cases"]
     huge = next(c for c in cases if "1e308 1.5e308" in c["input"])
     # Native relative comparison overflows its denominator and discards 1.5e308.

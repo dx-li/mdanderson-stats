@@ -58,6 +58,7 @@ from .cdflib_neg_binomial import (
     inv_neg_binomial,
 )
 from .cdflib_normal import CDFNormal, ccum_normal, cdf_normal, cum_normal, inv_normal
+from .cdflib_number_list import CDFNumberList
 from .cdflib_poisson import CDFPoisson, ccum_poisson, cdf_poisson, cum_poisson, inv_poisson
 from .cdflib_root import (
     ZeroFinder,
@@ -221,6 +222,7 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "CDFNumberList",
     "CDFConsole",
     "CDFConsoleError",
     "cdflib_aux",

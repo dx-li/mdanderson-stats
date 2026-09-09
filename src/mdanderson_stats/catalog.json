@@ -444,7 +444,8 @@
         "F95 constants namespace with all 27 native parameters, documented legacy kind/unit identifiers and audited binary32/binary64 models; constants and mathematical support modules implemented",
         "F95 direct/reverse interval and monotone step root finding with per-search state, corrected exact roots, effective tolerances and bounded evaluations",
         "F95 auxiliary namespace with all 13 native distribution descriptors, batched first-error validation, complement/range helpers and root-state adapters; explicit success and nonfinite handling",
-        "F95 console numeric input in float64, float32 and int32 scalar/vector forms, character/string input and basic output with per-console streams, bounded retries and explicit EOF/nonfinite handling; list editing and message formatting remain pending"
+        "F95 console numeric input in float64, float32 and int32 scalar/vector forms, character/string input and basic output with per-console streams, bounded retries and explicit EOF/nonfinite handling; message formatting remains pending",
+        "F95 numeric list editor with all eight actions, bounded persistent state, atomic edits, stable linear/log spacing and overflow-safe approximate duplicate removal"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -628,7 +629,9 @@
         "docs/cdflib-aux-benchmark.json",
         "tests/fixtures/cdflib_console.json",
         "tests/test_cdflib_console.py",
-        "docs/cdflib-console.md"
+        "docs/cdflib-console.md",
+        "tests/test_cdflib_number_list.py",
+        "docs/cdflib-number-list.md"
       ]
     },
     {
