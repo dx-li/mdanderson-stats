@@ -71,6 +71,6 @@ benefits, not a native-language speedup. No dependency or existing distribution
 kernel was changed. As with ordinary float64 log-gamma evaluation, relative
 accuracy can deteriorate near nontrivial zero log ratios on the negative-a domain.
 
-Nineteen mathematical support procedures are implemented. `betaln`, `log_beta`
-and `log_bicoef` remain pending, as do other incomplete-beta/gamma routines,
-constants and remaining support interfaces. CDFLIB90 remains partial.
+The later [beta/combinatorial port](cdflib-beta-support.md) implements `betaln`,
+`log_beta` and `log_bicoef` using these foundations. Other incomplete-beta/gamma
+routines, constants and support interfaces remain open; CDFLIB90 remains partial.

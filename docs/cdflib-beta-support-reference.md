@@ -2,8 +2,8 @@
 
 Six further public F95 mathematical procedures now have unchanged native
 reference evidence. The [gamma-ratio foundations](cdflib-gamma-ratios.md) now
-implement `algdiv`, `bcorr` and `gsumln`; `betaln`, `log_beta` and `log_bicoef`
-remain pending. CDFLIB90 remains partial.
+implement `algdiv`, `bcorr` and `gsumln`. The [beta/combinatorial port](cdflib-beta-support.md)
+implements `betaln`, `log_beta` and `log_bicoef`. CDFLIB90 remains partial.
 
 | Procedure | Mathematical operation and source constraints |
 |---|---|

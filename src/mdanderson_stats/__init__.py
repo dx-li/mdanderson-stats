@@ -22,6 +22,7 @@ from .binomial_null import BinomialNull, binomial_null
 from .binomial_sample_size import binomial_sample_size
 from .bp1ci import BP1CIResult, bp1ci
 from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
+from .cdflib_beta_support import betaln, log_beta, log_bicoef
 from .cdflib_binomial import CDFBinomial, ccum_binomial, cdf_binomial, cum_binomial, inv_binomial
 from .cdflib_chisq import CDFChiSquare, ccum_chisq, cdf_chisq, cum_chisq, inv_chisq
 from .cdflib_elementary import alnrel, evaluate_polynomial, rexp, rlog, rlog1
@@ -201,6 +202,9 @@ from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtas
 
 __all__ = [
     "alnrel",
+    "betaln",
+    "log_beta",
+    "log_bicoef",
     "algdiv",
     "bcorr",
     "gsumln",

@@ -104,7 +104,7 @@ F95 support also has an explicit public surface:
 
 | Module | Public/support scope and status |
 |---|---|
-| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), and [three gamma-ratio helpers](cdflib-gamma-ratios.md) implemented; remaining default-public numerical procedures and imported constants still open |
+| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), [three gamma-ratio helpers](cdflib-gamma-ratios.md), and [three beta/combinatorial helpers](cdflib-beta-support.md) implemented; remaining default-public numerical procedures and imported constants still open |
 | `zero_finder` | Direct and reverse-communication interval/step solvers, setup, final-state reporting, bounds and solver-state type |
 | `biomath_constants_mod` | Default-public kind and numeric constants |
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
@@ -226,4 +226,5 @@ The [beta/gamma-ratio support audit](cdflib-beta-support-reference.md) records
 Independent 800-digit checks document fractional domains, close-sum and quotient
 underflow failures, and valid extreme-range results. The
 [gamma-ratio foundations](cdflib-gamma-ratios.md) implement `algdiv`, `bcorr` and
-`gsumln`; the other three interfaces remain pending.
+`gsumln`. The [beta/combinatorial port](cdflib-beta-support.md) implements
+`betaln`, `log_beta` and `log_bicoef`.

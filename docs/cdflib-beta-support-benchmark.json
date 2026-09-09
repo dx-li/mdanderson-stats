@@ -1,0 +1,108 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same Python API; not native timing",
+  "cases": [
+    {
+      "operation": "betaln",
+      "size": 64,
+      "batch_seconds": 0.0009558340534567833,
+      "scalar_seconds": 0.0488674589432776,
+      "speedup": 51.125463428037484
+    },
+    {
+      "operation": "log_beta_wide",
+      "size": 64,
+      "batch_seconds": 0.0007890420965850353,
+      "scalar_seconds": 0.04868312459439039,
+      "speedup": 61.699020629051816
+    },
+    {
+      "operation": "beta_near_unit",
+      "size": 64,
+      "batch_seconds": 0.0007693339139223099,
+      "scalar_seconds": 0.05082700029015541,
+      "speedup": 66.06624168044684
+    },
+    {
+      "operation": "log_bicoef",
+      "size": 64,
+      "batch_seconds": 0.0012217913754284382,
+      "scalar_seconds": 0.07383816596120596,
+      "speedup": 60.43434865081903
+    },
+    {
+      "operation": "binomial_tiny_endpoint",
+      "size": 64,
+      "batch_seconds": 0.0011357502080500126,
+      "scalar_seconds": 0.07175187487155199,
+      "speedup": 63.175753227238154
+    },
+    {
+      "operation": "binomial_small_pair",
+      "size": 64,
+      "batch_seconds": 0.0011385828256607056,
+      "scalar_seconds": 0.07496620807796717,
+      "speedup": 65.84168177178081
+    },
+    {
+      "operation": "binomial_huge",
+      "size": 64,
+      "batch_seconds": 0.0011395839974284172,
+      "scalar_seconds": 0.0724100829102099,
+      "speedup": 63.54080355077847
+    },
+    {
+      "operation": "betaln",
+      "size": 256,
+      "batch_seconds": 0.0008102091960608959,
+      "scalar_seconds": 0.1938006249256432,
+      "speedup": 239.1982538187298
+    },
+    {
+      "operation": "log_beta_wide",
+      "size": 256,
+      "batch_seconds": 0.0008039576932787895,
+      "scalar_seconds": 0.195612832903862,
+      "speedup": 243.31234658143768
+    },
+    {
+      "operation": "beta_near_unit",
+      "size": 256,
+      "batch_seconds": 0.0007872083224356174,
+      "scalar_seconds": 0.2075333339162171,
+      "speedup": 263.63203741813896
+    },
+    {
+      "operation": "log_bicoef",
+      "size": 256,
+      "batch_seconds": 0.0011987090110778809,
+      "scalar_seconds": 0.28654875000938773,
+      "speedup": 239.04779839080604
+    },
+    {
+      "operation": "binomial_tiny_endpoint",
+      "size": 256,
+      "batch_seconds": 0.001153165940195322,
+      "scalar_seconds": 0.2910400410182774,
+      "speedup": 252.38348694983253
+    },
+    {
+      "operation": "binomial_small_pair",
+      "size": 256,
+      "batch_seconds": 0.0011827503331005573,
+      "scalar_seconds": 0.2970233750529587,
+      "speedup": 251.129394547975
+    },
+    {
+      "operation": "binomial_huge",
+      "size": 256,
+      "batch_seconds": 0.0011543752625584602,
+      "scalar_seconds": 0.2836248753592372,
+      "speedup": 245.6955589386374
+    }
+  ]
+}

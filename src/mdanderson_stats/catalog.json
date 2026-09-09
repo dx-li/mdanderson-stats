@@ -428,7 +428,8 @@
         "Five F95 elementary support procedures: alnrel, rexp, rlog, rlog1 and vectorized polynomial evaluation; 800-digit independent checks and subnormal remainder repair",
         "F95 erf, erfc1, esum and exparg support with vectorized evaluation, independent high-precision checks and subnormal/overflow repairs",
         "Seven F95 gamma/digamma helpers with distinct real domains, preserved remainders, negative subnormal gamma and pole/overflow handling",
-        "F95 algdiv, bcorr and gsumln foundations with stable gamma ratios, negative shifts, subnormal Stirling corrections and preserved close sums"
+        "F95 algdiv, bcorr and gsumln foundations with stable gamma ratios, negative shifts, subnormal Stirling corrections and preserved close sums",
+        "F95 betaln, log_beta and continuous log_bicoef with stable large shapes, fractional domains, tiny endpoints and factored near-origin series"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -552,7 +553,10 @@
         "docs/cdflib-beta-support-reference.md",
         "tests/test_cdflib_gamma_ratios.py",
         "docs/cdflib-gamma-ratios.md",
-        "docs/cdflib-gamma-ratios-benchmark.json"
+        "docs/cdflib-gamma-ratios-benchmark.json",
+        "tests/test_cdflib_beta_support.py",
+        "docs/cdflib-beta-support.md",
+        "docs/cdflib-beta-support-benchmark.json"
       ]
     },
     {

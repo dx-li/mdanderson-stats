@@ -53,6 +53,12 @@ def independent(mode, a, b):
             return float(oracle_log_gamma(a) + oracle_log_gamma(b) - oracle_log_gamma(a + b))
         if mode == 5:
             return float(oracle_log_gamma(a + b))
+        q = b - a
+        m = a if abs(a) <= abs(q) else q
+        if max(abs(a), abs(q), abs(b)) >= Decimal("1e-20") and abs(m) / min(b + 1, 1) < Decimal(
+            "1e-30"
+        ):
+            return float(m * (positive_psi(b + 1) + EULER))
         return float(
             oracle_log_gamma(b + 1) - oracle_log_gamma(a + 1) - oracle_log_gamma(b - a + 1)
         )

@@ -468,3 +468,6 @@ real domains and repairing lost remainders, subnormal tails and intermediate ove
 
 The [CDFLIB gamma-ratio foundations](docs/cdflib-gamma-ratios.md) add `algdiv`,
 `bcorr` and `gsumln`, preserving tiny ratios, subnormal corrections and close sums.
+
+The [CDFLIB beta/combinatorial helpers](docs/cdflib-beta-support.md) add `betaln`,
+`log_beta` and real-valued `log_bicoef`, retaining large-shape and tiny-result accuracy.

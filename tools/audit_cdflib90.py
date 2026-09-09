@@ -586,6 +586,9 @@ def main():
                 "algdiv",
                 "bcorr",
                 "gsumln",
+                "betaln",
+                "log_beta",
+                "log_bicoef",
             ],
             "python_interfaces": [
                 "alnrel",
@@ -607,6 +610,9 @@ def main():
                 "algdiv",
                 "bcorr",
                 "gsumln",
+                "betaln",
+                "log_beta",
+                "log_bicoef",
             ],
             "status": "partial",
             "remaining_scope": "Other mathematical procedures and imported constants",
@@ -660,6 +666,10 @@ def main():
                 "tests/test_cdflib_gamma_ratios.py",
                 "docs/cdflib-gamma-ratios.md",
                 "docs/cdflib-gamma-ratios-benchmark.json",
+                "src/mdanderson_stats/cdflib_beta_support.py",
+                "tests/test_cdflib_beta_support.py",
+                "docs/cdflib-beta-support.md",
+                "docs/cdflib-beta-support-benchmark.json",
             ],
         }
     )
