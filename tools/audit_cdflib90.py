@@ -782,8 +782,8 @@ def main():
     support_interfaces.append(
         {
             "module": "zero_finder",
-            "status": "reference_audited_not_implemented",
-            "reference_audited_public_names": [
+            "status": "implemented_with_documented_python_semantics",
+            "implemented_public_names": [
                 "set_zero_finder",
                 "interval_zf",
                 "rc_interval_zf",
@@ -792,9 +792,26 @@ def main():
                 "final_zf_state",
                 "zf_locals",
                 "zf_current_status",
+                "zf_bound_low",
+                "zf_bound_high",
+                "zf_crash_left",
+                "zf_crash_hi",
             ],
-            "remaining_scope": "Root solvers, setup and state interfaces",
+            "python_interfaces": [
+                "set_zero_finder",
+                "interval_zf",
+                "rc_interval_zf",
+                "step_zf",
+                "rc_step_zf",
+                "final_zf_state",
+                "ZeroFinder",
+                "ZeroFinderResult",
+            ],
+            "state_mapping": "Fortran shared globals become immutable per-search result fields",
             "evidence": [
+                "src/mdanderson_stats/cdflib_root.py",
+                "tests/test_cdflib_root.py",
+                "docs/cdflib-root.md",
                 "tools/reference_cdflib_root.py",
                 "tests/fixtures/cdflib_root.json",
                 "tests/test_cdflib_root_reference.py",

@@ -510,3 +510,6 @@ parameters, completing the constants and mathematical support modules.
 
 The [CDFLIB root-finder audit](docs/cdflib-root-reference.md) records direct and
 reverse-communication contracts and independently identifies native root/state defects.
+
+The [CDFLIB root finders](docs/cdflib-root.md) implement direct and reverse searches
+with independent state, corrected exact roots, working tolerances and bounded work.

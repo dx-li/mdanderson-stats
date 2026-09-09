@@ -48,9 +48,9 @@ Reverse-communication routines return the indicated bound. Failure flags and
 bounds are recorded only for status -1; their sign and boundary contracts are
 checked against the endpoint function values.
 
-This is an audit, not a Python root-finder implementation. It covers explicit
-local state and completed runs; interleaving, default-state behavior, invalid
-configuration and STOP paths still need examination. The Python port must handle
-exact roots, consistent completion state, configured tolerances and bounded
-work while preserving direct and reverse-communication interfaces. CDFLIB90 and
-the full catalog conversion remain partial.
+The [Python implementation](cdflib-root.md) uses this audit as evidence, with
+corrected exact roots and completion state, effective tolerances and bounded
+work. It replaces native shared default state with independent searches and
+validates inputs instead of invoking the source STOP paths. Python tests cover
+interleaving and invalid configuration; the native fixture itself covers explicit
+local state and completed runs. CDFLIB90 and the full catalog remain partial.

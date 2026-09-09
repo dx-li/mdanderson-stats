@@ -105,7 +105,7 @@ F95 support also has an explicit public surface:
 | Module | Public/support scope and status |
 |---|---|
 | `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), [three gamma-ratio helpers](cdflib-gamma-ratios.md), [three beta/combinatorial helpers](cdflib-beta-support.md), the [gamma scaling factor](cdflib-gamma-factor.md), [two incomplete-gamma helpers](cdflib-incomplete-gamma.md), [two beta factors](cdflib-beta-factors.md), the [beta shape shift](cdflib-beta-shift.md), [fpser](cdflib-fpser.md), [apser](cdflib-apser.md), [bpser](cdflib-bpser.md), [bgrat](cdflib-bgrat.md), [basym](cdflib-basym.md), [bfrac](cdflib-bfrac.md), and [bratio](cdflib-bratio.md) complete all 35 mathematical procedures; imported [constants](cdflib-constants.md) are available through `cdflib_constants` |
-| `zero_finder` | [Native audit](cdflib-root-reference.md) covers direct/reverse interval and step solvers; Python solvers, setup, final-state reporting, bounds and solver-state type remain pending |
+| `zero_finder` | [Implemented](cdflib-root.md): direct/reverse interval and step solvers, setup and per-search state; corrected roots and tolerances; shared globals become result fields |
 | `biomath_constants_mod` | [All 27 constants](cdflib-constants.md) implemented, with audited numeric values and documented legacy kind/unit identifiers |
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
 | `biomath_interface_mod` | Numeric/string input generics, console output and message controls |
@@ -261,4 +261,5 @@ interfaces keep CDFLIB90 partial.
 
 The [root-finder audit](cdflib-root-reference.md) records 60 completed native calls,
 including sixteen incorrect successful roots, four stale local completion states,
-and direct/reverse request traces. Root-finder implementation remains pending.
+and direct/reverse request traces. The [Python root finders](cdflib-root.md) implement
+these interfaces with corrected exact roots, per-search state and working tolerances.

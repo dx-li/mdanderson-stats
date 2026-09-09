@@ -441,7 +441,8 @@
         "F95 basym displacement-preserving beta tail with bounded coefficient batches, scaled exponents, convergence fallback and extreme-coordinate repairs",
         "F95 bfrac beta integral with compensated coordinate displacement, reflected bounded continued fractions, complete normalization and endpoint repairs",
         "F95 bratio paired beta integral with zero-shape limits, source input-error contracts, direct small tails and bounded huge-shape evaluation; all 35 F95 mathematical procedures implemented",
-        "F95 constants namespace with all 27 native parameters, documented legacy kind/unit identifiers and audited binary32/binary64 models; constants and mathematical support modules implemented"
+        "F95 constants namespace with all 27 native parameters, documented legacy kind/unit identifiers and audited binary32/binary64 models; constants and mathematical support modules implemented",
+        "F95 direct/reverse interval and monotone step root finding with per-search state, corrected exact roots, effective tolerances and bounded evaluations"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -616,7 +617,9 @@
         "docs/cdflib-constants.md",
         "tests/test_cdflib_root_reference.py",
         "tests/fixtures/cdflib_root.json",
-        "docs/cdflib-root-reference.md"
+        "docs/cdflib-root-reference.md",
+        "tests/test_cdflib_root.py",
+        "docs/cdflib-root.md"
       ]
     },
     {

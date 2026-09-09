@@ -58,6 +58,16 @@ from .cdflib_neg_binomial import (
 )
 from .cdflib_normal import CDFNormal, ccum_normal, cdf_normal, cum_normal, inv_normal
 from .cdflib_poisson import CDFPoisson, ccum_poisson, cdf_poisson, cum_poisson, inv_poisson
+from .cdflib_root import (
+    ZeroFinder,
+    ZeroFinderResult,
+    final_zf_state,
+    interval_zf,
+    rc_interval_zf,
+    rc_step_zf,
+    set_zero_finder,
+    step_zf,
+)
 from .cdflib_sort import sort_list
 from .cdflib_strings import (
     QlexToken,
@@ -252,6 +262,14 @@ __all__ = [
     "qlex",
     "upper_case_char",
     "upper_case_string",
+    "ZeroFinder",
+    "ZeroFinderResult",
+    "final_zf_state",
+    "interval_zf",
+    "rc_interval_zf",
+    "rc_step_zf",
+    "set_zero_finder",
+    "step_zf",
     "sort_list",
     "DCDFLIBNoncentralT",
     "cdftnc",
