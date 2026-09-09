@@ -580,6 +580,9 @@ and observed information, with explicit repairs to source boundary handling.
 Frequency summaries add calibration, mutant frequency and delta-method uncertainty;
 direct complementary groups and logarithmic formulas replace unstable subtraction
 and powers, and unavailable uncertainty is explicitly marked.
+The Python sampling layer adds stable model probabilities and explicit-state
+NumPy binomial generation in place of clock seeding and single-precision draws;
+historical random-sequence equivalence is not claimed.
 Remaining SPPCR workflow components are not yet implemented. The archive includes
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native

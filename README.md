@@ -566,5 +566,7 @@ rebuilds all 27 sources and checks interior allele-frequency fits independently.
 The [SPPCR fitting core](docs/sppcr-fit.md) provides vectorized Poisson-mean fits,
 observed-information variances and explicit boundary policies.
 [Frequency summaries](docs/sppcr-frequencies.md) add calibration, mutant frequency,
-delta-method uncertainty and stable forward transforms. SPPCR remains partial:
-resampling, confidence intervals, input formats and the full workflow remain.
+delta-method uncertainty and stable forward transforms.
+[Data generation](docs/sppcr-generation.md) adds explicit probability models and
+reproducible batched binomial samples. SPPCR remains partial: bootstrap fitting and
+summaries, confidence intervals, input formats and the full workflow remain.

@@ -1,0 +1,24 @@
+{
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scope": "Three-run medians, same Python API and identical samples/RNG state; not native Fortran speedup",
+  "cases": [
+    {
+      "replicates": 32,
+      "levels": 3,
+      "alleles": 4,
+      "batch_seconds": 0.00010850001126527786,
+      "scalar_seconds": 0.0009186249226331711,
+      "speedup": 8.466588269628588
+    },
+    {
+      "replicates": 1024,
+      "levels": 3,
+      "alleles": 4,
+      "batch_seconds": 0.0014722920022904873,
+      "scalar_seconds": 0.028492207638919353,
+      "speedup": 19.352280386358956
+    }
+  ]
+}

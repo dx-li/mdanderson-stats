@@ -211,6 +211,12 @@ from .single_two_sample import SingleTwoSamplePrecision, single_two_sample_preci
 from .single_uniform import SingleUniformCriterion, single_uniform_criterion
 from .sppcr_fit import SPPCRMeanFit, sppcr_fit_means
 from .sppcr_frequencies import SPPCREstimate, SPPCRFrequencies, SPPCRProportion, sppcr_frequencies
+from .sppcr_generate import (
+    SPPCRSamples,
+    sppcr_detection_probabilities,
+    sppcr_generate,
+    sppcr_observed_probabilities,
+)
 from .stattab_console import STATTABRun, run_stattab
 from .stattab_files import STATTABFile, stattab_open_file, stattab_report_file_dialogue
 from .stattab_probability import (
@@ -241,6 +247,10 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "SPPCRSamples",
+    "sppcr_detection_probabilities",
+    "sppcr_generate",
+    "sppcr_observed_probabilities",
     "SPPCREstimate",
     "SPPCRFrequencies",
     "SPPCRProportion",

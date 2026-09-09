@@ -107,7 +107,7 @@ and uncertainty workflows must retain these distinctions.
 | Source responsibilities | Python work required |
 |---|---|
 | `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Mean fitting, curvature, frequency/calibration/mutant summaries and forward transforms implemented; inverse-transform confidence intervals remain with reporting |
-| `generate_mod`, `one_data_set_mod`, `accumulate_mod` | Explicit resampling models, simulation, replicate fits and stable uncertainty summaries |
+| `generate_mod`, `one_data_set_mod`, `accumulate_mod` | Probability models and explicit-state NumPy simulation implemented; replicate fits and stable bootstrap uncertainty summaries remain |
 | `ecuyer_cote_mod`, random modules, seed helpers | Reconcile existing RANDLIB support with this source version; explicit reproducible RNG state |
 | `problem_in_mod`, `data_in_struct_mod` | Validate batch and FileMaker-derived formats, interactive inputs and progenitor identities |
 | `results_out_mod` | Structured results, confidence intervals, diagnostics, data and simulation reports |
