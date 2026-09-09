@@ -326,7 +326,14 @@
         "cdftnc",
         "cumtnc"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "not_yet_independently_validated",
+      "legacy_reference_evidence": [
+        "tools/reference_dcdflib_nc_t.py",
+        "tests/fixtures/dcdflib_nc_t.json",
+        "tests/test_dcdflib_nc_t_reference.py",
+        "docs/dcdflib-nc-t-reference.md"
+      ],
+      "legacy_review_notes": "Unchanged C/F77 contracts audited: signed noncentrality, ignored q, executable df cap 1e4 versus header 1e10, misleading failure bounds and false successes; API pending."
     },
     {
       "name": "neg_binomial",

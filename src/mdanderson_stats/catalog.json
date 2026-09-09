@@ -507,7 +507,10 @@
         "docs/dcdflib-nc-chisq-reference.md",
         "tests/test_dcdflib_nc_chisq.py",
         "docs/dcdflib-nc-chisq.md",
-        "docs/dcdflib-nc-chisq-benchmark.json"
+        "docs/dcdflib-nc-chisq-benchmark.json",
+        "tests/fixtures/dcdflib_nc_t.json",
+        "tests/test_dcdflib_nc_t_reference.py",
+        "docs/dcdflib-nc-t-reference.md"
       ]
     },
     {

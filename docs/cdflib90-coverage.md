@@ -186,3 +186,8 @@ records unchanged C/F77 behavior, the ignored-q inversion contract, early-series
 small-tail failures, invalid wide central probabilities and a large-noncentrality
 timeout. The [wider legacy API](dcdflib-nc-chisq.md) now implements all four
 modes with independent small-tail checks and documented numerical limits.
+
+The [legacy noncentral-t reference audit](dcdflib-nc-t-reference.md) records
+signed noncentrality, ignored q, the executable df upper bound of 1e4,
+misleading native status bounds and independently established tail/inverse
+failures. The wider legacy API remains pending.
