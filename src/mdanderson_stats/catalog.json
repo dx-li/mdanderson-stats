@@ -406,7 +406,8 @@
         "Negative-binomial tails, real failure/success inversions and complementary success-probability inversion; full count bounds, zero-success semantics and shared beta kernels",
         "Pinned 106-file archive inventory and public-interface crosswalk; legacy C/Fortran and public-support contract review explicitly tracked as outstanding",
         "Student's t lower/upper tails, quantiles and bounded degrees-of-freedom inversion using complementary beta coordinates and batched search",
-        "Binomial tails, real success/trial-count inversion and complementary probability inversion; explicit degenerate boundaries and dual primary/backup native validation"
+        "Binomial tails, real success/trial-count inversion and complementary probability inversion; explicit degenerate boundaries and dual primary/backup native validation",
+        "F95 F-distribution tails and quantiles with direct complementary beta coordinates; additional legacy C/F77 df inversion modes explicitly remain outstanding"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -429,7 +430,9 @@
         "tests/test_cdflib_t.py",
         "tests/fixtures/cdflib_t.json",
         "tests/test_cdflib_binomial.py",
-        "tests/fixtures/cdflib_binomial.json"
+        "tests/fixtures/cdflib_binomial.json",
+        "tests/test_cdflib_f.py",
+        "tests/fixtures/cdflib_f.json"
       ]
     },
     {

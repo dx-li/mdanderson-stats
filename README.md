@@ -372,3 +372,8 @@ bounded degrees-of-freedom inversion with preserved small probability tails.
 `cdf_binomial`, `cum_binomial`, `ccum_binomial` and `inv_binomial` preserve the
 continuous binomial extension, with success-count, trial-count and probability
 inversion. Native validation covers both archived binomial source versions.
+
+
+`cdf_f`, `cum_f`, `ccum_f` and `inv_f` implement the F95 F-distribution tails
+and quantiles. The older C/F77 degrees-of-freedom inversion modes remain tracked
+separately in the CDFLIB90 checklist.

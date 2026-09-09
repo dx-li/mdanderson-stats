@@ -94,13 +94,25 @@
         "cum_f",
         "inv_f"
       ],
-      "python_status": "pending_distribution",
-      "evidence": [],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_f.py",
+        "tests/test_cdflib_f.py",
+        "tests/fixtures/cdflib_f.json"
+      ],
       "legacy_distribution_names": [
         "cdff",
         "cumf"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "not_yet_independently_validated",
+      "f95_computed_groups": [
+        "cum/ccum",
+        "f"
+      ],
+      "legacy_additional_computed_groups_pending": [
+        "dfn",
+        "dfd"
+      ]
     },
     {
       "name": "gamma",
@@ -628,7 +640,7 @@
       "size": 11147,
       "sha256": "8b7f97c3f1446c80b6af0809e5d2b9a05f091e3266d03f910288832dc9765d92",
       "role": "f95_distribution",
-      "coverage_status": "pending_distribution",
+      "coverage_status": "implemented_distribution",
       "scope": "f",
       "declarations": {
         "routine_declarations_including_entries": [

@@ -4,7 +4,7 @@ CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
 The entry is **partial**. All four public interfaces are implemented for beta,
-binomial, normal, gamma, chi-square, Poisson, negative-binomial and Student's t distributions. Four other
+binomial, normal, gamma, chi-square, Poisson, negative-binomial, Student's t and F distributions. Three other
 distribution modules and the remaining archived library interfaces are outstanding.
 The [106-file inventory](cdflib90-coverage.md) identifies the legacy entry points
 and public support APIs that still need contract review and validation.
@@ -573,3 +573,61 @@ Independent tests use exact rational binomial sums, fractional count round trips
 trial upper bound, tiny complements, broadcasting, immutable ownership, empty
 arrays and invalid or unidentified requests. Separate regression checks cover
 the backup's unchanged output pair and its forward probabilities.
+
+
+## F distribution (F95 interface)
+
+```python
+from mdanderson_stats import cdf_f, cum_f, ccum_f, inv_f
+
+lower = cum_f([0.1, 1, 10], dfn=5, dfd=10)
+upper = ccum_f([0.1, 1, 10], dfn=5, dfd=10)
+quantile = inv_f(None, dfn=2, dfd=2, ccum=1e-100)
+```
+
+`cdf_f` computes group 1 (cum/ccum) or 2 (f), matching the F95 module and its
+parameter table. Omit the computed group and supply both degrees of freedom.
+`CDFF` contains `which` and five owned immutable broadcast arrays: `cum`, `ccum`,
+`f`, `dfn`, `dfd`. Tail conveniences take `(f, dfn, dfd)`; the quantile takes
+`(cum, dfn, dfd, *, ccum=None)`. f retains [0,1e100] and each df retains
+[1e-3,1e10]. No default degrees of freedom are assumed.
+
+**The F95 source deliberately omits df inversion.** Its header says which is
+restricted to 1:2, its metadata enforces that range, and the actual routine has
+only those two branches. A later contradictory comment about returning an
+arbitrary df root is stale. The bundled older C/F77 `cdff` supports additional
+which=3/4 modes for numerator/denominator df; those remain outstanding in the
+[archive checklist](cdflib90-coverage.md). This port does not claim to implement
+those legacy modes by completing the four named F95 interfaces.
+
+The F variable is a ratio of independent scaled chi-square variables. Its beta
+coordinate pair is x=dfn*f/(dfd+dfn*f), cx=dfd/(dfd+dfn*f), with shapes dfn/2
+and dfd/2. Both coordinates are formed directly, preserving a small coordinate
+when its complement rounds to one. The source domains keep the intermediate
+product and denominator within floating-point range. The shared beta kernels
+produce both tails and invert the smaller supplied probability directly.
+The quantile is (dfd/dfn)*(x/cx).
+
+Probability pairs follow the beta interface, extending the archived upper-tail
+cutoff to any positive representable ccum. cum=0 gives f=0; ccum=0 has no finite
+quantile and raises `ValueError`. A quantile outside the f domain also raises
+`ValueError`; computed upper-bound rounding within eight machine epsilons is
+accepted at the boundary, while input bounds remain strict. Failed beta kernels
+raise `ArithmeticError`. Plain probabilities and coordinates can underflow;
+values already rounded to zero/one cannot reconstruct an earlier finite f.
+
+`tools/reference_cdflib_f.py` compiles nine unmodified source files and records
+source/archive hashes, compiler, command, driver and **126 cases**: 64 forward
+evaluations and 62 quantile inversions. Forward probabilities agree directly in
+that grid; inverse tests recover the known generating f. This build records
+status 50 for every forward case because the source finalizes an unused zero
+finder. Such undefined-state status is not a portable statistical reference.
+
+Two additional tiny-f references at 1e-20 and 1e-100 with dfn=dfd=2 return lower
+CDF zero, although the exact answer is f/(1+f). The original coordinate branch
+reads xx before assigning it and can then obtain the small coordinate by
+subtraction from a rounded one. Python forms both coordinates directly and
+retains those tails. Independent tests use F(1,1) as a squared Cauchy variable,
+F(2,2)'s rational CDF, reciprocal symmetry with swapped df, equal-df medians,
+source-domain endpoints, underflow behavior, broadcasting, immutable ownership,
+empty arrays and invalid requests.

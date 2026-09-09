@@ -24,6 +24,7 @@ from .bp1ci import BP1CIResult, bp1ci
 from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
 from .cdflib_binomial import CDFBinomial, ccum_binomial, cdf_binomial, cum_binomial, inv_binomial
 from .cdflib_chisq import CDFChiSquare, ccum_chisq, cdf_chisq, cum_chisq, inv_chisq
+from .cdflib_f import CDFF, ccum_f, cdf_f, cum_f, inv_f
 from .cdflib_gamma import CDFGamma, ccum_gamma, cdf_gamma, cum_gamma, inv_gamma
 from .cdflib_neg_binomial import (
     CDFNegativeBinomial,
@@ -165,6 +166,11 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "CDFF",
+    "cdf_f",
+    "cum_f",
+    "ccum_f",
+    "inv_f",
     "CDFBinomial",
     "cdf_binomial",
     "cum_binomial",

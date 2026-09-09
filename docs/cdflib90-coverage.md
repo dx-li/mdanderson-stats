@@ -14,7 +14,7 @@ all its domains, inversions, endpoint policies or errors.
 
 | Archive material | Files | Coverage disposition |
 |---|---:|---|
-| F95 distribution modules | 12 | Eight implemented and validated; four pending |
+| F95 distribution modules | 12 | Nine implemented and validated; three pending |
 | F95 support modules | 7 | Public/support contract review remains open |
 | Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
@@ -37,7 +37,7 @@ contracts and numerical behavior still need comparison with the F95 port.
 | Beta | `beta` | `cdfbet`, `cumbet` | Implemented |
 | Binomial | `binomial` | `cdfbin`, `cumbin` | Implemented |
 | Chi-square | `chisq` | `cdfchi`, `cumchi` | Implemented |
-| F | `f` | `cdff`, `cumf` | Pending |
+| F | `f` | `cdff`, `cumf` | F95 tails/quantiles implemented; legacy df inversion pending |
 | Gamma | `gamma` | `cdfgam`, `cumgam` | Implemented |
 | Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | Pending |
 | Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | Pending |
@@ -53,6 +53,13 @@ independently validate the legacy C/F77 implementations. The inventory therefore
 keeps legacy contract status open even where a corresponding Python distribution
 exists. Future work must establish shared behavior, document differences, and
 preserve any additional substantive functionality before closing that scope.
+
+The F95 F module accepts only which=1 (tails) and which=2 (F quantile), explicitly
+excluding degrees-of-freedom inversion. The older C/F77 `cdff` additionally
+accepts which=3 (dfn) and which=4 (dfd). Those **additional legacy F modes remain
+unimplemented**, beyond independent validation of the shared tail/quantile modes.
+The inventory records them separately so implementing the F95 module cannot
+silently close the older library's wider interface.
 
 The archived DCDFLIB readme explicitly warns that F and noncentral-F CDFs need
 not be monotone in either degrees-of-freedom parameter and may have multiple
@@ -113,7 +120,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Implement and validate the four pending distribution modules and all their
+- Implement and validate the three pending distribution modules and all their
   parameter-inversion modes, including multiple-root and endpoint behavior.
 - Compare the 24 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.

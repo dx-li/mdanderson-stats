@@ -23,7 +23,7 @@ DISTRIBUTIONS = {
     "poisson": "poi",
     "t": "t",
 }
-IMPLEMENTED = {"beta", "binomial", "chisq", "gamma", "neg_binomial", "normal", "poisson", "t"}
+IMPLEMENTED = {"beta", "binomial", "chisq", "f", "gamma", "neg_binomial", "normal", "poisson", "t"}
 SUPPORT = {
     "biomath_constants_mod": "Kind declarations and numeric constants",
     "biomath_interface_mod": "Public console input/output and message controls",
@@ -215,6 +215,9 @@ def main():
                 "legacy_contract_status": "not_yet_independently_validated",
             }
         )
+    f_distribution = next(row for row in distributions if row["name"] == "f")
+    f_distribution["f95_computed_groups"] = ["cum/ccum", "f"]
+    f_distribution["legacy_additional_computed_groups_pending"] = ["dfn", "dfd"]
     header = next(row for row in members if row["role"] == "c_header")["declarations"]
     definitions = {
         name
