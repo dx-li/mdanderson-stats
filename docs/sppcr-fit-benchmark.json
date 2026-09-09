@@ -1,0 +1,24 @@
+{
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scope": "Three-run medians; same-Python batching, not native Fortran speedup",
+  "cases": [
+    {
+      "experiments": 32,
+      "dna_levels": 3,
+      "alleles": 4,
+      "batch_seconds": 0.001379791647195816,
+      "scalar_seconds": 0.029144542291760445,
+      "speedup": 21.122422614306736
+    },
+    {
+      "experiments": 1024,
+      "dna_levels": 3,
+      "alleles": 4,
+      "batch_seconds": 0.014149165712296963,
+      "scalar_seconds": 0.9294408340938389,
+      "speedup": 65.68873762543235
+    }
+  ]
+}

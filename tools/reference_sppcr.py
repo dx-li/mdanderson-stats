@@ -140,7 +140,7 @@ def main():
         "SPPCR%20%20%20_V1zip.zip",
         archive_sha256=SHA256,
         catalog_id=26,
-        status="source_audited_python_implementation_pending",
+        status="native_reference_evidence",
         compiler=subprocess.check_output(["gfortran", "--version"], text=True).splitlines()[0],
         flags=flags,
         source_order=order,

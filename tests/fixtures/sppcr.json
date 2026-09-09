@@ -2,7 +2,7 @@
   "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SPPCR/SPPCR%20%20%20_V1zip.zip",
   "archive_sha256": "98e0937e26a5209421144c20178a2bd9c77d3baad7a3b28606d0f0f6555e2c98",
   "catalog_id": 26,
-  "status": "source_audited_python_implementation_pending",
+  "status": "native_reference_evidence",
   "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
   "flags": [
     "gfortran",

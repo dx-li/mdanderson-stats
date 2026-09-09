@@ -876,13 +876,20 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
+      "status": "partial",
+      "implemented_features": [
+        "Vectorized per-allele Poisson-mean likelihood fits over DNA levels and experiment batches, observed-information variances, disclosed fit counts, true zero boundaries, explicit fully detected allele policy, immutable results and numerical root brackets"
+      ],
       "validation": [
         "docs/sppcr-research.md",
         "tools/reference_sppcr.py",
         "tests/fixtures/sppcr.json",
-        "tests/test_sppcr_reference.py"
+        "tests/test_sppcr_reference.py",
+        "src/mdanderson_stats/sppcr_fit.py",
+        "tests/test_sppcr_fit.py",
+        "docs/sppcr-fit.md",
+        "tools/benchmark_sppcr_fit.py",
+        "docs/sppcr-fit-benchmark.json"
       ]
     },
     {

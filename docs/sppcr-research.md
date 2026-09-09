@@ -1,6 +1,7 @@
 # SPPCR archive and numerical baseline
 
-Catalog entry **26, SPPCR**, remains pending implementation. The original source
+Catalog entry **26, SPPCR**, is partially implemented. The
+[likelihood fitting core](sppcr-fit.md) is available. The original source
 has been compiled and its interior likelihood/frequency calculations independently
 checked. This establishes a numerical reference and identifies defects that must
 be resolved in the Python implementation; it is not a completed catalog entry.
@@ -93,14 +94,15 @@ transform and the fixed normal multiplier 1.959964 for confidence limits.
   optional-argument combinations. Both require explicit Python contracts.
 
 The malformed and perturbed cases in the fixture are defect evidence, not desired
-Python results. The forthcoming fit API must distinguish original counts, deliberate
-boundary adjustments, genuine boundary estimates and numerical failure.
+Python results. The fitting API distinguishes original counts, deliberate
+boundary adjustments, genuine boundary estimates and numerical failure. Frequency
+and uncertainty workflows must retain these distinctions.
 
 ## Remaining implementation scope
 
 | Source responsibilities | Python work required |
 |---|---|
-| `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Stable vectorized fitting, curvature, frequencies/calibration/mutants, transforms and defined boundary policies |
+| `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Mean fitting and curvature implemented with explicit boundary policies; frequencies/calibration/mutants and transforms remain |
 | `generate_mod`, `one_data_set_mod`, `accumulate_mod` | Explicit resampling models, simulation, replicate fits and stable uncertainty summaries |
 | `ecuyer_cote_mod`, random modules, seed helpers | Reconcile existing RANDLIB support with this source version; explicit reproducible RNG state |
 | `problem_in_mod`, `data_in_struct_mod` | Validate batch and FileMaker-derived formats, interactive inputs and progenitor identities |
