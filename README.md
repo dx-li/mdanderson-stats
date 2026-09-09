@@ -423,3 +423,7 @@ unchanged C/F77 references checked against independent high-precision identities
 `cdfpoi` and `cumpoi` implement the [legacy Poisson interface](docs/dcdflib-poisson.md),
 including zero mean, wide finite inputs, bounded continuous count/mean inversions
 and independent repairs for native overflow and false-success results.
+
+`cdfnbn` and `cumnbn` implement the [legacy negative-binomial interface](docs/dcdflib-neg-binomial.md),
+with all four computation modes, wider counts, paired chance inversions and
+independently validated repairs for extreme shapes and small inverse targets.

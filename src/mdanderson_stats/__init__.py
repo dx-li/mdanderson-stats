@@ -60,6 +60,7 @@ from .dcdflib_chisq import DCDFLIBChiSquare, cdfchi, cumchi
 from .dcdflib_f import DCDFLIBF, cdff, cumf
 from .dcdflib_gamma import DCDFLIBGamma, cdfgam, cumgam
 from .dcdflib_nc_f import DCDFLIBNoncentralF, cdffnc, cumfnc
+from .dcdflib_neg_binomial import DCDFLIBNegativeBinomial, cdfnbn, cumnbn
 from .dcdflib_normal import DCDFLIBNormal, cdfnor, cumnor
 from .dcdflib_poisson import DCDFLIBPoisson, cdfpoi, cumpoi
 from .dcdflib_t import DCDFLIBStudentT, cdft, cumt
@@ -194,6 +195,9 @@ __all__ = [
     "DCDFLIBNoncentralF",
     "cdffnc",
     "cumfnc",
+    "DCDFLIBNegativeBinomial",
+    "cdfnbn",
+    "cumnbn",
     "DCDFLIBNormal",
     "cdfnor",
     "cumnor",

@@ -1,15 +1,15 @@
 # Legacy negative-binomial reference audit
 
-This is reference evidence for the forthcoming C/F77 `cdfnbn`/`cumnbn` port.
-The wider legacy Python interface is **not yet implemented**. The existing
+This is reference evidence for the [C/F77 `cdfnbn`/`cumnbn` port](dcdflib-neg-binomial.md).
+The separate implementation tests cover its wider domains. The existing
 `cdf_neg_binomial` implements the separately documented F95 domain and semantics.
 
 ## Executable contract
 
 The archived `cdfnbn` modes compute (1) p/q, (2) failures, (3) successes, or
 (4) success probability and its complement. Source S means failures; source XN
-means successes. A Python interface should retain the existing f/s naming and
-map source PR/OMPR to pr/cpr explicitly.
+means successes. The Python interface retains the existing f/s naming and
+maps source PR/OMPR to pr/cpr explicitly.
 
 Both count inputs allow all finite nonnegative values; count searches are
 [0,1e100]. Probabilities and their complements lie in [0,1], and both pair sums
@@ -22,7 +22,7 @@ count inversion is not an integer-valued quantile.
 both native languages return P=0, Q=1 with status 0. At zero successes and pr>0,
 they return P=1, Q=0. The existing Python F95 interface deliberately returns P=1
 for zero successes even at pr=0: no trials are needed to achieve zero successes.
-The legacy port needs an explicit documented choice at this boundary.
+The legacy port adopts this Python zero-success convention explicitly.
 
 ## Reproducible evidence
 
@@ -67,10 +67,10 @@ Python interface on its overlapping domain, independently check integer-count
 tails with 120-digit negative-binomial PMF sums, and preserve boundary and
 false-success evidence. Native inverse outputs are also evaluated forward.
 The independent sums use the smaller supplied chance coordinate to retain a
-small complement. These tests do not validate unimplemented wide-domain APIs.
+small complement. These reference tests cover the ordinary overlap; separate implementation tests
+validate the wider legacy API.
 
-Still required: a separate legacy interface, all count search bounds, both
-complementary chance coordinates, numerical handling of extreme beta shapes,
-explicit degenerate inversions, independent wide-domain tests and batching
-measurements. CDFLIB90 remains partial and its ten pending legacy distribution
-entry points remain pending after this reference checkpoint.
+The separate implementation now supplies the legacy interface, wider count
+searches, complementary chance coordinates, numerical repairs, wide-domain tests
+and batching measurements. CDFLIB90 remains partial, with eight other legacy
+distribution entry points and its public support interfaces still outstanding.

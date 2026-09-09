@@ -43,7 +43,7 @@ legacy distribution contracts still need comparison with the F95 ports.
 | Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | F95 implemented; legacy review pending |
 | Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | F95 and legacy C/F77 noncentral F interfaces implemented |
 | Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | F95 implemented with df brackets; legacy review pending |
-| Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | F95 implemented; legacy review pending |
+| Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | F95 and legacy C/F77 interfaces implemented |
 | Normal | `normal` | `cdfnor`, `cumnor` | F95 and legacy C/F77 normal interfaces implemented |
 | Poisson | `poisson` | `cdfpoi`, `cumpoi` | F95 and legacy C/F77 Poisson interfaces implemented |
 | Student's t | `t` | `cdft`, `cumt` | F95 and legacy C/F77 Student t interfaces implemented |
@@ -139,7 +139,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Compare the remaining 10 legacy distribution entry-point contracts and validate any
+- Compare the remaining 8 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.
@@ -165,5 +165,6 @@ wide finite inputs and independent small-tail checks.
 
 The [negative-binomial reference audit](dcdflib-neg-binomial-reference.md) records
 unchanged C/F77 behavior, independent ordinary-domain validation, boundary
-conflicts, false-success inversions and wide-input timeouts. Its separate legacy
-Python interface remains pending; this reference work does not reduce that scope.
+conflicts, false-success inversions and wide-input timeouts. The separate
+[legacy Python implementation](dcdflib-neg-binomial.md) now covers all four
+modes, wider counts, complementary chance coordinates and documented repairs.

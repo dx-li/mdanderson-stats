@@ -417,7 +417,8 @@
         "Legacy DCDFLIB Student t cdft/cumt: wide finite t and positive df inputs, bounded quantile and df inversions, logarithmic tail repair and unchanged C/F77 reference validation",
         "Legacy DCDFLIB gamma cdfgam/cumgam: all four computed groups, explicit rate semantics, unrestricted finite x/rate results, logarithmic scaling and tiny-shape repairs with unchanged C/F77 and independent high-precision validation",
         "Legacy DCDFLIB chi-square cdfchi/cumchi: all three computed groups, wide finite inputs, bounded x/df inversions and subnormal half-value repairs with unchanged C/F77 and independent high-precision validation",
-        "Legacy DCDFLIB Poisson cdfpoi/cumpoi: zero mean, wide nonnegative finite inputs, bounded continuous count/mean inversions and overflow/subnormal-tail repairs with unchanged C/F77 and independent high-precision validation"
+        "Legacy DCDFLIB Poisson cdfpoi/cumpoi: zero mean, wide nonnegative finite inputs, bounded continuous count/mean inversions and overflow/subnormal-tail repairs with unchanged C/F77 and independent high-precision validation",
+        "Legacy DCDFLIB negative-binomial cdfnbn/cumnbn: all four modes, wide finite counts, bounded count searches, complementary chance inversion, exact power and gamma-limit repairs with unchanged native and independent high-precision validation"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -482,7 +483,10 @@
         "docs/dcdflib-poisson-benchmark.json",
         "tests/fixtures/dcdflib_neg_binomial.json",
         "tests/test_dcdflib_neg_binomial_reference.py",
-        "docs/dcdflib-neg-binomial-reference.md"
+        "docs/dcdflib-neg-binomial-reference.md",
+        "tests/test_dcdflib_neg_binomial.py",
+        "docs/dcdflib-neg-binomial.md",
+        "docs/dcdflib-neg-binomial-benchmark.json"
       ]
     },
     {

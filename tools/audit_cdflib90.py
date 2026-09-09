@@ -138,6 +138,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"cdfnbn", "cumnbn"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_distribution",
+                    "Negative-binomial tails and inversions; independent C/F77 validation",
+                )
             if path.stem in {"cdfpoi", "cumpoi"}:
                 return (
                     "f77_source",
@@ -360,10 +366,17 @@ def main():
         "tests/test_dcdflib_neg_binomial_reference.py",
         "docs/dcdflib-neg-binomial-reference.md",
     ]
-    neg_binomial["legacy_review_notes"] = (
-        "Unchanged C/F77 references audited on the F95 overlap; wider legacy Python "
-        "interface remains pending, including zero-success semantics and inverse repairs."
-    )
+    neg_binomial["legacy_computed_groups"] = ["p/q", "f", "s", "pr/cpr"]
+    neg_binomial["legacy_python_interfaces"] = ["cdfnbn", "cumnbn"]
+    neg_binomial["legacy_contract_status"] = "implemented_with_documented_python_semantics"
+    neg_binomial["legacy_evidence"] = [
+        "src/mdanderson_stats/dcdflib_neg_binomial.py",
+        "tests/test_dcdflib_neg_binomial.py",
+        "tests/fixtures/dcdflib_neg_binomial.json",
+        "docs/dcdflib-neg-binomial.md",
+    ]
+    if any(not Path(path).is_file() for path in neg_binomial["legacy_evidence"]):
+        raise RuntimeError("missing legacy negative-binomial implementation evidence")
     if any(not Path(path).is_file() for path in neg_binomial["legacy_reference_evidence"]):
         raise RuntimeError("missing legacy negative-binomial reference evidence")
     header = next(row for row in members if row["role"] == "c_header")["declarations"]

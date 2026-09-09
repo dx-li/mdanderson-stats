@@ -525,3 +525,9 @@ C/F77 Poisson contracts through the incomplete-gamma identity. No archived
 numerical kernel is copied or bundled. The retained CDFLIB90 notices apply;
 [legacy Poisson notes](docs/dcdflib-poisson.md) describe unchanged references,
 independent high-precision validation and numerical repairs.
+
+The legacy `cdfnbn` and `cumnbn` interfaces independently express the archived
+C/F77 negative-binomial contracts through beta, power and gamma-limit identities.
+No archived numerical kernel is copied or bundled. The retained CDFLIB90 notices
+apply; [legacy notes](docs/dcdflib-neg-binomial.md) document numerical methods,
+independent validation and the explicit zero-success convention.

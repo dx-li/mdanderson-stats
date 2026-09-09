@@ -280,14 +280,29 @@
         "cdfnbn",
         "cumnbn"
       ],
-      "legacy_contract_status": "not_yet_independently_validated",
+      "legacy_contract_status": "implemented_with_documented_python_semantics",
       "legacy_reference_evidence": [
         "tools/reference_dcdflib_neg_binomial.py",
         "tests/fixtures/dcdflib_neg_binomial.json",
         "tests/test_dcdflib_neg_binomial_reference.py",
         "docs/dcdflib-neg-binomial-reference.md"
       ],
-      "legacy_review_notes": "Unchanged C/F77 references audited on the F95 overlap; wider legacy Python interface remains pending, including zero-success semantics and inverse repairs."
+      "legacy_computed_groups": [
+        "p/q",
+        "f",
+        "s",
+        "pr/cpr"
+      ],
+      "legacy_python_interfaces": [
+        "cdfnbn",
+        "cumnbn"
+      ],
+      "legacy_evidence": [
+        "src/mdanderson_stats/dcdflib_neg_binomial.py",
+        "tests/test_dcdflib_neg_binomial.py",
+        "tests/fixtures/dcdflib_neg_binomial.json",
+        "docs/dcdflib-neg-binomial.md"
+      ]
     },
     {
       "name": "normal",
@@ -1633,8 +1648,8 @@
       "size": 8889,
       "sha256": "7f1e83a2c5ad8ce26d8ac268adea3542f65dff5df4931b164ce23abb1cf40a69",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Negative-binomial tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdfnbn"
@@ -1813,8 +1828,8 @@
       "size": 2012,
       "sha256": "c7e42ff77432a67ffae6055dd6e0772e2d8d8fa05109cb624f28a4bb3c36dcd4",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Negative-binomial tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumnbn"
