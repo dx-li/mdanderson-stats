@@ -14,7 +14,7 @@ all its domains, inversions, endpoint policies or errors.
 
 | Archive material | Files | Coverage disposition |
 |---|---:|---|
-| F95 distribution modules | 12 | Eleven implemented and validated; one pending |
+| F95 distribution modules | 12 | All twelve implemented and validated |
 | F95 support modules | 7 | Public/support contract review remains open |
 | Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
@@ -41,11 +41,16 @@ contracts and numerical behavior still need comparison with the F95 port.
 | Gamma | `gamma` | `cdfgam`, `cumgam` | Implemented |
 | Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | Implemented |
 | Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | F95 tails/quantiles/noncentrality implemented; legacy df inversion pending |
-| Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | Pending |
+| Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | Implemented, including explicit df-root brackets |
 | Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | Implemented |
 | Normal | `normal` | `cdfnor`, `cumnor` | Implemented |
 | Poisson | `poisson` | `cdfpoi`, `cumpoi` | Implemented |
 | Student's t | `t` | `cdft`, `cumt` | Implemented |
+
+All 48 named F95 distribution interfaces now have implementations. The
+noncentral t df solver accepts an explicit sign-changing bracket to select
+between multiple roots; like the archived full-bound search, it does not
+enumerate roots or find tangencies without a sign change.
 
 The [method notes](cdflib90.md) document the implemented contracts, native F95
 fixtures, independent identities and source repairs. Those fixtures do not
@@ -125,8 +130,8 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Implement and validate the remaining noncentral t distribution module and all its
-  parameter-inversion modes, including multiple-root and endpoint behavior.
+- Implement the additional legacy F/noncentral-F df inversions, preserving
+  multiple-root and endpoint behavior.
 - Compare the 24 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described

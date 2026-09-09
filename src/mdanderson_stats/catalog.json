@@ -409,7 +409,8 @@
         "Binomial tails, real success/trial-count inversion and complementary probability inversion; explicit degenerate boundaries and dual primary/backup native validation",
         "F95 F-distribution tails and quantiles with direct complementary beta coordinates; additional legacy C/F77 df inversion modes explicitly remain outstanding",
         "Noncentral chi-square lower/upper tails and bounded x, df and noncentrality inversions; independent high-precision Poisson mixtures and original/status-repaired native evidence",
-        "F95 noncentral F tails, quantiles and noncentrality inversion; validated central reduction, selective bounded quantile refinement and independent beta mixtures; additional legacy df inversions remain outstanding"
+        "F95 noncentral F tails, quantiles and noncentrality inversion; validated central reduction, selective bounded quantile refinement and independent beta mixtures; additional legacy df inversions remain outstanding",
+        "Noncentral t tails, quantiles, noncentrality and explicitly bracketed df inversion; multiple-root selection and quadrature repair for small negative tails; all 48 F95 distribution interfaces implemented, with legacy/support contracts still outstanding"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -440,7 +441,10 @@
         "docs/cdflib-nc-chisq-benchmark.json",
         "tests/test_cdflib_nc_f.py",
         "tests/fixtures/cdflib_nc_f.json",
-        "docs/cdflib-nc-f-benchmark.json"
+        "docs/cdflib-nc-f-benchmark.json",
+        "tests/test_cdflib_nc_t.py",
+        "tests/fixtures/cdflib_nc_t.json",
+        "docs/cdflib-nc-t-benchmark.json"
       ]
     },
     {

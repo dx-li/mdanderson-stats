@@ -4,8 +4,9 @@ CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
 The entry is **partial**. All four public interfaces are implemented for beta,
-binomial, normal, gamma, chi-square, Poisson, negative-binomial, Student's t, F, noncentral chi-square and noncentral F
-distributions. The noncentral t module and the remaining archived library interfaces are outstanding.
+binomial, normal, gamma, chi-square, Poisson, negative-binomial, Student's t, F,
+noncentral chi-square, noncentral F and noncentral t distributions. All twelve F95 distribution modules are implemented;
+the additional legacy and public-support interfaces remain outstanding.
 The [106-file inventory](cdflib90-coverage.md) identifies the legacy entry points
 and public support APIs that still need contract review and validation.
 
@@ -833,3 +834,130 @@ repeated scalar calls to the same Python API, with agreement checked each time.
 Batches of 64/256 were about 35/130 times faster for tails and 49/116 times faster
 for noncentrality inversion on the recorded machine. These median-of-three
 measurements describe Python batching, not speedup over native Fortran.
+
+## Noncentral t distribution
+
+```python
+from mdanderson_stats import cdf_nc_t, cum_nc_t, ccum_nc_t, inv_nc_t
+
+lower = cum_nc_t([-2, 0, 2], df=2, pnonc=0.5)
+upper = ccum_nc_t([-2, 0, 2], df=2, pnonc=0.5)
+quantile = inv_nc_t(0.95, df=10, pnonc=2)
+noncentrality = cdf_nc_t(4, t=2, df=2, cum=lower[2]).pnonc
+roots = cdf_nc_t(3, t=1, pnonc=3, cum=0.03, df_bracket=([0.001, 0.2], [0.2, 100])).df
+```
+
+`cdf_nc_t` computes group 1 (cum/ccum), 2 (t), 3 (df) or 4 (pnonc). Omit the
+computed group and supply the other parameters. `CDFNoncentralT` contains
+`which` and five owned immutable broadcast arrays: `cum`, `ccum`, `t`, `df`,
+`pnonc`. Tail conveniences take `(t, df, pnonc)` and the inverse takes
+`(cum, df, pnonc, *, ccum=None)`. The df inverse additionally accepts
+`df_bracket=(lower, upper)`, whose endpoints broadcast with the other inputs.
+This option is rejected for other modes.
+
+The source domains remain t in [-1e100,1e100], df in [1e-3,1e10], and pnonc in
+[0,1e4]. Noncentral t is (Z+pnonc)/sqrt(V/df), where Z is standard normal and
+V is independent chi-square(df). Unlike noncentral F/chi-square, pnonc here is
+a **normal mean**, not a sum of squared means. Although the mathematical
+distribution supports negative noncentrality, this F95 interface retains its
+nonnegative source bound; remaining legacy contracts are reviewed separately.
+
+### Root selection and numerical behavior
+
+The df CDF is not generally monotone. For t=1, pnonc=3 and CDF=.03, there are
+two roots near .03926845456 and 1.65497762959. The example above selects both
+using separate brackets. The source's default interval [.001,1e10] has
+same-sign endpoint residuals and misses both. Python retains that default
+interval and raises a clear error asking for `df_bracket` when the root is not
+bracketed. It does not interpret this failure as proof that no df solution exists.
+
+A supplied bracket must have distinct ordered endpoints inside the source df
+bounds and must straddle the desired probability, or match an endpoint. The
+solver performs 64 bisections in log-df while preserving residual signs, without
+assuming monotonicity. It returns one bracketed root, not an enumeration of all
+roots. A same-sign bracket containing two crossings or a tangent root needs a
+more appropriate interval; this contract is explicit rather than claiming that
+finite sampling can find every root. At t=0, the CDF is Phi(-pnonc), independent
+of df, so df inversion is unidentified and rejected.
+
+Noncentrality monotonically decreases the CDF and is inverted on [0,1e4] with
+64 linear bisections. Endpoint matches within 32 machine epsilons of the smaller
+tail preserve boundary roots. Resolved endpoint rows are excluded from further
+search, including in mixed batches. Numerically identical endpoint probabilities
+cannot identify a parameter and fail explicitly. All inverses require positive
+cum/ccum and undergo smaller-tail forward verification at relative tolerance
+1e-7 plus 32 smallest subnormals. Failed verification raises `ArithmeticError`.
+Computed t/df bounds use the existing eight-epsilon rounding allowance; input
+bounds remain strict.
+
+Python uses public [SciPy nct methods](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.nct.html),
+with the installed 1.18.1 source inspected, for the general CDF/SF and PPF/ISF
+calculations. Zero noncentrality uses the package's central t implementation;
+zero t uses its normal tails. The smaller computed probability is retained and
+the larger reconstructed. The original probability cutoff is 1e-10 on both
+tails. Python accepts smaller positive probabilities where numerical kernels
+permit, with no claim of uniform accuracy in the extended range. At df=2 and
+t=pnonc=1e4, the underlying kernel's quantile differs from the generating t by
+about 1.5e-8 relatively while satisfying the probability tolerance; independent
+df=2 checks use an appropriate 1e-7 tolerance at that large noncentrality.
+
+### Small negative-tail repair
+
+For t<0 and positive noncentrality, the direct kernel can suffer cancellation
+or return NaN, including at ordinary trial parameters during a noncentrality
+search. If its lower tail is below 1e-6 or nonfinite, Python instead conditions
+on the normal numerator:
+
+P(T<=t) = integral from 0 to infinity of
+phi(pnonc+u) * P_gamma(df/2, df*u**2/(2*t**2)) du.
+
+The integrand is nonnegative and avoids subtracting nearly equal tails. The
+normal density at pnonc is factored out, and s=(pnonc+1)*u resolves its shrinking
+scale. Adaptive quadrature uses zero absolute tolerance, relative tolerance
+2e-11 and at most 200 subdivisions. An integration failure, nonfinite result or
+relative error estimate above 1e-8 raises `ArithmeticError`. When Phi(-pnonc)
+already underflows to zero, it is a decisive upper bound on this negative tail.
+These difficult rows use scalar quadrature; ordinary rows retain batched kernels.
+
+Tests independently condition on the chi-square denominator, integrating
+Phi(t*r-pnonc) against the known radial density using two converged Simpson
+grids. This is a different integral and numerical method from the fallback.
+It verifies both a cancellation case and a former NaN at t=-5, df=2,
+pnonc=9.765625. Other independent checks use the closed-form df=2 distribution
+and the exact normal identity at zero t, including noncentrality 37.
+
+### Native evidence and performance
+
+`tools/reference_cdflib_nc_t.py` compiles eleven source files into two profiles,
+recording original hashes, compiler, command, driver and exact patch text.
+Each profile retains **204 cases** (60 tails, 57 t, 45 df and 42 noncentrality
+requests), plus the explicit two-root df example. The unchanged original returns
+status 10 for 15 quantile and 12 df requests through its central t dependency.
+A separate profile guards only that dependency's unused root-finder status
+finalization with which>1; it makes no probability/search changes. The outer
+noncentral t forward status is still derived from unused solver state (50 here).
+
+The status-repaired profile returns success for 45 quantile, 42 df and all 42
+noncentrality requests. Twelve quantile requests still return -50 and three df
+requests return 50; the explicit two-root example also fails its full-bound
+search. Successful status alone does not establish an accurate answer. Most
+native forward differences on the fixture grid are below 1e-8, but at t=.5,
+df=10, pnonc=4 the source treats intermediate beta complements below 1e-10 as
+proof that t is effectively zero. It returns Phi(-4), about 3.17e-5, instead of
+about 2.41e-4. Independent denominator integration verifies this defect.
+Tests retain the resulting displaced/unattainable inverse requests explicitly.
+Native df comparisons use narrow explicit brackets around their generating df
+to isolate that root rather than enclosing both crossings.
+
+Validation also covers both df bounds, noncentrality zero/1e4, central reduction,
+multiple-root selection and sign changes, mixed endpoint batches, immutable
+ownership, empty arrays and invalid brackets/inputs. All four public F95
+interfaces are implemented, but the catalog entry remains partial pending the
+[legacy and supporting contracts](cdflib90-coverage.md).
+
+[Batch timings](cdflib-nc-t-benchmark.json) compare one broadcast call to repeated
+scalar calls of the same Python API, checking agreement each time. For batches
+of 32/128, positive-t tails were about 21/65 times faster and noncentrality
+inversions about 25/62 times faster. Quadrature-heavy negative-tail batches were
+about 1.30/1.34 times faster. These median-of-three measurements describe Python
+batching, not speedup over native Fortran, and expose the fallback's cost.

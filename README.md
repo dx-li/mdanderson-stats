@@ -386,3 +386,8 @@ profiles and explicit detection of inconsistent extreme-tail inverse results.
 `cdf_nc_f`, `cum_nc_f`, `ccum_nc_f` and `inv_nc_f` add noncentral F tails,
 quantiles and noncentrality inversion, with central-case correction and bounded
 refinement for failed inverse kernels. Legacy df inversions remain tracked.
+
+`cdf_nc_t`, `cum_nc_t`, `ccum_nc_t` and `inv_nc_t` add noncentral t tails and
+all parameter inversions, with explicit brackets for multiple df roots and
+quadrature repair for small negative tails. All twelve F95 distribution modules
+are implemented; CDFLIB90's additional legacy and support interfaces remain open.

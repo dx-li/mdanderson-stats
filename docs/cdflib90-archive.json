@@ -192,8 +192,12 @@
         "cum_nc_t",
         "inv_nc_t"
       ],
-      "python_status": "pending_distribution",
-      "evidence": [],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_nc_t.py",
+        "tests/test_cdflib_nc_t.py",
+        "tests/fixtures/cdflib_nc_t.json"
+      ],
       "legacy_distribution_names": [
         "cdftnc",
         "cumtnc"
@@ -758,7 +762,7 @@
       "size": 17060,
       "sha256": "3af14474847efbd23382eb7bb380ecfa6013b9ca527649264398f593d1c57faa",
       "role": "f95_distribution",
-      "coverage_status": "pending_distribution",
+      "coverage_status": "implemented_distribution",
       "scope": "nc_t",
       "declarations": {
         "routine_declarations_including_entries": [

@@ -1,0 +1,53 @@
+{
+  "python": "3.13.5",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "repetitions": 3,
+  "inputs": "t=linspace(1,5,n); pnonc=linspace(.5,2,n); df=5; negative_tails: -t,df=10,nc=4; p/q from the forward distribution",
+  "comparison": "One broadcast call versus n scalar calls to the same Python API; not native Fortran",
+  "cases": [
+    {
+      "operation": "tails",
+      "size": 32,
+      "batch_seconds": 0.00028237467631697655,
+      "scalar_seconds": 0.006025624927133322,
+      "speedup": 21.33911229479135
+    },
+    {
+      "operation": "pnonc",
+      "size": 32,
+      "batch_seconds": 0.014778375159949064,
+      "scalar_seconds": 0.36438425024971366,
+      "speedup": 24.656584117395592
+    },
+    {
+      "operation": "negative_tails",
+      "size": 32,
+      "batch_seconds": 0.02135187480598688,
+      "scalar_seconds": 0.027768875006586313,
+      "speedup": 1.3005356793680787
+    },
+    {
+      "operation": "tails",
+      "size": 128,
+      "batch_seconds": 0.0003636670298874378,
+      "scalar_seconds": 0.023758874740451574,
+      "speedup": 65.33139599651203
+    },
+    {
+      "operation": "pnonc",
+      "size": 128,
+      "batch_seconds": 0.02413154114037752,
+      "scalar_seconds": 1.4887727499008179,
+      "speedup": 61.69406011992183
+    },
+    {
+      "operation": "negative_tails",
+      "size": 128,
+      "batch_seconds": 0.08430549968034029,
+      "scalar_seconds": 0.11301600001752377,
+      "speedup": 1.3405531127393182
+    }
+  ]
+}

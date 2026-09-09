@@ -31,6 +31,7 @@ IMPLEMENTED = {
     "gamma",
     "nc_chisq",
     "nc_f",
+    "nc_t",
     "neg_binomial",
     "normal",
     "poisson",

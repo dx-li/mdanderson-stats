@@ -34,6 +34,7 @@ from .cdflib_nc_chisq import (
     inv_nc_chisq,
 )
 from .cdflib_nc_f import CDFNoncentralF, ccum_nc_f, cdf_nc_f, cum_nc_f, inv_nc_f
+from .cdflib_nc_t import CDFNoncentralT, ccum_nc_t, cdf_nc_t, cum_nc_t, inv_nc_t
 from .cdflib_neg_binomial import (
     CDFNegativeBinomial,
     ccum_neg_binomial,
@@ -174,6 +175,11 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "CDFNoncentralT",
+    "cdf_nc_t",
+    "cum_nc_t",
+    "ccum_nc_t",
+    "inv_nc_t",
     "CDFNoncentralF",
     "cdf_nc_f",
     "cum_nc_f",
