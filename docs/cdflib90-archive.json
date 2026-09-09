@@ -54,8 +54,12 @@
         "cum_binomial",
         "inv_binomial"
       ],
-      "python_status": "pending_distribution",
-      "evidence": [],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_binomial.py",
+        "tests/test_cdflib_binomial.py",
+        "tests/fixtures/cdflib_binomial.json"
+      ],
       "legacy_distribution_names": [
         "cdfbin",
         "cumbin"
@@ -338,8 +342,8 @@
       "size": 16425,
       "sha256": "90ef9756fedf9cce0a558053d153acca214fdd20a0499e1e3b83e86f4e929ad7",
       "role": "source_backup",
-      "coverage_status": "alternate_source_review",
-      "scope": "Distinct binomial backup; not compiled by the archived Makefile",
+      "coverage_status": "alternate_source_reconciled",
+      "scope": "Backup probability-assignment defects validated; primary source is authoritative",
       "declarations": {
         "routine_declarations_including_entries": [
           "ccum_binomial",
@@ -576,7 +580,7 @@
       "size": 17498,
       "sha256": "f3122ed01df9f327f8f432dbeced3d826ab67d3b0fb1239fe9c2cac869642fad",
       "role": "f95_distribution",
-      "coverage_status": "pending_distribution",
+      "coverage_status": "implemented_distribution",
       "scope": "binomial",
       "declarations": {
         "routine_declarations_including_entries": [

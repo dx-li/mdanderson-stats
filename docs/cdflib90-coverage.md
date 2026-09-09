@@ -14,9 +14,9 @@ all its domains, inversions, endpoint policies or errors.
 
 | Archive material | Files | Coverage disposition |
 |---|---:|---|
-| F95 distribution modules | 12 | Seven implemented and validated; five pending |
+| F95 distribution modules | 12 | Eight implemented and validated; four pending |
 | F95 support modules | 7 | Public/support contract review remains open |
-| Binomial editor backup | 1 | Distinct source variant; compare during binomial port |
+| Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
 | Legacy C implementations | 2 | DCDFLIB 1.1 contracts and independent native validation pending |
 | Legacy public C header | 1 | 73 external function prototypes inventoried |
@@ -35,7 +35,7 @@ contracts and numerical behavior still need comparison with the F95 port.
 | Distribution | F95/Python suffix | Legacy CDF / tail names | Current F95 interface coverage |
 |---|---|---|---|
 | Beta | `beta` | `cdfbet`, `cumbet` | Implemented |
-| Binomial | `binomial` | `cdfbin`, `cumbin` | Pending |
+| Binomial | `binomial` | `cdfbin`, `cumbin` | Implemented |
 | Chi-square | `chisq` | `cdfchi`, `cumchi` | Implemented |
 | F | `f` | `cdff`, `cumf` | Pending |
 | Gamma | `gamma` | `cdfgam`, `cumgam` | Implemented |
@@ -101,19 +101,25 @@ routines can include private procedures, generic implementations or nested scope
 
 `#cdf_binomial_mod.f90#` differs from the primary `cdf_binomial_mod.f90`, including
 formatting and IMPLICIT NONE declarations. It is not listed among the Makefile's
-19 F95 source inputs. Both hashes and declaration inventories are retained;
-semantic reconciliation remains part of the pending binomial work. It is not
-assumed to be a byte-identical duplicate or silently counted as another product.
+19 F95 source inputs. Both hashes and declaration inventories are retained.
+The [binomial reference tool](../tools/reference_cdflib_binomial.py) compiles both
+versions with unchanged source bytes and captures 102 cases each. All 25 backup
+probability inversions in this fixture return success without replacing the
+placeholder input probability. Source inspection confirms assignment/termination
+ordering differences. Python follows the shared statistical definition and
+repairs the inverse behavior; the Makefile-selected primary source remains the
+reference version. This alternate source is reconciled, not counted as a separate
+product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Implement and validate the five pending distribution modules and all their
+- Implement and validate the four pending distribution modules and all their
   parameter-inversion modes, including multiple-root and endpoint behavior.
 - Compare the 24 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.
-- Reconcile the alternate binomial source and applicable documentation differences.
+- Resolve remaining applicable documentation and cross-version contract differences.
 - Regenerate this inventory and update its coverage mapping as implementations
   land; keep catalog status partial until the remaining requirements are met.
 

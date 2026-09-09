@@ -367,3 +367,8 @@ files and tracks the remaining distribution, legacy-library and public-support s
 
 `cdf_t`, `cum_t`, `ccum_t` and `inv_t` provide Student's t tails, quantiles and
 bounded degrees-of-freedom inversion with preserved small probability tails.
+
+
+`cdf_binomial`, `cum_binomial`, `ccum_binomial` and `inv_binomial` preserve the
+continuous binomial extension, with success-count, trial-count and probability
+inversion. Native validation covers both archived binomial source versions.

@@ -23,7 +23,7 @@ DISTRIBUTIONS = {
     "poisson": "poi",
     "t": "t",
 }
-IMPLEMENTED = {"beta", "chisq", "gamma", "neg_binomial", "normal", "poisson", "t"}
+IMPLEMENTED = {"beta", "binomial", "chisq", "gamma", "neg_binomial", "normal", "poisson", "t"}
 SUPPORT = {
     "biomath_constants_mod": "Kind declarations and numeric constants",
     "biomath_interface_mod": "Public console input/output and message controls",
@@ -85,8 +85,8 @@ def classify(path: Path) -> tuple[str, str, str]:
         if path.name == "#cdf_binomial_mod.f90#":
             return (
                 "source_backup",
-                "alternate_source_review",
-                "Distinct binomial backup; not compiled by the archived Makefile",
+                "alternate_source_reconciled",
+                "Backup probability-assignment defects validated; primary source is authoritative",
             )
         if path.name in ("Makefile", "compile.cdflib90"):
             return "build", "build_replaced", "pyproject.toml, uv build and existing CI"

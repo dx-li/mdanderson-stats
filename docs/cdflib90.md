@@ -4,7 +4,7 @@ CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
 The entry is **partial**. All four public interfaces are implemented for beta,
-normal, gamma, chi-square, Poisson, negative-binomial and Student's t distributions. Five other
+binomial, normal, gamma, chi-square, Poisson, negative-binomial and Student's t distributions. Four other
 distribution modules and the remaining archived library interfaces are outstanding.
 The [106-file inventory](cdflib90-coverage.md) identifies the legacy entry points
 and public support APIs that still need contract review and validation.
@@ -492,3 +492,84 @@ recover the known generating t/df values rather than trusting those source resul
 Independent tests use Cauchy and df=2 identities, t up to magnitude 1e100, tiny
 upper probabilities, df boundaries, broadcasting, immutable ownership, empty
 arrays and invalid/unidentified requests.
+
+
+## Binomial distribution
+
+```python
+from mdanderson_stats import cdf_binomial, cum_binomial, ccum_binomial, inv_binomial
+
+lower = cum_binomial([0, 0.5, 3], n=5, pr=0.4)
+upper = ccum_binomial([0, 0.5, 3], n=5, pr=0.4)
+successes = inv_binomial(0.8, n=5, pr=0.4)
+trials = cdf_binomial(3, s=0, pr=0.5, cum=0.25).n  # 2
+chance = cdf_binomial(4, s=0, n=1, cum=1e-100)
+# chance.pr rounds to 1; chance.cpr retains 1e-100.
+```
+
+`cdf_binomial` computes group 1 (cum/ccum), 2 (s), 3 (n), or 4 (pr/cpr).
+Supply all input groups and omit the computed group. The immutable `CDFBinomial`
+contains `which` and six owned broadcast arrays: `cum`, `ccum`, `s`, `n`, `pr`,
+`cpr`. Tail conveniences accept `(s, n, pr, *, cpr=None)`; success-count inversion
+accepts `(cum, n, pr, *, ccum=None, cpr=None)`. Supply `None` for a positional
+probability when providing only its complement.
+
+Counts are real and satisfy 0 <= s <= n <= 1e10. The inclusive binomial CDF is
+1-I_pr(s+1,n-s) when s<n, extended to fractional s and n as in the archived
+source. At s=n it is one, including zero trials. Inversions return real counts,
+without integer rounding. Probability endpoints follow the same distribution:
+pr=0 gives cum=1; pr=1 gives cum=0 for s<n and cum=1 at s=n.
+
+Both input pairs preserve their smaller member. Direct complementary beta tails
+avoid subtraction when the lower binomial CDF rounds to one. Probability inversion
+uses swapped beta tails and returns both pr and cpr directly. It requires s<n;
+when s=n, the CDF is independent of pr and cannot identify it uniquely.
+The private kernels preserve the full binomial domain, including positive n-s
+below the public beta interface's shape minimum.
+
+Success inversion uses a 64-step batched bisection in the fraction s/n over
+[0,1], keeping s within [0,n]. Trial inversion solves for beta shape n-s in log
+space and reconstructs n. Both check the requested probability against their
+count-domain endpoints, allowing at most 32 machine epsilons relative to an
+endpoint's smaller tail for rounding. The reconstructed counts undergo a forward
+check against the original probability, with relative tolerance 1e-7 plus 32
+smallest-subnormal units. This detects precision loss when adding n-s to s.
+Unattainable or unidentified requests raise `ValueError`; failed forward
+verification raises `ArithmeticError`.
+
+At interior pr, cum=1 uniquely gives s=n for success inversion or n=s for trial
+inversion; cum=0 is not a finite admissible solution. At pr=1 the unit-CDF roots
+remain unique, while the zero-CDF counts are not. At pr=0, count inversion is
+unidentified except when the allowed count domain is a singleton: n=0 for
+success inversion or s=1e10 for trial inversion. Those singleton cases require
+cum=1. Explicit success/trial bounds and these degenerate cases are validated.
+
+Ordinary double precision limits relative accuracy for counts separated by very
+small differences; forming s+1 can also discard tiny success counts. Very small
+tails or coordinates can underflow. The forward check prevents silently returning
+a reconstructed count that fails the requested tail tolerance.
+
+`tools/reference_cdflib_binomial.py` compiles the primary source and archived
+`#cdf_binomial_mod.f90#` backup separately, with nine source files per build.
+The backup is renamed to a .f90 filename for compilation without changing its
+bytes. Source/archive hashes, both build commands and a common driver are
+recorded. Each build supplies **102 cases**: 27 forward evaluations and 25 each
+of success, trial and probability inversion. Known generating counts/chances are
+retained separately from the actual native inputs. In probability inversion,
+pr/cpr start at 0.123/0.877 to expose missing output assignments.
+
+Forward probabilities from both versions agree with Python. Each native build
+reports -50 for nine success inversions and six trial inversions. The backup
+returns status zero while leaving the placeholder pair unchanged in all 25
+probability-inversion cases. Source inspection shows that it moves complement
+updates after the termination checks and places final assignments inside just
+one branch. The primary version assigns the pair consistently but can still
+return an incorrect root with success status; the captured maximum absolute
+probability error is 0.2. Python recovers the known generating values rather
+than reproducing these defects.
+
+Independent tests use exact rational binomial sums, fractional count round trips,
+(1-pr)**n at zero successes down to n=1e-300, count/probability endpoints, the
+trial upper bound, tiny complements, broadcasting, immutable ownership, empty
+arrays and invalid or unidentified requests. Separate regression checks cover
+the backup's unchanged output pair and its forward probabilities.
