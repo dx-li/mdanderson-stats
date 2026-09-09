@@ -533,4 +533,6 @@ mappings; CDFLIB90 remains partial pending legacy C/F77 support contracts.
 
 The [legacy DCDFLIB support namespace](docs/dcdflib-support.md) adds machine
 parameters, polynomial prefix evaluation and checked vectorized C translation
-helpers. Ten of 49 legacy support contracts are reconciled; CDFLIB90 remains partial.
+helpers. The [31 legacy mathematical helpers](docs/dcdflib-math.md) also have
+direct C/F77 validation, including their distinct exponential-limit contract.
+41 of 49 legacy support contracts are reconciled; CDFLIB90 remains partial.

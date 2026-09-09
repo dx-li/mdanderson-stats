@@ -62,7 +62,7 @@ def esum(mu: ArrayLike, x: ArrayLike) -> FloatArray:
 def exparg(l: ArrayLike) -> FloatArray:  # noqa: E741 - native public argument name
     """Return log(max float64) for l=0, otherwise log(min NORMAL float64).
 
-    This preserves the native executable contract. Subnormal nonzero
+    This preserves the F95 executable contract. Subnormal nonzero
     exponentials remain possible below the returned negative threshold.
     """
     flag = _integer(l, "l")

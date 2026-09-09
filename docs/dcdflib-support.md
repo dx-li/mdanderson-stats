@@ -1,6 +1,6 @@
 # Legacy DCDFLIB support primitives
 
-The `dcdflib_support` namespace implements ten legacy public contracts: two
+This page covers ten legacy public contracts in `dcdflib_support`: two
 machine-parameter lookups, polynomial evaluation and seven C translation helpers.
 These mappings are audited separately from the F95 support modules.
 
@@ -95,6 +95,6 @@ over native C or Fortran. Integer arithmetic uses NumPy batch operations, with n
 per-element Python loop; polynomial evaluation loops over coefficients while
 processing all evaluation points together.
 
-Ten of the 49 legacy C support names now have explicit validated mappings.
-The other 39 contracts, including names shared with the F95 math helpers, remain
-pending. CDFLIB90 stays partial and the full catalog conversion remains in progress.
+These ten primitives and the [31 mathematical helpers](dcdflib-math.md) reconcile
+41 of 49 legacy C support names. Eight inversion/root-finding contracts remain.
+CDFLIB90 stays partial and the full catalog conversion remains in progress.

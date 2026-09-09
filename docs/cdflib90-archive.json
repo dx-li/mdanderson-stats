@@ -925,18 +925,6 @@
     "status": "partially_implemented_with_documented_python_semantics",
     "c_public_count": 49,
     "implemented_public_names": [
-      "devlpl",
-      "fifdint",
-      "fifdmax1",
-      "fifdmin1",
-      "fifdsign",
-      "fifidint",
-      "fifmod",
-      "ftnstop",
-      "ipmpar",
-      "spmpar"
-    ],
-    "remaining_public_names": [
       "Xgamm",
       "algdiv",
       "alngam",
@@ -952,29 +940,41 @@
       "brcmp1",
       "brcomp",
       "bup",
+      "devlpl",
+      "erf1",
+      "erfc1",
+      "esum",
+      "exparg",
+      "fifdint",
+      "fifdmax1",
+      "fifdmin1",
+      "fifdsign",
+      "fifidint",
+      "fifmod",
+      "fpser",
+      "ftnstop",
+      "gam1",
+      "gamln",
+      "gamln1",
+      "grat1",
+      "gratio",
+      "gsumln",
+      "ipmpar",
+      "psi",
+      "rcomp",
+      "rexp",
+      "rlog",
+      "rlog1",
+      "spmpar"
+    ],
+    "remaining_public_names": [
       "dinvnr",
       "dinvr",
       "dstinv",
       "dstzr",
       "dt1",
       "dzror",
-      "erf1",
-      "erfc1",
-      "esum",
-      "exparg",
-      "fpser",
-      "gam1",
       "gaminv",
-      "gamln",
-      "gamln1",
-      "grat1",
-      "gratio",
-      "gsumln",
-      "psi",
-      "rcomp",
-      "rexp",
-      "rlog",
-      "rlog1",
       "stvaln"
     ],
     "f77_name_aliases": {
@@ -991,6 +991,44 @@
       "ftnstop"
     ],
     "python_namespace": "dcdflib_support",
+    "mathematical_public_names": [
+      "Xgamm",
+      "algdiv",
+      "alngam",
+      "alnrel",
+      "apser",
+      "basym",
+      "bcorr",
+      "betaln",
+      "bfrac",
+      "bgrat",
+      "bpser",
+      "bratio",
+      "brcmp1",
+      "brcomp",
+      "bup",
+      "erf1",
+      "erfc1",
+      "esum",
+      "exparg",
+      "fpser",
+      "gam1",
+      "gamln",
+      "gamln1",
+      "grat1",
+      "gratio",
+      "gsumln",
+      "psi",
+      "rcomp",
+      "rexp",
+      "rlog",
+      "rlog1"
+    ],
+    "cross_version_notes": {
+      "exparg": "Legacy 0.99999 margin and rounded log(radix), distinct from F95",
+      "bfrac": "Redundant displacement computed from a,b,x,y",
+      "output_arguments": "Returned arrays/accumulator; invalid status/sentinels become exceptions"
+    },
     "evidence": [
       "src/mdanderson_stats/dcdflib_support.py",
       "tools/reference_dcdflib_support.py",
@@ -998,7 +1036,11 @@
       "tests/test_dcdflib_support.py",
       "docs/dcdflib-support.md",
       "tools/benchmark_dcdflib_support.py",
-      "docs/dcdflib-support-benchmark.json"
+      "docs/dcdflib-support-benchmark.json",
+      "tools/reference_dcdflib_math.py",
+      "tests/fixtures/dcdflib_math.json",
+      "tests/test_dcdflib_math.py",
+      "docs/dcdflib-math.md"
     ]
   },
   "f77_declared_entry_count": 66,
@@ -1923,8 +1965,8 @@
       "size": 1850,
       "sha256": "9d297f5fc7bc42d847974f5bf09149911430c0ba6d8d5750aed328a4cdb44d9d",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "algdiv"
@@ -1938,8 +1980,8 @@
       "size": 3365,
       "sha256": "001bfe36ede5c23fb69e87005ce3dbb4e82891c80ca29f59d6e3f1ba4830b7c7",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "alngam"
@@ -1953,8 +1995,8 @@
       "size": 1015,
       "sha256": "d3275e639e8bc56655983a5d85cbfb51bfa4249d992b02a035336a543db06d54",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "alnrel"
@@ -1968,8 +2010,8 @@
       "size": 1213,
       "sha256": "3db7ab44be06ea33cc995b645ef8ee23a3bfea5b6fc57835a4f7e6495914f62a",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "apser"
@@ -1983,8 +2025,8 @@
       "size": 3368,
       "sha256": "81551ffe05a8c234bce9e35762c92da7cf6fae0a5cb3ce4a78734a8ff25686a7",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "basym"
@@ -1998,8 +2040,8 @@
       "size": 1549,
       "sha256": "b6df2ee289e74a7835d2a203bbd8c1d552260836cc0f71f879d322d64472438c",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "bcorr"
@@ -2013,8 +2055,8 @@
       "size": 2969,
       "sha256": "a6b33f1e2e30c709b8c66acc43a8332d805da2605f8149f02e7046570e8b2816",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "betaln"
@@ -2028,8 +2070,8 @@
       "size": 1747,
       "sha256": "b0ded0016136daa0189ae08d92a42c74573cf9291c18bd47128fde5a43d0715d",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "bfrac"
@@ -2043,8 +2085,8 @@
       "size": 2482,
       "sha256": "e691caa74dc141f7d97f0a0e2243d1e5318ae8150ca660dcb462b7d2955d2c73",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "bgrat"
@@ -2058,8 +2100,8 @@
       "size": 2741,
       "sha256": "c8a55b4b05d5b219994ed6f4c034fcbf645eb32ee87b768bb8598400b302bd93",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "bpser"
@@ -2073,8 +2115,8 @@
       "size": 5717,
       "sha256": "91057618abc5d93e36cdcadadfd098dfa18c189cc37912d1bfe44d708c0a5bde",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "bratio"
@@ -2088,8 +2130,8 @@
       "size": 3422,
       "sha256": "f7c03f406cbf0c4243b034dfd05d11d61dddaf3f0b8a66cd155b7369a2019f64",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "brcmp1"
@@ -2103,8 +2145,8 @@
       "size": 3430,
       "sha256": "59415e5dede52b9843f8edfd68975e0a03ece8250dd16fd515339a614474254e",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "brcomp"
@@ -2118,8 +2160,8 @@
       "size": 1932,
       "sha256": "5d502174b7fa90eaf710ed6e0d39ce7016ef824b5e659031f1fe23df36504952",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "bup"
@@ -2570,8 +2612,8 @@
       "size": 2756,
       "sha256": "a3bedebbc571be2b4b3cee11c35f8a262e49e1206aca861a9cd9483a2f3c4a80",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "erf"
@@ -2585,8 +2627,8 @@
       "size": 3633,
       "sha256": "e709ae34ef1a400ac22fad59f2281b59bd493f106635112f9163058f74fb019d",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "erfc1"
@@ -2600,8 +2642,8 @@
       "size": 791,
       "sha256": "0951dbca70f77c8694a27786e4f502349e872ab12e12accfff0a6e4e1d371edc",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "esum"
@@ -2615,8 +2657,8 @@
       "size": 1233,
       "sha256": "c2553a869ab9da17d5a3fdfb5c6c7bd9df697d593f9bd36cd8097fd83c834417",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "exparg"
@@ -2630,8 +2672,8 @@
       "size": 1154,
       "sha256": "9c5bbfb7de959d5b28f2e27f4095be1fa79b921841964aa6ec660becf1e69ef6",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "fpser"
@@ -2645,8 +2687,8 @@
       "size": 2099,
       "sha256": "d1e65f34862c9044d5e262dc5258b76667f55d912d28b5dbbd595f26226e1bac",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "gam1"
@@ -2675,8 +2717,8 @@
       "size": 1664,
       "sha256": "8e293f0c5ebc21d289570b89f09f171d898a75d8cf9cec4ca5028f0b70f0eb2c",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "gamln"
@@ -2690,8 +2732,8 @@
       "size": 1699,
       "sha256": "762206be3a21955727a4ffd6f45b50cf7a768af2e7b75dfba0694f8ae07a8409",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "gamln1"
@@ -2705,8 +2747,8 @@
       "size": 4212,
       "sha256": "469a8c8f060eebeeac2a72433416129851c9d6f66addca4ea4e67a2018c67c6c",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "gamma"
@@ -2720,8 +2762,8 @@
       "size": 2500,
       "sha256": "d154bcf5d9d6cfcbaa03264d4e3e366b322b4c955b8ae72ef4ebb388af9c233e",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "grat1"
@@ -2735,8 +2777,8 @@
       "size": 12418,
       "sha256": "ef262202a5c2b82959c9701bd6075bdccd367c54ad85afba548d4f57c9a8c015",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "gratio"
@@ -2750,8 +2792,8 @@
       "size": 901,
       "sha256": "0da882dce02c98828a712e7a893cf512d07a2bf2b8f8a57bb124105a21fe16ba",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "gsumln"
@@ -2780,8 +2822,8 @@
       "size": 7352,
       "sha256": "a2e815ebe9c88a39b85d320135efbc636810a47259131369fbf00a8b83c0b202",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "psi"
@@ -2795,8 +2837,8 @@
       "size": 1069,
       "sha256": "af32325468ffa353705155972dcba36f7c5625264397379bd6ad59473a29c15d",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "rcomp"
@@ -2810,8 +2852,8 @@
       "size": 1009,
       "sha256": "868ce4c0002f2d3aa7bd27acb30cffd33dfc66b0b619cf1d43f84a6991ef86ef",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "rexp"
@@ -2825,8 +2867,8 @@
       "size": 1318,
       "sha256": "88fcabe47d6008e9ec32d28172ccce0d65f458b86ee3c92e28ccd1131bb0bcbd",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "rlog"
@@ -2840,8 +2882,8 @@
       "size": 1422,
       "sha256": "20efe393c38482a5284b3ca6d11b2367ddc78b6453b9b7f33146b116746bf800",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated mathematical mapping; see dcdflib-math.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "rlog1"

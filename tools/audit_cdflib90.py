@@ -9,6 +9,40 @@ from pathlib import Path
 
 ARCHIVE_SHA256 = "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b"
 F95_ROOT = "CDFLIB90/source/cdflib90_1.2/"
+LEGACY_MATH_NAMES = {
+    "esum",
+    "gsumln",
+    "rcomp",
+    "grat1",
+    "alnrel",
+    "fpser",
+    "rlog",
+    "bfrac",
+    "rlog1",
+    "erfc1",
+    "brcmp1",
+    "bup",
+    "basym",
+    "algdiv",
+    "brcomp",
+    "gamln",
+    "bpser",
+    "erf1",
+    "gam1",
+    "betaln",
+    "apser",
+    "bratio",
+    "gamln1",
+    "Xgamm",
+    "bcorr",
+    "exparg",
+    "psi",
+    "gratio",
+    "bgrat",
+    "rexp",
+    "alngam",
+}
+LEGACY_MATH_F77_NAMES = (LEGACY_MATH_NAMES - {"Xgamm", "erf1"}) | {"gamma", "erf"}
 DISTRIBUTIONS = {
     "beta": "bet",
     "binomial": "bin",
@@ -150,6 +184,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in LEGACY_MATH_F77_NAMES:
+                return (
+                    "f77_source",
+                    "implemented_legacy_support",
+                    "Validated mathematical mapping; see dcdflib-math.md",
+                )
             if path.stem in {"ipmpar", "spmpar", "devlpl"}:
                 return (
                     "f77_source",
@@ -944,6 +984,7 @@ def main():
         "fifmod",
         "ftnstop",
     }
+    legacy_implemented.update(LEGACY_MATH_NAMES)
     legacy_evidence = [
         "src/mdanderson_stats/dcdflib_support.py",
         "tools/reference_dcdflib_support.py",
@@ -952,6 +993,10 @@ def main():
         "docs/dcdflib-support.md",
         "tools/benchmark_dcdflib_support.py",
         "docs/dcdflib-support-benchmark.json",
+        "tools/reference_dcdflib_math.py",
+        "tests/fixtures/dcdflib_math.json",
+        "tests/test_dcdflib_math.py",
+        "docs/dcdflib-math.md",
     ]
     if not legacy_implemented <= legacy_names or any(
         not Path(path).is_file() for path in legacy_evidence
@@ -973,6 +1018,14 @@ def main():
             "ftnstop",
         ],
         "python_namespace": "dcdflib_support",
+        "mathematical_public_names": sorted(LEGACY_MATH_NAMES),
+        "cross_version_notes": {
+            "exparg": "Legacy 0.99999 margin and rounded log(radix), distinct from F95",
+            "bfrac": "Redundant displacement computed from a,b,x,y",
+            "output_arguments": (
+                "Returned arrays/accumulator; invalid status/sentinels become exceptions"
+            ),
+        },
         "evidence": legacy_evidence,
     }
     result = {

@@ -63,3 +63,7 @@ The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
 mathematical procedures. Their [constants](cdflib-constants.md) are also implemented.
 Other CDFLIB support interfaces and the rest of the catalog remain open.
 CDFLIB90 remains partial.
+
+The [legacy C/F77 mapping](dcdflib-math.md) is separately validated. Its
+`dcdflib_support.exparg` preserves the legacy safety margin; root-level `exparg`
+continues to implement the F95 log-limit contract.

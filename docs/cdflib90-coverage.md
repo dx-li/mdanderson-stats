@@ -102,8 +102,10 @@ direct/reverse-communication root finding.
 
 [Legacy support primitives](dcdflib-support.md) now reconcile ten of the 49 C
 support names: `ipmpar`, `spmpar`, `devlpl` and all seven C translation helpers.
-The inventory records those mappings and the 39 remaining names separately.
-Same-name F95 numerical helpers still need legacy contract evidence.
+The [31 mathematical helper mappings](dcdflib-math.md) now have separate C/F77
+evidence, including a distinct legacy `exparg` implementation. The inventory
+records 41 completed support mappings and eight remaining names: `dinvnr`,
+`stvaln`, `dt1`, `gaminv`, `dinvr`, `dstinv`, `dzror` and `dstzr`.
 
 F95 support also has an explicit public surface:
 
