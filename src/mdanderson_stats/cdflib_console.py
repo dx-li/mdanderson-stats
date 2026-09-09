@@ -101,12 +101,16 @@ class CDFConsole:
             raise CDFConsoleError("Console line exceeds max_line_length")
         return line
 
-    def write_message(self, message: str) -> None:
-        """Write a plain message to output and an optional report stream."""
+    def _write_output(self, message: str) -> str:
         if not isinstance(message, str):
             raise ValueError("message must be a string")
         text = message.rstrip(" ") + "\n"
         self.output.write(text)
+        return text
+
+    def write_message(self, message: str) -> None:
+        """Write a plain message to output and an optional report stream."""
+        text = self._write_output(message)
         if self.report is not None and self.report is not self.output:
             self.report.write(text)
 
@@ -140,7 +144,7 @@ class CDFConsole:
             raise ValueError("chars must contain nonblank lowercase ASCII choices")
         for _ in range(self.max_attempts):
             if message:
-                self.write_message(message)
+                self._write_output(message)
             self.output.write(f"Please enter one of [{chars}]:")
             self.prompt()
             line = self._read().lstrip(" ")
@@ -165,7 +169,7 @@ class CDFConsole:
             raise ValueError("allow_blank must be boolean")
         attempts = 0
         if message:
-            self.write_message(message)
+            self._write_output(message)
         self.prompt()
         for _ in range(self.max_records):
             line = self._read()
@@ -179,7 +183,7 @@ class CDFConsole:
                 raise CDFConsoleError("Too many blank string responses")
             self.output.write("Blank line not allowed. Please try again.\n")
             if message:
-                self.write_message(message)
+                self._write_output(message)
             self.prompt()
         raise CDFConsoleError("Console input exhausted max_records")
 
@@ -217,7 +221,7 @@ class CDFConsole:
         records = 0
         for _ in range(self.max_attempts):
             if message:
-                self.write_message(message)
+                self._write_output(message)
             self.prompt()
             values: list[int | float] = []
             try:
