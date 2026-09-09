@@ -32,6 +32,7 @@ from .cdflib_beta_shift import bup
 from .cdflib_beta_support import betaln, log_beta, log_bicoef
 from .cdflib_binomial import CDFBinomial, ccum_binomial, cdf_binomial, cum_binomial, inv_binomial
 from .cdflib_chisq import CDFChiSquare, ccum_chisq, cdf_chisq, cum_chisq, inv_chisq
+from .cdflib_console import CDFConsole, CDFConsoleError
 from .cdflib_elementary import alnrel, evaluate_polynomial, rexp, rlog, rlog1
 from .cdflib_error_exponential import erf, erfc1, esum, exparg
 from .cdflib_f import CDFF, ccum_f, cdf_f, cum_f, inv_f
@@ -220,6 +221,8 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "CDFConsole",
+    "CDFConsoleError",
     "cdflib_aux",
     "cdflib_constants",
     "alnrel",

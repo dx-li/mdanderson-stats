@@ -865,6 +865,41 @@ def main():
             ],
         }
     )
+    support_interfaces.append(
+        {
+            "module": "biomath_interface_mod",
+            "status": "partially_implemented_with_documented_python_semantics",
+            "implemented_public_names": [
+                "clear_screen",
+                "get_character",
+                "get_string",
+                "get_yn",
+                "hold",
+                "prompt",
+                "write_error",
+                "write_message",
+                "get_numbers",
+                "report_unit",
+            ],
+            "python_interfaces": ["CDFConsole", "CDFConsoleError"],
+            "remaining_public_names": [
+                "get_list_double",
+                "write_array",
+                "print_message_format",
+                "message_format",
+                "num_subs",
+                "always_print",
+                "print_off",
+            ],
+            "evidence": [
+                "src/mdanderson_stats/cdflib_console.py",
+                "tools/reference_cdflib_console.py",
+                "tests/fixtures/cdflib_console.json",
+                "tests/test_cdflib_console.py",
+                "docs/cdflib-console.md",
+            ],
+        }
+    )
     for interface in support_interfaces:
         if any(not Path(path).is_file() for path in interface["evidence"]):
             raise RuntimeError("missing public support evidence")

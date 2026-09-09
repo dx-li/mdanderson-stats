@@ -516,3 +516,6 @@ with independent state, corrected exact roots, working tolerances and bounded wo
 
 The [CDFLIB auxiliary namespace](docs/cdflib-aux.md) adds all 13 native distribution
 descriptors, batched validation, complement/range helpers and root-state adapters.
+
+The [CDFLIB console](docs/cdflib-console.md) adds reentrant typed numeric and text
+input with explicit streams, finite-value validation and bounded retries.

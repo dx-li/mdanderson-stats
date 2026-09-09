@@ -108,7 +108,7 @@ F95 support also has an explicit public surface:
 | `zero_finder` | [Implemented](cdflib-root.md): direct/reverse interval and step solvers, setup and per-search state; corrected roots and tolerances; shared globals become result fields |
 | `biomath_constants_mod` | [All 27 constants](cdflib-constants.md) implemented, with audited numeric values and documented legacy kind/unit identifiers |
 | `cdf_aux_mod` | [Implemented](cdflib-aux.md): all 13 native descriptors, batch validators, complement/range helpers and root-state adapters with explicit Python success/error behavior |
-| `biomath_interface_mod` | Numeric/string input generics, console output and message controls |
+| `biomath_interface_mod` | [Partially implemented](cdflib-console.md): all six numeric input overloads, character/string input, basic output and per-console streams; list editing, array formatting and message controls remain pending |
 | `biomath_sort_mod` | [Implemented](cdflib-sort.md): all four `sort_list` overloads and custom comparators |
 | `biomath_strings_mod` | [Implemented](cdflib-strings.md): ASCII conversion and reentrant lexer `qlex` with documented repairs |
 
@@ -137,8 +137,8 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Compare the remaining 2 legacy distribution entry-point contracts and validate any
-  behavior not already established by the F95 references.
+- All 12 legacy distribution mappings are implemented with documented Python
+  semantics; resolve any remaining cross-version support contracts below.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.
 - Resolve remaining applicable documentation and cross-version contract differences.

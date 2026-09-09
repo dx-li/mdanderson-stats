@@ -1,0 +1,235 @@
+{
+  "archive_sha256": "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b",
+  "source_hashes": {
+    "biomath_constants_mod": "2b0cfd2020e5221bc97edf80d1204ea074f7d82d0427dd912c96c357bcc7ba61",
+    "biomath_strings_mod": "c66814a0eec34c25283f0c71da41fc93969fc2cc0dba7f26146952adce70b8aa",
+    "biomath_sort_mod": "ab3d0939124dcdeadfbbe8950ae7b1207258ece5feb120da5c84da645d0530dc",
+    "biomath_interface_mod": "3ede16fa9d9b4e5e157a7eae1fc36d1f321863f9f74dcf56d4893655de564ed9"
+  },
+  "driver_sha256": "bf0fe6aa2237a6f9aa7d75ba64ed4fd6d6ba95807ab89970ae0772873b2d8317",
+  "flags": [
+    "-O0",
+    "-ffp-contract=off",
+    "-fcheck=all"
+  ],
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "cases": [
+    {
+      "mode": "number",
+      "input": "0.5\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n  5.00000000000000000E-001\n",
+      "stderr": ""
+    },
+    {
+      "mode": "number",
+      "input": "nan\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n                       NaN\n",
+      "stderr": ""
+    },
+    {
+      "mode": "number",
+      "input": "bad\n-1\n0.25\n",
+      "returncode": 0,
+      "stdout": " >  Entered value not accepted as a legal number.\n Please try again.\n > The value entered < the lower bound allowed.\nThe value entered was:        -1.000000    \nThe lower bound is:         0.000000    \n Please try again.\n >  RESULT  F\n  2.50000000000000000E-001\n",
+      "stderr": ""
+    },
+    {
+      "mode": "number",
+      "input": "",
+      "returncode": 0,
+      "stdout": " >  Entered value not accepted as a legal number.\n Please try again.\n >  Entered value not accepted as a legal number.\n Please try again.\n >  Entered value not accepted as a legal number.\n RESULT  T\n",
+      "stderr": ""
+    },
+    {
+      "mode": "character",
+      "input": " B\n",
+      "returncode": 0,
+      "stdout": " choose\n Please enter one of [abc]: >  RESULT  F\n           2\n",
+      "stderr": ""
+    },
+    {
+      "mode": "character",
+      "input": "x\nx\nx\n",
+      "returncode": 0,
+      "stdout": " choose\n Please enter one of [abc]: > \n     x is not allowed.\n\n     Please try again ...\n choose\n Please enter one of [abc]: > \n     x is not allowed.\n\n     Please try again ...\n choose\n Please enter one of [abc]: > \n     x is not allowed.\n RESULT  T\n",
+      "stderr": ""
+    },
+    {
+      "mode": "string",
+      "input": "# comment\nhello # tail\n",
+      "returncode": 0,
+      "stdout": " text\n >  RESULT  F\nhello\n",
+      "stderr": ""
+    },
+    {
+      "mode": "string",
+      "input": "",
+      "returncode": 2,
+      "stdout": " text\n > ",
+      "stderr": "At line 260 of file biomath_interface_mod.f90 (unit = 5, file = 'stdin')\nFortran runtime error: End of file\n\nError termination. Backtrace:\n#0  <address>\n#1  <address>\n#2  <address>\n#3  <address>\n#4  <address>\n#5  <address>\n#6  <address>\n#7  <address>\n#8  <address>\n#9  <address>\n#10  <address>\n"
+    },
+    {
+      "mode": "array",
+      "input": "",
+      "returncode": 0,
+      "stdout": "   0.000E+00   1.250000  0.100E-03  0.100E+05  -2.000000                        \n",
+      "stderr": ""
+    },
+    {
+      "mode": "list",
+      "input": "8\n",
+      "returncode": 0,
+      "stdout": "  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  RESULT  F           3\n  3.00000000000000000E+000  1.00000000000000000E+000  1.00000000000000000E+000\n",
+      "stderr": ""
+    },
+    {
+      "mode": "list",
+      "input": "7\n8\n",
+      "returncode": 0,
+      "stdout": "  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >   \n The list currently contains 2 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  RESULT  F           2\n  1.00000000000000000E+000  3.00000000000000000E+000\n",
+      "stderr": ""
+    },
+    {
+      "mode": "list",
+      "input": "5\n2\n8\n",
+      "returncode": 0,
+      "stdout": "  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >   \n Enter position in array for value to be deleted. [1,3]\n >   \n The list currently contains 2 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  RESULT  F           2\n  3.00000000000000000E+000  1.00000000000000000E+000\n",
+      "stderr": ""
+    },
+    {
+      "mode": "list",
+      "input": "6\n1 2\n8\n",
+      "returncode": 0,
+      "stdout": "  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >   \n Enter low and high positions in array for values to be deleted. [1,3]\n >   \n The list currently contains 1 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  RESULT  F           1\n  1.00000000000000000E+000\n",
+      "stderr": ""
+    },
+    {
+      "mode": "list",
+      "input": "2\n0 1 1\n8\n",
+      "returncode": 0,
+      "stdout": "  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >   \n Enter beginning bound, ending bound and number of intervals.\n >   \n The list currently contains 5 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  RESULT  F           5\n  3.00000000000000000E+000  1.00000000000000000E+000  1.00000000000000000E+000  0.00000000000000000E+000  1.00000000000000000E+000\n",
+      "stderr": ""
+    },
+    {
+      "mode": "list",
+      "input": "3\n1 100 1\n8\n",
+      "returncode": 0,
+      "stdout": "  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >   \n Enter beginning bound, ending bound and number of intervals.\n >   \n The list currently contains 5 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  RESULT  F           5\n  3.00000000000000000E+000  1.00000000000000000E+000  1.00000000000000000E+000  1.00000000000000000E+000  1.00000000000000043E+002\n",
+      "stderr": ""
+    },
+    {
+      "mode": "list",
+      "input": "1\n2\n4 5\n8\n",
+      "returncode": 0,
+      "stdout": "  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >   \n How many values will be entered? [0,2]\n >   \n Enter 2 values.\n >   \n The list currently contains 5 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  RESULT  F           5\n  3.00000000000000000E+000  1.00000000000000000E+000  1.00000000000000000E+000  4.00000000000000000E+000  5.00000000000000000E+000\n",
+      "stderr": ""
+    },
+    {
+      "mode": "list",
+      "input": "4\n8\n",
+      "returncode": 0,
+      "stdout": "  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >           1     3.000000E+00\n          2     1.000000E+00\n          3     1.000000E+00\n\n Press the Return or Enter key to continue ...\n  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  Entered value not accepted as a legal number.\n Please try again.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  Entered value not accepted as a legal number.\n Please try again.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  Entered value not accepted as a legal number.\n  \n Too many bad entries.\n RESULT  T           3\n",
+      "stderr": ""
+    },
+    {
+      "mode": "list",
+      "input": "4\n\n8\n",
+      "returncode": 0,
+      "stdout": "  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >           1     3.000000E+00\n          2     1.000000E+00\n          3     1.000000E+00\n\n Press the Return or Enter key to continue ...\n  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  RESULT  F           3\n  3.00000000000000000E+000  1.00000000000000000E+000  1.00000000000000000E+000\n",
+      "stderr": ""
+    },
+    {
+      "mode": "list",
+      "input": "6\n1 3\n1\n2\n1e308 1.5e308\n7\n8\n",
+      "returncode": 0,
+      "stdout": "  \n The list currently contains 3 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >   \n Enter low and high positions in array for values to be deleted. [1,3]\n >   \n The list currently contains 0 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >   \n How many values will be entered? [0,5]\n >   \n Enter 2 values.\n >   \n The list currently contains 2 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >   \n The list currently contains 1 values.\n The maximum number allowed is 5.\n\n     Select an option:\n        1 - ADD individually specified values to the list\n        2 - ADD equally spaced values to the list\n        3 - ADD logarithmically spaced values to the list\n        4 - PRINT the list\n        5 - DELETE a single element of the list\n        6 - DELETE consecutive elements of the list\n        7 - SORT the list in ascending order and eliminate duplicate values\n        8 - QUIT modifying the list\n >  RESULT  F           1\n  1.00000000000000001E+308\n",
+      "stderr": ""
+    },
+    {
+      "mode": "double_array",
+      "input": "0.1,0.2,0.3\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n  1.00000000000000006E-001  2.00000000000000011E-001  2.99999999999999989E-001\n",
+      "stderr": ""
+    },
+    {
+      "mode": "double_array",
+      "input": "0.1\n0.2 0.3\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n  1.00000000000000006E-001  2.00000000000000011E-001  2.99999999999999989E-001\n",
+      "stderr": ""
+    },
+    {
+      "mode": "double_array",
+      "input": "3*0.5\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n  5.00000000000000000E-001  5.00000000000000000E-001  5.00000000000000000E-001\n",
+      "stderr": ""
+    },
+    {
+      "mode": "real",
+      "input": "0.1\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n  1.00000001490116119E-001\n",
+      "stderr": ""
+    },
+    {
+      "mode": "real",
+      "input": "1+2\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n  1.00000000000000000E+002\n",
+      "stderr": ""
+    },
+    {
+      "mode": "real",
+      "input": "1-2\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n  9.99999977648258209E-003\n",
+      "stderr": ""
+    },
+    {
+      "mode": "real_array",
+      "input": "0.1 1e-40 1e30\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n  1.00000001490116119E-001  9.99994610111475958E-041  1.00000001504746622E+030\n",
+      "stderr": ""
+    },
+    {
+      "mode": "integer",
+      "input": "2147483647\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n  2147483647\n",
+      "stderr": ""
+    },
+    {
+      "mode": "integer",
+      "input": "2147483648\n-2147483648\n",
+      "returncode": 0,
+      "stdout": " >  Entered value not accepted as a legal number.\n Please try again.\n >  RESULT  F\n -2147483648\n",
+      "stderr": ""
+    },
+    {
+      "mode": "integer_array",
+      "input": "1 -2 3\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n           1          -2           3\n",
+      "stderr": ""
+    },
+    {
+      "mode": "number",
+      "input": "1D-2\n",
+      "returncode": 0,
+      "stdout": " >  RESULT  F\n  1.00000000000000002E-002\n",
+      "stderr": ""
+    },
+    {
+      "mode": "number",
+      "input": "bad\nbad\nbad\n",
+      "returncode": 0,
+      "stdout": " >  Entered value not accepted as a legal number.\n Please try again.\n >  Entered value not accepted as a legal number.\n Please try again.\n >  Entered value not accepted as a legal number.\n RESULT  T\n",
+      "stderr": ""
+    }
+  ]
+}
