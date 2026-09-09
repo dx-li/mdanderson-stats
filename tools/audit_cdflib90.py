@@ -819,6 +819,52 @@ def main():
             ],
         }
     )
+    support_interfaces.append(
+        {
+            "module": "cdf_aux_mod",
+            "status": "implemented_with_documented_python_semantics",
+            "implemented_public_names": [
+                "add_to_one",
+                "cdf_finalize_status",
+                "cdf_set_zero_finder",
+                "check_complements",
+                "dbl_in_range",
+                "int_in_range",
+                "in_range",
+                "validate_parameters",
+                "which_miss",
+                "one_parameter",
+                "the_distribution",
+                "the_beta",
+                "the_binomial",
+                "the_chi_square",
+                "the_dummy_binomial",
+                "the_f",
+                "the_gamma",
+                "the_negative_binomial",
+                "the_non_central_chi_square",
+                "the_non_central_f",
+                "the_non_central_t",
+                "the_normal",
+                "the_poisson",
+                "the_t",
+            ],
+            "python_namespace": "cdflib_aux",
+            "type_mapping": {
+                "one_parameter": "CDFParameter",
+                "the_distribution": "CDFDistribution",
+            },
+            "evidence": [
+                "src/mdanderson_stats/cdflib_aux.py",
+                "tools/reference_cdflib_aux.py",
+                "tests/fixtures/cdflib_aux.json",
+                "tests/test_cdflib_aux.py",
+                "docs/cdflib-aux.md",
+                "tools/benchmark_cdflib_aux.py",
+                "docs/cdflib-aux-benchmark.json",
+            ],
+        }
+    )
     for interface in support_interfaces:
         if any(not Path(path).is_file() for path in interface["evidence"]):
             raise RuntimeError("missing public support evidence")

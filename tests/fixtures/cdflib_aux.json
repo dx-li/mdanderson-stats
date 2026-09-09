@@ -1,0 +1,669 @@
+{
+  "archive_sha256": "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b",
+  "source_hashes": {
+    "biomath_constants_mod": "2b0cfd2020e5221bc97edf80d1204ea074f7d82d0427dd912c96c357bcc7ba61",
+    "biomath_strings_mod": "c66814a0eec34c25283f0c71da41fc93969fc2cc0dba7f26146952adce70b8aa",
+    "biomath_sort_mod": "ab3d0939124dcdeadfbbe8950ae7b1207258ece5feb120da5c84da645d0530dc",
+    "biomath_interface_mod": "3ede16fa9d9b4e5e157a7eae1fc36d1f321863f9f74dcf56d4893655de564ed9",
+    "zero_finder": "18300a0ebbcd15d7b1f96277a256fa6997349f3e0ee953b33db38be819470827",
+    "cdf_aux_mod": "62aa44bf1319c6ef5ba02df10e24fca6c9f31d21d7f4bd5e5c6a1820721ff8da"
+  },
+  "driver_sha256": "4315e1a9e4387c0c756ea45baf6a7170a615fe8d5375f6a0a7121897ad50f312",
+  "flags": [
+    "-O0",
+    "-ffp-contract=off",
+    "-fcheck=all"
+  ],
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "distributions": {
+    "the_beta": {
+      "name": "cdf_beta",
+      "max_which": 4,
+      "nparam": 6,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 0.0,
+          "high_bound": 1.0
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 0.0,
+          "high_bound": 1.0
+        },
+        {
+          "name": "x",
+          "no_check": 2,
+          "low_bound": 0.0,
+          "high_bound": 1.0
+        },
+        {
+          "name": "cx",
+          "no_check": 2,
+          "low_bound": 0.0,
+          "high_bound": 1.0
+        },
+        {
+          "name": "a",
+          "no_check": 3,
+          "low_bound": 1e-10,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "b",
+          "no_check": 4,
+          "low_bound": 1e-10,
+          "high_bound": 10000000000.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    },
+    "the_binomial": {
+      "name": "cdf_binomial",
+      "max_which": 4,
+      "nparam": 6,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 0.0,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 1.0
+        },
+        {
+          "name": "s",
+          "no_check": 2,
+          "low_bound": 0.0,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "n",
+          "no_check": 3,
+          "low_bound": 0.0,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "pr",
+          "no_check": 4,
+          "low_bound": 0.0,
+          "high_bound": 1.0
+        },
+        {
+          "name": "cpr",
+          "no_check": 4,
+          "low_bound": 0.0,
+          "high_bound": 1.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    },
+    "the_chi_square": {
+      "name": "cdf_chi_square",
+      "max_which": 3,
+      "nparam": 4,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 0.0,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 1.0
+        },
+        {
+          "name": "x",
+          "no_check": 2,
+          "low_bound": 0.0,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "df",
+          "no_check": 3,
+          "low_bound": 0.001,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    },
+    "the_dummy_binomial": {
+      "name": "cdf_binomial",
+      "max_which": 0,
+      "nparam": 2,
+      "parameters": [
+        {
+          "name": "pr",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.5
+        },
+        {
+          "name": "cpr",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.5
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": -1
+    },
+    "the_f": {
+      "name": "cdf_f",
+      "max_which": 2,
+      "nparam": 5,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 0.0,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 1.0
+        },
+        {
+          "name": "f",
+          "no_check": 2,
+          "low_bound": 0.0,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "dfn",
+          "no_check": 3,
+          "low_bound": 0.001,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "dfd",
+          "no_check": 4,
+          "low_bound": 0.001,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    },
+    "the_gamma": {
+      "name": "cdf_gamma",
+      "max_which": 4,
+      "nparam": 5,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 0.0,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 1.0
+        },
+        {
+          "name": "x",
+          "no_check": 2,
+          "low_bound": 0.0,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "shape",
+          "no_check": 3,
+          "low_bound": 1e-10,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "scale",
+          "no_check": 4,
+          "low_bound": 1e-10,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    },
+    "the_negative_binomial": {
+      "name": "cdf_negative_binomial",
+      "max_which": 4,
+      "nparam": 6,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 0.0,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 1.0
+        },
+        {
+          "name": "f",
+          "no_check": 2,
+          "low_bound": 0.0,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "s",
+          "no_check": 3,
+          "low_bound": 0.0,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "pr",
+          "no_check": 4,
+          "low_bound": 0.0,
+          "high_bound": 1.0
+        },
+        {
+          "name": "cpr",
+          "no_check": 4,
+          "low_bound": 0.0,
+          "high_bound": 1.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    },
+    "the_non_central_chi_square": {
+      "name": "cdf_nc_chisq",
+      "max_which": 4,
+      "nparam": 5,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 0.0,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 1.0
+        },
+        {
+          "name": "x",
+          "no_check": 2,
+          "low_bound": 0.0,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "df",
+          "no_check": 3,
+          "low_bound": 0.001,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "pnonc",
+          "no_check": 4,
+          "low_bound": 0.0,
+          "high_bound": 10000.0
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    },
+    "the_non_central_f": {
+      "name": "cdf_nc_f",
+      "max_which": 3,
+      "nparam": 6,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 0.0,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 1.0
+        },
+        {
+          "name": "f",
+          "no_check": 2,
+          "low_bound": 0.0,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "dfn",
+          "no_check": 3,
+          "low_bound": 0.001,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "dfd",
+          "no_check": 4,
+          "low_bound": 0.001,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "pnonc",
+          "no_check": 5,
+          "low_bound": 0.0,
+          "high_bound": 10000.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    },
+    "the_non_central_t": {
+      "name": "cdf_non_central_t",
+      "max_which": 4,
+      "nparam": 5,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "t",
+          "no_check": 2,
+          "low_bound": -1e+100,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "df",
+          "no_check": 3,
+          "low_bound": 0.001,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "pnonc",
+          "no_check": 4,
+          "low_bound": 0.0,
+          "high_bound": 10000.0
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    },
+    "the_normal": {
+      "name": "cdf_normal",
+      "max_which": 4,
+      "nparam": 5,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "x",
+          "no_check": 2,
+          "low_bound": -1e+100,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "mean",
+          "no_check": 3,
+          "low_bound": -1e+100,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "sd",
+          "no_check": 4,
+          "low_bound": 1e-10,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    },
+    "the_poisson": {
+      "name": "cdf_poisson",
+      "max_which": 3,
+      "nparam": 4,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 0.0,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 1.0
+        },
+        {
+          "name": "s",
+          "no_check": 2,
+          "low_bound": 0.0,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "lambda",
+          "no_check": 3,
+          "low_bound": 1e-10,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    },
+    "the_t": {
+      "name": "cdf_t",
+      "max_which": 3,
+      "nparam": 4,
+      "parameters": [
+        {
+          "name": "cum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "ccum",
+          "no_check": 1,
+          "low_bound": 1e-10,
+          "high_bound": 0.9999999999
+        },
+        {
+          "name": "t",
+          "no_check": 2,
+          "low_bound": -1e+100,
+          "high_bound": 1e+100
+        },
+        {
+          "name": "df",
+          "no_check": 3,
+          "low_bound": 0.001,
+          "high_bound": 10000000000.0
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        },
+        {
+          "name": "",
+          "no_check": 0,
+          "low_bound": 0.0,
+          "high_bound": 0.0
+        }
+      ],
+      "invalid_which_status": -1,
+      "zero_pair_status": 3
+    }
+  },
+  "ranges": [
+    {
+      "value": -1,
+      "ok": false,
+      "status": -7
+    },
+    {
+      "value": 0,
+      "ok": true,
+      "status": null
+    },
+    {
+      "value": 0.5,
+      "ok": true,
+      "status": null
+    },
+    {
+      "value": 1,
+      "ok": true,
+      "status": null
+    },
+    {
+      "value": 2,
+      "ok": false,
+      "status": -7
+    },
+    {
+      "value": "NaN",
+      "ok": true,
+      "status": null
+    }
+  ],
+  "complements": [
+    {
+      "x": 0,
+      "y": 1,
+      "ok": true,
+      "status": null
+    },
+    {
+      "x": 0.25,
+      "y": 0.75,
+      "ok": true,
+      "status": null
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "ok": false,
+      "status": 3
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "ok": false,
+      "status": 3
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "ok": true,
+      "status": null
+    }
+  ]
+}

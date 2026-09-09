@@ -513,3 +513,6 @@ reverse-communication contracts and independently identifies native root/state d
 
 The [CDFLIB root finders](docs/cdflib-root.md) implement direct and reverse searches
 with independent state, corrected exact roots, working tolerances and bounded work.
+
+The [CDFLIB auxiliary namespace](docs/cdflib-aux.md) adds all 13 native distribution
+descriptors, batched validation, complement/range helpers and root-state adapters.
