@@ -545,3 +545,8 @@ reconciles the manuals and marks CDFLIB90 implemented. The separate
 [discrete probability terms](docs/stattab-probability.md) provide vectorized
 binomial, negative-binomial and Poisson masses with consistent count truncation,
 small complementary chances and explicit degenerate boundaries.
+
+The [STATTAB result layer](docs/stattab-results.md) connects all twelve families
+and 42 computed groups to structured broadcast results, source column order,
+extra probabilities and neighboring integer rows. Interactive sessions and reports
+remain in progress.

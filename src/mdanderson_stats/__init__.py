@@ -214,6 +214,13 @@ from .stattab_probability import (
     stattab_negative_binomial_term,
     stattab_poisson_term,
 )
+from .stattab_results import (
+    STATTAB_DISTRIBUTIONS,
+    STATTABDistribution,
+    STATTABNeighbor,
+    STATTABResult,
+    stattab_solve,
+)
 from .stukel import predict_stukel, stukel_log_odds, stukel_probability
 from .stukel_comparison import StukelComparison, compare_stukel, stukel_demo
 from .stukel_fit import StukelFit, StukelFitError, fit_stukel
@@ -228,6 +235,11 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "STATTAB_DISTRIBUTIONS",
+    "STATTABDistribution",
+    "STATTABNeighbor",
+    "STATTABResult",
+    "stattab_solve",
     "stattab_binomial_term",
     "stattab_negative_binomial_term",
     "stattab_poisson_term",

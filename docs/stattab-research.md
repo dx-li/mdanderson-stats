@@ -1,7 +1,8 @@
 # STATTAB source and workflow audit
 
 Catalog entry **23, STATTAB**, is partially implemented. Its
-[discrete probability terms](stattab-probability.md) are available; the application
+[discrete probability terms](stattab-probability.md) and
+[structured distribution results](stattab-results.md) are available; the interactive application
 workflow and remaining responsibilities below are still pending. The pinned
 [archive inventory](stattab-archive.json) and [104 native sessions](../tests/fixtures/stattab.json)
 establish its application scope and defect evidence. They do not turn the existing
@@ -39,23 +40,23 @@ instructions will be replaced by Python packaging. The original
 [LEGALITIES](../notices/mdanderson-stattab-LEGALITIES.txt) is retained byte-for-byte;
 original native source and executables are not bundled in the Python wheel.
 
-## Application contract still to implement
+## Application coverage and remaining work
 
 | Responsibility | Required Python behavior and current evidence |
 |---|---|
-| Twelve distributions | Preserve the source menu's beta, binomial, negative-binomial, chi-square, noncentral chi-square, F, noncentral F, gamma, normal, Poisson, t and noncentral t workflows |
-| Computed parameters | All 42 supported computed groups, with source-order parameter mapping; every group has a native session |
+| Twelve distributions | [Numerical result layer implemented](stattab-results.md) for all twelve source families; interactive workflows remain pending |
+| Computed parameters | Implemented: all 42 supported computed groups with named parameters and source-order columns; native sessions and independent target tests cover every group |
 | F/noncentral F df | Source explicitly rejects df inversion in this application; expose any additional legacy-library df API separately and document the distinction |
-| Complementary values | Accept a primary or complementary coordinate/probability; preserve the smaller tail and calculate the paired output |
+| Complementary values | Implemented in numerical results: accept either member, preserve the smaller tail and calculate the paired output; interactive omission syntax remains pending |
 | Parameter requests | Exactly one unknown (`?`), omitted complement (`.`), optional list selector (`T`), numeric formats, separators and comments |
 | Reuse | `=` must refer to a defined previous value of the same distribution; preserve completed values without cross-call contamination |
-| Tables | Batched results for a list at any supported input position, including complementary inputs and gamma's reordered parameters; reset table state between requests |
+| Tables | Numerical batches implemented at every supported input position, including complements and gamma parameters; interactive list selection and state reset remain pending |
 | List editing | All eight source actions, capacity policy, pagination, linear/logarithmic sequences, deletions, sorting and duplicate handling; existing CDFLIB list support is a foundation, not application validation |
-| Extra probability columns | Two-sided normal/t probabilities; chi-square/F many-sided probabilities are their existing upper-tail columns, not extra density-ordered tests |
+| Extra probability columns | Implemented for forward results: two-sided normal/t probabilities; chi-square/F many-sided probabilities are their existing upper-tail columns |
 | Discrete terms | [Implemented](stattab-probability.md): binomial, negative-binomial and Poisson individual probabilities with consistent truncation; the manual only mentions binomial/Poisson but source also includes negative-binomial |
-| Count inversions | Retain the continuous solution and the separate neighboring integer evaluations; binomial/negative-binomial have both count inversions, Poisson has its event-count inversion |
-| Gamma ordering | Input A is the rate and B the shape; the source swaps them before CDF evaluation and prints shape before rate; Python names and report labels must remove ambiguity |
-| Output/reporting | Structured results, source column meanings, formatted tables, per-session streams and report-file output; no silently printed invalid or uninitialized results |
+| Count inversions | Implemented for all five count inversions: continuous solution plus separate floor/floor+1 rows, explicit invalid masks and compact valid outputs |
+| Gamma ordering | Implemented named rate/shape inputs and source-order result columns; source A is rate and B is shape |
+| Output/reporting | Structured results and source column meanings implemented; formatted tables, per-session streams and report-file output pending |
 | File I/O | `open_file` and `report_file_dialogue`, including read/write selection, existing-file/append/new-file policies, errors and caller ownership |
 | Help and examples | Distribution/parameter help, annotated manual workflow and report examples |
 | Failures | Checked invalid input, finite arithmetic, well-defined numerical failures and resource limits; no process STOP or stale answers |
@@ -63,8 +64,9 @@ original native source and executables are not bundled in the Python wheel.
 | Delivery | Python implementations, behavioral/numerical tests, relevant batching benchmarks, installed-wheel checks and full catalog metadata update |
 
 The completed CDFLIB90 kernels, lexer, console, list editor and formatting routines
-provide reusable foundations. STATTAB-specific workflow mapping, result construction,
-state management and remaining outputs still require implementation and tests.
+provide reusable foundations. The numerical result layer adds application parameter
+mapping and extra outputs. Interactive state management and remaining output
+responsibilities still require implementation and tests.
 
 ## Native evidence and independent checks
 
@@ -116,10 +118,11 @@ accuracy from a rounded table. Exact-state and error tests classify the defects 
   needs an explicit exact-token policy.
 
 The application also prints failed zero-mean Poisson results although the
-mathematical degenerate distribution is well-defined. A Python extension to that
-boundary must be deliberate and tested, using the package's existing zero-mean
-legacy kernel where appropriate. Existing documented CDFLIB numerical repairs
-remain relevant, but cannot replace STATTAB workflow validation.
+mathematical degenerate distribution is well-defined. The result layer deliberately
+extends forward evaluation at that boundary through the existing zero-mean legacy
+kernel, with mixed-batch tests. Parameter inversions retain their documented
+CDFLIB90 domains. Existing documented CDFLIB numerical repairs remain relevant,
+but cannot replace STATTAB workflow validation.
 
 ## Reproduction
 

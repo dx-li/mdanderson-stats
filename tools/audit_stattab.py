@@ -113,14 +113,21 @@ def main():
         ),
         archive_sha256=ARCHIVE_SHA256,
         catalog_id=23,
-        status="partial_discrete_probability_terms",
+        status="partial_numerical_result_layer",
         implemented_scope={
-            "description": "Direct discrete terms; full application workflow remains pending",
+            "description": (
+                "Discrete terms and all 42 numerical result groups; "
+                "interactive application remains pending"
+            ),
             "evidence": [
                 "src/mdanderson_stats/stattab_probability.py",
                 "tests/test_stattab_probability.py",
                 "docs/stattab-probability.md",
                 "docs/stattab-probability-benchmark.json",
+                "src/mdanderson_stats/stattab_results.py",
+                "tests/test_stattab_results.py",
+                "docs/stattab-results.md",
+                "docs/stattab-results-benchmark.json",
             ],
         },
         version_reconciliation=(
@@ -138,7 +145,7 @@ def main():
         members=members,
     )
     if any(not Path(p).is_file() for p in report["implemented_scope"]["evidence"]):
-        raise RuntimeError("Missing STATTAB discrete-probability evidence")
+        raise RuntimeError("Missing STATTAB implementation evidence")
     Path("docs/stattab-archive.json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps({k: report[k] for k in ["regular_file_count", "role_counts"]}, indent=2))
 

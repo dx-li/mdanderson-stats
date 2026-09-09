@@ -716,7 +716,8 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Vectorized binomial, negative-binomial and Poisson individual probabilities with consistent count truncation, explicit complementary chances, degenerate boundaries, direct stable factors and independent subnormal/huge-count validation; full STATTAB application workflow remains pending"
+        "Vectorized binomial, negative-binomial and Poisson individual probabilities with consistent count truncation, explicit complementary chances, degenerate boundaries, direct stable factors and independent subnormal/huge-count validation; full STATTAB application workflow remains pending",
+        "Structured vectorized results for all twelve STATTAB distributions and 42 supported computed groups, source-ordered columns, explicit gamma rate/shape mapping, forward extra probabilities, five continuous count inversions with valid neighboring integer rows, zero-mean Poisson forward extension and noncentral-t root brackets; interactive workflow and full source reconciliation remain pending"
       ],
       "validation": [
         "docs/stattab-research.md",
@@ -729,7 +730,12 @@
         "tests/test_stattab_probability.py",
         "docs/stattab-probability.md",
         "tools/benchmark_stattab_probability.py",
-        "docs/stattab-probability-benchmark.json"
+        "docs/stattab-probability-benchmark.json",
+        "src/mdanderson_stats/stattab_results.py",
+        "tests/test_stattab_results.py",
+        "docs/stattab-results.md",
+        "tools/benchmark_stattab_results.py",
+        "docs/stattab-results-benchmark.json"
       ]
     },
     {

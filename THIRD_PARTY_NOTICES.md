@@ -553,7 +553,10 @@ document numerical methods and independent validation. No archived code is bundl
 ## STATTAB
 
 Three discrete probability terms are independently implemented through the existing
-beta/gamma factor kernels; the full STATTAB application workflow remains in progress.
+beta/gamma factor kernels. Its structured numerical result layer maps all twelve
+distributions and 42 computed groups to the existing validated CDFLIB APIs, with
+source columns, extra probabilities and neighboring count rows. The interactive
+STATTAB application workflow remains in progress.
 Source inventory and native-session validation evidence are retained. The archive's
 manual and source banner identify version 2.0 despite the download's 1.3 label.
 Authors include Barry W. Brown, David Gutierrez, James Lovato, Dan Serachitopol,
