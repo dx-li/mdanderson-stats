@@ -555,14 +555,22 @@
         "rexp",
         "rlog",
         "rlog1",
-        "evaluate_polynomial"
+        "evaluate_polynomial",
+        "erf",
+        "erfc1",
+        "esum",
+        "exparg"
       ],
       "python_interfaces": [
         "alnrel",
         "rexp",
         "rlog",
         "rlog1",
-        "evaluate_polynomial"
+        "evaluate_polynomial",
+        "erf",
+        "erfc1",
+        "esum",
+        "exparg"
       ],
       "status": "partial",
       "remaining_scope": "Other mathematical procedures and imported constants",
@@ -582,7 +590,11 @@
         "tools/reference_cdflib_error_exponential.py",
         "tests/fixtures/cdflib_error_exponential.json",
         "tests/test_cdflib_error_exponential_reference.py",
-        "docs/cdflib-error-exponential-reference.md"
+        "docs/cdflib-error-exponential-reference.md",
+        "src/mdanderson_stats/cdflib_error_exponential.py",
+        "tests/test_cdflib_error_exponential.py",
+        "docs/cdflib-error-exponential.md",
+        "docs/cdflib-error-exponential-benchmark.json"
       ]
     }
   ],

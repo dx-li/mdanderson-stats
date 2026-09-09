@@ -1,7 +1,8 @@
 # CDFLIB error-function and exponential reference audit
 
-This audit covers four public F95 `biomath_mathlib_mod` procedures. Their Python
-interfaces are still pending. It records the original executable behavior and
+This audit covers four public F95 `biomath_mathlib_mod` procedures. Their
+[Python interfaces](cdflib-error-exponential.md) are now implemented. It records
+the original executable behavior and
 independent mathematical checks so that a port can preserve valid behavior and
 repair numerical failures deliberately.
 
@@ -57,7 +58,7 @@ finite mathematical answer. Ordinary reference agreement uses tolerances that
 accommodate the original rational approximations. The identified failures have
 specific assertions, not a broad tolerance that hides them.
 
-The module remains partially implemented: five elementary helpers are available;
-these four audited procedures, other mathematical support, imported constants,
-root-finder state and console/adapter interfaces remain open. This audit does not
-change catalog completion status or make a performance claim.
+The module remains partially implemented: five elementary helpers and these four
+audited procedures are available in Python. Other mathematical support, imported
+constants, root-finder state and console/adapter interfaces remain open. The audit
+itself makes no performance claim.

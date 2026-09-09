@@ -1,0 +1,94 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same Python API; not native timing",
+  "cases": [
+    {
+      "operation": "erf",
+      "size": 64,
+      "batch_seconds": 6.292015314102173e-06,
+      "scalar_seconds": 0.00020720809698104858,
+      "speedup": 32.931912374185906
+    },
+    {
+      "operation": "erfc",
+      "size": 64,
+      "batch_seconds": 3.2791867852211e-05,
+      "scalar_seconds": 0.0013709580525755882,
+      "speedup": 41.807867083214994
+    },
+    {
+      "operation": "erfc_scaled",
+      "size": 64,
+      "batch_seconds": 2.7624890208244324e-05,
+      "scalar_seconds": 0.0013645421713590622,
+      "speedup": 49.395388038567866
+    },
+    {
+      "operation": "erfc_subnormal",
+      "size": 64,
+      "batch_seconds": 2.7916859835386276e-05,
+      "scalar_seconds": 0.0013729589991271496,
+      "speedup": 49.180280562459345
+    },
+    {
+      "operation": "esum",
+      "size": 64,
+      "batch_seconds": 2.133287489414215e-05,
+      "scalar_seconds": 0.000891250092536211,
+      "speedup": 41.77824587444338
+    },
+    {
+      "operation": "exparg",
+      "size": 64,
+      "batch_seconds": 1.2749806046485901e-05,
+      "scalar_seconds": 0.0005936669185757637,
+      "speedup": 46.56281957633309
+    },
+    {
+      "operation": "erf",
+      "size": 256,
+      "batch_seconds": 4.666857421398163e-06,
+      "scalar_seconds": 0.0008002910763025284,
+      "speedup": 171.48393534224707
+    },
+    {
+      "operation": "erfc",
+      "size": 256,
+      "batch_seconds": 3.329198807477951e-05,
+      "scalar_seconds": 0.005583459045737982,
+      "speedup": 167.71179399669901
+    },
+    {
+      "operation": "erfc_scaled",
+      "size": 256,
+      "batch_seconds": 4.2750034481287e-05,
+      "scalar_seconds": 0.005529416259378195,
+      "speedup": 129.3429660693862
+    },
+    {
+      "operation": "erfc_subnormal",
+      "size": 256,
+      "batch_seconds": 4.641711711883545e-05,
+      "scalar_seconds": 0.005811082664877176,
+      "speedup": 125.19266653290529
+    },
+    {
+      "operation": "esum",
+      "size": 256,
+      "batch_seconds": 2.624979242682457e-05,
+      "scalar_seconds": 0.0036000418476760387,
+      "speedup": 137.14553582515833
+    },
+    {
+      "operation": "exparg",
+      "size": 256,
+      "batch_seconds": 1.750001683831215e-05,
+      "scalar_seconds": 0.0024365829303860664,
+      "speedup": 139.23317633910753
+    }
+  ]
+}

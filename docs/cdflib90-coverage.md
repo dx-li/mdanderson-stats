@@ -104,7 +104,7 @@ F95 support also has an explicit public surface:
 
 | Module | Public/support scope and status |
 |---|---|
-| `biomath_mathlib_mod` | [Five elementary helpers implemented](cdflib-elementary.md); remaining default-public numerical procedures and imported constants still open |
+| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md) and [four error/exponential helpers](cdflib-error-exponential.md) implemented; remaining default-public numerical procedures and imported constants still open |
 | `zero_finder` | Direct and reverse-communication interval/step solvers, setup, final-state reporting, bounds and solver-state type |
 | `biomath_constants_mod` | Default-public kind and numeric constants |
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
@@ -210,4 +210,5 @@ The [error-function/exponential reference audit](cdflib-error-exponential-refere
 records 134 unchanged F95 calls to `erf`, `erfc1`, `esum` and `exparg`, with
 independent defining-function checks. It identifies premature tail cutoff,
 intermediate overflow, subnormal double-rounding and the actual normal-range
-threshold contract. These four Python interfaces are still pending.
+threshold contract. The [Python port](cdflib-error-exponential.md) now implements
+all four with documented overflow handling and preserved subnormal tails.

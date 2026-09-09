@@ -25,6 +25,7 @@ from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
 from .cdflib_binomial import CDFBinomial, ccum_binomial, cdf_binomial, cum_binomial, inv_binomial
 from .cdflib_chisq import CDFChiSquare, ccum_chisq, cdf_chisq, cum_chisq, inv_chisq
 from .cdflib_elementary import alnrel, evaluate_polynomial, rexp, rlog, rlog1
+from .cdflib_error_exponential import erf, erfc1, esum, exparg
 from .cdflib_f import CDFF, ccum_f, cdf_f, cum_f, inv_f
 from .cdflib_gamma import CDFGamma, ccum_gamma, cdf_gamma, cum_gamma, inv_gamma
 from .cdflib_nc_chisq import (
@@ -198,6 +199,10 @@ from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtas
 
 __all__ = [
     "alnrel",
+    "erf",
+    "erfc1",
+    "esum",
+    "exparg",
     "evaluate_polynomial",
     "rexp",
     "rlog",

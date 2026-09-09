@@ -457,3 +457,7 @@ explicit malformed-token/overflow results and bounded exponent processing.
 The [elementary CDFLIB helpers](docs/cdflib-elementary.md) provide stable
 `alnrel`, `rexp`, `rlog`, `rlog1` and batched `evaluate_polynomial`, including
 independent high-precision validation of small and subnormal results.
+
+The [CDFLIB error/exponential helpers](docs/cdflib-error-exponential.md) add
+`erf`, `erfc1`, `esum` and `exparg`, with batch evaluation, preserved subnormal
+complementary-error tails and repaired intermediate exponential overflow.

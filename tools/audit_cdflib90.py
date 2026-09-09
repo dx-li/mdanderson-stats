@@ -566,8 +566,28 @@ def main():
     support_interfaces.append(
         {
             "module": "biomath_mathlib_mod",
-            "implemented_public_names": ["alnrel", "rexp", "rlog", "rlog1", "evaluate_polynomial"],
-            "python_interfaces": ["alnrel", "rexp", "rlog", "rlog1", "evaluate_polynomial"],
+            "implemented_public_names": [
+                "alnrel",
+                "rexp",
+                "rlog",
+                "rlog1",
+                "evaluate_polynomial",
+                "erf",
+                "erfc1",
+                "esum",
+                "exparg",
+            ],
+            "python_interfaces": [
+                "alnrel",
+                "rexp",
+                "rlog",
+                "rlog1",
+                "evaluate_polynomial",
+                "erf",
+                "erfc1",
+                "esum",
+                "exparg",
+            ],
             "status": "partial",
             "remaining_scope": "Other mathematical procedures and imported constants",
             "reference_audited_public_names": ["erf", "erfc1", "esum", "exparg"],
@@ -582,6 +602,10 @@ def main():
                 "tests/fixtures/cdflib_error_exponential.json",
                 "tests/test_cdflib_error_exponential_reference.py",
                 "docs/cdflib-error-exponential-reference.md",
+                "src/mdanderson_stats/cdflib_error_exponential.py",
+                "tests/test_cdflib_error_exponential.py",
+                "docs/cdflib-error-exponential.md",
+                "docs/cdflib-error-exponential-benchmark.json",
             ],
         }
     )
