@@ -99,6 +99,39 @@ def _positive_parts(
     return prefactor, exponent, divisor
 
 
+def _small_coordinate_log_cdf(a: FloatArray, b: FloatArray, x: FloatArray) -> FloatArray:
+    """Leading beta integral for x<=1e-300 and b*x<=1e-16.
+
+    The relative integral-series correction is bounded by order max(x,b*x).
+    Retain log(P) so both P and a small complementary Q remain recoverable.
+    """
+    result = np.empty(a.shape)
+    small = a <= 1
+    if np.any(small):
+        aa, shifted = a[small], b[small].copy()
+        correction = np.zeros(aa.shape)
+        # Shift b into the stable gamma-ratio domain. Gamma recurrences
+        # avoid subtracting log(a) from log(Beta(a,b)) for tiny a.
+        for _ in range(8):
+            active = shifted < 8
+            ratio = aa[active] / shifted[active]
+            logarithm = np.log1p(ratio)
+            overflow = np.isinf(ratio)
+            logarithm[overflow] = np.log(aa[active][overflow]) - np.log(shifted[active][overflow])
+            correction[active] -= logarithm
+            shifted[active] += 1
+        result[small] = (
+            aa * np.log(x[small]) - _local_log_gamma(aa) - _positive_ratio(aa, shifted) + correction
+        )
+    if np.any(~small):
+        aa, bb, xx = a[~small], b[~small], x[~small]
+        prefactor, exponent, divisor = _positive_parts(aa, bb, xx, 1 - xx, np.zeros(aa.shape))
+        result[~small] = (
+            exponent - np.log(aa) + np.log(prefactor) - np.log(divisor) - bb * np.log1p(-xx)
+        )
+    return result
+
+
 def _scaled(prefactor: FloatArray, exponent: FloatArray, divisor: FloatArray) -> FloatArray:
     exponent = exponent - np.log(divisor)
     direct = np.abs(exponent) <= 700

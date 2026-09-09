@@ -59,7 +59,22 @@ the actual archived implementation and this port use the standard definition.
 ## Numerics and failure behavior
 
 Forward evaluation reflects the beta parameters when the supplied complementary
-coordinate is smaller. SciPy `betainc` and `betaincc` evaluate both tails directly.
+coordinate is smaller. SciPy `betainc` and `betaincc` evaluate both tails directly,
+except at very small coordinates where an independently validated log-domain
+calculation repairs inaccurate or spuriously zero kernel results. For the smaller
+coordinate z<=1e-300 and its companion shape b satisfying b*z<=1e-16, the leading
+beta integral z**a/(a*Beta(a,b)) has a negligible series correction. Gamma
+recurrences and stable gamma ratios retain log(P); exp(log(P)) and -expm1(log(P))
+recover the two tails without cancellation or premature underflow. The product
+guard matters for legacy callers whose shapes can greatly exceed the public F95
+bounds. Other coordinates retain the compiled kernel.
+
+[Subnormal regression tests](../tests/test_cdflib_beta_subnormal.py) use independent
+800-digit beta integrals, check both coordinate orientations, and exercise legacy
+beta, negative-binomial identities and shape inversions. For example,
+`ccum_beta(5e-324, 0.01, 0.5)` now returns 0.9994232499281094; the previous kernel
+returned 0.9994237485382758. Representable small probabilities are also retained.
+
 The smaller computed tail is retained and the larger is reconstructed so the
 result is a consistent complementary pair. At x=cx=0.5 with a=b, symmetry gives
 exactly 0.5 for both tails. This also avoids platform-dependent kernel roundoff

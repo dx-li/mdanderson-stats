@@ -247,3 +247,8 @@ F95 calls to `apser`, `fpser` and `bpser`. Independent beta-integral checks expo
 endpoint errors, an overflowing digamma intermediate, a lost subnormal result
 and valid-domain timeouts. The [fpser](cdflib-fpser.md) and
 [apser](cdflib-apser.md) ports are implemented; `bpser` remains pending.
+
+The shared beta-tail kernel includes a [small-coordinate correction](cdflib90.md#numerics-and-failure-behavior)
+validated against independent 800-digit integrals, legacy beta and negative-binomial
+interfaces, and shape inversion. This repairs inaccurate and spuriously zero tails
+at subnormal coordinates without adding a new catalog procedure.

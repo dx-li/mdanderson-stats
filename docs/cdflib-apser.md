@@ -50,11 +50,10 @@ terms in large-parameter beta expansions are described in
 [NIST DLMF 8.18](https://dlmf.nist.gov/8.18#ii). This path is independently
 checked against beta integrals, including tiny upper tails and loose tolerances.
 
-Other cases use the existing compiled beta-tail kernel. An additional path for
-subnormal x and a<=1 avoids observed kernel inaccuracies there: it shifts b to
-the stable gamma-ratio domain and evaluates log(P) directly. In that path b<1e15,
-so the omitted coordinate-series correction is negligible. Existing distribution
-kernels are unchanged.
+Other cases use the shared [beta-tail calculation](cdflib90.md#numerics-and-failure-behavior).
+Its log-domain path for very small coordinates also handles the subnormal cases
+originally repaired inside apser. The shared path benefits distribution interfaces
+and avoids maintaining a duplicate normalization calculation.
 
 The tolerance controls series truncation and the allowed source domain; it is
 not a guarantee of correct rounding or a bound on every approximation/kernel

@@ -9,8 +9,7 @@ from .cdflib_beta import _tails
 from .cdflib_beta_factors import _positive_parts
 from .cdflib_beta_shift import _normalized
 from .cdflib_beta_support import _small_binomial
-from .cdflib_gamma_ratios import _positive_ratio
-from .cdflib_gamma_support import _local_log_gamma, psi
+from .cdflib_gamma_support import psi
 from .cdflib_incomplete_gamma import gratio
 
 
@@ -120,20 +119,6 @@ def _tiny_upper(a: FloatArray, b: FloatArray, x: FloatArray) -> FloatArray:
     return -a * (np.log(x) + psi(b) + np.euler_gamma + series)
 
 
-def _upper_subnormal_x(a: FloatArray, b: FloatArray, x: FloatArray) -> FloatArray:
-    # b<1e15 and x<min_normal make the integral-series correction negligible.
-    # Shift b to the stable gamma-ratio domain, preserving small shape
-    # corrections without cancellation between log(Beta(a,b)) and log(a).
-    shifted = b.copy()
-    correction = np.zeros(a.shape)
-    for _ in range(8):
-        active = shifted < 8
-        correction[active] -= np.log1p(a[active] / shifted[active])
-        shifted[active] += 1
-    logp = a * np.log(x) - _local_log_gamma(a) - _positive_ratio(a, shifted) + correction
-    return -np.expm1(logp)
-
-
 def apser(a: ArrayLike, b: ArrayLike, x: ArrayLike, eps: ArrayLike = 5e-15) -> FloatArray:
     """Compute I_(1-x)(b,a) for a<=min(eps,eps*b), b*x<=1 and x<=1/2.
 
@@ -171,10 +156,6 @@ def apser(a: ArrayLike, b: ArrayLike, x: ArrayLike, eps: ArrayLike = 5e-15) -> F
         if np.any(tiny):
             result[tiny] = _tiny_upper(aa[tiny], bb[tiny], xx[tiny])
         regular = active & ~small & ~large & ~tiny
-        subnormal = regular & (xx < np.finfo(float).tiny) & (aa <= 1)
-        if np.any(subnormal):
-            result[subnormal] = _upper_subnormal_x(aa[subnormal], bb[subnormal], xx[subnormal])
-        regular &= ~subnormal
         if np.any(regular):
             result[regular] = _tails(xx[regular], 1 - xx[regular], aa[regular], bb[regular])[1]
     if np.any(~np.isfinite(result) | (result < 0) | (result > 1)):

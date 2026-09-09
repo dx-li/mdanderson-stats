@@ -8,6 +8,7 @@ from scipy.special import betainc, betaincc, betainccinv, betaincinv
 
 from ._cdflib import _freeze, _pair
 from ._validation import FloatArray, finite
+from .cdflib_beta_factors import _small_coordinate_log_cdf
 
 
 def _shape(value: ArrayLike | None, name: str) -> FloatArray:
@@ -24,7 +25,16 @@ def _tails(
 ) -> tuple[FloatArray, FloatArray]:
     left = x <= cx
     aa, bb, z = np.where(left, a, b), np.where(left, b, a), np.minimum(x, cx)
-    lower, upper = betainc(aa, bb, z), betaincc(aa, bb, z)
+    small = (z > 0) & (z <= 1e-300) & (bb * z <= 1e-16)
+    if np.any(small):
+        lower, upper = np.empty(z.shape), np.empty(z.shape)
+        with np.errstate(over="ignore", under="ignore", divide="ignore"):
+            logp = _small_coordinate_log_cdf(aa[small], bb[small], z[small])
+            lower[small], upper[small] = np.exp(logp), -np.expm1(logp)
+        lower[~small] = betainc(aa[~small], bb[~small], z[~small])
+        upper[~small] = betaincc(aa[~small], bb[~small], z[~small])
+    else:
+        lower, upper = betainc(aa, bb, z), betaincc(aa, bb, z)
     p, q = np.where(left, lower, upper), np.where(left, upper, lower)
     if np.any(~np.isfinite(p) | ~np.isfinite(q) | (p < 0) | (p > 1) | (q < 0) | (q > 1)):
         raise ArithmeticError("beta tail evaluation failed")
