@@ -11,6 +11,18 @@ from .cdflib_gamma_ratios import _delta
 from .cdflib_gamma_support import _local_log_gamma, _positive_log_gamma
 
 
+def _large_log_factor(aa: FloatArray, xx: FloatArray) -> FloatArray:
+    """Log gamma factor for positive x and a>=8; retain near-center displacement."""
+    near = (xx >= 0.5 * aa) & (xx <= 1.5 * aa)
+    cost = np.empty(aa.shape)
+    # Subtract original coordinates, not their rounded quotient.
+    d = (xx[near] - aa[near]) / aa[near]
+    cost[near] = aa[near] * _log_remainder(d)
+    # The log difference remains finite even if x/a underflows to zero.
+    cost[~near] = (xx[~near] - aa[~near]) - aa[~near] * (np.log(xx[~near]) - np.log(aa[~near]))
+    return (0.5 * np.log(aa) - 0.9189385332046727) - _delta(1 / aa) - cost
+
+
 def rcomp(a: ArrayLike, x: ArrayLike) -> FloatArray:
     """Compute exp(-x)*x**a/Gamma(a) for finite real broadcast inputs.
 
@@ -29,14 +41,7 @@ def rcomp(a: ArrayLike, x: ArrayLike) -> FloatArray:
         result[local] = aa * np.exp(aa * np.log(xx) - xx - _local_log_gamma(aa))
 
         aa, xx = shape[large], coordinate[large]
-        near = (xx >= 0.5 * aa) & (xx <= 1.5 * aa)
-        cost = np.empty(aa.shape)
-        # Subtract the original coordinates, not their rounded quotient.
-        d = (xx[near] - aa[near]) / aa[near]
-        cost[near] = aa[near] * _log_remainder(d)
-        # log(x)-log(a) remains finite even if x/a underflows to zero.
-        cost[~near] = (xx[~near] - aa[~near]) - aa[~near] * (np.log(xx[~near]) - np.log(aa[~near]))
-        result[large] = np.exp((0.5 * np.log(aa) - 0.9189385332046727) - _delta(1 / aa) - cost)
+        result[large] = np.exp(_large_log_factor(aa, xx))
 
         aa, xx = shape[other], coordinate[other]
         positive = aa > 0

@@ -550,10 +550,11 @@ kernels, shifted-normal identities and Chernoff bounds. The CDFLIB90 authorship
 and retained legal notice above apply; [legacy notes](docs/dcdflib-nc-chisq.md)
 document numerical methods and independent validation. No archived code is bundled.
 
-## STATTAB research evidence
+## STATTAB
 
-The STATTAB archive is currently represented by source inventory and native-session
-validation evidence; its Python application is not yet implemented. The archive's
+Three discrete probability terms are independently implemented through the existing
+beta/gamma factor kernels; the full STATTAB application workflow remains in progress.
+Source inventory and native-session validation evidence are retained. The archive's
 manual and source banner identify version 2.0 despite the download's 1.3 label.
 Authors include Barry W. Brown, David Gutierrez, James Lovato, Dan Serachitopol,
 Marty Spears and John Venier. Its exact archived

@@ -1,6 +1,8 @@
 # STATTAB source and workflow audit
 
-Catalog entry **23, STATTAB**, remains pending Python implementation. The pinned
+Catalog entry **23, STATTAB**, is partially implemented. Its
+[discrete probability terms](stattab-probability.md) are available; the application
+workflow and remaining responsibilities below are still pending. The pinned
 [archive inventory](stattab-archive.json) and [104 native sessions](../tests/fixtures/stattab.json)
 establish its application scope and defect evidence. They do not turn the existing
 CDFLIB90 library into a completed STATTAB application.
@@ -50,7 +52,7 @@ original native source and executables are not bundled in the Python wheel.
 | Tables | Batched results for a list at any supported input position, including complementary inputs and gamma's reordered parameters; reset table state between requests |
 | List editing | All eight source actions, capacity policy, pagination, linear/logarithmic sequences, deletions, sorting and duplicate handling; existing CDFLIB list support is a foundation, not application validation |
 | Extra probability columns | Two-sided normal/t probabilities; chi-square/F many-sided probabilities are their existing upper-tail columns, not extra density-ordered tests |
-| Discrete terms | Binomial, negative-binomial and Poisson individual probabilities, with an explicit consistent truncation policy; the manual only mentions binomial/Poisson but source also includes negative-binomial |
+| Discrete terms | [Implemented](stattab-probability.md): binomial, negative-binomial and Poisson individual probabilities with consistent truncation; the manual only mentions binomial/Poisson but source also includes negative-binomial |
 | Count inversions | Retain the continuous solution and the separate neighboring integer evaluations; binomial/negative-binomial have both count inversions, Poisson has its event-count inversion |
 | Gamma ordering | Input A is the rate and B the shape; the source swaps them before CDF evaluation and prints shape before rate; Python names and report labels must remove ambiguity |
 | Output/reporting | Structured results, source column meanings, formatted tables, per-session streams and report-file output; no silently printed invalid or uninitialized results |
@@ -61,8 +63,8 @@ original native source and executables are not bundled in the Python wheel.
 | Delivery | Python implementations, behavioral/numerical tests, relevant batching benchmarks, installed-wheel checks and full catalog metadata update |
 
 The completed CDFLIB90 kernels, lexer, console, list editor and formatting routines
-provide reusable foundations. STATTAB-specific mapping, result construction,
-state management and extra outputs still require implementation and tests.
+provide reusable foundations. STATTAB-specific workflow mapping, result construction,
+state management and remaining outputs still require implementation and tests.
 
 ## Native evidence and independent checks
 
@@ -131,4 +133,4 @@ The native tools require the pinned ignored archive and, for the inventory,
 its exact extraction under `research/raw/STATTAB/source`; the reference tool
 also requires gfortran. The committed fixture tests require neither original
 source nor a native compiler. This audit makes no performance claim and leaves
-STATTAB pending in the 138-entry conversion goal.
+the full STATTAB application unfinished in the 138-entry conversion goal.

@@ -209,6 +209,11 @@ from .single_study import SingleStudy, SingleStudySpecification
 from .single_two_allocation import SingleTwoSampleAllocation, single_optimize_two_sample_allocations
 from .single_two_sample import SingleTwoSamplePrecision, single_two_sample_precision
 from .single_uniform import SingleUniformCriterion, single_uniform_criterion
+from .stattab_probability import (
+    stattab_binomial_term,
+    stattab_negative_binomial_term,
+    stattab_poisson_term,
+)
 from .stukel import predict_stukel, stukel_log_odds, stukel_probability
 from .stukel_comparison import StukelComparison, compare_stukel, stukel_demo
 from .stukel_fit import StukelFit, StukelFitError, fit_stukel
@@ -223,6 +228,9 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "stattab_binomial_term",
+    "stattab_negative_binomial_term",
+    "stattab_poisson_term",
     "format_cdflib_array",
     "CDFNumberList",
     "CDFConsole",

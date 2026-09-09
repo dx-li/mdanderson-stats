@@ -113,7 +113,16 @@ def main():
         ),
         archive_sha256=ARCHIVE_SHA256,
         catalog_id=23,
-        status="pending_python_implementation",
+        status="partial_discrete_probability_terms",
+        implemented_scope={
+            "description": "Direct discrete terms; full application workflow remains pending",
+            "evidence": [
+                "src/mdanderson_stats/stattab_probability.py",
+                "tests/test_stattab_probability.py",
+                "docs/stattab-probability.md",
+                "docs/stattab-probability-benchmark.json",
+            ],
+        },
         version_reconciliation=(
             "Catalog/download directory says 1.3; manual and unchanged compiled program banner "
             "say Version 2.0: March, 2002. Pinned archive bytes define the reference."
@@ -128,6 +137,8 @@ def main():
         ),
         members=members,
     )
+    if any(not Path(p).is_file() for p in report["implemented_scope"]["evidence"]):
+        raise RuntimeError("Missing STATTAB discrete-probability evidence")
     Path("docs/stattab-archive.json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps({k: report[k] for k in ["regular_file_count", "role_counts"]}, indent=2))
 

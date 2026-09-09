@@ -1,0 +1,50 @@
+{
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scope": "Three-run medians; batching versus repeated same-Python calls, not native Fortran",
+  "cases": [
+    {
+      "function": "stattab_binomial_term",
+      "rows": 64,
+      "batch_seconds": 0.0006018751300871372,
+      "scalar_seconds": 0.01726029207929969,
+      "speedup": 28.677529966723842
+    },
+    {
+      "function": "stattab_negative_binomial_term",
+      "rows": 64,
+      "batch_seconds": 0.0005371253937482834,
+      "scalar_seconds": 0.016336292028427124,
+      "speedup": 30.414298446077396
+    },
+    {
+      "function": "stattab_poisson_term",
+      "rows": 64,
+      "batch_seconds": 0.0002487911842763424,
+      "scalar_seconds": 0.013516291975975037,
+      "speedup": 54.327857376819054
+    },
+    {
+      "function": "stattab_binomial_term",
+      "rows": 1024,
+      "batch_seconds": 0.0008080829866230488,
+      "scalar_seconds": 0.2737478748895228,
+      "speedup": 338.7620818914971
+    },
+    {
+      "function": "stattab_negative_binomial_term",
+      "rows": 1024,
+      "batch_seconds": 0.0007911659777164459,
+      "scalar_seconds": 0.2625567498616874,
+      "speedup": 331.86051632238895
+    },
+    {
+      "function": "stattab_poisson_term",
+      "rows": 1024,
+      "batch_seconds": 0.00030562467873096466,
+      "scalar_seconds": 0.2162379170767963,
+      "speedup": 707.5276707845516
+    }
+  ]
+}

@@ -541,4 +541,7 @@ repairs. The [legacy root finders](docs/dcdflib-root.md) complete all 49 legacy
 support mappings with independent search state and their distinct stopping rule.
 The [completion audit](docs/cdflib90-completion.md) verifies all public mappings,
 reconciles the manuals and marks CDFLIB90 implemented. The separate
-[STATTAB application](docs/stattab-research.md) remains pending.
+[STATTAB application](docs/stattab-research.md) is partially implemented. Its
+[discrete probability terms](docs/stattab-probability.md) provide vectorized
+binomial, negative-binomial and Poisson masses with consistent count truncation,
+small complementary chances and explicit degenerate boundaries.

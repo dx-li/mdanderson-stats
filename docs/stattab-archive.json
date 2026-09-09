@@ -2,7 +2,16 @@
   "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/STATTAB/STATTAB%20%20%20%20%20%20_V1.3.zip",
   "archive_sha256": "0325f15818176418774216e546e0f61267cfd228cef184e63101c68e2b7e76f9",
   "catalog_id": 23,
-  "status": "pending_python_implementation",
+  "status": "partial_discrete_probability_terms",
+  "implemented_scope": {
+    "description": "Direct discrete terms; full application workflow remains pending",
+    "evidence": [
+      "src/mdanderson_stats/stattab_probability.py",
+      "tests/test_stattab_probability.py",
+      "docs/stattab-probability.md",
+      "docs/stattab-probability-benchmark.json"
+    ]
+  },
   "version_reconciliation": "Catalog/download directory says 1.3; manual and unchanged compiled program banner say Version 2.0: March, 2002. Pinned archive bytes define the reference.",
   "regular_file_count": 34,
   "role_counts": {
