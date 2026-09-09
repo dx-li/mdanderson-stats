@@ -174,3 +174,8 @@ invalid-mode guard, C-only small-n process exits, wider search bounds and
 independently established false-success inversions. The separate
 [legacy Python interface](dcdflib-binomial.md) now implements all four modes with distinct count bounds and independent wide-domain validation;
 the prior F95 backup-source reconciliation is unchanged.
+
+The [legacy beta reference audit](dcdflib-beta-reference.md) records unchanged
+C/F77 ordinary behavior, wider shape bounds, ambiguous endpoints, small-target
+and large-shape false successes, and symmetric overflow timeouts. The separate
+legacy beta API remains pending, including the full two-small-shape domain.

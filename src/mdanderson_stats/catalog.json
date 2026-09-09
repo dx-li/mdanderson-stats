@@ -493,7 +493,10 @@
         "docs/dcdflib-binomial-reference.md",
         "tests/test_dcdflib_binomial.py",
         "docs/dcdflib-binomial.md",
-        "docs/dcdflib-binomial-benchmark.json"
+        "docs/dcdflib-binomial-benchmark.json",
+        "tests/fixtures/dcdflib_beta.json",
+        "tests/test_dcdflib_beta_reference.py",
+        "docs/dcdflib-beta-reference.md"
       ]
     },
     {

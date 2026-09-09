@@ -385,6 +385,19 @@ def main():
         raise RuntimeError("missing legacy negative-binomial implementation evidence")
     if any(not Path(path).is_file() for path in neg_binomial["legacy_reference_evidence"]):
         raise RuntimeError("missing legacy negative-binomial reference evidence")
+    beta = next(row for row in distributions if row["name"] == "beta")
+    beta["legacy_reference_evidence"] = [
+        "tools/reference_dcdflib_beta.py",
+        "tests/fixtures/dcdflib_beta.json",
+        "tests/test_dcdflib_beta_reference.py",
+        "docs/dcdflib-beta-reference.md",
+    ]
+    beta["legacy_review_notes"] = (
+        "Unchanged C/F77 contracts audited: wider shape bounds, endpoint ambiguities, "
+        "small-target and large-shape false successes, symmetric overflow timeout; API pending."
+    )
+    if any(not Path(path).is_file() for path in beta["legacy_reference_evidence"]):
+        raise RuntimeError("missing legacy beta reference evidence")
     binomial = next(row for row in distributions if row["name"] == "binomial")
     binomial["legacy_reference_evidence"] = [
         "tools/reference_dcdflib_binomial.py",

@@ -44,7 +44,14 @@
         "cdfbet",
         "cumbet"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "not_yet_independently_validated",
+      "legacy_reference_evidence": [
+        "tools/reference_dcdflib_beta.py",
+        "tests/fixtures/dcdflib_beta.json",
+        "tests/test_dcdflib_beta_reference.py",
+        "docs/dcdflib-beta-reference.md"
+      ],
+      "legacy_review_notes": "Unchanged C/F77 contracts audited: wider shape bounds, endpoint ambiguities, small-target and large-shape false successes, symmetric overflow timeout; API pending."
     },
     {
       "name": "binomial",
