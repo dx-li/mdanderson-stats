@@ -4,8 +4,8 @@
 families and all 42 supported computed groups. It connects the independently
 validated CDFLIB kernels to the application's parameter order, output columns,
 extra probabilities and neighboring integer rows. The [request/session layer](stattab-sessions.md) adds parsing and saved-value reuse.
-Console/list-editor integration, formatted reporting and complete reconciliation
-of the shared source versions remain unfinished.
+The [console application](stattab-console.md) adds list editing and reporting.
+Complete reconciliation of the shared source versions remains unfinished.
 
 ```python
 from mdanderson_stats import STATTAB_DISTRIBUTIONS, stattab_solve

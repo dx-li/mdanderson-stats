@@ -89,6 +89,7 @@ sampled checks are not a uniform error proof.
 with repeated calls to the same Python API, verify identical arrays and report
 three-run medians. They measure Python batching, not speed relative to Fortran.
 
-STATTAB remains **partial**. Its parameter/session workflow, tables, neighboring
-integer inverse rows, p-value columns, help/reporting and complete source-version
-reconciliation remain tracked in the [application audit](stattab-research.md).
+The [result](stattab-results.md), [session](stattab-sessions.md) and
+[console](stattab-console.md) layers implement the application workflow around
+these terms. STATTAB remains **partial** pending its final source/version
+reconciliation, tracked in the [application audit](stattab-research.md).

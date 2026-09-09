@@ -2,8 +2,8 @@
 
 `parse_stattab_request` and `STATTABSession` implement the application's positional
 request grammar and saved-parameter state. They connect requests to the validated
-[result layer](stattab-results.md). Console menus, help text, interactive list
-editing, file dialogs and formatted reports remain pending.
+[result layer](stattab-results.md). The [console application](stattab-console.md) adds menus, help text, interactive
+list editing, file dialogs and formatted reports.
 
 ```python
 from mdanderson_stats import CDFNumberList, STATTABSession

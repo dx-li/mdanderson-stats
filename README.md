@@ -548,9 +548,10 @@ small complementary chances and explicit degenerate boundaries.
 
 The [STATTAB result layer](docs/stattab-results.md) connects all twelve families
 and 42 computed groups to structured broadcast results, source column order,
-extra probabilities and neighboring integer rows. Interactive sessions and reports
-remain in progress.
+extra probabilities and neighboring integer rows.
 
 [STATTAB sessions](docs/stattab-sessions.md) now parse positional requests and
 reuse completed values safely, including table snapshots and tiny saved complements.
-Console dialogs and formatted reports remain pending.
+The [console application](docs/stattab-console.md) adds all eight list-editor actions,
+formula help and report-file dialogs. Run `python -m mdanderson_stats.stattab`
+after installation. Final source/version reconciliation remains pending.

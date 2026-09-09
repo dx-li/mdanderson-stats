@@ -209,11 +209,14 @@ from .single_study import SingleStudy, SingleStudySpecification
 from .single_two_allocation import SingleTwoSampleAllocation, single_optimize_two_sample_allocations
 from .single_two_sample import SingleTwoSamplePrecision, single_two_sample_precision
 from .single_uniform import SingleUniformCriterion, single_uniform_criterion
+from .stattab_console import STATTABRun, run_stattab
+from .stattab_files import STATTABFile, stattab_open_file, stattab_report_file_dialogue
 from .stattab_probability import (
     stattab_binomial_term,
     stattab_negative_binomial_term,
     stattab_poisson_term,
 )
+from .stattab_reporting import format_stattab_result, stattab_help
 from .stattab_results import (
     STATTAB_DISTRIBUTIONS,
     STATTABDistribution,
@@ -236,6 +239,13 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "STATTABFile",
+    "stattab_open_file",
+    "stattab_report_file_dialogue",
+    "STATTABRun",
+    "run_stattab",
+    "format_stattab_result",
+    "stattab_help",
     "STATTABRequest",
     "STATTABSession",
     "parse_stattab_request",

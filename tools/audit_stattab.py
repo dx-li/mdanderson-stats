@@ -78,7 +78,7 @@ def main():
                 )
             else:
                 row["cdflib90_comparison"] = dict(status="additional_stattab_source")
-            scope = "Native application/support evidence; Python STATTAB mapping pending"
+            scope = "Native evidence; final Python source mapping reconciliation pending"
         elif p.name in {"Makefile", "COMPILE.IT", "compile.stattab"}:
             role, scope = (
                 "build",
@@ -113,11 +113,12 @@ def main():
         ),
         archive_sha256=ARCHIVE_SHA256,
         catalog_id=23,
-        status="partial_sessions",
+        status="partial_console_application",
         implemented_scope={
             "description": (
-                "Discrete terms, all 42 numerical result groups and checked sessions; "
-                "console/reporting integration remains pending"
+                "Discrete terms, all 42 numerical groups, sessions, "
+                "console and file/report workflows; "
+                "final source/version reconciliation remains pending"
             ),
             "evidence": [
                 "src/mdanderson_stats/stattab_probability.py",
@@ -132,6 +133,13 @@ def main():
                 "tests/test_stattab_session.py",
                 "docs/stattab-sessions.md",
                 "docs/stattab-sessions-benchmark.json",
+                "src/mdanderson_stats/stattab_console.py",
+                "src/mdanderson_stats/stattab_reporting.py",
+                "src/mdanderson_stats/stattab_files.py",
+                "src/mdanderson_stats/stattab.py",
+                "tests/test_stattab_console.py",
+                "tests/test_stattab_files.py",
+                "docs/stattab-console.md",
             ],
         },
         version_reconciliation=(

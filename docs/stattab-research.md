@@ -3,8 +3,9 @@
 Catalog entry **23, STATTAB**, is partially implemented. Its
 [discrete probability terms](stattab-probability.md),
 [structured distribution results](stattab-results.md), and
-[requests and sessions](stattab-sessions.md) are available. Console/reporting
-integration and remaining responsibilities below are still pending. The pinned
+[requests and sessions](stattab-sessions.md), and
+[console/reporting application](stattab-console.md) are available. The final
+source/version completion audit and reconciliation below remain pending. The pinned
 [archive inventory](stattab-archive.json) and [104 native sessions](../tests/fixtures/stattab.json)
 establish its application scope and defect evidence. They do not turn the existing
 CDFLIB90 library into a completed STATTAB application.
@@ -45,21 +46,21 @@ original native source and executables are not bundled in the Python wheel.
 
 | Responsibility | Required Python behavior and current evidence |
 |---|---|
-| Twelve distributions | [Numerical result layer implemented](stattab-results.md) for all twelve source families; interactive workflows remain pending |
+| Twelve distributions | [Numerical result layer implemented](stattab-results.md) for all twelve source families; console selection and requests are implemented |
 | Computed parameters | Implemented: all 42 supported computed groups with named parameters and source-order columns; native sessions and independent target tests cover every group |
 | F/noncentral F df | Source explicitly rejects df inversion in this application; expose any additional legacy-library df API separately and document the distinction |
 | Complementary values | Implemented in numerical results: accept either member, preserve the smaller tail and calculate the paired output; positional omission syntax is implemented |
 | Parameter requests | Implemented: exactly one unknown (`?`), omitted complement (`.`), optional list selector (`T`), numeric formats, separators and comments |
 | Reuse | Implemented: defined last-row reuse within one selected distribution, saved tiny complements, no cross-call contamination and transactional failure handling |
-| Tables | Numerical batches implemented at every supported input position, including complements and gamma parameters; request-local T selection, bounded list snapshots and state reset implemented; interactive list-editor dialogue pending |
-| List editing | All eight source actions, capacity policy, pagination, linear/logarithmic sequences, deletions, sorting and duplicate handling; existing CDFLIB list support is a foundation, not application validation |
+| Tables | Numerical batches implemented at every supported input position, including complements and gamma parameters; request-local T selection, bounded list snapshots and state reset implemented; interactive list-editor dialogue implemented |
+| List editing | Implemented and tested through the application: all eight source actions, capacity policy, pagination, linear/logarithmic sequences, deletions, sorting and duplicate handling |
 | Extra probability columns | Implemented for forward results: two-sided normal/t probabilities; chi-square/F many-sided probabilities are their existing upper-tail columns |
 | Discrete terms | [Implemented](stattab-probability.md): binomial, negative-binomial and Poisson individual probabilities with consistent truncation; the manual only mentions binomial/Poisson but source also includes negative-binomial |
 | Count inversions | Implemented for all five count inversions: continuous solution plus separate floor/floor+1 rows, explicit invalid masks and compact valid outputs |
 | Gamma ordering | Implemented named rate/shape inputs and source-order result columns; source A is rate and B is shape |
-| Output/reporting | Structured results and source column meanings implemented; formatted tables, per-session streams and report-file output pending |
-| File I/O | `open_file` and `report_file_dialogue`, including read/write selection, existing-file/append/new-file policies, errors and caller ownership |
-| Help and examples | Distribution/parameter help, annotated manual workflow and report examples |
+| Output/reporting | Implemented: structured/source-order results, bounded formatted tables, caller-owned streams and optionally owned report files |
+| File I/O | Implemented as stattab_open_file and stattab_report_file_dialogue: read/create/overwrite/append, cancel/retry/confirmation, errors and explicit stream ownership |
+| Help and examples | Implemented distribution/parameter/formula help and annotated console/report examples; final manual reconciliation remains pending |
 | Failures | Checked invalid input, finite arithmetic, well-defined numerical failures and resource limits; no process STOP or stale answers |
 | Public support | Reconcile all changed shared modules and the added descriptor/file-I/O interfaces; retain justified replacements explicitly |
 | Delivery | Python implementations, behavioral/numerical tests, relevant batching benchmarks, installed-wheel checks and full catalog metadata update |
@@ -67,8 +68,8 @@ original native source and executables are not bundled in the Python wheel.
 The completed CDFLIB90 kernels, lexer, console, list editor and formatting routines
 provide reusable foundations. The numerical result layer adds application parameter
 mapping and extra outputs. The request/session layer adds checked parsing and
-transactional reuse. Console integration and remaining output responsibilities
-still require implementation and tests.
+transactional reuse. The console layer integrates menus, list editing, help, output
+and file dialogs; full shared-source/version reconciliation remains required.
 
 ## Native evidence and independent checks
 

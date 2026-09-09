@@ -2,9 +2,9 @@
   "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/STATTAB/STATTAB%20%20%20%20%20%20_V1.3.zip",
   "archive_sha256": "0325f15818176418774216e546e0f61267cfd228cef184e63101c68e2b7e76f9",
   "catalog_id": 23,
-  "status": "partial_sessions",
+  "status": "partial_console_application",
   "implemented_scope": {
-    "description": "Discrete terms, all 42 numerical result groups and checked sessions; console/reporting integration remains pending",
+    "description": "Discrete terms, all 42 numerical groups, sessions, console and file/report workflows; final source/version reconciliation remains pending",
     "evidence": [
       "src/mdanderson_stats/stattab_probability.py",
       "tests/test_stattab_probability.py",
@@ -17,7 +17,14 @@
       "src/mdanderson_stats/stattab_session.py",
       "tests/test_stattab_session.py",
       "docs/stattab-sessions.md",
-      "docs/stattab-sessions-benchmark.json"
+      "docs/stattab-sessions-benchmark.json",
+      "src/mdanderson_stats/stattab_console.py",
+      "src/mdanderson_stats/stattab_reporting.py",
+      "src/mdanderson_stats/stattab_files.py",
+      "src/mdanderson_stats/stattab.py",
+      "tests/test_stattab_console.py",
+      "tests/test_stattab_files.py",
+      "docs/stattab-console.md"
     ]
   },
   "version_reconciliation": "Catalog/download directory says 1.3; manual and unchanged compiled program banner say Version 2.0: March, 2002. Pinned archive bytes define the reference.",
@@ -126,7 +133,7 @@
         "sha256": "2b0cfd2020e5221bc97edf80d1204ea074f7d82d0427dd912c96c357bcc7ba61"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/biomath_file_io_mod.f90",
@@ -151,7 +158,7 @@
         "status": "additional_stattab_source"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/biomath_interface_mod.f90",
@@ -208,7 +215,7 @@
         "sha256": "3ede16fa9d9b4e5e157a7eae1fc36d1f321863f9f74dcf56d4893655de564ed9"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/biomath_mathlib_mod.f90",
@@ -261,7 +268,7 @@
         "sha256": "be776a552418b614d1fa37f19111adebdbbfc56cd057893845a84f8a04601609"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/biomath_sort_mod.f90",
@@ -288,7 +295,7 @@
         "sha256": "ab3d0939124dcdeadfbbe8950ae7b1207258ece5feb120da5c84da645d0530dc"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/biomath_strings_mod.f90",
@@ -322,7 +329,7 @@
         "sha256": "c66814a0eec34c25283f0c71da41fc93969fc2cc0dba7f26146952adce70b8aa"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_aux_mod.f90",
@@ -348,7 +355,7 @@
         "sha256": "62aa44bf1319c6ef5ba02df10e24fca6c9f31d21d7f4bd5e5c6a1820721ff8da"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_beta_mod.f90",
@@ -376,7 +383,7 @@
         "sha256": "c73c3b081815cc1795d9f820c24c24f0aaeb50f50978ab522e1406a2c43b6099"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_binomial_mod.f90",
@@ -404,7 +411,7 @@
         "sha256": "f3122ed01df9f327f8f432dbeced3d826ab67d3b0fb1239fe9c2cac869642fad"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_chisq_mod.f90",
@@ -432,7 +439,7 @@
         "sha256": "572b5d26dbd452ea4cf74689bbb2943dbe8f2b0ee0fb28e31f4ab01654cf9b7b"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_f_mod.f90",
@@ -460,7 +467,7 @@
         "sha256": "8b7f97c3f1446c80b6af0809e5d2b9a05f091e3266d03f910288832dc9765d92"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_gamma_mod.f90",
@@ -489,7 +496,7 @@
         "sha256": "e3d3851278421b194b897f17aed26267c4ac408460e30ed27d79afe96b195d7f"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_nc_chisq_mod.f90",
@@ -519,7 +526,7 @@
         "sha256": "11f92499fae67e3b817930084cbb83da0c39887c0f33891e50372a970710f916"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_nc_f_mod.f90",
@@ -548,7 +555,7 @@
         "sha256": "34be5e1366fd609929ae8628bd6e0c790286b96a8533405658ea4461f2ec1da0"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_nc_t_mod.f90",
@@ -576,7 +583,7 @@
         "sha256": "3af14474847efbd23382eb7bb380ecfa6013b9ca527649264398f593d1c57faa"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_neg_binomial_mod.f90",
@@ -604,7 +611,7 @@
         "sha256": "f2d30c706264a4af776d55409996a0d6cdc25ecfaaf8e058072b49fa7bca060e"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_normal_mod.f90",
@@ -633,7 +640,7 @@
         "sha256": "f5e66f66150f8983ab2cbd2d71463064ca85287a4634fb57a2d5d90dc4d9e985"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_poisson_mod.f90",
@@ -660,7 +667,7 @@
         "sha256": "d74bd82c9733b667a883028b565c62b18b507312ec3a904ee58df9d8e44adb58"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/cdf_t_mod.f90",
@@ -689,7 +696,7 @@
         "sha256": "360fb24b24b91c4d86711983558cc0e6db6d4eb065dd6518c9472b89d6eda848"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/COMPILE.IT",
@@ -728,7 +735,7 @@
         "status": "additional_stattab_source"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/stattab_main.f90",
@@ -762,7 +769,7 @@
         "status": "additional_stattab_source"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/SOURCE/zero_finder.f90",
@@ -812,7 +819,7 @@
         "sha256": "18300a0ebbcd15d7b1f96277a256fa6997349f3e0ee953b33db38be819470827"
       },
       "role": "source",
-      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+      "scope": "Native evidence; final Python source mapping reconciliation pending"
     },
     {
       "path": "stattab13/WIN32/stattab.exe",

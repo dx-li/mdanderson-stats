@@ -557,7 +557,10 @@ beta/gamma factor kernels. Its structured numerical result layer maps all twelve
 distributions and 42 computed groups to the existing validated CDFLIB APIs, with
 source columns, extra probabilities and neighboring count rows. The
 STATTAB request/session layer adds checked positional parsing and isolated saved
-values. Console dialogs and reporting remain in progress.
+values. The console layer supplies distribution/formula help, list editing,
+formatted reports and file selection. Python streams replace Fortran unit numbers;
+optional confirmation occurs before file creation or truncation. Final shared-source
+reconciliation remains in progress.
 Source inventory and native-session validation evidence are retained. The archive's
 manual and source banner identify version 2.0 despite the download's 1.3 label.
 Authors include Barry W. Brown, David Gutierrez, James Lovato, Dan Serachitopol,

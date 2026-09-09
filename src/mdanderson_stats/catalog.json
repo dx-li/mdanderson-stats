@@ -716,9 +716,10 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Vectorized binomial, negative-binomial and Poisson individual probabilities with consistent count truncation, explicit complementary chances, degenerate boundaries, direct stable factors and independent subnormal/huge-count validation; full STATTAB application workflow remains pending",
-        "Structured vectorized results for all twelve STATTAB distributions and 42 supported computed groups, source-ordered columns, explicit gamma rate/shape mapping, forward extra probabilities, five continuous count inversions with valid neighboring integer rows, zero-mean Poisson forward extension and noncentral-t root brackets; interactive workflow and full source reconciliation remain pending",
-        "Checked positional requests and transactional STATTAB sessions: all 42 groups, question/dot/table/reuse grammar, exact help/menu commands, bounded list snapshots, last-row reuse, tiny complementary-pair preservation and isolated state; console/reporting and full source reconciliation remain pending"
+        "Vectorized binomial, negative-binomial and Poisson individual probabilities with consistent count truncation, explicit complementary chances, degenerate boundaries, direct stable factors and independent subnormal/huge-count validation",
+        "Structured vectorized results for all twelve STATTAB distributions and 42 supported computed groups, source-ordered columns, explicit gamma rate/shape mapping, forward extra probabilities, five continuous count inversions with valid neighboring integer rows, zero-mean Poisson forward extension and noncentral-t root brackets",
+        "Checked positional requests and transactional STATTAB sessions: all 42 groups, question/dot/table/reuse grammar, exact help/menu commands, bounded list snapshots, last-row reuse, tiny complementary-pair preservation and isolated state",
+        "Terminal/stream STATTAB application with twelve-distribution menu and formula help, all eight list-editor actions, bounded formatted result/neighbor tables, request reports, clean EOF with partial-list preservation, explicit file read/create/append/overwrite/cancel outcomes, pre-open confirmation and owned report cleanup; final shared-source/version completion audit remains pending"
       ],
       "validation": [
         "docs/stattab-research.md",
@@ -741,7 +742,14 @@
         "tests/test_stattab_session.py",
         "docs/stattab-sessions.md",
         "tools/benchmark_stattab_sessions.py",
-        "docs/stattab-sessions-benchmark.json"
+        "docs/stattab-sessions-benchmark.json",
+        "src/mdanderson_stats/stattab_console.py",
+        "src/mdanderson_stats/stattab_reporting.py",
+        "src/mdanderson_stats/stattab_files.py",
+        "src/mdanderson_stats/stattab.py",
+        "tests/test_stattab_console.py",
+        "tests/test_stattab_files.py",
+        "docs/stattab-console.md"
       ]
     },
     {
