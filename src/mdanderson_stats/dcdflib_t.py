@@ -7,7 +7,7 @@ from numpy.typing import ArrayLike, NDArray
 from scipy.special import betaln, gammaln
 
 from ._cdflib import _freeze
-from ._dcdflib import _invert_df, _probability_pair
+from ._dcdflib import _invert_positive, _probability_pair
 from ._validation import FloatArray, finite
 from .cdflib_beta import _quantiles, _tails
 from .dcdflib_f import _positive
@@ -133,7 +133,7 @@ def cdft(
             def evaluate(value: FloatArray, indices: NDArray[np.intp]) -> FloatArray:
                 return _small_tail(fixed[indices], value)
 
-            degrees = _invert_df(
+            degrees = _invert_positive(
                 target,
                 np.full(pp.shape, 1e-100),
                 np.full(pp.shape, 1e10),

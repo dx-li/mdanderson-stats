@@ -1,4 +1,4 @@
-"""Shared probability validation and vectorized legacy df inversion."""
+"""Shared probability validation and vectorized legacy parameter inversion."""
 
 from collections.abc import Callable
 
@@ -9,13 +9,14 @@ from ._cdflib import _pair
 from ._validation import FloatArray, finite
 
 
-def _invert_df(
+def _invert_positive(
     target: FloatArray,
     low: FloatArray,
     high: FloatArray,
     evaluate: Callable[[FloatArray, NDArray[np.intp]], FloatArray],
     *,
     probability_atol: FloatArray | float = 0.0,
+    initial: FloatArray | float = 5.0,
     unbracketed_message: str = "df root is not bracketed; multiple roots may require df_bracket",
 ) -> FloatArray:
     """Find a crossing; evaluate receives values and original flattened row indices.
@@ -25,12 +26,13 @@ def _invert_df(
     The caller verifies the final probability against the requested tail.
     """
     probability_atol = np.broadcast_to(probability_atol, target.shape).ravel()
+    initial = np.broadcast_to(initial, target.shape).ravel()
     shape = target.shape
     target, low, high = target.ravel(), low.ravel(), high.ravel()
     indices = np.arange(target.size, dtype=np.intp)
     at_low, at_high = evaluate(low, indices), evaluate(high, indices)
     if np.any(at_low == at_high):
-        raise ValueError("df is numerically unidentified across this bracket")
+        raise ValueError("parameter is numerically unidentified across this bracket")
     adjusted = target.copy()
     for endpoint in (at_low, at_high):
         adjusted = np.where(
@@ -47,10 +49,10 @@ def _invert_df(
     active = ~resolved
     indices, adjusted = indices[active], adjusted[active]
     low, high, at_low = low[active], high[active], at_low[active]
-    # Establish a local crossing from the legacy initial value of five.
+    # Establish a local crossing from the supplied initial value (normally five).
     # Huge log-midpoints can reach ill-conditioned beta parameters even
     # when the desired df is ordinary and nearby.
-    current = np.clip(np.full(low.shape, 5.0), low, high)
+    current = np.clip(initial[active], low, high)
     current_residual = evaluate(current, indices) - adjusted
     left = np.signbit(current_residual) != np.signbit(at_low - adjusted)
     found = current_residual == 0
@@ -68,7 +70,7 @@ def _invert_df(
         found |= crossed
         current, current_residual = trial, residual
     if not np.all(found):
-        raise ArithmeticError("legacy df search could not isolate a crossing")
+        raise ArithmeticError("legacy parameter search could not isolate a crossing")
     lo, hi = np.log(bracket_low), np.log(bracket_high)
     residual_low = evaluate(bracket_low, indices) - adjusted
     best, error = bracket_low.copy(), np.abs(residual_low)

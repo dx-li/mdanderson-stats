@@ -7,7 +7,7 @@ from numpy.typing import ArrayLike, NDArray
 from scipy.stats import ncf
 
 from ._cdflib import _freeze
-from ._dcdflib import _invert_df
+from ._dcdflib import _invert_positive
 from ._validation import FloatArray, finite
 from .cdflib_nc_f import _invert_noncentrality, _refine_quantiles, _tails, _verify
 from .dcdflib_f import _coordinate, _positive, cdff
@@ -119,7 +119,7 @@ def cdffnc(
                 )
                 return np.where(lower[indices], lp, uq)
 
-            value = _invert_df(
+            value = _invert_positive(
                 np.minimum(pp, qq), low, high, evaluate, probability_atol=probability_atol
             )
             if which == 3:

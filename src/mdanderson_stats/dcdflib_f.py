@@ -6,7 +6,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 from ._cdflib import _freeze
-from ._dcdflib import _invert_df as _search_df
+from ._dcdflib import _invert_positive as _search_df
 from ._dcdflib import _probability_pair
 from ._validation import FloatArray, finite
 from .cdflib_beta import _quantiles
