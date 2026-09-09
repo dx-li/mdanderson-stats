@@ -431,7 +431,8 @@
         "F95 algdiv, bcorr and gsumln foundations with stable gamma ratios, negative shifts, subnormal Stirling corrections and preserved close sums",
         "F95 betaln, log_beta and continuous log_bicoef with stable large shapes, fractional domains, tiny endpoints and factored near-origin series",
         "F95 rcomp gamma scaling factor with stable huge centers, subnormal signed shapes and explicit reciprocal-gamma continuation",
-        "F95 grat1 and gratio incomplete-gamma support with explicit r/accuracy contracts, stable tiny shapes, huge centers and subnormal-tail recovery"
+        "F95 grat1 and gratio incomplete-gamma support with explicit r/accuracy contracts, stable tiny shapes, huge centers and subnormal-tail recovery",
+        "F95 brcomp and brcmp1 beta factors with compensated large-shape centers, full exponential scaling and Gamma-defined signed values"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -568,7 +569,10 @@
         "docs/cdflib-incomplete-gamma.md",
         "docs/cdflib-incomplete-gamma-benchmark.json",
         "tests/test_cdflib_beta_factors_reference.py",
-        "docs/cdflib-beta-factors-reference.md"
+        "docs/cdflib-beta-factors-reference.md",
+        "tests/test_cdflib_beta_factors.py",
+        "docs/cdflib-beta-factors.md",
+        "docs/cdflib-beta-factors-benchmark.json"
       ]
     },
     {

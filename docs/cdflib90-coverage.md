@@ -104,7 +104,7 @@ F95 support also has an explicit public surface:
 
 | Module | Public/support scope and status |
 |---|---|
-| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), [three gamma-ratio helpers](cdflib-gamma-ratios.md), [three beta/combinatorial helpers](cdflib-beta-support.md), the [gamma scaling factor](cdflib-gamma-factor.md), and [two incomplete-gamma helpers](cdflib-incomplete-gamma.md) implemented; remaining default-public numerical procedures and imported constants still open |
+| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), [three gamma-ratio helpers](cdflib-gamma-ratios.md), [three beta/combinatorial helpers](cdflib-beta-support.md), the [gamma scaling factor](cdflib-gamma-factor.md), [two incomplete-gamma helpers](cdflib-incomplete-gamma.md), and [two beta factors](cdflib-beta-factors.md) implemented; remaining default-public numerical procedures and imported constants still open |
 | `zero_finder` | Direct and reverse-communication interval/step solvers, setup, final-state reporting, bounds and solver-state type |
 | `biomath_constants_mod` | Default-public kind and numeric constants |
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
@@ -239,4 +239,5 @@ implements `gratio` and `grat1` with independent tail checks and subnormal recov
 The [beta-factor audit](cdflib-beta-factors-reference.md) records 149 unchanged
 F95 calls to `brcomp`, `brcmp1` and `bup`. Independent checks expose intermediate
 overflow, premature subnormal rounding, shape-sum overflow and a valid large-shift
-timeout. These three public helpers remain pending implementation.
+timeout. The [beta-factor port](cdflib-beta-factors.md) implements `brcomp` and
+`brcmp1`; `bup` remains pending implementation.

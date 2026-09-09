@@ -477,3 +477,6 @@ including huge centers, tiny signed shapes and real reciprocal-gamma continuatio
 
 The [CDFLIB incomplete-gamma support](docs/cdflib-incomplete-gamma.md) adds
 `grat1` and `gratio`, with explicit source contracts and subnormal-tail repairs.
+
+The [CDFLIB beta scaling factors](docs/cdflib-beta-factors.md) add `brcomp` and
+`brcmp1`, including compensated large-shape centers and complete exponential scaling.

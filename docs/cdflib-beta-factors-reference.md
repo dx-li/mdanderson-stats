@@ -1,8 +1,9 @@
 # CDFLIB beta factors and shape-shift audit
 
 The unchanged F95 `brcomp`, `brcmp1` and `bup` routines now have 149 recorded
-native cases and independent mathematical checks. These three public support
-interfaces remain pending implementation. CDFLIB90 remains partial.
+native cases and independent mathematical checks. The
+[beta-factor port](cdflib-beta-factors.md) implements `brcomp` and `brcmp1`;
+`bup` remains pending implementation. CDFLIB90 remains partial.
 
 | Procedure | Source operation |
 |---|---|

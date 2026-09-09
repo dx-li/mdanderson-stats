@@ -1,0 +1,94 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same API; not native timing",
+  "cases": [
+    {
+      "operation": "ordinary",
+      "size": 64,
+      "batch_seconds": 0.0006795409135520458,
+      "scalar_seconds": 0.04257358284667134,
+      "speedup": 62.650507125662045
+    },
+    {
+      "operation": "tiny_shapes",
+      "size": 64,
+      "batch_seconds": 0.000767790712416172,
+      "scalar_seconds": 0.05017695762217045,
+      "speedup": 65.35238940865517
+    },
+    {
+      "operation": "large_center",
+      "size": 64,
+      "batch_seconds": 0.000295999925583601,
+      "scalar_seconds": 0.016670082695782185,
+      "speedup": 56.317861103900704
+    },
+    {
+      "operation": "scaled_tiny",
+      "size": 64,
+      "batch_seconds": 0.000780290924012661,
+      "scalar_seconds": 0.04995995806530118,
+      "speedup": 64.02734740060943
+    },
+    {
+      "operation": "scaled_large",
+      "size": 64,
+      "batch_seconds": 0.000314958393573761,
+      "scalar_seconds": 0.016484083142131567,
+      "speedup": 52.337335592458544
+    },
+    {
+      "operation": "negative_shape",
+      "size": 64,
+      "batch_seconds": 0.0006714579649269581,
+      "scalar_seconds": 0.04000187525525689,
+      "speedup": 59.574652986070895
+    },
+    {
+      "operation": "ordinary",
+      "size": 256,
+      "batch_seconds": 0.0007275003008544445,
+      "scalar_seconds": 0.16707358323037624,
+      "speedup": 229.65431496612356
+    },
+    {
+      "operation": "tiny_shapes",
+      "size": 256,
+      "batch_seconds": 0.0008207503706216812,
+      "scalar_seconds": 0.1982562500052154,
+      "speedup": 241.55487112975078
+    },
+    {
+      "operation": "large_center",
+      "size": 256,
+      "batch_seconds": 0.00041241711005568504,
+      "scalar_seconds": 0.06803837511688471,
+      "speedup": 164.97466632191396
+    },
+    {
+      "operation": "scaled_tiny",
+      "size": 256,
+      "batch_seconds": 0.000827333889901638,
+      "scalar_seconds": 0.22472949977964163,
+      "speedup": 271.6309612390709
+    },
+    {
+      "operation": "scaled_large",
+      "size": 256,
+      "batch_seconds": 0.000371541827917099,
+      "scalar_seconds": 0.07393949991092086,
+      "speedup": 199.00720283751943
+    },
+    {
+      "operation": "negative_shape",
+      "size": 256,
+      "batch_seconds": 0.0007065841928124428,
+      "scalar_seconds": 0.16457983385771513,
+      "speedup": 232.92317537225398
+    }
+  ]
+}
