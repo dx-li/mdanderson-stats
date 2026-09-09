@@ -550,3 +550,7 @@ The [STATTAB result layer](docs/stattab-results.md) connects all twelve families
 and 42 computed groups to structured broadcast results, source column order,
 extra probabilities and neighboring integer rows. Interactive sessions and reports
 remain in progress.
+
+[STATTAB sessions](docs/stattab-sessions.md) now parse positional requests and
+reuse completed values safely, including table snapshots and tiny saved complements.
+Console dialogs and formatted reports remain pending.

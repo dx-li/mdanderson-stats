@@ -1,0 +1,36 @@
+{
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scope": "Three-run medians; same-Python session batching, not native Fortran",
+  "cases": [
+    {
+      "distribution": "normal",
+      "rows": 100,
+      "batch_seconds": 0.0001410418190062046,
+      "scalar_seconds": 0.0077817076817154884,
+      "speedup": 55.17305247866352
+    },
+    {
+      "distribution": "normal",
+      "rows": 1000,
+      "batch_seconds": 0.00017508305609226227,
+      "scalar_seconds": 0.07217224966734648,
+      "speedup": 412.21721437918234
+    },
+    {
+      "distribution": "poisson",
+      "rows": 100,
+      "batch_seconds": 0.000580791849642992,
+      "scalar_seconds": 0.03922545909881592,
+      "speedup": 67.53789524237898
+    },
+    {
+      "distribution": "poisson",
+      "rows": 1000,
+      "batch_seconds": 0.0007239999249577522,
+      "scalar_seconds": 0.39220874989405274,
+      "speedup": 541.7248488208606
+    }
+  ]
+}

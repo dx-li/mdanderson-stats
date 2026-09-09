@@ -1,9 +1,10 @@
 # STATTAB source and workflow audit
 
 Catalog entry **23, STATTAB**, is partially implemented. Its
-[discrete probability terms](stattab-probability.md) and
-[structured distribution results](stattab-results.md) are available; the interactive application
-workflow and remaining responsibilities below are still pending. The pinned
+[discrete probability terms](stattab-probability.md),
+[structured distribution results](stattab-results.md), and
+[requests and sessions](stattab-sessions.md) are available. Console/reporting
+integration and remaining responsibilities below are still pending. The pinned
 [archive inventory](stattab-archive.json) and [104 native sessions](../tests/fixtures/stattab.json)
 establish its application scope and defect evidence. They do not turn the existing
 CDFLIB90 library into a completed STATTAB application.
@@ -47,10 +48,10 @@ original native source and executables are not bundled in the Python wheel.
 | Twelve distributions | [Numerical result layer implemented](stattab-results.md) for all twelve source families; interactive workflows remain pending |
 | Computed parameters | Implemented: all 42 supported computed groups with named parameters and source-order columns; native sessions and independent target tests cover every group |
 | F/noncentral F df | Source explicitly rejects df inversion in this application; expose any additional legacy-library df API separately and document the distinction |
-| Complementary values | Implemented in numerical results: accept either member, preserve the smaller tail and calculate the paired output; interactive omission syntax remains pending |
-| Parameter requests | Exactly one unknown (`?`), omitted complement (`.`), optional list selector (`T`), numeric formats, separators and comments |
-| Reuse | `=` must refer to a defined previous value of the same distribution; preserve completed values without cross-call contamination |
-| Tables | Numerical batches implemented at every supported input position, including complements and gamma parameters; interactive list selection and state reset remain pending |
+| Complementary values | Implemented in numerical results: accept either member, preserve the smaller tail and calculate the paired output; positional omission syntax is implemented |
+| Parameter requests | Implemented: exactly one unknown (`?`), omitted complement (`.`), optional list selector (`T`), numeric formats, separators and comments |
+| Reuse | Implemented: defined last-row reuse within one selected distribution, saved tiny complements, no cross-call contamination and transactional failure handling |
+| Tables | Numerical batches implemented at every supported input position, including complements and gamma parameters; request-local T selection, bounded list snapshots and state reset implemented; interactive list-editor dialogue pending |
 | List editing | All eight source actions, capacity policy, pagination, linear/logarithmic sequences, deletions, sorting and duplicate handling; existing CDFLIB list support is a foundation, not application validation |
 | Extra probability columns | Implemented for forward results: two-sided normal/t probabilities; chi-square/F many-sided probabilities are their existing upper-tail columns |
 | Discrete terms | [Implemented](stattab-probability.md): binomial, negative-binomial and Poisson individual probabilities with consistent truncation; the manual only mentions binomial/Poisson but source also includes negative-binomial |
@@ -65,8 +66,9 @@ original native source and executables are not bundled in the Python wheel.
 
 The completed CDFLIB90 kernels, lexer, console, list editor and formatting routines
 provide reusable foundations. The numerical result layer adds application parameter
-mapping and extra outputs. Interactive state management and remaining output
-responsibilities still require implementation and tests.
+mapping and extra outputs. The request/session layer adds checked parsing and
+transactional reuse. Console integration and remaining output responsibilities
+still require implementation and tests.
 
 ## Native evidence and independent checks
 

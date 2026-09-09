@@ -717,7 +717,8 @@
       "status": "partial",
       "implemented_features": [
         "Vectorized binomial, negative-binomial and Poisson individual probabilities with consistent count truncation, explicit complementary chances, degenerate boundaries, direct stable factors and independent subnormal/huge-count validation; full STATTAB application workflow remains pending",
-        "Structured vectorized results for all twelve STATTAB distributions and 42 supported computed groups, source-ordered columns, explicit gamma rate/shape mapping, forward extra probabilities, five continuous count inversions with valid neighboring integer rows, zero-mean Poisson forward extension and noncentral-t root brackets; interactive workflow and full source reconciliation remain pending"
+        "Structured vectorized results for all twelve STATTAB distributions and 42 supported computed groups, source-ordered columns, explicit gamma rate/shape mapping, forward extra probabilities, five continuous count inversions with valid neighboring integer rows, zero-mean Poisson forward extension and noncentral-t root brackets; interactive workflow and full source reconciliation remain pending",
+        "Checked positional requests and transactional STATTAB sessions: all 42 groups, question/dot/table/reuse grammar, exact help/menu commands, bounded list snapshots, last-row reuse, tiny complementary-pair preservation and isolated state; console/reporting and full source reconciliation remain pending"
       ],
       "validation": [
         "docs/stattab-research.md",
@@ -735,7 +736,12 @@
         "tests/test_stattab_results.py",
         "docs/stattab-results.md",
         "tools/benchmark_stattab_results.py",
-        "docs/stattab-results-benchmark.json"
+        "docs/stattab-results-benchmark.json",
+        "src/mdanderson_stats/stattab_session.py",
+        "tests/test_stattab_session.py",
+        "docs/stattab-sessions.md",
+        "tools/benchmark_stattab_sessions.py",
+        "docs/stattab-sessions-benchmark.json"
       ]
     },
     {

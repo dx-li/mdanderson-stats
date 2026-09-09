@@ -3,8 +3,8 @@
 `stattab_solve` implements the numerical result layer for all twelve STATTAB
 families and all 42 supported computed groups. It connects the independently
 validated CDFLIB kernels to the application's parameter order, output columns,
-extra probabilities and neighboring integer rows. The interactive parser, list
-editor integration, session reuse, formatted reporting and complete reconciliation
+extra probabilities and neighboring integer rows. The [request/session layer](stattab-sessions.md) adds parsing and saved-value reuse.
+Console/list-editor integration, formatted reporting and complete reconciliation
 of the shared source versions remain unfinished.
 
 ```python

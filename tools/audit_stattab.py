@@ -113,11 +113,11 @@ def main():
         ),
         archive_sha256=ARCHIVE_SHA256,
         catalog_id=23,
-        status="partial_numerical_result_layer",
+        status="partial_sessions",
         implemented_scope={
             "description": (
-                "Discrete terms and all 42 numerical result groups; "
-                "interactive application remains pending"
+                "Discrete terms, all 42 numerical result groups and checked sessions; "
+                "console/reporting integration remains pending"
             ),
             "evidence": [
                 "src/mdanderson_stats/stattab_probability.py",
@@ -128,6 +128,10 @@ def main():
                 "tests/test_stattab_results.py",
                 "docs/stattab-results.md",
                 "docs/stattab-results-benchmark.json",
+                "src/mdanderson_stats/stattab_session.py",
+                "tests/test_stattab_session.py",
+                "docs/stattab-sessions.md",
+                "docs/stattab-sessions-benchmark.json",
             ],
         },
         version_reconciliation=(
