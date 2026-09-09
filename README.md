@@ -558,3 +558,10 @@ after installation. The [shared-source audit](docs/stattab-shared-source.md) com
 259 public imports and reconciles all nineteen shared modules. The
 [completion audit](docs/stattab-completion.md) covers all 34 archive files and
 25 manual pages, including worked examples and documented corrections.
+
+## SPPCR source audit
+
+The [SPPCR audit](docs/sppcr-research.md) identifies misplaced SOGS documentation,
+rebuilds all 27 sources and checks interior allele-frequency fits independently.
+SPPCR remains pending: its boundary policies, resampling, input formats and full
+analysis workflow still require Python implementation.

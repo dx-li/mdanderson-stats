@@ -1,0 +1,514 @@
+{
+  "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SPPCR/SPPCR%20%20%20_V1zip.zip",
+  "archive_sha256": "98e0937e26a5209421144c20178a2bd9c77d3baad7a3b28606d0f0f6555e2c98",
+  "catalog_id": 26,
+  "status": "source_audited_python_implementation_pending",
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "flags": [
+    "gfortran",
+    "-std=legacy",
+    "-O0",
+    "-ffp-contract=off",
+    "-fcheck=all"
+  ],
+  "source_order": [
+    "accumulate_mod.f90",
+    "print_it.f90",
+    "banner.f90",
+    "zero_finder.f90",
+    "cdf_aux_mod.f90",
+    "cdf_normal_mod.f90",
+    "print_array_mod.f90",
+    "structures_mod.f90",
+    "data_in_struct_mod.f90",
+    "ecuyer_cote_mod.f90",
+    "file_mod.f90",
+    "sppcr_aux_mod.f90",
+    "fit_freq_mod.f90",
+    "fit_mu_mod.f90",
+    "random_standard_uniform_mod.f90",
+    "random_binomial_mod.f90",
+    "resize_mod.f90",
+    "generate_mod.f90",
+    "get_numbers_mod.f90",
+    "set_seeds_mod.f90",
+    "one_data_set_mod.f90",
+    "open_file_mod.f90",
+    "phrase_to_seed.f90",
+    "qlex_mod.f90",
+    "results_out_mod.f90",
+    "problem_in_mod.f90",
+    "sppcr.f90"
+  ],
+  "compile_diagnostics": "clang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\nclang: warning: overriding deployment version from '16.0' to '26.0' [-Woverriding-deployment-version]\n",
+  "members": [
+    {
+      "path": "sppcr/EXAMPLE/bwb.rep",
+      "size": 5627,
+      "sha256": "169bf58dc3ce60f3b3f1178433290aa5013ef6b1d0681968fd491ce2310a5094",
+      "role": "foreign_sogs_documentation_or_example"
+    },
+    {
+      "path": "sppcr/EXAMPLE/readme",
+      "size": 1019,
+      "sha256": "a226db7537f57726c43d5f85e9fe22431e966129373795f5ffa20e0180e138af",
+      "role": "foreign_sogs_documentation_or_example"
+    },
+    {
+      "path": "sppcr/EXAMPLE/test.in",
+      "size": 586,
+      "sha256": "cceb00fb7077f4080ae136e79b2d645d4ba1399f6c8d4e36e5f544d85fa1b568",
+      "role": "foreign_sogs_documentation_or_example"
+    },
+    {
+      "path": "sppcr/EXAMPLE/test.out",
+      "size": 6966,
+      "sha256": "74285391f807409547f8a583445d24e769e6ca4ab81220bf4223228c8195a48c",
+      "role": "foreign_sogs_documentation_or_example"
+    },
+    {
+      "path": "sppcr/HOWTOGET",
+      "size": 1386,
+      "sha256": "8710c712fe305d6edabffbff696dc760b57dfdd447ebdac4198897ea8adc4c09",
+      "role": "acquisition_build_or_legal_document"
+    },
+    {
+      "path": "sppcr/INSTALL",
+      "size": 1329,
+      "sha256": "98819ac6528fa80d152bc43fcace1ec5e5161863f17f1d550f36cd5333409710",
+      "role": "acquisition_build_or_legal_document"
+    },
+    {
+      "path": "sppcr/Legal.doc",
+      "size": 2482,
+      "sha256": "d8e71aea2f0b912ea38e9c904735cce3faf7d9311e563f1d89f8c7552e9b16b0",
+      "role": "acquisition_build_or_legal_document"
+    },
+    {
+      "path": "sppcr/docs/doc.ps",
+      "size": 85316,
+      "sha256": "617305afd332607c03ce2ea1ea375558b81322a6ed7156d156fbcc2316f08bb3",
+      "role": "foreign_sogs_documentation_or_example"
+    },
+    {
+      "path": "sppcr/docs/doc.tex",
+      "size": 15413,
+      "sha256": "dcf8854a5a7480d24b13a7febbda2532742d515fa9c51519fe30cc57e6b9676e",
+      "role": "foreign_sogs_documentation_or_example"
+    },
+    {
+      "path": "sppcr/docs/doc.txt",
+      "size": 16211,
+      "sha256": "c63f075063d7d8dab6d407fe725b6175e581aaee129066ff4990e4aea1ac280f",
+      "role": "foreign_sogs_documentation_or_example"
+    },
+    {
+      "path": "sppcr/powermac/sppcr-1.0-PPC.sea.hqx",
+      "size": 1152408,
+      "sha256": "979da137e2d5e720b8bd447da82ee36355b547bef752220c55b994d6a0709e80",
+      "role": "historical_binary"
+    },
+    {
+      "path": "sppcr/readme",
+      "size": 911,
+      "sha256": "e844f16116d23b631e0a1264653f66a5206203ccd28950417ef5d50237ccb743",
+      "role": "foreign_sogs_documentation_or_example"
+    },
+    {
+      "path": "sppcr/source/Makefile",
+      "size": 2330,
+      "sha256": "d3be26342b8a65e23fae734c1113ca0bc28c13928beb3775ab212ebd6ac22125",
+      "role": "build"
+    },
+    {
+      "path": "sppcr/source/accumulate_mod.f90",
+      "size": 1944,
+      "sha256": "9efbc0923374d5f563aec63bb2e4ca6061185bed29ad7501c58cf26267849cf5",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/banner.f90",
+      "size": 1022,
+      "sha256": "7c4446868fdb079dc8e16116f46bfe239ff4b712deeaa6533aba1a1602e722e9",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/cdf_aux_mod.f90",
+      "size": 26707,
+      "sha256": "d33e600f340887282c12e5710cb8bb51486854aa61c33151dcfa7e46d1d3a727",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/cdf_normal_mod.f90",
+      "size": 23882,
+      "sha256": "54df4c9dc752a3867c00bc3da7bf2e9930e476d33c234485a9cdf46fec381f2f",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/compile.sppcr",
+      "size": 1721,
+      "sha256": "d938035213cdc25de14d569b2590f64c6df47630443559921ee77b7fe3f73fee",
+      "role": "build"
+    },
+    {
+      "path": "sppcr/source/data_in_struct_mod.f90",
+      "size": 3222,
+      "sha256": "f6aaa2785690c4df270014f7679e668570b902e11ad4b5697133d24dd702fb7a",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/ecuyer_cote_mod.f90",
+      "size": 16902,
+      "sha256": "61de4b11fb1a523573a2ce1a7f6d3ab4386cd87e9ecc25914775aa453001b205",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/file_mod.f90",
+      "size": 2950,
+      "sha256": "c1037f2d3c52d2b824ad904e85f30e7cfdb0708561a9e5cc455199beb5e6eaad",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/fit_freq_mod.f90",
+      "size": 4557,
+      "sha256": "fbd7306e5bddab062f49652da8f901b1e4f2cd4311d17fa138a7f74553e610b0",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/fit_mu_mod.f90",
+      "size": 8495,
+      "sha256": "cc1604983a3814c634f1c8c7dd2b18da3071ebf90e975aee51bd8c5b397d569d",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/generate_mod.f90",
+      "size": 5059,
+      "sha256": "6d3c6708b7185be046e8c85438ce6ecb652cdf315f2f33978cdfba297488853e",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/get_numbers_mod.f90",
+      "size": 29773,
+      "sha256": "73f312e821a00d90df4680ef8ae7d4293f0a6f3dcc55fb1b7c35162581e99c28",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/one_data_set_mod.f90",
+      "size": 7145,
+      "sha256": "4975c8d0e843ad61470419374bfe9cb34d9c409e81ee010da8ca9a9ad4aefc15",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/open_file_mod.f90",
+      "size": 32428,
+      "sha256": "4ba95dec1751e283d8e14b429f9ed3bb836a7a959e62fb73aea4cf26c36360bf",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/phrase_to_seed.f90",
+      "size": 2298,
+      "sha256": "054d4d96b868b4ce6a131a9ff8e5e473ee7c25d4d3a69b34353c03778a1a0c79",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/print_array_mod.f90",
+      "size": 14147,
+      "sha256": "0175cf63b011858958cb3d7fcb149f787a2e2204a1fe0d90e14a1e45ab57b826",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/print_it.f90",
+      "size": 21231,
+      "sha256": "4e90e92c9430bd71e7baf95ddccfd3569766fd2b1c2d3e9ae717749a866ee9e9",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/problem_in_mod.f90",
+      "size": 30580,
+      "sha256": "fc24daea43b0b48cd77c579b8307a508319005adf3e0f1c5beebfdae4f181ff0",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/qlex_mod.f90",
+      "size": 37624,
+      "sha256": "1cd1df8407030a63538edf5283b493e24fde9bcf28470c81ea9eae68490010dc",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/random_binomial_mod.f90",
+      "size": 10957,
+      "sha256": "2599954570bd44e2cc05c735dc6a97c5fdc3da9d35a2735948892556eb8ab239",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/random_standard_uniform_mod.f90",
+      "size": 1478,
+      "sha256": "983fb8224149c4d86cd0cfad792b4443a97eecf44ea868e0017fdf10afe57135",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/resize_mod.f90",
+      "size": 6440,
+      "sha256": "c86b2963cdb1f8ca41888265b5c713007c35490e0ba48fe906e78abbe13ef886",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/results_out_mod.f90",
+      "size": 14593,
+      "sha256": "420c66a437c3faa4a6370ee477a50f6c517aa538cdbe896109346e110cc03f69",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/set_seeds_mod.f90",
+      "size": 3713,
+      "sha256": "b43aae4b0a246f3f5e468c327dfa9a5eee53d354509c88d93daccefe6bb4ab41",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/sppcr.f90",
+      "size": 7398,
+      "sha256": "e3dce85f758c9d07d1b7099fbf1516ea14bad549360f8c35f642f330d3ead507",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/sppcr_aux_mod.f90",
+      "size": 1963,
+      "sha256": "e0a8ffb4b893858edab7959343d49c6d0ba18a604425121f58d29bdf8940adfd",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/structures_mod.f90",
+      "size": 3645,
+      "sha256": "b10ea0115e6fd353f9825a97c3c918cdcebbab9608b513f0edd4a7bbc7d1f7f3",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/source/zero_finder.f90",
+      "size": 41498,
+      "sha256": "8954729dafe5a2f227a361c4c1ba218d955f8c9c87c0cf3f4c564980508c5119",
+      "role": "source"
+    },
+    {
+      "path": "sppcr/win32/sppcr.exe",
+      "size": 606624,
+      "sha256": "e27baf8d32ee35c7fd154c1e78ce8542dcac06243576dc50d672957cbb984795",
+      "role": "historical_binary"
+    }
+  ],
+  "driver": "program probe\nuse structures_mod\nuse one_data_set_mod, only: fit_one, modify_data\nimplicit none\ninteger :: i,j\nread(*,*) n_dna,n_allele\ncall initialize\nread(*,*) dna\nread(*,*) n_well\nread(*,*) progenitor\nread(*,*) seen(:,:,data)\ndo j=1,n_allele\n unseen(:,j,data)=n_well-seen(:,j,data)\nend do\ncall modify_data(seen(:,:,data),unseen(:,:,data),seen(:,:,shrink),unseen(:,:,shrink))\ndo j=1,n_allele\n write(*,'(A,I4,100ES25.16E3)') 'adjusted_seen ',j,seen(:,j,shrink)\nend do\ncall fit_one(.false.,.false.,-1)\ndo j=1,n_allele\n write(*,'(A,I4,100ES25.16E3)') 'mu ',j,mu(j,data,init_est:sd)\n write(*,'(A,I4,100ES25.16E3)') 'frequency ',j,freq(j,data,untrans,est:sd)\nend do\nwrite(*,'(A,100ES25.16E3)') 'calibration ',calibrate(data,est:sd)\nwrite(*,'(A,100ES25.16E3)') 'mutant ',mutant(data,untrans,est:sd)\nend program\n",
+  "startup": {
+    "returncode": 0,
+    "stdout": "\n\n                                     SPPCR\n                           Version 1.0: January 2003\n\n                       Estimates Allele Frequencies from\n                           Small Pool PCR Experiments\n\n                                 Barry W. Brown\n\n     This work supported by grants CA95567 and CA16672 from the National\n     Cancer Institute.\n\n     Copyright 2003 for:\n                    The University of Texas, M.D. Anderson Cancer Center\n                    Department of Biomathematics, Box 237\n                    1515 Holcombe Boulevard\n                    Houston, TX      77030\n     Contact: BWB at above address or bwb@mdanderson.org\n\n     This program may be freely  copied and distributed; it can be obtained\n     from\n                    http://odin.mdacc.tmc.edu/anonftp/\n\n Press the Return or Enter key to continue ...\n\n          What do you want to do?\n\n          (0) Exit this program\n\n          (1) Read data extracted from a filemaker file.\n              (See the documentation for the format)\n\n          (2) Read data from a 'batch' input file\n              (See the documentation for the format)\n\n          (3) Interactively enter a data set.\n\n          (4) Generate random data from parameters that you specify.\n\n > ",
+    "stderr": "STOP User specified program exit\n"
+  },
+  "cases": {
+    "single_level": {
+      "dna": [
+        1
+      ],
+      "wells": [
+        20
+      ],
+      "seen": [
+        [
+          6,
+          10
+        ]
+      ],
+      "progenitor": [
+        1,
+        1
+      ],
+      "stdin": "1 2\n1\n20\n1 1\n6 10\n",
+      "stdout": "adjusted_seen    1  6.0000000000000000E+000\nadjusted_seen    2  1.0000000000000000E+001\nmu    1  3.5667494393873245E-001  3.5667494393873234E-001  2.1428571428571418E-002  1.4638501094227993E-001\nfrequency    1  3.3974797788630678E-001  1.3712446093541128E-002  1.1710015411407931E-001\nmu    2  6.9314718055994529E-001  6.9314718055994529E-001  5.0000000000000003E-002  2.2360679774997896E-001\nfrequency    2  6.6025202211369316E-001  1.3712446093541128E-002  1.1710015411407931E-001\ncalibration   1.0498221244986776E+000  7.1428571428571425E-002  2.6726124191242440E-001\nmutant   6.6025202211369316E-001  1.3712446093541128E-002  1.1710015411407931E-001\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    "scaled_dna": {
+      "dna": [
+        0.25
+      ],
+      "wells": [
+        20
+      ],
+      "seen": [
+        [
+          6,
+          10
+        ]
+      ],
+      "progenitor": [
+        1,
+        1
+      ],
+      "stdin": "1 2\n0.25\n20\n1 1\n6 10\n",
+      "stdout": "adjusted_seen    1  6.0000000000000000E+000\nadjusted_seen    2  1.0000000000000000E+001\nmu    1  1.4266997757549298E+000  1.4266997757549293E+000  3.4285714285714269E-001  5.8554004376911972E-001\nfrequency    1  3.3974797788630678E-001  1.3712446093541128E-002  1.1710015411407931E-001\nmu    2  2.7725887222397811E+000  2.7725887222397811E+000  8.0000000000000004E-001  8.9442719099991586E-001\nfrequency    2  6.6025202211369316E-001  1.3712446093541128E-002  1.1710015411407931E-001\ncalibration   4.1992884979947105E+000  1.1428571428571428E+000  1.0690449676496976E+000\nmutant   6.6025202211369316E-001  1.3712446093541128E-002  1.1710015411407931E-001\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    "heterozygous": {
+      "dna": [
+        1
+      ],
+      "wells": [
+        20
+      ],
+      "seen": [
+        [
+          6,
+          10,
+          2
+        ]
+      ],
+      "progenitor": [
+        1,
+        2
+      ],
+      "stdin": "1 3\n1\n20\n1 2\n6 10 2\n",
+      "stdout": "adjusted_seen    1  6.0000000000000000E+000\nadjusted_seen    2  1.0000000000000000E+001\nadjusted_seen    3  2.0000000000000000E+000\nmu    1  3.5667494393873245E-001  3.5667494393873234E-001  2.1428571428571418E-002  1.4638501094227993E-001\nfrequency    1  3.0876065094815663E-001  1.1641609906741467E-002  1.0789629236790979E-001\nmu    2  6.9314718055994529E-001  6.9314718055994529E-001  5.0000000000000003E-002  2.2360679774997896E-001\nfrequency    2  6.0003254590636668E-001  1.3274441568756708E-002  1.1521476280736209E-001\nmu    3  1.0536051565782628E-001  1.0536051565782631E-001  5.5555555555555575E-003  7.4535599249993006E-002\nfrequency    3  9.1206803145476703E-002  3.8836711275692178E-003  6.2319107243037568E-002\ncalibration   1.1551826401565040E+000  7.6984126984126988E-002  2.7746013584680412E-001\nmutant   9.1206803145476731E-002  3.8836711275692217E-003  6.2319107243037603E-002\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    "two_levels_exact_model": {
+      "dna": [
+        1,
+        2
+      ],
+      "wells": [
+        100,
+        100
+      ],
+      "seen": [
+        [
+          20,
+          50
+        ],
+        [
+          36,
+          75
+        ]
+      ],
+      "progenitor": [
+        1,
+        1
+      ],
+      "stdin": "2 2\n1 2\n100 100\n1 1\n20 36 50 75\n",
+      "stdout": "adjusted_seen    1  2.0000000000000000E+001  3.6000000000000000E+001\nadjusted_seen    2  5.0000000000000000E+001  7.5000000000000000E+001\nmu    1  2.2314355131420971E-001  2.2314355131420976E-001  8.9999999999999987E-004  2.9999999999999999E-002\nfrequency    1  2.4352920263396996E-001  9.1615555598730772E-004  3.0268061648994104E-002\nmu    2  6.9314718055994529E-001  6.9314718055994529E-001  4.2857142857142859E-003  6.5465367070797711E-002\nfrequency    2  7.5647079736602996E-001  9.1615555598730772E-004  3.0268061648994104E-002\ncalibration   9.1629073187415511E-001  5.1857142857142857E-003  7.2011903777877487E-002\nmutant   7.5647079736603007E-001  9.1615555598730750E-004  3.0268061648994100E-002\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    "partly_saturated": {
+      "dna": [
+        1,
+        2
+      ],
+      "wells": [
+        20,
+        20
+      ],
+      "seen": [
+        [
+          10,
+          5
+        ],
+        [
+          20,
+          10
+        ]
+      ],
+      "progenitor": [
+        1,
+        1
+      ],
+      "stdin": "2 2\n1 2\n20 20\n1 1\n10 20 5 10\n",
+      "stdout": "adjusted_seen    1  9.5000000000000000E+000  2.0000000000000000E+001\nadjusted_seen    2  5.0000000000000000E+000  1.0000000000000000E+001\nmu    1  2.6247636011893021E+000  1.0596174233697591E+000  4.9689733005542330E-002  2.2291194002462572E-001\nfrequency    1  7.6581699914815493E-001  3.6243034194418347E-003  6.0202187829362437E-002\nmu    2  3.1712783136587674E-001  3.2402569835306588E-001  7.1845189884945223E-003  8.4761541919047945E-002\nfrequency    2  2.3418300085184507E-001  3.6243034194418343E-003  6.0202187829362430E-002\ncalibration   1.3836431217228249E+000  5.6874251994036853E-002  2.3848323210246219E-001\nmutant   2.3418300085184504E-001  3.6243034194418347E-003  6.0202187829362437E-002\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    "negative_adjustment": {
+      "dna": [
+        1,
+        2
+      ],
+      "wells": [
+        20,
+        20
+      ],
+      "seen": [
+        [
+          0,
+          5
+        ],
+        [
+          20,
+          10
+        ]
+      ],
+      "progenitor": [
+        1,
+        1
+      ],
+      "stdin": "2 2\n1 2\n20 20\n1 1\n0 20 5 10\n",
+      "stdout": "adjusted_seen    1 -5.0000000000000000E-001  2.0000000000000000E+001\nadjusted_seen    2  5.0000000000000000E+000  1.0000000000000000E+001\nmu    1  2.2902387866988598E+000  5.2983157404968662E-001  1.5823652222671153E-002  1.2579209920607554E-001\nfrequency    1  6.2051538491760072E-001  6.9198410801868263E-003  8.3185582165341762E-002\nmu    2  3.1712783136587674E-001  3.2402569835306588E-001  7.1845189884945223E-003  8.4761541919047945E-002\nfrequency    2  3.7948461508239928E-001  6.9198410801868263E-003  8.3185582165341762E-002\ncalibration   8.5385727240275244E-001  2.3008171211165676E-002  1.5168444617417329E-001\nmutant   3.7948461508239922E-001  6.9198410801868263E-003  8.3185582165341762E-002\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    "fully_saturated": {
+      "dna": [
+        1,
+        2
+      ],
+      "wells": [
+        20,
+        20
+      ],
+      "seen": [
+        [
+          20,
+          5
+        ],
+        [
+          20,
+          10
+        ]
+      ],
+      "progenitor": [
+        1,
+        1
+      ],
+      "stdin": "2 2\n1 2\n20 20\n1 1\n20 20 5 10\n",
+      "stdout": "adjusted_seen    1  1.9500000000000000E+001  2.0000000000000000E+001\nadjusted_seen    2  5.0000000000000000E+000  1.0000000000000000E+001\nmu    1  4.1470248200510138E+000  3.7344804727973298E+000  1.8707806477886271E+000  1.3677648364352064E+000\nfrequency    1  9.2016133900291208E-001  1.0932757904343364E-003  3.3064721236301636E-002\nmu    2  3.1712783136587674E-001  3.2402569835306588E-001  7.1845189884945223E-003  8.4761541919047945E-002\nfrequency    2  7.9838660997087960E-002  1.0932757904343385E-003  3.3064721236301671E-002\ncalibration   4.0585061711503956E+000  1.8779651667771216E+000  1.3703886918597663E+000\nmutant   7.9838660997087946E-002  1.0932757904343364E-003  3.3064721236301636E-002\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    "never_seen": {
+      "dna": [
+        1,
+        2
+      ],
+      "wells": [
+        20,
+        20
+      ],
+      "seen": [
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          10
+        ]
+      ],
+      "progenitor": [
+        1,
+        1
+      ],
+      "stdin": "2 2\n1 2\n20 20\n1 1\n0 0 5 10\n",
+      "stdout": "adjusted_seen    1  0.0000000000000000E+000  0.0000000000000000E+000\nadjusted_seen    2  5.0000000000000000E+000  1.0000000000000000E+001\nmu    1  0.0000000000000000E+000  1.6669445061882754E-004  0.0000000000000000E+000  0.0000000000000000E+000\nfrequency    1  5.1418372028170839E-004  1.8072935621988765E-008  1.3443561887382661E-004\nmu    2  3.1712783136587674E-001  3.2402569835306588E-001  7.1845189884945223E-003  8.4761541919047945E-002\nfrequency    2  9.9948581627971822E-001  1.8072935621992074E-008  1.3443561887383892E-004\ncalibration   3.2419239280368473E-001  7.1845189884945223E-003  8.4761541919047945E-002\nmutant   9.9948581627971822E-001  1.8072935621992074E-008  1.3443561887383892E-004\n",
+      "stderr": "",
+      "returncode": 0
+    }
+  },
+  "limits": "Successful compilation and exit are not correctness proofs. Foreign SOGS examples and invalid native fits must not be used as SPPCR correctness oracles."
+}

@@ -570,3 +570,12 @@ Marty Spears and John Venier. Its exact archived
 algorithm notices and warranty terms, is retained. Original Fortran source and
 platform executables are not bundled in the Python package. These notices do not
 replace the original terms with a different license.
+
+## SPPCR source audit
+
+The SPPCR 1.0 (January 2003) source, by Barry W. Brown, was compiled to establish
+numerical reference evidence. Independent mathematical checks and source analysis
+are provided; no Python SPPCR implementation is claimed yet. The archive includes
+misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
+Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native
+source and historical binaries are not bundled in the Python package.

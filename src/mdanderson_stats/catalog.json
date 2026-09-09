@@ -878,7 +878,12 @@
       "retrieval_error": null,
       "status": "pending",
       "implemented_features": [],
-      "validation": []
+      "validation": [
+        "docs/sppcr-research.md",
+        "tools/reference_sppcr.py",
+        "tests/fixtures/sppcr.json",
+        "tests/test_sppcr_reference.py"
+      ]
     },
     {
       "id": 27,
