@@ -205,3 +205,9 @@ The [elementary support port](cdflib-elementary.md) implements `alnrel`, `rexp`,
 `rlog`, `rlog1` and `evaluate_polynomial`, with unchanged F95 evidence and
 800-digit checks, including a native subnormal-remainder repair. The mathematical
 module remains partial.
+
+The [error-function/exponential reference audit](cdflib-error-exponential-reference.md)
+records 134 unchanged F95 calls to `erf`, `erfc1`, `esum` and `exparg`, with
+independent defining-function checks. It identifies premature tail cutoff,
+intermediate overflow, subnormal double-rounding and the actual normal-range
+threshold contract. These four Python interfaces are still pending.

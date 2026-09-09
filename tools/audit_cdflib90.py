@@ -570,6 +570,7 @@ def main():
             "python_interfaces": ["alnrel", "rexp", "rlog", "rlog1", "evaluate_polynomial"],
             "status": "partial",
             "remaining_scope": "Other mathematical procedures and imported constants",
+            "reference_audited_public_names": ["erf", "erfc1", "esum", "exparg"],
             "evidence": [
                 "src/mdanderson_stats/cdflib_elementary.py",
                 "tools/reference_cdflib_elementary.py",
@@ -577,6 +578,10 @@ def main():
                 "tests/test_cdflib_elementary.py",
                 "docs/cdflib-elementary.md",
                 "docs/cdflib-elementary-benchmark.json",
+                "tools/reference_cdflib_error_exponential.py",
+                "tests/fixtures/cdflib_error_exponential.json",
+                "tests/test_cdflib_error_exponential_reference.py",
+                "docs/cdflib-error-exponential-reference.md",
             ],
         }
     )

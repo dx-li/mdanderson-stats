@@ -531,7 +531,10 @@
         "tests/fixtures/cdflib_elementary.json",
         "tests/test_cdflib_elementary.py",
         "docs/cdflib-elementary.md",
-        "docs/cdflib-elementary-benchmark.json"
+        "docs/cdflib-elementary-benchmark.json",
+        "tests/fixtures/cdflib_error_exponential.json",
+        "tests/test_cdflib_error_exponential_reference.py",
+        "docs/cdflib-error-exponential-reference.md"
       ]
     },
     {

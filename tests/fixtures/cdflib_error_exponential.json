@@ -1,0 +1,961 @@
+{
+  "archive_sha256": "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b",
+  "source_sha256": {
+    "biomath_constants_mod.f90": "2b0cfd2020e5221bc97edf80d1204ea074f7d82d0427dd912c96c357bcc7ba61",
+    "biomath_mathlib_mod.f90": "be776a552418b614d1fa37f19111adebdbbfc56cd057893845a84f8a04601609"
+  },
+  "command": [
+    "gfortran",
+    "-O0",
+    "-ffp-contract=off",
+    "-fcheck=all",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/CDFLIB90/source/CDFLIB90/source/cdflib90_1.2/source/biomath_constants_mod.f90",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/CDFLIB90/source/CDFLIB90/source/cdflib90_1.2/source/biomath_mathlib_mod.f90",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/reference/cdflib-error-exponential/driver.f90",
+    "-o",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/reference/cdflib-error-exponential/reference"
+  ],
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "driver": "program reference\nuse biomath_mathlib_mod\nimplicit none\ninteger mode,ind\nreal(8) x,value\nread(*,*) mode,ind,x\nselect case(mode)\ncase(1)\n value=erf(x)\ncase(2)\n value=erfc1(ind,x)\ncase(3)\n value=esum(ind,x)\ncase(4)\n value=exparg(ind)\nend select\nwrite(*,'(ES26.17E3)') value\nend program reference\n",
+  "adaptations": [],
+  "cases": [
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": -1e+308,
+      "execution_outcome": "completed",
+      "result": -1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": -1e+308,
+      "execution_outcome": "completed",
+      "result": 2.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": -1e+308,
+      "execution_outcome": "completed",
+      "result": "inf"
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": -1e+308,
+      "execution_outcome": "completed",
+      "result": "inf"
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": -30.0,
+      "execution_outcome": "completed",
+      "result": -1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": -30.0,
+      "execution_outcome": "completed",
+      "result": 2.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": -30.0,
+      "execution_outcome": "completed",
+      "result": "inf"
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": -30.0,
+      "execution_outcome": "completed",
+      "result": "inf"
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": -27.0,
+      "execution_outcome": "completed",
+      "result": -1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": -27.0,
+      "execution_outcome": "completed",
+      "result": 2.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": -27.0,
+      "execution_outcome": "completed",
+      "result": "inf"
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": -27.0,
+      "execution_outcome": "completed",
+      "result": "inf"
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": -26.0,
+      "execution_outcome": "completed",
+      "result": -1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": -26.0,
+      "execution_outcome": "completed",
+      "result": 2.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": -26.0,
+      "execution_outcome": "completed",
+      "result": 7.657724931490568e+293
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": -26.0,
+      "execution_outcome": "completed",
+      "result": 7.657724931490568e+293
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": -5.8,
+      "execution_outcome": "completed",
+      "result": -1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": -5.8,
+      "execution_outcome": "completed",
+      "result": 2.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": -5.8,
+      "execution_outcome": "completed",
+      "result": 814134889859113.6
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": -5.8,
+      "execution_outcome": "completed",
+      "result": 814134889859113.6
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": -5.6,
+      "execution_outcome": "completed",
+      "result": -0.9999999999999976
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": -5.6,
+      "execution_outcome": "completed",
+      "result": 2.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": -5.6,
+      "execution_outcome": "completed",
+      "result": 83273141368680.52
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": -5.6,
+      "execution_outcome": "completed",
+      "result": 83273141368680.52
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": -4.0,
+      "execution_outcome": "completed",
+      "result": -0.9999999845827421
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": -4.0,
+      "execution_outcome": "completed",
+      "result": 1.999999984582742
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": -4.0,
+      "execution_outcome": "completed",
+      "result": 17772220.904016286
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": -4.0,
+      "execution_outcome": "completed",
+      "result": 17772220.904016286
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": -0.5,
+      "execution_outcome": "completed",
+      "result": -0.5204998778130469
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": -0.5,
+      "execution_outcome": "completed",
+      "result": 1.5204998778130467
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": -0.5,
+      "execution_outcome": "completed",
+      "result": 1.9523604891825572
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": -0.5,
+      "execution_outcome": "completed",
+      "result": 1.9523604891825572
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": -1e-10,
+      "execution_outcome": "completed",
+      "result": -1.1283791670955131e-10
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": -1e-10,
+      "execution_outcome": "completed",
+      "result": 1.000000000112838
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": -1e-10,
+      "execution_outcome": "completed",
+      "result": 1.000000000112838
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": -1e-10,
+      "execution_outcome": "completed",
+      "result": 1.000000000112838
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": -5e-324,
+      "execution_outcome": "completed",
+      "result": -5e-324
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": -5e-324,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": -5e-324,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": -5e-324,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 0.0,
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 0.0,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 0.0,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 0.0,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 5e-324,
+      "execution_outcome": "completed",
+      "result": 5e-324
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 5e-324,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 5e-324,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 5e-324,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 1e-10,
+      "execution_outcome": "completed",
+      "result": 1.1283791670955131e-10
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 1e-10,
+      "execution_outcome": "completed",
+      "result": 0.999999999887162
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 1e-10,
+      "execution_outcome": "completed",
+      "result": 0.999999999887162
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 1e-10,
+      "execution_outcome": "completed",
+      "result": 0.999999999887162
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 0.5,
+      "execution_outcome": "completed",
+      "result": 0.5204998778130469
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 0.5,
+      "execution_outcome": "completed",
+      "result": 0.47950012218695315
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 0.5,
+      "execution_outcome": "completed",
+      "result": 0.6156903441929255
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 0.5,
+      "execution_outcome": "completed",
+      "result": 0.6156903441929255
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 4.0,
+      "execution_outcome": "completed",
+      "result": 0.9999999845827421
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 4.0,
+      "execution_outcome": "completed",
+      "result": 1.5417257900280007e-08
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 4.0,
+      "execution_outcome": "completed",
+      "result": 0.13699945762506127
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 4.0,
+      "execution_outcome": "completed",
+      "result": 0.13699945762506127
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 5.6,
+      "execution_outcome": "completed",
+      "result": 0.9999999999999976
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 5.6,
+      "execution_outcome": "completed",
+      "result": 2.3828362845830272e-15
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 5.6,
+      "execution_outcome": "completed",
+      "result": 0.09921313139225192
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 5.6,
+      "execution_outcome": "completed",
+      "result": 0.09921313139225192
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 5.8,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 5.8,
+      "execution_outcome": "completed",
+      "result": 2.355589375156434e-16
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 5.8,
+      "execution_outcome": "completed",
+      "result": 0.09588837482481409
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 5.8,
+      "execution_outcome": "completed",
+      "result": 0.09588837482481409
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 26.0,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 26.0,
+      "execution_outcome": "completed",
+      "result": 5.66319240885614e-296
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 26.0,
+      "execution_outcome": "completed",
+      "result": 0.021683584850562897
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 26.0,
+      "execution_outcome": "completed",
+      "result": 0.021683584850562897
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 26.6,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 26.6,
+      "execution_outcome": "completed",
+      "result": 1.08851258854424e-309
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 26.6,
+      "execution_outcome": "completed",
+      "result": 0.021195178159166467
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 26.6,
+      "execution_outcome": "completed",
+      "result": 0.021195178159166467
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 26.7,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 26.7,
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 26.7,
+      "execution_outcome": "completed",
+      "result": 0.021115906641710213
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 26.7,
+      "execution_outcome": "completed",
+      "result": 0.021115906641710213
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 27.0,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 27.0,
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 27.0,
+      "execution_outcome": "completed",
+      "result": 0.020881607990420933
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 27.0,
+      "execution_outcome": "completed",
+      "result": 0.020881607990420933
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 27.2,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 27.2,
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 27.2,
+      "execution_outcome": "completed",
+      "result": 0.020728274352347843
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 27.2,
+      "execution_outcome": "completed",
+      "result": 0.020728274352347843
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 27.3,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 27.3,
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 27.3,
+      "execution_outcome": "completed",
+      "result": 0.020652448329847545
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 27.3,
+      "execution_outcome": "completed",
+      "result": 0.020652448329847545
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 28.0,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 28.0,
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 28.0,
+      "execution_outcome": "completed",
+      "result": 0.02013680196421427
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 28.0,
+      "execution_outcome": "completed",
+      "result": 0.02013680196421427
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 30.0,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 30.0,
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 30.0,
+      "execution_outcome": "completed",
+      "result": 0.018795888861416744
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 30.0,
+      "execution_outcome": "completed",
+      "result": 0.018795888861416744
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 100.0,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 100.0,
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 100.0,
+      "execution_outcome": "completed",
+      "result": 0.0056416137829894296
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 100.0,
+      "execution_outcome": "completed",
+      "result": 0.0056416137829894296
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 1e+154,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 1e+154,
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 1e+154,
+      "execution_outcome": "completed",
+      "result": 5.64189583547756e-155
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 1e+154,
+      "execution_outcome": "completed",
+      "result": 5.64189583547756e-155
+    },
+    {
+      "mode": 1,
+      "ind": 0,
+      "x": 1e+308,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 2,
+      "ind": 0,
+      "x": 1e+308,
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "ind": 1,
+      "x": 1e+308,
+      "execution_outcome": "completed",
+      "result": 5.64189583547756e-309
+    },
+    {
+      "mode": 2,
+      "ind": -2,
+      "x": 1e+308,
+      "execution_outcome": "completed",
+      "result": 5.64189583547756e-309
+    },
+    {
+      "mode": 3,
+      "ind": 0,
+      "x": 0.0,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 3,
+      "ind": 1,
+      "x": 0.25,
+      "execution_outcome": "completed",
+      "result": 3.490342957461841
+    },
+    {
+      "mode": 3,
+      "ind": -1,
+      "x": -0.25,
+      "execution_outcome": "completed",
+      "result": 0.2865047968601901
+    },
+    {
+      "mode": 3,
+      "ind": 700,
+      "x": -699.5,
+      "execution_outcome": "completed",
+      "result": 1.6487212707001282
+    },
+    {
+      "mode": 3,
+      "ind": -700,
+      "x": 699.5,
+      "execution_outcome": "completed",
+      "result": 0.6065306597126334
+    },
+    {
+      "mode": 3,
+      "ind": 1000,
+      "x": -999.5,
+      "execution_outcome": "completed",
+      "result": "nan"
+    },
+    {
+      "mode": 3,
+      "ind": 1000,
+      "x": -1000.5,
+      "execution_outcome": "completed",
+      "result": 0.6065306597126334
+    },
+    {
+      "mode": 3,
+      "ind": -1000,
+      "x": 999.5,
+      "execution_outcome": "completed",
+      "result": "nan"
+    },
+    {
+      "mode": 3,
+      "ind": -1000,
+      "x": 1000.5,
+      "execution_outcome": "completed",
+      "result": 1.6487212707001282
+    },
+    {
+      "mode": 3,
+      "ind": 710,
+      "x": -1.0,
+      "execution_outcome": "completed",
+      "result": "inf"
+    },
+    {
+      "mode": 3,
+      "ind": -745,
+      "x": 1.0,
+      "execution_outcome": "completed",
+      "result": 1.5e-323
+    },
+    {
+      "mode": 3,
+      "ind": 0,
+      "x": -745.0,
+      "execution_outcome": "completed",
+      "result": 5e-324
+    },
+    {
+      "mode": 3,
+      "ind": 0,
+      "x": -746.0,
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 3,
+      "ind": 0,
+      "x": 710.0,
+      "execution_outcome": "completed",
+      "result": "inf"
+    },
+    {
+      "mode": 3,
+      "ind": 2147483647,
+      "x": -2147483647.0,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 3,
+      "ind": -2147483648,
+      "x": 2147483648.0,
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 4,
+      "ind": 0,
+      "x": 0.0,
+      "execution_outcome": "completed",
+      "result": 709.782712893384
+    },
+    {
+      "mode": 4,
+      "ind": 1,
+      "x": 0.0,
+      "execution_outcome": "completed",
+      "result": -708.3964185322641
+    },
+    {
+      "mode": 4,
+      "ind": -1,
+      "x": 0.0,
+      "execution_outcome": "completed",
+      "result": -708.3964185322641
+    },
+    {
+      "mode": 4,
+      "ind": 2,
+      "x": 0.0,
+      "execution_outcome": "completed",
+      "result": -708.3964185322641
+    },
+    {
+      "mode": 4,
+      "ind": 2147483647,
+      "x": 0.0,
+      "execution_outcome": "completed",
+      "result": -708.3964185322641
+    },
+    {
+      "mode": 4,
+      "ind": -2147483648,
+      "x": 0.0,
+      "execution_outcome": "completed",
+      "result": -708.3964185322641
+    }
+  ]
+}
