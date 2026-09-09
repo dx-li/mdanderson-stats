@@ -209,6 +209,13 @@ from .single_study import SingleStudy, SingleStudySpecification
 from .single_two_allocation import SingleTwoSampleAllocation, single_optimize_two_sample_allocations
 from .single_two_sample import SingleTwoSamplePrecision, single_two_sample_precision
 from .single_uniform import SingleUniformCriterion, single_uniform_criterion
+from .sppcr_bootstrap import (
+    SPPCRBootstrap,
+    SPPCRBootstrapSeries,
+    SPPCRBootstrapSummary,
+    sppcr_bootstrap,
+    sppcr_bootstrap_summary,
+)
 from .sppcr_fit import SPPCRMeanFit, sppcr_fit_means
 from .sppcr_frequencies import SPPCREstimate, SPPCRFrequencies, SPPCRProportion, sppcr_frequencies
 from .sppcr_generate import (
@@ -247,6 +254,11 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "SPPCRBootstrap",
+    "SPPCRBootstrapSeries",
+    "SPPCRBootstrapSummary",
+    "sppcr_bootstrap",
+    "sppcr_bootstrap_summary",
     "SPPCRSamples",
     "sppcr_detection_probabilities",
     "sppcr_generate",

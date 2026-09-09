@@ -1,0 +1,24 @@
+{
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scope": "Three-run medians; identical counts, fits and summaries; same Python, not native Fortran",
+  "cases": [
+    {
+      "replicates": 32,
+      "levels": 2,
+      "alleles": 3,
+      "batch_seconds": 0.0017334576696157455,
+      "scalar_seconds": 0.0294280843809247,
+      "speedup": 16.976523221041795
+    },
+    {
+      "replicates": 1024,
+      "levels": 2,
+      "alleles": 3,
+      "batch_seconds": 0.010456915944814682,
+      "scalar_seconds": 0.9636431662365794,
+      "speedup": 92.15366856940507
+    }
+  ]
+}

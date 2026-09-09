@@ -582,7 +582,9 @@ direct complementary groups and logarithmic formulas replace unstable subtractio
 and powers, and unavailable uncertainty is explicitly marked.
 The Python sampling layer adds stable model probabilities and explicit-state
 NumPy binomial generation in place of clock seeding and single-precision draws;
-historical random-sequence equivalence is not claimed.
+historical random-sequence equivalence is not claimed. Bootstrap generation and
+replicate fits retain all observations and mark undefined frequencies explicitly.
+Centered, scaled population summaries replace cancellation-prone raw squared sums.
 Remaining SPPCR workflow components are not yet implemented. The archive includes
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native

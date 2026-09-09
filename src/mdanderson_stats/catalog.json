@@ -880,7 +880,8 @@
       "implemented_features": [
         "Vectorized per-allele Poisson-mean likelihood fits over DNA levels and experiment batches, observed-information variances, disclosed fit counts, true zero boundaries, explicit fully detected allele policy, immutable results and numerical root brackets",
         "Vectorized allele-frequency, calibration and mutant-frequency summaries with direct complementary groups, independent-mean delta variances, stable arcsine transforms, immutable results and explicit unavailable/structurally constant uncertainty",
-        "Stable Poisson detection probabilities, original-count empirical probabilities and vectorized independent binomial generation with explicit NumPy Generator state, batched replicates and immutable count results"
+        "Stable Poisson detection probabilities, original-count empirical probabilities and vectorized independent binomial generation with explicit NumPy Generator state, batched replicates and immutable count results",
+        "Batched bootstrap generation and replicate fitting with original-count or explicit probability models, stable population summaries, retained replicate values and explicit undefined-frequency diagnostics"
       ],
       "validation": [
         "docs/sppcr-research.md",
@@ -901,7 +902,12 @@
         "tests/test_sppcr_generate.py",
         "docs/sppcr-generation.md",
         "tools/benchmark_sppcr_generate.py",
-        "docs/sppcr-generation-benchmark.json"
+        "docs/sppcr-generation-benchmark.json",
+        "src/mdanderson_stats/sppcr_bootstrap.py",
+        "tests/test_sppcr_bootstrap.py",
+        "docs/sppcr-bootstrap.md",
+        "tools/benchmark_sppcr_bootstrap.py",
+        "docs/sppcr-bootstrap-benchmark.json"
       ]
     },
     {

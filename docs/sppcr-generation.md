@@ -1,7 +1,8 @@
 # SPPCR probabilities and reproducible generation
 
 SPPCR's independent binomial sampling layer is available through three functions.
-The full bootstrap, confidence intervals and application workflow remain pending.
+[Bootstrap fitting and summaries](sppcr-bootstrap.md) build on this layer.
+Confidence intervals and the full application workflow remain pending.
 
 ```python
 import numpy as np
@@ -85,8 +86,8 @@ Generating counts does not guarantee a regular fitted experiment. A replicate
 can have a never-seen allele, a fully detected allele, or all-zero counts. The
 existing fitter retains its explicit boundary policy; all-zero total means still
 make frequency summaries undefined. This layer neither drops replicates nor
-invents replacement observations. Bootstrap fitting and summary policy will be
-implemented separately.
+invents replacement observations. The bootstrap layer retains all-zero replicates
+with explicit undefined-frequency diagnostics.
 
 ## Validation and performance
 

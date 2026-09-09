@@ -568,5 +568,7 @@ observed-information variances and explicit boundary policies.
 [Frequency summaries](docs/sppcr-frequencies.md) add calibration, mutant frequency,
 delta-method uncertainty and stable forward transforms.
 [Data generation](docs/sppcr-generation.md) adds explicit probability models and
-reproducible batched binomial samples. SPPCR remains partial: bootstrap fitting and
-summaries, confidence intervals, input formats and the full workflow remain.
+reproducible batched binomial samples. [Bootstrap analysis](docs/sppcr-bootstrap.md)
+adds replicate fitting, stable population summaries and undefined-frequency
+diagnostics. SPPCR remains partial: confidence intervals, historical RNG
+reconciliation, input formats and the full application workflow remain.
