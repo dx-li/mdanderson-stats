@@ -1,6 +1,6 @@
 # Legacy noncentral-t reference audit
 
-This audit establishes unchanged C/F77 evidence for the pending `cdftnc` and
+This audit establishes unchanged C/F77 evidence for the `cdftnc` and
 `cumtnc` interfaces. Existing F95 Python noncentral-t functionality supplies
 validated overlapping behavior, including explicitly bracketed df inversion.
 It does not yet cover the legacy signed noncentrality and wider input contract.
@@ -93,6 +93,6 @@ initial value five with status 0. The existing Python interface rejects this.
 The p=0 central quantile fixture returns status 1 with lower bound -1e100;
 positive finite-df t distributions have no finite exact-zero quantile.
 
-The wider legacy API and batching measurements remain pending. CDFLIB90 stays
-partial with two legacy distribution entry points and public numerical/support
-interfaces still open.
+The [wider legacy API](dcdflib-nc-t.md) now implements both entry points and
+all four modes, with independent checks and recorded batching measurements.
+CDFLIB90 stays partial with public numerical/support interfaces still open.

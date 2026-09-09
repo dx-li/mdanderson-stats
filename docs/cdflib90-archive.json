@@ -326,14 +326,31 @@
         "cdftnc",
         "cumtnc"
       ],
-      "legacy_contract_status": "not_yet_independently_validated",
+      "legacy_contract_status": "implemented_with_documented_python_semantics",
       "legacy_reference_evidence": [
         "tools/reference_dcdflib_nc_t.py",
         "tests/fixtures/dcdflib_nc_t.json",
         "tests/test_dcdflib_nc_t_reference.py",
         "docs/dcdflib-nc-t-reference.md"
       ],
-      "legacy_review_notes": "Unchanged C/F77 contracts audited: signed noncentrality, ignored q, executable df cap 1e4 versus header 1e10, misleading failure bounds and false successes; API pending."
+      "legacy_review_notes": "Unchanged C/F77 contracts audited: signed noncentrality, ignored q, executable df cap 1e4 versus header 1e10, misleading failure bounds and false-success repairs.",
+      "legacy_computed_groups": [
+        "p/q",
+        "t",
+        "df",
+        "pnonc"
+      ],
+      "legacy_python_interfaces": [
+        "cdftnc",
+        "cumtnc"
+      ],
+      "legacy_evidence": [
+        "src/mdanderson_stats/dcdflib_nc_t.py",
+        "src/mdanderson_stats/_dcdflib_nc_t.py",
+        "tests/test_dcdflib_nc_t.py",
+        "tests/fixtures/dcdflib_nc_t.json",
+        "docs/dcdflib-nc-t.md"
+      ]
     },
     {
       "name": "neg_binomial",
@@ -1781,8 +1798,8 @@
       "size": 5984,
       "sha256": "b5a578bf20ccd237f9d8a45f90be160d72d67eb61d205a870f85cea9c159b245",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Signed noncentral t tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdftnc"
@@ -1961,8 +1978,8 @@
       "size": 6134,
       "sha256": "f985eb8a3dcffb9483d87a997c516a950468d4618867ee556e744e228c685f90",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Signed noncentral t tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumtnc"

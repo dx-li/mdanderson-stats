@@ -18,7 +18,7 @@ all its domains, inversions, endpoint policies or errors.
 | F95 support modules | 7 | Public/support contract review remains open |
 | Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
-| Legacy C implementations | 2 | Eleven distribution families validated; legacy noncentral t pending |
+| Legacy C implementations | 2 | All twelve distribution families independently validated |
 | Legacy public C header | 1 | 73 external function prototypes inventoried |
 | Legacy Fortran source | 64 | 66 declared entry points inventoried, including two ENTRY statements |
 | Documentation, installation and notices | 17 | Reference material accounted for; legal terms retained |
@@ -29,9 +29,8 @@ Each F95 distribution module explicitly exports four interfaces: its `cdf_*`,
 `cum_*`, `ccum_*` and `inv_*` functions. The inventory checks all **48 names**.
 The C/F77 libraries expose CDF solvers and paired-tail routines with older names.
 All 24 legacy distribution names below are present in both source inventories.
-The legacy routines do not introduce a thirteenth distribution. Eleven legacy
-distribution contracts are implemented with separate C/F77 validation;
-noncentral t remains open.
+The legacy routines do not introduce a thirteenth distribution. All twelve legacy
+distribution contracts are implemented with separate C/F77 validation.
 
 | Distribution | F95/Python suffix | Legacy CDF / tail names | Current distribution coverage |
 |---|---|---|---|
@@ -42,7 +41,7 @@ noncentral t remains open.
 | Gamma | `gamma` | `cdfgam`, `cumgam` | F95 and legacy C/F77 gamma interfaces implemented |
 | Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | F95 and legacy C/F77 interfaces implemented |
 | Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | F95 and legacy C/F77 noncentral F interfaces implemented |
-| Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | F95 implemented with df brackets; legacy review pending |
+| Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | F95 and signed legacy C/F77 interfaces implemented with df brackets |
 | Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | F95 and legacy C/F77 interfaces implemented |
 | Normal | `normal` | `cdfnor`, `cumnor` | F95 and legacy C/F77 normal interfaces implemented |
 | Poisson | `poisson` | `cdfpoi`, `cumpoi` | F95 and legacy C/F77 Poisson interfaces implemented |
@@ -59,8 +58,7 @@ independently validate legacy implementations.
 The separate [legacy F](dcdflib-f.md) and [noncentral F](dcdflib-nc-f.md) ports
 have their own unchanged C and F77 references. The [legacy normal port](dcdflib-normal.md)
 also validates its unrestricted domains, all four modes and repaired native SD
-results. The other legacy contract statuses remain open even where a corresponding
-F95/Python distribution exists. The [legacy Student t port](dcdflib-t.md)
+results. The public support/helper contracts remain open. The [legacy Student t port](dcdflib-t.md)
 validates its wider input/search domains and logarithmic tail repairs separately.
 Future work must establish shared
 behavior, document differences, and
@@ -190,4 +188,5 @@ modes with independent small-tail checks and documented numerical limits.
 The [legacy noncentral-t reference audit](dcdflib-nc-t-reference.md) records
 signed noncentrality, ignored q, the executable df upper bound of 1e4,
 misleading native status bounds and independently established tail/inverse
-failures. The wider legacy API remains pending.
+failures. The [wider legacy API](dcdflib-nc-t.md) now implements all four modes,
+signed noncentrality and independently checked tail repairs.

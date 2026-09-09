@@ -421,7 +421,8 @@
         "Legacy DCDFLIB negative-binomial cdfnbn/cumnbn: all four modes, wide finite counts, bounded count searches, complementary chance inversion, exact power and gamma-limit repairs with unchanged native and independent high-precision validation",
         "Legacy DCDFLIB binomial cdfbin/cumbin: all four modes, distinct success/trial search bounds, wide finite counts, complementary chance inversion and independently validated native process-exit/false-success repairs",
         "Legacy DCDFLIB beta cdfbet/cumbet: all four modes, wide finite shapes, bounded shape searches, positive recurrences for two small shapes, complementary quantiles and independent native false-success repairs",
-        "Legacy DCDFLIB noncentral chi-square cdfchn/cumchn: all four modes, ignored-q inversion, wide finite inputs, bounded searches, central and shifted-normal reductions, rigorous zero-tail bounds and independently validated small-tail repairs"
+        "Legacy DCDFLIB noncentral chi-square cdfchn/cumchn: all four modes, ignored-q inversion, wide finite inputs, bounded searches, central and shifted-normal reductions, rigorous zero-tail bounds and independently validated small-tail repairs",
+        "Legacy signed noncentral t: all four modes, executable df bounds, explicit root brackets, ignored-q semantics and wide/subnormal conditional-tail repairs"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -510,7 +511,10 @@
         "docs/dcdflib-nc-chisq-benchmark.json",
         "tests/fixtures/dcdflib_nc_t.json",
         "tests/test_dcdflib_nc_t_reference.py",
-        "docs/dcdflib-nc-t-reference.md"
+        "docs/dcdflib-nc-t-reference.md",
+        "tests/test_dcdflib_nc_t.py",
+        "docs/dcdflib-nc-t.md",
+        "docs/dcdflib-nc-t-benchmark.json"
       ]
     },
     {

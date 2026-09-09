@@ -138,6 +138,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"cdftnc", "cumtnc"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_distribution",
+                    "Signed noncentral t tails and inversions; independent C/F77 validation",
+                )
             if path.stem in {"cdfchn", "cumchn"}:
                 return (
                     "f77_source",
@@ -406,8 +412,20 @@ def main():
     ]
     nc_t["legacy_review_notes"] = (
         "Unchanged C/F77 contracts audited: signed noncentrality, ignored q, executable "
-        "df cap 1e4 versus header 1e10, misleading failure bounds and false successes; API pending."
+        "df cap 1e4 versus header 1e10, misleading failure bounds and false-success repairs."
     )
+    nc_t["legacy_computed_groups"] = ["p/q", "t", "df", "pnonc"]
+    nc_t["legacy_python_interfaces"] = ["cdftnc", "cumtnc"]
+    nc_t["legacy_contract_status"] = "implemented_with_documented_python_semantics"
+    nc_t["legacy_evidence"] = [
+        "src/mdanderson_stats/dcdflib_nc_t.py",
+        "src/mdanderson_stats/_dcdflib_nc_t.py",
+        "tests/test_dcdflib_nc_t.py",
+        "tests/fixtures/dcdflib_nc_t.json",
+        "docs/dcdflib-nc-t.md",
+    ]
+    if any(not Path(path).is_file() for path in nc_t["legacy_evidence"]):
+        raise RuntimeError("missing legacy noncentral t implementation evidence")
     if any(not Path(path).is_file() for path in nc_t["legacy_reference_evidence"]):
         raise RuntimeError("missing legacy noncentral t reference evidence")
     nc_chisq = next(row for row in distributions if row["name"] == "nc_chisq")

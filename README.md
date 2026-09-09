@@ -439,3 +439,9 @@ and positive recurrences that preserve tails when both shapes are tiny.
 `cdfchn` and `cumchn` implement the [legacy noncentral chi-square interface](docs/dcdflib-nc-chisq.md),
 with ignored-q inversion, wide inputs, bounded searches and independent repairs
 for native small-tail truncation and invalid wide central results.
+
+`cdftnc` and `cumtnc` implement the [signed legacy noncentral-t interface](docs/dcdflib-nc-t.md),
+including all four modes, explicit df brackets within the executable bounds,
+and conditional-tail repairs for wide inputs and subnormal probabilities.
+All twelve legacy distribution families now have independent C/F77 validation;
+CDFLIB90 remains partial while its public support interfaces are being ported.
