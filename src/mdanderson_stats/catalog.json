@@ -500,7 +500,10 @@
         "docs/dcdflib-beta-reference.md",
         "tests/test_dcdflib_beta.py",
         "docs/dcdflib-beta.md",
-        "docs/dcdflib-beta-benchmark.json"
+        "docs/dcdflib-beta-benchmark.json",
+        "tests/fixtures/dcdflib_nc_chisq.json",
+        "tests/test_dcdflib_nc_chisq_reference.py",
+        "docs/dcdflib-nc-chisq-reference.md"
       ]
     },
     {

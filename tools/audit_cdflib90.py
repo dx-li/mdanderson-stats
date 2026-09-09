@@ -391,6 +391,19 @@ def main():
         raise RuntimeError("missing legacy negative-binomial implementation evidence")
     if any(not Path(path).is_file() for path in neg_binomial["legacy_reference_evidence"]):
         raise RuntimeError("missing legacy negative-binomial reference evidence")
+    nc_chisq = next(row for row in distributions if row["name"] == "nc_chisq")
+    nc_chisq["legacy_reference_evidence"] = [
+        "tools/reference_dcdflib_nc_chisq.py",
+        "tests/fixtures/dcdflib_nc_chisq.json",
+        "tests/test_dcdflib_nc_chisq_reference.py",
+        "docs/dcdflib-nc-chisq-reference.md",
+    ]
+    nc_chisq["legacy_review_notes"] = (
+        "Unchanged C/F77 contracts audited: ignored q, wide domains, early series "
+        "truncation, false-success inversions and large-noncentrality timeout; API pending."
+    )
+    if any(not Path(path).is_file() for path in nc_chisq["legacy_reference_evidence"]):
+        raise RuntimeError("missing legacy noncentral chi-square reference evidence")
     beta = next(row for row in distributions if row["name"] == "beta")
     beta["legacy_reference_evidence"] = [
         "tools/reference_dcdflib_beta.py",

@@ -180,3 +180,8 @@ C/F77 ordinary behavior, wider shape bounds, ambiguous endpoints, small-target
 and large-shape false successes, and symmetric overflow timeouts. The separate
 [legacy beta API](dcdflib-beta.md) now implements all four modes, including the
 full two-small-shape domain, with independent implementation validation.
+
+The [legacy noncentral chi-square reference audit](dcdflib-nc-chisq-reference.md)
+records unchanged C/F77 behavior, the ignored-q inversion contract, early-series
+small-tail failures, invalid wide central probabilities and a large-noncentrality
+timeout. The wider legacy API remains pending.

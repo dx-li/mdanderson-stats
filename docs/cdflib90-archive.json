@@ -240,7 +240,14 @@
         "cdfchn",
         "cumchn"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "not_yet_independently_validated",
+      "legacy_reference_evidence": [
+        "tools/reference_dcdflib_nc_chisq.py",
+        "tests/fixtures/dcdflib_nc_chisq.json",
+        "tests/test_dcdflib_nc_chisq_reference.py",
+        "docs/dcdflib-nc-chisq-reference.md"
+      ],
+      "legacy_review_notes": "Unchanged C/F77 contracts audited: ignored q, wide domains, early series truncation, false-success inversions and large-noncentrality timeout; API pending."
     },
     {
       "name": "nc_f",
