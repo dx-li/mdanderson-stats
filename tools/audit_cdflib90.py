@@ -688,6 +688,10 @@ def main():
                 "tests/test_cdflib_incomplete_gamma.py",
                 "docs/cdflib-incomplete-gamma.md",
                 "docs/cdflib-incomplete-gamma-benchmark.json",
+                "tools/reference_cdflib_beta_factors.py",
+                "tests/fixtures/cdflib_beta_factors.json",
+                "tests/test_cdflib_beta_factors_reference.py",
+                "docs/cdflib-beta-factors-reference.md",
             ],
         }
     )

@@ -235,3 +235,8 @@ large-shape tail bias, center-branch sign errors, product-underflow endpoints an
 invalid-tolerance behavior. The [gamma scaling factor](cdflib-gamma-factor.md)
 implements `rcomp`; the [incomplete-gamma port](cdflib-incomplete-gamma.md)
 implements `gratio` and `grat1` with independent tail checks and subnormal recovery.
+
+The [beta-factor audit](cdflib-beta-factors-reference.md) records 149 unchanged
+F95 calls to `brcomp`, `brcmp1` and `bup`. Independent checks expose intermediate
+overflow, premature subnormal rounding, shape-sum overflow and a valid large-shift
+timeout. These three public helpers remain pending implementation.
