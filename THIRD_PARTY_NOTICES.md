@@ -531,3 +531,9 @@ C/F77 negative-binomial contracts through beta, power and gamma-limit identities
 No archived numerical kernel is copied or bundled. The retained CDFLIB90 notices
 apply; [legacy notes](docs/dcdflib-neg-binomial.md) document numerical methods,
 independent validation and the explicit zero-success convention.
+
+The legacy `cdfbin` and `cumbin` interfaces independently express the archived
+C/F77 binomial contracts through the shared complementary beta, power and
+gamma-limit kernels. The CDFLIB90 authorship and retained legal notice above
+apply; [legacy notes](docs/dcdflib-binomial.md) document methods, boundary choices
+and unchanged native reference evidence. No archived source is bundled.

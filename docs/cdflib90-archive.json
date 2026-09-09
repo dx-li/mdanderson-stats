@@ -64,14 +64,29 @@
         "cdfbin",
         "cumbin"
       ],
-      "legacy_contract_status": "not_yet_independently_validated",
+      "legacy_contract_status": "implemented_with_documented_python_semantics",
       "legacy_reference_evidence": [
         "tools/reference_dcdflib_binomial.py",
         "tests/fixtures/dcdflib_binomial.json",
         "tests/test_dcdflib_binomial_reference.py",
         "docs/dcdflib-binomial-reference.md"
       ],
-      "legacy_review_notes": "Unchanged C/F77 contracts audited: invalid-mode sentinel, C-only small-n process exits, wider search bounds and false-success inversions; legacy API pending."
+      "legacy_computed_groups": [
+        "p/q",
+        "s",
+        "n",
+        "pr/cpr"
+      ],
+      "legacy_python_interfaces": [
+        "cdfbin",
+        "cumbin"
+      ],
+      "legacy_evidence": [
+        "src/mdanderson_stats/dcdflib_binomial.py",
+        "tests/test_dcdflib_binomial.py",
+        "tests/fixtures/dcdflib_binomial.json",
+        "docs/dcdflib-binomial.md"
+      ]
     },
     {
       "name": "chisq",
@@ -1565,8 +1580,8 @@
       "size": 8616,
       "sha256": "87a93ebd92dbb0e805374fbe5a57f4d6d669fbe92f4444e3322a8f057e6113a8",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Binomial tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdfbin"
@@ -1745,8 +1760,8 @@
       "size": 1895,
       "sha256": "e691e7b0eb8e0866bffc5dbc8f776e26699544b1de24ee6307a8dd01a9da3811",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Binomial tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumbin"

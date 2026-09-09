@@ -427,3 +427,7 @@ and independent repairs for native overflow and false-success results.
 `cdfnbn` and `cumnbn` implement the [legacy negative-binomial interface](docs/dcdflib-neg-binomial.md),
 with all four computation modes, wider counts, paired chance inversions and
 independently validated repairs for extreme shapes and small inverse targets.
+
+`cdfbin` and `cumbin` implement the [legacy binomial interface](docs/dcdflib-binomial.md),
+with separate success/trial search bounds, complementary chance inversion and
+independent checks of native process failures, tiny counts and wide inputs.

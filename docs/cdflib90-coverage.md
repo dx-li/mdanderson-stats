@@ -18,7 +18,7 @@ all its domains, inversions, endpoint policies or errors.
 | F95 support modules | 7 | Public/support contract review remains open |
 | Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
-| Legacy C implementations | 2 | F interfaces validated; remaining DCDFLIB 1.1 contracts pending |
+| Legacy C implementations | 2 | Nine distribution families validated; three legacy families pending |
 | Legacy public C header | 1 | 73 external function prototypes inventoried |
 | Legacy Fortran source | 64 | 66 declared entry points inventoried, including two ENTRY statements |
 | Documentation, installation and notices | 17 | Reference material accounted for; legal terms retained |
@@ -29,14 +29,14 @@ Each F95 distribution module explicitly exports four interfaces: its `cdf_*`,
 `cum_*`, `ccum_*` and `inv_*` functions. The inventory checks all **48 names**.
 The C/F77 libraries expose CDF solvers and paired-tail routines with older names.
 All 24 legacy distribution names below are present in both source inventories.
-The legacy routines do not introduce a thirteenth distribution. F contracts
-have now been implemented and validated in both languages; the other eleven
-legacy distribution contracts still need comparison with the F95 ports.
+The legacy routines do not introduce a thirteenth distribution. Nine legacy
+distribution contracts are implemented with separate C/F77 validation; beta,
+noncentral chi-square and noncentral t remain open.
 
 | Distribution | F95/Python suffix | Legacy CDF / tail names | Current distribution coverage |
 |---|---|---|---|
 | Beta | `beta` | `cdfbet`, `cumbet` | F95 implemented; legacy review pending |
-| Binomial | `binomial` | `cdfbin`, `cumbin` | F95 implemented; legacy review pending |
+| Binomial | `binomial` | `cdfbin`, `cumbin` | F95 and legacy C/F77 binomial interfaces implemented |
 | Chi-square | `chisq` | `cdfchi`, `cumchi` | F95 and legacy C/F77 chi-square interfaces implemented |
 | F | `f` | `cdff`, `cumf` | F95 and legacy C/F77 F interfaces implemented |
 | Gamma | `gamma` | `cdfgam`, `cumgam` | F95 and legacy C/F77 gamma interfaces implemented |
@@ -139,7 +139,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Compare the remaining 8 legacy distribution entry-point contracts and validate any
+- Compare the remaining 6 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.
@@ -171,5 +171,6 @@ modes, wider counts, complementary chance coordinates and documented repairs.
 
 The [legacy binomial reference audit](dcdflib-binomial-reference.md) records the
 invalid-mode guard, C-only small-n process exits, wider search bounds and
-independently established false-success inversions. Its separate legacy Python
-interface remains pending; the prior F95 backup-source reconciliation is unchanged.
+independently established false-success inversions. The separate
+[legacy Python interface](dcdflib-binomial.md) now implements all four modes with distinct count bounds and independent wide-domain validation;
+the prior F95 backup-source reconciliation is unchanged.

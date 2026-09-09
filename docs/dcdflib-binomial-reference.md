@@ -1,8 +1,8 @@
 # Legacy binomial reference audit
 
-This audit establishes unchanged C/F77 evidence for the forthcoming
-`cdfbin`/`cumbin` Python interfaces. Those legacy interfaces are not yet
-implemented. The existing `cdf_binomial` covers the separately documented F95
+This audit establishes unchanged C/F77 evidence for the implemented
+[`cdfbin`/`cumbin` Python interfaces](dcdflib-binomial.md). The existing
+`cdf_binomial` covers the separately documented F95
 contract, including an independently reconciled F95 backup source.
 
 ## Contract differences
@@ -32,7 +32,7 @@ returned numerical status. The corresponding Fortran and F95 Python calls work.
 
 At s=n, P=1 does not identify the chance. Native mode 4 nevertheless reports
 success with an arbitrary chance near one. The Python F95 implementation rejects
-this case. A legacy port must document its degenerate-boundary choices explicitly.
+this case. The legacy Python port also rejects this case and documents its boundary choices.
 
 ## Reproduction and ordinary validation
 
@@ -83,14 +83,12 @@ transition even though the relative count error appears small.
 Successful wide cases also matter: both languages return P=Q=0.5 at the symmetric
 1e308 input and retain the upper tail near 6.931471805599447e-309 at s=0,
 n=1e-308, pr=0.5. At n=1e200 and pr=1e-200, the zero-success lower tail is near
-exp(-1). The new interface must preserve these domains while repairing failures.
+exp(-1). The legacy Python interface preserves these examples while repairing the failures.
 
-## Remaining implementation scope
+## Implementation coverage
 
-A separate legacy API still needs the correct s/n search bounds, complement
-handling, explicit endpoint semantics, inverse forward verification and robust
-beta evaluation when n-s is tiny or the counts are enormous. Independent
-wide-domain implementation tests and batching measurements remain required.
-This reference checkpoint does not mark the legacy binomial entry points
-implemented. CDFLIB90 remains partial, with eight legacy distribution entry
-points and public support interfaces still open.
+The separate [legacy API](dcdflib-binomial.md) implements the s/n search bounds,
+complement handling, endpoint semantics and inverse forward verification, with
+394 implementation tests and recorded batching measurements. This reference
+fixture remains unchanged evidence of native behavior. CDFLIB90 stays partial:
+six legacy distribution entry points and public support interfaces remain open.

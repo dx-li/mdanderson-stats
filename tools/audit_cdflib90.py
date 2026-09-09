@@ -138,6 +138,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"cdfbin", "cumbin"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_distribution",
+                    "Binomial tails and inversions; independent C/F77 validation",
+                )
             if path.stem in {"cdfnbn", "cumnbn"}:
                 return (
                     "f77_source",
@@ -386,10 +392,17 @@ def main():
         "tests/test_dcdflib_binomial_reference.py",
         "docs/dcdflib-binomial-reference.md",
     ]
-    binomial["legacy_review_notes"] = (
-        "Unchanged C/F77 contracts audited: invalid-mode sentinel, C-only small-n "
-        "process exits, wider search bounds and false-success inversions; legacy API pending."
-    )
+    binomial["legacy_computed_groups"] = ["p/q", "s", "n", "pr/cpr"]
+    binomial["legacy_python_interfaces"] = ["cdfbin", "cumbin"]
+    binomial["legacy_contract_status"] = "implemented_with_documented_python_semantics"
+    binomial["legacy_evidence"] = [
+        "src/mdanderson_stats/dcdflib_binomial.py",
+        "tests/test_dcdflib_binomial.py",
+        "tests/fixtures/dcdflib_binomial.json",
+        "docs/dcdflib-binomial.md",
+    ]
+    if any(not Path(path).is_file() for path in binomial["legacy_evidence"]):
+        raise RuntimeError("missing legacy binomial implementation evidence")
     if any(not Path(path).is_file() for path in binomial["legacy_reference_evidence"]):
         raise RuntimeError("missing legacy binomial reference evidence")
     header = next(row for row in members if row["role"] == "c_header")["declarations"]
