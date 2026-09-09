@@ -110,7 +110,7 @@ F95 support also has an explicit public surface:
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
 | `biomath_interface_mod` | Numeric/string input generics, console output and message controls |
 | `biomath_sort_mod` | [Implemented](cdflib-sort.md): all four `sort_list` overloads and custom comparators |
-| `biomath_strings_mod` | Public case conversion and stateful command-language lexer `qlex` |
+| `biomath_strings_mod` | [Reference audited](cdflib-strings-reference.md): case conversion and stateful lexer `qlex`; Python port pending |
 
 Existing Python/SciPy functions and the package's numerical helpers may replace
 many of these responsibilities. That mapping is **not yet established as a
@@ -195,3 +195,7 @@ The [sorting port](cdflib-sort.md) validates all four F95 overloads and custom
 comparison callbacks against unchanged source. It repairs duplicate-induced
 bounds failures and truncation of strings longer than 256 characters, while
 preserving stable ordering, prefix semantics and full-value permutations.
+
+The [string/lexer reference audit](cdflib-strings-reference.md) covers all five
+public names, ASCII conversion rules, token classes and native buffer, quote,
+malformed-number and overflow failures. Its Python replacement remains pending.

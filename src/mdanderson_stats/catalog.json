@@ -519,7 +519,10 @@
         "tests/fixtures/cdflib_sort.json",
         "tests/test_cdflib_sort.py",
         "docs/cdflib-sort.md",
-        "docs/cdflib-sort-benchmark.json"
+        "docs/cdflib-sort-benchmark.json",
+        "tests/fixtures/cdflib_strings.json",
+        "tests/test_cdflib_strings_reference.py",
+        "docs/cdflib-strings-reference.md"
       ]
     },
     {

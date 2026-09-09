@@ -527,9 +527,29 @@ def main():
             ],
         }
     ]
+    support_interfaces.append(
+        {
+            "module": "biomath_strings_mod",
+            "public_names": [
+                "lower_case_char",
+                "lower_case_string",
+                "qlex",
+                "upper_case_char",
+                "upper_case_string",
+            ],
+            "python_interfaces": [],
+            "status": "reference_audited_python_pending",
+            "evidence": [
+                "tools/reference_cdflib_strings.py",
+                "tests/fixtures/cdflib_strings.json",
+                "tests/test_cdflib_strings_reference.py",
+                "docs/cdflib-strings-reference.md",
+            ],
+        }
+    )
     for interface in support_interfaces:
         if any(not Path(path).is_file() for path in interface["evidence"]):
-            raise RuntimeError("missing public support implementation evidence")
+            raise RuntimeError("missing public support evidence")
     result = {
         "archive_sha256": digest,
         "regular_file_count": len(members),

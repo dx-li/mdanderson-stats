@@ -519,6 +519,24 @@
         "docs/cdflib-sort.md",
         "docs/cdflib-sort-benchmark.json"
       ]
+    },
+    {
+      "module": "biomath_strings_mod",
+      "public_names": [
+        "lower_case_char",
+        "lower_case_string",
+        "qlex",
+        "upper_case_char",
+        "upper_case_string"
+      ],
+      "python_interfaces": [],
+      "status": "reference_audited_python_pending",
+      "evidence": [
+        "tools/reference_cdflib_strings.py",
+        "tests/fixtures/cdflib_strings.json",
+        "tests/test_cdflib_strings_reference.py",
+        "docs/cdflib-strings-reference.md"
+      ]
     }
   ],
   "f77_declared_entry_count": 66,
