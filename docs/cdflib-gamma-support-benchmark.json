@@ -1,0 +1,122 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same Python API; not native timing",
+  "cases": [
+    {
+      "operation": "alngam",
+      "size": 64,
+      "batch_seconds": 0.0001461254432797432,
+      "scalar_seconds": 0.00878616701811552,
+      "speedup": 60.12756451520386
+    },
+    {
+      "operation": "gamln",
+      "size": 64,
+      "batch_seconds": 0.00014112470671534538,
+      "scalar_seconds": 0.008537542074918747,
+      "speedup": 60.496438034336094
+    },
+    {
+      "operation": "log_gamma",
+      "size": 64,
+      "batch_seconds": 0.00014833267778158188,
+      "scalar_seconds": 0.008485457859933376,
+      "speedup": 57.205586704422025
+    },
+    {
+      "operation": "gamln1",
+      "size": 64,
+      "batch_seconds": 6.933370605111122e-05,
+      "scalar_seconds": 0.004338374827057123,
+      "speedup": 62.57237747912931
+    },
+    {
+      "operation": "gam1",
+      "size": 64,
+      "batch_seconds": 7.841689512133598e-05,
+      "scalar_seconds": 0.004739707801491022,
+      "speedup": 60.4424313683573
+    },
+    {
+      "operation": "gamma",
+      "size": 64,
+      "batch_seconds": 1.5208031982183456e-05,
+      "scalar_seconds": 0.0008995840325951576,
+      "speedup": 59.1519029976423
+    },
+    {
+      "operation": "psi",
+      "size": 64,
+      "batch_seconds": 1.0416842997074127e-05,
+      "scalar_seconds": 0.0006162081845104694,
+      "speedup": 59.154984354045595
+    },
+    {
+      "operation": "gamma_subnormal",
+      "size": 64,
+      "batch_seconds": 2.38749198615551e-05,
+      "scalar_seconds": 0.0009383331052958965,
+      "speedup": 39.30204209007041
+    },
+    {
+      "operation": "alngam",
+      "size": 256,
+      "batch_seconds": 0.00015591690316796303,
+      "scalar_seconds": 0.03534166608005762,
+      "speedup": 226.66988223839633
+    },
+    {
+      "operation": "gamln",
+      "size": 256,
+      "batch_seconds": 0.00014404207468032837,
+      "scalar_seconds": 0.03337729210034013,
+      "speedup": 231.71904580251385
+    },
+    {
+      "operation": "log_gamma",
+      "size": 256,
+      "batch_seconds": 0.00014266697689890862,
+      "scalar_seconds": 0.033084084279835224,
+      "speedup": 231.89728274173805
+    },
+    {
+      "operation": "gamln1",
+      "size": 256,
+      "batch_seconds": 8.366676047444344e-05,
+      "scalar_seconds": 0.017026000190526247,
+      "speedup": 203.4977820818932
+    },
+    {
+      "operation": "gam1",
+      "size": 256,
+      "batch_seconds": 8.820928633213043e-05,
+      "scalar_seconds": 0.01831254130229354,
+      "speedup": 207.6033268576979
+    },
+    {
+      "operation": "gamma",
+      "size": 256,
+      "batch_seconds": 2.2625084966421127e-05,
+      "scalar_seconds": 0.003590124659240246,
+      "speedup": 158.67894704344783
+    },
+    {
+      "operation": "psi",
+      "size": 256,
+      "batch_seconds": 1.3125129044055939e-05,
+      "scalar_seconds": 0.002435124944895506,
+      "speedup": 185.5315050024835
+    },
+    {
+      "operation": "gamma_subnormal",
+      "size": 256,
+      "batch_seconds": 2.5458168238401413e-05,
+      "scalar_seconds": 0.003624875098466873,
+      "speedup": 142.3855426094273
+    }
+  ]
+}

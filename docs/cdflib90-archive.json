@@ -559,7 +559,14 @@
         "erf",
         "erfc1",
         "esum",
-        "exparg"
+        "exparg",
+        "alngam",
+        "gamln",
+        "log_gamma",
+        "gamln1",
+        "gam1",
+        "gamma",
+        "psi"
       ],
       "python_interfaces": [
         "alnrel",
@@ -570,7 +577,14 @@
         "erf",
         "erfc1",
         "esum",
-        "exparg"
+        "exparg",
+        "alngam",
+        "gamln",
+        "log_gamma",
+        "gamln1",
+        "gam1",
+        "gamma",
+        "psi"
       ],
       "status": "partial",
       "remaining_scope": "Other mathematical procedures and imported constants",
@@ -605,7 +619,11 @@
         "tools/reference_cdflib_gamma_support.py",
         "tests/fixtures/cdflib_gamma_support.json",
         "tests/test_cdflib_gamma_support_reference.py",
-        "docs/cdflib-gamma-support-reference.md"
+        "docs/cdflib-gamma-support-reference.md",
+        "src/mdanderson_stats/cdflib_gamma_support.py",
+        "tests/test_cdflib_gamma_support.py",
+        "docs/cdflib-gamma-support.md",
+        "docs/cdflib-gamma-support-benchmark.json"
       ]
     }
   ],

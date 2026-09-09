@@ -426,7 +426,8 @@
         "F95 sort_list public generic: integer/single/double/character values, prefix sorting, custom comparators, stable ties and native duplicate-bounds/long-string truncation repairs",
         "F95 string module: four ASCII case operations and reentrant qlex with stable token spans, quoted-string repairs, explicit sign policy and bounded numeric conversion/overflow reporting",
         "Five F95 elementary support procedures: alnrel, rexp, rlog, rlog1 and vectorized polynomial evaluation; 800-digit independent checks and subnormal remainder repair",
-        "F95 erf, erfc1, esum and exparg support with vectorized evaluation, independent high-precision checks and subnormal/overflow repairs"
+        "F95 erf, erfc1, esum and exparg support with vectorized evaluation, independent high-precision checks and subnormal/overflow repairs",
+        "Seven F95 gamma/digamma helpers with distinct real domains, preserved remainders, negative subnormal gamma and pole/overflow handling"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -541,7 +542,10 @@
         "docs/cdflib-error-exponential-benchmark.json",
         "tests/fixtures/cdflib_gamma_support.json",
         "tests/test_cdflib_gamma_support_reference.py",
-        "docs/cdflib-gamma-support-reference.md"
+        "docs/cdflib-gamma-support-reference.md",
+        "tests/test_cdflib_gamma_support.py",
+        "docs/cdflib-gamma-support.md",
+        "docs/cdflib-gamma-support-benchmark.json"
       ]
     },
     {

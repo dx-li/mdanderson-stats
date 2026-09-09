@@ -104,7 +104,7 @@ F95 support also has an explicit public surface:
 
 | Module | Public/support scope and status |
 |---|---|
-| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md) and [four error/exponential helpers](cdflib-error-exponential.md) implemented; remaining default-public numerical procedures and imported constants still open |
+| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), and [seven gamma/digamma helpers](cdflib-gamma-support.md) implemented; remaining default-public numerical procedures and imported constants still open |
 | `zero_finder` | Direct and reverse-communication interval/step solvers, setup, final-state reporting, bounds and solver-state type |
 | `biomath_constants_mod` | Default-public kind and numeric constants |
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
@@ -218,4 +218,5 @@ native calls for `alngam`, `gamln`, `log_gamma`, `gamln1`, `gam1`, `gamma` and
 `psi`, with independent recurrence/Stirling and exact-identity checks. It
 separates the different negative-argument contracts and documents intermediate
 overflow, lost subnormal tails, inaccurate logarithmic roots and a nonterminating
-recurrence. These seven public Python interfaces remain pending.
+recurrence. The [Python port](cdflib-gamma-support.md) now implements all seven, preserving
+valid negative intervals and repairing the audited numerical failures.

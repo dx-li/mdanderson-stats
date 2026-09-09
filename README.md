@@ -461,3 +461,7 @@ independent high-precision validation of small and subnormal results.
 The [CDFLIB error/exponential helpers](docs/cdflib-error-exponential.md) add
 `erf`, `erfc1`, `esum` and `exparg`, with batch evaluation, preserved subnormal
 complementary-error tails and repaired intermediate exponential overflow.
+
+The [CDFLIB gamma/digamma helpers](docs/cdflib-gamma-support.md) add `alngam`,
+`gamln`, `log_gamma`, `gamln1`, `gam1`, `gamma` and `psi`, preserving their distinct
+real domains and repairing lost remainders, subnormal tails and intermediate overflow.

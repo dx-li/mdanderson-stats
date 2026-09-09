@@ -1,7 +1,8 @@
 # CDFLIB gamma and digamma support audit
 
 Seven additional public F95 mathematical support procedures have native reference
-evidence. Their Python interfaces remain pending. This audit preserves executable
+evidence. Their [Python interfaces](cdflib-gamma-support.md) are now implemented.
+This audit preserves executable
 behavior separately from mathematical expectations and does not change CDFLIB90's
 partial completion status.
 
@@ -69,7 +70,7 @@ and half-integer identities check the oracle independently.
   or 1e308 exceeds finite float64; these are not intermediate-overflow defects.
 
 The tests isolate these discrepancies explicitly rather than broadening ordinary
-reference tolerances. The next implementation must retain valid negative-domain
-behavior, preserve small remainders and tails, and distinguish invalid arguments
+reference tolerances. The Python implementation retains valid negative-domain
+behavior, preserves small remainders and tails, and distinguishes invalid arguments
 from output overflow. Other gamma/beta ratios, combinatorial logarithms, constants
 and remaining support interfaces are still open.
