@@ -83,6 +83,6 @@ results. They cover wide beta shapes, close unit shapes, tiny endpoints, small
 argument pairs and huge totals. These measure batching benefits, not a speedup
 against Fortran.
 
-Twenty-two F95 mathematical support procedures are implemented. Remaining
+The later [gamma scaling factor](cdflib-gamma-factor.md) adds `rcomp`. Remaining
 incomplete-beta/gamma routines, constants and other support contracts keep
 CDFLIB90's catalog status partial.

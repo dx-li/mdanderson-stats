@@ -471,3 +471,6 @@ The [CDFLIB gamma-ratio foundations](docs/cdflib-gamma-ratios.md) add `algdiv`,
 
 The [CDFLIB beta/combinatorial helpers](docs/cdflib-beta-support.md) add `betaln`,
 `log_beta` and real-valued `log_bicoef`, retaining large-shape and tiny-result accuracy.
+
+The [CDFLIB gamma scaling factor](docs/cdflib-gamma-factor.md) adds `rcomp`,
+including huge centers, tiny signed shapes and real reciprocal-gamma continuation.

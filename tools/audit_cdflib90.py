@@ -589,6 +589,7 @@ def main():
                 "betaln",
                 "log_beta",
                 "log_bicoef",
+                "rcomp",
             ],
             "python_interfaces": [
                 "alnrel",
@@ -613,6 +614,7 @@ def main():
                 "betaln",
                 "log_beta",
                 "log_bicoef",
+                "rcomp",
             ],
             "status": "partial",
             "remaining_scope": "Other mathematical procedures and imported constants",
@@ -674,6 +676,10 @@ def main():
                 "tests/fixtures/cdflib_incomplete_gamma.json",
                 "tests/test_cdflib_incomplete_gamma_reference.py",
                 "docs/cdflib-incomplete-gamma-reference.md",
+                "src/mdanderson_stats/cdflib_gamma_factor.py",
+                "tests/test_cdflib_gamma_factor.py",
+                "docs/cdflib-gamma-factor.md",
+                "docs/cdflib-gamma-factor-benchmark.json",
             ],
         }
     )

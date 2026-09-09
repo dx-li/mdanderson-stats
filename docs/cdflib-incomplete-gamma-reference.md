@@ -1,8 +1,9 @@
 # CDFLIB incomplete-gamma support audit
 
 The unchanged F95 `rcomp`, `gratio` and `grat1` routines now have 162 recorded
-native cases and independent mathematical checks. These three public support
-interfaces remain pending implementation; CDFLIB90 remains partial.
+native cases and independent mathematical checks. The
+[gamma scaling factor](cdflib-gamma-factor.md) implements `rcomp`; `gratio` and
+`grat1` remain pending implementation. CDFLIB90 remains partial.
 
 | Procedure | Source contract |
 |---|---|

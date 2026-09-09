@@ -429,7 +429,8 @@
         "F95 erf, erfc1, esum and exparg support with vectorized evaluation, independent high-precision checks and subnormal/overflow repairs",
         "Seven F95 gamma/digamma helpers with distinct real domains, preserved remainders, negative subnormal gamma and pole/overflow handling",
         "F95 algdiv, bcorr and gsumln foundations with stable gamma ratios, negative shifts, subnormal Stirling corrections and preserved close sums",
-        "F95 betaln, log_beta and continuous log_bicoef with stable large shapes, fractional domains, tiny endpoints and factored near-origin series"
+        "F95 betaln, log_beta and continuous log_bicoef with stable large shapes, fractional domains, tiny endpoints and factored near-origin series",
+        "F95 rcomp gamma scaling factor with stable huge centers, subnormal signed shapes and explicit reciprocal-gamma continuation"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -558,7 +559,10 @@
         "docs/cdflib-beta-support.md",
         "docs/cdflib-beta-support-benchmark.json",
         "tests/test_cdflib_incomplete_gamma_reference.py",
-        "docs/cdflib-incomplete-gamma-reference.md"
+        "docs/cdflib-incomplete-gamma-reference.md",
+        "tests/test_cdflib_gamma_factor.py",
+        "docs/cdflib-gamma-factor.md",
+        "docs/cdflib-gamma-factor-benchmark.json"
       ]
     },
     {

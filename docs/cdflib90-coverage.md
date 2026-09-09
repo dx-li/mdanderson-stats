@@ -104,7 +104,7 @@ F95 support also has an explicit public surface:
 
 | Module | Public/support scope and status |
 |---|---|
-| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), [three gamma-ratio helpers](cdflib-gamma-ratios.md), and [three beta/combinatorial helpers](cdflib-beta-support.md) implemented; remaining default-public numerical procedures and imported constants still open |
+| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), [three gamma-ratio helpers](cdflib-gamma-ratios.md), [three beta/combinatorial helpers](cdflib-beta-support.md), and the [gamma scaling factor](cdflib-gamma-factor.md) implemented; remaining default-public numerical procedures and imported constants still open |
 | `zero_finder` | Direct and reverse-communication interval/step solvers, setup, final-state reporting, bounds and solver-state type |
 | `biomath_constants_mod` | Default-public kind and numeric constants |
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
@@ -232,4 +232,5 @@ underflow failures, and valid extreme-range results. The
 The [incomplete-gamma support audit](cdflib-incomplete-gamma-reference.md) records
 162 unchanged F95 calls to `rcomp`, `gratio` and `grat1`. Independent checks expose
 large-shape tail bias, center-branch sign errors, product-underflow endpoints and
-invalid-tolerance behavior. These three interfaces remain pending implementation.
+invalid-tolerance behavior. The [gamma scaling factor](cdflib-gamma-factor.md)
+implements `rcomp`; `gratio` and `grat1` remain pending implementation.
