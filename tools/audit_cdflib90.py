@@ -706,6 +706,10 @@ def main():
                 "tests/test_cdflib_beta_shift.py",
                 "docs/cdflib-beta-shift.md",
                 "docs/cdflib-beta-shift-benchmark.json",
+                "tools/reference_cdflib_beta_series.py",
+                "tests/fixtures/cdflib_beta_series.json",
+                "tests/test_cdflib_beta_series_reference.py",
+                "docs/cdflib-beta-series-reference.md",
             ],
         }
     )

@@ -241,3 +241,8 @@ F95 calls to `brcomp`, `brcmp1` and `bup`. Independent checks expose intermediat
 overflow, premature subnormal rounding, shape-sum overflow and a valid large-shift
 timeout. The [beta-factor port](cdflib-beta-factors.md) implements `brcomp` and
 `brcmp1`; the [shape-shift port](cdflib-beta-shift.md) implements `bup`.
+
+The [beta-series audit](cdflib-beta-series-reference.md) records 116 unchanged
+F95 calls to `apser`, `fpser` and `bpser`. Independent beta-integral checks expose
+endpoint errors, an overflowing digamma intermediate, a lost subnormal result
+and valid-domain timeouts. These three public helpers remain pending.

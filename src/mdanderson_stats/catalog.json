@@ -576,7 +576,9 @@
         "docs/cdflib-beta-factors-benchmark.json",
         "tests/test_cdflib_beta_shift.py",
         "docs/cdflib-beta-shift.md",
-        "docs/cdflib-beta-shift-benchmark.json"
+        "docs/cdflib-beta-shift-benchmark.json",
+        "tests/test_cdflib_beta_series_reference.py",
+        "docs/cdflib-beta-series-reference.md"
       ]
     },
     {
