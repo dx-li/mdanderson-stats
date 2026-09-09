@@ -492,3 +492,6 @@ The [CDFLIB small-first-shape upper beta tail](docs/cdflib-apser.md) adds
 
 The [CDFLIB beta power series](docs/cdflib-bpser.md) adds `bpser`, with bounded
 signed sums, stable near-one evaluation and extreme-shape normalization.
+
+The [CDFLIB accumulated beta increment](docs/cdflib-bgrat.md) adds `bgrat`,
+preserving signed accumulators and explicit tiny complementary coordinates.

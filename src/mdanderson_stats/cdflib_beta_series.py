@@ -3,7 +3,7 @@
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
-from ._cdflib import _freeze
+from ._cdflib import _freeze, _pair
 from ._validation import FloatArray, finite
 from .cdflib_beta import _tails
 from .cdflib_beta_factors import _positive_parts
@@ -217,3 +217,32 @@ def bpser(a: ArrayLike, b: ArrayLike, x: ArrayLike, eps: ArrayLike = 5e-15) -> F
     if np.any(~np.isfinite(result) | (result < 0) | (result > 1)):
         raise ArithmeticError("beta power series produced an invalid probability")
     return _freeze(result.reshape(shape))
+
+
+def bgrat(
+    a: ArrayLike,
+    b: ArrayLike,
+    x: ArrayLike | None,
+    y: ArrayLike | None = None,
+    w: ArrayLike = 0.0,
+    eps: ArrayLike = 5e-15,
+) -> FloatArray:
+    """Return w+I_x(a,b) for a>=15 and 0<b<=1, preserving x/y complements.
+
+    The finite accumulator may have either sign. Inputs broadcast and are not
+    mutated. Positive finite eps controls the bounded series when applicable;
+    numerical failures raise exceptions.
+    """
+    xx, yy = _pair(x, y, "x,y")
+    aa, bb, xx, yy, initial, ee = np.broadcast_arrays(
+        finite(a, "a"), finite(b, "b"), xx, yy, finite(w, "w"), finite(eps, "eps")
+    )
+    if np.any((aa < 15) | (bb <= 0) | (bb > 1) | (ee <= 0)):
+        raise ValueError("bgrat requires a>=15, 0<b<=1 and positive eps")
+    increment = np.empty(aa.shape)
+    left = xx <= yy
+    if np.any(left):
+        increment[left] = bpser(aa[left], bb[left], xx[left], ee[left])
+    if np.any(~left):
+        increment[~left] = cumbet(xx[~left], aa[~left], bb[~left], cx=yy[~left])[0]
+    return _freeze(initial + increment)

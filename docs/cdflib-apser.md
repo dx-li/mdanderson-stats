@@ -73,6 +73,6 @@ validator changes.
 scalar calls to this Python API and require identical results. They measure
 batching benefits, not speed relative to Fortran.
 
-The later [bpser port](cdflib-bpser.md) brings coverage to 31 of the 35 F95
-mathematical procedures. `basym`, `bfrac`, `bgrat` and `bratio` remain, along with other CDFLIB support interfaces
+The later [bpser](cdflib-bpser.md) and [bgrat](cdflib-bgrat.md) ports bring coverage
+to 32 of the 35 F95 mathematical procedures. `basym`, `bfrac` and `bratio` remain, along with other CDFLIB support interfaces
 and the rest of the software catalog. CDFLIB90 remains partial.

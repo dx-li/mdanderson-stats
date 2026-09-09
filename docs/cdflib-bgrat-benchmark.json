@@ -1,0 +1,94 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same API; not native timing",
+  "cases": [
+    {
+      "operation": "ordinary",
+      "size": 64,
+      "batch_seconds": 0.001215166412293911,
+      "scalar_seconds": 0.04952312493696809,
+      "speedup": 40.75419171887874
+    },
+    {
+      "operation": "tiny_companion",
+      "size": 64,
+      "batch_seconds": 0.00027416693046689034,
+      "scalar_seconds": 0.014448792207986116,
+      "speedup": 52.700711144778346
+    },
+    {
+      "operation": "large_first_shape",
+      "size": 64,
+      "batch_seconds": 0.0002833330072462559,
+      "scalar_seconds": 0.014566834084689617,
+      "speedup": 51.41241476334245
+    },
+    {
+      "operation": "subnormal_complement",
+      "size": 64,
+      "batch_seconds": 0.0002842079848051071,
+      "scalar_seconds": 0.015162707772105932,
+      "speedup": 53.35074516820354
+    },
+    {
+      "operation": "unit_shape",
+      "size": 64,
+      "batch_seconds": 0.00014012493193149567,
+      "scalar_seconds": 0.0063322922214865685,
+      "speedup": 45.19033218572625
+    },
+    {
+      "operation": "signed_accumulator",
+      "size": 64,
+      "batch_seconds": 0.0011359588243067265,
+      "scalar_seconds": 0.05081545887514949,
+      "speedup": 44.73353944511331
+    },
+    {
+      "operation": "ordinary",
+      "size": 256,
+      "batch_seconds": 0.0012919590808451176,
+      "scalar_seconds": 0.1964832921512425,
+      "speedup": 152.08166811499603
+    },
+    {
+      "operation": "tiny_companion",
+      "size": 256,
+      "batch_seconds": 0.0003826250322163105,
+      "scalar_seconds": 0.058320790994912386,
+      "speedup": 152.42283197493919
+    },
+    {
+      "operation": "large_first_shape",
+      "size": 256,
+      "batch_seconds": 0.0003805002197623253,
+      "scalar_seconds": 0.059585040900856256,
+      "speedup": 156.59660049099395
+    },
+    {
+      "operation": "subnormal_complement",
+      "size": 256,
+      "batch_seconds": 0.0003842078149318695,
+      "scalar_seconds": 0.058964832685887814,
+      "speedup": 153.47119552043438
+    },
+    {
+      "operation": "unit_shape",
+      "size": 256,
+      "batch_seconds": 0.00013879220932722092,
+      "scalar_seconds": 0.025461957789957523,
+      "speedup": 183.45379696296644
+    },
+    {
+      "operation": "signed_accumulator",
+      "size": 256,
+      "batch_seconds": 0.0012015001848340034,
+      "scalar_seconds": 0.1958944578655064,
+      "speedup": 163.04155449844623
+    }
+  ]
+}

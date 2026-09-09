@@ -59,6 +59,7 @@ integral is independently cross-checked against positive binomial sums for shape
   and (1,0), established by bounds and symmetry.
 
 The fixture records failures explicitly instead of treating native values as
-reference truth. This audit prepares four ports; it does not implement them.
-CDFLIB90 remains partial, with 31 of 35 F95 mathematical procedures implemented
-and other support interfaces and catalog entries still outstanding.
+reference truth. The later [bgrat port](cdflib-bgrat.md) implements the accumulated increment;
+basym, bfrac and bratio remain pending. CDFLIB90 remains partial, with 32 of 35
+F95 mathematical procedures implemented and other support interfaces and catalog
+entries still outstanding.

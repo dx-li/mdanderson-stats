@@ -581,7 +581,8 @@
         "bup",
         "fpser",
         "apser",
-        "bpser"
+        "bpser",
+        "bgrat"
       ],
       "python_interfaces": [
         "alnrel",
@@ -614,7 +615,8 @@
         "bup",
         "fpser",
         "apser",
-        "bpser"
+        "bpser",
+        "bgrat"
       ],
       "status": "partial",
       "remaining_scope": "Other mathematical procedures and imported constants",
@@ -714,6 +716,9 @@
         "tests/test_cdflib_bpser.py",
         "docs/cdflib-bpser.md",
         "docs/cdflib-bpser-benchmark.json",
+        "tests/test_cdflib_bgrat.py",
+        "docs/cdflib-bgrat.md",
+        "docs/cdflib-bgrat-benchmark.json",
         "tools/reference_cdflib_beta_remaining.py",
         "tests/fixtures/cdflib_beta_remaining.json",
         "tests/test_cdflib_beta_remaining_reference.py",
