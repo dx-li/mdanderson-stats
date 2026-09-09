@@ -74,10 +74,10 @@ Fortran transcript reproductions and are not copied to the report stream.
 
 The source's `report_unit` maps to `report_stream`. These methods implement
 `clear_screen`, `get_character`, `get_string`, `get_yn`, `hold`, `prompt`,
-`write_error`, `write_message` and the six `get_numbers` overloads. **Console support
-remains partial:** `write_array`, `print_message_format` and its
-message-format/control state remain to be implemented. The [list editor](cdflib-number-list.md) is implemented separately using these
-input methods.
+`write_error`, `write_message` and the six `get_numbers` overloads.
+[Message templates and controls](cdflib-message-format.md) complete the console
+module with documented Python formatting semantics. The
+[list editor](cdflib-number-list.md) uses these input methods.
 
 The [reference generator](../tools/reference_cdflib_console.py) compiles four
 unchanged source modules from the hash-verified archive. The [31 transcripts](../tests/fixtures/cdflib_console.json)
@@ -86,7 +86,7 @@ hashes are recorded. Backtrace addresses and temporary build paths are normalize
 All runs finish within the three-second per-call limit. Tests use defined native
 results and independently exercise repaired error handling and output ownership.
 
-The fixture also establishes cases for the remaining console work: string EOF
+The fixture also establishes repaired source defects: string EOF
 causes a native runtime exit, numeric bounds accept NaN, and the list editor's
 relative comparison merges distinct `1e308` and `1.5e308` values when its denominator
 overflows. The [Python list editor](cdflib-number-list.md) now implements all eight menu
@@ -95,3 +95,6 @@ actions with explicit state and corrected numerical behavior.
 Parsing and interactive I/O are scalar control flow; conversion and vector bounds
 use NumPy. No speedup over native console I/O is claimed. CDFLIB90 and the full
 catalog conversion remain partial.
+
+[Numeric array formatting](cdflib-array-format.md) is available through
+`write_array`, with checked field counts and support for records longer than 79 characters.

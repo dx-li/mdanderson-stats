@@ -108,13 +108,13 @@ F95 support also has an explicit public surface:
 | `zero_finder` | [Implemented](cdflib-root.md): direct/reverse interval and step solvers, setup and per-search state; corrected roots and tolerances; shared globals become result fields |
 | `biomath_constants_mod` | [All 27 constants](cdflib-constants.md) implemented, with audited numeric values and documented legacy kind/unit identifiers |
 | `cdf_aux_mod` | [Implemented](cdflib-aux.md): all 13 native descriptors, batch validators, complement/range helpers and root-state adapters with explicit Python success/error behavior |
-| `biomath_interface_mod` | [Partially implemented](cdflib-console.md): all six numeric input overloads, character/string input, basic output, per-console streams and [all eight list-editing actions](cdflib-number-list.md); array formatting and message controls remain pending |
+| `biomath_interface_mod` | [Implemented](cdflib-console.md): all six numeric input overloads, character/string input, basic output, per-console streams and [all eight list-editing actions](cdflib-number-list.md); [array formatting](cdflib-array-format.md) and [message controls](cdflib-message-format.md) with documented Python templates |
 | `biomath_sort_mod` | [Implemented](cdflib-sort.md): all four `sort_list` overloads and custom comparators |
 | `biomath_strings_mod` | [Implemented](cdflib-strings.md): ASCII conversion and reentrant lexer `qlex` with documented repairs |
 
-Existing Python/SciPy functions and the package's numerical helpers may replace
-many of these responsibilities. That mapping is **not yet established as a
-complete public-API replacement**. For each remaining exported responsibility,
+All seven F95 support modules now have explicit Python mappings and validation
+evidence. The legacy C/F77 support contracts remain **incomplete**.
+For each remaining exported responsibility,
 record either a validated Python equivalent or a justified implementation-detail
 replacement; do not silently discard it because the distribution tests pass.
 The declaration inventory records explicit PUBLIC names and the first default

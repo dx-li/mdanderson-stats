@@ -1,0 +1,218 @@
+{
+  "archive_sha256": "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b",
+  "source_hashes": {
+    "biomath_constants_mod": "2b0cfd2020e5221bc97edf80d1204ea074f7d82d0427dd912c96c357bcc7ba61",
+    "biomath_strings_mod": "c66814a0eec34c25283f0c71da41fc93969fc2cc0dba7f26146952adce70b8aa",
+    "biomath_sort_mod": "ab3d0939124dcdeadfbbe8950ae7b1207258ece5feb120da5c84da645d0530dc",
+    "biomath_interface_mod": "3ede16fa9d9b4e5e157a7eae1fc36d1f321863f9f74dcf56d4893655de564ed9"
+  },
+  "driver_sha256": "b030b027bcf2d721208b8a5a545928a51a853dc8a9bdf964ecdc7ebff4dd5f1c",
+  "flags": [
+    "-O0",
+    "-ffp-contract=off",
+    "-fcheck=all"
+  ],
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "cases": [
+    {
+      "mode": "message",
+      "format": "(1X,'Hello')",
+      "flag": "default",
+      "input": "",
+      "returncode": 0,
+      "stdout": " Hello\n",
+      "stderr": "",
+      "report": ""
+    },
+    {
+      "mode": "message",
+      "format": "(1X,'Hello')",
+      "flag": "unit",
+      "input": "",
+      "returncode": 0,
+      "stdout": " Hello\n",
+      "stderr": "",
+      "report": " Hello\n"
+    },
+    {
+      "mode": "message",
+      "format": "(1X,'Hello')",
+      "flag": "unit_false",
+      "input": "",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "report": " Hello\n"
+    },
+    {
+      "mode": "message",
+      "format": "(1X,'Hello')",
+      "flag": "unit_true",
+      "input": "",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "report": " Hello\n"
+    },
+    {
+      "mode": "message",
+      "format": "(1X,'Hello')",
+      "flag": "off",
+      "input": "",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "report": ""
+    },
+    {
+      "mode": "message",
+      "format": "(1X,'Hello')",
+      "flag": "force",
+      "input": "",
+      "returncode": 0,
+      "stdout": " Hello\n",
+      "stderr": "",
+      "report": ""
+    },
+    {
+      "mode": "array",
+      "format": "5F11.6",
+      "flag": "",
+      "input": "0 1 1e-4 1e4 -1\n",
+      "returncode": 0,
+      "stdout": "   0.000E+00   1.000000  0.100E-03  0.100E+05  -1.000000                        \n",
+      "stderr": "",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5F11.3",
+      "flag": "",
+      "input": "0 1 1e-4 1e4 -1\n",
+      "returncode": 0,
+      "stdout": "   0.000E+00      1.000  0.100E-03  0.100E+05     -1.000                        \n",
+      "stderr": "",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5F11.6",
+      "flag": "",
+      "input": "1e-3 1e3 5e-324 1e308 -1e308\n",
+      "returncode": 0,
+      "stdout": "   0.100E-021000.000000  0.494-323  0.100+309 -0.100+309                        \n",
+      "stderr": "",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5E11.3",
+      "flag": "",
+      "input": "0 1 1e-4 1e4 -1\n",
+      "returncode": 0,
+      "stdout": " INTERNAL ERROR IN WRITE_ARRAY!\n",
+      "stderr": "STOP INTERNAL ERROR IN WRITE_ARRAY!\n",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5F18.6",
+      "flag": "",
+      "input": "0 1 1e-4 1e4 -1\n",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "At line 2231 of file biomath_interface_mod.f90\nFortran runtime error: Substring out of bounds: upper bound (90) of 'out_string' exceeds string length (79)\n\nError termination. Backtrace:\n#0  <address>\n#1  <address>\n#2  <address>\n#3  <address>\n#4  <address>\n#5  <address>\n",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5f11.6",
+      "flag": "",
+      "input": "0 1 1e-4 1e4 -1\n",
+      "returncode": 0,
+      "stdout": " INTERNAL ERROR IN WRITE_ARRAY!\n",
+      "stderr": "STOP INTERNAL ERROR IN WRITE_ARRAY!\n",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5F11.0",
+      "flag": "",
+      "input": "0 1e-4 5e4 9e4 -9e4\n",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "At line 2231 of file biomath_interface_mod.f90\nFortran runtime error: Scale factor out of range in format specifier 'E' or 'D'\n\nError termination. Backtrace:\n#0  <address>\n#1  <address>\n#2  <address>\n#3  <address>\n#4  <address>\n#5  <address>\n#6  <address>\n#7  <address>\n#8  <address>\n#9  <address>\n",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5F11.1",
+      "flag": "",
+      "input": "0 1e-4 5e4 9e4 -9e4\n",
+      "returncode": 0,
+      "stdout": "     0.0E+00    0.1E-03    0.5E+05    0.9E+05   -0.9E+05                        \n",
+      "stderr": "",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5F11.6",
+      "flag": "",
+      "input": "-0 -1e-4 0.0010000000474974513 1000.0000001 999.9999999\n",
+      "returncode": 0,
+      "stdout": "  -0.000E+00 -0.100E-03   0.001000  0.100E+041000.000000                        \n",
+      "stderr": "",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5F11.1",
+      "flag": "",
+      "input": "1.25 1.75 -1.25 -1.75 9.95\n",
+      "returncode": 0,
+      "stdout": "         1.2        1.8       -1.2       -1.8        9.9                        \n",
+      "stderr": "",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5F11.0",
+      "flag": "",
+      "input": "1 2 -1 0.4 -0.4\n",
+      "returncode": 0,
+      "stdout": "          1.         2.        -1.         0.        -0.                        \n",
+      "stderr": "",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5F10.6",
+      "flag": "",
+      "input": "999.9999999 -999.9999999 0.1 -0.1 1000\n",
+      "returncode": 0,
+      "stdout": " ********************  0.100000 -0.100000**********                             \n",
+      "stderr": "",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "2F11.6 3X 3F11.6",
+      "flag": "",
+      "input": "1 2 3 4 5\n",
+      "returncode": 0,
+      "stdout": "    1.000000   2.000000      3.000000   4.000000   5.000000                     \n",
+      "stderr": "",
+      "report": null
+    },
+    {
+      "mode": "array",
+      "format": "5F11.9",
+      "flag": "",
+      "input": "0.5 -0.5 1.25 -1.25 0.0011\n",
+      "returncode": 0,
+      "stdout": " 0.500000000-.5000000001.250000000***********0.001100000                        \n",
+      "stderr": "",
+      "report": null
+    }
+  ]
+}

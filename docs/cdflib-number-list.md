@@ -93,5 +93,6 @@ Independent Decimal calculations check spacing and duplicate groups. Further
 regressions cover extreme/subnormal inputs, atomic rejection, retained edits after
 EOF, distinct retry budgets, pagination and fractional interval rejection.
 
-CDFLIB console support remains partial: array formatting and message-format/control
-interfaces are still pending. CDFLIB90 and the full catalog remain partial.
+[Array formatting](cdflib-array-format.md) and [message controls](cdflib-message-format.md)
+complete the F95 console support module with documented Python semantics.
+CDFLIB90 remains partial pending the legacy support contracts; the full catalog is incomplete.

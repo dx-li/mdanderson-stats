@@ -444,7 +444,7 @@ for native small-tail truncation and invalid wide central results.
 including all four modes, explicit df brackets within the executable bounds,
 and conditional-tail repairs for wide inputs and subnormal probabilities.
 All twelve legacy distribution families now have independent C/F77 validation;
-CDFLIB90 remains partial while its public support interfaces are being ported.
+CDFLIB90 remains partial while its legacy C/F77 support contracts are being reconciled.
 
 `sort_list` implements the [CDFLIB sorting generic](docs/cdflib-sort.md), with
 all four value types, prefix sorting and custom comparators. It preserves stable
@@ -522,3 +522,11 @@ input with explicit streams, finite-value validation and bounded retries.
 
 The [CDFLIB numeric list editor](docs/cdflib-number-list.md) adds all eight native
 actions, persistent state, stable spacing and corrected duplicate removal.
+
+The [CDFLIB array formatter](docs/cdflib-array-format.md) adds checked fixed/scientific
+fields, long records and matching console/report output.
+
+[Message templates and controls](docs/cdflib-message-format.md) complete the F95
+console module: repeatable Python substitutions, optional help, suppression and
+explicit output routing. All seven F95 support modules now have validated Python
+mappings; CDFLIB90 remains partial pending legacy C/F77 support contracts.

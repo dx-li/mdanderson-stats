@@ -868,7 +868,7 @@ def main():
     support_interfaces.append(
         {
             "module": "biomath_interface_mod",
-            "status": "partially_implemented_with_documented_python_semantics",
+            "status": "implemented_with_documented_python_semantics",
             "implemented_public_names": [
                 "clear_screen",
                 "get_character",
@@ -878,18 +878,21 @@ def main():
                 "prompt",
                 "write_error",
                 "write_message",
+                "write_array",
                 "get_numbers",
                 "get_list_double",
                 "report_unit",
-            ],
-            "python_interfaces": ["CDFConsole", "CDFConsoleError", "CDFNumberList"],
-            "remaining_public_names": [
-                "write_array",
                 "print_message_format",
                 "message_format",
                 "num_subs",
                 "always_print",
                 "print_off",
+            ],
+            "python_interfaces": [
+                "CDFConsole",
+                "CDFConsoleError",
+                "CDFNumberList",
+                "format_cdflib_array",
             ],
             "evidence": [
                 "src/mdanderson_stats/cdflib_console.py",
@@ -900,6 +903,13 @@ def main():
                 "src/mdanderson_stats/cdflib_number_list.py",
                 "tests/test_cdflib_number_list.py",
                 "docs/cdflib-number-list.md",
+                "src/mdanderson_stats/cdflib_array_format.py",
+                "tools/reference_cdflib_array_format.py",
+                "tests/fixtures/cdflib_array_format.json",
+                "tests/test_cdflib_array_format.py",
+                "docs/cdflib-array-format.md",
+                "tests/test_cdflib_message_format.py",
+                "docs/cdflib-message-format.md",
             ],
         }
     )

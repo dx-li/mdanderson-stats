@@ -8,12 +8,17 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 from ._validation import FloatArray, finite
+from .cdflib_array_format import format_cdflib_array
 from .cdflib_number_list import CDFNumberList, _ListEditError
 from .cdflib_strings import _MANTISSA, _NUMBER, lower_case_char
 
 
 class CDFConsoleError(RuntimeError):
     """A console operation failed or exhausted its input allowance."""
+
+
+class _CharacterAttemptsExhausted(CDFConsoleError):
+    """An optional choice exhausted its retry allowance."""
 
 
 class _NumericAttemptsExhausted(CDFConsoleError):
@@ -96,6 +101,12 @@ class CDFConsole:
         self.max_attempts = _positive(max_attempts, "max_attempts")
         self.max_records = _positive(max_records, "max_records")
         self.max_line_length = _positive(max_line_length, "max_line_length")
+        self.message_format = ""
+        self._substitutions: tuple[str, ...] = ()
+        self.always_print = True
+        self.print_off = False
+        self.print_level = 1
+        self.format_printed = False
 
     def _read(self) -> str:
         line = self.input.readline(self.max_line_length + 2)
@@ -158,7 +169,7 @@ class CDFConsole:
                 if index >= 0:
                     return index + 1
             self.output.write("Invalid choice. Please try again.\n")
-        raise CDFConsoleError("Too many invalid character responses")
+        raise _CharacterAttemptsExhausted("Too many invalid character responses")
 
     def get_yn(self, message: str = "") -> bool:
         """Read y/n using the character input contract."""
@@ -356,3 +367,87 @@ class CDFConsole:
                     raise CDFConsoleError("Too many failed list actions") from error
                 self.output.write(f"{error}. Please try again.\n")
         raise CDFConsoleError("List editing exhausted max_actions")
+
+    def write_array(self, values: ArrayLike, format_spec: str, *, max_output: int = 1000000) -> str:
+        """Format and write an entire numeric record to output and optional report.
+
+        Validation finishes before either stream receives data. Return the exact
+        record without its terminating newline; explicit trailing spaces remain.
+        """
+        text = format_cdflib_array(values, format_spec, max_output=max_output)
+        self.output.write(text + "\n")
+        if self.report is not None and self.report is not self.output:
+            self.report.write(text + "\n")
+        return text
+
+    @property
+    def substitutions(self) -> tuple[str, ...]:
+        """Explicit replacement strings, replacing native private substitution arrays."""
+        return self._substitutions
+
+    @substitutions.setter
+    def substitutions(self, values: tuple[str, ...]) -> None:
+        if not isinstance(values, tuple) or any(not isinstance(value, str) for value in values):
+            raise ValueError("substitutions must be a tuple of strings")
+        self._substitutions = values
+
+    @property
+    def num_subs(self) -> int:
+        """Number of initialized replacement strings; cannot disagree with their storage."""
+        return len(self._substitutions)
+
+    def print_message_format(
+        self,
+        *,
+        force: bool = False,
+        unit: TextIO | None = None,
+        unit_only: bool = False,
+    ) -> str | None:
+        """Render a Python message template under the source's print controls.
+
+        print_level 1 always shows messages; 2 asks; 3 suppresses them unless
+        always_print or force is true. print_off suppresses even always_print;
+        force overrides suppression and skips the question. Explicit unit output
+        is independent of report_stream, matching the native optional-unit API.
+        """
+        self.format_printed = False
+        if any(
+            not isinstance(value, bool)
+            for value in (force, unit_only, self.print_off, self.always_print)
+        ):
+            raise ValueError("Message controls must be boolean")
+        if (
+            isinstance(self.print_level, bool)
+            or not isinstance(self.print_level, int)
+            or self.print_level not in (1, 2, 3)
+        ):
+            raise ValueError("print_level must be 1, 2 or 3")
+        if unit_only and unit is None:
+            raise ValueError("unit_only requires an explicit output unit stream")
+        if not isinstance(self.message_format, str):
+            raise ValueError("message_format must be a string")
+        if self.print_off and not force:
+            return None
+        # Rendering precedes all message output, so malformed fields cannot
+        # produce partial records. Values are inserted once, never reparsed.
+        try:
+            text = self.message_format.format(*self._substitutions)
+        except (IndexError, KeyError, ValueError, AttributeError) as error:
+            raise ValueError(f"Invalid message template: {error}") from error
+        show = force or self.always_print or self.print_level == 1
+        if not show and self.print_level == 2:
+            try:
+                show = self.get_yn("Want the next help message? (y/n)")
+            except (_CharacterAttemptsExhausted, EOFError):
+                # The native optional-help dialog defaults to displaying help
+                # when no valid answer is obtained.
+                show = True
+        if not show:
+            return None
+        record = text + "\n"
+        if not unit_only:
+            self.output.write(record)
+        if unit is not None and (unit_only or unit is not self.output):
+            unit.write(record)
+        self.format_printed = True
+        return text

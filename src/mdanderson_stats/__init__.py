@@ -22,6 +22,7 @@ from .binomial_design import (
 from .binomial_null import BinomialNull, binomial_null
 from .binomial_sample_size import binomial_sample_size
 from .bp1ci import BP1CIResult, bp1ci
+from .cdflib_array_format import format_cdflib_array
 from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
 from .cdflib_beta_asymptotic import basym
 from .cdflib_beta_factors import brcmp1, brcomp
@@ -222,6 +223,7 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "format_cdflib_array",
     "CDFNumberList",
     "CDFConsole",
     "CDFConsoleError",
