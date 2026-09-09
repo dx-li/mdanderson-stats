@@ -977,3 +977,7 @@ range [1e-100,1e10], logarithmic overflow repair and separate native validation.
 including all four computed groups, explicit rate semantics, wide finite domains,
 logarithmic scaling and tiny-shape tail repairs validated against independent
 high-precision calculations and unchanged C/F77 references.
+
+`cdfchi` and `cumchi` implement the [legacy chi-square interface](dcdflib-chisq.md),
+with wide finite inputs, bounded x/df inversions, subnormal rounding repairs and
+unchanged C/F77 references checked against independent high-precision identities.

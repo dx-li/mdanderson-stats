@@ -84,7 +84,22 @@
         "cdfchi",
         "cumchi"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "implemented_with_documented_python_semantics",
+      "legacy_computed_groups": [
+        "p/q",
+        "x",
+        "df"
+      ],
+      "legacy_python_interfaces": [
+        "cdfchi",
+        "cumchi"
+      ],
+      "legacy_evidence": [
+        "src/mdanderson_stats/dcdflib_chisq.py",
+        "tests/test_dcdflib_chisq.py",
+        "tests/fixtures/dcdflib_chisq.json",
+        "docs/dcdflib-chisq.md"
+      ]
     },
     {
       "name": "f",
@@ -1521,8 +1536,8 @@
       "size": 6534,
       "sha256": "f38c727e4f72cf365c800af7d88cf4610848d8052d443cf9b945a17c4bdbaa25",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Chi-square tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdfchi"
@@ -1701,8 +1716,8 @@
       "size": 1463,
       "sha256": "5b781d5aa7bdf263f845a7a6cbace76af821c1c4e635ebb6071aafff4a829213",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Chi-square tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumchi"

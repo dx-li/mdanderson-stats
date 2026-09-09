@@ -37,7 +37,7 @@ legacy distribution contracts still need comparison with the F95 ports.
 |---|---|---|---|
 | Beta | `beta` | `cdfbet`, `cumbet` | F95 implemented; legacy review pending |
 | Binomial | `binomial` | `cdfbin`, `cumbin` | F95 implemented; legacy review pending |
-| Chi-square | `chisq` | `cdfchi`, `cumchi` | F95 implemented; legacy review pending |
+| Chi-square | `chisq` | `cdfchi`, `cumchi` | F95 and legacy C/F77 chi-square interfaces implemented |
 | F | `f` | `cdff`, `cumf` | F95 and legacy C/F77 F interfaces implemented |
 | Gamma | `gamma` | `cdfgam`, `cumgam` | F95 and legacy C/F77 gamma interfaces implemented |
 | Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | F95 implemented; legacy review pending |
@@ -139,7 +139,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Compare the remaining 14 legacy distribution entry-point contracts and validate any
+- Compare the remaining 12 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.
@@ -154,3 +154,7 @@ the script deliberately fails if they are absent, changed or inconsistent.
 The [legacy gamma port](dcdflib-gamma.md) independently validates all four
 computed groups against unchanged C/F77 sources, including executable x/rate
 bounds that differ from the source header and repairs for scaled underflow.
+
+The [legacy chi-square port](dcdflib-chisq.md) validates all three computed
+groups against unchanged C/F77 sources and independently checks wide inputs,
+subnormal half-value rounding and bounded x/df inversions.

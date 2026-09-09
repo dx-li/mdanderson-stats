@@ -1,0 +1,67 @@
+{
+  "python": "3.13.5",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "repetitions": 3,
+  "inputs": "x=2, df=linspace(.2,20,n); tiny df=geomspace(1e-308,4e-308,n)",
+  "comparison": "One broadcast call versus n scalar calls to the same Python API; not native C/Fortran",
+  "cases": [
+    {
+      "operation": "p",
+      "size": 64,
+      "batch_seconds": 0.00013250019401311874,
+      "scalar_seconds": 0.0043284171260893345,
+      "speedup": 32.667251231804094
+    },
+    {
+      "operation": "x",
+      "size": 64,
+      "batch_seconds": 0.0002850419841706753,
+      "scalar_seconds": 0.008619165979325771,
+      "speedup": 30.238233165556597
+    },
+    {
+      "operation": "df",
+      "size": 64,
+      "batch_seconds": 0.0057370830327272415,
+      "scalar_seconds": 0.26791049959138036,
+      "speedup": 46.69803418620273
+    },
+    {
+      "operation": "tiny_df_quantile",
+      "size": 64,
+      "batch_seconds": 0.002145499922335148,
+      "scalar_seconds": 0.03283295873552561,
+      "speedup": 15.3031740498925
+    },
+    {
+      "operation": "p",
+      "size": 256,
+      "batch_seconds": 0.00017654197290539742,
+      "scalar_seconds": 0.016918291803449392,
+      "speedup": 95.83155509718533
+    },
+    {
+      "operation": "x",
+      "size": 256,
+      "batch_seconds": 0.0005699167959392071,
+      "scalar_seconds": 0.033272082917392254,
+      "speedup": 58.38059722833889
+    },
+    {
+      "operation": "df",
+      "size": 256,
+      "batch_seconds": 0.010199790820479393,
+      "scalar_seconds": 1.086927083786577,
+      "speedup": 106.56366418850648
+    },
+    {
+      "operation": "tiny_df_quantile",
+      "size": 256,
+      "batch_seconds": 0.0069348751567304134,
+      "scalar_seconds": 0.12870133435353637,
+      "speedup": 18.558565431221865
+    }
+  ]
+}

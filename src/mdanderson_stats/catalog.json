@@ -415,7 +415,8 @@
         "Legacy DCDFLIB noncentral F cdffnc/cumfnc: all five computed groups, wide input domains, ignored-q inversion contract, explicit multiple-df-root brackets and unchanged C/F77 references with independent false-success detection",
         "Legacy DCDFLIB normal cdfnor/cumnor: all four computed groups, unrestricted finite locations and positive scales, overflow-safe inversions, subnormal tails and independent C/F77 evidence",
         "Legacy DCDFLIB Student t cdft/cumt: wide finite t and positive df inputs, bounded quantile and df inversions, logarithmic tail repair and unchanged C/F77 reference validation",
-        "Legacy DCDFLIB gamma cdfgam/cumgam: all four computed groups, explicit rate semantics, unrestricted finite x/rate results, logarithmic scaling and tiny-shape repairs with unchanged C/F77 and independent high-precision validation"
+        "Legacy DCDFLIB gamma cdfgam/cumgam: all four computed groups, explicit rate semantics, unrestricted finite x/rate results, logarithmic scaling and tiny-shape repairs with unchanged C/F77 and independent high-precision validation",
+        "Legacy DCDFLIB chi-square cdfchi/cumchi: all three computed groups, wide finite inputs, bounded x/df inversions and subnormal half-value repairs with unchanged C/F77 and independent high-precision validation"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -469,7 +470,11 @@
         "tests/test_dcdflib_gamma.py",
         "tests/fixtures/dcdflib_gamma.json",
         "docs/dcdflib-gamma.md",
-        "docs/dcdflib-gamma-benchmark.json"
+        "docs/dcdflib-gamma-benchmark.json",
+        "tests/test_dcdflib_chisq.py",
+        "tests/fixtures/dcdflib_chisq.json",
+        "docs/dcdflib-chisq.md",
+        "docs/dcdflib-chisq-benchmark.json"
       ]
     },
     {

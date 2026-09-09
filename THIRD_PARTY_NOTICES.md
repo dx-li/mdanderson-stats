@@ -513,3 +513,9 @@ C/F77 gamma contracts using SciPy special functions and logarithmic expansions.
 No archived numerical kernel is copied or bundled. The retained CDFLIB90 notices
 apply; [legacy gamma notes](docs/dcdflib-gamma.md) document reference validation,
 source contract differences and numerical repairs.
+
+The legacy `cdfchi` and `cumchi` interfaces independently express the archived
+C/F77 chi-square contracts through gamma and exponential-integral identities.
+No archived numerical kernel is copied or bundled. The retained CDFLIB90 notices
+apply; [legacy chi-square notes](docs/dcdflib-chisq.md) describe independent
+validation, bounded inversions and half-value underflow repairs.

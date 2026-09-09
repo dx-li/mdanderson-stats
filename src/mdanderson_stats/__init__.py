@@ -56,6 +56,7 @@ from .cta_study import CTAStudy, CTAStudySpecification
 from .cuminc_plot import plot_cuminc
 from .cuminc_study import CumIncStudy, cuminc
 from .cumulative_incidence import CumulativeIncidence, IncidenceSummary, cumulative_incidence
+from .dcdflib_chisq import DCDFLIBChiSquare, cdfchi, cumchi
 from .dcdflib_f import DCDFLIBF, cdff, cumf
 from .dcdflib_gamma import DCDFLIBGamma, cdfgam, cumgam
 from .dcdflib_nc_f import DCDFLIBNoncentralF, cdffnc, cumfnc
@@ -180,6 +181,9 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "DCDFLIBChiSquare",
+    "cdfchi",
+    "cumchi",
     "DCDFLIBF",
     "cdff",
     "cumf",

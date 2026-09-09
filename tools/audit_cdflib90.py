@@ -138,6 +138,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"cdfchi", "cumchi"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_distribution",
+                    "Chi-square tails and inversions; independent C/F77 validation",
+                )
             if path.stem in {"cdfgam", "cumgam"}:
                 return (
                     "f77_source",
@@ -317,6 +323,18 @@ def main():
     ]
     if any(not Path(path).is_file() for path in gamma["legacy_evidence"]):
         raise RuntimeError("missing legacy gamma implementation evidence")
+    chisq = next(row for row in distributions if row["name"] == "chisq")
+    chisq["legacy_computed_groups"] = ["p/q", "x", "df"]
+    chisq["legacy_python_interfaces"] = ["cdfchi", "cumchi"]
+    chisq["legacy_contract_status"] = "implemented_with_documented_python_semantics"
+    chisq["legacy_evidence"] = [
+        "src/mdanderson_stats/dcdflib_chisq.py",
+        "tests/test_dcdflib_chisq.py",
+        "tests/fixtures/dcdflib_chisq.json",
+        "docs/dcdflib-chisq.md",
+    ]
+    if any(not Path(path).is_file() for path in chisq["legacy_evidence"]):
+        raise RuntimeError("missing legacy chi-square implementation evidence")
     header = next(row for row in members if row["role"] == "c_header")["declarations"]
     definitions = {
         name
