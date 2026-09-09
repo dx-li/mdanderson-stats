@@ -594,6 +594,7 @@ def main():
                 "gratio",
                 "brcomp",
                 "brcmp1",
+                "bup",
             ],
             "python_interfaces": [
                 "alnrel",
@@ -623,6 +624,7 @@ def main():
                 "gratio",
                 "brcomp",
                 "brcmp1",
+                "bup",
             ],
             "status": "partial",
             "remaining_scope": "Other mathematical procedures and imported constants",
@@ -700,6 +702,10 @@ def main():
                 "tests/test_cdflib_beta_factors.py",
                 "docs/cdflib-beta-factors.md",
                 "docs/cdflib-beta-factors-benchmark.json",
+                "src/mdanderson_stats/cdflib_beta_shift.py",
+                "tests/test_cdflib_beta_shift.py",
+                "docs/cdflib-beta-shift.md",
+                "docs/cdflib-beta-shift-benchmark.json",
             ],
         }
     )

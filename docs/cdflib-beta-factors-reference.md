@@ -3,7 +3,7 @@
 The unchanged F95 `brcomp`, `brcmp1` and `bup` routines now have 149 recorded
 native cases and independent mathematical checks. The
 [beta-factor port](cdflib-beta-factors.md) implements `brcomp` and `brcmp1`;
-`bup` remains pending implementation. CDFLIB90 remains partial.
+the [shape-shift port](cdflib-beta-shift.md) implements `bup`. CDFLIB90 remains partial.
 
 | Procedure | Source operation |
 |---|---|

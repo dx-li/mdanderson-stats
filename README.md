@@ -480,3 +480,6 @@ The [CDFLIB incomplete-gamma support](docs/cdflib-incomplete-gamma.md) adds
 
 The [CDFLIB beta scaling factors](docs/cdflib-beta-factors.md) add `brcomp` and
 `brcmp1`, including compensated large-shape centers and complete exponential scaling.
+
+The [CDFLIB beta shape shift](docs/cdflib-beta-shift.md) adds `bup`, with
+positive finite sums, bounded remainders and efficient large-shift paths.

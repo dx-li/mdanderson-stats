@@ -1,0 +1,80 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same API; not native timing",
+  "cases": [
+    {
+      "operation": "ordinary",
+      "size": 64,
+      "batch_seconds": 0.0015886668115854263,
+      "scalar_seconds": 0.05427937489002943,
+      "speedup": 34.16661976834575
+    },
+    {
+      "operation": "tiny_shapes",
+      "size": 64,
+      "batch_seconds": 0.0011918749660253525,
+      "scalar_seconds": 0.06311958283185959,
+      "speedup": 52.9582251755399
+    },
+    {
+      "operation": "huge_center",
+      "size": 64,
+      "batch_seconds": 0.0004575420171022415,
+      "scalar_seconds": 0.024616833310574293,
+      "speedup": 53.80234468187314
+    },
+    {
+      "operation": "unit_large_shift",
+      "size": 64,
+      "batch_seconds": 9.583309292793274e-05,
+      "scalar_seconds": 0.004003999754786491,
+      "speedup": 41.78097181729835
+    },
+    {
+      "operation": "tail_difference",
+      "size": 64,
+      "batch_seconds": 0.00016033416613936424,
+      "scalar_seconds": 0.006594541948288679,
+      "speedup": 41.12998562362952
+    },
+    {
+      "operation": "ordinary",
+      "size": 256,
+      "batch_seconds": 0.0021239998750388622,
+      "scalar_seconds": 0.21347329067066312,
+      "speedup": 100.50532167133827
+    },
+    {
+      "operation": "tiny_shapes",
+      "size": 256,
+      "batch_seconds": 0.0017385408282279968,
+      "scalar_seconds": 0.2527030832134187,
+      "speedup": 145.35355115645208
+    },
+    {
+      "operation": "huge_center",
+      "size": 256,
+      "batch_seconds": 0.0005435831844806671,
+      "scalar_seconds": 0.0998645001091063,
+      "speedup": 183.7152122439469
+    },
+    {
+      "operation": "unit_large_shift",
+      "size": 256,
+      "batch_seconds": 0.00010720919817686081,
+      "scalar_seconds": 0.016030082944780588,
+      "speedup": 149.52152629978718
+    },
+    {
+      "operation": "tail_difference",
+      "size": 256,
+      "batch_seconds": 0.00022629089653491974,
+      "scalar_seconds": 0.02728074975311756,
+      "speedup": 120.55610796039147
+    }
+  ]
+}

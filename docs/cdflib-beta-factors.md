@@ -77,6 +77,6 @@ coordinates against repeated scalar calls to the same API, requiring identical
 results. Cases include ordinary, tiny, large-center, scaled and negative-shape
 factors. These measure batching benefits, not a speedup over Fortran.
 
-Twenty-seven F95 mathematical support procedures are implemented. `bup` and the
-seven other incomplete-beta helpers, constants and other support interfaces keep
-CDFLIB90 partial. The full catalog conversion remains ongoing.
+The later [beta shape-shift port](cdflib-beta-shift.md) implements `bup`.
+Seven remaining incomplete-beta helpers, constants and other support interfaces
+keep CDFLIB90 partial. The full catalog conversion remains ongoing.
