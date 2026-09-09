@@ -519,3 +519,9 @@ C/F77 chi-square contracts through gamma and exponential-integral identities.
 No archived numerical kernel is copied or bundled. The retained CDFLIB90 notices
 apply; [legacy chi-square notes](docs/dcdflib-chisq.md) describe independent
 validation, bounded inversions and half-value underflow repairs.
+
+The legacy `cdfpoi` and `cumpoi` interfaces independently express the archived
+C/F77 Poisson contracts through the incomplete-gamma identity. No archived
+numerical kernel is copied or bundled. The retained CDFLIB90 notices apply;
+[legacy Poisson notes](docs/dcdflib-poisson.md) describe unchanged references,
+independent high-precision validation and numerical repairs.

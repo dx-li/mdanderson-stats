@@ -336,7 +336,22 @@
         "cdfpoi",
         "cumpoi"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "implemented_with_documented_python_semantics",
+      "legacy_computed_groups": [
+        "p/q",
+        "s",
+        "mean"
+      ],
+      "legacy_python_interfaces": [
+        "cdfpoi",
+        "cumpoi"
+      ],
+      "legacy_evidence": [
+        "src/mdanderson_stats/dcdflib_poisson.py",
+        "tests/test_dcdflib_poisson.py",
+        "tests/fixtures/dcdflib_poisson.json",
+        "docs/dcdflib-poisson.md"
+      ]
     },
     {
       "name": "t",
@@ -1641,8 +1656,8 @@
       "size": 6103,
       "sha256": "c0e82d9d49dfa7366fd930d38789036c6e0370cdadaa32714b5525e15f18bdb1",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Poisson tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdfpoi"
@@ -1821,8 +1836,8 @@
       "size": 1578,
       "sha256": "9c9d260b6eefe2cbf7f1d0fe7e960a19a9d7651aad7f3af066fba5d9365e280e",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Poisson tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumpoi"

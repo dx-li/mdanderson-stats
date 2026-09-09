@@ -416,7 +416,8 @@
         "Legacy DCDFLIB normal cdfnor/cumnor: all four computed groups, unrestricted finite locations and positive scales, overflow-safe inversions, subnormal tails and independent C/F77 evidence",
         "Legacy DCDFLIB Student t cdft/cumt: wide finite t and positive df inputs, bounded quantile and df inversions, logarithmic tail repair and unchanged C/F77 reference validation",
         "Legacy DCDFLIB gamma cdfgam/cumgam: all four computed groups, explicit rate semantics, unrestricted finite x/rate results, logarithmic scaling and tiny-shape repairs with unchanged C/F77 and independent high-precision validation",
-        "Legacy DCDFLIB chi-square cdfchi/cumchi: all three computed groups, wide finite inputs, bounded x/df inversions and subnormal half-value repairs with unchanged C/F77 and independent high-precision validation"
+        "Legacy DCDFLIB chi-square cdfchi/cumchi: all three computed groups, wide finite inputs, bounded x/df inversions and subnormal half-value repairs with unchanged C/F77 and independent high-precision validation",
+        "Legacy DCDFLIB Poisson cdfpoi/cumpoi: zero mean, wide nonnegative finite inputs, bounded continuous count/mean inversions and overflow/subnormal-tail repairs with unchanged C/F77 and independent high-precision validation"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -474,7 +475,11 @@
         "tests/test_dcdflib_chisq.py",
         "tests/fixtures/dcdflib_chisq.json",
         "docs/dcdflib-chisq.md",
-        "docs/dcdflib-chisq-benchmark.json"
+        "docs/dcdflib-chisq-benchmark.json",
+        "tests/test_dcdflib_poisson.py",
+        "tests/fixtures/dcdflib_poisson.json",
+        "docs/dcdflib-poisson.md",
+        "docs/dcdflib-poisson-benchmark.json"
       ]
     },
     {

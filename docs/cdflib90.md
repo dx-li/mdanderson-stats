@@ -981,3 +981,7 @@ high-precision calculations and unchanged C/F77 references.
 `cdfchi` and `cumchi` implement the [legacy chi-square interface](dcdflib-chisq.md),
 with wide finite inputs, bounded x/df inversions, subnormal rounding repairs and
 unchanged C/F77 references checked against independent high-precision identities.
+
+`cdfpoi` and `cumpoi` implement the [legacy Poisson interface](dcdflib-poisson.md),
+including zero mean, wide finite inputs, bounded continuous count/mean inversions
+and independent repairs for native overflow and false-success results.

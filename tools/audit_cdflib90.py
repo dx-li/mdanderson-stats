@@ -138,6 +138,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"cdfpoi", "cumpoi"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_distribution",
+                    "Poisson tails and inversions; independent C/F77 validation",
+                )
             if path.stem in {"cdfchi", "cumchi"}:
                 return (
                     "f77_source",
@@ -335,6 +341,18 @@ def main():
     ]
     if any(not Path(path).is_file() for path in chisq["legacy_evidence"]):
         raise RuntimeError("missing legacy chi-square implementation evidence")
+    poisson = next(row for row in distributions if row["name"] == "poisson")
+    poisson["legacy_computed_groups"] = ["p/q", "s", "mean"]
+    poisson["legacy_python_interfaces"] = ["cdfpoi", "cumpoi"]
+    poisson["legacy_contract_status"] = "implemented_with_documented_python_semantics"
+    poisson["legacy_evidence"] = [
+        "src/mdanderson_stats/dcdflib_poisson.py",
+        "tests/test_dcdflib_poisson.py",
+        "tests/fixtures/dcdflib_poisson.json",
+        "docs/dcdflib-poisson.md",
+    ]
+    if any(not Path(path).is_file() for path in poisson["legacy_evidence"]):
+        raise RuntimeError("missing legacy Poisson implementation evidence")
     header = next(row for row in members if row["role"] == "c_header")["declarations"]
     definitions = {
         name

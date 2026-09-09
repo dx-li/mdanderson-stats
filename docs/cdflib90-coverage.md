@@ -45,7 +45,7 @@ legacy distribution contracts still need comparison with the F95 ports.
 | Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | F95 implemented with df brackets; legacy review pending |
 | Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | F95 implemented; legacy review pending |
 | Normal | `normal` | `cdfnor`, `cumnor` | F95 and legacy C/F77 normal interfaces implemented |
-| Poisson | `poisson` | `cdfpoi`, `cumpoi` | F95 implemented; legacy review pending |
+| Poisson | `poisson` | `cdfpoi`, `cumpoi` | F95 and legacy C/F77 Poisson interfaces implemented |
 | Student's t | `t` | `cdft`, `cumt` | F95 and legacy C/F77 Student t interfaces implemented |
 
 All 48 named F95 distribution interfaces now have implementations. The
@@ -139,7 +139,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Compare the remaining 12 legacy distribution entry-point contracts and validate any
+- Compare the remaining 10 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.
@@ -158,3 +158,7 @@ bounds that differ from the source header and repairs for scaled underflow.
 The [legacy chi-square port](dcdflib-chisq.md) validates all three computed
 groups against unchanged C/F77 sources and independently checks wide inputs,
 subnormal half-value rounding and bounded x/df inversions.
+
+The [legacy Poisson port](dcdflib-poisson.md) validates paired tails and both
+inversions against unchanged C/F77 sources, with explicit zero-mean semantics,
+wide finite inputs and independent small-tail checks.

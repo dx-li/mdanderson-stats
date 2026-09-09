@@ -61,6 +61,7 @@ from .dcdflib_f import DCDFLIBF, cdff, cumf
 from .dcdflib_gamma import DCDFLIBGamma, cdfgam, cumgam
 from .dcdflib_nc_f import DCDFLIBNoncentralF, cdffnc, cumfnc
 from .dcdflib_normal import DCDFLIBNormal, cdfnor, cumnor
+from .dcdflib_poisson import DCDFLIBPoisson, cdfpoi, cumpoi
 from .dcdflib_t import DCDFLIBStudentT, cdft, cumt
 from .expsurv import ExploratorySurvival, exploratory_survival
 from .expsurv_alignment import SurvivalAlignmentPlot, plot_survival_alignment
@@ -196,6 +197,9 @@ __all__ = [
     "DCDFLIBNormal",
     "cdfnor",
     "cumnor",
+    "DCDFLIBPoisson",
+    "cdfpoi",
+    "cumpoi",
     "DCDFLIBStudentT",
     "cdft",
     "cumt",
