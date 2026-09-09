@@ -1,0 +1,94 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same API; not native timing",
+  "cases": [
+    {
+      "operation": "ordinary",
+      "size": 64,
+      "batch_seconds": 0.0015981672331690788,
+      "scalar_seconds": 0.1138988328166306,
+      "speedup": 71.26840699316266
+    },
+    {
+      "operation": "far_tail_fallback",
+      "size": 64,
+      "batch_seconds": 0.004770166240632534,
+      "scalar_seconds": 0.2750603328458965,
+      "speedup": 57.662630392818954
+    },
+    {
+      "operation": "huge_center_displacement",
+      "size": 64,
+      "batch_seconds": 0.0003759171813726425,
+      "scalar_seconds": 0.02098629204556346,
+      "speedup": 55.82690306660919
+    },
+    {
+      "operation": "huge_shape_tail",
+      "size": 64,
+      "batch_seconds": 0.00038408301770687103,
+      "scalar_seconds": 0.021006000228226185,
+      "speedup": 54.69130177543489
+    },
+    {
+      "operation": "subnormal_coordinate_fallback",
+      "size": 64,
+      "batch_seconds": 0.003501791972666979,
+      "scalar_seconds": 0.25619129091501236,
+      "speedup": 73.16005431353366
+    },
+    {
+      "operation": "underflow_bound",
+      "size": 64,
+      "batch_seconds": 0.0008074580691754818,
+      "scalar_seconds": 0.026126916985958815,
+      "speedup": 32.35699534545211
+    },
+    {
+      "operation": "ordinary",
+      "size": 256,
+      "batch_seconds": 0.0018160832114517689,
+      "scalar_seconds": 0.45087187457829714,
+      "speedup": 248.26608810389925
+    },
+    {
+      "operation": "far_tail_fallback",
+      "size": 256,
+      "batch_seconds": 0.0053953747265040874,
+      "scalar_seconds": 1.1043268339708447,
+      "speedup": 204.68028449367577
+    },
+    {
+      "operation": "huge_center_displacement",
+      "size": 256,
+      "batch_seconds": 0.0004938747733831406,
+      "scalar_seconds": 0.08395816711708903,
+      "speedup": 169.9988977812308
+    },
+    {
+      "operation": "huge_shape_tail",
+      "size": 256,
+      "batch_seconds": 0.0004313751123845577,
+      "scalar_seconds": 0.0823864578269422,
+      "speedup": 190.98565369598143
+    },
+    {
+      "operation": "subnormal_coordinate_fallback",
+      "size": 256,
+      "batch_seconds": 0.0038237501867115498,
+      "scalar_seconds": 1.0035832501016557,
+      "speedup": 262.4604644909462
+    },
+    {
+      "operation": "underflow_bound",
+      "size": 256,
+      "batch_seconds": 0.0008039171807467937,
+      "scalar_seconds": 0.10397349996492267,
+      "speedup": 129.33359611538236
+    }
+  ]
+}

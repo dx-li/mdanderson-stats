@@ -26,9 +26,11 @@ def integral(a, b, x):
     if a == b and a >= 2:
         delta = Decimal(".5") - x
         u = 4 * delta * delta
-        if a * u <= 2:
+        if a * u <= 2 or (a >= Decimal("1e100") and a * u <= 1000):
             # Integrate the symmetric density about its midpoint. The
             # coordinate displacement remains exact in Decimal arithmetic.
+            # For enormous shapes, a*u<=1000 bounds absolute coefficient
+            # growth by exp(1000), leaving enough precision even for subnormals.
             term = total = Decimal(1)
             for n in range(1, 10000):
                 term *= (n - a) * u / n

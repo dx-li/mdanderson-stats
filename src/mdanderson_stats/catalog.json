@@ -437,7 +437,8 @@
         "F95 fpser beta-integral series with strict source-domain validation, full beta normalization, bounded remainders and subnormal recovery",
         "F95 apser upper beta tail with exact inclusive source-domain checks, direct tiny complements, large-companion gamma limits and subnormal-coordinate recovery",
         "F95 bpser beta integral with exact product-domain checks, bounded signed series, stable near-one evaluation and guarded large-companion gamma approximation",
-        "F95 bgrat accumulated beta integral with signed accumulators, explicit complements, endpoint repairs and stable extreme-shape increments"
+        "F95 bgrat accumulated beta integral with signed accumulators, explicit complements, endpoint repairs and stable extreme-shape increments",
+        "F95 basym displacement-preserving beta tail with bounded coefficient batches, scaled exponents, convergence fallback and extreme-coordinate repairs"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -597,7 +598,10 @@
         "docs/cdflib-beta-remaining-reference.md",
         "tests/test_cdflib_bgrat.py",
         "docs/cdflib-bgrat.md",
-        "docs/cdflib-bgrat-benchmark.json"
+        "docs/cdflib-bgrat-benchmark.json",
+        "tests/test_cdflib_basym.py",
+        "docs/cdflib-basym.md",
+        "docs/cdflib-basym-benchmark.json"
       ]
     },
     {

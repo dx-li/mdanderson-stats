@@ -495,3 +495,6 @@ signed sums, stable near-one evaluation and extreme-shape normalization.
 
 The [CDFLIB accumulated beta increment](docs/cdflib-bgrat.md) adds `bgrat`,
 preserving signed accumulators and explicit tiny complementary coordinates.
+
+The [CDFLIB beta tail from a displacement](docs/cdflib-basym.md) adds `basym`,
+retaining tiny displacements and bounding asymptotic work and scratch memory.
