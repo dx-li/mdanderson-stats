@@ -670,6 +670,10 @@ def main():
                 "tests/test_cdflib_beta_support.py",
                 "docs/cdflib-beta-support.md",
                 "docs/cdflib-beta-support-benchmark.json",
+                "tools/reference_cdflib_incomplete_gamma.py",
+                "tests/fixtures/cdflib_incomplete_gamma.json",
+                "tests/test_cdflib_incomplete_gamma_reference.py",
+                "docs/cdflib-incomplete-gamma-reference.md",
             ],
         }
     )

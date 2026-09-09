@@ -556,7 +556,9 @@
         "docs/cdflib-gamma-ratios-benchmark.json",
         "tests/test_cdflib_beta_support.py",
         "docs/cdflib-beta-support.md",
-        "docs/cdflib-beta-support-benchmark.json"
+        "docs/cdflib-beta-support-benchmark.json",
+        "tests/test_cdflib_incomplete_gamma_reference.py",
+        "docs/cdflib-incomplete-gamma-reference.md"
       ]
     },
     {

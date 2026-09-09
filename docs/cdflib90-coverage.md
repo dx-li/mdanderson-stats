@@ -228,3 +228,8 @@ underflow failures, and valid extreme-range results. The
 [gamma-ratio foundations](cdflib-gamma-ratios.md) implement `algdiv`, `bcorr` and
 `gsumln`. The [beta/combinatorial port](cdflib-beta-support.md) implements
 `betaln`, `log_beta` and `log_bicoef`.
+
+The [incomplete-gamma support audit](cdflib-incomplete-gamma-reference.md) records
+162 unchanged F95 calls to `rcomp`, `gratio` and `grat1`. Independent checks expose
+large-shape tail bias, center-branch sign errors, product-underflow endpoints and
+invalid-tolerance behavior. These three interfaces remain pending implementation.
