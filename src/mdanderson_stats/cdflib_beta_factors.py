@@ -42,6 +42,16 @@ def _deviation(a: FloatArray, b: FloatArray, x: FloatArray, y: FloatArray) -> Fl
     return (first - second) + ((first_error - second_error) + correction)
 
 
+def _far_log_ratio(x: FloatArray, center: FloatArray, log_x: FloatArray) -> FloatArray:
+    ratio = x / center
+    result = log_x - np.log(center)
+    normal = ratio >= np.finfo(float).tiny
+    # Form the ratio first to avoid cancellation between large logarithms.
+    # A subnormal quotient may lose relative precision; keep separate logs there.
+    result[normal] = np.log(ratio[normal])
+    return result
+
+
 def _positive_parts(
     a: FloatArray, b: FloatArray, x: FloatArray, y: FloatArray, mu: FloatArray
 ) -> tuple[FloatArray, FloatArray, FloatArray]:
@@ -86,8 +96,8 @@ def _positive_parts(
         u, v = np.empty(ea.shape), np.empty(eb.shape)
         near_a, near_b = np.abs(ea) <= 0.6, np.abs(eb) <= 0.6
         u[near_a], v[near_b] = _log_remainder(ea[near_a]), _log_remainder(eb[near_b])
-        u[~near_a] = ea[~near_a] - (lx[~near_a] - np.log(x0[~near_a]))
-        v[~near_b] = eb[~near_b] - (ly[~near_b] - np.log(y0[~near_b]))
+        u[~near_a] = ea[~near_a] - _far_log_ratio(xx[~near_a], x0[~near_a], lx[~near_a])
+        v[~near_b] = eb[~near_b] - _far_log_ratio(yy[~near_b], y0[~near_b], ly[~near_b])
         exponent[large] = (
             mu[large]
             + 0.5 * (np.log(aa) - np.log1p(h))

@@ -53,10 +53,12 @@ itself cannot overflow. A separate correction accounts for the rounding of the
 larger complementary coordinate. These details preserve meaningful deviations
 near the center at shapes such as 1e30.
 
-Stable log1p remainders evaluate the center correction. Separate logarithms in
-the far tails avoid quantizing a subnormal coordinate by dividing it before
-taking its logarithm. The existing gamma/Stirling helpers are reused; no
-dependency or distribution implementation changed.
+Stable log1p remainders evaluate the center correction. In the far tails, normal
+coordinate ratios are formed before taking a logarithm, avoiding cancellation
+between large logarithms for extreme companion shapes. Subnormal ratios retain
+separate logarithms to avoid quantizing the coordinate. Direct 800-digit factor
+checks cover both orientations of these extreme-companion cases. The existing
+gamma/Stirling helpers are reused.
 
 On the negative-shape domain, a compensated sum retains the small offset when
 a+b rounds onto or close to a gamma pole. Reflection evaluates the gamma factor

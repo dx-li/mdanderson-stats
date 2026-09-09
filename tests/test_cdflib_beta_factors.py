@@ -150,3 +150,15 @@ def test_coordinate_completion_broadcasting_and_immutable_ownership():
         result.setflags(write=True)
     assert brcomp(np.empty((0, 1)), 2, np.empty((1, 3))).shape == (0, 3)
     assert float(brcomp(1, 1, None, 0.25)) == float(brcomp(1, 1, 0.75, 0.25))
+
+
+@pytest.mark.parametrize("a", [8.0, 15.0, 50.0, 100.0])
+@pytest.mark.parametrize("scaled_x", [0.01, 0.71, 1.0, 2.0, 5.0, 10.0, 20.0])
+@pytest.mark.parametrize("reflected", [False, True])
+def test_extreme_companion_normalization_avoids_log_cancellation(a, scaled_x, reflected):
+    b = 1e308
+    x, y = scaled_x / b, 1.0
+    if reflected:
+        a, b, x, y = b, a, y, x
+    expected = independent(1, a, b, x, y)
+    np.testing.assert_allclose(brcomp(a, b, x, y), expected, rtol=5e-13, atol=5e-324)
