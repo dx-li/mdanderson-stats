@@ -4,8 +4,8 @@ CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
 The entry is **partial**. All four public interfaces are implemented for beta,
-binomial, normal, gamma, chi-square, Poisson, negative-binomial, Student's t and F distributions. Three other
-distribution modules and the remaining archived library interfaces are outstanding.
+binomial, normal, gamma, chi-square, Poisson, negative-binomial, Student's t, F and noncentral chi-square
+distributions. Two other distribution modules and the remaining archived library interfaces are outstanding.
 The [106-file inventory](cdflib90-coverage.md) identifies the legacy entry points
 and public support APIs that still need contract review and validation.
 
@@ -631,3 +631,98 @@ retains those tails. Independent tests use F(1,1) as a squared Cauchy variable,
 F(2,2)'s rational CDF, reciprocal symmetry with swapped df, equal-df medians,
 source-domain endpoints, underflow behavior, broadcasting, immutable ownership,
 empty arrays and invalid requests.
+
+## Noncentral chi-square distribution
+
+```python
+from mdanderson_stats import cdf_nc_chisq, cum_nc_chisq, ccum_nc_chisq, inv_nc_chisq
+
+lower = cum_nc_chisq([1, 10, 30], df=2, pnonc=4)
+upper = ccum_nc_chisq([1, 10, 30], df=2, pnonc=4)
+quantile = inv_nc_chisq(None, df=2, pnonc=4, ccum=1e-100)
+degrees = cdf_nc_chisq(3, x=10, cum=lower[1], pnonc=4).df
+noncentrality = cdf_nc_chisq(4, x=10, cum=lower[1], df=2).pnonc
+```
+
+The four public interfaces are `cdf_nc_chisq`, `cum_nc_chisq`, `ccum_nc_chisq`
+and `inv_nc_chisq`. The CDF solver computes group 1 (cum/ccum), 2 (x), 3 (df)
+or 4 (pnonc). This follows the source's actual branches and parameter metadata;
+its introductory numbered list incorrectly omits x and mislabels later modes.
+Omit the computed group and supply the other parameters. `CDFNoncentralChiSquare`
+contains `which` and owned immutable broadcast arrays `cum`, `ccum`, `x`, `df`
+and `pnonc`. The tail conveniences take `(x, df, pnonc)` and the inverse takes
+`(cum, df, pnonc, *, ccum=None)`.
+
+Source domains are x in [0,1e100], df in [1e-3,1e10], and pnonc in [0,1e4].
+All are explicit inputs except the computed group. Noncentrality is the sum of
+**squared** normal means for the sum of squared unit-variance independent normals;
+the source prose omits both squares. For real df, the equivalent definition is
+a Poisson(pnonc/2) mixture of central chi-square distributions with df+2*j degrees
+of freedom. Zero noncentrality reduces to the central distribution. Positive
+noncentrality is retained even below the source's 1e-10 central approximation.
+
+Python uses the public [SciPy ncx2 methods](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ncx2.html),
+verified against the installed 1.18.1 source: CDF/SF evaluate both tails directly;
+PPF/ISF invert the smaller supplied probability. The smaller computed tail is
+preserved and the larger reconstructed to maintain a complementary pair.
+Both df and noncentrality monotonically decrease the CDF for positive x.
+Their searches use 64 batched bisections, in log-df or linear noncentrality,
+inside the source bounds. Tail matches within 32 machine epsilons preserve
+endpoint roots, including pnonc=0. Out-of-bound or numerically indistinguishable
+requests fail explicitly. Computed df/x bounds allow eight-epsilon rounding,
+following the existing central distribution interfaces; input bounds stay strict.
+
+At x=0 the tails are (0,1). A zero lower probability yields quantile zero;
+a zero upper probability has no finite quantile. Parameter inversions require
+positive x and both probabilities, because endpoint probabilities cannot identify
+the parameter reliably in floating point. Every inverse is checked by forward
+evaluation of the smaller tail, with relative tolerance 1e-7 plus 32 smallest
+subnormals. A failed consistency check raises `ArithmeticError`.
+
+The original probability validation requires ccum>=1e-10. Python permits smaller
+positive tails where the numerical kernels support them, but does not promise
+accuracy throughout the extended range. Tests recover lower tails through
+1e-300 and upper tails through 1e-100. At df=2, pnonc=4, ccum=1e-300, SciPy 1.18.1
+returns a finite inverse whose forward SF differs by a factor greater than ten;
+the forward kernel also suffers internal underflow nearby. Python rejects that
+inverse. This limit is well outside the archived probability range. A positive
+probability whose quantile underflows to zero also fails forward verification.
+Forward values alone have the numerical limitations of the underlying kernels;
+complement preservation cannot repair their internal underflow.
+
+### Native evidence and independent validation
+
+`tools/reference_cdflib_nc_chisq.py` compiles ten files into two separate profiles,
+recording archive/source hashes, compiler, commands, driver and exact patch text.
+Each profile has **159 cases**: 48 forward, 40 x, 40 df and 31 noncentrality
+inversions. The first profile uses unchanged archive bytes. All its inverse
+requests return status 10 because its central chi-square dependency finalizes
+an uninitialized root-finder state during forward evaluation. The final status
+of the outer forward calls is itself overwritten by unused root-finder state
+(status 50 in this build), so it cannot establish validity of those outputs.
+
+The second profile changes only central chi-square status finalization to run
+when which>1. No probability or search algorithm is changed. All 111 inverse
+requests then return success. The outer forward status remains unreliable.
+The native algorithm's series stops at relative term size 1e-5 or total below
+1e-20, and forms its upper tail by subtraction. On the reference grid, forward
+absolute errors are below 2e-6, but relative errors in small tails can be large:
+at x=.2, df=10, pnonc=20, the native lower tail is about 1.32e-26 instead of
+4.10e-12; at x=30, df=2, pnonc=.5, its upper tail is about 10% too large.
+120-digit independent Poisson mixtures verify both defects. Native inverse
+requests based on these approximate tails can move materially from their
+known generating parameters. Tests retain and identify four such inverse
+comparisons, and verify Python solves the actual requested probability.
+
+Independent tests use 120-digit Poisson mixtures of integer-shape gamma CDFs
+for both tails and all inverse modes, the df=1 shifted-normal-square identity,
+central reduction, both parameter bounds, tiny positive noncentrality, direct
+extreme tails, zero/large x, broadcasting, immutable ownership, empty batches
+and invalid/unidentified requests. Original native failures are retained rather
+than presented as successful reference answers.
+
+[Batch timings](cdflib-nc-chisq-benchmark.json) compare a broadcast call with
+repeated calls to the same Python API, with result agreement checked each time.
+On the recorded machine, batches of 64/256 were about 36/105 times faster for
+tails and 45/97 times faster for df inversion. These are median-of-three Python
+batching measurements, not speedups over native Fortran.

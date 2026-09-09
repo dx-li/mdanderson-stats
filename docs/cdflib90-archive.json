@@ -142,8 +142,12 @@
         "cum_nc_chisq",
         "inv_nc_chisq"
       ],
-      "python_status": "pending_distribution",
-      "evidence": [],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_nc_chisq.py",
+        "tests/test_cdflib_nc_chisq.py",
+        "tests/fixtures/cdflib_nc_chisq.json"
+      ],
       "legacy_distribution_names": [
         "cdfchn",
         "cumchn"
@@ -689,7 +693,7 @@
       "size": 16220,
       "sha256": "11f92499fae67e3b817930084cbb83da0c39887c0f33891e50372a970710f916",
       "role": "f95_distribution",
-      "coverage_status": "pending_distribution",
+      "coverage_status": "implemented_distribution",
       "scope": "nc_chisq",
       "declarations": {
         "routine_declarations_including_entries": [

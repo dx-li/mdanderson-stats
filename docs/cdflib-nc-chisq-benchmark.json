@@ -1,0 +1,39 @@
+{
+  "python": "3.13.5",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "repetitions": 3,
+  "inputs": "x=linspace(1,30,n); pnonc=linspace(.5,20,n); df=2; p/q from the forward distribution",
+  "comparison": "One broadcast call versus n scalar calls to the same Python API; not native Fortran",
+  "cases": [
+    {
+      "operation": "tails",
+      "size": 64,
+      "batch_seconds": 0.00021025026217103004,
+      "scalar_seconds": 0.007474707905203104,
+      "speedup": 35.55147959398373
+    },
+    {
+      "operation": "df",
+      "size": 64,
+      "batch_seconds": 0.008795665577054024,
+      "scalar_seconds": 0.3952695420011878,
+      "speedup": 44.939128089676345
+    },
+    {
+      "operation": "tails",
+      "size": 256,
+      "batch_seconds": 0.0002755420282483101,
+      "scalar_seconds": 0.02887537470087409,
+      "speedup": 104.79481073882668
+    },
+    {
+      "operation": "df",
+      "size": 256,
+      "batch_seconds": 0.016351083759218454,
+      "scalar_seconds": 1.5934017905965447,
+      "speedup": 97.44930758477784
+    }
+  ]
+}

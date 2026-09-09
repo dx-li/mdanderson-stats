@@ -23,7 +23,18 @@ DISTRIBUTIONS = {
     "poisson": "poi",
     "t": "t",
 }
-IMPLEMENTED = {"beta", "binomial", "chisq", "f", "gamma", "neg_binomial", "normal", "poisson", "t"}
+IMPLEMENTED = {
+    "beta",
+    "binomial",
+    "chisq",
+    "f",
+    "gamma",
+    "nc_chisq",
+    "neg_binomial",
+    "normal",
+    "poisson",
+    "t",
+}
 SUPPORT = {
     "biomath_constants_mod": "Kind declarations and numeric constants",
     "biomath_interface_mod": "Public console input/output and message controls",

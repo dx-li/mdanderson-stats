@@ -26,6 +26,13 @@ from .cdflib_binomial import CDFBinomial, ccum_binomial, cdf_binomial, cum_binom
 from .cdflib_chisq import CDFChiSquare, ccum_chisq, cdf_chisq, cum_chisq, inv_chisq
 from .cdflib_f import CDFF, ccum_f, cdf_f, cum_f, inv_f
 from .cdflib_gamma import CDFGamma, ccum_gamma, cdf_gamma, cum_gamma, inv_gamma
+from .cdflib_nc_chisq import (
+    CDFNoncentralChiSquare,
+    ccum_nc_chisq,
+    cdf_nc_chisq,
+    cum_nc_chisq,
+    inv_nc_chisq,
+)
 from .cdflib_neg_binomial import (
     CDFNegativeBinomial,
     ccum_neg_binomial,
@@ -166,6 +173,11 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "CDFNoncentralChiSquare",
+    "cdf_nc_chisq",
+    "cum_nc_chisq",
+    "ccum_nc_chisq",
+    "inv_nc_chisq",
     "CDFF",
     "cdf_f",
     "cum_f",

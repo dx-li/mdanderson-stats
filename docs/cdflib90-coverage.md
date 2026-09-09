@@ -14,7 +14,7 @@ all its domains, inversions, endpoint policies or errors.
 
 | Archive material | Files | Coverage disposition |
 |---|---:|---|
-| F95 distribution modules | 12 | Nine implemented and validated; three pending |
+| F95 distribution modules | 12 | Ten implemented and validated; two pending |
 | F95 support modules | 7 | Public/support contract review remains open |
 | Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
@@ -39,7 +39,7 @@ contracts and numerical behavior still need comparison with the F95 port.
 | Chi-square | `chisq` | `cdfchi`, `cumchi` | Implemented |
 | F | `f` | `cdff`, `cumf` | F95 tails/quantiles implemented; legacy df inversion pending |
 | Gamma | `gamma` | `cdfgam`, `cumgam` | Implemented |
-| Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | Pending |
+| Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | Implemented |
 | Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | Pending |
 | Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | Pending |
 | Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | Implemented |
@@ -120,7 +120,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Implement and validate the three pending distribution modules and all their
+- Implement and validate the two pending distribution modules and all their
   parameter-inversion modes, including multiple-root and endpoint behavior.
 - Compare the 24 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.

@@ -377,3 +377,8 @@ inversion. Native validation covers both archived binomial source versions.
 `cdf_f`, `cum_f`, `ccum_f` and `inv_f` implement the F95 F-distribution tails
 and quantiles. The older C/F77 degrees-of-freedom inversion modes remain tracked
 separately in the CDFLIB90 checklist.
+
+`cdf_nc_chisq`, `cum_nc_chisq`, `ccum_nc_chisq` and `inv_nc_chisq` provide
+noncentral chi-square tails, quantiles and bounded degrees-of-freedom/noncentrality
+inversions. Validation includes high-precision Poisson mixtures, native source
+profiles and explicit detection of inconsistent extreme-tail inverse results.
