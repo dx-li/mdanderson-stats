@@ -97,8 +97,13 @@ The name differences between the C and F77 inventories are `erf`/`erf1`,
 `gamma`/`Xgamm`, and seven C translation helpers: `fifdint`, `fifdmax1`,
 `fifdmin1`, `fifdsign`, `fifidint`, `fifmod`, `ftnstop`. Names alone do not prove
 semantic equivalence. The remaining shared names include incomplete-beta/gamma
-kernels, log-gamma helpers, normal inversion/initial approximations, machine
-constants and direct/reverse-communication root finding.
+kernels, log-gamma helpers, normal inversion/initial approximations, and
+direct/reverse-communication root finding.
+
+[Legacy support primitives](dcdflib-support.md) now reconcile ten of the 49 C
+support names: `ipmpar`, `spmpar`, `devlpl` and all seven C translation helpers.
+The inventory records those mappings and the 39 remaining names separately.
+Same-name F95 numerical helpers still need legacy contract evidence.
 
 F95 support also has an explicit public surface:
 

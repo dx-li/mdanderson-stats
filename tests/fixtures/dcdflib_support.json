@@ -1,0 +1,908 @@
+{
+  "archive_sha256": "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b",
+  "profiles": {
+    "c": {
+      "source_hashes": {
+        "source/dcdflib.c/src/dcdflib.c": "818f03e7286890836d34c0da32a95e193093a6cf2d4fb8d7fabda446f8cf2081",
+        "source/dcdflib.c/src/ipmpar.c": "559e88f3da35fad7115000a2a8eb89f0c074e1798c792bfbdd0a7ba1abde45c2",
+        "source/dcdflib.c/src/cdflib.h": "6bdb5838eb4de58ba298b086901ef604194c86271eb46eb45ec8e236476dccce"
+      },
+      "driver_sha256": "e178c6337941f83222223cd9ff53335600cc2dcd39e97c728966a9362fd81986",
+      "flags": [
+        "cc",
+        "-std=gnu89",
+        "-O0",
+        "-ffp-contract=off"
+      ],
+      "link_flags": [
+        "-lm"
+      ],
+      "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)",
+      "cases": [
+        {
+          "op": "ipmpar",
+          "index": 1,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "2\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 2,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "31\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 3,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "2147483647\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 4,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "2\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 5,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "24\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 6,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "-125\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 7,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "128\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 8,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "53\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 9,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "-1021\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 10,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "1024\n",
+          "stderr": ""
+        },
+        {
+          "op": "spmpar",
+          "index": 1,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "2.2204460492503131e-16\n",
+          "stderr": ""
+        },
+        {
+          "op": "spmpar",
+          "index": 2,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "2.2250738585072014e-308\n",
+          "stderr": ""
+        },
+        {
+          "op": "spmpar",
+          "index": 3,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "1.7976931348623157e+308\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 1,
+          "a": -2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 1,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 1,
+          "a": 0.5,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 1,
+          "a": 2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 2,
+          "a": -2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "5\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 2,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 2,
+          "a": 0.5,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 2,
+          "a": 2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "-3\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 3,
+          "a": -2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "17\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 3,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 3,
+          "a": 0.5,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "0.75\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 3,
+          "a": 2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "9\n",
+          "stderr": ""
+        },
+        {
+          "op": "ftnstop",
+          "index": 0,
+          "a": 0,
+          "b": 0,
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "reference stop\n"
+        },
+        {
+          "op": "fifdint",
+          "index": 0,
+          "a": -1.75,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "-1\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdint",
+          "index": 0,
+          "a": -0.5,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdint",
+          "index": 0,
+          "a": -0.0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdint",
+          "index": 0,
+          "a": 0.0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdint",
+          "index": 0,
+          "a": 0.5,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdint",
+          "index": 0,
+          "a": 1.75,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdint",
+          "index": 0,
+          "a": -9223372036854775808,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "-9.2233720368547758e+18\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdint",
+          "index": 0,
+          "a": 9223372036854774784,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "9.2233720368547748e+18\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifidint",
+          "index": 0,
+          "a": -1.75,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "-1\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifidint",
+          "index": 0,
+          "a": -0.5,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifidint",
+          "index": 0,
+          "a": -0.0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifidint",
+          "index": 0,
+          "a": 0.0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifidint",
+          "index": 0,
+          "a": 0.5,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifidint",
+          "index": 0,
+          "a": 1.75,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifidint",
+          "index": 0,
+          "a": -9223372036854775808,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "-9223372036854775808\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifidint",
+          "index": 0,
+          "a": 9223372036854774784,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "9223372036854774784\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmax1",
+          "index": 0,
+          "a": -2,
+          "b": 3,
+          "returncode": 0,
+          "stdout": "3\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmax1",
+          "index": 0,
+          "a": 3,
+          "b": -2,
+          "returncode": 0,
+          "stdout": "3\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmax1",
+          "index": 0,
+          "a": 2,
+          "b": 2,
+          "returncode": 0,
+          "stdout": "2\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmax1",
+          "index": 0,
+          "a": -0.0,
+          "b": 0.0,
+          "returncode": 0,
+          "stdout": "-0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmax1",
+          "index": 0,
+          "a": 0.0,
+          "b": -0.0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmax1",
+          "index": 0,
+          "a": -0.0,
+          "b": -1,
+          "returncode": 0,
+          "stdout": "-0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmax1",
+          "index": 0,
+          "a": 1,
+          "b": -0.0,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmin1",
+          "index": 0,
+          "a": -2,
+          "b": 3,
+          "returncode": 0,
+          "stdout": "-2\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmin1",
+          "index": 0,
+          "a": 3,
+          "b": -2,
+          "returncode": 0,
+          "stdout": "-2\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmin1",
+          "index": 0,
+          "a": 2,
+          "b": 2,
+          "returncode": 0,
+          "stdout": "2\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmin1",
+          "index": 0,
+          "a": -0.0,
+          "b": 0.0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmin1",
+          "index": 0,
+          "a": 0.0,
+          "b": -0.0,
+          "returncode": 0,
+          "stdout": "-0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmin1",
+          "index": 0,
+          "a": -0.0,
+          "b": -1,
+          "returncode": 0,
+          "stdout": "-1\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdmin1",
+          "index": 0,
+          "a": 1,
+          "b": -0.0,
+          "returncode": 0,
+          "stdout": "-0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdsign",
+          "index": 0,
+          "a": -2,
+          "b": 3,
+          "returncode": 0,
+          "stdout": "2\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdsign",
+          "index": 0,
+          "a": 3,
+          "b": -2,
+          "returncode": 0,
+          "stdout": "-3\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdsign",
+          "index": 0,
+          "a": 2,
+          "b": 2,
+          "returncode": 0,
+          "stdout": "2\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdsign",
+          "index": 0,
+          "a": -0.0,
+          "b": 0.0,
+          "returncode": 0,
+          "stdout": "-0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdsign",
+          "index": 0,
+          "a": 0.0,
+          "b": -0.0,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdsign",
+          "index": 0,
+          "a": -0.0,
+          "b": -1,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifdsign",
+          "index": 0,
+          "a": 1,
+          "b": -0.0,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifmod",
+          "index": 0,
+          "a": -5,
+          "b": 3,
+          "returncode": 0,
+          "stdout": "-2\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifmod",
+          "index": 0,
+          "a": 5,
+          "b": -3,
+          "returncode": 0,
+          "stdout": "2\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifmod",
+          "index": 0,
+          "a": -5,
+          "b": -3,
+          "returncode": 0,
+          "stdout": "-2\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifmod",
+          "index": 0,
+          "a": 5,
+          "b": 3,
+          "returncode": 0,
+          "stdout": "2\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifmod",
+          "index": 0,
+          "a": 0,
+          "b": -3,
+          "returncode": 0,
+          "stdout": "0\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifmod",
+          "index": 0,
+          "a": 9223372036854775807,
+          "b": 3,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifmod",
+          "index": 0,
+          "a": -9223372036854775808,
+          "b": 3,
+          "returncode": 0,
+          "stdout": "-2\n",
+          "stderr": ""
+        },
+        {
+          "op": "fifmod",
+          "index": 0,
+          "a": 1,
+          "b": -9223372036854775808,
+          "returncode": 0,
+          "stdout": "1\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "fortran": {
+      "source_hashes": {
+        "source/dcdflib.f/src/ipmpar.f": "68b6fa2cb4178b894b3878428d5f45bf3dde2a28ed887da94adc1636cbb3fb4a",
+        "source/dcdflib.f/src/spmpar.f": "f4d99ace0d95f75dc2389d4067d9e3f005abc52edabfd8bbd60c056c8d7ebd83",
+        "source/dcdflib.f/src/devlpl.f": "e77fa5d42ccc7f89242f0a174423f132446f187235f01cd68a6a95650b1d0aa9"
+      },
+      "driver_sha256": "7e5b6763469e7e8432d10cd67a19d2f8176ff3adcca1dbeaad0c4ec4317f8ae8",
+      "flags": [
+        "gfortran",
+        "-std=legacy",
+        "-O0",
+        "-ffp-contract=off",
+        "-fcheck=all"
+      ],
+      "link_flags": [],
+      "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+      "cases": [
+        {
+          "op": "ipmpar",
+          "index": 1,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "           2\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 2,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "          31\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 3,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  2147483647\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 4,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "           2\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 5,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "          24\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 6,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "        -125\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 7,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "         128\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 8,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "          53\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 9,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "       -1021\n",
+          "stderr": ""
+        },
+        {
+          "op": "ipmpar",
+          "index": 10,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "        1024\n",
+          "stderr": ""
+        },
+        {
+          "op": "spmpar",
+          "index": 1,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  2.22044604925031308E-016\n",
+          "stderr": ""
+        },
+        {
+          "op": "spmpar",
+          "index": 2,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  2.22507385850720138E-308\n",
+          "stderr": ""
+        },
+        {
+          "op": "spmpar",
+          "index": 3,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  1.79769313486231571E+308\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 1,
+          "a": -2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  1.00000000000000000E+000\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 1,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  1.00000000000000000E+000\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 1,
+          "a": 0.5,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  1.00000000000000000E+000\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 1,
+          "a": 2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  1.00000000000000000E+000\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 2,
+          "a": -2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  5.00000000000000000E+000\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 2,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  1.00000000000000000E+000\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 2,
+          "a": 0.5,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  0.00000000000000000E+000\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 2,
+          "a": 2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": " -3.00000000000000000E+000\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 3,
+          "a": -2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  1.70000000000000000E+001\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 3,
+          "a": 0,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  1.00000000000000000E+000\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 3,
+          "a": 0.5,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  7.50000000000000000E-001\n",
+          "stderr": ""
+        },
+        {
+          "op": "devlpl",
+          "index": 3,
+          "a": 2,
+          "b": 0,
+          "returncode": 0,
+          "stdout": "  9.00000000000000000E+000\n",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

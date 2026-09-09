@@ -921,6 +921,86 @@
       ]
     }
   ],
+  "legacy_support_interfaces": {
+    "status": "partially_implemented_with_documented_python_semantics",
+    "c_public_count": 49,
+    "implemented_public_names": [
+      "devlpl",
+      "fifdint",
+      "fifdmax1",
+      "fifdmin1",
+      "fifdsign",
+      "fifidint",
+      "fifmod",
+      "ftnstop",
+      "ipmpar",
+      "spmpar"
+    ],
+    "remaining_public_names": [
+      "Xgamm",
+      "algdiv",
+      "alngam",
+      "alnrel",
+      "apser",
+      "basym",
+      "bcorr",
+      "betaln",
+      "bfrac",
+      "bgrat",
+      "bpser",
+      "bratio",
+      "brcmp1",
+      "brcomp",
+      "bup",
+      "dinvnr",
+      "dinvr",
+      "dstinv",
+      "dstzr",
+      "dt1",
+      "dzror",
+      "erf1",
+      "erfc1",
+      "esum",
+      "exparg",
+      "fpser",
+      "gam1",
+      "gaminv",
+      "gamln",
+      "gamln1",
+      "grat1",
+      "gratio",
+      "gsumln",
+      "psi",
+      "rcomp",
+      "rexp",
+      "rlog",
+      "rlog1",
+      "stvaln"
+    ],
+    "f77_name_aliases": {
+      "erf1": "erf",
+      "Xgamm": "gamma"
+    },
+    "c_only_names": [
+      "fifdint",
+      "fifdmax1",
+      "fifdmin1",
+      "fifdsign",
+      "fifidint",
+      "fifmod",
+      "ftnstop"
+    ],
+    "python_namespace": "dcdflib_support",
+    "evidence": [
+      "src/mdanderson_stats/dcdflib_support.py",
+      "tools/reference_dcdflib_support.py",
+      "tests/fixtures/dcdflib_support.json",
+      "tests/test_dcdflib_support.py",
+      "docs/dcdflib-support.md",
+      "tools/benchmark_dcdflib_support.py",
+      "docs/dcdflib-support-benchmark.json"
+    ]
+  },
   "f77_declared_entry_count": 66,
   "f77_names_not_in_c_header": [
     "erf",
@@ -1797,8 +1877,8 @@
       "size": 9425,
       "sha256": "559e88f3da35fad7115000a2a8eb89f0c074e1798c792bfbdd0a7ba1abde45c2",
       "role": "c_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy C implementation; retain header-to-definition inventory",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated int32/IEEE machine-parameter mapping",
       "declarations": {
         "external_function_names": [
           "ipmpar"
@@ -2413,8 +2493,8 @@
       "size": 1209,
       "sha256": "e77fa5d42ccc7f89242f0a174423f132446f187235f01cd68a6a95650b1d0aa9",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated machine parameters and polynomial prefix mapping; see legacy support ledger",
       "declarations": {
         "routine_declarations_including_entries": [
           "devlpl"
@@ -2685,8 +2765,8 @@
       "size": 12380,
       "sha256": "68b6fa2cb4178b894b3878428d5f45bf3dde2a28ed887da94adc1636cbb3fb4a",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated machine parameters and polynomial prefix mapping; see legacy support ledger",
       "declarations": {
         "routine_declarations_including_entries": [
           "ipmpar"
@@ -2775,8 +2855,8 @@
       "size": 2128,
       "sha256": "f4d99ace0d95f75dc2389d4067d9e3f005abc52edabfd8bbd60c056c8d7ebd83",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated machine parameters and polynomial prefix mapping; see legacy support ledger",
       "declarations": {
         "routine_declarations_including_entries": [
           "spmpar"

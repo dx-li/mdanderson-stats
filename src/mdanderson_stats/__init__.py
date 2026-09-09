@@ -1,6 +1,6 @@
 """Independent Python implementations of MD Anderson catalog methods."""
 
-from . import cdflib_aux, cdflib_constants
+from . import cdflib_aux, cdflib_constants, dcdflib_support
 from .beta_mixture import BetaMixture
 from .beta_mixture_bootstrap import BetaMixtureBootstrap, beta_mixture_bootstrap
 from .beta_mixture_fit import (
@@ -229,6 +229,7 @@ __all__ = [
     "CDFConsoleError",
     "cdflib_aux",
     "cdflib_constants",
+    "dcdflib_support",
     "alnrel",
     "betaln",
     "log_beta",

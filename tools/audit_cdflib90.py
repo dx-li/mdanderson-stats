@@ -150,6 +150,13 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"ipmpar", "spmpar", "devlpl"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_support",
+                    "Validated machine parameters and polynomial prefix mapping; "
+                    "see legacy support ledger",
+                )
             if path.stem in {"cdftnc", "cumtnc"}:
                 return (
                     "f77_source",
@@ -222,6 +229,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "Legacy entry point; not independently validated by F95 fixtures",
             )
         if path.suffix == ".c":
+            if path.name == "ipmpar.c":
+                return (
+                    "c_source",
+                    "implemented_legacy_support",
+                    "Validated int32/IEEE machine-parameter mapping",
+                )
             return (
                 "c_source",
                 "legacy_contract_review",
@@ -916,6 +929,52 @@ def main():
     for interface in support_interfaces:
         if any(not Path(path).is_file() for path in interface["evidence"]):
             raise RuntimeError("missing public support evidence")
+    legacy_names = {
+        name for name in header["external_function_names"] if not name.startswith(("cdf", "cum"))
+    }
+    legacy_implemented = {
+        "ipmpar",
+        "spmpar",
+        "devlpl",
+        "fifdint",
+        "fifdmax1",
+        "fifdmin1",
+        "fifdsign",
+        "fifidint",
+        "fifmod",
+        "ftnstop",
+    }
+    legacy_evidence = [
+        "src/mdanderson_stats/dcdflib_support.py",
+        "tools/reference_dcdflib_support.py",
+        "tests/fixtures/dcdflib_support.json",
+        "tests/test_dcdflib_support.py",
+        "docs/dcdflib-support.md",
+        "tools/benchmark_dcdflib_support.py",
+        "docs/dcdflib-support-benchmark.json",
+    ]
+    if not legacy_implemented <= legacy_names or any(
+        not Path(path).is_file() for path in legacy_evidence
+    ):
+        raise RuntimeError("Missing legacy support declaration or evidence")
+    legacy_support = {
+        "status": "partially_implemented_with_documented_python_semantics",
+        "c_public_count": len(legacy_names),
+        "implemented_public_names": sorted(legacy_implemented),
+        "remaining_public_names": sorted(legacy_names - legacy_implemented),
+        "f77_name_aliases": {"erf1": "erf", "Xgamm": "gamma"},
+        "c_only_names": [
+            "fifdint",
+            "fifdmax1",
+            "fifdmin1",
+            "fifdsign",
+            "fifidint",
+            "fifmod",
+            "ftnstop",
+        ],
+        "python_namespace": "dcdflib_support",
+        "evidence": legacy_evidence,
+    }
     result = {
         "archive_sha256": digest,
         "regular_file_count": len(members),
@@ -923,6 +982,7 @@ def main():
         "role_counts": dict(Counter(row["role"] for row in members)),
         "distribution_interfaces": distributions,
         "support_interfaces": support_interfaces,
+        "legacy_support_interfaces": legacy_support,
         "f77_declared_entry_count": len(f77_names),
         "f77_names_not_in_c_header": sorted(f77_names - set(header["external_function_names"])),
         "c_names_not_in_f77": sorted(set(header["external_function_names"]) - f77_names),

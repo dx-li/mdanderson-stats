@@ -530,3 +530,7 @@ fields, long records and matching console/report output.
 console module: repeatable Python substitutions, optional help, suppression and
 explicit output routing. All seven F95 support modules now have validated Python
 mappings; CDFLIB90 remains partial pending legacy C/F77 support contracts.
+
+The [legacy DCDFLIB support namespace](docs/dcdflib-support.md) adds machine
+parameters, polynomial prefix evaluation and checked vectorized C translation
+helpers. Ten of 49 legacy support contracts are reconciled; CDFLIB90 remains partial.
