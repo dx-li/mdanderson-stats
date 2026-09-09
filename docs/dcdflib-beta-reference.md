@@ -1,8 +1,8 @@
 # Legacy beta reference audit
 
-This audit establishes unchanged C/F77 evidence for the pending `cdfbet` and
-`cumbet` interfaces. The existing `cdf_beta` implements the separately bounded
-F95 contract. This checkpoint does not mark the legacy beta API implemented.
+This audit establishes unchanged C/F77 evidence for the implemented [`cdfbet` and
+`cumbet` interfaces](dcdflib-beta.md). The existing `cdf_beta` implements the
+separately bounded F95 contract. The legacy implementation has separate wide-domain tests.
 
 ## Source contract
 
@@ -57,7 +57,7 @@ For b=1, P=x**a. At x=0.5 and Q=1e-100, a 150-digit logarithmic calculation
 gives a approximately 1.4426950408889634e-100, inside the legacy search bounds.
 Both sources return the lower bound 1e-100 with status 0, an error above 30%.
 The reflected b inversion has the same defect. This domain is outside the F95
-Python shape bounds and still needs a legacy implementation.
+Python shape bounds and is covered by the legacy implementation.
 
 For a inversion at x=0.5, P=Q=0.5 and fixed b=1e90, symmetry requires a=b.
 Both native sources instead return a approximately 1.0000000016027156e90 with
@@ -86,8 +86,8 @@ The legacy API must cover both small shapes, wide finite inputs, distinct
 shape search bounds, direct complementary quantiles, exact endpoints and
 inverse forward verification. Existing negative-binomial repairs cover useful
 beta subdomains but not the full two-small-shape domain; simply mapping all
-beta calls to that count interface would discard valid inputs. Independent
-implementation tests and batching measurements remain required.
+beta calls to that count interface would discard valid inputs. The
+[legacy implementation](dcdflib-beta.md) now uses positive beta recurrences for this domain and includes 650 implementation tests and batching measurements.
 
-CDFLIB90 remains partial with six legacy distribution entry points and public
+CDFLIB90 remains partial with four legacy distribution entry points and public
 numerical/support interfaces still open.

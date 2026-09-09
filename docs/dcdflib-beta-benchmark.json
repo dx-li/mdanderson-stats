@@ -1,0 +1,67 @@
+{
+  "python": "3.13.5",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "repetitions": 3,
+  "inputs": "a=.5, b=.25, x=linspace(.01,.9,size)",
+  "comparison": "One broadcast call versus n scalar calls to the same Python API; not native C/Fortran",
+  "cases": [
+    {
+      "operation": "p",
+      "size": 64,
+      "batch_seconds": 0.000338082667440176,
+      "scalar_seconds": 0.01399304112419486,
+      "speedup": 41.38940700552459
+    },
+    {
+      "operation": "x",
+      "size": 64,
+      "batch_seconds": 0.0004893336445093155,
+      "scalar_seconds": 0.01672516670078039,
+      "speedup": 34.17947424717082
+    },
+    {
+      "operation": "a",
+      "size": 64,
+      "batch_seconds": 0.019348958041518927,
+      "scalar_seconds": 0.8380900830961764,
+      "speedup": 43.31448139469865
+    },
+    {
+      "operation": "b",
+      "size": 64,
+      "batch_seconds": 0.018554999958723783,
+      "scalar_seconds": 0.8212808747775853,
+      "speedup": 44.261971253276855
+    },
+    {
+      "operation": "p",
+      "size": 256,
+      "batch_seconds": 0.0005223751068115234,
+      "scalar_seconds": 0.05612212512642145,
+      "speedup": 107.43644632873118
+    },
+    {
+      "operation": "x",
+      "size": 256,
+      "batch_seconds": 0.0010302499867975712,
+      "scalar_seconds": 0.06697891699150205,
+      "speedup": 65.0122958988811
+    },
+    {
+      "operation": "a",
+      "size": 256,
+      "batch_seconds": 0.035775874741375446,
+      "scalar_seconds": 3.3097514580003917,
+      "speedup": 92.51350195981664
+    },
+    {
+      "operation": "b",
+      "size": 256,
+      "batch_seconds": 0.033489459194242954,
+      "scalar_seconds": 3.3813785421662033,
+      "speedup": 100.96844271368477
+    }
+  ]
+}

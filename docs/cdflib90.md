@@ -993,3 +993,7 @@ independently validated repairs for extreme shapes and small inverse targets.
 `cdfbin` and `cumbin` implement the [legacy binomial interface](dcdflib-binomial.md),
 with separate success/trial search bounds, complementary chance inversion and
 independent checks of native process failures, tiny counts and wide inputs.
+
+`cdfbet` and `cumbet` implement the [legacy beta interface](dcdflib-beta.md),
+with wide positive shapes, bounded shape inversions, complementary quantiles
+and positive recurrences that preserve tails when both shapes are tiny.

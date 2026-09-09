@@ -138,6 +138,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"cdfbet", "cumbet"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_distribution",
+                    "Beta tails and inversions; independent C/F77 validation",
+                )
             if path.stem in {"cdfbin", "cumbin"}:
                 return (
                     "f77_source",
@@ -392,10 +398,17 @@ def main():
         "tests/test_dcdflib_beta_reference.py",
         "docs/dcdflib-beta-reference.md",
     ]
-    beta["legacy_review_notes"] = (
-        "Unchanged C/F77 contracts audited: wider shape bounds, endpoint ambiguities, "
-        "small-target and large-shape false successes, symmetric overflow timeout; API pending."
-    )
+    beta["legacy_computed_groups"] = ["p/q", "x/cx", "a", "b"]
+    beta["legacy_python_interfaces"] = ["cdfbet", "cumbet"]
+    beta["legacy_contract_status"] = "implemented_with_documented_python_semantics"
+    beta["legacy_evidence"] = [
+        "src/mdanderson_stats/dcdflib_beta.py",
+        "tests/test_dcdflib_beta.py",
+        "tests/fixtures/dcdflib_beta.json",
+        "docs/dcdflib-beta.md",
+    ]
+    if any(not Path(path).is_file() for path in beta["legacy_evidence"]):
+        raise RuntimeError("missing legacy beta implementation evidence")
     if any(not Path(path).is_file() for path in beta["legacy_reference_evidence"]):
         raise RuntimeError("missing legacy beta reference evidence")
     binomial = next(row for row in distributions if row["name"] == "binomial")

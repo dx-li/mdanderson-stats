@@ -537,3 +537,9 @@ C/F77 binomial contracts through the shared complementary beta, power and
 gamma-limit kernels. The CDFLIB90 authorship and retained legal notice above
 apply; [legacy notes](docs/dcdflib-binomial.md) document methods, boundary choices
 and unchanged native reference evidence. No archived source is bundled.
+
+The legacy `cdfbet` and `cumbet` interfaces independently express C/F77 beta
+contracts through shared numerical kernels and positive beta recurrence
+identities. The CDFLIB90 authorship and retained legal notice above apply;
+[legacy notes](docs/dcdflib-beta.md) document independent validation, numerical
+repairs and boundary conventions. No archived numerical code is bundled.

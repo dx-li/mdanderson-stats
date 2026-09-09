@@ -44,14 +44,29 @@
         "cdfbet",
         "cumbet"
       ],
-      "legacy_contract_status": "not_yet_independently_validated",
+      "legacy_contract_status": "implemented_with_documented_python_semantics",
       "legacy_reference_evidence": [
         "tools/reference_dcdflib_beta.py",
         "tests/fixtures/dcdflib_beta.json",
         "tests/test_dcdflib_beta_reference.py",
         "docs/dcdflib-beta-reference.md"
       ],
-      "legacy_review_notes": "Unchanged C/F77 contracts audited: wider shape bounds, endpoint ambiguities, small-target and large-shape false successes, symmetric overflow timeout; API pending."
+      "legacy_computed_groups": [
+        "p/q",
+        "x/cx",
+        "a",
+        "b"
+      ],
+      "legacy_python_interfaces": [
+        "cdfbet",
+        "cumbet"
+      ],
+      "legacy_evidence": [
+        "src/mdanderson_stats/dcdflib_beta.py",
+        "tests/test_dcdflib_beta.py",
+        "tests/fixtures/dcdflib_beta.json",
+        "docs/dcdflib-beta.md"
+      ]
     },
     {
       "name": "binomial",
@@ -1572,8 +1587,8 @@
       "size": 8472,
       "sha256": "599a209cc814b0023701ec6ecce3cfb528b6b37a3b2cc1d3eba0238038db0cbf",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Beta tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdfbet"
@@ -1752,8 +1767,8 @@
       "size": 2110,
       "sha256": "3d95859e4ee780e524e43b748789dbf242eb971e711009541678d9bedd161321",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Beta tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumbet"
