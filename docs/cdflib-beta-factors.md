@@ -79,6 +79,6 @@ coordinates against repeated scalar calls to the same API, requiring identical
 results. Cases include ordinary, tiny, large-center, scaled and negative-shape
 factors. These measure batching benefits, not a speedup over Fortran.
 
-The later [beta shape-shift port](cdflib-beta-shift.md) implements `bup`.
-Seven remaining incomplete-beta helpers, constants and other support interfaces
-keep CDFLIB90 partial. The full catalog conversion remains ongoing.
+The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
+mathematical procedures. Imported constants and other CDFLIB support interfaces
+remain open, along with the rest of the software catalog. CDFLIB90 remains partial.

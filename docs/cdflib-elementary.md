@@ -1,8 +1,8 @@
 # CDFLIB elementary mathematical support
 
-Five public F95 `biomath_mathlib_mod` procedures now have vectorized Python
-implementations. The rest of this default-public mathematical module remains
-under review; this is not completion of CDFLIB90's numerical support surface.
+These five public F95 `biomath_mathlib_mod` procedures have vectorized Python
+implementations. Subsequent ports complete all 35 mathematical procedures;
+imported constants and other CDFLIB support interfaces remain open.
 
 | Function | Mathematical result | Domain |
 |---|---|---|
@@ -63,6 +63,6 @@ outputs. They do not measure a native-language speedup. The implementations use
 NumPy array operations and a short fixed-length polynomial loop, with no added
 dependency or change to existing distribution kernels.
 
-The remaining public procedures include gamma/beta functions and ratios, their
-approximations, logarithmic combinatorial helpers and machine-range helpers.
-Constants, root-finder/state and console/adapter interfaces also remain open.
+The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
+mathematical procedures. Imported constants and other CDFLIB support interfaces
+remain open, along with the rest of the software catalog. CDFLIB90 remains partial.

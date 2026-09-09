@@ -65,6 +65,6 @@ repair in both orientations, including shapes paired with 1e308.
 scalar calls and require identical outputs. They measure batching benefits,
 not speed relative to Fortran.
 
-Thirty-four of the 35 F95 mathematical procedures are implemented. `bratio`, other
-CDFLIB support interfaces and the remaining software catalog still require work.
-CDFLIB90 remains partial.
+The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
+mathematical procedures. Imported constants and other CDFLIB support interfaces
+remain open, along with the rest of the software catalog. CDFLIB90 remains partial.

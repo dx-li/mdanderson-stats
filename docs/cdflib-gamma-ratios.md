@@ -1,7 +1,7 @@
 # CDFLIB gamma-ratio foundations
 
 Three more public F95 procedures now have vectorized implementations. They form
-the numerical foundation for the remaining beta/combinatorial helpers.
+the numerical foundation for the beta/combinatorial helpers.
 
 | Function | Result | Domain |
 |---|---|---|
@@ -71,6 +71,6 @@ benefits, not a native-language speedup. No dependency or existing distribution
 kernel was changed. As with ordinary float64 log-gamma evaluation, relative
 accuracy can deteriorate near nontrivial zero log ratios on the negative-a domain.
 
-The later [beta/combinatorial port](cdflib-beta-support.md) implements `betaln`,
-`log_beta` and `log_bicoef` using these foundations. Other incomplete-beta/gamma
-routines, constants and support interfaces remain open; CDFLIB90 remains partial.
+The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
+mathematical procedures. Imported constants and other CDFLIB support interfaces
+remain open, along with the rest of the software catalog. CDFLIB90 remains partial.

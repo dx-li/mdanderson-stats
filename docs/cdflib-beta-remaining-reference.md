@@ -59,8 +59,8 @@ integral is independently cross-checked against positive binomial sums for shape
   and (1,0), established by bounds and symmetry.
 
 The fixture records failures explicitly instead of treating native values as
-reference truth. The later [bgrat](cdflib-bgrat.md), [basym](cdflib-basym.md), and
-[bfrac](cdflib-bfrac.md) ports implement the accumulated increment,
-displacement-preserving tail and continued fraction. Bratio remains pending.
-CDFLIB90 remains partial, with 34 of 35 F95 mathematical procedures implemented
-and other support interfaces and catalog entries still outstanding.
+reference truth. The later [bgrat](cdflib-bgrat.md), [basym](cdflib-basym.md),
+[bfrac](cdflib-bfrac.md), and [bratio](cdflib-bratio.md) ports implement all four
+audited interfaces. All 35 F95 mathematical procedures are now implemented;
+imported constants and other support interfaces remain open. CDFLIB90 remains
+partial, and the rest of the catalog still requires work.

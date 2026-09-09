@@ -79,6 +79,6 @@ immutable ownership and batches exceeding the coefficient-work limit.
 [Benchmarks](cdflib-basym-benchmark.json) require identical batched and repeated
 scalar outputs. They measure batching benefits, not speed relative to Fortran.
 
-The later [bfrac port](cdflib-bfrac.md) brings coverage to 34 of the 35 F95
-mathematical procedures. `bratio`, other CDFLIB support interfaces and the
-remaining software catalog still require work. CDFLIB90 remains partial.
+The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
+mathematical procedures. Imported constants and other CDFLIB support interfaces
+remain open, along with the rest of the software catalog. CDFLIB90 remains partial.

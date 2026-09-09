@@ -75,6 +75,6 @@ coordinates with repeated scalar calls to the same public API. Every comparison
 checks identical results; negative subnormal gamma is included. These measure
 batching benefits, not speedup against Fortran.
 
-The later [gamma-ratio foundations](cdflib-gamma-ratios.md) extend this support.
-Remaining beta/gamma routines, combinatorial logarithms, constants and other
-support contracts keep CDFLIB90's catalog status partial.
+The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
+mathematical procedures. Imported constants and other CDFLIB support interfaces
+remain open, along with the rest of the software catalog. CDFLIB90 remains partial.

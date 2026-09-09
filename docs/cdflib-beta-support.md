@@ -83,6 +83,6 @@ results. They cover wide beta shapes, close unit shapes, tiny endpoints, small
 argument pairs and huge totals. These measure batching benefits, not a speedup
 against Fortran.
 
-The later [gamma scaling factor](cdflib-gamma-factor.md) adds `rcomp`. Remaining
-incomplete-beta/gamma routines, constants and other support contracts keep
-CDFLIB90's catalog status partial.
+The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
+mathematical procedures. Imported constants and other CDFLIB support interfaces
+remain open, along with the rest of the software catalog. CDFLIB90 remains partial.

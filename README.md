@@ -501,3 +501,6 @@ retaining tiny displacements and bounding asymptotic work and scratch memory.
 
 The [CDFLIB beta continued fraction](docs/cdflib-bfrac.md) adds `bfrac`,
 with reflected tails, bounded iteration and extreme-shape normalization.
+
+The [CDFLIB paired beta integral](docs/cdflib-bratio.md) adds `bratio`,
+completing all 35 F95 mathematical procedures while preserving tiny paired tails.

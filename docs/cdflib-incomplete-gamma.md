@@ -78,6 +78,6 @@ coordinates with repeated scalar calls, checking identical results. They include
 ordinary, tiny-shape, large-center, lower/upper-subnormal and `grat1` fraction
 cases. These measure batching benefits, not speed relative to Fortran.
 
-The later [beta-factor port](cdflib-beta-factors.md) implements `brcomp` and
-`brcmp1`. Remaining incomplete-beta helpers, constants and other support
-interfaces keep CDFLIB90 partial; the overall catalog conversion is still ongoing.
+The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
+mathematical procedures. Imported constants and other CDFLIB support interfaces
+remain open, along with the rest of the software catalog. CDFLIB90 remains partial.

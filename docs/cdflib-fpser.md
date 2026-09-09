@@ -58,6 +58,6 @@ exercise the general series path rather than the exact unit-shape identity.
 with repeated scalar calls to this Python API, requiring identical results.
 They measure batching benefits, not speed relative to Fortran.
 
-The later [apser port](cdflib-apser.md) adds the small-first-shape upper tail.
-Remaining beta helpers, other CDFLIB support interfaces and the rest of the
-software catalog keep the conversion ongoing. CDFLIB90 remains partial.
+The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
+mathematical procedures. Imported constants and other CDFLIB support interfaces
+remain open, along with the rest of the software catalog. CDFLIB90 remains partial.
