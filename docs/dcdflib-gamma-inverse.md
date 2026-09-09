@@ -100,5 +100,6 @@ with repeated scalar calls to this same API, requiring identical outputs. It
 does not claim a speedup over native C or Fortran. There is no per-element Python
 loop in the production inverse; special paths operate on selected array batches.
 
-45 of 49 legacy support names are now reconciled. `dinvr`, `dstinv`, `dzror` and
-`dstzr` and the final archive/documentation audit remain. CDFLIB90 is still partial.
+This inverse reconciles 45 of 49 legacy support names. The subsequent
+[legacy root finders](dcdflib-root.md) complete all 49 mappings. The final
+archive/documentation audit remains pending and CDFLIB90 is still partial.

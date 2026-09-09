@@ -96,5 +96,6 @@ NumPy operations, compiled normal kernels and fixed loops over polynomial terms.
 
 These helpers reconcile 44 of 49 legacy support names. The subsequent
 [incomplete-gamma inverse](dcdflib-gamma-inverse.md) brings the total to 45.
-`dinvr`, `dstinv`, `dzror` and `dstzr` remain, followed by the final archive/documentation audit.
+The [legacy root finders](dcdflib-root.md) complete all 49 mappings. The final
+archive/documentation audit remains pending.
 CDFLIB90 and the overall catalog conversion remain incomplete.

@@ -451,7 +451,8 @@
         "Legacy DCDFLIB machine parameters, polynomial prefix evaluation and all seven C translation helpers: ten of 49 support contracts reconciled with checked vectorized arithmetic, exact int64 remainder and exception-based STOP",
         "All 31 legacy mathematical support helpers mapped through dcdflib_support with direct C/F77 validation and independent extreme-value oracles; distinct conservative legacy exparg contract preserved; 41 of 49 legacy support names reconciled",
         "Legacy stvaln normal starting approximation, dinvnr refined normal inversion and dt1 inverse-df t starting expansion, with subnormal-tail verification and finite tiny-df corrections; 44 of 49 support names reconciled",
-        "Legacy GAMINV: batched incomplete-gamma inversion with checked optional starting values, endpoint sentinels, subnormal log-tail refinement and large-shape quantiles; native statuses reconciled with explicit Python errors"
+        "Legacy GAMINV: batched incomplete-gamma inversion with checked optional starting values, endpoint sentinels, subnormal log-tail refinement and large-shape quantiles; native statuses reconciled with explicit Python errors",
+        "Legacy DSTINV/DINVR and DSTZR/DZROR reverse-communication roots with independent states, exact max-tolerance/best-endpoint contracts, checked work caps and unchanged C/F77 validation; all 49 legacy support mappings implemented, final archive audit pending"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -657,7 +658,11 @@
         "tests/fixtures/dcdflib_gamma_inverse.json",
         "tests/test_dcdflib_gamma_inverse.py",
         "docs/dcdflib-gamma-inverse.md",
-        "docs/dcdflib-gamma-inverse-benchmark.json"
+        "docs/dcdflib-gamma-inverse-benchmark.json",
+        "tests/fixtures/dcdflib_root.json",
+        "tests/test_dcdflib_root.py",
+        "docs/dcdflib-root.md",
+        "docs/dcdflib-root-benchmark.json"
       ]
     },
     {

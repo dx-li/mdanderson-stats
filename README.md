@@ -538,4 +538,6 @@ direct C/F77 validation, including their distinct exponential-limit contract.
 The [normal/t quantile helpers](docs/dcdflib-quantile-helpers.md) preserve the
 starting formulas and add refined normal inversion. The [incomplete-gamma
 inverse](docs/dcdflib-gamma-inverse.md) adds checked starting values and extreme-tail
-repairs. 45 of 49 legacy support contracts are reconciled; CDFLIB90 remains partial.
+repairs. The [legacy root finders](docs/dcdflib-root.md) complete all 49 legacy
+support mappings with independent search state and their distinct stopping rule.
+CDFLIB90 remains partial pending the final archive/documentation audit.

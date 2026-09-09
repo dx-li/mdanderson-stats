@@ -1,0 +1,32 @@
+{
+  "python": "3.13.5",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "workload": "Independent scalar reverse-communication searches; not a native speedup comparison",
+  "cases": [
+    {
+      "mode": "interval",
+      "searches": 100,
+      "seconds": 0.0067964158952236176,
+      "evaluations": 970
+    },
+    {
+      "mode": "interval",
+      "searches": 1000,
+      "seconds": 0.07077287510037422,
+      "evaluations": 9987
+    },
+    {
+      "mode": "step",
+      "searches": 100,
+      "seconds": 0.00697262492030859,
+      "evaluations": 1039
+    },
+    {
+      "mode": "step",
+      "searches": 1000,
+      "seconds": 0.06990400003269315,
+      "evaluations": 10390
+    }
+  ]
+}

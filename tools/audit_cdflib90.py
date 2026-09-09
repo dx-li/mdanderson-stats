@@ -185,6 +185,13 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"dinvr", "dzror"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_support",
+                    "Validated legacy root protocols and configuration entries; "
+                    "see dcdflib-root.md",
+                )
             if path.stem == "gaminv":
                 return (
                     "f77_source",
@@ -997,6 +1004,10 @@ def main():
         "fifmod",
         "ftnstop",
         "gaminv",
+        "dinvr",
+        "dstinv",
+        "dstzr",
+        "dzror",
     }
     legacy_implemented.update(LEGACY_MATH_NAMES | LEGACY_QUANTILE_NAMES)
     legacy_evidence = [
@@ -1025,13 +1036,21 @@ def main():
         "docs/dcdflib-gamma-inverse.md",
         "tools/benchmark_dcdflib_gamma_inverse.py",
         "docs/dcdflib-gamma-inverse-benchmark.json",
+        "src/mdanderson_stats/dcdflib_root.py",
+        "src/mdanderson_stats/cdflib_root.py",
+        "tools/reference_dcdflib_root.py",
+        "tests/fixtures/dcdflib_root.json",
+        "tests/test_dcdflib_root.py",
+        "docs/dcdflib-root.md",
+        "tools/benchmark_dcdflib_root.py",
+        "docs/dcdflib-root-benchmark.json",
     ]
-    if not legacy_implemented <= legacy_names or any(
+    if legacy_implemented != legacy_names or any(
         not Path(path).is_file() for path in legacy_evidence
     ):
         raise RuntimeError("Missing legacy support declaration or evidence")
     legacy_support = {
-        "status": "partially_implemented_with_documented_python_semantics",
+        "status": "implemented_with_documented_python_semantics",
         "c_public_count": len(legacy_names),
         "implemented_public_names": sorted(legacy_implemented),
         "remaining_public_names": sorted(legacy_names - legacy_implemented),
@@ -1049,6 +1068,7 @@ def main():
         "mathematical_public_names": sorted(LEGACY_MATH_NAMES),
         "quantile_helper_names": sorted(LEGACY_QUANTILE_NAMES),
         "gamma_inverse_names": ["gaminv"],
+        "root_finder_names": ["dinvr", "dstinv", "dstzr", "dzror"],
         "cross_version_notes": {
             "exparg": "Legacy 0.99999 margin and rounded log(radix), distinct from F95",
             "bfrac": "Redundant displacement computed from a,b,x,y",

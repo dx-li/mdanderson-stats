@@ -922,7 +922,7 @@
     }
   ],
   "legacy_support_interfaces": {
-    "status": "partially_implemented_with_documented_python_semantics",
+    "status": "implemented_with_documented_python_semantics",
     "c_public_count": 49,
     "implemented_public_names": [
       "Xgamm",
@@ -942,7 +942,11 @@
       "bup",
       "devlpl",
       "dinvnr",
+      "dinvr",
+      "dstinv",
+      "dstzr",
       "dt1",
+      "dzror",
       "erf1",
       "erfc1",
       "esum",
@@ -971,12 +975,7 @@
       "spmpar",
       "stvaln"
     ],
-    "remaining_public_names": [
-      "dinvr",
-      "dstinv",
-      "dstzr",
-      "dzror"
-    ],
+    "remaining_public_names": [],
     "f77_name_aliases": {
       "erf1": "erf",
       "Xgamm": "gamma"
@@ -1032,6 +1031,12 @@
     "gamma_inverse_names": [
       "gaminv"
     ],
+    "root_finder_names": [
+      "dinvr",
+      "dstinv",
+      "dstzr",
+      "dzror"
+    ],
     "cross_version_notes": {
       "exparg": "Legacy 0.99999 margin and rounded log(radix), distinct from F95",
       "bfrac": "Redundant displacement computed from a,b,x,y",
@@ -1062,7 +1067,15 @@
       "tests/test_dcdflib_gamma_inverse.py",
       "docs/dcdflib-gamma-inverse.md",
       "tools/benchmark_dcdflib_gamma_inverse.py",
-      "docs/dcdflib-gamma-inverse-benchmark.json"
+      "docs/dcdflib-gamma-inverse-benchmark.json",
+      "src/mdanderson_stats/dcdflib_root.py",
+      "src/mdanderson_stats/cdflib_root.py",
+      "tools/reference_dcdflib_root.py",
+      "tests/fixtures/dcdflib_root.json",
+      "tests/test_dcdflib_root.py",
+      "docs/dcdflib-root.md",
+      "tools/benchmark_dcdflib_root.py",
+      "docs/dcdflib-root-benchmark.json"
     ]
   },
   "f77_declared_entry_count": 66,
@@ -2587,8 +2600,8 @@
       "size": 10245,
       "sha256": "5c49b2aea6e98a421da138754ee5b9b119e8ae84d69d4eb05d97f5a329a9eec6",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated legacy root protocols and configuration entries; see dcdflib-root.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "dinvr",
@@ -2618,8 +2631,8 @@
       "size": 7759,
       "sha256": "d2f2681c5fd4fb1394f973602c1bfe9194850da408e4bd20f23920af9a996bba",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated legacy root protocols and configuration entries; see dcdflib-root.md",
       "declarations": {
         "routine_declarations_including_entries": [
           "dstzr",

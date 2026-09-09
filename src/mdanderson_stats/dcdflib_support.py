@@ -24,6 +24,7 @@ from .cdflib_gamma_support import gamma as Xgamm
 from .cdflib_incomplete_gamma import grat1, gratio
 from .dcdflib_gamma_inverse import gaminv
 from .dcdflib_quantile_helpers import dinvnr, dt1, stvaln
+from .dcdflib_root import dinvr, dstinv, dstzr, dzror
 
 # Archived int32 / IEEE binary32 / IEEE binary64 model, independent of C long.
 _IMACH = (2, 31, 2147483647, 2, 24, -125, 128, 53, -1021, 1024)
@@ -134,6 +135,10 @@ def ftnstop(message: str | None = None) -> NoReturn:
 
 
 __all__ = [
+    "dinvr",
+    "dstinv",
+    "dstzr",
+    "dzror",
     "gaminv",
     "stvaln",
     "dinvnr",

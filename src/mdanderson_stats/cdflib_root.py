@@ -95,6 +95,7 @@ class ZeroFinder:
                 if (
                     max(self._settings.absolute_step, self._settings.relative_step * abs(initial))
                     == 0
+                    and self._low < self._high
                 ):
                     raise ValueError("The initial step must be positive")
             self._mode = mode
@@ -169,9 +170,9 @@ class ZeroFinder:
             self._low, self._high = a, b
             middle = a / 2 + b / 2
             half_width = b / 2 - a / 2
-            tol = self._settings.absolute + self._settings.relative * min(abs(a), abs(b))
+            final_x, tol = self._refinement_goal(a, fa, b, fb)
             if half_width <= tol or nextafter(a, b) == b:
-                return self._finish(middle)
+                return self._finish(final_x)
             # At least halve the bracket every three proposals. This bounds
             # progress even for extremely flat residuals or rejected interpolants.
             bisect = iteration % 3 == 2 and half_width > saved_half_width / 2
@@ -190,6 +191,13 @@ class ZeroFinder:
             else:
                 old, a, fa = (a, fa), c, fc
             iteration += 1
+
+    def _refinement_goal(self, a: float, fa: float, b: float, fb: float) -> tuple[float, float]:
+        """F95 midpoint/error policy; legacy searches supply their distinct policy."""
+        return (
+            a / 2 + b / 2,
+            self._settings.absolute + self._settings.relative * min(abs(a), abs(b)),
+        )
 
 
 def _interpolate(
@@ -239,12 +247,41 @@ def set_zero_finder(
     returned midpoint's absolute error for a continuous bracketed function by
     abs_tol + rel_tol*min(abs(left), abs(right)), subject to float resolution.
     """
+    return ZeroFinder(
+        _validated_settings(
+            low_limit,
+            hi_limit,
+            abs_tol,
+            rel_tol,
+            abs_step,
+            rel_step,
+            step_multiplier,
+            max_evaluations,
+        )
+    )
+
+
+def _validated_settings(
+    low_limit: float,
+    hi_limit: float,
+    abs_tol: float,
+    rel_tol: float,
+    abs_step: float,
+    rel_step: float,
+    step_multiplier: float,
+    max_evaluations: int,
+    *,
+    allow_equal: bool = False,
+) -> _Settings:
+    """Shared configuration validation; legacy searches also allow a single point."""
     low, high = scalar(low_limit, "low_limit"), scalar(hi_limit, "hi_limit")
     absolute, relative = scalar(abs_tol, "abs_tol"), scalar(rel_tol, "rel_tol")
     astep, rstep = scalar(abs_step, "abs_step"), scalar(rel_step, "rel_step")
     multiplier = scalar(step_multiplier, "step_multiplier")
-    if low >= high:
-        raise ValueError("Require low_limit < hi_limit")
+    if low > high or (low == high and not allow_equal):
+        raise ValueError(
+            "Require low_limit <= hi_limit" if allow_equal else "Require low_limit < hi_limit"
+        )
     if absolute < 0 or relative < 0 or max(absolute, relative) == 0:
         raise ValueError("Tolerances must be nonnegative and at least one positive")
     if astep < 0 or rstep < 0 or multiplier <= 1:
@@ -255,9 +292,7 @@ def set_zero_finder(
         or max_evaluations < 1
     ):
         raise ValueError("max_evaluations must be a positive integer")
-    return ZeroFinder(
-        _Settings(low, high, absolute, relative, astep, rstep, multiplier, max_evaluations)
-    )
+    return _Settings(low, high, absolute, relative, astep, rstep, multiplier, max_evaluations)
 
 
 def rc_interval_zf(local: ZeroFinder, fx: float | None = None) -> ZeroFinderResult:
