@@ -94,6 +94,7 @@ repeated scalar calls to this same Python API, requiring identical results.
 It does not claim a speedup over C or Fortran. The implementation uses batched
 NumPy operations, compiled normal kernels and fixed loops over polynomial terms.
 
-44 of 49 legacy support names are now reconciled. `gaminv`, `dinvr`, `dstinv`,
-`dzror` and `dstzr` remain, followed by the final archive/documentation audit.
+These helpers reconcile 44 of 49 legacy support names. The subsequent
+[incomplete-gamma inverse](dcdflib-gamma-inverse.md) brings the total to 45.
+`dinvr`, `dstinv`, `dzror` and `dstzr` remain, followed by the final archive/documentation audit.
 CDFLIB90 and the overall catalog conversion remain incomplete.

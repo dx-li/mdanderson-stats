@@ -5,7 +5,8 @@ the archived C/F77 libraries. It reuses the validated vectorized kernels already
 available for F95 support, with a separate implementation where the legacy
 contract differs. Together with the ten [support primitives](dcdflib-support.md),
 these account for 41 legacy support contracts. The later
-[normal/t quantile helpers](dcdflib-quantile-helpers.md) bring the total to 44 of 49.
+[normal/t quantile helpers](dcdflib-quantile-helpers.md) and
+[incomplete-gamma inverse](dcdflib-gamma-inverse.md) bring the total to 45 of 49.
 
 ```python
 from mdanderson_stats import dcdflib_support as legacy
@@ -127,5 +128,5 @@ F95 pages, not duplicate numerical implementations. `exparg` evaluates selectors
 in one NumPy batch. No new dependency or native-language speedup claim is added.
 
 The [normal/t quantile helpers](dcdflib-quantile-helpers.md) are also implemented.
-Five legacy contracts remain: `gaminv`, `dinvr`, `dstinv`, `dzror` and `dstzr`. CDFLIB90 stays partial until these and the final
+Four legacy contracts remain: `dinvr`, `dstinv`, `dzror` and `dstzr`. CDFLIB90 stays partial until these and the final
 archive/documentation audit are complete; the full catalog conversion is ongoing.

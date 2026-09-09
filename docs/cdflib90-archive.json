@@ -956,6 +956,7 @@
       "fpser",
       "ftnstop",
       "gam1",
+      "gaminv",
       "gamln",
       "gamln1",
       "grat1",
@@ -974,8 +975,7 @@
       "dinvr",
       "dstinv",
       "dstzr",
-      "dzror",
-      "gaminv"
+      "dzror"
     ],
     "f77_name_aliases": {
       "erf1": "erf",
@@ -1029,6 +1029,9 @@
       "dt1",
       "stvaln"
     ],
+    "gamma_inverse_names": [
+      "gaminv"
+    ],
     "cross_version_notes": {
       "exparg": "Legacy 0.99999 margin and rounded log(radix), distinct from F95",
       "bfrac": "Redundant displacement computed from a,b,x,y",
@@ -1052,7 +1055,14 @@
       "tests/test_dcdflib_quantile_helpers.py",
       "docs/dcdflib-quantile-helpers.md",
       "tools/benchmark_dcdflib_quantile_helpers.py",
-      "docs/dcdflib-quantile-helpers-benchmark.json"
+      "docs/dcdflib-quantile-helpers-benchmark.json",
+      "src/mdanderson_stats/dcdflib_gamma_inverse.py",
+      "tools/reference_dcdflib_gamma_inverse.py",
+      "tests/fixtures/dcdflib_gamma_inverse.json",
+      "tests/test_dcdflib_gamma_inverse.py",
+      "docs/dcdflib-gamma-inverse.md",
+      "tools/benchmark_dcdflib_gamma_inverse.py",
+      "docs/dcdflib-gamma-inverse-benchmark.json"
     ]
   },
   "f77_declared_entry_count": 66,
@@ -2714,8 +2724,8 @@
       "size": 10511,
       "sha256": "91e27d56e3d3f5b3714ceb257a0659b5f4f9d401288e35831bade060a10c11d5",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated inverse gamma with checked hints and numerical repairs",
       "declarations": {
         "routine_declarations_including_entries": [
           "gaminv"

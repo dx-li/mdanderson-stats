@@ -97,5 +97,6 @@ processing all evaluation points together.
 
 These ten primitives and the [31 mathematical helpers](dcdflib-math.md) reconcile
 41 legacy C support names. The [normal/t quantile helpers](dcdflib-quantile-helpers.md)
-bring the total to 44 of 49. Five inverse-gamma/root-finding contracts remain.
+and [incomplete-gamma inverse](dcdflib-gamma-inverse.md) bring the total to 45 of 49.
+Four root-finding contracts remain.
 CDFLIB90 stays partial and the full catalog conversion remains in progress.

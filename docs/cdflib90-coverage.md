@@ -105,8 +105,8 @@ support names: `ipmpar`, `spmpar`, `devlpl` and all seven C translation helpers.
 The [31 mathematical helper mappings](dcdflib-math.md) now have separate C/F77
 evidence, including a distinct legacy `exparg` implementation. The inventory
 also records the [normal/t quantile helpers](dcdflib-quantile-helpers.md).
-44 support mappings are complete; `gaminv`, `dinvr`, `dstinv`, `dzror` and `dstzr`
-remain pending.
+The [incomplete-gamma inverse](dcdflib-gamma-inverse.md) brings the total to 45
+support mappings; `dinvr`, `dstinv`, `dzror` and `dstzr` remain pending.
 
 F95 support also has an explicit public surface:
 

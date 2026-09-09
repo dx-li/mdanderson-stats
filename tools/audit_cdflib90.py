@@ -185,6 +185,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem == "gaminv":
+                return (
+                    "f77_source",
+                    "implemented_legacy_support",
+                    "Validated inverse gamma with checked hints and numerical repairs",
+                )
             if path.stem in LEGACY_QUANTILE_NAMES:
                 return (
                     "f77_source",
@@ -990,6 +996,7 @@ def main():
         "fifidint",
         "fifmod",
         "ftnstop",
+        "gaminv",
     }
     legacy_implemented.update(LEGACY_MATH_NAMES | LEGACY_QUANTILE_NAMES)
     legacy_evidence = [
@@ -1011,6 +1018,13 @@ def main():
         "docs/dcdflib-quantile-helpers.md",
         "tools/benchmark_dcdflib_quantile_helpers.py",
         "docs/dcdflib-quantile-helpers-benchmark.json",
+        "src/mdanderson_stats/dcdflib_gamma_inverse.py",
+        "tools/reference_dcdflib_gamma_inverse.py",
+        "tests/fixtures/dcdflib_gamma_inverse.json",
+        "tests/test_dcdflib_gamma_inverse.py",
+        "docs/dcdflib-gamma-inverse.md",
+        "tools/benchmark_dcdflib_gamma_inverse.py",
+        "docs/dcdflib-gamma-inverse-benchmark.json",
     ]
     if not legacy_implemented <= legacy_names or any(
         not Path(path).is_file() for path in legacy_evidence
@@ -1034,6 +1048,7 @@ def main():
         "python_namespace": "dcdflib_support",
         "mathematical_public_names": sorted(LEGACY_MATH_NAMES),
         "quantile_helper_names": sorted(LEGACY_QUANTILE_NAMES),
+        "gamma_inverse_names": ["gaminv"],
         "cross_version_notes": {
             "exparg": "Legacy 0.99999 margin and rounded log(radix), distinct from F95",
             "bfrac": "Redundant displacement computed from a,b,x,y",

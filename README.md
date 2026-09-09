@@ -536,5 +536,6 @@ parameters, polynomial prefix evaluation and checked vectorized C translation
 helpers. The [31 legacy mathematical helpers](docs/dcdflib-math.md) also have
 direct C/F77 validation, including their distinct exponential-limit contract.
 The [normal/t quantile helpers](docs/dcdflib-quantile-helpers.md) preserve the
-starting formulas and add refined normal inversion. 44 of 49 legacy support
-contracts are reconciled; CDFLIB90 remains partial.
+starting formulas and add refined normal inversion. The [incomplete-gamma
+inverse](docs/dcdflib-gamma-inverse.md) adds checked starting values and extreme-tail
+repairs. 45 of 49 legacy support contracts are reconciled; CDFLIB90 remains partial.
