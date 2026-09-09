@@ -3,9 +3,10 @@
 from dataclasses import dataclass
 
 import numpy as np
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 
 from ._cdflib import _freeze, _pair
+from ._dcdflib import _invert_df as _search_df
 from ._validation import FloatArray, finite
 from .cdflib_beta import _quantiles
 from .cdflib_beta import _tails as _beta_tails
@@ -72,66 +73,16 @@ def _invert_df(
     *,
     numerator: bool,
 ) -> FloatArray:
-    lower, target = p <= q, np.minimum(p, q)
+    lower = (p <= q).ravel()
+    ff, n, d = f.ravel(), nn.ravel(), dd.ravel()
 
-    def evaluate(value: FloatArray) -> FloatArray:
-        lp, uq = _tails(f, value if numerator else nn, dd if numerator else value)
-        return np.where(lower, lp, uq)
-
-    at_low, at_high = evaluate(low), evaluate(high)
-    if np.any(at_low == at_high):
-        raise ValueError("df is numerically unidentified across this bracket")
-    adjusted = target.copy()
-    for endpoint in (at_low, at_high):
-        adjusted = np.where(
-            np.abs(target - endpoint) <= 32 * np.finfo(float).eps * endpoint, endpoint, adjusted
+    def evaluate(value: FloatArray, indices: NDArray[np.intp]) -> FloatArray:
+        lp, uq = _tails(
+            ff[indices], value if numerator else n[indices], d[indices] if numerator else value
         )
-    if np.any((adjusted < np.minimum(at_low, at_high)) | (adjusted > np.maximum(at_low, at_high))):
-        raise ValueError("F df root is not bracketed; multiple roots may require df_bracket")
-    resolved = (adjusted == at_low) | (adjusted == at_high)
-    answer = np.where(adjusted == at_low, low, high)
-    if np.all(resolved):
-        return answer
-    active = ~resolved
-    f, nn, dd = f[active], nn[active], dd[active]
-    lower, adjusted = lower[active], adjusted[active]
-    low, high, at_low = low[active], high[active], at_low[active]
-    # Establish a local crossing from the legacy initial value of five.
-    # Huge log-midpoints can reach ill-conditioned beta parameters even
-    # when the desired df is ordinary and nearby.
-    current = np.clip(np.full(low.shape, 5.0), low, high)
-    current_residual = evaluate(current) - adjusted
-    left = np.signbit(current_residual) != np.signbit(at_low - adjusted)
-    found = current_residual == 0
-    bracket_low, bracket_high = current.copy(), current.copy()
-    for _ in range(300):
-        if np.all(found):
-            break
-        trial = np.where(left, np.maximum(low, current / 5), np.minimum(high, current * 5))
-        trial = np.where(found, current, trial)
-        residual = evaluate(trial) - adjusted
-        crossed = (np.signbit(residual) != np.signbit(current_residual)) | (residual == 0)
-        newly_found = ~found & crossed
-        bracket_low = np.where(newly_found, np.minimum(current, trial), bracket_low)
-        bracket_high = np.where(newly_found, np.maximum(current, trial), bracket_high)
-        found |= crossed
-        current, current_residual = trial, residual
-    if not np.all(found):
-        raise ArithmeticError("legacy F df search could not isolate a crossing")
-    lo, hi = np.log(bracket_low), np.log(bracket_high)
-    residual_low = evaluate(bracket_low) - adjusted
-    best, error = bracket_low.copy(), np.abs(residual_low)
-    for _ in range(64):
-        middle = (lo + hi) / 2
-        candidate = np.clip(np.exp(middle), bracket_low, bracket_high)
-        residual = evaluate(candidate) - adjusted
-        best = np.where(np.abs(residual) < error, candidate, best)
-        error = np.minimum(error, np.abs(residual))
-        move_low = np.signbit(residual) == np.signbit(residual_low)
-        lo, hi = np.where(move_low, middle, lo), np.where(move_low, hi, middle)
-        residual_low = np.where(move_low, residual, residual_low)
-    answer[active] = best
-    return answer
+        return np.where(lower[indices], lp, uq)
+
+    return _search_df(np.minimum(p, q), low, high, evaluate)
 
 
 @dataclass(frozen=True)

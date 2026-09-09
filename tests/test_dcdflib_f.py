@@ -145,3 +145,23 @@ def test_native_invalid_contracts(language):
 def test_invalid_unidentified_and_out_of_bounds(which, kwargs):
     with pytest.raises(ValueError):
         cdff(which, **kwargs)
+
+
+@pytest.mark.parametrize("which", [3, 4])
+def test_df_batch_keeps_parameters_aligned_after_endpoint_solutions(which):
+    # A non-contiguous two-dimensional batch mixes exact bracket endpoints
+    # with interior roots; removing solved rows must retain each row's inputs.
+    truth = np.array([[2.0, 3.0, 4.0], [6.0, 8.0, 10.0]])[:, ::-1]
+    f = np.array([[0.7], [1.3]])
+    fixed = np.array([7.0, 9.0, 11.0])
+    nn, dd = (truth, fixed) if which == 3 else (fixed, truth)
+    forward = cdff(f=f, dfn=nn, dfd=dd)
+    low, high = truth * 0.99, truth * 1.01
+    low[0, 0], high[1, 1] = truth[0, 0], truth[1, 1]
+    kwargs = {"dfd" if which == 3 else "dfn": fixed}
+    result = cdff(which, p=forward.p, q=forward.q, f=f, df_bracket=(low, high), **kwargs)
+    actual = result.dfn if which == 3 else result.dfd
+    assert actual.shape == truth.shape
+    assert actual[0, 0] == truth[0, 0]
+    assert actual[1, 1] == truth[1, 1]
+    np.testing.assert_allclose(actual, truth, rtol=2e-11, atol=0)
