@@ -37,6 +37,19 @@ def _tails(x: FloatArray, a: FloatArray, rate: FloatArray) -> tuple[FloatArray, 
     q[small_shape] = a[small_shape] * exp1(z[small_shape])
     p[small_shape] = 1 - q[small_shape]
     p[regular], q[regular] = _unit_tails(a[regular], z[regular])
+    # A normal coordinate can still produce a representable subnormal P
+    # that the compiled incomplete-gamma kernel rounds prematurely to zero.
+    recover = regular & (p == 0) & (z <= 1)
+    if np.any(recover):
+        aa, zz = a[recover], z[recover]
+        term = total = np.ones(aa.shape)
+        for n in range(1, 33):
+            term = term * zz / (aa + n)
+            total = total + term
+        with np.errstate(over="ignore"):
+            logp = aa * (np.log(zz) - _log_gamma_ratio(aa)) - zz + np.log(total)
+        p[recover] = np.exp(logp)
+        q[recover] = 1 - p[recover]
     if np.any(tiny):
         logz = np.log(x[tiny]) + np.log(rate[tiny])
         with np.errstate(over="ignore"):

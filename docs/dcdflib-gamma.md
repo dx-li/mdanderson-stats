@@ -79,7 +79,7 @@ returns P=0, although P is about 1.1283791670954814e-200. Another native inverse
 reports status 10 for P=1e-200, shape=0.5, rate=1e-308, although x is about
 7.85398163397433e-93. Both are recovered by logarithmic scaling.
 
-The 301 tests include native comparisons, independent 120-digit integer-shape
+The 302 tests include native comparisons, independent 120-digit integer-shape
 finite sums, 400-digit tiny-shape series, half-shape error-function identities,
 all inverse groups, endpoints, mixed batches, ownership and domain failures.
 Tests include shapes down to 1e-320 and computed shapes up to 1e100. Tiny-shape
@@ -91,3 +91,9 @@ repeated scalar calls to the same Python API, with answer agreement checked.
 For 64/256 rows, measured speedups were about 39/106 for tails, 33/88 for x,
 51/131 for shape, 34/92 for rate, and 13/16 for tiny-shape quantiles. These are
 batching measurements, not comparisons with native C/Fortran execution.
+
+A normal unit-rate coordinate can also yield a subnormal lower tail. If the
+compiled kernel returns P=0 at 0<z<=1, a 32-term positive lower-gamma series
+recovers P in logarithms. The omitted relative remainder is bounded by the
+exponential-series tail beyond 32 terms (less than 1e-36 for z<=1). An independent
+800-digit check of P(2,1e-160) verifies the representable tail near 5e-321.

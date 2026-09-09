@@ -185,3 +185,13 @@ def test_defaults_broadcasts_owned_empty_and_f95_overlap():
 def test_invalid_unidentified_or_unrepresentable(which, kwargs):
     with pytest.raises(ValueError):
         cdfgam(which, **kwargs)
+
+
+def test_independent_subnormal_tail_with_normal_unit_coordinate():
+    # P(2,z)=1-exp(-z)*(1+z); 800 digits retain the quadratic term.
+    with localcontext() as ctx:
+        ctx.prec = 800
+        z = Decimal.from_float(1e-160)
+        expected = float(1 - (-z).exp() * (1 + z))
+    r = cdfgam(x=1e-160, shape=2)
+    np.testing.assert_allclose(r.p, expected, rtol=3e-13, atol=np.nextafter(0.0, 1.0))
