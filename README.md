@@ -564,6 +564,7 @@ after installation. The [shared-source audit](docs/stattab-shared-source.md) com
 The [SPPCR audit](docs/sppcr-research.md) identifies misplaced SOGS documentation,
 rebuilds all 27 sources and checks interior allele-frequency fits independently.
 The [SPPCR fitting core](docs/sppcr-fit.md) provides vectorized Poisson-mean fits,
-observed-information variances and explicit boundary policies. SPPCR remains partial:
-frequency summaries, resampling, input formats and the full workflow still require
-Python implementation.
+observed-information variances and explicit boundary policies.
+[Frequency summaries](docs/sppcr-frequencies.md) add calibration, mutant frequency,
+delta-method uncertainty and stable forward transforms. SPPCR remains partial:
+resampling, confidence intervals, input formats and the full workflow remain.

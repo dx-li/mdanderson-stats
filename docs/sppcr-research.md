@@ -1,7 +1,8 @@
 # SPPCR archive and numerical baseline
 
 Catalog entry **26, SPPCR**, is partially implemented. The
-[likelihood fitting core](sppcr-fit.md) is available. The original source
+[likelihood fitting core](sppcr-fit.md) and
+[frequency summaries](sppcr-frequencies.md) are available. The original source
 has been compiled and its interior likelihood/frequency calculations independently
 checked. This establishes a numerical reference and identifies defects that must
 be resolved in the Python implementation; it is not a completed catalog entry.
@@ -79,6 +80,9 @@ transform and the fixed normal multiplier 1.959964 for confidence limits.
   each observed detection fraction `seen/(seen+unseen)`, not probabilities from
   fitted means. The truth-specified path instead uses `1-exp(-dna*calibration*frequency)`.
   These are distinct resampling models and must be named explicitly.
+- `bootstrap` calls `set_seeds(which=1)`, forcing a clock-based reset even if a
+  preceding data-generation step used a phrase. Reproducible Python resampling
+  must use explicit RNG state and disclose its seed instead of silently resetting it.
 - Simulation probabilities are converted to single precision and well counts to
   integers before the native binomial generator. Replicate count is fixed at 1000.
   `stats_from_accum` computes population variance with divisor B, using the
@@ -102,7 +106,7 @@ and uncertainty workflows must retain these distinctions.
 
 | Source responsibilities | Python work required |
 |---|---|
-| `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Mean fitting and curvature implemented with explicit boundary policies; frequencies/calibration/mutants and transforms remain |
+| `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Mean fitting, curvature, frequency/calibration/mutant summaries and forward transforms implemented; inverse-transform confidence intervals remain with reporting |
 | `generate_mod`, `one_data_set_mod`, `accumulate_mod` | Explicit resampling models, simulation, replicate fits and stable uncertainty summaries |
 | `ecuyer_cote_mod`, random modules, seed helpers | Reconcile existing RANDLIB support with this source version; explicit reproducible RNG state |
 | `problem_in_mod`, `data_in_struct_mod` | Validate batch and FileMaker-derived formats, interactive inputs and progenitor identities |

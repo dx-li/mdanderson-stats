@@ -1,8 +1,9 @@
 # SPPCR Poisson-mean fitting
 
 `sppcr_fit_means` fits per-allele Poisson means from small-pool PCR detection counts.
-It implements the likelihood/curvature core of catalog entry 26. Allele-frequency
-summaries, bootstrap, input formats and application reporting remain separate work;
+It implements the likelihood/curvature core of catalog entry 26.
+[Frequency summaries](sppcr-frequencies.md) use these fits; bootstrap, input formats
+and application reporting remain separate work;
 SPPCR is **partial**, not complete.
 
 ```python
