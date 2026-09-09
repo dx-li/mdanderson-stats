@@ -2,8 +2,8 @@
 
 The STATTAB application can now run through a terminal or caller-owned streams.
 It uses the [checked session layer](stattab-sessions.md), all twelve distributions
-and the existing eight-action CDFLIB list editor. The full catalog entry remains
-partial until its final source/version and documentation reconciliation is complete.
+and the existing eight-action CDFLIB list editor. The
+[completion audit](stattab-completion.md) reconciles its source and documentation.
 
 Run the installed module with:
 

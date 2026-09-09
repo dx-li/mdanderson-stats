@@ -1,14 +1,14 @@
 # STATTAB source and workflow audit
 
-Catalog entry **23, STATTAB**, is partially implemented. Its
+Catalog entry **23, STATTAB**, is implemented. Its
 [discrete probability terms](stattab-probability.md),
-[structured distribution results](stattab-results.md), and
+[structured distribution results](stattab-results.md),
 [requests and sessions](stattab-sessions.md), and
-[console/reporting application](stattab-console.md) are available. The final
-application/manual completion audit remains pending; the shared-source review is complete. The pinned
+[console/reporting application](stattab-console.md) are available. The
+[completion audit](stattab-completion.md) reconciles the source and manual. The pinned
 [archive inventory](stattab-archive.json) and [104 native sessions](../tests/fixtures/stattab.json)
-establish its application scope and defect evidence. They do not turn the existing
-CDFLIB90 library into a completed STATTAB application.
+establish its application scope and defect evidence. The application adds tested
+workflow layers to the existing CDFLIB90 foundation.
 
 ## Archive identity
 
@@ -39,11 +39,11 @@ and compiles 259 public imports against the STATTAB archive. The application add
 
 The INSTALL file incorrectly names `confint`; the actual source, build scripts,
 executables and runtime banner identify STATTAB. Historical compiler/platform
-instructions will be replaced by Python packaging. The original
+instructions are replaced by Python packaging. The original
 [LEGALITIES](../notices/mdanderson-stattab-LEGALITIES.txt) is retained byte-for-byte;
 original native source and executables are not bundled in the Python wheel.
 
-## Application coverage and remaining work
+## Application coverage
 
 | Responsibility | Required Python behavior and current evidence |
 |---|---|
@@ -61,7 +61,7 @@ original native source and executables are not bundled in the Python wheel.
 | Gamma ordering | Implemented named rate/shape inputs and source-order result columns; source A is rate and B is shape |
 | Output/reporting | Implemented: structured/source-order results, bounded formatted tables, caller-owned streams and optionally owned report files |
 | File I/O | Implemented as stattab_open_file and stattab_report_file_dialogue: read/create/overwrite/append, cancel/retry/confirmation, errors and explicit stream ownership |
-| Help and examples | Implemented distribution/parameter/formula help and annotated console/report examples; final manual reconciliation remains pending |
+| Help and examples | Implemented distribution/parameter/formula help and annotated console/report examples; all manual sections and worked examples reconciled in the completion audit |
 | Failures | Checked invalid input, finite arithmetic, well-defined numerical failures and resource limits; no process STOP or stale answers |
 | Public support | [Shared-source review complete](stattab-shared-source.md): all nineteen shared modules and seven added public interfaces mapped, with 259 native imports compiled |
 | Delivery | Python implementations, behavioral/numerical tests, relevant batching benchmarks, installed-wheel checks and full catalog metadata update |
@@ -70,8 +70,8 @@ The completed CDFLIB90 kernels, lexer, console, list editor and formatting routi
 provide reusable foundations. The numerical result layer adds application parameter
 mapping and extra outputs. The request/session layer adds checked parsing and
 transactional reuse. The console layer integrates menus, list editing, help, output
-and file dialogs. Shared-source reconciliation is complete; the final application/manual
-audit remains required.
+and file dialogs. Source and manual reconciliation is complete; see the
+[completion audit](stattab-completion.md) for evidence and explicit semantic replacements.
 
 ## Native evidence and independent checks
 

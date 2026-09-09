@@ -217,7 +217,7 @@ integer :: status
     report = dict(
         archive_sha256=ARCHIVE_SHA256,
         cdflib_archive_sha256=CDFLIB_SHA256,
-        status="shared_source_review_complete_application_manual_audit_pending",
+        status="shared_source_review_complete",
         comparison_limits=(
             "Logical diffs preserve literals, executable statements and declaration order; "
             "omit comments, unquoted whitespace, case, standalone PUBLIC and IMPLICIT NONE. "

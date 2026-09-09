@@ -1,7 +1,7 @@
 {
   "archive_sha256": "0325f15818176418774216e546e0f61267cfd228cef184e63101c68e2b7e76f9",
   "cdflib_archive_sha256": "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b",
-  "status": "shared_source_review_complete_application_manual_audit_pending",
+  "status": "shared_source_review_complete",
   "comparison_limits": "Logical diffs preserve literals, executable statements and declaration order; omit comments, unquoted whitespace, case, standalone PUBLIC and IMPLICIT NONE. They aid source review, not semantic or numerical proof. Compiler imports prove accessibility of listed names, not exhaustive export discovery or correctness. Use existing independent numerical and behavioral tests for correctness.",
   "shared_modules": [
     {

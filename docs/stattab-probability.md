@@ -91,5 +91,5 @@ three-run medians. They measure Python batching, not speed relative to Fortran.
 
 The [result](stattab-results.md), [session](stattab-sessions.md) and
 [console](stattab-console.md) layers implement the application workflow around
-these terms. STATTAB remains **partial** pending its final source/version
-reconciliation, tracked in the [application audit](stattab-research.md).
+these terms. STATTAB is implemented with the source mappings and manual errata
+recorded in the [completion audit](stattab-completion.md).

@@ -714,12 +714,12 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Vectorized binomial, negative-binomial and Poisson individual probabilities with consistent count truncation, explicit complementary chances, degenerate boundaries, direct stable factors and independent subnormal/huge-count validation",
         "Structured vectorized results for all twelve STATTAB distributions and 42 supported computed groups, source-ordered columns, explicit gamma rate/shape mapping, forward extra probabilities, five continuous count inversions with valid neighboring integer rows, zero-mean Poisson forward extension and noncentral-t root brackets",
         "Checked positional requests and transactional STATTAB sessions: all 42 groups, question/dot/table/reuse grammar, exact help/menu commands, bounded list snapshots, last-row reuse, tiny complementary-pair preservation and isolated state",
-        "Terminal/stream STATTAB application with twelve-distribution menu and formula help, all eight list-editor actions, bounded formatted result/neighbor tables, request reports, clean EOF with partial-list preservation, explicit file read/create/append/overwrite/cancel outcomes, pre-open confirmation and owned report cleanup; shared-source reconciliation complete; final application/manual completion audit remains pending"
+        "Terminal/stream STATTAB application with twelve-distribution menu and formula help, all eight list-editor actions, bounded formatted result/neighbor tables, request reports, clean EOF with partial-list preservation, explicit file read/create/append/overwrite/cancel outcomes, pre-open confirmation and owned report cleanup; all source modules and manual workflows reconciled with documented Python semantics"
       ],
       "validation": [
         "docs/stattab-research.md",
@@ -752,7 +752,11 @@
         "docs/stattab-console.md",
         "docs/stattab-shared-source.md",
         "docs/stattab-shared-source.json",
-        "tools/audit_stattab_shared.py"
+        "tools/audit_stattab_shared.py",
+        "docs/stattab-completion.md",
+        "docs/stattab-completion.json",
+        "tools/audit_stattab_completion.py",
+        "tests/test_stattab_manual.py"
       ]
     },
     {

@@ -5,8 +5,8 @@ modules shared with CDFLIB90 and compiles **259 public imports** against STATTAB
 unchanged source: 252 shared imports and seven application-specific imports.
 Run `uv run python tools/audit_stattab_shared.py` with both pinned archives present
 and gfortran installed. The tool checks archive hashes and builds in a temporary
-directory. This completes the shared-source review; the final application/manual
-completion audit remains pending, so catalog entry 23 remains partial.
+directory. The [completion audit](stattab-completion.md) incorporates this review
+and reconciles the complete application/manual contract.
 
 ## What changed between archives
 
@@ -93,6 +93,5 @@ names compile in the export probe.
 
 The main program is an application entry point rather than an importable module.
 Its request parsing, dispatch, help, numerical postprocessing, and status handling
-map to the implemented session, result, reporting, and console layers. The final
-manual audit must still reconcile the complete application contract and historical
-documentation before changing the catalog's completion status.
+map to the implemented session, result, reporting, and console layers. The [completion audit](stattab-completion.md) reconciles the complete application
+contract and historical documentation.

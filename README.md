@@ -541,7 +541,7 @@ repairs. The [legacy root finders](docs/dcdflib-root.md) complete all 49 legacy
 support mappings with independent search state and their distinct stopping rule.
 The [completion audit](docs/cdflib90-completion.md) verifies all public mappings,
 reconciles the manuals and marks CDFLIB90 implemented. The separate
-[STATTAB application](docs/stattab-research.md) is partially implemented. Its
+[STATTAB application](docs/stattab-research.md) is implemented. Its
 [discrete probability terms](docs/stattab-probability.md) provide vectorized
 binomial, negative-binomial and Poisson masses with consistent count truncation,
 small complementary chances and explicit degenerate boundaries.
@@ -555,5 +555,6 @@ reuse completed values safely, including table snapshots and tiny saved compleme
 The [console application](docs/stattab-console.md) adds all eight list-editor actions,
 formula help and report-file dialogs. Run `python -m mdanderson_stats.stattab`
 after installation. The [shared-source audit](docs/stattab-shared-source.md) compiles
-259 public imports and reconciles all nineteen shared modules. The final application/manual
-audit remains pending.
+259 public imports and reconciles all nineteen shared modules. The
+[completion audit](docs/stattab-completion.md) covers all 34 archive files and
+25 manual pages, including worked examples and documented corrections.

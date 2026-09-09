@@ -78,14 +78,11 @@ def main():
                 )
             else:
                 row["cdflib90_comparison"] = dict(status="additional_stattab_source")
-            scope = (
-                "Python source mapping reviewed in docs/stattab-shared-source.md; "
-                "final manual audit pending"
-            )
+            scope = "Python source mapping and manual reconciled in docs/stattab-completion.md"
         elif p.name in {"Makefile", "COMPILE.IT", "compile.stattab"}:
             role, scope = (
                 "build",
-                "All 22 source files compile unchanged; Python build will replace",
+                "All 22 source files compile unchanged; Python packaging replaces native build",
             )
         elif p.name in {"stattab", "stattab.exe"}:
             role, scope = (
@@ -116,12 +113,12 @@ def main():
         ),
         archive_sha256=ARCHIVE_SHA256,
         catalog_id=23,
-        status="partial_shared_source_reconciled",
+        status="complete_with_documented_python_semantics",
         implemented_scope={
             "description": (
                 "Discrete terms, all 42 numerical groups, sessions, "
                 "console and file/report workflows; "
-                "shared source reconciled; final application/manual audit remains pending"
+                "source and manual reconciled with documented Python semantics"
             ),
             "evidence": [
                 "src/mdanderson_stats/stattab_probability.py",
@@ -146,6 +143,10 @@ def main():
                 "docs/stattab-shared-source.md",
                 "docs/stattab-shared-source.json",
                 "tools/audit_stattab_shared.py",
+                "docs/stattab-completion.md",
+                "docs/stattab-completion.json",
+                "tools/audit_stattab_completion.py",
+                "tests/test_stattab_manual.py",
             ],
         },
         version_reconciliation=(
