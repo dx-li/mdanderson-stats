@@ -563,6 +563,23 @@ def main():
             ],
         }
     )
+    constants = json.loads(Path("tests/fixtures/cdflib_constants.json").read_text())
+    constant_evidence = [
+        "src/mdanderson_stats/cdflib_constants.py",
+        "tools/reference_cdflib_constants.py",
+        "tests/fixtures/cdflib_constants.json",
+        "tests/test_cdflib_constants.py",
+        "docs/cdflib-constants.md",
+    ]
+    support_interfaces.append(
+        {
+            "module": "biomath_constants_mod",
+            "public_names": constants["integer_names"] + constants["real_names"],
+            "python_interfaces": ["cdflib_constants"],
+            "status": "implemented_with_documented_python_semantics",
+            "evidence": constant_evidence,
+        }
+    )
     support_interfaces.append(
         {
             "module": "biomath_mathlib_mod",
@@ -640,8 +657,9 @@ def main():
                 "bfrac",
                 "bratio",
             ],
-            "status": "partial",
-            "remaining_scope": "Imported constants",
+            "status": "implemented_with_documented_python_semantics",
+            "imported_constant_module": "biomath_constants_mod",
+            "python_constant_namespace": "cdflib_constants",
             "reference_audited_public_names": [
                 "erf",
                 "erfc1",
@@ -666,6 +684,7 @@ def main():
                 "bratio",
             ],
             "evidence": [
+                *constant_evidence,
                 "src/mdanderson_stats/cdflib_elementary.py",
                 "tools/reference_cdflib_elementary.py",
                 "tests/fixtures/cdflib_elementary.json",

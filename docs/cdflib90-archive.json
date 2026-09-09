@@ -549,6 +549,49 @@
       ]
     },
     {
+      "module": "biomath_constants_mod",
+      "public_names": [
+        "dpkind",
+        "spkind",
+        "stdin",
+        "stdout",
+        "eight",
+        "five",
+        "four",
+        "hundred",
+        "nine",
+        "one",
+        "seven",
+        "six",
+        "sixth",
+        "ten",
+        "tenth",
+        "thousand",
+        "thousandth",
+        "three",
+        "twelve",
+        "two",
+        "zero",
+        "eighth",
+        "fifth",
+        "fourth",
+        "half",
+        "hundredth",
+        "third"
+      ],
+      "python_interfaces": [
+        "cdflib_constants"
+      ],
+      "status": "implemented_with_documented_python_semantics",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_constants.py",
+        "tools/reference_cdflib_constants.py",
+        "tests/fixtures/cdflib_constants.json",
+        "tests/test_cdflib_constants.py",
+        "docs/cdflib-constants.md"
+      ]
+    },
+    {
       "module": "biomath_mathlib_mod",
       "implemented_public_names": [
         "alnrel",
@@ -624,8 +667,9 @@
         "bfrac",
         "bratio"
       ],
-      "status": "partial",
-      "remaining_scope": "Imported constants",
+      "status": "implemented_with_documented_python_semantics",
+      "imported_constant_module": "biomath_constants_mod",
+      "python_constant_namespace": "cdflib_constants",
       "reference_audited_public_names": [
         "erf",
         "erfc1",
@@ -650,6 +694,11 @@
         "bratio"
       ],
       "evidence": [
+        "src/mdanderson_stats/cdflib_constants.py",
+        "tools/reference_cdflib_constants.py",
+        "tests/fixtures/cdflib_constants.json",
+        "tests/test_cdflib_constants.py",
+        "docs/cdflib-constants.md",
         "src/mdanderson_stats/cdflib_elementary.py",
         "tools/reference_cdflib_elementary.py",
         "tests/fixtures/cdflib_elementary.json",

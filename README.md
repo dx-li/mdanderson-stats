@@ -504,3 +504,6 @@ with reflected tails, bounded iteration and extreme-shape normalization.
 
 The [CDFLIB paired beta integral](docs/cdflib-bratio.md) adds `bratio`,
 completing all 35 F95 mathematical procedures while preserving tiny paired tails.
+
+The [CDFLIB constants namespace](docs/cdflib-constants.md) preserves all 27 native
+parameters, completing the constants and mathematical support modules.

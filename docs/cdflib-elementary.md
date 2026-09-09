@@ -2,7 +2,8 @@
 
 These five public F95 `biomath_mathlib_mod` procedures have vectorized Python
 implementations. Subsequent ports complete all 35 mathematical procedures;
-imported constants and other CDFLIB support interfaces remain open.
+their [constants](cdflib-constants.md) are also implemented. Other CDFLIB support
+interfaces remain open.
 
 | Function | Mathematical result | Domain |
 |---|---|---|
@@ -64,5 +65,6 @@ NumPy array operations and a short fixed-length polynomial loop, with no added
 dependency or change to existing distribution kernels.
 
 The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
-mathematical procedures. Imported constants and other CDFLIB support interfaces
-remain open, along with the rest of the software catalog. CDFLIB90 remains partial.
+mathematical procedures. Their [constants](cdflib-constants.md) are also implemented.
+Other CDFLIB support interfaces and the rest of the catalog remain open.
+CDFLIB90 remains partial.

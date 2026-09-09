@@ -62,5 +62,6 @@ The fixture records failures explicitly instead of treating native values as
 reference truth. The later [bgrat](cdflib-bgrat.md), [basym](cdflib-basym.md),
 [bfrac](cdflib-bfrac.md), and [bratio](cdflib-bratio.md) ports implement all four
 audited interfaces. All 35 F95 mathematical procedures are now implemented;
-imported constants and other support interfaces remain open. CDFLIB90 remains
-partial, and the rest of the catalog still requires work.
+their [constants](cdflib-constants.md) are also implemented. Other support interfaces
+remain open. CDFLIB90 remains partial, and the rest of the catalog still requires
+work.

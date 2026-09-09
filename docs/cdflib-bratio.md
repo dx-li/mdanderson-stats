@@ -65,7 +65,7 @@ scalar calls and require identical paired outputs. They include ordinary,
 small-shape, subnormal-shape, subnormal-tail, huge-shape and tiny-upper-tail cases.
 These measure batching benefits, not speed relative to Fortran.
 
-All 35 F95 mathematical procedures are now implemented. Imported constants,
-root-finder/state, console and adapter interfaces, and other CDFLIB support scope
-remain open. CDFLIB90 stays partial, and the full software catalog conversion
-continues.
+All 35 F95 mathematical procedures and their [constants](cdflib-constants.md)
+are implemented. Root-finder/state, console and adapter interfaces, and other
+CDFLIB support scope remain open. CDFLIB90 stays partial, and the full software
+catalog conversion continues.

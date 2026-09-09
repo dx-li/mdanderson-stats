@@ -440,7 +440,8 @@
         "F95 bgrat accumulated beta integral with signed accumulators, explicit complements, endpoint repairs and stable extreme-shape increments",
         "F95 basym displacement-preserving beta tail with bounded coefficient batches, scaled exponents, convergence fallback and extreme-coordinate repairs",
         "F95 bfrac beta integral with compensated coordinate displacement, reflected bounded continued fractions, complete normalization and endpoint repairs",
-        "F95 bratio paired beta integral with zero-shape limits, source input-error contracts, direct small tails and bounded huge-shape evaluation; all 35 F95 mathematical procedures implemented"
+        "F95 bratio paired beta integral with zero-shape limits, source input-error contracts, direct small tails and bounded huge-shape evaluation; all 35 F95 mathematical procedures implemented",
+        "F95 constants namespace with all 27 native parameters, documented legacy kind/unit identifiers and audited binary32/binary64 models; constants and mathematical support modules implemented"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -609,7 +610,10 @@
         "docs/cdflib-bfrac-benchmark.json",
         "tests/test_cdflib_bratio.py",
         "docs/cdflib-bratio.md",
-        "docs/cdflib-bratio-benchmark.json"
+        "docs/cdflib-bratio-benchmark.json",
+        "tests/test_cdflib_constants.py",
+        "tests/fixtures/cdflib_constants.json",
+        "docs/cdflib-constants.md"
       ]
     },
     {

@@ -80,5 +80,6 @@ results. Cases include ordinary, tiny, large-center, scaled and negative-shape
 factors. These measure batching benefits, not a speedup over Fortran.
 
 The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
-mathematical procedures. Imported constants and other CDFLIB support interfaces
-remain open, along with the rest of the software catalog. CDFLIB90 remains partial.
+mathematical procedures. Their [constants](cdflib-constants.md) are also implemented.
+Other CDFLIB support interfaces and the rest of the catalog remain open.
+CDFLIB90 remains partial.
