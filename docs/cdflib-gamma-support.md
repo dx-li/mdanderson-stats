@@ -75,6 +75,6 @@ coordinates with repeated scalar calls to the same public API. Every comparison
 checks identical results; negative subnormal gamma is included. These measure
 batching benefits, not speedup against Fortran.
 
-Sixteen F95 mathematical support procedures are now implemented. Remaining
-beta/gamma ratios, combinatorial logarithms, constants and other support contracts
-keep CDFLIB90's catalog status partial.
+The later [gamma-ratio foundations](cdflib-gamma-ratios.md) extend this support.
+Remaining beta/gamma routines, combinatorial logarithms, constants and other
+support contracts keep CDFLIB90's catalog status partial.

@@ -1,8 +1,9 @@
 # CDFLIB beta and gamma-ratio support audit
 
 Six further public F95 mathematical procedures now have unchanged native
-reference evidence. Their Python interfaces remain pending. CDFLIB90 remains
-partial; this audit adds validation requirements rather than claiming a port.
+reference evidence. The [gamma-ratio foundations](cdflib-gamma-ratios.md) now
+implement `algdiv`, `bcorr` and `gsumln`; `betaln`, `log_beta` and `log_bicoef`
+remain pending. CDFLIB90 remains partial.
 
 | Procedure | Mathematical operation and source constraints |
 |---|---|
@@ -39,7 +40,8 @@ The cases cover unit and half shapes, source branch boundaries, symmetry,
 subnormal shapes and ratios, arguments whose sum exceeds float64, fractional
 combinatorial inputs, close sums and invalid boundaries. Independent 800-digit
 Decimal calculations use log-gamma identities, recurrence and Stirling expansions.
-Local expansions around gamma's unit values preserve offsets that a fixed
+Tiny relative gamma increments use a digamma derivative; local expansions around
+gamma's unit values preserve offsets that a fixed
 absolute-error approximation would hide. Exact binomial coefficients, B(1,b)=1/b,
 B(1/2,1/2)=π and integer gamma-ratio identities independently check the oracle.
 The two renamed beta entry points agree on every recorded case.

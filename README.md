@@ -465,3 +465,6 @@ complementary-error tails and repaired intermediate exponential overflow.
 The [CDFLIB gamma/digamma helpers](docs/cdflib-gamma-support.md) add `alngam`,
 `gamln`, `log_gamma`, `gamln1`, `gam1`, `gamma` and `psi`, preserving their distinct
 real domains and repairing lost remainders, subnormal tails and intermediate overflow.
+
+The [CDFLIB gamma-ratio foundations](docs/cdflib-gamma-ratios.md) add `algdiv`,
+`bcorr` and `gsumln`, preserving tiny ratios, subnormal corrections and close sums.

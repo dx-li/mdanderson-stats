@@ -28,6 +28,7 @@ from .cdflib_elementary import alnrel, evaluate_polynomial, rexp, rlog, rlog1
 from .cdflib_error_exponential import erf, erfc1, esum, exparg
 from .cdflib_f import CDFF, ccum_f, cdf_f, cum_f, inv_f
 from .cdflib_gamma import CDFGamma, ccum_gamma, cdf_gamma, cum_gamma, inv_gamma
+from .cdflib_gamma_ratios import algdiv, bcorr, gsumln
 from .cdflib_gamma_support import alngam, gam1, gamln, gamln1, gamma, log_gamma, psi
 from .cdflib_nc_chisq import (
     CDFNoncentralChiSquare,
@@ -200,6 +201,9 @@ from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtas
 
 __all__ = [
     "alnrel",
+    "algdiv",
+    "bcorr",
+    "gsumln",
     "alngam",
     "gam1",
     "gamln",

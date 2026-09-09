@@ -583,6 +583,9 @@ def main():
                 "gam1",
                 "gamma",
                 "psi",
+                "algdiv",
+                "bcorr",
+                "gsumln",
             ],
             "python_interfaces": [
                 "alnrel",
@@ -601,6 +604,9 @@ def main():
                 "gam1",
                 "gamma",
                 "psi",
+                "algdiv",
+                "bcorr",
+                "gsumln",
             ],
             "status": "partial",
             "remaining_scope": "Other mathematical procedures and imported constants",
@@ -650,6 +656,10 @@ def main():
                 "tests/fixtures/cdflib_beta_support.json",
                 "tests/test_cdflib_beta_support_reference.py",
                 "docs/cdflib-beta-support-reference.md",
+                "src/mdanderson_stats/cdflib_gamma_ratios.py",
+                "tests/test_cdflib_gamma_ratios.py",
+                "docs/cdflib-gamma-ratios.md",
+                "docs/cdflib-gamma-ratios-benchmark.json",
             ],
         }
     )

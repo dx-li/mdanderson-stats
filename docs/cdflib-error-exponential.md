@@ -59,7 +59,7 @@ checks identical outputs. They include regular, scaled and subnormal erfc and
 large-cancellation exponential sums. These measure batching benefits, not a
 speedup over the original Fortran implementation. No dependency was added.
 
-CDFLIB90 remains partial. These helpers and the later
-[gamma/digamma port](cdflib-gamma-support.md) bring mathematical support to sixteen
-public procedures. The rest of the mathematical module, imported constants and
-other remaining support contracts are still open.
+CDFLIB90 remains partial. The later [gamma/digamma](cdflib-gamma-support.md) and
+[gamma-ratio](cdflib-gamma-ratios.md) ports extend mathematical support. The rest
+of the mathematical module, imported constants and other support contracts remain
+open.

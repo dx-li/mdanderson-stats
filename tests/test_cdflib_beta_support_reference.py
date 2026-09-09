@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 from test_cdflib_error_exponential_reference import decimal_pi
-from test_cdflib_gamma_support_reference import EULER, positive_log_gamma
+from test_cdflib_gamma_support_reference import EULER, positive_log_gamma, positive_psi
 
 FIXTURE = json.loads((Path(__file__).parent / "fixtures/cdflib_beta_support.json").read_text())
 
@@ -33,6 +33,10 @@ def independent(mode, a, b):
         ctx.prec = 800
         a, b = Decimal.from_float(a), Decimal.from_float(b)
         if mode == 1:
+            if abs(a) / b < Decimal("1e-30"):
+                # The next relative term is O(abs(a)/b). A derivative avoids
+                # subtracting two Stirling errors with different recurrence shifts.
+                return float(-a * positive_psi(b))
             return float(oracle_log_gamma(b) - oracle_log_gamma(a + b))
         if mode == 2:
 

@@ -1,0 +1,94 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same Python API; not native timing",
+  "cases": [
+    {
+      "operation": "algdiv",
+      "size": 64,
+      "batch_seconds": 8.504185825586319e-05,
+      "scalar_seconds": 0.004600792191922665,
+      "speedup": 54.10032525489251
+    },
+    {
+      "operation": "algdiv_negative",
+      "size": 64,
+      "batch_seconds": 0.00015008309856057167,
+      "scalar_seconds": 0.008124083280563354,
+      "speedup": 54.13056738886941
+    },
+    {
+      "operation": "algdiv_tiny_ratio",
+      "size": 64,
+      "batch_seconds": 8.304230868816376e-05,
+      "scalar_seconds": 0.004361583851277828,
+      "speedup": 52.522430074243545
+    },
+    {
+      "operation": "bcorr",
+      "size": 64,
+      "batch_seconds": 6.349990144371986e-05,
+      "scalar_seconds": 0.001154125202447176,
+      "speedup": 18.175228247717524
+    },
+    {
+      "operation": "bcorr_subnormal",
+      "size": 64,
+      "batch_seconds": 5.1291193813085556e-05,
+      "scalar_seconds": 0.0011526248417794704,
+      "speedup": 22.47217808928069
+    },
+    {
+      "operation": "gsumln",
+      "size": 64,
+      "batch_seconds": 0.00017645908519625664,
+      "scalar_seconds": 0.008975582662969828,
+      "speedup": 50.864950665403505
+    },
+    {
+      "operation": "algdiv",
+      "size": 256,
+      "batch_seconds": 0.00010183313861489296,
+      "scalar_seconds": 0.01771154161542654,
+      "speedup": 173.92709147861078
+    },
+    {
+      "operation": "algdiv_negative",
+      "size": 256,
+      "batch_seconds": 0.00016854191198945045,
+      "scalar_seconds": 0.03243766725063324,
+      "speedup": 192.46053914864578
+    },
+    {
+      "operation": "algdiv_tiny_ratio",
+      "size": 256,
+      "batch_seconds": 0.00010674959048628807,
+      "scalar_seconds": 0.01782137481495738,
+      "speedup": 166.94560357350062
+    },
+    {
+      "operation": "bcorr",
+      "size": 256,
+      "batch_seconds": 6.570899859070778e-05,
+      "scalar_seconds": 0.004607416223734617,
+      "speedup": 70.11849704838104
+    },
+    {
+      "operation": "bcorr_subnormal",
+      "size": 256,
+      "batch_seconds": 6.691645830869675e-05,
+      "scalar_seconds": 0.0048059578984975815,
+      "speedup": 71.8202669413091
+    },
+    {
+      "operation": "gsumln",
+      "size": 256,
+      "batch_seconds": 0.00018120789900422096,
+      "scalar_seconds": 0.03723549982532859,
+      "speedup": 205.48497074325243
+    }
+  ]
+}

@@ -104,7 +104,7 @@ F95 support also has an explicit public surface:
 
 | Module | Public/support scope and status |
 |---|---|
-| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), and [seven gamma/digamma helpers](cdflib-gamma-support.md) implemented; remaining default-public numerical procedures and imported constants still open |
+| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), and [three gamma-ratio helpers](cdflib-gamma-ratios.md) implemented; remaining default-public numerical procedures and imported constants still open |
 | `zero_finder` | Direct and reverse-communication interval/step solvers, setup, final-state reporting, bounds and solver-state type |
 | `biomath_constants_mod` | Default-public kind and numeric constants |
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
@@ -224,5 +224,6 @@ valid negative intervals and repairing the audited numerical failures.
 The [beta/gamma-ratio support audit](cdflib-beta-support-reference.md) records
 192 calls to `algdiv`, `bcorr`, `betaln`, `log_beta`, `gsumln` and `log_bicoef`.
 Independent 800-digit checks document fractional domains, close-sum and quotient
-underflow failures, and valid extreme-range results. These six Python interfaces
-remain pending.
+underflow failures, and valid extreme-range results. The
+[gamma-ratio foundations](cdflib-gamma-ratios.md) implement `algdiv`, `bcorr` and
+`gsumln`; the other three interfaces remain pending.
