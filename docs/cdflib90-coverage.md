@@ -212,3 +212,10 @@ independent defining-function checks. It identifies premature tail cutoff,
 intermediate overflow, subnormal double-rounding and the actual normal-range
 threshold contract. The [Python port](cdflib-error-exponential.md) now implements
 all four with documented overflow handling and preserved subnormal tails.
+
+The [gamma/digamma support audit](cdflib-gamma-support-reference.md) adds 237
+native calls for `alngam`, `gamln`, `log_gamma`, `gamln1`, `gam1`, `gamma` and
+`psi`, with independent recurrence/Stirling and exact-identity checks. It
+separates the different negative-argument contracts and documents intermediate
+overflow, lost subnormal tails, inaccurate logarithmic roots and a nonterminating
+recurrence. These seven public Python interfaces remain pending.

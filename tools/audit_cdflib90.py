@@ -590,7 +590,19 @@ def main():
             ],
             "status": "partial",
             "remaining_scope": "Other mathematical procedures and imported constants",
-            "reference_audited_public_names": ["erf", "erfc1", "esum", "exparg"],
+            "reference_audited_public_names": [
+                "erf",
+                "erfc1",
+                "esum",
+                "exparg",
+                "alngam",
+                "gamln",
+                "log_gamma",
+                "gamln1",
+                "gam1",
+                "gamma",
+                "psi",
+            ],
             "evidence": [
                 "src/mdanderson_stats/cdflib_elementary.py",
                 "tools/reference_cdflib_elementary.py",
@@ -606,6 +618,10 @@ def main():
                 "tests/test_cdflib_error_exponential.py",
                 "docs/cdflib-error-exponential.md",
                 "docs/cdflib-error-exponential-benchmark.json",
+                "tools/reference_cdflib_gamma_support.py",
+                "tests/fixtures/cdflib_gamma_support.json",
+                "tests/test_cdflib_gamma_support_reference.py",
+                "docs/cdflib-gamma-support-reference.md",
             ],
         }
     )

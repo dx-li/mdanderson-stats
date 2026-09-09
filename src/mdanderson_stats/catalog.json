@@ -538,7 +538,10 @@
         "docs/cdflib-error-exponential-reference.md",
         "tests/test_cdflib_error_exponential.py",
         "docs/cdflib-error-exponential.md",
-        "docs/cdflib-error-exponential-benchmark.json"
+        "docs/cdflib-error-exponential-benchmark.json",
+        "tests/fixtures/cdflib_gamma_support.json",
+        "tests/test_cdflib_gamma_support_reference.py",
+        "docs/cdflib-gamma-support-reference.md"
       ]
     },
     {
