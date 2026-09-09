@@ -13,6 +13,8 @@ def _invert_df(
     low: FloatArray,
     high: FloatArray,
     evaluate: Callable[[FloatArray, NDArray[np.intp]], FloatArray],
+    *,
+    probability_atol: FloatArray | float = 0.0,
 ) -> FloatArray:
     """Find a crossing; evaluate receives values and original flattened row indices.
 
@@ -20,6 +22,7 @@ def _invert_df(
     Indices keep fixed parameters aligned when endpoint solutions are removed.
     The caller verifies the final probability against the requested tail.
     """
+    probability_atol = np.broadcast_to(probability_atol, target.shape).ravel()
     shape = target.shape
     target, low, high = target.ravel(), low.ravel(), high.ravel()
     indices = np.arange(target.size, dtype=np.intp)
@@ -29,7 +32,9 @@ def _invert_df(
     adjusted = target.copy()
     for endpoint in (at_low, at_high):
         adjusted = np.where(
-            np.abs(target - endpoint) <= 32 * np.finfo(float).eps * endpoint, endpoint, adjusted
+            np.abs(target - endpoint) <= 32 * np.finfo(float).eps * endpoint + probability_atol,
+            endpoint,
+            adjusted,
         )
     if np.any((adjusted < np.minimum(at_low, at_high)) | (adjusted > np.maximum(at_low, at_high))):
         raise ValueError("df root is not bracketed; multiple roots may require df_bracket")

@@ -489,3 +489,9 @@ archived DCDFLIB 1.1 F contracts by the same authors. Both C and Fortran referen
 implementations are compiled unchanged for validation and remain outside the
 package. Python result/error conventions and numerical repairs are documented
 in [the legacy F notes](docs/dcdflib-f.md).
+
+The legacy `cdffnc` and `cumfnc` interfaces independently implement the same
+archive's noncentral F contracts, including both df inversions. Unchanged C/F77
+references, contract differences and numerical repairs are documented in
+[the legacy noncentral F notes](docs/dcdflib-nc-f.md); the same retained notices
+apply, and the original sources and binaries are not bundled.

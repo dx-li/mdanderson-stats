@@ -138,11 +138,11 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
-            if path.stem in {"cdff", "cumf"}:
+            if path.stem in {"cdff", "cumf", "cdffnc", "cumfnc"}:
                 return (
                     "f77_source",
                     "implemented_legacy_distribution",
-                    "F tails and all parameter inversions; independent C/F77 validation",
+                    "F/noncentral F tails and inversions; independent C/F77 validation",
                 )
             return (
                 "f77_source",
@@ -250,7 +250,18 @@ def main():
         raise RuntimeError("missing legacy F implementation evidence")
     noncentral_f = next(row for row in distributions if row["name"] == "nc_f")
     noncentral_f["f95_computed_groups"] = ["cum/ccum", "f", "pnonc"]
-    noncentral_f["legacy_additional_computed_groups_pending"] = ["dfn", "dfd"]
+    noncentral_f["legacy_additional_computed_groups_pending"] = []
+    noncentral_f["legacy_computed_groups"] = ["p/q", "f", "dfn", "dfd", "pnonc"]
+    noncentral_f["legacy_python_interfaces"] = ["cdffnc", "cumfnc"]
+    noncentral_f["legacy_contract_status"] = "implemented_with_documented_python_semantics"
+    noncentral_f["legacy_evidence"] = [
+        "src/mdanderson_stats/dcdflib_nc_f.py",
+        "tests/test_dcdflib_nc_f.py",
+        "tests/fixtures/dcdflib_nc_f.json",
+        "docs/dcdflib-nc-f.md",
+    ]
+    if any(not Path(path).is_file() for path in noncentral_f["legacy_evidence"]):
+        raise RuntimeError("missing legacy noncentral F implementation evidence")
     noncentral_f["legacy_pnonc_which"] = 5
     header = next(row for row in members if row["role"] == "c_header")["declarations"]
     definitions = {

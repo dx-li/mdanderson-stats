@@ -128,6 +128,6 @@ for numerator-df inversion, and 29/47 times for denominator-df inversion. These
 median-of-three measurements describe Python batching, not speedup over native
 C or Fortran.
 
-This resolves the two legacy F entry-point contracts. The additional noncentral-F
-df inversions, the other legacy distribution contracts and public support routines
+This resolves the two legacy F entry-point contracts. The [legacy noncentral-F port](dcdflib-nc-f.md) resolves its df inversions too.
+The other legacy distribution contracts and public support routines
 remain in the [CDFLIB90 completion checklist](cdflib90-coverage.md).

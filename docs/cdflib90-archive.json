@@ -185,15 +185,29 @@
         "cdffnc",
         "cumfnc"
       ],
-      "legacy_contract_status": "not_yet_independently_validated",
+      "legacy_contract_status": "implemented_with_documented_python_semantics",
       "f95_computed_groups": [
         "cum/ccum",
         "f",
         "pnonc"
       ],
-      "legacy_additional_computed_groups_pending": [
+      "legacy_additional_computed_groups_pending": [],
+      "legacy_computed_groups": [
+        "p/q",
+        "f",
         "dfn",
-        "dfd"
+        "dfd",
+        "pnonc"
+      ],
+      "legacy_python_interfaces": [
+        "cdffnc",
+        "cumfnc"
+      ],
+      "legacy_evidence": [
+        "src/mdanderson_stats/dcdflib_nc_f.py",
+        "tests/test_dcdflib_nc_f.py",
+        "tests/fixtures/dcdflib_nc_f.json",
+        "docs/dcdflib-nc-f.md"
       ],
       "legacy_pnonc_which": 5
     },
@@ -1491,7 +1505,7 @@
       "sha256": "b0ef08fb74be17f6ec2546936aff54f598737f7bd6b8dc40ab103f631e85575b",
       "role": "f77_source",
       "coverage_status": "implemented_legacy_distribution",
-      "scope": "F tails and all parameter inversions; independent C/F77 validation",
+      "scope": "F/noncentral F tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdff"
@@ -1505,8 +1519,8 @@
       "size": 8047,
       "sha256": "1a3a8eb7bbe3a68de16061ee10ce09f30633a1bd451e3e3f385ec233397bb39a",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "F/noncentral F tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdffnc"
@@ -1671,7 +1685,7 @@
       "sha256": "7d0ccf43329b7bf1945c89d3b0d688700dd5931ef4d1ec1dd23723cf56f3ae6c",
       "role": "f77_source",
       "coverage_status": "implemented_legacy_distribution",
-      "scope": "F tails and all parameter inversions; independent C/F77 validation",
+      "scope": "F/noncentral F tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumf"
@@ -1685,8 +1699,8 @@
       "size": 4711,
       "sha256": "dad1d938447527150f64df0877cb3cfbfaac4fdbbf1be439e9af1c911cad626b",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "F/noncentral F tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumfnc"

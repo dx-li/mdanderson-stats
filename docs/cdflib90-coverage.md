@@ -41,7 +41,7 @@ legacy distribution contracts still need comparison with the F95 ports.
 | F | `f` | `cdff`, `cumf` | F95 and legacy C/F77 F interfaces implemented |
 | Gamma | `gamma` | `cdfgam`, `cumgam` | F95 implemented; legacy review pending |
 | Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | F95 implemented; legacy review pending |
-| Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | F95 tails/quantiles/noncentrality implemented; legacy df inversion pending |
+| Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | F95 and legacy C/F77 noncentral F interfaces implemented |
 | Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | F95 implemented with df brackets; legacy review pending |
 | Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | F95 implemented; legacy review pending |
 | Normal | `normal` | `cdfnor`, `cumnor` | F95 implemented; legacy review pending |
@@ -56,9 +56,9 @@ enumerate roots or find tangencies without a sign change.
 The [method notes](cdflib90.md) document the implemented contracts, native F95
 fixtures, independent identities and source repairs. Those F95 fixtures do not
 independently validate legacy implementations.
-The [separate legacy F port](dcdflib-f.md) has its own unchanged C and F77
-references. The other legacy contract statuses remain open even where a
-corresponding F95/Python distribution exists. Future work must establish shared
+The separate [legacy F](dcdflib-f.md) and [noncentral F](dcdflib-nc-f.md) ports
+have their own unchanged C and F77 references. The other legacy contract statuses
+remain open even where a corresponding F95/Python distribution exists. Future work must establish shared
 behavior, document differences, and
 preserve any additional substantive functionality before closing that scope.
 
@@ -71,14 +71,16 @@ The inventory records that evidence separately from the F95 module.
 
 The noncentral F F95 code additionally computes pnonc with which=3, despite
 its header listing only two modes. Legacy C/F77 `cdffnc` uses which=5 for pnonc
-and supports additional dfn/dfd modes at which=3/4. Those additional legacy
-inversions also remain outstanding and are recorded separately in the inventory.
+and supports additional dfn/dfd modes at which=3/4. The Python `cdffnc`/`cumfnc`
+port implements these modes, wide legacy domains and the ignored-q inversion
+contract, with separate native and independent evidence.
 
 The archived DCDFLIB readme explicitly warns that F and noncentral-F CDFs need
 not be monotone in either degrees-of-freedom parameter and may have multiple
-solutions. Their future inversions cannot assume the monotone shape-search
-contract used for beta/gamma. The discrete-family ports must also preserve the
-archive's continuous extensions rather than substitute integer quantiles.
+solutions. Their implemented inversions use explicit sign-changing brackets without
+assuming the monotone shape-search contract used for beta/gamma. The discrete-family
+ports must also preserve the archive's continuous extensions rather than substitute
+integer quantiles.
 
 ## Public numerical and supporting interfaces
 
@@ -133,9 +135,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Implement the additional legacy noncentral-F df inversions, preserving
-  multiple-root and endpoint behavior.
-- Compare the remaining 22 legacy distribution entry-point contracts and validate any
+- Compare the remaining 20 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.

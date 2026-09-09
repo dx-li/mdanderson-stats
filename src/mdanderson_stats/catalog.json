@@ -409,9 +409,10 @@
         "Binomial tails, real success/trial-count inversion and complementary probability inversion; explicit degenerate boundaries and dual primary/backup native validation",
         "F95 F-distribution tails and quantiles with direct complementary beta coordinates; additional legacy modes are implemented separately by cdff",
         "Noncentral chi-square lower/upper tails and bounded x, df and noncentrality inversions; independent high-precision Poisson mixtures and original/status-repaired native evidence",
-        "F95 noncentral F tails, quantiles and noncentrality inversion; validated central reduction, selective bounded quantile refinement and independent beta mixtures; additional legacy df inversions remain outstanding",
+        "F95 noncentral F tails, quantiles and noncentrality inversion; validated central reduction, selective bounded quantile refinement and independent beta mixtures; additional legacy df inversions are implemented separately by cdffnc",
         "Noncentral t tails, quantiles, noncentrality and explicitly bracketed df inversion; multiple-root selection and quadrature repair for small negative tails; all 48 F95 distribution interfaces implemented, with legacy/support contracts still outstanding",
-        "Legacy DCDFLIB F cdff/cumf: all four computed groups, positive finite input df, full 1e-100..1e100 df searches, multiple-root brackets and unchanged C/F77 reference validation"
+        "Legacy DCDFLIB F cdff/cumf: all four computed groups, positive finite input df, full 1e-100..1e100 df searches, multiple-root brackets and unchanged C/F77 reference validation",
+        "Legacy DCDFLIB noncentral F cdffnc/cumfnc: all five computed groups, wide input domains, ignored-q inversion contract, explicit multiple-df-root brackets and unchanged C/F77 references with independent false-success detection"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -449,7 +450,11 @@
         "tests/test_dcdflib_f.py",
         "tests/fixtures/dcdflib_f.json",
         "docs/dcdflib-f.md",
-        "docs/dcdflib-f-benchmark.json"
+        "docs/dcdflib-f-benchmark.json",
+        "tests/test_dcdflib_nc_f.py",
+        "tests/fixtures/dcdflib_nc_f.json",
+        "docs/dcdflib-nc-f.md",
+        "docs/dcdflib-nc-f-benchmark.json"
       ]
     },
     {

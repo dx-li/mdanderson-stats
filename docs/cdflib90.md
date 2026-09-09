@@ -755,14 +755,14 @@ I_z(dfn/2+j,dfd/2), with z=dfn*f/(dfd+dfn*f). This retains the original numerato
 scale as j changes; simply mixing central F distributions at the same f would
 use the wrong scaling.
 
-**Legacy degrees-of-freedom inversions remain outstanding.** F95 explicitly
-excludes those nonmonotone inversions, while older C/F77 `cdffnc` provides dfn
-and dfd at which=3/4 and noncentrality at which=5. The inventory records the
-extra modes and the noncentrality mode-number difference. Implementing the four
-F95 interfaces does not close the legacy contracts.
+The separate [legacy `cdffnc` interface](dcdflib-nc-f.md) implements dfn/dfd
+inversions at which=3/4 and noncentrality at which=5, retaining wider legacy
+input domains and the ignored-q inversion contract. Its unchanged C/F77
+fixtures and independent evidence are recorded separately from the F95 port.
 
 Python uses public [SciPy ncf methods](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ncf.html)
-for positive noncentrality, with the installed 1.18.1 source inspected. The
+for positive noncentrality outside the exact dfd=2 closed form described in
+[the legacy notes](dcdflib-nc-f.md), with the installed 1.18.1 source inspected. The
 exact central case uses the package's validated F routines for both tails and
 quantiles: SciPy 1.18.1 `ncf.sf(1,2,2,0)` returns -0.5. Small positive
 noncentralities are retained, rather than applying the archive's <1e-10 central
