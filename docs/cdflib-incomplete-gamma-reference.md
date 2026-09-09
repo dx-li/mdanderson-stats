@@ -4,7 +4,9 @@ The unchanged F95 `rcomp`, `gratio` and `grat1` routines now have 162 recorded
 native cases and independent mathematical checks. The
 [gamma scaling factor](cdflib-gamma-factor.md) implements `rcomp`, and the
 [incomplete-gamma port](cdflib-incomplete-gamma.md) implements `gratio` and
-`grat1`. CDFLIB90 remains partial.
+`grat1`.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.
 
 | Procedure | Source contract |
 |---|---|

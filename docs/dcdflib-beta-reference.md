@@ -89,5 +89,5 @@ beta subdomains but not the full two-small-shape domain; simply mapping all
 beta calls to that count interface would discard valid inputs. The
 [legacy implementation](dcdflib-beta.md) now uses positive beta recurrences for this domain and includes 650 implementation tests and batching measurements.
 
-CDFLIB90 remains partial with four legacy distribution entry points and public
-numerical/support interfaces still open.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

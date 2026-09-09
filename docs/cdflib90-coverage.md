@@ -1,27 +1,25 @@
-# CDFLIB90 archive inventory and remaining coverage
+# CDFLIB90 archive coverage
 
-The [machine-readable inventory](cdflib90-archive.json) accounts for **106 regular
-files** in the catalog archive. `tools/audit_cdflib90.py` pins the archive SHA-256,
-compares every extracted file with its archive bytes, records member hashes and
-sizes, rejects unknown file roles, and inventories source declarations. It also
-records directory members; there are no other member types in this archive.
-Original source and executables are not bundled in the Python package.
+Catalog entry 21 is implemented with documented Python semantics. The
+[completion audit](cdflib90-completion.md) reconciles source visibility,
+documentation, alternate source and packaging; the
+[machine-readable inventory](cdflib90-archive.json) links each interface to
+implementation, native fixtures, independent tests and method notes.
 
-This is a complete file inventory, **not a claim that every archived interface
-is implemented or numerically equivalent**. CDFLIB90 remains partial. A source
-file's declarations and a matching Python function name are not validation of
-all its domains, inversions, endpoint policies or errors.
+The pinned archive contains **106 regular files**. Its inventory tool compares
+all extracted files with archive bytes, retains hashes and rejects unknown roles.
+Original native sources and executables are not bundled in the Python package.
 
-| Archive material | Files | Coverage disposition |
+| Archive material | Files | Disposition |
 |---|---:|---|
-| F95 distribution modules | 12 | All twelve implemented and validated |
-| F95 support modules | 7 | Sorting and strings implemented; five other public/support modules remain open |
-| Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
-| F95 build files | 2 | Replaced by the package build and CI workflow |
-| Legacy C implementations | 2 | All twelve distribution families independently validated |
-| Legacy public C header | 1 | 73 external function prototypes inventoried |
-| Legacy Fortran source | 64 | 66 declared entry points inventoried, including two ENTRY statements |
-| Documentation, installation and notices | 17 | Reference material accounted for; legal terms retained |
+| F95 distribution modules | 12 | All 48 public interfaces implemented and validated |
+| F95 support modules | 7 | All public responsibilities mapped and validated |
+| Binomial editor backup | 1 | Distinct source variant and false-success inversions reconciled |
+| F95 build files | 2 | Replaced by Python packaging and CI |
+| Legacy C implementations | 2 | All 24 distribution and 49 support names mapped |
+| Legacy public C header | 1 | All 73 external declarations reconciled |
+| Legacy Fortran source | 64 | All 66 routines/entries mapped, including two ENTRY statements |
+| Documentation, installation and notices | 17 | Manuals reconciled, STATTAB cross-referenced and legalities retained |
 
 ## Distribution crosswalk
 
@@ -32,7 +30,7 @@ All 24 legacy distribution names below are present in both source inventories.
 The legacy routines do not introduce a thirteenth distribution. All twelve legacy
 distribution contracts are implemented with separate C/F77 validation.
 
-| Distribution | F95/Python suffix | Legacy CDF / tail names | Current distribution coverage |
+| Distribution | F95/Python suffix | Legacy CDF / tail names | Validated coverage |
 |---|---|---|---|
 | Beta | `beta` | `cdfbet`, `cumbet` | F95 and legacy C/F77 beta interfaces implemented |
 | Binomial | `binomial` | `cdfbin`, `cumbin` | F95 and legacy C/F77 binomial interfaces implemented |
@@ -47,69 +45,14 @@ distribution contracts are implemented with separate C/F77 validation.
 | Poisson | `poisson` | `cdfpoi`, `cumpoi` | F95 and legacy C/F77 Poisson interfaces implemented |
 | Student's t | `t` | `cdft`, `cumt` | F95 and legacy C/F77 Student t interfaces implemented |
 
-All 48 named F95 distribution interfaces now have implementations. The
-noncentral t df solver accepts an explicit sign-changing bracket to select
-between multiple roots; like the archived full-bound search, it does not
-enumerate roots or find tangencies without a sign change.
+The [F95 method notes](cdflib90.md) and each legacy family's method document
+explain domains, computed groups, endpoints, numerical repairs and failure behavior.
+Legacy evidence is separate from F95 evidence. In particular, legacy F and
+noncentral F include additional df inversions and wider bounds; their df searches
+and noncentral t df searches require explicit sign-changing brackets when selecting
+among multiple roots. Discrete families retain continuous extensions.
 
-The [method notes](cdflib90.md) document the implemented contracts, native F95
-fixtures, independent identities and source repairs. Those F95 fixtures do not
-independently validate legacy implementations.
-The separate [legacy F](dcdflib-f.md) and [noncentral F](dcdflib-nc-f.md) ports
-have their own unchanged C and F77 references. The [legacy normal port](dcdflib-normal.md)
-also validates its unrestricted domains, all four modes and repaired native SD
-results. The public support/helper contracts remain open. The [legacy Student t port](dcdflib-t.md)
-validates its wider input/search domains and logarithmic tail repairs separately.
-Future work must establish shared
-behavior, document differences, and
-preserve any additional substantive functionality before closing that scope.
-
-The F95 F module accepts only which=1 (tails) and which=2 (F quantile), explicitly
-excluding degrees-of-freedom inversion. The older C/F77 `cdff` additionally
-accepts which=3 (dfn) and which=4 (dfd). The Python `cdff` and `cumf` interfaces
-now implement those legacy modes and the wider input/search bounds, with
-independent C/F77 validation and documented Python error/result semantics.
-The inventory records that evidence separately from the F95 module.
-
-The noncentral F F95 code additionally computes pnonc with which=3, despite
-its header listing only two modes. Legacy C/F77 `cdffnc` uses which=5 for pnonc
-and supports additional dfn/dfd modes at which=3/4. The Python `cdffnc`/`cumfnc`
-port implements these modes, wide legacy domains and the ignored-q inversion
-contract, with separate native and independent evidence.
-
-The archived DCDFLIB readme explicitly warns that F and noncentral-F CDFs need
-not be monotone in either degrees-of-freedom parameter and may have multiple
-solutions. Their implemented inversions use explicit sign-changing brackets without
-assuming the monotone shape-search contract used for beta/gamma. The discrete-family
-ports must also preserve the archive's continuous extensions rather than substitute
-integer quantiles.
-
-## Public numerical and supporting interfaces
-
-The C header declares **73 external functions**, plus two static implementation
-helpers. All detected external names have matching definitions in the two C
-source files, and no detected external definition lacks a header prototype.
-The 64 F77 files declare 66 routines/entries: `dinvr.f` additionally exports
-`dstinv`, and `dzror.f` additionally exports `dstzr`. Counting only filenames
-would miss those solver-configuration interfaces.
-
-The name differences between the C and F77 inventories are `erf`/`erf1`,
-`gamma`/`Xgamm`, and seven C translation helpers: `fifdint`, `fifdmax1`,
-`fifdmin1`, `fifdsign`, `fifidint`, `fifmod`, `ftnstop`. Names alone do not prove
-semantic equivalence. The remaining shared names include incomplete-beta/gamma
-kernels, log-gamma helpers, normal inversion/initial approximations, and
-direct/reverse-communication root finding.
-
-[Legacy support primitives](dcdflib-support.md) now reconcile ten of the 49 C
-support names: `ipmpar`, `spmpar`, `devlpl` and all seven C translation helpers.
-The [31 mathematical helper mappings](dcdflib-math.md) now have separate C/F77
-evidence, including a distinct legacy `exparg` implementation. The inventory
-also records the [normal/t quantile helpers](dcdflib-quantile-helpers.md).
-The [incomplete-gamma inverse](dcdflib-gamma-inverse.md) and
-[legacy root finders](dcdflib-root.md) complete all 49 support mappings.
-The final archive/documentation audit remains pending.
-
-F95 support also has an explicit public surface:
+## Public F95 support
 
 | Module | Public/support scope and status |
 |---|---|
@@ -121,16 +64,36 @@ F95 support also has an explicit public surface:
 | `biomath_sort_mod` | [Implemented](cdflib-sort.md): all four `sort_list` overloads and custom comparators |
 | `biomath_strings_mod` | [Implemented](cdflib-strings.md): ASCII conversion and reentrant lexer `qlex` with documented repairs |
 
-All seven F95 support modules now have explicit Python mappings and validation
-evidence. The legacy C/F77 support contracts remain **incomplete**.
-For each remaining exported responsibility,
-record either a validated Python equivalent or a justified implementation-detail
-replacement; do not silently discard it because the distribution tests pass.
-The declaration inventory records explicit PUBLIC names and the first default
-access statement. It is not a compiler-derived export table, and declared
-routines can include private procedures, generic implementations or nested scope.
+The source declaration crosswalk covers 121 support names in addition to the
+48 distribution names. The completion verifier compiles all 19 unchanged F95
+modules and imports 252 public names: those 169 names plus 83 transitive USE
+associations. Python uses the documented support namespaces instead of copying
+all implicit Fortran aliases. Private procedures and generic overload bodies are
+implementation details; their public generic behavior is tested.
 
-## Alternate source and completion requirements
+## Legacy support
+
+All **49 support names** are exposed by `mdanderson_stats.dcdflib_support`:
+
+- [Ten primitives](dcdflib-support.md): machine parameters, polynomial evaluation
+  and the seven C translation helpers.
+- [31 mathematical helpers](dcdflib-math.md): separate C/F77 validation, including
+  the distinct legacy exponential-limit convention.
+- [Three normal/t quantile helpers](dcdflib-quantile-helpers.md): starting formulas
+  and refined normal inversion.
+- [Incomplete-gamma inversion](dcdflib-gamma-inverse.md): starting hints,
+  representability checks and independently verified extreme-tail repairs.
+- [Four root-finder interfaces](dcdflib-root.md): separate search state,
+  reverse communication, failure flags and the native stopping convention.
+
+Together with the 24 distribution names, these account for every external C
+function. The 66 F77 names correspond after the `erf`/`erf1` and `gamma`/`Xgamm`
+aliases and exclusion of seven C-only helpers. The two static C functions are
+private implementation details. Native process termination becomes a Python
+exception; native status/result conventions and numerical defects are documented
+rather than silently copied.
+
+## Alternate binomial source
 
 `#cdf_binomial_mod.f90#` differs from the primary `cdf_binomial_mod.f90`, including
 formatting and IMPLICIT NONE declarations. It is not listed among the Makefile's
@@ -144,131 +107,19 @@ repairs the inverse behavior; the Makefile-selected primary source remains the
 reference version. This alternate source is reconciled, not counted as a separate
 product or assumed byte-identical.
 
-Before marking the catalog entry complete:
+## Reproduction and limits
 
-- All 12 legacy distribution mappings are implemented with documented Python
-  semantics; resolve any remaining cross-version support contracts below.
-- Resolve the public numerical, root-finding and supporting interfaces described
-  above, with evidence for each replacement or explicit scope decision.
-- Resolve remaining applicable documentation and cross-version contract differences.
-- Regenerate this inventory and update its coverage mapping as implementations
-  land; keep catalog status partial until the remaining requirements are met.
+Run `uv run python tools/audit_cdflib90.py`, then
+`uv run python tools/audit_cdflib90_completion.py` from the repository root.
+The pinned archive and extraction under ignored `research/raw` are required;
+missing or changed source fails the audit. The second command additionally
+requires gfortran and records compiler details and the import-driver hash.
 
-Run `uv run python tools/audit_cdflib90.py` from the repository root to regenerate
-the inventory. The original archive/extraction live under ignored `research/raw`;
-the script deliberately fails if they are absent, changed or inconsistent.
+Export compilation proves public visibility, not numerical accuracy. Per-interface
+tests provide native comparisons and independent mathematical or protocol checks;
+the method documents retain representability limits, explicit errors and benchmark
+scope. No uniform native-code speedup or bitwise equivalence is claimed.
 
-The [legacy gamma port](dcdflib-gamma.md) independently validates all four
-computed groups against unchanged C/F77 sources, including executable x/rate
-bounds that differ from the source header and repairs for scaled underflow.
-
-The [legacy chi-square port](dcdflib-chisq.md) validates all three computed
-groups against unchanged C/F77 sources and independently checks wide inputs,
-subnormal half-value rounding and bounded x/df inversions.
-
-The [legacy Poisson port](dcdflib-poisson.md) validates paired tails and both
-inversions against unchanged C/F77 sources, with explicit zero-mean semantics,
-wide finite inputs and independent small-tail checks.
-
-The [negative-binomial reference audit](dcdflib-neg-binomial-reference.md) records
-unchanged C/F77 behavior, independent ordinary-domain validation, boundary
-conflicts, false-success inversions and wide-input timeouts. The separate
-[legacy Python implementation](dcdflib-neg-binomial.md) now covers all four
-modes, wider counts, complementary chance coordinates and documented repairs.
-
-The [legacy binomial reference audit](dcdflib-binomial-reference.md) records the
-invalid-mode guard, C-only small-n process exits, wider search bounds and
-independently established false-success inversions. The separate
-[legacy Python interface](dcdflib-binomial.md) now implements all four modes with distinct count bounds and independent wide-domain validation;
-the prior F95 backup-source reconciliation is unchanged.
-
-The [legacy beta reference audit](dcdflib-beta-reference.md) records unchanged
-C/F77 ordinary behavior, wider shape bounds, ambiguous endpoints, small-target
-and large-shape false successes, and symmetric overflow timeouts. The separate
-[legacy beta API](dcdflib-beta.md) now implements all four modes, including the
-full two-small-shape domain, with independent implementation validation.
-
-The [legacy noncentral chi-square reference audit](dcdflib-nc-chisq-reference.md)
-records unchanged C/F77 behavior, the ignored-q inversion contract, early-series
-small-tail failures, invalid wide central probabilities and a large-noncentrality
-timeout. The [wider legacy API](dcdflib-nc-chisq.md) now implements all four
-modes with independent small-tail checks and documented numerical limits.
-
-The [legacy noncentral-t reference audit](dcdflib-nc-t-reference.md) records
-signed noncentrality, ignored q, the executable df upper bound of 1e4,
-misleading native status bounds and independently established tail/inverse
-failures. The [wider legacy API](dcdflib-nc-t.md) now implements all four modes,
-signed noncentrality and independently checked tail repairs.
-
-The [sorting port](cdflib-sort.md) validates all four F95 overloads and custom
-comparison callbacks against unchanged source. It repairs duplicate-induced
-bounds failures and truncation of strings longer than 256 characters, while
-preserving stable ordering, prefix semantics and full-value permutations.
-
-The [string/lexer reference audit](cdflib-strings-reference.md) covers all five
-public names, ASCII conversion rules, token classes and native buffer, quote,
-malformed-number and overflow failures. The [Python port](cdflib-strings.md) now
-implements all five public operations with documented token/numeric policies.
-
-The [elementary support port](cdflib-elementary.md) implements `alnrel`, `rexp`,
-`rlog`, `rlog1` and `evaluate_polynomial`, with unchanged F95 evidence and
-800-digit checks, including a native subnormal-remainder repair. The mathematical
-module remains partial.
-
-The [error-function/exponential reference audit](cdflib-error-exponential-reference.md)
-records 134 unchanged F95 calls to `erf`, `erfc1`, `esum` and `exparg`, with
-independent defining-function checks. It identifies premature tail cutoff,
-intermediate overflow, subnormal double-rounding and the actual normal-range
-threshold contract. The [Python port](cdflib-error-exponential.md) now implements
-all four with documented overflow handling and preserved subnormal tails.
-
-The [gamma/digamma support audit](cdflib-gamma-support-reference.md) adds 237
-native calls for `alngam`, `gamln`, `log_gamma`, `gamln1`, `gam1`, `gamma` and
-`psi`, with independent recurrence/Stirling and exact-identity checks. It
-separates the different negative-argument contracts and documents intermediate
-overflow, lost subnormal tails, inaccurate logarithmic roots and a nonterminating
-recurrence. The [Python port](cdflib-gamma-support.md) now implements all seven, preserving
-valid negative intervals and repairing the audited numerical failures.
-
-The [beta/gamma-ratio support audit](cdflib-beta-support-reference.md) records
-192 calls to `algdiv`, `bcorr`, `betaln`, `log_beta`, `gsumln` and `log_bicoef`.
-Independent 800-digit checks document fractional domains, close-sum and quotient
-underflow failures, and valid extreme-range results. The
-[gamma-ratio foundations](cdflib-gamma-ratios.md) implement `algdiv`, `bcorr` and
-`gsumln`. The [beta/combinatorial port](cdflib-beta-support.md) implements
-`betaln`, `log_beta` and `log_bicoef`.
-
-The [incomplete-gamma support audit](cdflib-incomplete-gamma-reference.md) records
-162 unchanged F95 calls to `rcomp`, `gratio` and `grat1`. Independent checks expose
-large-shape tail bias, center-branch sign errors, product-underflow endpoints and
-invalid-tolerance behavior. The [gamma scaling factor](cdflib-gamma-factor.md)
-implements `rcomp`; the [incomplete-gamma port](cdflib-incomplete-gamma.md)
-implements `gratio` and `grat1` with independent tail checks and subnormal recovery.
-
-The [beta-factor audit](cdflib-beta-factors-reference.md) records 149 unchanged
-F95 calls to `brcomp`, `brcmp1` and `bup`. Independent checks expose intermediate
-overflow, premature subnormal rounding, shape-sum overflow and a valid large-shift
-timeout. The [beta-factor port](cdflib-beta-factors.md) implements `brcomp` and
-`brcmp1`; the [shape-shift port](cdflib-beta-shift.md) implements `bup`.
-
-The [beta-series audit](cdflib-beta-series-reference.md) records 116 unchanged
-F95 calls to `apser`, `fpser` and `bpser`. Independent beta-integral checks expose
-endpoint errors, an overflowing digamma intermediate, a lost subnormal result
-and valid-domain timeouts. The [fpser](cdflib-fpser.md) and
-[apser](cdflib-apser.md) and [bpser](cdflib-bpser.md) ports are implemented.
-
-The shared beta-tail kernel includes a [small-coordinate correction](cdflib90.md#numerics-and-failure-behavior)
-validated against independent 800-digit integrals, legacy beta and negative-binomial
-interfaces, and shape inversion. This repairs inaccurate and spuriously zero tails
-at subnormal coordinates without adding a new catalog procedure.
-
-The [remaining beta-helper audit](cdflib-beta-remaining-reference.md) records 116
-native calls to basym, bfrac, bgrat and bratio, with independent integral checks,
-endpoint/status contracts, inaccurate results and five timeouts. The [bgrat](cdflib-bgrat.md), [basym](cdflib-basym.md), [bfrac](cdflib-bfrac.md), and
-[bratio](cdflib-bratio.md) ports implement all four audited interfaces. Other support
-interfaces keep CDFLIB90 partial.
-
-The [root-finder audit](cdflib-root-reference.md) records 60 completed native calls,
-including sixteen incorrect successful roots, four stale local completion states,
-and direct/reverse request traces. The [Python root finders](cdflib-root.md) implement
-these interfaces with corrected exact roots, per-search state and working tolerances.
+All 17 documentation members have dispositions in the completion evidence.
+The embedded STATTAB 2.0 manual belongs to the separate pending
+[STATTAB entry 23](stattab-research.md), whose workflow remains in the catalog goal.

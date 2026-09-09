@@ -124,5 +124,6 @@ speedup over native code. Reverse communication advances one caller-supplied
 scalar residual per request; distribution-specific batched inversions remain
 separate package APIs.
 
-All 49 legacy support names now have validated Python mappings. CDFLIB90 remains
-partial pending the final archive/documentation audit.
+All 49 legacy support names now have validated Python mappings.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

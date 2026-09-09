@@ -128,5 +128,6 @@ not comparisons against native C or Fortran. On the recorded machine, batches
 of 64/256 were about 39/103 times faster for tails, 45/97 times for numerator-df
 inversion, and 42/84 times for denominator-df inversion (median of three runs).
 
-This resolves the two legacy noncentral-F distribution entry points. CDFLIB90
-remains partial while its other legacy and public supporting contracts are open.
+This resolves the two legacy noncentral-F distribution entry points.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

@@ -83,7 +83,8 @@ successes and four stale completion states. Further tests cover direct/reverse
 trace agreement, exact roots, effective tolerances, flat odd polynomials,
 interleaved/nested searches, extreme residuals and bounds, adjacent floats,
 immutable snapshots, input validation and exact work-budget behavior.
-CDFLIB90 remains partial because other archive interfaces remain unimplemented.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.
 
 For a reproducible evaluation-count check, use limits [0,2], absolute tolerance
 1e-12, relative tolerance 0 and initial 1 for step search. With default step

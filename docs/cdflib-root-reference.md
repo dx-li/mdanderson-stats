@@ -53,4 +53,6 @@ corrected exact roots and completion state, effective tolerances and bounded
 work. It replaces native shared default state with independent searches and
 validates inputs instead of invoking the source STOP paths. Python tests cover
 interleaving and invalid configuration; the native fixture itself covers explicit
-local state and completed runs. CDFLIB90 and the full catalog remain partial.
+local state and completed runs.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

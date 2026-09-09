@@ -3,12 +3,10 @@
 CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
-The entry is **partial**. All four public interfaces are implemented for beta,
-binomial, normal, gamma, chi-square, Poisson, negative-binomial, Student's t, F,
-noncentral chi-square, noncentral F and noncentral t distributions. All twelve F95 distribution modules are implemented;
-the additional legacy and public-support interfaces remain outstanding.
-The [106-file inventory](cdflib90-coverage.md) identifies the legacy entry points
-and public support APIs that still need contract review and validation.
+The entry is **implemented with documented Python semantics**: all 48 F95
+distribution interfaces, seven F95 support modules and all 73 legacy C exports
+are mapped and validated. The [completion audit](cdflib90-completion.md) records
+source, public-interface, documentation and packaging evidence.
 
 Source: [catalog entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/21)
 and [archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CDFLIB90/CDFLIB90%20%20_V90.tar.gz).
@@ -967,8 +965,8 @@ to isolate that root rather than enclosing both crossings.
 Validation also covers both df bounds, noncentrality zero/1e4, central reduction,
 multiple-root selection and sign changes, mixed endpoint batches, immutable
 ownership, empty arrays and invalid brackets/inputs. All four public F95
-interfaces are implemented, but the catalog entry remains partial pending the
-[legacy and supporting contracts](cdflib90-coverage.md).
+interfaces and the [legacy/support contracts](cdflib90-coverage.md) are implemented;
+see the [completion audit](cdflib90-completion.md).
 
 [Batch timings](cdflib-nc-t-benchmark.json) compare one broadcast call to repeated
 scalar calls of the same Python API, checking agreement each time. For batches

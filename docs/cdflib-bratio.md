@@ -66,6 +66,6 @@ small-shape, subnormal-shape, subnormal-tail, huge-shape and tiny-upper-tail cas
 These measure batching benefits, not speed relative to Fortran.
 
 All 35 F95 mathematical procedures and their [constants](cdflib-constants.md)
-are implemented. Root-finder/state, console and adapter interfaces, and other
-CDFLIB support scope remain open. CDFLIB90 stays partial, and the full software
-catalog conversion continues.
+are implemented.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

@@ -118,5 +118,5 @@ measure Python batching, not speed relative to native C or Fortran.
 For 64/256 rows, recorded speedups were about 39/126 for tails, 53/139 for
 quantiles, 49/125 for df and 54/142 for noncentrality inversion.
 
-CDFLIB90 remains partial: two legacy noncentral-t distribution entry points and
-public numerical/support interfaces still require reconciliation.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

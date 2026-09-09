@@ -102,5 +102,6 @@ answers. They do not measure speedup over native C or Fortran. On the recorded
 machine, 64/256-element batches were about 34/81 times faster for tails, 43/93
 times for quantiles and 41/81 times for df inversion (median of three runs).
 
-These two legacy entry points are now covered. CDFLIB90 remains partial until
-the other legacy distribution and public supporting contracts are resolved.
+These two legacy entry points are now covered.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

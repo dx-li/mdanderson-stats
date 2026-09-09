@@ -96,5 +96,5 @@ the recorded machine, 256 rows were about 127× faster and 10,000 rows about 1,0
 faster. These are not comparisons with native Fortran timing. Reproduce with
 `uv run python tools/benchmark_cdflib_aux.py`.
 
-CDFLIB90 remains partial: console/message support and remaining legacy interfaces
-still need implementation and validation.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

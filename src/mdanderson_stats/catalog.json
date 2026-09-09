@@ -395,7 +395,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Beta distribution lower/upper tails, quantile/complement and both shape inversions; broadcast immutable results and all four CDFLIB90 beta public interfaces",
         "Explicit complementary coordinates/probabilities, smaller-tail numerical evaluation, batched bounded log-shape searches and clear invalid/out-of-bound errors",
@@ -404,13 +404,13 @@
         "Chi-square lower/upper tails, quantiles and bounded real degrees-of-freedom inversion through shared gamma kernels; immutable broadcasting and native status/root defect validation",
         "Poisson continuous-count lower/upper tails, count and mean inversions using complementary gamma ratios; immutable broadcasting and rejection of native negative-count clamping",
         "Negative-binomial tails, real failure/success inversions and complementary success-probability inversion; full count bounds, zero-success semantics and shared beta kernels",
-        "Pinned 106-file archive inventory and public-interface crosswalk; legacy C/Fortran and public-support contract review explicitly tracked as outstanding",
+        "Pinned 106-file archive inventory and public-interface crosswalk; all legacy C/Fortran and public-support contracts reconciled",
         "Student's t lower/upper tails, quantiles and bounded degrees-of-freedom inversion using complementary beta coordinates and batched search",
         "Binomial tails, real success/trial-count inversion and complementary probability inversion; explicit degenerate boundaries and dual primary/backup native validation",
         "F95 F-distribution tails and quantiles with direct complementary beta coordinates; additional legacy modes are implemented separately by cdff",
         "Noncentral chi-square lower/upper tails and bounded x, df and noncentrality inversions; independent high-precision Poisson mixtures and original/status-repaired native evidence",
         "F95 noncentral F tails, quantiles and noncentrality inversion; validated central reduction, selective bounded quantile refinement and independent beta mixtures; additional legacy df inversions are implemented separately by cdffnc",
-        "Noncentral t tails, quantiles, noncentrality and explicitly bracketed df inversion; multiple-root selection and quadrature repair for small negative tails; all 48 F95 distribution interfaces implemented, with legacy/support contracts still outstanding",
+        "Noncentral t tails, quantiles, noncentrality and explicitly bracketed df inversion; multiple-root selection and quadrature repair for small negative tails; all 48 F95 distribution interfaces implemented, with independently validated legacy/support mappings",
         "Legacy DCDFLIB F cdff/cumf: all four computed groups, positive finite input df, full 1e-100..1e100 df searches, multiple-root brackets and unchanged C/F77 reference validation",
         "Legacy DCDFLIB noncentral F cdffnc/cumfnc: all five computed groups, wide input domains, ignored-q inversion contract, explicit multiple-df-root brackets and unchanged C/F77 references with independent false-success detection",
         "Legacy DCDFLIB normal cdfnor/cumnor: all four computed groups, unrestricted finite locations and positive scales, overflow-safe inversions, subnormal tails and independent C/F77 evidence",
@@ -447,12 +447,13 @@
         "F95 console numeric input in float64, float32 and int32 scalar/vector forms, character/string input and basic output with per-console streams, bounded retries and explicit EOF/nonfinite handling",
         "F95 numeric list editor with all eight actions, bounded persistent state, atomic edits, stable linear/log spacing and overflow-safe approximate duplicate removal",
         "F95 numeric array formatting with native adaptive F layouts, scientific E fields, checked widths/counts, signed zero and extreme exponents, and console/report output without the fixed 79-character buffer",
-        "F95 message templates with initialized repeatable Python substitutions, optional help, suppression/force controls and explicit stream routing; all seven F95 support modules implemented with documented Python semantics, legacy C/F77 support contracts remain pending",
+        "F95 message templates with initialized repeatable Python substitutions, optional help, suppression/force controls and explicit stream routing; all seven F95 support modules implemented with documented Python semantics",
         "Legacy DCDFLIB machine parameters, polynomial prefix evaluation and all seven C translation helpers: ten of 49 support contracts reconciled with checked vectorized arithmetic, exact int64 remainder and exception-based STOP",
-        "All 31 legacy mathematical support helpers mapped through dcdflib_support with direct C/F77 validation and independent extreme-value oracles; distinct conservative legacy exparg contract preserved; 41 of 49 legacy support names reconciled",
-        "Legacy stvaln normal starting approximation, dinvnr refined normal inversion and dt1 inverse-df t starting expansion, with subnormal-tail verification and finite tiny-df corrections; 44 of 49 support names reconciled",
+        "All 31 legacy mathematical support helpers mapped through dcdflib_support with direct C/F77 validation and independent extreme-value oracles; distinct conservative legacy exparg contract preserved",
+        "Legacy stvaln normal starting approximation, dinvnr refined normal inversion and dt1 inverse-df t starting expansion, with subnormal-tail verification and finite tiny-df corrections",
         "Legacy GAMINV: batched incomplete-gamma inversion with checked optional starting values, endpoint sentinels, subnormal log-tail refinement and large-shape quantiles; native statuses reconciled with explicit Python errors",
-        "Legacy DSTINV/DINVR and DSTZR/DZROR reverse-communication roots with independent states, exact max-tolerance/best-endpoint contracts, checked work caps and unchanged C/F77 validation; all 49 legacy support mappings implemented, final archive audit pending"
+        "Legacy DSTINV/DINVR and DSTZR/DZROR reverse-communication roots with independent states, exact max-tolerance/best-endpoint contracts, checked work caps and unchanged C/F77 validation; all 49 legacy support mappings implemented",
+        "Final archive/documentation audit: 252 compiled F95 public imports, all 73 C exports and 66 F77 entries mapped; 17 documentation members reconciled, retained legalities verified byte-for-byte and embedded STATTAB manual tracked under separate entry 23"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -662,7 +663,10 @@
         "tests/fixtures/dcdflib_root.json",
         "tests/test_dcdflib_root.py",
         "docs/dcdflib-root.md",
-        "docs/dcdflib-root-benchmark.json"
+        "docs/dcdflib-root-benchmark.json",
+        "tools/audit_cdflib90_completion.py",
+        "docs/cdflib90-completion.json",
+        "docs/cdflib90-completion.md"
       ]
     },
     {
@@ -712,7 +716,9 @@
       "retrieval_error": null,
       "status": "pending",
       "implemented_features": [],
-      "validation": []
+      "validation": [
+        "docs/stattab-research.md"
+      ]
     },
     {
       "id": 24,

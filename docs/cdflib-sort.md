@@ -84,7 +84,7 @@ with `np.asarray(sorted(array.tolist()), dtype=array.dtype)` at 10,000 and 100,0
 values, verifying equal outputs on each repetition. These measurements do not
 compare against the archived native executable.
 
-This closes the sorting module's public interface. CDFLIB90 remains partial:
-its mathematical helpers, constants, solver state and console interfaces still
-require public-contract coverage. The [string module](cdflib-strings.md), including
-its command-language lexer, now has a separate validated implementation.
+This closes the sorting module's public interface.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope. The [string module](cdflib-strings.md), including its
+command-language lexer, also has a validated implementation.

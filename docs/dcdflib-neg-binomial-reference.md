@@ -72,5 +72,6 @@ validate the wider legacy API.
 
 The separate implementation now supplies the legacy interface, wider count
 searches, complementary chance coordinates, numerical repairs, wide-domain tests
-and batching measurements. CDFLIB90 remains partial, with eight other legacy
-distribution entry points and its public support interfaces still outstanding.
+and batching measurements.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

@@ -90,5 +90,6 @@ exp(-1). The legacy Python interface preserves these examples while repairing th
 The separate [legacy API](dcdflib-binomial.md) implements the s/n search bounds,
 complement handling, endpoint semantics and inverse forward verification, with
 394 implementation tests and recorded batching measurements. This reference
-fixture remains unchanged evidence of native behavior. CDFLIB90 stays partial:
-six legacy distribution entry points and public support interfaces remain open.
+fixture remains unchanged evidence of native behavior.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

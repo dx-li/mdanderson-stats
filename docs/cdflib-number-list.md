@@ -95,4 +95,5 @@ EOF, distinct retry budgets, pagination and fractional interval rejection.
 
 [Array formatting](cdflib-array-format.md) and [message controls](cdflib-message-format.md)
 complete the F95 console support module with documented Python semantics.
-CDFLIB90 remains partial pending the legacy support contracts; the full catalog is incomplete.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

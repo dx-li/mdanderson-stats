@@ -58,7 +58,5 @@ finite mathematical answer. Ordinary reference agreement uses tolerances that
 accommodate the original rational approximations. The identified failures have
 specific assertions, not a broad tolerance that hides them.
 
-The module remains partially implemented: five elementary helpers and these four
-audited procedures are available in Python. Other mathematical support, imported
-constants, root-finder state and console/adapter interfaces remain open. The audit
-itself makes no performance claim.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope. This reference audit makes no performance claim.

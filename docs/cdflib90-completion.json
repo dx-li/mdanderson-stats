@@ -1,0 +1,438 @@
+{
+  "archive_sha256": "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b",
+  "status": "complete_with_documented_python_semantics",
+  "f95_modules": {
+    "cdf_beta_mod": [
+      "ccum_beta",
+      "cdf_beta",
+      "cum_beta",
+      "inv_beta"
+    ],
+    "cdf_binomial_mod": [
+      "ccum_binomial",
+      "cdf_binomial",
+      "cum_binomial",
+      "inv_binomial"
+    ],
+    "cdf_chisq_mod": [
+      "ccum_chisq",
+      "cdf_chisq",
+      "cum_chisq",
+      "inv_chisq"
+    ],
+    "cdf_f_mod": [
+      "ccum_f",
+      "cdf_f",
+      "cum_f",
+      "inv_f"
+    ],
+    "cdf_gamma_mod": [
+      "ccum_gamma",
+      "cdf_gamma",
+      "cum_gamma",
+      "inv_gamma"
+    ],
+    "cdf_nc_chisq_mod": [
+      "ccum_nc_chisq",
+      "cdf_nc_chisq",
+      "cum_nc_chisq",
+      "inv_nc_chisq"
+    ],
+    "cdf_nc_f_mod": [
+      "ccum_nc_f",
+      "cdf_nc_f",
+      "cum_nc_f",
+      "inv_nc_f"
+    ],
+    "cdf_nc_t_mod": [
+      "ccum_nc_t",
+      "cdf_nc_t",
+      "cum_nc_t",
+      "inv_nc_t"
+    ],
+    "cdf_neg_binomial_mod": [
+      "ccum_neg_binomial",
+      "cdf_neg_binomial",
+      "cum_neg_binomial",
+      "inv_neg_binomial"
+    ],
+    "cdf_normal_mod": [
+      "ccum_normal",
+      "cdf_normal",
+      "cum_normal",
+      "inv_normal"
+    ],
+    "cdf_poisson_mod": [
+      "ccum_poisson",
+      "cdf_poisson",
+      "cum_poisson",
+      "inv_poisson"
+    ],
+    "cdf_t_mod": [
+      "ccum_t",
+      "cdf_t",
+      "cum_t",
+      "inv_t"
+    ],
+    "biomath_sort_mod": [
+      "sort_list"
+    ],
+    "biomath_strings_mod": [
+      "lower_case_char",
+      "lower_case_string",
+      "qlex",
+      "upper_case_char",
+      "upper_case_string"
+    ],
+    "biomath_constants_mod": [
+      "dpkind",
+      "eight",
+      "eighth",
+      "fifth",
+      "five",
+      "four",
+      "fourth",
+      "half",
+      "hundred",
+      "hundredth",
+      "nine",
+      "one",
+      "seven",
+      "six",
+      "sixth",
+      "spkind",
+      "stdin",
+      "stdout",
+      "ten",
+      "tenth",
+      "third",
+      "thousand",
+      "thousandth",
+      "three",
+      "twelve",
+      "two",
+      "zero"
+    ],
+    "biomath_mathlib_mod": [
+      "algdiv",
+      "alngam",
+      "alnrel",
+      "apser",
+      "basym",
+      "bcorr",
+      "betaln",
+      "bfrac",
+      "bgrat",
+      "bpser",
+      "bratio",
+      "brcmp1",
+      "brcomp",
+      "bup",
+      "erf",
+      "erfc1",
+      "esum",
+      "evaluate_polynomial",
+      "exparg",
+      "fpser",
+      "gam1",
+      "gamln",
+      "gamln1",
+      "gamma",
+      "grat1",
+      "gratio",
+      "gsumln",
+      "log_beta",
+      "log_bicoef",
+      "log_gamma",
+      "psi",
+      "rcomp",
+      "rexp",
+      "rlog",
+      "rlog1"
+    ],
+    "zero_finder": [
+      "final_zf_state",
+      "interval_zf",
+      "rc_interval_zf",
+      "rc_step_zf",
+      "set_zero_finder",
+      "step_zf",
+      "zf_bound_high",
+      "zf_bound_low",
+      "zf_crash_hi",
+      "zf_crash_left",
+      "zf_current_status",
+      "zf_locals"
+    ],
+    "cdf_aux_mod": [
+      "add_to_one",
+      "cdf_finalize_status",
+      "cdf_set_zero_finder",
+      "check_complements",
+      "dbl_in_range",
+      "in_range",
+      "int_in_range",
+      "one_parameter",
+      "the_beta",
+      "the_binomial",
+      "the_chi_square",
+      "the_distribution",
+      "the_dummy_binomial",
+      "the_f",
+      "the_gamma",
+      "the_negative_binomial",
+      "the_non_central_chi_square",
+      "the_non_central_f",
+      "the_non_central_t",
+      "the_normal",
+      "the_poisson",
+      "the_t",
+      "validate_parameters",
+      "which_miss"
+    ],
+    "biomath_interface_mod": [
+      "always_print",
+      "clear_screen",
+      "get_character",
+      "get_list_double",
+      "get_numbers",
+      "get_string",
+      "get_yn",
+      "hold",
+      "message_format",
+      "num_subs",
+      "print_message_format",
+      "print_off",
+      "prompt",
+      "report_unit",
+      "write_array",
+      "write_error",
+      "write_message"
+    ]
+  },
+  "transitive_exports": {
+    "biomath_mathlib_mod": {
+      "biomath_constants_mod": [
+        "dpkind",
+        "eight",
+        "eighth",
+        "fifth",
+        "five",
+        "four",
+        "fourth",
+        "half",
+        "hundred",
+        "hundredth",
+        "nine",
+        "one",
+        "seven",
+        "six",
+        "sixth",
+        "spkind",
+        "stdin",
+        "stdout",
+        "ten",
+        "tenth",
+        "third",
+        "thousand",
+        "thousandth",
+        "three",
+        "twelve",
+        "two",
+        "zero"
+      ]
+    },
+    "cdf_aux_mod": {
+      "biomath_constants_mod": [
+        "dpkind",
+        "eight",
+        "eighth",
+        "fifth",
+        "five",
+        "four",
+        "fourth",
+        "half",
+        "hundred",
+        "hundredth",
+        "nine",
+        "one",
+        "seven",
+        "six",
+        "sixth",
+        "spkind",
+        "stdin",
+        "stdout",
+        "ten",
+        "tenth",
+        "third",
+        "thousand",
+        "thousandth",
+        "three",
+        "twelve",
+        "two",
+        "zero"
+      ],
+      "biomath_interface_mod": [
+        "always_print",
+        "clear_screen",
+        "get_character",
+        "get_list_double",
+        "get_numbers",
+        "get_string",
+        "get_yn",
+        "hold",
+        "message_format",
+        "num_subs",
+        "print_message_format",
+        "print_off",
+        "prompt",
+        "report_unit",
+        "write_array",
+        "write_error",
+        "write_message"
+      ],
+      "zero_finder": [
+        "final_zf_state",
+        "interval_zf",
+        "rc_interval_zf",
+        "rc_step_zf",
+        "set_zero_finder",
+        "step_zf",
+        "zf_bound_high",
+        "zf_bound_low",
+        "zf_crash_hi",
+        "zf_crash_left",
+        "zf_current_status",
+        "zf_locals"
+      ]
+    }
+  },
+  "compiler_import_count": 252,
+  "compiler_flags": [
+    "gfortran",
+    "-std=legacy",
+    "-O0",
+    "-ffp-contract=off",
+    "-fcheck=all"
+  ],
+  "compiler_source_order": [
+    "biomath_constants_mod.f90",
+    "biomath_sort_mod.f90",
+    "biomath_strings_mod.f90",
+    "biomath_interface_mod.f90",
+    "biomath_mathlib_mod.f90",
+    "zero_finder.f90",
+    "cdf_aux_mod.f90",
+    "cdf_beta_mod.f90",
+    "cdf_binomial_mod.f90",
+    "cdf_gamma_mod.f90",
+    "cdf_chisq_mod.f90",
+    "cdf_f_mod.f90",
+    "cdf_nc_chisq_mod.f90",
+    "cdf_nc_f_mod.f90",
+    "cdf_normal_mod.f90",
+    "cdf_t_mod.f90",
+    "cdf_nc_t_mod.f90",
+    "cdf_neg_binomial_mod.f90",
+    "cdf_poisson_mod.f90"
+  ],
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "driver_sha256": "29a815e4d95b67e108038f42c563ea0bd446d0b0375f6ae1d0ed992ade8352cf",
+  "c_external_count": 73,
+  "f77_entry_count": 66,
+  "legacy_support_count": 49,
+  "documentation": [
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/doc/cdflib90_doc.pdf",
+      "sha256": "c57bce0b986231b18c2cc1ef699b6e5e46ce70a3fd24d20aa90a02942796fb47",
+      "disposition": "CDFLIB90/DCDFLIB API documentation reconciled against executable contracts and documented errata"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/doc/cdflib90_doc.ps",
+      "sha256": "7817b2b574a6433e0bcd37f9b92c3da3f6cdeda141eb706af4398bbac074cd2c",
+      "disposition": "CDFLIB90/DCDFLIB API documentation reconciled against executable contracts and documented errata"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/doc/cdflib90_doc.tex",
+      "sha256": "39d55cc094e5b178de5dc6a5a724a2309f2c7adc1285b7fecef2f31b94f98719",
+      "disposition": "CDFLIB90/DCDFLIB API documentation reconciled against executable contracts and documented errata"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/doc/cdflib90_doc.txt",
+      "sha256": "58db6654e7b5c16ba37999443c46b328d1820a791dd15692908d8f4670903442",
+      "disposition": "CDFLIB90/DCDFLIB API documentation reconciled against executable contracts and documented errata"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/DOC.TEX",
+      "sha256": "a36945d06c8d83f52af691e17cb8d787e2c49733aa85fb0f3f3356bdc1e2eec3",
+      "disposition": "STATTAB 2.0 manual; separate catalog entry, not a duplicate CDFLIB90 manual"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/INSTALL",
+      "sha256": "771353b3387a406f4314aa8853e73d1a402d4a1ff8866b4bf80c76660b421070",
+      "disposition": "Historical acquisition/build/platform instructions replaced by Python packaging; numerical guidance reconciled"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/LEGALITIES",
+      "sha256": "b4ceda52fb94d8cd273e2ae184ae4aacbb6040c0200d45d12b49508a535823cd",
+      "disposition": "Retained byte-for-byte in the Python package notice"
+    },
+    {
+      "path": "CDFLIB90/source/cdflib90_1.2/readme",
+      "sha256": "2f3ecded1334c88d1f1980a0b036659d708bf7206cb150b47e294da7d0dc5313",
+      "disposition": "Historical acquisition/build/platform instructions replaced by Python packaging; numerical guidance reconciled"
+    },
+    {
+      "path": "source/dcdflib.c/doc/dcdflib.chs",
+      "sha256": "36e6909aad25124587e2c906eaecb37a5a6cc13f7329d320118fcaae674a0ed4",
+      "disposition": "CDFLIB90/DCDFLIB API documentation reconciled against executable contracts and documented errata"
+    },
+    {
+      "path": "source/dcdflib.c/doc/dcdflib.fdoc",
+      "sha256": "4c24d4ad49c2f3bb3f213c20165f33b77549b35c3069737627903a1472b9d9c8",
+      "disposition": "CDFLIB90/DCDFLIB API documentation reconciled against executable contracts and documented errata"
+    },
+    {
+      "path": "source/dcdflib.c/doc/dcdflib.h",
+      "sha256": "01796df29163de465a8429c12cf7ced98b4840b7859fda31ce93cfad65180cac",
+      "disposition": "CDFLIB90/DCDFLIB API documentation reconciled against executable contracts and documented errata"
+    },
+    {
+      "path": "source/dcdflib.c/HOWTOGET",
+      "sha256": "91fb9bcfaa5fb25c0bb048ad0ee11c2e8b44d8bcf1d2c98b56e07d9626d4f880",
+      "disposition": "Historical acquisition/build/platform instructions replaced by Python packaging; numerical guidance reconciled"
+    },
+    {
+      "path": "source/dcdflib.c/readme",
+      "sha256": "1007be43e39e9ecd2063348f0d86686fc3d27176f47f04036c17f1adaa539f79",
+      "disposition": "Historical acquisition/build/platform instructions replaced by Python packaging; numerical guidance reconciled"
+    },
+    {
+      "path": "source/dcdflib.f/doc/dcdflib.chs",
+      "sha256": "7c62aad37766ae0f78efaf7ee612f1d8764f8ebc8068cee2edf83047bf55dad7",
+      "disposition": "CDFLIB90/DCDFLIB API documentation reconciled against executable contracts and documented errata"
+    },
+    {
+      "path": "source/dcdflib.f/doc/dcdflib.fdoc",
+      "sha256": "16dc1e30e31297844980a25b631a49108ef0f73cf9875eb2d419a42fe5fb813f",
+      "disposition": "CDFLIB90/DCDFLIB API documentation reconciled against executable contracts and documented errata"
+    },
+    {
+      "path": "source/dcdflib.f/HOWTOGET",
+      "sha256": "91fb9bcfaa5fb25c0bb048ad0ee11c2e8b44d8bcf1d2c98b56e07d9626d4f880",
+      "disposition": "Historical acquisition/build/platform instructions replaced by Python packaging; numerical guidance reconciled"
+    },
+    {
+      "path": "source/dcdflib.f/readme",
+      "sha256": "8f34f9a4863ad9600fbd2c89077f9dc7cc98779b316ccd5dff305f256daa870b",
+      "disposition": "Historical acquisition/build/platform instructions replaced by Python packaging; numerical guidance reconciled"
+    }
+  ],
+  "foreign_manual_catalog_entry": {
+    "id": 23,
+    "name": "STATTAB",
+    "scope": "Separate STATTAB workflow remains tracked in the full catalog",
+    "evidence": "docs/stattab-research.md"
+  },
+  "numerical_evidence": "Per-interface native/independent fixtures and tests in cdflib90-archive.json; export compilation alone is not a numerical proof"
+}

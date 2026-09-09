@@ -4,7 +4,8 @@ The unchanged F95 `apser`, `fpser` and `bpser` routines are recorded with source
 provenance and independent high-precision beta-integral checks: 116 calls,
 111 completed and five timed out. The [fpser](cdflib-fpser.md) and
 [apser](cdflib-apser.md) and [bpser](cdflib-bpser.md) ports are implemented.
-CDFLIB90 is partial.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.
 
 | Helper | Mathematical result | Source's stated series domain |
 |---|---|---|

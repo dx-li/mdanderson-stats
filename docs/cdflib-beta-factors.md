@@ -81,5 +81,5 @@ factors. These measure batching benefits, not a speedup over Fortran.
 
 The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
 mathematical procedures. Their [constants](cdflib-constants.md) are also implemented.
-Other CDFLIB support interfaces and the rest of the catalog remain open.
-CDFLIB90 remains partial.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

@@ -74,5 +74,5 @@ Fortran I/O is claimed.
 
 The same fixture records a repaired message-control defect: `unit_only=False`
 suppresses native console output merely because the argument is present. The
-[message controls](cdflib-message-format.md) now honor the boolean value. CDFLIB90
-and the overall catalog conversion remain partial.
+[message controls](cdflib-message-format.md) now honor the boolean value. See the
+[CDFLIB90 completion audit](cdflib90-completion.md) for the complete library scope.

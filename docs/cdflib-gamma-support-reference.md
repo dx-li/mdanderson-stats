@@ -2,9 +2,8 @@
 
 Seven additional public F95 mathematical support procedures have native reference
 evidence. Their [Python interfaces](cdflib-gamma-support.md) are now implemented.
-This audit preserves executable
-behavior separately from mathematical expectations and does not change CDFLIB90's
-partial completion status.
+This audit preserves executable behavior separately from mathematical expectations.
+The [completion audit](cdflib90-completion.md) covers the full library.
 
 | Procedure | Source contract |
 |---|---|
@@ -72,5 +71,5 @@ and half-integer identities check the oracle independently.
 The tests isolate these discrepancies explicitly rather than broadening ordinary
 reference tolerances. The Python implementation retains valid negative-domain
 behavior, preserves small remainders and tails, and distinguishes invalid arguments
-from output overflow. Other gamma/beta ratios, combinatorial logarithms, constants
-and remaining support interfaces are still open.
+from output overflow. Other support interfaces are mapped in the
+[coverage crosswalk](cdflib90-coverage.md).

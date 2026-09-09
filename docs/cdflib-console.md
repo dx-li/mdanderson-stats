@@ -93,8 +93,8 @@ overflows. The [Python list editor](cdflib-number-list.md) now implements all ei
 actions with explicit state and corrected numerical behavior.
 
 Parsing and interactive I/O are scalar control flow; conversion and vector bounds
-use NumPy. No speedup over native console I/O is claimed. CDFLIB90 and the full
-catalog conversion remain partial.
+use NumPy. No speedup over native console I/O is claimed. See the
+[CDFLIB90 completion audit](cdflib90-completion.md) for the complete library scope.
 
 [Numeric array formatting](cdflib-array-format.md) is available through
 `write_array`, with checked field counts and support for records longer than 79 characters.

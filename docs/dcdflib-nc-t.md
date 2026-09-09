@@ -121,5 +121,6 @@ conditional integrations remain scalar per affected row. Exceptional sharp or
 ill-conditioned integrals can still raise an explicit numerical error.
 
 All twelve legacy distribution families now have separate C/F77 evidence and
-Python interfaces. CDFLIB90 remains partial because its public support, numerical
-helper, root-finder/state and console/string/sort interfaces are still under review.
+Python interfaces.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

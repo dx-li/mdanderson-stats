@@ -102,5 +102,5 @@ not measure speedup against native C or Fortran. On the recorded machine,
 2,048-element batches were about 444 times faster for tails and 615–657 times
 faster for the three inversions (median of three runs).
 
-These two legacy distribution interfaces are now covered. The remaining legacy
-and public supporting interfaces keep the CDFLIB90 catalog entry partial.
+These two legacy distribution interfaces are covered by the
+[CDFLIB90 completion audit](cdflib90-completion.md).

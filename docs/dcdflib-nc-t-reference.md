@@ -95,4 +95,5 @@ positive finite-df t distributions have no finite exact-zero quantile.
 
 The [wider legacy API](dcdflib-nc-t.md) now implements both entry points and
 all four modes, with independent checks and recorded batching measurements.
-CDFLIB90 stays partial with public numerical/support interfaces still open.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

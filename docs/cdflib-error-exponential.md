@@ -61,8 +61,8 @@ speedup over the original Fortran implementation. No dependency was added.
 
 The later [paired beta integral](cdflib-bratio.md) completes all 35 F95
 mathematical procedures. Their [constants](cdflib-constants.md) are also implemented.
-Other CDFLIB support interfaces and the rest of the catalog remain open.
-CDFLIB90 remains partial.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.
 
 The [legacy C/F77 mapping](dcdflib-math.md) is separately validated. Its
 `dcdflib_support.exparg` preserves the legacy safety margin; root-level `exparg`

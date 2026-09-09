@@ -72,6 +72,6 @@ repair, substitutions, repeated calls, help answers/fallbacks, forced display,
 state reset, invalid templates and stream ownership.
 
 All seven F95 support modules now have validated mappings with documented Python
-semantics. CDFLIB90 remains partial until the legacy C/F77 support contracts are
-reconciled; the complete catalog conversion remains in progress. No speedup over
-native interactive I/O is claimed.
+semantics.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope. No speedup over native interactive I/O is claimed.

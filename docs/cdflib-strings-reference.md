@@ -123,4 +123,5 @@ reentrant lexer with explicit choices for sign grouping, malformed tokens,
 quoted-string decoding, integer/real representation and overflow reporting.
 Those choices are tested against applicable native cases and independent
 intended-token examples. Native defects remain as regression evidence.
-CDFLIB90 remains partial.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

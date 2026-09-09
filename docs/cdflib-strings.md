@@ -117,5 +117,5 @@ no claim of a speedup over the archived native implementation.
 
 The existing MULTI lexer has a different grammar and historical numerical
 semantics; it is unchanged. This closes the CDFLIB string module's public scope.
-CDFLIB90 remains partial while its other support and legacy helper interfaces
-are being ported.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

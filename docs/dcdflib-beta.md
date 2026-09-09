@@ -103,5 +103,5 @@ measure Python batching rather than speed relative to native C or Fortran.
 For 64/256 rows, recorded speedups were approximately 41/107 for tails,
 34/65 for quantiles, 43/93 for a and 44/101 for b.
 
-CDFLIB90 remains partial: four legacy distribution entry points and public
-numerical/support interfaces still require reconciliation.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

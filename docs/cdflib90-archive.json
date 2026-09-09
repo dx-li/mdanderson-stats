@@ -1098,14 +1098,14 @@
   "c_header_without_detected_definition": [],
   "c_definitions_without_header_prototype": [],
   "backup_identical_to_primary": false,
-  "inventory_limits": "Declaration extraction is an inventory, not a compiler/export or numerical equivalence proof. Public support and legacy contracts remain open.",
+  "inventory_limits": "Declaration extraction is an inventory, not a compiler/export or numerical equivalence proof. See cdflib90-completion.json and per-interface numerical evidence.",
   "members": [
     {
       "path": "CDFLIB90/source/cdflib90_1.2/doc/cdflib90_doc.pdf",
       "size": 213853,
       "sha256": "c57bce0b986231b18c2cc1ef699b6e5e46ce70a3fd24d20aa90a02942796fb47",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "F95 methods, installation and retained legal terms"
     },
     {
@@ -1113,7 +1113,7 @@
       "size": 197520,
       "sha256": "7817b2b574a6433e0bcd37f9b92c3da3f6cdeda141eb706af4398bbac074cd2c",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "F95 methods, installation and retained legal terms"
     },
     {
@@ -1121,7 +1121,7 @@
       "size": 42337,
       "sha256": "39d55cc094e5b178de5dc6a5a724a2309f2c7adc1285b7fecef2f31b94f98719",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "F95 methods, installation and retained legal terms"
     },
     {
@@ -1129,7 +1129,7 @@
       "size": 56562,
       "sha256": "58db6654e7b5c16ba37999443c46b328d1820a791dd15692908d8f4670903442",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "F95 methods, installation and retained legal terms"
     },
     {
@@ -1137,15 +1137,15 @@
       "size": 46078,
       "sha256": "a36945d06c8d83f52af691e17cb8d787e2c49733aa85fb0f3f3356bdc1e2eec3",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
-      "scope": "F95 methods, installation and retained legal terms"
+      "coverage_status": "cross_catalog_documentation",
+      "scope": "STATTAB 2.0 manual; separate pending catalog entry 23, see stattab-research.md"
     },
     {
       "path": "CDFLIB90/source/cdflib90_1.2/INSTALL",
       "size": 3925,
       "sha256": "771353b3387a406f4314aa8853e73d1a402d4a1ff8866b4bf80c76660b421070",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "F95 methods, installation and retained legal terms"
     },
     {
@@ -1153,7 +1153,7 @@
       "size": 4284,
       "sha256": "b4ceda52fb94d8cd273e2ae184ae4aacbb6040c0200d45d12b49508a535823cd",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "F95 methods, installation and retained legal terms"
     },
     {
@@ -1161,7 +1161,7 @@
       "size": 2922,
       "sha256": "2f3ecded1334c88d1f1980a0b036659d708bf7206cb150b47e294da7d0dc5313",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "F95 methods, installation and retained legal terms"
     },
     {
@@ -1193,7 +1193,7 @@
       "size": 1624,
       "sha256": "2b0cfd2020e5221bc97edf80d1204ea074f7d82d0427dd912c96c357bcc7ba61",
       "role": "f95_support",
-      "coverage_status": "public_support_review",
+      "coverage_status": "implemented_public_support",
       "scope": "Kind declarations and numeric constants",
       "declarations": {
         "routine_declarations_including_entries": [],
@@ -1206,7 +1206,7 @@
       "size": 80228,
       "sha256": "3ede16fa9d9b4e5e157a7eae1fc36d1f321863f9f74dcf56d4893655de564ed9",
       "role": "f95_support",
-      "coverage_status": "public_support_review",
+      "coverage_status": "implemented_public_support",
       "scope": "Public console input/output and message controls",
       "declarations": {
         "routine_declarations_including_entries": [
@@ -1259,7 +1259,7 @@
       "size": 99384,
       "sha256": "be776a552418b614d1fa37f19111adebdbbfc56cd057893845a84f8a04601609",
       "role": "f95_support",
-      "coverage_status": "public_support_review",
+      "coverage_status": "implemented_public_support",
       "scope": "Default-public mathematical functions and numerical kernels",
       "declarations": {
         "routine_declarations_including_entries": [
@@ -1361,7 +1361,7 @@
       "size": 18781,
       "sha256": "62aa44bf1319c6ef5ba02df10e24fca6c9f31d21d7f4bd5e5c6a1820721ff8da",
       "role": "f95_support",
-      "coverage_status": "public_support_review",
+      "coverage_status": "implemented_public_support",
       "scope": "Default-public validation, distribution metadata and solver adapters",
       "declarations": {
         "routine_declarations_including_entries": [
@@ -1692,7 +1692,7 @@
       "size": 41697,
       "sha256": "18300a0ebbcd15d7b1f96277a256fa6997349f3e0ee953b33db38be819470827",
       "role": "f95_support",
-      "coverage_status": "public_support_review",
+      "coverage_status": "implemented_public_support",
       "scope": "Public direct/reverse-communication root finding and solver state",
       "declarations": {
         "routine_declarations_including_entries": [
@@ -1737,7 +1737,7 @@
       "size": 6099,
       "sha256": "36e6909aad25124587e2c906eaecb37a5a6cc13f7329d320118fcaae674a0ed4",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
     },
     {
@@ -1745,7 +1745,7 @@
       "size": 35157,
       "sha256": "4c24d4ad49c2f3bb3f213c20165f33b77549b35c3069737627903a1472b9d9c8",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
     },
     {
@@ -1753,7 +1753,7 @@
       "size": 977,
       "sha256": "01796df29163de465a8429c12cf7ced98b4840b7859fda31ce93cfad65180cac",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
     },
     {
@@ -1761,7 +1761,7 @@
       "size": 1223,
       "sha256": "91fb9bcfaa5fb25c0bb048ad0ee11c2e8b44d8bcf1d2c98b56e07d9626d4f880",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
     },
     {
@@ -1769,7 +1769,7 @@
       "size": 14617,
       "sha256": "1007be43e39e9ecd2063348f0d86686fc3d27176f47f04036c17f1adaa539f79",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
     },
     {
@@ -1777,8 +1777,8 @@
       "size": 3758,
       "sha256": "6bdb5838eb4de58ba298b086901ef604194c86271eb46eb45ec8e236476dccce",
       "role": "c_header",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Public C prototypes, including numerical helpers and solver setup",
+      "coverage_status": "implemented_legacy_interface",
+      "scope": "All 73 external prototypes reconciled with Python mappings",
       "declarations": {
         "external_function_names": [
           "Xgamm",
@@ -1866,8 +1866,8 @@
       "size": 226348,
       "sha256": "818f03e7286890836d34c0da32a95e193093a6cf2d4fb8d7fabda446f8cf2081",
       "role": "c_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy C implementation; retain header-to-definition inventory",
+      "coverage_status": "implemented_legacy_library",
+      "scope": "All 24 distribution and 49 support functions mapped and independently validated",
       "declarations": {
         "external_function_names": [
           "Xgamm",
@@ -1968,7 +1968,7 @@
       "size": 5424,
       "sha256": "7c62aad37766ae0f78efaf7ee612f1d8764f8ebc8068cee2edf83047bf55dad7",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
     },
     {
@@ -1976,7 +1976,7 @@
       "size": 38656,
       "sha256": "16dc1e30e31297844980a25b631a49108ef0f73cf9875eb2d419a42fe5fb813f",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
     },
     {
@@ -1984,7 +1984,7 @@
       "size": 1223,
       "sha256": "91fb9bcfaa5fb25c0bb048ad0ee11c2e8b44d8bcf1d2c98b56e07d9626d4f880",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
     },
     {
@@ -1992,7 +1992,7 @@
       "size": 12147,
       "sha256": "8f34f9a4863ad9600fbd2c89077f9dc7cc98779b316ccd5dff305f256daa870b",
       "role": "documentation",
-      "coverage_status": "reference_documentation",
+      "coverage_status": "documentation_reconciled",
       "scope": "DCDFLIB 1.1 legacy contracts and notices; compare with F95"
     },
     {

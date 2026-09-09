@@ -3,7 +3,9 @@
 Six further public F95 mathematical procedures now have unchanged native
 reference evidence. The [gamma-ratio foundations](cdflib-gamma-ratios.md) now
 implement `algdiv`, `bcorr` and `gsumln`. The [beta/combinatorial port](cdflib-beta-support.md)
-implements `betaln`, `log_beta` and `log_bicoef`. CDFLIB90 remains partial.
+implements `betaln`, `log_beta` and `log_bicoef`.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.
 
 | Procedure | Mathematical operation and source constraints |
 |---|---|
@@ -71,6 +73,6 @@ for two shapes of 1e308 despite their overflowing float64 sum. A naive differenc
 of three float64 log-gamma values would lose these properties. Genuine log-ratio
 output overflow is distinguished from avoidable intermediate loss.
 
-The implementation should retain these successes, repair the identified failures,
-and keep fractional domains explicit. Other incomplete-beta/gamma ratios,
-constants and remaining support interfaces are still open.
+The implementation retains these successes, repairs the identified failures
+and keeps fractional domains explicit. The [coverage crosswalk](cdflib90-coverage.md)
+maps the other support interfaces.

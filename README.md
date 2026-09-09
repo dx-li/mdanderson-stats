@@ -332,10 +332,10 @@ calculations in one call. Search results include a fixed-observation comparison;
 The [TDTASP archive audit](docs/tdtasp-coverage.md) covers all 44 archived files.
 
 
-`cdf_beta`, `cum_beta`, `ccum_beta` and `inv_beta` begin the CDFLIB90 port with
+`cdf_beta`, `cum_beta`, `ccum_beta` and `inv_beta` provide CDFLIB90
 beta tails, quantiles and shape inversions. They broadcast arrays and retain
 small probability/coordinate complements. [CDFLIB90 notes](docs/cdflib90.md)
-describe native validation, corrected source defects and the remaining scope.
+describe native validation, corrected source defects and numerical limits.
 
 
 `cdf_normal`, `cum_normal`, `ccum_normal` and `inv_normal` add CDFLIB90's normal
@@ -362,7 +362,7 @@ including explicit zero-success behavior and preserved small complements.
 
 
 The [CDFLIB90 inventory](docs/cdflib90-coverage.md) accounts for all 106 archived
-files and tracks the remaining distribution, legacy-library and public-support scope.
+files and maps the complete distribution, legacy-library and public-support scope.
 
 
 `cdf_t`, `cum_t`, `ccum_t` and `inv_t` provide Student's t tails, quantiles and
@@ -391,7 +391,7 @@ implements both df inversions.
 `cdf_nc_t`, `cum_nc_t`, `ccum_nc_t` and `inv_nc_t` add noncentral t tails and
 all parameter inversions, with explicit brackets for multiple df roots and
 quadrature repair for small negative tails. All twelve F95 distribution modules
-are implemented; CDFLIB90's additional legacy and support interfaces remain open.
+are implemented with documented Python semantics.
 
 `cdff` and `cumf` implement the [legacy DCDFLIB F interface](docs/dcdflib-f.md),
 including numerator/denominator df inversions, source search bounds through
@@ -443,8 +443,7 @@ for native small-tail truncation and invalid wide central results.
 `cdftnc` and `cumtnc` implement the [signed legacy noncentral-t interface](docs/dcdflib-nc-t.md),
 including all four modes, explicit df brackets within the executable bounds,
 and conditional-tail repairs for wide inputs and subnormal probabilities.
-All twelve legacy distribution families now have independent C/F77 validation;
-CDFLIB90 remains partial while its legacy C/F77 support contracts are being reconciled.
+All twelve legacy distribution families have independent C/F77 validation.
 
 `sort_list` implements the [CDFLIB sorting generic](docs/cdflib-sort.md), with
 all four value types, prefix sorting and custom comparators. It preserves stable
@@ -529,7 +528,7 @@ fields, long records and matching console/report output.
 [Message templates and controls](docs/cdflib-message-format.md) complete the F95
 console module: repeatable Python substitutions, optional help, suppression and
 explicit output routing. All seven F95 support modules now have validated Python
-mappings; CDFLIB90 remains partial pending legacy C/F77 support contracts.
+mappings.
 
 The [legacy DCDFLIB support namespace](docs/dcdflib-support.md) adds machine
 parameters, polynomial prefix evaluation and checked vectorized C translation
@@ -540,4 +539,6 @@ starting formulas and add refined normal inversion. The [incomplete-gamma
 inverse](docs/dcdflib-gamma-inverse.md) adds checked starting values and extreme-tail
 repairs. The [legacy root finders](docs/dcdflib-root.md) complete all 49 legacy
 support mappings with independent search state and their distinct stopping rule.
-CDFLIB90 remains partial pending the final archive/documentation audit.
+The [completion audit](docs/cdflib90-completion.md) verifies all public mappings,
+reconciles the manuals and marks CDFLIB90 implemented. The separate
+[STATTAB application](docs/stattab-research.md) remains pending.

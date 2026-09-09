@@ -128,5 +128,6 @@ F95 pages, not duplicate numerical implementations. `exparg` evaluates selectors
 in one NumPy batch. No new dependency or native-language speedup claim is added.
 
 The [normal/t quantile helpers](dcdflib-quantile-helpers.md) are also implemented.
-[Legacy root finders](dcdflib-root.md) complete all 49 support mappings. CDFLIB90 stays partial until the final
-archive/documentation audit are complete; the full catalog conversion is ongoing.
+[Legacy root finders](dcdflib-root.md) complete all 49 support mappings.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

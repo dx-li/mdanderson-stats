@@ -96,5 +96,6 @@ native absolute accuracy. A legacy port must retain positive tiny df inputs,
 not impose the F95 lower bound of 0.001.
 
 The [legacy implementation](dcdflib-nc-chisq.md) now includes 388 implementation
-tests and batching measurements. CDFLIB90 stays partial with two legacy
-distribution entry points and public numerical/support interfaces still open.
+tests and batching measurements.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

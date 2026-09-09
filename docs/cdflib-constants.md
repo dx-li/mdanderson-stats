@@ -47,7 +47,5 @@ native records, including exact binary64 encodings, and verify the recorded
 floating models against NumPy's representations. Constants need no numerical
 iteration or performance benchmark.
 
-Together with the 35 mathematical procedures, this covers the constants and
-mathematical support modules with documented Python semantics. The root-finder,
-console and distribution-adapter support interfaces remain open, as do remaining
-legacy helper contracts. CDFLIB90 and the full catalog conversion remain partial.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

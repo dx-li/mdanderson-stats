@@ -87,5 +87,5 @@ For 64/256 rows, recorded speedups were about 29/66 for tails, 37/70 for
 successes, 37/68 for trials and 31/55 for chance inversion. These measure Python
 batching, not speed relative to native C or Fortran.
 
-CDFLIB90 remains partial: six legacy distribution entry points and the public
-numerical/support interfaces still require reconciliation.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.

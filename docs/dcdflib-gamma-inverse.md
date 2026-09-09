@@ -101,5 +101,6 @@ does not claim a speedup over native C or Fortran. There is no per-element Pytho
 loop in the production inverse; special paths operate on selected array batches.
 
 This inverse reconciles 45 of 49 legacy support names. The subsequent
-[legacy root finders](dcdflib-root.md) complete all 49 mappings. The final
-archive/documentation audit remains pending and CDFLIB90 is still partial.
+[legacy root finders](dcdflib-root.md) complete all 49 mappings.
+See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
+complete library scope.
