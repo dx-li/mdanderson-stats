@@ -15,7 +15,7 @@ all its domains, inversions, endpoint policies or errors.
 | Archive material | Files | Coverage disposition |
 |---|---:|---|
 | F95 distribution modules | 12 | All twelve implemented and validated |
-| F95 support modules | 7 | Sorting implemented; six other public/support modules remain open |
+| F95 support modules | 7 | Sorting and strings implemented; five other public/support modules remain open |
 | Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
 | Legacy C implementations | 2 | All twelve distribution families independently validated |
@@ -110,7 +110,7 @@ F95 support also has an explicit public surface:
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
 | `biomath_interface_mod` | Numeric/string input generics, console output and message controls |
 | `biomath_sort_mod` | [Implemented](cdflib-sort.md): all four `sort_list` overloads and custom comparators |
-| `biomath_strings_mod` | [Reference audited](cdflib-strings-reference.md): case conversion and stateful lexer `qlex`; Python port pending |
+| `biomath_strings_mod` | [Implemented](cdflib-strings.md): ASCII conversion and reentrant lexer `qlex` with documented repairs |
 
 Existing Python/SciPy functions and the package's numerical helpers may replace
 many of these responsibilities. That mapping is **not yet established as a
@@ -198,4 +198,5 @@ preserving stable ordering, prefix semantics and full-value permutations.
 
 The [string/lexer reference audit](cdflib-strings-reference.md) covers all five
 public names, ASCII conversion rules, token classes and native buffer, quote,
-malformed-number and overflow failures. Its Python replacement remains pending.
+malformed-number and overflow failures. The [Python port](cdflib-strings.md) now
+implements all five public operations with documented token/numeric policies.

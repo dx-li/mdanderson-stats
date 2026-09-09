@@ -45,6 +45,14 @@ from .cdflib_neg_binomial import (
 from .cdflib_normal import CDFNormal, ccum_normal, cdf_normal, cum_normal, inv_normal
 from .cdflib_poisson import CDFPoisson, ccum_poisson, cdf_poisson, cum_poisson, inv_poisson
 from .cdflib_sort import sort_list
+from .cdflib_strings import (
+    QlexToken,
+    lower_case_char,
+    lower_case_string,
+    qlex,
+    upper_case_char,
+    upper_case_string,
+)
 from .cdflib_t import CDFStudentT, ccum_t, cdf_t, cum_t, inv_t
 from .cta import ContingencyChiSquare, contingency_chi_square
 from .cta_binomial import BinomialComparison, binomial_comparison
@@ -188,6 +196,12 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "QlexToken",
+    "lower_case_char",
+    "lower_case_string",
+    "qlex",
+    "upper_case_char",
+    "upper_case_string",
     "sort_list",
     "DCDFLIBNoncentralT",
     "cdftnc",

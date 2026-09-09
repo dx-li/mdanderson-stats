@@ -423,7 +423,8 @@
         "Legacy DCDFLIB beta cdfbet/cumbet: all four modes, wide finite shapes, bounded shape searches, positive recurrences for two small shapes, complementary quantiles and independent native false-success repairs",
         "Legacy DCDFLIB noncentral chi-square cdfchn/cumchn: all four modes, ignored-q inversion, wide finite inputs, bounded searches, central and shifted-normal reductions, rigorous zero-tail bounds and independently validated small-tail repairs",
         "Legacy signed noncentral t: all four modes, executable df bounds, explicit root brackets, ignored-q semantics and wide/subnormal conditional-tail repairs",
-        "F95 sort_list public generic: integer/single/double/character values, prefix sorting, custom comparators, stable ties and native duplicate-bounds/long-string truncation repairs"
+        "F95 sort_list public generic: integer/single/double/character values, prefix sorting, custom comparators, stable ties and native duplicate-bounds/long-string truncation repairs",
+        "F95 string module: four ASCII case operations and reentrant qlex with stable token spans, quoted-string repairs, explicit sign policy and bounded numeric conversion/overflow reporting"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -522,7 +523,10 @@
         "docs/cdflib-sort-benchmark.json",
         "tests/fixtures/cdflib_strings.json",
         "tests/test_cdflib_strings_reference.py",
-        "docs/cdflib-strings-reference.md"
+        "docs/cdflib-strings-reference.md",
+        "tests/test_cdflib_strings.py",
+        "docs/cdflib-strings.md",
+        "docs/cdflib-strings-benchmark.json"
       ]
     },
     {

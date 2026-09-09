@@ -529,13 +529,23 @@
         "upper_case_char",
         "upper_case_string"
       ],
-      "python_interfaces": [],
-      "status": "reference_audited_python_pending",
+      "python_interfaces": [
+        "lower_case_char",
+        "lower_case_string",
+        "qlex",
+        "upper_case_char",
+        "upper_case_string"
+      ],
+      "status": "implemented_with_documented_python_semantics",
       "evidence": [
         "tools/reference_cdflib_strings.py",
         "tests/fixtures/cdflib_strings.json",
         "tests/test_cdflib_strings_reference.py",
-        "docs/cdflib-strings-reference.md"
+        "docs/cdflib-strings-reference.md",
+        "src/mdanderson_stats/cdflib_strings.py",
+        "tests/test_cdflib_strings.py",
+        "docs/cdflib-strings.md",
+        "docs/cdflib-strings-benchmark.json"
       ]
     }
   ],
@@ -792,8 +802,8 @@
       "size": 43329,
       "sha256": "c66814a0eec34c25283f0c71da41fc93969fc2cc0dba7f26146952adce70b8aa",
       "role": "f95_support",
-      "coverage_status": "public_support_review",
-      "scope": "Public case conversion and stateful command-language lexer",
+      "coverage_status": "implemented_public_support",
+      "scope": "ASCII conversion and reentrant lexer with explicit token/numeric repairs",
       "declarations": {
         "routine_declarations_including_entries": [
           "accum",

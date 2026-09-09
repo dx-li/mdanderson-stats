@@ -4,7 +4,8 @@ This audit covers the five public names of `biomath_strings_mod`:
 `lower_case_char`, `upper_case_char`, `lower_case_string`, `upper_case_string`
 and `qlex`. The module is private by default. Its character tables and the
 nested lexer helpers are implementation details, not additional public APIs.
-The Python port remains pending; no lexer functionality is claimed by this audit.
+The [Python port](cdflib-strings.md) now implements all five public operations;
+this audit preserves the original native evidence.
 
 ## Evidence
 
@@ -115,11 +116,11 @@ output buffer fails while reading `abc`. The classifier's table covers only
 despite documentation allowing arbitrary quoted characters. Python must validate
 or define the extended character domain and allocate token storage safely.
 
-## Remaining work
+## Python replacement
 
-Implement the four ASCII conversion operations and a reentrant lexer with
-explicit choices for sign grouping, malformed tokens, quoted-string decoding,
-integer/real representation and overflow reporting. Validate those choices
-against the applicable native cases and independent intended-token examples;
-retain the native defects as regression evidence rather than reproducing silent
-data loss or unsafe buffer access. CDFLIB90 remains partial.
+The [implemented port](cdflib-strings.md) provides ASCII conversion and a
+reentrant lexer with explicit choices for sign grouping, malformed tokens,
+quoted-string decoding, integer/real representation and overflow reporting.
+Those choices are tested against applicable native cases and independent
+intended-token examples. Native defects remain as regression evidence.
+CDFLIB90 remains partial.

@@ -1,0 +1,71 @@
+{
+  "python": "3.13.5",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "Validated end-to-end throughput; no native speedup claim",
+  "cases": [
+    {
+      "operation": "identifier",
+      "characters": 1000,
+      "tokens": 1,
+      "seconds": 9.237509220838547e-05,
+      "characters_per_second": 10825428.97758779
+    },
+    {
+      "operation": "commands",
+      "characters": 9000,
+      "tokens": 4000,
+      "seconds": 0.006528458092361689,
+      "characters_per_second": 1378579.7308755065
+    },
+    {
+      "operation": "case_conversion",
+      "characters": 6000,
+      "tokens": null,
+      "seconds": 0.0003210841678082943,
+      "characters_per_second": 18686689.041554812
+    },
+    {
+      "operation": "identifier",
+      "characters": 10000,
+      "tokens": 1,
+      "seconds": 0.0008890838362276554,
+      "characters_per_second": 11247533.238743346
+    },
+    {
+      "operation": "commands",
+      "characters": 90000,
+      "tokens": 40000,
+      "seconds": 0.06943474989384413,
+      "characters_per_second": 1296180.9488418582
+    },
+    {
+      "operation": "case_conversion",
+      "characters": 60000,
+      "tokens": null,
+      "seconds": 0.0032861661165952682,
+      "characters_per_second": 18258358.789897334
+    },
+    {
+      "operation": "identifier",
+      "characters": 100000,
+      "tokens": 1,
+      "seconds": 0.008664791006594896,
+      "characters_per_second": 11540959.259593055
+    },
+    {
+      "operation": "commands",
+      "characters": 900000,
+      "tokens": 400000,
+      "seconds": 0.7914043329656124,
+      "characters_per_second": 1137218.9442373272
+    },
+    {
+      "operation": "case_conversion",
+      "characters": 600000,
+      "tokens": null,
+      "seconds": 0.03201279183849692,
+      "characters_per_second": 18742507.777108997
+    }
+  ]
+}

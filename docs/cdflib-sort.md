@@ -85,6 +85,6 @@ values, verifying equal outputs on each repetition. These measurements do not
 compare against the archived native executable.
 
 This closes the sorting module's public interface. CDFLIB90 remains partial:
-its mathematical helpers, constants, solver state, console interfaces and string
-module still require public-contract coverage. In particular, the string module's
-`qlex` is a stateful command-language lexer, not merely a lexical comparator.
+its mathematical helpers, constants, solver state and console interfaces still
+require public-contract coverage. The [string module](cdflib-strings.md), including
+its command-language lexer, now has a separate validated implementation.

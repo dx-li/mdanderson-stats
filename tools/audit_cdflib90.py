@@ -109,6 +109,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "implemented_public_support",
                 "sort_list: four overloads, custom comparison, duplicate and long-string repairs",
             )
+        if stem == "biomath_strings_mod" and path.suffix == ".f90":
+            return (
+                "f95_support",
+                "implemented_public_support",
+                "ASCII conversion and reentrant lexer with explicit token/numeric repairs",
+            )
         if stem in SUPPORT and path.suffix == ".f90":
             return "f95_support", "public_support_review", SUPPORT[stem]
         if stem.startswith("cdf_") and stem.endswith("_mod"):
@@ -537,13 +543,23 @@ def main():
                 "upper_case_char",
                 "upper_case_string",
             ],
-            "python_interfaces": [],
-            "status": "reference_audited_python_pending",
+            "python_interfaces": [
+                "lower_case_char",
+                "lower_case_string",
+                "qlex",
+                "upper_case_char",
+                "upper_case_string",
+            ],
+            "status": "implemented_with_documented_python_semantics",
             "evidence": [
                 "tools/reference_cdflib_strings.py",
                 "tests/fixtures/cdflib_strings.json",
                 "tests/test_cdflib_strings_reference.py",
                 "docs/cdflib-strings-reference.md",
+                "src/mdanderson_stats/cdflib_strings.py",
+                "tests/test_cdflib_strings.py",
+                "docs/cdflib-strings.md",
+                "docs/cdflib-strings-benchmark.json",
             ],
         }
     )
