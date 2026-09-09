@@ -483,3 +483,6 @@ The [CDFLIB beta scaling factors](docs/cdflib-beta-factors.md) add `brcomp` and
 
 The [CDFLIB beta shape shift](docs/cdflib-beta-shift.md) adds `bup`, with
 positive finite sums, bounded remainders and efficient large-shift paths.
+
+The [CDFLIB tiny-companion beta series](docs/cdflib-fpser.md) adds `fpser`,
+with strict source-domain checks, full normalization and subnormal recovery.

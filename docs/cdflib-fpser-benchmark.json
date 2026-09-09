@@ -1,0 +1,94 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same API; not native timing",
+  "cases": [
+    {
+      "operation": "ordinary",
+      "size": 64,
+      "batch_seconds": 0.0012765000574290752,
+      "scalar_seconds": 0.06433208333328366,
+      "speedup": 50.397242803773295
+    },
+    {
+      "operation": "tiny_shapes",
+      "size": 64,
+      "batch_seconds": 0.0008071251213550568,
+      "scalar_seconds": 0.05525133432820439,
+      "speedup": 68.45448477114017
+    },
+    {
+      "operation": "large_shape",
+      "size": 64,
+      "batch_seconds": 0.0009818333201110363,
+      "scalar_seconds": 0.04640241572633386,
+      "speedup": 47.26099102145583
+    },
+    {
+      "operation": "unit_shape",
+      "size": 64,
+      "batch_seconds": 8.083321154117584e-05,
+      "scalar_seconds": 0.002975416835397482,
+      "speedup": 36.80933589879485
+    },
+    {
+      "operation": "subnormal",
+      "size": 64,
+      "batch_seconds": 0.0007289168424904346,
+      "scalar_seconds": 0.04481937503442168,
+      "speedup": 61.48763812520882
+    },
+    {
+      "operation": "loose_tolerance",
+      "size": 64,
+      "batch_seconds": 0.001354958862066269,
+      "scalar_seconds": 0.06308483285829425,
+      "speedup": 46.558485740365505
+    },
+    {
+      "operation": "ordinary",
+      "size": 256,
+      "batch_seconds": 0.001356957945972681,
+      "scalar_seconds": 0.2527872920036316,
+      "speedup": 186.28970245826676
+    },
+    {
+      "operation": "tiny_shapes",
+      "size": 256,
+      "batch_seconds": 0.0009368746541440487,
+      "scalar_seconds": 0.21055991621688008,
+      "speedup": 224.74715831570094
+    },
+    {
+      "operation": "large_shape",
+      "size": 256,
+      "batch_seconds": 0.001157666090875864,
+      "scalar_seconds": 0.179087792057544,
+      "speedup": 154.69727710695076
+    },
+    {
+      "operation": "unit_shape",
+      "size": 256,
+      "batch_seconds": 9.029172360897064e-05,
+      "scalar_seconds": 0.012021459173411131,
+      "speedup": 133.14021144920062
+    },
+    {
+      "operation": "subnormal",
+      "size": 256,
+      "batch_seconds": 0.0007584579288959503,
+      "scalar_seconds": 0.18498666724190116,
+      "speedup": 243.89838934267203
+    },
+    {
+      "operation": "loose_tolerance",
+      "size": 256,
+      "batch_seconds": 0.0013596252538263798,
+      "scalar_seconds": 0.24902791576460004,
+      "speedup": 183.15923087171504
+    }
+  ]
+}

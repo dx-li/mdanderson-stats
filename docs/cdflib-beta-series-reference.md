@@ -2,8 +2,8 @@
 
 The unchanged F95 `apser`, `fpser` and `bpser` routines are recorded with source
 provenance and independent high-precision beta-integral checks: 116 calls,
-111 completed and five timed out. These three
-public mathematical helpers remain pending implementation; CDFLIB90 is partial.
+111 completed and five timed out. The [fpser port](cdflib-fpser.md) is
+implemented; `apser` and `bpser` remain pending. CDFLIB90 is partial.
 
 | Helper | Mathematical result | Source's stated series domain |
 |---|---|---|

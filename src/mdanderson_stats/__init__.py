@@ -23,6 +23,7 @@ from .binomial_sample_size import binomial_sample_size
 from .bp1ci import BP1CIResult, bp1ci
 from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
 from .cdflib_beta_factors import brcmp1, brcomp
+from .cdflib_beta_series import fpser
 from .cdflib_beta_shift import bup
 from .cdflib_beta_support import betaln, log_beta, log_bicoef
 from .cdflib_binomial import CDFBinomial, ccum_binomial, cdf_binomial, cum_binomial, inv_binomial
@@ -214,6 +215,7 @@ __all__ = [
     "brcomp",
     "brcmp1",
     "bup",
+    "fpser",
     "gsumln",
     "alngam",
     "gam1",

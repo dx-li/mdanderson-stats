@@ -81,6 +81,6 @@ digamma coefficients provide additional independent checks.
 scalar calls to this Python API, requiring identical results. They do not
 measure speed relative to Fortran.
 
-Twenty-eight of the 35 F95 mathematical procedures are now implemented. Seven
-incomplete-beta helpers remain, along with other CDFLIB support interfaces and
-the rest of the software catalog. CDFLIB90 remains partial.
+The later [fpser port](cdflib-fpser.md) implements another beta-series helper.
+Remaining incomplete-beta helpers, other support interfaces and the rest of the
+software catalog are still pending. CDFLIB90 remains partial.

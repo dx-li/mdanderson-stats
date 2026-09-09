@@ -578,7 +578,8 @@
         "gratio",
         "brcomp",
         "brcmp1",
-        "bup"
+        "bup",
+        "fpser"
       ],
       "python_interfaces": [
         "alnrel",
@@ -608,7 +609,8 @@
         "gratio",
         "brcomp",
         "brcmp1",
-        "bup"
+        "bup",
+        "fpser"
       ],
       "status": "partial",
       "remaining_scope": "Other mathematical procedures and imported constants",
@@ -693,7 +695,11 @@
         "tools/reference_cdflib_beta_series.py",
         "tests/fixtures/cdflib_beta_series.json",
         "tests/test_cdflib_beta_series_reference.py",
-        "docs/cdflib-beta-series-reference.md"
+        "docs/cdflib-beta-series-reference.md",
+        "src/mdanderson_stats/cdflib_beta_series.py",
+        "tests/test_cdflib_fpser.py",
+        "docs/cdflib-fpser.md",
+        "docs/cdflib-fpser-benchmark.json"
       ]
     }
   ],
