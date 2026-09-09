@@ -535,4 +535,6 @@ The [legacy DCDFLIB support namespace](docs/dcdflib-support.md) adds machine
 parameters, polynomial prefix evaluation and checked vectorized C translation
 helpers. The [31 legacy mathematical helpers](docs/dcdflib-math.md) also have
 direct C/F77 validation, including their distinct exponential-limit contract.
-41 of 49 legacy support contracts are reconciled; CDFLIB90 remains partial.
+The [normal/t quantile helpers](docs/dcdflib-quantile-helpers.md) preserve the
+starting formulas and add refined normal inversion. 44 of 49 legacy support
+contracts are reconciled; CDFLIB90 remains partial.

@@ -96,5 +96,6 @@ per-element Python loop; polynomial evaluation loops over coefficients while
 processing all evaluation points together.
 
 These ten primitives and the [31 mathematical helpers](dcdflib-math.md) reconcile
-41 of 49 legacy C support names. Eight inversion/root-finding contracts remain.
+41 legacy C support names. The [normal/t quantile helpers](dcdflib-quantile-helpers.md)
+bring the total to 44 of 49. Five inverse-gamma/root-finding contracts remain.
 CDFLIB90 stays partial and the full catalog conversion remains in progress.

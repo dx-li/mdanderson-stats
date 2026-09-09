@@ -1,0 +1,21 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One batch versus repeated scalar calls to the same API; not native timing",
+  "cases": [
+    {
+      "size": 64,
+      "batch_seconds": 0.00021691713482141495,
+      "scalar_seconds": 0.011052667163312435,
+      "speedup": 50.95340749550261
+    },
+    {
+      "size": 1000,
+      "batch_seconds": 0.0003025420010089874,
+      "scalar_seconds": 0.16246208315715194,
+      "speedup": 536.9901786044106
+    }
+  ]
+}

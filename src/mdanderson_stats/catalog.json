@@ -449,7 +449,8 @@
         "F95 numeric array formatting with native adaptive F layouts, scientific E fields, checked widths/counts, signed zero and extreme exponents, and console/report output without the fixed 79-character buffer",
         "F95 message templates with initialized repeatable Python substitutions, optional help, suppression/force controls and explicit stream routing; all seven F95 support modules implemented with documented Python semantics, legacy C/F77 support contracts remain pending",
         "Legacy DCDFLIB machine parameters, polynomial prefix evaluation and all seven C translation helpers: ten of 49 support contracts reconciled with checked vectorized arithmetic, exact int64 remainder and exception-based STOP",
-        "All 31 legacy mathematical support helpers mapped through dcdflib_support with direct C/F77 validation and independent extreme-value oracles; distinct conservative legacy exparg contract preserved; 41 of 49 legacy support names reconciled"
+        "All 31 legacy mathematical support helpers mapped through dcdflib_support with direct C/F77 validation and independent extreme-value oracles; distinct conservative legacy exparg contract preserved; 41 of 49 legacy support names reconciled",
+        "Legacy stvaln normal starting approximation, dinvnr refined normal inversion and dt1 inverse-df t starting expansion, with subnormal-tail verification and finite tiny-df corrections; 44 of 49 support names reconciled"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -647,7 +648,11 @@
         "docs/dcdflib-support-benchmark.json",
         "tests/fixtures/dcdflib_math.json",
         "tests/test_dcdflib_math.py",
-        "docs/dcdflib-math.md"
+        "docs/dcdflib-math.md",
+        "tests/fixtures/dcdflib_quantile_helpers.json",
+        "tests/test_dcdflib_quantile_helpers.py",
+        "docs/dcdflib-quantile-helpers.md",
+        "docs/dcdflib-quantile-helpers-benchmark.json"
       ]
     },
     {

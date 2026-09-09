@@ -9,6 +9,7 @@ from pathlib import Path
 
 ARCHIVE_SHA256 = "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b"
 F95_ROOT = "CDFLIB90/source/cdflib90_1.2/"
+LEGACY_QUANTILE_NAMES = {"stvaln", "dinvnr", "dt1"}
 LEGACY_MATH_NAMES = {
     "esum",
     "gsumln",
@@ -184,6 +185,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in LEGACY_QUANTILE_NAMES:
+                return (
+                    "f77_source",
+                    "implemented_legacy_support",
+                    "Validated normal inverse and normal/t starting approximations",
+                )
             if path.stem in LEGACY_MATH_F77_NAMES:
                 return (
                     "f77_source",
@@ -984,7 +991,7 @@ def main():
         "fifmod",
         "ftnstop",
     }
-    legacy_implemented.update(LEGACY_MATH_NAMES)
+    legacy_implemented.update(LEGACY_MATH_NAMES | LEGACY_QUANTILE_NAMES)
     legacy_evidence = [
         "src/mdanderson_stats/dcdflib_support.py",
         "tools/reference_dcdflib_support.py",
@@ -997,6 +1004,13 @@ def main():
         "tests/fixtures/dcdflib_math.json",
         "tests/test_dcdflib_math.py",
         "docs/dcdflib-math.md",
+        "src/mdanderson_stats/dcdflib_quantile_helpers.py",
+        "tools/reference_dcdflib_quantile_helpers.py",
+        "tests/fixtures/dcdflib_quantile_helpers.json",
+        "tests/test_dcdflib_quantile_helpers.py",
+        "docs/dcdflib-quantile-helpers.md",
+        "tools/benchmark_dcdflib_quantile_helpers.py",
+        "docs/dcdflib-quantile-helpers-benchmark.json",
     ]
     if not legacy_implemented <= legacy_names or any(
         not Path(path).is_file() for path in legacy_evidence
@@ -1019,6 +1033,7 @@ def main():
         ],
         "python_namespace": "dcdflib_support",
         "mathematical_public_names": sorted(LEGACY_MATH_NAMES),
+        "quantile_helper_names": sorted(LEGACY_QUANTILE_NAMES),
         "cross_version_notes": {
             "exparg": "Legacy 0.99999 margin and rounded log(radix), distinct from F95",
             "bfrac": "Redundant displacement computed from a,b,x,y",

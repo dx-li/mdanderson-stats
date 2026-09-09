@@ -941,6 +941,8 @@
       "brcomp",
       "bup",
       "devlpl",
+      "dinvnr",
+      "dt1",
       "erf1",
       "erfc1",
       "esum",
@@ -965,17 +967,15 @@
       "rexp",
       "rlog",
       "rlog1",
-      "spmpar"
+      "spmpar",
+      "stvaln"
     ],
     "remaining_public_names": [
-      "dinvnr",
       "dinvr",
       "dstinv",
       "dstzr",
-      "dt1",
       "dzror",
-      "gaminv",
-      "stvaln"
+      "gaminv"
     ],
     "f77_name_aliases": {
       "erf1": "erf",
@@ -1024,6 +1024,11 @@
       "rlog",
       "rlog1"
     ],
+    "quantile_helper_names": [
+      "dinvnr",
+      "dt1",
+      "stvaln"
+    ],
     "cross_version_notes": {
       "exparg": "Legacy 0.99999 margin and rounded log(radix), distinct from F95",
       "bfrac": "Redundant displacement computed from a,b,x,y",
@@ -1040,7 +1045,14 @@
       "tools/reference_dcdflib_math.py",
       "tests/fixtures/dcdflib_math.json",
       "tests/test_dcdflib_math.py",
-      "docs/dcdflib-math.md"
+      "docs/dcdflib-math.md",
+      "src/mdanderson_stats/dcdflib_quantile_helpers.py",
+      "tools/reference_dcdflib_quantile_helpers.py",
+      "tests/fixtures/dcdflib_quantile_helpers.json",
+      "tests/test_dcdflib_quantile_helpers.py",
+      "docs/dcdflib-quantile-helpers.md",
+      "tools/benchmark_dcdflib_quantile_helpers.py",
+      "docs/dcdflib-quantile-helpers-benchmark.json"
     ]
   },
   "f77_declared_entry_count": 66,
@@ -2550,8 +2562,8 @@
       "size": 2446,
       "sha256": "69aa662f1f154670a21bea1d051e44f5ca007a5b5bdb5ada106ed31e831ad02c",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated normal inverse and normal/t starting approximations",
       "declarations": {
         "routine_declarations_including_entries": [
           "dinvnr"
@@ -2581,8 +2593,8 @@
       "size": 2078,
       "sha256": "5a5659368b35c736159e195cd95a1f5a18e7dde5bd54774b31ffa25d7574aae6",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated normal inverse and normal/t starting approximations",
       "declarations": {
         "routine_declarations_including_entries": [
           "dt1"
@@ -2912,8 +2924,8 @@
       "size": 1787,
       "sha256": "9fa1a0b15f30623a51ee0487f9c5d098f66705548ffc083a9bbb7e465af179a3",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_support",
+      "scope": "Validated normal inverse and normal/t starting approximations",
       "declarations": {
         "routine_declarations_including_entries": [
           "stvaln"
