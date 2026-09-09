@@ -240,14 +240,29 @@
         "cdfchn",
         "cumchn"
       ],
-      "legacy_contract_status": "not_yet_independently_validated",
+      "legacy_contract_status": "implemented_with_documented_python_semantics",
       "legacy_reference_evidence": [
         "tools/reference_dcdflib_nc_chisq.py",
         "tests/fixtures/dcdflib_nc_chisq.json",
         "tests/test_dcdflib_nc_chisq_reference.py",
         "docs/dcdflib-nc-chisq-reference.md"
       ],
-      "legacy_review_notes": "Unchanged C/F77 contracts audited: ignored q, wide domains, early series truncation, false-success inversions and large-noncentrality timeout; API pending."
+      "legacy_computed_groups": [
+        "p/q",
+        "x",
+        "df",
+        "pnonc"
+      ],
+      "legacy_python_interfaces": [
+        "cdfchn",
+        "cumchn"
+      ],
+      "legacy_evidence": [
+        "src/mdanderson_stats/dcdflib_nc_chisq.py",
+        "tests/test_dcdflib_nc_chisq.py",
+        "tests/fixtures/dcdflib_nc_chisq.json",
+        "docs/dcdflib-nc-chisq.md"
+      ]
     },
     {
       "name": "nc_f",
@@ -1639,8 +1654,8 @@
       "size": 6665,
       "sha256": "6e71075599c8beaa1f19e5cbbe132d23fa3826bd1ba4eeefaa3f763de1a73c20",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Noncentral chi-square tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdfchn"
@@ -1819,8 +1834,8 @@
       "size": 6020,
       "sha256": "fa88fdd4ace9315308cd629bc42562cb0f3f162570a74be61d34141d131c880c",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Noncentral chi-square tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumchn"

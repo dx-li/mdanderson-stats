@@ -138,6 +138,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"cdfchn", "cumchn"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_distribution",
+                    "Noncentral chi-square tails and inversions; independent C/F77 validation",
+                )
             if path.stem in {"cdfbet", "cumbet"}:
                 return (
                     "f77_source",
@@ -398,10 +404,17 @@ def main():
         "tests/test_dcdflib_nc_chisq_reference.py",
         "docs/dcdflib-nc-chisq-reference.md",
     ]
-    nc_chisq["legacy_review_notes"] = (
-        "Unchanged C/F77 contracts audited: ignored q, wide domains, early series "
-        "truncation, false-success inversions and large-noncentrality timeout; API pending."
-    )
+    nc_chisq["legacy_computed_groups"] = ["p/q", "x", "df", "pnonc"]
+    nc_chisq["legacy_python_interfaces"] = ["cdfchn", "cumchn"]
+    nc_chisq["legacy_contract_status"] = "implemented_with_documented_python_semantics"
+    nc_chisq["legacy_evidence"] = [
+        "src/mdanderson_stats/dcdflib_nc_chisq.py",
+        "tests/test_dcdflib_nc_chisq.py",
+        "tests/fixtures/dcdflib_nc_chisq.json",
+        "docs/dcdflib-nc-chisq.md",
+    ]
+    if any(not Path(path).is_file() for path in nc_chisq["legacy_evidence"]):
+        raise RuntimeError("missing legacy noncentral chi-square implementation evidence")
     if any(not Path(path).is_file() for path in nc_chisq["legacy_reference_evidence"]):
         raise RuntimeError("missing legacy noncentral chi-square reference evidence")
     beta = next(row for row in distributions if row["name"] == "beta")

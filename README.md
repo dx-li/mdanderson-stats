@@ -435,3 +435,7 @@ independent checks of native process failures, tiny counts and wide inputs.
 `cdfbet` and `cumbet` implement the [legacy beta interface](docs/dcdflib-beta.md),
 with wide positive shapes, bounded shape inversions, complementary quantiles
 and positive recurrences that preserve tails when both shapes are tiny.
+
+`cdfchn` and `cumchn` implement the [legacy noncentral chi-square interface](docs/dcdflib-nc-chisq.md),
+with ignored-q inversion, wide inputs, bounded searches and independent repairs
+for native small-tail truncation and invalid wide central results.

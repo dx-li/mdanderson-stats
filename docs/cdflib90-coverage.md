@@ -18,7 +18,7 @@ all its domains, inversions, endpoint policies or errors.
 | F95 support modules | 7 | Public/support contract review remains open |
 | Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
-| Legacy C implementations | 2 | Ten distribution families validated; two legacy families pending |
+| Legacy C implementations | 2 | Eleven distribution families validated; legacy noncentral t pending |
 | Legacy public C header | 1 | 73 external function prototypes inventoried |
 | Legacy Fortran source | 64 | 66 declared entry points inventoried, including two ENTRY statements |
 | Documentation, installation and notices | 17 | Reference material accounted for; legal terms retained |
@@ -29,9 +29,9 @@ Each F95 distribution module explicitly exports four interfaces: its `cdf_*`,
 `cum_*`, `ccum_*` and `inv_*` functions. The inventory checks all **48 names**.
 The C/F77 libraries expose CDF solvers and paired-tail routines with older names.
 All 24 legacy distribution names below are present in both source inventories.
-The legacy routines do not introduce a thirteenth distribution. Ten legacy
+The legacy routines do not introduce a thirteenth distribution. Eleven legacy
 distribution contracts are implemented with separate C/F77 validation;
-noncentral chi-square and noncentral t remain open.
+noncentral t remains open.
 
 | Distribution | F95/Python suffix | Legacy CDF / tail names | Current distribution coverage |
 |---|---|---|---|
@@ -40,7 +40,7 @@ noncentral chi-square and noncentral t remain open.
 | Chi-square | `chisq` | `cdfchi`, `cumchi` | F95 and legacy C/F77 chi-square interfaces implemented |
 | F | `f` | `cdff`, `cumf` | F95 and legacy C/F77 F interfaces implemented |
 | Gamma | `gamma` | `cdfgam`, `cumgam` | F95 and legacy C/F77 gamma interfaces implemented |
-| Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | F95 implemented; legacy review pending |
+| Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | F95 and legacy C/F77 interfaces implemented |
 | Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | F95 and legacy C/F77 noncentral F interfaces implemented |
 | Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | F95 implemented with df brackets; legacy review pending |
 | Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | F95 and legacy C/F77 interfaces implemented |
@@ -139,7 +139,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Compare the remaining 4 legacy distribution entry-point contracts and validate any
+- Compare the remaining 2 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.
@@ -184,4 +184,5 @@ full two-small-shape domain, with independent implementation validation.
 The [legacy noncentral chi-square reference audit](dcdflib-nc-chisq-reference.md)
 records unchanged C/F77 behavior, the ignored-q inversion contract, early-series
 small-tail failures, invalid wide central probabilities and a large-noncentrality
-timeout. The wider legacy API remains pending.
+timeout. The [wider legacy API](dcdflib-nc-chisq.md) now implements all four
+modes with independent small-tail checks and documented numerical limits.

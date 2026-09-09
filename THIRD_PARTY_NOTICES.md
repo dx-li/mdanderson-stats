@@ -543,3 +543,9 @@ contracts through shared numerical kernels and positive beta recurrence
 identities. The CDFLIB90 authorship and retained legal notice above apply;
 [legacy notes](docs/dcdflib-beta.md) document independent validation, numerical
 repairs and boundary conventions. No archived numerical code is bundled.
+
+The legacy `cdfchn` and `cumchn` interfaces independently express the C/F77
+noncentral chi-square contracts through shared central and compiled distribution
+kernels, shifted-normal identities and Chernoff bounds. The CDFLIB90 authorship
+and retained legal notice above apply; [legacy notes](docs/dcdflib-nc-chisq.md)
+document numerical methods and independent validation. No archived code is bundled.

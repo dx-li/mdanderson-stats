@@ -1,7 +1,8 @@
 # Legacy noncentral chi-square reference audit
 
-This audit establishes unchanged C/F77 evidence for the pending `cdfchn` and
-`cumchn` interfaces. The existing `cdf_nc_chisq` implements the F95 contract;
+This audit establishes unchanged C/F77 evidence for the implemented [`cdfchn` and
+`cumchn` interfaces](dcdflib-nc-chisq.md). The existing `cdf_nc_chisq` implements
+the F95 contract;
 it does not establish the legacy input and inversion contracts by itself.
 
 ## Contract differences
@@ -94,6 +95,6 @@ including its zero-degree atom, corroborates this latter limit within the
 native absolute accuracy. A legacy port must retain positive tiny df inputs,
 not impose the F95 lower bound of 0.001.
 
-The legacy implementation, its wide-domain regression tests and batching
-measurements remain pending. CDFLIB90 stays partial with four legacy distribution
-entry points and public numerical/support interfaces still open.
+The [legacy implementation](dcdflib-nc-chisq.md) now includes 388 implementation
+tests and batching measurements. CDFLIB90 stays partial with two legacy
+distribution entry points and public numerical/support interfaces still open.

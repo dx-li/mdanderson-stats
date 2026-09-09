@@ -420,7 +420,8 @@
         "Legacy DCDFLIB Poisson cdfpoi/cumpoi: zero mean, wide nonnegative finite inputs, bounded continuous count/mean inversions and overflow/subnormal-tail repairs with unchanged C/F77 and independent high-precision validation",
         "Legacy DCDFLIB negative-binomial cdfnbn/cumnbn: all four modes, wide finite counts, bounded count searches, complementary chance inversion, exact power and gamma-limit repairs with unchanged native and independent high-precision validation",
         "Legacy DCDFLIB binomial cdfbin/cumbin: all four modes, distinct success/trial search bounds, wide finite counts, complementary chance inversion and independently validated native process-exit/false-success repairs",
-        "Legacy DCDFLIB beta cdfbet/cumbet: all four modes, wide finite shapes, bounded shape searches, positive recurrences for two small shapes, complementary quantiles and independent native false-success repairs"
+        "Legacy DCDFLIB beta cdfbet/cumbet: all four modes, wide finite shapes, bounded shape searches, positive recurrences for two small shapes, complementary quantiles and independent native false-success repairs",
+        "Legacy DCDFLIB noncentral chi-square cdfchn/cumchn: all four modes, ignored-q inversion, wide finite inputs, bounded searches, central and shifted-normal reductions, rigorous zero-tail bounds and independently validated small-tail repairs"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -503,7 +504,10 @@
         "docs/dcdflib-beta-benchmark.json",
         "tests/fixtures/dcdflib_nc_chisq.json",
         "tests/test_dcdflib_nc_chisq_reference.py",
-        "docs/dcdflib-nc-chisq-reference.md"
+        "docs/dcdflib-nc-chisq-reference.md",
+        "tests/test_dcdflib_nc_chisq.py",
+        "docs/dcdflib-nc-chisq.md",
+        "docs/dcdflib-nc-chisq-benchmark.json"
       ]
     },
     {
