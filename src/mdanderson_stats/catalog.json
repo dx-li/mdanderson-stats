@@ -422,7 +422,8 @@
         "Legacy DCDFLIB binomial cdfbin/cumbin: all four modes, distinct success/trial search bounds, wide finite counts, complementary chance inversion and independently validated native process-exit/false-success repairs",
         "Legacy DCDFLIB beta cdfbet/cumbet: all four modes, wide finite shapes, bounded shape searches, positive recurrences for two small shapes, complementary quantiles and independent native false-success repairs",
         "Legacy DCDFLIB noncentral chi-square cdfchn/cumchn: all four modes, ignored-q inversion, wide finite inputs, bounded searches, central and shifted-normal reductions, rigorous zero-tail bounds and independently validated small-tail repairs",
-        "Legacy signed noncentral t: all four modes, executable df bounds, explicit root brackets, ignored-q semantics and wide/subnormal conditional-tail repairs"
+        "Legacy signed noncentral t: all four modes, executable df bounds, explicit root brackets, ignored-q semantics and wide/subnormal conditional-tail repairs",
+        "F95 sort_list public generic: integer/single/double/character values, prefix sorting, custom comparators, stable ties and native duplicate-bounds/long-string truncation repairs"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -514,7 +515,11 @@
         "docs/dcdflib-nc-t-reference.md",
         "tests/test_dcdflib_nc_t.py",
         "docs/dcdflib-nc-t.md",
-        "docs/dcdflib-nc-t-benchmark.json"
+        "docs/dcdflib-nc-t-benchmark.json",
+        "tests/fixtures/cdflib_sort.json",
+        "tests/test_cdflib_sort.py",
+        "docs/cdflib-sort.md",
+        "docs/cdflib-sort-benchmark.json"
       ]
     },
     {

@@ -15,7 +15,7 @@ all its domains, inversions, endpoint policies or errors.
 | Archive material | Files | Coverage disposition |
 |---|---:|---|
 | F95 distribution modules | 12 | All twelve implemented and validated |
-| F95 support modules | 7 | Public/support contract review remains open |
+| F95 support modules | 7 | Sorting implemented; six other public/support modules remain open |
 | Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
 | Legacy C implementations | 2 | All twelve distribution families independently validated |
@@ -102,15 +102,15 @@ constants and direct/reverse-communication root finding.
 
 F95 support also has an explicit public surface:
 
-| Module | Public/support scope that remains to be reviewed |
+| Module | Public/support scope and status |
 |---|---|
 | `biomath_mathlib_mod` | Default-public module with 35 declared numerical procedures, including `log_beta`, `log_gamma`, `log_bicoef`, gamma/beta ratios and approximations |
 | `zero_finder` | Direct and reverse-communication interval/step solvers, setup, final-state reporting, bounds and solver-state type |
 | `biomath_constants_mod` | Default-public kind and numeric constants |
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
 | `biomath_interface_mod` | Numeric/string input generics, console output and message controls |
-| `biomath_sort_mod` | Public `sort_list` generic and typed implementations |
-| `biomath_strings_mod` | Public case conversion and lexical comparison |
+| `biomath_sort_mod` | [Implemented](cdflib-sort.md): all four `sort_list` overloads and custom comparators |
+| `biomath_strings_mod` | Public case conversion and stateful command-language lexer `qlex` |
 
 Existing Python/SciPy functions and the package's numerical helpers may replace
 many of these responsibilities. That mapping is **not yet established as a
@@ -190,3 +190,8 @@ signed noncentrality, ignored q, the executable df upper bound of 1e4,
 misleading native status bounds and independently established tail/inverse
 failures. The [wider legacy API](dcdflib-nc-t.md) now implements all four modes,
 signed noncentrality and independently checked tail repairs.
+
+The [sorting port](cdflib-sort.md) validates all four F95 overloads and custom
+comparison callbacks against unchanged source. It repairs duplicate-induced
+bounds failures and truncation of strings longer than 256 characters, while
+preserving stable ordering, prefix semantics and full-value permutations.

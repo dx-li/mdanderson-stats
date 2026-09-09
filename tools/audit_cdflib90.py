@@ -42,7 +42,7 @@ SUPPORT = {
     "biomath_interface_mod": "Public console input/output and message controls",
     "biomath_mathlib_mod": "Default-public mathematical functions and numerical kernels",
     "biomath_sort_mod": "Public sort_list generic and character/real/integer overloads",
-    "biomath_strings_mod": "Public character/string case conversion and lexical comparison",
+    "biomath_strings_mod": "Public case conversion and stateful command-language lexer",
     "cdf_aux_mod": "Default-public validation, distribution metadata and solver adapters",
     "zero_finder": "Public direct/reverse-communication root finding and solver state",
 }
@@ -103,6 +103,12 @@ def classify(path: Path) -> tuple[str, str, str]:
             )
         if path.name in ("Makefile", "compile.cdflib90"):
             return "build", "build_replaced", "pyproject.toml, uv build and existing CI"
+        if stem == "biomath_sort_mod" and path.suffix == ".f90":
+            return (
+                "f95_support",
+                "implemented_public_support",
+                "sort_list: four overloads, custom comparison, duplicate and long-string repairs",
+            )
         if stem in SUPPORT and path.suffix == ".f90":
             return "f95_support", "public_support_review", SUPPORT[stem]
         if stem.startswith("cdf_") and stem.endswith("_mod"):
@@ -505,12 +511,32 @@ def main():
         names = set(distribution["legacy_distribution_names"])
         if not names <= f77_names or not names <= set(header["external_function_names"]):
             raise RuntimeError(f"missing legacy distribution declarations: {distribution['name']}")
+    support_interfaces = [
+        {
+            "module": "biomath_sort_mod",
+            "public_names": ["sort_list"],
+            "python_interfaces": ["sort_list"],
+            "status": "implemented_with_documented_python_semantics",
+            "evidence": [
+                "src/mdanderson_stats/cdflib_sort.py",
+                "tools/reference_cdflib_sort.py",
+                "tests/fixtures/cdflib_sort.json",
+                "tests/test_cdflib_sort.py",
+                "docs/cdflib-sort.md",
+                "docs/cdflib-sort-benchmark.json",
+            ],
+        }
+    ]
+    for interface in support_interfaces:
+        if any(not Path(path).is_file() for path in interface["evidence"]):
+            raise RuntimeError("missing public support implementation evidence")
     result = {
         "archive_sha256": digest,
         "regular_file_count": len(members),
         "directory_members": directories,
         "role_counts": dict(Counter(row["role"] for row in members)),
         "distribution_interfaces": distributions,
+        "support_interfaces": support_interfaces,
         "f77_declared_entry_count": len(f77_names),
         "f77_names_not_in_c_header": sorted(f77_names - set(header["external_function_names"])),
         "c_names_not_in_f77": sorted(set(header["external_function_names"]) - f77_names),

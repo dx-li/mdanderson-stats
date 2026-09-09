@@ -445,3 +445,7 @@ including all four modes, explicit df brackets within the executable bounds,
 and conditional-tail repairs for wide inputs and subnormal probabilities.
 All twelve legacy distribution families now have independent C/F77 validation;
 CDFLIB90 remains partial while its public support interfaces are being ported.
+
+`sort_list` implements the [CDFLIB sorting generic](docs/cdflib-sort.md), with
+all four value types, prefix sorting and custom comparators. It preserves stable
+ties and full string contents, repairing native duplicate and truncation defects.

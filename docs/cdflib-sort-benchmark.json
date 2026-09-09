@@ -1,0 +1,51 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 5,
+  "comparison": "sort_list(array) versus np.asarray(sorted(array.tolist()), dtype=array.dtype); no native executable timing",
+  "cases": [
+    {
+      "size": 10000,
+      "dtype": "int64",
+      "numpy_seconds": 0.0004271669313311577,
+      "python_seconds": 0.0014146659523248672,
+      "speedup": 3.311740325770112
+    },
+    {
+      "size": 10000,
+      "dtype": "float32",
+      "numpy_seconds": 0.0006327498704195023,
+      "python_seconds": 0.0014553330838680267,
+      "speedup": 2.300013246787654
+    },
+    {
+      "size": 10000,
+      "dtype": "float64",
+      "numpy_seconds": 0.0006324579007923603,
+      "python_seconds": 0.0014332919381558895,
+      "speedup": 2.266225050489879
+    },
+    {
+      "size": 100000,
+      "dtype": "int64",
+      "numpy_seconds": 0.005450916010886431,
+      "python_seconds": 0.01943804230540991,
+      "speedup": 3.566013907862228
+    },
+    {
+      "size": 100000,
+      "dtype": "float32",
+      "numpy_seconds": 0.00820124987512827,
+      "python_seconds": 0.018425042275339365,
+      "speedup": 2.246613937616575
+    },
+    {
+      "size": 100000,
+      "dtype": "float64",
+      "numpy_seconds": 0.00827716663479805,
+      "python_seconds": 0.017922124825417995,
+      "speedup": 2.165248763999937
+    }
+  ]
+}
