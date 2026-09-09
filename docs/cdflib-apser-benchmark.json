@@ -1,0 +1,108 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same API; not native timing",
+  "cases": [
+    {
+      "operation": "ordinary",
+      "size": 64,
+      "batch_seconds": 0.0003499588929116726,
+      "scalar_seconds": 0.016848833300173283,
+      "speedup": 48.14517830934452
+    },
+    {
+      "operation": "small_shapes",
+      "size": 64,
+      "batch_seconds": 0.0007705418393015862,
+      "scalar_seconds": 0.0335771250538528,
+      "speedup": 43.57599203735241
+    },
+    {
+      "operation": "tiny_companion",
+      "size": 64,
+      "batch_seconds": 0.0007338332943618298,
+      "scalar_seconds": 0.03342537488788366,
+      "speedup": 45.549002947531406
+    },
+    {
+      "operation": "large_companion",
+      "size": 64,
+      "batch_seconds": 0.0005274158902466297,
+      "scalar_seconds": 0.03083308320492506,
+      "speedup": 58.46066410799061
+    },
+    {
+      "operation": "unit_shape",
+      "size": 64,
+      "batch_seconds": 9.88328829407692e-05,
+      "scalar_seconds": 0.004106583073735237,
+      "speedup": 41.55077694330057
+    },
+    {
+      "operation": "subnormal_coordinate",
+      "size": 64,
+      "batch_seconds": 0.000264208298176527,
+      "scalar_seconds": 0.014685125090181828,
+      "speedup": 55.58161947044589
+    },
+    {
+      "operation": "loose_tolerance",
+      "size": 64,
+      "batch_seconds": 0.000174832995980978,
+      "scalar_seconds": 0.005695375148206949,
+      "speedup": 32.57608849090827
+    },
+    {
+      "operation": "ordinary",
+      "size": 256,
+      "batch_seconds": 0.00031120795756578445,
+      "scalar_seconds": 0.06491066701710224,
+      "speedup": 208.5765014648803
+    },
+    {
+      "operation": "small_shapes",
+      "size": 256,
+      "batch_seconds": 0.0008932910859584808,
+      "scalar_seconds": 0.13329004170373082,
+      "speedup": 149.21232708900666
+    },
+    {
+      "operation": "tiny_companion",
+      "size": 256,
+      "batch_seconds": 0.0008977502584457397,
+      "scalar_seconds": 0.13451595790684223,
+      "speedup": 149.83672423523163
+    },
+    {
+      "operation": "large_companion",
+      "size": 256,
+      "batch_seconds": 0.0004997081123292446,
+      "scalar_seconds": 0.12183208297938108,
+      "speedup": 243.80649417816358
+    },
+    {
+      "operation": "unit_shape",
+      "size": 256,
+      "batch_seconds": 9.82917845249176e-05,
+      "scalar_seconds": 0.016504500061273575,
+      "speedup": 167.91332196323668
+    },
+    {
+      "operation": "subnormal_coordinate",
+      "size": 256,
+      "batch_seconds": 0.000294750090688467,
+      "scalar_seconds": 0.05736112501472235,
+      "speedup": 194.6093549309526
+    },
+    {
+      "operation": "loose_tolerance",
+      "size": 256,
+      "batch_seconds": 0.00032970821484923363,
+      "scalar_seconds": 0.0333340410143137,
+      "speedup": 101.10163930721721
+    }
+  ]
+}
