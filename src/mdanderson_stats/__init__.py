@@ -24,6 +24,7 @@ from .bp1ci import BP1CIResult, bp1ci
 from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
 from .cdflib_beta_asymptotic import basym
 from .cdflib_beta_factors import brcmp1, brcomp
+from .cdflib_beta_fraction import bfrac
 from .cdflib_beta_series import apser, bgrat, bpser, fpser
 from .cdflib_beta_shift import bup
 from .cdflib_beta_support import betaln, log_beta, log_bicoef
@@ -221,6 +222,7 @@ __all__ = [
     "bpser",
     "bgrat",
     "basym",
+    "bfrac",
     "gsumln",
     "alngam",
     "gam1",

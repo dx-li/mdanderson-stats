@@ -583,7 +583,8 @@
         "apser",
         "bpser",
         "bgrat",
-        "basym"
+        "basym",
+        "bfrac"
       ],
       "python_interfaces": [
         "alnrel",
@@ -618,7 +619,8 @@
         "apser",
         "bpser",
         "bgrat",
-        "basym"
+        "basym",
+        "bfrac"
       ],
       "status": "partial",
       "remaining_scope": "Other mathematical procedures and imported constants",
@@ -725,6 +727,10 @@
         "tests/test_cdflib_basym.py",
         "docs/cdflib-basym.md",
         "docs/cdflib-basym-benchmark.json",
+        "src/mdanderson_stats/cdflib_beta_fraction.py",
+        "tests/test_cdflib_bfrac.py",
+        "docs/cdflib-bfrac.md",
+        "docs/cdflib-bfrac-benchmark.json",
         "tools/reference_cdflib_beta_remaining.py",
         "tests/fixtures/cdflib_beta_remaining.json",
         "tests/test_cdflib_beta_remaining_reference.py",

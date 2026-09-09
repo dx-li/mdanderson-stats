@@ -498,3 +498,6 @@ preserving signed accumulators and explicit tiny complementary coordinates.
 
 The [CDFLIB beta tail from a displacement](docs/cdflib-basym.md) adds `basym`,
 retaining tiny displacements and bounding asymptotic work and scratch memory.
+
+The [CDFLIB beta continued fraction](docs/cdflib-bfrac.md) adds `bfrac`,
+with reflected tails, bounded iteration and extreme-shape normalization.

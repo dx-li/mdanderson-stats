@@ -55,6 +55,7 @@ check the exact increment x**a.
 scalar calls and require identical outputs. They measure batching benefits,
 not speed relative to Fortran.
 
-The later [basym port](cdflib-basym.md) brings coverage to 33 of the 35 F95
-mathematical procedures. `bfrac` and `bratio` remain, along with other CDFLIB support interfaces and the
-remaining software catalog. CDFLIB90 remains partial.
+The later [basym](cdflib-basym.md) and [bfrac](cdflib-bfrac.md) ports bring
+coverage to 34 of the 35 F95 mathematical procedures. `bratio` remains, along with
+other CDFLIB support interfaces and the remaining software catalog. CDFLIB90
+remains partial.

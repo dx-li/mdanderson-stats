@@ -104,7 +104,7 @@ F95 support also has an explicit public surface:
 
 | Module | Public/support scope and status |
 |---|---|
-| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), [three gamma-ratio helpers](cdflib-gamma-ratios.md), [three beta/combinatorial helpers](cdflib-beta-support.md), the [gamma scaling factor](cdflib-gamma-factor.md), [two incomplete-gamma helpers](cdflib-incomplete-gamma.md), [two beta factors](cdflib-beta-factors.md), the [beta shape shift](cdflib-beta-shift.md), [fpser](cdflib-fpser.md), [apser](cdflib-apser.md), [bpser](cdflib-bpser.md), [bgrat](cdflib-bgrat.md), and [basym](cdflib-basym.md) implemented; remaining default-public numerical procedures and imported constants still open |
+| `biomath_mathlib_mod` | [Five elementary helpers](cdflib-elementary.md), [four error/exponential helpers](cdflib-error-exponential.md), [seven gamma/digamma helpers](cdflib-gamma-support.md), [three gamma-ratio helpers](cdflib-gamma-ratios.md), [three beta/combinatorial helpers](cdflib-beta-support.md), the [gamma scaling factor](cdflib-gamma-factor.md), [two incomplete-gamma helpers](cdflib-incomplete-gamma.md), [two beta factors](cdflib-beta-factors.md), the [beta shape shift](cdflib-beta-shift.md), [fpser](cdflib-fpser.md), [apser](cdflib-apser.md), [bpser](cdflib-bpser.md), [bgrat](cdflib-bgrat.md), [basym](cdflib-basym.md), and [bfrac](cdflib-bfrac.md) implemented; remaining default-public numerical procedures and imported constants still open |
 | `zero_finder` | Direct and reverse-communication interval/step solvers, setup, final-state reporting, bounds and solver-state type |
 | `biomath_constants_mod` | Default-public kind and numeric constants |
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
@@ -255,5 +255,5 @@ at subnormal coordinates without adding a new catalog procedure.
 
 The [remaining beta-helper audit](cdflib-beta-remaining-reference.md) records 116
 native calls to basym, bfrac, bgrat and bratio, with independent integral checks,
-endpoint/status contracts, inaccurate results and five timeouts. The [bgrat](cdflib-bgrat.md) and [basym](cdflib-basym.md) ports are implemented;
-bfrac and bratio remain pending.
+endpoint/status contracts, inaccurate results and five timeouts. The [bgrat](cdflib-bgrat.md), [basym](cdflib-basym.md), and [bfrac](cdflib-bfrac.md) ports are implemented;
+bratio remains pending.

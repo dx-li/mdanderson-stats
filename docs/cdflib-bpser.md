@@ -61,6 +61,7 @@ Existing fpser and apser tests cover the shared remainder-bound change.
 scalar calls, requiring identical results. These measure batching benefits rather
 than speed relative to Fortran.
 
-The later [bgrat](cdflib-bgrat.md) and [basym](cdflib-basym.md) ports bring coverage to 33 of the 35 F95
-mathematical procedures. `bfrac` and `bratio`, other support interfaces, and the remaining software catalog
+The later [bgrat](cdflib-bgrat.md), [basym](cdflib-basym.md), and
+[bfrac](cdflib-bfrac.md) ports bring coverage to 34 of the 35 F95 mathematical
+procedures. `bratio`, other support interfaces, and the remaining software catalog
 still require work. CDFLIB90 remains partial.

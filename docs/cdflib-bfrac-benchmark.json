@@ -1,0 +1,94 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same API; not native timing",
+  "cases": [
+    {
+      "operation": "ordinary_fraction",
+      "size": 64,
+      "batch_seconds": 0.0009285411797463894,
+      "scalar_seconds": 0.04364512534812093,
+      "speedup": 47.00397386795665
+    },
+    {
+      "operation": "reflected_fraction",
+      "size": 64,
+      "batch_seconds": 0.0007606660947203636,
+      "scalar_seconds": 0.03343575028702617,
+      "speedup": 43.95588355928738
+    },
+    {
+      "operation": "near_unit_shapes",
+      "size": 64,
+      "batch_seconds": 0.0013424158096313477,
+      "scalar_seconds": 0.06925633270293474,
+      "speedup": 51.59082022577924
+    },
+    {
+      "operation": "central_expansion",
+      "size": 64,
+      "batch_seconds": 0.0007909159176051617,
+      "scalar_seconds": 0.04983437526971102,
+      "speedup": 63.00843637160071
+    },
+    {
+      "operation": "subnormal_coordinate",
+      "size": 64,
+      "batch_seconds": 0.0005757915787398815,
+      "scalar_seconds": 0.03736645821481943,
+      "speedup": 64.89580534782367
+    },
+    {
+      "operation": "huge_shapes",
+      "size": 64,
+      "batch_seconds": 0.0005708746612071991,
+      "scalar_seconds": 0.021542500238865614,
+      "speedup": 37.7359544971059
+    },
+    {
+      "operation": "ordinary_fraction",
+      "size": 256,
+      "batch_seconds": 0.0010919589549303055,
+      "scalar_seconds": 0.1759702921845019,
+      "speedup": 161.15101340574952
+    },
+    {
+      "operation": "reflected_fraction",
+      "size": 256,
+      "batch_seconds": 0.0008252076804637909,
+      "scalar_seconds": 0.1348745827563107,
+      "speedup": 163.44319854185946
+    },
+    {
+      "operation": "near_unit_shapes",
+      "size": 256,
+      "batch_seconds": 0.001502749975770712,
+      "scalar_seconds": 0.2794831250794232,
+      "speedup": 185.98112100190542
+    },
+    {
+      "operation": "central_expansion",
+      "size": 256,
+      "batch_seconds": 0.0010442077182233334,
+      "scalar_seconds": 0.20357204182073474,
+      "speedup": 194.9535885131191
+    },
+    {
+      "operation": "subnormal_coordinate",
+      "size": 256,
+      "batch_seconds": 0.0006242077797651291,
+      "scalar_seconds": 0.1470607086084783,
+      "speedup": 235.5957637436254
+    },
+    {
+      "operation": "huge_shapes",
+      "size": 256,
+      "batch_seconds": 0.0007040002383291721,
+      "scalar_seconds": 0.0869969162158668,
+      "speedup": 123.5751232447585
+    }
+  ]
+}
