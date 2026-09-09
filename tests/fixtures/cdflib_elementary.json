@@ -1,0 +1,734 @@
+{
+  "archive_sha256": "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b",
+  "source_sha256": {
+    "biomath_constants_mod.f90": "2b0cfd2020e5221bc97edf80d1204ea074f7d82d0427dd912c96c357bcc7ba61",
+    "biomath_mathlib_mod.f90": "be776a552418b614d1fa37f19111adebdbbfc56cd057893845a84f8a04601609"
+  },
+  "command": [
+    "gfortran",
+    "-O0",
+    "-ffp-contract=off",
+    "-fcheck=all",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/CDFLIB90/source/CDFLIB90/source/cdflib90_1.2/source/biomath_constants_mod.f90",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/CDFLIB90/source/CDFLIB90/source/cdflib90_1.2/source/biomath_mathlib_mod.f90",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/reference/cdflib-elementary/driver.f90",
+    "-o",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/reference/cdflib-elementary/reference"
+  ],
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "driver": "program reference\nuse biomath_mathlib_mod\nimplicit none\ninteger mode,n\nreal(8) x,value\nreal(8),allocatable :: a(:)\nread(*,*) mode,x,n\nallocate(a(n))\nif(n>0) read(*,*) a\nselect case(mode)\ncase(1)\n value=alnrel(x)\ncase(2)\n value=rexp(x)\ncase(3)\n value=rlog(x)\ncase(4)\n value=rlog1(x)\ncase(5)\n value=evaluate_polynomial(a,x)\nend select\nwrite(*,'(ES26.17E3)') value\nend program reference\n",
+  "adaptations": [],
+  "cases": [
+    {
+      "mode": 1,
+      "x": -0.99,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -4.605170185988091
+    },
+    {
+      "mode": 1,
+      "x": -0.5,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -0.6931471805599453
+    },
+    {
+      "mode": 1,
+      "x": -0.125,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -0.1335313926245226
+    },
+    {
+      "mode": 1,
+      "x": -1e-08,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -1.000000005e-08
+    },
+    {
+      "mode": 1,
+      "x": -1e-100,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -1e-100
+    },
+    {
+      "mode": 1,
+      "x": 0.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 1,
+      "x": 1e-100,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 1e-100
+    },
+    {
+      "mode": 1,
+      "x": 1e-08,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 9.999999950000001e-09
+    },
+    {
+      "mode": 1,
+      "x": 0.125,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.11778303565638346
+    },
+    {
+      "mode": 1,
+      "x": 0.5,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.4054651081081644
+    },
+    {
+      "mode": 1,
+      "x": 1.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.6931471805599453
+    },
+    {
+      "mode": 1,
+      "x": 10.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 2.3978952727983707
+    },
+    {
+      "mode": 1,
+      "x": 100.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 4.61512051684126
+    },
+    {
+      "mode": 2,
+      "x": -0.99,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -0.6284233089779543
+    },
+    {
+      "mode": 2,
+      "x": -0.5,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -0.3934693402873666
+    },
+    {
+      "mode": 2,
+      "x": -0.125,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -0.1175030974154046
+    },
+    {
+      "mode": 2,
+      "x": -1e-08,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -9.999999950000001e-09
+    },
+    {
+      "mode": 2,
+      "x": -1e-100,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -1e-100
+    },
+    {
+      "mode": 2,
+      "x": 0.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "x": 1e-100,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 1e-100
+    },
+    {
+      "mode": 2,
+      "x": 1e-08,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 1.000000005e-08
+    },
+    {
+      "mode": 2,
+      "x": 0.125,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.13314845306682632
+    },
+    {
+      "mode": 2,
+      "x": 0.5,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.6487212707001282
+    },
+    {
+      "mode": 2,
+      "x": 1.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 1.718281828459045
+    },
+    {
+      "mode": 2,
+      "x": 10.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 22025.465794806718
+    },
+    {
+      "mode": 2,
+      "x": 100.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 2.6881171418161356e+43
+    },
+    {
+      "mode": 4,
+      "x": -0.99,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 3.6151701859880907
+    },
+    {
+      "mode": 4,
+      "x": -0.5,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.1931471805599453
+    },
+    {
+      "mode": 4,
+      "x": -0.125,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.008531392624522623
+    },
+    {
+      "mode": 4,
+      "x": -1e-08,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 5.000000033333333e-17
+    },
+    {
+      "mode": 4,
+      "x": -1e-100,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 5e-201
+    },
+    {
+      "mode": 4,
+      "x": 0.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 4,
+      "x": 1e-100,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 5e-201
+    },
+    {
+      "mode": 4,
+      "x": 1e-08,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 4.999999966666668e-17
+    },
+    {
+      "mode": 4,
+      "x": 0.125,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.007216964343616546
+    },
+    {
+      "mode": 4,
+      "x": 0.5,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.09453489189183562
+    },
+    {
+      "mode": 4,
+      "x": 1.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.3068528194400547
+    },
+    {
+      "mode": 4,
+      "x": 10.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 7.602104727201629
+    },
+    {
+      "mode": 4,
+      "x": 100.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 95.38487948315874
+    },
+    {
+      "mode": 3,
+      "x": 5e-324,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 743.4400719213812
+    },
+    {
+      "mode": 3,
+      "x": 1e-308,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 708.1962086421661
+    },
+    {
+      "mode": 3,
+      "x": 0.1,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 1.4025850929940455
+    },
+    {
+      "mode": 3,
+      "x": 0.61,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.10429632181478013
+    },
+    {
+      "mode": 3,
+      "x": 0.82,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.018450938723838264
+    },
+    {
+      "mode": 3,
+      "x": 0.9999999999999998,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 2.4651903288156624e-32
+    },
+    {
+      "mode": 3,
+      "x": 1.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 3,
+      "x": 1.0000000000000002,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 2.4651903288156624e-32
+    },
+    {
+      "mode": 3,
+      "x": 1.18,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.0144855615224266
+    },
+    {
+      "mode": 3,
+      "x": 1.57,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.11892438063978329
+    },
+    {
+      "mode": 3,
+      "x": 10.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 6.697414907005954
+    },
+    {
+      "mode": 3,
+      "x": 1e+100,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 1e+100
+    },
+    {
+      "mode": 3,
+      "x": 1e+308,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 1e+308
+    },
+    {
+      "mode": 4,
+      "x": -5e-162,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 1e-323
+    },
+    {
+      "mode": 4,
+      "x": -3e-162,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 4,
+      "x": 3e-162,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 4,
+      "x": 5e-162,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 1e-323
+    },
+    {
+      "mode": 4,
+      "x": 1e-160,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 5e-321
+    },
+    {
+      "mode": 1,
+      "x": -2.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -1.0
+    },
+    {
+      "mode": 1,
+      "x": -1.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": "-inf"
+    },
+    {
+      "mode": 1,
+      "x": 0.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 3,
+      "x": -2.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": "nan"
+    },
+    {
+      "mode": 3,
+      "x": -1.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": "nan"
+    },
+    {
+      "mode": 3,
+      "x": 0.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": "inf"
+    },
+    {
+      "mode": 4,
+      "x": -2.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -1.0
+    },
+    {
+      "mode": 4,
+      "x": -1.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -1.0
+    },
+    {
+      "mode": 4,
+      "x": 0.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 2,
+      "x": -1000.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": -1.0
+    },
+    {
+      "mode": 2,
+      "x": 710.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": "inf"
+    },
+    {
+      "mode": 2,
+      "x": 1000.0,
+      "a": [],
+      "execution_outcome": "completed",
+      "result": "inf"
+    },
+    {
+      "mode": 5,
+      "x": -2.0,
+      "a": [
+        2.0
+      ],
+      "execution_outcome": "completed",
+      "result": 2.0
+    },
+    {
+      "mode": 5,
+      "x": 0.0,
+      "a": [
+        2.0
+      ],
+      "execution_outcome": "completed",
+      "result": 2.0
+    },
+    {
+      "mode": 5,
+      "x": 0.5,
+      "a": [
+        2.0
+      ],
+      "execution_outcome": "completed",
+      "result": 2.0
+    },
+    {
+      "mode": 5,
+      "x": 1.0,
+      "a": [
+        2.0
+      ],
+      "execution_outcome": "completed",
+      "result": 2.0
+    },
+    {
+      "mode": 5,
+      "x": 2.0,
+      "a": [
+        2.0
+      ],
+      "execution_outcome": "completed",
+      "result": 2.0
+    },
+    {
+      "mode": 5,
+      "x": -2.0,
+      "a": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "execution_outcome": "completed",
+      "result": 9.0
+    },
+    {
+      "mode": 5,
+      "x": 0.0,
+      "a": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 5,
+      "x": 0.5,
+      "a": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "execution_outcome": "completed",
+      "result": 2.75
+    },
+    {
+      "mode": 5,
+      "x": 1.0,
+      "a": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "execution_outcome": "completed",
+      "result": 6.0
+    },
+    {
+      "mode": 5,
+      "x": 2.0,
+      "a": [
+        1.0,
+        2.0,
+        3.0
+      ],
+      "execution_outcome": "completed",
+      "result": 17.0
+    },
+    {
+      "mode": 5,
+      "x": -2.0,
+      "a": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "execution_outcome": "completed",
+      "result": 3.0
+    },
+    {
+      "mode": 5,
+      "x": 0.0,
+      "a": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "execution_outcome": "completed",
+      "result": -1.0
+    },
+    {
+      "mode": 5,
+      "x": 0.5,
+      "a": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "execution_outcome": "completed",
+      "result": -0.75
+    },
+    {
+      "mode": 5,
+      "x": 1.0,
+      "a": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 5,
+      "x": 2.0,
+      "a": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "execution_outcome": "completed",
+      "result": 3.0
+    },
+    {
+      "mode": 5,
+      "x": -2.0,
+      "a": [
+        1.0,
+        -4.0,
+        6.0,
+        -4.0,
+        1.0
+      ],
+      "execution_outcome": "completed",
+      "result": 81.0
+    },
+    {
+      "mode": 5,
+      "x": 0.0,
+      "a": [
+        1.0,
+        -4.0,
+        6.0,
+        -4.0,
+        1.0
+      ],
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 5,
+      "x": 0.5,
+      "a": [
+        1.0,
+        -4.0,
+        6.0,
+        -4.0,
+        1.0
+      ],
+      "execution_outcome": "completed",
+      "result": 0.0625
+    },
+    {
+      "mode": 5,
+      "x": 1.0,
+      "a": [
+        1.0,
+        -4.0,
+        6.0,
+        -4.0,
+        1.0
+      ],
+      "execution_outcome": "completed",
+      "result": 0.0
+    },
+    {
+      "mode": 5,
+      "x": 2.0,
+      "a": [
+        1.0,
+        -4.0,
+        6.0,
+        -4.0,
+        1.0
+      ],
+      "execution_outcome": "completed",
+      "result": 1.0
+    },
+    {
+      "mode": 5,
+      "x": 1.0,
+      "a": [],
+      "execution_outcome": "process_error",
+      "stderr": "At line 1860 of file /Users/dxli2/math stats/mdanderson-stats/research/raw/CDFLIB90/source/CDFLIB90/source/cdflib90_1.2/source/biomath_mathlib_mod.f90\nFortran runtime error: Index '0' of dimension 1 of array 'a' below lower bound of 1\n\nError termination. Backtrace:\n#0  0x10046ad2f\n#1  0x10046b8d7\n#2  0x10046bc8f\n#3  0x100271c23\n#4  0x1002781f7\n#5  0x1002782a3\n",
+      "exit_code": 2
+    }
+  ]
+}

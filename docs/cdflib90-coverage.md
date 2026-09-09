@@ -104,7 +104,7 @@ F95 support also has an explicit public surface:
 
 | Module | Public/support scope and status |
 |---|---|
-| `biomath_mathlib_mod` | Default-public module with 35 declared numerical procedures, including `log_beta`, `log_gamma`, `log_bicoef`, gamma/beta ratios and approximations |
+| `biomath_mathlib_mod` | [Five elementary helpers implemented](cdflib-elementary.md); remaining default-public numerical procedures and imported constants still open |
 | `zero_finder` | Direct and reverse-communication interval/step solvers, setup, final-state reporting, bounds and solver-state type |
 | `biomath_constants_mod` | Default-public kind and numeric constants |
 | `cdf_aux_mod` | Default-public distribution metadata, validation and solver adapters, with explicit private exceptions |
@@ -200,3 +200,8 @@ The [string/lexer reference audit](cdflib-strings-reference.md) covers all five
 public names, ASCII conversion rules, token classes and native buffer, quote,
 malformed-number and overflow failures. The [Python port](cdflib-strings.md) now
 implements all five public operations with documented token/numeric policies.
+
+The [elementary support port](cdflib-elementary.md) implements `alnrel`, `rexp`,
+`rlog`, `rlog1` and `evaluate_polynomial`, with unchanged F95 evidence and
+800-digit checks, including a native subnormal-remainder repair. The mathematical
+module remains partial.

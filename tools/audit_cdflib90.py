@@ -563,6 +563,23 @@ def main():
             ],
         }
     )
+    support_interfaces.append(
+        {
+            "module": "biomath_mathlib_mod",
+            "implemented_public_names": ["alnrel", "rexp", "rlog", "rlog1", "evaluate_polynomial"],
+            "python_interfaces": ["alnrel", "rexp", "rlog", "rlog1", "evaluate_polynomial"],
+            "status": "partial",
+            "remaining_scope": "Other mathematical procedures and imported constants",
+            "evidence": [
+                "src/mdanderson_stats/cdflib_elementary.py",
+                "tools/reference_cdflib_elementary.py",
+                "tests/fixtures/cdflib_elementary.json",
+                "tests/test_cdflib_elementary.py",
+                "docs/cdflib-elementary.md",
+                "docs/cdflib-elementary-benchmark.json",
+            ],
+        }
+    )
     for interface in support_interfaces:
         if any(not Path(path).is_file() for path in interface["evidence"]):
             raise RuntimeError("missing public support evidence")

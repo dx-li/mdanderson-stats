@@ -1,0 +1,79 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "repetitions": 3,
+  "comparison": "One broadcast call versus repeated scalar calls to the same Python API; not native timing",
+  "cases": [
+    {
+      "operation": "alnrel",
+      "size": 64,
+      "batch_seconds": 1.44164077937603e-05,
+      "scalar_seconds": 0.000363833736628294,
+      "speedup": 25.237475370651506
+    },
+    {
+      "operation": "rexp",
+      "size": 64,
+      "batch_seconds": 1.12093985080719e-05,
+      "scalar_seconds": 0.00043000001460313797,
+      "speedup": 38.36066799601196
+    },
+    {
+      "operation": "rlog",
+      "size": 64,
+      "batch_seconds": 5.1416922360658646e-05,
+      "scalar_seconds": 0.0031680837273597717,
+      "speedup": 61.615584556725864
+    },
+    {
+      "operation": "rlog1",
+      "size": 64,
+      "batch_seconds": 5.058431997895241e-05,
+      "scalar_seconds": 0.00282495841383934,
+      "speedup": 55.84652348820297
+    },
+    {
+      "operation": "polynomial",
+      "size": 64,
+      "batch_seconds": 1.7249956727027893e-05,
+      "scalar_seconds": 0.0007495000027120113,
+      "speedup": 43.449384515711046
+    },
+    {
+      "operation": "alnrel",
+      "size": 256,
+      "batch_seconds": 7.83335417509079e-06,
+      "scalar_seconds": 0.0013731252402067184,
+      "speedup": 175.29211746522412
+    },
+    {
+      "operation": "rexp",
+      "size": 256,
+      "batch_seconds": 7.33276829123497e-06,
+      "scalar_seconds": 0.001651291735470295,
+      "speedup": 225.1934971740649
+    },
+    {
+      "operation": "rlog",
+      "size": 256,
+      "batch_seconds": 6.441585719585419e-05,
+      "scalar_seconds": 0.013190125115215778,
+      "speedup": 204.76518809819854
+    },
+    {
+      "operation": "rlog1",
+      "size": 256,
+      "batch_seconds": 6.312504410743713e-05,
+      "scalar_seconds": 0.01212608302012086,
+      "speedup": 192.0962304514606
+    },
+    {
+      "operation": "polynomial",
+      "size": 256,
+      "batch_seconds": 3.17087396979332e-05,
+      "scalar_seconds": 0.00347350025549531,
+      "speedup": 109.5439392604341
+    }
+  ]
+}

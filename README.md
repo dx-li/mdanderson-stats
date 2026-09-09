@@ -453,3 +453,7 @@ ties and full string contents, repairing native duplicate and truncation defects
 The [CDFLIB string module](docs/cdflib-strings.md) supplies ASCII-only case
 conversion and `qlex`, a reentrant command lexer with safe quoted strings,
 explicit malformed-token/overflow results and bounded exponent processing.
+
+The [elementary CDFLIB helpers](docs/cdflib-elementary.md) provide stable
+`alnrel`, `rexp`, `rlog`, `rlog1` and batched `evaluate_polynomial`, including
+independent high-precision validation of small and subnormal results.
