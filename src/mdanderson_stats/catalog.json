@@ -404,7 +404,8 @@
         "Chi-square lower/upper tails, quantiles and bounded real degrees-of-freedom inversion through shared gamma kernels; immutable broadcasting and native status/root defect validation",
         "Poisson continuous-count lower/upper tails, count and mean inversions using complementary gamma ratios; immutable broadcasting and rejection of native negative-count clamping",
         "Negative-binomial tails, real failure/success inversions and complementary success-probability inversion; full count bounds, zero-success semantics and shared beta kernels",
-        "Pinned 106-file archive inventory and public-interface crosswalk; legacy C/Fortran and public-support contract review explicitly tracked as outstanding"
+        "Pinned 106-file archive inventory and public-interface crosswalk; legacy C/Fortran and public-support contract review explicitly tracked as outstanding",
+        "Student's t lower/upper tails, quantiles and bounded degrees-of-freedom inversion using complementary beta coordinates and batched search"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -423,7 +424,9 @@
         "tests/test_cdflib_neg_binomial.py",
         "tests/fixtures/cdflib_neg_binomial.json",
         "docs/cdflib90-archive.json",
-        "docs/cdflib90-coverage.md"
+        "docs/cdflib90-coverage.md",
+        "tests/test_cdflib_t.py",
+        "tests/fixtures/cdflib_t.json"
       ]
     },
     {

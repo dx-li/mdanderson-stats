@@ -4,7 +4,7 @@ CDFLIB90 is a library of cumulative distributions, complementary distributions,
 quantiles and inversions with respect to distribution parameters. The catalog
 archive contains Fortran 95 version 1.2 and additional C/Fortran DCDFLIB material.
 The entry is **partial**. All four public interfaces are implemented for beta,
-normal, gamma, chi-square, Poisson and negative-binomial distributions. Six other
+normal, gamma, chi-square, Poisson, negative-binomial and Student's t distributions. Five other
 distribution modules and the remaining archived library interfaces are outstanding.
 The [106-file inventory](cdflib90-coverage.md) identifies the legacy entry points
 and public support APIs that still need contract review and validation.
@@ -435,3 +435,60 @@ Independent tests use exact rational binomial sums, geometric identities,
 pr**s at f=0, success counts down to 1e-300, both count upper bounds, probability
 endpoints, tiny complements, mixed zero/nonzero success inversions, broadcasting,
 immutable ownership, empty inputs and strict validation.
+
+
+## Student's t distribution
+
+```python
+from mdanderson_stats import cdf_t, cum_t, ccum_t, inv_t
+
+lower = cum_t([-2, 0, 3], df=5)
+upper = ccum_t([-2, 0, 3], df=5)
+quantile = inv_t(None, df=2, ccum=1e-100)
+degrees = cdf_t(3, t=1, cum=0.75).df  # 1: the Cauchy case
+```
+
+`cdf_t` computes group 1 (cum/ccum), 2 (t), or 3 (df). Omit the computed
+group and supply the others. `CDFStudentT` contains `which` and four owned
+immutable broadcast arrays: `cum`, `ccum`, `t`, `df`. Tail conveniences take
+`(t, df)`; the quantile takes `(cum, df, *, ccum=None)`. There is no default df.
+The source domains are retained: t in [-1e100,1e100], df in [1e-3,1e10].
+This is the centered Student's t distribution. The source header's references
+to “noncentral t” and its density exponent's missing minus sign are errors;
+the actual source uses the centered t-to-beta identity implemented here.
+
+With x=df/(df+t²), cx=t²/(df+t²), the smaller t tail is
+I_x(df/2,1/2)/2. Both beta coordinates are formed directly, preserving a small
+cx when x rounds to one. The sign of t determines which probability is smaller.
+Quantile inversion uses the smaller supplied tail, inverts the corresponding
+beta probability and its coordinate complement, then forms sqrt(df)*sqrt(cx/x)
+with the appropriate sign. The median gives exactly t=0. Any positive
+representable probability pair can be supplied, extending the archived 1e-10
+tail cutoff. Zero probability tails have no finite t quantile and fail.
+
+At nonzero fixed t, the smaller tail decreases as df increases. Degrees-of-freedom
+inversion uses 64 batched bisections in log df over the original bounds, with
+forward verification at relative tail tolerance 1e-7 plus 32 smallest-subnormal
+units. Targets within 32 machine epsilons relative to an endpoint tail retain
+that endpoint. Computed t and df allow eight-epsilon relative endpoint roundoff;
+input bounds remain strict. Out-of-range requests raise `ValueError`, and failed
+forward verification raises `ArithmeticError`.
+
+A median probability does not identify df, and a nonmedian target must have the
+same sign relative to one-half as t has relative to zero. Numerically identical
+tails at both df bounds are also rejected. At large df the distribution approaches
+the normal and the inverse can be poorly conditioned; tail accuracy does not imply
+the same relative accuracy in df. Tiny tails/coordinates may underflow and extreme
+quantiles may exceed the finite source domain. These interfaces use double precision.
+
+`tools/reference_cdflib_t.py` compiles ten unmodified archived files, including
+the normal module used by the native initial quantile approximation. It records
+source/archive hashes, compiler, command and **70 cases**: 25 forward, 25 quantile
+and 20 df inversions. Forward probabilities agree directly. This build returned
+status 50 for all forward cases because the source finalizes an unused zero
+finder; that undefined-state status is not a portable reference. Five native
+quantile cases and four df inversions also report nonzero status. Inverse tests
+recover the known generating t/df values rather than trusting those source results.
+Independent tests use Cauchy and df=2 identities, t up to magnitude 1e100, tiny
+upper probabilities, df boundaries, broadcasting, immutable ownership, empty
+arrays and invalid/unidentified requests.

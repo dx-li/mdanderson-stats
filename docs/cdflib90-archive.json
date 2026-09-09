@@ -234,8 +234,12 @@
         "cum_t",
         "inv_t"
       ],
-      "python_status": "pending_distribution",
-      "evidence": [],
+      "python_status": "implemented_distribution",
+      "evidence": [
+        "src/mdanderson_stats/cdflib_t.py",
+        "tests/test_cdflib_t.py",
+        "tests/fixtures/cdflib_t.json"
+      ],
       "legacy_distribution_names": [
         "cdft",
         "cumt"
@@ -816,7 +820,7 @@
       "size": 12362,
       "sha256": "360fb24b24b91c4d86711983558cc0e6db6d4eb065dd6518c9472b89d6eda848",
       "role": "f95_distribution",
-      "coverage_status": "pending_distribution",
+      "coverage_status": "implemented_distribution",
       "scope": "t",
       "declarations": {
         "routine_declarations_including_entries": [

@@ -363,3 +363,7 @@ including explicit zero-success behavior and preserved small complements.
 
 The [CDFLIB90 inventory](docs/cdflib90-coverage.md) accounts for all 106 archived
 files and tracks the remaining distribution, legacy-library and public-support scope.
+
+
+`cdf_t`, `cum_t`, `ccum_t` and `inv_t` provide Student's t tails, quantiles and
+bounded degrees-of-freedom inversion with preserved small probability tails.

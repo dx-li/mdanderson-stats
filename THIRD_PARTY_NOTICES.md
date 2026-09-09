@@ -473,7 +473,8 @@ Original source, executables and archived ACM numerical code are not bundled.
 
 ## CDFLIB90
 
-The beta, normal, gamma, chi-square, Poisson and negative-binomial CDF/inversion interfaces independently express CDFLIB90 1.2,
+The beta, normal, gamma, chi-square, Poisson, negative-binomial and Student's t
+CDF/inversion interfaces independently express CDFLIB90 1.2,
 by Barry W. Brown, James Lovato and Kathy Russell, with the Fortran 95
 conversion by Dan Serachitopol. The manual credits copyright 2002 to the
 University of Texas M.D. Anderson Cancer Center, Department of Biomathematics.

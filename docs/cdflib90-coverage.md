@@ -14,7 +14,7 @@ all its domains, inversions, endpoint policies or errors.
 
 | Archive material | Files | Coverage disposition |
 |---|---:|---|
-| F95 distribution modules | 12 | Six implemented and validated; six pending |
+| F95 distribution modules | 12 | Seven implemented and validated; five pending |
 | F95 support modules | 7 | Public/support contract review remains open |
 | Binomial editor backup | 1 | Distinct source variant; compare during binomial port |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
@@ -45,7 +45,7 @@ contracts and numerical behavior still need comparison with the F95 port.
 | Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | Implemented |
 | Normal | `normal` | `cdfnor`, `cumnor` | Implemented |
 | Poisson | `poisson` | `cdfpoi`, `cumpoi` | Implemented |
-| Student's t | `t` | `cdft`, `cumt` | Pending |
+| Student's t | `t` | `cdft`, `cumt` | Implemented |
 
 The [method notes](cdflib90.md) document the implemented contracts, native F95
 fixtures, independent identities and source repairs. Those fixtures do not
@@ -107,7 +107,7 @@ assumed to be a byte-identical duplicate or silently counted as another product.
 
 Before marking the catalog entry complete:
 
-- Implement and validate the six pending distribution modules and all their
+- Implement and validate the five pending distribution modules and all their
   parameter-inversion modes, including multiple-root and endpoint behavior.
 - Compare the 24 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
