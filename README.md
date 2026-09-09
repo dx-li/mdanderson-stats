@@ -402,3 +402,7 @@ Fortran implementations provide independent reference fixtures.
 including both df inversions, wider input domains and the source's ignored-q
 inversion contract. Tests select multiple roots, retain native false-success
 evidence and independently check all modes using high-precision beta mixtures.
+
+`cdfnor` and `cumnor` implement the [legacy normal interface](docs/dcdflib-normal.md):
+tails and all parameter inversions over unrestricted finite locations and positive
+scales, with overflow repair, subnormal tails and independent native validation.

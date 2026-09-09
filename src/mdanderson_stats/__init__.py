@@ -58,6 +58,7 @@ from .cuminc_study import CumIncStudy, cuminc
 from .cumulative_incidence import CumulativeIncidence, IncidenceSummary, cumulative_incidence
 from .dcdflib_f import DCDFLIBF, cdff, cumf
 from .dcdflib_nc_f import DCDFLIBNoncentralF, cdffnc, cumfnc
+from .dcdflib_normal import DCDFLIBNormal, cdfnor, cumnor
 from .expsurv import ExploratorySurvival, exploratory_survival
 from .expsurv_alignment import SurvivalAlignmentPlot, plot_survival_alignment
 from .expsurv_box import CensoredBox, censored_box
@@ -183,6 +184,9 @@ __all__ = [
     "DCDFLIBNoncentralF",
     "cdffnc",
     "cumfnc",
+    "DCDFLIBNormal",
+    "cdfnor",
+    "cumnor",
     "CDFNoncentralT",
     "cdf_nc_t",
     "cum_nc_t",

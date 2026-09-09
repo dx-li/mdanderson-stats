@@ -44,7 +44,7 @@ legacy distribution contracts still need comparison with the F95 ports.
 | Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | F95 and legacy C/F77 noncentral F interfaces implemented |
 | Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | F95 implemented with df brackets; legacy review pending |
 | Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | F95 implemented; legacy review pending |
-| Normal | `normal` | `cdfnor`, `cumnor` | F95 implemented; legacy review pending |
+| Normal | `normal` | `cdfnor`, `cumnor` | F95 and legacy C/F77 normal interfaces implemented |
 | Poisson | `poisson` | `cdfpoi`, `cumpoi` | F95 implemented; legacy review pending |
 | Student's t | `t` | `cdft`, `cumt` | F95 implemented; legacy review pending |
 
@@ -57,8 +57,10 @@ The [method notes](cdflib90.md) document the implemented contracts, native F95
 fixtures, independent identities and source repairs. Those F95 fixtures do not
 independently validate legacy implementations.
 The separate [legacy F](dcdflib-f.md) and [noncentral F](dcdflib-nc-f.md) ports
-have their own unchanged C and F77 references. The other legacy contract statuses
-remain open even where a corresponding F95/Python distribution exists. Future work must establish shared
+have their own unchanged C and F77 references. The [legacy normal port](dcdflib-normal.md)
+also validates its unrestricted domains, all four modes and repaired native SD
+results. The other legacy contract statuses remain open even where a corresponding
+F95/Python distribution exists. Future work must establish shared
 behavior, document differences, and
 preserve any additional substantive functionality before closing that scope.
 
@@ -135,7 +137,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Compare the remaining 20 legacy distribution entry-point contracts and validate any
+- Compare the remaining 18 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.

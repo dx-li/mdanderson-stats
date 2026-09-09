@@ -269,7 +269,23 @@
         "cdfnor",
         "cumnor"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "implemented_with_documented_python_semantics",
+      "legacy_computed_groups": [
+        "p/q",
+        "x",
+        "mean",
+        "sd"
+      ],
+      "legacy_python_interfaces": [
+        "cdfnor",
+        "cumnor"
+      ],
+      "legacy_evidence": [
+        "src/mdanderson_stats/dcdflib_normal.py",
+        "tests/test_dcdflib_normal.py",
+        "tests/fixtures/dcdflib_normal.json",
+        "docs/dcdflib-normal.md"
+      ]
     },
     {
       "name": "poisson",
@@ -1564,8 +1580,8 @@
       "size": 5198,
       "sha256": "c6c81c9a42ee0f4eadde645f1f0ba07ca926b2ceb80ff727d168d2eb11a0a927",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Normal tails and all parameter inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdfnor"
@@ -1744,8 +1760,8 @@
       "size": 8282,
       "sha256": "d3ffb0a6e95e58554e8fb9412474607b072974fc8ab54cb41b24ef531ab75db8",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Normal tails and all parameter inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumnor"

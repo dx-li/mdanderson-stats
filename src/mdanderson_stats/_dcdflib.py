@@ -1,11 +1,12 @@
-"""Shared vectorized search for legacy distribution df inversions."""
+"""Shared probability validation and vectorized legacy df inversion."""
 
 from collections.abc import Callable
 
 import numpy as np
-from numpy.typing import NDArray
+from numpy.typing import ArrayLike, NDArray
 
-from ._validation import FloatArray
+from ._cdflib import _pair
+from ._validation import FloatArray, finite
 
 
 def _invert_df(
@@ -81,3 +82,12 @@ def _invert_df(
         residual_low = np.where(move_low, residual, residual_low)
     answer[active] = best
     return answer.reshape(shape)
+
+
+def _probability_pair(p: ArrayLike | None, q: ArrayLike | None) -> tuple[FloatArray, FloatArray]:
+    """Legacy paired probabilities, with the source's three-epsilon sum check."""
+    pp, qq = _pair(p, q, "p/q")
+    if p is not None and q is not None:
+        if np.any(np.abs(finite(p, "p") + finite(q, "q") - 1) > 3 * np.finfo(float).eps):
+            raise ValueError("p and q must sum to one within three machine epsilons")
+    return pp, qq

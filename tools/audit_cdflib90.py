@@ -138,6 +138,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"cdfnor", "cumnor"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_distribution",
+                    "Normal tails and all parameter inversions; independent C/F77 validation",
+                )
             if path.stem in {"cdff", "cumf", "cdffnc", "cumfnc"}:
                 return (
                     "f77_source",
@@ -263,6 +269,18 @@ def main():
     if any(not Path(path).is_file() for path in noncentral_f["legacy_evidence"]):
         raise RuntimeError("missing legacy noncentral F implementation evidence")
     noncentral_f["legacy_pnonc_which"] = 5
+    normal = next(row for row in distributions if row["name"] == "normal")
+    normal["legacy_computed_groups"] = ["p/q", "x", "mean", "sd"]
+    normal["legacy_python_interfaces"] = ["cdfnor", "cumnor"]
+    normal["legacy_contract_status"] = "implemented_with_documented_python_semantics"
+    normal["legacy_evidence"] = [
+        "src/mdanderson_stats/dcdflib_normal.py",
+        "tests/test_dcdflib_normal.py",
+        "tests/fixtures/dcdflib_normal.json",
+        "docs/dcdflib-normal.md",
+    ]
+    if any(not Path(path).is_file() for path in normal["legacy_evidence"]):
+        raise RuntimeError("missing legacy normal implementation evidence")
     header = next(row for row in members if row["role"] == "c_header")["declarations"]
     definitions = {
         name

@@ -961,3 +961,9 @@ of 32/128, positive-t tails were about 21/65 times faster and noncentrality
 inversions about 25/62 times faster. Quadrature-heavy negative-tail batches were
 about 1.30/1.34 times faster. These median-of-three measurements describe Python
 batching, not speedup over native Fortran, and expose the fallback's cost.
+
+
+The separate [legacy normal interface](dcdflib-normal.md), `cdfnor`/`cumnor`,
+implements all four C/F77 normal modes without the F95 location/scale bounds.
+It adds scaled arithmetic for intermediate overflow, subnormal tail recovery
+and forward verification, with unchanged native C and F77 reference fixtures.

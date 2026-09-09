@@ -495,3 +495,9 @@ archive's noncentral F contracts, including both df inversions. Unchanged C/F77
 references, contract differences and numerical repairs are documented in
 [the legacy noncentral F notes](docs/dcdflib-nc-f.md); the same retained notices
 apply, and the original sources and binaries are not bundled.
+
+The legacy `cdfnor` and `cumnor` interfaces independently implement the archived
+DCDFLIB normal contracts using SciPy kernels and array arithmetic. Original C/F77
+code is used only for reference validation and is not bundled. The same retained
+CDFLIB90 notices apply; [legacy normal notes](docs/dcdflib-normal.md) document
+contract differences and numerical repairs.

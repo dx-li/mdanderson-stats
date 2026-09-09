@@ -5,8 +5,9 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
-from ._cdflib import _freeze, _pair
+from ._cdflib import _freeze
 from ._dcdflib import _invert_df as _search_df
+from ._dcdflib import _probability_pair
 from ._validation import FloatArray, finite
 from .cdflib_beta import _quantiles
 from .cdflib_beta import _tails as _beta_tails
@@ -126,11 +127,7 @@ def cdff(
     ff = _coordinate(f) if which != 2 else np.asarray(0.0)
     nn = _positive(dfn, "dfn") if which != 3 else np.asarray(1.0)
     dd = _positive(dfd, "dfd") if which != 4 else np.asarray(1.0)
-    pp, qq = _pair(p, q, "p/q") if which != 1 else (np.asarray(0.5), np.asarray(0.5))
-    if which != 1 and p is not None and q is not None:
-        raw_p, raw_q = finite(p, "p"), finite(q, "q")
-        if np.any(np.abs(raw_p + raw_q - 1) > 3 * np.finfo(float).eps):
-            raise ValueError("p and q must sum to one within three machine epsilons")
+    pp, qq = _probability_pair(p, q) if which != 1 else (np.asarray(0.5), np.asarray(0.5))
     bounds = (1e-100, 1e100) if df_bracket is None else df_bracket
     if len(bounds) != 2:
         raise ValueError("df_bracket requires two endpoints")
