@@ -549,3 +549,15 @@ noncentral chi-square contracts through shared central and compiled distribution
 kernels, shifted-normal identities and Chernoff bounds. The CDFLIB90 authorship
 and retained legal notice above apply; [legacy notes](docs/dcdflib-nc-chisq.md)
 document numerical methods and independent validation. No archived code is bundled.
+
+## STATTAB research evidence
+
+The STATTAB archive is currently represented by source inventory and native-session
+validation evidence; its Python application is not yet implemented. The archive's
+manual and source banner identify version 2.0 despite the download's 1.3 label.
+Authors include Barry W. Brown, David Gutierrez, James Lovato, Dan Serachitopol,
+Marty Spears and John Venier. Its exact archived
+[LEGALITIES](notices/mdanderson-stattab-LEGALITIES.txt), including the referenced
+algorithm notices and warranty terms, is retained. Original Fortran source and
+platform executables are not bundled in the Python package. These notices do not
+replace the original terms with a different license.

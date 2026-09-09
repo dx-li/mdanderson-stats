@@ -717,7 +717,12 @@
       "status": "pending",
       "implemented_features": [],
       "validation": [
-        "docs/stattab-research.md"
+        "docs/stattab-research.md",
+        "docs/stattab-archive.json",
+        "tools/audit_stattab.py",
+        "tools/reference_stattab.py",
+        "tests/fixtures/stattab.json",
+        "tests/test_stattab_reference.py"
       ]
     },
     {

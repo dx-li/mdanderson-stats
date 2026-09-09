@@ -1,0 +1,808 @@
+{
+  "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/STATTAB/STATTAB%20%20%20%20%20%20_V1.3.zip",
+  "archive_sha256": "0325f15818176418774216e546e0f61267cfd228cef184e63101c68e2b7e76f9",
+  "catalog_id": 23,
+  "status": "pending_python_implementation",
+  "version_reconciliation": "Catalog/download directory says 1.3; manual and unchanged compiled program banner say Version 2.0: March, 2002. Pinned archive bytes define the reference.",
+  "regular_file_count": 34,
+  "role_counts": {
+    "documentation": 6,
+    "executable": 2,
+    "build_log": 1,
+    "source": 22,
+    "build": 3
+  },
+  "source_order": [
+    "biomath_constants_mod.f90",
+    "biomath_sort_mod.f90",
+    "biomath_strings_mod.f90",
+    "biomath_interface_mod.f90",
+    "biomath_file_io_mod.f90",
+    "biomath_mathlib_mod.f90",
+    "zero_finder.f90",
+    "cdf_aux_mod.f90",
+    "cdf_beta_mod.f90",
+    "cdf_binomial_mod.f90",
+    "cdf_gamma_mod.f90",
+    "cdf_chisq_mod.f90",
+    "cdf_f_mod.f90",
+    "cdf_nc_chisq_mod.f90",
+    "cdf_nc_f_mod.f90",
+    "cdf_normal_mod.f90",
+    "cdf_t_mod.f90",
+    "cdf_nc_t_mod.f90",
+    "cdf_neg_binomial_mod.f90",
+    "cdf_poisson_mod.f90",
+    "stattab_aux_mod.f90",
+    "stattab_main.f90"
+  ],
+  "comparison_limits": "Byte identity supports reuse of prior numerical evidence for two modules only. Changed source and application behavior require separate validation; declaration inventories are not compiler export proofs.",
+  "members": [
+    {
+      "path": "stattab13/DOC/stattab90_doc.pdf",
+      "size": 145167,
+      "sha256": "09e3dea8ddcf163f5103ef15960f28b36c76a27eabb52b5247318450fff8f2ac",
+      "role": "documentation",
+      "scope": "Manual, acquisition/build instructions and retained terms"
+    },
+    {
+      "path": "stattab13/DOC/stattab90_doc.ps",
+      "size": 1639869,
+      "sha256": "b9994946f741eeb30050248bed8d86437deea8e0afb4f52659906eba9e86a27d",
+      "role": "documentation",
+      "scope": "Manual, acquisition/build instructions and retained terms"
+    },
+    {
+      "path": "stattab13/DOC/stattab90_doc.tex",
+      "size": 45622,
+      "sha256": "b8e7305c23e3fa245536e7582735c8ca0255ed9302451ee38153bd1990b34d69",
+      "role": "documentation",
+      "scope": "Manual, acquisition/build instructions and retained terms"
+    },
+    {
+      "path": "stattab13/HOWTOGET",
+      "size": 918,
+      "sha256": "3462dc3061391757f3f25c521b19483fbed5535d12ac5faee97337dbec18ab0f",
+      "role": "documentation",
+      "scope": "Manual, acquisition/build instructions and retained terms"
+    },
+    {
+      "path": "stattab13/INSTALL",
+      "size": 1820,
+      "sha256": "a1ce72952058aa3f05dc75515297abc3a27fb3cc7db639a25bfe3cfa8b097b99",
+      "role": "documentation",
+      "scope": "Manual, acquisition/build instructions and retained terms"
+    },
+    {
+      "path": "stattab13/LEGALITIES",
+      "size": 6894,
+      "sha256": "927fa61b3cd74f71d9baa6e535e20cdeefb4ee3e49431f90808f747db57f7af1",
+      "role": "documentation",
+      "scope": "Manual, acquisition/build instructions and retained terms"
+    },
+    {
+      "path": "stattab13/MACOSX/stattab",
+      "size": 848652,
+      "sha256": "990e8a7a88175d140571e07f28fd17e563f881c4875e9193247af6273b79fa38",
+      "role": "executable",
+      "scope": "Historical platform binaries; rebuilt source used as reference"
+    },
+    {
+      "path": "stattab13/SOURCE/.log",
+      "size": 627,
+      "sha256": "b9d6f29e66002e38c19172decf89b51887579e7344f6d98dff9cb8700f7ac863",
+      "role": "build_log",
+      "scope": "Interrupted TeX run with no pages produced; no additional interface"
+    },
+    {
+      "path": "stattab13/SOURCE/biomath_constants_mod.f90",
+      "size": 1633,
+      "sha256": "0940e420b0a4033ddf4af9ebe45af84b0d6e89b163a06d00cc31fbcc0d90df63",
+      "declarations": {
+        "routine_declarations_including_entries": [],
+        "explicit_public_names": [],
+        "first_default_access_statement": null,
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "2b0cfd2020e5221bc97edf80d1204ea074f7d82d0427dd912c96c357bcc7ba61"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/biomath_file_io_mod.f90",
+      "size": 24694,
+      "sha256": "d3f4184970df7c24fa8c1c7f8bf78120efeca80a76c7167b7b3c62b6ef8a016f",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "close_or_new_unit",
+          "get_free_unit_number",
+          "handle_error",
+          "open_file",
+          "report_file_dialogue"
+        ],
+        "explicit_public_names": [
+          "open_file",
+          "report_file_dialogue"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "additional_stattab_source"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/biomath_interface_mod.f90",
+      "size": 82198,
+      "sha256": "ba821962d8c3f0f635994769d914eb404bf578cd5ef09cc4c1f59f58a1ffdd21",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "approx_equal",
+          "clear_screen",
+          "edit_format",
+          "edit_message_format",
+          "get_character",
+          "get_double_array",
+          "get_double_scalar",
+          "get_integer_array",
+          "get_integer_scalar",
+          "get_list_double",
+          "get_real_array",
+          "get_real_scalar",
+          "get_string",
+          "get_yn",
+          "hold",
+          "print_format",
+          "print_message_format",
+          "prompt",
+          "write_array",
+          "write_error",
+          "write_message"
+        ],
+        "explicit_public_names": [
+          "always_print",
+          "clear_screen",
+          "get_character",
+          "get_list_double",
+          "get_numbers",
+          "get_string",
+          "get_yn",
+          "hold",
+          "message_format",
+          "num_subs",
+          "print_message_format",
+          "print_off",
+          "prompt",
+          "report_unit",
+          "write_array",
+          "write_error",
+          "write_message"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "3ede16fa9d9b4e5e157a7eae1fc36d1f321863f9f74dcf56d4893655de564ed9"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/biomath_mathlib_mod.f90",
+      "size": 99384,
+      "sha256": "be776a552418b614d1fa37f19111adebdbbfc56cd057893845a84f8a04601609",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "algdiv",
+          "alngam",
+          "alnrel",
+          "apser",
+          "basym",
+          "bcorr",
+          "betaln",
+          "bfrac",
+          "bgrat",
+          "bpser",
+          "bratio",
+          "brcmp1",
+          "brcomp",
+          "bup",
+          "erf",
+          "erfc1",
+          "esum",
+          "evaluate_polynomial",
+          "exparg",
+          "fpser",
+          "gam1",
+          "gamln",
+          "gamln1",
+          "gamma",
+          "grat1",
+          "gratio",
+          "gsumln",
+          "log_beta",
+          "log_bicoef",
+          "log_gamma",
+          "psi",
+          "rcomp",
+          "rexp",
+          "rlog",
+          "rlog1"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": "public",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "byte_identical",
+        "sha256": "be776a552418b614d1fa37f19111adebdbbfc56cd057893845a84f8a04601609"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/biomath_sort_mod.f90",
+      "size": 23561,
+      "sha256": "295020fe91b4f0146cc84c97ed31f70d1bc7e8ebc4c0fb60a557ba8b91f3ef25",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "a_gt_b",
+          "qgr",
+          "sort_list_char",
+          "sort_list_dbl",
+          "sort_list_integer",
+          "sort_list_single",
+          "swap_elements"
+        ],
+        "explicit_public_names": [
+          "sort_list"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "ab3d0939124dcdeadfbbe8950ae7b1207258ece5feb120da5c84da645d0530dc"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/biomath_strings_mod.f90",
+      "size": 44449,
+      "sha256": "b0f436cfe9d7d377a2767ea037d5de7db10037f5a61fd495b3c8ae3097c68521",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "accum",
+          "get_action",
+          "lower_case_char",
+          "lower_case_string",
+          "ncqlex",
+          "next_state",
+          "qlex",
+          "set_numeric_values",
+          "upper_case_char",
+          "upper_case_string"
+        ],
+        "explicit_public_names": [
+          "lower_case_char",
+          "lower_case_string",
+          "qlex",
+          "upper_case_char",
+          "upper_case_string"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "c66814a0eec34c25283f0c71da41fc93969fc2cc0dba7f26146952adce70b8aa"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_aux_mod.f90",
+      "size": 21083,
+      "sha256": "0d2d375b9c11be22feefa7f8d5ae48819e7788c503afc530ac864aee6b1753fa",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "add_to_one",
+          "cdf_finalize_status",
+          "cdf_set_zero_finder",
+          "check_complements",
+          "dbl_in_range",
+          "int_in_range",
+          "validate_parameters",
+          "which_miss"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null,
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "62aa44bf1319c6ef5ba02df10e24fca6c9f31d21d7f4bd5e5c6a1820721ff8da"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_beta_mod.f90",
+      "size": 12485,
+      "sha256": "475b6fb6d8cd799ffd924cf378eb2a6c451e64137b83f5477f0e6dd16cef518c",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_beta",
+          "cdf_beta",
+          "cum_beta",
+          "inv_beta",
+          "local_cum_beta"
+        ],
+        "explicit_public_names": [
+          "ccum_beta",
+          "cdf_beta",
+          "cum_beta",
+          "inv_beta"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "c73c3b081815cc1795d9f820c24c24f0aaeb50f50978ab522e1406a2c43b6099"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_binomial_mod.f90",
+      "size": 17537,
+      "sha256": "6ea13aeb05edb909fca13f04ad537f4e91bb31f4a9903df87fb9355746d717e4",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_binomial",
+          "cdf_binomial",
+          "cum_binomial",
+          "inv_binomial",
+          "local_cum_binomial"
+        ],
+        "explicit_public_names": [
+          "ccum_binomial",
+          "cdf_binomial",
+          "cum_binomial",
+          "inv_binomial"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "f3122ed01df9f327f8f432dbeced3d826ab67d3b0fb1239fe9c2cac869642fad"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_chisq_mod.f90",
+      "size": 10777,
+      "sha256": "5f281d5772120892ad98ec0ff7d733360cb300007427c3b7215021bb582a3e58",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_chisq",
+          "cdf_chisq",
+          "cum_chisq",
+          "inv_chisq",
+          "local_cum_chisq"
+        ],
+        "explicit_public_names": [
+          "ccum_chisq",
+          "cdf_chisq",
+          "cum_chisq",
+          "inv_chisq"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "572b5d26dbd452ea4cf74689bbb2943dbe8f2b0ee0fb28e31f4ab01654cf9b7b"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_f_mod.f90",
+      "size": 11709,
+      "sha256": "8594534bed7faf2f594b3f631b5ef55ad2285a0447f0fc18c81dde42bf6d960e",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_f",
+          "cdf_f",
+          "cum_f",
+          "inv_f",
+          "local_cum_f"
+        ],
+        "explicit_public_names": [
+          "ccum_f",
+          "cdf_f",
+          "cum_f",
+          "inv_f"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "8b7f97c3f1446c80b6af0809e5d2b9a05f091e3266d03f910288832dc9765d92"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_gamma_mod.f90",
+      "size": 22489,
+      "sha256": "e3d3851278421b194b897f17aed26267c4ac408460e30ed27d79afe96b195d7f",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_gamma",
+          "cdf_gamma",
+          "cum_gamma",
+          "gamma_inverse",
+          "inv_gamma",
+          "local_cum_gamma"
+        ],
+        "explicit_public_names": [
+          "ccum_gamma",
+          "cdf_gamma",
+          "cum_gamma",
+          "inv_gamma"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "byte_identical",
+        "sha256": "e3d3851278421b194b897f17aed26267c4ac408460e30ed27d79afe96b195d7f"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_nc_chisq_mod.f90",
+      "size": 17191,
+      "sha256": "571d3e8370cd1f5a684052b4281a85ced39f0c3ca883370cafd29b06be0683b2",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_nc_chisq",
+          "cdf_nc_chisq",
+          "cum_nc_chisq",
+          "dg",
+          "inv_nc_chisq",
+          "local_cum_nc_chisq",
+          "qsmall"
+        ],
+        "explicit_public_names": [
+          "ccum_nc_chisq",
+          "cdf_nc_chisq",
+          "cum_nc_chisq",
+          "inv_nc_chisq"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "11f92499fae67e3b817930084cbb83da0c39887c0f33891e50372a970710f916"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_nc_f_mod.f90",
+      "size": 15268,
+      "sha256": "23dc6e79f2a20d5922aecb221e410aecc9d3c313f7b799b6c8200450ade79a48",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_nc_f",
+          "cdf_nc_f",
+          "cum_nc_f",
+          "inv_nc_f",
+          "local_cum_nc_f",
+          "qsmall"
+        ],
+        "explicit_public_names": [
+          "ccum_nc_f",
+          "cdf_nc_f",
+          "cum_nc_f",
+          "inv_nc_f"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "34be5e1366fd609929ae8628bd6e0c790286b96a8533405658ea4461f2ec1da0"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_nc_t_mod.f90",
+      "size": 18153,
+      "sha256": "c8099b7f1ac356fb45c611ef16856adad99386f5ac761a822429f47f54904e25",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_nc_t",
+          "cdf_nc_t",
+          "cum_nc_t",
+          "inv_nc_t",
+          "local_cum_nc_t"
+        ],
+        "explicit_public_names": [
+          "ccum_nc_t",
+          "cdf_nc_t",
+          "cum_nc_t",
+          "inv_nc_t"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "3af14474847efbd23382eb7bb380ecfa6013b9ca527649264398f593d1c57faa"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_neg_binomial_mod.f90",
+      "size": 15748,
+      "sha256": "ae65cd7956c801dcd2fb7353f4a2f08468a98d5f7236a768ed1237ef2f42bfe2",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_neg_binomial",
+          "cdf_neg_binomial",
+          "cum_neg_binomial",
+          "inv_neg_binomial",
+          "local_cum_neg_binomial"
+        ],
+        "explicit_public_names": [
+          "ccum_neg_binomial",
+          "cdf_neg_binomial",
+          "cum_neg_binomial",
+          "inv_neg_binomial"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "f2d30c706264a4af776d55409996a0d6cdc25ecfaaf8e058072b49fa7bca060e"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_normal_mod.f90",
+      "size": 22305,
+      "sha256": "30e13267719d1be4b3a274954babcc87fb5369ba59f3dd668413178d71377dd3",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_normal",
+          "cdf_normal",
+          "cum_normal",
+          "inv_normal",
+          "local_cum_normal",
+          "local_inv_normal"
+        ],
+        "explicit_public_names": [
+          "ccum_normal",
+          "cdf_normal",
+          "cum_normal",
+          "inv_normal"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "f5e66f66150f8983ab2cbd2d71463064ca85287a4634fb57a2d5d90dc4d9e985"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_poisson_mod.f90",
+      "size": 7871,
+      "sha256": "703169aeaa82f96edff74ed5c6904e173adadcb1c653f1c6697816d236b631e8",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_poisson",
+          "cdf_poisson",
+          "cum_poisson",
+          "inv_poisson"
+        ],
+        "explicit_public_names": [
+          "ccum_poisson",
+          "cdf_poisson",
+          "cum_poisson",
+          "inv_poisson"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "d74bd82c9733b667a883028b565c62b18b507312ec3a904ee58df9d8e44adb58"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/cdf_t_mod.f90",
+      "size": 13079,
+      "sha256": "f4ca37c5916eae88c5ab91629b65e1a726adf4ef26b9cc86c1e75c1c5c285b0c",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "ccum_t",
+          "cdf_t",
+          "cum_t",
+          "dt1",
+          "inv_t",
+          "local_cum_t"
+        ],
+        "explicit_public_names": [
+          "ccum_t",
+          "cdf_t",
+          "cum_t",
+          "inv_t"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "360fb24b24b91c4d86711983558cc0e6db6d4eb065dd6518c9472b89d6eda848"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/COMPILE.IT",
+      "size": 1042,
+      "sha256": "39c9cf3848a7b62d487c8fb82dd72fe1ce043155355ce1fb40c670459e5b4391",
+      "role": "build",
+      "scope": "All 22 source files compile unchanged; Python build will replace"
+    },
+    {
+      "path": "stattab13/SOURCE/compile.stattab",
+      "size": 1092,
+      "sha256": "dccb685c8c3f9465d144262dcf42b3c555cf429e8575b99f61bbe662f4c283aa",
+      "role": "build",
+      "scope": "All 22 source files compile unchanged; Python build will replace"
+    },
+    {
+      "path": "stattab13/SOURCE/Makefile",
+      "size": 3258,
+      "sha256": "6b1fe972ca814cf7524a68fa13949aafc98b28d28a2525252dfc6998b487d2c6",
+      "role": "build",
+      "scope": "All 22 source files compile unchanged; Python build will replace"
+    },
+    {
+      "path": "stattab13/SOURCE/stattab_aux_mod.f90",
+      "size": 20452,
+      "sha256": "801f7e76d492b15dbcdb2e7acee4132052eb2e7797ba387d8bbc9fb62bb5947f",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "display_banner"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null,
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "additional_stattab_source"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/stattab_main.f90",
+      "size": 61803,
+      "sha256": "f41a27e39d56e60bf76c694b93dada1f91f312e70fe7c7bc5845f5af377dd1ca",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "check_status_value",
+          "display_help",
+          "display_status_error",
+          "parse_parameters",
+          "solve_beta",
+          "solve_binomial",
+          "solve_chisq",
+          "solve_distribution",
+          "solve_f",
+          "solve_gamma",
+          "solve_nc_chisq",
+          "solve_nc_f",
+          "solve_nc_t",
+          "solve_neg_binomial",
+          "solve_normal",
+          "solve_poisson",
+          "solve_t"
+        ],
+        "explicit_public_names": [],
+        "first_default_access_statement": null,
+        "attribute_public_names": []
+      },
+      "cdflib90_comparison": {
+        "status": "additional_stattab_source"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/SOURCE/zero_finder.f90",
+      "size": 43902,
+      "sha256": "ac26a73dc1a12cacfa5d18f3a986586e533937907e60cd36c93e891ae45ad4f3",
+      "declarations": {
+        "routine_declarations_including_entries": [
+          "adjust_c",
+          "bracket",
+          "f",
+          "final_zf_state",
+          "ftol",
+          "has_converged",
+          "ifabde",
+          "iisign",
+          "interval_zf",
+          "newton_quadratic",
+          "pzero",
+          "qxmon",
+          "rc_interval_local_zf",
+          "rc_interval_zf",
+          "rc_step_local_zf",
+          "rc_step_zf",
+          "set_zero_finder",
+          "step_zf"
+        ],
+        "explicit_public_names": [
+          "final_zf_state",
+          "interval_zf",
+          "rc_interval_zf",
+          "rc_step_zf",
+          "set_zero_finder",
+          "step_zf"
+        ],
+        "first_default_access_statement": "private",
+        "attribute_public_names": [
+          "zf_bound_high",
+          "zf_bound_low",
+          "zf_crash_hi",
+          "zf_crash_left",
+          "zf_current_status",
+          "zf_locals"
+        ]
+      },
+      "cdflib90_comparison": {
+        "status": "changed_source_requires_contract_review",
+        "sha256": "18300a0ebbcd15d7b1f96277a256fa6997349f3e0ee953b33db38be819470827"
+      },
+      "role": "source",
+      "scope": "Native application/support evidence; Python STATTAB mapping pending"
+    },
+    {
+      "path": "stattab13/WIN32/stattab.exe",
+      "size": 732554,
+      "sha256": "0d8279cb3da21bf6d3fa7fea89e6f723d0db1e3e1b67d7ba0b095b9722e2ec64",
+      "role": "executable",
+      "scope": "Historical platform binaries; rebuilt source used as reference"
+    }
+  ]
+}
