@@ -501,3 +501,9 @@ DCDFLIB normal contracts using SciPy kernels and array arithmetic. Original C/F7
 code is used only for reference validation and is not bundled. The same retained
 CDFLIB90 notices apply; [legacy normal notes](docs/dcdflib-normal.md) document
 contract differences and numerical repairs.
+
+The legacy `cdft` and `cumt` interfaces independently implement the archived
+DCDFLIB Student t contracts using SciPy kernels and vectorized arithmetic.
+Unchanged original C/F77 references are used only for validation and are not
+bundled. The retained CDFLIB90 notices apply; [legacy Student t notes](docs/dcdflib-t.md)
+document wider domains, numerical repairs and validation.

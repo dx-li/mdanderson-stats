@@ -138,6 +138,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"cdft", "cumt"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_distribution",
+                    "Student t tails and inversions; independent C/F77 validation",
+                )
             if path.stem in {"cdfnor", "cumnor"}:
                 return (
                     "f77_source",
@@ -281,6 +287,18 @@ def main():
     ]
     if any(not Path(path).is_file() for path in normal["legacy_evidence"]):
         raise RuntimeError("missing legacy normal implementation evidence")
+    student_t = next(row for row in distributions if row["name"] == "t")
+    student_t["legacy_computed_groups"] = ["p/q", "t", "df"]
+    student_t["legacy_python_interfaces"] = ["cdft", "cumt"]
+    student_t["legacy_contract_status"] = "implemented_with_documented_python_semantics"
+    student_t["legacy_evidence"] = [
+        "src/mdanderson_stats/dcdflib_t.py",
+        "tests/test_dcdflib_t.py",
+        "tests/fixtures/dcdflib_t.json",
+        "docs/dcdflib-t.md",
+    ]
+    if any(not Path(path).is_file() for path in student_t["legacy_evidence"]):
+        raise RuntimeError("missing legacy Student t implementation evidence")
     header = next(row for row in members if row["role"] == "c_header")["declarations"]
     definitions = {
         name

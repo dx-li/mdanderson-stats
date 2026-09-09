@@ -967,3 +967,8 @@ The separate [legacy normal interface](dcdflib-normal.md), `cdfnor`/`cumnor`,
 implements all four C/F77 normal modes without the F95 location/scale bounds.
 It adds scaled arithmetic for intermediate overflow, subnormal tail recovery
 and forward verification, with unchanged native C and F77 reference fixtures.
+
+
+The [legacy Student t interface](dcdflib-t.md), `cdft`/`cumt`, additionally
+supports unrestricted finite t and positive df inputs, with the C/F77 df search
+range [1e-100,1e10], logarithmic overflow repair and separate native validation.

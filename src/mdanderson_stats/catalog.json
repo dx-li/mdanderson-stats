@@ -413,7 +413,8 @@
         "Noncentral t tails, quantiles, noncentrality and explicitly bracketed df inversion; multiple-root selection and quadrature repair for small negative tails; all 48 F95 distribution interfaces implemented, with legacy/support contracts still outstanding",
         "Legacy DCDFLIB F cdff/cumf: all four computed groups, positive finite input df, full 1e-100..1e100 df searches, multiple-root brackets and unchanged C/F77 reference validation",
         "Legacy DCDFLIB noncentral F cdffnc/cumfnc: all five computed groups, wide input domains, ignored-q inversion contract, explicit multiple-df-root brackets and unchanged C/F77 references with independent false-success detection",
-        "Legacy DCDFLIB normal cdfnor/cumnor: all four computed groups, unrestricted finite locations and positive scales, overflow-safe inversions, subnormal tails and independent C/F77 evidence"
+        "Legacy DCDFLIB normal cdfnor/cumnor: all four computed groups, unrestricted finite locations and positive scales, overflow-safe inversions, subnormal tails and independent C/F77 evidence",
+        "Legacy DCDFLIB Student t cdft/cumt: wide finite t and positive df inputs, bounded quantile and df inversions, logarithmic tail repair and unchanged C/F77 reference validation"
       ],
       "validation": [
         "tests/test_cdflib_beta.py",
@@ -459,7 +460,11 @@
         "tests/test_dcdflib_normal.py",
         "tests/fixtures/dcdflib_normal.json",
         "docs/dcdflib-normal.md",
-        "docs/dcdflib-normal-benchmark.json"
+        "docs/dcdflib-normal-benchmark.json",
+        "tests/test_dcdflib_t.py",
+        "tests/fixtures/dcdflib_t.json",
+        "docs/dcdflib-t.md",
+        "docs/dcdflib-t-benchmark.json"
       ]
     },
     {

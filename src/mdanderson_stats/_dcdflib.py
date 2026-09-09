@@ -16,6 +16,7 @@ def _invert_df(
     evaluate: Callable[[FloatArray, NDArray[np.intp]], FloatArray],
     *,
     probability_atol: FloatArray | float = 0.0,
+    unbracketed_message: str = "df root is not bracketed; multiple roots may require df_bracket",
 ) -> FloatArray:
     """Find a crossing; evaluate receives values and original flattened row indices.
 
@@ -38,7 +39,7 @@ def _invert_df(
             adjusted,
         )
     if np.any((adjusted < np.minimum(at_low, at_high)) | (adjusted > np.maximum(at_low, at_high))):
-        raise ValueError("df root is not bracketed; multiple roots may require df_bracket")
+        raise ValueError(unbracketed_message)
     resolved = (adjusted == at_low) | (adjusted == at_high)
     answer = np.where(adjusted == at_low, low, high)
     if np.all(resolved):

@@ -325,7 +325,22 @@
         "cdft",
         "cumt"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "implemented_with_documented_python_semantics",
+      "legacy_computed_groups": [
+        "p/q",
+        "t",
+        "df"
+      ],
+      "legacy_python_interfaces": [
+        "cdft",
+        "cumt"
+      ],
+      "legacy_evidence": [
+        "src/mdanderson_stats/dcdflib_t.py",
+        "tests/test_dcdflib_t.py",
+        "tests/fixtures/dcdflib_t.json",
+        "docs/dcdflib-t.md"
+      ]
     }
   ],
   "f77_declared_entry_count": 66,
@@ -1610,8 +1625,8 @@
       "size": 5997,
       "sha256": "50efe4e2a311b3a6a7502db9a7699fdcbbace89aa61b5bb7ff120c1ce5564bfd",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Student t tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdft"
@@ -1790,8 +1805,8 @@
       "size": 1702,
       "sha256": "0f36b6aa3310d69649468815579d93aa91e5acae08f7d5d64fb8dbe2c5646c08",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Student t tails and inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumt"

@@ -46,7 +46,7 @@ legacy distribution contracts still need comparison with the F95 ports.
 | Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | F95 implemented; legacy review pending |
 | Normal | `normal` | `cdfnor`, `cumnor` | F95 and legacy C/F77 normal interfaces implemented |
 | Poisson | `poisson` | `cdfpoi`, `cumpoi` | F95 implemented; legacy review pending |
-| Student's t | `t` | `cdft`, `cumt` | F95 implemented; legacy review pending |
+| Student's t | `t` | `cdft`, `cumt` | F95 and legacy C/F77 Student t interfaces implemented |
 
 All 48 named F95 distribution interfaces now have implementations. The
 noncentral t df solver accepts an explicit sign-changing bracket to select
@@ -60,7 +60,9 @@ The separate [legacy F](dcdflib-f.md) and [noncentral F](dcdflib-nc-f.md) ports
 have their own unchanged C and F77 references. The [legacy normal port](dcdflib-normal.md)
 also validates its unrestricted domains, all four modes and repaired native SD
 results. The other legacy contract statuses remain open even where a corresponding
-F95/Python distribution exists. Future work must establish shared
+F95/Python distribution exists. The [legacy Student t port](dcdflib-t.md)
+validates its wider input/search domains and logarithmic tail repairs separately.
+Future work must establish shared
 behavior, document differences, and
 preserve any additional substantive functionality before closing that scope.
 
@@ -137,7 +139,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Compare the remaining 18 legacy distribution entry-point contracts and validate any
+- Compare the remaining 16 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.

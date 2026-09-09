@@ -406,3 +406,7 @@ evidence and independently check all modes using high-precision beta mixtures.
 `cdfnor` and `cumnor` implement the [legacy normal interface](docs/dcdflib-normal.md):
 tails and all parameter inversions over unrestricted finite locations and positive
 scales, with overflow repair, subnormal tails and independent native validation.
+
+`cdft` and `cumt` implement the [legacy Student t interface](docs/dcdflib-t.md),
+with wider input domains, df inversion down to the legacy search limit and
+logarithmic repairs for representable tails lost by the original implementation.
