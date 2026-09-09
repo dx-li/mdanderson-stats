@@ -78,7 +78,10 @@ def main():
                 )
             else:
                 row["cdflib90_comparison"] = dict(status="additional_stattab_source")
-            scope = "Native evidence; final Python source mapping reconciliation pending"
+            scope = (
+                "Python source mapping reviewed in docs/stattab-shared-source.md; "
+                "final manual audit pending"
+            )
         elif p.name in {"Makefile", "COMPILE.IT", "compile.stattab"}:
             role, scope = (
                 "build",
@@ -113,12 +116,12 @@ def main():
         ),
         archive_sha256=ARCHIVE_SHA256,
         catalog_id=23,
-        status="partial_console_application",
+        status="partial_shared_source_reconciled",
         implemented_scope={
             "description": (
                 "Discrete terms, all 42 numerical groups, sessions, "
                 "console and file/report workflows; "
-                "final source/version reconciliation remains pending"
+                "shared source reconciled; final application/manual audit remains pending"
             ),
             "evidence": [
                 "src/mdanderson_stats/stattab_probability.py",
@@ -140,6 +143,9 @@ def main():
                 "tests/test_stattab_console.py",
                 "tests/test_stattab_files.py",
                 "docs/stattab-console.md",
+                "docs/stattab-shared-source.md",
+                "docs/stattab-shared-source.json",
+                "tools/audit_stattab_shared.py",
             ],
         },
         version_reconciliation=(
@@ -150,9 +156,9 @@ def main():
         role_counts=dict(Counter(m["role"] for m in members)),
         source_order=source_order(contents),
         comparison_limits=(
-            "Byte identity supports reuse of prior numerical evidence for two modules only. "
-            "Changed source and application behavior require separate validation; "
-            "declaration inventories are not compiler export proofs."
+            "Two modules are byte-identical. Changed shared sources are reviewed in "
+            "stattab-shared-source.json with 259 compiled public imports and independent "
+            "binomial branch checks; compilation alone does not prove numerical correctness."
         ),
         members=members,
     )

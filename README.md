@@ -554,4 +554,6 @@ extra probabilities and neighboring integer rows.
 reuse completed values safely, including table snapshots and tiny saved complements.
 The [console application](docs/stattab-console.md) adds all eight list-editor actions,
 formula help and report-file dialogs. Run `python -m mdanderson_stats.stattab`
-after installation. Final source/version reconciliation remains pending.
+after installation. The [shared-source audit](docs/stattab-shared-source.md) compiles
+259 public imports and reconciles all nineteen shared modules. The final application/manual
+audit remains pending.

@@ -5,7 +5,7 @@ Catalog entry **23, STATTAB**, is partially implemented. Its
 [structured distribution results](stattab-results.md), and
 [requests and sessions](stattab-sessions.md), and
 [console/reporting application](stattab-console.md) are available. The final
-source/version completion audit and reconciliation below remain pending. The pinned
+application/manual completion audit remains pending; the shared-source review is complete. The pinned
 [archive inventory](stattab-archive.json) and [104 native sessions](../tests/fixtures/stattab.json)
 establish its application scope and defect evidence. They do not turn the existing
 CDFLIB90 library into a completed STATTAB application.
@@ -32,8 +32,9 @@ Nineteen source filenames also occur in CDFLIB90. Only `biomath_mathlib_mod` and
 `cdf_gamma_mod` are byte-identical. The other seventeen contain changes, including
 explicit declarations, formatting and public attributes; byte differences alone
 do not establish numerical differences or equivalence. The inventory retains both
-hashes and source declarations, including inline PUBLIC attributes. Full cross-version
-contract reconciliation remains required. The application adds `biomath_file_io_mod`,
+hashes and source declarations, including inline PUBLIC attributes. The
+[shared-source reconciliation](stattab-shared-source.md) reviews all nineteen modules
+and compiles 259 public imports against the STATTAB archive. The application adds `biomath_file_io_mod`,
 `stattab_aux_mod` and `stattab_main`.
 
 The INSTALL file incorrectly names `confint`; the actual source, build scripts,
@@ -62,14 +63,15 @@ original native source and executables are not bundled in the Python wheel.
 | File I/O | Implemented as stattab_open_file and stattab_report_file_dialogue: read/create/overwrite/append, cancel/retry/confirmation, errors and explicit stream ownership |
 | Help and examples | Implemented distribution/parameter/formula help and annotated console/report examples; final manual reconciliation remains pending |
 | Failures | Checked invalid input, finite arithmetic, well-defined numerical failures and resource limits; no process STOP or stale answers |
-| Public support | Reconcile all changed shared modules and the added descriptor/file-I/O interfaces; retain justified replacements explicitly |
+| Public support | [Shared-source review complete](stattab-shared-source.md): all nineteen shared modules and seven added public interfaces mapped, with 259 native imports compiled |
 | Delivery | Python implementations, behavioral/numerical tests, relevant batching benchmarks, installed-wheel checks and full catalog metadata update |
 
 The completed CDFLIB90 kernels, lexer, console, list editor and formatting routines
 provide reusable foundations. The numerical result layer adds application parameter
 mapping and extra outputs. The request/session layer adds checked parsing and
 transactional reuse. The console layer integrates menus, list editing, help, output
-and file dialogs; full shared-source/version reconciliation remains required.
+and file dialogs. Shared-source reconciliation is complete; the final application/manual
+audit remains required.
 
 ## Native evidence and independent checks
 

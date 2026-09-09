@@ -372,3 +372,17 @@ def test_forward_probabilities_match_independent_values_at_tighter_precision():
         result = stattab_solve(name, **inputs)
         assert result.parameters["cum"] == pytest.approx(TARGETS[name], rel=3e-13, abs=3e-14)
         assert result.parameters["ccum"] == pytest.approx(1 - TARGETS[name], rel=3e-13, abs=3e-14)
+
+
+@pytest.mark.parametrize("s,pr", [(0, 0.25), (0, 0.75), (3, 0.25), (3, 0.75)])
+@pytest.mark.parametrize("tail", ["cum", "ccum"])
+def test_binomial_chance_inverse_across_native_branch_conditions(s, pr, tail):
+    # The archived program chooses its branch from C <= 1/2 and C(1/2) <= C.
+    # These four cases exercise every combination. Three native branches omit
+    # output assignments; verify the mathematical answer, not native garbage.
+    cum = math.fsum(math.comb(4, k) * pr**k * (1 - pr) ** (4 - k) for k in range(s + 1))
+    result = stattab_solve(
+        "binomial", compute="pr", s=s, n=4, **{tail: cum if tail == "cum" else 1 - cum}
+    )
+    assert result.parameters["pr"] == pytest.approx(pr, rel=2e-13)
+    assert result.parameters["cpr"] == pytest.approx(1 - pr, rel=2e-13)
