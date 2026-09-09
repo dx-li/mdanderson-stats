@@ -791,6 +791,27 @@
         "tests/test_cdflib_beta_remaining_reference.py",
         "docs/cdflib-beta-remaining-reference.md"
       ]
+    },
+    {
+      "module": "zero_finder",
+      "status": "reference_audited_not_implemented",
+      "reference_audited_public_names": [
+        "set_zero_finder",
+        "interval_zf",
+        "rc_interval_zf",
+        "step_zf",
+        "rc_step_zf",
+        "final_zf_state",
+        "zf_locals",
+        "zf_current_status"
+      ],
+      "remaining_scope": "Root solvers, setup and state interfaces",
+      "evidence": [
+        "tools/reference_cdflib_root.py",
+        "tests/fixtures/cdflib_root.json",
+        "tests/test_cdflib_root_reference.py",
+        "docs/cdflib-root-reference.md"
+      ]
     }
   ],
   "f77_declared_entry_count": 66,

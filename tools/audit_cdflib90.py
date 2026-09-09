@@ -779,6 +779,29 @@ def main():
             ],
         }
     )
+    support_interfaces.append(
+        {
+            "module": "zero_finder",
+            "status": "reference_audited_not_implemented",
+            "reference_audited_public_names": [
+                "set_zero_finder",
+                "interval_zf",
+                "rc_interval_zf",
+                "step_zf",
+                "rc_step_zf",
+                "final_zf_state",
+                "zf_locals",
+                "zf_current_status",
+            ],
+            "remaining_scope": "Root solvers, setup and state interfaces",
+            "evidence": [
+                "tools/reference_cdflib_root.py",
+                "tests/fixtures/cdflib_root.json",
+                "tests/test_cdflib_root_reference.py",
+                "docs/cdflib-root-reference.md",
+            ],
+        }
+    )
     for interface in support_interfaces:
         if any(not Path(path).is_file() for path in interface["evidence"]):
             raise RuntimeError("missing public support evidence")

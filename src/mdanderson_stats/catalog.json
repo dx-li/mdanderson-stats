@@ -613,7 +613,10 @@
         "docs/cdflib-bratio-benchmark.json",
         "tests/test_cdflib_constants.py",
         "tests/fixtures/cdflib_constants.json",
-        "docs/cdflib-constants.md"
+        "docs/cdflib-constants.md",
+        "tests/test_cdflib_root_reference.py",
+        "tests/fixtures/cdflib_root.json",
+        "docs/cdflib-root-reference.md"
       ]
     },
     {

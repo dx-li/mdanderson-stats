@@ -507,3 +507,6 @@ completing all 35 F95 mathematical procedures while preserving tiny paired tails
 
 The [CDFLIB constants namespace](docs/cdflib-constants.md) preserves all 27 native
 parameters, completing the constants and mathematical support modules.
+
+The [CDFLIB root-finder audit](docs/cdflib-root-reference.md) records direct and
+reverse-communication contracts and independently identifies native root/state defects.
