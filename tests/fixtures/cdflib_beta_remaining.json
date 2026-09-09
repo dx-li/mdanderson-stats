@@ -1,0 +1,1859 @@
+{
+  "archive_sha256": "2f5dd397b93546222a3b31e02073abeee1fc213cea75768c34b17e06c8264a3b",
+  "source_sha256": {
+    "biomath_constants_mod.f90": "2b0cfd2020e5221bc97edf80d1204ea074f7d82d0427dd912c96c357bcc7ba61",
+    "biomath_mathlib_mod.f90": "be776a552418b614d1fa37f19111adebdbbfc56cd057893845a84f8a04601609"
+  },
+  "command": [
+    "gfortran",
+    "-O0",
+    "-ffp-contract=off",
+    "-fcheck=all",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/CDFLIB90/source/CDFLIB90/source/cdflib90_1.2/source/biomath_constants_mod.f90",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/CDFLIB90/source/CDFLIB90/source/cdflib90_1.2/source/biomath_mathlib_mod.f90",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/reference/cdflib-beta-remaining/driver.f90",
+    "-o",
+    "/Users/dxli2/math stats/mdanderson-stats/research/raw/reference/cdflib-beta-remaining/reference"
+  ],
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "driver": "program reference\nuse biomath_mathlib_mod\nimplicit none\ninteger mode,ierr\nreal(8) a,b,x,y,lambda,eps,value,complement\nread(*,*) mode,a,b,x,y,lambda,eps,value\nierr=0\ncomplement=0\nselect case(mode)\ncase(1)\n value=basym(a,b,lambda,eps)\ncase(2)\n value=bfrac(a,b,x,y,lambda,eps)\ncase(3)\n call bgrat(a,b,x,y,value,eps,ierr)\ncase(4)\n call bratio(a,b,x,y,value,complement,ierr)\nend select\nwrite(*,'(2ES26.17E3,I5)') value,complement,ierr\nend program reference\n",
+  "adaptations": [],
+  "cases": [
+    {
+      "mode": 1,
+      "a": 15.0,
+      "b": 15.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.5000000000000001,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 15.0,
+      "b": 15.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 1.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.29303248238816787,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 15.0,
+      "b": 15.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 7.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0017842616544090576,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 15.0,
+      "b": 15.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 15.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        "nan",
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 15.0,
+      "b": 50.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.5211296305651032,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 15.0,
+      "b": 50.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 1.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.34543659214376604,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 15.0,
+      "b": 50.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 7.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0054350405143807476,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 15.0,
+      "b": 50.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 15.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        "nan",
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 50.0,
+      "b": 15.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.4788703694348971,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 50.0,
+      "b": 15.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 5.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.07677414275370044,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 50.0,
+      "b": 15.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 25.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.1467834120650199e-10,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 50.0,
+      "b": 15.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 50.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        "nan",
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 100.0,
+      "b": 100.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.5000000000000001,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 100.0,
+      "b": 100.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 10.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.07838793271222048,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 100.0,
+      "b": 100.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 50.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.7814755217536868e-14,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 100.0,
+      "b": 100.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 100.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        "nan",
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 1e+308,
+      "b": 1e+308,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.5,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 1e+308,
+      "b": 1e+308,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 1e+140,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.5,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 1e+308,
+      "b": 1e+308,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 1e+146,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.5,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 1,
+      "a": 1e+308,
+      "b": 1e+308,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 1e+154,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.07864960352514247,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 2.0,
+      "b": 3.0,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 2.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 2.0,
+      "b": 3.0,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 1.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.05230000000000004,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 2.0,
+      "b": 3.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": -0.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.6875000000000003,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 2.0,
+      "b": 3.0,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": -2.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.9963000000000217,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 2.0,
+      "b": 3.0,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -3.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 15.0,
+      "b": 15.0,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 15.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 15.0,
+      "b": 15.0,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 12.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.9626131794184588e-08,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 15.0,
+      "b": 15.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.5000000000000003,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 15.0,
+      "b": 15.0,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": -12.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0000000054039753,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 15.0,
+      "b": 15.0,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -15.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 20.0,
+      "b": 50.0,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 20.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 20.0,
+      "b": 50.0,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 13.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        8.873991702977738e-06,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 20.0,
+      "b": 50.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": -15.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.9998778014394384,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 20.0,
+      "b": 50.0,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": -43.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "timeout",
+      "timeout_seconds": 3
+    },
+    {
+      "mode": 2,
+      "a": 20.0,
+      "b": 50.0,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -50.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 100.0,
+      "b": 100.0,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 100.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 100.0,
+      "b": 100.0,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 80.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.4990328239114312e-46,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 100.0,
+      "b": 100.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.5000000000000008,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 100.0,
+      "b": 100.0,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": -80.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.3904890661728285e-44,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 100.0,
+      "b": 100.0,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -100.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 2,
+      "a": 1e+308,
+      "b": 1e+308,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "timeout",
+      "timeout_seconds": 3
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 0.5,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 15.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        "nan",
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 0.5,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 13.45,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.5175525817575693e-16,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 0.5,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 7.25,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        6.055176384095912e-06,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 0.5,
+      "x": 0.999999999999,
+      "y": 9.999778782798785e-13,
+      "lam": -0.49999999998450034,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.9999956661144943,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 0.5,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -0.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 1
+    },
+    {
+      "mode": 3,
+      "a": 100.0,
+      "b": 0.5,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 100.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        "nan",
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 100.0,
+      "b": 0.5,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 89.95,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        5.9363894010803565e-102,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 100.0,
+      "b": 0.5,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 49.75,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        6.255662994307494e-32,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 100.0,
+      "b": 0.5,
+      "x": 0.999999999999,
+      "y": 9.999778782798785e-13,
+      "lam": -0.4999999998995022,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.9999887304288521,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 100.0,
+      "b": 0.5,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -0.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 1
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 1.0,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 15.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        "nan",
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 1.0,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 13.4,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0000000000000015e-15,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 1.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 7.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        3.0517578125000014e-05,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 1.0,
+      "x": 0.999999999999,
+      "y": 9.999778782798785e-13,
+      "lam": -0.9999999999840004,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.9999999999850003,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 1.0,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -1.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 1
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 1e-20,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 15.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        "nan",
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 1e-20,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 13.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        7.356627331961175e-37,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 1e-20,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 7.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        3.8404744665520617e-26,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 1e-20,
+      "x": 0.999999999999,
+      "y": 9.999778782798785e-13,
+      "lam": 1.4999668164198178e-11,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        2.437948091134502e-19,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 1e-20,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -1e-20,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 1
+    },
+    {
+      "mode": 3,
+      "a": 1e+308,
+      "b": 0.5,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 1e+308,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        "nan",
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 1e+308,
+      "b": 0.5,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 9e+307,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        "nan",
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 1e+308,
+      "b": 0.5,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 5e+307,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 1
+    },
+    {
+      "mode": 3,
+      "a": 1e+308,
+      "b": 0.5,
+      "x": 0.999999999999,
+      "y": 9.999778782798785e-13,
+      "lam": 9.999778782798786e+295,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 1
+    },
+    {
+      "mode": 3,
+      "a": 1e+308,
+      "b": 0.5,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -0.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 1
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 0.5,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 7.25,
+      "eps": 5e-15,
+      "initial": 0.25,
+      "execution_outcome": "completed",
+      "result": [
+        0.2500060551763841,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 0.5,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 7.25,
+      "eps": 5e-15,
+      "initial": -1.0,
+      "execution_outcome": "completed",
+      "result": [
+        -0.9999939448236159,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 3,
+      "a": 15.0,
+      "b": 0.5,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 7.25,
+      "eps": 5e-15,
+      "initial": 1.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.000006055176384,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 0.0,
+      "b": 1.0,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 6
+    },
+    {
+      "mode": 4,
+      "a": 0.0,
+      "b": 1.0,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": -0.1,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 0.0,
+      "b": 1.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": -0.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 0.0,
+      "b": 1.0,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": -0.9,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 0.0,
+      "b": 1.0,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -1.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 0.0,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 1.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        1.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 0.0,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 0.9,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        1.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 0.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        1.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 0.0,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": 0.09999999999999998,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        1.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 0.0,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 7
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 1.0,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 1.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        1.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 1.0,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 0.8,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.10000000000000002,
+        0.8999999999999999
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 1.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.5,
+        0.5
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 1.0,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": -0.8,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.9,
+        0.09999999999999998
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 1.0,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -1.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 0.5,
+      "b": 0.5,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 0.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        1.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 0.5,
+      "b": 0.5,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 0.4,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.20483276469913345,
+        0.7951672353008665
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 0.5,
+      "b": 0.5,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.49999999999999956,
+        0.5000000000000004
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 0.5,
+      "b": 0.5,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": -0.4,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.7951672353008666,
+        0.2048327646991334
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 0.5,
+      "b": 0.5,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -0.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 2.0,
+      "b": 3.0,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 2.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        1.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 2.0,
+      "b": 3.0,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 1.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.05230000000000003,
+        0.9477
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 2.0,
+      "b": 3.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": -0.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.6875,
+        0.31250000000000006
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 2.0,
+      "b": 3.0,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": -2.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.9963,
+        0.0036999999999999993
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 2.0,
+      "b": 3.0,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -3.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 15.0,
+      "b": 50.0,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 15.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        1.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 15.0,
+      "b": 50.0,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 8.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0013601916415715318,
+        0.9986398083584285
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 15.0,
+      "b": 50.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": -17.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.9999964652562288,
+        3.5347437712728305e-06
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 15.0,
+      "b": 50.0,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": -43.5,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0,
+        1.1291284813287176e-37
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 15.0,
+      "b": 50.0,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -50.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1e-309,
+      "b": 5e-324,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 1e-309,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        1.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1e-309,
+      "b": 5e-324,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 9e-310,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        4.9406564584124316e-15,
+        0.999999999999995
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1e-309,
+      "b": 5e-324,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 5.00000000000003e-310,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        4.9406564584124316e-15,
+        0.999999999999995
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1e-309,
+      "b": 5e-324,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": 9.9999999999995e-311,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        4.9406564584124316e-15,
+        0.999999999999995
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1e-309,
+      "b": 5e-324,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -5e-324,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1e+308,
+      "b": 1e+308,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 1e+308,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        1.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": 1e+308,
+      "b": 1e+308,
+      "x": 0.1,
+      "y": 0.9,
+      "lam": 8.000000000000001e+307,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "timeout",
+      "timeout_seconds": 3
+    },
+    {
+      "mode": 4,
+      "a": 1e+308,
+      "b": 1e+308,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "timeout",
+      "timeout_seconds": 3
+    },
+    {
+      "mode": 4,
+      "a": 1e+308,
+      "b": 1e+308,
+      "x": 0.9,
+      "y": 0.09999999999999998,
+      "lam": -8.000000000000001e+307,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "timeout",
+      "timeout_seconds": 3
+    },
+    {
+      "mode": 4,
+      "a": 1e+308,
+      "b": 1e+308,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": -1e+308,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        1.0,
+        0.0
+      ],
+      "status": 0
+    },
+    {
+      "mode": 4,
+      "a": -1.0,
+      "b": 1.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 1
+    },
+    {
+      "mode": 4,
+      "a": 0.0,
+      "b": 0.0,
+      "x": 0.5,
+      "y": 0.5,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 2
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 1.0,
+      "x": -0.1,
+      "y": 1.1,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 3
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 1.0,
+      "x": 0.5,
+      "y": -0.1,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 4
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 1.0,
+      "x": 0.5,
+      "y": 0.4,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 5
+    },
+    {
+      "mode": 4,
+      "a": 0.0,
+      "b": 1.0,
+      "x": 0.0,
+      "y": 1.0,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 6
+    },
+    {
+      "mode": 4,
+      "a": 1.0,
+      "b": 0.0,
+      "x": 1.0,
+      "y": 0.0,
+      "lam": 0.0,
+      "eps": 5e-15,
+      "initial": 0.0,
+      "execution_outcome": "completed",
+      "result": [
+        0.0,
+        0.0
+      ],
+      "status": 7
+    }
+  ]
+}

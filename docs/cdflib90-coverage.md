@@ -252,3 +252,8 @@ The shared beta-tail kernel includes a [small-coordinate correction](cdflib90.md
 validated against independent 800-digit integrals, legacy beta and negative-binomial
 interfaces, and shape inversion. This repairs inaccurate and spuriously zero tails
 at subnormal coordinates without adding a new catalog procedure.
+
+The [remaining beta-helper audit](cdflib-beta-remaining-reference.md) records 116
+native calls to basym, bfrac, bgrat and bratio, with independent integral checks,
+endpoint/status contracts, inaccurate results and five timeouts. All four ports
+remain pending.

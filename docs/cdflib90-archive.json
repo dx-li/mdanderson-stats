@@ -635,7 +635,11 @@
         "betaln",
         "log_beta",
         "gsumln",
-        "log_bicoef"
+        "log_bicoef",
+        "basym",
+        "bfrac",
+        "bgrat",
+        "bratio"
       ],
       "evidence": [
         "src/mdanderson_stats/cdflib_elementary.py",
@@ -709,7 +713,11 @@
         "docs/cdflib-apser-benchmark.json",
         "tests/test_cdflib_bpser.py",
         "docs/cdflib-bpser.md",
-        "docs/cdflib-bpser-benchmark.json"
+        "docs/cdflib-bpser-benchmark.json",
+        "tools/reference_cdflib_beta_remaining.py",
+        "tests/fixtures/cdflib_beta_remaining.json",
+        "tests/test_cdflib_beta_remaining_reference.py",
+        "docs/cdflib-beta-remaining-reference.md"
       ]
     }
   ],

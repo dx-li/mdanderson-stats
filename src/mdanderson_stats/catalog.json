@@ -590,7 +590,10 @@
         "docs/cdflib-apser-benchmark.json",
         "tests/test_cdflib_bpser.py",
         "docs/cdflib-bpser.md",
-        "docs/cdflib-bpser-benchmark.json"
+        "docs/cdflib-bpser-benchmark.json",
+        "tests/fixtures/cdflib_beta_remaining.json",
+        "tests/test_cdflib_beta_remaining_reference.py",
+        "docs/cdflib-beta-remaining-reference.md"
       ]
     },
     {

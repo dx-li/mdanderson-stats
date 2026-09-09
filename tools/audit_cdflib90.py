@@ -652,6 +652,10 @@ def main():
                 "log_beta",
                 "gsumln",
                 "log_bicoef",
+                "basym",
+                "bfrac",
+                "bgrat",
+                "bratio",
             ],
             "evidence": [
                 "src/mdanderson_stats/cdflib_elementary.py",
@@ -726,6 +730,10 @@ def main():
                 "tests/test_cdflib_bpser.py",
                 "docs/cdflib-bpser.md",
                 "docs/cdflib-bpser-benchmark.json",
+                "tools/reference_cdflib_beta_remaining.py",
+                "tests/fixtures/cdflib_beta_remaining.json",
+                "tests/test_cdflib_beta_remaining_reference.py",
+                "docs/cdflib-beta-remaining-reference.md",
             ],
         }
     )

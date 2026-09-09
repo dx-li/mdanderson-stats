@@ -15,7 +15,7 @@ FIXTURE = json.loads((Path(__file__).parent / "fixtures/cdflib_beta_series.json"
 def independent(mode, a, b, x):
     with localcontext() as ctx:
         ctx.prec = 800
-        a, b, x = map(Decimal.from_float, (a, b, x))
+        a, b, x = (v if isinstance(v, Decimal) else Decimal.from_float(v) for v in (a, b, x))
         if x == 0:
             return 1.0 if mode == 1 else 0.0
         if x == 1:
@@ -26,7 +26,7 @@ def independent(mode, a, b, x):
         if b == 1:
             lower = (x.ln() * a).exp()
             return float(1 - lower if mode == 1 else lower)
-        assert x <= Decimal(".5") and (b <= 1 or b * x <= Decimal("1.000000000000001"))
+        assert x <= Decimal(".5") and (b <= 1 or b * x <= 100)
         # Integrate the binomial expansion of (1-t)**(b-1) term by term.
         term = total = Decimal(1)
         for k in range(1, 10000):
