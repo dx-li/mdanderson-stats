@@ -379,6 +379,19 @@ def main():
         raise RuntimeError("missing legacy negative-binomial implementation evidence")
     if any(not Path(path).is_file() for path in neg_binomial["legacy_reference_evidence"]):
         raise RuntimeError("missing legacy negative-binomial reference evidence")
+    binomial = next(row for row in distributions if row["name"] == "binomial")
+    binomial["legacy_reference_evidence"] = [
+        "tools/reference_dcdflib_binomial.py",
+        "tests/fixtures/dcdflib_binomial.json",
+        "tests/test_dcdflib_binomial_reference.py",
+        "docs/dcdflib-binomial-reference.md",
+    ]
+    binomial["legacy_review_notes"] = (
+        "Unchanged C/F77 contracts audited: invalid-mode sentinel, C-only small-n "
+        "process exits, wider search bounds and false-success inversions; legacy API pending."
+    )
+    if any(not Path(path).is_file() for path in binomial["legacy_reference_evidence"]):
+        raise RuntimeError("missing legacy binomial reference evidence")
     header = next(row for row in members if row["role"] == "c_header")["declarations"]
     definitions = {
         name

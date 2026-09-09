@@ -486,7 +486,10 @@
         "docs/dcdflib-neg-binomial-reference.md",
         "tests/test_dcdflib_neg_binomial.py",
         "docs/dcdflib-neg-binomial.md",
-        "docs/dcdflib-neg-binomial-benchmark.json"
+        "docs/dcdflib-neg-binomial-benchmark.json",
+        "tests/fixtures/dcdflib_binomial.json",
+        "tests/test_dcdflib_binomial_reference.py",
+        "docs/dcdflib-binomial-reference.md"
       ]
     },
     {

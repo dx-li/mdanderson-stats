@@ -168,3 +168,8 @@ unchanged C/F77 behavior, independent ordinary-domain validation, boundary
 conflicts, false-success inversions and wide-input timeouts. The separate
 [legacy Python implementation](dcdflib-neg-binomial.md) now covers all four
 modes, wider counts, complementary chance coordinates and documented repairs.
+
+The [legacy binomial reference audit](dcdflib-binomial-reference.md) records the
+invalid-mode guard, C-only small-n process exits, wider search bounds and
+independently established false-success inversions. Its separate legacy Python
+interface remains pending; the prior F95 backup-source reconciliation is unchanged.

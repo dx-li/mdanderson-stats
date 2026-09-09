@@ -64,7 +64,14 @@
         "cdfbin",
         "cumbin"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "not_yet_independently_validated",
+      "legacy_reference_evidence": [
+        "tools/reference_dcdflib_binomial.py",
+        "tests/fixtures/dcdflib_binomial.json",
+        "tests/test_dcdflib_binomial_reference.py",
+        "docs/dcdflib-binomial-reference.md"
+      ],
+      "legacy_review_notes": "Unchanged C/F77 contracts audited: invalid-mode sentinel, C-only small-n process exits, wider search bounds and false-success inversions; legacy API pending."
     },
     {
       "name": "chisq",
