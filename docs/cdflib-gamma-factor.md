@@ -60,6 +60,6 @@ coordinates against repeated scalar calls, verifying identical results. Cases
 include ordinary, tiny, large and negative shapes. The measured speedups describe
 batching benefits, not a comparison against Fortran.
 
-Twenty-three F95 mathematical support procedures are implemented. `grat1` and
-`gratio`, other incomplete-beta helpers, constants and other support interfaces
+The later [incomplete-gamma port](cdflib-incomplete-gamma.md) implements `grat1`
+and `gratio`. Incomplete-beta helpers, constants and other support interfaces
 remain open; CDFLIB90 remains partial.

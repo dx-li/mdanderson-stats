@@ -32,6 +32,7 @@ from .cdflib_gamma import CDFGamma, ccum_gamma, cdf_gamma, cum_gamma, inv_gamma
 from .cdflib_gamma_factor import rcomp
 from .cdflib_gamma_ratios import algdiv, bcorr, gsumln
 from .cdflib_gamma_support import alngam, gam1, gamln, gamln1, gamma, log_gamma, psi
+from .cdflib_incomplete_gamma import grat1, gratio
 from .cdflib_nc_chisq import (
     CDFNoncentralChiSquare,
     ccum_nc_chisq,
@@ -224,6 +225,8 @@ __all__ = [
     "rexp",
     "rlog",
     "rcomp",
+    "grat1",
+    "gratio",
     "rlog1",
     "QlexToken",
     "lower_case_char",

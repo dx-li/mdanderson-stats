@@ -474,3 +474,6 @@ The [CDFLIB beta/combinatorial helpers](docs/cdflib-beta-support.md) add `betaln
 
 The [CDFLIB gamma scaling factor](docs/cdflib-gamma-factor.md) adds `rcomp`,
 including huge centers, tiny signed shapes and real reciprocal-gamma continuation.
+
+The [CDFLIB incomplete-gamma support](docs/cdflib-incomplete-gamma.md) adds
+`grat1` and `gratio`, with explicit source contracts and subnormal-tail repairs.

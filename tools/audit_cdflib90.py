@@ -590,6 +590,8 @@ def main():
                 "log_beta",
                 "log_bicoef",
                 "rcomp",
+                "grat1",
+                "gratio",
             ],
             "python_interfaces": [
                 "alnrel",
@@ -615,6 +617,8 @@ def main():
                 "log_beta",
                 "log_bicoef",
                 "rcomp",
+                "grat1",
+                "gratio",
             ],
             "status": "partial",
             "remaining_scope": "Other mathematical procedures and imported constants",
@@ -680,6 +684,10 @@ def main():
                 "tests/test_cdflib_gamma_factor.py",
                 "docs/cdflib-gamma-factor.md",
                 "docs/cdflib-gamma-factor-benchmark.json",
+                "src/mdanderson_stats/cdflib_incomplete_gamma.py",
+                "tests/test_cdflib_incomplete_gamma.py",
+                "docs/cdflib-incomplete-gamma.md",
+                "docs/cdflib-incomplete-gamma-benchmark.json",
             ],
         }
     )

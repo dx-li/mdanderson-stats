@@ -30,11 +30,11 @@ def independent(a, x):
             return 0.0, 0.0, 1.0
         log_r = a * x.ln() - x - log_gamma(a)
         r = log_r.exp() if log_r > -10000 else Decimal(0)
-        if a > 1000:
+        if a > 10000:
             # Only equal-shape and far-left large-shape cases are recorded.
             # At the mean, the first correction to 1/2 is O(a**(-1/2));
             # for a>=1e100 it is below float64 resolution.
-            assert x == a or x == 1
+            assert a >= Decimal("1e100") and (x == a or x == 1)
             return float(r), (0.5 if x == a else 0.0), (0.5 if x == a else 1.0)
         if a == a.to_integral_value():
             term = total = Decimal(1)
