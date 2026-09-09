@@ -410,3 +410,8 @@ scales, with overflow repair, subnormal tails and independent native validation.
 `cdft` and `cumt` implement the [legacy Student t interface](docs/dcdflib-t.md),
 with wider input domains, df inversion down to the legacy search limit and
 logarithmic repairs for representable tails lost by the original implementation.
+
+`cdfgam` and `cumgam` implement the [legacy gamma interface](docs/dcdflib-gamma.md),
+including all four computed groups, explicit rate semantics, wide finite domains,
+logarithmic scaling and tiny-shape tail repairs validated against independent
+high-precision calculations and unchanged C/F77 references.

@@ -39,7 +39,7 @@ legacy distribution contracts still need comparison with the F95 ports.
 | Binomial | `binomial` | `cdfbin`, `cumbin` | F95 implemented; legacy review pending |
 | Chi-square | `chisq` | `cdfchi`, `cumchi` | F95 implemented; legacy review pending |
 | F | `f` | `cdff`, `cumf` | F95 and legacy C/F77 F interfaces implemented |
-| Gamma | `gamma` | `cdfgam`, `cumgam` | F95 implemented; legacy review pending |
+| Gamma | `gamma` | `cdfgam`, `cumgam` | F95 and legacy C/F77 gamma interfaces implemented |
 | Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | F95 implemented; legacy review pending |
 | Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | F95 and legacy C/F77 noncentral F interfaces implemented |
 | Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | F95 implemented with df brackets; legacy review pending |
@@ -139,7 +139,7 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Compare the remaining 16 legacy distribution entry-point contracts and validate any
+- Compare the remaining 14 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.
@@ -150,3 +150,7 @@ Before marking the catalog entry complete:
 Run `uv run python tools/audit_cdflib90.py` from the repository root to regenerate
 the inventory. The original archive/extraction live under ignored `research/raw`;
 the script deliberately fails if they are absent, changed or inconsistent.
+
+The [legacy gamma port](dcdflib-gamma.md) independently validates all four
+computed groups against unchanged C/F77 sources, including executable x/rate
+bounds that differ from the source header and repairs for scaled underflow.

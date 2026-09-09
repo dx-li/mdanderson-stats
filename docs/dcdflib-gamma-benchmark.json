@@ -1,0 +1,81 @@
+{
+  "python": "3.13.5",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "repetitions": 3,
+  "inputs": "x=2, rate=1, shape=linspace(.2,20,n); tiny shape=geomspace(1e-300,1e-13,n)",
+  "comparison": "One broadcast call versus n scalar calls to the same Python API; not native C/Fortran",
+  "cases": [
+    {
+      "operation": "p",
+      "size": 64,
+      "batch_seconds": 9.058276191353798e-05,
+      "scalar_seconds": 0.00349033297970891,
+      "speedup": 38.53197789487213
+    },
+    {
+      "operation": "x",
+      "size": 64,
+      "batch_seconds": 0.00022279098629951477,
+      "scalar_seconds": 0.0072739156894385815,
+      "speedup": 32.64905735306412
+    },
+    {
+      "operation": "shape",
+      "size": 64,
+      "batch_seconds": 0.003597542177885771,
+      "scalar_seconds": 0.18446404207497835,
+      "speedup": 51.2750185971094
+    },
+    {
+      "operation": "rate",
+      "size": 64,
+      "batch_seconds": 0.00020200014114379883,
+      "scalar_seconds": 0.00685900030657649,
+      "speedup": 33.95542333652995
+    },
+    {
+      "operation": "tiny_shape_quantile",
+      "size": 64,
+      "batch_seconds": 0.0024652499705553055,
+      "scalar_seconds": 0.03190887486562133,
+      "speedup": 12.943464251795023
+    },
+    {
+      "operation": "p",
+      "size": 256,
+      "batch_seconds": 0.00012483308091759682,
+      "scalar_seconds": 0.0132917077280581,
+      "speedup": 106.47584462673038
+    },
+    {
+      "operation": "x",
+      "size": 256,
+      "batch_seconds": 0.00030179182067513466,
+      "scalar_seconds": 0.026450250297784805,
+      "speedup": 87.64402639744604
+    },
+    {
+      "operation": "shape",
+      "size": 256,
+      "batch_seconds": 0.005840874742716551,
+      "scalar_seconds": 0.7661997079849243,
+      "speedup": 131.1789315359586
+    },
+    {
+      "operation": "rate",
+      "size": 256,
+      "batch_seconds": 0.00031008385121822357,
+      "scalar_seconds": 0.02853208314627409,
+      "speedup": 92.01408920258297
+    },
+    {
+      "operation": "tiny_shape_quantile",
+      "size": 256,
+      "batch_seconds": 0.008601374924182892,
+      "scalar_seconds": 0.1348347500897944,
+      "speedup": 15.675953121250943
+    }
+  ]
+}

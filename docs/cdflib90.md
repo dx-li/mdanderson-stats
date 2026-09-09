@@ -972,3 +972,8 @@ and forward verification, with unchanged native C and F77 reference fixtures.
 The [legacy Student t interface](dcdflib-t.md), `cdft`/`cumt`, additionally
 supports unrestricted finite t and positive df inputs, with the C/F77 df search
 range [1e-100,1e10], logarithmic overflow repair and separate native validation.
+
+`cdfgam` and `cumgam` implement the [legacy gamma interface](dcdflib-gamma.md),
+including all four computed groups, explicit rate semantics, wide finite domains,
+logarithmic scaling and tiny-shape tail repairs validated against independent
+high-precision calculations and unchanged C/F77 references.

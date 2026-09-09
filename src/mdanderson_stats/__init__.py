@@ -57,6 +57,7 @@ from .cuminc_plot import plot_cuminc
 from .cuminc_study import CumIncStudy, cuminc
 from .cumulative_incidence import CumulativeIncidence, IncidenceSummary, cumulative_incidence
 from .dcdflib_f import DCDFLIBF, cdff, cumf
+from .dcdflib_gamma import DCDFLIBGamma, cdfgam, cumgam
 from .dcdflib_nc_f import DCDFLIBNoncentralF, cdffnc, cumfnc
 from .dcdflib_normal import DCDFLIBNormal, cdfnor, cumnor
 from .dcdflib_t import DCDFLIBStudentT, cdft, cumt
@@ -182,6 +183,9 @@ __all__ = [
     "DCDFLIBF",
     "cdff",
     "cumf",
+    "DCDFLIBGamma",
+    "cdfgam",
+    "cumgam",
     "DCDFLIBNoncentralF",
     "cdffnc",
     "cumfnc",

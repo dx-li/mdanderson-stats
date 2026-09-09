@@ -507,3 +507,9 @@ DCDFLIB Student t contracts using SciPy kernels and vectorized arithmetic.
 Unchanged original C/F77 references are used only for validation and are not
 bundled. The retained CDFLIB90 notices apply; [legacy Student t notes](docs/dcdflib-t.md)
 document wider domains, numerical repairs and validation.
+
+The legacy `cdfgam` and `cumgam` interfaces independently express the archived
+C/F77 gamma contracts using SciPy special functions and logarithmic expansions.
+No archived numerical kernel is copied or bundled. The retained CDFLIB90 notices
+apply; [legacy gamma notes](docs/dcdflib-gamma.md) document reference validation,
+source contract differences and numerical repairs.

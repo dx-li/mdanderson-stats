@@ -145,7 +145,23 @@
         "cdfgam",
         "cumgam"
       ],
-      "legacy_contract_status": "not_yet_independently_validated"
+      "legacy_contract_status": "implemented_with_documented_python_semantics",
+      "legacy_computed_groups": [
+        "p/q",
+        "x",
+        "shape",
+        "rate"
+      ],
+      "legacy_python_interfaces": [
+        "cdfgam",
+        "cumgam"
+      ],
+      "legacy_evidence": [
+        "src/mdanderson_stats/dcdflib_gamma.py",
+        "tests/test_dcdflib_gamma.py",
+        "tests/fixtures/dcdflib_gamma.json",
+        "docs/dcdflib-gamma.md"
+      ]
     },
     {
       "name": "nc_chisq",
@@ -1565,8 +1581,8 @@
       "size": 7121,
       "sha256": "d13cf72da91889ee687e7df6e0a45f6c9ac6b7e55ca1c5f346ea91c7f2b247f2",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Gamma tails and all parameter inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cdfgam"
@@ -1745,8 +1761,8 @@
       "size": 1686,
       "sha256": "250cd3d7506ee815cea5c65fa25e48c6a6d925729960fda329a206dd1f3dea0a",
       "role": "f77_source",
-      "coverage_status": "legacy_contract_review",
-      "scope": "Legacy entry point; not independently validated by F95 fixtures",
+      "coverage_status": "implemented_legacy_distribution",
+      "scope": "Gamma tails and all parameter inversions; independent C/F77 validation",
       "declarations": {
         "routine_declarations_including_entries": [
           "cumgam"
