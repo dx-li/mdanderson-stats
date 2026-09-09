@@ -483,3 +483,9 @@ The archived Fortran/C sources, binaries and ACM implementations are not
 bundled. Python uses SciPy numerical kernels and independently written
 array-based searches. Numerical differences and recorded native defects are
 explained in [the implementation notes](docs/cdflib90.md).
+
+The legacy `cdff` and `cumf` interfaces also independently implement the
+archived DCDFLIB 1.1 F contracts by the same authors. Both C and Fortran reference
+implementations are compiled unchanged for validation and remain outside the
+package. Python result/error conventions and numerical repairs are documented
+in [the legacy F notes](docs/dcdflib-f.md).

@@ -138,6 +138,12 @@ def classify(path: Path) -> tuple[str, str, str]:
                 "DCDFLIB 1.1 legacy contracts and notices; compare with F95",
             )
         if path.suffix == ".f":
+            if path.stem in {"cdff", "cumf"}:
+                return (
+                    "f77_source",
+                    "implemented_legacy_distribution",
+                    "F tails and all parameter inversions; independent C/F77 validation",
+                )
             return (
                 "f77_source",
                 "legacy_contract_review",
@@ -230,7 +236,18 @@ def main():
         )
     f_distribution = next(row for row in distributions if row["name"] == "f")
     f_distribution["f95_computed_groups"] = ["cum/ccum", "f"]
-    f_distribution["legacy_additional_computed_groups_pending"] = ["dfn", "dfd"]
+    f_distribution["legacy_additional_computed_groups_pending"] = []
+    f_distribution["legacy_computed_groups"] = ["p/q", "f", "dfn", "dfd"]
+    f_distribution["legacy_python_interfaces"] = ["cdff", "cumf"]
+    f_distribution["legacy_contract_status"] = "implemented_with_documented_python_semantics"
+    f_distribution["legacy_evidence"] = [
+        "src/mdanderson_stats/dcdflib_f.py",
+        "tests/test_dcdflib_f.py",
+        "tests/fixtures/dcdflib_f.json",
+        "docs/dcdflib-f.md",
+    ]
+    if any(not Path(path).is_file() for path in f_distribution["legacy_evidence"]):
+        raise RuntimeError("missing legacy F implementation evidence")
     noncentral_f = next(row for row in distributions if row["name"] == "nc_f")
     noncentral_f["f95_computed_groups"] = ["cum/ccum", "f", "pnonc"]
     noncentral_f["legacy_additional_computed_groups_pending"] = ["dfn", "dfd"]

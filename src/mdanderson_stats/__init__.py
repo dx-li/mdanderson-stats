@@ -56,6 +56,7 @@ from .cta_study import CTAStudy, CTAStudySpecification
 from .cuminc_plot import plot_cuminc
 from .cuminc_study import CumIncStudy, cuminc
 from .cumulative_incidence import CumulativeIncidence, IncidenceSummary, cumulative_incidence
+from .dcdflib_f import DCDFLIBF, cdff, cumf
 from .expsurv import ExploratorySurvival, exploratory_survival
 from .expsurv_alignment import SurvivalAlignmentPlot, plot_survival_alignment
 from .expsurv_box import CensoredBox, censored_box
@@ -175,6 +176,9 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "DCDFLIBF",
+    "cdff",
+    "cumf",
     "CDFNoncentralT",
     "cdf_nc_t",
     "cum_nc_t",

@@ -597,9 +597,9 @@ parameter table. Omit the computed group and supply both degrees of freedom.
 restricted to 1:2, its metadata enforces that range, and the actual routine has
 only those two branches. A later contradictory comment about returning an
 arbitrary df root is stale. The bundled older C/F77 `cdff` supports additional
-which=3/4 modes for numerator/denominator df; those remain outstanding in the
-[archive checklist](cdflib90-coverage.md). This port does not claim to implement
-those legacy modes by completing the four named F95 interfaces.
+which=3/4 modes for numerator/denominator df. Those are now available through
+the [separate legacy `cdff` interface](dcdflib-f.md), with its wider domains and
+independent C/F77 validation. The four F95 interfaces keep their own contract.
 
 The F variable is a ratio of independent scaled chi-square variables. Its beta
 coordinate pair is x=dfn*f/(dfd+dfn*f), cx=dfd/(dfd+dfn*f), with shapes dfn/2

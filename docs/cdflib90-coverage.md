@@ -18,7 +18,7 @@ all its domains, inversions, endpoint policies or errors.
 | F95 support modules | 7 | Public/support contract review remains open |
 | Binomial editor backup | 1 | Distinct source variant; probability-assignment defect validated |
 | F95 build files | 2 | Replaced by the package build and CI workflow |
-| Legacy C implementations | 2 | DCDFLIB 1.1 contracts and independent native validation pending |
+| Legacy C implementations | 2 | F interfaces validated; remaining DCDFLIB 1.1 contracts pending |
 | Legacy public C header | 1 | 73 external function prototypes inventoried |
 | Legacy Fortran source | 64 | 66 declared entry points inventoried, including two ENTRY statements |
 | Documentation, installation and notices | 17 | Reference material accounted for; legal terms retained |
@@ -29,23 +29,24 @@ Each F95 distribution module explicitly exports four interfaces: its `cdf_*`,
 `cum_*`, `ccum_*` and `inv_*` functions. The inventory checks all **48 names**.
 The C/F77 libraries expose CDF solvers and paired-tail routines with older names.
 All 24 legacy distribution names below are present in both source inventories.
-The legacy routines do not introduce a thirteenth distribution, but their
-contracts and numerical behavior still need comparison with the F95 port.
+The legacy routines do not introduce a thirteenth distribution. F contracts
+have now been implemented and validated in both languages; the other eleven
+legacy distribution contracts still need comparison with the F95 ports.
 
-| Distribution | F95/Python suffix | Legacy CDF / tail names | Current F95 interface coverage |
+| Distribution | F95/Python suffix | Legacy CDF / tail names | Current distribution coverage |
 |---|---|---|---|
-| Beta | `beta` | `cdfbet`, `cumbet` | Implemented |
-| Binomial | `binomial` | `cdfbin`, `cumbin` | Implemented |
-| Chi-square | `chisq` | `cdfchi`, `cumchi` | Implemented |
-| F | `f` | `cdff`, `cumf` | F95 tails/quantiles implemented; legacy df inversion pending |
-| Gamma | `gamma` | `cdfgam`, `cumgam` | Implemented |
-| Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | Implemented |
+| Beta | `beta` | `cdfbet`, `cumbet` | F95 implemented; legacy review pending |
+| Binomial | `binomial` | `cdfbin`, `cumbin` | F95 implemented; legacy review pending |
+| Chi-square | `chisq` | `cdfchi`, `cumchi` | F95 implemented; legacy review pending |
+| F | `f` | `cdff`, `cumf` | F95 and legacy C/F77 F interfaces implemented |
+| Gamma | `gamma` | `cdfgam`, `cumgam` | F95 implemented; legacy review pending |
+| Noncentral chi-square | `nc_chisq` | `cdfchn`, `cumchn` | F95 implemented; legacy review pending |
 | Noncentral F | `nc_f` | `cdffnc`, `cumfnc` | F95 tails/quantiles/noncentrality implemented; legacy df inversion pending |
-| Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | Implemented, including explicit df-root brackets |
-| Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | Implemented |
-| Normal | `normal` | `cdfnor`, `cumnor` | Implemented |
-| Poisson | `poisson` | `cdfpoi`, `cumpoi` | Implemented |
-| Student's t | `t` | `cdft`, `cumt` | Implemented |
+| Noncentral t | `nc_t` | `cdftnc`, `cumtnc` | F95 implemented with df brackets; legacy review pending |
+| Negative binomial | `neg_binomial` | `cdfnbn`, `cumnbn` | F95 implemented; legacy review pending |
+| Normal | `normal` | `cdfnor`, `cumnor` | F95 implemented; legacy review pending |
+| Poisson | `poisson` | `cdfpoi`, `cumpoi` | F95 implemented; legacy review pending |
+| Student's t | `t` | `cdft`, `cumt` | F95 implemented; legacy review pending |
 
 All 48 named F95 distribution interfaces now have implementations. The
 noncentral t df solver accepts an explicit sign-changing bracket to select
@@ -53,18 +54,20 @@ between multiple roots; like the archived full-bound search, it does not
 enumerate roots or find tangencies without a sign change.
 
 The [method notes](cdflib90.md) document the implemented contracts, native F95
-fixtures, independent identities and source repairs. Those fixtures do not
-independently validate the legacy C/F77 implementations. The inventory therefore
-keeps legacy contract status open even where a corresponding Python distribution
-exists. Future work must establish shared behavior, document differences, and
+fixtures, independent identities and source repairs. Those F95 fixtures do not
+independently validate legacy implementations.
+The [separate legacy F port](dcdflib-f.md) has its own unchanged C and F77
+references. The other legacy contract statuses remain open even where a
+corresponding F95/Python distribution exists. Future work must establish shared
+behavior, document differences, and
 preserve any additional substantive functionality before closing that scope.
 
 The F95 F module accepts only which=1 (tails) and which=2 (F quantile), explicitly
 excluding degrees-of-freedom inversion. The older C/F77 `cdff` additionally
-accepts which=3 (dfn) and which=4 (dfd). Those **additional legacy F modes remain
-unimplemented**, beyond independent validation of the shared tail/quantile modes.
-The inventory records them separately so implementing the F95 module cannot
-silently close the older library's wider interface.
+accepts which=3 (dfn) and which=4 (dfd). The Python `cdff` and `cumf` interfaces
+now implement those legacy modes and the wider input/search bounds, with
+independent C/F77 validation and documented Python error/result semantics.
+The inventory records that evidence separately from the F95 module.
 
 The noncentral F F95 code additionally computes pnonc with which=3, despite
 its header listing only two modes. Legacy C/F77 `cdffnc` uses which=5 for pnonc
@@ -130,9 +133,9 @@ product or assumed byte-identical.
 
 Before marking the catalog entry complete:
 
-- Implement the additional legacy F/noncentral-F df inversions, preserving
+- Implement the additional legacy noncentral-F df inversions, preserving
   multiple-root and endpoint behavior.
-- Compare the 24 legacy distribution entry-point contracts and validate any
+- Compare the remaining 22 legacy distribution entry-point contracts and validate any
   behavior not already established by the F95 references.
 - Resolve the public numerical, root-finding and supporting interfaces described
   above, with evidence for each replacement or explicit scope decision.

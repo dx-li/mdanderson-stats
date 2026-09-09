@@ -375,8 +375,8 @@ inversion. Native validation covers both archived binomial source versions.
 
 
 `cdf_f`, `cum_f`, `ccum_f` and `inv_f` implement the F95 F-distribution tails
-and quantiles. The older C/F77 degrees-of-freedom inversion modes remain tracked
-separately in the CDFLIB90 checklist.
+and quantiles. The older C/F77 degrees-of-freedom inversion modes are available
+through the separate `cdff` interface described below.
 
 `cdf_nc_chisq`, `cum_nc_chisq`, `ccum_nc_chisq` and `inv_nc_chisq` provide
 noncentral chi-square tails, quantiles and bounded degrees-of-freedom/noncentrality
@@ -391,3 +391,8 @@ refinement for failed inverse kernels. Legacy df inversions remain tracked.
 all parameter inversions, with explicit brackets for multiple df roots and
 quadrature repair for small negative tails. All twelve F95 distribution modules
 are implemented; CDFLIB90's additional legacy and support interfaces remain open.
+
+`cdff` and `cumf` implement the [legacy DCDFLIB F interface](docs/dcdflib-f.md),
+including numerator/denominator df inversions, source search bounds through
+1e-100..1e100, and explicit brackets for multiple roots. Both archived C and
+Fortran implementations provide independent reference fixtures.
