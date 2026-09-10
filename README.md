@@ -699,4 +699,5 @@ integrated reports remain pending.
 [TITE-Keyboard](docs/tite-keyboard.md) adds uniform and informative follow-up
 weights, effective sample sizes and dose decisions with pending toxicity outcomes.
 The likelihood approximation, enrolled-count safety rule and accrual suspension
-are explicit. Calendar-time simulation and integrated reports remain pending.
+are explicit. Precomputed effective-follow-up boundaries provide numerical lookup
+without rounded cutoffs. Calendar-time simulation and integrated reports remain pending.

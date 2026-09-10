@@ -357,8 +357,11 @@ from .tite_keyboard import (
     tite_keyboard_decision,
     toxicity_followup_weights,
 )
+from .tite_keyboard_boundaries import TITEKeyboardBoundaries, tite_keyboard_boundaries
 
 __all__ = [
+    "TITEKeyboardBoundaries",
+    "tite_keyboard_boundaries",
     "TITEEffectiveSampleSize",
     "TITEKeyboardDecision",
     "toxicity_followup_weights",

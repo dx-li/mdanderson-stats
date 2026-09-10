@@ -3,8 +3,9 @@
 Catalog entry **135**, [TITE-Keyboard](https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD/),
 is partially implemented for its ESS calculator, informative trimester weights,
 approximate posterior-key calculations and interim dose decisions with pending
-outcomes. Calendar-time trial simulation, time-to-DLT scenario generators, follow-up
-boundary tables/flowcharts and integrated protocol reports remain pending.
+outcomes. Calendar-time trial simulation, time-to-DLT scenario generators,
+flowcharts and integrated protocol reports remain pending. Numerical effective-follow-up
+boundaries and lookup tables are available.
 
 The app snapshot identifies version 1.2.2.0, updated December 15, 2025. Its technical
 PDFs and the authors' [methodological paper](https://arxiv.org/abs/1807.08393) are
@@ -118,3 +119,57 @@ weights, time-unit invariance, an independent closed-form fractional-beta integr
 published rounded decision thresholds, complete-data reduction and explicit
 safety/suspension checks. Existing Keyboard reference tests exercise the shared
 posterior kernel after its extraction for fractional effective counts.
+
+## Precomputed effective-follow-up boundaries
+
+`tite_keyboard_boundaries(design, max_patients=30)` tabulates ordinary posterior
+transitions by observed DLT count y. The coordinate is the effective **non-DLT**
+count `m = effective_sample_size - y`, not total ESS and not raw follow-up time.
+The result is independent of the assessment window and timing-weight choice.
+
+```python
+from mdanderson_stats import tite_keyboard_boundaries
+
+boundaries = tite_keyboard_boundaries(KeyboardDesign(), max_patients=12)
+# One observed DLT: stop de-escalating near m=1.8756; escalate near m=3.0749.
+assert 1.87 < boundaries.stay_or_escalate[1, 1] < 1.88
+assert 3.07 < boundaries.escalate[1, 1] < 3.08
+assert boundaries.moves(1, 3.06) == 0
+assert boundaries.moves(1, 3.08) == 1
+```
+
+Each transition array has shape `(max_patients+1, 2)` and is indexed directly by y.
+Columns contain the last effective non-DLT count before the transition and the
+first after it. Nonzero finite pairs are adjacent representable floating-point
+values. A pair `[0,0]` means the new decision already applies at zero; `[NaN,NaN]`
+means it is unreachable within the specified maximum effective total. The first
+transition permits stay **or escalation**; it need not create a nonempty stay
+interval when the target key is at an endpoint.
+
+`moves(y,m)` broadcasts inputs and returns -1/de-escalate, 0/stay, or +1/escalate
+without rounding y or m. It rejects negative effective non-DLT counts or totals
+above the table's range. Use it instead of rounding thresholds printed for display.
+The zero-DLT row can have tiny positive thresholds near machine precision due to
+conservative tie handling of a uniform, no-information posterior; the conduct
+rules separately restrict decisions before sufficient outcomes are observed.
+
+For n enrolled patients with y DLTs and c pending outcomes, m is
+`n-y-c + sum(pending_weights)`, constrained to `[n-y-c, n-y]`. Thus a transition
+requires the corresponding summed pending weight after subtracting the completed
+non-DLT count. Under uniform timing, multiply that required weight by the window
+length to express it as total pending follow-up time.
+
+The result also includes `enrolled_patients` (1 through the planned maximum),
+`eliminate_min` and `lowest_stop_min`: the inclusive integer DLT thresholds for
+overdose safety. A threshold of n+1 means it is impossible at enrollment n.
+Posterior boundaries **do not override safety, suspension, dose-range or precision
+rules**. Continue to use `tite_keyboard_decision` for a complete interim assignment.
+The tables expose numerical thresholds; formatted flowcharts and integrated reports
+remain pending.
+
+Validation reproduces the published thresholds for one through four DLTs and
+checks one-DLT likelihood crossings using an independent closed-form Beta(2,b)
+survival function. Lookup results agree with posterior calculations across 10,000
+feasible effective-count scenarios, including asymmetric and endpoint target keys.
+Every finite nonzero bracket is checked at both adjacent endpoints, and follow-up
+lookups agree with interim conduct when suspension and safety allow assignment.
