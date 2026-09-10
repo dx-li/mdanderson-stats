@@ -329,9 +329,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Median-effect dose-response OLS with covariance and stable inverse prediction",
+        "Loewe interaction indices and log-delta Student-t intervals for observed combination effects with explicit measurement variance",
+        "Fixed-ray interaction curves with uncertainty from independent component and combination regressions"
+      ],
+      "validation": [
+        "Five focused tests: analytic regression, published three-drug scenario, finite-difference delta variances, Student-t intervals and log-scale extremes; tests/test_interaction_index.py",
+        "Pending Monte Carlo comparator, plots, source case studies and native workflow audit; additional parametric and semiparametric response-surface models pending; docs/interaction-index.md"
+      ]
     },
     {
       "id": 19,
@@ -2082,9 +2089,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Median-effect dose-response OLS with covariance and stable inverse prediction",
+        "Loewe interaction indices and log-delta Student-t intervals for observed combination effects with explicit measurement variance",
+        "Fixed-ray interaction curves with uncertainty from independent component and combination regressions"
+      ],
+      "validation": [
+        "Five focused tests: analytic regression, published three-drug scenario, finite-difference delta variances, Student-t intervals and log-scale extremes; tests/test_interaction_index.py",
+        "Pending Monte Carlo comparator, plots, source case studies and native workflow audit; docs/interaction-index.md"
+      ]
     },
     {
       "id": 66,

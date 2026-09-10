@@ -227,6 +227,7 @@ from .hierarchical_binomial import (
 from .hierarchical_normal import HierarchicalNormalFit, hierarchical_normal
 from .imom_prior import IMOMBinaryPrior
 from .inequality import InequalityProbability, inequality_probability
+from .interaction_index import InteractionIndex, interaction_index, interaction_index_ray
 from .intervals import (
     binomial_interval,
     bp1ci_binomial_interval,
@@ -249,6 +250,7 @@ from .ksbin2_probability import (
 )
 from .ksbin2_study import KSTwoSampleStudy, ksbin2_study
 from .kstage_binomial import KStageBinomial
+from .median_effect import MedianEffectFit, fit_median_effect
 from .microarray_normalization import quantile_normalize
 from .mtpi import MTPIDesign, MTPIPosterior, MTPISelection, MTPITable
 from .mtpi_simulation import MTPISimulation, simulate_mtpi
@@ -450,6 +452,11 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "InteractionIndex",
+    "interaction_index",
+    "interaction_index_ray",
+    "MedianEffectFit",
+    "fit_median_effect",
     "quantile_normalize",
     "MTPIDesign",
     "MTPIPosterior",

@@ -1,0 +1,17 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CIInteractionIndex/ReadmeCI.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 17507,
+      "sha256": "747dd671f7024f7a47b6f997520d3a53e6e13e753e9cd612355d5ab983bb19bb"
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_xml/PMC2796809/unicode",
+      "retrieved_date": "2026-09-10",
+      "bytes": 131807,
+      "sha256": "9de592a2da6b2d01985870f914412fbcb1549835c0e5dcdd2a60abda39b2b3e6"
+    }
+  ],
+  "scope": "Median-effect OLS; observed-combination and fixed-ray Loewe log-delta intervals. Monte Carlo comparator, other SYNERGY models and native workflows remain pending."
+}
