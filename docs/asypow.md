@@ -10,8 +10,8 @@ pending; the catalog status is **partial**.
 The original S-plus 2.1 archive has a broader scope than the later R archive.
 In particular, it supplies separate SMO and multinomial routines documented in
 the 1997 paper. Coverage is assessed against that broader original scope, not
-just the R package's index. LR information-matrix calculations and the binomial
-SMO expected-log-likelihood method are available. SMO supports both conventions
+just the R package's index. LR information-matrix calculations and binomial/Poisson
+SMO expected-log-likelihood methods are available. SMO supports both conventions
 for subtracting degrees of freedom, as described below.
 
 ```python
@@ -313,9 +313,37 @@ were unchanged. Inversion was independently checked with a tighter R root.
 
 The significance inverse uses actual df, correcting the original `self.sig.s`
 hardcoded df=1, just as the LR inverse does. Mixed fixed/equality constraints,
-other distribution families, regression SMO and generic expected-likelihood
+families beyond binomial/Poisson, regression SMO and generic expected-likelihood
 optimization remain pending. These tests are asymptotic approximations, not
 finite-sample exact binomial tests.
+
+## SMO Poisson designs
+
+`asypow_smo_poisson(means, null_means=None, group_size=1, subtract_df=True)`
+provides the same fixed-null and all-groups-equal hypotheses for positive Poisson
+means. The equality null uses allocation-weighted means and df=G-1; a specified
+null fixes all G means and uses df=G. Inputs support up to 500 groups. The result
+is `SMOPower`, with the same correction, inversion and noncentrality limits
+as the binomial method above. Mixed constraints remain pending.
+
+The per-observation divergence is twice the weighted sum of
+`p*log(p/q) - p + q`. Near-equal means use a stable log remainder; large or small
+means use log-space divergences and allocation weights before exponentiation.
+
+```python
+from mdanderson_stats import asypow_smo_poisson
+
+design = asypow_smo_poisson([2, 4], group_size=[1, 2])
+assert abs(design.sample_size() - 30.37914057915722) < 1e-9
+assert abs(float(design.power(30)) - 0.7944166025642022) < 1e-12
+```
+
+The original S-plus `noncent.poisson.kgp.s` and `self.power.s`, evaluated through
+R, give null means 10/3, w=0.29128080454643612, and the values above.
+Compatibility changes were limited to converting the multi-value return to an
+R list and aliasing `is.inf` to `is.infinite`; the later R chi-square wrapper
+provided distribution calculations. The statistical formulas were unchanged.
+Sample size was independently inverted with a tight R root tolerance.
 
 ## Native comparisons and intentional corrections
 

@@ -867,5 +867,5 @@ exponential-survival information, including linear/quadratic regression designs
 and complementary-log-log binomial models. Raw ordinal and cumulative-link
 ordinal regression information, general logistic/multiplicative-binomial designs,
 multinomial information and information reparameterization are also available.
-SMO binomial fixed-null/equality designs are available with both df conventions.
+SMO binomial and Poisson fixed-null/equality designs are available with both df conventions.
 Other SMO models, mixed constraints and full native workflows remain pending.

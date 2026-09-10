@@ -109,3 +109,54 @@ def asypow_smo_binomial(
     if not np.isfinite(w) or np.any(kl < 0):
         raise ArithmeticError("binomial divergence calculation failed")
     return SMOPower(w, df, _owned(q), bool(subtract_df))
+
+
+def asypow_smo_poisson(
+    means: ArrayLike,
+    *,
+    null_means: ArrayLike | None = None,
+    group_size: ArrayLike = 1,
+    subtract_df: bool = True,
+) -> SMOPower:
+    """SMO for equal Poisson means or a fully specified positive null vector."""
+    p = finite(means, "means")
+    if p.ndim != 1 or not 1 <= p.size <= 500 or np.any(p <= 0):
+        raise ValueError("means must be a positive vector of length 1..500")
+    if not isinstance(subtract_df, (bool, np.bool_)):
+        raise ValueError("subtract_df must be boolean")
+    weights = np.broadcast_to(finite(group_size, "group_size"), p.shape)
+    if np.any(weights <= 0):
+        raise ValueError("group_size must be positive")
+    log_weights = np.log(weights) - logsumexp(np.log(weights))
+    if null_means is None:
+        if p.size < 2:
+            raise ValueError("equality testing requires at least two groups")
+        normalized = np.exp(log_weights)
+        normalized /= normalized.sum()
+        mean = np.clip(normalized @ (p / p.max()), 0, 1) * p.max()
+        q = np.full_like(p, np.clip(mean, p.min(), p.max()))
+        df = p.size - 1
+    else:
+        q = np.broadcast_to(finite(null_means, "null_means"), p.shape)
+        if np.any(q <= 0):
+            raise ValueError("null_means must be positive")
+        df = p.size
+    delta = q - p
+    near = np.abs(delta) <= 0.125 * p
+    # KL(Pois(p), Pois(q)) = p * [q/p - 1 - log(q/p)].
+    # Keep large divergences in logs until allocation weighting is applied.
+    with np.errstate(divide="ignore", under="ignore"):
+        log_kl = np.empty_like(p)
+        log_kl[near] = np.log(p[near]) + np.log(rlog1(delta[near] / p[near]))
+        ratio = np.log(q[~near]) - np.log(p[~near])
+        positive = ratio >= 0
+        remainder = np.empty_like(ratio)
+        r = ratio[positive]
+        remainder[positive] = np.log(q[~near][positive]) + np.log(-np.expm1(-r) - r * np.exp(-r))
+        r = ratio[~positive]
+        remainder[~positive] = np.log(p[~near][~positive]) + np.log(np.expm1(r) - r)
+        log_kl[~near] = remainder
+        w = float(np.exp(np.log(2) + logsumexp(log_weights + log_kl)))
+    if not np.isfinite(w):
+        raise ArithmeticError("Poisson divergence is not representable")
+    return SMOPower(w, df, _owned(q), bool(subtract_df))
