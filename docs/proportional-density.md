@@ -76,12 +76,13 @@ have unique, nonnegative times and valid monotone survival vectors. The fit's
 `goodness_of_fit` applies this statistic to the control disease-survival curves.
 It is not a calibrated goodness-of-fit p-value.
 
-**Entry 78 remains partial.** Both supplied R routines now have Python
-counterparts, but bootstrap critical values for goodness of fit and unequal-
-censoring treatment inference, bootstrap uncertainty, and the paper's alternate
-failure-only bootstrap test remain unimplemented. No bootstrap code is present
-in the downloaded archive; a comment instructs the user to bootstrap. Those
-missing inference workflows are tracked rather than represented as completed.
+**Entry 78 remains partial.** Both supplied R routines have Python counterparts,
+and the paper’s alternative failure-only goodness-of-fit bootstrap is available
+as described below. Full-data disease-curve bootstrap calibration, unequal-
+censoring treatment-effect calibration and bootstrap parameter uncertainty
+remain unimplemented. No bootstrap code is present in the downloaded archive;
+a comment instructs the user to bootstrap. Missing inference workflows remain
+tracked rather than represented as completed.
 
 ## Source repairs and numerical behavior
 
@@ -134,3 +135,63 @@ Three focused tests also check mass normalization, immutable outputs, arm
 exchange, time-unit changes by 1e-150 and 1e150, tied identical-arm analytic
 results, input-order invariance, separation, unidentifiable slopes and unsupported
 censoring tails. No CI jobs or dependencies were added.
+
+
+## Failure-only goodness-of-fit bootstrap
+
+`proportional_density_bootstrap(time, event, treatment, replicates=999, seed=None)`
+implements the computationally cheaper alternative in section 3.1 of the paper.
+It tests the observed-failure density ratio, using the same fixed censoring
+log-ratio estimated from the original data. Each replicate draws the original
+number of failures independently within each arm from the fitted observed-failure
+masses, refits the offset likelihood, and compares the fitted control CDF with
+its empirical failure-time CDF. It does not resample censoring observations.
+
+```python
+from mdanderson_stats import proportional_density_bootstrap
+
+result = proportional_density_bootstrap(
+    time=[1, 3, 5, 7, 9, 12, 2, 4, 6, 8, 10, 12],
+    event=[1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0],
+    treatment=[0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    replicates=999,
+    seed=7808,
+)
+print(result.statistic, result.pvalue)
+print(result.failed_replicates, result.pvalue_lower, result.pvalue_upper)
+```
+
+This is the paper's **Delta_1n** statistic, not the archive's disease-curve Pepe
+statistic. Unit weight and exact integration of squared right-continuous CDF
+differences are used. The default integration endpoint is the minimum of the
+two arms' maximum follow-up times; `tau` can select a smaller positive endpoint
+that extends beyond at least one failure. Values at jumps have measure zero;
+each post-jump difference applies until the next jump or tau. The constant tail
+after the final failure is included when applicable.
+
+The result stores the observed statistic, endpoint, all bootstrap statistics,
+failed-replicate counts/reasons, an upper-tail Monte Carlo p-value and its
+approximate simulation standard error. With B replicates and E exceedances,
+the p-value is `(1+E)/(B+1)`, counting ties as exceedances. This finite-simulation
+correction does not make the fitted-model bootstrap an exact finite-sample test.
+The standard error uses `sqrt(p*(1-p)/B)` and measures simulation error only.
+A local NumPy generator makes a supplied integer seed reproducible without
+changing global random state.
+
+Discrete resampling can produce separated or constant failure times, so a finite
+fit need not exist for every replicate. Such replicates are retained as NaN,
+with their exception reasons counted. When K fits fail, the single p-value and
+its standard error are `None`; reported bounds are `(1+E)/(B+1)` and
+`(1+E+K)/(B+1)`. These bound the contribution of unresolved replicates; they are
+**not confidence intervals**. Failed replicates are neither discarded nor
+redrawn. Original-data fitting failures still raise immediately. Replicates
+are limited to 10,000 and total sampled failures to 50 million.
+
+Five fixed resamples agree with independent R `glm` offset fits and `ecdf`-based
+step integration within 2e-13 absolute error. The fixture includes the sampled
+times, labels and offsets, rather than claiming native bootstrap outputs from
+an archive that has no bootstrap implementation. Two additional focused tests
+cover that reference, time-unit invariance, a hand-calculated step integral,
+immutable output and honest calibration bounds when resamples are unidentified.
+The treatment-effect LR test and full-data disease-curve bootstrap are separate
+procedures and are not calibrated by this function.

@@ -408,6 +408,10 @@ from .proportional_density import (
     proportional_density,
     proportional_density_pepe,
 )
+from .proportional_density_bootstrap import (
+    ProportionalDensityBootstrap,
+    proportional_density_bootstrap,
+)
 from .pvalue_models import (
     OrderStatisticDiagnostics,
     clustered_pvalues,
@@ -604,6 +608,8 @@ from .windows import (
 )
 
 __all__ = [
+    "ProportionalDensityBootstrap",
+    "proportional_density_bootstrap",
     "ProportionalDensityFit",
     "proportional_density",
     "proportional_density_pepe",

@@ -953,5 +953,6 @@ read/create/append/overwrite actions and confirmation before changing a file.
 [Proportional Density](docs/proportional-density.md) adds treatment-effect
 estimation for censored survival using a density-ratio model, incidence estimates,
 and disease-conditional survival curves. It includes the supplied goodness-of-fit
-statistic and explicit equal-censoring LR inference. Bootstrap calibration for
-unequal censoring and goodness of fit remains pending.
+statistic, the paper’s failure-only goodness-of-fit bootstrap, and explicit
+equal-censoring LR inference. Full-data disease-curve bootstrap and unequal-
+censoring treatment-effect calibration remain pending.

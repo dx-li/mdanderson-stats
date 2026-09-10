@@ -725,3 +725,7 @@ The missing likelihood is reconstructed from the published equations, and
 existing Python Kaplan–Meier routines supply survival calculations. See
 `docs/proportional-density.md` and `docs/proportional-density-sources.json` for
 attribution, source repairs, scope and validation provenance.
+
+`proportional_density_bootstrap.py` independently implements the paper's
+section 3.1 failure-only goodness-of-fit bootstrap from its statistical
+specification. No corresponding bootstrap source was supplied in the archive.
