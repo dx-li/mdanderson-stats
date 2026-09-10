@@ -908,4 +908,5 @@ quantile confidence calculations. [Logistic regression](docs/survan-logistic.md)
 adds fitted probabilities and coefficient/likelihood inference.
 [Cox regression](docs/survan-cox.md) adds multivariable Breslow-tie fits, with
 [Kalbfleisch–Prentice baseline survival](docs/survan-baseline.md) and profile
-prediction. Time-dependent covariates and remaining reporting are pending.
+prediction. [Frequency tables and descriptive summaries](docs/survan-descriptive.md)
+complete its [seven advertised calculation families](docs/survan-coverage.md).

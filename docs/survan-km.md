@@ -86,4 +86,4 @@ with native single precision. All nine interval flags and available bounds match
 Focused checks also cover censor plateaus, all-censored data, terminal zero
 survival, zero-time events, probabilities as small as 1e-300, and interval re-entry.
 Source hashes and original terms are linked from [SURVAN coverage](survan.md).
-SURVAN remains partially implemented while its other workflows are ported.
+All advertised calculation families are mapped in the SURVAN coverage audit.

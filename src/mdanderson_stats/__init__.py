@@ -500,6 +500,12 @@ from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 from .survan_baseline import SurvanBaseline, survan_baseline
 from .survan_cox import SurvanCox, survan_cox
+from .survan_descriptive import (
+    SurvanDescription,
+    SurvanFrequencies,
+    survan_describe,
+    survan_frequencies,
+)
 from .survan_km import SurvanKM, SurvanQuantiles, survan_km
 from .survan_logistic import SurvanLogistic, survan_logistic
 from .survan_tests import SurvivalGroupTest, survan_group_test
@@ -553,6 +559,10 @@ from .windows import (
 )
 
 __all__ = [
+    "SurvanDescription",
+    "SurvanFrequencies",
+    "survan_describe",
+    "survan_frequencies",
     "SurvanBaseline",
     "survan_baseline",
     "SurvanCox",

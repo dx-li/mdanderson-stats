@@ -67,14 +67,15 @@ sign reversal does not change the omnibus statistic.
 
 Additional checks cover an analytic tied-censor example, independent-stratum
 addition, group relabeling, absence of information and disconnected groups.
-No claim is made that the entire SURVAN application is implemented: its native
-time-dependent covariates, descriptive summaries and interactive reporting
-remain to be ported.
-[Static-covariate Cox regression](survan-cox.md) and
-[Kalbfleisch–Prentice baseline survival](survan-baseline.md) are implemented.
-Kaplan–Meier and Simon–Lee confidence calculations are available through
-[survan_km](survan-km.md), and
-[logistic regression](survan-logistic.md) provides multivariable binary fits.
+All seven calculation families advertised in the source manual have Python
+interfaces. The [coverage audit](survan-coverage.md) maps each family to its
+implementation and source checks, and distinguishes the numerical APIs from
+the legacy interactive/file interface.
+
+Additional interfaces include [Cox regression](survan-cox.md),
+[baseline survival](survan-baseline.md), [Kaplan–Meier summaries](survan-km.md),
+[logistic regression](survan-logistic.md), and
+[frequency/descriptive tables](survan-descriptive.md).
 
 Sources: [MD Anderson SURVAN](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/59)
 and [source archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SURVAN/SURVAN_V1.tar.gz).

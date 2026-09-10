@@ -624,6 +624,8 @@ source and historical binaries are not bundled in the Python package.
 likelihood and inference with new scaled numerical and separation calculations.
 `survan_baseline.py` implements the Kalbfleisch–Prentice survivor calculation
 with log-domain roots and explicit limiting cases.
+`survan_descriptive.py` implements frequency grouping and descriptive summaries,
+with stable moments and an explicit legacy standard-error field.
 `survan_tests.py` implements SURVAN's log-rank and Gehan–Breslow calculations
 with NumPy risk tables and covariance eigendecomposition. This adaptation is
 maintained independently of the original authors. Original copyright, use terms
