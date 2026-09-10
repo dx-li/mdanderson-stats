@@ -34,6 +34,20 @@
       "retrieved_date": "2026-09-10",
       "bytes": 6494,
       "sha256": "c2643fa28ba066b6be0d61dbca2b86788a13c1ebf014c7aba4f4009b76005be4"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WINDOWS/WINDOWS_V1.tar.gz",
+      "artifact": "source/readme",
+      "retrieved_date": "2026-09-10",
+      "bytes": 4741,
+      "sha256": "48400f19babad53ff67fcf7d97c4699e17e2cb6da128ee8ed29aaadd073e5e30"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WINDOWS/WINDOWS_V1.tar.gz",
+      "artifact": "source/windows.doc",
+      "retrieved_date": "2026-09-10",
+      "bytes": 76236,
+      "sha256": "a0c6942da9c61b0dfb87d77050da159d14371380d5d5f041883acc7f92742b5e"
     }
   ]
 }

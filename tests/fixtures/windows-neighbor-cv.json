@@ -1,0 +1,194 @@
+[
+  {
+    "weighting": "boxcar",
+    "polynomial_weights": "kernel",
+    "estimator": "mean",
+    "expected": [
+      3.25,
+      3.75,
+      2.75,
+      3.75,
+      3.75,
+      4.5,
+      5.5,
+      6.75,
+      5.0
+    ]
+  },
+  {
+    "weighting": "boxcar",
+    "polynomial_weights": "kernel",
+    "estimator": "linear",
+    "expected": [
+      -2.0,
+      2.42857142857143,
+      2.75,
+      3.75,
+      3.75,
+      4.5,
+      5.5,
+      7.57142857142857,
+      1.5
+    ]
+  },
+  {
+    "weighting": "boxcar",
+    "polynomial_weights": "kernel",
+    "estimator": "quadratic",
+    "expected": [
+      1.75,
+      1.45454545454545,
+      -1.0,
+      7.5,
+      0.833333333333334,
+      9.5,
+      0.500000000000001,
+      6.5,
+      1.5
+    ]
+  },
+  {
+    "weighting": "boxcar",
+    "polynomial_weights": "native_inverse",
+    "estimator": "mean",
+    "expected": [
+      3.25,
+      3.75,
+      2.75,
+      3.75,
+      3.75,
+      4.5,
+      5.5,
+      6.75,
+      5.0
+    ]
+  },
+  {
+    "weighting": "boxcar",
+    "polynomial_weights": "native_inverse",
+    "estimator": "linear",
+    "expected": [
+      -2.0,
+      2.42857142857143,
+      2.75,
+      3.75,
+      3.75,
+      4.5,
+      5.5,
+      7.57142857142857,
+      1.5
+    ]
+  },
+  {
+    "weighting": "boxcar",
+    "polynomial_weights": "native_inverse",
+    "estimator": "quadratic",
+    "expected": [
+      1.75,
+      1.45454545454545,
+      -1.0,
+      7.5,
+      0.833333333333334,
+      9.5,
+      0.500000000000001,
+      6.5,
+      1.5
+    ]
+  },
+  {
+    "weighting": "biquadratic",
+    "polynomial_weights": "kernel",
+    "estimator": "mean",
+    "expected": [
+      1.49521531100478,
+      2.93312597200622,
+      2.25609756097561,
+      4.24390243902439,
+      3.36585365853659,
+      5.15853658536585,
+      4.84146341463415,
+      6.88024883359254,
+      3.83971291866029
+    ]
+  },
+  {
+    "weighting": "biquadratic",
+    "polynomial_weights": "kernel",
+    "estimator": "linear",
+    "expected": [
+      -0.970486859112451,
+      2.56502434832426,
+      2.25609756097561,
+      4.24390243902439,
+      3.36585365853658,
+      5.15853658536585,
+      4.84146341463415,
+      7.68955886565454,
+      0.895088323998279
+    ]
+  },
+  {
+    "weighting": "biquadratic",
+    "polynomial_weights": "kernel",
+    "estimator": "quadratic",
+    "expected": [
+      -11.0,
+      2.23792629892424,
+      -1.0,
+      7.5,
+      0.833333333333333,
+      9.5,
+      0.499999999999999,
+      7.18030441748684,
+      -12.0
+    ]
+  },
+  {
+    "weighting": "biquadratic",
+    "polynomial_weights": "native_inverse",
+    "estimator": "mean",
+    "expected": [
+      1.49521531100478,
+      2.93312597200622,
+      2.25609756097561,
+      4.24390243902439,
+      3.36585365853659,
+      5.15853658536585,
+      4.84146341463415,
+      6.88024883359254,
+      3.83971291866029
+    ]
+  },
+  {
+    "weighting": "biquadratic",
+    "polynomial_weights": "native_inverse",
+    "estimator": "linear",
+    "expected": [
+      2.07764705882353,
+      2.08182903097483,
+      3.24390243902439,
+      3.25609756097561,
+      4.13414634146341,
+      3.84146341463415,
+      6.15853658536585,
+      7.24605691799895,
+      4.81411764705882
+    ]
+  },
+  {
+    "weighting": "biquadratic",
+    "polynomial_weights": "native_inverse",
+    "estimator": "quadratic",
+    "expected": [
+      -11.0,
+      0.827494160827492,
+      -0.999999999999998,
+      7.5,
+      0.833333333333334,
+      9.5,
+      0.5,
+      5.95545545545546,
+      -12.0
+    ]
+  }
+]

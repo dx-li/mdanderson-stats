@@ -534,9 +534,18 @@ from .top_simulation import simulate_top_binary
 from .toxicity_timing import toxicity_time_quantile
 from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
-from .windows import WindowCrossValidation, WindowSmoothing, window_cross_validation, window_smooth
+from .windows import (
+    WindowCrossValidation,
+    WindowNeighborCrossValidation,
+    WindowSmoothing,
+    window_cross_validation,
+    window_neighbor_cross_validation,
+    window_smooth,
+)
 
 __all__ = [
+    "WindowNeighborCrossValidation",
+    "window_neighbor_cross_validation",
     "WindowSmoothing",
     "WindowCrossValidation",
     "window_smooth",

@@ -1,0 +1,182 @@
+[
+  {
+    "estimator": "mean",
+    "weighting": "boxcar",
+    "expected": [
+      3.1000001430511475,
+      4.400000095367432,
+      5.000000476837158
+    ]
+  },
+  {
+    "estimator": "linear",
+    "weighting": "boxcar",
+    "expected": [
+      2.875,
+      3.875,
+      5.0
+    ]
+  },
+  {
+    "estimator": "quadratic",
+    "weighting": "boxcar",
+    "expected": [
+      3.1875,
+      5.298610687255859,
+      5.0
+    ]
+  },
+  {
+    "estimator": "maximum",
+    "weighting": "boxcar",
+    "expected": [
+      8.0,
+      8.0,
+      9.0
+    ]
+  },
+  {
+    "estimator": "minimum",
+    "weighting": "boxcar",
+    "expected": [
+      0.0,
+      1.0,
+      1.0
+    ]
+  },
+  {
+    "estimator": "quantile",
+    "weighting": "boxcar",
+    "expected": [
+      2.5,
+      3.6666665077209473,
+      4.999999523162842
+    ]
+  },
+  {
+    "estimator": "std",
+    "weighting": "boxcar",
+    "expected": [
+      2.8089144229888916,
+      2.6907248497009277,
+      2.898275375366211
+    ]
+  },
+  {
+    "estimator": "derivative",
+    "weighting": "boxcar",
+    "expected": [
+      0.5166666507720947,
+      -0.11666679382324219,
+      1.100000023841858
+    ]
+  },
+  {
+    "estimator": "span",
+    "weighting": "boxcar",
+    "expected": [
+      5.0,
+      5.0,
+      5.0
+    ]
+  },
+  {
+    "estimator": "count",
+    "weighting": "boxcar",
+    "expected": [
+      6.0,
+      6.0,
+      6.0
+    ]
+  },
+  {
+    "estimator": "mean",
+    "weighting": "biquadratic",
+    "expected": [
+      3.023959159851074,
+      4.382861614227295,
+      5.000000476837158
+    ]
+  },
+  {
+    "estimator": "linear",
+    "weighting": "biquadratic",
+    "expected": [
+      2.9522032737731934,
+      3.9382572174072266,
+      5.000000476837158
+    ]
+  },
+  {
+    "estimator": "quadratic",
+    "weighting": "biquadratic",
+    "expected": [
+      3.2609856128692627,
+      5.265950679779053,
+      5.000000476837158
+    ]
+  },
+  {
+    "estimator": "maximum",
+    "weighting": "biquadratic",
+    "expected": [
+      8.0,
+      8.0,
+      9.0
+    ]
+  },
+  {
+    "estimator": "minimum",
+    "weighting": "biquadratic",
+    "expected": [
+      0.0,
+      1.0,
+      1.0
+    ]
+  },
+  {
+    "estimator": "quantile",
+    "weighting": "biquadratic",
+    "expected": [
+      2.499999761581421,
+      3.6353557109832764,
+      5.000000476837158
+    ]
+  },
+  {
+    "estimator": "std",
+    "weighting": "biquadratic",
+    "expected": [
+      2.6626718044281006,
+      2.6430673599243164,
+      2.9315168857574463
+    ]
+  },
+  {
+    "estimator": "derivative",
+    "weighting": "biquadratic",
+    "expected": [
+      0.6179323196411133,
+      -0.02028632164001465,
+      0.9489254951477051
+    ]
+  },
+  {
+    "estimator": "span",
+    "weighting": "biquadratic",
+    "expected": [
+      5.0,
+      5.0,
+      5.0
+    ]
+  },
+  {
+    "estimator": "count",
+    "weighting": "biquadratic",
+    "expected": [
+      6.0,
+      6.0,
+      6.0
+    ]
+  }
+]

@@ -1,9 +1,10 @@
 # WINDOWS smoothing
 
-Catalog entry 61 provides moving-window estimators and cross-validation. This
-increment covers all **fixed-width** estimators, with boxcar and biquadratic
-weights. Nearest-neighbor windows, their boundary-tie weights, and full native
-workflow coverage remain pending; the catalog status is partial.
+Catalog entry 61 provides moving-window estimators and cross-validation. The
+implementation covers all ten estimators under both fixed-width and
+nearest-neighbor membership, with boxcar and biquadratic weights, and
+cross-validation for mean/linear/quadratic fits. The original terminal prompts
+and text plotting are represented by array-based Python inputs and outputs.
 
 ```python
 import numpy as np
@@ -21,7 +22,7 @@ assert cv.best_width is not None
 `center ± width/2`. Input observations are stably sorted by x. Omitted centers
 produce 20 equally spaced values over the observed range; explicit centers keep
 their input order. Inputs must be finite; missing observations must be handled
-explicitly before calling. A width is required rather than silently chosen.
+explicitly before calling. Supply exactly one of `width` or `neighbors` rather than silently choosing a smoothing parameter.
 
 Available `estimator` values are `mean`, `linear`, `quadratic`, `maximum`,
 `minimum`, `quantile`, `std`, `derivative`, `span`, and `count`.
@@ -87,9 +88,81 @@ absolute 2e-6). Native mean and linear leave-one-out predictions also agree.
 x=0,...,6 and y=(2,0,4,1,8,3,7), width 4 and centers (0,2.5,5).
 Further focused checks cover exact quadratic reproduction, first derivatives,
 rank loss, empty windows, repeated-x leave-one-out behavior and corrected quantile
-endpoint extrapolation. Native nearest-neighbor parity is not claimed.
+endpoint extrapolation. Nearest-neighbor validation is described below.
 
 Sources: [MD Anderson WINDOWS](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/61)
 and [original archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WINDOWS/WINDOWS_V1.tar.gz).
 Hashes of the archive and consulted sources are in `windows-sources.json`.
 Original files remain in ignored research storage and are not redistributed.
+
+## Nearest-neighbor windows
+
+```python
+from mdanderson_stats import window_neighbor_cross_validation, window_smooth
+
+nearest = window_smooth([0, 1, 1.1, 100], [0, 1, 2, 100], neighbors=2, centers=[1.1])
+assert abs(nearest.estimates[0] - 1.5) < 1e-12
+neighbor_cv = window_neighbor_cross_validation(np.arange(9), [2, 0, 4, 1, 8, 3, 7, 2, 9], [3, 5, 7])
+assert neighbor_cv.best_neighbors in (3, 5, 7)
+```
+
+`neighbors` is an integer from 2 through the number of input observations.
+A binary search selects the closest block of k observations, and all observations
+at the kth distance are included. Thus the reported count may exceed k. Ties
+use exact floating-point distances and x values, avoiding the source's
+coordinate-dependent approximate-equality rule. This makes membership invariant
+to observation ordering, including duplicate x values. As with any floating-point
+distance calculation, very large coordinate offsets can make distinct distances
+numerically indistinguishable; inconsistent boundary mass raises an error.
+
+For n selected points, let b be the number belonging to either endpoint-value
+group. Boundary weights receive factor `(k - (n - b))/b`, with unit weights on
+interior points, then normalization. This reproduces the original boxcar boundary
+adjustment. For biquadratic weighting the denominator is the selected window's
+**observed span**, and the boundary factor is applied when b>2, as in the source.
+The polynomial kernel is evaluated as written even for centers outside the data
+range; it is not replaced by a compact-support kernel. Its weights are evaluated
+in the log domain to avoid overflow far from the data range.
+
+If all selected x values coincide with the center, kernel weights are uniform.
+A zero-span biquadratic window away from its center has status `zero_weight` for
+weighted estimators. Zero kernel weights are removed before estimation; native
+inverse-weight polynomial fits additionally omit normalized weights at most
+1e-10, matching `lqbeta`. Counts and spans still describe the selected membership.
+Min/max/count/span ignore weights. Insufficient positive-weight polynomial
+observations retain the existing explicit failure statuses.
+
+`window_neighbor_cross_validation` tests explicit integer neighbor counts.
+Selection, span and boundary weights are computed **before** dropping the target
+observation, as in WINDOWS. Only its row is excluded, and remaining weights are
+renormalized. Consequently k usually supplies k−1 training observations, with
+additional observations possible from ties. The result exposes `neighbors`,
+`sum_squared_errors`, `valid_folds`, and `best_neighbors`. Invalid candidates
+follow the same rules as width cross-validation; repeated x values are retained.
+
+### Native corrections and validation
+
+The original `wnnrn` starts with the closest point and its right neighbor, then
+compares included boundary distances instead of the next candidate distances.
+On x=(0,1,1.1,100), center=1.1 and k=2 it selects (1.1,100), despite 1 being
+closer. Python selects (1,1.1). It also includes both equal-distance boundaries
+when k would otherwise split a tie. The source has a double increment in its
+right-boundary tie scan and possible out-of-range accesses; Python replaces
+that scan with bounded searches and does not emulate those defects.
+
+`windows-neighbor-native.json` covers all ten estimators and both weighting
+schemes on x=0,...,8, y=(2,0,4,1,8,3,7,2,9), k=5, and centers (2.5,4.5,5.5).
+The original Fortran and Python agree at relative 1e-5/absolute 2e-6 tolerance
+with native inverse polynomial weights. The two native weighting routines were
+also checked directly on x=(0,0,1,2,2), k=4, center=1, independently of membership.
+Exhaustive-distance checks cover irregular designs, extrapolation and k=n.
+Independent R fits supply all 108 leave-one-out predictions for mean, linear
+and quadratic fits, both kernels and both polynomial-weight conventions on the
+nine-observation data with k=5. These agree to 1e-12 and are stored in
+`windows-neighbor-cv.json`. Tests also cover zero weights, all-equal x values,
+quadratic reproduction and invalid cross-validation candidates.
+
+The archived introduction's implemented estimator list is covered. The manual
+also discusses possible applications such as local Kaplan–Meier estimation and
+coefficient plots; these are not routines implemented in the distributed WINDOWS
+estimator dispatch and are not claimed as WINDOWS features here.

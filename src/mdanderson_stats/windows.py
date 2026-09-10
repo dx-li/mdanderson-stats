@@ -1,4 +1,4 @@
-"""Fixed-width estimators from MD Anderson WINDOWS."""
+"""Fixed-width and nearest-neighbor estimators from MD Anderson WINDOWS."""
 
 from dataclasses import dataclass
 
@@ -6,6 +6,7 @@ import numpy as np
 from numpy.typing import ArrayLike
 
 from ._validation import FloatArray, finite, scalar
+from .windows_neighbors import _neighbor_bounds, _neighbor_weights
 
 
 @dataclass(frozen=True)
@@ -35,7 +36,8 @@ def window_smooth(
     x: ArrayLike,
     y: ArrayLike,
     *,
-    width: float,
+    width: float | None = None,
+    neighbors: int | None = None,
     centers: ArrayLike | None = None,
     estimator: str = "mean",
     weighting: str = "boxcar",
@@ -44,17 +46,28 @@ def window_smooth(
     polynomial_weights: str = "kernel",
     leave_one_out: bool = False,
 ) -> WindowSmoothing:
-    """Full window width; endpoints included. Missing estimates have explicit status.
+    """Choose a full window width or neighbor count; missing estimates have explicit status.
 
     Estimators: mean, linear, quadratic, maximum, minimum, quantile, std,
     derivative, span, count. Polynomial weights are kernel or native_inverse.
     Leave-one-out evaluates sorted observations and excludes just the target row.
     """
     x, y = _data(x, y)
-    width = scalar(width, "width")
+    if (width is None) == (neighbors is None):
+        raise ValueError("supply exactly one of width or neighbors")
+    if width is not None:
+        width = scalar(width, "width")
+        if width <= 0:
+            raise ValueError("width must be positive")
+    if neighbors is not None and (
+        isinstance(neighbors, (bool, np.bool_))
+        or not isinstance(neighbors, (int, np.integer))
+        or not 2 <= neighbors <= x.size
+    ):
+        raise ValueError("neighbors must be an integer in 2..len(x)")
     quantile = scalar(quantile, "quantile")
-    if width <= 0 or not 0 <= quantile <= 1:
-        raise ValueError("width must be positive and quantile in [0,1]")
+    if not 0 <= quantile <= 1:
+        raise ValueError("quantile must be in [0,1]")
     if estimator not in (
         "mean",
         "linear",
@@ -88,9 +101,14 @@ def window_smooth(
         points = points[None]
     if points.ndim != 1 or not 1 <= points.size <= 100_000:
         raise ValueError("centers must have 1..100000 entries")
-    with np.errstate(over="ignore"):
-        left = np.searchsorted(x, points - width / 2, side="left")
-        right = np.searchsorted(x, points + width / 2, side="right")
+    if width is not None:
+        with np.errstate(over="ignore"):
+            left = np.searchsorted(x, points - width / 2, side="left")
+            right = np.searchsorted(x, points + width / 2, side="right")
+    else:
+        assert neighbors is not None
+        bounds = [_neighbor_bounds(x, float(center), neighbors) for center in points]
+        left, right = np.array(bounds, dtype=np.intp).T
     if np.sum(right - left) > 20_000_000:
         raise ValueError("total window membership exceeds twenty million observations")
     values = np.full(points.size, np.nan)
@@ -102,7 +120,12 @@ def window_smooth(
     )
     for i, center in enumerate(points):
         indices = np.arange(left[i], right[i])
+        neighbor_weight = None
+        if neighbors is not None:
+            neighbor_weight = _neighbor_weights(x[indices], float(center), neighbors, weighting)
         if leave_one_out:
+            if neighbor_weight is not None:
+                neighbor_weight = neighbor_weight[indices != i]
             indices = indices[indices != i]
         xx, yy = x[indices], y[indices]
         counts[i] = yy.size
@@ -113,7 +136,10 @@ def window_smooth(
             else:
                 status.append("empty")
             continue
-        spans[i] = xx[-1] - xx[0]
+        with np.errstate(over="ignore"):
+            spans[i] = xx[-1] - xx[0]
+        if not np.isfinite(spans[i]):
+            raise ArithmeticError("window span is not representable; rescale x")
         if estimator == "count":
             values[i] = yy.size
         elif estimator == "span":
@@ -125,8 +151,26 @@ def window_smooth(
         else:
             # Native fixed-width kernel uses full width in its denominator.
             delta = xx - center
-            z = delta / width
-            weight = np.ones(yy.size) if weighting == "boxcar" else (1 - z * z) ** 2
+            if neighbor_weight is None:
+                assert width is not None
+                z = delta / width
+                weight = np.ones(yy.size) if weighting == "boxcar" else (1 - z * z) ** 2
+            else:
+                weight = neighbor_weight
+            if weight.sum() == 0:
+                status.append("zero_weight")
+                continue
+            weight = weight / weight.sum()
+            positive = weight > (
+                1e-10
+                if polynomial_weights == "native_inverse"
+                and estimator in ("linear", "quadratic", "derivative")
+                else 0
+            )
+            yy, delta, weight = yy[positive], delta[positive], weight[positive]
+            if not yy.size:
+                status.append("zero_weight")
+                continue
             weight /= weight.sum()
             yscale = float(np.max(np.abs(yy)))
             scaled = yy / yscale if yscale else yy
@@ -196,15 +240,69 @@ def window_cross_validation(
     widths = finite(widths, "widths")
     if widths.ndim != 1 or not 1 <= widths.size <= 1000 or np.any(widths <= 0):
         raise ValueError("widths must be a vector of 1..1000 positive candidates")
-    if widths.size * x.size * x.size > 50_000_000:
+    scores, folds, best = _cross_validation(
+        x, y, widths, estimator, weighting, polynomial_weights, False
+    )
+    return WindowCrossValidation(_readonly(widths), _readonly(scores), _readonly(folds), best)
+
+
+@dataclass(frozen=True)
+class WindowNeighborCrossValidation:
+    neighbors: FloatArray
+    sum_squared_errors: FloatArray
+    valid_folds: FloatArray
+    best_neighbors: int | None
+
+
+def window_neighbor_cross_validation(
+    x: ArrayLike,
+    y: ArrayLike,
+    neighbors: ArrayLike,
+    *,
+    estimator: str = "mean",
+    weighting: str = "boxcar",
+    polynomial_weights: str = "kernel",
+) -> WindowNeighborCrossValidation:
+    """Tune neighbor counts; membership and weights are determined before removing each target."""
+    x, y = _data(x, y)
+    candidates = finite(neighbors, "neighbors")
+    if (
+        candidates.ndim != 1
+        or not 1 <= candidates.size <= 1000
+        or np.any(candidates != np.floor(candidates))
+        or np.any((candidates < 2) | (candidates > x.size))
+    ):
+        raise ValueError("neighbors must contain 1..1000 integer candidates in 2..len(x)")
+    scores, folds, best = _cross_validation(
+        x, y, candidates, estimator, weighting, polynomial_weights, True
+    )
+    return WindowNeighborCrossValidation(
+        _readonly(candidates),
+        _readonly(scores),
+        _readonly(folds),
+        None if best is None else int(best),
+    )
+
+
+def _cross_validation(
+    x: FloatArray,
+    y: FloatArray,
+    candidates: FloatArray,
+    estimator: str,
+    weighting: str,
+    polynomial_weights: str,
+    nearest: bool,
+) -> tuple[FloatArray, FloatArray, float | None]:
+    if candidates.size * x.size * x.size > 50_000_000:
         raise ValueError("cross-validation workload exceeds supported limit")
-    scores = np.full(widths.size, np.nan)
-    folds = np.zeros(widths.size)
-    for i, width in enumerate(widths):
+    scores = np.full(candidates.size, np.nan)
+    folds = np.zeros(candidates.size)
+    for i, parameter in enumerate(candidates):
         result = window_smooth(
             x,
             y,
-            width=float(width),
+            width=None if nearest else float(parameter),
+            neighbors=int(parameter) if nearest else None,
             estimator=estimator,
             weighting=weighting,
             polynomial_weights=polynomial_weights,
@@ -218,5 +316,5 @@ def window_cross_validation(
             if not np.isfinite(scores[i]):
                 raise ArithmeticError("cross-validation loss is not representable; rescale y")
     valid = np.flatnonzero(np.isfinite(scores))
-    best = float(widths[valid[np.argmin(scores[valid])]]) if valid.size else None
-    return WindowCrossValidation(_readonly(widths), _readonly(scores), _readonly(folds), best)
+    best = float(candidates[valid[np.argmin(scores[valid])]]) if valid.size else None
+    return scores, folds, best

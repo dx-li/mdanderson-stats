@@ -884,6 +884,6 @@ splitting, with trimmed validation curves, automatic threshold selection and
 final-model diagnostics. Stable SVD fits support corrected refitted scores and
 an explicit original-software compatibility mode.
 
-[WINDOWS](docs/windows.md) adds fixed-width nonparametric smoothing, local
-polynomial derivatives, descriptive window statistics and leave-one-out bandwidth
-cross-validation. Nearest-neighbor windowing remains pending.
+[WINDOWS](docs/windows.md) adds fixed-width and nearest-neighbor smoothing, local
+polynomial derivatives, descriptive window statistics, and leave-one-out selection
+of widths or neighbor counts, with documented native boundary weights and corrections.
