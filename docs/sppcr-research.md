@@ -88,8 +88,8 @@ transform and the fixed normal multiplier 1.959964 for confidence limits.
   `stats_from_accum` computes population variance with divisor B, using the
   cancellation-prone difference of mean squares and squared mean.
 - The inverse arcsine confidence-limit formula is periodic outside `[0,pi]`.
-  The report path needs a checked interval policy, rather than blindly wrapping
-  endpoints through `sin^2`.
+  The Python interval implementation clips transformed limits to `[0,pi]` before
+  inversion instead of wrapping endpoints through `sin^2`.
 - `structures_mod.initialize` attempts allocation of already allocated arrays when
   dimensions change and inconsistently resizes other arrays. Python must use
   independent, correctly sized state for successive data sets.
@@ -102,15 +102,32 @@ Python results. The fitting API distinguishes original counts, deliberate
 boundary adjustments, genuine boundary estimates and numerical failure. Frequency
 and uncertainty workflows must retain these distinctions.
 
+## Input conversion findings for the remaining parser work
+
+`data_in_struct_mod.values_to_structures` doubles input DNA amounts when
+converting genome equivalents to allele equivalents, removes never-seen allele
+columns and maps progenitor sizes to the retained indices. The numerical Python
+APIs accept model DNA amounts directly; a future file parser must make this unit
+conversion explicit. The native removal test sums all 50 rows of `seen_in`, not
+only `1:n_dna_in`, so repeated-input state requires a dedicated native probe.
+Removing an unobserved progenitor can also leave its mapped index at -1. Neither
+behavior should become an implicit Python input policy.
+
+The batch reader requires ordered `nallele`, `nrun`, `nwell`, `allelesizes`,
+`progenitor` records followed by the specified number of `run` records. Each run
+contains a DNA amount and one integer count per allele. Its lexical and comment
+rules, FileMaker input, interactive input and malformed-data handling still need
+full reconciliation and validation.
+
 ## Remaining implementation scope
 
 | Source responsibilities | Python work required |
 |---|---|
-| `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Mean fitting, curvature, frequency/calibration/mutant summaries and forward transforms implemented; inverse-transform confidence intervals remain with reporting |
+| `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Mean fitting, curvature, summaries, transforms and support-aware inverse-transform confidence intervals implemented |
 | `generate_mod`, `one_data_set_mod`, `accumulate_mod` | Probability models, explicit-state NumPy simulation, replicate fits and stable population summaries implemented; simulation reports remain with output workflows |
 | `ecuyer_cote_mod`, random modules, seed helpers | Reconcile existing RANDLIB support with this source version; explicit reproducible RNG state |
 | `problem_in_mod`, `data_in_struct_mod` | Validate batch and FileMaker-derived formats, interactive inputs and progenitor identities |
-| `results_out_mod` | Structured results, confidence intervals, diagnostics, data and simulation reports |
+| `results_out_mod` | Structured confidence intervals and diagnostics implemented; formatted data, analysis and simulation reports remain |
 | Main program, structures, file/format/input helpers | Complete reusable analysis workflow, CLI/stream behavior, safe file handling and source-interface reconciliation |
 
 Build and startup succeeded, and twelve independent native-reference tests pass.

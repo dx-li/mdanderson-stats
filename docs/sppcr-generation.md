@@ -2,7 +2,8 @@
 
 SPPCR's independent binomial sampling layer is available through three functions.
 [Bootstrap fitting and summaries](sppcr-bootstrap.md) build on this layer.
-Confidence intervals and the full application workflow remain pending.
+[Confidence intervals](sppcr-intervals.md) build on the bootstrap results.
+The full application workflow remains pending.
 
 ```python
 import numpy as np

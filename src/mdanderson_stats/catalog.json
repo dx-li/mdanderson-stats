@@ -881,7 +881,8 @@
         "Vectorized per-allele Poisson-mean likelihood fits over DNA levels and experiment batches, observed-information variances, disclosed fit counts, true zero boundaries, explicit fully detected allele policy, immutable results and numerical root brackets",
         "Vectorized allele-frequency, calibration and mutant-frequency summaries with direct complementary groups, independent-mean delta variances, stable arcsine transforms, immutable results and explicit unavailable/structurally constant uncertainty",
         "Stable Poisson detection probabilities, original-count empirical probabilities and vectorized independent binomial generation with explicit NumPy Generator state, batched replicates and immutable count results",
-        "Batched bootstrap generation and replicate fitting with original-count or explicit probability models, stable population summaries, retained replicate values and explicit undefined-frequency diagnostics"
+        "Batched bootstrap generation and replicate fitting with original-count or explicit probability models, stable population summaries, retained replicate values and explicit undefined-frequency diagnostics",
+        "Vectorized observed-centered bootstrap confidence intervals for calibration, reciprocal calibration, allele and mutant frequencies, with support clipping, unbounded reciprocal limits and unavailable-uncertainty diagnostics"
       ],
       "validation": [
         "docs/sppcr-research.md",
@@ -907,7 +908,14 @@
         "tests/test_sppcr_bootstrap.py",
         "docs/sppcr-bootstrap.md",
         "tools/benchmark_sppcr_bootstrap.py",
-        "docs/sppcr-bootstrap-benchmark.json"
+        "docs/sppcr-bootstrap-benchmark.json",
+        "src/mdanderson_stats/sppcr_intervals.py",
+        "tests/test_sppcr_intervals.py",
+        "tools/reference_sppcr_intervals.py",
+        "tests/fixtures/sppcr_intervals.json",
+        "docs/sppcr-intervals.md",
+        "tools/benchmark_sppcr_intervals.py",
+        "docs/sppcr-intervals-benchmark.json"
       ]
     },
     {

@@ -1,0 +1,22 @@
+{
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "python": "3.13.5",
+  "numpy": "2.5.3",
+  "scope": "Three-run medians; identical intervals and diagnostics; same Python, not native Fortran",
+  "cases": [
+    {
+      "experiments": 32,
+      "alleles": 4,
+      "batch_seconds": 0.0003992500714957714,
+      "scalar_seconds": 0.009719042107462883,
+      "speedup": 24.34324450099897
+    },
+    {
+      "experiments": 1024,
+      "alleles": 4,
+      "batch_seconds": 0.0016454998403787613,
+      "scalar_seconds": 0.30411749985069036,
+      "speedup": 184.8177024317964
+    }
+  ]
+}

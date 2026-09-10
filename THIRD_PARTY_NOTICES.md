@@ -585,6 +585,9 @@ NumPy binomial generation in place of clock seeding and single-precision draws;
 historical random-sequence equivalence is not claimed. Bootstrap generation and
 replicate fits retain all observations and mark undefined frequencies explicitly.
 Centered, scaled population summaries replace cancellation-prone raw squared sums.
+Confidence limits use the source multiplier and observed centers, with explicit
+support clipping and unbounded reciprocal calibration limits replacing invalid
+wrapped or negative limits.
 Remaining SPPCR workflow components are not yet implemented. The archive includes
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native

@@ -55,6 +55,7 @@ def _series(values: FloatArray) -> SPPCRBootstrapSeries:
 class SPPCRBootstrapSummary:
     """All replicates retained; defined marks positive-total-mean experiments."""
 
+    progenitor: tuple[int, int]
     defined: BoolArray
     mu: SPPCRBootstrapSeries
     calibration: SPPCRBootstrapSeries
@@ -85,6 +86,7 @@ def sppcr_bootstrap_summary(mu: ArrayLike, *, progenitor: tuple[int, int]) -> SP
     if np.any(~np.isfinite(total)):
         raise ArithmeticError("SPPCR total mean exceeds finite float64 range")
     return SPPCRBootstrapSummary(
+        frequencies.progenitor,
         _mask(defined),
         _series(m),
         _series(total),

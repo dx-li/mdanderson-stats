@@ -224,6 +224,12 @@ from .sppcr_generate import (
     sppcr_generate,
     sppcr_observed_probabilities,
 )
+from .sppcr_intervals import (
+    SPPCRInterval,
+    SPPCRIntervals,
+    sppcr_bootstrap_intervals,
+    sppcr_intervals,
+)
 from .stattab_console import STATTABRun, run_stattab
 from .stattab_files import STATTABFile, stattab_open_file, stattab_report_file_dialogue
 from .stattab_probability import (
@@ -254,6 +260,10 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "SPPCRInterval",
+    "SPPCRIntervals",
+    "sppcr_intervals",
+    "sppcr_bootstrap_intervals",
     "SPPCRBootstrap",
     "SPPCRBootstrapSeries",
     "SPPCRBootstrapSummary",

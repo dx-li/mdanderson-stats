@@ -3,8 +3,8 @@
 `sppcr_bootstrap` generates independent binomial replicate data, fits each
 experiment and summarizes the replicate distributions. `sppcr_bootstrap_summary`
 can also summarize previously fitted or externally supplied replicate means.
-Confidence intervals, historical RNG compatibility and file/application workflows
-remain separate outstanding work; SPPCR is still partial.
+[Confidence intervals](sppcr-intervals.md) consume these summaries. Historical RNG
+compatibility and file/application workflows remain outstanding; SPPCR is partial.
 
 ```python
 import numpy as np
@@ -59,7 +59,7 @@ No numerical failure is caught and converted into a fabricated successful fit.
 with shape `(replicates, ..., alleles)`. Replicate and allele axes must be nonempty;
 empty leading experiment axes are supported.
 
-`SPPCRBootstrapSummary` contains these `SPPCRBootstrapSeries` results:
+`SPPCRBootstrapSummary` retains the validated progenitor indices and contains these `SPPCRBootstrapSeries` results:
 
 - `mu`: individual allele means;
 - `calibration`: total allele mean;
