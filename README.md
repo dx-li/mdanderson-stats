@@ -831,3 +831,7 @@ because the public protocol omits it; default decision tables are reproduced.
 boundaries, optional robust historical borrowing and complete-outcome dose assignment,
 verified against published and
 live-app tables. Simulation and final MTD estimation options remain pending.
+
+[Bayesian prior ESS](docs/conjugate-ess.md) adds seven conjugate-model calculations,
+with vectorized inputs and an explicit choice between information-based and native
+gamma–exponential conventions. Nonconjugate app workflows remain pending.

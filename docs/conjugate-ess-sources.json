@@ -1,0 +1,33 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BayesESS/BayesESS_Support.pdf",
+      "artifact": "support.pdf",
+      "retrieved_date": "2026-09-10",
+      "sha256": "18fbb026f6dcf66e6224f96844af35bb76d041bddfd215156db8e9136485cb31",
+      "bytes": 405108
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BayesESS/",
+      "artifact": "app.html",
+      "retrieved_date": "2026-09-10",
+      "sha256": "626723ddb6ee192b1277efdbe7218cad954d1b1c920c24967d2e2fc997516ca0",
+      "bytes": 36260
+    },
+    {
+      "url": "https://github.com/github-js/BayesESS/blob/4bbf4df3789912b967774e8ff5c3a2d6d5646cdd/R/ess.R",
+      "artifact": "source/R/ess.R",
+      "retrieved_date": "2026-09-10",
+      "sha256": "59de41d4271fe842ca02e190cad0e41963177fe1849be1744a3b88e91845cdb3",
+      "bytes": 17745
+    },
+    {
+      "url": "https://github.com/github-js/BayesESS/blob/4bbf4df3789912b967774e8ff5c3a2d6d5646cdd/R/internal.R",
+      "artifact": "source/R/internal.R",
+      "retrieved_date": "2026-09-10",
+      "sha256": "bfbe92f0e5366e0157ff250e3743a24048f1f24244825524aa67c957bd5bcf14",
+      "bytes": 25620
+    }
+  ],
+  "native_reference": "R 0.1.19 functions sourced without compiled dependencies; seven conjugate cases executed. App V0.0.5.0 confirms gamma-exponential output equals beta."
+}

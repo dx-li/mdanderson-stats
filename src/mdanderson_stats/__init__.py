@@ -178,6 +178,7 @@ from .cdflib_t import CDFStudentT, ccum_t, cdf_t, cum_t, inv_t
 from .chi_square_order_bounds import ChiSquareOrderBounds, chi_square_order_bounds
 from .condis import CondiSImputation, condis_impute
 from .condis_linear import CondiSLinearRefinement, condis_linear_refine
+from .conjugate_ess import conjugate_prior_ess
 from .continuous_sample_size import (
     ContinuousSampleSize,
     anova_effect_size,
@@ -481,6 +482,7 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "conjugate_prior_ess",
     "IBOINBoundaries",
     "IBOINDesign",
     "RareDisease123Decision",

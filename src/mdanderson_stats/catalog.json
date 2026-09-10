@@ -3588,12 +3588,21 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BayesESS",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BayesESS",
-      "references": [],
+      "references": [
+        "https://github.com/github-js/BayesESS",
+        "https://biostatistics.mdanderson.org/shinyapps/BayesESS/BayesESS_Support.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Vectorized prior ESS for beta-binomial, gamma-exponential, gamma-Poisson, Dirichlet-multinomial, normal-normal and known-mean inverse-chi-squared/inverse-gamma-normal models",
+        "Explicit information/native gamma-exponential conventions to distinguish equivalent count from native prior-exposure output"
+      ],
+      "validation": [
+        "Seven native R conjugate results, posterior information increments, time rescaling, vectorization and extreme variance scales; tests/test_conjugate_ess.py",
+        "Pending unknown-mean variance, regression/CRM/TITE-CRM/nonconjugate workflows, plots and reports; docs/conjugate-ess.md"
+      ]
     },
     {
       "id": 156,
