@@ -82,7 +82,8 @@ repairs, domains and Python semantics.
 | `sort_mod`, `sort_permutation_mod` | Matrix-column sorting, gather indices, direct/reversed gathers and callback contracts implemented below. Existing `sort_list` offers list sorting; its Misclib-specific source comparison remains pending |
 | `format_number_mod` | Integer/single/double number formatting implemented below, including alignment, scaling, trimming and fit reporting |
 | `print_it_mod`, `format_specs` | Template-page compilation, fixed-width substitutions and message printing implemented below; screen clearing, pauses and related console utilities remain pending |
-| `get_values_from_user_mod`, `open_file` | Existing console helpers offer related behavior; exact prompting/file contracts not yet audited |
+| `get_values_from_user_mod` | Existing console helpers offer related behavior; final source-contract audit pending |
+| `open_file` | Interactive file selection implemented below with explicit statuses, read/create/append/overwrite and confirmation before mutation |
 | `interface_mod`, build/install files | Fortran interfaces and installation need final reconciliation with Python packaging |
 
 The manual mistakenly prints `2/sqrt(2*pi)` in its erf/erfc definitions. The
@@ -308,3 +309,70 @@ Native validation required two packaging repairs and explicit caller setup:
 expected output and repairs. Two focused tests check that comparison, repeat
 rendering, literal substitutions, malformed structure, suppression/forcing,
 stream routing and preservation of caller state.
+
+## Interactive file selection
+
+`misclib_open_file(*, console=None, message="", read_only=False,
+appendable=True, delimiter="none", max_attempts=3, encoding="utf-8")` ports the
+`open_file.f90` selection workflow using caller-owned Python text streams.
+
+```python
+from io import StringIO
+from mdanderson_stats import CDFConsole, misclib_open_file
+
+# An interactive call defaults to standard input/output:
+# selection = misclib_open_file(read_only=True)
+# The same workflow can be driven by explicit streams:
+console = CDFConsole(StringIO("quit\n"), StringIO())
+selection = misclib_open_file(console=console)
+assert selection.status == 2 and selection.stream is None
+```
+
+The returned immutable `MisclibFileSelection` contains `status`, `stream`,
+`path`, `action`, `delimiter` and optional `error`. Status meanings are 0 for
+success, 1 for exhausted filename attempts, 2 for quit and 3 for back. On
+success, use `with selection.stream as file:` after checking the status; the
+caller owns and must close the stream. Failed/cancelled results have no stream
+or path. EOF and underlying console-stream failures propagate, following the
+existing `CDFConsole` contract; they do not fabricate an open-file result.
+
+A filename is the first space-delimited word, preserving the source's inline
+comment convention. Python also accepts single- or double-quoted filenames with
+spaces, followed by an optional comment. Backslashes remain literal. `back` and
+`quit` are case-insensitive commands. Blank names, NUL characters and unclosed
+quotes are rejected within the bounded filename-attempt loop. Unicode filenames
+are accepted without the legacy ASCII-warning dialog.
+
+For an existing writable file, the user chooses `(q)uit`, `(r)etry`,
+`(o)verwrite`, or `(a)ppend` when `appendable=True`. Read-only selection requires
+an existing file. New writable paths select creation. Every selected action
+then asks for quit, retry or proceed. Invalid action choices use the console's
+bounded character-input policy. Open errors report context and allow another
+filename attempt; exhaustion includes the last available error message.
+
+**Confirmation occurs before opening, creating or truncating the file.** The
+original truncates before its confirmation prompt and can delete the newly
+opened/overwritten file when the user cancels. Python cancellation preserves
+existing contents and creates no unwanted file. Confirmed creation uses exclusive
+`x+` mode, so a file appearing between selection and creation is not overwritten.
+Confirmed overwrite opens an existing file as `r+` and truncates it; append opens
+an existing file as `r+` and seeks to its end. Append therefore sets the initial
+position, as Fortran POSITION='APPEND' does; callers can deliberately seek later.
+Read-only uses `r`, repairing the original's READWRITE access even in read-only
+mode. A failure after opening closes the stream. Filesystem changes are not
+transactional if an operating-system error occurs after truncation.
+
+`delimiter` accepts case-insensitive `none`, `quote`, or `apostrophe`. The result
+records this legacy list-directed formatting preference. Raw Python stream
+writes remain literal: selecting a delimiter does not turn text into Fortran
+list-directed or NAMELIST serialization. Python stream/descriptor management
+replaces numeric Fortran unit allocation and the global already-open-unit check;
+multiple handles follow normal Python/operating-system rules. Invalid arguments
+raise before prompting, including unknown encodings.
+
+`tests/test_misclib_files.py` exercises actual temporary files and scripted
+console streams: create/read/append/overwrite, filenames containing spaces,
+read-only permissions, cancellation before overwrite, retry before creation,
+quit/back statuses, missing files, directory-open failures, bounded attempts and
+EOF. These are filesystem integration checks against the inspected source
+workflow and documented repairs, not claims of native Fortran transcript parity.

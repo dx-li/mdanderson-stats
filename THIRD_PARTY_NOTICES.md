@@ -707,3 +707,8 @@ in `docs/misclib.md`.
 fixed-width substitution contracts of `print_it_mod.f90`. It reuses the existing
 CDFConsole message controls. Native validation repairs are documented in
 `docs/misclib.md`; original source files are not redistributed.
+
+`misclib_files.py` implements the selection workflow documented in Misclib’s
+`open_file.f90` using Python-owned streams and confirmation before filesystem
+mutation. Source behavior and deliberate I/O repairs are described in
+`docs/misclib.md`; the original Fortran source is not redistributed.

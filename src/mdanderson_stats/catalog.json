@@ -2670,17 +2670,19 @@
       "status": "partial",
       "implemented_features": [
         "Bounded Brent/golden scalar maximizer with direct/reverse communication, private state, numerical safeguards and evaluation budget; fun_max, rc_fun_max, set_fun_max; docs/misclib.md.",
-        "Reuse existing CDFLIB APIs for 35 math, five string and eight root-finder source procedures whose normalized bodies match. Remaining console/file and list-sort source contracts remain pending source-contract audit or implementation.",
+        "Reuse existing CDFLIB APIs for 35 math, five string and eight root-finder source procedures whose normalized bodies match. Remaining console and list-sort source contracts remain pending source-contract audit or implementation.",
         "Matrix-column sorting, stable gather permutations, direct/reversed/copy options, partial blocks, integer/real/string data and custom full-column comparators; sort_matrix, permutation_sort_matrix, permute_matrix. Source index orientation and negative-option discrepancies documented.",
         "Integer, single-real and double-real number formatting with strict fixed/exponential thresholds, scale factors, all alignments, trailing-zero control and explicit fit results; format_number, FormattedNumber. Rounding-carry and extreme-exponent repairs documented.",
-        "Original BEGIN/CONTINUE/END message-page syntax, named pages, fixed-width percent substitutions, immutable rendering and existing CDFConsole display/routing controls; compile_misclib_messages, MisclibMessage, print_misclib_message. Legacy generator syntax/module-name repairs documented."
+        "Original BEGIN/CONTINUE/END message-page syntax, named pages, fixed-width percent substitutions, immutable rendering and existing CDFConsole display/routing controls; compile_misclib_messages, MisclibMessage, print_misclib_message. Legacy generator syntax/module-name repairs documented.",
+        "Interactive text-file selection with read/create/append/overwrite, quit/back/retry statuses, caller-owned streams, quoted filenames and bounded attempts; misclib_open_file, MisclibFileSelection. Confirmation precedes mutation; read-only mode is enforced."
       ],
       "validation": [
         "Six compiled-native scalar maximization references plus analytic locations, interleaved states, budget failures and extreme coordinate/objective scales; tests/test_misclib_maximum.py; tests/fixtures/misclib-maximum-native.json.",
         "Procedure-by-procedure source comparison with pinned CDFLIB90; docs/misclib-shared-source.json; existing CDFLIB numerical validation applies to the identical source methods.",
         "Compiled unchanged Fortran double/single/integer matrix sorts and all permutation modes with single-row and custom multirow keys; native padded-character ordering; tests/test_misclib_sort.py and tests/fixtures/misclib-sort-native.json. Stable ties, large integers, malformed permutations and immutable outputs checked.",
         "240 compiled-native number-format cases matched; compact representative fixture tests/fixtures/misclib-format-native.json, tests/test_misclib_format.py. Explicit checks for field failure, rounding carry, exact large integers, subnormals and three-digit exponents.",
-        "Three exact native-rendered template pages after one-semicolon private Perl repair and generated module-name correction, using unchanged Fortran print_it_mod. Native fixture and focused state/routing/parser checks: tests/test_misclib_messages.py; tests/fixtures/misclib-messages-native.json."
+        "Three exact native-rendered template pages after one-semicolon private Perl repair and generated module-name correction, using unchanged Fortran print_it_mod. Native fixture and focused state/routing/parser checks: tests/test_misclib_messages.py; tests/fixtures/misclib-messages-native.json.",
+        "Real temporary-file integration checks for every file action, cancellation preserving existing contents, retries creating no unwanted file, read-only permissions, missing paths, invalid arguments and EOF; tests/test_misclib_files.py."
       ]
     },
     {

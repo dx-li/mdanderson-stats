@@ -946,3 +946,6 @@ fixed/scientific thresholds, exponent scaling and explicit field-fit reporting.
 `compile_misclib_messages` reads Misclib’s page-template syntax and renders
 fixed-width substitutions; `print_misclib_message` uses the existing console’s
 display and stream-routing controls.
+
+`misclib_open_file` provides scripted or interactive file selection, with
+read/create/append/overwrite actions and confirmation before changing a file.
