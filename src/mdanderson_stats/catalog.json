@@ -1337,9 +1337,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Backward elimination via repeated data splitting: trimmed/truncated validation curves, selected alpha, final regression coefficients, MSE, R-squared and Mallows Cp. Corrected refitted prediction scores plus explicit native stale-coefficient/threshold compatibility; supplied split replay, stable centered/scaled SVD fits, and original MSE exposed separately."
+      ],
+      "validation": [
+        "tests/test_berds.py",
+        "tests/fixtures/berds-native.json",
+        "docs/berds.md",
+        "docs/berds-sources.json"
+      ]
     },
     {
       "id": 36,

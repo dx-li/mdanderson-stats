@@ -1,0 +1,67 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BERDS/BERDS_V1.tar.gz",
+      "artifact": "archive.tar.gz",
+      "retrieved_date": "2026-09-10",
+      "bytes": 91205,
+      "sha256": "61597eed0a00f09961679a11fe8b1b7d492e4bb2576acbe7280aced3e218d87b"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BERDS/BERDS_V1.tar.gz",
+      "artifact": "source/berds/readme",
+      "retrieved_date": "2026-09-10",
+      "bytes": 2372,
+      "sha256": "ec5cb45a68ae09a82b0d9bc52c083b5565aa032e22475f56ecea77390851a1ae"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BERDS/BERDS_V1.tar.gz",
+      "artifact": "source/berds/BERDS.doc",
+      "retrieved_date": "2026-09-10",
+      "bytes": 5515,
+      "sha256": "115c404398275395115314044d7dac58022bc63cac7f0b70ae71803a65a16158"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BERDS/BERDS_V1.tar.gz",
+      "artifact": "source/berds/berds.c",
+      "retrieved_date": "2026-09-10",
+      "bytes": 15458,
+      "sha256": "0f876d9f499a071e0b5b9ab3cdee0c94b14d8abae173d651debb020126a42626"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BERDS/BERDS_V1.tar.gz",
+      "artifact": "source/berds/back.c",
+      "retrieved_date": "2026-09-10",
+      "bytes": 5318,
+      "sha256": "cd851c3a6a872f9b8b80e99abcadef3ae21b9ba58c808f12fdb41a6cb7b1a746"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BERDS/BERDS_V1.tar.gz",
+      "artifact": "source/berds/utils.c",
+      "retrieved_date": "2026-09-10",
+      "bytes": 12107,
+      "sha256": "4538242d2a1e34fece0bb807b4191bfa9a96555ad6ad80cf57ff335f221544f6"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BERDS/BERDS_V1.tar.gz",
+      "artifact": "source/berds/dcdflib.c",
+      "retrieved_date": "2026-09-10",
+      "bytes": 229967,
+      "sha256": "b86aec32579c885fbcf90e6ee342e1b1d687f0b3ca1978b9982d57f17b66b8f9"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BERDS/BERDS_V1.tar.gz",
+      "artifact": "source/berds/ipmpar.c",
+      "retrieved_date": "2026-09-10",
+      "bytes": 9470,
+      "sha256": "ae339ea23ceaa656fe29ef4046ea14d63ae10b1339e2c7356019dc30c979d99f"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BERDS/BERDS_V1.tar.gz",
+      "artifact": "source/berds/driver.c",
+      "retrieved_date": "2026-09-10",
+      "bytes": 19197,
+      "sha256": "c82f285dac08f7be582b418bb0df7e96b19a5f2e6e80c821696df5e68fb2194c"
+    }
+  ]
+}

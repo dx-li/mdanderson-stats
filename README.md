@@ -878,3 +878,8 @@ Poisson and censored
 exponential-survival SMO regression supports polynomial and explicit design matrices.
 Multiplicative-binomial log-linear SMO and logistic/cloglog ordinal regression
 SMO are also available. Full native workflows remain pending.
+
+[BERDS](docs/berds.md) adds regression variable selection through repeated data
+splitting, with trimmed validation curves, automatic threshold selection and
+final-model diagnostics. Stable SVD fits support corrected refitted scores and
+an explicit original-software compatibility mode.

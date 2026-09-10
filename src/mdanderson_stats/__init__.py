@@ -48,6 +48,7 @@ from .bayesian_monitoring import (
     predictive_efficacy_design,
     toxicity_monitoring_design,
 )
+from .berds import BackwardElimination, BERDSResult, backward_elimination, berds
 from .beta_binomial import (
     BetaBinomialPosterior,
     BetaBinomialSequence,
@@ -535,6 +536,10 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "BERDSResult",
+    "BackwardElimination",
+    "backward_elimination",
+    "berds",
     "SMOPower",
     "asypow_smo_generic",
     "asypow_smo_ordinal_regression",
