@@ -46,6 +46,24 @@
       "bytes": 726424,
       "sha256": "435d883fb5f20872c48d4fb16151f2c9e7eb6daca9b816374d298a1f5bfe814a",
       "role": "Related-method explanation of probability cutoff and exponent range"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/BThelp.pdf",
+      "bytes": 100167,
+      "sha256": "eb471c452738f3f0afbe12e9a479ec1e18a48a5ef0301f0aa518c7c62d15483f",
+      "retrieved_at": "2026-09-10T06:20:21.904343+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Null2Help.pdf",
+      "bytes": 45183,
+      "sha256": "82dada7129ea6a33687c8e20896d3900e7fe1f03d757ecf17d4c293e11e13fb4",
+      "retrieved_at": "2026-09-10T06:20:21.904854+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Alter2Help.pdf",
+      "bytes": 65668,
+      "sha256": "4b28378bfbc61b29ef0870683951ad04768d924772ea25b2bc1997e1ba5f3d08",
+      "retrieved_at": "2026-09-10T06:20:21.905132+00:00"
     }
   ],
   "application_version": "1.4.27.0",

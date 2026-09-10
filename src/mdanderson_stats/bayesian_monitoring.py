@@ -95,7 +95,7 @@ class MonitoringOperatingCharacteristics:
 
     @property
     def positive_conclusion(self) -> FloatArray:
-        """Efficacy for BEMPO/BEMPR; excessive toxicity for BTOX."""
+        """High-event conclusion: efficacy, or unsafe for BTOX/BOP2 toxicity."""
         return self.stop_high.sum(axis=-1) + self.complete_positive
 
     def sample_size_quantile(self, probability: float) -> FloatArray:
@@ -117,7 +117,7 @@ class MonitoringOperatingCharacteristics:
 
 @dataclass(frozen=True)
 class BayesianMonitoringDesign:
-    """Use the three design factories; final analysis supersedes early rules.
+    """Construct with a design factory; final analysis supersedes early rules.
 
     Low denotes futility. High denotes efficacy or excessive toxicity according
     to method. Tables include every attainable (sample size, event count) pair;
@@ -144,7 +144,9 @@ class BayesianMonitoringDesign:
         for index, look in enumerate(self.looks[:-1]):
             decision[(nn == look) & (rr <= self.futility_max[index])] = "stop_futility"
             decision[(nn == look) & (rr >= self.positive_min[index])] = (
-                "stop_toxicity" if self.method == "toxicity" else "stop_efficacy"
+                "stop_toxicity"
+                if self.method in ("toxicity", "bop2_binary_toxicity")
+                else "stop_efficacy"
             )
         decision[(nn == self.max_subjects) & (rr >= self.final_positive_min)] = "final_positive"
         decision[(nn == self.max_subjects) & (rr < self.final_positive_min)] = "final_negative"

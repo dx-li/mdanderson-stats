@@ -1,9 +1,9 @@
-# BOP2 binary efficacy monitoring
+# BOP2 binary efficacy and toxicity monitoring
 
 Catalog entry **112**, [BOP2](https://biostatistics.mdanderson.org/shinyapps/BOP2/),
-is partially implemented for binary efficacy: specified-parameter monitoring,
+is partially implemented for binary efficacy and toxicity: specified-parameter monitoring,
 exact operating characteristics, and power-maximizing finite-grid calibration.
-Binary toxicity, joint/ordinal/multiple efficacy, time-to-event endpoints,
+Joint/ordinal/multiple efficacy, time-to-event endpoints,
 minimum-expected-sample-size optimization and integrated reports remain pending.
 
 The app snapshot is version 1.4.27.0, updated September 4, 2026. Its binary-prior
@@ -14,7 +14,7 @@ rule and power-function cutoff are also given in the clinical-methods study
 The related [BOP2-TE paper](https://arxiv.org/abs/2408.05816) explains the restriction
 of the power exponent to `[0,1]`; its joint efficacy/toxicity design is not implemented here.
 
-## A specified binary design
+## A specified efficacy design
 
 ```python
 from mdanderson_stats import bop2_binary_design
@@ -105,3 +105,71 @@ explicit equality handling, and operating characteristics against enumeration of
 all 64 binary paths in a small trial. A separate small-grid search verifies the
 chosen optimum, and an informative-prior case confirms that calibration parameters
 stay fixed while the resulting error rate is separately reported.
+
+## Binary toxicity
+
+Set `endpoint="toxicity"` in either factory. Count observed toxicities as events;
+the null toxicity rate is unacceptably high, and the alternative must be lower.
+The app's [null guide](https://biostatistics.mdanderson.org/shinyapps/BOP2/Null2Help.pdf)
+defines type I error as concluding that treatment is safe at this unacceptable rate.
+Its [alternative guide](https://biostatistics.mdanderson.org/shinyapps/BOP2/Alter2Help.pdf)
+defines power as concluding safety at the lower rate. The
+[toxicity-prior guide](https://biostatistics.mdanderson.org/shinyapps/BOP2/BThelp.pdf)
+specifies the same null-centered calibration prior and separate analysis prior.
+The guide's opening reference to an “efficacy rate” is inconsistent with its
+“Prob(Toxicity)” input; here the beta prior is explicitly on the toxicity rate.
+
+The binary BOP2 acceptability rule reverses direction:
+
+$$
+\Pr(p<p_0\mid y,n)<\lambda(n/N)^\gamma
+$$
+
+stops for excessive toxicity. This is the efficacy rule after the mathematical
+substitution `q=1-p`, reversing event counts and swapping beta prior shapes.
+The implementation evaluates the beta **lower tail directly at `p0`**, without
+forming `1-p0` as a new efficacy threshold or subtracting a near-unit upper tail.
+This preserves representable small toxicity thresholds. Equality continues;
+there is no early declaration of safety. Native app optimizer parity is not
+claimed; the same explicit finite-grid calibration policy applies to both endpoints.
+
+```python
+from mdanderson_stats import optimize_bop2_binary
+
+fit = optimize_bop2_binary(
+    40,
+    null_rate=0.4,
+    alternative_rate=0.2,
+    endpoint="toxicity",
+    looks=[10, 20, 30, 40],
+    type1_error=0.1,
+)
+print(fit.calibration_design.positive_min)  # smallest unsafe toxicity count at each look
+print(fit.calibration_success_probability)  # null error, power at the lower toxicity rate
+print(fit.analysis_success_probability)
+print(fit.calibration_oc.expected_sample_size)
+```
+
+The shared monitoring result retains its existing high-event convention:
+
+| Output | Toxicity interpretation |
+| --- | --- |
+| `positive_min`, `final_positive_min` | Minimum count requiring an unsafe conclusion |
+| `stop_toxicity` | Early unsafe conclusion |
+| `final_positive` | Unsafe at the final analysis |
+| `final_negative` | Safe at the final analysis |
+| `low_probability` | Posterior probability of a toxicity rate below the null |
+| `high_probability`, `final_probability` | Posterior probability above the null |
+| `oc.positive_conclusion` | Probability of concluding unsafe, early or at completion |
+| `oc.complete_negative` | Probability of concluding safe |
+
+`futility_max` is always `-1` for toxicity. Both optimization-result
+`*_success_probability` properties use the appropriate endpoint direction, in
+`[null, alternative]` order. Use these properties for type I error and power.
+The existing efficacy defaults and result interpretation are unchanged.
+
+Toxicity validation independently checks rational beta lower tails, equality at
+a stopping cutoff, a very small null rate, all 64 paths in a six-subject trial
+(including expected toxicities and the sample-size distribution), and agreement
+with the outcome-reversed efficacy calibration. A separate informative-prior
+case verifies that analysis success probabilities can exceed calibrated error.

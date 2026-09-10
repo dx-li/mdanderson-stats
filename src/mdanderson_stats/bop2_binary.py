@@ -1,11 +1,11 @@
-"""Binary-efficacy BOP2 monitoring and exact finite-grid calibration."""
+"""Binary efficacy/toxicity BOP2 monitoring and exact finite-grid calibration."""
 
 from dataclasses import dataclass
 
 import numpy as np
 from numpy.typing import ArrayLike
 
-from ._validation import finite, scalar
+from ._validation import FloatArray, finite, scalar
 from .bayesian_monitoring import (
     BayesianMonitoringDesign,
     MonitoringOperatingCharacteristics,
@@ -21,16 +21,22 @@ def bop2_binary_design(
     *,
     cutoff_scale: float,
     gamma: float,
+    endpoint: str = "efficacy",
     looks: ArrayLike | None = None,
     prior: ArrayLike | None = None,
     min_subjects: int = 10,
     cohort_size: int = 5,
 ) -> BayesianMonitoringDesign:
-    """Stop for futility when Pr(p>p0|data) < scale*(n/N)**gamma.
+    """Stop when posterior acceptability < scale*(n/N)**gamma.
+
+    Acceptability is p>p0 for efficacy or p<p0 for toxicity. Toxicity counts
+    remain adverse events; high/positive conclusions then mean unsafe.
 
     Equality continues; the final analysis uses the same rule. Tuning parameters
     are supplied, not automatically calibrated. Default prior is Beta(p0,1-p0).
     """
+    if endpoint not in ("efficacy", "toxicity"):
+        raise ValueError("endpoint must be efficacy or toxicity")
     p0 = scalar(null_rate, "null_rate")
     scale, exponent = scalar(cutoff_scale, "cutoff_scale"), scalar(gamma, "gamma")
     if not 0 < p0 < 1 or not 0 < scale < 1 or not 0 <= exponent <= 1:
@@ -38,32 +44,66 @@ def bop2_binary_design(
     n, pair, schedule = _inputs(
         max_subjects, (p0, 1 - p0) if prior is None else prior, looks, min_subjects, cohort_size
     )
-    go = _tail_table(n, pair, p0, upper=True)
-    low = _tail_table(n, pair, p0, upper=False)
-    cutoff = scale * (schedule / n) ** exponent
-    if np.any(cutoff == 0):
-        raise ArithmeticError("posterior cutoff underflows; increase cutoff_scale")
-    bounds = np.array(
-        [
-            int(np.count_nonzero(go[size, : size + 1] < limit)) - 1
-            for size, limit in zip(schedule, cutoff)
-        ],
-        dtype=np.int64,
-    )
-    bounds.flags.writeable = False
-    high = schedule + 1
-    high.flags.writeable = False
-    return BayesianMonitoringDesign(
-        "bop2_binary_efficacy",
+    upper = _owned(_tail_table(n, pair, p0, upper=True))
+    lower = _owned(_tail_table(n, pair, p0, upper=False))
+    baseline = BayesianMonitoringDesign(
+        "bop2_binary_" + endpoint,
         n,
         pair,
         schedule,
-        bounds,
+        np.full(schedule.size, -1, dtype=np.int64),
+        schedule + 1,
+        n + 1,
+        lower,
+        upper,
+        upper,
+    )
+    return _candidate(baseline, _boundaries(baseline, scale, exponent))
+
+
+def _boundaries(
+    baseline: BayesianMonitoringDesign, scale: float, exponent: float
+) -> tuple[int, ...]:
+    toxicity = baseline.method == "bop2_binary_toxicity"
+    go = baseline.low_probability if toxicity else baseline.high_probability
+    cutoff = scale * (baseline.looks / baseline.max_subjects) ** exponent
+    if np.any(cutoff == 0):
+        raise ArithmeticError("posterior cutoff underflows; increase cutoff_scale")
+    return tuple(
+        int(np.count_nonzero(go[size, : size + 1] >= limit))
+        if toxicity
+        else int(np.count_nonzero(go[size, : size + 1] < limit)) - 1
+        for size, limit in zip(baseline.looks, cutoff)
+    )
+
+
+def _candidate(
+    baseline: BayesianMonitoringDesign, boundaries: tuple[int, ...]
+) -> BayesianMonitoringDesign:
+    toxicity = baseline.method == "bop2_binary_toxicity"
+    bounds = np.array(boundaries, dtype=np.int64)
+    low = np.full(bounds.size, -1, dtype=np.int64) if toxicity else bounds
+    high = bounds if toxicity else baseline.looks + 1
+    low.flags.writeable = high.flags.writeable = False
+    return BayesianMonitoringDesign(
+        baseline.method,
+        baseline.max_subjects,
+        baseline.prior,
+        baseline.looks,
+        low,
         high,
-        int(bounds[-1] + 1),
-        _owned(low),
-        _owned(go),
-        _owned(go),
+        boundaries[-1] if toxicity else boundaries[-1] + 1,
+        baseline.low_probability,
+        baseline.high_probability,
+        baseline.final_probability,
+    )
+
+
+def _success(
+    design: BayesianMonitoringDesign, oc: MonitoringOperatingCharacteristics
+) -> FloatArray:
+    return (
+        oc.complete_negative if design.method == "bop2_binary_toxicity" else oc.positive_conclusion
     )
 
 
@@ -78,6 +118,16 @@ class BOP2BinaryOptimization:
     distinct_boundaries: int
     parameter_pairs: int
 
+    @property
+    def calibration_success_probability(self) -> FloatArray:
+        """Null type I error and alternative power (efficacious or safe)."""
+        return _success(self.calibration_design, self.calibration_oc)
+
+    @property
+    def analysis_success_probability(self) -> FloatArray:
+        """Success probabilities under the separately specified analysis prior."""
+        return _success(self.analysis_design, self.analysis_oc)
+
 
 def optimize_bop2_binary(
     max_subjects: int,
@@ -85,6 +135,7 @@ def optimize_bop2_binary(
     alternative_rate: float,
     *,
     type1_error: float = 0.1,
+    endpoint: str = "efficacy",
     looks: ArrayLike | None = None,
     cutoff_scales: ArrayLike | None = None,
     gammas: ArrayLike | None = None,
@@ -108,8 +159,14 @@ def optimize_bop2_binary(
             (type1_error, "type1_error"),
         )
     )
-    if not 0 < p0 < p1 < 1 or not 0 < alpha < 1:
-        raise ValueError("require 0<null<alternative<1 and type1_error in (0,1)")
+    if endpoint not in ("efficacy", "toxicity"):
+        raise ValueError("endpoint must be efficacy or toxicity")
+    ordered = 0 < p0 < p1 < 1 if endpoint == "efficacy" else 0 < p1 < p0 < 1
+    if not ordered or not 0 < alpha < 1:
+        raise ValueError(
+            "require rates in (0,1), null<alternative for efficacy or alternative<null "
+            "for toxicity, and type1_error in (0,1)"
+        )
     scales = finite(
         np.arange(50, 100) / 100 if cutoff_scales is None else cutoff_scales, "cutoff_scales"
     )
@@ -131,6 +188,7 @@ def optimize_bop2_binary(
     baseline = bop2_binary_design(
         max_subjects,
         p0,
+        endpoint=endpoint,
         cutoff_scale=float(scales[0]),
         gamma=float(powers[0]),
         looks=looks,
@@ -139,7 +197,7 @@ def optimize_bop2_binary(
     )
     if baseline.max_subjects > 200:
         raise ValueError("exact grid calibration supports at most 200 subjects")
-    schedule, go = baseline.looks, baseline.high_probability
+    schedule = baseline.looks
     seen: set[tuple[int, ...]] = set()
     best_key: tuple[float, ...] | None = None
     best: (
@@ -147,32 +205,13 @@ def optimize_bop2_binary(
     ) = None
     for scale in scales:
         for exponent in powers:
-            cutoff = scale * (schedule / max_subjects) ** exponent
-            if np.any(cutoff == 0):
-                raise ArithmeticError("posterior cutoff underflows; increase cutoff_scales")
-            boundaries = tuple(
-                int(np.count_nonzero(go[size, : size + 1] < limit)) - 1
-                for size, limit in zip(schedule, cutoff)
-            )
+            boundaries = _boundaries(baseline, float(scale), float(exponent))
             if boundaries in seen:
                 continue
             seen.add(boundaries)
-            bounds = np.array(boundaries, dtype=np.int64)
-            bounds.flags.writeable = False
-            design = BayesianMonitoringDesign(
-                baseline.method,
-                baseline.max_subjects,
-                baseline.prior,
-                schedule,
-                bounds,
-                baseline.positive_min,
-                boundaries[-1] + 1,
-                baseline.low_probability,
-                go,
-                go,
-            )
+            design = _candidate(baseline, boundaries)
             oc = design.operating_characteristics([p0, p1])
-            error, power = map(float, oc.positive_conclusion)
+            error, power = map(float, _success(design, oc))
             if error_control == "strict" and error > alpha:
                 continue
             key = ((abs(error - alpha),) if error_control == "closest" else ()) + (
@@ -190,6 +229,7 @@ def optimize_bop2_binary(
         else bop2_binary_design(
             max_subjects,
             p0,
+            endpoint=endpoint,
             cutoff_scale=scale,
             gamma=exponent,
             looks=schedule,
