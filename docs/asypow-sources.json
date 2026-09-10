@@ -1,0 +1,68 @@
+{
+  "version": "2015.6.25",
+  "sources": [
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "archive.tar.gz",
+      "retrieved_date": "2026-09-10",
+      "bytes": 226380,
+      "sha256": "b226b29bd459946ecb3d6dbddb2e75a733ef0d8695aafbd951b3f03a65438346"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/DESCRIPTION",
+      "retrieved_date": "2026-09-10",
+      "bytes": 700,
+      "sha256": "fc0e0ae20717b7ba16083aa29974c6a84438db780c78d816ce84e413aae59f81"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/asypow.noncent.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 3175,
+      "sha256": "25666698e635427d45d5959c51b826b45b0b30163af10ccd1b0a7498666cc7d3"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/asypow.power.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1019,
+      "sha256": "1a885e0508c9c9b9bd69a0cbfb3f52ec9e4e024e485f71150a0a2ee7c33f3aae"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/asypow.n.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1042,
+      "sha256": "0d1d6e95cf38aaedb0d806fa27330f1b10ed27dafc9edf7de7f4e0c4ae68e62b"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/asypow.sig.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 933,
+      "sha256": "b4ef099e230a9887c80f62a537c3fd3de5c59d40d734b65a9cadd3bfabb2c285"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.binomial.kgroup.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1021,
+      "sha256": "81a2370341375184f395fb716dd4908230af855575f2d40d463bece7acd703c3"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.poisson.kgroup.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 971,
+      "sha256": "2e145b3d77309f4db766c7c1db98b8cfc41b31998f96bcf96d9e6aea75873f22"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.expsurv.kgroup.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1255,
+      "sha256": "db2cebe6549abcc7cdbb36b88138a2a0ecd1c80048ab648de06c937403cdce33"
+    }
+  ]
+}

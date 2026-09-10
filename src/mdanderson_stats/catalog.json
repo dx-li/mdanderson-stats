@@ -1287,9 +1287,14 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Local information-matrix noncentrality and null projection for linear contrasts; noncentral chi-square power, continuous sample size and significance inversion; independent-group binomial, Poisson and uniformly accrued exponential-survival information. Regression, ordinal/multinomial families and full native workflow remain pending."
+      ],
+      "validation": [
+        "tests/test_asypow.py",
+        "docs/asypow.md"
+      ]
     },
     {
       "id": 35,

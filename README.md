@@ -860,3 +860,8 @@ risk counts and total events. It returns fitted curves and reconstruction errors
 two-arm Efron Cox comparisons, survival confidence intervals, landmark summaries
 and survival quantiles are also available. Digitizing and native graphics remain
 pending.
+
+[ASYPOW](docs/asypow.md) adds information-matrix power, sample-size and
+significance calculations with independent-group binomial, Poisson and
+exponential-survival information. Regression and ordinal/multinomial models
+remain pending.
