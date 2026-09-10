@@ -1,0 +1,23 @@
+{
+  "retrieved_at": "2026-09-10T03:00:56.759088+00:00",
+  "sources": [
+    {
+      "name": "BTOX",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BTOX/BTOX.pdf",
+      "sha256": "9ede4ae04fb7a47a64cdeb780f6c9bd18c92931273f74f1ecfac810cc52dfdc6",
+      "bytes": 1248285
+    },
+    {
+      "name": "BEMPO",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BEMPO/BEMPO.pdf",
+      "sha256": "d8b0593599d5fd8d8d3690430a7518460e8cdfc7d4538b5b63a325cc14793cf2",
+      "bytes": 1423344
+    },
+    {
+      "name": "BEMPR",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BEMPR/BEMPR.pdf",
+      "sha256": "e63c8cd2996deb00529435adf16275e62e925676e2e2aef5b5ee34b255c9b3f8",
+      "bytes": 1361643
+    }
+  ]
+}

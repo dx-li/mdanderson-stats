@@ -619,3 +619,12 @@ interval discrepancy.
 prevalence-dependent predictive values, population projections and binormal ROC
 analysis. Thresholds, density arrays, ROC curves and AUC are available as batched
 Python calculations, with direct log tails for extreme diagnostic thresholds.
+
+## Bayesian trial monitoring
+
+[BTOX, BEMPO and BEMPR](docs/bayesian-monitoring.md) provide toxicity,
+posterior-efficacy and predictive-efficacy monitoring designs. Their Python APIs
+calculate stopping boundaries, patient histories and exact operating
+characteristics, including sample-size distributions and stopping-induced bias
+in observed rates. Predictive calculations use a vectorized backward
+beta-binomial recursion.

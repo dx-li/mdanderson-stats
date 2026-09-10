@@ -1,6 +1,14 @@
 """Independent Python implementations of MD Anderson catalog methods."""
 
 from . import cdflib_aux, cdflib_constants, dcdflib_support
+from .bayesian_monitoring import (
+    BayesianMonitoringDesign,
+    MonitoringOperatingCharacteristics,
+    MonitoringState,
+    posterior_efficacy_design,
+    predictive_efficacy_design,
+    toxicity_monitoring_design,
+)
 from .beta_binomial import (
     BetaBinomialPosterior,
     BetaBinomialSequence,
@@ -294,6 +302,12 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "BayesianMonitoringDesign",
+    "MonitoringOperatingCharacteristics",
+    "MonitoringState",
+    "posterior_efficacy_design",
+    "predictive_efficacy_design",
+    "toxicity_monitoring_design",
     "BinormalROC",
     "BinormalROCPoint",
     "DiagnosticPopulation",

@@ -2677,12 +2677,22 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BTOX/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BTOX/",
-      "references": [],
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/BTOX/BTOX.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Bayesian toxicity stopping boundaries and final excessive-toxicity decisions from inclusive beta posterior upper-tail cutoffs",
+        "Regular or explicit irregular analyses, all attainable probability states, batched cumulative/patient-history monitoring, exact sequential operating characteristics including sample-size distribution and expected observed event rate; numerical API replaces browser tables and forms"
+      ],
+      "validation": [
+        "src/mdanderson_stats/bayesian_monitoring.py",
+        "tests/test_bayesian_monitoring.py",
+        "docs/bayesian-monitoring.md",
+        "docs/bayesian-monitoring-sources.json"
+      ]
     },
     {
       "id": 101,
@@ -2837,12 +2847,22 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BEMPO/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BEMPO/",
-      "references": [],
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/BEMPO/BEMPO.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Posterior efficacy/futility monitoring with distinct strict/inclusive thresholds, optional early stopping and separate final efficacy criterion",
+        "Regular or explicit irregular analyses, all attainable probability states, batched cumulative/patient-history monitoring, exact sequential operating characteristics including sample-size distribution and expected observed event rate; numerical API replaces browser tables and forms"
+      ],
+      "validation": [
+        "src/mdanderson_stats/bayesian_monitoring.py",
+        "tests/test_bayesian_monitoring.py",
+        "docs/bayesian-monitoring.md",
+        "docs/bayesian-monitoring-sources.json"
+      ]
     },
     {
       "id": 110,
@@ -2850,12 +2870,22 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BEMPR/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BEMPR/",
-      "references": [],
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/BEMPR/BEMPR.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Predictive efficacy/futility monitoring with exact backward beta-binomial recursion, optional early stopping and final posterior efficacy criterion",
+        "Regular or explicit irregular analyses, all attainable probability states, batched cumulative/patient-history monitoring, exact sequential operating characteristics including sample-size distribution and expected observed event rate; numerical API replaces browser tables and forms"
+      ],
+      "validation": [
+        "src/mdanderson_stats/bayesian_monitoring.py",
+        "tests/test_bayesian_monitoring.py",
+        "docs/bayesian-monitoring.md",
+        "docs/bayesian-monitoring-sources.json"
+      ]
     },
     {
       "id": 112,
