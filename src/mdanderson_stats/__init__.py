@@ -201,6 +201,11 @@ from .confint_poisson import (
     confint_poisson_probability,
     confint_poisson_rate_limit,
 )
+from .confint_survival import (
+    CONFINTSurvivalAssurance,
+    confint_survival_fixed_events,
+    confint_survival_probability,
+)
 from .conjugate_ess import conjugate_prior_ess
 from .continuous_sample_size import (
     ContinuousSampleSize,
@@ -506,6 +511,9 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "CONFINTSurvivalAssurance",
+    "confint_survival_fixed_events",
+    "confint_survival_probability",
     "confint_binomial_difference_probability",
     "confint_binomial_difference_event_limit",
     "confint_binomial_difference_sample_size",

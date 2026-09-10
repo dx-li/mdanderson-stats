@@ -271,4 +271,77 @@ assert abs(p - 0.0679396627) < 1e-9
 assert abs(confint_binomial_difference_probability(40, 60, 0.2, p, 0.3) - 0.8) < 1e-10
 ```
 
-**Catalog status is partial.** Exponential-survival, and native session/report workflows remain pending.
+## Exponential-survival width assurance
+
+`confint_survival_fixed_events(events,hazard,max_length,target=...)` implements
+the source's gamma approximation conditional on the event count. For n>0,
+let T be total time at risk with the planning distribution `Gamma(n, rate=h)`.
+Write g_low and g_high for the equal-tail quantiles of `Gamma(n, rate=1)`.
+The hazard interval is `[g_low/T,g_high/T]`, and the mean-survival interval is
+`[T/g_high,T/g_low]`. Thus width assurance is a gamma survival probability for
+`target="hazard"` and a gamma CDF for `target="mean"`. Zero events receive
+zero assurance because the source treats their interval as undefined.
+
+The manual calls the gamma model a **general-censoring approximation**. It is
+not the exact conditional distribution of observed follow-up in every
+calendar-based trial. The source's gamma parameter named `scale` is a rate;
+Python uses the explicit name `hazard` to avoid that ambiguity.
+
+`confint_survival_probability(hazard,accrual_rate,accrual_time,followup_time,max_length)`
+averages this conditional assurance over a Poisson event count. Accrual is
+Poisson, entry is uniform over the accrual period, and survival is exponential,
+with no dropout or competing risks. If A is accrual duration and F additional
+follow-up, the per-patient event probability is
+`1-exp(-h*F)*(1-exp(-h*A))/(h*A)`. The event-count mean is `accrual_rate*A*p_event`.
+This event-count distribution follows from Poisson thinning; the conditional
+follow-up approximation remains a separate assumption.
+
+Python reuses the package's stable uniform-accrual calculation. A log-domain
+fallback preserves expected event counts when the per-patient probability
+underflows but the expected count remains representable. Fixed-event gamma
+evaluation also uses log arguments, avoiding overflow from changing time units.
+Stable Poisson mass factors avoid cancellation near large count means.
+
+The result `CONFINTSurvivalAssurance` reports:
+
+- `probability`: the unnormalized sum over retained positive event counts;
+- `expected_events` and `event_probability`;
+- `omitted_probability`: an absolute bound on omitted positive-count contributions;
+- `included_events`: inclusive count limits, or `None` for a zero mean.
+
+The default truncation tolerance is 1e-12, configurable from 1e-14 to 1e-4.
+The omitted-mass bound addresses truncation only; it does not bound floating-
+point error or model approximation. In exact arithmetic the sum is a lower
+bound and the full mixture lies at most `omitted_probability` above it.
+The source instead stops near 99% mass or 1000 evaluations and renormalizes.
+Python's results intentionally differ from that approximation.
+
+For h=1, accrual rate 5, accrual duration 10 and no extra follow-up, expected
+events are 45.0002269996. With confidence .95 and total length .5, independent
+R summation gives .154951144202 for hazard-width assurance and .128574843760
+for mean-width assurance. The manual reports approximately .153 and .127284.
+Tests check R results within the omitted-mass bounds and validate conditional
+width probabilities using independently generated exponential samples.
+
+Fixed-event calculations broadcast up to two million designs, with integer
+counts 0–200 million. Study calculations are scalar, with expected counts at
+most 100 million and at most 200,000 retained count terms. Hazard, length and
+accrual duration must be positive and finite; accrual rate and follow-up must
+be nonnegative, with finite total duration. Confidence uses the same range as
+other CONFINT APIs. Hazard lengths have inverse-time units; mean lengths have
+time units. Changes of time units by 1e±200 are checked.
+
+```python
+from mdanderson_stats import confint_survival_fixed_events, confint_survival_probability
+
+result = confint_survival_probability(1, 5, 10, 0, 0.5, target="hazard")
+assert abs(result.probability - 0.154951144202) < 1e-11
+assert result.omitted_probability <= 1e-12
+mean = confint_survival_probability(1, 5, 10, 0, 0.5, target="mean")
+assert abs(mean.probability - 0.128574843760) < 1e-11
+fixed = confint_survival_fixed_events([0, 10, 45], 1, 0.5)
+assert fixed.shape == (3,) and fixed[0] == 0
+```
+
+**Catalog status is partial.** Survival quantile/design inversions and native
+session/report workflows remain pending.

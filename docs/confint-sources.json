@@ -55,6 +55,20 @@
       "retrieved_date": "2026-09-10",
       "bytes": 7436,
       "sha256": "15fac4407f46877114e76929f7abd38d6cc7265e79650084ce7dfbb1765cd0c6"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CONFINT/CONFINT_V2.0.zip",
+      "artifact": "confint-2.0/SOURCE/surv_ci_mod.f90",
+      "retrieved_date": "2026-09-10",
+      "bytes": 22026,
+      "sha256": "72c81cfe68da6a3b209c3e48e4eaa7237982bc361e7a2b77cd813ca44fb8830e"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CONFINT/CONFINT_V2.0.zip",
+      "artifact": "confint-2.0/SOURCE/gen_poisson_mod.f90",
+      "retrieved_date": "2026-09-10",
+      "bytes": 7414,
+      "sha256": "ff2412cd6e6d0ed5abd4c2bc4780667661070b85cecaacde391ef343126180e1"
     }
   ]
 }
