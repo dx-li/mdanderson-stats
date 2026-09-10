@@ -2085,12 +2085,14 @@
         "Normal CI-length assurance for one-sample mean, one-sample SD, and independent equal-variance mean difference",
         "Vectorized population-SD limits and minimal integer sample-size planning, with log-scale numerical evaluation",
         "Corrected pooled two-sample pivot including the degrees-of-freedom factor omitted in the archived source",
-        "One-binomial Clopper-Pearson CI-width probability, attainable-length quantile, event-probability limits and minimum sample size using discrete counts and batched exhaustive n search"
+        "One-binomial Clopper-Pearson CI-width probability, attainable-length quantile, event-probability limits and minimum sample size using discrete counts and batched exhaustive n search",
+        "Poisson Garwood rate-CI width probability, attainable-length quantile, rate limit and earliest exposure by enumerating event-count thresholds"
       ],
       "validation": [
         "Manual worked examples, independent R probabilities, normal-data simulation, inversion minimality and extreme unit/tail checks; tests/test_confint_normal.py",
-        "Pending binomial-difference, Poisson, exponential-survival and session/report workflows; docs/confint.md",
-        "Independent R enumeration, all-count probability checks, discontinuous length inversion, and nonmonotone sample-size examples; tests/test_confint_binomial.py"
+        "Pending binomial-difference, exponential-survival and session/report workflows; docs/confint.md",
+        "Independent R enumeration, all-count probability checks, discontinuous length inversion, and nonmonotone sample-size examples; tests/test_confint_binomial.py",
+        "Independent R gamma/Poisson calculations, zero/one-count corrections, full count sums, exposure-threshold minimality and extreme unit scaling; tests/test_confint_poisson.py"
       ]
     },
     {

@@ -190,6 +190,12 @@ from .confint_normal import (
     confint_normal_sample_size,
     confint_normal_sd_limit,
 )
+from .confint_poisson import (
+    confint_poisson_exposure,
+    confint_poisson_length,
+    confint_poisson_probability,
+    confint_poisson_rate_limit,
+)
 from .conjugate_ess import conjugate_prior_ess
 from .continuous_sample_size import (
     ContinuousSampleSize,
@@ -495,6 +501,10 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "confint_poisson_probability",
+    "confint_poisson_length",
+    "confint_poisson_rate_limit",
+    "confint_poisson_exposure",
     "confint_binomial_probability",
     "confint_binomial_sample_size",
     "confint_binomial_length",

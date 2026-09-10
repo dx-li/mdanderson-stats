@@ -154,5 +154,68 @@ limit = confint_binomial_event_limit(250, 0.1, confidence=0.9, assurance=0.5)
 assert abs(limit - 0.3102536151) < 1e-9
 ```
 
-**Catalog status is partial.** Binomial-difference, Poisson,
+## Poisson calculations
+
+The Poisson APIs use equal-tail Garwood intervals on the **event rate**.
+For count k and exposure t, the interval has lower gamma shape k (zero bound
+at k=0), upper gamma shape k+1, and both bounds are divided by t. Exposure
+can be time or another unit of Poisson observation. The true rate may be zero.
+
+| API | Result |
+|---|---|
+| `confint_poisson_probability` | Probability the rate CI has at most the requested total length; inputs broadcast |
+| `confint_poisson_length` | Smallest attainable length reaching the requested cumulative probability |
+| `confint_poisson_rate_limit` | Largest true rate attaining assurance, or `None` if no count qualifies |
+| `confint_poisson_exposure` | Earliest exposure attaining assurance |
+
+The probability calculation searches integer counts and evaluates the Poisson
+CDF at the last qualifying count. Unlike the native `arg<=1` shortcut, it
+includes cases where only zero or one event qualifies. The length calculation
+uses a discrete Poisson quantile; the rate limit uses inverse gamma-tail
+probability directly, avoiding approximate outer root searches.
+
+**Exposure assurance is not monotone.** If w(k) is the unscaled interval width,
+count k becomes acceptable at exposure `w(k)/max_length`. Between these
+thresholds, the qualifying count stays fixed while the Poisson mean grows,
+so assurance decreases. The first success must occur at a threshold. Python
+checks them in increasing-count batches; it does not assume that every later
+exposure will also attain assurance. Returned floating-point exposure/length
+thresholds are rounded upward by one representable step when needed to include
+the defining outcome.
+
+Probability calculations and length quantiles support qualifying event counts
+through 100 million. Exposure planning scans from zero through `max_events`
+(default one million, inclusive) and raises if the target is not reached.
+Exposure, maximum length and rate must be finite, with positive exposure/length
+and nonnegative rate. Confidence/assurance ranges match the other CONFINT APIs.
+Probability evaluation supports two million broadcast designs; other Poisson
+functions handle one design. Unrepresentable output lengths/rates/exposures
+raise errors. Changing time units by factors 1e±200 preserves probability.
+
+For rate 20, exposure 210, maximum length 1 and confidence .9, the qualifying
+count is 4035 and the probability is .0053469235. This agrees with the manual's
+commentary, while its adjacent printed block gives a different number. Independent
+R gamma quantiles and Poisson CDFs confirm the probability, length quantile,
+and rate-limit results. With assurance .9, the first qualifying exposure is
+222.5920387855, at count 4537, with probability .9001183457; all earlier
+thresholds have probability at most .8987881519.
+
+```python
+from mdanderson_stats import (
+    confint_poisson_probability,
+    confint_poisson_length,
+    confint_poisson_rate_limit,
+    confint_poisson_exposure,
+)
+
+p = confint_poisson_probability(210, 1, 20, confidence=0.9)
+assert abs(float(p) - 0.005346923511) < 1e-12
+assert abs(confint_poisson_length(210, 20, confidence=0.9) - 1.0300012109) < 1e-9
+assert abs(confint_poisson_rate_limit(210, 1, confidence=0.9) - 18.8323846149) < 1e-9
+exposure = confint_poisson_exposure(1, 20, confidence=0.9, assurance=0.9)
+assert abs(exposure - 222.5920387855) < 1e-8
+assert confint_poisson_probability(exposure, 1, 20, confidence=0.9) >= 0.9
+```
+
+**Catalog status is partial.** Binomial-difference,
 exponential-survival, and native session/report workflows remain pending.
