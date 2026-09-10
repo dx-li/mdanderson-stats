@@ -11,7 +11,13 @@
       "retrieved_date": "2026-09-10",
       "bytes": 368660,
       "sha256": "2688f9005a1902c1b6407cb5d3844bd3113b0bcd0ba841aab8cae52ffa23640f"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3276744/",
+      "retrieved_date": "2026-09-10",
+      "doi": "10.1111/j.1541-0420.2011.01668.x",
+      "used": "Equation (6), dependent order-statistic bounds and upper 0.5% exclusion convention; native BCSTTE rank/trim parity not established."
     }
   ],
-  "scope": "Complete continuous-data posterior diagnostic and explicit-prior exponential posterior. Censoring and native BCSTTE model workflows pending."
+  "scope": "Complete continuous-data posterior diagnostic, explicit-prior exponential posterior and dependent order-statistic bounds. Censoring and native BCSTTE model workflows pending."
 }

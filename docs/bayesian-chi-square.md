@@ -33,6 +33,31 @@ directly from upper tails. These averages are **not calibrated p-values** for th
 posterior mean statistic. The chi-square reference is asymptotic under the paper's
 regularity conditions; it does not make dependent posterior statistics independent.
 
+## Dependent order-statistic bounds
+
+`diagnostic.order_bounds(upper_trim=.005)` or
+`chi_square_order_bounds(statistics, degrees_of_freedom, upper_trim=.005)`
+returns bounds for ascending ranks r of J posterior statistics:
+
+```text
+P(D_(r) > t) <= min(1, J * chi_square_sf(t) / (J - r + 1)).
+```
+
+The calculation follows equation (6) in [Yuan and Johnson (2012)](https://pmc.ncbi.nlm.nih.gov/articles/PMC3276744/).
+It allows dependence between draws, provided their marginal reference holds.
+The minimum across ranks is exposed as `minimum_diagnostic`; searching ranks
+requires additional calibration. `search_adjusted_bound` conservatively multiplies
+the minimum by the number of retained ranks, capped at one. Its validity also
+requires the marginal reference, which is asymptotic for Johnson's chi-square
+statistic. Exact pivotal arguments require the paper's prior assumptions;
+an arbitrary improper prior does not establish them.
+
+By default the largest `ceil(.005 * J)` observations are excluded from the search,
+retaining at least one rank. Set `upper_trim=0` to retain all ranks. This follows
+the later paper's tail-exclusion approach; BCSTTE's exact trimming and rank
+conventions are unverified. Survival probabilities are floored at the smallest
+positive normal float to avoid zero bounds from extreme-tail underflow.
+
 ## Exact exponential posterior
 
 `exponential_bayesian_gof(times, prior_shape=..., prior_rate=..., samples=1000, ...)`
@@ -57,18 +82,21 @@ np.testing.assert_allclose(fit.log_posterior_rate, np.log(18))
 assert fit.diagnostic.statistic.shape == (1000,)
 ```
 
-Three focused tests cover independent Pearson calculations and endpoint bins,
+Six focused tests cover independent Pearson calculations and endpoint bins,
 reference summaries, exact Gamma posterior moments, seeded unit invariance over
 400 orders of magnitude, repeated-data/posterior reference calibration, and a
 clear nonexponential alternative. The repeated-data check uses independent
 simulated datasets followed by one posterior draw per dataset; it does not treat
 multiple posterior draws from a single dataset as independent calibration data.
+The order-bound checks cover the published 20% tail example, strongly dependent
+chi-square marginals, search correction, and extreme-tail underflow.
 
 ## Remaining coverage and source issues
 
 **Catalog status is partial.** Right-censoring, rounded observations, the six
 other distribution-family workflows, native fitting/priors and fallback priors,
-the Rychlik p-value bound, sorting and native HTML reports remain pending.
+native Rychlik rank/trim conventions, BIC/DIC, sorting and native HTML reports
+remain pending.
 The generic interface can consume verified posterior CDF draws from other models,
 but it does not itself fit those models or impute censored observations.
 

@@ -8,6 +8,7 @@ from scipy.special import gammainc, gammaincc, gammaincinv, logsumexp
 
 from ._validation import FloatArray, finite, scalar
 from .boin import _owned
+from .chi_square_order_bounds import ChiSquareOrderBounds, chi_square_order_bounds
 
 
 @dataclass(frozen=True)
@@ -21,6 +22,12 @@ class BayesianChiSquare:
     mean_reference_tail: float
     critical_value: float
     critical_exceedance_fraction: float
+
+    def order_bounds(self, *, upper_trim: float = 0.005) -> ChiSquareOrderBounds:
+        """Order-statistic diagnostic and fixed-rank bounds; see returned conventions."""
+        return chi_square_order_bounds(
+            self.statistic, self.degrees_of_freedom, upper_trim=upper_trim
+        )
 
 
 def bayesian_chi_square_cdf(

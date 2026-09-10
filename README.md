@@ -791,5 +791,6 @@ measurements, explicit allocation rounding and achieved power. Native rounding
 and reports remain pending.
 
 [Bayesian Chi Square TTE Fit](docs/bayesian-chi-square.md) adds the complete-data
-posterior diagnostic and exact exponential-posterior workflow. Censoring, other
-family fits, the Rychlik bound and native reporting remain pending.
+posterior diagnostic, exact exponential-posterior workflow and dependent
+order-statistic bounds. Censoring, other family fits, BIC/DIC, native rank/trim
+conventions and reporting remain pending.

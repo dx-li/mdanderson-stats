@@ -173,6 +173,7 @@ from .cdflib_strings import (
     upper_case_string,
 )
 from .cdflib_t import CDFStudentT, ccum_t, cdf_t, cum_t, inv_t
+from .chi_square_order_bounds import ChiSquareOrderBounds, chi_square_order_bounds
 from .continuous_sample_size import (
     ContinuousSampleSize,
     anova_effect_size,
@@ -461,6 +462,8 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "ChiSquareOrderBounds",
+    "chi_square_order_bounds",
     "BayesianChiSquare",
     "ExponentialBayesianGOF",
     "bayesian_chi_square_cdf",
