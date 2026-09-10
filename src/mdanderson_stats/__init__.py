@@ -276,6 +276,7 @@ from .onesample_workflow import OneSampleResult, one_sample
 from .parameter_distribution import ParameterDistribution
 from .parameter_solver import solve_distribution_moments, solve_distribution_quantiles
 from .pdnn import PDNNExpression, pdnn_binding_energy, pdnn_expression, pdnn_signal
+from .pdnn_fit import PDNNConvergenceError, PDNNFit, PDNNParameters, fit_pdnn
 from .pehaz import PiecewiseHazard, pehaz
 from .phase2_predictive import (
     Phase2PredictiveCandidate,
@@ -449,6 +450,10 @@ from .toxicity_timing import toxicity_time_quantile
 __all__ = [
     "quantile_normalize",
     "PDNNExpression",
+    "PDNNConvergenceError",
+    "PDNNFit",
+    "PDNNParameters",
+    "fit_pdnn",
     "pdnn_binding_energy",
     "pdnn_signal",
     "pdnn_expression",

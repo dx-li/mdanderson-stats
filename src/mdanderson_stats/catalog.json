@@ -127,12 +127,13 @@
       "status": "partial",
       "implemented_features": [
         "Reference and average-rank quantile normalization with explicit tie averaging",
-        "Position-weighted nearest-neighbor PDNN energies, stable predicted signals and conditional probeset expression with explicit exclusion rules"
+        "Position-weighted nearest-neighbor PDNN energies, stable predicted signals and conditional probeset expression with explicit exclusion rules",
+        "Analytic-gradient staged local PDNN fitting of stacking energies, position weights, log expression and array-wide nonspecific amount/background"
       ],
       "validation": [
-        "Three focused tests: rank mappings, ties, independently summed energies, known-signal recovery, direct weighted expression equation and extreme log-scale stability",
+        "Six focused tests: normalization, energies, conditional expression, extreme scales, finite-difference gradient agreement, amplitude recovery and joint-fit error reduction",
         "200000-probe/20000-probeset performance and synthetic recovery audit; see docs/perfectmatch.md",
-        "Pending joint parameter optimization, array-wide nuisance estimation, CEL/parameter/annotation formats, full QC/export/display workflows and native scaling conventions"
+        "Pending CEL/parameter/annotation formats, full QC/export/display workflows, real-array/native optimizer audit and native scaling conventions"
       ]
     },
     {

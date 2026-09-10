@@ -1,4 +1,4 @@
-# PerfectMatch: normalization and conditional PDNN expression
+# PerfectMatch: normalization, PDNN fitting and expression
 
 Independent Python implementation of the numerical methods in MD Anderson's
 [PerfectMatch manual](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PerfectMatch/PerfectMatchManual.pdf)
@@ -68,12 +68,44 @@ fit = pdnn_expression(signal, ids, energy, noise_energy, nonspecific_amount=50, 
 np.testing.assert_allclose(np.exp(fit.log_expression), [100, 200])
 ```
 
+## Learning parameters
+
+`fit_pdnn(sequences, intensities, probeset_ids, initial=PDNNParameters(...))`
+minimizes equation (4), the mean squared difference between observed and predicted
+natural-log intensities. It fits one array at a time, using all supplied probes.
+Supply two 4-by-4 stacking matrices, two 24-position weight vectors, a log-expression
+vector in sorted unique probeset-ID order, and scalar `log_nonspecific_amount` and
+`log_background`. All amplitudes remain positive through log parameterization.
+No universal initial parameters or random initialization are supplied.
+
+The default first fits stacking energies and amplitudes with weights fixed, then
+jointly fits all parameters. `fit_weights=False` omits the joint stage;
+`fit_energies=False, fit_weights=False` fits amplitudes with fixed energies/weights.
+An analytic gradient and L-BFGS-B replace the paper's Monte Carlo optimizer.
+`tolerance` sets the gradient threshold, and relative objective reduction can also
+terminate a stage at `tolerance*1e-3`; `max_iterations` applies separately to each
+stage. Results include initial/final fitness, total iterations, final active-gradient
+maximum, optimizer message, fitted signals and learned parameters.
+
+This is local optimization: convergence does not prove a global minimum, and
+bilinear energy/weight scaling makes parameter estimates nonunique. Assess fitted
+signals and sensitivity to starting parameters; do not interpret individual energy
+coefficients as uniquely identified. `PDNNConvergenceError.result` retains a valid
+checkpoint that can be passed back as `initial=result.parameters`. Invalid numerical
+states raise errors. Outliers are not removed implicitly during fitting. The
+log-error objective is distinct from the conditional weighted expression equation
+(5); their expression estimates need not coincide with noisy observations.
+
 ## Validation and performance
 
-Three focused tests cover both normalization modes and ties; independently summed
+Six focused tests cover both normalization modes and ties; independently summed
 nearest-neighbor energies; recovery of known gene-expression levels; direct
 weighted equation (5); negative-residual and outlier exclusion; very large
 intensities; and log-expression 1,000 without intermediate exponentiation overflow.
+The fitting checks compare every analytic gradient component with central finite
+differences, recover known amplitudes with fixed energies, verify synthetic joint-fit
+error reduction, and exercise a failed optimizer checkpoint. Synthetic intensities
+are generated through the separate public signal/energy functions.
 Groupwise expression sums use NumPy reductions and stabilized log sums, avoiding
 one full-array scan per gene.
 
@@ -84,10 +116,9 @@ error `2.7e-15`. These are local measurements, not cross-machine guarantees.
 
 ## Remaining coverage
 
-**Catalog status is partial.** Joint energy/position-weight optimization, estimation
-of array-wide nonspecific amount/background, native parameter-file formats,
+**Catalog status is partial.** Native parameter-file formats,
 Affymetrix text/binary CEL and binCEL workflows, probe sequence/annotation files,
 complete quality-control statistics, output formats, native rescaling conventions,
-and gene/image/scatter displays remain pending. Synthetic recovery with known
-parameters is not validation of parameter learning or of an end-to-end microarray
-analysis. No native optimization or display parity is claimed.
+and gene/image/scatter displays remain pending. Synthetic parameter-learning checks
+do not validate an end-to-end microarray analysis against real array data. No native
+optimization or display parity is claimed.

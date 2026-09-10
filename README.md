@@ -771,5 +771,6 @@ monitoring and continuous time-on-test boundaries. Calendar simulation and nativ
 input/report workflows remain pending.
 
 [PerfectMatch](docs/perfectmatch.md) adds quantile normalization and PDNN energy,
-signal and conditional gene-expression calculations. Parameter learning and native
-CEL/file/display workflows remain pending.
+signal and conditional gene-expression calculations, plus joint fitting of stacking
+energies, position weights, expression and background. Native CEL/file/QC/display
+workflows remain pending.

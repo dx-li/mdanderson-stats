@@ -9,6 +9,24 @@ from ._validation import FloatArray, count, finite, scalar
 from .beta_binomial import _owned
 
 
+def _pdnn_pairs(sequences: ArrayLike) -> NDArray[np.int64]:
+    seq = np.asarray(sequences, dtype=str)
+    if seq.ndim != 1 or seq.size == 0 or np.any(np.char.str_len(seq) != 25):
+        raise ValueError("sequences must be a nonempty vector of 25-base probes")
+    try:
+        encoded = np.frombuffer("".join(seq).upper().encode("ascii"), dtype=np.uint8).reshape(
+            -1, 25
+        )
+    except UnicodeEncodeError as exc:
+        raise ValueError("probe sequences may contain only A,C,G,T") from exc
+    lookup = np.full(256, -1, dtype=np.int64)
+    lookup[np.frombuffer(b"ACGT", dtype=np.uint8)] = np.arange(4)
+    bases = lookup[encoded]
+    if np.any(bases < 0):
+        raise ValueError("probe sequences may contain only A,C,G,T")
+    return 4 * bases[:, :-1] + bases[:, 1:]
+
+
 def pdnn_binding_energy(
     sequences: ArrayLike, stacking_energy: ArrayLike, position_weights: ArrayLike
 ) -> FloatArray:
@@ -17,27 +35,12 @@ def pdnn_binding_energy(
     stacking_energy is 4x4 with both axes ordered A,C,G,T. Position weights
     have length 24. These are fitted PDNN energy parameters, not solution energies.
     """
-    seq = np.asarray(sequences, dtype=str)
-    energy, weights = (
-        finite(stacking_energy, "stacking_energy"),
-        finite(position_weights, "position_weights"),
-    )
-    if seq.ndim != 1 or seq.size == 0 or np.any(np.char.str_len(seq) != 25):
-        raise ValueError("sequences must be a nonempty vector of 25-base probes")
+    pairs = _pdnn_pairs(sequences)
+    energy = finite(stacking_energy, "stacking_energy")
+    weights = finite(position_weights, "position_weights")
     if energy.shape != (4, 4) or weights.shape != (24,):
         raise ValueError("stacking_energy must be 4x4 and position_weights length 24")
-    try:
-        encoded = np.frombuffer("".join(seq).upper().encode("ascii"), dtype=np.uint8).reshape(
-            -1, 25
-        )
-    except UnicodeEncodeError as exc:
-        raise ValueError("probe sequences may contain only A,C,G,T") from exc
-    lookup = np.full(256, -1, dtype=int)
-    lookup[np.frombuffer(b"ACGT", dtype=np.uint8)] = np.arange(4)
-    bases = lookup[encoded]
-    if np.any(bases < 0):
-        raise ValueError("probe sequences may contain only A,C,G,T")
-    result = np.sum(energy[bases[:, :-1], bases[:, 1:]] * weights, axis=1)
+    result = np.sum(energy.ravel()[pairs] * weights, axis=1)
     if np.any(~np.isfinite(result)):
         raise ArithmeticError("binding energies cannot be represented")
     return _owned(result)
