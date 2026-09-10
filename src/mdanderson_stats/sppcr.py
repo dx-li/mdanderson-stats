@@ -14,6 +14,9 @@ def main(argv: list[str] | None = None) -> int:
     """Run the menu on standard streams with a reproducible, explicit seed."""
     parser = argparse.ArgumentParser(description="SPPCR allele-frequency analysis menu")
     parser.add_argument("--seed", type=int, required=True, help="explicit RNG seed")
+    parser.add_argument(
+        "--save-reports", action="store_true", help="ask for output files after each analysis"
+    )
     parser.add_argument("--legacy", action="store_true", help="use historical RANDLIB sampling")
     parser.add_argument("--seed2", type=int, default=123456789, help="second seed for legacy RNG")
     parser.add_argument("--replicates", type=int, default=1000)
@@ -35,6 +38,7 @@ def main(argv: list[str] | None = None) -> int:
             max_steps=args.max_steps,
             unseen_alleles=args.unseen_alleles,
             write_simulations=args.simulations,
+            ask_save=args.save_reports,
         )
     except (ValueError, ArithmeticError, CDFConsoleError, OSError) as error:
         print("SPPCR: " + str(error), file=sys.stderr)

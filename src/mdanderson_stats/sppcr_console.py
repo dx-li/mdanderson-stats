@@ -12,6 +12,7 @@ from .sppcr_analysis import SPPCRAnalysis, format_sppcr_analysis, sppcr_analyze,
 from .sppcr_bootstrap import _bootstrap_options
 from .sppcr_files import read_sppcr_file
 from .sppcr_interactive import read_sppcr_interactive
+from .sppcr_output import SPPCRSavedFiles, sppcr_output_dialogue
 from .sppcr_truth_console import read_sppcr_truth
 
 
@@ -23,6 +24,7 @@ class SPPCRRun:
     completed: int
     rejected: int
     last_analysis: SPPCRAnalysis | None
+    last_files: SPPCRSavedFiles | None = None
 
 
 def run_sppcr(
@@ -33,6 +35,7 @@ def run_sppcr(
     report_stream: TextIO | None = None,
     simulation_stream: TextIO | None = None,
     write_simulations: bool | None = None,
+    ask_save: bool = False,
     replicates: int = 1000,
     saturation: str = "half",
     unseen_alleles: str = "drop",
@@ -55,8 +58,12 @@ def run_sppcr(
     EOF ends cleanly with prior results retained. Invalid data/numerical analyses
     return to the menu; exhausted console limits and output failures propagate.
     Streams remain caller-owned; only input files opened here are closed here.
+    ask_save adds output-file selection after each completed analysis. Saving EOF
+    preserves that analysis; last_files records its save outcome when available.
     """
     _bootstrap_options(rng, replicates, saturation)
+    if not isinstance(ask_save, bool):
+        raise ValueError("ask_save must be boolean")
     if unseen_alleles not in ("drop", "retain"):
         raise ValueError("unseen_alleles must be 'drop' or 'retain'")
     if write_simulations is not None and not isinstance(write_simulations, bool):
@@ -82,6 +89,7 @@ def run_sppcr(
         raise ValueError("input stream must differ from output streams")
     completed = rejected = 0
     last: SPPCRAnalysis | None = None
+    last_files: SPPCRSavedFiles | None = None
     console.write_message("SPPCR: small-pool PCR allele-frequency analysis")
     for _ in range(max_steps):
         try:
@@ -97,16 +105,20 @@ def run_sppcr(
                 )
             )
             if action == 0:
-                return SPPCRRun("exit", completed, rejected, last)
+                return SPPCRRun("exit", completed, rejected, last, last_files)
+            source_path = None
+            default_name = "generated.data" if action == 4 else "interactive.data"
             try:
                 if action in (1, 2):
                     name = console.get_string(
                         "Enter input file path (back returns to menu):"
                     ).strip()
                     if name.lower() == "quit":
-                        return SPPCRRun("exit", completed, rejected, last)
+                        return SPPCRRun("exit", completed, rejected, last, last_files)
                     if name.lower() == "back":
                         continue
+                    source_path = name
+                    default_name = name
                     try:
                         data = read_sppcr_file(
                             name,
@@ -149,7 +161,7 @@ def run_sppcr(
                 continue
         except EOFError:
             console.write_message("End of input.")
-            return SPPCRRun("eof", completed, rejected, last)
+            return SPPCRRun("eof", completed, rejected, last, last_files)
         # Formatting and output failures are not retried as input errors.
         reports = format_sppcr_analysis(
             analysis,
@@ -168,4 +180,22 @@ def run_sppcr(
             sink.write(heading + reports.simulations)
         completed += 1
         last = analysis
+        last_files = None
+        if ask_save:
+            protected = [source_path] if source_path is not None else []
+            for stream in (report_stream, simulation_stream):
+                active_name = getattr(stream, "name", None)
+                if isinstance(active_name, str):
+                    protected.append(active_name)
+            try:
+                last_files = sppcr_output_dialogue(
+                    console,
+                    reports,
+                    default_name=default_name,
+                    protected_paths=tuple(protected),
+                    max_attempts=max_attempts,
+                )
+            except EOFError:
+                console.write_message("End of input; completed analysis was not saved to files.")
+                return SPPCRRun("eof", completed, rejected, last, None)
     raise CDFConsoleError("SPPCR exhausted max_steps")

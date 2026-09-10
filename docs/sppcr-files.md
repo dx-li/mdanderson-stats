@@ -65,5 +65,6 @@ sync failures, symlink replacement, and a competing writer at publication time.
 Assertions check actual file bytes, preserved destinations, and temporary-file
 cleanup rather than only mocking successful writes.
 
-SPPCR remains partial. The repeated menu/CLI is implemented; interactive output
-file choices and the final source-interface completion audit remain.
+The [output dialogue](sppcr-output.md) adds independent overwrite/append choices
+and menu integration. SPPCR remains partial pending the final source-interface
+completion audit.

@@ -104,7 +104,13 @@ def write_sppcr_reports(
             raise ValueError("report and simulation destinations must differ")
         paths.append(simulation)
         payloads.append(reports.simulations.encode("utf-8"))
-    for path in paths:
+    _publish(paths, payloads, [overwrite] * len(paths))
+    return destination, simulation
+
+
+def _publish(paths: list[Path], payloads: list[bytes], replace: list[bool]) -> None:
+    """Stage all outputs before per-path exclusive publication or replacement."""
+    for path, overwrite in zip(paths, replace, strict=True):
         if path.is_dir():
             raise IsADirectoryError(str(path))
         if not overwrite and os.path.lexists(path):
@@ -113,7 +119,7 @@ def write_sppcr_reports(
     try:
         for path, payload in zip(paths, payloads, strict=True):
             staged.append(_stage(path, payload))
-        for temporary, path in zip(staged, paths, strict=True):
+        for temporary, path, overwrite in zip(staged, paths, replace, strict=True):
             if overwrite:
                 os.replace(temporary, path)
             else:
@@ -122,4 +128,3 @@ def write_sppcr_reports(
     finally:
         for temporary in staged:
             temporary.unlink(missing_ok=True)
-    return destination, simulation

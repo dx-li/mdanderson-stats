@@ -60,8 +60,8 @@ All supplied streams remain caller-owned. The input object must differ from outp
 objects. The runner closes only input files that it opens itself. It never infers
 answer-file names or overwrites report files. Callers can use
 [staged file publication](sppcr-files.md) for a completed analysis, or supply their
-own report streams. Interactive output-file selection remains a separate integration
-task; this runner does not claim native file-dialogue transcript equivalence.
+own report streams. [Interactive file saving](sppcr-output.md) is available with `ask_save=True`,
+using completed reports and explicit per-file choices.
 
 Limits default to `max_steps=1000` menu iterations, `max_attempts=3` correction
 attempts, `max_records=10000` records per input request, and
@@ -84,6 +84,7 @@ no clock seed. `--replicates`, `--max-steps`, and `--unseen-alleles drop|retain`
 configure the runner. Mutually exclusive `--write-simulations` and
 `--no-simulations` override output selection; otherwise the menu request controls it.
 The CLI uses standard streams; reports can be redirected by the invoking shell.
+`--save-reports` enables interactive output-file selection after each analysis.
 
 Exit status is 0 for normal exit/EOF without rejected analyses, 1 if any analysis
 was rejected (even if a later analysis succeeds), and 2 for invalid configuration,
@@ -98,5 +99,4 @@ and legacy CLI reproducibility and exit statuses. Underlying input dialogues and
 numerical kernels retain their separate native reference tests; the repaired full
 menu is not claimed to reproduce defective native application behavior.
 
-SPPCR remains partial pending interactive output-file selection and the final
-source-interface completion audit.
+SPPCR remains partial pending the final source-interface completion audit.

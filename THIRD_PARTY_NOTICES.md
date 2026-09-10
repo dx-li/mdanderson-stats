@@ -610,7 +610,9 @@ bootstrap-choice dependence on uninitialized counts.
 File workflows use bounded read-only input and complete staged report files with
 exclusive publication by default and explicit replacement. A repeated four-mode
 menu and seeded CLI use caller-owned streams, preserve prior results on EOF, and
-reset per-analysis choices. Interactive output-file selection remains pending. The archive includes
+reset per-analysis choices. Interactive output selection retains q/r/o/a choices
+and basename conventions, while collecting all choices before staged publication,
+protecting inputs and named active streams, and bounding append reads. The archive includes
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native
 source and historical binaries are not bundled in the Python package.

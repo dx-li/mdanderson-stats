@@ -244,6 +244,7 @@ from .sppcr_intervals import (
     sppcr_intervals,
 )
 from .sppcr_legacy_generate import sppcr_generate_legacy
+from .sppcr_output import SPPCRSavedFiles, sppcr_output_dialogue
 from .sppcr_reporting import format_sppcr_report, format_sppcr_simulations
 from .sppcr_truth import SPPCRTruth, sppcr_truth
 from .sppcr_truth_console import SPPCRSimulationRequest, read_sppcr_truth
@@ -278,6 +279,8 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "SPPCRSavedFiles",
+    "sppcr_output_dialogue",
     "SPPCRRun",
     "run_sppcr",
     "read_sppcr_file",

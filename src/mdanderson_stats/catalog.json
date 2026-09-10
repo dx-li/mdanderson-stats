@@ -892,7 +892,8 @@
         "Bounded native-order truth-parameter dialogue with explicit bootstrap/output choices and formatted parameter reports, reconciled against unchanged native dialogue transcripts",
         "Reusable observed-data and truth-simulation workflows with modern or historical bootstrap sampling, explicit continuous RNG state, preserved identities and composed bounded reports",
         "Bounded read-only batch/FileMaker file input and staged UTF-8 report publication with exclusive defaults, explicit replacement, alias protection and documented multi-file failure semantics",
-        "Repeated four-mode menu and seeded CLI with modern/historical RNGs, explicit stream ownership, EOF outcomes, bounded correction loops and report/replicate routing"
+        "Repeated four-mode menu and seeded CLI with modern/historical RNGs, explicit stream ownership, EOF outcomes, bounded correction loops and report/replicate routing",
+        "Interactive output-file selection with source basename and q/r/o/a choices, staged independent overwrite/append modes, protected inputs and named streams, cancellation safety and menu/CLI integration"
       ],
       "validation": [
         "docs/sppcr-research.md",
@@ -969,7 +970,10 @@
         "src/mdanderson_stats/sppcr_console.py",
         "src/mdanderson_stats/sppcr.py",
         "tests/test_sppcr_console.py",
-        "docs/sppcr-console.md"
+        "docs/sppcr-console.md",
+        "src/mdanderson_stats/sppcr_output.py",
+        "tests/test_sppcr_output.py",
+        "docs/sppcr-output.md"
       ]
     },
     {

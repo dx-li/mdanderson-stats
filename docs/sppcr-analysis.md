@@ -81,5 +81,5 @@ mathematical validation; this workflow adds integration evidence.
 
 [File workflows](sppcr-files.md) provide bounded input reads and staged report
 publication. A [menu/CLI](sppcr-console.md) supports repeated analyses. SPPCR
-remains partial: interactive output-file selection and the final source-interface
-completion audit remain.
+also supports [interactive output-file selection](sppcr-output.md). SPPCR remains
+partial pending the final source-interface completion audit.
