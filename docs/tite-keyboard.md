@@ -3,9 +3,9 @@
 Catalog entry **135**, [TITE-Keyboard](https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD/),
 is partially implemented for its ESS calculator, informative trimester weights,
 approximate posterior-key calculations and interim dose decisions with pending
-outcomes. Calendar-time trial simulation, time-to-DLT scenario generators,
-flowcharts and integrated protocol reports remain pending. Numerical effective-follow-up
-boundaries and lookup tables are available.
+outcomes. Calendar-time replay and simulation with uniform/piecewise-uniform DLT
+timing, numerical effective-follow-up boundaries and lookup tables are available.
+Weibull/log-logistic timing calibration, flowcharts and integrated reports remain pending.
 
 The app snapshot identifies version 1.2.2.0, updated December 15, 2025. Its technical
 PDFs and the authors' [methodological paper](https://arxiv.org/abs/1807.08393) are
@@ -173,3 +173,91 @@ survival function. Lookup results agree with posterior calculations across 10,00
 feasible effective-count scenarios, including asymmetric and endpoint target keys.
 Every finite nonzero bracket is checked at both adjacent endpoints, and follow-up
 lookups agree with interim conduct when suspension and safety allow assignment.
+
+## Calendar-time trial replay and simulation
+
+`run_tite_keyboard_trial` conducts a trial from explicit arrival gaps and potential
+outcomes. It returns patient enrollment times, assigned doses, absolute observed
+DLT times (`inf` for no DLT), final dose-level counts, MTD selection, exclusions,
+stop reason, total time and suspension time. Every interim step retains its time,
+current dose and complete decision object, including effective counts and key masses.
+
+```python
+import numpy as np
+from mdanderson_stats import run_tite_keyboard_trial, simulate_tite_keyboard
+
+trial = run_tite_keyboard_trial(
+    KeyboardDesign(),
+    interarrival=[15] * 6,
+    dlt_delays=np.full((6, 2), np.inf),
+    window=90,
+)
+assert trial.enrollment_times.tolist() == [15, 30, 45, 120, 135, 150]
+assert trial.suspension_time == 60
+assert trial.final_time == 240
+
+calendar = simulate_tite_keyboard(
+    KeyboardDesign(),
+    true_toxicity=[0.05, 0.15, 0.3, 0.45, 0.6],
+    window=3,
+    accrual_rate=2,
+    trials=1000,
+    rng=135,
+)
+print(calendar.selection_probability)
+print(calendar.duration.mean(), calendar.suspension_time.mean())
+```
+
+Potential DLT delays have shape `(planned_patients,doses)` and are measured from
+individual enrollment: values in `[0,window]` denote DLT, while positive infinity
+means no DLT in the window. Only the assigned-dose outcome is observed, and only
+once its event time is reached. Unassigned potential outcomes cannot influence
+conduct. Arrival gaps are nonnegative, with the first gap measured from trial time
+zero. Planned enrollment must comprise complete cohorts and cannot exceed 200.
+
+The calendar engine uses the following explicit conventions:
+
+* Each cohort receives one fixed dose, with individual staggered enrollment.
+  There are no within-cohort dose changes or interim stopping decisions. Set
+  cohort size one to make an assignment decision before every patient.
+* The next cohort is assessed when its first patient is ready. If suspended,
+  advance directly to the next DLT observation or completed window among enrolled
+  patients and reassess. The clock does not poll at arbitrary time increments.
+* Suspended accrual does not create an enrollment queue. The waiting candidate
+  enters when suspension ends; subsequent interarrival gaps start from the actual
+  preceding enrollment time.
+* Safety and precision stops are recorded at these cohort-decision times. Thus
+  termination time may be later than the time a toxicity first became observable.
+* Final analysis waits until all enrolled outcomes are ascertained, including after
+  enrollment stops for precision. An observed DLT is already ascertained and does
+  not need a full window for this toxicity-only analysis. `final_time` is the later
+  of the last decision/enrollment time and the last outcome ascertainment.
+
+These conventions specify reproducible calendar behavior; they are not a claim
+of exact parity with undocumented source-app scheduling. Safety and suspension
+checks use the existing interim-decision API, and final selection uses complete
+integer outcomes with retained exclusions. Timelines that cannot represent a
+positive event-time increment in floating precision raise an explicit error.
+
+`simulate_tite_keyboard` generates independent binary DLT incidence and conditional
+DLT timing. It supports fixed gaps `1/accrual_rate` or independent exponential gaps
+with that mean, chosen through `arrival="fixed"` or `"exponential"`. The first
+patient also receives an arrival gap. Rate units must match the window's time unit.
+
+Conditional DLT time is uniform over the window by default. Optional
+`event_trimester_probabilities` specify a piecewise-uniform true timing distribution.
+These scenario probabilities are distinct from `trimester_probabilities`, which
+specify the analysis weighting prior; they may deliberately differ to examine
+misspecification. Both support three nonnegative masses summing to one.
+Weibull/log-logistic timing and the app's late-half calibration remain pending.
+
+The simulation result retains trial-level patient/toxicity counts, selected doses,
+durations, suspension times and stop reasons. Selection index zero means no MTD;
+probability and marginal Monte Carlo standard-error bins are `[no MTD, dose 1, ...]`.
+Use the explicit replay function when individual-patient histories are needed.
+
+Validation reproduces the initial staggered-cohort waiting pattern and the paper's
+day-165 delayed-DLT decision, checks invariance to unobserved future events, confirms
+final follow-up after precision stopping, and checks conditional timing and arrival
+distributions against their known laws. Fixed/exponential 300-trial runs exercised
+full multi-dose timelines. No native calendar-simulation equivalence is claimed.
