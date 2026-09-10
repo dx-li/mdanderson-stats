@@ -333,11 +333,12 @@
       "implemented_features": [
         "Median-effect dose-response OLS with covariance and stable inverse prediction",
         "Loewe interaction indices and log-delta Student-t intervals for observed combination effects with explicit measurement variance",
-        "Fixed-ray interaction curves with uncertainty from independent component and combination regressions"
+        "Fixed-ray interaction curves with uncertainty from independent component and combination regressions",
+        "Normal-coefficient Monte Carlo comparison with paper RMS formula, retained draws and slope-reversal diagnostics"
       ],
       "validation": [
-        "Five focused tests: analytic regression, published three-drug scenario, finite-difference delta variances, Student-t intervals and log-scale extremes; tests/test_interaction_index.py",
-        "Pending Monte Carlo comparator, plots, source case studies and native workflow audit; additional parametric and semiparametric response-surface models pending; docs/interaction-index.md"
+        "Eight focused tests: regression, published three-drug identity, delta variances, exact Monte Carlo RMS reconstruction, small-noise agreement and unstable-slope diagnostics; tests/test_interaction_index.py and tests/test_interaction_monte_carlo.py",
+        "Pending plots, source case studies and native workflow audit; additional parametric and semiparametric response-surface models pending; docs/interaction-index.md"
       ]
     },
     {
@@ -2093,11 +2094,12 @@
       "implemented_features": [
         "Median-effect dose-response OLS with covariance and stable inverse prediction",
         "Loewe interaction indices and log-delta Student-t intervals for observed combination effects with explicit measurement variance",
-        "Fixed-ray interaction curves with uncertainty from independent component and combination regressions"
+        "Fixed-ray interaction curves with uncertainty from independent component and combination regressions",
+        "Normal-coefficient Monte Carlo comparison with paper RMS formula, retained draws and slope-reversal diagnostics"
       ],
       "validation": [
-        "Five focused tests: analytic regression, published three-drug scenario, finite-difference delta variances, Student-t intervals and log-scale extremes; tests/test_interaction_index.py",
-        "Pending Monte Carlo comparator, plots, source case studies and native workflow audit; docs/interaction-index.md"
+        "Eight focused tests: regression, published three-drug identity, delta variances, exact Monte Carlo RMS reconstruction, small-noise agreement and unstable-slope diagnostics; tests/test_interaction_index.py and tests/test_interaction_monte_carlo.py",
+        "Pending plots, source case studies and native workflow audit; docs/interaction-index.md"
       ]
     },
     {

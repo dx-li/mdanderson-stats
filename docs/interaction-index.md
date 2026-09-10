@@ -65,6 +65,31 @@ assert np.all(ray.interval[:, 0] < 1)
 assert np.all(ray.interval[:, 1] > 1)
 ```
 
+## Monte Carlo comparator
+
+`interaction_index_monte_carlo(models, combination, proportions, effect, samples=2000, rng=...)`
+implements the normal-coefficient procedure in paper section 3.1. It draws each
+intercept/slope pair jointly with its fitted covariance, independently across
+curves, and retains the coefficient draws in the result. The reported standard
+error is `sqrt(mean((sampled_index - fitted_index)**2))`, as printed in the paper.
+It is not centered on the Monte Carlo mean and does not use a samples-minus-one
+denominator. The interval is fitted index plus/minus a critical value times this
+RMS deviation. `critical_distribution="t"` follows the paper's small-sample
+comparisons; `"normal"` uses its original normal critical value.
+
+These untransformed intervals may have negative lower limits, which are retained.
+Gaussian slopes are not truncated or resampled: `slope_reversal_fraction` reports
+sign reversals for each drug and the combination. Draws near zero slope can create
+extreme indices and unstable Monte Carlo uncertainty. Unrepresentable results
+raise instead of dropping draws. A finite run does not establish existence of
+population moments under this approximation. The existing log-delta interval is
+available separately.
+
+Calculation uses bounded sample/effect blocks and log-space squared deviations.
+The same coefficient draws are used across the effect grid. Inputs are capped at
+20 million sample-effect cells and four million coefficient cells. Fixed seeds
+reproduce a fixed call; native software random streams are not reproduced.
+
 ## Validation and remaining coverage
 
 Five focused tests cover centered regression against hand-computed coefficients
@@ -78,8 +103,12 @@ A local batch of 200,000 three-drug observed-combination calculations, including
 confidence limits, took about 0.057 seconds. This is a development-machine
 measurement, not a cross-machine guarantee.
 
+Three additional Monte Carlo tests reproduce the printed RMS formula directly
+from retained draws, compare small-uncertainty results to the delta method, check
+zero covariance and seeded replay, and retain reversed slopes and negative limits.
+
 **Both catalog entries remain partial.** CI of Interaction Index still needs its
-Monte Carlo comparator, median-effect plots, source case-study fixtures and native
+median-effect plots, source case-study fixtures and native
 workflow audit. SYNERGY additionally needs its other response-surface models,
 semiparametric methods and associated workflows. Pooled measurement-error
 estimation and native file/report conventions have not been silently inferred.

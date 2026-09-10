@@ -13,5 +13,5 @@
       "sha256": "9de592a2da6b2d01985870f914412fbcb1549835c0e5dcdd2a60abda39b2b3e6"
     }
   ],
-  "scope": "Median-effect OLS; observed-combination and fixed-ray Loewe log-delta intervals. Monte Carlo comparator, other SYNERGY models and native workflows remain pending."
+  "scope": "Median-effect OLS; observed-combination and fixed-ray Loewe log-delta intervals. Normal-coefficient Monte Carlo comparator with fitted-center RMS. Other SYNERGY models and native workflows remain pending."
 }

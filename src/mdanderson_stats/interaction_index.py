@@ -47,14 +47,17 @@ def _models(models: Sequence[MedianEffectFit]) -> tuple[MedianEffectFit, ...]:
     return fits
 
 
-def _variance(fit: MedianEffectFit, gradient: FloatArray) -> FloatArray:
-    # A PSD square root avoids negative quadratic forms from cancellation.
+def _covariance_factor(fit: MedianEffectFit) -> FloatArray:
     scale = np.max(abs(fit.covariance))
     if scale == 0:
-        return np.zeros(gradient.shape[:-1])
+        return np.zeros((2, 2))
     values, vectors = np.linalg.eigh(fit.covariance / scale)
-    factor = vectors * np.sqrt(np.maximum(values, 0)) * np.sqrt(scale)
-    return np.sum((gradient @ factor) ** 2, axis=-1)
+    return vectors * np.sqrt(np.maximum(values, 0)) * np.sqrt(scale)
+
+
+def _variance(fit: MedianEffectFit, gradient: FloatArray) -> FloatArray:
+    # A PSD square root avoids negative quadratic forms from cancellation.
+    return np.sum((gradient @ _covariance_factor(fit)) ** 2, axis=-1)
 
 
 def _result(

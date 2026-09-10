@@ -781,5 +781,6 @@ calibration and native software workflow audits remain pending.
 
 [CI of Interaction Index and SYNERGY](docs/interaction-index.md) share median-effect
 regression and Loewe interaction indices with log-delta confidence intervals for
-observed combinations and fixed-ratio curves. Other models and native workflows
+observed combinations and fixed-ratio curves, plus the normal-coefficient Monte
+Carlo comparator with retained draws. Other models and native workflows
 remain pending.

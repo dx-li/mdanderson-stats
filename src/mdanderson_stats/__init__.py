@@ -228,6 +228,7 @@ from .hierarchical_normal import HierarchicalNormalFit, hierarchical_normal
 from .imom_prior import IMOMBinaryPrior
 from .inequality import InequalityProbability, inequality_probability
 from .interaction_index import InteractionIndex, interaction_index, interaction_index_ray
+from .interaction_monte_carlo import InteractionMonteCarlo, interaction_index_monte_carlo
 from .intervals import (
     binomial_interval,
     bp1ci_binomial_interval,
@@ -452,6 +453,8 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "InteractionMonteCarlo",
+    "interaction_index_monte_carlo",
     "InteractionIndex",
     "interaction_index",
     "interaction_index_ray",
