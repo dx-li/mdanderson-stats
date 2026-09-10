@@ -1,0 +1,27 @@
+{
+  "version": "0.1.10",
+  "license_declared": "GPL-2",
+  "sources": [
+    {
+      "url": "https://github.com/cran/IPDfromKM/blob/16ea3e163b8ad409e51e035154c52803dcb1c28b/DESCRIPTION",
+      "artifact": "DESCRIPTION",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1750,
+      "sha256": "021d47cf6b0cdefcff82b7ec41bc1d45296f5c69b4a539c6136ef36822f6410e"
+    },
+    {
+      "url": "https://github.com/cran/IPDfromKM/blob/16ea3e163b8ad409e51e035154c52803dcb1c28b/R/getIPD.R",
+      "artifact": "R/getIPD.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 12130,
+      "sha256": "afdc9d6b5cba9015626b926a1ec54ad54c8278c5a00dd36f0ff9e258784aa988"
+    },
+    {
+      "url": "https://github.com/cran/IPDfromKM/blob/16ea3e163b8ad409e51e035154c52803dcb1c28b/R/preprocess.R",
+      "artifact": "R/preprocess.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 8064,
+      "sha256": "092dfa67cfdd06f9e025ce00ba01cbd93c41209a3bb5707929830e765f3d88e5"
+    }
+  ]
+}

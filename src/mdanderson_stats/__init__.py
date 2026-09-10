@@ -280,6 +280,7 @@ from .intervals import (
     bp1ci_poisson_interval,
     poisson_interval,
 )
+from .ipdfromkm import ReconstructedIPD, reconstruct_ipd
 from .keyboard import KeyboardDesign, KeyboardPosterior, KeyboardSelection
 from .keyboard_simulation import KeyboardSimulation, simulate_keyboard
 from .kphaz import KPHazard, kphaz
@@ -513,6 +514,8 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "ReconstructedIPD",
+    "reconstruct_ipd",
     "CONFINTSurvivalHazardRange",
     "confint_survival_hazard_range",
     "CONFINTSurvivalSolution",

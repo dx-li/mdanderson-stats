@@ -853,3 +853,8 @@ probabilities, event-probability limits and balanced sample sizes. Survival
 hazard/mean width assurance is available for fixed counts and Poisson accrual;
 bracketed survival quantile/design inversions and automatic hazard-range
 searches are also available. Native reporting remains pending.
+
+[IPDfromKM](docs/ipdfromkm.md) reconstructs approximate patient survival records
+from cleaned Kaplan–Meier coordinates, with optional reported risk counts and
+total events. It returns fitted curves and reconstruction errors; digitizing,
+native cleaning and secondary reports remain pending.
