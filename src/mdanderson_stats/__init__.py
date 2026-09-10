@@ -272,6 +272,13 @@ from .diagnostic_population import (
     diagnostic_population_from_counts,
 )
 from .drdist import drdist
+from .eventchart import (
+    ConvertedEvents,
+    EventChart,
+    event_chart_data,
+    event_convert,
+    plot_event_chart,
+)
 from .expsurv import ExploratorySurvival, exploratory_survival
 from .expsurv_alignment import SurvivalAlignmentPlot, plot_survival_alignment
 from .expsurv_box import CensoredBox, censored_box
@@ -567,6 +574,11 @@ from .windows import (
 )
 
 __all__ = [
+    "ConvertedEvents",
+    "EventChart",
+    "event_convert",
+    "event_chart_data",
+    "plot_event_chart",
     "BLiPBox",
     "BLiPCustomGroup",
     "BLiPCustomPlot",

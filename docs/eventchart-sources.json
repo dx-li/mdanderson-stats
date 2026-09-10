@@ -1,0 +1,60 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EVENTCHART/EVENTCHART_V1.tar.gz",
+      "artifact": "archive.tar.gz",
+      "bytes": 30492,
+      "sha256": "42af233b8af70725d75a444feebdb74bb1983150286d3d98a7a6a1adcb716275",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EVENTCHART/EVENTCHART_V1.tar.gz",
+      "artifact": "S/event.chart/readme.txt",
+      "bytes": 1514,
+      "sha256": "a33fef2c83705e4bd6c9390e4b203b7d2209775496acc315933129ba51b648af",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EVENTCHART/EVENTCHART_V1.tar.gz",
+      "artifact": "S/event.chart/event.chart.s",
+      "bytes": 17540,
+      "sha256": "79df7e1e56628806968288a9e6f3fb3aaf87026c9c89d44d286ccc76ce29b24b",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EVENTCHART/EVENTCHART_V1.tar.gz",
+      "artifact": "S/event.chart/event.chart.d",
+      "bytes": 23554,
+      "sha256": "304fa7a407ce0c74912a3b0e9cad10210df0fb860a92d6b5767e96867ea79355",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EVENTCHART/EVENTCHART_V1.tar.gz",
+      "artifact": "S/event.chart/event.convert.s",
+      "bytes": 2312,
+      "sha256": "d4ff4410d7dcdf0b6784d85f5cbbfacbc0224ff391972f14928421bd45c7bdd9",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EVENTCHART/EVENTCHART_V1.tar.gz",
+      "artifact": "S/event.chart/event.convert.d",
+      "bytes": 1149,
+      "sha256": "52c24940ba448b51da3ec466c85d25b88bd0fd809fae8b91a6b4e5d4a3bb203a",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EVENTCHART/EVENTCHART_V1.tar.gz",
+      "artifact": "S/event.chart/example1.s",
+      "bytes": 6813,
+      "sha256": "411421116bce07f5ee5008c89c5d93e09b888b7323b7cb8a0ce2a1702ca78737",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EVENTCHART/EVENTCHART_V1.tar.gz",
+      "artifact": "S/event.chart/example2.s",
+      "bytes": 4658,
+      "sha256": "b2fcded83308ef9dea962ef8d4dd50e355c108740bad7747d8d62c74893596e9",
+      "retrieved_date": "2026-09-10"
+    }
+  ]
+}

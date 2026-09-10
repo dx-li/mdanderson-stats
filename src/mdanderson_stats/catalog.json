@@ -1273,9 +1273,14 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Numeric coded-event conversion; calendar/elapsed-time event geometry, reference alignment and scaling, stable multi-key ordering, row provenance, missing-data handling, numeric covariate placement and local jitter, interval overlays and optional rendering. Goldman charts, calendar formatting, grouped line styles and categorical codes remain pending."
+      ],
+      "validation": [
+        "Original S event.chart translated mechanically to R assignment syntax: calendar, interval and sorted-subset point/span coordinates; original event.convert with multiple pairs; tests/fixtures/eventchart-native.json",
+        "Missing-reference/overlay regression, ordering and provenance, missing codes, jitter replay, overflow and rendering; tests/test_eventchart.py; docs/eventchart.md; docs/eventchart-sources.json"
+      ]
     },
     {
       "id": 33,

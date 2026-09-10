@@ -915,3 +915,8 @@ complete its [seven advertised calculation families](docs/survan-coverage.md).
 polygons, with plotting-independent geometry and optional Matplotlib rendering.
 Custom layouts include fixed/variable percentile boxes, percentile and mean/SD/SE
 lines, centered/baseline placement, and all six point patterns.
+
+[EVENTCHART](docs/eventchart.md) provides coded-event conversion and calendar or
+elapsed-time subject timelines, with sorting, reference alignment, covariate
+placement, interval overlays and immutable plotting geometry. Goldman charts and
+remaining display workflows are still pending.

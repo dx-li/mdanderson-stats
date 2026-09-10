@@ -645,3 +645,14 @@ citation; its [readme](notices/mdanderson-blip-readme.txt) is preserved. This
 independent adaptation does not replace those terms with another license.
 Archive hashes and numerical comparisons are documented in `docs/blip.md` and
 `docs/blip-sources.json`. Original S code and archives are not redistributed.
+
+## EVENTCHART
+
+`eventchart.py` independently implements event conversion and timeline geometry
+from the MD Anderson EVENTCHART distribution by J. Jack Lee, K. R. Hess and
+J. A. Dubin. See Lee JJ, Hess KR, Dubin JA, “Extensions and applications of
+event charts,” The American Statistician 54:63–70 (2000). Source provenance and
+implementation differences are in `docs/eventchart.md` and
+`docs/eventchart-sources.json`. The original S source and example data are not
+redistributed. The downloaded readme identifies authors and references but does
+not include a separate software license grant.
