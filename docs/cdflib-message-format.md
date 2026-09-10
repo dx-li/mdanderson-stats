@@ -75,3 +75,8 @@ All seven F95 support modules now have validated mappings with documented Python
 semantics.
 See the [CDFLIB90 completion audit](cdflib90-completion.md) for the
 complete library scope. No speedup over native interactive I/O is claimed.
+
+`clear_screen_before_print=True` clears console output with `window_size` blank
+lines before displayed messages (default 24), including explicit unit-only output.
+Suppressed messages do not clear. Both settings are per-console; window size must
+be a nonnegative integer. This completes Misclib’s corresponding public control.

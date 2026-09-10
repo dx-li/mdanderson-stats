@@ -3,9 +3,9 @@
 Misclib is a library of statistical-software support routines by the MD Anderson
 Section of Computer Science, Department of Biomathematics. This port reuses the
 existing CDFLIB implementations where the archived procedure bodies agree.
-Catalog entry 87 remains **partial**: its numerical methods are available, while
-some formatting and file/prompt utilities still need ports
-or a source-contract audit.
+Catalog entry 87 is **implemented** with documented Python semantics. The
+[completion audit](misclib-coverage.md) accounts for all 20 archive files, shared
+implementations, new methods and validation evidence.
 
 ## Bounded scalar maximization
 
@@ -61,7 +61,7 @@ Nonfinite interpolation intermediates fall back to golden-section refinement.
 Midpoints avoid sum overflow, and rounded steps stay within the bounds. These
 changes address numerical limits without changing the ordinary search method.
 
-## Shared source audit and remaining coverage
+## Shared source audit and coverage
 
 A procedure-by-procedure comparison against the pinned CDFLIB90 archive removes
 comments, whitespace, redundant IMPLICIT NONE declarations, terminal RETURNs and
@@ -78,13 +78,13 @@ repairs, domains and Python semantics.
 | `zero_finder_mod` | Existing `set_zero_finder`, `interval_zf`, `step_zf`, `rc_interval_zf`, `rc_step_zf`, `final_zf_state`; local state replaces source globals. Python uses safeguarded interpolation/bisection rather than the source TOMS 748 kernel; see [root methods](cdflib-root.md) |
 | `strings_mod` | Existing ASCII case conversions and reentrant `qlex`; [string semantics and native validation](cdflib-strings.md) |
 | `max_fun_mod` | New `set_fun_max`, `fun_max`, `rc_fun_max` and per-search state, described above |
-| `constants_mod` | Existing `cdflib_constants` appears equivalent; final source-contract audit pending |
-| `sort_mod`, `sort_permutation_mod` | Matrix-column sorting, gather indices, direct/reversed gathers and callback contracts implemented below. Existing `sort_list` offers list sorting; its Misclib-specific source comparison remains pending |
+| `constants_mod` | Existing `cdflib_constants`; entire normalized source module matches CDFLIB90 |
+| `sort_mod`, `sort_permutation_mod` | Matrix-column sorting, gather indices, direct/reversed gathers and callback contracts implemented below. Existing `sort_list` covers list sorting; only declaration/name/diagnostic differences from CDFLIB90 were found |
 | `format_number_mod` | Integer/single/double number formatting implemented below, including alignment, scaling, trimming and fit reporting |
-| `print_it_mod`, `format_specs` | Template-page compilation, fixed-width substitutions and message printing implemented below; screen clearing, pauses and related console utilities remain pending |
-| `get_values_from_user_mod` | Existing console helpers offer related behavior; final source-contract audit pending |
+| `print_it_mod`, `format_specs` | Template-page compilation, fixed-width substitutions and message printing implemented below; screen clearing, pauses and related controls map to `CDFConsole` |
+| `get_values_from_user_mod` | Existing CDFConsole helpers cover identical numeric/choice/string/list procedures; see completion audit |
 | `open_file` | Interactive file selection implemented below with explicit statuses, read/create/append/overwrite and confirmation before mutation |
-| `interface_mod`, build/install files | Fortran interfaces and installation need final reconciliation with Python packaging |
+| `interface_mod`, build/install files | CDFConsole covers interface methods, including pause; Python packaging replaces Fortran compilation |
 
 The manual mistakenly prints `2/sqrt(2*pi)` in its erf/erfc definitions. The
 executable computes the standard `2/sqrt(pi)` normalization, as the existing
@@ -287,9 +287,9 @@ intentional difference from the legacy prompt path.
 Python pages replace **generated** Fortran FORMAT strings; arbitrary hand-written
 Fortran FORMAT expressions are not interpreted. `render` replaces both
 `edit_format` and `edit_message_format` for these pages; `print_misclib_message`
-replaces the corresponding print calls. Screen clearing, pause/prompt functions,
-file-unit allocation and the separate numeric-input helpers remain in the
-remaining console-utility audit.
+replaces the corresponding print calls. Screen clearing, pause/prompt functions and numeric-input helpers map to
+`CDFConsole`; caller-owned streams replace file-unit allocation. The
+[completion audit](misclib-coverage.md) records the full mapping.
 
 Native validation required two packaging repairs and explicit caller setup:
 

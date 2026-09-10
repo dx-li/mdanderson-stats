@@ -98,3 +98,7 @@ use NumPy. No speedup over native console I/O is claimed. See the
 
 [Numeric array formatting](cdflib-array-format.md) is available through
 `write_array`, with checked field counts and support for records longer than 79 characters.
+
+`pause()` supplies Misclib’s distinct pause message and consumes one record,
+while `hold()` retains its existing message. Both propagate EOF and leave streams
+open. The native pause text was verified from the unchanged compiled routine.

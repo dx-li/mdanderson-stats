@@ -107,6 +107,8 @@ class CDFConsole:
         self.print_off = False
         self.print_level = 1
         self.format_printed = False
+        self.clear_screen_before_print = False
+        self.window_size = 24
 
     def _read(self) -> str:
         line = self.input.readline(self.max_line_length + 2)
@@ -147,6 +149,12 @@ class CDFConsole:
     def hold(self) -> None:
         """Display the hold message and consume one input record."""
         self.output.write("\nPress the Return or Enter key to continue ...\n")
+        self.output.flush()
+        self._read()
+
+    def pause(self) -> None:
+        """Display Misclib's pause message and consume one input record."""
+        self.output.write('\n Hit the "Enter" or "Return" key to continue\n\n\n')
         self.output.flush()
         self._read()
 
@@ -413,7 +421,13 @@ class CDFConsole:
         self.format_printed = False
         if any(
             not isinstance(value, bool)
-            for value in (force, unit_only, self.print_off, self.always_print)
+            for value in (
+                force,
+                unit_only,
+                self.print_off,
+                self.always_print,
+                self.clear_screen_before_print,
+            )
         ):
             raise ValueError("Message controls must be boolean")
         if (
@@ -422,6 +436,7 @@ class CDFConsole:
             or self.print_level not in (1, 2, 3)
         ):
             raise ValueError("print_level must be 1, 2 or 3")
+        screen_lines = _positive(self.window_size, "window_size", allow_zero=True)
         if unit_only and unit is None:
             raise ValueError("unit_only requires an explicit output unit stream")
         if not isinstance(self.message_format, str):
@@ -445,6 +460,8 @@ class CDFConsole:
         if not show:
             return None
         record = text + "\n"
+        if self.clear_screen_before_print:
+            self.clear_screen(screen_lines)
         if not unit_only:
             self.output.write(record)
         if unit is not None and (unit_only or unit is not self.output):
