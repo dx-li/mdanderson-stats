@@ -498,6 +498,7 @@ from .stukel_fit import StukelFit, StukelFitError, fit_stukel
 from .stukel_objective import StukelObjective, stukel_objective
 from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
+from .survan_km import SurvanKM, SurvanQuantiles, survan_km
 from .survan_tests import SurvivalGroupTest, survan_group_test
 from .survival_ess import SurvivalPriorESS, survival_prior_ess
 from .survival_sample_size import (
@@ -549,6 +550,9 @@ from .windows import (
 )
 
 __all__ = [
+    "SurvanKM",
+    "SurvanQuantiles",
+    "survan_km",
     "SurvivalGroupTest",
     "survan_group_test",
     "TRAXData",

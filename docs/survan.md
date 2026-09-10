@@ -68,10 +68,9 @@ sign reversal does not change the omnibus statistic.
 Additional checks cover an analytic tied-censor example, independent-stratum
 addition, group relabeling, absence of information and disconnected groups.
 No claim is made that the entire SURVAN application is implemented: its native
-Kaplan–Meier confidence/quantile conventions, multivariable proportional-hazards
-and logistic fits, descriptive summaries and interactive reporting remain to be
-ported. Existing package survival estimators are not counted as completing those
-native workflows without a separate convention audit.
+multivariable proportional-hazards and logistic fits, descriptive summaries and
+interactive reporting remain to be ported. Kaplan–Meier and Simon–Lee confidence
+calculations are now available through [survan_km](survan-km.md).
 
 Sources: [MD Anderson SURVAN](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/59)
 and [source archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SURVAN/SURVAN_V1.tar.gz).

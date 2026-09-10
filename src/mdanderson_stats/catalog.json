@@ -2010,11 +2010,13 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Multi-group log-rank and Gehan–Breslow survival comparisons, optional stratification, tied-event hypergeometric covariance, scores and effective-rank chi-square tests. Native KM confidence/quantile conventions, multivariable Cox/logistic regression and reporting remain pending."
+        "Multi-group log-rank and Gehan–Breslow survival comparisons, optional stratification, tied-event hypergeometric covariance, scores and effective-rank chi-square tests. Multivariable Cox/logistic regression and reporting remain pending.",
+        "Kaplan–Meier life table, Greenwood standard errors, risk-based Simon–Lee pointwise confidence limits, native interpolated quantiles and confidence-interval status flags, including censor times."
       ],
       "validation": [
         "Original Fortran LRC/GBC calculations on the manual example and three-group stratified tied data; tests/test_survan_tests.py",
-        "Analytic tied-censor risk-set example, stratum addition and disconnected-group rank checks"
+        "Analytic tied-censor risk-set example, stratum addition and disconnected-group rank checks",
+        "Original Fortran KMC/FSROUT/KMCI/CALQV/KMCIQT life table and nine quantiles; endpoint, rare-probability and interval re-entry checks; tests/test_survan_km.py"
       ]
     },
     {
