@@ -4,7 +4,7 @@ MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
 including regression, ordinal, multinomial and general design-matrix models.
-Dedicated S-plus regression SMO models and complete native workflows remain
+Remaining S-plus regression SMO families and complete native workflows remain
 pending; the catalog status is **partial**.
 
 The original S-plus 2.1 archive has a broader scope than the later R archive.
@@ -313,7 +313,7 @@ chi-square wrapper supplied its distribution calculations; statistical formulas
 were unchanged. Inversion was independently checked with a tighter R root.
 
 The significance inverse uses actual df, correcting the original `self.sig.s`
-hardcoded df=1, just as the LR inverse does. Dedicated regression SMO remains pending; generic expected-likelihood fitting
+hardcoded df=1, just as the LR inverse does. Remaining regression families are pending; generic expected-likelihood fitting
 is described below. These tests are asymptotic approximations, not
 finite-sample exact binomial tests.
 
@@ -394,7 +394,7 @@ join. For p=(0.1,0.2,0.4,0.8), allocation=(1,2,3,4) and equalities (1,4), (2,3),
 instead leaves group 1 at 0.1 and pools only the other three to 0.5333333. This
 port preserves every connection. It also accepts consistent redundant rows that
 the native constraint checker rejects, while counting their independent rank.
-Categorical fixed constraints are described below; regression constraints remain pending.
+Categorical fixed constraints and logistic/Poisson regression constraints are described below.
 
 ## SMO multinomial and ordinal designs
 
@@ -595,6 +595,71 @@ This comparison does not execute the original S-plus/Fortran optimizer.
 A fully specified null rate of 0.15 in both groups gives
 w=0.038608754773719056 and df=2.
 
+## Logistic and Poisson regression SMO
+
+`asypow_smo_regression(parameters, covariates, constraints=..., lower=...,
+upper=..., family="logistic", observations=1, group_size=1, subtract_df=True,
+tolerance=1e-8)` implements the original logistic-binomial and Poisson design
+SMO methods. Parameter rows contain (intercept,slope) or
+(intercept,slope,quadratic coefficient). The linear predictor is a+b*x or
+a+b*x+c*x²; it is a logit for logistic outcomes and a log mean for Poisson.
+A coefficient vector represents one group. The returned null coefficients are
+flattened group by group, matching the one-based constraint indices.
+
+Covariates may be a vector shared by groups or a matrix with one row per group.
+`observations` broadcasts across those rows, and `group_size` supplies relative
+group allocations. The product is normalized across the entire design, matching
+ASYPOW. Zero-observation points are skipped before polynomial evaluation. Every
+group's positive-observation design must identify all its coefficients. The
+limits are 500 coefficients and one million input design points.
+
+```python
+from mdanderson_stats import asypow_smo_regression
+
+design = asypow_smo_regression(
+    [-0.5, 0.4],
+    [-1, 0, 1, 2],
+    constraints=[1, 2, 0],
+    lower=-3,
+    upper=3,
+    observations=[1, 2, 3, 4],
+)
+assert abs(design.null_parameters[0] + 0.093281846302436) < 1e-8
+assert abs(design.sample_size() - 233.077457894724) < 1e-8
+```
+
+The original expected-log-likelihood bodies from `noncent.binomial.design.s`
+and `noncent.poisson.design.s` were evaluated in R for comparison. Fixing the
+slope to zero in this example gives a pooled-probability/log-mean intercept,
+which can be calculated independently without optimization. The logistic source
+gives w=0.037965321010678954 and sample size 233.077457894724; Poisson gives
+intercept -0.027003488090893299, w=0.1277553120648478 and sample size
+69.2641297360267. Original SMO power formulas and tight R root inversions agree.
+
+A two-group quadratic case with a fully fixed null also agrees with both source
+likelihood bodies. The original Poisson wrapper assigns `xpoint2` but later
+reads `xpoints2`, leaving its quadratic covariates undefined. The Python version
+uses x² as specified by the model; the isolated R likelihood comparison explicitly
+supplies that matrix. It does not execute the broken wrapper or original Fortran
+optimizer.
+
+The callbacks evaluate minus KL divergence through log-space exponential
+remainders, avoiding subtraction of full expected log likelihoods. Analytic
+coefficient gradients are supplied to the generic optimizer. The optimization
+objective is scaled by total alternative predictor information; the original
+per-observation scale is restored in the result. This keeps very small Poisson
+means from triggering false convergence solely because their likelihood is tiny.
+Checks include an intercept shift of -600, nearly certain logistic events, huge
+common allocation scaling, and zero-observation points with extreme covariates.
+
+Bounds and convergence rules follow the generic method below. Choose coefficient
+bounds whose predictors and likelihoods remain representable; overflow and rank
+failure raise errors. `tolerance` controls a scaled gradient criterion, so very
+small effects should be checked for sensitivity to a tighter tolerance. The
+logistic and Poisson expected likelihoods are concave, subject to identifiable
+designs. Complementary-log-log, exponential-survival, ordinal and arbitrary
+design-matrix regression SMO wrappers remain pending.
+
 ## Generic expected-log-likelihood SMO
 
 `asypow_smo_generic(parameters, expected_log_likelihood, lower=..., upper=...,
@@ -675,7 +740,7 @@ correct expectation/gradient calculations, and regularity for the chi-square
 approximation remain the model author's responsibility. For nonconcave models,
 compare feasible starts and independently establish that the fitted null is the
 relevant maximum before interpreting power. Native interactive prompts and
-named-model regression SMO wrappers remain pending.
+remaining named-model regression SMO wrappers remain pending.
 
 ## Native comparisons and intentional corrections
 

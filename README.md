@@ -873,5 +873,6 @@ Mixed fixed/equality constraints are supported for binomial, Poisson and surviva
 groups. Partial fixed categorical nulls redistribute remaining probability using
 expected-likelihood maximization. General categorical equality components use a
 constrained likelihood fit. Generic SMO accepts a user-supplied expected log
-likelihood, bounds and fixed/equality constraints. Dedicated regression SMO
-models and full native workflows remain pending.
+likelihood, bounds and fixed/equality constraints. Logistic and Poisson SMO
+regression supports linear/quadratic covariate designs. Remaining regression
+families and full native workflows remain pending.

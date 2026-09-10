@@ -13,6 +13,7 @@ from .asypow_regression import asypow_regression_information
 from .asypow_smo import SMOPower, asypow_smo_binomial, asypow_smo_poisson
 from .asypow_smo_categorical import asypow_smo_multinomial, asypow_smo_ordinal
 from .asypow_smo_exponential import asypow_smo_exponential
+from .asypow_smo_regression import asypow_smo_regression
 from .bayes_factor_binary import (
     BayesFactorBinaryDesign,
     BayesFactorBinaryOC,
@@ -534,6 +535,7 @@ from .tpi_simulation import simulate_tpi
 __all__ = [
     "SMOPower",
     "asypow_smo_generic",
+    "asypow_smo_regression",
     "asypow_smo_binomial",
     "asypow_smo_poisson",
     "asypow_smo_multinomial",
