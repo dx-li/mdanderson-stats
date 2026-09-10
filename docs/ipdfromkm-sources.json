@@ -29,6 +29,13 @@
       "retrieved_date": "2026-09-10",
       "bytes": 1534,
       "sha256": "8a94e107a4d04692000b9603ef00ce65ccec5ea7630c55ccf4cf9dec00ef3fb6"
+    },
+    {
+      "url": "https://github.com/cran/IPDfromKM/blob/16ea3e163b8ad409e51e035154c52803dcb1c28b/R/survreport.R",
+      "artifact": "R/survreport.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 12718,
+      "sha256": "bb2126847cb2c18292f827848ec047e27d9801aed8dc8815c811d8caf7ffe6b8"
     }
   ]
 }

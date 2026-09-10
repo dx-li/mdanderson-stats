@@ -79,8 +79,9 @@ Records are sorted by time, with events before censors at a tied time.
   error even when the reconstructed drop is exact.
 - Input cleaning is explicit: malformed/nonmonotone coordinates are rejected.
   Native coordinate cleaning is available separately below. Interactive image
-  digitizing, graphical reports, KS diagnostic and secondary survival analyses
-  are not yet ported. Catalog entry 151 remains **partial**.
+  digitizing, graphical reports, KS diagnostic and survival confidence/quantile
+  reports are not yet ported. The two-arm Cox comparison is available below.
+  Catalog entry 151 remains **partial**.
 
 ## Preparing digitized coordinates
 
@@ -128,6 +129,50 @@ native preprocessing, excess risk times are not silently truncated.
 The implementation uses array operations and cumulative minima, with sorting
 cost O(m log m) for m coordinates.
 
+## Comparing two arms
+
+`ipd_cox_compare(time1, event1, time2, event2)` fits the binary-treatment Cox model
+used in native `survreport.R`. The hazard ratio is **arm 2 relative to arm 1**.
+Events are 1 and right censors are 0. Inputs can be reconstructed records or
+ordinary complete patient records, with no left truncation or time-varying
+covariates. The two arms together may contain up to 1,000,000 patients.
+
+```python
+from mdanderson_stats import ipd_cox_compare
+
+comparison = ipd_cox_compare(
+    [1, 2, 2, 4, 5, 7],
+    [1, 1, 0, 1, 0, 1],
+    [1, 2, 3, 4, 6, 8],
+    [0, 1, 1, 0, 1, 1],
+)
+assert abs(comparison.hazard_ratio - 0.6503080491295959) < 1e-12
+assert abs(comparison.score_pvalue - 0.5732550732841908) < 1e-12
+```
+
+The result includes the log hazard ratio, model-based standard error, hazard
+ratio and Wald confidence bounds, score statistic/p-value, and patient/event
+counts. Confidence defaults to 0.95. These model-based uncertainties condition
+on the supplied records and do not incorporate digitization or reconstruction
+uncertainty.
+
+For each tied failure time, Efron's risk denominator subtracts fractions
+`j/d`, for `j=0,...,d-1`, of each arm's failing subjects. The implementation
+vectorizes these contributions and solves the one-dimensional partial-likelihood
+score. Logistic calculations in log-odds coordinates avoid exponentiating large
+regression coefficients. Exact limiting scores detect separation or absence of
+treatment information and reject a nonexistent finite estimate. Risk tables
+reuse the package's grouped Kaplan–Meier implementation. Censors tied with
+events remain at risk for those events.
+
+The native plot labels `summary(coxph(...))$sctest` as a logrank p-value. Python
+names it **Cox score p-value**: Efron treatment of ties can differ from the
+ordinary hypergeometric logrank test. Exact time ties are grouped; Python does
+not apply R's default `timefix` merging of nearly equal times. Native comparison
+checks therefore use `coxph.control(timefix=FALSE)`. Confidence bounds can extend
+to zero/infinity if their exponentials exceed floating-point range; the
+log-hazard ratio and standard error remain available.
+
 ## Validation and sources
 
 Focused checks compare event, risk, censor and survival estimates against the
@@ -147,6 +192,12 @@ the package's `Radiationdata`. The radiation arm has 144 cleaned coordinates,
 coordinates, 211 patients and 110 events. Cleaned survival agrees within `1e-14`,
 times within `1e-12` in the source units, and all event indicators exactly. The
 reference dataset is an ignored research input, not redistributed in the wheel.
+
+The two-arm Cox fit also matches R survival's Efron fit on those reconstructed
+records: log-HR `-0.33276379386731858`, SE `0.12873930990874974`, score statistic
+`6.742778035806654`, and p-value `0.009412793550808497`. Focused tests check a
+separate tied-event fixture, arm reversal, times scaled by `1e-200`/`1e200`,
+separation, no events, and simultaneous failures in both arms.
 
 Reference source: [CRAN package](https://CRAN.R-project.org/package=IPDfromKM),
 [versioned R source](https://github.com/cran/IPDfromKM/tree/16ea3e163b8ad409e51e035154c52803dcb1c28b),
