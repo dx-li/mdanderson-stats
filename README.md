@@ -1007,4 +1007,6 @@ characteristics; source analysis/reporting corrections are documented.
 C workflow: phase-I escalation, beta-binomial adaptive randomization, toxicity
 closure, efficacy/futility stopping, final selection and replayable simulation.
 Python replay matches 24 native C decision histories, with independent R checks
-of 179 posterior comparisons. The later C++ trial variant remains pending.
+of 179 posterior comparisons. The later C++ variant now has its shared six-dose
+logistic response fit, beta toxicity updates and calendar outcome snapshots;
+integrated trial conduct remains pending.

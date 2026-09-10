@@ -450,6 +450,14 @@ from .parallel_phase12 import (
     parallel_phase12_replay,
     simulate_parallel_phase12,
 )
+from .parallel_phase12_model import (
+    Phase12ModelFit,
+    Phase12Snapshot,
+    fit_phase12_model,
+    phase12_response_loglikelihood,
+    phase12_response_probabilities,
+    phase12_snapshot,
+)
 from .parameter_distribution import ParameterDistribution
 from .parameter_solver import solve_distribution_moments, solve_distribution_quantiles
 from .pdnn import PDNNExpression, pdnn_binding_energy, pdnn_expression, pdnn_signal
@@ -709,6 +717,12 @@ from .windows import (
 )
 
 __all__ = [
+    "Phase12ModelFit",
+    "Phase12Snapshot",
+    "fit_phase12_model",
+    "phase12_snapshot",
+    "phase12_response_probabilities",
+    "phase12_response_loglikelihood",
     "ParallelPhase12Result",
     "parallel_phase12_replay",
     "simulate_parallel_phase12",

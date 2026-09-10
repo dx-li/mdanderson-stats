@@ -4,7 +4,8 @@ Catalog entry **85 remains partial**. The package now implements the complete
 four-arm beta-binomial workflow in the archive's `SwatiBiswasCode` C program,
 including patient-history replay, phase-I escalation, phase-II adaptive
 randomization, toxicity closure, efficacy/futility stopping and simulation.
-The later C++ trial implementation is a separate remaining workstream.
+The later C++ response/toxicity model and calendar snapshots are now available
+below; its integrated trial-conduct implementation remains outstanding.
 
 Sources: [MD Anderson's entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85)
 and [P12Xuelin archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/P12Xuelin/P12Xuelin_V1.0_.zip),
@@ -134,8 +135,81 @@ Reproduce the audits after retrieving the archive with
 Original source is used only from the ignored research directory; audit tooling
 and generated numerical fixtures are bundled, not original code or trial data.
 
-Remaining: the later C++ six-arm trial, its calendar/pending-outcome behavior,
-model fitting, configurable inputs/reports, and full published operating-
-characteristic replication. The C++ source explicitly prohibits redistribution
+Remaining: the later C++ six-arm trial-conduct and allocation workflow, calendar
+simulation, configurable inputs/reports, native adaptive-importance-sampler
+parity and full published operating-characteristic replication. The C++ source explicitly prohibits redistribution
 of the original program. No original archive files are shipped; this is an
 independent Python expression of the four-arm statistical workflow.
+
+
+## Six-dose C++ model and calendar snapshots
+
+`phase12_snapshot(records, time=...)` accepts rows
+`(dose, entry_time, response, response_time, toxicity, toxicity_time)` with
+zero-based dose indices 0–5. Event times are absolute. Entries after analysis
+time are excluded. Each endpoint contributes only when its own observation time
+is at or before analysis time; efficacy may be available without toxicity and
+vice versa. The returned `tally` columns are **no response, response, no toxicity,
+toxicity**, matching `Kernel::SetData` rather than conflicting comments elsewhere
+in the source. Enrollment and pending counts are retained separately.
+
+```python
+import numpy as np
+from mdanderson_stats import phase12_snapshot, fit_phase12_model
+
+snapshot = phase12_snapshot([[0, 0, 1, 5, 0, 10], [0, 2, 0, 12, 1, 4]], time=5)
+print(snapshot.tally[0])  # [0, 1, 0, 1]
+
+fit = fit_phase12_model(
+    snapshot.tally,
+    draws=1000,
+    warmup=500,
+    chains=4,
+    rng=np.random.default_rng(8524),
+)
+print(fit.response_summary.mean)
+print(fit.coefficient_summary.split_rhat)
+```
+
+The source's four-coefficient logistic response model uses the six rows
+`(0,-s,-s,-1)`, `(0,-s,-s,1)`, `(-s,s,0,-1)`, `(-s,s,0,1)`,
+`(-s,0,s,-1)`, `(-s,0,s,1)`, with `s=.7071067811865` as written in
+`SetupTrial`. There is no additional intercept. Coefficient prior means are
+`(6.2445,2.0815,2.0815,0)` and independent SDs are `3.16227766` (variance about
+10). These are the executable parameters, not an interpretation of an ambiguous
+Normal(mean,10) comment. Toxicity uses independent Beta(.1,.9) priors per dose.
+Both sets of priors may be supplied explicitly.
+
+`phase12_response_probabilities(coefficients)` evaluates the model;
+`phase12_response_loglikelihood(coefficients, tally)` gives the response binomial
+log likelihood without combinatorial constants. Both support batched coefficient
+vectors. The latter excludes toxicity columns. Log-sigmoid calculations remain
+finite for ordinary counts at predictors ±1000, avoiding the source expression's
+`log(1-p)` loss near probability one.
+
+`fit_phase12_model` samples the normal-prior response posterior with four-
+dimensional elliptical-slice updates. With no observed response outcomes it
+samples the prior directly. It returns coefficient and response-probability
+chains, classical split R-hat and batch-mean MCSE summaries, plus the source's
+posterior comparisons: response at least `.30`, response greater than `.10`,
+pairwise response superiority, and superiority to dose zero with its reference
+weight fixed at `.5`. Comparisons use predictors to avoid artificial ties from
+rounded probabilities at zero or one. Toxicity exceedance at `.33` is evaluated
+analytically. These thresholds are explicit arguments.
+
+The posterior is shared across doses through the response regression; it is
+not six independent beta efficacy models. This Python sampler differs from the
+C++ adaptive mixture importance integrator. Diagnostics do not guarantee
+convergence or precise indicator probabilities, especially near a decision
+threshold; retained chains allow further precision assessment. Complete source
+trial allocation, stopping, calendar simulation and native integration parity
+remain pending, so a fitted model alone is not a trial-conduct implementation.
+
+Validation uses an [independent R importance calculation](phase12-model-reference.json)
+with 200,000 draws from an inflated-Laplace/prior-normal mixture (importance ESS
+about 145,977). All four coefficient means and six response means agree within
+six combined Monte Carlo errors; four chains with 1,000 warmup and 3,000 retained
+draws have maximum split R-hat below 1.04 in the checked dataset. Separate checks
+cover prior recovery, the analytic dose contrast, extreme log likelihoods and
+independent observation of calendar outcomes. Reference generation is in
+`tools/reference_phase12_model.R`.
