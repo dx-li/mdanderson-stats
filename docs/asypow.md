@@ -11,8 +11,9 @@ The original S-plus 2.1 archive has a broader scope than the later R archive.
 In particular, it supplies separate SMO and multinomial routines documented in
 the 1997 paper. Coverage is assessed against that broader original scope, not
 just the R package's index. LR information-matrix calculations and binomial,
-Poisson, multinomial and ordinal SMO expected-log-likelihood methods are available. SMO supports both conventions
-for subtracting degrees of freedom, as described below.
+Poisson, multinomial, ordinal and censored exponential-survival SMO methods are
+available. SMO supports both conventions for subtracting degrees of freedom,
+as described below.
 
 ```python
 import numpy as np
@@ -313,8 +314,7 @@ were unchanged. Inversion was independently checked with a tighter R root.
 
 The significance inverse uses actual df, correcting the original `self.sig.s`
 hardcoded df=1, just as the LR inverse does. Mixed fixed/equality constraints,
-exponential-survival models, regression SMO and generic expected-likelihood
-optimization remain pending. These tests are asymptotic approximations, not
+regression SMO and generic expected-likelihood optimization remain pending. These tests are asymptotic approximations, not
 finite-sample exact binomial tests.
 
 ## SMO Poisson designs
@@ -395,6 +395,53 @@ is a valid null with cumulative probabilities (0.25,0.5). The original ordinal
 routine incorrectly rejects it: repeated zero equality markers are interpreted
 as duplicate equality constraints. This port accepts the valid null and gives
 the same divergence as the multinomial parameterization.
+
+## SMO exponential survival
+
+`asypow_smo_exponential(rates, duration, null_rates=None, group_size=1,
+subtract_df=True)` implements independent exponential-survival groups under
+uniform entry during each group's study period. Follow-up is uniform from zero
+to `duration`, with administrative censoring at study end. This is the original
+ASYPOW censoring model; it has no additional fixed follow-up period. Rates,
+durations and relative group sizes must be finite and positive, with at most
+500 rates. Duration and allocation may be scalars or group vectors.
+
+Omitting `null_rates` tests equality of all G>=2 rates, with df=G-1. Supplying
+null rates fixes every group rate, with df=G. The result is `SMOPower`, with the
+same power, sample-size and significance methods and correction options above.
+Mixed constraints and survival regression SMO remain pending.
+
+For rate p and duration L, let d=1-(1-exp(-p*L))/(p*L), the probability of an
+observed event. Expected observed follow-up is d/p. The expected log likelihood
+at candidate rate q is `d*log(q) - q*d/p`. Therefore the common null rate is
+`sum(allocation*d) / sum(allocation*d/p)`. This exact maximizer replaces the
+original numerical optimization. Divergence per group is
+`d * (log(p/q) - 1 + q/p)`; SMO uses twice its allocation-weighted sum.
+
+Stable log event probabilities, log-weighted summation and near-null log
+remainders handle extreme rates and censoring. The calculation can retain a
+representable divergence even when event probability or a rate ratio alone
+cannot be represented. Changing time units consistently in rates and durations
+preserves power.
+
+```python
+from mdanderson_stats import asypow_smo_exponential
+
+design = asypow_smo_exponential([0.1, 0.2], [5, 8], group_size=[1, 2])
+assert abs(design.null_parameters[0] - 0.170169783580771) < 1e-14
+assert abs(design.sample_size() - 272.918844627906) < 1e-8
+assert abs(float(design.power(300)) - 0.839930657600275) < 1e-11
+```
+
+The original `expect.loglike` function body from `noncent.expsurv.kgp.s`, run
+unchanged in R with its duration and allocation inputs, gives
+w=0.032423046936867372 for this example. The original SMO power routine and an
+independent R root give the displayed power and sample size. R's separate
+scalar likelihood optimization locates the common null within 9e-9 of the
+closed-form value; the expected score vanishes at the closed-form value.
+This comparison does not execute the original S-plus/Fortran optimizer.
+A fully specified null rate of 0.15 in both groups gives
+w=0.038608754773719056 and df=2.
 
 ## Native comparisons and intentional corrections
 

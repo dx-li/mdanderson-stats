@@ -11,6 +11,7 @@ from .asypow_ordinal import asypow_ordinal_information, asypow_ordinal_regressio
 from .asypow_regression import asypow_regression_information
 from .asypow_smo import SMOPower, asypow_smo_binomial, asypow_smo_poisson
 from .asypow_smo_categorical import asypow_smo_multinomial, asypow_smo_ordinal
+from .asypow_smo_exponential import asypow_smo_exponential
 from .bayes_factor_binary import (
     BayesFactorBinaryDesign,
     BayesFactorBinaryOC,
@@ -535,6 +536,7 @@ __all__ = [
     "asypow_smo_poisson",
     "asypow_smo_multinomial",
     "asypow_smo_ordinal",
+    "asypow_smo_exponential",
     "asypow_multinomial_information",
     "asypow_design_information",
     "asypow_reparameterize",
