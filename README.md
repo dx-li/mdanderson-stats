@@ -891,3 +891,7 @@ of widths or neighbor counts, with documented native boundary weights and correc
 [EXTSIG](docs/extsig.md) adds unconditional two-binomial tests with five outcome
 orderings, mid-p calculations, and either the native probability grid or continuous
 nuisance maximization with numerical bounds.
+
+[DRDIST](docs/drdist.md) provides its seven distribution-calculator menu operations
+through the shared numerical kernels, preserving the original tail conventions
+while correcting legacy approximation and cancellation problems.

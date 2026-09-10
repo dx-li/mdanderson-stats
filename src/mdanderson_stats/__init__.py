@@ -263,6 +263,7 @@ from .diagnostic_population import (
     diagnostic_population,
     diagnostic_population_from_counts,
 )
+from .drdist import drdist
 from .expsurv import ExploratorySurvival, exploratory_survival
 from .expsurv_alignment import SurvivalAlignmentPlot, plot_survival_alignment
 from .expsurv_box import CensoredBox, censored_box
@@ -546,6 +547,7 @@ from .windows import (
 )
 
 __all__ = [
+    "drdist",
     "ExtsigResult",
     "ExtsigMaximum",
     "extsig",

@@ -1247,9 +1247,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "All seven distribution-calculator menu operations: F upper tails/inverse upper tails, normal lower tails/quantiles with location and scale, Student t lower tails/quantiles, and chi-square upper tails. Broadcast immutable results use shared CDFLIB/CUMNOR kernels, with explicit tail conventions, mathematical inverse endpoints, and corrected legacy chi-square fallback."
+      ],
+      "validation": [
+        "tests/test_drdist.py",
+        "docs/drdist.md",
+        "docs/drdist-sources.json"
+      ]
     },
     {
       "id": 32,

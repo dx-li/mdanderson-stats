@@ -1,0 +1,18 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/DRDIST/DRDIST%20%20%20%20%20_V1.tar.gz",
+      "artifact": "archive.tar.gz",
+      "retrieved_date": "2026-09-10",
+      "bytes": 9950,
+      "sha256": "09eb803476aec355b046a650e633bee2555e9b303a2d31e9edd19c719f7c9c37"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/DRDIST/DRDIST%20%20%20%20%20_V1.tar.gz",
+      "artifact": "source/drdist/drdist.f",
+      "retrieved_date": "2026-09-10",
+      "bytes": 31292,
+      "sha256": "607ec66eb307282ab0de8cc052778a7a84b881254b8ecf24e17f8edcdbe551bf"
+    }
+  ]
+}
