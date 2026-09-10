@@ -89,6 +89,42 @@ Three focused tests check every default native table cell, cohort progression
 and selection at the next assigned full dose, the one-patient exemption,
 toxicity/futility exclusions, the escalation exploration limit and stopping.
 
-**Catalog status is partial.** Generalized 1+a+b cohorts, batched operating-
-characteristic simulation, within-cohort staggering, generated reports and native
-prior/source audit remain pending. This is not a claim of complete app parity.
+## Operating characteristics
+
+`simulate_rare_disease_123` runs independent trials in batches, using the same
+rules as `next_dose`. Outcomes are available after each complete cohort. The
+app's simulation help specifies correlated standard normals, thresholded at
+normal quantiles of the dose-specific toxicity and efficacy probabilities.
+`correlation` therefore specifies **latent normal correlation**, not the Pearson
+correlation of the observed binary endpoints. Its default is .1, matching the app.
+Endpoint probabilities 0 and 1 and latent correlations -1 and 1 are supported.
+
+```python
+from mdanderson_stats import RareDisease123Design, simulate_rare_disease_123
+
+simulation = simulate_rare_disease_123(
+    RareDisease123Design(efficacy_prior=(1, 1)),
+    toxicity_rates=[0.1, 0.25, 0.4],
+    efficacy_rates=[0.7, 0.7, 0.7],
+    trials=10000,
+    rng=172,
+)
+assert abs(simulation.selection_probability.sum() - 1) < 1e-12
+assert simulation.patients.max() <= 6
+```
+
+Selection probabilities and their Monte Carlo standard errors are indexed
+`[no OBD, dose 1, ..., dose J]`. Per-trial `selected_dose` uses 0 for no OBD and
+one-based dose indices otherwise. Patient, toxicity and response counts and
+persistent exclusions are returned per trial and dose; their means are per dose.
+Arrays are read-only. `start_dose` defaults to 1. At most three cohorts and six
+patients can be enrolled per dose. Simulations support up to 100,000 trials.
+
+Focused checks compare selection probabilities and allocation means with exhaustive
+small-trial paths, cover deterministic endpoint extremes, and verify perfectly
+correlated binary outcomes. Seed reproducibility is for this implementation;
+matching the native application's random-number sequence is not claimed.
+
+**Catalog status is partial.** Generalized 1+a+b cohorts, within-cohort staggering,
+generated reports and native prior/source audit remain pending. This is not a
+claim of complete app parity.

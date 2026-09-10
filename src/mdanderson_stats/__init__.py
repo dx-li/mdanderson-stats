@@ -336,6 +336,7 @@ from .ranlist_restricted import RestrictedAllocation, ranlist_restricted
 from .ranlist_session import RanlistAssignments, RanlistSession, RanlistSpecification
 from .ranlist_unrestricted import UnrestrictedAllocation, ranlist_unrestricted
 from .rare_disease_123 import RareDisease123Decision, RareDisease123Design
+from .rare_disease_123_simulation import RareDisease123Simulation, simulate_rare_disease_123
 from .regression_ess import RegressionESS, logistic_regression_ess, normal_regression_ess
 from .rolling_six import RollingSixDecision, RollingSixDesign, RollingSixSelection
 from .rolling_six_simulation import RollingSixSimulation, simulate_rolling_six
@@ -481,6 +482,8 @@ from .tpi_simulation import simulate_tpi
 __all__ = [
     "RareDisease123Decision",
     "RareDisease123Design",
+    "RareDisease123Simulation",
+    "simulate_rare_disease_123",
     "CondiSLinearRefinement",
     "condis_linear_refine",
     "CondiSImputation",

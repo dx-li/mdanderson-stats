@@ -823,5 +823,6 @@ Its default CondiS-X linear refinement is also available, with explicit censorin
 diagnostics. Seven other refinement learners remain pending.
 
 [1+2+3 rare-disease design](docs/rare-disease-123.md) adds cohort-based
-efficacy/toxicity dose assignment and OBD selection. The efficacy prior is explicit
+efficacy/toxicity dose assignment, OBD selection and batched trial simulation with
+correlated endpoints and patient-allocation summaries. The efficacy prior is explicit
 because the public protocol omits it; default decision tables are reproduced.

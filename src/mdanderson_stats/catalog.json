@@ -3808,11 +3808,13 @@
       "status": "partial",
       "implemented_features": [
         "Complete-outcome 1+2+3 dose assignment, cohort sizes, efficacy/toxicity admissibility, permanent exclusions and OBD selection at the next assigned full dose",
-        "BOIN toxicity boundaries and explicit beta efficacy prior; native prior is not documented"
+        "BOIN toxicity boundaries and explicit beta efficacy prior; native prior is not documented",
+        "Batched complete-cohort simulation with Gaussian-latent toxicity/efficacy correlation, selection probabilities, Monte Carlo errors and patient allocation"
       ],
       "validation": [
         "All 69 default native table cells, cohort progression, selection, exemptions, exclusions, exploration restriction and stopping; tests/test_rare_disease_123.py",
-        "Pending generalized 1+a+b, simulation, staggering, reports and native prior/source audit; docs/rare-disease-123.md"
+        "Exhaustive small-trial selection/allocation probabilities, deterministic extremes and perfect endpoint correlation; tests/test_rare_disease_123_simulation.py",
+        "Pending generalized 1+a+b, staggering, reports and native prior/source audit; docs/rare-disease-123.md"
       ]
     },
     {

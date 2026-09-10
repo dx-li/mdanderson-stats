@@ -100,35 +100,12 @@ class RareDisease123Design:
             if given.shape != n.shape or given.dtype != bool:
                 raise ValueError("eliminated must be a matching boolean vector")
             excluded |= given
-        le, ld = self.toxicity_boundaries
-        rate = np.divide(t, n, out=np.zeros(n.shape), where=n > 0)
-        acceptable = betaincc(
-            r + self.efficacy_prior[0], n - r + self.efficacy_prior[1], self.minimum_efficacy
+        candidates, masks, probabilities = _next_batch(
+            self, n[None, :], t[None, :], r[None, :], np.array([j]), excluded[None, :]
         )
-        # An untried/one-patient dose is exempt, unless previously eliminated.
-        toxic = (n > 1) & (rate >= ld)
-        excluded |= np.maximum.accumulate(toxic)
-        excluded |= (n > 1) & (
-            betainc(
-                r + self.efficacy_prior[0], n - r + self.efficacy_prior[1], self.minimum_efficacy
-            )
-            >= self.efficacy_cutoff
-        )
+        proposed = None if candidates[0] < 0 else int(candidates[0])
+        excluded, acceptable = masks[0], probabilities[0]
         admissible = ~excluded
-        lower = j > 0 and admissible[j - 1]
-        higher = j + 1 < n.size and admissible[j + 1] and n[j + 1] <= 1
-        if rate[j] >= ld:
-            proposed = j - 1 if lower else j if admissible[j] else None
-        elif rate[j] > le:
-            proposed = j if admissible[j] else j + 1 if higher else None
-        else:
-            proposed = (
-                j + 1
-                if acceptable[j] < self.escalation_cutoff and higher
-                else j
-                if admissible[j]
-                else None
-            )
         selected = None
         size = 0
         if proposed is None:
@@ -148,3 +125,37 @@ class RareDisease123Design:
             _owned(excluded),
             _owned(acceptable),
         )
+
+
+def _next_batch(
+    design: RareDisease123Design,
+    n: FloatArray | NDArray[np.int64],
+    t: FloatArray | NDArray[np.int64],
+    r: FloatArray | NDArray[np.int64],
+    current: NDArray[np.int64],
+    excluded: NDArray[np.bool_],
+) -> tuple[NDArray[np.int64], NDArray[np.bool_], FloatArray]:
+    """Apply identical rules to validated trial rows; -1 denotes no next dose."""
+    le, ld = design.toxicity_boundaries
+    rate = np.divide(t, n, out=np.zeros(n.shape), where=n > 0)
+    a, b = design.efficacy_prior
+    acceptable = betaincc(r + a, n - r + b, design.minimum_efficacy)
+    excluded = excluded | np.maximum.accumulate((n > 1) & (rate >= ld), axis=1)
+    excluded |= (n > 1) & (
+        betainc(r + a, n - r + b, design.minimum_efficacy) >= design.efficacy_cutoff
+    )
+    rows = np.arange(n.shape[0])
+    lo, hi = np.maximum(current - 1, 0), np.minimum(current + 1, n.shape[1] - 1)
+    lower = (current > 0) & ~excluded[rows, lo]
+    higher = (current + 1 < n.shape[1]) & ~excluded[rows, hi] & (n[rows, hi] <= 1)
+    stay = np.where(~excluded[rows, current], current, -1)
+    proposed = np.where(
+        rate[rows, current] >= ld,
+        np.where(lower, lo, stay),
+        np.where(
+            rate[rows, current] > le,
+            np.where(stay >= 0, stay, np.where(higher, hi, -1)),
+            np.where((acceptable[rows, current] < design.escalation_cutoff) & higher, hi, stay),
+        ),
+    )
+    return proposed, excluded, acceptable
