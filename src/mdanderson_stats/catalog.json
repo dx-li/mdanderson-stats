@@ -3031,9 +3031,19 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Single-agent posterior Keyboard decisions with custom target interval, complete-key and rescaled endpoint conventions, and inclusive integer decision tables",
+        "Posterior overdose elimination, sticky higher-dose exclusions, extra-safe lowest-dose stopping and unconditional precision stopping",
+        "Weak-prior weighted isotonic MTD selection, native marginal reporting intervals and separate reporting/safety overdose probabilities",
+        "Batched complete-outcome Keyboard simulation honoring nondefault intervals and safety settings; integrated reports remain pending"
+      ],
+      "validation": [
+        "Six original Keyboard 0.1.3 full decision tables; 64 native MTD selections and reporting estimates",
+        "10000-trial native default simulation comparison and independent rational beta/binomial key probabilities",
+        "Custom-interval simulation forwarding, bounded extreme counts and safety/precision precedence",
+        "docs/keyboard.md"
+      ]
     },
     {
       "id": 128,

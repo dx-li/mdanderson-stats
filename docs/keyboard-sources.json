@@ -1,0 +1,53 @@
+{
+  "retrieved_at": "2026-09-10T04:52:31.043043+00:00",
+  "application_version": "1.2.4.0",
+  "application_updated": "2025-12-15",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Keyboard/Doses.pdf",
+      "sha256": "27d12b2359197d7a54d18ea42a495dccb51c0bb8e4191825be4445e26f30245e",
+      "bytes": 172800
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Keyboard/Guide.pdf",
+      "sha256": "7810ecfcc54eedebf68b70f91fd0358a1fcb930ef5d02e06baee5d14a01b2033",
+      "bytes": 537643
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Keyboard/Probability.pdf",
+      "sha256": "32301b9cad97d1135ecb9c997e3dfd7d959e502c502bd0a7939f07c397beb089",
+      "bytes": 440580
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Keyboard/Safety.pdf",
+      "sha256": "62e12ddcbf2a91f4f300cfbfdbcf41c533c746f8bd765dfb003b21ec34b2bbcd",
+      "bytes": 116860
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Keyboard/Samplesize.pdf",
+      "sha256": "3b9fff732c0f5ad997956c46df2bd80bbdd38a52b147cebe7fd8016117f47747",
+      "bytes": 177692
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Keyboard/",
+      "sha256": "9f0cace87958d46fa97d46e0d54b828a9e5e1f6996874e7373741fadd2f8ee79",
+      "bytes": 36818
+    },
+    {
+      "url": "https://arxiv.org/pdf/1712.06718",
+      "sha256": "c352121f6eeb3d95c6d6111ee609ff4ead13c2c34d2862a90d2fa7d69f8bc8c2",
+      "bytes": 468273
+    }
+  ],
+  "native_reference": {
+    "package": "Keyboard",
+    "version": "0.1.3",
+    "url": "https://cran.r-project.org/web/packages/Keyboard/",
+    "runner": "tools/keyboard_reference.R",
+    "fixtures": {
+      "tests/fixtures/keyboard-boundaries.csv": "1175d0a0429ba409923d1329de2fda1212bccb6941c9a02cf24793cd1c855b90",
+      "tests/fixtures/keyboard-oc.csv": "c67677492ed6f02f5566ba139f659332cfc2d161bdb1c1c0f763cd7ec3c24fc8",
+      "tests/fixtures/keyboard-selection.csv": "a6fc79d4b2f0a6bbd40b38b58169b618b807d28e92aee395e17d92d1351b2d75"
+    }
+  }
+}

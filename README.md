@@ -685,3 +685,11 @@ Chinese statistical protocol text includes the numerical decision table. Custom 
 can be entered directly, with numerically checked inversion to BOIN alternatives.
 The conventional 3+3 comparator supports cohort expansion and matching BOIN
 enrollment caps to realized 3+3 sample sizes.
+
+## Keyboard dose finding
+
+[Keyboard](docs/keyboard.md) adds posterior interval decisions, overdose safeguards,
+isotonic MTD selection and batched simulation. The paper's complete-key convention
+and the R package's adjusted endpoint convention are explicit. Native R comparisons
+and independent exact interval probabilities validate the statistical core;
+integrated reports remain pending.

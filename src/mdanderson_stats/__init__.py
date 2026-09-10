@@ -174,6 +174,8 @@ from .intervals import (
     bp1ci_poisson_interval,
     poisson_interval,
 )
+from .keyboard import KeyboardDesign, KeyboardPosterior, KeyboardSelection
+from .keyboard_simulation import KeyboardSimulation, simulate_keyboard
 from .kphaz import KPHazard, kphaz
 from .ksbin1 import KSBinomialOperatingCharacteristics, ksbin1_operating_characteristics
 from .ksbin1_study import KSBinomialStudy, ksbin1_study
@@ -350,6 +352,11 @@ from .three_plus_three import (
 )
 
 __all__ = [
+    "KeyboardDesign",
+    "KeyboardPosterior",
+    "KeyboardSelection",
+    "KeyboardSimulation",
+    "simulate_keyboard",
     "boin_protocol",
     "BOINThreePlusThreeComparison",
     "ThreePlusThreeSimulation",
