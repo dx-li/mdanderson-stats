@@ -80,6 +80,66 @@ and time-unit invariance over 400 orders of magnitude, distinguish suspension
 conventions, check final follow-up requirements, compare with complete-data BOP2,
 and verify posterior crossings from both sides.
 
+## Calendar replay and simulation
+
+`run_top_binary_trial(design, interarrival, response_delays, window)` takes one
+planned gap and potential response delay per patient. A finite delay in
+`[0,window]` denotes a response; infinity denotes a nonresponse ascertained at
+window completion. Early responses are immediately available. Decisions use only
+responses and follow-up observed at the current calendar time.
+
+Analysis occurs immediately after enrolling the patient who reaches a scheduled
+look. If that look is suspended, the clock advances to the next response or window
+completion and re-evaluates the same look. After continuation, the next arrival
+gap begins; accrual does not build a queue while suspended. The first gap is
+measured from trial time zero. These scheduling conventions are explicit Python
+choices, not a claim of native event-scheduling parity.
+
+Replay retains enrollment times, response times actually observed by termination,
+pending indicators, the terminal decision, and a chronological decision history.
+Unobserved response times are infinity even when a supplied potential response
+would occur later. Duration ends at the terminal decision; follow-up of pending
+patients after a futility stop is outside that duration. Interim accrual pauses
+and waiting for final outcomes are reported separately.
+
+`simulate_top_binary` batches trials with NumPy. It supports fixed or exponential
+arrival gaps, uniform conditional response timing, and the package's calibrated
+Weibull/log-logistic alternatives through `response_distribution` and
+`late_probability`. The latter is the probability a response falls in the second
+half of the window, conditional on responding by the window. Uniform generation
+does not accept that argument. Analysis always uses uniform TOP weights, allowing
+sensitivity checks under other true timing distributions. These simulations do
+not optimize C/gamma or certify type I error control.
+
+The result retains per-trial enrollment, observed responses and pending counts,
+terminal actions, durations, accrual-pause times and final-wait times, as well as
+success probability and its Monte Carlo standard error. It supports at most
+100,000 trials and 2 million trial-patient cells. Positive time increments that
+cannot be represented at the current clock magnitude raise an error instead of
+silently changing event order.
+
+```python
+from mdanderson_stats import run_top_binary_trial, simulate_top_binary
+
+small = TOPBinaryDesign(4, 0.2, 0.86, 0.95, looks=[2, 4])
+trial = run_top_binary_trial(small, [0, 0, 0, 0], [0.2, np.inf, 0.1, np.inf], 1)
+np.testing.assert_allclose(trial.enrollment_times, [0, 0, 0.2, 0.2])
+np.testing.assert_allclose(trial.final_time, 1.2)
+assert trial.decision == "success"
+
+simulation = simulate_top_binary(design, 0.4, window=4, accrual_rate=2, trials=10000, rng=134)
+assert simulation.success_mcse > 0
+```
+
+That simulation took approximately 0.17 seconds in the development environment,
+with estimated success probability .8584 (MCSE .00349). This is an illustrative
+benchmark for these explicit scheduling and timing choices, not a reproduced
+native operating-characteristic result.
+
+Three additional checks cover hand-calculated pause/resumption/final waiting,
+time-unit scaling, absence of look-ahead, retained pending status after stopping,
+calendar representability, and a final-only design against exact binomial power.
+
 ## Source differences and remaining coverage
 
 The published Table 4 labels `(gamma,C)=(.86,.95)`, but its numerical crossings
@@ -88,7 +148,7 @@ At n=20 of N=40, the table suspends with 10 pending while the prose's strict
 inequality requires 11. Both conventions are exposed. The earlier arXiv table
 has different thresholds; this implementation targets the published table.
 
-**Catalog status is partial.** Calendar-time trial conduct, delayed-response
-simulation and calibration, co-primary efficacy and efficacy/toxicity models,
+**Catalog status is partial.** Delayed-response calibration, co-primary efficacy
+and efficacy/toxicity models,
 the app's nonuniform timing elicitation, native reports and app version parity
 remain pending. Original PDFs and application files are not redistributed.

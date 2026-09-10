@@ -466,9 +466,16 @@ from .tite_keyboard_boundaries import TITEKeyboardBoundaries, tite_keyboard_boun
 from .tite_keyboard_simulation import TITEKeyboardSimulation, simulate_tite_keyboard
 from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_keyboard_trial
 from .top_binary import TOPBinaryBoundaries, TOPBinaryDecision, TOPBinaryDesign
+from .top_calendar import TOPBinarySimulation, TOPBinaryTrial, TOPCalendarStep, run_top_binary_trial
+from .top_simulation import simulate_top_binary
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "TOPCalendarStep",
+    "TOPBinaryTrial",
+    "TOPBinarySimulation",
+    "run_top_binary_trial",
+    "simulate_top_binary",
     "TOPBinaryDesign",
     "TOPBinaryDecision",
     "TOPBinaryBoundaries",

@@ -805,5 +805,5 @@ effective sample sizes, including parameter subvectors, using direct expected
 curvature calculations. Native R inputs and covariate defaults remain pending.
 
 [TOP](docs/top-binary.md) adds delayed binary-response posterior decisions,
-accrual suspension and effective-sample-size boundary tables. Calendar simulation,
-calibration, multiple endpoints and native reports remain pending.
+accrual suspension, effective-sample-size boundary tables, and batched calendar
+replay/simulation. Calibration, multiple endpoints and native reports remain pending.
