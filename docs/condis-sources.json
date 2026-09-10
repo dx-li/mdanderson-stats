@@ -1,0 +1,15 @@
+{
+  "sources": [
+    {
+      "url": "https://cran.r-project.org/src/contrib/CondiS_0.1.2.tar.gz",
+      "retrieved_date": "2026-09-10",
+      "bytes": 21614,
+      "sha256": "0b893a5342860f2d48fb016cfbcddf17d3987959fdcd50a365a8c4f5a53282a6"
+    }
+  ],
+  "references": [
+    "https://doi.org/10.1016/j.jbi.2022.104117",
+    "https://pubmed.ncbi.nlm.nih.gov/35801895/"
+  ],
+  "scope": "Independent base CondiS imputation with exact segment integration for native linear interpolation or explicit KM step interpolation. Native CondiS 0.1.2 function executed with survival for numerical comparisons. CondiS-X remains pending."
+}

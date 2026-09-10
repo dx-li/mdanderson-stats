@@ -816,3 +816,7 @@ alongside the existing mTPI implementation.
 [aPCoA](docs/apcoa.md) adds covariate-adjusted principal coordinates, signed
 spectral diagnostics and grouped before/after plots, checked against the original
 R implementation and independent regression calculations.
+
+[CondiS](docs/condis.md) adds censored-lifetime imputation using conditional
+restricted survival means, with native linear and KM-step interpolation.
+CondiS-X covariate-refinement learners remain pending.

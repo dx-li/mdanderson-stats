@@ -176,6 +176,7 @@ from .cdflib_strings import (
 )
 from .cdflib_t import CDFStudentT, ccum_t, cdf_t, cum_t, inv_t
 from .chi_square_order_bounds import ChiSquareOrderBounds, chi_square_order_bounds
+from .condis import CondiSImputation, condis_impute
 from .continuous_sample_size import (
     ContinuousSampleSize,
     anova_effect_size,
@@ -476,6 +477,8 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "CondiSImputation",
+    "condis_impute",
     "plot_adjusted_pcoa",
     "AdjustedPCoA",
     "PCoAOrdination",
