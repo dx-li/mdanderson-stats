@@ -2496,9 +2496,17 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "proportional_density: offset-likelihood estimation of alpha/beta/alpha_star, reverse Kaplan–Meier censoring, incidence and Greenwood errors, observed-failure and disease-conditional masses and survival; tied times pooled.",
+        "proportional_density_pepe: archived unit-weight right-endpoint squared-curve area statistic; no bootstrap p-value.",
+        "Explicit equal-censoring model with pooled reverse KM and asymptotic LR calibration; default unequal-censoring fit leaves LR p-value uncalibrated. Archive incidence Wald statistic retained.",
+        "Remaining: bootstrap goodness-of-fit critical values, unequal-censoring treatment-effect calibration, bootstrap uncertainty and the paper’s alternate failure-only bootstrap; download supplies neither bootstrap nor condlik/lsort helpers."
+      ],
+      "validation": [
+        "Three datasets compared with archived R routines after documented missing-helper/current-R compatibility repairs, and independent R GLM offset fits: coefficients within 3e-6 and 5e-9 respectively; docs/proportional-density.md.",
+        "Three focused tests: native curves/masses/Greenwood errors, score residual and normalization, time scaling 1e-150/1e150, arm exchange, tied analytic null, immutable results, separation and unsupported censoring tails."
+      ]
     },
     {
       "id": 80,

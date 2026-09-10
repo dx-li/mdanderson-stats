@@ -712,3 +712,16 @@ CDFConsole message controls. Native validation repairs are documented in
 `open_file.f90` using Python-owned streams and confirmation before filesystem
 mutation. Source behavior and deliberate I/O repairs are described in
 `docs/misclib.md`; the original Fortran source is not redistributed.
+
+## Proportional Density
+
+`proportional_density.py` implements the method of Yu Shen, Jing Qin and
+Joseph P. Costantino, “Inference of Tamoxifen’s Effects on Prevention of Breast
+Cancer from a Randomized Controlled Trial,” JASA 102:1235–1244 (2007),
+DOI 10.1198/016214506000001446, and the numerical contracts of MD Anderson's
+`parameterest.R` and `modelchecking.R`. The two-file download contains no separate
+software license grant. Original R source and paper text are not redistributed.
+The missing likelihood is reconstructed from the published equations, and
+existing Python Kaplan–Meier routines supply survival calculations. See
+`docs/proportional-density.md` and `docs/proportional-density-sources.json` for
+attribution, source repairs, scope and validation provenance.

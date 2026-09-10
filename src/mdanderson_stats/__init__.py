@@ -403,6 +403,11 @@ from .predictive_binary import (
 )
 from .predictive_survival import SurvivalPredictiveComparison, compare_predictive_survival
 from .predictive_survival_simulation import SurvivalPredictiveProbabilities, predictive_survival
+from .proportional_density import (
+    ProportionalDensityFit,
+    proportional_density,
+    proportional_density_pepe,
+)
 from .pvalue_models import (
     OrderStatisticDiagnostics,
     clustered_pvalues,
@@ -599,6 +604,9 @@ from .windows import (
 )
 
 __all__ = [
+    "ProportionalDensityFit",
+    "proportional_density",
+    "proportional_density_pepe",
     "MisclibFileSelection",
     "misclib_open_file",
     "MisclibMessage",

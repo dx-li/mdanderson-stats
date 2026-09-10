@@ -1,0 +1,19 @@
+{
+  "catalog_id": 78,
+  "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PropDen/PropDen_V1.00.zip",
+  "archive_sha256": "04f6c1de72fe8a08349bb18c797c1b816ea4ae53ad06479c3e486cc529c2a7e9",
+  "paper": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2721282/",
+  "doi": "10.1198/016214506000001446",
+  "members": [
+    {
+      "path": "parameterest.R",
+      "bytes": 3697,
+      "sha256": "c310c0f71893f4a183b51de6fd5f016856578240035ea72305efbdf5fa3592fa"
+    },
+    {
+      "path": "modelchecking.R",
+      "bytes": 830,
+      "sha256": "89e681ae7ebd0c682b8d0a0a79c575a0380acca85d8219d430405aebf1614617"
+    }
+  ]
+}
