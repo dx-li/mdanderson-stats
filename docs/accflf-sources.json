@@ -1,0 +1,211 @@
+{
+  "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ACCFLF/ACCFLF_V1.tar.gz",
+  "sha256": "cc49e6795ecd0db2af33526d49d9656d5da4db705fd9350a2047b2c0f718dbee",
+  "members": [
+    {
+      "path": "linux386/accflf90_1.1/accflf",
+      "bytes": 342173,
+      "sha256": "8c775fb86cae2258e12f8a2fc3a0b13636c0f40aa7262dbf3baf85801898fe5c"
+    },
+    {
+      "path": "linux386/accflf90_1.1/doc/accflf.pdf",
+      "bytes": 186281,
+      "sha256": "8255f9cf642aa8de109acce7b72a949fee57d24fabf5388f9390c1ad7e04101c"
+    },
+    {
+      "path": "linux386/accflf90_1.1/doc/accflf.ps",
+      "bytes": 179392,
+      "sha256": "d68bbed13a61df5de7e2cac441a4467a3da062e071bc76a001180d33112af052"
+    },
+    {
+      "path": "linux386/accflf90_1.1/doc/accflf.tex",
+      "bytes": 42747,
+      "sha256": "c841638a04d043759fa335e741259352bfd0689aada098256ee02ba00c1537dd"
+    },
+    {
+      "path": "linux386/accflf90_1.1/doc/KP.data",
+      "bytes": 366,
+      "sha256": "d5f6e70b4c194ceba374814975c5e3ad99e9501e7a59944dc03cea03c3bc5e51"
+    },
+    {
+      "path": "linux386/accflf90_1.1/doc/KP.new",
+      "bytes": 663,
+      "sha256": "363f3488f0bb5e394a4c7eaf5767476af4331c14736b91ced3c126991082e174"
+    },
+    {
+      "path": "linux386/accflf90_1.1/HOWTOGET",
+      "bytes": 280,
+      "sha256": "6a9da6cec1b89374769c9e56f3e80ada725da6ce7b1ef0fd890cc3e8a925c069"
+    },
+    {
+      "path": "linux386/accflf90_1.1/LEGALITIES",
+      "bytes": 4452,
+      "sha256": "ceaa356132fe4cfd1b558b69ff5e78be7653970b0bf5fbe7779d4e8ce31b51ce"
+    },
+    {
+      "path": "linux386/accflf90_1.1/readme",
+      "bytes": 1556,
+      "sha256": "e3da99daa952fc0402a935714e79054a6b3a345c80ec9b388663f535195aca41"
+    },
+    {
+      "path": "source/accflf90_1.0/doc/accflf.pdf",
+      "bytes": 186281,
+      "sha256": "8255f9cf642aa8de109acce7b72a949fee57d24fabf5388f9390c1ad7e04101c"
+    },
+    {
+      "path": "source/accflf90_1.0/doc/accflf.ps",
+      "bytes": 179392,
+      "sha256": "d68bbed13a61df5de7e2cac441a4467a3da062e071bc76a001180d33112af052"
+    },
+    {
+      "path": "source/accflf90_1.0/doc/accflf.tex",
+      "bytes": 42747,
+      "sha256": "c841638a04d043759fa335e741259352bfd0689aada098256ee02ba00c1537dd"
+    },
+    {
+      "path": "source/accflf90_1.0/doc/KP.data",
+      "bytes": 366,
+      "sha256": "d5f6e70b4c194ceba374814975c5e3ad99e9501e7a59944dc03cea03c3bc5e51"
+    },
+    {
+      "path": "source/accflf90_1.0/doc/KP.new",
+      "bytes": 663,
+      "sha256": "363f3488f0bb5e394a4c7eaf5767476af4331c14736b91ced3c126991082e174"
+    },
+    {
+      "path": "source/accflf90_1.0/HOWTOGET",
+      "bytes": 280,
+      "sha256": "6a9da6cec1b89374769c9e56f3e80ada725da6ce7b1ef0fd890cc3e8a925c069"
+    },
+    {
+      "path": "source/accflf90_1.0/INSTALL",
+      "bytes": 1501,
+      "sha256": "b1693ec6fd4adff07c820d443775bef6b769ca345141583f24bd901def767a6e"
+    },
+    {
+      "path": "source/accflf90_1.0/LEGALITIES",
+      "bytes": 4452,
+      "sha256": "ceaa356132fe4cfd1b558b69ff5e78be7653970b0bf5fbe7779d4e8ce31b51ce"
+    },
+    {
+      "path": "source/accflf90_1.0/readme",
+      "bytes": 1734,
+      "sha256": "b96f5ce16ac68f03e74b654f289e8a539dfe4a32446de13b4efd764ec8dda165"
+    },
+    {
+      "path": "source/accflf90_1.0/source/accflf.f90",
+      "bytes": 64141,
+      "sha256": "352e48f9794704418c858d6b02b4d759af29d47aed917edaddc614562cadc7da"
+    },
+    {
+      "path": "source/accflf90_1.0/source/accflf_aux_mod.f90",
+      "bytes": 65510,
+      "sha256": "87c241379bb1e3d5e9008e255a754307edbbe416089bc1f3657383047c9e3785"
+    },
+    {
+      "path": "source/accflf90_1.0/source/accflf_constants_mod.f90",
+      "bytes": 381,
+      "sha256": "ba2b1a8f21dadba7af007c78e451d23c9579301525ab1a409206eb6abe769e87"
+    },
+    {
+      "path": "source/accflf90_1.0/source/accflf_dgay_mod.f90",
+      "bytes": 158923,
+      "sha256": "da1899bd7c68ea4e23700ac2f42c14fd5b30b359951784791409eb6af43edc12"
+    },
+    {
+      "path": "source/accflf90_1.0/source/biomath_constants_mod.f90",
+      "bytes": 1588,
+      "sha256": "194da06d75b89107fe0297d87ac2e4d9c622b6d6747f67feadde75d34a8c4d22"
+    },
+    {
+      "path": "source/accflf90_1.0/source/biomath_file_io_mod.f90",
+      "bytes": 28285,
+      "sha256": "1c535e3625c72a7bfc9788b755838292bb4db159bec84b8751334eb8e7fcd263"
+    },
+    {
+      "path": "source/accflf90_1.0/source/biomath_interface_mod.f90",
+      "bytes": 78105,
+      "sha256": "9397386c18589253b74591cc7b10e812650d8b36e275861ee04daafe77bf21fd"
+    },
+    {
+      "path": "source/accflf90_1.0/source/biomath_mathlib_mod.f90",
+      "bytes": 108743,
+      "sha256": "ca3865ee13e141058f076553506ac3d9ef71add7fbee6d790fd431b2c24d0923"
+    },
+    {
+      "path": "source/accflf90_1.0/source/biomath_sort_mod.f90",
+      "bytes": 21339,
+      "sha256": "b1fcdd3ddc2f58b82068080a57c2a5868de43d556090245e900924d9ad5ca2df"
+    },
+    {
+      "path": "source/accflf90_1.0/source/biomath_strings_mod.f90",
+      "bytes": 42189,
+      "sha256": "18fb11e28d703a3e047498db944975b7493a5541f6276c3ffd2a4528aafee662"
+    },
+    {
+      "path": "source/accflf90_1.0/source/compile_accflf",
+      "bytes": 607,
+      "sha256": "3e5259363e3cfff0ea2b3260e16c64748836564d63e8139d05e2905ac6047a6f"
+    },
+    {
+      "path": "source/accflf90_1.0/source/Makefile",
+      "bytes": 1660,
+      "sha256": "9876f6ea66e8415163bd36b3f9f0ac9e415bf4891e47bcad3d21ebb30816c296"
+    },
+    {
+      "path": "source/accflf90_1.0/source/read_table_mod.f90",
+      "bytes": 8732,
+      "sha256": "cde3c5031d846dff09e5b6797bc1e369802d2543f04922ea9ef47f5e03f8e423"
+    },
+    {
+      "path": "win32/accflf90_1.0/accflf.exe",
+      "bytes": 710984,
+      "sha256": "515f6bd066441aae889369076f3975234fb3180ec4e2c3acf8fa1c94e733dc7c"
+    },
+    {
+      "path": "win32/accflf90_1.0/doc/accflf.pdf",
+      "bytes": 186281,
+      "sha256": "8255f9cf642aa8de109acce7b72a949fee57d24fabf5388f9390c1ad7e04101c"
+    },
+    {
+      "path": "win32/accflf90_1.0/doc/accflf.ps",
+      "bytes": 179392,
+      "sha256": "d68bbed13a61df5de7e2cac441a4467a3da062e071bc76a001180d33112af052"
+    },
+    {
+      "path": "win32/accflf90_1.0/doc/accflf.tex",
+      "bytes": 42747,
+      "sha256": "c841638a04d043759fa335e741259352bfd0689aada098256ee02ba00c1537dd"
+    },
+    {
+      "path": "win32/accflf90_1.0/doc/KP.data",
+      "bytes": 366,
+      "sha256": "d5f6e70b4c194ceba374814975c5e3ad99e9501e7a59944dc03cea03c3bc5e51"
+    },
+    {
+      "path": "win32/accflf90_1.0/doc/KP.new",
+      "bytes": 663,
+      "sha256": "363f3488f0bb5e394a4c7eaf5767476af4331c14736b91ced3c126991082e174"
+    },
+    {
+      "path": "win32/accflf90_1.0/HOWTOGET",
+      "bytes": 280,
+      "sha256": "6a9da6cec1b89374769c9e56f3e80ada725da6ce7b1ef0fd890cc3e8a925c069"
+    },
+    {
+      "path": "win32/accflf90_1.0/INSTALL",
+      "bytes": 1501,
+      "sha256": "b1693ec6fd4adff07c820d443775bef6b769ca345141583f24bd901def767a6e"
+    },
+    {
+      "path": "win32/accflf90_1.0/LEGALITIES",
+      "bytes": 4452,
+      "sha256": "ceaa356132fe4cfd1b558b69ff5e78be7653970b0bf5fbe7779d4e8ce31b51ce"
+    },
+    {
+      "path": "win32/accflf90_1.0/readme",
+      "bytes": 1759,
+      "sha256": "39542ffc8568df0d7aee876c9db55cb939f3a11a4d9ec3ceb4f7204f3f245532"
+    }
+  ]
+}

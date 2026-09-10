@@ -782,3 +782,18 @@ are documented; original implementation files are not redistributed.
 predictive output mapping and five figures in `R/anovaddpio.R`, `anovaddp.cpp`
 and `R/plotResults.R` under the same attribution and terms. No original data
 files are redistributed.
+
+## ACCFLF (entry 16)
+
+`accflf.py` and `accflf_model.py` are Python implementations of the log-F
+accelerated failure-time model described in the ACCFLF manual and source by
+Barry W. Brown, with shape conversion, normalized probability outputs,
+right-censored likelihood, fixed-shape fitting and prediction. The original
+LEGALITIES is preserved in `notices/mdanderson-accflf-LEGALITIES.txt`; its
+redistribution/commercial-package qualifications should not be confused with an
+unqualified open-source license grant. The archive includes ACM Algorithms 708,
+762 and 611. Their Fortran implementations, native binaries and original example
+data are not bundled here. Python uses the existing NumPy/SciPy dependencies,
+package beta factors, independently expressed derivatives and a beta continued
+fraction. Explicit differences from the source and native validation are recorded
+in `docs/accflf.md`. This is modified Python software, not the original ACCFLF.

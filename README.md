@@ -970,3 +970,9 @@ states. `predict_anovaddp` adds new-subject curves, native study components and
 nadir summaries. Source-format readers, predictive text exports and all five
 report figures complete the supplied workflow; see the documented MCMC mixing
 limitations before scientific use.
+
+[ACCFLF](docs/accflf.md) provides log-F probabilities and derivatives,
+right-censored accelerated failure-time regression at fixed shape, and survival
+prediction. It covers the source's fixed-shape Weibull, exponential, lognormal
+and log-logistic submodels with their documented finite-df boundary convention.
+Shape optimization and the remaining original workflow are still pending.

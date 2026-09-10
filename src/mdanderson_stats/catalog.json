@@ -309,9 +309,18 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "accflf_shape: stable Prentice p,q conversion with explicit native df bounds and clipping flags.",
+        "accflf_logf: normalized log-F density, log CDF/survival and first/second w derivatives, stable centers and underflowed tail fractions.",
+        "accflf_loglikelihood, fit_accflf and accflf_survival: weighted right-censored AFT regression at fixed p,q, optional fixed sigma, analytic score/information, covariance and survival predictions.",
+        "Remaining: estimation of p/q, grid and named-model orchestration, covariate update/selection, source input/report workflow. docs/accflf.md."
+      ],
+      "validation": [
+        "84 cases from unchanged compiled native LLDRLF: values and first/second derivatives across df bounds and w=+-1000. Normalized density factor, tails, reflection and integration checked.",
+        "Independent R fixed-shape censored regression agrees within 9e-8; analytic gradient/Hessian, weighted replication, time rescaling, observed covariance and exponential limit checked.",
+        "Four KP example fixed-model likelihoods reproduce all printed manual digits. Archive hashes and legal qualifications recorded; no original data or ACM source bundled."
+      ]
     },
     {
       "id": 18,
