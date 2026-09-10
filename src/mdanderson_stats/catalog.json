@@ -2296,9 +2296,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "anovaddp_curve: vectorized supplied six-parameter nonlinear response with fixed logistic intercept, native narrow-transition floor, explicit fittare knot repair and stable sigmoid limits.",
+        "anovaddp_loglikelihood and anovaddp_amplitude_posterior: Gaussian observation likelihood and correlated-prior conditional amplitude update using linear solves.",
+        "Remaining: dependent-DP cluster/parameter/covariance/base-measure updates, complete MCMC, new-patient prediction, contrasts/nadirs, file readers and plots. Native residual-variance prior-scale omission identified; docs/anovaddp.md."
+      ],
+      "validation": [
+        "Three parameter vectors at eight times match unchanged native C++ regressione outputs exactly; correlated Gaussian conditional agrees with independent R calculations within 5e-15.",
+        "Two focused tests cover normalization, curve branches and knot repair, extreme sigmoid limits, Gaussian moments and positive-definiteness. Complete archive member hashes recorded in docs/anovaddp-sources.json."
+      ]
     },
     {
       "id": 69,

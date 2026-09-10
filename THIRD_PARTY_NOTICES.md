@@ -741,3 +741,15 @@ contracts of Jing Ning's accompanying R simulator. The article is copyright
 license grant. Original source and article are not redistributed. See
 `docs/response-survival.md` and `docs/response-survival-sources.json` for source
 attribution, numerical scope, deliberate repairs and validation.
+
+## ANOVA DDP
+
+`anovaddp.py` adapts the supplied nonlinear observation curve and Gaussian
+conditional-update formulas of the ANOVA DDP package by De Iorio, Müller,
+Rosner and MacEachern, packaged by P. Roebuck and R. Herrick. The archive states
+that the MDACC-derived portion is released under the Artistic license;
+Copyright 2004–5 MD Anderson Cancer Center. Its original declaration is preserved
+in `notices/mdanderson-anovaddp-COPYING.txt`. These adaptations do not replace
+those terms. Original C++ sources, NEWMAT/RANDLIB code, data and article are not
+redistributed. See `docs/anovaddp.md` and `docs/anovaddp-sources.json` for source
+provenance, scope, native comparisons and documented differences.

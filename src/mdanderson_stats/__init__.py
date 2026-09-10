@@ -1,6 +1,12 @@
 """Independent Python implementations of MD Anderson catalog methods."""
 
 from . import cdflib_aux, cdflib_constants, dcdflib_support
+from .anovaddp import (
+    AnovaDDPAmplitudePosterior,
+    anovaddp_amplitude_posterior,
+    anovaddp_curve,
+    anovaddp_loglikelihood,
+)
 from .apcoa import AdjustedPCoA, PCoAOrdination, adjusted_pcoa
 from .apcoa_plot import plot_adjusted_pcoa
 from .asypow import AsymptoticPower, asypow_information
@@ -610,6 +616,10 @@ from .windows import (
 )
 
 __all__ = [
+    "AnovaDDPAmplitudePosterior",
+    "anovaddp_amplitude_posterior",
+    "anovaddp_curve",
+    "anovaddp_loglikelihood",
     "ResponseSurvivalPosterior",
     "response_survival_posterior",
     "ResponseSurvivalSimulation",

@@ -1,0 +1,772 @@
+{
+  "catalog_id": 67,
+  "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/AnovaDDP/anovaddp_1.0.tar.gz",
+  "sha256": "ce94b42392a6d6756ea09af8b42896a2be6758fd0f921985cb82e3a496d763a0",
+  "members": [
+    {
+      "path": "anovaddp/COPYING",
+      "bytes": 213,
+      "sha256": "a73e3b5e9b6063540561c05e6e9293bca53db684c730e4580b95a3f54dfdebd8"
+    },
+    {
+      "path": "anovaddp/data/covmu.txt",
+      "bytes": 19635,
+      "sha256": "c080937f1f02059b7eb5ac65a40ecfd4f45c8087962f7bcf07d8eac2050a2cac"
+    },
+    {
+      "path": "anovaddp/data/dati.txt",
+      "bytes": 52632,
+      "sha256": "b0f0dc9eab90a9534dd3aff7590a38b933f6a3eaa5e78e0345086ea6e3d33b80"
+    },
+    {
+      "path": "anovaddp/data/dnew.txt",
+      "bytes": 69312,
+      "sha256": "3ed917ada6db7706e313609a79860761a631673b5e6926e99cf4b00fa89df561"
+    },
+    {
+      "path": "anovaddp/data/dprednew.txt",
+      "bytes": 1130,
+      "sha256": "8e4f3231061523e6e06362f3cdc8ae984ec41ea6dcd7e0a96613ef154d8d1b86"
+    },
+    {
+      "path": "anovaddp/data/npat.txt",
+      "bytes": 10336,
+      "sha256": "8e3081e8a6faf878f285085b11bd7f9ab7179126b6fdca13be072d4374d48a0f"
+    },
+    {
+      "path": "anovaddp/data/start.txt",
+      "bytes": 58976,
+      "sha256": "4244a26de1cc3d322d60f10040795f91d2fb1d91fe8425db87bcb69e392b9e11"
+    },
+    {
+      "path": "anovaddp/data/time.txt",
+      "bytes": 52632,
+      "sha256": "4e402f03b80083bb78cb22e1222a115b7dbda5a292bc5e85ac4f65ef251fc022"
+    },
+    {
+      "path": "anovaddp/data/var.txt",
+      "bytes": 582,
+      "sha256": "7e962594aefb4ae5a8eeb2ecf316ae7da4bdc5a3ca54e60ee5faf24a1249aed2"
+    },
+    {
+      "path": "anovaddp/demo/00Index",
+      "bytes": 44,
+      "sha256": "5c6de3377fea1288f663039b3b4fef8dd9cb032c5167efb28ea4879241514823"
+    },
+    {
+      "path": "anovaddp/demo/anovaddp_demo.R",
+      "bytes": 1414,
+      "sha256": "251796a337a2dfbe3a3f817cd37f713cf76c0ce684c8675857626760354bbe1f"
+    },
+    {
+      "path": "anovaddp/DESCRIPTION",
+      "bytes": 513,
+      "sha256": "263396a28e4180498bcbd4694bf3c1a8ea475823043166fcbde0deede888067a"
+    },
+    {
+      "path": "anovaddp/inst/CITATION",
+      "bytes": 1594,
+      "sha256": "7c35d9ab1fbe9b4c229fc88b7e96e2837ad54fd7405772128bb97b26f1d552fd"
+    },
+    {
+      "path": "anovaddp/inst/doc/ANOVA_DRM_paper6.pdf.gz",
+      "bytes": 200961,
+      "sha256": "d762762058215a540f6a2b793cd384a926f28b5165b8e686210023d1fdd9faf5"
+    },
+    {
+      "path": "anovaddp/inst/doc/AnovaddpWindowsBuildReq.doc",
+      "bytes": 29184,
+      "sha256": "446a474d1824d1f1ffaa174312e88ac0587121e61cd7f495cecfb760e1ff1571"
+    },
+    {
+      "path": "anovaddp/inst/NEWS",
+      "bytes": 25,
+      "sha256": "083f9ce1b8bed1b587bd46afe2f42ac36d2f70dfab96964523830056fd7e67f2"
+    },
+    {
+      "path": "anovaddp/man/anovaddp-package.Rd",
+      "bytes": 709,
+      "sha256": "29986c04e4f9de2345dbbbc9a6c66b99c7f7f2536777a63da555b2ac871b7c8f"
+    },
+    {
+      "path": "anovaddp/man/anovaddp.Rd",
+      "bytes": 9516,
+      "sha256": "8a116af77dd8b331c808639bd06e224651021b7aff76c2c4093a67ab452d7fcf"
+    },
+    {
+      "path": "anovaddp/NAMESPACE",
+      "bytes": 101,
+      "sha256": "a3a40f760282d1a4e74e23e1a2f6e840f660fd6a23bedd867945e10e666ffacc"
+    },
+    {
+      "path": "anovaddp/R/anovaddp.R",
+      "bytes": 8026,
+      "sha256": "01c4bdc493554c9ebba781077cae925023f54ac665779b88e1786556f826095e"
+    },
+    {
+      "path": "anovaddp/R/anovaddpio.R",
+      "bytes": 929,
+      "sha256": "340e0604c111a387f3343348ec4dcd7c9dfb93c7aaf365a35eca69a5917c35c4"
+    },
+    {
+      "path": "anovaddp/R/plotResults.R",
+      "bytes": 3154,
+      "sha256": "3cb972e36b5432dcf739e81a5e61dc7aa58bf0087afd5e118f20afef19c5cde6"
+    },
+    {
+      "path": "anovaddp/R/zzz.R",
+      "bytes": 990,
+      "sha256": "20a1fd7b64e8f2dd591179de9fcbfc9deb52148bf79a7fe7fd8bbb71bc6917f5"
+    },
+    {
+      "path": "anovaddp/src/anovaddp.cpp",
+      "bytes": 22993,
+      "sha256": "c03f4883abe32f781f994db020e9a501fa84c4f89956c996548222e1596ccf0a"
+    },
+    {
+      "path": "anovaddp/src/regressione.hpp",
+      "bytes": 135,
+      "sha256": "586cdd2cc068b6237d05ce8b1944d7bf6dbd039a3620575920aa7b568ad6b772"
+    },
+    {
+      "path": "anovaddp/src/anovaddp.hpp",
+      "bytes": 1101,
+      "sha256": "908ee41c7236006fecaa19c2ba1cfc0891d6a1e8c62eb327d426e51f8bc5dd95"
+    },
+    {
+      "path": "anovaddp/src/regressione.cpp",
+      "bytes": 978,
+      "sha256": "54909914f0578b37d8bd8650295d08d16fa15fde54168f34d956f12bd1beb2a0"
+    },
+    {
+      "path": "anovaddp/src/Makefile",
+      "bytes": 1650,
+      "sha256": "6d91b8de0ec027421d4d5c2de44258c390f867d1b446a229120408047bb5ef7a"
+    },
+    {
+      "path": "anovaddp/src/cdefs.h",
+      "bytes": 383,
+      "sha256": "89e3b778e0540f646714143899d74597f9be9442369812a747d3ccade8256285"
+    },
+    {
+      "path": "anovaddp/src/constants.cpp",
+      "bytes": 4779,
+      "sha256": "f7f1b7bddd0c4e7718a48a2d45f360ac0ea8b0324b6d408097f1a1bf18e0c750"
+    },
+    {
+      "path": "anovaddp/src/constants.hpp",
+      "bytes": 1620,
+      "sha256": "96c5207c1e8008c945825388e847868731155eb9c2bfb3190e3328bf54e0cd8f"
+    },
+    {
+      "path": "anovaddp/src/do_anovaddp.cpp",
+      "bytes": 12289,
+      "sha256": "d3c68db42825ad652dbf023f957aab5ae08a686f42b05709fbd0403119c78804"
+    },
+    {
+      "path": "anovaddp/src/anovaddp_windows.mk",
+      "bytes": 1769,
+      "sha256": "293822d30d633c1e51d6f8be4175ac3caf72ce9df321898ac800c6a700a9be64"
+    },
+    {
+      "path": "anovaddp/src/do_anovaddp.h",
+      "bytes": 593,
+      "sha256": "d79ff6fe147bf59e10b1f02a702bf81cdbb8ce6d5c298cfa474fa5159c4127a1"
+    },
+    {
+      "path": "anovaddp/src/error.hpp",
+      "bytes": 1809,
+      "sha256": "0af050fe52063d1904d2c8d42753e08f31039b8484ec09dad759c47f445841de"
+    },
+    {
+      "path": "anovaddp/src/init.c",
+      "bytes": 804,
+      "sha256": "793756085095f83cd03457cb00696757ebfbee929d5f687f3ba9dbf8ddc7c61d"
+    },
+    {
+      "path": "anovaddp/src/init.h",
+      "bytes": 370,
+      "sha256": "a469a2fcd62233e14af3dcc5bc1749c47ac382f93dd33202eed2335ec77d1777"
+    },
+    {
+      "path": "anovaddp/src/newmat10/add_time.png",
+      "bytes": 15259,
+      "sha256": "fc424279be1d499c5d74a85f9356d81fe4e9c53b936a534ae3db9be8dee1dfb4"
+    },
+    {
+      "path": "anovaddp/src/newmat10/AUTHORS",
+      "bytes": 121,
+      "sha256": "9268e217b0d9fb3f3cff312dbbabe86d403279b6e917f14137fdbb9a56dfca2d"
+    },
+    {
+      "path": "anovaddp/src/newmat10/bandmat.cpp",
+      "bytes": 15852,
+      "sha256": "0511f45f6e1375d0f97910cbbef53987ec0faa845f637fa32c0fe07eb681037c"
+    },
+    {
+      "path": "anovaddp/src/newmat10/boolean.h",
+      "bytes": 594,
+      "sha256": "d1c57df73fa0f5d5bd97c6ba626c1a5064996265b2355770a76f0366041c2068"
+    },
+    {
+      "path": "anovaddp/src/newmat10/cholesky.cpp",
+      "bytes": 2080,
+      "sha256": "ceacbeb6b472d0d1169a0ede4ad49df382aa9c7050193a5f54b51369ef82a90c"
+    },
+    {
+      "path": "anovaddp/src/newmat10/controlw.h",
+      "bytes": 1489,
+      "sha256": "4e90db7454a8f4ae903f55aba39dd0e565427a136b8d132e6388990d238425c5"
+    },
+    {
+      "path": "anovaddp/src/newmat10/COPYING",
+      "bytes": 926,
+      "sha256": "1c2f4052d3b167a50ed1e61a448573e190c1da3a90eb3cd9531d01ae3674191f"
+    },
+    {
+      "path": "anovaddp/src/newmat10/evalue.cpp",
+      "bytes": 9214,
+      "sha256": "6c213020043bdf582cbcee82b4d6e6df77cb4f1c1cfca0541da92801185dd951"
+    },
+    {
+      "path": "anovaddp/src/newmat10/example",
+      "bytes": 949576,
+      "sha256": "c092902315e6d4005a7bd9ebc772c3f837905a6c61088621113f7a1e12c6892b"
+    },
+    {
+      "path": "anovaddp/src/newmat10/example.cpp",
+      "bytes": 12084,
+      "sha256": "a8f9c570faf1ac14ba9a41ee56a34d49916eaa29cbd6db8dd6b97877221f430b"
+    },
+    {
+      "path": "anovaddp/src/newmat10/example.txt",
+      "bytes": 3944,
+      "sha256": "3b33328bf3cc146c0917ec72f7a355d5ea0efec7f5adf857181826e5c7ca6fa9"
+    },
+    {
+      "path": "anovaddp/src/newmat10/fft.cpp",
+      "bytes": 14579,
+      "sha256": "ae2dfa09018745d6fd03da824b984870f60873fc41fb4899c91c041b5b7a9af7"
+    },
+    {
+      "path": "anovaddp/src/newmat10/garch",
+      "bytes": 943020,
+      "sha256": "f45610e47c2840d2a2617fbb1c4f7ebbec35904fda3afc56f0d48e3c32909efc"
+    },
+    {
+      "path": "anovaddp/src/newmat10/garch.cpp",
+      "bytes": 6411,
+      "sha256": "71ecaa7c5f2f5a8819888126fe082ef8099180f5c18729e45ccaa2fa3525c451"
+    },
+    {
+      "path": "anovaddp/src/newmat10/garch.dat",
+      "bytes": 11505,
+      "sha256": "f2287b10e5246a2b842ac323afea5e67cd4b2f1391752138ce7e207ab9c56b67"
+    },
+    {
+      "path": "anovaddp/src/newmat10/garch.txt",
+      "bytes": 1209,
+      "sha256": "553c80bf6be327258a8523cdb18fd17d219efac3aae3dac1234ab7e4de80e216"
+    },
+    {
+      "path": "anovaddp/src/newmat10/hholder.cpp",
+      "bytes": 4803,
+      "sha256": "c6ed32e4734c118a4db50f126bdf8096785a222355c3a6f30dcf08bfd3689111"
+    },
+    {
+      "path": "anovaddp/src/newmat10/include.h",
+      "bytes": 7787,
+      "sha256": "13761e09659647c1e8e7d33c33ee513f5a3c7254a8ce09d12f3cff272927a783"
+    },
+    {
+      "path": "anovaddp/src/newmat10/jacobi.cpp",
+      "bytes": 3855,
+      "sha256": "5f1573ed1c8b748e5b4c86e57da47e3117eb8d6bb392213221e0a6f71a30f81a"
+    },
+    {
+      "path": "anovaddp/src/newmat10/myexcept.cpp",
+      "bytes": 13457,
+      "sha256": "c715fdcba6e4c955d5649f728109fe4ab3907c66f8556525b2f94f7b2e24ce79"
+    },
+    {
+      "path": "anovaddp/src/newmat10/myexcept.h",
+      "bytes": 12009,
+      "sha256": "b54838ca68ca70785dd88f7583b5776247ad0785f9077456270c8cec0fedb80c"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newfft.cpp",
+      "bytes": 34460,
+      "sha256": "f20ea6520c600cebb37523659754f0b2cce999491225b127ecb9319dc1290131"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmat.h",
+      "bytes": 67118,
+      "sha256": "898faff7d187a98f00a268eef64620a3125721d5a91880b08bf4de0f32b5b793"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmat.lfl",
+      "bytes": 44,
+      "sha256": "bd9956d6556fdbf92e4b80ccc0914c331727ebf2da899a7535e7d663bac2cbc4"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmat1.cpp",
+      "bytes": 4989,
+      "sha256": "fdc956869c1c7164d412757ef6de0335e7a00c5c4ec9d98fa2a482b3ab6925a1"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmat2.cpp",
+      "bytes": 18775,
+      "sha256": "0a2b5c89fbde0b785087a63063c02b2fae86f7e87d5cff7bb81f06c9222240f1"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmat3.cpp",
+      "bytes": 24410,
+      "sha256": "e37df30a92cc1bc40623e289f3de51ead5c2c82cecaec45139e9b568018e9f1b"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmat4.cpp",
+      "bytes": 24629,
+      "sha256": "0a2caf0b6a22f729025d5501b4a7a617fda00c7ada18af212d23a3ef47561cb5"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmat5.cpp",
+      "bytes": 14514,
+      "sha256": "7016fbaae4d0316ccb4211cf880044c815cf0c5888436502b40899ecf120e88d"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmat6.cpp",
+      "bytes": 27102,
+      "sha256": "380b51239a94ba8d8ecd6358245442cdc8c9752bbe2c1f6df3c5b242537b1e7d"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmat7.cpp",
+      "bytes": 31748,
+      "sha256": "d8cf8a36561ac6c6518664d73cfa5babfaeb7fd9cf69c03167399a236fe90b87"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmat8.cpp",
+      "bytes": 19848,
+      "sha256": "9b7ccefaa54bd163b4b477356882a4c307cc2e52633829186a21736c8b3fd679"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmat9.cpp",
+      "bytes": 1616,
+      "sha256": "6475a133c7898664c74486d0bd0b727cc92a74137d6c4b3e1161cfaed458da80"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmatap.h",
+      "bytes": 4609,
+      "sha256": "b3d3895a7c293b30f9ca42d95d69210915977a42815037cbd081cb0092a39777"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmatex.cpp",
+      "bytes": 8750,
+      "sha256": "63e19a9fb251aa2204a4f56305f77d96dad13cf1a7ed064f46fc6cc4c9da9929"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmatio.h",
+      "bytes": 953,
+      "sha256": "f881998a19f0ae2a7241ce24b222d4aa473e27b8f52c3f0bbe430e0d5b3c6c70"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmatnl.cpp",
+      "bytes": 7185,
+      "sha256": "a1cccdea4da378731e5d1199d8564b5e096a7a28dd0bd43c4f9cd006bfe95239"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmatnl.h",
+      "bytes": 11098,
+      "sha256": "ca6bf0e826f66ce93e2bf5eabe04e27f7e6c875317b5f9402e40385a076a2d3b"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmatrc.h",
+      "bytes": 7202,
+      "sha256": "bd6f03df738e8d9ccfa3adc6dca7c0b7cbbe470184726b6ad18376cc51b61fe2"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmatrm.cpp",
+      "bytes": 4571,
+      "sha256": "bcc389dfbeac769524504e1ea1242808bc328b9e6dfda051884eea781e882709"
+    },
+    {
+      "path": "anovaddp/src/newmat10/newmatrm.h",
+      "bytes": 3938,
+      "sha256": "262f6fe4382f41935b0e90d83d1d382f6269adf228c452e8373ed5b061548152"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nl_ex.cpp",
+      "bytes": 3004,
+      "sha256": "e64ef57bbfffb8ad1a4b3650f6fddf4a386b1a0524e6e504ef2a4deb423bf8fa"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nl_ex.txt",
+      "bytes": 1115,
+      "sha256": "a3644e3389aa559c336a6757d0fdef9303ca1688fff8b7da3c598d0c7ef45c9a"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nm10.htm",
+      "bytes": 174495,
+      "sha256": "a2ecaa9daa3e7b2f38c94faa867b1f37f6f0bb6c2e0ab2cc1df2cd4ed7dff9d7"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nm_r.mk",
+      "bytes": 6393,
+      "sha256": "cddfc7706d3f3f2ba8cfc88c52aa9d32cd80071b38a22da92f607cdecfbec9b8"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nm_targ.txt",
+      "bytes": 50,
+      "sha256": "f99dbd867ad9e041c6ca040a20872ca889359d274d917e5e79d35b128dfd8f00"
+    },
+    {
+      "path": "anovaddp/src/newmat10/precisio.h",
+      "bytes": 6621,
+      "sha256": "1d10e12b502bcb778dffb0cae4d40ecbcd273e0395ea76f9bceebd4290918490"
+    },
+    {
+      "path": "anovaddp/src/newmat10/rbd.css",
+      "bytes": 1397,
+      "sha256": "f6fd9af80baac2aed4d7ec56d6895e103196ae14039580f8c7f5665b879d1a54"
+    },
+    {
+      "path": "anovaddp/src/newmat10/README",
+      "bytes": 1005,
+      "sha256": "8f1fde71a81b08d5c717e959b0137720c3824dc159665c01e94ed371b965b8a2"
+    },
+    {
+      "path": "anovaddp/src/newmat10/sl_ex.cpp",
+      "bytes": 652,
+      "sha256": "91a43e0b58b077c9349d8ee1405236d729ee9a2201ed2cd425240b3eed5a3693"
+    },
+    {
+      "path": "anovaddp/src/newmat10/sl_ex.txt",
+      "bytes": 255,
+      "sha256": "c85d45fb9e39219c84b279615126d989506045fe923998f0e910f8d8d1aeb85b"
+    },
+    {
+      "path": "anovaddp/src/newmat10/solution.cpp",
+      "bytes": 6038,
+      "sha256": "caf181ccbdf1eead765ab39a77562384cd733af486448e63d00e2ebe129e3354"
+    },
+    {
+      "path": "anovaddp/src/newmat10/solution.h",
+      "bytes": 3221,
+      "sha256": "cf6788f565714dee826af0397014b18b431b166eeb8e61033c8061a15cd64397"
+    },
+    {
+      "path": "anovaddp/src/newmat10/sort.cpp",
+      "bytes": 7521,
+      "sha256": "496bb4d6fe5dc495e8e6277d309cef20d7f10255fea0045d052a2c4f6b6ad242"
+    },
+    {
+      "path": "anovaddp/src/newmat10/submat.cpp",
+      "bytes": 11586,
+      "sha256": "cb2a9d94a15561b80b451d75caa5a639620995c87df1c6edb86cc7881544c0bd"
+    },
+    {
+      "path": "anovaddp/src/newmat10/svd.cpp",
+      "bytes": 6667,
+      "sha256": "489d463f6d587b9dda48dcdfe21aa904c0b56b2bf525295da23f864213c55cbd"
+    },
+    {
+      "path": "anovaddp/src/newmat10/test_exc.cpp",
+      "bytes": 6463,
+      "sha256": "d0b0b56e3ca6789b41b27535aa3e9e81b5ba218d5787f846998d7a7accbca74e"
+    },
+    {
+      "path": "anovaddp/src/newmat10/test_exc.txt",
+      "bytes": 4050,
+      "sha256": "3f22d770deeab35d8ce9722554bbbf463455e1494fc702385769931392a7ec50"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt.cpp",
+      "bytes": 10402,
+      "sha256": "8180258ad03d230170b22b1071357c7fcce56ba76fb3d188dffa11f338e44ba1"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt.h",
+      "bytes": 1517,
+      "sha256": "0cc580a5e96b88918738ea27653706c02bc69859f1331fa158eaefcfdd515714"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt.txt",
+      "bytes": 68317,
+      "sha256": "4b33fe7fd2e610f41454bd6f7459a452c633d963008d9528dc0f25dd9c6f553b"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt1.cpp",
+      "bytes": 6372,
+      "sha256": "9f7260300f292f116a4bcd64bb20f491dd7cbf98fc46d7d02f4dcc131b8c6a45"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt2.cpp",
+      "bytes": 9197,
+      "sha256": "9b5b1c35477f10d4576d23d816dd90f8e07f428f2f5914601c580f640c578ed1"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt3.cpp",
+      "bytes": 5076,
+      "sha256": "5c9590ac2617c088b80c46720a1592608594463b7411edd7e0839fee65cee1d0"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt4.cpp",
+      "bytes": 4641,
+      "sha256": "fb789af9575f7e7463d57e2e479bad05c4d5e0d02bd5f89132b9172145eccf04"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt5.cpp",
+      "bytes": 3438,
+      "sha256": "13db562c9b53a9aab9000b94c49945997c79fc143c6c1364ed1a78a505319937"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt6.cpp",
+      "bytes": 4618,
+      "sha256": "7c356a71fd79919d3aa6bf047bab5db1b058189e1876f886b67551f6691993e5"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt7.cpp",
+      "bytes": 4199,
+      "sha256": "31cb11e472f81d54bcc1f8075af3f38293150f75a133ad22305ef976317e53dd"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt8.cpp",
+      "bytes": 8851,
+      "sha256": "1a53aa1e930dc7feffde5f4746a33796e145835d19666063ff494c2b41e6b6f1"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmt9.cpp",
+      "bytes": 7327,
+      "sha256": "bb6eee26fb73369aa132fdeb7040b075b067a3c9adcc31a517b7d080d95f8278"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmta.cpp",
+      "bytes": 3704,
+      "sha256": "90c31476339ac9fa1ab745872db97102eb0291c28c66e0a17168a67b6fbbc776"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmtb.cpp",
+      "bytes": 4280,
+      "sha256": "66e912bc7d2aaf6fa22180fa13916aa07305865fa015b5dc84439cae992715d5"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmtc.cpp",
+      "bytes": 5334,
+      "sha256": "2dcf8d326f5febd7413cdacb6e411f1ca886cb9ea2d9952dbec7ec8deeea721e"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmtd.cpp",
+      "bytes": 5865,
+      "sha256": "32231ac531731c45fafe7aa5670a71d36c2bff5de2ef78012abb390a1ced5351"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmte.cpp",
+      "bytes": 17824,
+      "sha256": "5df315e2d218da125010e5aa5acbe57ff7748f34ab761fc6f2c84020654a6d5a"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmtf.cpp",
+      "bytes": 10247,
+      "sha256": "c4aa86a2c31cad205525d904364ff9502114a0cb6904dfb31ef84a98429b7a4a"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmtg.cpp",
+      "bytes": 4581,
+      "sha256": "2f302ef97e73f1f24e69f6022ec6fcf15341f7eb7e74bfe3344490bbb0a32e39"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmth.cpp",
+      "bytes": 27593,
+      "sha256": "1df078cc74bba1f6b46dd1c65f9bff9d314bde47b0f6dfce466b91e2516da871"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmti.cpp",
+      "bytes": 6074,
+      "sha256": "31dfa49c760daf9d9376ada476afdc698ac26546d2ad379875c3e22aec3da781"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmtj.cpp",
+      "bytes": 4661,
+      "sha256": "e9854dc181990b1ed94a0c275eed8a58bf6d83528233baaa4d629af171e7e3de"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmtk.cpp",
+      "bytes": 5333,
+      "sha256": "2d3fddad3e1c8ac3f173ffa1bce2ceb0e24fd2eb51a10bf68e67327fc8558d71"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmtl.cpp",
+      "bytes": 5133,
+      "sha256": "a237b51fb40c0b28b65d99b58c97261c17b47856ff0ed7408cfcd55919eca054"
+    },
+    {
+      "path": "anovaddp/src/newmat10/tmtm.cpp",
+      "bytes": 6463,
+      "sha256": "74786f3afabb16c926fa9622758eceb2e7525f917a97a17ca68166e30d8faaef"
+    },
+    {
+      "path": "anovaddp/src/newmat10/Newmat10 documentation_files/geov2.js",
+      "bytes": 635,
+      "sha256": "0e55453f677330743905506f829383f5366b3a41ae089338c73f4686ca0efe7f"
+    },
+    {
+      "path": "anovaddp/src/newmat10/Newmat10 documentation_files/serv.gif",
+      "bytes": 43,
+      "sha256": "b1442e85b03bdcaf66dc58c7abb98745dd2687d86350be9a298a1d9382ac849b"
+    },
+    {
+      "path": "anovaddp/src/newmat10/Newmat10 documentation_files/visit.gif",
+      "bytes": 85,
+      "sha256": "148bb6e7cdf1ca5053df6028be0a955ee1ea71402486dc398ac91992c13696e6"
+    },
+    {
+      "path": "anovaddp/src/newmat10/Newmat10 documentation_files/rbd.css",
+      "bytes": 1256,
+      "sha256": "c818e86691beefe724f84fb6f2fc3193d5cd6315adc2977c35b8d69092a0fe90"
+    },
+    {
+      "path": "anovaddp/src/newmat10/Newmat10 documentation.htm",
+      "bytes": 197017,
+      "sha256": "c0fe9e3f4ae7269195a7ae2b102393dc4c210cc5d22c9c9e4e21b0805b30974e"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nm_b55.mak",
+      "bytes": 6966,
+      "sha256": "741513c0bc8759beb801bfe233f14c5aa031732a4f6dd2ffc5f5ec3c7af7dc28"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nm_cc.mak",
+      "bytes": 6328,
+      "sha256": "0a49f3a21c7ed5f5112d9e0b467de55371de01328a87fefed2b1b94064689e39"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nm_gnu.mak",
+      "bytes": 6276,
+      "sha256": "2260e4f8abee0ea3cec6f7b90882fe902de2e036cf1b40da5ec46d38f125b4bc"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nm_i8.mak",
+      "bytes": 6467,
+      "sha256": "9e7203d0e48a17f3ce0870e32be4da00f14290d5a2264fa3c4ffb05681123802"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nm_il8.mak",
+      "bytes": 6306,
+      "sha256": "e814adf32855f3fafdef1d1159d909c437b2b6fcabde50773e1f890cba6082ef"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nm_m6.mak",
+      "bytes": 6420,
+      "sha256": "acee937713a8581c43a02e210bfdc78ce4273ef576864bc95018a4955fbedd94"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nm_m8.mak",
+      "bytes": 6413,
+      "sha256": "c4ea41a0604e7dd9420c25ffd43266d0a19afd5f111b7bd25874d1eee0e8d072"
+    },
+    {
+      "path": "anovaddp/src/newmat10/nm_ow.mak",
+      "bytes": 6599,
+      "sha256": "250e01335cee5d1ccbc645542769f44fbdff2e03dfe62dcf7cee34e8ccb82da7"
+    },
+    {
+      "path": "anovaddp/src/rand.cpp",
+      "bytes": 2029,
+      "sha256": "e4c424e2f7c62495b3adf77601034264b0fd314ed47977a647934a98e64706df"
+    },
+    {
+      "path": "anovaddp/src/rand.hpp",
+      "bytes": 409,
+      "sha256": "78a8439afb270a8cd9f3feafbf2834c0169a8bc96a54206cc4b85481304d7305"
+    },
+    {
+      "path": "anovaddp/src/randlib/doc/Basegen.c.doc",
+      "bytes": 13852,
+      "sha256": "79ef2060a9171f7ef184aea32052157431ee3cd7219eb2da9a36a4ffd7d48146"
+    },
+    {
+      "path": "anovaddp/src/randlib/doc/randlib.c.chs",
+      "bytes": 13018,
+      "sha256": "2e9fc86d338f2be53fc2f0f43b38a2c81256223342317573897f3f43a3427f9b"
+    },
+    {
+      "path": "anovaddp/src/randlib/doc/randlib.c.fdoc",
+      "bytes": 23427,
+      "sha256": "9a46fa3e9237de67eb51816005dfda8fce797b1b3835ea5c42832eceb70f9143"
+    },
+    {
+      "path": "anovaddp/src/randlib/HOWTOGET",
+      "bytes": 1223,
+      "sha256": "91fb9bcfaa5fb25c0bb048ad0ee11c2e8b44d8bcf1d2c98b56e07d9626d4f880"
+    },
+    {
+      "path": "anovaddp/src/randlib/include/cplusplus.h",
+      "bytes": 980,
+      "sha256": "3049948b9997a59e92a6377ef36a9331ad045c0070fd1e318929581eb6b038cc"
+    },
+    {
+      "path": "anovaddp/src/randlib/include/randlib.h",
+      "bytes": 2190,
+      "sha256": "60fd3a2f42038ee1e8d0acda1a9fa30e44c0eda77568a8c96ed7369cd2a5a007"
+    },
+    {
+      "path": "anovaddp/src/randlib/include/randlibP.h",
+      "bytes": 1080,
+      "sha256": "b045ac5300f13da2e8c7887638f4bf778c85e8997f72f6f6fc49ca0f540eadc4"
+    },
+    {
+      "path": "anovaddp/src/randlib/README",
+      "bytes": 14047,
+      "sha256": "4f766b4e82beccd3b6f0eceff56e6d84d1063d90bcd95174ae4995dc049ec347"
+    },
+    {
+      "path": "anovaddp/src/randlib/src/com.c",
+      "bytes": 11968,
+      "sha256": "0bcc61cb91a637f68305858f0a218198be92f970a0522ed90d81208bc160424e"
+    },
+    {
+      "path": "anovaddp/src/randlib/src/linpack.c",
+      "bytes": 3292,
+      "sha256": "3ad6707f595907a97126ba067d23e1b6d76f385ecf3323d1635a1ce785679298"
+    },
+    {
+      "path": "anovaddp/src/randlib/src/randlib.c",
+      "bytes": 69751,
+      "sha256": "58fad4486ddaaa4cb644d23df29bbee02feadd9ef93685d0059b2e859feafb3d"
+    },
+    {
+      "path": "anovaddp/src/randlib/src/randlib_r.mk",
+      "bytes": 909,
+      "sha256": "c0e64cf2f8d9a4222949d2e2101415703e5290769614a4f824db15c8ceb69e6c"
+    },
+    {
+      "path": "anovaddp/src/REostream.hpp",
+      "bytes": 1403,
+      "sha256": "280394334a714963cf6068854842f95c8cb66f5820c149d355b105e136430bf5"
+    },
+    {
+      "path": "anovaddp/src/Rostream.hpp",
+      "bytes": 1439,
+      "sha256": "39b48aae4ce27732faf2989bc714e10461de4d1ccd8682ac22f029a02d2dfa0f"
+    },
+    {
+      "path": "anovaddp/src/routine.cpp",
+      "bytes": 26939,
+      "sha256": "44df930fc2181bb0a46a20d72f83b514f4e451ce157e2ff8f7bab6680e1f2551"
+    },
+    {
+      "path": "anovaddp/src/routine.hpp",
+      "bytes": 2859,
+      "sha256": "45596a44545c113f07f747e02136410b0e5afb57e98030f6edf7e5ba653c1832"
+    },
+    {
+      "path": "anovaddp/src/anovaddp_unix.mk",
+      "bytes": 1650,
+      "sha256": "6d91b8de0ec027421d4d5c2de44258c390f867d1b446a229120408047bb5ef7a"
+    },
+    {
+      "path": "anovaddp/tests/anovaddp.R",
+      "bytes": 257,
+      "sha256": "6d4fe185cfe5f3c494d5f2b3310ce01ebe7ff3f123247b3752bfcff100f8bf4f"
+    }
+  ]
+}

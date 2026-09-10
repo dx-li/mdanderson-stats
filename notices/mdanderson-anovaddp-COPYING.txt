@@ -1,0 +1,4 @@
+All the MDACC-derived portion is released under the Artistic license
+as described here <http://opensource.org/licenses/artistic-license>.
+Copyright 2004-5, MD Anderson Cancer Center (MDACC). All rights reserved.
+
