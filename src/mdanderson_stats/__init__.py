@@ -677,6 +677,7 @@ from .u2oet_scenario import (
     read_u2oet_utility,
     u2oet_scenario,
 )
+from .u2oet_simulation import U2OETTrial, U2OETTrialDecision, simulate_u2oet_trial
 from .windows import (
     WindowCrossValidation,
     WindowNeighborCrossValidation,
@@ -687,6 +688,9 @@ from .windows import (
 )
 
 __all__ = [
+    "U2OETTrial",
+    "U2OETTrialDecision",
+    "simulate_u2oet_trial",
     "U2OETPatients",
     "U2OETPatientDecision",
     "u2oet_patients",

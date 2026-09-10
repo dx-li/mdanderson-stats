@@ -2517,7 +2517,8 @@
         "IID prior draws, ordinal-cell beta moment-matching prior ESS, and balanced pseudo-trial averaging of prior centers with per-trial MCMC diagnostics and retained counts",
         "Optional scalar elliptical updates and reversible joint link/intercept/slope Metropolis moves with the exact Jacobian; enabled by default in pseudo-prior calibration",
         "Deterministic Gaussian-copula ordinal scenarios, with independent/perfect-correlation limits and native scenario/raw-dose/utility readers",
-        "Native five-column patient snapshots, toxicity-only marginal likelihoods and posterior fitting, and fixed-size next-patient cohort continuation/early closure with enrollment caps"
+        "Native five-column patient snapshots, toxicity-only marginal likelihoods and posterior fitting, and fixed-size next-patient cohort continuation/early closure with enrollment caps",
+        "Calendar-based single-trial simulation with exponential arrivals, uniform observation delays, pending snapshots, cached posterior summaries, no-enrollment stopping, complete final follow-up and explicit acceptable/tried final-ranking conventions"
       ],
       "validation": [
         "Independent R implementation of published equations: 549 joint cells across five cases, 2-4 categories, three models, two centerings and FGM association endpoints",
@@ -2528,7 +2529,8 @@
         "Earlier block-only SD-100 pseudo-prior check did not mix: two trials, four chains, 2000 warmup/2000 retained sweeps gave maximum split Rhats 51.95 and 7.27; this failure motivated the additional coordinate and joint-link updates",
         "Reversibility, finite-difference Jacobian and center-probability preservation checked for all three models; first failing diffuse-prior dataset now has max parameter split Rhat 1.003 with four chains and 1500 warmup/1500 retained draws, while independent R importance comparison still passes",
         "All 96 native scenarios across eight configurations passed marginal/probability checks; scenario-1 expected utilities match paper Table 4; independent R cells and analytic near-singular Gaussian quadrants agree within 2e-12",
-        "Toxicity-only posterior agrees with independent logistic-normal integration; pending assignments, open-cohort precedence and closure checked; all three native 60-patient example files read successfully"
+        "Toxicity-only posterior agrees with independent logistic-normal integration; pending assignments, open-cohort precedence and closure checked; all three native 60-patient example files read successfully",
+        "End-to-end pending/cohort/follow-up and toxicity-only stop tests; nine-patient source-scenario pilot with independently reconstructed interim availability counts; native final-selection parity and multi-trial operating characteristics remain unverified"
       ]
     },
     {

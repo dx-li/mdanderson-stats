@@ -4,8 +4,9 @@ Entry 77 is **partial**. The Python implementation supplies PDS, CMI and hybrid
 model probabilities, grouped likelihoods and conditional expected utilities.
 Posterior summaries and new-cohort allocation from supplied posterior draws
 and posterior fitting are also available, along with IID prior sampling,
-beta-moment information and pseudo-trial prior calibration. Full trial conduct,
-simulation and complete native input/report workflows remain pending. Gaussian
+beta-moment information, pseudo-trial prior calibration and single-trial calendar
+simulation. Complete native input/report workflows and operating-characteristic
+validation remain pending. Gaussian
 scenario construction and native scenario/dose/utility readers are available;
 Patient snapshots, toxicity-only likelihoods and next-patient cohort decisions
 are also available. GAO model fitting is still pending.
@@ -114,10 +115,9 @@ Remaining coverage includes:
 - GAO continuation probabilities and fitting (Gaussian scenario copulas are supplied).
 - Validation of complete trial operating characteristics.
   Explicit-prior fitting, pseudo-trial centers and prior ESS are supplied below.
-- Calendar simulation, final selection and adaptive MCMC precision targets.
-  Open-cohort handling and toxicity-only likelihoods are supplied below.
-- Calendar-based simulation, operating characteristics, scenario/native-file
-  import and reports.
+- Adaptive MCMC precision targets and native final-selection validation.
+- Multi-trial operating characteristics and complete native configuration/reports.
+  Calendar simulation, open-cohort handling and partial likelihoods are supplied below.
 
 The original program is freely downloadable, but a general redistribution
 license was not found in the inspected guide or README. This implementation
@@ -183,8 +183,8 @@ randomization and greedy allocation. These validate the published decision
 rules, not native executable parity.
 
 The new-cohort function must not silently rerandomize patients within an
-existing cohort. Use `u2oet_next_patient` below for open-cohort handling. Accrual
-calendars, final selection and trial simulation remain pending.
+existing cohort. Use `u2oet_next_patient` below for open-cohort handling and
+`simulate_u2oet_trial` for calendars and explicit final-selection conventions.
 
 ## Posterior fitting
 
@@ -293,8 +293,8 @@ Three focused numerical checks validate the sampler:
 
 These checks validate the target and sampling implementation in the tested
 settings. They do not establish convergence for other priors/data or reproduce
-the published trial operating characteristics. GAO and full trial simulation
-remain pending; toxicity-only outcomes are supported below. Prior calibration is now supplied below.
+the published trial operating characteristics. GAO remains pending; toxicity-only
+outcomes and calendar simulation are supplied below. Prior calibration is now supplied below.
 
 ## Prior draws, information and pseudo-trial calibration
 
@@ -578,8 +578,9 @@ rule. With no patients, supply an explicit zero-based `initial` pair. Reaching
 
 This implements the guide's fixed cohort-size rule. The archive's separately
 named first/new-dose/old-dose cohort settings are not mapped without verifying
-their exact semantics. Calendar simulation, final selection, adaptive MCMC
-precision targets and integrated trial reports remain outstanding.
+their exact semantics. Adaptive MCMC precision targets, native final-selection
+validation and integrated trial reports remain outstanding. Calendar simulation
+is supplied below.
 
 Two focused tests cover mixed complete/partial/pending records, marginal
 likelihood contributions, open-cohort precedence, early cohort closure,
@@ -590,3 +591,113 @@ carry no information about association. All three supplied example patient
 files were also read: each has 60 complete observations. The PDS/4E_4T and
 hybrid examples end in a seven-patient run at zero-based pair (1,1); the binary
 example ends in a three-patient run there. Original patient files are not bundled.
+
+## Calendar trial simulation
+
+`simulate_u2oet_trial` connects scenario generation, partial-outcome snapshots,
+posterior fitting and patient-level cohort decisions. It simulates one trial
+and retains its true patient records, arrival and outcome-observation times,
+interim decisions, final posterior summary and selection.
+
+```python
+from mdanderson_stats import (
+    u2oet_scenario,
+    simulate_u2oet_trial,
+    U2OETCriteria,
+    u2oet_parameter_names,
+)
+
+scenario = u2oet_scenario(
+    np.broadcast_to([0.4, 0.6], (2, 2, 2)),
+    np.broadcast_to([0.8, 0.2], (2, 2, 2)),
+)
+names = u2oet_parameter_names(2, 2)
+mean = np.array([0.5 if ".slope." in name else 0.0 for name in names[:-1]])
+trial = simulate_u2oet_trial(
+    [1, 2],
+    [10, 20],
+    scenario,
+    [[10, 0], [100, 40]],
+    prior_mean=mean,
+    prior_sd=np.full(mean.size, 0.3),
+    initial=(0, 0),
+    criteria=U2OETCriteria(efficacy_level=1, toxicity_level=1),
+    max_patients=6,
+    cohort_size=3,
+    efficacy_window=(42, 42),
+    toxicity_window=(42, 42),
+    mean_interarrival=20,
+    draws=200,
+    warmup=100,
+    chains=2,
+    rng=np.random.default_rng(80),
+)
+print(trial.selected, trial.final_max_split_rhat)
+```
+
+This is an illustrative small run, not a calibrated design. Inspect Monte Carlo
+precision before using simulated decisions to estimate operating characteristics.
+The current simulation uses explicit fixed MCMC budgets; it does not yet extend
+chains to the guide's corner-utility MCSE targets.
+
+The first patient arrives at time zero and receives the specified initial pair.
+Subsequent interarrival times are exponential with the requested mean. Outcome
+categories are drawn from the selected pair's Gaussian-copula scenario. Efficacy
+and toxicity observation delays are independent uniforms on their respective
+windows, as specified in the guide. Equal window endpoints give fixed delays.
+Zero delays are allowed as a Python limiting-case extension; the guide's UI
+minimum is .1 days. All times must use the same unit.
+
+At each later arrival, only outcomes whose observation times are at or before
+that arrival are revealed. The existing toxicity-only and open-cohort rules
+then determine assignment. There is no automatic accrual suspension while
+outcomes are pending. If no assignment is acceptable, no additional patient is
+enrolled. The returned decision history includes that unsuccessful arrival
+attempt, but the patient records and arrival array contain only enrolled
+patients. The predetermined first assignment has no posterior decision record.
+
+When complete and toxicity-only counts are unchanged, the previous posterior
+sample summary is reused. Assignments and open-cohort status are still updated.
+This avoids both redundant fitting and changes caused solely by Monte Carlo
+noise when the statistical information is unchanged. Efficacy-only updates with
+pending toxicity do not invalidate this cache, following the source rule.
+
+At the enrollment limit, or after early stopping, follow all enrolled patients
+until both outcomes have been observed, then compute a final posterior summary.
+An early no-acceptable-pair stop remains a no-selection result even if later
+follow-up changes acceptability. The result distinguishes `stop_time` from
+`analysis_time`, and retains the final complete patient snapshot.
+
+**Final-selection convention:** for a completed trial, `final_scope="acceptable"`
+selects the maximum-posterior-utility acceptable pair. `final_scope="tried"`
+restricts this choice to pairs actually assigned. Ties use ascending agent-1,
+then agent-2 indices. Escalation restrictions apply to assignments, not to final
+ranking. The public guide does not establish the executable's exact final
+eligibility/follow-up convention, so these explicit Python options do not claim
+native final-selection parity. No eligible pair produces `selected=None`.
+
+The caller's generator creates separate recorded seeds for the data/assignment
+stream and the posterior-sampling stream. Changing the MCMC workload therefore
+does not directly consume the random numbers used for arrival and outcome
+simulation, although changed decisions can naturally change subsequent data.
+Every interim result records the usable outcome counts, posterior summary,
+assignment weights, reason, cohort-continuation flag and maximum classic split
+R-hat. The latter is a diagnostic, not a convergence certificate. Full retained
+MCMC arrays are released after each fit to keep simulation memory bounded.
+
+Two end-to-end tests verify pending-patient cohort capacity, reuse of identical
+posterior information, final follow-up, toxicity-only stopping and the absence
+of extra enrollment or later resurrection after a stop. A separate nine-patient
+pilot used the archive's PDS/4E_4T scenario 1, raw doses and utility matrix,
+initial pair (0,1), default timing, illustrative normal means 0 (slopes .5), SD
+.3, permissive efficacy/toxicity cutoffs, and two chains with 64 warmup/64 kept
+draws (seed 7719). It performed six posterior fits, ended enrollment at time
+193.5363 and follow-up at 235.5363, and had final maximum split R-hat 1.0352.
+All interim usable-outcome counts were independently reconstructed from the
+retained true outcomes and observation times. This is a workflow check, not a
+reproduction of the paper's 3000-trial operating characteristics.
+
+Still pending: GAO model fitting, adaptive posterior precision control,
+first/new/old-dose cohort-size semantics, multi-trial operating-characteristic
+summaries, complete native configuration/report workflows and validation of
+native final selection.
