@@ -1294,7 +1294,7 @@
         "Ordinal cumulative-probability information and logistic/cloglog ordinal regression designs with linear/quadratic shared slopes and multiple independent groups.",
         "General design-matrix logistic and multiplicative-binomial log-linear information, plus delta-method information reparameterization using a supplied Jacobian.",
         "Original S-plus multinomial information for free category probabilities, corrected to include the implicit final category contribution.",
-        "SMO binomial, Poisson, multinomial, ordinal and censored exponential-survival fixed-null and all-groups-equal tests, with optional df subtraction, stable expected-log-likelihood divergence and power/sample-size/significance inversion. Mixed fixed/equality constraints for binomial, Poisson and exponential-survival groups, with connected equality components and independent restriction counts. Partial fixed multinomial/ordinal nulls with corrected expected-likelihood redistribution of unconstrained category mass; general categorical fixed/equality components fitted by a positive-interior concave likelihood solver. Generic bounded expected-log-likelihood SMO with optional analytic gradients, fixed/equality components and convergence/cancellation checks. Logistic, complementary-log-log, Poisson and censored exponential-survival linear/quadratic regression SMO with mixed coefficient constraints, multiple groups and normalized design allocations."
+        "SMO binomial, Poisson, multinomial, ordinal and censored exponential-survival fixed-null and all-groups-equal tests, with optional df subtraction, stable expected-log-likelihood divergence and power/sample-size/significance inversion. Mixed fixed/equality constraints for binomial, Poisson and exponential-survival groups, with connected equality components and independent restriction counts. Partial fixed multinomial/ordinal nulls with corrected expected-likelihood redistribution of unconstrained category mass; general categorical fixed/equality components fitted by a positive-interior concave likelihood solver. Generic bounded expected-log-likelihood SMO with optional analytic gradients, fixed/equality components and convergence/cancellation checks. Logistic, complementary-log-log, Poisson and censored exponential-survival linear/quadratic regression SMO with mixed coefficient constraints, multiple groups and normalized design allocations. Explicit design-matrix SMO for multivariable logistic and the shared cloglog/Poisson/exponential families."
       ],
       "validation": [
         "tests/test_asypow.py",
@@ -1313,7 +1313,8 @@
         "tests/test_asypow_generic.py",
         "tests/test_asypow_smo_regression.py",
         "tests/test_asypow_smo_survival_regression.py",
-        "tests/test_asypow_smo_cloglog.py"
+        "tests/test_asypow_smo_cloglog.py",
+        "tests/test_asypow_smo_design.py"
       ]
     },
     {

@@ -595,6 +595,54 @@ This comparison does not execute the original S-plus/Fortran optimizer.
 A fully specified null rate of 0.15 in both groups gives
 w=0.038608754773719056 and df=2.
 
+## General design-matrix SMO
+
+`asypow_smo_design(coefficients, design, constraints=..., lower=..., upper=...,
+family="logistic", observations=1, duration=None, subtract_df=True,
+tolerance=1e-8)` accepts one covariate vector per matrix row. It implements the
+original `noncent.mvlogistic.s` model for multivariable/tabulated logistic data.
+Include a column of ones if an intercept is wanted; none is added automatically.
+The coefficient vector may contain 1..500 entries and the design up to one million
+entries. Positive-observation rows must identify all coefficients. Constraints
+use one-based coefficient indices, including fixed values and equality components.
+
+Observation counts are nonnegative and normalized across design rows. At least
+one row must have a positive count; zero-count rows are excluded from likelihood
+and rank calculations. The shared engine also supports `family="cloglog"`,
+`"poisson"` and `"exponential"`. Exponential survival requires a positive scalar
+study duration shared by the design points. These extensions preserve the same
+likelihood/censoring models as the polynomial regression interface. Multiplicative
+binomial log-linear SMO, the separate original `noncent.mvloglin.s` model, remains
+pending.
+
+```python
+from mdanderson_stats import asypow_smo_design
+
+design = asypow_smo_design(
+    [-0.3, 0.4, 0.2],
+    [[1, -1, 0], [1, 0, 1], [1, 1, 0], [1, 2, 1]],
+    observations=[1, 2, 3, 4],
+    constraints=[1, 3, 0],
+    lower=-2,
+    upper=2,
+)
+assert abs(design.null_parameters[0] + 0.218670544626246) < 1e-8
+assert abs(design.null_parameters[1] - 0.437341089252492) < 1e-8
+assert abs(design.sample_size() - 4498.64025856258) < 1e-6
+```
+
+The original multivariable logistic expected-likelihood body, evaluated unchanged
+in R, gives w=0.0019670078069664587 for this example. An independent R fit refined
+with the expected-score/Hessian equations gives the displayed null coefficients;
+its residual scores are below 3e-17. The original chi-square approximation gives
+the displayed sample size. This comparison does not execute the original
+S-plus/Fortran optimizer.
+
+Numerical checks verify explicit polynomial matrices against all four existing
+regression families, a model without an intercept, unused extreme-covariate rows,
+and rank rejection. The shared log-space likelihood, gradient scaling, bounded
+optimization and convergence limitations remain as described for regression.
+
 ## Logistic and Poisson regression SMO
 
 `asypow_smo_regression(parameters, covariates, constraints=..., lower=...,
@@ -657,7 +705,7 @@ bounds whose predictors and likelihoods remain representable; overflow and rank
 failure raise errors. `tolerance` controls a scaled gradient criterion, so very
 small effects should be checked for sensitivity to a tighter tolerance. The
 logistic and Poisson expected likelihoods are concave, subject to identifiable
-designs. Ordinal and arbitrary design-matrix regression SMO wrappers remain pending.
+designs. Ordinal and multiplicative-binomial log-linear SMO wrappers remain pending.
 
 ## Complementary-log-log regression SMO
 

@@ -875,5 +875,5 @@ expected-likelihood maximization. General categorical equality components use a
 constrained likelihood fit. Generic SMO accepts a user-supplied expected log
 likelihood, bounds and fixed/equality constraints. Logistic, complementary-log-log,
 Poisson and censored
-exponential-survival SMO regression supports linear/quadratic covariate designs. Remaining regression
+exponential-survival SMO regression supports polynomial and explicit design matrices. Remaining regression
 families and full native workflows remain pending.

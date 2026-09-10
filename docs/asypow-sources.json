@@ -280,6 +280,13 @@
       "retrieved_date": "2026-09-10",
       "bytes": 10825,
       "sha256": "b3b13acae468acb1dadac1971efae268ce50a03a97838650e5f31ad72bad8184"
+    },
+    {
+      "url": "https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v002i02/asypow-2.1.tar.Z.tar",
+      "artifact": "original/asypow/S/noncent.mvlogistic.s",
+      "retrieved_date": "2026-09-10",
+      "bytes": 5928,
+      "sha256": "a65ac191be95b4f42bb286877e2c19d7e44300687818b5c686d676616efe1ba4"
     }
   ],
   "original_s_plus_version": "2.1"

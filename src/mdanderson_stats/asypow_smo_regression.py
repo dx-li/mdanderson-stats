@@ -1,7 +1,7 @@
 """SMO expected-likelihood power for binary, Poisson and survival regression."""
 
 import numpy as np
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 from scipy.special import logsumexp
 
 from ._validation import FloatArray, finite
@@ -80,13 +80,42 @@ def asypow_smo_regression(
         design = np.vander(x[used], N=columns, increasing=True)
     if not np.all(np.isfinite(design)):
         raise ArithmeticError("polynomial design overflow; rescale covariates")
+    log_weight = np.log(count[used]) + np.log(relative[group_index])
+    log_weight -= logsumexp(log_weight)
+    return _fit_regression(
+        theta,
+        design,
+        group_index,
+        log_weight,
+        family,
+        length,
+        constraints,
+        lower,
+        upper,
+        subtract_df,
+        tolerance,
+    )
+
+
+def _fit_regression(
+    theta: FloatArray,
+    design: FloatArray,
+    group_index: NDArray[np.intp],
+    log_weight: FloatArray,
+    family: str,
+    length: FloatArray | None,
+    constraints: ArrayLike,
+    lower: ArrayLike,
+    upper: ArrayLike,
+    subtract_df: bool,
+    tolerance: float,
+) -> SMOPower:
+    groups, columns = theta.shape
     for g in range(groups):
         block = design[group_index == g]
         scale = np.max(np.abs(block), axis=0)
         if np.any(scale == 0) or np.linalg.matrix_rank(block / scale) < columns:
             raise ValueError("each group's observed design must identify all coefficients")
-    log_weight = np.log(count[used]) + np.log(relative[group_index])
-    log_weight -= logsumexp(log_weight)
 
     def predictors(q: FloatArray) -> FloatArray:
         with np.errstate(over="ignore", invalid="ignore"):
