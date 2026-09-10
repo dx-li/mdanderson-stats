@@ -692,3 +692,8 @@ Existing CDFLIB implementations cover identical math, string and root-finder
 source procedures under their documented implementation choices and notices.
 See `docs/misclib.md`, `docs/misclib-shared-source.json` and
 `docs/misclib-sources.json`. Original implementation sources are not bundled.
+
+`misclib_sort.py` implements Misclib matrix sorting and permutation contracts
+using NumPy and Python sorting, with stable ties. The original sorting modules
+credit Robert Sedgewick, “Implementing Quicksort Programs,” CACM 21(10):847–857
+(1978). The original quicksort code is not copied into this implementation.

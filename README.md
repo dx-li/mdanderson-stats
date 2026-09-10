@@ -937,4 +937,5 @@ matches the original separator and inter-unit comment handling.
 [Misclib](docs/misclib.md) adds bounded scalar maximization with `fun_max` and
 independent reverse-communication searches. Its 35 mathematical helpers and
 shared root/string routines reuse the existing CDFLIB implementations; remaining
-formatting and matrix-permutation utilities are tracked explicitly.
+formatting and console utilities are tracked explicitly. Matrix-column sorting,
+gather indices and direct/reversed permutations support numeric and string records.

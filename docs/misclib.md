@@ -4,7 +4,7 @@ Misclib is a library of statistical-software support routines by the MD Anderson
 Section of Computer Science, Department of Biomathematics. This port reuses the
 existing CDFLIB implementations where the archived procedure bodies agree.
 Catalog entry 87 remains **partial**: its numerical methods are available, while
-some formatting, file/prompt and matrix-permutation utilities still need ports
+some formatting and file/prompt utilities still need ports
 or a source-contract audit.
 
 ## Bounded scalar maximization
@@ -79,7 +79,7 @@ repairs, domains and Python semantics.
 | `strings_mod` | Existing ASCII case conversions and reentrant `qlex`; [string semantics and native validation](cdflib-strings.md) |
 | `max_fun_mod` | New `set_fun_max`, `fun_max`, `rc_fun_max` and per-search state, described above |
 | `constants_mod` | Existing `cdflib_constants` appears equivalent; final source-contract audit pending |
-| `sort_mod`, `sort_permutation_mod` | Existing `sort_list` offers list sorting, but source blocks differ; matrix sorting, forward/inverse permutations and callback contracts still need audit/implementation |
+| `sort_mod`, `sort_permutation_mod` | Matrix-column sorting, gather indices, direct/reversed gathers and callback contracts implemented below. Existing `sort_list` offers list sorting; its Misclib-specific source comparison remains pending |
 | `format_number_mod`, `print_it_mod`, `format_specs` | Number/template formatting needs a Misclib-specific audit/port |
 | `get_values_from_user_mod`, `open_file` | Existing console helpers offer related behavior; exact prompting/file contracts not yet audited |
 | `interface_mod`, build/install files | Fortran interfaces and installation need final reconciliation with Python packaging |
@@ -112,3 +112,60 @@ The archive URL requires the lowercase `misclib` directory. Source hashes are in
 `misclib-sources.json`. See the [original legal notice](../notices/mdanderson-misclib-Legal.txt)
 for public-domain contributions and separate third-party terms. Original source
 files and archives are not redistributed.
+
+## Matrix sorting and permutations
+
+`permutation_sort_matrix(values, *, ncol=None, irow=0, a_gt_b=None)` returns
+immutable **zero-based gather indices** for sorting the first `ncol` columns.
+The default compares row `irow`. For example:
+
+```python
+from mdanderson_stats import permutation_sort_matrix, permute_matrix, sort_matrix
+
+matrix = [[30, 10, 40, 20], [3, 1, 4, 2]]
+index = permutation_sort_matrix(matrix)  # [1, 3, 0, 2]
+ascending = permute_matrix(matrix, index)
+descending = permute_matrix(matrix, index, opt=-1)
+assert (ascending == sort_matrix(matrix)).all()
+```
+
+The source's introductory rank-vector prose contradicts its executable:
+`index[j]` identifies the original column to place at output column `j`.
+Further, `opt < 0` means **reverse the gather sequence**, not invert the
+permutation mathematically. `opt > 0` gathers directly; `opt == 0` copies the
+input and ignores `index`. Python preserves this executable behavior.
+
+`permute_matrix(values, index=None, *, opt=1, ncol=None, nrowus=None)` and
+`sort_matrix(values, *, ncol=None, nrowus=None, irow=0, a_gt_b=None)` operate
+on the leading `nrowus` rows and `ncol` columns; defaults select the entire
+matrix. Other elements are copied unchanged. This makes the source's untouched
+or uninitialized destination elements deterministic. Sorting uses column
+records, not rows. Numeric dtype is retained, including integers beyond 2**53.
+Input must be a 2-D real numeric or Unicode-string array, with at least one row
+and at most two million elements; nonfinite numbers and mixed string/number
+sequences are rejected. Inputs are never mutated; outputs have independent,
+read-only storage. An empty column dimension is allowed.
+
+A custom `a_gt_b(x, y, irow)` receives immutable full original columns and the
+integer `irow` unchanged; it returns a scalar boolean indicating whether `x`
+belongs after `y`. It must define a consistent ordering. Inclusive comparisons
+are accepted, with symmetric results treated as ties. Without a callback,
+`irow` is a zero-based row index, and for `sort_matrix` it must lie within the
+rows being moved. When moving only a row prefix, custom keys should likewise
+use that prefix for parity with the original in-place algorithm. Python computes
+all decisions from original records; it does not reproduce a comparator whose
+keys change because some fields stay in place during a native swap.
+
+Ties retain input order, improving on the original unspecified quicksort tie
+ordering. Strings are compared with blank padding to the array's character
+width, including for callback arguments; stored output strings retain their
+input contents. Numeric default sorting uses NumPy's compiled stable sort and
+array indexing. Custom comparators use Python's comparison sorter.
+
+Focused reference checks compile the unchanged `sort_mod.f90` and
+`sort_permutation_mod.f90` with `-O2 -fcheck=all`. Double, single and integer
+variants agree on single-row and custom multirow keys, gather indices, partial
+row/column movement and all three option signs. A separate character case checks
+blank padding against punctuation and a tab. Results are in
+`tests/fixtures/misclib-sort-native.json`; tests also check stable ties, exact
+large integers, malformed permutations and immutable ownership.
