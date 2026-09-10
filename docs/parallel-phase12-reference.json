@@ -1,0 +1,153 @@
+{
+  "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/P12Xuelin/P12Xuelin_V1.0_.zip",
+  "archive_sha256": "b9f0c99e75e4b207a0aaaaeb11f7445c9e1213df7f6a7d551092a9fc443ba2dc",
+  "native_control_flow": "Original C main and functions; absolute include paths rewritten. CDF, external R comparison and RNG replaced by explicit callbacks; not an independent numerical comparison.",
+  "seed": 8501,
+  "trials": [
+    {
+      "trial": 0,
+      "enrollment": 25,
+      "selected": null,
+      "reason": "futility"
+    },
+    {
+      "trial": 1,
+      "enrollment": 20,
+      "selected": 3,
+      "reason": "efficacy"
+    },
+    {
+      "trial": 2,
+      "enrollment": 27,
+      "selected": 2,
+      "reason": "efficacy"
+    },
+    {
+      "trial": 3,
+      "enrollment": 68,
+      "selected": null,
+      "reason": "futility"
+    },
+    {
+      "trial": 4,
+      "enrollment": 21,
+      "selected": 2,
+      "reason": "efficacy"
+    },
+    {
+      "trial": 5,
+      "enrollment": 14,
+      "selected": null,
+      "reason": "futility"
+    },
+    {
+      "trial": 6,
+      "enrollment": 17,
+      "selected": null,
+      "reason": "futility"
+    },
+    {
+      "trial": 7,
+      "enrollment": 33,
+      "selected": 3,
+      "reason": "efficacy"
+    },
+    {
+      "trial": 8,
+      "enrollment": 77,
+      "selected": 2,
+      "reason": "efficacy"
+    },
+    {
+      "trial": 9,
+      "enrollment": 27,
+      "selected": null,
+      "reason": "futility"
+    },
+    {
+      "trial": 10,
+      "enrollment": 77,
+      "selected": 3,
+      "reason": "efficacy"
+    },
+    {
+      "trial": 11,
+      "enrollment": 30,
+      "selected": 3,
+      "reason": "efficacy"
+    },
+    {
+      "trial": 12,
+      "enrollment": 25,
+      "selected": null,
+      "reason": "futility"
+    },
+    {
+      "trial": 13,
+      "enrollment": 6,
+      "selected": null,
+      "reason": "futility"
+    },
+    {
+      "trial": 14,
+      "enrollment": 3,
+      "selected": null,
+      "reason": "no admissible arms"
+    },
+    {
+      "trial": 15,
+      "enrollment": 19,
+      "selected": null,
+      "reason": "futility"
+    },
+    {
+      "trial": 16,
+      "enrollment": 100,
+      "selected": 1,
+      "reason": "maximum sample size"
+    },
+    {
+      "trial": 17,
+      "enrollment": 50,
+      "selected": 2,
+      "reason": "efficacy"
+    },
+    {
+      "trial": 18,
+      "enrollment": 14,
+      "selected": null,
+      "reason": "futility"
+    },
+    {
+      "trial": 19,
+      "enrollment": 70,
+      "selected": 2,
+      "reason": "efficacy"
+    },
+    {
+      "trial": 20,
+      "enrollment": 100,
+      "selected": 0,
+      "reason": "maximum sample size"
+    },
+    {
+      "trial": 21,
+      "enrollment": 14,
+      "selected": null,
+      "reason": "futility"
+    },
+    {
+      "trial": 22,
+      "enrollment": 47,
+      "selected": 2,
+      "reason": "efficacy"
+    },
+    {
+      "trial": 23,
+      "enrollment": 100,
+      "selected": 1,
+      "reason": "maximum sample size"
+    }
+  ],
+  "unique_beta_comparisons": 179
+}

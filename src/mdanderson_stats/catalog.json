@@ -2697,9 +2697,18 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Complete fixed four-arm C beta-binomial workflow: phase-I cohort escalation/clearance, reference-arm posterior adaptive randomization, five-patient interim monitoring, permanent toxicity closure, efficacy/futility and N=100 final selection",
+        "Complete-outcome patient-history replay with enforced assignment eligibility and no enrollment after stopping; independent binary toxicity/efficacy trial simulation with explicit NumPy random state",
+        "Stable direct beta tails, cached pairwise beta quadrature and explicit integration-error checks before normalizing small allocation weights",
+        "Remaining: later C++ trial variant, calendar/pending outcomes, model fitting, configurable native input/report workflows and full published operating-characteristic reproduction"
+      ],
+      "validation": [
+        "Python replay matches final selection and all outcome/enrollment counts for 24 trials run through original C control flow; numerical and RNG callbacks replace missing/platform-specific dependencies and are explicitly disclosed",
+        "179 beta-ordering probabilities independently checked against R quadrature, maximum absolute difference 1.14e-10; representative regression fixtures retained",
+        "Focused partial-cohort, 2/6 clearance/admissibility, invalid assignment, post-stop history, simulation/replay and certain-toxicity checks; existing beta quadrature validation reused"
+      ]
     },
     {
       "id": 86,

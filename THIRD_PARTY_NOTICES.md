@@ -826,3 +826,14 @@ explicit general redistribution license was found in the inspected R code or
 README. Original source, papers and examples are not bundled. Python reuses the
 package's beta-comparison quadrature; provenance, validation and corrections to
 source analysis/reporting behavior are documented in `docs/catbub.md`.
+
+## Parallel phase I/II design (entry 85)
+
+`parallel_phase12.py` independently expresses the four-arm beta-binomial trial
+workflow of Huang, Biswas, Oki, Issa and Berry (Biometrics 63, 2007, 429–436),
+using the P12Xuelin archive's C program as a behavioral reference. Original C/C++
+code, libraries, executables, papers and data are not bundled. The C++ source
+explicitly prohibits redistribution of the original program; the inspected C
+main/functions have no explicit general redistribution grant. The separate C++
+trial has not been implemented. Numerical and control-flow validation, adapters
+and reporting differences are documented in `docs/parallel-phase12.md`.

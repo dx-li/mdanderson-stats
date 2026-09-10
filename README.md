@@ -1002,3 +1002,9 @@ analysis. It supports arbitrary categorical outcomes and utility vectors, with
 explicit priors, alpha spending and first-stop operating characteristics.
 Identical source-generated trials reproduce the R boundaries and operating
 characteristics; source analysis/reporting corrections are documented.
+
+[Parallel phase I/II](docs/parallel-phase12.md) now supports the archived four-arm
+C workflow: phase-I escalation, beta-binomial adaptive randomization, toxicity
+closure, efficacy/futility stopping, final selection and replayable simulation.
+Python replay matches 24 native C decision histories, with independent R checks
+of 179 posterior comparisons. The later C++ trial variant remains pending.
