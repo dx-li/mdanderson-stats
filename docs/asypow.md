@@ -4,8 +4,8 @@ MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
 including regression, ordinal, multinomial and general design-matrix models.
-Ordinal regression SMO and complete native workflows remain
-pending; the catalog status is **partial**.
+Logistic/cloglog ordinal regression SMO is also available. Complete native
+workflows remain pending; the catalog status is **partial**.
 
 The original S-plus 2.1 archive has a broader scope than the later R archive.
 In particular, it supplies separate SMO and multinomial routines documented in
@@ -755,7 +755,7 @@ bounds whose predictors and likelihoods remain representable; overflow and rank
 failure raise errors. `tolerance` controls a scaled gradient criterion, so very
 small effects should be checked for sensitivity to a tighter tolerance. The
 logistic and Poisson expected likelihoods are concave, subject to identifiable
-designs. Ordinal regression SMO remains pending.
+designs. Ordinal regression SMO is described below.
 
 ## Complementary-log-log regression SMO
 
@@ -850,6 +850,47 @@ KL approaches Poisson KL multiplied by duration/2. Constraints, convergence
 checks and numerical limitations otherwise follow the regression and generic
 interfaces described here.
 
+## Ordinal regression SMO
+
+`asypow_smo_ordinal_regression` fits cumulative logistic or complementary-log-log
+models. Each parameter row contains K−1 strictly increasing intercepts followed
+by a common linear slope, or linear and quadratic slopes with `quadratic=True`.
+Covariates, observation counts and group allocations follow the other regression
+interfaces. Fixed/equality constraints use one-based flattened coefficient indices.
+
+```python
+from mdanderson_stats import asypow_smo_ordinal_regression
+
+ordinal_smo = asypow_smo_ordinal_regression(
+    [-1, 0.5, 0.3],
+    [-1, 0, 1, 2],
+    observations=[1, 2, 3, 4],
+    constraints=[1, 3, 0],
+    lower=[-2, 0, -1],
+    upper=[-0.1, 2, 1],
+)
+assert abs(ordinal_smo.divergence_per_observation - 0.026151127604835622) < 1e-12
+```
+
+Supply bounds that preserve intercept ordering throughout optimization; separate
+adjacent intercept intervals are a simple sufficient choice. Invalid ordering
+raises an error. Each group's observed covariates must identify its polynomial
+slopes. The optimizer checks convergence and rejects boundary solutions, so its
+computational bounds must contain the fitted null in their interior.
+
+Category probabilities and derivatives are evaluated in the log domain. A
+centered KL objective, analytic score and information scaling avoid subtracting
+large expected log likelihoods and preserve rare-category contributions.
+The original `noncent.ordinal.design.s` expected-likelihood function, evaluated
+unchanged in R, gives w=0.026151127604835622 for this example and
+w=0.067370094489672905 with `link="cloglog"`. With the slope fixed to zero,
+fitted cumulative probabilities equal the allocation-weighted cumulative
+probabilities, providing an independent check of nuisance estimation. Binary
+reductions agree with the corresponding regression models for both links,
+including probabilities near 1e-261 and multi-group quadratic designs. This
+validates the original likelihood, without claiming execution of its S-plus
+Fortran optimizer.
+
 ## Generic expected-log-likelihood SMO
 
 `asypow_smo_generic(parameters, expected_log_likelihood, lower=..., upper=...,
@@ -929,8 +970,7 @@ local fit is not a global-optimality certificate. Concavity, identifiability,
 correct expectation/gradient calculations, and regularity for the chi-square
 approximation remain the model author's responsibility. For nonconcave models,
 compare feasible starts and independently establish that the fitted null is the
-relevant maximum before interpreting power. Native interactive prompts and
-remaining named-model regression SMO wrappers remain pending.
+relevant maximum before interpreting power. Native interactive prompts and full native workflow coverage remain pending.
 
 ## Native comparisons and intentional corrections
 

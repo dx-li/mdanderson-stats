@@ -876,5 +876,5 @@ constrained likelihood fit. Generic SMO accepts a user-supplied expected log
 likelihood, bounds and fixed/equality constraints. Logistic, complementary-log-log,
 Poisson and censored
 exponential-survival SMO regression supports polynomial and explicit design matrices.
-Multiplicative-binomial log-linear SMO is also available. Ordinal regression SMO
-and full native workflows remain pending.
+Multiplicative-binomial log-linear SMO and logistic/cloglog ordinal regression
+SMO are also available. Full native workflows remain pending.
