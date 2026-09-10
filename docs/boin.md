@@ -4,8 +4,8 @@ Catalog entry **120**, the [BOIN application](https://biostatistics.mdanderson.o
 is **partially implemented**: single-agent local BOIN boundaries, cohort decisions,
 overdose elimination, final MTD selection, fixed-cohort simulation and accelerated titration are available.
 The 3+3 comparison includes both sample-size matching options.
-Direct boundary-to-probability inversion is available; protocol generation and
-animation remain pending. Desktop entry 99
+Direct boundary-to-probability inversion and English/Chinese statistical protocol
+text are available; animation and the original HTML/Word report formats remain pending. Desktop entry 99
 and BOIN combination/time-to-event variants are separate, unaudited entries.
 
 The application was inspected at version **3.0.20.0**, updated September 4, 2026.
@@ -257,3 +257,39 @@ rounds below 29, but `29/50 <= .58` is true and the table permits escalation wit
 Validation includes default-probability round trips across eight targets,
 independent 80-digit decimal likelihood identities, tiny alternatives, explicit
 resolution failures, and agreement between integer tables and rate comparisons.
+
+## Statistical protocol text
+
+`boin_protocol` returns independently written Markdown methods text in English
+(`language="en"`) or Chinese (`language="zh"`). It describes the supplied design's
+actual safety thresholds, optional rule modifications, precision stopping,
+indifference probabilities, final isotonic selection and titration settings.
+It appends the complete integer decision table for all sample sizes through the
+planned maximum. Numeric rate cutoffs use the shortest decimal representation that preserves the
+stored value, avoiding changes to inclusive boundaries through report rounding.
+
+```python
+from mdanderson_stats import boin_protocol
+
+methods = boin_protocol(
+    design,
+    doses=5,
+    cohorts=10,
+    cohort_size=3,
+    titration=True,
+    titration_cap=3,
+    language="en",
+)
+chinese_methods = boin_protocol(design, language="zh")
+assert "Beta(1,1)" in methods
+assert "| 3 |" in methods
+```
+
+The enrollment limit is 200, matching the source application. All outcomes are
+assumed evaluable before decisions. Supply the same cohort and titration settings
+used in simulation. This output is statistical methods text, not a complete
+clinical protocol or a reproduction of the site's Word/HTML layout. It does not
+invent operating-characteristic results: append results from the simulation and
+comparison APIs separately. Animation and integrated report export remain pending.
+Both language variants are checked for exact numeric boundaries and safety-table
+values, including the custom-boundary integer-rounding regression.

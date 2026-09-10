@@ -2995,7 +2995,8 @@
         "Complete-outcome fixed-cohort trial simulation with trial-level counts, selection probabilities and Monte Carlo standard errors",
         "Accelerated single-patient titration with DLT/second grade-2 stopping, lower dose caps, cohort completion and strict total enrollment cap",
         "Vectorized conventional 3+3 trials and BOIN comparison with MTD expansion or per-trial BOIN enrollment caps matched to realized 3+3 sample sizes",
-        "Direct escalation/de-escalation cutoff input with stable inverse indifference probabilities, forward validation and inclusive integer table/conduct agreement"
+        "Direct escalation/de-escalation cutoff input with stable inverse indifference probabilities, forward validation and inclusive integer table/conduct agreement",
+        "Independent English/Chinese statistical protocol text with exact rate cutoffs, all selected conduct options and complete integer decision tables; integrated HTML/Word reports and animation remain pending"
       ],
       "validation": [
         "Six published boundary pairs and .30-target cohort table; rational posterior safety identities",
@@ -3004,7 +3005,8 @@
         "docs/boin.md",
         "10000-trial original R accelerated-titration comparison; exact competing-event duration probabilities and deterministic transition/enrollment paths",
         "Independent analytical two-dose selection probabilities in three 100000-trial scenarios; deterministic six-patient confirmation and de-escalation paths; trial-level matching conservation",
-        "Independent 80-digit decimal likelihood identities, eight default-probability round trips, tiny alternatives and explicit floating-point resolution limits"
+        "Independent 80-digit decimal likelihood identities, eight default-probability round trips, tiny alternatives and explicit floating-point resolution limits",
+        "Both protocol language variants preserve exact custom boundaries and safety table values; optional modification/precision/titration descriptions verified"
       ]
     },
     {

@@ -680,7 +680,8 @@ with conservative and joint-normal equivalence options.
 [BOIN](docs/boin.md) provides single-agent dose decisions, overdose safeguards,
 weighted isotonic MTD selection and trial simulation with accelerated titration. Published
 boundaries and original R results validate the core. This catalog entry remains
-partial while protocol generation and animation are pending. Custom rate cutoffs
+partial while animation and integrated report export are pending. English and
+Chinese statistical protocol text includes the numerical decision table. Custom rate cutoffs
 can be entered directly, with numerically checked inversion to BOIN alternatives.
 The conventional 3+3 comparator supports cohort expansion and matching BOIN
 enrollment caps to realized 3+3 sample sizes.

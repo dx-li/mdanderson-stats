@@ -48,6 +48,7 @@ from .binomial_null import BinomialNull, binomial_null
 from .binomial_sample_size import binomial_sample_size
 from .binormal_roc import BinormalROC, BinormalROCPoint
 from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
+from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
 from .bp1ci import BP1CIResult, bp1ci
 from .cdflib_array_format import format_cdflib_array
@@ -349,6 +350,7 @@ from .three_plus_three import (
 )
 
 __all__ = [
+    "boin_protocol",
     "BOINThreePlusThreeComparison",
     "ThreePlusThreeSimulation",
     "compare_boin_three_plus_three",
