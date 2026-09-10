@@ -141,6 +141,15 @@ def asypow_smo_poisson(
         if np.any(q <= 0):
             raise ValueError("null_means must be positive")
         df = p.size
+    with np.errstate(over="ignore", under="ignore"):
+        w = float(np.exp(np.log(2) + logsumexp(log_weights + _poisson_log_kl(p, q))))
+    if not np.isfinite(w):
+        raise ArithmeticError("Poisson divergence is not representable")
+    return SMOPower(w, df, _owned(q), bool(subtract_df))
+
+
+def _poisson_log_kl(p: FloatArray, q: FloatArray) -> FloatArray:
+    """Log of p*log(p/q)-p+q, also a nonnegative categorical KL summand."""
     delta = q - p
     near = np.abs(delta) <= 0.125 * p
     # KL(Pois(p), Pois(q)) = p * [q/p - 1 - log(q/p)].
@@ -156,7 +165,4 @@ def asypow_smo_poisson(
         r = ratio[~positive]
         remainder[~positive] = np.log(p[~near][~positive]) + np.log(np.expm1(r) - r)
         log_kl[~near] = remainder
-        w = float(np.exp(np.log(2) + logsumexp(log_weights + log_kl)))
-    if not np.isfinite(w):
-        raise ArithmeticError("Poisson divergence is not representable")
-    return SMOPower(w, df, _owned(q), bool(subtract_df))
+    return log_kl

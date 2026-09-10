@@ -10,8 +10,8 @@ pending; the catalog status is **partial**.
 The original S-plus 2.1 archive has a broader scope than the later R archive.
 In particular, it supplies separate SMO and multinomial routines documented in
 the 1997 paper. Coverage is assessed against that broader original scope, not
-just the R package's index. LR information-matrix calculations and binomial/Poisson
-SMO expected-log-likelihood methods are available. SMO supports both conventions
+just the R package's index. LR information-matrix calculations and binomial,
+Poisson, multinomial and ordinal SMO expected-log-likelihood methods are available. SMO supports both conventions
 for subtracting degrees of freedom, as described below.
 
 ```python
@@ -313,7 +313,7 @@ were unchanged. Inversion was independently checked with a tighter R root.
 
 The significance inverse uses actual df, correcting the original `self.sig.s`
 hardcoded df=1, just as the LR inverse does. Mixed fixed/equality constraints,
-families beyond binomial/Poisson, regression SMO and generic expected-likelihood
+exponential-survival models, regression SMO and generic expected-likelihood
 optimization remain pending. These tests are asymptotic approximations, not
 finite-sample exact binomial tests.
 
@@ -344,6 +344,57 @@ Compatibility changes were limited to converting the multi-value return to an
 R list and aliasing `is.inf` to `is.infinite`; the later R chi-square wrapper
 provided distribution calculations. The statistical formulas were unchanged.
 Sample size was independently inverted with a tight R root tolerance.
+
+## SMO multinomial and ordinal designs
+
+`asypow_smo_multinomial(probabilities, null_probabilities=None, group_size=1,
+subtract_df=True)` takes K-1 category probabilities per group, with the final
+mass equal to one minus their sum. `asypow_smo_ordinal(cumulative,
+null_cumulative=None, group_size=1, subtract_df=True)` takes K-1 increasing
+cumulative probabilities, excluding the terminal 1. A vector represents one
+group; a matrix has one group per row. At most 500 free parameters are supported.
+All category masses must be positive, including the implicit final category.
+
+Omitting the null compares the complete distributions across G>=2 groups.
+The null is the allocation-weighted pooled distribution, with df=(G-1)*(K-1).
+Supplying null parameters fixes every free parameter, with df=G*(K-1); a
+single vector broadcasts to all groups. Mixed constraints, partial constraints,
+and equality between selected categories remain pending. Null parameters in
+`SMOPower` are always a G by (K-1) matrix in the input parameterization.
+
+The two parameterizations produce the same divergence and power for the same
+category masses and hypotheses. The noncentrality is twice allocation-weighted
+categorical KL divergence. Nonnegative generalized-KL summands avoid subtraction
+of nearly equal expected log likelihoods. Compensated summation computes the
+multinomial final mass; calculations retain small representable divergences.
+If rounding makes a pooled distribution invalid, it is rejected rather than
+silently replacing a zero category with a positive floor.
+
+```python
+from mdanderson_stats import asypow_smo_multinomial, asypow_smo_ordinal
+
+multi = asypow_smo_multinomial([[0.2, 0.3], [0.4, 0.1]], group_size=[1, 3])
+ordinal = asypow_smo_ordinal([[0.2, 0.5], [0.4, 0.5]], group_size=[1, 3])
+assert abs(multi.sample_size() - 172.853418531114) < 1e-9
+assert abs(float(multi.power(100)) - 0.480630044419691) < 1e-12
+assert abs(ordinal.sample_size() - multi.sample_size()) < 1e-9
+```
+
+The original S-plus multinomial and ordinal noncentrality routines give
+w=0.06730956764893814 (within rounding) and df=2 for this equality example.
+The pooled category masses are (0.35,0.15,0.5). The reference execution through
+R changes only the S-plus multi-value return to an R list, with the later R
+chi-square wrapper supplying distribution calculations. Power and sample-size
+inversion agree with the original formulas. Binary-category reduction and
+340-digit Decimal likelihood comparisons cover near-null and rare-category
+behavior independently.
+
+For a fully specified null with category masses (0.25,0.25,0.5) in both groups,
+the multinomial source gives w=0.14959244615398992 and df=4. Its ordinal equivalent
+is a valid null with cumulative probabilities (0.25,0.5). The original ordinal
+routine incorrectly rejects it: repeated zero equality markers are interpreted
+as duplicate equality constraints. This port accepts the valid null and gives
+the same divergence as the multinomial parameterization.
 
 ## Native comparisons and intentional corrections
 

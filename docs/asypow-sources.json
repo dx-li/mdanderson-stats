@@ -224,6 +224,20 @@
       "retrieved_date": "2026-09-10",
       "bytes": 5412,
       "sha256": "d607aa1a4b9eb54a350a49245425a00cf9eabc96769d658b39d020a56054b996"
+    },
+    {
+      "url": "https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v002i02/asypow-2.1.tar.Z.tar",
+      "artifact": "original/asypow/S/noncent.ordinal.kgp.s",
+      "retrieved_date": "2026-09-10",
+      "bytes": 7098,
+      "sha256": "9471d396d31e3a646ff2a9fb94f56271bb44a73910667acc8e1e1b4c77299422"
+    },
+    {
+      "url": "https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v002i02/asypow-2.1.tar.Z.tar",
+      "artifact": "original/asypow/S/noncent.multinomial.kgp.s",
+      "retrieved_date": "2026-09-10",
+      "bytes": 6178,
+      "sha256": "1440e5d894ae1ed0352d0696394384304ad8342d2079b2c90d0533a5749caec0"
     }
   ],
   "original_s_plus_version": "2.1"
