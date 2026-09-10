@@ -2964,9 +2964,19 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "One- and pooled two-sample equality, equivalence, noninferiority and superiority sample-size planning",
+        "Paired mean-difference planning, Fisher correlation t/z approximations and balanced ANOVA",
+        "Broadcast power curves, integer allocation, achieved and predecessor power, effect-size calculation",
+        "Optional exact two-sided t and TOST power; documented corrections to source formula typos"
+      ],
+      "validation": [
+        "Twelve worked application examples reproduced in fifteen focused tests",
+        "Independent raw-normal simulations validate exact TOST and ANOVA power",
+        "Null power, integer allocation, scale invariance and bounded-search validation",
+        "docs/continuous-sample-size.md"
+      ]
     },
     {
       "id": 120,

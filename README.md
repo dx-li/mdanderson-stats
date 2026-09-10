@@ -650,3 +650,11 @@ normal comparisons are explicitly distinguished from posterior mean uncertainty.
 and minimax designs, vectorized power and early-stopping probabilities, enrollment
 moments, stage decisions and statistical protocol paragraphs. Published design
 tables and independent exhaustive enumeration validate the implementation.
+
+## Continuous-endpoint sample size
+
+[Nnormal](docs/continuous-sample-size.md) covers one- and two-sample equality,
+equivalence, noninferiority and superiority tests, paired differences, correlation
+and balanced ANOVA. Power curves broadcast over scenarios, and integer searches
+report achieved and predecessor power. Conservative planning formulas are
+distinguished from optional exact normal-model power calculations.

@@ -1,0 +1,36 @@
+{
+  "retrieved_at": "2026-09-10T03:36:38.385365+00:00",
+  "documents": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Nnormal/One-sample-help.pdf",
+      "sha256": "cedf7218bebfff381a0b5c83116583fe51780f8d117e4811d31df7c4d476f0ca",
+      "bytes": 79859
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Nnormal/Two-sample-help.pdf",
+      "sha256": "fa9374b73dd126384acb9e2d47d6a1a863cc564ab73651bc817f4694f9de8a05",
+      "bytes": 80859
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Nnormal/Correlation-help.pdf",
+      "sha256": "6136ee964b23d50b019b2f534f24a8eb3008c3bf29fd74cd4e279ebafa92bcce",
+      "bytes": 65833
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Nnormal/Multiple-sample-help.pdf",
+      "sha256": "708aaf591a45a65c6eed4ba15ebf66fbfe857d8dbf4bfb8c44ea776ec5f08f61",
+      "bytes": 105943
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Nnormal/Paired-sample-help.pdf",
+      "sha256": "378db66c3e0699d1a3975e00093c00b6de1f7319dfc79ab8d93811bf5c07f06f",
+      "bytes": 73199
+    }
+  ],
+  "application": {
+    "url": "https://biostatistics.mdanderson.org/shinyapps/Nnormal/",
+    "sha256": "00152f5129426f40377517d3037b3b5e45a958dd840282e9baa18114d5e1ad9a",
+    "bytes": 88033,
+    "version": "PID 966; v2.1.1.0; updated 03/24/2026"
+  }
+}

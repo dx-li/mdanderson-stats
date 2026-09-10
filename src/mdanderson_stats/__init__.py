@@ -98,6 +98,16 @@ from .cdflib_strings import (
     upper_case_string,
 )
 from .cdflib_t import CDFStudentT, ccum_t, cdf_t, cum_t, inv_t
+from .continuous_sample_size import (
+    ContinuousSampleSize,
+    anova_effect_size,
+    anova_power,
+    anova_sample_size,
+    correlation_power,
+    correlation_sample_size,
+    normal_mean_power,
+    normal_mean_sample_size,
+)
 from .cta import ContingencyChiSquare, contingency_chi_square
 from .cta_binomial import BinomialComparison, binomial_comparison
 from .cta_diagnostic import DiagnosticAccuracy, diagnostic_accuracy
@@ -315,6 +325,14 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "ContinuousSampleSize",
+    "anova_effect_size",
+    "anova_power",
+    "anova_sample_size",
+    "correlation_power",
+    "correlation_sample_size",
+    "normal_mean_power",
+    "normal_mean_sample_size",
     "SimonDesign",
     "SimonDesignSearch",
     "SimonOperatingCharacteristics",
