@@ -2515,7 +2515,8 @@
         "Equal-weight posterior-draw utility/acceptability summaries and new-cohort greedy/adaptive allocation with surplus and per-agent no-skipping rules; full trial conduct pending",
         "Explicit normal/truncated-normal/lognormal priors and multi-chain elliptical-slice posterior fitting of PDS, CMI and hybrid models for complete outcomes; uniform association Metropolis updates, retained predictions and diagnostics support",
         "IID prior draws, ordinal-cell beta moment-matching prior ESS, and balanced pseudo-trial averaging of prior centers with per-trial MCMC diagnostics and retained counts",
-        "Optional scalar elliptical updates and reversible joint link/intercept/slope Metropolis moves with the exact Jacobian; enabled by default in pseudo-prior calibration"
+        "Optional scalar elliptical updates and reversible joint link/intercept/slope Metropolis moves with the exact Jacobian; enabled by default in pseudo-prior calibration",
+        "Deterministic Gaussian-copula ordinal scenarios, with independent/perfect-correlation limits and native scenario/raw-dose/utility readers"
       ],
       "validation": [
         "Independent R implementation of published equations: 549 joint cells across five cases, 2-4 categories, three models, two centerings and FGM association endpoints",
@@ -2524,7 +2525,8 @@
         "Posterior sampler checked against R logistic-normal quadrature, no-data prior recovery and 200,000-sample independent R PDS importance integration; all full-model parameter means within six combined Monte Carlo errors",
         "Truncated-normal prior means checked against R at underlying means -10,-2,0,1; hand-calculated beta ESS and degeneracies; opposite elicited efficacy scenarios shift calibrated intercepts appropriately",
         "Earlier block-only SD-100 pseudo-prior check did not mix: two trials, four chains, 2000 warmup/2000 retained sweeps gave maximum split Rhats 51.95 and 7.27; this failure motivated the additional coordinate and joint-link updates",
-        "Reversibility, finite-difference Jacobian and center-probability preservation checked for all three models; first failing diffuse-prior dataset now has max parameter split Rhat 1.003 with four chains and 1500 warmup/1500 retained draws, while independent R importance comparison still passes"
+        "Reversibility, finite-difference Jacobian and center-probability preservation checked for all three models; first failing diffuse-prior dataset now has max parameter split Rhat 1.003 with four chains and 1500 warmup/1500 retained draws, while independent R importance comparison still passes",
+        "All 96 native scenarios across eight configurations passed marginal/probability checks; scenario-1 expected utilities match paper Table 4; independent R cells and analytic near-singular Gaussian quadrants agree within 2e-12"
       ]
     },
     {

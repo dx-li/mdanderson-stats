@@ -663,6 +663,13 @@ from .u2oet_prior import (
     sample_u2oet_prior,
     u2oet_prior_ess,
 )
+from .u2oet_scenario import (
+    U2OETScenario,
+    read_u2oet_doses,
+    read_u2oet_scenario,
+    read_u2oet_utility,
+    u2oet_scenario,
+)
 from .windows import (
     WindowCrossValidation,
     WindowNeighborCrossValidation,
@@ -673,6 +680,11 @@ from .windows import (
 )
 
 __all__ = [
+    "U2OETScenario",
+    "u2oet_scenario",
+    "read_u2oet_scenario",
+    "read_u2oet_doses",
+    "read_u2oet_utility",
     "U2OETCalibration",
     "calibrate_u2oet_prior",
     "U2OETPriorDraws",

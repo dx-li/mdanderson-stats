@@ -987,4 +987,5 @@ and new-cohort allocation include acceptability, patient-surplus randomization
 and escalation restrictions. Multi-chain posterior fitting supports explicit
 priors and complete outcomes. IID prior draws, beta-moment prior information
 and pseudo-trial prior calibration are available. Additional coordinate and joint
-link moves address diffuse-prior mixing; full trial conduct remains pending.
+link moves address diffuse-prior mixing. Gaussian-copula scenario construction
+and native scenario/dose/utility readers are available; full trial conduct remains pending.

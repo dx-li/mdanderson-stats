@@ -1,0 +1,86 @@
+{
+  "configurations": [
+    {
+      "folder": "Model_CMI/4E_4T",
+      "scenarios": 12,
+      "dose_counts": [
+        3,
+        3
+      ],
+      "efficacy_levels": 4,
+      "toxicity_levels": 4
+    },
+    {
+      "folder": "Model_GAO/3E_3T_Upper2",
+      "scenarios": 12,
+      "dose_counts": [
+        3,
+        3
+      ],
+      "efficacy_levels": 3,
+      "toxicity_levels": 3
+    },
+    {
+      "folder": "Model_GAO/4E_4T",
+      "scenarios": 12,
+      "dose_counts": [
+        3,
+        3
+      ],
+      "efficacy_levels": 4,
+      "toxicity_levels": 4
+    },
+    {
+      "folder": "Model_PDS/2E_2T",
+      "scenarios": 12,
+      "dose_counts": [
+        3,
+        3
+      ],
+      "efficacy_levels": 2,
+      "toxicity_levels": 2
+    },
+    {
+      "folder": "Model_PDS/3E_3T_Lower2",
+      "scenarios": 12,
+      "dose_counts": [
+        3,
+        3
+      ],
+      "efficacy_levels": 3,
+      "toxicity_levels": 3
+    },
+    {
+      "folder": "Model_PDS/3E_3T_Upper2",
+      "scenarios": 12,
+      "dose_counts": [
+        3,
+        3
+      ],
+      "efficacy_levels": 3,
+      "toxicity_levels": 3
+    },
+    {
+      "folder": "Model_PDS/4E_4T",
+      "scenarios": 12,
+      "dose_counts": [
+        3,
+        3
+      ],
+      "efficacy_levels": 4,
+      "toxicity_levels": 4
+    },
+    {
+      "folder": "Model_PDS+CMI/4E_4T",
+      "scenarios": 12,
+      "dose_counts": [
+        3,
+        3
+      ],
+      "efficacy_levels": 4,
+      "toxicity_levels": 4
+    }
+  ],
+  "total_scenarios": 96,
+  "maximum_estimated_quadrature_error": 4.9802620541288694e-14
+}

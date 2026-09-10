@@ -5,8 +5,9 @@ model probabilities, grouped likelihoods and conditional expected utilities.
 Posterior summaries and new-cohort allocation from supplied posterior draws
 and posterior fitting are also available, along with IID prior sampling,
 beta-moment information and pseudo-trial prior calibration. Full trial conduct,
-simulation and native input/report workflows remain pending. GAO with its Gaussian copula is
-also pending; it is not replaced with the FGM model.
+simulation and complete native input/report workflows remain pending. Gaussian
+scenario construction and native scenario/dose/utility readers are available;
+GAO model fitting is still pending.
 
 The sources are the [official U2OET 1.8 archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/U2OET/U2OET_V1.8.zip),
 its user guide and the [author-hosted paper](https://odin.mdacc.tmc.edu/~pfthall/main/JRCCS_2017_ph12_2agent_utility.pdf)
@@ -109,7 +110,7 @@ a fixed reference table; R is not a runtime or CI dependency.
 
 Remaining coverage includes:
 
-- GAO continuation probabilities and its Gaussian copula.
+- GAO continuation probabilities and fitting (Gaussian scenario copulas are supplied).
 - Validation of complete trial operating characteristics.
   Explicit-prior fitting, pseudo-trial centers and prior ESS are supplied below.
 - Open-cohort conduct, delayed/partial outcomes and final selection.
@@ -362,7 +363,7 @@ print(information.mean, information.maximum)
 For calibration, pass an elicited `scenario_joint` with axes `(agent1, agent2,
 efficacy, toxicity)` to `calibrate_u2oet_prior`, along with dose arrays,
 `repetitions` and an explicit generator. The guide's Gaussian-copula scenario
-construction from marginal elicitation is still pending; supplying an arbitrary
+construction is now supplied by `u2oet_scenario`, described below. An arbitrary
 FGM scenario is not equivalent to that construction.
 
 Validation covers independent normal-tail moment references from R at underlying
@@ -421,3 +422,74 @@ in this environment. The record also includes parameter means, Monte Carlo
 errors and joint-probability diagnostics. This is a targeted difficult-case
 check, not a universal convergence guarantee or a completed 1000-trial
 calibration study.
+
+## Gaussian scenarios and native scenario inputs
+
+`u2oet_scenario(efficacy, toxicity, association=.1)` constructs a true-outcome
+scenario from marginal arrays shaped `(agent1, agent2, category)`. It uses the
+Gaussian copula specified for simulation in section 4.1 of the paper. This
+association is a latent-normal correlation, not the observed ordinal Pearson
+correlation. It is distinct from the FGM parameter in the fitted PDS/CMI/hybrid
+model. The default .1 matches the paper's simulation scenario association.
+
+```python
+from mdanderson_stats import u2oet_scenario
+
+# Illustrative constant marginals over a 2-by-2 dose grid.
+efficacy = np.broadcast_to([0.1, 0.2, 0.3, 0.4], (2, 2, 4))
+toxicity = np.broadcast_to([0.4, 0.3, 0.2, 0.1], (2, 2, 4))
+scenario = u2oet_scenario(efficacy, toxicity, association=0.1)
+assert scenario.joint.shape == (2, 2, 4, 4)
+# scenario.joint can be passed to calibrate_u2oet_prior.
+```
+
+The implementation integrates conditional-normal probabilities over each
+ordinal rectangle. It avoids subtraction of four bivariate CDF values and does
+not use randomized multivariate integration. Upper-tail normal quantiles are
+formed from independently accumulated survival probabilities. Integration
+intervals split at the conditional transitions to resolve near-perfect
+correlation. Independence and limiting correlations ±1 use direct formulas.
+Zero marginal categories remain zero joint cells.
+
+Every quadrature cell must meet an estimated absolute error tolerance of 2e-12,
+and both reconstructed marginals are checked within 1e-11. Per-cell estimated
+errors are returned in `quadrature_error`; these estimates are not rigorous
+mathematical bounds. This API computes ordinary probabilities and does not
+promise relative accuracy for extremely small cells or finite log tails.
+Marginal normalization errors up to 1e-12 are rescaled; larger errors fail.
+
+The following native file readers support the guide's formats:
+
+- `read_u2oet_doses(path)` returns the two positive increasing raw-dose arrays.
+- `read_u2oet_scenario(path, dose_counts=(M1,M2), efficacy_levels=LE,
+  toxicity_levels=LT)` reads one-based dose indices and ordered marginal
+  probabilities. An optional single-value association header must be strictly
+  between -1 and 1. Without that header, association is zero. Row order is free;
+  every dose pair must appear exactly once.
+- `read_u2oet_utility(path, efficacy_levels=LE, toxicity_levels=LT)` reads
+  zero-based efficacy/toxicity/value rows into an efficacy-by-toxicity matrix.
+  Every cell is required; utilities must be nonnegative and weakly improve with
+  efficacy and worsen with toxicity.
+
+Readers accept whitespace, blank lines and UTF-8 BOMs. Invalid indices, duplicate
+or missing cells, malformed numbers and inconsistent probabilities raise errors.
+An invalid single-number scenario header is rejected; the guide describes the
+native program defaulting invalid association to independence. The Python
+reader deliberately does not conceal that invalid input. Model/prior/trial
+parameter-file parsing and patient-data import remain pending.
+
+Two focused tests cover an independently written R integral over uniform
+quantiles, analytic Gaussian quadrant probabilities, correlations within 1e-12
+of ±1, exact limiting correlations, zero-probability categories and native-format
+indexing/validation. The 48 R cell references agree within 2e-12 absolute error;
+the [R reference script](../tests/fixtures/u2oet-gaussian-reference.R) is supplied.
+The library does not depend on R.
+
+An additional [archive audit](u2oet-scenario-audit.json) read all **96 scenarios**
+from eight supplied configurations, including 2-, 3- and 4-category variants,
+as well as every configuration's raw doses and utility matrix. All probability
+and marginal checks passed. The maximum estimated quadrature error was
+4.99e-14 or less. The nine scenario-1 expected utilities for PDS/4E_4T match the
+paper's Table 4 to its printed one-decimal precision. This validates source
+scenario construction, not native posterior/trial simulation parity. Original
+scenario and utility files are not bundled.

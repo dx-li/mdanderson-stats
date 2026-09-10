@@ -10,7 +10,7 @@ from ._validation import FloatArray
 from .u2oet import _real
 
 
-def _integer(value: int, name: str, minimum: int, maximum: int) -> int:
+def _integer(value: int | float, name: str, minimum: int, maximum: int) -> int:
     a = _real(value, name)
     if a.ndim or a != np.floor(a) or not minimum <= a <= maximum:
         raise ValueError(f"{name} must be an integer in [{minimum},{maximum}]")
