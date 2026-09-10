@@ -200,6 +200,7 @@ from .dcdflib_neg_binomial import DCDFLIBNegativeBinomial, cdfnbn, cumnbn
 from .dcdflib_normal import DCDFLIBNormal, cdfnor, cumnor
 from .dcdflib_poisson import DCDFLIBPoisson, cdfpoi, cumpoi
 from .dcdflib_t import DCDFLIBStudentT, cdft, cumt
+from .dct_normal import DCTNormalSampleSize, dct_normal_sample_size
 from .diagnostic_population import (
     DiagnosticPopulation,
     diagnostic_population,
@@ -453,6 +454,8 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "DCTNormalSampleSize",
+    "dct_normal_sample_size",
     "InteractionMonteCarlo",
     "interaction_index_monte_carlo",
     "InteractionIndex",

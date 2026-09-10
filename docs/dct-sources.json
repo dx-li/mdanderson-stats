@@ -1,0 +1,17 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/DCTs/",
+      "retrieved_date": "2026-09-10",
+      "bytes": 117432,
+      "sha256": "b6afa4d0b283113c2271a9f331a9e1271727f2354e4398cfb96a63aa59188403"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/DCTs/pdf_DCT.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1110175,
+      "sha256": "29129767b175d60e68950ffe847d726a6b25ce10b37dd643528b216908bb2a4a"
+    }
+  ],
+  "scope": "Paper equations 2.3 and 2.5, continuous equal-arm-variance planning. Native rounding, binary and unequal-arm-variance methods pending."
+}

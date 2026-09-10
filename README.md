@@ -784,3 +784,8 @@ regression and Loewe interaction indices with log-delta confidence intervals for
 observed combinations and fixed-ratio curves, plus the normal-coefficient Monte
 Carlo comparator with retained draws. Other models and native workflows
 remain pending.
+
+[Decentralized trial planning](docs/dct-normal.md) adds continuous-endpoint sample
+sizes with onsite/offsite heterogeneity and repeated measurements, explicit
+allocation rounding and achieved power. Binary and unequal-arm-variance methods
+remain pending.
