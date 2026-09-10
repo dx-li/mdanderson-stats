@@ -658,3 +658,11 @@ equivalence, noninferiority and superiority tests, paired differences, correlati
 and balanced ANOVA. Power curves broadcast over scenarios, and integer searches
 report achieved and predecessor power. Conservative planning formulas are
 distinguished from optional exact normal-model power calculations.
+
+## Binary-endpoint sample size
+
+[Nbinary](docs/binary-sample-size.md) adds one- and two-group proportion planning,
+equivalence and directional margin tests, continuity-corrected score planning,
+exact Fisher power and enrollment search, paired McNemar tests and kappa agreement
+designs. Approximate planning power is explicitly distinguished from exact
+binomial enumeration, with all twelve source examples reproduced.

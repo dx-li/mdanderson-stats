@@ -28,6 +28,15 @@ from .beta_mixture_fit import (
 from .beta_mixture_ml import fit_beta_mixture_ml
 from .beta_mixture_selection import BetaMixtureSelection, fit_beta_mixture_k, select_beta_mixture
 from .beta_mixture_testing import BetaMixtureTestingResult, beta_mixture_testing
+from .binary_sample_size import (
+    BinarySampleSize,
+    binary_proportion_power,
+    binary_proportion_sample_size,
+    kappa_power,
+    kappa_sample_size,
+    mcnemar_power,
+    mcnemar_sample_size,
+)
 from .binomial_alternative import BinomialAlternative, binomial_alternative
 from .binomial_design import (
     BinomialPower,
@@ -146,6 +155,7 @@ from .expsurv_data import ExploratoryTable
 from .expsurv_event import EventScatterPlot, plot_event_scatter
 from .expsurv_scatter import SurvivalScatterPlot, plot_survival_scatter
 from .expsurv_simulation import generate_exploratory_data, generate_exponential_samples
+from .fisher_design import fisher_power, fisher_sample_size
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .gray_test import GrayTest, gray_test
 from .hierarchical_binomial import (
@@ -325,6 +335,15 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "BinarySampleSize",
+    "binary_proportion_power",
+    "binary_proportion_sample_size",
+    "kappa_power",
+    "kappa_sample_size",
+    "mcnemar_power",
+    "mcnemar_sample_size",
+    "fisher_power",
+    "fisher_sample_size",
     "ContinuousSampleSize",
     "anova_effect_size",
     "anova_power",

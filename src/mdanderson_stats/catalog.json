@@ -3158,9 +3158,20 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "One- and two-sample Wald equality, equivalence, noninferiority and superiority planning",
+        "Pooled score and continuity-corrected score planning at actual integer allocation",
+        "Exact one- and probability-ordered two-sided Fisher power with exhaustive sample-size search",
+        "Paired McNemar and binary Cohen kappa planning using distinct null and alternative variances",
+        "Broadcast power curves, bounded enrollment searches and predecessor power"
+      ],
+      "validation": [
+        "All twelve source help examples reproduced",
+        "Independent rational table enumeration validates three Fisher alternatives",
+        "Multinomial simulation validates kappa variance; null rejection and integer allocation checks",
+        "docs/binary-sample-size.md"
+      ]
     },
     {
       "id": 140,

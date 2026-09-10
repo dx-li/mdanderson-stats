@@ -1,0 +1,31 @@
+{
+  "retrieved_at": "2026-09-10T03:46:17.661946+00:00",
+  "documents": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Nbinary/One-sample-help.pdf",
+      "sha256": "fe91c1d0ca88e7a3c496c38a9ccd8c14e130b4790edda430f400933bcf41eb47",
+      "bytes": 86423
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Nbinary/Two-sample-help.pdf",
+      "sha256": "8db7c4ec4b27c4dff6057dc956fc5fa2a25eafc765f28876b33ab5636f6fd605",
+      "bytes": 89415
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Nbinary/McNemar-Test-Help.pdf",
+      "sha256": "8db801428aa777533b6d26352d626293189cb074f3c7627d5516eca63d811b87",
+      "bytes": 63797
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Nbinary/Cohen-Kappa-Help.pdf",
+      "sha256": "83a0570710e1432de77a5702ddfcb42138702713f385d2be830cf9510bff75d1",
+      "bytes": 91057
+    }
+  ],
+  "application": {
+    "url": "https://biostatistics.mdanderson.org/shinyapps/Nbinary/",
+    "sha256": "19f40bed9080070e962181c961239b8cb5e5d4f9596cb95a5352d68525a08eaf",
+    "bytes": 81440,
+    "version": "PID 965; v2.1.2.0; updated 12/17/2025"
+  }
+}
