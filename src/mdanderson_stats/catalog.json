@@ -884,7 +884,8 @@
         "Batched bootstrap generation and replicate fitting with original-count or explicit probability models, stable population summaries, retained replicate values and explicit undefined-frequency diagnostics",
         "Vectorized observed-centered bootstrap confidence intervals for calibration, reciprocal calibration, allele and mutant frequencies, with support clipping, unbounded reciprocal limits and unavailable-uncertainty diagnostics",
         "Validated immutable experiment data and native batch parsing/formatting with explicit DNA-unit conversion, allele/progenitor identity mapping, continued lists, comments, canonical round trips and disclosed unseen-allele policy",
-        "FileMaker-style numeric export parsing and canonical quoted CSV output with repeated identity checks, preserved field boundaries, native limits and shared validated DNA/count conversion"
+        "FileMaker-style numeric export parsing and canonical quoted CSV output with repeated identity checks, preserved field boundaries, native limits and shared validated DNA/count conversion",
+        "Interactive experiment entry over caller-owned streams in native field order and ranges, with bounded numeric/identity corrections, explicit EOF/failure semantics and shared validated data conversion"
       ],
       "validation": [
         "docs/sppcr-research.md",
@@ -928,7 +929,12 @@
         "tests/test_sppcr_filemaker.py",
         "tools/reference_sppcr_filemaker.py",
         "tests/fixtures/sppcr_filemaker.json",
-        "docs/sppcr-filemaker.md"
+        "docs/sppcr-filemaker.md",
+        "src/mdanderson_stats/sppcr_interactive.py",
+        "tests/test_sppcr_interactive.py",
+        "tools/reference_sppcr_interactive.py",
+        "tests/fixtures/sppcr_interactive.json",
+        "docs/sppcr-interactive.md"
       ]
     },
     {

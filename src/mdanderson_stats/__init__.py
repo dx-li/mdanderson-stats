@@ -227,6 +227,7 @@ from .sppcr_generate import (
     sppcr_generate,
     sppcr_observed_probabilities,
 )
+from .sppcr_interactive import read_sppcr_interactive
 from .sppcr_intervals import (
     SPPCRInterval,
     SPPCRIntervals,
@@ -263,6 +264,7 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "read_sppcr_interactive",
     "parse_sppcr_filemaker",
     "format_sppcr_filemaker",
     "SPPCRData",

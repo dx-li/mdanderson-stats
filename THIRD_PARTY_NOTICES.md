@@ -592,7 +592,9 @@ and valid-file semantics, while checking identities/counts, disclosing omitted
 alleles and repairing sign loss, stale-storage dependence and invalid progenitor
 indices. FileMaker-style numeric rows add strict CSV field boundaries, repeated
 identity validation and checked native output limits. Python tokenization reuses
-the package's checked CDFLIB lexer.
+the package's checked CDFLIB lexer. Interactive entry reuses the tested CDFLIB
+console with native field order/ranges, explicit stream ownership and bounded
+corrections instead of invalid identity continuation.
 Remaining SPPCR workflow components are not yet implemented. The archive includes
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native

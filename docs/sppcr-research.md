@@ -120,7 +120,8 @@ contains a DNA amount and one integer count per allele. Its lexical/comment rule
 and valid conversion results now have native probes
 and a validated Python batch parser. The native negative-count probe also confirms
 sign loss, which Python rejects. FileMaker numeric rows now have native probes
-and validated parsing/formatting; interactive input remains pending.
+and validated parsing/formatting. Interactive data entry now has native transcript
+probes and a bounded stream API with numeric and identity corrections.
 
 ## Remaining implementation scope
 
@@ -129,7 +130,7 @@ and validated parsing/formatting; interactive input remains pending.
 | `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Mean fitting, curvature, summaries, transforms and support-aware inverse-transform confidence intervals implemented |
 | `generate_mod`, `one_data_set_mod`, `accumulate_mod` | Probability models, explicit-state NumPy simulation, replicate fits and stable population summaries implemented; simulation reports remain with output workflows |
 | `ecuyer_cote_mod`, random modules, seed helpers | Reconcile existing RANDLIB support with this source version; explicit reproducible RNG state |
-| `problem_in_mod`, `data_in_struct_mod` | Batch and FileMaker parsing/formatting, units, identities and validated data implemented; interactive input remains |
+| `problem_in_mod`, `data_in_struct_mod` | Batch, FileMaker and interactive entry, units, identities and validated data implemented; truth-generation dialogue remains with the application |
 | `results_out_mod` | Structured confidence intervals and diagnostics implemented; formatted data, analysis and simulation reports remain |
 | Main program, structures, file/format/input helpers | Complete reusable analysis workflow, CLI/stream behavior, safe file handling and source-interface reconciliation |
 

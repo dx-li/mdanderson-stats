@@ -574,5 +574,6 @@ diagnostics. [Confidence limits](docs/sppcr-intervals.md) add support-aware
 calibration, reciprocal calibration and transformed frequency intervals.
 [Batch input](docs/sppcr-batch.md) adds validated experiment data and canonical
 parsing/formatting. [FileMaker-style exports](docs/sppcr-filemaker.md) use the
-same validated data model. SPPCR remains partial: interactive input, historical
-RNG reconciliation and the full reporting/application workflow remain.
+same validated data model. [Interactive entry](docs/sppcr-interactive.md) adds
+bounded data collection and corrections. SPPCR remains partial: historical RNG
+reconciliation and the full reporting/application workflow remain.
