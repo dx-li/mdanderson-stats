@@ -982,5 +982,6 @@ fit/search/grid/model reports complete the supplied workflow.
 
 [U2OET](docs/u2oet.md) adds PDS, conventional interaction and hybrid ordinal
 efficacy/toxicity probabilities for two-agent combinations, with stable joint
-log probabilities, likelihoods and expected utilities. Posterior fitting and
-trial conduct remain pending.
+log probabilities, likelihoods and expected utilities. Posterior-draw summaries
+and new-cohort allocation include acceptability, patient-surplus randomization
+and escalation restrictions. Posterior fitting and full trial conduct remain pending.

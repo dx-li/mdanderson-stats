@@ -648,6 +648,13 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 from .trax import TRAXData, TRAXPlot, trax, trax_data
 from .u2oet import U2OETMarginal, U2OETProbabilities, u2oet_probabilities, u2oet_standardize
+from .u2oet_decision import (
+    U2OETAllocation,
+    U2OETCriteria,
+    U2OETPosterior,
+    u2oet_allocation,
+    u2oet_posterior,
+)
 from .windows import (
     WindowCrossValidation,
     WindowNeighborCrossValidation,
@@ -658,6 +665,11 @@ from .windows import (
 )
 
 __all__ = [
+    "U2OETAllocation",
+    "U2OETCriteria",
+    "U2OETPosterior",
+    "u2oet_allocation",
+    "u2oet_posterior",
     "U2OETMarginal",
     "U2OETProbabilities",
     "u2oet_probabilities",

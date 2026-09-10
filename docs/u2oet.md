@@ -2,8 +2,9 @@
 
 Entry 77 is **partial**. The Python implementation supplies PDS, CMI and hybrid
 model probabilities, grouped likelihoods and conditional expected utilities.
-Posterior sampling, prior calibration, dose allocation, trial simulation and
-native input/report workflows remain pending. GAO with its Gaussian copula is
+Posterior summaries and new-cohort allocation from supplied posterior draws
+are also available. Posterior sampling, prior calibration, full trial conduct,
+simulation and native input/report workflows remain pending. GAO with its Gaussian copula is
 also pending; it is not replaced with the FGM model.
 
 The sources are the [official U2OET 1.8 archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/U2OET/U2OET_V1.8.zip),
@@ -110,8 +111,8 @@ Remaining coverage includes:
 - GAO continuation probabilities and its Gaussian copula.
 - Priors, pseudosampling prior centers, effective sample size calibration and
   posterior fitting with convergence assessment.
-- Posterior acceptability, hybrid greedy/randomized allocation, escalation
-  restrictions, cohort conduct and final selection.
+- Open-cohort conduct, delayed/partial outcomes and final selection.
+  Posterior acceptability and new-cohort allocation are now supplied below.
 - Calendar-based simulation, operating characteristics, scenario/native-file
   import and reports.
 
@@ -119,3 +120,67 @@ The original program is freely downloadable, but a general redistribution
 license was not found in the inspected guide or README. This implementation
 uses the published mathematics and does not assert a license for the vendor
 software. The repository's release and licensing status is unchanged.
+
+## Posterior criteria and new-cohort allocation
+
+`u2oet_posterior(joint_draws, utility, criteria=...)` accepts equally weighted
+posterior joint-probability draws with axes `(draw, agent1, agent2, efficacy,
+toxicity)`. It returns posterior mean utilities, probabilities of unacceptable
+efficacy/toxicity and a dose acceptability mask. It does not produce posterior
+draws or assess MCMC convergence. Prior draws or scenario probabilities must not
+be represented as a fitted posterior.
+
+`U2OETCriteria` defaults to the paper's four-category example: efficacy at least
+level 2 must have probability at least .40, and toxicity at least level 2 must
+have probability at most .45. A pair is excluded when the posterior probability
+of either violation is **strictly greater than .90**. The bad events themselves
+also use strict inequalities. Binary outcomes require level 1; defaults are not
+silently adjusted to another outcome scale. Utilities must be nonnegative for
+utility-proportional randomization. Joint probability normalization is checked
+per draw/dose; input is not silently rescaled. At most 20 million cells are
+accepted per call.
+
+For separately fitted draws, call
+`summary = u2oet_posterior(posterior_draws, utility)`, then
+`decision = u2oet_allocation(summary, treated_counts, surplus=3, top=2)`.
+`decision.probabilities` contains the next-cohort assignment weights.
+
+`u2oet_allocation` implements the new-cohort rule using counts of **all assigned
+patients**, including those without completed outcomes. Each agent may advance
+at most one level beyond its highest previously tried level. Both agents can
+advance together, and an untried pair of previously tried individual levels is
+eligible. Statistical acceptability and this escalation restriction jointly
+define the candidate set for ranking and the surplus calculation.
+
+The best candidate receives the cohort unless it has at least `surplus` more
+patients than **every other candidate**. Once that condition holds, allocation
+is proportional to utility among the best `top` candidates. The default is the
+paper's surplus 3 and top 2. Use `top=3`, `top=4` or `top=None` for the guide's
+alternatives, and `greedy=True` or `top=1` for pure greedy allocation. All-zero
+utilities in the randomization set raise an error: proportional weights are
+undefined. Scaling utilities before normalization prevents overflow of their
+sum. A candidate with zero utility receives zero randomization probability.
+
+With no assigned patients, an explicit zero-based `initial=(i,j)` is required.
+The protocol starting pair is returned regardless of prior acceptability. With
+patients already assigned and no acceptable eligible pairs, the result has
+`best=None`, all-zero assignment probabilities and an explanatory reason.
+This is a stop indication, not a probability distribution to sample.
+
+Ties use ascending agent-1 then agent-2 indices. This is an explicit Python
+convention; native tie handling has not been verified. Output arrays are
+immutable. The function returns weights rather than consuming random numbers,
+so a trial simulator can control its RNG and audit each assignment.
+
+Two additional focused tests use hand-computable posterior draws and cohort
+histories. They verify threshold equality, exactly-.90 posterior risk,
+inefficacy stopping, utility orientation, first-cohort assignment, no skipping,
+surplus comparison against a lower-ranked third pair, top-two/all-pair
+randomization and greedy allocation. These validate the published decision
+rules, not native executable parity.
+
+Still pending: generating the posterior draws, managing an open cohort (the
+guide rechecks acceptability at every arrival and may close a cohort early),
+handling delayed/partial outcomes, accrual calendars, final selection and trial
+simulation. The cohort-boundary function must not be used to silently rerandomize
+patients within an existing cohort.
