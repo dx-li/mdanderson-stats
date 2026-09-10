@@ -3,8 +3,10 @@
 `sppcr_bootstrap` generates independent binomial replicate data, fits each
 experiment and summarizes the replicate distributions. `sppcr_bootstrap_summary`
 can also summarize previously fitted or externally supplied replicate means.
-[Confidence intervals](sppcr-intervals.md) consume these summaries. Historical RNG
-compatibility and file/application workflows remain outstanding; SPPCR is partial.
+[Confidence intervals](sppcr-intervals.md) consume these summaries.
+[Explicit legacy sampling](sppcr-random.md) can use the same fitting/summary primitives;
+this high-level bootstrap keeps its NumPy RNG contract. File/application workflows
+remain outstanding; SPPCR is partial.
 
 ```python
 import numpy as np

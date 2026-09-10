@@ -5,8 +5,7 @@
 Both use the validated `SPPCRData` model, including explicit DNA units and allele
 identity mapping. This is a text-file format interface, not a live FileMaker
 application connection. [Interactive entry](sppcr-interactive.md) uses the same data
-model. Historical RNG reconciliation and the complete reporting/application
-workflow remain outstanding.
+model. The complete reporting/application workflow remains outstanding.
 
 ```python
 import numpy as np

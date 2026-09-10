@@ -79,7 +79,8 @@ The original source narrows probabilities to single precision and calls its
 Fortran binomial generator in replicate/level/allele order. The Python path retains
 float64 probabilities and uses NumPy's generator. It implements the same binomial
 model but does not reproduce historical random sequences. Reconciliation of
-SPPCR's bundled RNG with the package's RANDLIB implementation remains pending.
+SPPCR's bundled RNG with RANDLIB is documented in [historical random streams](sppcr-random.md).
+An explicit `sppcr_generate_legacy` path is available separately.
 The original bootstrap also forcibly seeds from the clock; that behavior is not
 part of this explicit-state API.
 

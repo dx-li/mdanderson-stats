@@ -597,6 +597,9 @@ console with native field order/ranges, explicit stream ownership and bounded
 corrections instead of invalid identity continuation. Labeled analysis and replicate
 reports preserve original counts, both DNA units and boundary diagnostics, and
 replace fixed-width overflow and ambiguous unavailable values with explicit output.
+Native RNG draws and state have been reconciled with existing RANDLIB. An explicit
+legacy sampling path retains float32 probabilities and source cell ordering;
+RANDLIB repairs the source all-stream reseeding defect and rejects unsafe inputs.
 Remaining SPPCR workflow components are not yet implemented. The archive includes
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native

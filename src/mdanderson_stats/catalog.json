@@ -886,7 +886,8 @@
         "Validated immutable experiment data and native batch parsing/formatting with explicit DNA-unit conversion, allele/progenitor identity mapping, continued lists, comments, canonical round trips and disclosed unseen-allele policy",
         "FileMaker-style numeric export parsing and canonical quoted CSV output with repeated identity checks, preserved field boundaries, native limits and shared validated DNA/count conversion",
         "Interactive experiment entry over caller-owned streams in native field order and ranges, with bounded numeric/identity corrections, explicit EOF/failure semantics and shared validated data conversion",
-        "Bounded analysis and replicate text reports with original counts, explicit DNA units, labeled estimates and uncertainty, confidence limits, sampling probabilities, all replicate rows and boundary/missingness diagnostics"
+        "Bounded analysis and replicate text reports with original counts, explicit DNA units, labeled estimates and uncertainty, confidence limits, sampling probabilities, all replicate rows and boundary/missingness diagnostics",
+        "Native random-stream reconciliation and explicit legacy SPPCR binomial generation through existing RANDLIB, preserving source cell order and float32 probabilities with validated state and reseeding safeguards"
       ],
       "validation": [
         "docs/sppcr-research.md",
@@ -938,7 +939,12 @@
         "docs/sppcr-interactive.md",
         "src/mdanderson_stats/sppcr_reporting.py",
         "tests/test_sppcr_reporting.py",
-        "docs/sppcr-reporting.md"
+        "docs/sppcr-reporting.md",
+        "tools/reference_sppcr_random.py",
+        "tests/fixtures/sppcr_random.json",
+        "tests/test_sppcr_random.py",
+        "src/mdanderson_stats/sppcr_legacy_generate.py",
+        "docs/sppcr-random.md"
       ]
     },
     {

@@ -129,7 +129,7 @@ probes and a bounded stream API with numeric and identity corrections.
 |---|---|
 | `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Mean fitting, curvature, summaries, transforms and support-aware inverse-transform confidence intervals implemented |
 | `generate_mod`, `one_data_set_mod`, `accumulate_mod` | Probability models, explicit-state NumPy simulation, replicate fits, population summaries and replicate estimate reports implemented |
-| `ecuyer_cote_mod`, random modules, seed helpers | Reconcile existing RANDLIB support with this source version; explicit reproducible RNG state |
+| `ecuyer_cote_mod`, random modules, seed helpers | Native draws/state reconciled with RANDLIB; explicit legacy sampler implemented, with all-stream reseed defect repaired |
 | `problem_in_mod`, `data_in_struct_mod` | Batch, FileMaker and interactive entry, units, identities and validated data implemented; truth-generation dialogue remains with the application |
 | `results_out_mod` | Structured intervals and formatted data, analysis and replicate reports implemented; truth-parameter report remains with generation workflow |
 | Main program, structures, file/format/input helpers | Complete reusable analysis workflow, CLI/stream behavior, safe file handling and source-interface reconciliation |

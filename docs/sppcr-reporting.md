@@ -4,7 +4,8 @@
 experiment. `format_sppcr_simulations(data, bootstrap)` returns a table of every
 replicate estimate. These formatters consume validated results; they do not refit,
 resample, open files or mutate random state. The full menu/file workflow, truth
-parameter dialogue/report and historical RNG reconciliation remain outstanding.
+parameter dialogue/report remain outstanding. [Historical RNG support](sppcr-random.md)
+is available through the explicit legacy sampler.
 
 ```python
 import numpy as np

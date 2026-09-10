@@ -2,7 +2,7 @@
 
 `read_sppcr_interactive` reads one experiment from text streams and returns the
 same validated `SPPCRData` used by batch and FileMaker input. The complete SPPCR
-menu, report/file workflow and historical RNG reconciliation remain outstanding.
+menu and report/file workflow remain outstanding.
 
 ```python
 import numpy as np
