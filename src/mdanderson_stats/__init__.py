@@ -261,6 +261,9 @@ from .ksbin2_probability import (
 from .ksbin2_study import KSTwoSampleStudy, ksbin2_study
 from .kstage_binomial import KStageBinomial
 from .median_effect import MedianEffectFit, fit_median_effect
+from .merit import MERITDesign, MERITMonitoring, MERITSelection, merit_monitor
+from .merit_search import MERITSearch, merit_sample_size
+from .merit_simulation import MERITSimulation, simulate_merit
 from .microarray_normalization import quantile_normalize
 from .mtpi import MTPIDesign, MTPIPosterior, MTPISelection, MTPITable
 from .mtpi_simulation import MTPISimulation, simulate_mtpi
@@ -462,6 +465,14 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "MERITDesign",
+    "MERITSelection",
+    "MERITMonitoring",
+    "merit_monitor",
+    "MERITSimulation",
+    "simulate_merit",
+    "MERITSearch",
+    "merit_sample_size",
     "ChiSquareOrderBounds",
     "chi_square_order_bounds",
     "BayesianChiSquare",

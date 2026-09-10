@@ -794,3 +794,7 @@ and reports remain pending.
 posterior diagnostic, exact exponential-posterior workflow and dependent
 order-statistic bounds. Censoring, other family fits, BIC/DIC, native rank/trim
 conventions and reporting remain pending.
+
+[MERIT](docs/merit.md) adds isotonic dose selection, Bayesian interim decisions,
+correlated endpoint simulation and sample-size/boundary optimization for randomized
+dose-optimization trials. Persistent interim stopping and native reports remain pending.

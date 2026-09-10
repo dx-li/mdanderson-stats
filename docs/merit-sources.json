@@ -1,0 +1,17 @@
+{
+  "sources": [
+    {
+      "url": "https://arxiv.org/pdf/2302.09612v2",
+      "retrieved_date": "2026-09-10",
+      "bytes": 388822,
+      "sha256": "2d2ef042a080f5151e03cbcb088217e19b3dbd17f284c1c22509697e0c0bee1a"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/MERIT/",
+      "retrieved_date": "2026-09-10",
+      "bytes": 52182,
+      "sha256": "28d4cbc38fe818edafebc200b8ca45981d155c7242a8ed876d24b5ce295cd16e"
+    }
+  ],
+  "scope": "Author manuscript v2 sections 2.2-2.5, Table 2. Fixed-size decisions, simulation and Monte Carlo search; standalone equal-size interim monitoring. Native app workflows remain partial."
+}

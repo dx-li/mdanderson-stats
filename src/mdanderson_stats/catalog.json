@@ -3612,12 +3612,23 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/MERIT/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/MERIT/",
-      "references": [],
+      "references": [
+        "https://arxiv.org/abs/2302.09612v2",
+        "https://doi.org/10.1002/sim.10093"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Batched isotonic toxicity/efficacy admissible-set selection and explicit-prior Bayesian interim monitoring",
+        "Gaussian-latent correlated binary endpoint simulation with dose selection probabilities and both generalized powers",
+        "Vectorized Monte Carlo sample-size and boundary search across all published corner null and alternative configurations"
+      ],
+      "validation": [
+        "Four focused tests: independent PAVA reference, exhaustive boundary-event enumeration, beta/binomial/Gaussian probability checks and independent search validation; tests/test_merit.py",
+        "Seeded Table 2 example reproduces n=26, toxicity_max=7, efficacy_min=9; docs/merit.md",
+        "Pending persistent interim trial simulation, unequal arm sizes, separate assessment schedules, interim tables, native source/version parity and app reports"
+      ]
     },
     {
       "id": 161,
