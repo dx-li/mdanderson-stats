@@ -50,7 +50,12 @@ from .binormal_roc import BinormalROC, BinormalROCPoint
 from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
 from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
-from .bop2_binary import BOP2BinaryOptimization, bop2_binary_design, optimize_bop2_binary
+from .bop2_binary import (
+    BOP2BinaryOptimization,
+    BOP2InfeasibleError,
+    bop2_binary_design,
+    optimize_bop2_binary,
+)
 from .bop2_efftox import bop2_efftox_design
 from .bop2_efftox_optimization import BOP2EffToxOptimization, optimize_bop2_efftox
 from .bop2_paired import (
@@ -60,6 +65,7 @@ from .bop2_paired import (
     bop2_paired_design,
 )
 from .bop2_paired_optimization import BOP2PairedOptimization, optimize_bop2_paired
+from .bop2_sample_size import BOP2BinarySampleSizeOptimization, optimize_bop2_binary_sample_size
 from .bp1ci import BP1CIResult, bp1ci
 from .cdflib_array_format import format_cdflib_array
 from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
@@ -379,6 +385,9 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "BOP2InfeasibleError",
+    "BOP2BinarySampleSizeOptimization",
+    "optimize_bop2_binary_sample_size",
     "bop2_efftox_design",
     "BOP2EffToxOptimization",
     "optimize_bop2_efftox",

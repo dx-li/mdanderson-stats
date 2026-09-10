@@ -15,6 +15,10 @@ from .bayesian_monitoring import (
 )
 
 
+class BOP2InfeasibleError(ValueError):
+    """No design in the declared grid meets the requested operating constraints."""
+
+
 def bop2_binary_design(
     max_subjects: int,
     null_rate: float,
@@ -134,6 +138,8 @@ class BOP2BinaryOptimization:
     analysis_oc: MonitoringOperatingCharacteristics
     distinct_boundaries: int
     parameter_pairs: int
+    objective: str = "power"
+    minimum_power: float | None = None
 
     @property
     def calibration_success_probability(self) -> FloatArray:
@@ -158,16 +164,28 @@ def optimize_bop2_binary(
     gammas: ArrayLike | None = None,
     analysis_prior: ArrayLike | None = None,
     error_control: str = "strict",
+    objective: str = "power",
+    minimum_power: float | None = None,
     min_subjects: int = 10,
     cohort_size: int = 5,
 ) -> BOP2BinaryOptimization:
-    """Maximize exact power over a declared finite grid, with null-centered calibration.
+    """Optimize exact power or null expected sample size on a declared finite grid.
+
+    Expected-sample-size optimization requires a minimum power and strict error
+    control. All optimization uses the null-centered calibration prior.
 
     'strict' enforces type I error <= nominal; 'closest' first minimizes its
     absolute distance to nominal and can exceed it. Break power ties by lower
     null expected sample size, then input grid order. Informative analysis priors
     never alter calibration and may change the achieved type I error.
     """
+    if objective not in ("power", "expected_sample_size"):
+        raise ValueError("objective must be power or expected_sample_size")
+    power_floor = None if minimum_power is None else scalar(minimum_power, "minimum_power")
+    if power_floor is not None and not 0 < power_floor <= 1:
+        raise ValueError("minimum_power must lie in (0,1]")
+    if objective == "expected_sample_size" and (power_floor is None or error_control != "strict"):
+        raise ValueError("expected_sample_size requires minimum_power and strict error control")
     p0, p1, alpha = (
         scalar(x, name)
         for x, name in (
@@ -231,14 +249,17 @@ def optimize_bop2_binary(
             error, power = map(float, _success(design, oc))
             if error_control == "strict" and error > alpha:
                 continue
-            key = ((abs(error - alpha),) if error_control == "closest" else ()) + (
-                -power,
-                float(oc.expected_sample_size[0]),
-            )
+            if power_floor is not None and power < power_floor:
+                continue
+            en = float(oc.expected_sample_size[0])
+            ranking = (-power, en) if objective == "power" else (en, -power)
+            key = ((abs(error - alpha),) if error_control == "closest" else ()) + ranking
             if best_key is None or key < best_key:
                 best_key, best = key, (float(scale), float(exponent), design, oc)
     if best is None:
-        raise ValueError("no grid candidate satisfies the type I error constraint; expand the grid")
+        raise BOP2InfeasibleError(
+            "no grid candidate satisfies the type I error and power constraints; expand the grid"
+        )
     scale, exponent, calibration, calibration_oc = best
     analysis = (
         calibration
@@ -265,4 +286,6 @@ def optimize_bop2_binary(
         analysis_oc,
         len(seen),
         int(scales.size * powers.size),
+        objective,
+        power_floor,
     )

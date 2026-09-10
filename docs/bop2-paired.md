@@ -4,7 +4,7 @@ Catalog **112** now supports specified-parameter designs, monitoring of fully
 observed outcomes, exact operating characteristics, and power-maximizing grid
 calibration for two more BOP2 endpoint types. Binary efficacy/toxicity are described
 [separately](bop2-binary.md). [Joint efficacy/toxicity](bop2-efftox.md) is also available. Time-to-event endpoints,
-sample-size optimization and integrated reports remain pending.
+sample-size optimization for paired endpoints and integrated reports remain pending.
 
 The method follows sections 2.1–2.3, examples 2 and 3 of
 [Zhou, Lee and Yuan (2017), DOI 10.1002/sim.7338](https://onlinelibrary.wiley.com/doi/10.1002/sim.7338)

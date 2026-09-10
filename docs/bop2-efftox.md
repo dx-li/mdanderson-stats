@@ -4,7 +4,7 @@ Catalog **112** now includes joint efficacy/toxicity monitoring, exact correlate
 operating characteristics, and finite-grid power calibration with three null
 error constraints. Binary and paired-efficacy methods are documented
 [here](bop2-binary.md) and [here](bop2-paired.md). Time-to-event endpoints,
-sample-size optimization and integrated reports remain pending.
+sample-size optimization for joint endpoints and integrated reports remain pending.
 
 The current app's `EffToxT1e1Help-YY.pdf` extends the original 2017 BOP2 design
 with the global and partial null hypotheses developed in

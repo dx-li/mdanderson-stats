@@ -2922,13 +2922,15 @@
         "Deduplicated finite-grid power calibration with strict or nearest-nominal type I error control, null-centered calibration prior and separate informative-prior analysis",
         "Ordinal and multiple efficacy Dirichlet monitoring, exact correlated operating characteristics and deduplicated finite-grid power calibration",
         "Joint efficacy/toxicity monitoring with separate assessment schedules, exact correlated operating characteristics and power calibration under three null error constraints",
-        "Time-to-event endpoints, minimum expected sample-size optimization and integrated reports remain pending"
+        "Binary efficacy/toxicity expected-sample-size and minimax searches with exact null-error and power constraints",
+        "Time-to-event endpoints, sample-size optimization for complex endpoints and integrated reports remain pending"
       ],
       "validation": [
         "Exact rational beta-binomial tails in both endpoint directions, cutoff equality, complete binary-path enumeration, reflected efficacy/toxicity grid calibration and separation of informative analysis prior",
         "docs/bop2-binary.md",
         "Exact Dirichlet marginal identities and complete ordinal/multiple outcome enumeration; docs/bop2-paired.md",
-        "Joint efficacy/toxicity rational posterior checks, all-path enumeration, independent error identity and three-null grid optimum; docs/bop2-efftox.md"
+        "Joint efficacy/toxicity rational posterior checks, all-path enumeration, independent error identity and three-null grid optimum; docs/bop2-efftox.md",
+        "Independent full size/parameter grid enumeration for both binary endpoints and both sample-size objectives; docs/bop2-sample-size.md"
       ]
     },
     {

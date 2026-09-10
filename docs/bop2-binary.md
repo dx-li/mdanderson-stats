@@ -4,8 +4,9 @@ Catalog entry **112**, [BOP2](https://biostatistics.mdanderson.org/shinyapps/BOP
 is partially implemented for binary efficacy and toxicity: specified-parameter monitoring,
 exact operating characteristics, and power-maximizing finite-grid calibration.
 [Ordinal and multiple efficacy](bop2-paired.md) and
-[joint efficacy/toxicity](bop2-efftox.md) are also available. Time-to-event endpoints,
-minimum-expected-sample-size optimization and integrated reports remain pending.
+[joint efficacy/toxicity](bop2-efftox.md) are also available. Time-to-event endpoints
+and integrated reports remain pending. Binary [sample-size optimization](bop2-sample-size.md)
+is available.
 
 The app snapshot is version 1.4.27.0, updated September 4, 2026. Its binary-prior
 and error-control guides are pinned in [provenance](bop2-sources.json). The original
@@ -77,7 +78,7 @@ print(fit.calibration_oc.positive_conclusion)  # null error, alternative power
 print(fit.calibration_oc.expected_sample_size)
 ```
 
-`optimize_bop2_binary` maximizes exact power over the supplied `cutoff_scales` and
+By default, `optimize_bop2_binary` maximizes exact power over the supplied `cutoff_scales` and
 `gammas` grids. Defaults are scales `0.50,0.51,...,0.99` and exponents
 `0,0.05,...,1`. Repeated integer stopping boundaries are evaluated once. Power
 ties favor lower expected sample size under the null, followed by input grid order.
