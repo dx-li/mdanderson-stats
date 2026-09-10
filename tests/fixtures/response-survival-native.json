@@ -1,0 +1,181 @@
+{
+  "provenance": "Archived comp unchanged; distribution primitives supplied using base R. AR_survival scripted inputs, stop-before-enrollment and actual final-arrival follow-up repairs; see docs/response-survival.md. R 4.4.1. Independent NumPy random streams.",
+  "posterior": {
+    "native_draws": 10000,
+    "python_draws": 100000,
+    "seed": 8209,
+    "native": [
+      0.9278,
+      0.4993,
+      0.9186
+    ],
+    "python": [
+      0.92704,
+      0.5011,
+      0.91338
+    ],
+    "combined_standard_error_z": [
+      0.2798530828204066,
+      -0.34324691344473557,
+      1.8153283942131841
+    ],
+    "inputs": [
+      {
+        "shape": [
+          [
+            5,
+            8
+          ],
+          [
+            7,
+            9
+          ]
+        ],
+        "scale": [
+          [
+            20,
+            80
+          ],
+          [
+            30,
+            180
+          ]
+        ],
+        "concentration": [
+          [
+            4,
+            7
+          ],
+          [
+            3,
+            9
+          ]
+        ]
+      },
+      {
+        "shape": [
+          [
+            5,
+            8
+          ],
+          [
+            5,
+            8
+          ]
+        ],
+        "scale": [
+          [
+            20,
+            80
+          ],
+          [
+            20,
+            80
+          ]
+        ],
+        "concentration": [
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            7
+          ]
+        ]
+      },
+      {
+        "shape": [
+          [
+            4
+          ],
+          [
+            2
+          ]
+        ],
+        "scale": [
+          [
+            20
+          ],
+          [
+            30
+          ]
+        ],
+        "concentration": [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "simulation": {
+    "replicates": 200,
+    "seed": 8210,
+    "max_patients": 16,
+    "initial_patients": 4,
+    "accrual_per_period": 2,
+    "additional_followup": 8,
+    "cutoff": 0.95,
+    "posterior_draws": 10000,
+    "probabilities": [
+      [
+        0.6,
+        0.4
+      ],
+      [
+        0.3,
+        0.7
+      ]
+    ],
+    "means": [
+      [
+        3,
+        9
+      ],
+      [
+        3,
+        12
+      ]
+    ],
+    "response_prior": [
+      0.5,
+      0.5
+    ],
+    "survival_shape": [
+      5,
+      5
+    ],
+    "survival_scale": [
+      12,
+      36
+    ],
+    "native_selection": [
+      0.005,
+      0.155
+    ],
+    "python_selection": [
+      0.005,
+      0.195
+    ],
+    "native_enrollment": [
+      6.415,
+      9.245
+    ],
+    "python_enrollment": [
+      5.76,
+      9.645
+    ],
+    "selection_z": [
+      0.0,
+      -1.0541840663950923
+    ],
+    "enrollment_z": [
+      2.2192371969938827,
+      -1.3588394662711134
+    ]
+  }
+}

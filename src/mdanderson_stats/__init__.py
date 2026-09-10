@@ -434,6 +434,8 @@ from .ranlist_unrestricted import UnrestrictedAllocation, ranlist_unrestricted
 from .rare_disease_123 import RareDisease123Decision, RareDisease123Design
 from .rare_disease_123_simulation import RareDisease123Simulation, simulate_rare_disease_123
 from .regression_ess import RegressionESS, logistic_regression_ess, normal_regression_ess
+from .response_survival import ResponseSurvivalPosterior, response_survival_posterior
+from .response_survival_simulation import ResponseSurvivalSimulation, simulate_response_survival
 from .rolling_six import RollingSixDecision, RollingSixDesign, RollingSixSelection
 from .rolling_six_simulation import RollingSixSimulation, simulate_rolling_six
 from .rolling_six_trial import RollingSixStep, RollingSixTrial, run_rolling_six_trial
@@ -608,6 +610,10 @@ from .windows import (
 )
 
 __all__ = [
+    "ResponseSurvivalPosterior",
+    "response_survival_posterior",
+    "ResponseSurvivalSimulation",
+    "simulate_response_survival",
     "ProportionalDensityBootstrap",
     "proportional_density_bootstrap",
     "ProportionalDensityFit",

@@ -1,0 +1,17 @@
+{
+  "catalog_id": 82,
+  "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ResponseSurvival/ResponseSurvival_V1R.zip",
+  "sha256": "74ef0d59390d7169fc5ff6426919c67ef62f7f8b1c85fba4061d6b5cc33f2fa2",
+  "members": [
+    {
+      "path": "AR_using_Response_and_Survival_Simu.R",
+      "bytes": 6579,
+      "sha256": "0669b8338804d1bc2519ed96f41596857ca9adb0eadd897a9d7f9f6de064d3c4"
+    },
+    {
+      "path": "ResponseSurvivalArticle.pdf",
+      "bytes": 91802,
+      "sha256": "e79fa637dbbc5a2a84cc737901e5489e83b7cb3d040cf793ea46ca3029eb090a"
+    }
+  ]
+}

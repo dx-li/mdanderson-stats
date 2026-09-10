@@ -729,3 +729,15 @@ attribution, source repairs, scope and validation provenance.
 `proportional_density_bootstrap.py` independently implements the paper's
 section 3.1 failure-only goodness-of-fit bootstrap from its statistical
 specification. No corresponding bootstrap source was supplied in the archive.
+
+## Response and Survival
+
+`response_survival.py` and `response_survival_simulation.py` independently
+implement the method in Huang, Ning, Li, Estey, Issa and Berry, “Using short-term
+response information to facilitate adaptive randomization for survival clinical
+trials,” Statistics in Medicine 28:1680–1689 (2009), DOI 10.1002/sim.3578, and the
+contracts of Jing Ning's accompanying R simulator. The article is copyright
+2009 John Wiley & Sons, Ltd.; the R download contains no separate software
+license grant. Original source and article are not redistributed. See
+`docs/response-survival.md` and `docs/response-survival-sources.json` for source
+attribution, numerical scope, deliberate repairs and validation.

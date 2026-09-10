@@ -2585,9 +2585,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "response_survival_posterior: response-category Dirichlet and censored exponential/inverse-gamma conjugate updating, independent log-scale mixture-mean posterior comparison and Monte Carlo error.",
+        "simulate_response_survival: both-arm category/survival scenarios, fair initial randomization, posterior-adaptive allocation, symmetric stopping, final follow-up, replicate operating characteristics and all four native summaries.",
+        "Complete two-member archive/two-procedure audit; explicit repairs for enrollment after stopping and final follow-up under batched accrual. Immediate-response assumption preserved; docs/response-survival.md."
+      ],
+      "validation": [
+        "Three posterior comparisons and 200 trial replicates agree with native R comparisons within five combined Monte Carlo standard errors; documented compatibility adapters and simulator bookkeeping repairs; tests/fixtures/response-survival-native.json.",
+        "Two focused tests: analytic one-category inverse-gamma comparison, exact posterior parameters, time scaling by 1e200, immutable output, no enrollment after stopping and final follow-up under batched accrual."
+      ]
     },
     {
       "id": 84,

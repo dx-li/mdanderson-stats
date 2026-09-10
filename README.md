@@ -956,3 +956,8 @@ and disease-conditional survival curves. It includes the supplied goodness-of-fi
 statistic, the paper’s failure-only goodness-of-fit bootstrap, and explicit
 equal-censoring LR inference. Full-data disease-curve bootstrap and unequal-
 censoring treatment-effect calibration remain pending.
+
+[Response and Survival](docs/response-survival.md) combines early response
+categories with censored survival for Bayesian adaptive randomization. It includes
+conjugate posterior comparison and a two-arm trial simulator with stopping,
+follow-up, allocation summaries and Monte Carlo errors.
