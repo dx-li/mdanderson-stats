@@ -9,10 +9,11 @@ curve parameters depends on subject covariates through a DDP mixture.
 **Coverage is partial.** The observation curve, Gaussian likelihood and
 conditional Gaussian amplitude update, complete subject-level transition and
 residual-variance conditional, Gaussian atom posterior and cluster sweep are
-available, together with covariance, base-mean and concentration updates. Full MCMC,
-new-subject prediction, study contrasts, nadir summaries, source data readers and
-plotting workflow remain to be ported. These kernels do not fit a DDP model by
-themselves and are not a substitute for the full sampler.
+available, together with covariance, base-mean and concentration updates and
+the complete `fit_anovaddp` MCMC routine. New-subject prediction, study contrasts,
+nadir summaries, source data readers and plotting workflow remain to be ported.
+The low-level conditional kernels are components of the fitting routine; they
+do not independently fit a DDP model.
 
 ## Supplied nonlinear curve
 
@@ -85,7 +86,7 @@ the likelihood mean. This deliberately resolves a source inconsistency:
 match both native formulas; very close knots follow the observation curve.
 These are conditional moments, not samples or unconditional DDP posterior moments.
 
-## Source findings to resolve in the full sampler
+## Source findings and explicit corrections
 
 The archived `vardati` signature accepts beta0 but never uses it; it draws
 residual variance with inverse-gamma shape `(alpha0+N)/2` and scale `SSE/2`.
@@ -167,7 +168,8 @@ normal and uniform innovations used in the sweep. No knot-order truncation is
 added. The curve/conditional-design consistency repair for nearly coincident
 knots described above remains in effect. A seeded local NumPy generator gives
 repeatable standalone sweeps; reusing the same seed on every iteration is not
-an appropriate way to construct a chain. A full-chain API remains pending.
+an appropriate way to construct a chain. Use `fit_anovaddp` to manage the chain
+and independent transition seeds.
 
 The variance function accepts one six-parameter row per subject and aligned
 time, observation and zero-based subject-ID vectors. Subjects need not be
@@ -186,7 +188,7 @@ parameter/log-acceptance discrepancy was approximately 1.1e-14. These are
 formula-level comparisons, not an unchanged compiled `simtheta` comparison.
 Two additional focused tests cover those transitions, exact variance updates
 for interleaved subjects, the omitted source prior scale, zero residuals and
-response-unit rescaling by 1e100. The full sampler remains unimplemented.
+response-unit rescaling by 1e100. The fitting routine below assembles these blocks.
 
 
 ## Covariate-dependent atoms and cluster allocation
@@ -261,7 +263,7 @@ innovations. The sweep exercises singleton deletion, new-atom generation and
 final resampling. Differences were below 5e-15. The comparison uses the corrected
 Gaussian/assignment formulas, not an unchanged compiled native sampler. Two
 focused tests additionally cover the single-subject case, coherent label/count
-invariants, immutable results and density-underflow inputs. Full MCMC and predictive/reporting workflows remain pending.
+invariants, immutable results and density-underflow inputs. Predictive/reporting workflows remain pending.
 
 
 ## Hyperparameter transition
@@ -315,7 +317,7 @@ freedom covariance_df+N and scale
 (theta_i-prior_mean_i))`, where prior_mean_i is `[2, F_i*atom_label_i]`.
 Covariance_df is an integer at least six. **The native caller discards the return
 value of `S_Sample`, so S never changes.** The Python transition returns and
-retains the draw; the full sampler must propagate it. This repairs the omitted
+retains the draw; `fit_anovaddp` propagates it to the next iteration. This repairs the omitted
 update rather than reproducing a chain with fixed S.
 
 The concentration update follows the source's Escobar–West augmentation:
@@ -339,4 +341,124 @@ Carlo standard errors; the scalar case matches inverse gamma exactly up to
 floating-point rounding. Focused checks also verify the retained S update,
 positive definiteness, unchanged fixed base-covariance blocks, and rejection of
 unsupported cross-block dependence. These do not establish convergence of a
-complete chain: MCMC orchestration and prediction/reporting are still pending.
+complete chain; prediction/reporting workflows are still pending.
+
+
+## Complete MCMC fitting routine
+
+`fit_anovaddp` assembles the observation, subject, allocation, atom and
+hyperparameter blocks into a complete fitting chain for the supplied nonlinear
+model. It accepts flat time/observation arrays and zero-based subject IDs, one
+row of design and six initial parameters per subject, the initial random-effect
+covariance, the base-mean hyperprior mean and initial base covariance. Each
+subject must have observations. Interleaved observations are sorted once for
+subject-wise updates without requiring a particular input row order.
+
+```python
+import numpy as np
+from mdanderson_stats import anovaddp_curve, fit_anovaddp
+
+times = np.tile([0, 1, 2, 3, 4, 6], 3)
+subject = np.repeat(np.arange(3), 6)
+initial = np.tile([2, 0.5, 1.8, 1, 3, 0.2], (3, 1))
+y = np.tile(anovaddp_curve(initial[0], times[:6]), 3)
+y += 0.15 * np.sin(np.arange(18))
+fit = fit_anovaddp(
+    times,
+    y,
+    subject,
+    np.ones((3, 1)),
+    initial_parameters=initial,
+    initial_covariance=np.diag([1, 1, 1, 0.2, 0.2, 0.1]),
+    base_prior=[0.5, 1.8, 1, 3, 0.2],
+    base_covariance=np.eye(5),
+    covariance_df=8,
+    alpha0=6,
+    beta0=2,
+    concentration_shape=2,
+    concentration_rate=1,
+    iterations=200,
+    burn_in=100,
+    seed=67,
+)
+print(fit.observation_variance.mean(), fit.cluster_count.mean())
+```
+
+This short example demonstrates execution, not a sufficient analysis-length
+chain. The initial covariance also supplies the fixed prior scale factor for
+random-effect covariance updates, matching the source's `covcomfac = S` setup.
+The initial cluster is shared by every subject, its atom and base mean equal
+base_prior, and concentration is one. Default hyperparameters and 2,000 total /
+1,000 warmup iterations come from the supplied demonstration; those iteration
+counts do not automatically establish adequate mixing for another dataset.
+
+Every iteration draws residual observation variance, updates each subject's
+six parameters, conditions the five nonbaseline effects on its first effect,
+updates clusters/atoms, and updates the base mean/covariances/concentration.
+The conditional transformation is
+`theta[:,1:] - (theta[:,0]-2)*S[1:,0]/S[0,0]`, with covariance
+`S[1:,1:] - S[1:,0]*S[0,1:]/S[0,0]`. All blocks use the current state and every
+hyperparameter update is propagated. The independent base-intercept covariance
+restriction remains in force. `variance_mode="source"` changes only the omitted
+beta0 scale behavior; it does not reinstate the singleton or discarded-S bugs.
+
+The result retains complete post-sweep states: subject parameters, observation
+variance, random-effect covariance, base mean/covariance, concentration, labels,
+occupied atoms and cluster counts. Atom matrices have varying cluster counts
+and are stored as an immutable tuple. A normalized observation log likelihood
+is recorded for each retained state. It is not the full joint posterior or
+model evidence. Acceptance fractions for the two knots and slope are reported
+per subject over all iterations, including warmup.
+
+With burn_in=B, retained iteration numbers are B+1, B+1+thin, ... up to the
+iteration limit. Thinning controls storage only and consumes no extra randomness;
+it does not change the underlying trajectory. A local master generator supplies
+the variance draws and separate integer seeds to transition blocks. Repeating a
+complete call with the same seed reproduces its states without modifying global
+randomness. Current inputs and prior arrays are not mutated. Runtime transition
+errors include their iteration number; failed transitions are not silently
+skipped or replaced by previous states.
+
+Labels are arbitrary between draws: averaging their integer IDs is meaningless.
+Use posterior co-clustering probabilities or permutation-invariant summaries
+when analyzing allocations. Acceptance rates and a completed run do not certify
+convergence. Run multiple chains, inspect predictive and parameter traces, and
+assess effective sample sizes / Monte Carlo errors for the quantities of interest.
+The function does not automatically certify convergence or stop when it believes
+convergence has occurred.
+
+Memory/work limits are checked before sampling: at most 50 million stored
+numeric values under a conservative all-subjects-in-separate-clusters bound,
+5 million subject transitions and 100 million observation-iterations. Original
+predictive plotting, study contrasts and nadir summaries are still pending;
+the chain supplies the posterior states needed to implement them.
+
+Integration checks verify unchanged trajectories under thinning, normalized
+log likelihood reconstructed from retained states, positive covariance draws,
+occupied label/atom consistency, immutable history and input preservation.
+An independent base-R chain implementing the corrected statistical equations
+also provides a cross-implementation distributional check; it is not an
+unchanged executable comparison with the defective native caller.
+
+Four independent chains per implementation were run for 8,000 iterations with
+2,000 discarded, on a three-subject repeated-measurement example. The monitored
+summaries were observation variance, occupied-cluster count, concentration and
+the mean subject curve at time two. R/Python mean differences were within 1.1
+combined Monte Carlo standard errors, using the larger of batch-means and
+between-chain errors. The Python runs took about 91 seconds locally for 32,000
+iterations in total. Inputs, seeds, settings and both shorter and longer run
+summaries are recorded in `tests/fixtures/anovaddp-chain-comparison.json`.
+
+**Validation limitation:** one Python chain continued to mix slowly for the
+fitted-response summary. Its across-chain classical split R-hat was about 1.072
+in the longer run; cluster count was about 1.044. These are descriptive classical
+diagnostics, not modern rank-normalized diagnostics, and the cross-implementation
+agreement within estimated error is not a convergence certificate. The example
+therefore establishes executable, state-consistent integration and supplies a
+qualified distributional check, not a claim that the displayed iteration count
+is sufficient for posterior inference. No automatic convergence claim is made.
+
+A separate four-subject integration run also exercised the native seven-covariate,
+five-conditional-effect geometry (35 atom coefficients), retaining coherent
+35-column atom histories and positive-definite random-effect covariances. This
+was a short dimensional/wiring check, not a convergence experiment.

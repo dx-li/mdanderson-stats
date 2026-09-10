@@ -768,3 +768,7 @@ these differences are documented in `docs/anovaddp.md`.
 and `M_sample` conditional formulas under the same attribution and terms. It
 retains the covariance update discarded by the original caller and explicitly
 requires the block-independence needed by its base-covariance update.
+
+`anovaddp_mcmc.py` assembles these adapted conditional transitions according to
+`anovaddp.cpp`, retaining the documented source corrections. It returns posterior
+states independently of the original R interface and predictive plot routines.

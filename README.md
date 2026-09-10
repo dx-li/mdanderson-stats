@@ -964,5 +964,6 @@ follow-up, allocation summaries and Monte Carlo errors.
 
 [ANOVA DDP](docs/anovaddp.md) now supplies its nonlinear repeated-measurement
 curve, Gaussian likelihood, subject-level parameter sweep and residual-variance
-conditional, plus atom, cluster, covariance and concentration updates. Full MCMC
-and prediction/reporting workflows remain pending.
+conditional, plus atom, cluster, covariance and concentration updates.
+`fit_anovaddp` runs the complete fitting chain and returns immutable posterior
+states. Prediction/reporting workflows remain pending.

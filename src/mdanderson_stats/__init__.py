@@ -14,6 +14,7 @@ from .anovaddp_clusters import (
     anovaddp_cluster_sweep,
 )
 from .anovaddp_hyperparameters import AnovaDDPHyperparameters, anovaddp_hyperparameter_update
+from .anovaddp_mcmc import AnovaDDPFit, fit_anovaddp
 from .anovaddp_updates import (
     AnovaDDPSubjectUpdate,
     AnovaDDPVariancePosterior,
@@ -629,6 +630,8 @@ from .windows import (
 )
 
 __all__ = [
+    "AnovaDDPFit",
+    "fit_anovaddp",
     "AnovaDDPHyperparameters",
     "anovaddp_hyperparameter_update",
     "AnovaDDPAtomPosterior",
