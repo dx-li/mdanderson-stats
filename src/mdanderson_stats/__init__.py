@@ -233,6 +233,9 @@ from .ranlist_report import ranlist_report, ranlist_summary
 from .ranlist_restricted import RestrictedAllocation, ranlist_restricted
 from .ranlist_session import RanlistAssignments, RanlistSession, RanlistSpecification
 from .ranlist_unrestricted import UnrestrictedAllocation, ranlist_unrestricted
+from .rolling_six import RollingSixDecision, RollingSixDesign, RollingSixSelection
+from .rolling_six_simulation import RollingSixSimulation, simulate_rolling_six
+from .rolling_six_trial import RollingSixStep, RollingSixTrial, run_rolling_six_trial
 from .schweder import (
     SchwederBootstrap,
     SchwederFit,
@@ -366,6 +369,14 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "RollingSixDesign",
+    "RollingSixDecision",
+    "RollingSixSelection",
+    "RollingSixStep",
+    "RollingSixTrial",
+    "run_rolling_six_trial",
+    "RollingSixSimulation",
+    "simulate_rolling_six",
     "TITEBOINStep",
     "TITEBOINTrial",
     "run_tite_boin_trial",

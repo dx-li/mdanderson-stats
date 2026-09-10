@@ -3072,15 +3072,17 @@
         "Broadcast single-mean imputation and coherent STFT escalation/de-escalation thresholds using the published weak prior with mean target/2",
         "Interim conduct with informative trimester weights, enrolled-count overdose control, sticky exclusions, current completion/minimum-follow-up suspension rules and precision stopping",
         "Final complete-data MTD selection through BOINDesign.select_mtd",
-        "Rolling 6 comparison, flowcharts and integrated reports remain pending",
+        "Dedicated Rolling 6 comparison reports, flowcharts and integrated reports remain pending",
         "Calendar replay and simulation with outcome/minimum-follow-up accrual releases, final complete-data selection, fixed/exponential arrivals and calibrated uniform/Weibull/log-logistic timing",
-        "Optional complete-outcome 1/3 stay and pending-inclusive 2/6 de-escalation, including completion-suspension override, available in conduct/replay/simulation"
+        "Optional complete-outcome 1/3 stay and pending-inclusive 2/6 de-escalation, including completion-suspension override, available in conduct/replay/simulation",
+        "Rolling Six comparator conduct, calendar replay and calibrated simulation, with explicit strict-completion variant and terminal MTD/highest-dose interpretation"
       ],
       "validation": [
         "Twelve rounded Table S1 thresholds, independent rational imputation for all valid counts through n=12, complete-data BOIN reduction, safety/suspension precedence and weighted/time-rescaled follow-up",
         "docs/tite-boin.md",
         "Deterministic follow-up release before next outcome, intervening toxicity with causal history, time scaling, toxicity extremes and existing shared TITE-Keyboard calendar/timing checks",
-        "Live app 2.5.4.0 decision-row capture for both optional 3+3 modifications, guide screenshot, complete-data modified-BOIN reduction, pending counts and safety precedence"
+        "Live app 2.5.4.0 decision-row capture for both optional 3+3 modifications, guide screenshot, complete-data modified-BOIN reduction, pending counts and safety precedence",
+        "Published Rolling Six decision-table states, downward completion, six-patient capacity, deterministic calendars and shared scheduling checks; docs/rolling-six.md"
       ]
     },
     {

@@ -8,7 +8,7 @@ Accelerate Phase I Trials*, DOI 10.1158/1078-0432.CCR-18-0246.
 
 The implementation provides vectorized single-mean imputation, ordinary follow-up
 thresholds, and interim dose decisions. Calendar replay, simulation and optional
-3+3 modifications are supported. Rolling 6 comparison, flowcharts and integrated
+3+3 modifications are supported. Dedicated Rolling 6 comparison reports, flowcharts and integrated
 protocol reports remain pending. Final selection is available through
 `BOINDesign.select_mtd` once all outcomes are ascertained.
 
@@ -198,3 +198,7 @@ with the source app's unpublished scheduler or random-number sequence. Checks
 cover release before the next outcome, intervening DLTs without future-information
 leakage, time scaling, deterministic toxicity extremes and final follow-up. The
 shared scheduler also passes the existing TITE-Keyboard calendar and timing checks.
+
+The [Rolling Six comparator](rolling-six.md) now has separate conduct, replay and
+simulation APIs using the same scenario-generation functions. Dedicated comparison
+report generation remains pending.

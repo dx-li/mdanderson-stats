@@ -713,3 +713,11 @@ completion and minimum-follow-up suspension rules. Calendar replay and simulatio
 include releases at minimum-follow-up thresholds and calibrated toxicity timing.
 Optional 3+3 modifications follow the app’s pending-outcome rules. Rolling 6
 comparison and integrated reports remain pending.
+
+
+## Rolling Six
+
+[Rolling Six](docs/rolling-six.md) provides patient-by-patient dose decisions,
+calendar replay and simulation, including the six-patient capacity, pending-outcome
+escalation rule and downward completion. Results distinguish a found MTD from a
+highest-dose recommendation. Dedicated comparison reports remain pending.

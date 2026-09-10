@@ -10,6 +10,7 @@ from numpy.typing import ArrayLike, NDArray
 from ._validation import FloatArray, count, finite, scalar
 from .boin import BOINDesign, _owned
 from .keyboard import KeyboardDesign
+from .rolling_six import RollingSixDesign
 
 
 class InterimDecision(Protocol):
@@ -51,7 +52,7 @@ def _advance(time: float, gap: float) -> float:
 
 
 def run_calendar_trial[D: InterimDecision, S](
-    design: BOINDesign | KeyboardDesign,
+    design: BOINDesign | KeyboardDesign | RollingSixDesign,
     interarrival: ArrayLike,
     dlt_delays: ArrayLike,
     window: float,
