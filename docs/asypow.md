@@ -3,8 +3,9 @@
 MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
-including regression designs. Ordinal/multinomial families and the complete native workflow remain
-pending; the catalog status is **partial**.
+including regression and ordinal designs. Remaining multivariable/log-linear
+interfaces and the complete native workflow remain pending; the catalog status
+is **partial**.
 
 ```python
 import numpy as np
@@ -113,6 +114,51 @@ limits replace native cancellation/overflow. A zero or singular information
 matrix can legitimately result from an uninformative design or saturated
 response; the shared power constructor rejects non-positive-definite information.
 An overflowing polynomial or information matrix raises a rescaling error.
+
+## Ordinal outcomes
+
+`asypow_ordinal_information(cumulative, group_size=1)` accepts K-1 cumulative
+category probabilities, excluding the final one. Each row is a separate group.
+Probabilities must increase strictly inside (0,1), so all K category masses are
+positive. The information is tridiagonal within each group: diagonal entries
+are `1/p_category[i] + 1/p_category[i+1]`, with off-diagonal entries
+`-1/p_category[i+1]`. Group blocks are weighted by normalized allocations.
+The matrix is with respect to cumulative probabilities, not raw category masses.
+Up to 500 total cumulative-probability parameters are supported.
+
+`asypow_ordinal_regression_information(parameters, covariates, quadratic=False,
+link="logistic", observations=1, group_size=1)` adds cumulative-link ordinal
+regression. Each parameter row contains the ordered K-1 intercepts, followed by
+the shared coefficient of x and, if `quadratic=True`, x². For category boundary i,
+the cumulative probability is `G(intercept[i] + slope*x + quadratic*x²)`, where
+G is logistic or complementary-log-log (`link="cloglog"`).
+
+```python
+from mdanderson_stats import asypow_ordinal_regression_information, asypow_information
+
+theta = [-1.0, 0.5, 0.2]  # two ordered intercepts, one shared slope: 3 categories
+information = asypow_ordinal_regression_information(theta, [-1, 0, 1, 2])
+design = asypow_information(theta, information, [0, 0, 1])
+assert abs(float(design.power(design.sample_size())) - 0.8) < 1e-12
+```
+
+Covariate and allocation rules match the other regression designs, with limits
+of 500 total coefficients and 10,000 covariate entries. The output is block
+diagonal across independent groups, with coefficients ordered group by group.
+The computation sums category score outer products weighted by category
+probabilities. Second-derivative link terms cancel in the sum; avoiding them
+reduces cancellation compared with the native per-category Hessian routine.
+Category gradients and their matrix products are vectorized within each design
+point. Stable log category probabilities preserve distinctions between nearby
+logistic probabilities even when both round to one. Zero-allocation points are
+skipped. Unordered/collapsed thresholds or unrepresentable cloglog category log
+probabilities raise errors rather than returning an invalid matrix.
+
+The raw-information formula is independently checked against multinomial
+probability gradients. Both regression links match unmodified ASYPOW R results
+for two-group quadratic designs; reference outputs are in
+`tests/fixtures/asypow-ordinal.json`. Additional checks verify reduction to the
+existing binary models, cross-group slope power, and extreme-predictor cases.
 
 ## Power and inversions
 

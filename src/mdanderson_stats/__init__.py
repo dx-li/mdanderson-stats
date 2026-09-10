@@ -5,6 +5,7 @@ from .apcoa import AdjustedPCoA, PCoAOrdination, adjusted_pcoa
 from .apcoa_plot import plot_adjusted_pcoa
 from .asypow import AsymptoticPower, asypow_information
 from .asypow_groups import asypow_group_information
+from .asypow_ordinal import asypow_ordinal_information, asypow_ordinal_regression_information
 from .asypow_regression import asypow_regression_information
 from .bayes_factor_binary import (
     BayesFactorBinaryDesign,
@@ -525,6 +526,8 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "asypow_ordinal_information",
+    "asypow_ordinal_regression_information",
     "asypow_regression_information",
     "AsymptoticPower",
     "asypow_information",
