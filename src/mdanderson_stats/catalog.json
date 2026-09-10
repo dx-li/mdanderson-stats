@@ -2507,9 +2507,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "PDS dose standardization and Aranda-Ordaz generalized continuation-ratio ordinal probabilities",
+        "PDS, conventional multiplicative interaction and hybrid marginals with FGM joint probabilities",
+        "Log-space grouped complete-outcome likelihood and conditional expected utility; posterior fitting and trial conduct remain pending"
+      ],
+      "validation": [
+        "Independent R implementation of published equations: 549 joint cells across five cases, 2-4 categories, three models, two centerings and FGM association endpoints",
+        "Analytic extreme logistic/FGM log-tail checks, marginal preservation, normalization, dose-unit invariance and likelihood/utility checks; no native executable parity claimed"
+      ]
     },
     {
       "id": 78,

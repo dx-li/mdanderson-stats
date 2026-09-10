@@ -807,3 +807,11 @@ It uses SciPy's bounded Nelder-Mead algorithm rather than copying ACM Algorithm
 `SRVPRB` averaging and report workflows with explicit Python semantics. They
 reuse the package QLEX implementation and preserve native equal-row averaging
 independently of multiplicity. Original patient data are not included.
+
+## U2OET (entry 77)
+
+Independent Python implementation of the published PDS/GCR and FGM model
+equations in Thall, Nguyen and Zinner, JRSS Series C 66 (2017), 201–224,
+doi:10.1111/rssc.12162. Original executables, papers, examples and comparator
+code are not bundled. No general redistribution grant was found in the inspected
+U2OET 1.8 guide or README. See `docs/u2oet.md` for provenance and limitations.

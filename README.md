@@ -979,3 +979,8 @@ Profile shape estimation, rectangular grids and all six named-model comparisons
 are also available, with explicit local-search and boundary diagnostics.
 Source-format table input, covariate changes, covariate-averaged survival and
 fit/search/grid/model reports complete the supplied workflow.
+
+[U2OET](docs/u2oet.md) adds PDS, conventional interaction and hybrid ordinal
+efficacy/toxicity probabilities for two-agent combinations, with stable joint
+log probabilities, likelihoods and expected utilities. Posterior fitting and
+trial conduct remain pending.

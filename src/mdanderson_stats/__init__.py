@@ -647,6 +647,7 @@ from .toxicity_timing import toxicity_time_quantile
 from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 from .trax import TRAXData, TRAXPlot, trax, trax_data
+from .u2oet import U2OETMarginal, U2OETProbabilities, u2oet_probabilities, u2oet_standardize
 from .windows import (
     WindowCrossValidation,
     WindowNeighborCrossValidation,
@@ -657,6 +658,10 @@ from .windows import (
 )
 
 __all__ = [
+    "U2OETMarginal",
+    "U2OETProbabilities",
+    "u2oet_probabilities",
+    "u2oet_standardize",
     "AccflfData",
     "read_accflf_data",
     "accflf_marginal_survival",
