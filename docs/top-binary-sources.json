@@ -19,5 +19,5 @@
       "sha256": "72f6c92453295f62058fe71f28fbbcefa0645ee7cf5ee6279afa2be1b7c5e104"
     }
   ],
-  "scope": "Published binary TOP Tables 2-4; numeric Table 4 verified with C=.86, gamma=.95 despite caption ordering. Explicit table/prose suspension conventions. App workflows remain partial. Binary calendar replay/simulation uses explicit immediate-look and restarted-gap conventions; native calendar parity remains unverified."
+  "scope": "Published binary TOP Tables 2-4; numeric Table 4 verified with C=.86, gamma=.95 despite caption ordering. Explicit table/prose suspension conventions. App workflows remain partial. Binary calendar replay/simulation uses explicit immediate-look and restarted-gap conventions; native calendar parity remains unverified. Binary finite-grid calibration with common random numbers and independent validation is an explicit Python workflow, not native tuning-grid parity."
 }

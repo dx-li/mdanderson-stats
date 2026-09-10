@@ -140,6 +140,53 @@ Three additional checks cover hand-calculated pause/resumption/final waiting,
 time-unit scaling, absence of look-ahead, retained pending status after stopping,
 calendar representability, and a final-only design against exact binomial power.
 
+## Calibration with independent validation
+
+`optimize_top_binary` searches an explicit Cartesian grid of `cutoff_scales` (C)
+and `gammas`. It chooses the highest estimated alternative success probability
+among candidates whose estimated null success probability is at most
+`type1_error`. Ties prefer smaller mean null enrollment, then input order.
+All candidates share potential outcomes and arrival gaps, reducing Monte Carlo
+noise in comparisons. Candidates with identical complete-data boundaries are
+retained because their fractional-information decisions can differ.
+
+The selected design is evaluated on independent validation simulations; validation
+never changes the selection. Both stages report null/alternative probabilities,
+Monte Carlo standard errors, mean enrollment and mean duration. Grid rows follow
+C then gamma input order, with null and alternative in the two columns. Returned
+seeds reproduce each stage with `simulate_top_binary`.
+
+```python
+from mdanderson_stats import optimize_top_binary
+
+calibrated = optimize_top_binary(
+    20,
+    0.2,
+    0.4,
+    window=4,
+    accrual_rate=2,
+    cutoff_scales=[0.8, 0.9, 0.95],
+    gammas=[0.5, 0.75, 1],
+    looks=[5, 10, 15, 20],
+    trials=10000,
+    validation_trials=10000,
+    rng=134,
+)
+chosen = calibrated.design
+print(calibrated.parameter_pairs[calibrated.selected_index])
+print(calibrated.validation_probability, calibrated.validation_mcse)
+```
+
+The constraint is an estimated point-null constraint, not a guarantee of type I
+error control. Grid selection introduces Monte Carlo uncertainty, and independent
+validation can exceed the target. Assess that uncertainty and timing assumptions
+before adopting a design; do not repeatedly redraw validation until it passes.
+This is an explicit Python search, not reproduction of the native tuning grid.
+An infeasible grid raises `TOPInfeasibleError`. Each stage supports 100–100,000
+trials with at most 2 million trial-patient cells; the grid has at most 500 pairs.
+Focused checks compare final-only designs with exact binomial power and verify
+reproducibility of delayed-outcome calibration and independent validation.
+
 ## Source differences and remaining coverage
 
 The published Table 4 labels `(gamma,C)=(.86,.95)`, but its numerical crossings
@@ -148,7 +195,7 @@ At n=20 of N=40, the table suspends with 10 pending while the prose's strict
 inequality requires 11. Both conventions are exposed. The earlier arXiv table
 has different thresholds; this implementation targets the published table.
 
-**Catalog status is partial.** Delayed-response calibration, co-primary efficacy
+**Catalog status is partial.** Co-primary efficacy
 and efficacy/toxicity models,
 the app's nonuniform timing elicitation, native reports and app version parity
 remain pending. Original PDFs and application files are not redistributed.

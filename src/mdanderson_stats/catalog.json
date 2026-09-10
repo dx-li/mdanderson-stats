@@ -3263,12 +3263,14 @@
       "implemented_features": [
         "Batched binary TOP posterior/decision calculation using effective follow-up weights, explicit suspension conventions and final-outcome waiting",
         "Effective-size crossing tables and complete-data BOP2 interoperability; uniform follow-up reuses the existing TITE effective-size kernel",
-        "Calendar replay and batched simulation with observed-data interim decisions, accrual pauses, final outcome waiting, timing sensitivity and per-trial summaries"
+        "Calendar replay and batched simulation with observed-data interim decisions, accrual pauses, final outcome waiting, timing sensitivity and per-trial summaries",
+        "Finite-grid binary calibration with shared potential outcomes, power-based selection and independent validation with Monte Carlo standard errors"
       ],
       "validation": [
         "Three focused tests: published Table 4, pending follow-up example, extreme time units, suspension/equality behavior and complete-data BOP2 equivalence; tests/test_top_binary.py",
         "Three additional tests: hand calendar paths, no look-ahead, time scaling, pending-state retention and final-only exact binomial power; tests/test_top_calendar.py",
-        "Pending delayed-response calibration, multiple endpoints, nonuniform analysis timing elicitation, native reports and app/calendar parity; docs/top-binary.md"
+        "Three calibration checks: exact final-only binomial power, delayed-outcome stage reproducibility and infeasible-grid failure; tests/test_top_calibration.py",
+        "Pending multiple endpoints, nonuniform analysis timing elicitation, native tuning grid, reports and app/calendar parity; docs/top-binary.md"
       ]
     },
     {

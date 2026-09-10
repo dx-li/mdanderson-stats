@@ -28,6 +28,33 @@ def simulate_top_binary(
     quantile model with conditional late-half probability. Calibrating decisions
     to control type I error is a separate operation, not performed here.
     """
+    gaps, delays, duration = _top_potential(
+        design,
+        response_probability,
+        window,
+        accrual_rate,
+        trials=trials,
+        arrival=arrival,
+        response_distribution=response_distribution,
+        late_probability=late_probability,
+        rng=rng,
+    )
+    result, _, _, _ = _run_top(design, gaps, delays, duration)
+    return result
+
+
+def _top_potential(
+    design: TOPBinaryDesign,
+    response_probability: float,
+    window: float,
+    accrual_rate: float,
+    *,
+    trials: int,
+    arrival: str,
+    response_distribution: str,
+    late_probability: float | None,
+    rng: int | np.random.Generator | None,
+) -> tuple[np.ndarray, np.ndarray, float]:
     repetitions = _integer(trials, "trials")
     rate = scalar(accrual_rate, "accrual_rate")
     duration = scalar(window, "window")
@@ -61,5 +88,4 @@ def simulate_top_binary(
     gaps = (
         np.full(shape, 1 / rate) if arrival == "fixed" else generator.exponential(1 / rate, shape)
     )
-    result, _, _, _ = _run_top(design, gaps, delays, duration)
-    return result
+    return gaps, delays, duration

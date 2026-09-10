@@ -806,4 +806,5 @@ curvature calculations. Native R inputs and covariate defaults remain pending.
 
 [TOP](docs/top-binary.md) adds delayed binary-response posterior decisions,
 accrual suspension, effective-sample-size boundary tables, and batched calendar
-replay/simulation. Calibration, multiple endpoints and native reports remain pending.
+replay/simulation, and tuning-parameter grid calibration with independent validation.
+Multiple endpoints and native reports remain pending.
