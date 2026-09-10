@@ -464,6 +464,7 @@ from .sogs import (
 )
 from .sogs_reporting import SOGSSummary, format_sogs, sogs_summary
 from .sogs_simulation import SOGSSimulation, sogs_simulate
+from .sortf90 import sortf90
 from .sppcr_analysis import (
     SPPCRAnalysis,
     SPPCRReports,
@@ -587,6 +588,7 @@ from .windows import (
 )
 
 __all__ = [
+    "sortf90",
     "SOGSSimulation",
     "sogs_simulate",
     "SOGSSummary",

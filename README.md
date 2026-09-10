@@ -929,3 +929,7 @@ complete the [advertised plotting families](docs/eventchart-coverage.md).
 including marker error, all four selection rules, chromosome exclusions, variable
 offspring schedules and replicate simulations. Reports align chromosome counts
 and donor-length summaries to the same backcross generation.
+
+[SORTF90](docs/sortf90.md) provides `sortf90(source)` to alphabetize Fortran
+program units and nested contained procedures. It returns text for review and
+matches the original separator and inter-unit comment handling.

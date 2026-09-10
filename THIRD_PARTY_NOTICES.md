@@ -670,3 +670,12 @@ source reuse and requires written permission for commercial source use. These
 terms are preserved; this adaptation does not replace them with another license.
 Source archives and original implementation files are not redistributed. See
 `docs/sogs.md` and `docs/sogs-sources.json` for methods and provenance.
+
+## SORTF90
+
+`sortf90.py` independently implements the source-organizing behavior described
+and implemented by Barry W. Brown, Department of Biomathematics, University of
+Texas M. D. Anderson Cancer Center, in SORTF90. The downloaded archive contains
+no separate software license grant. Original Perl source and documentation are
+not redistributed. See `docs/sortf90.md` and `docs/sortf90-sources.json` for
+scope, differences, source provenance and native-output validation.

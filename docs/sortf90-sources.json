@@ -1,0 +1,32 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SORTF90/SORTF90_V1.tar.gz",
+      "artifact": "archive.tar.gz",
+      "bytes": 5163,
+      "sha256": "e9bcfd61c08e51e723d97303191b87a483e67ca6457262cb70b2c54a8ee52f46",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SORTF90/SORTF90_V1.tar.gz",
+      "artifact": "source/sortf90/readme",
+      "bytes": 1316,
+      "sha256": "83056a3885096f0553a80ccb197d343b8ab22139fca0088ee519b0d56cd3c36b",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SORTF90/SORTF90_V1.tar.gz",
+      "artifact": "source/sortf90/sortf90.routines",
+      "bytes": 12419,
+      "sha256": "da7b30239d8a76060debcf68e4da6f0602033fb5f559f1141ad891f2c3b0c91d",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SORTF90/SORTF90_V1.tar.gz",
+      "artifact": "source/sortf90/sortf90.routines.doc",
+      "bytes": 4591,
+      "sha256": "5457ef78851b9f672989fe745259e11f44a3c30d2b40d46b7411411325c5941c",
+      "retrieved_date": "2026-09-10"
+    }
+  ]
+}

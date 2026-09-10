@@ -1,0 +1,10 @@
+[
+  {
+    "source": "! discarded preamble\nmodule demo\nimplicit none\ncontains\nreal function zebra(x)\nreal :: x\nzebra=x\nend function zebra\n! discarded between units\nrecursive subroutine alpha()\ncontains\nsubroutine zoo()\nend subroutine zoo\nsubroutine beta()\nend subroutine beta\nend subroutine alpha\nend module demo\n",
+    "expected": "module demo\nimplicit none\ncontains\n\n!*********************************************************************\n\nrecursive subroutine alpha()\ncontains\n\n!.....................................................................\n\nsubroutine beta()\nend subroutine beta\n\n!.....................................................................\n\nsubroutine zoo()\nend subroutine zoo\n\n!.....................................................................\n\nend subroutine alpha\n\n!*********************************************************************\n\nreal function zebra(x)\nreal :: x\nzebra=x\nend function zebra\n\n!*********************************************************************\n\nend module demo\n"
+  },
+  {
+    "source": "subroutine zebra()\ninterface\nreal function external_value(x)\nreal :: x\nend function external_value\nend interface\nprint *, 3\nend subroutine zebra\nprogram alpha\nprint *, 2\nend program alpha\n",
+    "expected": "program alpha\nprint *, 2\nend program alpha\nsubroutine zebra()\ninterface\nreal function external_value(x)\nreal :: x\nend function external_value\nend interface\nprint *, 3\nend subroutine zebra\n"
+  }
+]

@@ -1964,9 +1964,13 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Alphabetize top-level and recursively contained Fortran units; typed/prefixed procedures, opaque interfaces, source-compatible separators and comment handling. Pure text API with explicit structure validation; docs/sortf90.md."
+      ],
+      "validation": [
+        "Byte-for-byte comparison against unchanged original Perl for two independently written nested/interface examples, idempotence and malformed-source checks; tests/test_sortf90.py; tests/fixtures/sortf90-native.json. Organized examples passed gfortran -fsyntax-only."
+      ]
     },
     {
       "id": 58,
