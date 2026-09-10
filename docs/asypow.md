@@ -4,7 +4,7 @@ MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
 including regression, ordinal, multinomial and general design-matrix models.
-Remaining S-plus regression/generic SMO models and complete native workflows remain
+Dedicated S-plus regression SMO models and complete native workflows remain
 pending; the catalog status is **partial**.
 
 The original S-plus 2.1 archive has a broader scope than the later R archive.
@@ -313,8 +313,8 @@ chi-square wrapper supplied its distribution calculations; statistical formulas
 were unchanged. Inversion was independently checked with a tighter R root.
 
 The significance inverse uses actual df, correcting the original `self.sig.s`
-hardcoded df=1, just as the LR inverse does. Regression SMO and generic
-expected-likelihood optimization remain pending. These tests are asymptotic approximations, not
+hardcoded df=1, just as the LR inverse does. Dedicated regression SMO remains pending; generic expected-likelihood fitting
+is described below. These tests are asymptotic approximations, not
 finite-sample exact binomial tests.
 
 ## SMO Poisson designs
@@ -594,6 +594,88 @@ closed-form value; the expected score vanishes at the closed-form value.
 This comparison does not execute the original S-plus/Fortran optimizer.
 A fully specified null rate of 0.15 in both groups gives
 w=0.038608754773719056 and df=2.
+
+## Generic expected-log-likelihood SMO
+
+`asypow_smo_generic(parameters, expected_log_likelihood, lower=..., upper=...,
+constraints=..., gradient=None, initial=None, subtract_df=True, tolerance=1e-8,
+max_iterations=1000)` implements the statistical interface of the original
+`noncent.generic.s` / `generic.model.smo.s` routines. Supply
+`expected_log_likelihood(alternative, candidate)` returning the per-observation
+expectation under the alternative of the candidate model's log likelihood.
+Parameter-independent constants may be omitted. Callback inputs are read-only,
+flattened vectors; vector or matrix parameters are flattened group by group.
+At most 500 parameters are supported. Bounds are finite scalars or flattened
+vectors, and both alternatives and fixed values must lie strictly inside them.
+
+The optional gradient has the same two arguments and differentiates the expected
+log likelihood with respect to the **candidate** vector. It returns one entry
+per flattened parameter. Otherwise, bounded three-point finite differences are
+used. Callbacks must return finite values throughout the closed search box and
+be differentiable there. Additional nonlinear domain restrictions must be handled
+by a suitable parameterization or tighter bounds.
+
+```python
+import numpy as np
+from mdanderson_stats import asypow_smo_generic
+
+precision = np.array([[2.0, 1.0], [1.0, 2.0]])
+
+
+def expected_log_likelihood(alternative, candidate):
+    delta = candidate - alternative
+    return -0.5 * float(delta @ precision @ delta)
+
+
+def gradient(alternative, candidate):
+    return -precision @ (candidate - alternative)
+
+
+design = asypow_smo_generic(
+    [1, 2],
+    expected_log_likelihood,
+    gradient=gradient,
+    lower=-10,
+    upper=10,
+    constraints=[1, 1, 0],
+)
+assert abs(design.null_parameters[1] - 2.5) < 1e-9
+assert abs(design.divergence_per_observation - 1.5) < 1e-12
+```
+
+This Gaussian example has a closed-form constrained maximizer. It also verifies
+that nuisance parameters can change when one parameter is fixed. The binomial
+expected-likelihood callback reproduces the earlier original-software example,
+and parameter-unit checks span factors of 1e-200 to 1e200. These comparisons
+validate the generic statistical contract; they do not execute the original
+S-plus/Fortran generic optimizer.
+
+Fixed and equality components reduce the optimization to a box in the remaining
+parameters. Their intersected bounds are scaled to [0,1]. L-BFGS-B maximizes the
+expected likelihood, with `ftol=0`; success additionally requires the reported
+unprojected gradient norm to meet `tolerance` (in the scaled coordinates).
+Search-bound optima and unsuccessful fits are rejected. The default start
+projects component averages of alternative parameters into the box, using its
+midpoint if needed for an interior start. A supplied full `initial` vector must
+satisfy all constraints and lie strictly inside the original bounds. The
+iteration limit defaults to 1000. No optimization is needed for a fully fixed
+null or an alternative already satisfying the constraints.
+
+The returned `SMOPower` uses twice the difference between alternative and fitted
+null expected log likelihood, and counts independent restrictions for df.
+Unresolved or nonpositive differences away from an exactly null alternative
+raise an error. A centered callback returning minus the expected log-likelihood
+ratio (minus KL divergence) can avoid cancellation from large additive constants.
+For small effects, evaluate that centered expression stably rather than subtracting
+two large log likelihoods inside the callback.
+
+**A generic nonconcave callback can have multiple local maxima.** A successful
+local fit is not a global-optimality certificate. Concavity, identifiability,
+correct expectation/gradient calculations, and regularity for the chi-square
+approximation remain the model author's responsibility. For nonconcave models,
+compare feasible starts and independently establish that the fitted null is the
+relevant maximum before interpreting power. Native interactive prompts and
+named-model regression SMO wrappers remain pending.
 
 ## Native comparisons and intentional corrections
 

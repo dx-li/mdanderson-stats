@@ -872,5 +872,6 @@ fixed-null/equality designs are available with both df conventions.
 Mixed fixed/equality constraints are supported for binomial, Poisson and survival
 groups. Partial fixed categorical nulls redistribute remaining probability using
 expected-likelihood maximization. General categorical equality components use a
-constrained likelihood fit. Regression/generic SMO models and full native workflows
-remain pending.
+constrained likelihood fit. Generic SMO accepts a user-supplied expected log
+likelihood, bounds and fixed/equality constraints. Dedicated regression SMO
+models and full native workflows remain pending.
