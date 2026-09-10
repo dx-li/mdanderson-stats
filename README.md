@@ -839,6 +839,6 @@ gamma–exponential conventions. Nonconjugate app workflows remain pending.
 [Survival prior ESS](docs/survival-ess.md) evaluates the native censored-exponential
 information criterion analytically, avoiding Monte Carlo noise and patient loops.
 
-[CID2BP](docs/cid2bp.md) adds eight confidence-interval menu options for independent
+[CID2BP](docs/cid2bp.md) adds all nine confidence-interval menu options for independent
 binomial differences, including Cox–Snell profile likelihood and native boundary
-adjustments. Its exact method and session/report interfaces remain pending.
+adjustments and exact binomial-tail inversion. Session/report interfaces remain pending.

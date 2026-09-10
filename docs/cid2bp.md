@@ -1,6 +1,6 @@
 # CID2BP: difference between two binomial proportions
 
-`cid2bp_interval` implements eight menu options from catalog entry **38**,
+`cid2bp_interval` implements all nine menu options from catalog entry **38**,
 [CID2BP](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/38).
 The [version 1.2 archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CID2BP/CID2BP_V1.2.zip)
 contains complete Fortran 77 source, build instructions and reference output.
@@ -30,6 +30,7 @@ must lie between zero and trials. Confidence must be in `[1e-6,1-1e-12]`.
 | `weighted_mid_p` | 6 | Likelihood-weighted tail with half of tied probability |
 | `weighted_likelihood` | 7 | Likelihood-weighted tail including all tied probability |
 | `auto` | 8 | Method 7 if total trials ≤50, otherwise method 5 |
+| `exact` | 9 | Brown's nuisance-maximized inclusive binomial-tail interval |
 
 `continuity_corrected` requires at least two observations in each sample.
 The default is explicitly `cox_snell`; it is **not** the native menu's automatic
@@ -72,6 +73,44 @@ change extreme cases or final printed decimals. Independent adaptive integration
 checks both variants' tail equations, and tests verify sample-exchange symmetry
 and extreme data through the 200-observation limit.
 
+## Exact binomial-tail interval
+
+`exact` ports the calculation in `cfbwb`, `SETCI`, `CONINT`, `MAXTL` and
+`EVALTL`. For each proposed difference `d`, compute both inclusive tails
+`P(D* >= D_observed)` and `P(D* <= D_observed)` under independent binomial
+replicates. Maximize the **smaller** tail over the valid nuisance-probability
+range, then invert at `(1-confidence)/2`. Maximizing each tail separately is
+not the source's calculation. The original caller swaps samples because its
+internal routine returns `p2-p1`; Python consistently returns `p1-p2`.
+
+The method permits at most 100 trials per sample, matching the native array
+limit. Vectorized binomial CDFs/survival functions replace joint-outcome loops
+and avoid subtracting a tail from one. Integer cross products identify ties.
+The nuisance search checks endpoints and refines every local maximum on a
+uniform grid of `max(33,n1+n2+1)` points. The Fortran routine uses one interior
+search plus endpoints. Python searches the full [-1,1] difference domain with
+1e-10 root tolerance, instead of the source's ±.999999 bracket and 1e-6 tolerance.
+These numerical improvements can change final decimals and extreme cases.
+The nuisance optimizer is numerical; the grid/refinement is not a formal
+certificate of the global maximum for every possible input.
+
+Five examples, including zero-event and separated samples, match the compiled
+original computational routines within 1e-6. Independent joint-outcome
+enumeration on 10,001 nuisance points checks the endpoint equations. Complete
+outcome enumeration for sample sizes 3 and 4 verifies at least 95% coverage on
+a 21-by-21 probability grid; this check is not a proof over the continuous
+parameter space. Separated samples with 100 observations per group match the
+analytic lower limit `2*((1-confidence)/2)**(1/200)-1`, including confidence
+levels near zero and one.
+
+A further 40-case native comparison found two differences beyond the Fortran
+solver tolerance. At `62/86-21/44`, Python's lower bound is .0657197636, versus
+.0660312889 from Fortran. At `49/89-12/39`, the upper bounds are .4184969807
+and .4184685970. Independent joint-outcome enumeration over 100,001 nuisance
+points gives maximum smaller-tail probabilities .025 at the Python endpoints,
+versus .02520440 and .02501931 at the native endpoints. The Python bounds are
+intentionally wider in these cases; tests retain these numerical-search cases.
+
 ## Native Peskun calculation
 
 `peskun_native` reproduces menu option 4, including two source conventions:
@@ -90,7 +129,7 @@ instead of returning NaN or silently fabricating a bound.
 
 The original `cfpesk` subroutine was extracted unchanged and compiled with
 `gfortran -std=legacy`. Its ordinary example and the asymmetric correction example
-match Python to floating-point tolerance. Only this subroutine was compiled;
+match Python to floating-point tolerance. The exact-method computational routines were also compiled;
 the full interactive executable has not been rebuilt.
 
 ## Profile-likelihood implementation
@@ -122,6 +161,9 @@ assert abs(native.upper - 0.7662527684207924) < 1e-12
 weighted = cid2bp_interval(7, 12, 1, 7, method="auto")
 assert weighted.method == "weighted_likelihood"
 assert abs(weighted.lower - (-0.0247382734)) < 1e-8
+exact = cid2bp_interval(7, 12, 1, 7, method="exact")
+assert abs(exact.lower - (-0.0469414823)) < 1e-8
+assert abs(exact.upper - 0.8159484324) < 1e-8
 ```
 
 The returned `BinomialDifferenceInterval` contains the estimate, limits,
@@ -132,7 +174,7 @@ methods, exact profile-likelihood limits for zero-event and separated samples,
 sample-exchange symmetry through million-patient examples, and the source's
 special normal-method adjustments. Native output comparisons allow its stated
 1e-4 solver tolerance. The full original executable has not been rebuilt or run;
-its supplied reference output and computational source were used, plus the compiled Peskun subroutine.
+its supplied reference output and computational source were used, plus compiled Peskun and exact-method computational routines.
 
-**Catalog status remains partial.** Exact intervals (9) and native session/report
-interfaces remain pending.
+**All nine numerical menu options are available. Catalog status remains partial:**
+native session/report interfaces remain pending.

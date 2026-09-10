@@ -9,6 +9,7 @@ from scipy.special import ndtri
 from ._validation import scalar
 from .bayesian_monitoring import _integer
 from .cdflib_elementary import rlog1
+from .cid2bp_exact import _exact
 from .cid2bp_peskun import _peskun
 from .cid2bp_weighted import _weighted
 
@@ -93,7 +94,7 @@ def cid2bp_interval(
     """Estimate p1-p2 using a supported CID2BP method.
 
     Methods: wald, continuity_corrected, yates, cox_snell, peskun_native,
-    weighted_likelihood, weighted_mid_p, auto. The corrected normal
+    weighted_likelihood, weighted_mid_p, auto, exact. The corrected normal
     method uses unbiased binomial variances plus 1/(2*min(n1,n2)); Yates adds
     1/(2*n1)+1/(2*n2) to the ordinary Wald half-width. Source boundary adjustments
     apply to all three normal methods. Final limits are clipped to [-1,1].
@@ -121,6 +122,7 @@ def cid2bp_interval(
         "peskun_native",
         "weighted_likelihood",
         "weighted_mid_p",
+        "exact",
     }:
         raise ValueError("unknown CID2BP method")
     if method == "continuity_corrected" and min(n1, n2) < 2:
@@ -138,6 +140,8 @@ def cid2bp_interval(
         upper = 1.0 if difference == 1 else brentq(crossing, difference, 1, xtol=1e-12)
     elif method in {"weighted_likelihood", "weighted_mid_p"}:
         lower, upper = _weighted(n1, x1, n2, x2, tail, method == "weighted_mid_p")
+    elif method == "exact":
+        lower, upper = _exact(n1, x1, n2, x2, tail)
     elif method == "peskun_native":
         lower, upper = _peskun(n1, x1, n2, x2, z)
         lower, upper = _adjust(n1, x1, n2, x2, tail, lower, upper)
