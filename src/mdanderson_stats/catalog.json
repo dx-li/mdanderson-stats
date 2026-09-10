@@ -3067,9 +3067,17 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Broadcast single-mean imputation and coherent STFT escalation/de-escalation thresholds using the published weak prior with mean target/2",
+        "Interim conduct with informative trimester weights, enrolled-count overdose control, sticky exclusions, current completion/minimum-follow-up suspension rules and precision stopping",
+        "Final complete-data MTD selection through BOINDesign.select_mtd",
+        "Calendar simulation, Rolling 6 comparison, optional 3+3 modifications, flowcharts and integrated reports remain pending"
+      ],
+      "validation": [
+        "Twelve rounded Table S1 thresholds, independent rational imputation for all valid counts through n=12, complete-data BOIN reduction, safety/suspension precedence and weighted/time-rescaled follow-up",
+        "docs/tite-boin.md"
+      ]
     },
     {
       "id": 130,

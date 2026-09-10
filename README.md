@@ -703,3 +703,11 @@ are explicit. Precomputed effective-follow-up boundaries provide numerical looku
 without rounded cutoffs. Calendar-time replay and simulation support staggered
 enrollment and outcome-driven pauses, with calibrated Weibull/log-logistic toxicity
 timing scenarios. Flowcharts and integrated reports remain pending.
+
+
+## TITE-BOIN
+
+[TITE-BOIN](docs/tite-boin.md) adds vectorized pending-outcome imputation,
+standardized follow-up thresholds, and interim dose decisions with the current
+completion and minimum-follow-up suspension rules. Calendar simulation, Rolling 6
+comparison, optional 3+3 modifications and integrated reports remain pending.

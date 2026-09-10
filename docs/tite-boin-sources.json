@@ -1,0 +1,52 @@
+{
+  "retrieved_at": "2026-09-10T05:32:53.825038+00:00",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/Accrual.pdf",
+      "bytes": 51010,
+      "sha256": "b9fbb37ab3fbebc71747e863e5870acfedeff6bd0906498b90a7cc2ebec4eaf0"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/Doses_Samplesize.pdf",
+      "bytes": 124309,
+      "sha256": "f7c20bbc98f67d4e07030646fc69828b67f2babfa19c831526bb0b941eb8f35d"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/Guide.pdf",
+      "bytes": 1193721,
+      "sha256": "c18d74376e560a70189bb93214bee6e8fb0b506c3e7f0b6fef500e3660130123"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/Probability.pdf",
+      "bytes": 102708,
+      "sha256": "25d5f24be67a83f722d8c1fde7f277c9c7769c287c6e6f7546c6b1cf9277af3d"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/Safety.pdf",
+      "bytes": 130883,
+      "sha256": "e2321b0d645b8b9e910da693cdd3627e3a11fa2b282e0c80402b2124b38ab967"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/rule_modify.pdf",
+      "bytes": 42650,
+      "sha256": "4024a70f49961fbf8f6a368f04755587f45456e7797d50c0f982aab500c4af71"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/rule_modify2.pdf",
+      "bytes": 22901,
+      "sha256": "c8cb1af7921efbbec6109d76ebd738dea7ced5a90cb4624f0ee9ff4801cf2a39"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/",
+      "bytes": 69665,
+      "sha256": "aa3035f040f1e23162a734c0e2bd1fa42007703e0261468113adab82a5f30dbe"
+    },
+    {
+      "url": "https://aacr.silverchair-cdn.com/aacr/content_public/journal/clincancerres/24/20/10.1158_1078-0432.ccr-18-0246/2/10780432ccr180246-sup-195865_2_supp_4686492_p8kvw2.pdf",
+      "bytes": 7508002,
+      "sha256": "7cb473a3afd9641df0be708c259900df783277ab77e328d0ab03cf77df6078f6"
+    }
+  ],
+  "application_version": "2.5.4.0",
+  "application_updated": "2025-11-20"
+}

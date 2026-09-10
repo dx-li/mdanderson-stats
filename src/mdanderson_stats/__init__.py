@@ -350,6 +350,7 @@ from .three_plus_three import (
     compare_boin_three_plus_three,
     simulate_three_plus_three,
 )
+from .tite_boin import TITEBOINDecision, TITEBOINEstimate, tite_boin_decision, tite_boin_estimate
 from .tite_keyboard import (
     TITEEffectiveSampleSize,
     TITEKeyboardDecision,
@@ -363,6 +364,10 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "TITEBOINDecision",
+    "TITEBOINEstimate",
+    "tite_boin_decision",
+    "tite_boin_estimate",
     "toxicity_time_quantile",
     "TITEKeyboardStep",
     "TITEKeyboardTrial",
