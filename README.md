@@ -808,3 +808,7 @@ curvature calculations. Native R inputs and covariate defaults remain pending.
 accrual suspension, effective-sample-size boundary tables, and batched calendar
 replay/simulation, and tuning-parameter grid calibration with independent validation.
 Multiple endpoints and native reports remain pending.
+
+[Original TPI](docs/tpi.md) adds posterior-SD intervals, original-paper decision
+tables, two-patient safety gating, isotonic MTD selection and batched simulation,
+alongside the existing mTPI implementation.

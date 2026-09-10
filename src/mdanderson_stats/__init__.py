@@ -470,8 +470,13 @@ from .top_calendar import TOPBinarySimulation, TOPBinaryTrial, TOPCalendarStep, 
 from .top_calibration import TOPBinaryOptimization, TOPInfeasibleError, optimize_top_binary
 from .top_simulation import simulate_top_binary
 from .toxicity_timing import toxicity_time_quantile
+from .tpi import TPIDesign, TPIPosterior
+from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "TPIDesign",
+    "TPIPosterior",
+    "simulate_tpi",
     "TOPBinaryOptimization",
     "TOPInfeasibleError",
     "optimize_top_binary",

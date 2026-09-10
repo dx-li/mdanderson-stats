@@ -91,8 +91,11 @@ On the development machine, the full 200-patient decision table took about
 0.015 seconds, and 5,000 five-dose trials with ten cohorts of three took about
 0.29 seconds including final MTD selection. These are local measurements.
 
-**Catalog status remains partial.** The original 2007 TPI design and its
-calibration, native archive/source and isotonic-weight audit, prior-sensitivity
+The [original 2007 TPI design](tpi.md) now has separate posterior decisions,
+safety rules, MTD selection and batched simulation.
+
+**Catalog status remains partial.** TPI tuning, native archive/source and
+isotonic-weight audit, mTPI prior-sensitivity
 options, posterior isotonic interval simulation, and native spreadsheet/report
 workflows remain pending. The published screenshot validates the checked mTPI
 decisions; it does not establish parity for all software features.

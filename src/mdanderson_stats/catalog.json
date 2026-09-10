@@ -2251,12 +2251,14 @@
       "implemented_features": [
         "Vectorized mTPI unit-probability-mass decisions and full decision table under uniform beta priors",
         "Paper safety rules, persistent exclusions and isotonic posterior-mean MTD selection with explicit weights",
-        "Batched complete-outcome cohort simulation with allocations, selections, safety stops and Monte Carlo uncertainty"
+        "Batched complete-outcome cohort simulation with allocations, selections, safety stops and Monte Carlo uncertainty",
+        "Original TPI posterior-SD interval decisions, common informative priors, two-patient safety gate, permanent exclusion, isotonic MTD selection and batched complete-outcome simulation"
       ],
       "validation": [
         "Exact rational beta-polynomial probabilities and extreme tails; published Excel screenshot columns at n=3,6,12,30",
         "Exhaustive small-trial response-path operating characteristics, safety sequence, isotonic ties and seeded replay; tests/test_mtpi.py",
-        "Pending original 2007 TPI/calibration, native source/weight audit, prior sensitivity, posterior isotonic intervals and spreadsheet/report workflows; docs/mtpi.md"
+        "Pending TPI tuning, native source/weight audit, mTPI prior sensitivity, posterior isotonic intervals and spreadsheet/report workflows; docs/mtpi.md",
+        "Original TPI: published Table 1, independent weighted beta quadrature, safety/selection and exact small-trial path checks; tests/test_tpi.py; limitations in docs/tpi.md"
       ]
     },
     {

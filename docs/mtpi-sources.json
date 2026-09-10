@@ -13,5 +13,5 @@
       "sha256": "0be9c2d73bb11b49ee2c6df0c418bbf2d8172cb5f401420f556f93e64e781a85"
     }
   ],
-  "scope": "mTPI uniform-prior UPM decisions, paper safety timing, explicitly weighted isotonic selection and complete-outcome simulation. Original TPI and native software audit remain pending."
+  "scope": "mTPI uniform-prior UPM decisions, paper safety timing, explicitly weighted isotonic selection and complete-outcome simulation. Original TPI is documented separately in tpi.md; native software audit remains pending."
 }
