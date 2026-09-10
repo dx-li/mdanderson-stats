@@ -666,3 +666,11 @@ equivalence and directional margin tests, continuity-corrected score planning,
 exact Fisher power and enrollment search, paired McNemar tests and kappa agreement
 designs. Approximate planning power is explicitly distinguished from exact
 binomial enumeration, with all twelve source examples reproduced.
+
+## Time-to-event sample size
+
+[Nsurvival](docs/survival-sample-size.md) adds event and enrollment planning for
+one- and two-arm survival comparisons, including equivalence and directional
+margins. Median and hazard inputs broadcast over accrual/follow-up scenarios.
+Source approximations and exact uniform-accrual event probabilities are explicit,
+with conservative and joint-normal equivalence options.

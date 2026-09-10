@@ -3145,9 +3145,19 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "One- and two-arm equality, superiority, noninferiority and equivalence survival planning",
+        "Median/hazard inputs, planned allocation, accrual and additional follow-up scenarios with NumPy broadcasting",
+        "Source event approximation and exact uniform-accrual exponential event probabilities",
+        "Conservative and joint-normal equivalence power, fractional and rounded event targets, integer group enrollment"
+      ],
+      "validation": [
+        "All five source event/enrollment examples reproduced",
+        "Independent integration and exponential simulation validate uniform-accrual events",
+        "Normal rejection-region simulation validates joint equivalence power",
+        "Extreme exposure, unit scaling, allocation and invalid-follow-up checks; docs/survival-sample-size.md"
+      ]
     },
     {
       "id": 139,

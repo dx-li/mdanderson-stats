@@ -327,6 +327,12 @@ from .stukel_fit import StukelFit, StukelFitError, fit_stukel
 from .stukel_objective import StukelObjective, stukel_objective
 from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
+from .survival_sample_size import (
+    SurvivalSampleSize,
+    exponential_event_probability,
+    survival_event_power,
+    survival_sample_size,
+)
 from .tdtasp_ascertainment import TDTASPAscertainment, tdtasp_ascertainment
 from .tdtasp_genetics import TDTASPGenetics, tdtasp_genetics, tdtasp_haplotype_frequencies
 from .tdtasp_power import TDTASPFixedPower, TDTASPPower, tdtasp_fixed_power, tdtasp_power
@@ -335,6 +341,10 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "SurvivalSampleSize",
+    "exponential_event_probability",
+    "survival_event_power",
+    "survival_sample_size",
     "BinarySampleSize",
     "binary_proportion_power",
     "binary_proportion_sample_size",

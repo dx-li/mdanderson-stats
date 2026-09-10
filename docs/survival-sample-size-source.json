@@ -1,0 +1,16 @@
+{
+  "retrieved_at": "2026-09-10T04:04:59.867602+00:00",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Nsurvival/Log-rank-survival-help.pdf",
+      "sha256": "9f36643068c68ab4469fe02c8e401cba4f48cd5bfeb5a680b0b97b0dd0594435",
+      "bytes": 107554
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Nsurvival/",
+      "sha256": "657ba2abab2f7af528b3551fab5ca4d91b4964745546d5ea350ddc92f203101f",
+      "bytes": 53372
+    }
+  ],
+  "application_version": "PID 967; v2.1.7.0; updated 03/24/2026"
+}
