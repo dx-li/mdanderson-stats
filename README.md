@@ -895,3 +895,8 @@ nuisance maximization with numerical bounds.
 [DRDIST](docs/drdist.md) provides its seven distribution-calculator menu operations
 through the shared numerical kernels, preserving the original tail conventions
 while correcting legacy approximation and cancellation problems.
+
+[TRAX](docs/trax.md) plots arbitrary transformations of either axis while retaining
+original-unit labels, with grids, explicit limits, and overlays that reuse the
+transform contract. A plotting-independent interface exposes transformed pairs
+and any omitted row indices.

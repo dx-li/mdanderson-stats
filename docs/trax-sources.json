@@ -1,0 +1,32 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/TRAX/TRAX_V1.tar.gz",
+      "artifact": "archive.tar.gz",
+      "retrieved_date": "2026-09-10",
+      "bytes": 3641,
+      "sha256": "0d73db23329c2a46cbca2a48a06b8c93ec40aa76d3c3a828a663825cb73052be"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/TRAX/TRAX_V1.tar.gz",
+      "artifact": "S/trax/trax.S",
+      "retrieved_date": "2026-09-10",
+      "bytes": 6682,
+      "sha256": "56fce9f3f0e899418c75e7994bb9df8becd9e59bfbb62b6316610e18d322bdfd"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/TRAX/TRAX_V1.tar.gz",
+      "artifact": "S/trax/trax.d",
+      "retrieved_date": "2026-09-10",
+      "bytes": 2348,
+      "sha256": "c0adb74e73245e0bcada9389893e6edbe3a3ba7cc542e7a9ad318703d0c0e46a"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/TRAX/TRAX_V1.tar.gz",
+      "artifact": "S/trax/ReadMe",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1640,
+      "sha256": "1ba2944ac14260d5ca96e7810068d971063aab9479c1a2e778f4b682d734b555"
+    }
+  ]
+}
