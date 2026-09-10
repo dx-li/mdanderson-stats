@@ -3,8 +3,8 @@
 `parse_sppcr_batch` reads the original ordered batch format into immutable
 `SPPCRData`. `format_sppcr_batch` writes canonical records, and `sppcr_data` builds
 validated experiment data directly. [FileMaker input](sppcr-filemaker.md) uses the
-same model, as does [interactive entry](sppcr-interactive.md). The complete
-reporting/application workflow remains pending.
+same model, as does [interactive entry](sppcr-interactive.md). [Analysis workflows](sppcr-analysis.md) connect this data to fits and reports;
+menu/file routing remains pending.
 
 ```python
 import numpy as np

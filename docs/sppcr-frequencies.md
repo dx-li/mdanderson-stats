@@ -4,8 +4,8 @@
 mutant frequency. It adds the original independent-mean delta-method variances,
 standard errors and forward arcsine transformations to the
 [likelihood fitting core](sppcr-fit.md). [Bootstrap uncertainty](sppcr-bootstrap.md)
-and [confidence intervals](sppcr-intervals.md) build on these summaries. The complete
-file/report workflow remains unfinished; catalog entry 26 is partial.
+and [confidence intervals](sppcr-intervals.md) build on these summaries. [Analysis workflows](sppcr-analysis.md) compose input, fitting and reports.
+File/menu routing remains unfinished; catalog entry 26 is partial.
 
 ```python
 from mdanderson_stats import sppcr_fit_means, sppcr_frequencies

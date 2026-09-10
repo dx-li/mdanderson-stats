@@ -4,9 +4,9 @@
 experiment and summarizes the replicate distributions. `sppcr_bootstrap_summary`
 can also summarize previously fitted or externally supplied replicate means.
 [Confidence intervals](sppcr-intervals.md) consume these summaries.
-[Explicit legacy sampling](sppcr-random.md) can use the same fitting/summary primitives;
-this high-level bootstrap keeps its NumPy RNG contract. File/application workflows
-remain outstanding; SPPCR is partial.
+[Explicit legacy sampling](sppcr-random.md) is available through a RandlibGenerator.
+[Reusable analysis workflows](sppcr-analysis.md) connect input and reports.
+File/application workflows remain outstanding; SPPCR is partial.
 
 ```python
 import numpy as np
@@ -39,7 +39,8 @@ replicate axis. `wells` broadcasts to `(..., levels)`. The default is 1,000
 replicates, matching the source, but any positive Python integer is accepted.
 Progenitor indices are zero-based; repeat an index for a homozygote.
 
-An explicit NumPy Generator is required. Input validation and the observed-data
+An explicit NumPy Generator or RandlibGenerator is required. The latter uses
+historical float32 binomials and the documented legacy safety limits. Input validation and the observed-data
 fit precede sampling. Once generation starts, the supplied RNG is consumed;
 subsequent fitting or numerical errors propagate and do not roll back RNG state.
 No clock reseeding or silent retry occurs. Memory use grows with the number of

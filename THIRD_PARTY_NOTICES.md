@@ -604,7 +604,10 @@ Truth-generation designs preserve native normalization and model DNA units, with
 stable weight scaling and explicit validation replacing invalid truth parameters.
 Truth dialogue preserves field order and numeric ranges with bounded corrections;
 parameter reports disclose units and simulation choices without implicit file writes.
-Remaining SPPCR workflow components are not yet implemented. The archive includes
+Reusable observed/truth analysis workflows use explicit modern or historical RNG
+state and always draw initial simulated data from truth, repairing the source
+bootstrap-choice dependence on uninitialized counts.
+Remaining SPPCR application/file components are not yet implemented. The archive includes
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native
 source and historical binaries are not bundled in the Python package.

@@ -1,11 +1,7 @@
 """Bounded truth-parameter reports with explicit DNA units and choices."""
 
-import numpy as np
-
-from .sppcr_generate import sppcr_detection_probabilities
 from .sppcr_reporting import _Report
-from .sppcr_truth import sppcr_truth
-from .sppcr_truth_console import SPPCRSimulationRequest
+from .sppcr_truth_console import SPPCRSimulationRequest, _validate_request
 
 
 def format_sppcr_truth(
@@ -21,19 +17,8 @@ def format_sppcr_truth(
     through sppcr_truth. No streams, files or random state are touched.
     """
     report = _Report(precision, max_characters)
-    if not isinstance(request.bootstrap_from_truth, bool) or not isinstance(
-        request.write_simulations, bool
-    ):
-        raise ValueError("Simulation choices must be boolean")
+    _validate_request(request)
     t = request.truth
-    # Validate public dataclass contents without silently replacing reported values.
-    sppcr_truth(t.dna, t.wells, t.frequency, t.calibration, progenitor=t.progenitor)
-    if (
-        not np.isclose(np.sum(t.frequency), 1, rtol=0, atol=8 * np.finfo(float).eps)
-        or not np.array_equal(t.mu, t.calibration * t.frequency)
-        or not np.array_equal(t.probability, sppcr_detection_probabilities(t.dna, t.mu))
-    ):
-        raise ValueError("Truth design has inconsistent frequencies, means or probabilities")
     report.row("SPPCR TRUTH PARAMETERS")
     report.row("dna_levels", str(t.dna.size))
     report.row("alleles", str(t.frequency.size))

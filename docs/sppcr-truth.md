@@ -48,9 +48,9 @@ first experiment from truth before choosing their bootstrap model.
 
 For historical sampling, pass the design's probabilities and wells to
 `sppcr_generate_legacy` with an explicit `RandlibGenerator`; see
-[the RNG reconciliation](sppcr-random.md). The high-level bootstrap function still
-uses a NumPy generator. Its replicates can instead be composed explicitly from
-legacy sampling, `sppcr_fit_means`, and `sppcr_bootstrap_summary`.
+[the RNG reconciliation](sppcr-random.md). The high-level bootstrap and [analysis workflows](sppcr-analysis.md) also accept
+a RandlibGenerator. Replicates can also be composed explicitly from legacy sampling,
+`sppcr_fit_means`, and `sppcr_bootstrap_summary`.
 
 ## Validation and numerical choices
 

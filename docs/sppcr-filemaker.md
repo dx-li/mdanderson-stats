@@ -5,7 +5,8 @@
 Both use the validated `SPPCRData` model, including explicit DNA units and allele
 identity mapping. This is a text-file format interface, not a live FileMaker
 application connection. [Interactive entry](sppcr-interactive.md) uses the same data
-model. The complete reporting/application workflow remains outstanding.
+model. [Analysis workflows](sppcr-analysis.md) connect this data to fits and reports;
+menu/file routing remains pending.
 
 ```python
 import numpy as np

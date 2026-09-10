@@ -3,9 +3,9 @@
 `format_sppcr_report(data, bootstrap)` returns a complete text analysis for one
 experiment. `format_sppcr_simulations(data, bootstrap)` returns a table of every
 replicate estimate. These formatters consume validated results; they do not refit,
-resample, open files or mutate random state. The full menu/file workflow, truth
-parameter dialogue/report remain outstanding. [Historical RNG support](sppcr-random.md)
-is available through the explicit legacy sampler.
+resample, open files or mutate random state. [Truth entry and reports](sppcr-truth.md)
+and [composed analysis workflows](sppcr-analysis.md) are available, with modern or
+[historical RNG support](sppcr-random.md). The full menu/file workflow remains pending.
 
 ```python
 import numpy as np

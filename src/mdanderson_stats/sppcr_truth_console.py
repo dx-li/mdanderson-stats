@@ -6,6 +6,7 @@ from typing import TextIO
 import numpy as np
 
 from .cdflib_console import CDFConsole, CDFConsoleError
+from .sppcr_generate import sppcr_detection_probabilities
 from .sppcr_truth import SPPCRTruth, sppcr_truth
 
 
@@ -100,3 +101,20 @@ def read_sppcr_truth(
     )
     simulations = console.get_yn("Request replicate estimates for output? (y/n)")
     return SPPCRSimulationRequest(truth, from_truth, simulations)
+
+
+def _validate_request(request: SPPCRSimulationRequest) -> None:
+    """Validate public records before sampling or reporting."""
+    if not isinstance(request.bootstrap_from_truth, bool) or not isinstance(
+        request.write_simulations, bool
+    ):
+        raise ValueError("Simulation choices must be boolean")
+    t = request.truth
+    # Validate public dataclass contents without silently replacing reported values.
+    sppcr_truth(t.dna, t.wells, t.frequency, t.calibration, progenitor=t.progenitor)
+    if (
+        not np.isclose(np.sum(t.frequency), 1, rtol=0, atol=8 * np.finfo(float).eps)
+        or not np.array_equal(t.mu, t.calibration * t.frequency)
+        or not np.array_equal(t.probability, sppcr_detection_probabilities(t.dna, t.mu))
+    ):
+        raise ValueError("Truth design has inconsistent frequencies, means or probabilities")

@@ -73,8 +73,9 @@ back; callers requiring transactional orchestration must account for this.
 
 Historical rejection sampling is sequential and this explicit path prioritizes
 sequence compatibility. Use NumPy-based `sppcr_generate` for fast modern batches.
-The current high-level `sppcr_bootstrap` continues to accept a NumPy Generator;
-the example composes legacy sampling with the common fitting/summary primitives.
+The high-level `sppcr_bootstrap` and [analysis workflows](sppcr-analysis.md) now
+also accept a RandlibGenerator; the example remains an explicit composition of
+legacy sampling with the common fitting/summary primitives.
 Fitting retains the documented Python boundary repairs, so matching RNG draws
 does not claim reproduction of the native program's defective boundary estimates.
 

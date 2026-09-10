@@ -889,7 +889,8 @@
         "Bounded analysis and replicate text reports with original counts, explicit DNA units, labeled estimates and uncertainty, confidence limits, sampling probabilities, all replicate rows and boundary/missingness diagnostics",
         "Native random-stream reconciliation and explicit legacy SPPCR binomial generation through existing RANDLIB, preserving source cell order and float32 probabilities with validated state and reseeding safeguards",
         "Validated immutable truth-generation designs with stable weight normalization, explicit model DNA units, calibration and progenitor mapping, reconciled against seeded native truth generation",
-        "Bounded native-order truth-parameter dialogue with explicit bootstrap/output choices and formatted parameter reports, reconciled against unchanged native dialogue transcripts"
+        "Bounded native-order truth-parameter dialogue with explicit bootstrap/output choices and formatted parameter reports, reconciled against unchanged native dialogue transcripts",
+        "Reusable observed-data and truth-simulation workflows with modern or historical bootstrap sampling, explicit continuous RNG state, preserved identities and composed bounded reports"
       ],
       "validation": [
         "docs/sppcr-research.md",
@@ -956,7 +957,10 @@
         "src/mdanderson_stats/sppcr_truth_reporting.py",
         "tests/test_sppcr_truth_console.py",
         "tools/reference_sppcr_truth_console.py",
-        "tests/fixtures/sppcr_truth_console.json"
+        "tests/fixtures/sppcr_truth_console.json",
+        "src/mdanderson_stats/sppcr_analysis.py",
+        "tests/test_sppcr_analysis.py",
+        "docs/sppcr-analysis.md"
       ]
     },
     {

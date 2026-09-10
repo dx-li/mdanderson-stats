@@ -6,9 +6,11 @@ import numpy as np
 from numpy.typing import ArrayLike
 
 from ._validation import count, finite
+from .randlib import RandlibGenerator
 from .sppcr_fit import BoolArray, FloatArray, SPPCRMeanFit, _freeze, _mask, sppcr_fit_means
 from .sppcr_frequencies import sppcr_frequencies
 from .sppcr_generate import SPPCRSamples, sppcr_generate, sppcr_observed_probabilities
+from .sppcr_legacy_generate import sppcr_generate_legacy
 
 
 @dataclass(frozen=True)
@@ -113,7 +115,7 @@ def sppcr_bootstrap(
     wells: ArrayLike,
     *,
     progenitor: tuple[int, int],
-    rng: np.random.Generator,
+    rng: np.random.Generator | RandlibGenerator,
     replicates: int = 1000,
     probability: ArrayLike | None = None,
     saturation: str = "half",
@@ -124,10 +126,11 @@ def sppcr_bootstrap(
     probability array broadcasting to seen selects a caller-specified model.
     saturation applies to both observed and replicate fits. The default half
     policy adjusts only alleles detected in every well at every DNA level.
-    Numerical fit failures propagate; RNG state is consumed once sampling starts.
+    A NumPy Generator selects modern sampling; RandlibGenerator selects historical
+    float32 binomials with legacy safety limits. Numerical failures propagate;
+    RNG state is consumed once sampling starts.
     """
-    if isinstance(replicates, bool) or not isinstance(replicates, int) or replicates < 1:
-        raise ValueError("replicates must be a positive integer")
+    _bootstrap_options(rng, replicates, saturation)
     observed = sppcr_fit_means(dna, seen, wells, saturation=saturation)
     parents = count(progenitor, "progenitor")
     if parents.shape != (2,) or np.any(parents >= observed.mu.shape[-1]):
@@ -137,8 +140,33 @@ def sppcr_bootstrap(
         if probability is None
         else np.broadcast_to(finite(probability, "probability"), observed.original_seen.shape)
     )
-    samples = sppcr_generate(p, observed.wells, rng=rng, replicates=replicates)
+    samples = _sample(p, observed.wells, rng=rng, replicates=replicates)
     fit = sppcr_fit_means(observed.dna, samples.seen, samples.wells, saturation=saturation)
     return SPPCRBootstrap(
         observed, samples, fit, sppcr_bootstrap_summary(fit.mu, progenitor=progenitor)
     )
+
+
+def _bootstrap_options(
+    rng: np.random.Generator | RandlibGenerator,
+    replicates: int,
+    saturation: str,
+) -> None:
+    if isinstance(replicates, bool) or not isinstance(replicates, int) or replicates < 1:
+        raise ValueError("replicates must be a positive integer")
+    if saturation not in ("half", "raise"):
+        raise ValueError("saturation must be 'raise' or 'half'")
+    if not isinstance(rng, (np.random.Generator, RandlibGenerator)):
+        raise TypeError("rng must be a numpy.random.Generator or RandlibGenerator")
+
+
+def _sample(
+    probability: ArrayLike,
+    wells: ArrayLike,
+    *,
+    rng: np.random.Generator | RandlibGenerator,
+    replicates: int,
+) -> SPPCRSamples:
+    if isinstance(rng, RandlibGenerator):
+        return sppcr_generate_legacy(probability, wells, rng=rng, replicates=replicates)
+    return sppcr_generate(probability, wells, rng=rng, replicates=replicates)

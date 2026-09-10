@@ -580,5 +580,6 @@ retain identities, units and diagnostics. [Historical random streams](docs/sppcr
 are reconciled through RANDLIB with an explicit legacy sampling path.
 [Truth designs](docs/sppcr-truth.md) normalize allele weights and prepare explicit
 simulation parameters in model DNA units, with bounded interactive entry and
-parameter reports. SPPCR remains partial: the full application workflow and final
-source-interface audit remain.
+parameter reports. [Analysis workflows](docs/sppcr-analysis.md) connect data or
+truth input to modern/historical sampling, fitting and reports. SPPCR remains
+partial: menu/CLI and file workflows and the final source-interface audit remain.
