@@ -8,8 +8,8 @@ curve parameters depends on subject covariates through a DDP mixture.
 
 **Coverage is partial.** The observation curve, Gaussian likelihood and
 conditional Gaussian amplitude update, complete subject-level transition and
-residual-variance conditional are available. The dependent-DP cluster updates,
-covariance/base-measure updates, full MCMC,
+residual-variance conditional, Gaussian atom posterior and cluster sweep are
+available. Covariance/base-measure updates, full MCMC,
 new-subject prediction, study contrasts, nadir summaries, source data readers and
 plotting workflow remain to be ported. These kernels do not fit a DDP model by
 themselves and are not a substitute for the full sampler.
@@ -186,5 +186,80 @@ parameter/log-acceptance discrepancy was approximately 1.1e-14. These are
 formula-level comparisons, not an unchanged compiled `simtheta` comparison.
 Two additional focused tests cover those transitions, exact variance updates
 for interleaved subjects, the omitted source prior scale, zero residuals and
-response-unit rescaling by 1e100. The dependent-DP updates and full sampler
-remain unimplemented.
+response-unit rescaling by 1e100. The remaining hyperparameter updates and full sampler remain unimplemented.
+
+
+## Covariate-dependent atoms and cluster allocation
+
+`anovaddp_atom_posterior` supplies the Gaussian conditional used by `musimul`
+and for newly occupied clusters. It accepts a matrix of **conditional random
+effects** (subjects by d), a design matrix (subjects by q), their common residual
+covariance Scond, and the Gaussian base mean/covariance. These conditional
+random effects are not the original six curve parameters. In the supplied model,
+d=5 and q=7; the full sampler conditions the last five effects on the first.
+
+The q*d atom coefficients are stored in covariate-major order: q successive
+blocks of d elements. Subject i has conditional mean `(x_i kron I_d) @ atom`.
+The first design column must be one; the native routines hard-code the intercept
+block and ignore values in that column. Python validates it explicitly and
+allows compatible dimensions up to 100 coefficients. Posterior precision is
+`C^-1 + sum(F_i.T @ Scond^-1 @ F_i)`, with the corresponding prior/data mean term.
+The implementation uses linear solves and returns immutable mean/covariance.
+
+```python
+import numpy as np
+from mdanderson_stats import anovaddp_cluster_sweep
+
+clusters = anovaddp_cluster_sweep(
+    conditional_parameters=[[3, 1], [-2, 0], [-1, 1], [4, 2]],
+    design=[[1, 0], [1, 1], [1, -1], [1, 2]],
+    labels=[0, 1, 1, 2],
+    atoms=[[3, 1, 0, 0], [-2, 0, 0.5, 0.2], [4, 2, 0, 0]],
+    residual_covariance=[[1, 0.2], [0.2, 0.7]],
+    base_mean=np.zeros(4),
+    base_covariance=np.eye(4),
+    concentration=1.3,
+    seed=70,
+)
+print(clusters.labels, clusters.counts, clusters.atoms)
+```
+
+The sweep implements `clusters` followed by `musimul`: remove each subject from
+its current group, compute assignment probabilities, assign it, and finally
+resample every occupied atom conditional on all its subjects. An existing
+cluster receives weight equal to its remaining size times its Gaussian density.
+The new-cluster weight integrates out an atom under the Gaussian base measure:
+concentration times a normal density with mean F_i*m and covariance
+Scond+F_i*C*F_i.T. When that option is selected, its atom is drawn from the
+single-subject posterior immediately, making it available to subsequent subjects.
+The final atom draws use all assignments after the sweep.
+
+Labels are zero-based and contiguous. Input atoms are rows, unlike the source's
+columns, and every input atom must be occupied. The result includes labels,
+atoms, counts, and counts of cluster creations/removals. It also records the
+assignment uniforms and standard-normal atom innovations, in order of new-atom
+creation followed by final occupied-atom resampling, for reproducible auditing.
+This remains one conditional block, not a complete fitted DDP model.
+
+**Singleton repair:** native `clusters` deletes the empty cluster count and
+renumbers labels but does not delete its MU column. That can associate shifted
+labels with the wrong old atom. Python removes the atom row, count and label
+together. A one-subject dataset correctly removes its only old cluster before
+creating and sampling the single occupied cluster again. No mode reproduces
+misaligned labels and atoms.
+
+All assignment calculations use log densities and log-sum-exp normalization,
+avoiding native all-zero weights when Gaussian densities underflow. Existing
+atom densities are evaluated together in one matrix solve. Cholesky factors
+supply log determinants and standardized residuals; no raw determinant or
+matrix inverse is used for density evaluation. Nonfinite final log densities
+or moments raise errors instead of inventing replacement probabilities.
+
+Independent R calculations verified every posterior mean/covariance element at
+the native dimensionality d=5,q=7 and a complete smaller sweep with matching
+innovations. The sweep exercises singleton deletion, new-atom generation and
+final resampling. Differences were below 5e-15. The comparison uses the corrected
+Gaussian/assignment formulas, not an unchanged compiled native sampler. Two
+focused tests additionally cover the single-subject case, coherent label/count
+invariants, immutable results and density-underflow inputs. Full MCMC,
+hyperparameter updates and predictive/reporting workflows remain pending.

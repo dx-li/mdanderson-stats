@@ -2301,12 +2301,14 @@
         "anovaddp_curve: vectorized supplied six-parameter nonlinear response with fixed logistic intercept, native narrow-transition floor, explicit fittare knot repair and stable sigmoid limits.",
         "anovaddp_loglikelihood and anovaddp_amplitude_posterior: Gaussian observation likelihood and correlated-prior conditional amplitude update using linear solves.",
         "anovaddp_subject_update and anovaddp_variance_posterior: full subject-level Gaussian/Metropolis sweep with source proposal scales, log acceptance, and residual-variance conditional with explicit documented/source prior-scale modes.",
-        "Remaining: dependent-DP cluster/covariance/base-measure updates, complete MCMC, new-patient prediction, contrasts/nadirs, file readers and plots. Residual-variance prior-scale discrepancy exposed explicitly; docs/anovaddp.md."
+        "anovaddp_atom_posterior and anovaddp_cluster_sweep: covariate-dependent Gaussian atom conditional, sequential allocation with integrated new-cluster weights, coherent singleton deletion and final atom resampling; log-density normalization.",
+        "Remaining: covariance/base-measure/concentration updates, complete MCMC, new-patient prediction, contrasts/nadirs, file readers and plots. Variance prior-scale and singleton atom/label discrepancies documented; docs/anovaddp.md."
       ],
       "validation": [
         "Three parameter vectors at eight times match unchanged native C++ regressione outputs exactly; correlated Gaussian conditional agrees with independent R calculations within 5e-15.",
         "Two focused tests cover normalization, curve branches and knot repair, extreme sigmoid limits, Gaussian moments and positive-definiteness. Complete archive member hashes recorded in docs/anovaddp-sources.json.",
-        "Three complete subject sweeps agree with independent R conditional/proposal calculations within 2e-13; exact residual-variance prior contribution, interleaved subjects, source zero-scale rejection and response rescaling checked."
+        "Three complete subject sweeps agree with independent R conditional/proposal calculations within 2e-13; exact residual-variance prior contribution, interleaved subjects, source zero-scale rejection and response rescaling checked.",
+        "Native-dimension (5 parameters x 7 covariates) atom posterior and full corrected cluster sweep agree with independent R formulas within 1e-13; singleton removal/creation and Gaussian-density underflow checked."
       ]
     },
     {

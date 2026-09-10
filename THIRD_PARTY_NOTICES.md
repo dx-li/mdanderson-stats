@@ -758,3 +758,8 @@ provenance, scope, native comparisons and documented differences.
 residual-variance conditional under the same ANOVA DDP attribution and terms.
 The documented variance prior is the default; the source's omitted scale is
 available only through an explicitly named mode.
+
+`anovaddp_clusters.py` adapts the Gaussian atom and cluster-allocation formulas
+in `clusters` and `musimul` under the same attribution and terms. Empty-cluster
+atom/label alignment is repaired, and probabilities use log-scale arithmetic;
+these differences are documented in `docs/anovaddp.md`.

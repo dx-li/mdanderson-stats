@@ -7,6 +7,12 @@ from .anovaddp import (
     anovaddp_curve,
     anovaddp_loglikelihood,
 )
+from .anovaddp_clusters import (
+    AnovaDDPAtomPosterior,
+    AnovaDDPClusters,
+    anovaddp_atom_posterior,
+    anovaddp_cluster_sweep,
+)
 from .anovaddp_updates import (
     AnovaDDPSubjectUpdate,
     AnovaDDPVariancePosterior,
@@ -622,6 +628,10 @@ from .windows import (
 )
 
 __all__ = [
+    "AnovaDDPAtomPosterior",
+    "AnovaDDPClusters",
+    "anovaddp_atom_posterior",
+    "anovaddp_cluster_sweep",
     "AnovaDDPSubjectUpdate",
     "AnovaDDPVariancePosterior",
     "anovaddp_subject_update",
