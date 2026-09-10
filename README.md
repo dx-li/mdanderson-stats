@@ -582,5 +582,6 @@ are reconciled through RANDLIB with an explicit legacy sampling path.
 simulation parameters in model DNA units, with bounded interactive entry and
 parameter reports. [Analysis workflows](docs/sppcr-analysis.md) connect data or
 truth input to modern/historical sampling, fitting and reports. SPPCR remains
-partial: [file workflows](docs/sppcr-files.md) are available, while menu/CLI
-integration and the final source-interface audit remain.
+partial: [file workflows](docs/sppcr-files.md) and a [menu/CLI](docs/sppcr-console.md)
+are available; interactive output-file selection and the final source-interface
+audit remain.

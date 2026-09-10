@@ -132,7 +132,7 @@ probes and a bounded stream API with numeric and identity corrections.
 | `ecuyer_cote_mod`, random modules, seed helpers | Native draws/state reconciled with RANDLIB; explicit legacy sampler implemented, with all-stream reseed defect repaired |
 | `problem_in_mod`, `data_in_struct_mod` | Batch, FileMaker and interactive entry, units, identities and validated data implemented; validated truth designs and bounded truth-generation dialogue implemented |
 | `results_out_mod` | Structured intervals and formatted data, analysis and replicate reports implemented; truth-parameter reports implemented |
-| Main program, structures, file/format/input helpers | Reusable observed/truth analysis and report composition implemented; bounded file reads and staged report publication implemented; CLI/menu behavior and final source-interface reconciliation remain |
+| Main program, structures, file/format/input helpers | Reusable observed/truth analysis and report composition implemented; bounded file reads and staged report publication implemented; four-mode repeated menu/CLI implemented; interactive output-file selection and final source-interface reconciliation remain |
 
 Build and startup succeeded, and twelve independent native-reference tests pass.
 These tests cover the baseline just described, not bootstrap, file formats, repeated

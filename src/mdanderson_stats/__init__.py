@@ -224,6 +224,7 @@ from .sppcr_bootstrap import (
     sppcr_bootstrap,
     sppcr_bootstrap_summary,
 )
+from .sppcr_console import SPPCRRun, run_sppcr
 from .sppcr_data import SPPCRData, sppcr_data
 from .sppcr_filemaker import format_sppcr_filemaker, parse_sppcr_filemaker
 from .sppcr_files import read_sppcr_file, write_sppcr_reports
@@ -277,6 +278,8 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "SPPCRRun",
+    "run_sppcr",
     "read_sppcr_file",
     "write_sppcr_reports",
     "SPPCRAnalysis",

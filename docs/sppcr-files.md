@@ -28,7 +28,7 @@ paths = write_sppcr_reports(reports, "experiment.ans", "experiment.sim")
 The read path composes previously reconciled native formats with normal Python
 stream ownership. Native `open_file_mod` opens even read inputs with READWRITE;
 Python only requires read access. Existing STATTAB file dialogue remains available
-for interactive file selection; SPPCR menu routing is still pending.
+for interactive file selection; the [SPPCR menu](sppcr-console.md) now routes all four input modes.
 
 ## Report publication
 
@@ -65,6 +65,5 @@ sync failures, symlink replacement, and a competing writer at publication time.
 Assertions check actual file bytes, preserved destinations, and temporary-file
 cleanup rather than only mocking successful writes.
 
-SPPCR remains partial. Main-menu/CLI behavior, interactive output choices and
-repeated application sessions still require integration and the final completion
-audit has not been performed.
+SPPCR remains partial. The repeated menu/CLI is implemented; interactive output
+file choices and the final source-interface completion audit remain.

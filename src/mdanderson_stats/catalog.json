@@ -891,7 +891,8 @@
         "Validated immutable truth-generation designs with stable weight normalization, explicit model DNA units, calibration and progenitor mapping, reconciled against seeded native truth generation",
         "Bounded native-order truth-parameter dialogue with explicit bootstrap/output choices and formatted parameter reports, reconciled against unchanged native dialogue transcripts",
         "Reusable observed-data and truth-simulation workflows with modern or historical bootstrap sampling, explicit continuous RNG state, preserved identities and composed bounded reports",
-        "Bounded read-only batch/FileMaker file input and staged UTF-8 report publication with exclusive defaults, explicit replacement, alias protection and documented multi-file failure semantics"
+        "Bounded read-only batch/FileMaker file input and staged UTF-8 report publication with exclusive defaults, explicit replacement, alias protection and documented multi-file failure semantics",
+        "Repeated four-mode menu and seeded CLI with modern/historical RNGs, explicit stream ownership, EOF outcomes, bounded correction loops and report/replicate routing"
       ],
       "validation": [
         "docs/sppcr-research.md",
@@ -964,7 +965,11 @@
         "docs/sppcr-analysis.md",
         "src/mdanderson_stats/sppcr_files.py",
         "tests/test_sppcr_files.py",
-        "docs/sppcr-files.md"
+        "docs/sppcr-files.md",
+        "src/mdanderson_stats/sppcr_console.py",
+        "src/mdanderson_stats/sppcr.py",
+        "tests/test_sppcr_console.py",
+        "docs/sppcr-console.md"
       ]
     },
     {

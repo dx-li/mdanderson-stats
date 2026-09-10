@@ -80,5 +80,6 @@ The numerical kernels and historical sampler retain their independent native and
 mathematical validation; this workflow adds integration evidence.
 
 [File workflows](sppcr-files.md) provide bounded input reads and staged report
-publication. SPPCR remains partial: main-menu/CLI behavior, interactive routing,
-repeated application sessions and the final source-interface completion audit remain.
+publication. A [menu/CLI](sppcr-console.md) supports repeated analyses. SPPCR
+remains partial: interactive output-file selection and the final source-interface
+completion audit remain.
