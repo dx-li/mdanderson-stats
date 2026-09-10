@@ -3597,11 +3597,13 @@
       "status": "partial",
       "implemented_features": [
         "Vectorized prior ESS for beta-binomial, gamma-exponential, gamma-Poisson, Dirichlet-multinomial, normal-normal and known-mean inverse-chi-squared/inverse-gamma-normal models",
-        "Explicit information/native gamma-exponential conventions to distinguish equivalent count from native prior-exposure output"
+        "Explicit information/native gamma-exponential conventions to distinguish equivalent count from native prior-exposure output",
+        "Analytic expectation of native censored-exponential/inverse-gamma survival ESS, with log-stable continuous root and native interpolation grid"
       ],
       "validation": [
         "Seven native R conjugate results, posterior information increments, time rescaling, vectorization and extreme variance scales; tests/test_conjugate_ess.py",
-        "Pending unknown-mean variance, regression/CRM/TITE-CRM/nonconjugate workflows, plots and reports; docs/conjugate-ess.md"
+        "Pending unknown-mean variance, regression/CRM/TITE-CRM/nonconjugate workflows, plots and reports; docs/conjugate-ess.md",
+        "Independent quadrature, censoring/time-scale limits and search boundaries; tests/test_survival_ess.py; docs/survival-ess.md"
       ]
     },
     {
