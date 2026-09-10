@@ -1,0 +1,32 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EXTSIG/EXTSIG_V1.4.zip",
+      "artifact": "archive.zip",
+      "retrieved_date": "2026-09-10",
+      "bytes": 892251,
+      "sha256": "080b0b79ab73e6ee6b87dda94c93548173c91b2121ab80c4de53f1f933bac9ac"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EXTSIG/EXTSIG_V1.4.zip",
+      "artifact": "extsig-1.4/DOC/extsig.tex",
+      "retrieved_date": "2026-09-10",
+      "bytes": 17528,
+      "sha256": "7dbc05b0885a4f835cf59788dfbf5b913e5568a2e6bcc2963fe60171adeed5f1"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EXTSIG/EXTSIG_V1.4.zip",
+      "artifact": "extsig-1.4/SOURCE/extsig.f90",
+      "retrieved_date": "2026-09-10",
+      "bytes": 138892,
+      "sha256": "8d8ce27aca1ae75aa5c959688860f6c900451cf1b39691a7b74bb486feb5da01"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EXTSIG/EXTSIG_V1.4.zip",
+      "artifact": "extsig-1.4/SOURCE/fileio_mod.f90",
+      "retrieved_date": "2026-09-10",
+      "bytes": 82702,
+      "sha256": "62ee649a5d005481f486918965f75f690f8b0e585d15d3648c8f8ef29c398daa"
+    }
+  ]
+}

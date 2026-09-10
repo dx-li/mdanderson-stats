@@ -887,3 +887,7 @@ an explicit original-software compatibility mode.
 [WINDOWS](docs/windows.md) adds fixed-width and nearest-neighbor smoothing, local
 polynomial derivatives, descriptive window statistics, and leave-one-out selection
 of widths or neighbor counts, with documented native boundary weights and corrections.
+
+[EXTSIG](docs/extsig.md) adds unconditional two-binomial tests with five outcome
+orderings, mid-p calculations, and either the native probability grid or continuous
+nuisance maximization with numerical bounds.

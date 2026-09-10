@@ -273,6 +273,8 @@ from .expsurv_data import ExploratoryTable
 from .expsurv_event import EventScatterPlot, plot_event_scatter
 from .expsurv_scatter import SurvivalScatterPlot, plot_survival_scatter
 from .expsurv_simulation import generate_exploratory_data, generate_exponential_samples
+from .extsig import ExtsigResult, extsig
+from .extsig_maximum import ExtsigMaximum
 from .fisher_design import fisher_power, fisher_sample_size
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .gray_test import GrayTest, gray_test
@@ -544,6 +546,9 @@ from .windows import (
 )
 
 __all__ = [
+    "ExtsigResult",
+    "ExtsigMaximum",
+    "extsig",
     "WindowNeighborCrossValidation",
     "window_neighbor_cross_validation",
     "WindowSmoothing",

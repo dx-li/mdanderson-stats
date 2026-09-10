@@ -1501,9 +1501,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "All five outcome orderings for unconditional two-binomial tests, with one-/two-sided and separately maximized mid-p probabilities; original 99-point nuisance grid and continuous Bernstein-subdivision numerical bounds. Conditional Fisher and Pearson chi-square analyses, stable log-domain probabilities, explicit native tie/ordering compatibility."
+      ],
+      "validation": [
+        "tests/test_extsig.py",
+        "docs/extsig.md",
+        "docs/extsig-sources.json"
+      ]
     },
     {
       "id": 43,
