@@ -51,6 +51,13 @@ from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
 from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
 from .bop2_binary import BOP2BinaryOptimization, bop2_binary_design, optimize_bop2_binary
+from .bop2_paired import (
+    BOP2PairedDesign,
+    BOP2PairedOperatingCharacteristics,
+    BOP2PairedState,
+    bop2_paired_design,
+)
+from .bop2_paired_optimization import BOP2PairedOptimization, optimize_bop2_paired
 from .bp1ci import BP1CIResult, bp1ci
 from .cdflib_array_format import format_cdflib_array
 from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
@@ -370,6 +377,12 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "BOP2PairedDesign",
+    "BOP2PairedState",
+    "BOP2PairedOperatingCharacteristics",
+    "bop2_paired_design",
+    "BOP2PairedOptimization",
+    "optimize_bop2_paired",
     "BOP2BinaryOptimization",
     "bop2_binary_design",
     "optimize_bop2_binary",

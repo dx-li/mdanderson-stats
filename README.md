@@ -723,9 +723,11 @@ escalation rule and downward completion. Results distinguish a found MTD from a
 highest-dose recommendation. Dedicated comparison reports remain pending.
 
 
-## BOP2 binary efficacy and toxicity
+## BOP2 efficacy and toxicity monitoring
 
 [BOP2 binary efficacy and toxicity](docs/bop2-binary.md) provides posterior stopping boundaries,
 exact operating characteristics and power-maximizing grid calibration. Calibration
-and informative-prior analysis are reported separately. The other BOP2 endpoint
-types and integrated reports remain pending.
+and informative-prior analysis are reported separately.
+[Ordinal and multiple efficacy](docs/bop2-paired.md) add Dirichlet monitoring and
+exact correlated operating characteristics with grid calibration. Joint
+efficacy/toxicity, time-to-event endpoints and integrated reports remain pending.

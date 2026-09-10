@@ -2920,11 +2920,13 @@
       "implemented_features": [
         "Binary efficacy and toxicity posterior stopping rules and full-path monitoring with exact binomial operating characteristics",
         "Deduplicated finite-grid power calibration with strict or nearest-nominal type I error control, null-centered calibration prior and separate informative-prior analysis",
-        "Joint/ordinal/multiple efficacy, time-to-event endpoints, minimum expected sample-size optimization and integrated reports remain pending"
+        "Ordinal and multiple efficacy Dirichlet monitoring, exact correlated operating characteristics and deduplicated finite-grid power calibration",
+        "Joint efficacy/toxicity, time-to-event endpoints, minimum expected sample-size optimization and integrated reports remain pending"
       ],
       "validation": [
         "Exact rational beta-binomial tails in both endpoint directions, cutoff equality, complete binary-path enumeration, reflected efficacy/toxicity grid calibration and separation of informative analysis prior",
-        "docs/bop2-binary.md"
+        "docs/bop2-binary.md",
+        "Exact Dirichlet marginal identities and complete ordinal/multiple outcome enumeration; docs/bop2-paired.md"
       ]
     },
     {

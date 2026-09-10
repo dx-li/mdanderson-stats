@@ -64,6 +64,49 @@
       "bytes": 65668,
       "sha256": "4b28378bfbc61b29ef0870683951ad04768d924772ea25b2bc1997e1ba5f3d08",
       "retrieved_at": "2026-09-10T06:20:21.905132+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/OEhelp.pdf",
+      "bytes": 103424,
+      "sha256": "b7aed14e789ce3298357019a8cbe4417555671b46fab662c484b89d9202d6223",
+      "retrieved_at": "2026-09-10T06:30:16.261947+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/CPEhelp.pdf",
+      "bytes": 104166,
+      "sha256": "e501e2154ba9d506c77253e7ad3e1c0d60381e5d25a841fe88b17fef9f634cb8",
+      "retrieved_at": "2026-09-10T06:30:16.262486+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Null4Help.pdf",
+      "bytes": 71424,
+      "sha256": "0f0990410e6a6e74f698fddde8d0456a0081e76143996f52fcd797badf2236c8",
+      "retrieved_at": "2026-09-10T06:30:16.262763+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Null5Help.pdf",
+      "bytes": 62268,
+      "sha256": "c60a9e245c2f4896c1c2db1164f0d925fbcf822f33dea19b416913d05d8de05d",
+      "retrieved_at": "2026-09-10T06:30:16.263148+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Alter4Help.pdf",
+      "bytes": 71517,
+      "sha256": "7f0f03e96102b6dea2c72dec7629a45d813be9fb0e802f2cf781fa42c057da75",
+      "retrieved_at": "2026-09-10T06:30:16.263402+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Alter5Help.pdf",
+      "bytes": 35508,
+      "sha256": "e3b16c68feff6bc2521d2f653f4e1db5a589cd864e0f58b137683b40b0ce783b",
+      "retrieved_at": "2026-09-10T06:30:16.263627+00:00"
+    },
+    {
+      "url": "https://eurekamag.com/research/059/454/059454786.pdf",
+      "doi": "10.1002/sim.7338",
+      "retrieved_at": "2026-09-10T06:30:16.263630+00:00",
+      "role": "Original paper sections 2.1-2.3: Dirichlet model and AND stopping rule for ordinal/multiple efficacy",
+      "retrieval": "Read via web PDF extraction; direct archive download returned HTTP 403"
     }
   ],
   "application_version": "1.4.27.0",
