@@ -4,7 +4,7 @@ MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
 including regression, ordinal, multinomial and general design-matrix models.
-Remaining S-plus regression SMO families and complete native workflows remain
+Ordinal regression SMO and complete native workflows remain
 pending; the catalog status is **partial**.
 
 The original S-plus 2.1 archive has a broader scope than the later R archive.
@@ -611,9 +611,8 @@ one row must have a positive count; zero-count rows are excluded from likelihood
 and rank calculations. The shared engine also supports `family="cloglog"`,
 `"poisson"` and `"exponential"`. Exponential survival requires a positive scalar
 study duration shared by the design points. These extensions preserve the same
-likelihood/censoring models as the polynomial regression interface. Multiplicative
-binomial log-linear SMO, the separate original `noncent.mvloglin.s` model, remains
-pending.
+likelihood/censoring models as the polynomial regression interface. The separate multiplicative
+binomial log-linear SMO model is described below.
 
 ```python
 from mdanderson_stats import asypow_smo_design
@@ -642,6 +641,57 @@ Numerical checks verify explicit polynomial matrices against all four existing
 regression families, a model without an intercept, unused extreme-covariate rows,
 and rank rejection. The shared log-space likelihood, gradient scaling, bounded
 optimization and convergence limitations remain as described for regression.
+
+## Multiplicative-binomial log-linear SMO
+
+`asypow_smo_design(..., family="loglinear")` implements the original
+`noncent.mvloglin.s` model. Each observation is binomial with event probability
+`exp(design @ log(coefficients))`, equivalently the product of positive
+coefficients raised to their design-row exponents. Individual coefficients can
+exceed one when every resulting probability is still strictly below one.
+
+Coefficients, lower/upper bounds and fixed constraint values are supplied on the
+original positive scale. They are transformed to logs for fitting; equality
+components are preserved by the monotone transform. Returned null coefficients
+are transformed back to the original scale. The degrees of freedom are unchanged.
+All original-scale bounds must be finite and strictly positive.
+
+```python
+from mdanderson_stats import asypow_smo_design
+
+design = asypow_smo_design(
+    [0.2, 0.8, 1.1],
+    [[1, -1, 0], [1, 0, 1], [1, 1, 0], [1, 2, 1]],
+    family="loglinear",
+    observations=[1, 2, 3, 4],
+    constraints=[1, 3, 1],
+    lower=[0.05, 0.6, 0.8],
+    upper=[0.3, 1.2, 1.3],
+)
+assert abs(design.null_parameters[0] - 0.208352279326602) < 1e-8
+assert abs(design.null_parameters[1] - 0.813728633695676) < 1e-8
+assert abs(design.sample_size() - 21819.4182519509) < 1e-5
+```
+
+The original expected-log-likelihood body, evaluated unchanged in R, gives
+w=0.00040554979088569532 for this example. An independent expected-score/Hessian
+solution gives the null coefficients above, with score residuals below 2e-17.
+The original chi-square approximation gives the displayed sample size. The
+comparison does not execute the S-plus/Fortran optimizer. Identity-design tests
+reduce this model to independent binomial groups and verify fixed/equality
+constraints, including probabilities scaled by 1e-250.
+
+The binomial log probabilities and KL remainders stay in log space. Likelihood
+normalization is applied inside each log-sum term to retain optimizer progress
+for rare probabilities; subtracting two large aggregate logs can lose that
+progress. The analytic
+predictor score is `(p_alternative-p_candidate)/(1-p_candidate)`, and alternative
+predictor information scales optimization as in the other design families.
+Choose computational bounds that keep every evaluated `design @ log(coefficients)`
+strictly negative. Invalid candidate probabilities raise errors; this interface
+does not optimize over an additional set of coupled domain inequalities.
+The expected likelihood is concave in log coefficients on its valid domain;
+the generic convergence and search-bound checks still apply.
 
 ## Logistic and Poisson regression SMO
 
@@ -705,7 +755,7 @@ bounds whose predictors and likelihoods remain representable; overflow and rank
 failure raise errors. `tolerance` controls a scaled gradient criterion, so very
 small effects should be checked for sensitivity to a tighter tolerance. The
 logistic and Poisson expected likelihoods are concave, subject to identifiable
-designs. Ordinal and multiplicative-binomial log-linear SMO wrappers remain pending.
+designs. Ordinal regression SMO remains pending.
 
 ## Complementary-log-log regression SMO
 

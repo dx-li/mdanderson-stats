@@ -5,8 +5,10 @@ from numpy.typing import ArrayLike
 from scipy.special import logsumexp
 
 from ._validation import finite, scalar
+from .asypow_constraints import _components
 from .asypow_smo import SMOPower
 from .asypow_smo_regression import _fit_regression
+from .boin import _owned
 
 
 def asypow_smo_design(
@@ -27,6 +29,8 @@ def asypow_smo_design(
     Each row has one covariate vector; one-based constraints index coefficients.
     The default logistic model is ASYPOW's noncent.mvlogistic. The shared engine
     also supports cloglog, Poisson and uniformly censored exponential survival.
+    loglinear uses positive multiplicative coefficients and returns their null
+    values on that same scale; its probabilities must remain strictly below one.
     """
     theta = finite(coefficients, "coefficients")
     if theta.ndim != 1 or not 1 <= theta.size <= 500:
@@ -39,8 +43,8 @@ def asypow_smo_design(
     count = np.broadcast_to(finite(observations, "observations"), (len(x),))
     if np.any(count < 0) or not np.any(count > 0):
         raise ValueError("observations must be nonnegative with a positive total")
-    if family not in ("logistic", "cloglog", "poisson", "exponential"):
-        raise ValueError("family must be logistic, cloglog, poisson, or exponential")
+    if family not in ("logistic", "cloglog", "poisson", "exponential", "loglinear"):
+        raise ValueError("family must be logistic, cloglog, poisson, exponential, or loglinear")
     length = None
     if family == "exponential":
         if duration is None or scalar(duration, "duration") <= 0:
@@ -48,10 +52,24 @@ def asypow_smo_design(
         length = np.array([duration])
     elif duration is not None:
         raise ValueError("duration is only used for exponential survival")
+    if family == "loglinear":
+        lo = np.broadcast_to(finite(lower, "lower"), theta.shape)
+        hi = np.broadcast_to(finite(upper, "upper"), theta.shape)
+        if np.any(theta <= 0) or np.any(lo <= 0) or np.any(hi <= 0):
+            raise ValueError("log-linear coefficients and bounds must be positive")
+        # A monotone log transform preserves fixed/equality hypotheses and df.
+        _components(constraints, theta.size)
+        rows = finite(constraints, "constraints").reshape(-1, 3).copy()
+        fixed = rows[:, 0] == 1
+        if np.any(rows[fixed, 2] <= 0):
+            raise ValueError("fixed log-linear coefficients must be positive")
+        rows[fixed, 2] = np.log(rows[fixed, 2])
+        constraints, lower, upper = rows, np.log(lo), np.log(hi)
+        theta = np.log(theta)
     used = count > 0
     log_weight = np.log(count[used])
     log_weight -= logsumexp(log_weight)
-    return _fit_regression(
+    result = _fit_regression(
         theta[None, :],
         x[used],
         np.zeros(np.count_nonzero(used), dtype=np.intp),
@@ -64,3 +82,11 @@ def asypow_smo_design(
         subtract_df,
         tolerance,
     )
+    if family == "loglinear":
+        return SMOPower(
+            result.divergence_per_observation,
+            result.degrees_of_freedom,
+            _owned(np.exp(result.null_parameters)),
+            result.subtract_df,
+        )
+    return result

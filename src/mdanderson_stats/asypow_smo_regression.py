@@ -123,6 +123,12 @@ def _fit_regression(
         return finite(eta, "linear predictors")
 
     def binary_logs(eta: FloatArray) -> tuple[FloatArray, FloatArray]:
+        if family == "loglinear":
+            if np.any(eta >= 0):
+                raise ValueError(
+                    "log-linear binomial predictors must be negative; review bounds/design"
+                )
+            return eta, np.log(-np.expm1(eta))
         if family != "cloglog":
             return -np.logaddexp(0, -eta), -np.logaddexp(0, eta)
         with np.errstate(over="ignore", under="ignore", divide="ignore"):
@@ -134,7 +140,11 @@ def _fit_regression(
     log_p, log_s = binary_logs(eta)
     # Normalize likelihood curvature for optimization; restore its original
     # scale in the returned per-observation divergence (essential for rare means).
-    log_information = _log_information(eta, family, None if length is None else length[group_index])
+    log_information = (
+        log_p - log_s
+        if family == "loglinear"
+        else _log_information(eta, family, None if length is None else length[group_index])
+    )
     log_scale = float(logsumexp(log_weight + log_information))
     if not np.isfinite(log_scale):
         raise ArithmeticError("alternative predictor information is numerically unresolved")
@@ -142,14 +152,16 @@ def _fit_regression(
     def likelihood(_p: FloatArray, q: FloatArray) -> float:
         candidate = predictors(q)
         if family in ("poisson", "exponential"):
-            log_kl = log_information + _log_exp_remainder(candidate - eta)
+            log_kl = (log_weight + log_information - log_scale) + _log_exp_remainder(
+                candidate - eta
+            )
         else:
             candidate_p, candidate_s = binary_logs(candidate)
-            first = log_p + _log_exp_remainder(candidate_p - log_p)
-            second = log_s + _log_exp_remainder(candidate_s - log_s)
+            first = (log_weight + log_p - log_scale) + _log_exp_remainder(candidate_p - log_p)
+            second = (log_weight + log_s - log_scale) + _log_exp_remainder(candidate_s - log_s)
             log_kl = np.logaddexp(first, second)
         with np.errstate(over="ignore", under="ignore"):
-            return -float(np.exp(logsumexp(log_weight + log_kl) - log_scale))
+            return -float(np.exp(logsumexp(log_kl)))
 
     def gradient(_p: FloatArray, q: FloatArray) -> FloatArray:
         candidate = predictors(q)
@@ -161,6 +173,9 @@ def _fit_regression(
             log_difference[~large] = np.log(np.abs(np.expm1(delta[~large])))
         if family in ("poisson", "exponential"):
             log_score = log_weight + log_information + log_difference - log_scale
+        elif family == "loglinear":
+            _, candidate_s = binary_logs(candidate)
+            log_score = log_weight + log_p - candidate_s + log_difference - log_scale
         elif family == "cloglog":
             # p_alt-p_null = exp(-z_null)-exp(-z_alt), z=exp(eta).
             # Preserve the difference even when z or the probabilities underflow.
