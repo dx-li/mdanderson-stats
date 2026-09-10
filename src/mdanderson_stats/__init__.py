@@ -454,6 +454,14 @@ from .single_study import SingleStudy, SingleStudySpecification
 from .single_two_allocation import SingleTwoSampleAllocation, single_optimize_two_sample_allocations
 from .single_two_sample import SingleTwoSamplePrecision, single_two_sample_precision
 from .single_uniform import SingleUniformCriterion, single_uniform_criterion
+from .sogs import (
+    SOGS_MOUSE_LENGTHS,
+    SOGSCrossover,
+    SOGSScreen,
+    sogs_eligible,
+    sogs_recombine,
+    sogs_screen,
+)
 from .sppcr_analysis import (
     SPPCRAnalysis,
     SPPCRReports,
@@ -577,6 +585,12 @@ from .windows import (
 )
 
 __all__ = [
+    "SOGS_MOUSE_LENGTHS",
+    "SOGSCrossover",
+    "SOGSScreen",
+    "sogs_recombine",
+    "sogs_screen",
+    "sogs_eligible",
     "event_chart_legend",
     "EventLineStyle",
     "event_dates",

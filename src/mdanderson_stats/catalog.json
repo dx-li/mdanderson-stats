@@ -1938,9 +1938,14 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Deterministic donor-segment crossover, source approximately 5-cM marker screening, original mouse chromosome lengths and all four offspring eligibility rules. Stochastic crossover/offspring generation, multi-generation replicate simulation and reports remain pending."
+      ],
+      "validation": [
+        "Unchanged Fortran one_event/is_missed/b_stretch and controlled one_simulation eligibility; tests/test_sogs.py; tests/fixtures/sogs-native-kernels.json",
+        "Conservation, probe-endpoint and invalid-interval checks; docs/sogs.md; docs/sogs-sources.json"
+      ]
     },
     {
       "id": 57,

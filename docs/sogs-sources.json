@@ -1,0 +1,60 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "archive.tar.gz",
+      "bytes": 538357,
+      "sha256": "bb7c48beccab206b4b557cbf3b434f84f0d67203baa454add92a881fbd4db768",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/Legal.doc",
+      "bytes": 2435,
+      "sha256": "ebb5f0f053a68206d56e07af8c0799037556a9a001f72ea249a5edf3bcb244d8",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/readme",
+      "bytes": 877,
+      "sha256": "bd8dc897e6199f8aa53ea382b49e9583a50063d2088dcc8a33aa84a5076872ff",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/docs/doc.txt",
+      "bytes": 15778,
+      "sha256": "5d105b955c09a2a3fa6cb3bec9ee3805794f5491e814c77e9d45d7f2012ad336",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/source/sim_input.f90",
+      "bytes": 1679,
+      "sha256": "a0c5051a9205c9c3f89e24e8e38c59ea033845c44b86b3611ebf7d19655333be",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/source/sim_info.f90",
+      "bytes": 16542,
+      "sha256": "127edf05446b27be2651f3b19d43df4dfd269b043c2eece98b7f6ab9f013a74a",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/source/one_simulation.f90",
+      "bytes": 8006,
+      "sha256": "379472b1c9a3dfecd925979a5b314f676670745972e2a463de039eefbb787892",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/source/chrom_sim.f90",
+      "bytes": 19285,
+      "sha256": "dc83efc46fe3f6a339cca191a26a464756e7c4a9b99e498cf5793d6005f147f8",
+      "retrieved_date": "2026-09-10"
+    }
+  ]
+}

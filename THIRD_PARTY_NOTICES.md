@@ -657,3 +657,15 @@ implementation differences are in `docs/eventchart.md` and
 `docs/eventchart-sources.json`. The original S source and example data are not
 redistributed. The downloaded readme identifies authors and references but does
 not include a separate software license grant.
+
+## SOGS
+
+`sogs.py` implements chromosome recombination, screening and offspring eligibility
+from SOGS by Michael M. Weil, Barry W. Brown and Dan M. Seachitopol. Copyright
+(1997), The University of Texas, M. D. Anderson Cancer Center, Department of
+Biomathematics. The [original legal notice](notices/mdanderson-sogs-Legal.txt)
+permits copying/distribution under its stated terms, permits non-commercial
+source reuse and requires written permission for commercial source use. These
+terms are preserved; this adaptation does not replace them with another license.
+Source archives and original implementation files are not redistributed. See
+`docs/sogs.md` and `docs/sogs-sources.json` for methods and provenance.

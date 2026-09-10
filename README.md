@@ -924,3 +924,7 @@ calendar date conversion/formatting. Categorical conversion supports string code
 explicit factor order, unobserved categories and shared time columns. Grouped
 styles, general calendar-covariate layouts, square plots and separate legend pages
 complete the [advertised plotting families](docs/eventchart-coverage.md).
+
+[SOGS](docs/sogs.md) adds donor-segment recombination, marker screening and all
+four offspring eligibility rules for genotype-selection breeding. The stochastic
+multi-generation simulator and reports remain pending.
