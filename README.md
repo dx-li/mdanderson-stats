@@ -865,5 +865,6 @@ pending.
 significance calculations with independent-group binomial, Poisson and
 exponential-survival information, including linear/quadratic regression designs
 and complementary-log-log binomial models. Raw ordinal and cumulative-link
-ordinal regression information are also available. Remaining multivariable and
-log-linear interfaces are pending.
+ordinal regression information, general logistic/multiplicative-binomial designs,
+and information reparameterization are also available. Full native workflow
+coverage remains pending.

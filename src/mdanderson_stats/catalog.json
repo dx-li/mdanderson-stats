@@ -1289,15 +1289,17 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Local information-matrix noncentrality and null projection for linear contrasts; noncentral chi-square power, continuous sample size and significance inversion; independent-group binomial, Poisson and uniformly accrued exponential-survival information. Remaining multivariable/log-linear interfaces and full native workflow remain pending.",
+        "Local information-matrix noncentrality and null projection for linear contrasts; noncentral chi-square power, continuous sample size and significance inversion; independent-group binomial, Poisson and uniformly accrued exponential-survival information. Full native workflow coverage remains pending.",
         "Linear/quadratic regression information for logistic and complementary-log-log binomial, Poisson and exponential-survival models; multiple independent groups and covariate-specific allocations.",
-        "Ordinal cumulative-probability information and logistic/cloglog ordinal regression designs with linear/quadratic shared slopes and multiple independent groups."
+        "Ordinal cumulative-probability information and logistic/cloglog ordinal regression designs with linear/quadratic shared slopes and multiple independent groups.",
+        "General design-matrix logistic and multiplicative-binomial log-linear information, plus delta-method information reparameterization using a supplied Jacobian."
       ],
       "validation": [
         "tests/test_asypow.py",
         "docs/asypow.md",
         "tests/test_asypow_regression.py",
-        "tests/test_asypow_ordinal.py"
+        "tests/test_asypow_ordinal.py",
+        "tests/test_asypow_design.py"
       ]
     },
     {

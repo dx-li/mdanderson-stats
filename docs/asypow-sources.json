@@ -140,6 +140,27 @@
       "retrieved_date": "2026-09-10",
       "bytes": 917,
       "sha256": "b90b43c384abfd6020d2a6ba481f4f41cb30122ac79ee4ad2b4935f7528adc07"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.mvlogistic.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1821,
+      "sha256": "1cf978217e123cbe3db7cbcf9abb497c8881ca4e5b7a671584b2093164aaf006"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.mvloglin.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1937,
+      "sha256": "5fb852db0837542519d8b1123b1b30d25b167d05970a2b3281bd3198f2859636"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.reparam.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1305,
+      "sha256": "9aca803eabfbf2e610e8a71d40ed335745a55563e45570a4f71bf2bed5704228"
     }
   ]
 }

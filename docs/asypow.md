@@ -3,8 +3,8 @@
 MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
-including regression and ordinal designs. Remaining multivariable/log-linear
-interfaces and the complete native workflow remain pending; the catalog status
+including regression, ordinal and general design-matrix models. Complete native
+workflow coverage remains pending; the catalog status
 is **partial**.
 
 ```python
@@ -159,6 +159,57 @@ probability gradients. Both regression links match unmodified ASYPOW R results
 for two-group quadratic designs; reference outputs are in
 `tests/fixtures/asypow-ordinal.json`. Additional checks verify reduction to the
 existing binary models, cross-group slope power, and extreme-predictor cases.
+
+## General design matrices and transformed parameters
+
+`asypow_design_information(coefficients, design, model="logistic", observations=1)`
+implements native `info.mvlogistic` and `info.mvloglin`. Supply one design row
+per covariate pattern and one column per coefficient; include any intercept
+column explicitly. Nonnegative observation weights are normalized over all
+positive-weight rows. A design vector represents one row. Limits are 500
+coefficients and 1,000,000 matrix entries.
+
+For `model="logistic"`, event probability is `logistic(X @ coefficients)` and
+the information is the weighted sum of `p(1-p) * x xᵀ`.
+
+For `model="loglinear"`, coefficients must be positive. The native model is
+**binomial with multiplicative probabilities**:
+`p = exp(X @ log(coefficients))`. Every used row must imply `p < 1`; coefficients
+themselves may exceed one when the full row still implies a valid probability.
+Information is with respect to the supplied positive coefficients, with each
+row contributing `p/(1-p) * (x/coefficients)(x/coefficients)ᵀ`.
+This is separate from the Poisson log-link regression interface.
+
+```python
+from mdanderson_stats import asypow_design_information, asypow_information
+
+theta = [0.2, 0.8]
+info = asypow_design_information(theta, [[1, 0], [1, 1], [1, 2]], model="loglinear")
+design = asypow_information(theta, info, [0, 1], null_values=1)
+assert abs(float(design.power(design.sample_size())) - 0.8) < 1e-12
+```
+
+Log-space weights and scaled design vectors avoid overflowing intermediate
+derivative products. Positive probabilities smaller than a representable float
+can still contribute representable information. Rows with zero allocation are
+skipped before model evaluation, so they need not imply a valid probability.
+This differs from the native loop, which can reject unused log-linear rows.
+
+`asypow_reparameterize(information, jacobian)` implements delta-method information
+for a new parameter vector. Supply `J = d(new parameters)/d(old parameters)` at
+the alternative. The result is the inverse of `J I⁻¹ Jᵀ`. For a log transformation
+of positive parameters, for example, `J = diag(1/parameters)`. The Jacobian may
+have fewer rows than columns for a reduced parameter vector, but must have full
+row rank. The old information must be positive definite. Cholesky solves and
+singular values replace explicit inverses, and row scaling makes the rank check
+less sensitive to differing parameter units. Nonlinear transformations retain
+the usual local delta-method interpretation.
+
+Both general models match native R outputs on weighted, three-coefficient
+designs. Reparameterization matches native R evaluation of a log transformation and an
+independent variance calculation for a reduced contrast. Tests also cover very
+small multiplicative coefficients, probabilities near one, zero-allocation rows,
+and parameter units scaled by `1e-100`/`1e100`.
 
 ## Power and inversions
 
