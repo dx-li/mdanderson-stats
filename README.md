@@ -848,4 +848,6 @@ minimum integer sample sizes for normal means, normal SDs, and independent
 pooled mean differences. Binomial width assurance, attainable lengths, event-
 probability limits and discrete sample-size planning are also available. Poisson
 rate-interval planning includes width probability, length/rate limits and earliest
-qualifying exposure. Binomial differences and survival remain pending.
+qualifying exposure. Binomial-difference Wald-width planning includes full
+probabilities, event-probability limits and balanced sample sizes. Survival
+planning remains pending.

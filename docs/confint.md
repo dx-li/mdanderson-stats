@@ -217,5 +217,58 @@ assert abs(exposure - 222.5920387855) < 1e-8
 assert confint_poisson_probability(exposure, 1, 20, confidence=0.9) >= 0.9
 ```
 
-**Catalog status is partial.** Binomial-difference,
-exponential-survival, and native session/report workflows remain pending.
+## Difference of two binomial proportions
+
+The native `bin2_ci_mod.f90` plans the **plain, unadjusted Wald interval**.
+Its total length is
+`2*z*sqrt(phat1*(1-phat1)/n1 + phat2*(1-phat2)/n2)`, where z is the upper
+normal equal-tail quantile. This differs from the adjusted CID2BP intervals:
+there is no continuity correction, special boundary adjustment or clipping.
+A high probability of a short interval does not establish its nominal coverage;
+small samples can have zero estimated variance and misleadingly narrow CIs.
+
+`confint_binomial_difference_probability(n1,n2,p1,p2,max_length)` evaluates
+width assurance for independent samples. Python folds complementary counts
+in the smaller group, then uses binomial CDF/SF tails for acceptable counts
+in the other group. This needs O(min(n1,n2)) time and memory, rather than
+allocating the full joint-outcome grid. Stable quadratic roots and integer
+cutoff checks locate the variance boundary. Every folded count contributes;
+the source's relative-term early stopping is omitted.
+
+The source also uses its first-group midpoint flag to decide whether to add
+the second group's upper tail. Those are separate conditions: both second-group
+tails must be included even at a first-group midpoint. For n1=2, n2=3, p1=.5,
+p2=.4, length 1.5 and confidence .95, the full width probability is .64.
+Independent joint-outcome enumeration verifies this and other boundary cases.
+
+`confint_binomial_difference_event_limit` holds p1 fixed and returns the largest
+p2 in [0,.5] attaining assurance. The symmetric region p2≥1−limit also qualifies.
+It returns `None` when impossible and .5 when all probabilities qualify.
+`confint_binomial_difference_sample_size` scans every equal per-group integer
+n in the requested range, because assurance can decrease between adjacent n.
+The native search range 10–1000 is the default; users may specify bounds within
+1–10000. This is the first qualifying size **within that range**. At n1=n2=1
+all estimated variances are zero, illustrating why a lower planning bound
+matters for this approximation. Larger sizes need not all attain assurance.
+
+All three APIs accept scalar designs. Fixed sample sizes may be 1–1,000,000;
+probabilities are in [0,1] and max_length must be positive and finite.
+Confidence/assurance ranges match the other CONFINT APIs. The implementation
+matches independent R joint enumeration, including .3145255737 for
+n1=12, n2=17, p1=.2, p2=.4 and length .6 at confidence .95.
+
+```python
+from mdanderson_stats import (
+    confint_binomial_difference_probability,
+    confint_binomial_difference_event_limit,
+    confint_binomial_difference_sample_size,
+)
+
+assert abs(confint_binomial_difference_probability(2, 3, 0.5, 0.4, 1.5) - 0.64) < 1e-12
+assert confint_binomial_difference_sample_size(0.3, 0.2, 0.4, assurance=0.9) == 74
+p = confint_binomial_difference_event_limit(40, 60, 0.2, 0.3, assurance=0.8)
+assert abs(p - 0.0679396627) < 1e-9
+assert abs(confint_binomial_difference_probability(40, 60, 0.2, p, 0.3) - 0.8) < 1e-10
+```
+
+**Catalog status is partial.** Exponential-survival, and native session/report workflows remain pending.

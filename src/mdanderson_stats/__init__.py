@@ -185,6 +185,11 @@ from .confint_binomial import (
     confint_binomial_probability,
     confint_binomial_sample_size,
 )
+from .confint_binomial_difference import (
+    confint_binomial_difference_event_limit,
+    confint_binomial_difference_probability,
+    confint_binomial_difference_sample_size,
+)
 from .confint_normal import (
     confint_normal_probability,
     confint_normal_sample_size,
@@ -501,6 +506,9 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "confint_binomial_difference_probability",
+    "confint_binomial_difference_event_limit",
+    "confint_binomial_difference_sample_size",
     "confint_poisson_probability",
     "confint_poisson_length",
     "confint_poisson_rate_limit",

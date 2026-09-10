@@ -48,6 +48,13 @@
       "retrieved_date": "2026-09-10",
       "bytes": 12946,
       "sha256": "2c54e40431e0677849e80dd5d7ff13cfc7bb455639f563c4a7a3ab65f829176d"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CONFINT/CONFINT_V2.0.zip",
+      "artifact": "confint-2.0/SOURCE/bin2_ci_mod.f90",
+      "retrieved_date": "2026-09-10",
+      "bytes": 7436,
+      "sha256": "15fac4407f46877114e76929f7abd38d6cc7265e79650084ce7dfbb1765cd0c6"
     }
   ]
 }
