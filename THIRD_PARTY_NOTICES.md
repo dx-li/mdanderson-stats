@@ -763,3 +763,8 @@ available only through an explicitly named mode.
 in `clusters` and `musimul` under the same attribution and terms. Empty-cluster
 atom/label alignment is repaired, and probabilities use log-scale arithmetic;
 these differences are documented in `docs/anovaddp.md`.
+
+`anovaddp_hyperparameters.py` implements the `Basesim`, `SampleCovmu`, `S_Sample`
+and `M_sample` conditional formulas under the same attribution and terms. It
+retains the covariance update discarded by the original caller and explicitly
+requires the block-independence needed by its base-covariance update.

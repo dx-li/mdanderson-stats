@@ -2302,13 +2302,15 @@
         "anovaddp_loglikelihood and anovaddp_amplitude_posterior: Gaussian observation likelihood and correlated-prior conditional amplitude update using linear solves.",
         "anovaddp_subject_update and anovaddp_variance_posterior: full subject-level Gaussian/Metropolis sweep with source proposal scales, log acceptance, and residual-variance conditional with explicit documented/source prior-scale modes.",
         "anovaddp_atom_posterior and anovaddp_cluster_sweep: covariate-dependent Gaussian atom conditional, sequential allocation with integrated new-cluster weights, coherent singleton deletion and final atom resampling; log-density normalization.",
-        "Remaining: covariance/base-measure/concentration updates, complete MCMC, new-patient prediction, contrasts/nadirs, file readers and plots. Variance prior-scale and singleton atom/label discrepancies documented; docs/anovaddp.md."
+        "anovaddp_hyperparameter_update: Gaussian base mean, inverse-Wishart base-intercept and random-effect covariances, and Escobar-West concentration transition. Retains discarded native S update; validates base intercept block independence.",
+        "Remaining: complete MCMC orchestration, new-patient prediction, contrasts/nadirs, file readers and plots. Variance prior-scale, singleton atom/label alignment and discarded covariance-update discrepancies documented; docs/anovaddp.md."
       ],
       "validation": [
         "Three parameter vectors at eight times match unchanged native C++ regressione outputs exactly; correlated Gaussian conditional agrees with independent R calculations within 5e-15.",
         "Two focused tests cover normalization, curve branches and knot repair, extreme sigmoid limits, Gaussian moments and positive-definiteness. Complete archive member hashes recorded in docs/anovaddp-sources.json.",
         "Three complete subject sweeps agree with independent R conditional/proposal calculations within 2e-13; exact residual-variance prior contribution, interleaved subjects, source zero-scale rejection and response rescaling checked.",
-        "Native-dimension (5 parameters x 7 covariates) atom posterior and full corrected cluster sweep agree with independent R formulas within 1e-13; singleton removal/creation and Gaussian-density underflow checked."
+        "Native-dimension (5 parameters x 7 covariates) atom posterior and full corrected cluster sweep agree with independent R formulas within 1e-13; singleton removal/creation and Gaussian-density underflow checked.",
+        "Hyperparameter conditional parameters agree with independent R calculations; inverse-Wishart matrix/scalar moments and scale, retained random-effect covariance, fixed base blocks and unsupported cross-block rejection checked."
       ]
     },
     {

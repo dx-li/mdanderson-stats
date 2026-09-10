@@ -9,7 +9,7 @@ curve parameters depends on subject covariates through a DDP mixture.
 **Coverage is partial.** The observation curve, Gaussian likelihood and
 conditional Gaussian amplitude update, complete subject-level transition and
 residual-variance conditional, Gaussian atom posterior and cluster sweep are
-available. Covariance/base-measure updates, full MCMC,
+available, together with covariance, base-mean and concentration updates. Full MCMC,
 new-subject prediction, study contrasts, nadir summaries, source data readers and
 plotting workflow remain to be ported. These kernels do not fit a DDP model by
 themselves and are not a substitute for the full sampler.
@@ -186,7 +186,7 @@ parameter/log-acceptance discrepancy was approximately 1.1e-14. These are
 formula-level comparisons, not an unchanged compiled `simtheta` comparison.
 Two additional focused tests cover those transitions, exact variance updates
 for interleaved subjects, the omitted source prior scale, zero residuals and
-response-unit rescaling by 1e100. The remaining hyperparameter updates and full sampler remain unimplemented.
+response-unit rescaling by 1e100. The full sampler remains unimplemented.
 
 
 ## Covariate-dependent atoms and cluster allocation
@@ -261,5 +261,82 @@ innovations. The sweep exercises singleton deletion, new-atom generation and
 final resampling. Differences were below 5e-15. The comparison uses the corrected
 Gaussian/assignment formulas, not an unchanged compiled native sampler. Two
 focused tests additionally cover the single-subject case, coherent label/count
-invariants, immutable results and density-underflow inputs. Full MCMC,
-hyperparameter updates and predictive/reporting workflows remain pending.
+invariants, immutable results and density-underflow inputs. Full MCMC and predictive/reporting workflows remain pending.
+
+
+## Hyperparameter transition
+
+`anovaddp_hyperparameter_update` covers `Basesim`, `SampleCovmu`, `S_Sample`
+and `M_sample` in their sampler order. Inputs include raw six-dimensional curve
+parameters, design, occupied labels/atoms, the current base covariance, the
+fixed base-mean hyperprior mean, the residual-covariance prior, and concentration
+prior/current values. The design's first column is one, and coefficient layout
+matches the cluster block. The prior mean for the first curve parameter is 2.
+
+```python
+import numpy as np
+from mdanderson_stats import anovaddp_hyperparameter_update
+
+hyper = anovaddp_hyperparameter_update(
+    parameters=[[2, 1, 2, 3, 4, 0.5], [2.1, 2, 1, 2, 3, 0.6]],
+    design=[[1], [1]],
+    labels=[0, 1],
+    atoms=[[1, 2, 3, 4, 0.5], [2, 1, 2, 3, 0.6]],
+    base_covariance=np.eye(5),
+    base_prior=np.zeros(5),
+    covariance_prior=np.eye(6),
+    covariance_df=8,
+    concentration=1,
+    concentration_shape=2,
+    concentration_rate=1,
+    seed=6712,
+)
+print(hyper.concentration, hyper.residual_covariance)
+```
+
+The base mean has hyperprior N(base_prior,1000 I), matching the archived fixed
+precision 0.001 I. Its conditional combines all occupied atoms and the current
+base covariance, and a joint normal draw supplies the updated mean. Given that
+mean, the intercept coefficient block's covariance has inverse-Wishart degrees
+of freedom 10+K and scale `10 I_5 + sum((atom_intercept-mean_intercept) outer
+(atom_intercept-mean_intercept))`. K is the number of occupied clusters.
+Remaining base-covariance blocks are held fixed, as in `SampleCovmu`.
+
+**Block independence is required:** the intercept block must have zero
+cross-covariance with the other coefficient blocks. The native update replaces
+only its top-left 5x5 submatrix without conditioning on cross-block dependence;
+with nonzero cross-covariances that is not the stated conjugate update and may
+not preserve positive definiteness. Python rejects those inputs. Correlations
+within the intercept block and within the remaining fixed submatrix are allowed.
+
+The six-dimensional random-effect covariance uses inverse-Wishart degrees of
+freedom covariance_df+N and scale
+`covariance_df*covariance_prior + sum((theta_i-prior_mean_i) outer
+(theta_i-prior_mean_i))`, where prior_mean_i is `[2, F_i*atom_label_i]`.
+Covariance_df is an integer at least six. **The native caller discards the return
+value of `S_Sample`, so S never changes.** The Python transition returns and
+retains the draw; the full sampler must propagate it. This repairs the omitted
+update rather than reproducing a chain with fixed S.
+
+The concentration update follows the source's Escobar–West augmentation:
+eta ~ Beta(M+1,N), rate = concentration_rate-log(eta), and a mixture of gamma
+shapes concentration_shape+K and concentration_shape+K-1. The higher-shape
+mixing probability is `(concentration_shape+K-1) /
+(N*rate+concentration_shape+K-1)`. The implementation calculates that probability
+in log space and uses the rate parameterization for the gamma draw.
+
+Covariance draws use a Bartlett factorization with triangular solves, avoiding
+inversion of a sampled precision matrix. The returned immutable result includes
+all draws and the conditional means, covariance scales/degrees of freedom,
+beta auxiliary and selected gamma parameters for audit. A fixed seed produces
+a repeatable transition. Unrepresentable or nonpositive draws fail explicitly;
+there is no covariance clipping or fabricated positive concentration.
+
+Independent R calculations verify the normal conditional, both inverse-Wishart
+scales and concentration-mixture parameters. Five thousand two-dimensional
+inverse-Wishart draws agree with their analytic expectation within five Monte
+Carlo standard errors; the scalar case matches inverse gamma exactly up to
+floating-point rounding. Focused checks also verify the retained S update,
+positive definiteness, unchanged fixed base-covariance blocks, and rejection of
+unsupported cross-block dependence. These do not establish convergence of a
+complete chain: MCMC orchestration and prediction/reporting are still pending.
