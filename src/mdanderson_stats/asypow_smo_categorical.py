@@ -7,6 +7,7 @@ from numpy.typing import ArrayLike
 from scipy.special import logsumexp
 
 from ._validation import FloatArray, finite
+from .asypow_categorical_constraints import _fixed_categorical_null
 from .asypow_smo import SMOPower, _poisson_log_kl
 from .boin import _owned
 
@@ -31,6 +32,7 @@ def _masses(parameters: FloatArray, ordinal: bool) -> FloatArray:
 def _categorical(
     parameters: ArrayLike,
     null: ArrayLike | None,
+    constraints: ArrayLike | None,
     group_size: ArrayLike,
     subtract_df: bool,
     ordinal: bool,
@@ -47,7 +49,11 @@ def _categorical(
     if np.any(weight <= 0):
         raise ValueError("group_size must be positive")
     log_weight = np.log(weight) - logsumexp(np.log(weight))
-    if null is None:
+    if constraints is not None:
+        if null is not None:
+            raise ValueError("supply either null parameters or constraints, not both")
+        q, df = _fixed_categorical_null(p, mass, constraints, ordinal)
+    elif null is None:
         if len(p) < 2:
             raise ValueError("equality testing requires at least two groups")
         normalized = np.exp(log_weight)
@@ -76,6 +82,7 @@ def asypow_smo_multinomial(
     probabilities: ArrayLike,
     *,
     null_probabilities: ArrayLike | None = None,
+    constraints: ArrayLike | None = None,
     group_size: ArrayLike = 1,
     subtract_df: bool = True,
 ) -> SMOPower:
@@ -84,13 +91,16 @@ def asypow_smo_multinomial(
     Omit the null to compare all group distributions, or supply a vector/row
     matrix fixing every free probability. Null parameters retain group rows.
     """
-    return _categorical(probabilities, null_probabilities, group_size, subtract_df, False)
+    return _categorical(
+        probabilities, null_probabilities, constraints, group_size, subtract_df, False
+    )
 
 
 def asypow_smo_ordinal(
     cumulative: ArrayLike,
     *,
     null_cumulative: ArrayLike | None = None,
+    constraints: ArrayLike | None = None,
     group_size: ArrayLike = 1,
     subtract_df: bool = True,
 ) -> SMOPower:
@@ -99,4 +109,4 @@ def asypow_smo_ordinal(
     Omit the null to compare all group distributions, or supply a vector/row
     matrix fixing every cumulative probability. The terminal 1 is implicit.
     """
-    return _categorical(cumulative, null_cumulative, group_size, subtract_df, True)
+    return _categorical(cumulative, null_cumulative, constraints, group_size, subtract_df, True)

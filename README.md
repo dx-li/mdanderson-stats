@@ -870,5 +870,6 @@ multinomial information and information reparameterization are also available.
 SMO binomial, Poisson, multinomial, ordinal and censored exponential-survival
 fixed-null/equality designs are available with both df conventions.
 Mixed fixed/equality constraints are supported for binomial, Poisson and survival
-groups. Categorical mixed constraints, other SMO models and full native workflows
-remain pending.
+groups. Partial fixed categorical nulls redistribute remaining probability using
+expected-likelihood maximization. Unanchored categorical equality constraints,
+other SMO models and full native workflows remain pending.

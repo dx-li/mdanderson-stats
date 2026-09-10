@@ -4,7 +4,7 @@ MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
 including regression, ordinal, multinomial and general design-matrix models.
-Remaining S-plus SMO models, categorical mixed constraints and complete native workflows remain
+Remaining S-plus SMO models, unanchored categorical equality constraints and complete native workflows remain
 pending; the catalog status is **partial**.
 
 The original S-plus 2.1 archive has a broader scope than the later R archive.
@@ -394,7 +394,7 @@ join. For p=(0.1,0.2,0.4,0.8), allocation=(1,2,3,4) and equalities (1,4), (2,3),
 instead leaves group 1 at 0.1 and pools only the other three to 0.5333333. This
 port preserves every connection. It also accepts consistent redundant rows that
 the native constraint checker rejects, while counting their independent rank.
-These extensions do not apply yet to categorical SMO or regression models.
+Categorical fixed constraints are described below; regression constraints remain pending.
 
 ## SMO multinomial and ordinal designs
 
@@ -409,8 +409,8 @@ All category masses must be positive, including the implicit final category.
 Omitting the null compares the complete distributions across G>=2 groups.
 The null is the allocation-weighted pooled distribution, with df=(G-1)*(K-1).
 Supplying null parameters fixes every free parameter, with df=G*(K-1); a
-single vector broadcasts to all groups. Mixed constraints, partial constraints,
-and equality between selected categories remain pending. Null parameters in
+single vector broadcasts to all groups. Partial fixed constraints are supported
+as described below; unanchored equality components remain pending. Null parameters in
 `SMOPower` are always a G by (K-1) matrix in the input parameterization.
 
 The two parameterizations produce the same divergence and power for the same
@@ -446,6 +446,50 @@ is a valid null with cumulative probabilities (0.25,0.5). The original ordinal
 routine incorrectly rejects it: repeated zero equality markers are interpreted
 as duplicate equality constraints. This port accepts the valid null and gives
 the same divergence as the multinomial parameterization.
+
+## Partial fixed categorical nulls
+
+Both categorical SMO functions now accept `constraints=` using the original
+three-column format. Indices are one-based, flattened group by group across
+K-1 free category probabilities or cumulative thresholds. A row `[1,i,value]`
+fixes the selected parameter. An equality component is also supported when it
+contains a fixed value, which fixes all its members. An equality component with
+no fixed value raises `NotImplementedError`; its constrained optimization remains
+pending. The existing all-distributions-equal shortcut is still available by
+omitting both the null and constraints arguments.
+
+For multinomial outcomes, fixing some probabilities leaves the remaining mass
+to distribute among the other categories, including the implicit final one.
+The expected-likelihood maximizer preserves their conditional probabilities:
+`q[j] = remaining_null_mass * p[j] / remaining_alternative_mass`.
+For ordinal outcomes, fixed cumulative thresholds divide the categories into
+segments. Each segment retains its alternative conditional category distribution
+while receiving the total mass specified by its two bounding thresholds.
+Degrees of freedom count the distinct fixed parameters. Unconstrained groups
+retain their alternative distributions. Infeasible fixed values are rejected.
+
+```python
+from mdanderson_stats import asypow_smo_multinomial, asypow_smo_ordinal
+
+multi = asypow_smo_multinomial([0.2, 0.3], constraints=[1, 1, 0.4])
+assert abs(multi.null_parameters[0, 1] - 0.225) < 1e-14
+assert abs(multi.divergence_per_observation - 0.1830324436988713) < 1e-13
+ordinal = asypow_smo_ordinal([0.2, 0.5, 0.8], constraints=[1, 2, 0.6])
+assert abs(ordinal.null_parameters[0, 0] - 0.24) < 1e-14
+assert abs(ordinal.null_parameters[0, 2] - 0.84) < 1e-14
+```
+
+The multinomial source sets q=(0.4,0.3,0.3) for the first example, leaving its
+unconstrained free probability unchanged. It gives w=0.23356675154201234.
+That is not the expected-likelihood maximizer: the correct q=(0.4,0.225,0.375)
+gives w=0.18303244369887126. Direct R likelihood evaluation and independent scalar
+optimization confirm this correction; aggregating the unconstrained categories
+also recovers the existing binomial SMO calculation exactly up to rounding.
+The ordinal example similarly reduces to a binomial test at its fixed threshold,
+with w=0.040821994520255173. Tests check the conditional allocations, likelihood
+score, power inversion, fixed components across groups and infeasible nulls.
+The original ordinal duplicate-marker rejection described above also affects
+some partial fixed hypotheses.
 
 ## SMO exponential survival
 
