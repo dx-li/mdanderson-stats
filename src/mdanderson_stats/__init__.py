@@ -73,6 +73,11 @@ from .bop2_paired import (
 from .bop2_paired_optimization import BOP2PairedOptimization, optimize_bop2_paired
 from .bop2_sample_size import BOP2BinarySampleSizeOptimization, optimize_bop2_binary_sample_size
 from .bop2_survival import BOP2SurvivalDesign, BOP2SurvivalState, bop2_survival_design
+from .bop2_survival_optimization import (
+    BOP2SurvivalOperatingCharacteristics,
+    BOP2SurvivalOptimization,
+    optimize_bop2_survival,
+)
 from .bop2_survival_trial import (
     BOP2SurvivalSimulation,
     BOP2SurvivalTrial,
@@ -398,6 +403,9 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "BOP2SurvivalOperatingCharacteristics",
+    "BOP2SurvivalOptimization",
+    "optimize_bop2_survival",
     "BOP2SurvivalDesign",
     "BOP2SurvivalState",
     "bop2_survival_design",

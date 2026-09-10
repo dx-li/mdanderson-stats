@@ -1,5 +1,6 @@
 """Calendar replay and Monte Carlo OC for single-arm BOP2 survival monitoring."""
 
+from collections.abc import Iterator
 from dataclasses import dataclass
 
 import numpy as np
@@ -85,48 +86,18 @@ def simulate_bop2_survival(
     Includes one interarrival interval before the first enrollment. Uses administrative
     censoring only. Operating-characteristic estimates have Monte Carlo uncertainty.
     """
-    median, rate, fup = (
-        scalar(true_median, "true_median"),
-        scalar(accrual_rate, "accrual_rate"),
-        scalar(final_followup, "final_followup"),
-    )
-    trials = _integer(n_trials, "n_trials")
-    if median <= 0 or rate <= 0 or fup < 0 or not 1 <= trials <= 100000:
-        raise ValueError(
-            "require positive median/rate, nonnegative follow-up, n_trials in [1,100000]"
-        )
-    if arrival not in ("fixed", "poisson"):
-        raise ValueError("arrival must be fixed or poisson")
-    mean = median / np.log(2)
-    interval = 1 / rate
-    if not np.isfinite(mean) or not np.isfinite(interval):
-        raise ArithmeticError("event or accrual time scale is not representable")
-    generator = np.random.default_rng(rng)
+    trials = _trial_count(n_trials)
     ns = np.empty(trials)
     ds = np.empty(trials)
     clocks = np.empty(trials)
     success = np.empty(trials)
-    for start in range(0, trials, 5000):
-        stop = min(start + 5000, trials)
-        size = stop - start
-        enrolled = (
-            np.broadcast_to(
-                np.arange(1, design.max_subjects + 1) * interval, (size, design.max_subjects)
-            )
-            if arrival == "fixed"
-            else generator.exponential(interval, (size, design.max_subjects)).cumsum(axis=-1)
-        )
-        times = generator.exponential(mean, (size, design.max_subjects))
-        if np.any(~np.isfinite(enrolled)) or np.any(~np.isfinite(times)):
-            raise ArithmeticError("simulated calendar or event times overflow")
-        active = np.ones(size, dtype=bool)
+    for start, enrolled, times, fup in _survival_paths(
+        design.max_subjects, true_median, accrual_rate, final_followup, trials, arrival, rng
+    ):
+        active = np.ones(enrolled.shape[0], dtype=bool)
         for n in design.looks:
-            clock = enrolled[:, n - 1] + (fup if n == design.max_subjects else 0)
-            if np.any(~np.isfinite(clock)):
-                raise ArithmeticError("analysis calendar time overflows")
-            observed = clock[:, None] - enrolled[:, :n]
-            events = np.count_nonzero(times[:, :n] <= observed, axis=-1)
-            state = design.monitor(events, np.minimum(times[:, :n], observed).sum(axis=-1), int(n))
+            clock, events, total = _observe(enrolled, times, int(n), design.max_subjects, fup)
+            state = design.monitor(events, total, int(n))
             ended = active & (state.decision != "continue")
             indices = start + np.flatnonzero(ended)
             ns[indices] = n
@@ -144,3 +115,61 @@ def simulate_bop2_survival(
         float(np.sqrt(probability * (1 - probability) / trials)),
         float(ns.mean()),
     )
+
+
+def _trial_count(n_trials: int) -> int:
+    trials = _integer(n_trials, "n_trials")
+    if not 1 <= trials <= 100000:
+        raise ValueError("n_trials must lie in [1,100000]")
+    return trials
+
+
+def _survival_paths(
+    max_subjects: int,
+    true_median: float,
+    accrual_rate: float,
+    final_followup: float,
+    n_trials: int,
+    arrival: str,
+    rng: np.random.Generator | int | None,
+) -> Iterator[tuple[int, FloatArray, FloatArray, float]]:
+    median, rate, fup = (
+        scalar(true_median, "true_median"),
+        scalar(accrual_rate, "accrual_rate"),
+        scalar(final_followup, "final_followup"),
+    )
+    trials = _trial_count(n_trials)
+    if median <= 0 or rate <= 0 or fup < 0:
+        raise ValueError(
+            "require positive median/rate, nonnegative follow-up, n_trials in [1,100000]"
+        )
+    if arrival not in ("fixed", "poisson"):
+        raise ValueError("arrival must be fixed or poisson")
+    mean = median / np.log(2)
+    interval = 1 / rate
+    if not np.isfinite(mean) or not np.isfinite(interval):
+        raise ArithmeticError("event or accrual time scale is not representable")
+    generator = np.random.default_rng(rng)
+    for start in range(0, trials, 5000):
+        stop = min(start + 5000, trials)
+        size = stop - start
+        enrolled = (
+            np.broadcast_to(np.arange(1, max_subjects + 1) * interval, (size, max_subjects))
+            if arrival == "fixed"
+            else generator.exponential(interval, (size, max_subjects)).cumsum(axis=-1)
+        )
+        times = generator.exponential(mean, (size, max_subjects))
+        if np.any(~np.isfinite(enrolled)) or np.any(~np.isfinite(times)):
+            raise ArithmeticError("simulated calendar or event times overflow")
+        yield start, enrolled, times, fup
+
+
+def _observe(
+    enrolled: FloatArray, times: FloatArray, n: int, max_subjects: int, final_followup: float
+) -> tuple[FloatArray, FloatArray, FloatArray]:
+    clock = enrolled[:, n - 1] + (final_followup if n == max_subjects else 0)
+    if np.any(~np.isfinite(clock)):
+        raise ArithmeticError("analysis calendar time overflows")
+    observed = clock[:, None] - enrolled[:, :n]
+    events = np.count_nonzero(times[:, :n] <= observed, axis=-1).astype(float)
+    return clock, events, np.minimum(times[:, :n], observed).sum(axis=-1)

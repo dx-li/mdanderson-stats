@@ -4,8 +4,8 @@ Catalog entry **112**, [BOP2](https://biostatistics.mdanderson.org/shinyapps/BOP
 is partially implemented for binary efficacy and toxicity: specified-parameter monitoring,
 exact operating characteristics, and power-maximizing finite-grid calibration.
 [Ordinal and multiple efficacy](bop2-paired.md) and
-[joint efficacy/toxicity](bop2-efftox.md) are also available. [Survival monitoring](bop2-survival.md) is available; survival calibration
-and integrated reports remain pending. Categorical [sample-size optimization](bop2-sample-size.md)
+[joint efficacy/toxicity](bop2-efftox.md) are also available. [Survival monitoring and Monte Carlo calibration](bop2-survival.md) are available;
+integrated reports remain pending. Categorical [sample-size optimization](bop2-sample-size.md)
 is available.
 
 The app snapshot is version 1.4.27.0, updated September 4, 2026. Its binary-prior

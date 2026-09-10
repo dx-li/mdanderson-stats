@@ -2,8 +2,9 @@
 
 BOP2 catalog **112** now includes specified-parameter survival monitoring,
 follow-up-time boundaries, calendar replay, and Monte Carlo operating
-characteristics. Automatic survival calibration, survival sample-size searches,
-two-arm/joint survival models and integrated reports remain pending.
+characteristics, plus Monte Carlo grid calibration with independent validation.
+Survival sample-size searches, two-arm/joint survival models and integrated reports
+remain pending.
 
 The model is the exponential/inverse-gamma model described by
 [Zhou et al. (2020), DOI 10.1002/pst.2030](https://pubmed.ncbi.nlm.nih.gov/32524679/).
@@ -138,3 +139,82 @@ checks boundaries and both equality conventions, changes time units by factors
 of `1e-200` and `1e200`, verifies censoring and absence of future-event leakage,
 compares vectorized simulation with individual trial replay, and checks a
 single-look simulation against its analytic success probability.
+
+
+## Monte Carlo parameter calibration
+
+`optimize_bop2_survival` searches cutoff scales and exponents for a fixed maximum
+sample size under the exponential model above. This implements the paper's
+power-maximization principle with an explicit Python finite grid and simulation
+algorithm. Native app grid, random-number stream and tie-breaking parity are not
+claimed. The default grids are scales `0.50,0.51,...,0.99` and exponents
+`0,0.05,...,1`, giving 1,050 candidates.
+
+```python
+from mdanderson_stats import optimize_bop2_survival
+
+fit = optimize_bop2_survival(
+    30,
+    null_median=6,
+    alternative_median=10,
+    accrual_rate=1.5,
+    final_followup=12,
+    looks=[15, 30],
+    type1_error=0.1,
+    n_trials=10000,
+    n_validation=10000,
+    rng=960,
+)
+print(fit.cutoff_scale, fit.gamma)
+print(fit.calibration_oc.success_probability)  # Estimated null error, alternative power.
+print(fit.validation_oc.success_probability)  # Independent post-selection estimates.
+print(fit.validation_oc.success_mcse)
+```
+
+Within each of the null and alternative scenarios, every candidate uses the same
+simulated enrollment and event paths. Posterior probabilities are computed once
+at each look, then compared across batches of cutoff scales. A trial continues
+only while it passes every preceding look. Expected enrollment is calculated
+from the number still continuing at each interim; integer enrollment totals are
+accumulated before division. This avoids repeating gamma calculations and
+simulating fresh patients for each candidate. Scenario samples are independent.
+
+The default `error_control="strict"` requires **estimated** null error no greater
+than `type1_error`, and maximizes estimated alternative power. Power ties favor
+smaller estimated null enrollment, then the input scale/exponent order.
+`error_control="closest"` first minimizes absolute distance between estimated
+null error and the target, then applies the same ranking; it can exceed the
+nominal error. An optional `minimum_power` constrains the estimated power.
+`objective="expected_sample_size"` instead minimizes estimated null enrollment,
+with power as tie-breaker, and requires both `minimum_power` and strict mode.
+No empirically feasible candidate raises `BOP2InfeasibleError`.
+
+Selection always uses the null-centered default weak prior. An optional
+`analysis_prior=[shape,median_scale]` never affects selection. The chosen
+`calibration_design` is evaluated on fresh null and alternative trials, yielding
+`validation_oc`. If an analysis prior is supplied, `analysis_design` is evaluated
+on additional fresh trials, yielding `analysis_oc`; otherwise `analysis_oc` is
+`validation_oc`. No re-selection occurs after these evaluations. The arrival law
+and follow-up convention are the same as in standalone simulation.
+
+All three OC summaries contain two-element arrays ordered **null, alternative**:
+`success_probability`, `success_mcse`, and `expected_sample_size`, plus the number
+of trials per scenario. The plug-in binomial MCSE is descriptive; calibration
+MCSE does not account for selecting the best grid candidate. Independent
+validation reduces that selection bias but **does not guarantee true type I
+error control or target power**. Zero estimated MCSE after zero or all successes
+does not establish certainty. An informative analysis prior may change error
+substantially. Inspect independent validation and use adequate simulation sizes
+before interpreting a selected design's performance.
+
+Custom grids allow at most 10,000 pairs. Calibration and validation allow up to
+100,000 trials each per scenario. Calibration also limits each scenario to
+10 million trial/look combinations to bound memory. A supplied integer seed is
+reproducible; a supplied NumPy generator advances through calibration, validation,
+and optional analysis-prior validation in that order.
+
+Focused calibration validation enumerates a small parameter grid using complete
+standalone trial simulations, checks both objectives under fixed and Poisson
+arrivals, reproduces the independent holdout, crosses the 5,000-trial batch
+boundary, verifies closest-error ranking, and confirms that an informative
+analysis prior leaves selection unchanged.
