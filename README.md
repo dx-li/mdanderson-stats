@@ -991,5 +991,6 @@ link moves address diffuse-prior mixing. Gaussian-copula scenario construction
 and native scenario/dose/utility readers are available. Patient snapshots,
 toxicity-only likelihoods and open-cohort decisions are supported. Single-trial
 calendar simulation includes pending outcomes and explicit final-selection
-conventions; native final-selection parity and operating-characteristic validation
-remain pending.
+conventions. Multi-trial summaries report selection, enrollment, duration and
+normalized utility performance with Monte Carlo errors. Native final-selection
+parity and published operating-characteristic validation remain pending.

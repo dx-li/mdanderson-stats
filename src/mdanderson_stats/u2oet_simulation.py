@@ -1,6 +1,7 @@
 """Calendar-based U2OET trial simulation with auditable pending outcomes."""
 
-from dataclasses import dataclass
+import json
+from dataclasses import asdict, dataclass
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -46,6 +47,7 @@ class U2OETTrial:
     data_seed: int
     posterior_seed: int
     final_scope: str
+    design_json: str = ""
 
 
 def _window(value: ArrayLike, name: str) -> FloatArray:
@@ -141,6 +143,37 @@ def simulate_u2oet_trial(
     gap = _real(mean_interarrival, "mean_interarrival")
     if gap.ndim or gap <= 0:
         raise ValueError("mean_interarrival must be a positive scalar")
+    design_json = json.dumps(
+        {
+            "format_version": 1,
+            "doses1": d1.tolist(),
+            "doses2": d2.tolist(),
+            "scenario_joint": scenario.joint.tolist(),
+            "utility": u.tolist(),
+            "criteria": asdict(criteria),
+            "prior_mean": mu.tolist(),
+            "prior_sd": sd.tolist(),
+            "initial": first,
+            "max_patients": maximum,
+            "cohort_size": cohort,
+            "surplus": surplus,
+            "top": top,
+            "greedy": bool(greedy),
+            "efficacy_window": ew.tolist(),
+            "toxicity_window": tw.tolist(),
+            "mean_interarrival": float(gap),
+            "final_scope": final_scope,
+            "model": model,
+            "centering": centering,
+            "draws": draws,
+            "warmup": warmup,
+            "chains": chains,
+            "coordinate_updates": bool(coordinate_updates),
+        },
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    )
     # Posterior workload must not change the data-generating RNG stream.
     seeds = rng.integers(0, 2**63, size=2, dtype=np.int64)
     data_rng, fit_rng = (np.random.default_rng(int(s)) for s in seeds)
@@ -265,4 +298,5 @@ def simulate_u2oet_trial(
         int(seeds[0]),
         int(seeds[1]),
         final_scope,
+        design_json,
     )

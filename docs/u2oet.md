@@ -5,7 +5,7 @@ model probabilities, grouped likelihoods and conditional expected utilities.
 Posterior summaries and new-cohort allocation from supplied posterior draws
 and posterior fitting are also available, along with IID prior sampling,
 beta-moment information, pseudo-trial prior calibration and single-trial calendar
-simulation. Complete native input/report workflows and operating-characteristic
+simulation and multi-trial operating-characteristic summaries. Complete native input/report workflows and operating-characteristic
 validation remain pending. Gaussian
 scenario construction and native scenario/dose/utility readers are available;
 Patient snapshots, toxicity-only likelihoods and next-patient cohort decisions
@@ -116,7 +116,7 @@ Remaining coverage includes:
 - Validation of complete trial operating characteristics.
   Explicit-prior fitting, pseudo-trial centers and prior ESS are supplied below.
 - Adaptive MCMC precision targets and native final-selection validation.
-- Multi-trial operating characteristics and complete native configuration/reports.
+- Complete native configuration/reports.
   Calendar simulation, open-cohort handling and partial likelihoods are supplied below.
 
 The original program is freely downloadable, but a general redistribution
@@ -698,6 +698,57 @@ retained true outcomes and observation times. This is a workflow check, not a
 reproduction of the paper's 3000-trial operating characteristics.
 
 Still pending: GAO model fitting, adaptive posterior precision control,
-first/new/old-dose cohort-size semantics, multi-trial operating-characteristic
-summaries, complete native configuration/report workflows and validation of
+first/new/old-dose cohort-size semantics, complete native configuration/report
+workflows and validation of
 native final selection.
+
+
+## Multi-trial summaries
+
+`summarize_u2oet_trials(trials)` accepts an iterable of independent results from
+`simulate_u2oet_trial`. A generator allows each full history to be released after
+its counts, selection and diagnostics have been collected. For example, given
+`simulate_one(rng)` configured with one fixed scenario and design:
+
+```python
+import numpy as np
+from mdanderson_stats import summarize_u2oet_trials
+
+rng = np.random.default_rng(7722)
+summary = summarize_u2oet_trials(simulate_one(rng) for _ in range(100))
+print(summary.selection_probability, summary.none_probability)
+print(summary.mean_rselect, summary.mean_rtreat)
+```
+
+Each simulation records canonical `design_json` containing the true joint
+probabilities, doses, utility, prior, clinical criteria, timing, allocation rules
+and MCMC settings. Summaries reject different recipes and reused data or posterior
+seeds. Seeds themselves are excluded from the recipe. Results without recorded
+metadata cannot be summarized.
+
+Selection, no-selection, early-stop and best-acceptable selection probabilities
+use all replicates as their denominator. True acceptability uses the clinical
+marginal efficacy/toxicity thresholds, and all exact utility ties among truly
+acceptable pairs count as best. If no pair is truly acceptable, best-selection
+probability is undefined (`NaN`).
+
+The paper's section 4.1 scores normalize true expected utility using the minimum
+and maximum across **all** dose pairs. `rselect` is undefined when no dose was
+selected; `mean_rselect` and its error are explicitly conditional on selection.
+`rtreat` averages utility over each trial's **actual** final enrollment, including
+early-stopped trials. A constant true utility surface makes both normalized
+scores undefined. This conditional selection convention is explicit; native
+summary-file parity has not been established.
+
+The result also contains mean enrollment, per-dose treatment counts, final
+follow-up duration and each trial's final maximum split R-hat. Probability MCSEs
+use the binomial plug-in formula; mean MCSEs use sample SD divided by the square
+root of the relevant replicate count, and are undefined with fewer than two
+observations. Zero plug-in MCSE at a boundary is not a confidence interval or
+proof that an event is impossible. These errors measure between-trial simulation
+uncertainty and do not certify sufficient within-trial MCMC precision.
+
+Hand-calculated three-trial histories verify selection, early stopping, treatment
+allocation, both normalized scores and their MCSEs. A streamed simulation check
+verifies aggregation and a constant-utility case verifies undefined scores. Full
+published operating-characteristic reproduction remains outstanding.
