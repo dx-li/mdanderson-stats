@@ -812,3 +812,7 @@ Multiple endpoints and native reports remain pending.
 [Original TPI](docs/tpi.md) adds posterior-SD intervals, original-paper decision
 tables, two-patient safety gating, isotonic MTD selection and batched simulation,
 alongside the existing mTPI implementation.
+
+[aPCoA](docs/apcoa.md) adds covariate-adjusted principal coordinates, signed
+spectral diagnostics and grouped before/after plots, checked against the original
+R implementation and independent regression calculations.

@@ -1,0 +1,29 @@
+{
+  "sources": [
+    {
+      "url": "https://cran.r-project.org/src/contrib/aPCoA_1.3.tar.gz",
+      "retrieved_date": "2026-09-10",
+      "bytes": 6393,
+      "sha256": "03fdb0b73824bed670e121d6f2dbe4818d070d659515aa1627ad021c9a3c7779"
+    },
+    {
+      "url": "https://oup.silverchair-cdn.com/article-minimal/5825727",
+      "retrieved_date": "2026-09-10",
+      "bytes": 64626,
+      "sha256": "98981457499a14760eeca8b7829bebc4ea2920482ed0cfb51085fdc92424e6d6"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/aPCoA/",
+      "retrieved_date": "2026-09-10",
+      "bytes": 8861,
+      "sha256": "016fff5bb2286f48cded72cd1c7e5b5d24615fc8d98c06d026aa95ef247a1d21"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/cran/ape/master/R/pcoa.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 6720,
+      "sha256": "cd878aee304f68d2284aa8b0ed1c24e97fae6d7e75fcaf63d3aaf21512af3abe"
+    }
+  ],
+  "scope": "Independent implementation of paper Eq. 3 with raw covariate projection matching R 1.3. Native positive-coordinate fixture verified by running original aPCoA function, with plotting extras disabled. Full display parity pending."
+}

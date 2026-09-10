@@ -3477,12 +3477,21 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/aPCoA",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/aPCoA",
-      "references": [],
+      "references": [
+        "https://doi.org/10.1093/bioinformatics/btaa276",
+        "https://cran.r-project.org/package=aPCoA"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Original and covariate-adjusted PCoA via scaled distance centering and rank-revealing SVD projection, with explicit intercept convention",
+        "Positive coordinates, full signed spectra, negative-inertia diagnostics and optional grouped comparison plots"
+      ],
+      "validation": [
+        "Unmodified R aPCoA 1.3 non-Euclidean fixture, independent Euclidean regression residuals, rank deficiency and distance scales 1e-200..1e200; tests/test_apcoa.py",
+        "Pending native ellipses, medoid connectors, interactive file/formula handling and full app audit; docs/apcoa.md"
+      ]
     },
     {
       "id": 148,
