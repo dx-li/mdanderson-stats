@@ -643,3 +643,10 @@ dependency. Diagnostic limitations and weak-prior mixing concerns are explicit.
 group and between-group precisions. Vectorized Gibbs updates retain multiple
 chains for group means, the overall mean and both precision levels. Empirical
 normal comparisons are explicitly distinguished from posterior mean uncertainty.
+
+## Simon's two-stage design
+
+[Simon2S](docs/simon-two-stage.md) provides exact bounded searches for optimal
+and minimax designs, vectorized power and early-stopping probabilities, enrollment
+moments, stage decisions and statistical protocol paragraphs. Published design
+tables and independent exhaustive enumeration validate the implementation.

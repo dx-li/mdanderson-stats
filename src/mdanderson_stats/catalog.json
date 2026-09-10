@@ -2929,9 +2929,18 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Bounded exact search for optimal and minimax Simon two-stage designs with documented tie breaking",
+        "Vectorized operating characteristics: rejection probability, early stopping, continuation, expected enrollment and enrollment standard deviation",
+        "Stage decisions and generated statistical protocol paragraphs for either design"
+      ],
+      "validation": [
+        "Six published optimal/minimax pairs from Simon (1989), Table 1",
+        "Unpruned rational enumeration of all designs through n=10 for two parameter sets",
+        "Exhaustive binary-path operating characteristics, tiny upper-tail check, and source-default example",
+        "docs/simon-two-stage.md"
+      ]
     },
     {
       "id": 114,

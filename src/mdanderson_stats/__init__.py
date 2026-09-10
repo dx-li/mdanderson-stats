@@ -227,6 +227,12 @@ from .seqbin_calibration import (
 from .seqbin_prior import seqbin_prior
 from .seqbin_study import SeqBinStudy, SeqBinStudySpecification
 from .seqbin_table import SeqBinBoundaryTable, seqbin_boundary_table
+from .simon_two_stage import (
+    SimonDesign,
+    SimonDesignSearch,
+    SimonOperatingCharacteristics,
+    simon_two_stage,
+)
 from .single import SingleDesignPrecision, single_design_precision
 from .single_allocation import SingleAllocation, single_optimize_allocations
 from .single_correlation import SingleDesignCorrelation, single_design_correlation
@@ -309,6 +315,10 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "SimonDesign",
+    "SimonDesignSearch",
+    "SimonOperatingCharacteristics",
+    "simon_two_stage",
     "HierarchicalNormalFit",
     "hierarchical_normal",
     "ChainSummary",
