@@ -7,8 +7,9 @@ measurements using subject-specific nonlinear curves; the distribution of those
 curve parameters depends on subject covariates through a DDP mixture.
 
 **Coverage is partial.** The observation curve, Gaussian likelihood and
-conditional Gaussian amplitude update are available. The dependent-DP cluster
-updates, remaining parameter updates, covariance/base-measure updates, full MCMC,
+conditional Gaussian amplitude update, complete subject-level transition and
+residual-variance conditional are available. The dependent-DP cluster updates,
+covariance/base-measure updates, full MCMC,
 new-subject prediction, study contrasts, nadir summaries, source data readers and
 plotting workflow remain to be ported. These kernels do not fit a DDP model by
 themselves and are not a substitute for the full sampler.
@@ -89,10 +90,9 @@ These are conditional moments, not samples or unconditional DDP posterior moment
 The archived `vardati` signature accepts beta0 but never uses it; it draws
 residual variance with inverse-gamma shape `(alpha0+N)/2` and scale `SSE/2`.
 The R manual instead specifies inverse-gamma prior shape alpha0/2 and scale
-beta0/2, which would give posterior scale `(beta0+SSE)/2`. This is an identified
-source discrepancy, not an implemented variance update. The complete sampler
-needs an explicit, documented resolution before native MCMC comparisons can
-be interpreted correctly.
+beta0/2, which would give posterior scale `(beta0+SSE)/2`. The variance API now makes this discrepancy explicit: its default follows the
+documented prior, while `mode="source"` reproduces the omission. Whole-sampler
+comparisons will need to state which variance target they use.
 
 Other native routines and the DDP model structure remain under audit. The source
 also offers replacement of `regressione.cpp` for user-defined response curves;
@@ -121,3 +121,70 @@ That inventory establishes provenance, not completion of every source routine.
 The MDACC portion's original Artistic-license declaration is preserved in
 `notices/mdanderson-anovaddp-COPYING.txt`. Original source, NEWMAT/RANDLIB
 implementations, sample data and the article are not redistributed.
+
+
+## Subject transition and residual variance
+
+`anovaddp_subject_update` performs one `simtheta` sweep conditional on the current
+subject-specific Gaussian prior, residual variance and observations. It first
+draws the amplitudes jointly from their exact conditional posterior. Next it
+proposes tau1 and tau2 in sequence from their Gaussian conditional priors. The
+prior and proposal ratios cancel for these independence proposals, leaving the
+likelihood ratio. Finally it proposes b1 by a symmetric normal random walk with
+standard deviation 0.45 times its conditional-prior standard deviation, as in
+the source. That acceptance ratio includes both likelihood and conditional prior.
+Each conditional uses the values already updated earlier in the sweep.
+
+```python
+import numpy as np
+from mdanderson_stats import anovaddp_subject_update, anovaddp_variance_posterior
+
+step = anovaddp_subject_update(
+    [2, -1, 4, 1, 3, 0.7],
+    [0, 1, 2, 3, 4, 6],
+    [2, 1.9, 0.7, -0.4, 0.3, 2],
+    prior_mean=[1, 0, 3, 0.5, 2, 0.5],
+    prior_covariance=np.eye(6),
+    variance=0.4,
+    seed=70,
+)
+variance = anovaddp_variance_posterior(
+    [step.parameters],
+    [0, 1, 2, 3, 4, 6],
+    [2, 1.9, 0.7, -0.4, 0.3, 2],
+    [0, 0, 0, 0, 0, 0],
+    alpha0=6,
+    beta0=4,
+)
+print(step.parameters, step.accepted)
+print(variance.shape, variance.scale)
+```
+
+Acceptance calculations compare logarithms, avoiding exponentiated-ratio
+overflow. The result provides updated parameters, three acceptance flags and
+clipped log acceptance probabilities in tau1/tau2/b1 order, plus the independent
+normal and uniform innovations used in the sweep. No knot-order truncation is
+added. The curve/conditional-design consistency repair for nearly coincident
+knots described above remains in effect. A seeded local NumPy generator gives
+repeatable standalone sweeps; reusing the same seed on every iteration is not
+an appropriate way to construct a chain. A full-chain API remains pending.
+
+The variance function accepts one six-parameter row per subject and aligned
+time, observation and zero-based subject-ID vectors. Subjects need not be
+contiguous. Observations are grouped once by sorting, avoiding a full data scan
+for each subject. With N observations and squared residual sum SSE, the result
+is inverse-gamma shape `(alpha0+N)/2` and scale `(beta0+SSE)/2` by default. In
+`mode="source"`, the scale is SSE/2 and beta0 is ignored, as in `vardati`.
+All priors must still be positive. A zero source-mode scale raises an error
+because it is not a proper inverse-gamma distribution. This API returns
+conditional distribution parameters, not a variance draw.
+
+Three complete subject transitions were checked against an independent R
+calculation of the archived formulas, using identical supplied normal/uniform
+innovations. They exercise accepted and rejected knot/slope moves; maximum
+parameter/log-acceptance discrepancy was approximately 1.1e-14. These are
+formula-level comparisons, not an unchanged compiled `simtheta` comparison.
+Two additional focused tests cover those transitions, exact variance updates
+for interleaved subjects, the omitted source prior scale, zero residuals and
+response-unit rescaling by 1e100. The dependent-DP updates and full sampler
+remain unimplemented.

@@ -753,3 +753,8 @@ in `notices/mdanderson-anovaddp-COPYING.txt`. These adaptations do not replace
 those terms. Original C++ sources, NEWMAT/RANDLIB code, data and article are not
 redistributed. See `docs/anovaddp.md` and `docs/anovaddp-sources.json` for source
 provenance, scope, native comparisons and documented differences.
+
+`anovaddp_updates.py` adapts the `simtheta` subject transition and the `vardati`
+residual-variance conditional under the same ANOVA DDP attribution and terms.
+The documented variance prior is the default; the source's omitted scale is
+available only through an explicitly named mode.

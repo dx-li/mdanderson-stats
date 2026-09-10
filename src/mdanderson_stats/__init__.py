@@ -7,6 +7,12 @@ from .anovaddp import (
     anovaddp_curve,
     anovaddp_loglikelihood,
 )
+from .anovaddp_updates import (
+    AnovaDDPSubjectUpdate,
+    AnovaDDPVariancePosterior,
+    anovaddp_subject_update,
+    anovaddp_variance_posterior,
+)
 from .apcoa import AdjustedPCoA, PCoAOrdination, adjusted_pcoa
 from .apcoa_plot import plot_adjusted_pcoa
 from .asypow import AsymptoticPower, asypow_information
@@ -616,6 +622,10 @@ from .windows import (
 )
 
 __all__ = [
+    "AnovaDDPSubjectUpdate",
+    "AnovaDDPVariancePosterior",
+    "anovaddp_subject_update",
+    "anovaddp_variance_posterior",
     "AnovaDDPAmplitudePosterior",
     "anovaddp_amplitude_posterior",
     "anovaddp_curve",

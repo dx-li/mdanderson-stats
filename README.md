@@ -963,5 +963,6 @@ conjugate posterior comparison and a two-arm trial simulator with stopping,
 follow-up, allocation summaries and Monte Carlo errors.
 
 [ANOVA DDP](docs/anovaddp.md) now supplies its nonlinear repeated-measurement
-curve, Gaussian likelihood and conditional amplitude update. The dependent-DP
-sampler and its prediction/reporting workflows remain pending.
+curve, Gaussian likelihood, subject-level parameter sweep and residual-variance
+conditional. The dependent-DP sampler and its prediction/reporting workflows
+remain pending.
