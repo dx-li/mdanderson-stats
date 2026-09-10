@@ -68,8 +68,9 @@ sign reversal does not change the omnibus statistic.
 Additional checks cover an analytic tied-censor example, independent-stratum
 addition, group relabeling, absence of information and disconnected groups.
 No claim is made that the entire SURVAN application is implemented: its native
-multivariable proportional-hazards fits, descriptive summaries and
-interactive reporting remain to be ported. Kaplan–Meier and Simon–Lee confidence
+Kalbfleisch–Prentice baseline survival, time-dependent covariates, descriptive
+summaries and interactive reporting remain to be ported.
+[Static-covariate Cox regression](survan-cox.md) is implemented. Kaplan–Meier and Simon–Lee confidence
 calculations are now available through [survan_km](survan-km.md), and
 [logistic regression](survan-logistic.md) provides multivariable binary fits.
 
