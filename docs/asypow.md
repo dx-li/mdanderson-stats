@@ -4,15 +4,15 @@ MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
 including regression, ordinal, multinomial and general design-matrix models.
-The original S-plus SMO methods and complete native workflow coverage remain
+Remaining S-plus SMO models, mixed constraints and complete native workflow coverage remain
 pending; the catalog status is **partial**.
 
 The original S-plus 2.1 archive has a broader scope than the later R archive.
 In particular, it supplies separate SMO and multinomial routines documented in
 the 1997 paper. Coverage is assessed against that broader original scope, not
-just the R package's index. Implemented power calculations currently use the LR
-information-matrix approximation. The SMO expected-log-likelihood calculation,
-including its optional subtraction of degrees of freedom, is not yet available.
+just the R package's index. LR information-matrix calculations and the binomial
+SMO expected-log-likelihood method are available. SMO supports both conventions
+for subtracting degrees of freedom, as described below.
 
 ```python
 import numpy as np
@@ -268,6 +268,54 @@ This is an asymptotic calculation, not finite-sample exact power.
 
 `design.significance(sample_size, power=0.8)` inverts power for significance,
 using the design's degrees of freedom. Inputs broadcast.
+
+## SMO binomial designs
+
+`asypow_smo_binomial(probabilities, null_probabilities=None, group_size=1,
+subtract_df=True)` implements two common original S-plus SMO hypotheses:
+
+- Omit `null_probabilities` to test equality across G>=2 binomial groups. The
+  null probability is the allocation-weighted mean, which maximizes expected
+  log likelihood under equality. Degrees of freedom are G-1.
+- Supply a scalar or vector to fix all G null probabilities. Degrees of freedom
+  are G, including when some alternative components happen to match the null.
+
+Probabilities must be strictly in (0,1); up to 500 groups are supported, with
+positive relative allocations. SMO uses `w = 2 * sum(weight * KL(Bern(p),Bern(q)))`,
+the expected log-likelihood difference, instead of the LR quadratic approximation.
+For near-equal probabilities, stable log remainders avoid cancellation; log-space
+weighting retains small representable divergences.
+
+```python
+from mdanderson_stats import asypow_smo_binomial
+
+design = asypow_smo_binomial([0.4, 0.3], group_size=[10, 9])
+assert abs(design.sample_size() - 806.341114462205) < 1e-8
+assert abs(float(design.power(100)) - 0.061231924153204) < 1e-12
+```
+
+The returned `SMOPower` exposes `power`, `sample_size`, and `significance` methods.
+The default correction gives noncentrality `nu=n*w-df`; `subtract_df=False` uses
+`nu=n*w`. Following the original software, power and significance calculations
+reject nonpositive nu. It is not clamped to zero. Sample-size inversion returns
+a continuous value, requires requested power above significance, and rejects
+an exactly null alternative. Power/significance inputs broadcast; sample-size
+targets are scalar. The shared noncentrality limit of `1e8` also applies.
+
+The original example p=(0.4,0.3), allocation=(10,9), has null probability
+0.35263157894736841 and w=0.01097409068025511. At significance 0.05 and power 0.8,
+sample sizes are approximately 715.2173914 without correction and 806.3411145
+with correction. Direct R calculations and evaluation of the original S-plus
+binomial/noncentrality and power routines agree. For that reference execution,
+the S-plus multi-value return was converted to an R list and the later R
+chi-square wrapper supplied its distribution calculations; statistical formulas
+were unchanged. Inversion was independently checked with a tighter R root.
+
+The significance inverse uses actual df, correcting the original `self.sig.s`
+hardcoded df=1, just as the LR inverse does. Mixed fixed/equality constraints,
+other distribution families, regression SMO and generic expected-likelihood
+optimization remain pending. These tests are asymptotic approximations, not
+finite-sample exact binomial tests.
 
 ## Native comparisons and intentional corrections
 

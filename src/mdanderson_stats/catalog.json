@@ -1289,11 +1289,12 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Local information-matrix noncentrality and null projection for linear contrasts; noncentral chi-square power, continuous sample size and significance inversion; independent-group binomial, Poisson and uniformly accrued exponential-survival information. Original S-plus SMO methods and full native workflow coverage remain pending.",
+        "Local information-matrix noncentrality and null projection for linear contrasts; noncentral chi-square power, continuous sample size and significance inversion; independent-group binomial, Poisson and uniformly accrued exponential-survival information. Remaining SMO models, mixed constraints and full native workflow coverage remain pending.",
         "Linear/quadratic regression information for logistic and complementary-log-log binomial, Poisson and exponential-survival models; multiple independent groups and covariate-specific allocations.",
         "Ordinal cumulative-probability information and logistic/cloglog ordinal regression designs with linear/quadratic shared slopes and multiple independent groups.",
         "General design-matrix logistic and multiplicative-binomial log-linear information, plus delta-method information reparameterization using a supplied Jacobian.",
-        "Original S-plus multinomial information for free category probabilities, corrected to include the implicit final category contribution."
+        "Original S-plus multinomial information for free category probabilities, corrected to include the implicit final category contribution.",
+        "SMO binomial fixed-null and all-groups-equal tests, with optional df subtraction, stable expected-log-likelihood divergence and power/sample-size/significance inversion."
       ],
       "validation": [
         "tests/test_asypow.py",
@@ -1301,7 +1302,8 @@
         "tests/test_asypow_regression.py",
         "tests/test_asypow_ordinal.py",
         "tests/test_asypow_design.py",
-        "tests/test_asypow_multinomial.py"
+        "tests/test_asypow_multinomial.py",
+        "tests/test_asypow_smo.py"
       ]
     },
     {
