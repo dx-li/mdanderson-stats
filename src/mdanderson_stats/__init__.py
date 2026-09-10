@@ -19,6 +19,12 @@ from .bayes_factor_survival import (
     bayes_factor_survival,
     bayes_factor_survival_boundaries,
 )
+from .bayesian_chi_square import (
+    BayesianChiSquare,
+    ExponentialBayesianGOF,
+    bayesian_chi_square_cdf,
+    exponential_bayesian_gof,
+)
 from .bayesian_monitoring import (
     BayesianMonitoringDesign,
     MonitoringOperatingCharacteristics,
@@ -455,6 +461,10 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "BayesianChiSquare",
+    "ExponentialBayesianGOF",
+    "bayesian_chi_square_cdf",
+    "exponential_bayesian_gof",
     "dct_binary_sample_size",
     "DCTNormalSampleSize",
     "dct_normal_sample_size",

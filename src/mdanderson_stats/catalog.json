@@ -2124,9 +2124,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Vectorized Johnson posterior chi-square statistics, bin counts, reference tails and posterior A/exceedance summaries for complete continuous observations",
+        "Exact Gamma-prior exponential posterior diagnostic with explicit hyperparameters, log-rate samples and stable time-unit handling"
+      ],
+      "validation": [
+        "Three focused tests: direct Pearson statistics, exact posterior moments, extreme unit invariance, repeated-data/posterior calibration and misspecification detection; tests/test_bayesian_chi_square.py",
+        "Pending censoring/discrete handling, other model-family fitting and priors, Rychlik bound and native reports; guide inconsistencies recorded in docs/bayesian-chi-square.md"
+      ]
     },
     {
       "id": 67,

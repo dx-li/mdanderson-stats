@@ -1,0 +1,17 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BCSTTE/BCSTTE_UsersGuide.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 123344,
+      "sha256": "85ef8cb10d5043cebb89e1be770bf92317f107f3cf1bf41ace79dbb510f29bdc"
+    },
+    {
+      "url": "https://arxiv.org/pdf/math/0508593",
+      "retrieved_date": "2026-09-10",
+      "bytes": 368660,
+      "sha256": "2688f9005a1902c1b6407cb5d3844bd3113b0bcd0ba841aab8cae52ffa23640f"
+    }
+  ],
+  "scope": "Complete continuous-data posterior diagnostic and explicit-prior exponential posterior. Censoring and native BCSTTE model workflows pending."
+}

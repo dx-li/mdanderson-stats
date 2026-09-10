@@ -789,3 +789,7 @@ remain pending.
 sample sizes with onsite/offsite heterogeneity, unequal arm variances and repeated
 measurements, explicit allocation rounding and achieved power. Native rounding
 and reports remain pending.
+
+[Bayesian Chi Square TTE Fit](docs/bayesian-chi-square.md) adds the complete-data
+posterior diagnostic and exact exponential-posterior workflow. Censoring, other
+family fits, the Rychlik bound and native reporting remain pending.
