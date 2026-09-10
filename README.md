@@ -851,4 +851,5 @@ rate-interval planning includes width probability, length/rate limits and earlie
 qualifying exposure. Binomial-difference Wald-width planning includes full
 probabilities, event-probability limits and balanced sample sizes. Survival
 hazard/mean width assurance is available for fixed counts and Poisson accrual;
-survival design inversions remain pending.
+bracketed survival quantile/design inversions are also available. Automatic
+hazard-range searches and reporting remain pending.

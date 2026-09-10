@@ -343,5 +343,75 @@ fixed = confint_survival_fixed_events([0, 10, 45], 1, 0.5)
 assert fixed.shape == (3,) and fixed[0] == 0
 ```
 
-**Catalog status is partial.** Survival quantile/design inversions and native
+## Survival quantiles and design inversions
+
+`confint_survival_solve` solves for one of `hazard`, `accrual_rate`,
+`accrual_time`, `followup_time`, or `max_length`. Supply the other four and
+leave the unknown as `None` (or omit it). Specify `assurance`, `confidence`,
+and interval `target` just as for the forward calculation. Solving for
+`max_length` gives the mixture width quantile; studies with zero events have
+infinite width, so some high quantiles are unattainable at any finite length.
+
+The result `CONFINTSurvivalSolution` contains the solved `parameter`, its
+`value`, the requested `assurance`, and the forward `achieved` result with its
+expected event count and omitted-mass bound. The default summation tolerance
+is 1e-14. Root finding uses log coordinates to retain relative accuracy under
+changes in physical units.
+
+**Supply a bracket for the desired crossing.** `bounds=(low,high)` defaults to
+(1e-4,1e4), matching the native non-hazard search range, in the solved parameter's
+units. Both endpoints must be within the forward calculation's resource and
+validity limits. Zero is permitted as a lower bound only for accrual rate and
+follow-up. The endpoint assurances must straddle the target, or an endpoint
+must attain it. Otherwise the function raises rather than returning an
+unverified boundary value.
+
+This API returns **one root within the bracket**, not the smallest design,
+a unique global solution, or every admissible value. Some curves are
+nonmonotone. For a hazard-width interval, two different hazards can produce
+the same assurance. Bracket the lower or upper crossing separately. A broad
+bracket enclosing both can have same-sign endpoints and be rejected despite
+containing roots. Automatic peak/range search remains pending.
+
+Independent R full-mixture inversions give, for h=1, accrual rate 5, accrual
+10, follow-up 0 and confidence .95:
+
+| Solved quantity | Hazard interval | Mean-survival interval |
+|---|---:|---:|
+| Median CI length | .588236492657 | .604554196094 |
+| Accrual rate for length .5 and assurance .9 | 9.526211616013 | 9.689856286516 |
+| Accrual duration for length .5 and assurance .8 | 16.467345537066 | 16.853286568888 |
+| Extra follow-up for accrual duration 16, length .5 and assurance .8 | .629882372084 | 1.919274257303 |
+
+For the hazard interval with length .5 and assurance .5, the lower and upper
+hazard solutions are .002858333869 and .840906351881. Tests verify both
+crossings, the other inversions, and time-unit changes by factors 1e±200.
+These use the full mixture rather than the manual's 99%-mass approximation.
+
+```python
+from mdanderson_stats import confint_survival_solve
+
+median = confint_survival_solve(
+    hazard=1,
+    accrual_rate=5,
+    accrual_time=10,
+    followup_time=0,
+    assurance=0.5,
+    bounds=(0.1, 2),
+)
+assert median.parameter == "max_length"
+assert abs(median.value - 0.588236492657) < 1e-9
+followup = confint_survival_solve(
+    hazard=1,
+    accrual_rate=5,
+    accrual_time=16,
+    max_length=0.5,
+    assurance=0.8,
+    bounds=(0, 10),
+)
+assert abs(followup.value - 0.629882372084) < 1e-9
+assert abs(followup.achieved.probability - 0.8) < 1e-10
+```
+
+**Catalog status is partial.** Automatic hazard-maximum/range search and native
 session/report workflows remain pending.

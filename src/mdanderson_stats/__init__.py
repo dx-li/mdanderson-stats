@@ -206,6 +206,7 @@ from .confint_survival import (
     confint_survival_fixed_events,
     confint_survival_probability,
 )
+from .confint_survival_inverse import CONFINTSurvivalSolution, confint_survival_solve
 from .conjugate_ess import conjugate_prior_ess
 from .continuous_sample_size import (
     ContinuousSampleSize,
@@ -511,6 +512,8 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "CONFINTSurvivalSolution",
+    "confint_survival_solve",
     "CONFINTSurvivalAssurance",
     "confint_survival_fixed_events",
     "confint_survival_probability",
