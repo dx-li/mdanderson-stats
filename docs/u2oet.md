@@ -3,7 +3,8 @@
 Entry 77 is **partial**. The Python implementation supplies PDS, CMI and hybrid
 model probabilities, grouped likelihoods and conditional expected utilities.
 Posterior summaries and new-cohort allocation from supplied posterior draws
-and posterior fitting are also available. Prior calibration, full trial conduct,
+and posterior fitting are also available, along with IID prior sampling,
+beta-moment information and pseudo-trial prior calibration. Full trial conduct,
 simulation and native input/report workflows remain pending. GAO with its Gaussian copula is
 also pending; it is not replaced with the FGM model.
 
@@ -109,8 +110,8 @@ a fixed reference table; R is not a runtime or CI dependency.
 Remaining coverage includes:
 
 - GAO continuation probabilities and its Gaussian copula.
-- Pseudosampling prior centers and effective sample size calibration.
-  Explicit-prior posterior fitting is now supplied below.
+- Validation of complete trial operating characteristics.
+  Explicit-prior fitting, pseudo-trial centers and prior ESS are supplied below.
 - Open-cohort conduct, delayed/partial outcomes and final selection.
   Posterior acceptability and new-cohort allocation are now supplied below.
 - Calendar-based simulation, operating characteristics, scenario/native-file
@@ -292,5 +293,93 @@ Three focused numerical checks validate the sampler:
 
 These checks validate the target and sampling implementation in the tested
 settings. They do not establish convergence for other priors/data or reproduce
-the published trial operating characteristics. Pseudosampling prior calibration,
-ESS calibration, GAO, partial outcomes and full trial simulation remain pending.
+the published trial operating characteristics. GAO, partial outcomes and full
+trial simulation remain pending. Prior calibration is now supplied below.
+
+## Prior draws, information and pseudo-trial calibration
+
+`sample_u2oet_prior` draws directly from the stated prior, independently across
+samples. It accepts the same named means/SDs as the fitter and adds uniform
+association draws. The result contains named coordinates and joint outcome
+probabilities. It does not use MCMC. Positive-normal slopes use rejection from
+a normal when its mean is nonnegative and an exponential-tail envelope when its
+mean is negative. Tail draws are formed as positive excesses, avoiding
+cancellation from subtracting a large truncation threshold.
+
+`u2oet_prior_ess(prior.joint)` implements guide section 1.5: marginalize the joint
+draws, moment-match a beta distribution for each dose/outcome category, and
+report the mean and maximum information across all cells. With marginal mean
+`m` and variance `v`, the beta concentration is `m*(1-m)/v - 1`. Efficacy and
+toxicity cell arrays remain available for inspection. This is **prior
+information**, not the effective number of MCMC samples.
+
+The estimator uses empirical population variance (divisor number of draws),
+which respects the variance bound for probabilities. Native C++ variance
+normalization is unverified. A constant interior probability has infinite
+concentration; an identically zero/one probability has undefined concentration
+(NaN); a mixture entirely at the endpoints has limiting concentration zero.
+Undefined cells are retained and make the overall summaries undefined. They
+are not dropped or replaced with fabricated finite values. Marginal roundoff
+within the admitted normalization tolerance is clipped to [0,1].
+
+`calibrate_u2oet_prior` implements guide section 1.3. For each replicate it draws
+a balanced pseudo dataset from an explicit joint scenario, fits the pseudo
+posterior, and retains its coordinate means, Monte Carlo standard errors and
+classic split R-hats. Averaging these pseudo-posterior means produces the
+candidate prior centers. The supplied guide defaults are 100 pseudo patients
+per dose pair and underlying normal means zero/SDs 100. Association remains
+uniform and does not receive an estimated center. Log powers/link are averaged
+on their named log coordinate scale. `pseudo_prior_sd` can be changed explicitly;
+changing it defines a different calibration exercise.
+
+The number of `repetitions` is required. The guide recommends at least 1000;
+small values are useful for workflow checks, not adequate production calibration.
+Returned `standard_error` describes variation of the average over independent
+pseudo trials, including their MCMC noise. Inspect the per-trial MCMC diagnostics
+as well. Trials with poor mixing are retained; numerical failures raise errors.
+No failed or inconvenient pseudo dataset is silently discarded. Exact pseudo
+counts are retained to permit replay. Scenario sums within 1e-12 of one are
+rescaled to one before multinomial sampling; malformed scenarios are rejected.
+
+```python
+from mdanderson_stats import sample_u2oet_prior, u2oet_prior_ess
+
+# Reuse the illustrative binary prior arrays and names from the fitting example.
+prior = sample_u2oet_prior(
+    [1, 2, 3],
+    [1, 2, 3],
+    efficacy_levels=2,
+    toxicity_levels=2,
+    prior_mean=mean,
+    prior_sd=sd,
+    draws=10000,
+    rng=np.random.default_rng(78),
+)
+information = u2oet_prior_ess(prior.joint)
+print(information.mean, information.maximum)
+```
+
+For calibration, pass an elicited `scenario_joint` with axes `(agent1, agent2,
+efficacy, toxicity)` to `calibrate_u2oet_prior`, along with dose arrays,
+`repetitions` and an explicit generator. The guide's Gaussian-copula scenario
+construction from marginal elicitation is still pending; supplying an arbitrary
+FGM scenario is not equivalent to that construction.
+
+Validation covers independent normal-tail moment references from R at underlying
+means -10, -2, 0 and 1, normalization of 12,000 IID prior draws, a hand-computed
+beta-moment example (efficacy concentration 4, toxicity 14, overall mean 9),
+constant/endpoint degeneracies, and pseudo-data scenarios with all low versus
+all high efficacy. The latter use a specified SD .5 and show the expected
+opposite movement of the inferred efficacy intercept while preserving balanced
+allocation and all trial diagnostics. No 1000-replicate clinical calibration
+or published operating-characteristic reproduction is claimed.
+
+**Diffuse-default limitation:** an additional PDS check used the guide's SD 100,
+100 patients per pair, a 2×2 dose grid with binary uniform joint scenarios, two
+pseudo trials, four chains, 2000 warmup and 2000 retained sweeps per chain
+(seed 7708). Maximum classic split R-hats were **51.95 and 7.27**. Thus this
+configuration did not mix adequately, and its finite prior-center estimates
+must not be treated as calibrated. A shorter 64-draw check also failed strongly.
+The SD-.5 workflow checks above do not validate the diffuse default. Improving
+sampling for this regime is outstanding before reproducing the guide's complete
+calibration workflow or trial operating characteristics.

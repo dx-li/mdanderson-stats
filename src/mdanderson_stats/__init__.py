@@ -648,6 +648,7 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 from .trax import TRAXData, TRAXPlot, trax, trax_data
 from .u2oet import U2OETMarginal, U2OETProbabilities, u2oet_probabilities, u2oet_standardize
+from .u2oet_calibration import U2OETCalibration, calibrate_u2oet_prior
 from .u2oet_decision import (
     U2OETAllocation,
     U2OETCriteria,
@@ -656,6 +657,12 @@ from .u2oet_decision import (
     u2oet_posterior,
 )
 from .u2oet_fit import U2OETFit, fit_u2oet, u2oet_parameter_names
+from .u2oet_prior import (
+    U2OETPriorDraws,
+    U2OETPriorESS,
+    sample_u2oet_prior,
+    u2oet_prior_ess,
+)
 from .windows import (
     WindowCrossValidation,
     WindowNeighborCrossValidation,
@@ -666,6 +673,12 @@ from .windows import (
 )
 
 __all__ = [
+    "U2OETCalibration",
+    "calibrate_u2oet_prior",
+    "U2OETPriorDraws",
+    "U2OETPriorESS",
+    "sample_u2oet_prior",
+    "u2oet_prior_ess",
     "U2OETFit",
     "fit_u2oet",
     "u2oet_parameter_names",

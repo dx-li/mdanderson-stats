@@ -985,4 +985,6 @@ efficacy/toxicity probabilities for two-agent combinations, with stable joint
 log probabilities, likelihoods and expected utilities. Posterior-draw summaries
 and new-cohort allocation include acceptability, patient-surplus randomization
 and escalation restrictions. Multi-chain posterior fitting supports explicit
-priors and complete outcomes. Prior calibration and full trial conduct remain pending.
+priors and complete outcomes. IID prior draws, beta-moment prior information
+and pseudo-trial prior calibration are available. The diffuse SD-100 calibration
+requires improved sampling; full trial conduct remains pending.
