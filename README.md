@@ -942,3 +942,7 @@ gather indices and direct/reversed permutations support numeric and string recor
 
 Misclib’s `format_number` formats integer and floating values with alignment,
 fixed/scientific thresholds, exponent scaling and explicit field-fit reporting.
+
+`compile_misclib_messages` reads Misclib’s page-template syntax and renders
+fixed-width substitutions; `print_misclib_message` uses the existing console’s
+display and stream-routing controls.

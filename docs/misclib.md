@@ -81,7 +81,7 @@ repairs, domains and Python semantics.
 | `constants_mod` | Existing `cdflib_constants` appears equivalent; final source-contract audit pending |
 | `sort_mod`, `sort_permutation_mod` | Matrix-column sorting, gather indices, direct/reversed gathers and callback contracts implemented below. Existing `sort_list` offers list sorting; its Misclib-specific source comparison remains pending |
 | `format_number_mod` | Integer/single/double number formatting implemented below, including alignment, scaling, trimming and fit reporting |
-| `print_it_mod`, `format_specs` | Template compilation and message printing need a Misclib-specific audit/port |
+| `print_it_mod`, `format_specs` | Template-page compilation, fixed-width substitutions and message printing implemented below; screen clearing, pauses and related console utilities remain pending |
 | `get_values_from_user_mod`, `open_file` | Existing console helpers offer related behavior; exact prompting/file contracts not yet audited |
 | `interface_mod`, build/install files | Fortran interfaces and installation need final reconciliation with Python packaging |
 
@@ -233,3 +233,78 @@ padded/trimmed decimals, fixed/scientific thresholds and scale factors -2, 0, 1,
 `tests/test_misclib_format.py` cover these outputs plus field failure, rounding
 carry, large integers, subnormal values and extreme exponents. Native rounding-carry, omitted-exponent-letter and pre-trimming field-failure
 examples were separately reproduced before documenting differences.
+
+## Template pages and message printing
+
+`compile_misclib_messages(source)` replaces the `format_specs` Perl-to-Fortran
+code generator with immutable Python `MisclibMessage` pages. It accepts the
+original text layout syntax:
+
+```python
+from mdanderson_stats import compile_misclib_messages, print_misclib_message
+
+pages = compile_misclib_messages(
+    ">>BEGIN Result\nPatient: %%%%%%%%\n>>CONTINUE\nStatus: %%%%\n>>END\n"
+)
+assert pages[0].render(["O'Brien"]) == "     Patient: O'Brien "
+assert pages[1].render(["done"]) == "     Status: done"
+```
+
+Directives start in column one. `>>BEGIN [name]` starts a block; omitted names
+become `message`, and explicit names are lowercased. `>>CONTINUE` finishes a page
+and starts another with the same name; substitution numbering restarts on each
+page. `>>END` closes the block. The returned tuple preserves source order and
+repeated names. Each page exposes `name`, `template`, `substitution_widths` and
+the directive's one-based `source_line`. Ordinary text outside blocks is ignored.
+Unmatched/nested directives, empty pages with no lines, and unclosed blocks raise
+`ValueError` rather than dropping text. Source text is limited to two million
+characters. The original's unrelated continuation-line and Fortran variable-name
+limits do not constrain Python output.
+
+Trailing whitespace is removed from each source line; nonblank lines gain five
+leading spaces. Blank lines remain blank, and existing indentation is preserved.
+Each contiguous run of `%` is one fixed-width field. `render(substitutions)`
+requires one string per field, truncates long values and blank-pads short ones,
+as the source's `edit_format` does. Field width counts Python characters. Names
+use ASCII letters, digits and underscores. Literal braces and quotation marks
+remain literal; inserted values are never parsed as templates. No implicit
+percent escape is introduced. Rendering returns text without an automatically
+added final newline, and never edits the page in place.
+
+`print_misclib_message(page, substitutions=(), *, console=None, force=False,
+unit=None, unit_only=False)` routes the rendered text through `CDFConsole`.
+Without a supplied console it creates one using the standard streams. The
+console's existing `print_off`, `always_print`, `print_level` and `format_printed`
+controls apply, as documented in [CDFLIB message controls](cdflib-message-format.md).
+The console's prior template/substitution configuration is restored afterward;
+`format_printed` reflects this attempt. Substitutions are validated before output,
+even for a suppressed message. Streams remain caller-owned. Unit routing appends
+one newline and respects `unit_only=False` by value, fixing the source's
+presence-only interpretation. Forcing output skips optional help questions, an
+intentional difference from the legacy prompt path.
+
+Python pages replace **generated** Fortran FORMAT strings; arbitrary hand-written
+Fortran FORMAT expressions are not interpreted. `render` replaces both
+`edit_format` and `edit_message_format` for these pages; `print_misclib_message`
+replaces the corresponding print calls. Screen clearing, pause/prompt functions,
+file-unit allocation and the separate numeric-input helpers remain in the
+remaining console-utility audit.
+
+Native validation required two packaging repairs and explicit caller setup:
+
+1. The archived `format_specs` fails Perl compilation because the assignment
+   `$always_print = '.TRUE.'` lacks a semicolon. A private copy adds only that
+   semicolon; the original download is unchanged.
+2. Generated code says `USE print_it`, but the archive ships `print_it_mod`.
+   The harness changes that module reference, supplies the user substitution
+   assignments the generated code deliberately leaves blank, and initializes
+   `print_off`/`num_subs` before use. In particular, named pages without fields
+   otherwise inherit stale substitution state from earlier pages.
+3. The original `print_it_mod.f90` is compiled unchanged with `-O2 -fcheck=all`.
+   Three printed pages agree exactly, including continued pages, named pages,
+   padding/truncation, apostrophes, double quotes, literal braces and blank lines.
+
+`tests/fixtures/misclib-messages-native.json` records the source, substitutions,
+expected output and repairs. Two focused tests check that comparison, repeat
+rendering, literal substitutions, malformed structure, suppression/forcing,
+stream routing and preservation of caller state.

@@ -1,0 +1,18 @@
+{
+  "source": "Ignored preamble\n>>BEGIN\nName: %%%%%%%% and {literal}\nHe said \"it's ready\".\n>>CONTINUE\nRate: %%%\n>>END\nIgnored middle\n>>BEGIN Detail\nHeading\n\nEnd\n>>END\n",
+  "substitutions": [
+    [
+      "O'Brien"
+    ],
+    [
+      "12.34"
+    ],
+    []
+  ],
+  "expected": [
+    "     Name: O'Brien  and {literal}\n     He said \"it's ready\".",
+    "     Rate: 12.",
+    "     Heading\n\n     End"
+  ],
+  "provenance": "Original format_specs with only missing semicolon after always_print assignment repaired; emitted USE print_it adjusted to shipped print_it_mod, user substitution assignments supplied and num_subs initialized before named page. Original print_it_mod compiled unchanged."
+}

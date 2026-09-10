@@ -702,3 +702,8 @@ credit Robert Sedgewick, “Implementing Quicksort Programs,” CACM 21(10):847�
 number-formatting contracts from `format_number_mod.f90`, using Python integer
 and decimal arithmetic. Native buffer and exponent-display repairs are described
 in `docs/misclib.md`.
+
+`misclib_messages.py` implements the `format_specs` page syntax and the
+fixed-width substitution contracts of `print_it_mod.f90`. It reuses the existing
+CDFConsole message controls. Native validation repairs are documented in
+`docs/misclib.md`; original source files are not redistributed.

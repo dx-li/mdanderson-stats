@@ -355,6 +355,7 @@ from .misclib_maximum import (
     rc_fun_max,
     set_fun_max,
 )
+from .misclib_messages import MisclibMessage, compile_misclib_messages, print_misclib_message
 from .misclib_sort import permutation_sort_matrix, permute_matrix, sort_matrix
 from .mtpi import MTPIDesign, MTPIPosterior, MTPISelection, MTPITable
 from .mtpi_simulation import MTPISimulation, simulate_mtpi
@@ -597,6 +598,9 @@ from .windows import (
 )
 
 __all__ = [
+    "MisclibMessage",
+    "compile_misclib_messages",
+    "print_misclib_message",
     "FormattedNumber",
     "format_number",
     "permutation_sort_matrix",
