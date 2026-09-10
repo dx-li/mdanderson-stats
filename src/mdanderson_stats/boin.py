@@ -184,8 +184,8 @@ class BOINDesign:
         """Decision after an evaluated cohort, including inherited safety exclusions.
 
         At a dose-range boundary, an unavailable escalation/de-escalation becomes
-        stay. Precision stopping requires the underlying BOIN rate rule to say
-        stay, not merely clipping an escalation to the highest dose.
+        stay. Precision stopping applies when the resulting assignment stays at
+        the current dose, including a move clipped by the dose range or safety.
         """
         n, y, excluded, posterior = self._state(patients, toxicities, eliminated)
         dose = scalar(current_dose, "current_dose")
@@ -212,18 +212,18 @@ class BOINDesign:
             if excluded[j]:
                 next_j = int(np.flatnonzero(~excluded)[-1])
                 action, next_dose = "deescalate", next_j + 1
-            elif (
-                move == 0
-                and self.early_stop_patients is not None
-                and n[j] >= self.early_stop_patients
-            ):
-                action, next_dose = "stop_precision", None
             else:
                 next_j = max(0, min(j + move, len(n) - 1))
                 if excluded[next_j]:
                     next_j = j
                 action = "escalate" if next_j > j else "deescalate" if next_j < j else "stay"
                 next_dose = next_j + 1
+                if (
+                    next_j == j
+                    and self.early_stop_patients is not None
+                    and n[j] >= self.early_stop_patients
+                ):
+                    action, next_dose = "stop_precision", None
         return BOINDecision(action, next_dose, _owned(excluded), _owned(posterior))
 
     def select_mtd(

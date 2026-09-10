@@ -60,7 +60,8 @@
     "seed": 120,
     "fixtures": {
       "tests/fixtures/boin-reference.csv": "2274775c50f31d336d2d09b3e38de23293b27dd9e360e2f2daf242c745eb29e3",
-      "tests/fixtures/boin-oc-reference.csv": "ef62e2ceaf9fc2531a808a91c2bb611448b823327332b81cc99148a47ee37edd"
+      "tests/fixtures/boin-oc-reference.csv": "ef62e2ceaf9fc2531a808a91c2bb611448b823327332b81cc99148a47ee37edd",
+      "tests/fixtures/boin-titration-reference.csv": "e332cf8753fd5d5a0cd2e016d0cef12925b68bac85758d388e4a8ce4a34767d7"
     }
   }
 }

@@ -87,7 +87,7 @@ def test_safety_history_and_extra_lowest_rule():
     assert design.select_mtd([6, 3, 0], [0, 0, 0], eliminated=decision.eliminated).dose == 1
 
 
-def test_rule_modifications_and_stay_only_precision_stop():
+def test_rule_modifications_and_actual_stay_precision_stop():
     assert BOINDesign(0.25).next_dose([3, 3, 0], [0, 1, 0], 2).next_dose == 1
     assert (
         BOINDesign(0.25, stay_at_one_of_three=True).next_dose([3, 3, 0], [0, 1, 0], 2).next_dose
@@ -101,7 +101,9 @@ def test_rule_modifications_and_stay_only_precision_stop():
     design = BOINDesign(0.25, early_stop_patients=12)
     assert design.next_dose([3, 12, 0], [0, 3, 0], 2).action == "stop_precision"
     assert design.next_dose([3, 12, 0], [0, 0, 0], 2).next_dose == 3
-    assert design.next_dose([3, 12], [0, 0], 2).action == "stay"
+    assert design.next_dose([3, 12], [0, 0], 2).action == "stop_precision"
+    assert design.next_dose([12, 0], [5, 0], 1).action == "stop_precision"
+    assert design.next_dose([12, 0], [0, 0], 1, eliminated=[False, True]).action == "stop_precision"
 
 
 def test_weighted_pooling_and_tie_selection():
@@ -146,14 +148,64 @@ def test_one_cohort_simulation_against_binomial_law():
     assert result.selection_probability[0] == counts[3]
 
 
-def test_simulation_against_native_r_operating_characteristics():
-    reference = np.genfromtxt(
-        Path(__file__).parent / "fixtures/boin-oc-reference.csv", delimiter=",", names=True
+@pytest.mark.parametrize("titration", [False, True])
+def test_simulation_against_native_r_operating_characteristics(titration):
+    name = "boin-titration-reference.csv" if titration else "boin-oc-reference.csv"
+    reference = np.genfromtxt(Path(__file__).parent / "fixtures" / name, delimiter=",", names=True)
+    result = simulate_boin(
+        BOINDesign(0.3),
+        [0.05, 0.15, 0.3, 0.45, 0.6],
+        trials=10000,
+        rng=120,
+        titration=titration,
     )
-    result = simulate_boin(BOINDesign(0.3), [0.05, 0.15, 0.3, 0.45, 0.6], trials=10000, rng=120)
     expected = reference["selection_probability"]
     # Independent R and NumPy streams: combine the two Monte Carlo variances.
     error = np.sqrt(result.selection_mcse[1:] ** 2 + expected * (1 - expected) / 10000)
     assert np.all(np.abs(result.selection_probability[1:] - expected) < 6 * error)
     assert_allclose(result.mean_patients, reference["mean_patients"], atol=0.5, rtol=0)
     assert_allclose(result.mean_toxicities, reference["mean_toxicities"], atol=0.15, rtol=0)
+
+
+def test_accelerated_titration_transitions_and_enrollment_cap():
+    design = BOINDesign(0.3)
+    options = dict(cohorts=4, trials=1, rng=12, titration=True)
+    top = simulate_boin(design, [0, 0, 0, 0], **options)
+    assert_array_equal(top.patients[0], [1, 1, 1, 9])
+    assert top.titration_end_reason == ("highest_dose",)
+    capped = simulate_boin(design, [0, 0, 0, 0], titration_cap=2, **options)
+    assert_array_equal(capped.patients[0], [1, 1, 3, 7])
+    assert capped.titration_end_reason == ("dose_cap",)
+    grade2 = simulate_boin(design, [0, 0, 0, 0], moderate_toxicity=[1, 1, 1, 1], **options)
+    assert_array_equal(grade2.patients[0], [1, 3, 3, 5])
+    assert_array_equal(grade2.titration_moderate_toxicities[0], [1, 1, 0, 0])
+    assert grade2.titration_end_reason == ("grade2",)
+    unsafe = simulate_boin(design, [1, 1, 1, 1], **options)
+    assert_array_equal(unsafe.patients[0], [3, 0, 0, 0])
+    assert unsafe.titration_end_reason == ("DLT",)
+    assert unsafe.safety_stop_probability == 1
+    precision = simulate_boin(BOINDesign(0.3, early_stop_patients=9), [0, 0, 0], trials=1)
+    assert_array_equal(precision.patients[0], [3, 3, 9])  # original R deterministic path
+    assert precision.precision_stop_probability == 1
+    small = simulate_boin(design, [0] * 8, cohorts=1, trials=1, titration=True)
+    assert small.patients.sum() == 3
+    assert small.titration_end_reason == ("max_patients",)
+    at_top = simulate_boin(design, [0, 0, 0, 0], start_dose=4, **options)
+    assert at_top.titration_patients[0] == 0
+    assert_array_equal(at_top.patients[0], [0, 0, 0, 12])
+
+
+def test_titration_duration_against_exact_competing_event_probability():
+    result = simulate_boin(
+        BOINDesign(0.3),
+        [0.1] * 5,
+        moderate_toxicity=[0.2] * 5,
+        titration=True,
+        trials=4000,
+        rng=555,
+    )
+    for k in range(1, 5):
+        # No DLT and at most one grade-2 event in the first k patients.
+        exact = 0.7**k + k * 0.2 * 0.7 ** (k - 1)
+        observed = np.mean(result.titration_patients > k)
+        assert abs(observed - exact) < 6 * np.sqrt(exact * (1 - exact) / 4000)

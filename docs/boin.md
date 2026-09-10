@@ -2,8 +2,8 @@
 
 Catalog entry **120**, the [BOIN application](https://biostatistics.mdanderson.org/shinyapps/BOIN/),
 is **partially implemented**: single-agent local BOIN boundaries, cohort decisions,
-overdose elimination, final MTD selection and fixed-cohort simulation are available.
-Accelerated titration, direct boundary-to-probability inversion, the app's 3+3
+overdose elimination, final MTD selection, fixed-cohort simulation and accelerated titration are available.
+Direct boundary-to-probability inversion, the app's 3+3
 comparators, protocol generation and animation remain pending. Desktop entry 99
 and BOIN combination/time-to-event variants are separate, unaudited entries.
 
@@ -63,7 +63,8 @@ that sample size. Safety rules take precedence over the ordinary rate boundaries
 Optional source modifications are `stay_at_one_of_three=True` for targets in
 [.25,.279], and `deescalate_at_two_of_six=True` for targets in [.28,.33]. With
 `early_stop_patients=m`, stop for precision once the current dose has at least m
-patients **and the underlying rate rule says stay**. This option is off by default.
+patients **and the resulting next assignment stays at the same dose**, including
+when the dose range or a safety exclusion prevents escalation/deescalation. This option is off by default.
 A stopped decision has `next_dose=None`; final selection is a separate calculation.
 
 ## Final estimation and MTD selection
@@ -104,15 +105,57 @@ paper and R implementation use the inclusive rule implemented here. The older
 Guide says more than three patients for safety, whereas the paper/native rules
 use at least three. The latest standalone modification PDF broadens the 1/3
 option's target range beyond the older Guide's .25 example. The latest sample-size
-PDF requires stay for precision stopping; R 2.7.2 instead stops unconditionally at
-its sample threshold. Native simulation comparisons therefore disable that stop.
+PDF requires stay for precision stopping, including unavailable moves at a dose
+boundary. This agrees with the R 2.7.2 simulation rule.
 The R selection implementation adds a tiny artificial trend to break ties;
 Python resolves ties explicitly without perturbing fitted probabilities, so
 pathological near-ties or values exactly on a selection bound may differ.
 
 Validation checks six published boundary pairs, the full .30-target cohort table,
 exact rational beta/binomial safety identities, 64 original R MTD selections and
-reported estimates, and a 10,000-trial original R operating-characteristic run.
+reported estimates, and two 10,000-trial original R operating-characteristic runs, with and without titration.
 Deterministic safe/unsafe trial paths and the exact one-cohort binomial law check
-simulation independently. The reference runner requires BOIN 2.7.2 and its Iso
+simulation independently. An exact competing-event calculation checks titration
+duration with grade-2 events; deterministic paths check every transition and the
+enrollment cap. The reference runner requires BOIN 2.7.2 and its Iso
 dependency; neither is a Python runtime dependency.
+
+## Accelerated titration
+
+Set `titration=True` to escalate one patient per dose, starting at `start_dose`.
+Stop this phase at the first DLT, second grade-2 event across all titration patients,
+or the highest dose. Complete the current cohort with `cohort_size-1` additional
+patients, then make a BOIN decision and use full cohorts thereafter.
+
+`titration_cap` defaults to the highest dose. If a lower cap is reached without
+those toxicity triggers, begin a full cohort at the next higher dose instead of
+expanding the cap dose. A toxicity trigger at the cap takes precedence. As on the
+site, titration has no effect with cohort size one or a starting dose at the top.
+The total enrollment cap remains `cohorts*cohort_size`, including all titration
+patients; the last cohort is shortened when necessary. Even if the cap is reached
+during titration, it is never exceeded.
+
+`moderate_toxicity` supplies a probability per dose for a grade-2 event that is
+**mutually exclusive with DLT**, not a conditional probability among non-DLT cases.
+It defaults to zero, matching the original R simulator's DLT-only titration.
+Each grade-2 probability must lie between zero and `1-true_toxicity`. This explicit
+scenario input implements the site's documented grade-2 conduct rule; it does not
+claim to reproduce an undocumented grade-2 simulation model from the app.
+
+`titration_patients` counts single-patient assignments before cohort completion.
+`titration_moderate_toxicities` records grade-2 events only during that phase;
+these are never added to the DLT count. `titration_end_reason` records `DLT`,
+`grade2`, `highest_dose`, `dose_cap`, `max_patients`, or `disabled` for each trial.
+
+```python
+accelerated = simulate_boin(
+    design,
+    [0.05, 0.15, 0.3, 0.45, 0.6],
+    titration=True,
+    titration_cap=3,
+    moderate_toxicity=[0.05, 0.1, 0.1, 0.15, 0.15],
+    trials=1000,
+    rng=120,
+)
+assert (accelerated.patients.sum(axis=1) <= 30).all()
+```

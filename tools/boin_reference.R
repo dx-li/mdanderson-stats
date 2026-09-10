@@ -24,3 +24,9 @@ oc <- get.oc(.3, c(.05,.15,.3,.45,.6), 10, 3,
 write.csv(data.frame(dose = 1:5, selection_probability = oc$selpercent / 100,
                     mean_patients = oc$npatients, mean_toxicities = oc$ntox),
           "tests/fixtures/boin-oc-reference.csv", row.names = FALSE)
+
+oc <- get.oc(.3, c(.05,.15,.3,.45,.6), 10, 3, titration = TRUE,
+             n.earlystop = 100, ntrial = 10000, seed = 120)
+write.csv(data.frame(dose = 1:5, selection_probability = oc$selpercent / 100,
+                    mean_patients = oc$npatients, mean_toxicities = oc$ntox),
+          "tests/fixtures/boin-titration-reference.csv", row.names = FALSE)

@@ -678,6 +678,6 @@ with conservative and joint-normal equivalence options.
 ## BOIN dose finding
 
 [BOIN](docs/boin.md) provides single-agent dose decisions, overdose safeguards,
-weighted isotonic MTD selection and fixed-cohort trial simulation. Published
+weighted isotonic MTD selection and trial simulation with accelerated titration. Published
 boundaries and original R results validate the core. This catalog entry remains
-partial while accelerated titration and the 3+3 comparison are pending.
+partial while the 3+3 comparison and additional app features are pending.
