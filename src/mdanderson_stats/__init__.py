@@ -499,6 +499,7 @@ from .stukel_objective import StukelObjective, stukel_objective
 from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 from .survan_km import SurvanKM, SurvanQuantiles, survan_km
+from .survan_logistic import SurvanLogistic, survan_logistic
 from .survan_tests import SurvivalGroupTest, survan_group_test
 from .survival_ess import SurvivalPriorESS, survival_prior_ess
 from .survival_sample_size import (
@@ -550,6 +551,8 @@ from .windows import (
 )
 
 __all__ = [
+    "SurvanLogistic",
+    "survan_logistic",
     "SurvanKM",
     "SurvanQuantiles",
     "survan_km",

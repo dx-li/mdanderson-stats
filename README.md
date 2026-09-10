@@ -904,5 +904,6 @@ and any omitted row indices.
 [SURVAN](docs/survan.md) adds multi-group log-rank and Gehan–Breslow tests,
 including stratification, tied events, and group score/covariance diagnostics.
 Its [Kaplan–Meier tables](docs/survan-km.md) include Simon–Lee survival and
-quantile confidence calculations. Multivariable regression and remaining
-reporting workflows are still pending.
+quantile confidence calculations. [Logistic regression](docs/survan-logistic.md)
+adds fitted probabilities and coefficient/likelihood inference. Cox regression
+and remaining reporting workflows are still pending.
