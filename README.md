@@ -922,5 +922,5 @@ placement, interval overlays and immutable plotting geometry. Goldman entry-date
 charts add current-date boundaries, optional native-boundary compatibility and
 calendar date conversion/formatting. Categorical conversion supports string codes,
 explicit factor order, unobserved categories and shared time columns. Grouped
-styles and remaining display
-workflows are still pending.
+styles, general calendar-covariate layouts, square plots and separate legend pages
+complete the [advertised plotting families](docs/eventchart-coverage.md).

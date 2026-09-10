@@ -11,6 +11,7 @@ from numpy.typing import ArrayLike
 from ._cdflib import _freeze
 from ._validation import FloatArray
 from .eventchart_codes import EventCode, _code_levels
+from .eventchart_style import EventLineStyle, LegendLocation, _line_groups
 
 if TYPE_CHECKING:
     from matplotlib.axes import Axes
@@ -262,12 +263,27 @@ def plot_event_chart(
     xlabel: str | None = None,
     calendar: bool = False,
     date_origin: str = "1960-01-01",
+    calendar_y: bool = False,
+    ylabel: str = "",
+    line_groups: tuple[EventCode | None, ...] | None = None,
+    group_styles: dict[EventCode, EventLineStyle] | None = None,
+    overlay_styles: tuple[EventLineStyle, ...] | None = None,
+    point_colors: tuple[str, ...] | None = None,
+    point_sizes: ArrayLike | None = None,
+    legend: bool = True,
+    legend_location: LegendLocation = "best",
 ) -> Axes:
     """Render calendar/interval event geometry on linear numeric axes."""
     from matplotlib import pyplot as plt
 
-    if not isinstance(calendar, bool):
-        raise ValueError("calendar must be boolean")
+    if any(not isinstance(v, bool) for v in (calendar, calendar_y, legend)):
+        raise ValueError("calendar, calendar_y and legend must be boolean")
+    y_ticks = None
+    if calendar_y:
+        from .eventchart_dates import event_date_labels
+
+        y_ticks = np.unique(np.rint(np.linspace(data.positions.min(), data.positions.max(), 5)))
+        y_labels = event_date_labels(y_ticks, origin=date_origin)
     calendar_ticks = None
     if calendar:
         from .eventchart_dates import event_date_labels
@@ -284,24 +300,67 @@ def plot_event_chart(
         markers = tuple(shapes[i % len(shapes)] for i in range(count))
     if len(event_labels) != count or len(markers) != count:
         raise ValueError("event_labels and markers need one entry per event column")
+    sizes = np.full(count, 5.0) if point_sizes is None else np.asarray(point_sizes, dtype=float)
+    if sizes.shape != (count,) or not np.isfinite(sizes).all() or np.any(sizes < 0):
+        raise ValueError("point_sizes must contain one nonnegative finite size per event")
+    if point_colors is not None and len(point_colors) != count:
+        raise ValueError("point_colors must contain one color per event")
+    if overlay_styles is None:
+        overlay_styles = (EventLineStyle(color, "--"),) * len(data.overlays)
+    if len(overlay_styles) != len(data.overlays):
+        raise ValueError("overlay_styles must contain one style per interval pair")
+    layers: list[tuple[FloatArray, FloatArray, EventLineStyle, str | None]] = []
+    if line_groups is None:
+        if group_styles is not None:
+            raise ValueError("group_styles requires line_groups")
+        layers.append((data.spans, data.positions, EventLineStyle(color), None))
+    else:
+        selected, levels = _line_groups(data.rows, line_groups)
+        for i, level in enumerate(levels):
+            if group_styles is not None:
+                if level not in group_styles:
+                    raise ValueError("group_styles must cover every retained line group")
+                style = group_styles[level]
+            else:
+                style = EventLineStyle(f"C{i % 10}", ("-", "--", ":", "-.")[i % 4])
+            mask = selected == level
+            layers.append((data.spans[mask], data.positions[mask], style, str(level)))
+    layers.extend(
+        (a, data.positions, style, None)
+        for a, style in zip(data.overlays, overlay_styles, strict=True)
+    )
+    if any(not isinstance(layer[2], EventLineStyle) for layer in layers):
+        raise ValueError("line styles must be EventLineStyle instances")
     if axes is None:
         _, axes = plt.subplots(layout="constrained")
     if axes.get_xscale() != "linear" or axes.get_yscale() != "linear":
         raise ValueError("event charts require linear axes")
-    for spans, style in [(data.spans, "-")] + [(a, "--") for a in data.overlays]:
+    for spans, positions, style, label in layers:
         xx = np.column_stack((spans, np.full(spans.shape[0], np.nan))).ravel()
-        yy = np.repeat(data.positions, 3)
-        axes.plot(xx, yy, color=color, linestyle=style, linewidth=1)
+        yy = np.repeat(positions, 3)
+        axes.plot(
+            xx,
+            yy,
+            color=style.color,
+            linestyle=style.linestyle,
+            linewidth=style.linewidth,
+            label=label,
+        )
     for j in range(count):
         axes.plot(
             data.times[:, j],
             data.positions,
             marker=markers[j],
             linestyle="None",
-            markersize=5,
+            markersize=sizes[j],
+            color=None if point_colors is None else point_colors[j],
             label=event_labels[j],
         )
-    axes.set_yticks(data.positions, labels=data.labels)
+    if y_ticks is None:
+        axes.set_yticks(data.positions, labels=data.labels)
+    else:
+        axes.set_yticks(y_ticks, labels=y_labels)
+    axes.set_ylabel(ylabel)
     lo, hi = data.x_range
     pad = 0.03 * (hi - lo) if hi > lo else max(1.0, abs(lo) * 0.03)
     if np.isfinite([lo - pad, hi + pad]).all():
@@ -311,5 +370,6 @@ def plot_event_chart(
     )
     if calendar_ticks is not None:
         axes.set_xticks(calendar_ticks, labels=calendar_labels)
-    axes.legend()
+    if legend:
+        axes.legend(loc=legend_location)
     return axes

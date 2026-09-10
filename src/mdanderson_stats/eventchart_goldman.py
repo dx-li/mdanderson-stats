@@ -11,7 +11,9 @@ from numpy.typing import ArrayLike
 from ._cdflib import _freeze
 from ._validation import FloatArray
 from .eventchart import EventChart, _matrix, event_chart_data, plot_event_chart
+from .eventchart_codes import EventCode
 from .eventchart_dates import event_date_labels
+from .eventchart_style import EventLineStyle, LegendLocation
 
 if TYPE_CHECKING:
     from matplotlib.axes import Axes
@@ -23,6 +25,7 @@ class GoldmanChart:
     boundary: FloatArray
     now: float
     native_boundary: bool
+    entry_axis: bool = True
 
 
 def goldman_chart_data(
@@ -36,6 +39,7 @@ def goldman_chart_data(
     drop_missing: bool = False,
     line_pairs: tuple[tuple[int, int], ...] = (),
     native_boundary: bool = False,
+    y_column: int | None = None,
 ) -> GoldmanChart:
     """Plot elapsed times against the reference column's calendar dates.
 
@@ -44,6 +48,10 @@ def goldman_chart_data(
     """
     if not isinstance(native_boundary, bool):
         raise ValueError("native_boundary must be boolean")
+    if y_column is None:
+        y_column = reference
+    if y_column != reference and not native_boundary:
+        raise ValueError("a different calendar y_column requires native_boundary=True")
     x = _matrix(data)
     chart = event_chart_data(
         x,
@@ -51,7 +59,7 @@ def goldman_chart_data(
         rows=rows,
         reference=reference,
         scale=scale,
-        y_column=reference,
+        y_column=y_column,
         drop_missing=drop_missing,
         line_pairs=line_pairs,
     )
@@ -75,7 +83,9 @@ def goldman_chart_data(
             boundary = np.array([[(now - low) / scale, low], [(now - high) / scale, high]])
     if not np.isfinite(boundary).all():
         raise ValueError("current-date boundary exceeds numerical range")
-    return GoldmanChart(chart, _freeze(boundary), float(now), native_boundary)
+    return GoldmanChart(
+        chart, _freeze(boundary), float(now), native_boundary, y_column == reference
+    )
 
 
 def plot_goldman_chart(
@@ -86,10 +96,18 @@ def plot_goldman_chart(
     calendar_labels: bool = True,
     event_labels: tuple[str, ...] | None = None,
     xlabel: str = "Elapsed time",
+    line_groups: tuple[EventCode | None, ...] | None = None,
+    group_styles: dict[EventCode, EventLineStyle] | None = None,
+    boundary_style: EventLineStyle = EventLineStyle("#963e35", "--"),
+    legend: bool = True,
+    legend_location: LegendLocation = "best",
+    square: bool = False,
 ) -> Axes:
     """Render the chart and current-date line, with ISO calendar y-axis labels."""
-    if not isinstance(calendar_labels, bool):
-        raise ValueError("calendar_labels must be boolean")
+    if any(not isinstance(v, bool) for v in (calendar_labels, legend, square)):
+        raise ValueError("calendar_labels, legend and square must be boolean")
+    if not isinstance(boundary_style, EventLineStyle):
+        raise ValueError("boundary_style must be an EventLineStyle")
     # Prepare ticks before drawing, so invalid calendar inputs fail without plotting.
     low, high = float(data.chart.positions.min()), float(data.chart.positions.max())
     ticks = (
@@ -97,24 +115,49 @@ def plot_goldman_chart(
         if calendar_labels
         else np.unique(np.linspace(low, high, 5))
     )
+    if square:
+        ticks = np.unique(np.r_[ticks, data.now])
     labels = (
         event_date_labels(ticks, origin=origin)
         if calendar_labels
         else tuple(f"{v:g}" for v in ticks)
     )
-    axes = plot_event_chart(data.chart, axes=axes, event_labels=event_labels, xlabel=xlabel)
+    axes = plot_event_chart(
+        data.chart,
+        axes=axes,
+        event_labels=event_labels,
+        xlabel=xlabel,
+        line_groups=line_groups,
+        group_styles=group_styles,
+        legend=False,
+    )
+    boundary = np.vstack((data.boundary, [0.0, data.now])) if square else data.boundary
     axes.plot(
-        data.boundary[:, 0],
-        data.boundary[:, 1],
-        linestyle="--",
-        color="#963e35",
+        boundary[:, 0],
+        boundary[:, 1],
+        linestyle=boundary_style.linestyle,
+        color=boundary_style.color,
+        linewidth=boundary_style.linewidth,
         label="Current-date boundary",
     )
     left = min(data.chart.x_range[0], float(data.boundary[:, 0].min()))
     right = max(data.chart.x_range[1], float(data.boundary[:, 0].max()))
     if left < right:
-        axes.set_xlim(left, right)
+        pad = 0.03 * (right - left)
+        if np.isfinite([left - pad, right + pad]).all():
+            axes.set_xlim(left - pad, right + pad)
+    if square:
+        axes.set_box_aspect(1)
+        pad_y = 0.03 * abs(data.now - low)
+        if not np.isfinite([low - pad_y, data.now + pad_y]).all():
+            raise ValueError("square chart limits exceed numerical range")
+        axes.set_ylim(low - pad_y, data.now + pad_y)
     axes.set_yticks(ticks, labels=labels)
-    axes.set_ylabel("Entry date" if calendar_labels else "Entry time")
-    axes.legend()
+    axes.set_ylabel(
+        ("Entry date" if data.entry_axis else "Calendar date")
+        if calendar_labels
+        else ("Entry time" if data.entry_axis else "Time")
+    )
+    if legend:
+        axes.legend(loc=legend_location)
     return axes

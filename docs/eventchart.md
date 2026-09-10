@@ -144,8 +144,7 @@ The current-date boundary is an annotation, not a filter: events after a supplie
 `plot_goldman_chart` draws the current-date boundary as a dashed line and formats
 five calendar y ticks using `origin`; `calendar_labels=False` uses numeric ticks.
 Event labels, existing Axes and the x-axis label are configurable. Limits include
-both observed events and the boundary; historical graphics-device square-layout
-and legend-placement conventions are not reproduced automatically.
+both observed events and the boundary. Square and legend controls are described below.
 
 The additional native fixture uses synthetic calendar records with missing
 events. It compares original event coordinates and the original boundary slope
@@ -154,6 +153,67 @@ were unchanged; graphics callbacks captured the result. Separate checks cover
 the corrected boundary identity, leap-day/date round trips, scaled calendar ticks
 and both Goldman/calendar rendering. Source example patient records are not
 redistributed.
+
+## Covariate groups and display controls
+
+```python
+from mdanderson_stats import (
+    EventLineStyle,
+    event_chart_data,
+    event_chart_legend,
+    plot_event_chart,
+)
+
+chart = event_chart_data([[0, 5], [0, 6], [0, 3], [0, 1], [0, 2]], reference=0)
+axes = plot_event_chart(
+    chart,
+    line_groups=("A", "B", "A", "B", "A"),
+    group_styles={
+        "A": EventLineStyle("teal", "-", 1.5),
+        "B": EventLineStyle("brown", "--", 1.5),
+    },
+    legend=False,
+)
+legend_page = event_chart_legend(axes, title="Events and treatment groups", columns=2)
+legend_page.savefig("event-legend.png")
+```
+
+`line_groups` contains one numeric or string category per original record; the
+renderer applies the chart's retained-row mapping. All nonmissing categories must
+be homogeneous numbers or strings. None/NaN, empty strings and the literal "NA"
+suppress the subject span, following the source grouping convention. These values
+do not suppress event markers or extra interval layers. Automatic styles vary
+color and line type; `group_styles` explicitly maps every retained category to an
+`EventLineStyle(color, linestyle, linewidth)`.
+
+`overlay_styles` gives one style per `line_pairs` interval. `point_colors` and
+`point_sizes` give one value per event column; repeated values are permitted.
+Widths/sizes must be finite and nonnegative. `legend=False` omits the internal
+legend, while `legend_location` selects a standard Matplotlib location or explicit
+axes-relative coordinate pair. The separate `event_chart_legend` figure uses the
+actual event and group artists, so its appearance agrees with the chart.
+
+`calendar_y=True` formats arbitrary numeric y covariates as calendar dates using
+`date_origin`. `ylabel` supplies the axis title. A general calendar-covariate
+boundary is also supported by `goldman_chart_data(y_column=..., native_boundary=True)`;
+when the y covariate differs from the reference date there is no universal
+calendar-identity line, so the original range-dependent rule must be requested.
+`GoldmanChart.entry_axis` reports whether the calendar covariate is the reference.
+
+`plot_goldman_chart` also accepts grouped lines, legend controls and a
+`boundary_style`. `square=True` makes the physical axes box square, extends the
+calendar view to `now`, and extends the boundary to its current-date intercept.
+The current date is labelled and small margins preserve endpoint markers.
+
+![Grouped square Goldman chart](eventchart-grouped-demo.png)
+
+![Separate event and group legend page](eventchart-legend-demo.png)
+
+The source's grouped-line coordinates, types and widths were checked after
+sorting and subsetting. Another native fixture checks the boundary with a
+calendar covariate distinct from the elapsed-time reference. Rendering checks
+cover missing groups, calendar covariates, custom event/interval appearance,
+square layout and a separate legend page.
 
 ## Native validation and deliberate corrections
 
@@ -183,9 +243,9 @@ Corrections to the original implementation:
 - Descending sorting keeps the requested missing-key placement. NumPy jitter is
   reproducible but does not reproduce S random numbers.
 
-**Status: partial.** Calendar, elapsed-time and Goldman charts are now available.
-Remaining work includes line styles grouped by covariates, fuller legend/style
-controls and general calendar-covariate layouts beyond the entry-date Goldman chart. The current geometry does not stand in for those workflows.
+**Coverage:** all advertised conversion and plot families are implemented. See
+[the source coverage audit](eventchart-coverage.md) for the mapping of calculation,
+layout and legend features, plus deliberate differences from the S interface.
 
 Source: [MD Anderson EVENTCHART](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/32),
 [original archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EVENTCHART/EVENTCHART_V1.tar.gz).
