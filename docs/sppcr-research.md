@@ -1,11 +1,11 @@
 # SPPCR archive and numerical baseline
 
-Catalog entry **26, SPPCR**, is partially implemented. The
-[likelihood fitting core](sppcr-fit.md) and
-[frequency summaries](sppcr-frequencies.md) are available. The original source
-has been compiled and its interior likelihood/frequency calculations independently
-checked. This establishes a numerical reference and identifies defects that must
-be resolved in the Python implementation; it is not a completed catalog entry.
+Catalog entry **26, SPPCR**, is implemented. The Python package covers the
+source's statistical methods, four input modes, repeated analysis, reports and
+file workflows. The [completion mapping](sppcr-coverage.md) reconciles all 27
+source files and explains the deliberate differences from the historical program.
+The numerical baseline below records the original source findings; subsequent
+implementation and validation are linked from the completion mapping.
 
 ## Archive identity and misplaced material
 
@@ -102,7 +102,7 @@ Python results. The fitting API distinguishes original counts, deliberate
 boundary adjustments, genuine boundary estimates and numerical failure. Frequency
 and uncertainty workflows must retain these distinctions.
 
-## Input conversion findings for the remaining parser work
+## Input conversion findings
 
 `data_in_struct_mod.values_to_structures` doubles input DNA amounts when
 converting genome equivalents to allele equivalents, removes never-seen allele
@@ -123,18 +123,8 @@ sign loss, which Python rejects. FileMaker numeric rows now have native probes
 and validated parsing/formatting. Interactive data entry now has native transcript
 probes and a bounded stream API with numeric and identity corrections.
 
-## Remaining implementation scope
+## Completion
 
-| Source responsibilities | Python work required |
-|---|---|
-| `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Mean fitting, curvature, summaries, transforms and support-aware inverse-transform confidence intervals implemented |
-| `generate_mod`, `one_data_set_mod`, `accumulate_mod` | Probability models, explicit-state NumPy simulation, replicate fits, population summaries and replicate estimate reports implemented |
-| `ecuyer_cote_mod`, random modules, seed helpers | Native draws/state reconciled with RANDLIB; explicit legacy sampler implemented, with all-stream reseed defect repaired |
-| `problem_in_mod`, `data_in_struct_mod` | Batch, FileMaker and interactive entry, units, identities and validated data implemented; validated truth designs and bounded truth-generation dialogue implemented |
-| `results_out_mod` | Structured intervals and formatted data, analysis and replicate reports implemented; truth-parameter reports implemented |
-| Main program, structures, file/format/input helpers | Reusable observed/truth analysis and report composition implemented; bounded file reads and staged report publication implemented; four-mode repeated menu/CLI implemented; staged interactive output-file selection implemented; final source-interface reconciliation remains |
-
-Build and startup succeeded, and twelve independent native-reference tests pass.
-These tests cover the baseline just described, not bootstrap, file formats, repeated
-application sessions or the full support surface. Those remain required along with
-implementation benchmarks, installed-wheel checks and a final completion audit.
+The [method and source coverage mapping](sppcr-coverage.md) records the completed
+implementation and its validation. Native defects above are retained as evidence,
+not reproduced as desired Python behavior.

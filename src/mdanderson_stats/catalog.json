@@ -876,7 +876,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Vectorized per-allele Poisson-mean likelihood fits over DNA levels and experiment batches, observed-information variances, disclosed fit counts, true zero boundaries, explicit fully detected allele policy, immutable results and numerical root brackets",
         "Vectorized allele-frequency, calibration and mutant-frequency summaries with direct complementary groups, independent-mean delta variances, stable arcsine transforms, immutable results and explicit unavailable/structurally constant uncertainty",
@@ -973,7 +973,8 @@
         "docs/sppcr-console.md",
         "src/mdanderson_stats/sppcr_output.py",
         "tests/test_sppcr_output.py",
-        "docs/sppcr-output.md"
+        "docs/sppcr-output.md",
+        "docs/sppcr-coverage.md"
       ]
     },
     {

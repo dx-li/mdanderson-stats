@@ -581,7 +581,8 @@ are reconciled through RANDLIB with an explicit legacy sampling path.
 [Truth designs](docs/sppcr-truth.md) normalize allele weights and prepare explicit
 simulation parameters in model DNA units, with bounded interactive entry and
 parameter reports. [Analysis workflows](docs/sppcr-analysis.md) connect data or
-truth input to modern/historical sampling, fitting and reports. SPPCR remains
-partial: [file workflows](docs/sppcr-files.md) and a [menu/CLI](docs/sppcr-console.md)
-and [output-file dialogue](docs/sppcr-output.md) are available. The final
-source-interface audit remains.
+truth input to modern/historical sampling, fitting and reports.
+[File workflows](docs/sppcr-files.md), a [menu/CLI](docs/sppcr-console.md)
+and an [output-file dialogue](docs/sppcr-output.md) complete the application.
+The [coverage mapping](docs/sppcr-coverage.md) reconciles all 27 source files and
+documents deliberate changes to the historical behavior.
