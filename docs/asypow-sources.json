@@ -161,6 +161,49 @@
       "retrieved_date": "2026-09-10",
       "bytes": 1305,
       "sha256": "9aca803eabfbf2e610e8a71d40ed335745a55563e45570a4f71bf2bed5704228"
+    },
+    {
+      "url": "https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v002i02/asypow-2.1.tar.Z.tar",
+      "artifact": "original.tar",
+      "retrieved_date": "2026-09-10",
+      "bytes": 394022,
+      "sha256": "dcaf2b965a769e2be83a4e77845e51ea18d898e8639c6f10a225ec5f39cfa87d"
+    },
+    {
+      "url": "https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v002i02/asypow-2.1.tar.Z.tar",
+      "artifact": "original/asypow/S/info.multinomial.kgp.s",
+      "retrieved_date": "2026-09-10",
+      "bytes": 2134,
+      "sha256": "3d815b930b996c6303e5d7ae5d31a8a79d2455d83172e056bb199b2467aa48f9"
+    },
+    {
+      "url": "https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v002i02/asypow-2.1.tar.Z.tar",
+      "artifact": "original/asypow/S/generic.model.smo.s",
+      "retrieved_date": "2026-09-10",
+      "bytes": 6858,
+      "sha256": "e69d89fa15bb40a66ac92e71922379ad798fe43c9d722b4dfaa84ee07462452d"
+    },
+    {
+      "url": "https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v002i02/asypow-2.1.tar.Z.tar",
+      "artifact": "original/asypow/S/self.power.s",
+      "retrieved_date": "2026-09-10",
+      "bytes": 2815,
+      "sha256": "384848cc156ce003f4136730645ca23d36f94b7fdf5310427c9516a012f50e3f"
+    },
+    {
+      "url": "https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v002i02/asypow-2.1.tar.Z.tar",
+      "artifact": "original/asypow/S/self.n.s",
+      "retrieved_date": "2026-09-10",
+      "bytes": 2597,
+      "sha256": "d3973cfe923dfa01bd7f8f2fd97db1efeefaa9374031ad79d2164511cc30eb92"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/inst/doc/asypow.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 87102,
+      "sha256": "46105f01d0e5f861fb5859f12f48d902ac14107bd86e037f3adc5abad78c7e85"
     }
-  ]
+  ],
+  "original_s_plus_version": "2.1"
 }

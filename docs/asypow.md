@@ -3,9 +3,16 @@
 MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
-including regression, ordinal and general design-matrix models. Complete native
-workflow coverage remains pending; the catalog status
-is **partial**.
+including regression, ordinal, multinomial and general design-matrix models.
+The original S-plus SMO methods and complete native workflow coverage remain
+pending; the catalog status is **partial**.
+
+The original S-plus 2.1 archive has a broader scope than the later R archive.
+In particular, it supplies separate SMO and multinomial routines documented in
+the 1997 paper. Coverage is assessed against that broader original scope, not
+just the R package's index. Implemented power calculations currently use the LR
+information-matrix approximation. The SMO expected-log-likelihood calculation,
+including its optional subtraction of degrees of freedom, is not yet available.
 
 ```python
 import numpy as np
@@ -160,6 +167,39 @@ for two-group quadratic designs; reference outputs are in
 `tests/fixtures/asypow-ordinal.json`. Additional checks verify reduction to the
 existing binary models, cross-group slope power, and extreme-predictor cases.
 
+## Multinomial category probabilities
+
+`asypow_multinomial_information(probabilities, group_size=1)` supplies information
+for the original S-plus multinomial model. Each row contains K-1 positive
+**individual category probabilities** whose sum is strictly below one. The last
+category has probability `1 - sum(row)`. A vector is one group. Up to 500 free
+probabilities are supported; allocations are positive and normalized by group.
+The residual probability uses compensated summation to retain precision near
+the boundary where the supplied probabilities sum to one.
+
+```python
+from mdanderson_stats import asypow_multinomial_information, asypow_information
+
+p = [0.2, 0.3, 0.1]  # the fourth category has probability 0.4
+information = asypow_multinomial_information(p)
+assert abs(information[0, 1] - 2.5) < 1e-14
+design = asypow_information(p, information, [1, 0, 0], null_values=0.1)
+assert abs(float(design.power(design.sample_size())) - 0.8) < 1e-12
+```
+
+For each group, information is `diag(1/p) + ones/p_last`, weighted by that group's
+allocation. The original `info.multinomial.kgp.s` returns only `diag(1/p)` when
+K>2, omitting the implicit final category. Python includes its contribution:
+observing that category has score `(-1/p_last, ..., -1/p_last)`, whose expected
+outer product is `ones/p_last`. With two categories this reduces to the ordinary
+binomial formula, matching the source's special binary branch.
+
+For p=(0.2,0.3,0.1), the original function returns diagonal (5, 10/3, 10).
+The corrected matrix adds 2.5 to **every** element. This deliberate correction
+can change LR noncentrality and power relative to the native software.
+Validation independently calculates expected category-score products and checks
+equivalence to cumulative-probability information after reparameterization.
+
 ## General design matrices and transformed parameters
 
 `asypow_design_information(coefficients, design, model="logistic", observations=1)`
@@ -264,5 +304,8 @@ Sources: [MD Anderson entry](https://biostatistics.mdanderson.org/SoftwareDownlo
 [Brown and Lovato's ASYPOW paper](https://doi.org/10.18637/jss.v002.i02), and
 [archived R source](https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz).
 The R archive identifies the original S authors and declares `ACM | file LICENSE`.
-The site's registered download is not used as a native parity claim; this port
-was checked against the published R archive version 2015.6.25.
+The site's registered download is not used as a native parity claim. Validation
+uses R archive version 2015.6.25 and the original
+[S-plus 2.1 supplement](https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v002i02/asypow-2.1.tar.Z.tar).
+Original archive and inspected routine hashes are recorded separately in the
+provenance file. Neither archive is redistributed in the wheel.
