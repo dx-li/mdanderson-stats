@@ -753,3 +753,7 @@ expected enrollment.
 
 [Parameter Solver](docs/parameter-solver.md) provides all six distribution families,
 with parameter, moment and two-quantile input modes and vectorized density/tail evaluation.
+
+[Inequality Calculator](docs/inequality-calculator.md) compares independent variables
+from all six families, including additive shifts, direct complementary probabilities
+and numerical error estimates.

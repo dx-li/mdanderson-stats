@@ -152,9 +152,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Independent same-family beta, gamma, inverse-gamma, normal, lognormal and Weibull ordering probabilities, including additive shifts",
+        "Direct complementary probabilities, analytic special cases and bounded probability-domain quadrature with error estimates; density arrays reuse ParameterDistribution"
+      ],
+      "validation": [
+        "Guide examples, exact shifted-beta polynomial integral, shifted exponential identities and scale invariance, independent log-density quadrature, reciprocal and extreme-tail cases; tests/test_inequality.py",
+        "22 focused tests including existing beta comparison and Parameter Solver; Windows plot controls and native algorithm parity are outside scope; docs/inequality-calculator.md"
+      ]
     },
     {
       "id": 10,

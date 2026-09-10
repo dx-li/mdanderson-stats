@@ -207,6 +207,7 @@ from .hierarchical_binomial import (
     summarize_chains,
 )
 from .hierarchical_normal import HierarchicalNormalFit, hierarchical_normal
+from .inequality import InequalityProbability, inequality_probability
 from .intervals import (
     binomial_interval,
     bp1ci_binomial_interval,
@@ -425,6 +426,8 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "InequalityProbability",
+    "inequality_probability",
     "ParameterDistribution",
     "solve_distribution_moments",
     "solve_distribution_quantiles",
