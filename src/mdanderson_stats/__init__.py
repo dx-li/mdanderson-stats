@@ -252,6 +252,8 @@ from .normal_updating import NormalInverseGamma, NormalMeanPosterior, NormalSamp
 from .numerics import invert_monotone, normal_tails
 from .onesample import OneSampleTest, binomial_test, poisson_test
 from .onesample_workflow import OneSampleResult, one_sample
+from .parameter_distribution import ParameterDistribution
+from .parameter_solver import solve_distribution_moments, solve_distribution_quantiles
 from .pehaz import PiecewiseHazard, pehaz
 from .phase2_predictive import (
     Phase2PredictiveCandidate,
@@ -423,6 +425,9 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "ParameterDistribution",
+    "solve_distribution_moments",
+    "solve_distribution_quantiles",
     "Phase2PredictiveCandidate",
     "Phase2PredictiveOptimization",
     "Phase2PredictiveInfeasibleError",

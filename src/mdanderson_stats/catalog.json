@@ -93,9 +93,17 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Beta, gamma, inverse-gamma, normal, lognormal and Weibull parameter conventions",
+        "Parameters to mean, variance, density, CDF, survival function and arbitrary quantiles",
+        "Mean and variance or standard deviation to parameters",
+        "Two quantiles to parameters with bracketed log-parameter solves and probability-tail verification"
+      ],
+      "validation": [
+        "Eight focused numerical tests: guide beta examples, all-family moment and quantile round trips, exponential identities across 200 orders of scale, inverse-gamma identities and concentrated Weibull stability",
+        "Independent Python implementation; Windows GUI and native solver iteration parity are outside scope; see docs/parameter-solver.md"
+      ]
     },
     {
       "id": 7,

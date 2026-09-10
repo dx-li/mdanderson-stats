@@ -750,3 +750,6 @@ adds posterior simulation with patient, time and event accrual limits.
 [Phase II Predictive Probability](docs/phase2-predictive.md) adds strict
 Lee–Liu stopping rules and exact cutoff/sample-size searches for power or
 expected enrollment.
+
+[Parameter Solver](docs/parameter-solver.md) provides all six distribution families,
+with parameter, moment and two-quantile input modes and vectorized density/tail evaluation.
