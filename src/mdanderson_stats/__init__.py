@@ -281,6 +281,7 @@ from .intervals import (
     poisson_interval,
 )
 from .ipdfromkm import ReconstructedIPD, reconstruct_ipd
+from .ipdfromkm_preprocess import PreparedKMCurve, prepare_km_coordinates
 from .keyboard import KeyboardDesign, KeyboardPosterior, KeyboardSelection
 from .keyboard_simulation import KeyboardSimulation, simulate_keyboard
 from .kphaz import KPHazard, kphaz
@@ -514,6 +515,8 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "PreparedKMCurve",
+    "prepare_km_coordinates",
     "ReconstructedIPD",
     "reconstruct_ipd",
     "CONFINTSurvivalHazardRange",

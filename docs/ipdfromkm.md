@@ -78,9 +78,55 @@ Records are sorted by time, with events before censors at a tied time.
   survival at that time, so the upper end of a vertical drop can have nonzero
   error even when the reconstructed drop is exact.
 - Input cleaning is explicit: malformed/nonmonotone coordinates are rejected.
-  The native outlier removal, cumulative-minimum cleaning, interactive image
+  Native coordinate cleaning is available separately below. Interactive image
   digitizing, graphical reports, KS diagnostic and secondary survival analyses
   are not yet ported. Catalog entry 151 remains **partial**.
+
+## Preparing digitized coordinates
+
+`prepare_km_coordinates` applies the coordinate portion of native `preprocess.R`
+and returns a `PreparedKMCurve` ready for reconstruction. The default `scale=100`
+accepts percentages; use `scale=1` for probabilities. Input requires 5–100,000
+points. Missing (NaN) rows are omitted; infinite coordinates are rejected.
+
+```python
+from mdanderson_stats import prepare_km_coordinates, reconstruct_ipd
+
+curve = prepare_km_coordinates([0, 1, 2, 3, 4], [100, 100, 100, 100, 100])
+ipd = reconstruct_ipd(curve.time, curve.survival, patients=20)
+assert ipd.event.sum() == 0
+assert curve.baseline_added
+```
+
+The native sequence is preserved:
+
+1. Sort by time, retaining input order for tied times.
+2. Compute absolute successive survival differences, including an initial zero.
+   Using interpolated quartiles, flag differences outside or on the fences
+   `Q1 - 0.5*IQR` and `Q3 + 0.5*IQR`. Delete a flagged point only when the preceding
+   difference is unflagged and the following difference is flagged. The initial
+   predecessor is unflagged; the terminal successor is flagged.
+3. Replace survival by its cumulative minimum. Reduce each tied time to its
+   highest and lowest distinct survival readings.
+4. Remove negative times and probabilities outside [0, 1], then prepend `(0, 1)`
+   when absent. Reject a result with no usable positive-time curve.
+
+These are heuristics, not a guarantee of correcting tracing errors. For a flat
+curve the inclusive fences flag every difference, remove the first point, and
+then restore the baseline. Some large dips survive the native rule and propagate
+through the cumulative minimum. Range filtering occurs **after** that correction,
+so an invalid negative survival can affect later readings. Review cleaned curves
+and the returned diagnostics before reconstructing.
+
+`source_index` identifies each retained original row using zero-based indices;
+`-1` denotes an inserted baseline. Separate counts report missing, outlier,
+redundant and out-of-range deletions, and survival values changed by the
+cumulative minimum. All output arrays are read-only. No risk-table guessing is
+performed: pass paired vectors of matching length to `reconstruct_ipd`; unlike
+native preprocessing, excess risk times are not silently truncated.
+
+The implementation uses array operations and cumulative minima, with sorting
+cost O(m log m) for m coordinates.
 
 ## Validation and sources
 
@@ -93,6 +139,14 @@ R produces an undefined terminal survival after exhausting the risk set; Python
 retains the last product-limit estimate. Tests independently recalculate the
 product-limit curve from emitted records, cover complete/no-event curves and
 vertical drops, and check equivalent time units at factors `1e-200` and `1e200`.
+
+Coordinate cleaning was also compared with **unmodified** native `preprocess.R`
+using dplyr, followed by unmodified `getIPD.R` using survival, for both arms of
+the package's `Radiationdata`. The radiation arm has 144 cleaned coordinates,
+213 reconstructed patients and 134 events; the combination arm has 135 cleaned
+coordinates, 211 patients and 110 events. Cleaned survival agrees within `1e-14`,
+times within `1e-12` in the source units, and all event indicators exactly. The
+reference dataset is an ignored research input, not redistributed in the wheel.
 
 Reference source: [CRAN package](https://CRAN.R-project.org/package=IPDfromKM),
 [versioned R source](https://github.com/cran/IPDfromKM/tree/16ea3e163b8ad409e51e035154c52803dcb1c28b),

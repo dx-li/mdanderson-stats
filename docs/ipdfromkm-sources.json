@@ -22,6 +22,13 @@
       "retrieved_date": "2026-09-10",
       "bytes": 8064,
       "sha256": "092dfa67cfdd06f9e025ce00ba01cbd93c41209a3bb5707929830e765f3d88e5"
+    },
+    {
+      "url": "https://github.com/cran/IPDfromKM/blob/16ea3e163b8ad409e51e035154c52803dcb1c28b/data/Radiationdata.rda",
+      "artifact": "data/Radiationdata.rda",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1534,
+      "sha256": "8a94e107a4d04692000b9603ef00ce65ccec5ea7630c55ccf4cf9dec00ef3fb6"
     }
   ]
 }

@@ -3585,11 +3585,12 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Modified iterative KM reconstruction from cleaned coordinates, with optional risk table and total-event input; patient records, fitted curve and unrounded error diagnostics. Native cleaning, digitizing and secondary reporting remain pending."
+        "Modified iterative KM reconstruction from cleaned coordinates, with optional risk table and total-event input; patient records, fitted curve and unrounded error diagnostics. Native coordinate cleaning with outlier deletion, cumulative-minimum correction, duplicate reduction and provenance. Digitizing and secondary reporting remain pending."
       ],
       "validation": [
         "tests/test_ipdfromkm.py",
-        "docs/ipdfromkm.md"
+        "docs/ipdfromkm.md",
+        "tests/test_ipdfromkm_preprocess.py"
       ]
     },
     {
