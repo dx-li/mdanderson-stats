@@ -2763,12 +2763,23 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/DIAG/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/DIAG/",
-      "references": [],
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/DIAG/DIAG.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Count-table or sensitivity/specificity input, prevalence substitution and sweeps, stable predictive values and false discovery rate, population joint probabilities and expected 2x2 counts; reuses CTA count estimates"
+      ],
+      "validation": [
+        "src/mdanderson_stats/diagnostic_population.py",
+        "tests/test_diagnostic_population.py",
+        "docs/diagnostic-and-roc.md",
+        "docs/diagnostic-and-roc-sources.json",
+        "src/mdanderson_stats/cta_diagnostic.py",
+        "tests/test_cta_diagnostic.py"
+      ]
     },
     {
       "id": 105,
@@ -2776,12 +2787,23 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/DTROC/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/DTROC/",
-      "references": [],
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/DTROC/DTROC.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Broadcast binormal marker model, control-percentile or explicit thresholds, sensitivity/specificity and prevalence-dependent predictive values, population counts, direct-FPR ROC curves, analytic AUC and density arrays",
+        "Stable normal log-tail conditioning, scaled AUC and explicit unrepresentable-percentile and impossible-outcome semantics"
+      ],
+      "validation": [
+        "src/mdanderson_stats/diagnostic_population.py",
+        "tests/test_diagnostic_population.py",
+        "docs/diagnostic-and-roc.md",
+        "docs/diagnostic-and-roc-sources.json",
+        "src/mdanderson_stats/binormal_roc.py"
+      ]
     },
     {
       "id": 106,

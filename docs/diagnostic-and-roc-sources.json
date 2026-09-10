@@ -1,0 +1,17 @@
+{
+  "retrieved_at": "2026-09-10T02:49:47.919547+00:00",
+  "sources": [
+    {
+      "name": "DIAG",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/DIAG/DIAG.pdf",
+      "sha256": "9afe534d89ef9dd40867da8dcf0bbe812181e5bc94893194bda29178a8519d51",
+      "bytes": 1238067
+    },
+    {
+      "name": "DTROC",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/DTROC/DTROC.pdf",
+      "sha256": "8c81a532e68b9a69161cf1ee217da68c02f82780c88f19ddc1f276dc03e66312",
+      "bytes": 1144263
+    }
+  ]
+}

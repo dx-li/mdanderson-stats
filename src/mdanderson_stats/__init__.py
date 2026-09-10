@@ -29,6 +29,7 @@ from .binomial_design import (
 )
 from .binomial_null import BinomialNull, binomial_null
 from .binomial_sample_size import binomial_sample_size
+from .binormal_roc import BinormalROC, BinormalROCPoint
 from .bp1ci import BP1CIResult, bp1ci
 from .cdflib_array_format import format_cdflib_array
 from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
@@ -112,6 +113,11 @@ from .dcdflib_neg_binomial import DCDFLIBNegativeBinomial, cdfnbn, cumnbn
 from .dcdflib_normal import DCDFLIBNormal, cdfnor, cumnor
 from .dcdflib_poisson import DCDFLIBPoisson, cdfpoi, cumpoi
 from .dcdflib_t import DCDFLIBStudentT, cdft, cumt
+from .diagnostic_population import (
+    DiagnosticPopulation,
+    diagnostic_population,
+    diagnostic_population_from_counts,
+)
 from .expsurv import ExploratorySurvival, exploratory_survival
 from .expsurv_alignment import SurvivalAlignmentPlot, plot_survival_alignment
 from .expsurv_box import CensoredBox, censored_box
@@ -288,6 +294,11 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "BinormalROC",
+    "BinormalROCPoint",
+    "DiagnosticPopulation",
+    "diagnostic_population",
+    "diagnostic_population_from_counts",
     "NormalInverseGamma",
     "NormalMeanPosterior",
     "NormalSample",

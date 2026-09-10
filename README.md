@@ -612,3 +612,10 @@ and summary data, sequential updating, batched prior sensitivity, marginal
 mean/variance distributions, credible intervals and data-only confidence
 intervals. The documentation identifies and corrects the manual's variance
 interval discrepancy.
+
+## Diagnostic populations and ROC curves
+
+[DIAG and DTROC](docs/diagnostic-and-roc.md) provide classification-table estimates,
+prevalence-dependent predictive values, population projections and binormal ROC
+analysis. Thresholds, density arrays, ROC curves and AUC are available as batched
+Python calculations, with direct log tails for extreme diagnostic thresholds.
