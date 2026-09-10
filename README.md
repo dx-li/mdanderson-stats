@@ -603,3 +603,12 @@ treatment = BetaBinomialPosterior(0.5, 0.5).update(successes=6, failures=4)
 probability = compare_beta_binomial(control, treatment).treatment_greater
 # approximately 0.86272321
 ```
+
+## Bayesian updating for normal outcomes
+
+[BNORM](docs/normal-updating.md) provides normal and normal–inverse-gamma
+conjugate updates for known or unknown observation variance. It supports raw
+and summary data, sequential updating, batched prior sensitivity, marginal
+mean/variance distributions, credible intervals and data-only confidence
+intervals. The documentation identifies and corrects the manual's variance
+interval discrepancy.

@@ -1,0 +1,30 @@
+{
+  "retrieved_at": "2026-09-10T02:41:46.642714+00:00",
+  "url": "https://biostatistics.mdanderson.org/shinyapps/BNORM/BNORM.pdf",
+  "sha256": "3fe0f9034063e6982fa911812c070a5688dcfc11acb7fd0c26c70ad3823a0988",
+  "bytes": 1210722,
+  "manual_example": {
+    "data": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "known": {
+      "prior_mean": 0,
+      "prior_variance": 10,
+      "observation_variance": 4
+    },
+    "unknown": {
+      "prior_location": 0,
+      "prior_mean_precision": 4,
+      "prior_shape": 2,
+      "prior_scale": 3,
+      "posterior_location": 1.6666666666666667,
+      "posterior_mean_precision": 9,
+      "posterior_shape": 4.5,
+      "posterior_scale": 18
+    }
+  }
+}

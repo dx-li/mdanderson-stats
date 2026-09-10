@@ -163,6 +163,7 @@ from .multiplicity import (
 )
 from .nonparametric import NonparametricFit, NonparametricFitError, nonparametric_pvalues
 from .nonparametric_testing import NonparametricTestingResult, nonparametric_testing
+from .normal_updating import NormalInverseGamma, NormalMeanPosterior, NormalSample
 from .numerics import invert_monotone, normal_tails
 from .onesample import OneSampleTest, binomial_test, poisson_test
 from .onesample_workflow import OneSampleResult, one_sample
@@ -287,6 +288,9 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "NormalInverseGamma",
+    "NormalMeanPosterior",
+    "NormalSample",
     "BetaComparison",
     "compare_beta_binomial",
     "BetaBinomialPosterior",

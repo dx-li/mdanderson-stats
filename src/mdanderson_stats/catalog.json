@@ -2739,12 +2739,23 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BNORM/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BNORM/",
-      "references": [],
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/BNORM/BNORM.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Broadcast normal conjugate updating with known observation variance, raw or summary data, sequential posterior reuse, prior sensitivity, marginal densities, direct tails and credible intervals",
+        "Normal-inverse-gamma updating for unknown variance with stable sufficient statistics, marginal Student-t mean and inverse-gamma variance distributions, explicit moment existence, highest-density and equal-tail variance intervals",
+        "Data-only normal and Student-t confidence intervals, explicit sample-standard-deviation convention, numerical representability checks and documented correction of manual variance-interval examples"
+      ],
+      "validation": [
+        "src/mdanderson_stats/normal_updating.py",
+        "tests/test_normal_updating.py",
+        "docs/normal-updating.md",
+        "docs/normal-updating-source.json"
+      ]
     },
     {
       "id": 104,
