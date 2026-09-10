@@ -259,6 +259,8 @@ from .predictive_binary import (
     plan_predictive_binary,
     predictive_binary,
 )
+from .predictive_survival import SurvivalPredictiveComparison, compare_predictive_survival
+from .predictive_survival_simulation import SurvivalPredictiveProbabilities, predictive_survival
 from .pvalue_models import (
     OrderStatisticDiagnostics,
     clustered_pvalues,
@@ -414,6 +416,10 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "SurvivalPredictiveComparison",
+    "compare_predictive_survival",
+    "SurvivalPredictiveProbabilities",
+    "predictive_survival",
     "BinaryPredictiveProbabilities",
     "BinaryPredictivePlan",
     "predictive_binary",

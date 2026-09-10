@@ -1,7 +1,7 @@
 # Predictive Probabilities: binary outcomes
 
 Catalog **10** now supports the binary interim-analysis and first-stage planning
-workflows. Time-to-event prediction and integrated reports remain pending.
+workflows. [Time-to-event prediction](predictive-survival.md) is also available.
 Sources are the [version 1.5 guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PredictiveProbabilit/PredictiveProbabilitiesUsersGuide.pdf)
 and John Cook's [Predictive Probability Interim Analysis](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PredictiveProbabilit/PredictiveInterimAnalysis.pdf),
 with hashes in [provenance](predictive-probabilities-sources.json).
@@ -85,9 +85,8 @@ predictive kernel produce the entire table. This is a planning table, not a
 sample-size optimizer or frequentist power calculation at fixed true rates.
 
 Both interfaces support up to 200 planned patients per arm. Input sizes and
-counts must be nonnegative integers; priors must be proper. The time-to-event
-model and the desktop application's report-history interface are not yet
-implemented. Parameter Solver and Inequality Calculator are separate catalog
+counts must be nonnegative integers; priors must be proper. The time-to-event model is documented [separately](predictive-survival.md).
+The desktop application's report-history interface is not reproduced. Parameter Solver and Inequality Calculator are separate catalog
 entries, not bundled UI utilities in this port.
 
 Validation reproduces Cook's numerical example and beta(2,3) two-attempt

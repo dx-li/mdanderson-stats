@@ -744,4 +744,5 @@ updating, credible sets, cohort simulation and prior/posterior history plots.
 
 [Predictive Probabilities: binary outcomes](docs/predictive-binary.md) provides
 two-arm interim predictions and first-stage planning tables for frequentist or
-Bayesian final comparisons. Time-to-event prediction remains pending.
+Bayesian final comparisons. [Time-to-event prediction](docs/predictive-survival.md)
+adds posterior simulation with patient, time and event accrual limits.

@@ -12,5 +12,6 @@
       "sha256": "ae8673b5b135e5152fe15dd7b7fbc6b57502f8ed9564d467a027e13ab52a610a"
     }
   ],
-  "scope": "Binary model, comparison rules, interim and trial-planning workflows; independent implementation."
+  "scope": "Binary and time-to-event models, comparison rules, interim and binary trial-planning workflows; independent implementation.",
+  "survival_equations_visually_checked": "Guide printed pages 13 and 16: comparisons, accrual stopping and additional follow-up"
 }
