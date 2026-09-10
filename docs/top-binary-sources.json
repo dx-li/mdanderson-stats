@@ -1,0 +1,23 @@
+{
+  "sources": [
+    {
+      "url": "https://arxiv.org/pdf/1810.00709",
+      "retrieved_date": "2026-09-10",
+      "bytes": 510309,
+      "sha256": "f0bce8444ccf2c41fc7dbe0742aff7a9c0c939e0b090f279eb2e92bffa1e1a23"
+    },
+    {
+      "url": "https://academic.oup.com/jnci/article/112/1/38/5423189",
+      "retrieved_date": "2026-09-10",
+      "bytes": 343995,
+      "sha256": "5f5c3deeb7cc3dfc3b108a8f4fc0582b311ad5180f0742c881669a98634d5d6f"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TOP2/",
+      "retrieved_date": "2026-09-10",
+      "bytes": 111759,
+      "sha256": "72f6c92453295f62058fe71f28fbbcefa0645ee7cf5ee6279afa2be1b7c5e104"
+    }
+  ],
+  "scope": "Published binary TOP Tables 2-4; numeric Table 4 verified with C=.86, gamma=.95 despite caption ordering. Explicit table/prose suspension conventions. App workflows remain partial."
+}

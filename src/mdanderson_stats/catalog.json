@@ -3253,12 +3253,21 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/TOP2",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/TOP2",
-      "references": [],
+      "references": [
+        "https://academic.oup.com/jnci/article/112/1/38/5423189",
+        "https://arxiv.org/abs/1810.00709"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Batched binary TOP posterior/decision calculation using effective follow-up weights, explicit suspension conventions and final-outcome waiting",
+        "Effective-size crossing tables and complete-data BOP2 interoperability; uniform follow-up reuses the existing TITE effective-size kernel"
+      ],
+      "validation": [
+        "Three focused tests: published Table 4, pending follow-up example, extreme time units, suspension/equality behavior and complete-data BOP2 equivalence; tests/test_top_binary.py",
+        "Pending calendar trial conduct, delayed-response simulation/calibration, multiple endpoints, nonuniform timing elicitation, native reports and app parity; docs/top-binary.md"
+      ]
     },
     {
       "id": 135,

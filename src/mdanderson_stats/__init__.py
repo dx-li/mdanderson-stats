@@ -465,9 +465,13 @@ from .tite_keyboard import (
 from .tite_keyboard_boundaries import TITEKeyboardBoundaries, tite_keyboard_boundaries
 from .tite_keyboard_simulation import TITEKeyboardSimulation, simulate_tite_keyboard
 from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_keyboard_trial
+from .top_binary import TOPBinaryBoundaries, TOPBinaryDecision, TOPBinaryDesign
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "TOPBinaryDesign",
+    "TOPBinaryDecision",
+    "TOPBinaryBoundaries",
     "RegressionESS",
     "logistic_regression_ess",
     "normal_regression_ess",
