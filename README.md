@@ -821,3 +821,7 @@ R implementation and independent regression calculations.
 restricted survival means, with native linear and KM-step interpolation.
 Its default CondiS-X linear refinement is also available, with explicit censoring
 diagnostics. Seven other refinement learners remain pending.
+
+[1+2+3 rare-disease design](docs/rare-disease-123.md) adds cohort-based
+efficacy/toxicity dose assignment and OBD selection. The efficacy prior is explicit
+because the public protocol omits it; default decision tables are reproduced.

@@ -1,0 +1,47 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/1plus2plus3/",
+      "artifact": "app.html",
+      "retrieved_date": "2026-09-10",
+      "bytes": 35526,
+      "sha256": "85bef978a6a80893e58bdf45a7981876b481ac08b4ec92a663826d2ea07f349a"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/1plus2plus3/123Design_Dose_Input.pdf",
+      "artifact": "123Design_Dose_Input.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 33857,
+      "sha256": "520ed35f228b81dd61e5023c7723a822067c6847d4b94865b07bae5848bd22ac"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/1plus2plus3/123Design_target_prob_input.pdf",
+      "artifact": "123Design_target_prob_input.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 36810,
+      "sha256": "13398dfde07e6ad2a9af0e0178822708c5615c820fccfe479c2873a6527de4b4"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/1plus2plus3/123Design_eff_threshold_Input.pdf",
+      "artifact": "123Design_eff_threshold_Input.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 39735,
+      "sha256": "a2ea530900fee027339fe49de6ef28e32b44c065390f9e87c094f43694158e82"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/1plus2plus3/123Design_Simulation.pdf",
+      "artifact": "123Design_Simulation.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 21972,
+      "sha256": "07f2ae128746a4e1635924b78889fa5df92ad2273bb8f38c9117020301f7a3fc"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/1plus2plus3/",
+      "artifact": "protocol-default.html",
+      "retrieved_date": "2026-09-10",
+      "bytes": 4734264,
+      "sha256": "8bb08758eb855cc5f1414e9283bc5ac0feff1c2284352d82658ded30b1fc07e1"
+    }
+  ],
+  "scope": "Default app protocol/table verification, target toxicity .28, efficacy .6, cutoffs .90/.50, 1+2+3 cohorts. Efficacy prior absent from protocol: required explicitly; Beta(1,1) matches all 69 native table cells. Generalized cohorts and native prior audit pending."
+}
