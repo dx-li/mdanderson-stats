@@ -30,9 +30,7 @@ updated = posterior.update(successes=7, failures=4)
 arms = BetaBinomialPosterior([1, 0.5], [1, 0.5]).update([1, 6], [3, 4])
 x = np.linspace(0, 1, 501)
 densities = BetaBinomialPosterior(arms.alpha[:, None], arms.beta[:, None]).pdf(x)
-comparison = compare_beta_binomial(
-    BetaBinomialPosterior(2, 4), BetaBinomialPosterior(6.5, 4.5)
-)
+comparison = compare_beta_binomial(BetaBinomialPosterior(2, 4), BetaBinomialPosterior(6.5, 4.5))
 print(comparison.treatment_greater)  # approximately 0.86272321
 ```
 
@@ -83,8 +81,12 @@ regions = history.posterior.credible_set()
 rng = np.random.default_rng(123)
 trial = simulate_beta_binomial(0.3, cohort_size=3, cohorts=10, rng=rng)
 continued = simulate_beta_binomial(
-    0.3, cohort_size=3, cohorts=10,
-    alpha=trial.posterior.alpha[:, -1], beta=trial.posterior.beta[:, -1], rng=rng,
+    0.3,
+    cohort_size=3,
+    cohorts=10,
+    alpha=trial.posterior.alpha[:, -1],
+    beta=trial.posterior.beta[:, -1],
+    rng=rng,
 )
 ```
 
