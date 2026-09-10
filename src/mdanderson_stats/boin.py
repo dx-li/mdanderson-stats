@@ -16,6 +16,46 @@ def _owned(value: ArrayLike) -> np.ndarray:
     return result
 
 
+def _crossing(target: float, alternative: float) -> float:
+    """Bernoulli likelihood crossing, with a continuous limit at the target."""
+    if alternative == target:
+        return target
+    if alternative < target:
+        numerator = np.log1p((target - alternative) / (1 - target))
+        denominator_term = (
+            np.log(target) - np.log(alternative)
+            if alternative < target / 2
+            else np.log1p((target - alternative) / alternative)
+        )
+    else:
+        numerator = np.log1p((alternative - target) / (1 - alternative))
+        denominator_term = np.log1p((alternative - target) / target)
+    return float(numerator / (numerator + denominator_term))
+
+
+def _alternative(target: float, boundary: float) -> float:
+    lower = boundary < target
+    # Log probability resolves tiny safe alternatives; the upper side instead
+    # searches representable probabilities, including the float just below one.
+    left, right = (
+        (np.log(np.nextafter(0.0, 1.0)), np.log(target))
+        if lower
+        else (target, np.nextafter(1.0, 0.0))
+    )
+    for _ in range(100):
+        middle = left + (right - left) / 2
+        probability = float(np.exp(middle) if lower else middle)
+        if _crossing(target, probability) < boundary:
+            left = middle
+        else:
+            right = middle
+    candidates = [float(np.exp(v) if lower else v) for v in (left, right)]
+    result = min(candidates, key=lambda p: abs(_crossing(target, p) - boundary))
+    if abs(_crossing(target, result) - boundary) > 64 * np.finfo(float).eps * boundary:
+        raise ArithmeticError("boundary requires an alternative beyond floating-point resolution")
+    return result
+
+
 @dataclass(frozen=True)
 class BOINBoundaryTable:
     patients: NDArray[np.int64]
@@ -95,11 +135,8 @@ class BOINDesign:
             stop = scalar(self.early_stop_patients, "early_stop_patients")
             if stop != int(stop) or not 3 <= stop <= 100_000:
                 raise ValueError("early_stop_patients must be an integer in [3,100000]")
-        # Likelihood-ratio crossings; log1p preserves close probability differences.
-        low = np.log1p((target - safe) / (1 - target))
-        high = np.log1p((toxic - target) / (1 - toxic))
-        le = low / (low + np.log1p((target - safe) / safe))
-        ld = high / (high + np.log1p((toxic - target) / target))
+        le = _crossing(target, safe)
+        ld = _crossing(target, toxic)
         if not safe < le < target < ld < toxic:
             raise ArithmeticError("BOIN boundaries are not distinguishable at floating precision")
         for name, value in (
@@ -112,6 +149,49 @@ class BOINDesign:
             ("deescalation_boundary", ld),
         ):
             object.__setattr__(self, name, float(value))
+
+    @classmethod
+    def from_boundaries(
+        cls,
+        target: float,
+        escalation_boundary: float,
+        deescalation_boundary: float,
+        *,
+        elimination_probability: float = 0.95,
+        extra_safe: bool = False,
+        safety_offset: float = 0.05,
+        stay_at_one_of_three: bool = False,
+        deescalate_at_two_of_six: bool = False,
+        bound_mtd: bool = False,
+        early_stop_patients: int | None = None,
+    ) -> "BOINDesign":
+        """Recover indifference probabilities from directly specified rate cutoffs.
+
+        Retain the requested cutoffs exactly after checking the forward mapping.
+        Unrepresentable alternatives raise ArithmeticError rather than clipping.
+        """
+        phi = scalar(target, "target")
+        le = scalar(escalation_boundary, "escalation_boundary")
+        ld = scalar(deescalation_boundary, "deescalation_boundary")
+        if not 0.05 <= phi <= 0.6 or not 0 < le < phi < ld < 1:
+            raise ValueError(
+                "require target in [.05,.6] and 0 < escalation < target < deescalation < 1"
+            )
+        result = cls(
+            phi,
+            _alternative(phi, le),
+            _alternative(phi, ld),
+            elimination_probability=elimination_probability,
+            extra_safe=extra_safe,
+            safety_offset=safety_offset,
+            stay_at_one_of_three=stay_at_one_of_three,
+            deescalate_at_two_of_six=deescalate_at_two_of_six,
+            bound_mtd=bound_mtd,
+            early_stop_patients=early_stop_patients,
+        )
+        object.__setattr__(result, "escalation_boundary", le)
+        object.__setattr__(result, "deescalation_boundary", ld)
+        return result
 
     def _safety_boundary(self, n: NDArray[np.int64], cutoff: float) -> NDArray[np.int64]:
         low, high = np.full(n.shape, -1), n + 1
@@ -132,6 +212,12 @@ class BOINDesign:
         n = np.arange(1, int(maximum) + 1)
         escalate = np.floor(n * self.escalation_boundary).astype(np.int64)
         deescalate = np.ceil(n * self.deescalation_boundary).astype(np.int64)
+        # Multiplication can cross an integer by one ulp (e.g. .58 * 50).
+        # Match conduct's inclusive comparison of the actual observed rate.
+        escalate += (escalate + 1) / n <= self.escalation_boundary
+        escalate -= escalate / n > self.escalation_boundary
+        deescalate -= (deescalate - 1) / n >= self.deescalation_boundary
+        deescalate += deescalate / n < self.deescalation_boundary
         if self.stay_at_one_of_three:
             deescalate = np.where(n == 3, 2, deescalate)
         if self.deescalate_at_two_of_six:

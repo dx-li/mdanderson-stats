@@ -209,3 +209,57 @@ def test_titration_duration_against_exact_competing_event_probability():
         exact = 0.7**k + k * 0.2 * 0.7 ** (k - 1)
         observed = np.mean(result.titration_patients > k)
         assert abs(observed - exact) < 6 * np.sqrt(exact * (1 - exact) / 4000)
+
+
+def test_custom_boundary_inversion_and_likelihood_identity():
+    from decimal import Decimal, localcontext
+
+    for phi, lower, upper in [(0.3, 0.2, 0.4), (0.6, 0.58, 0.65), (0.3, 0.001, 0.4)]:
+        design = BOINDesign.from_boundaries(phi, lower, upper, extra_safe=True)
+        assert design.escalation_boundary == lower
+        assert design.deescalation_boundary == upper
+        assert design.extra_safe
+        with localcontext() as context:
+            context.prec = 80
+            target = Decimal.from_float(phi)
+            for bound, alternative in [
+                (lower, design.safe_probability),
+                (upper, design.toxic_probability),
+            ]:
+                p = Decimal.from_float(alternative)
+                b = Decimal.from_float(bound)
+                # At the likelihood crossing, target and alternative have equal
+                # Bernoulli log likelihood per patient. Independent decimal logs.
+                residual = b * (p / target).ln() + (1 - b) * ((1 - p) / (1 - target)).ln()
+                assert abs(residual) < Decimal("2e-14")
+    for target in [0.05, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.6]:
+        original = BOINDesign(target)
+        recovered = BOINDesign.from_boundaries(
+            target, original.escalation_boundary, original.deescalation_boundary
+        )
+        assert_allclose(
+            [recovered.safe_probability, recovered.toxic_probability],
+            [original.safe_probability, original.toxic_probability],
+            rtol=3e-14,
+        )
+
+
+def test_custom_table_agrees_with_inclusive_conduct_at_integer_crossings():
+    design = BOINDesign.from_boundaries(0.6, 0.58, 0.65)
+    table = design.boundary_table(100)
+    assert table.escalate_max[49] == 29  # .58*50 rounds just below 29
+    for n in range(1, 101):
+        rates = np.arange(n + 1) / n
+        assert table.escalate_max[n - 1] == np.flatnonzero(rates <= 0.58)[-1]
+        assert table.deescalate_min[n - 1] == np.flatnonzero(rates >= 0.65)[0]
+    assert design.next_dose([50, 0], [29, 0], 1).action == "escalate"
+    assert design.next_dose([3, 20], [0, 13], 2).action == "deescalate"
+
+
+def test_unrepresentable_custom_boundaries_fail_explicitly():
+    with pytest.raises(ArithmeticError, match="resolution"):
+        BOINDesign.from_boundaries(0.3, 1e-8, 0.4)
+    with pytest.raises(ArithmeticError, match="resolution"):
+        BOINDesign.from_boundaries(0.3, 0.2, 0.999)
+    with pytest.raises(ValueError, match="escalation"):
+        BOINDesign.from_boundaries(0.3, 0.3, 0.4)

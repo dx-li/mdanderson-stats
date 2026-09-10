@@ -4,7 +4,8 @@ Catalog entry **120**, the [BOIN application](https://biostatistics.mdanderson.o
 is **partially implemented**: single-agent local BOIN boundaries, cohort decisions,
 overdose elimination, final MTD selection, fixed-cohort simulation and accelerated titration are available.
 The 3+3 comparison includes both sample-size matching options.
-Direct boundary-to-probability inversion, protocol generation and animation remain pending. Desktop entry 99
+Direct boundary-to-probability inversion is available; protocol generation and
+animation remain pending. Desktop entry 99
 and BOIN combination/time-to-event variants are separate, unaudited entries.
 
 The application was inspected at version **3.0.20.0**, updated September 4, 2026.
@@ -216,3 +217,43 @@ write `s_j=a_j**2+2*a_j*b_j`. Then selection probabilities are
 `P(MTD=1)=(1-s_2)*s_1` and `P(MTD=2)=a_1*(1+b_1)*s_2`; the remaining mass is no MTD.
 Deterministic paths check top-dose confirmation and downward expansion, and paired
 trial accounting checks both matching modes without assuming they force equality.
+
+## Direct custom boundaries
+
+The site's alternative input mode accepts rate cutoffs instead of indifference
+probabilities. `BOINDesign.from_boundaries` provides the same parameterization:
+
+```python
+custom = BOINDesign.from_boundaries(
+    target=0.3,
+    escalation_boundary=0.2,
+    deescalation_boundary=0.4,
+    extra_safe=True,
+)
+print(custom.safe_probability, custom.toxic_probability)
+# approximately 0.1202446414191221 and 0.5059405275001106
+assert custom.escalation_boundary == 0.2
+assert custom.deescalation_boundary == 0.4
+```
+
+Require `0 < escalation < target < deescalation < 1`, with target in [.05,.6].
+All safety, modification, precision-stop and final-selection options are available
+as keyword arguments. The factory solves the Bernoulli likelihood-crossing equations
+for the two alternatives. It searches log probability below target to resolve tiny
+safe alternatives, and representable probability above target. A forward residual
+check rejects cutoffs whose alternatives cannot be resolved in double precision;
+it does not clip the result to zero or one. For example, target .3 and escalation
+.001 imply a safe alternative near `5.37e-156`, which is supported. Escalation
+`1e-8` or deescalation `.999` at that target require unrepresentable alternatives
+and raise `ArithmeticError`.
+
+The requested cutoffs are retained exactly after forward validation, so inversion
+roundoff cannot change decisions at an inclusive boundary. Boundary-table integer
+cutoffs are likewise checked against `DLTs/patients`, as used by conduct, rather
+than relying exclusively on floating-point multiplication. For example, `.58*50`
+rounds below 29, but `29/50 <= .58` is true and the table permits escalation with
+29 DLTs. Safety rules continue to take precedence.
+
+Validation includes default-probability round trips across eight targets,
+independent 80-digit decimal likelihood identities, tiny alternatives, explicit
+resolution failures, and agreement between integer tables and rate comparisons.
