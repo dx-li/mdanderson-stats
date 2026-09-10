@@ -573,5 +573,6 @@ adds replicate fitting, stable population summaries and undefined-frequency
 diagnostics. [Confidence limits](docs/sppcr-intervals.md) add support-aware
 calibration, reciprocal calibration and transformed frequency intervals.
 [Batch input](docs/sppcr-batch.md) adds validated experiment data and canonical
-parsing/formatting. SPPCR remains partial: FileMaker and interactive input,
-historical RNG reconciliation and the full reporting/application workflow remain.
+parsing/formatting. [FileMaker-style exports](docs/sppcr-filemaker.md) use the
+same validated data model. SPPCR remains partial: interactive input, historical
+RNG reconciliation and the full reporting/application workflow remain.

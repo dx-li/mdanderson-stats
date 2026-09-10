@@ -1,0 +1,37 @@
+{
+  "archive_sha256": "98e0937e26a5209421144c20178a2bd9c77d3baad7a3b28606d0f0f6555e2c98",
+  "driver": "program probe\nuse problem_in_mod, only: read_mjs_one\nuse data_in_struct_mod, only: seen_in,size_in,n_well_in\nuse structures_mod\nimplicit none\ninteger :: i,tail\nread(*,*) tail\nseen_in=0\nsize_in=0\nn_well_in=0\nseen_in(50,3)=tail\ncall read_mjs_one(5)\nwrite(*,'(A,2I8)') 'dimensions ',n_dna,n_allele\nwrite(*,'(A,100ES25.16E3)') 'dna ',dna\nwrite(*,'(A,100ES25.16E3)') 'wells ',n_well\nwrite(*,'(A,100I8)') 'sizes ',allele_size\nwrite(*,'(A,2I8)') 'parents ',progenitor\ndo i=1,n_dna\nwrite(*,'(A,100ES25.16E3)') 'seen ',seen(i,:,data)\nend do\nend program\n",
+  "scope": "Original FileMaker numeric-row reader and conversion, with unused input arrays zeroed",
+  "cases": {
+    "basic": {
+      "input": "100 102 20 .5 100 4 102 8 104 2\n100 102 30 1 100 10 102 15 104 5\n",
+      "returncode": 0,
+      "stdout": "$100 102 20 .5 100 4 102 8 104 2$\n$100 102 30 1 100 10 102 15 104 5$\ndimensions        2       3\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      100     102     104\nparents        1       2\nseen   4.0000000000000000E+000  8.0000000000000000E+000  2.0000000000000000E+000\nseen   1.0000000000000000E+001  1.5000000000000000E+001  5.0000000000000000E+000\n",
+      "stderr": ""
+    },
+    "quoted_csv": {
+      "input": "\"100\",\"102\",\"20\",\".5\",\"100\",\"4\",\"102\",\"8\",\"104\",\"2\"\n\"100\",\"102\",\"30\",\"1\",\"100\",\"10\",\"102\",\"15\",\"104\",\"5\"\n",
+      "returncode": 0,
+      "stdout": "$ 100   102   20   .5   100   4   102   8   104   2$\n$ 100   102   30   1   100   10   102   15   104   5$\ndimensions        2       3\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      100     102     104\nparents        1       2\nseen   4.0000000000000000E+000  8.0000000000000000E+000  2.0000000000000000E+000\nseen   1.0000000000000000E+001  1.5000000000000000E+001  5.0000000000000000E+000\n",
+      "stderr": ""
+    },
+    "exponent_comments": {
+      "input": "100 102 20 5d-1 100 4 102 8 104 2 # first\n100 102 30 1 100 10 102 15 104 5 / second\n",
+      "returncode": 0,
+      "stdout": "$100 102 20 5d-1 100 4 102 8 104 2$\n$100 102 30 1 100 10 102 15 104 5$\ndimensions        2       3\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      100     102     104\nparents        1       2\nseen   4.0000000000000000E+000  8.0000000000000000E+000  2.0000000000000000E+000\nseen   1.0000000000000000E+001  1.5000000000000000E+001  5.0000000000000000E+000\n",
+      "stderr": ""
+    },
+    "homozygote": {
+      "input": "100 100 20 .5 100 4 102 8 104 2\n100 100 30 1 100 10 102 15 104 5\n",
+      "returncode": 0,
+      "stdout": "$100 100 20 .5 100 4 102 8 104 2$\n$100 100 30 1 100 10 102 15 104 5$\ndimensions        2       3\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      100     102     104\nparents        1       1\nseen   4.0000000000000000E+000  8.0000000000000000E+000  2.0000000000000000E+000\nseen   1.0000000000000000E+001  1.5000000000000000E+001  5.0000000000000000E+000\n",
+      "stderr": ""
+    },
+    "drop_unseen": {
+      "input": "100 102 20 .5 100 4 102 8 104 0\n100 102 30 1 100 10 102 15 104 0\n",
+      "returncode": 0,
+      "stdout": "$100 102 20 .5 100 4 102 8 104 0$\n$100 102 30 1 100 10 102 15 104 0$\ndimensions        2       2\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      100     102\nparents        1       2\nseen   4.0000000000000000E+000  8.0000000000000000E+000\nseen   1.0000000000000000E+001  1.5000000000000000E+001\n",
+      "stderr": ""
+    }
+  }
+}

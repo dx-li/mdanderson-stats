@@ -883,7 +883,8 @@
         "Stable Poisson detection probabilities, original-count empirical probabilities and vectorized independent binomial generation with explicit NumPy Generator state, batched replicates and immutable count results",
         "Batched bootstrap generation and replicate fitting with original-count or explicit probability models, stable population summaries, retained replicate values and explicit undefined-frequency diagnostics",
         "Vectorized observed-centered bootstrap confidence intervals for calibration, reciprocal calibration, allele and mutant frequencies, with support clipping, unbounded reciprocal limits and unavailable-uncertainty diagnostics",
-        "Validated immutable experiment data and native batch parsing/formatting with explicit DNA-unit conversion, allele/progenitor identity mapping, continued lists, comments, canonical round trips and disclosed unseen-allele policy"
+        "Validated immutable experiment data and native batch parsing/formatting with explicit DNA-unit conversion, allele/progenitor identity mapping, continued lists, comments, canonical round trips and disclosed unseen-allele policy",
+        "FileMaker-style numeric export parsing and canonical quoted CSV output with repeated identity checks, preserved field boundaries, native limits and shared validated DNA/count conversion"
       ],
       "validation": [
         "docs/sppcr-research.md",
@@ -922,7 +923,12 @@
         "tests/test_sppcr_batch.py",
         "tools/reference_sppcr_batch.py",
         "tests/fixtures/sppcr_batch.json",
-        "docs/sppcr-batch.md"
+        "docs/sppcr-batch.md",
+        "src/mdanderson_stats/sppcr_filemaker.py",
+        "tests/test_sppcr_filemaker.py",
+        "tools/reference_sppcr_filemaker.py",
+        "tests/fixtures/sppcr_filemaker.json",
+        "docs/sppcr-filemaker.md"
       ]
     },
     {

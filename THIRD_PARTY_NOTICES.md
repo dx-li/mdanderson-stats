@@ -590,7 +590,9 @@ support clipping and unbounded reciprocal calibration limits replacing invalid
 wrapped or negative limits. The batch reader retains explicit DNA-unit conversion
 and valid-file semantics, while checking identities/counts, disclosing omitted
 alleles and repairing sign loss, stale-storage dependence and invalid progenitor
-indices. Python tokenization reuses the package's checked CDFLIB lexer.
+indices. FileMaker-style numeric rows add strict CSV field boundaries, repeated
+identity validation and checked native output limits. Python tokenization reuses
+the package's checked CDFLIB lexer.
 Remaining SPPCR workflow components are not yet implemented. The archive includes
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native

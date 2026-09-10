@@ -119,7 +119,8 @@ The batch reader requires ordered `nallele`, `nrun`, `nwell`, `allelesizes`,
 contains a DNA amount and one integer count per allele. Its lexical/comment rules
 and valid conversion results now have native probes
 and a validated Python batch parser. The native negative-count probe also confirms
-sign loss, which Python rejects. FileMaker and interactive inputs remain pending.
+sign loss, which Python rejects. FileMaker numeric rows now have native probes
+and validated parsing/formatting; interactive input remains pending.
 
 ## Remaining implementation scope
 
@@ -128,7 +129,7 @@ sign loss, which Python rejects. FileMaker and interactive inputs remain pending
 | `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Mean fitting, curvature, summaries, transforms and support-aware inverse-transform confidence intervals implemented |
 | `generate_mod`, `one_data_set_mod`, `accumulate_mod` | Probability models, explicit-state NumPy simulation, replicate fits and stable population summaries implemented; simulation reports remain with output workflows |
 | `ecuyer_cote_mod`, random modules, seed helpers | Reconcile existing RANDLIB support with this source version; explicit reproducible RNG state |
-| `problem_in_mod`, `data_in_struct_mod` | Batch parsing/formatting, units, identities and validated data implemented; FileMaker and interactive inputs remain |
+| `problem_in_mod`, `data_in_struct_mod` | Batch and FileMaker parsing/formatting, units, identities and validated data implemented; interactive input remains |
 | `results_out_mod` | Structured confidence intervals and diagnostics implemented; formatted data, analysis and simulation reports remain |
 | Main program, structures, file/format/input helpers | Complete reusable analysis workflow, CLI/stream behavior, safe file handling and source-interface reconciliation |
 
