@@ -131,6 +131,24 @@
       "bytes": 66956,
       "sha256": "8b653c1412d5835a448186b78f815df8f21ccfc8486199499f2b5bfe85dd8d14",
       "retrieved_at": "2026-09-10T06:40:44.281610+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/TTEhelp.pdf",
+      "bytes": 85881,
+      "sha256": "186050700bb73591fe522c7ea50a25a990002eec9027b8c98a6fdb3b5e9cefb3",
+      "retrieved_at": "2026-09-10T07:09:36.569036+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Null6Help.pdf",
+      "bytes": 61258,
+      "sha256": "a22f778224146a85d54eb017cf87b425d90c6063438616ba702490baca2a54c5",
+      "retrieved_at": "2026-09-10T07:09:36.569495+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Alter6Help.pdf",
+      "bytes": 34914,
+      "sha256": "964e550ec9b426cfbec9fcf2ab4093f4d88c658346295d19aa693cfe1a6e32e0",
+      "retrieved_at": "2026-09-10T07:09:36.569714+00:00"
     }
   ],
   "application_version": "1.4.27.0",

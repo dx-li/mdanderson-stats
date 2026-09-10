@@ -734,4 +734,6 @@ exact correlated operating characteristics with grid calibration.
 and calibration against global and partial null hypotheses.
 [Categorical sample-size optimization](docs/bop2-sample-size.md) searches for minimum
 expected enrollment or minimum maximum sample size under error and power constraints.
-Time-to-event endpoints and integrated reports remain pending.
+[Survival monitoring](docs/bop2-survival.md) adds exponential/inverse-gamma
+posterior decisions, calendar replay and simulation. Survival calibration and
+integrated reports remain pending.

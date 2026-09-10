@@ -7,7 +7,8 @@ sample-size criteria in section 2.3 of
 [Zhou, Lee and Yuan (2017), DOI 10.1002/sim.7338](https://onlinelibrary.wiley.com/doi/10.1002/sim.7338)
 ([paper mirror](https://eurekamag.com/research/059/454/059454786.pdf)).
 The joint search retains the additional BOP2-TE partial-null constraints.
-Time-to-event methods and their sample-size searches remain pending.
+[Survival monitoring](bop2-survival.md) is available; survival calibration
+and sample-size searches remain pending.
 
 ## Binary search over maximum sample sizes
 
