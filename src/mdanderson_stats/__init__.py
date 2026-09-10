@@ -249,6 +249,7 @@ from .ksbin2_probability import (
 )
 from .ksbin2_study import KSTwoSampleStudy, ksbin2_study
 from .kstage_binomial import KStageBinomial
+from .microarray_normalization import quantile_normalize
 from .muhaz import MuhazFixed, muhaz_fixed
 from .muhaz_global import MuhazGlobal, muhaz_global
 from .muhaz_knn import MuhazKNN, muhaz_knn
@@ -274,6 +275,7 @@ from .onesample import OneSampleTest, binomial_test, poisson_test
 from .onesample_workflow import OneSampleResult, one_sample
 from .parameter_distribution import ParameterDistribution
 from .parameter_solver import solve_distribution_moments, solve_distribution_quantiles
+from .pdnn import PDNNExpression, pdnn_binding_energy, pdnn_expression, pdnn_signal
 from .pehaz import PiecewiseHazard, pehaz
 from .phase2_predictive import (
     Phase2PredictiveCandidate,
@@ -445,6 +447,11 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "quantile_normalize",
+    "PDNNExpression",
+    "pdnn_binding_energy",
+    "pdnn_signal",
+    "pdnn_expression",
     "BayesFactorSurvivalState",
     "BayesFactorSurvivalBoundaries",
     "bayes_factor_survival",

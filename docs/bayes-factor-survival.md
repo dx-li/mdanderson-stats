@@ -101,3 +101,5 @@ simulation report still require source audit and implementation. The guide lists
 an accrual rate but does not fully specify these mechanics. The available model
 functions do not silently assume a calendar simulation convention or reproduce
 the native Monte Carlo report.
+
+Archive retrieval was checked on September 10, 2026: the [version 1.1 download](https://biostatistics.mdanderson.org/SoftwareDownload/FileDownloader/Index/401) requires email, organization and occupation registration.

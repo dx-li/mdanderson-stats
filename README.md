@@ -769,3 +769,7 @@ and native protocol/export coverage remain pending.
 [Bayes Factor TTE](docs/bayes-factor-survival.md) adds exponential/iMOM posterior
 monitoring and continuous time-on-test boundaries. Calendar simulation and native
 input/report workflows remain pending.
+
+[PerfectMatch](docs/perfectmatch.md) adds quantile normalization and PDNN energy,
+signal and conditional gene-expression calculations. Parameter learning and native
+CEL/file/display workflows remain pending.
