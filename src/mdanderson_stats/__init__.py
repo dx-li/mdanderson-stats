@@ -138,6 +138,12 @@ from .expsurv_scatter import SurvivalScatterPlot, plot_survival_scatter
 from .expsurv_simulation import generate_exploratory_data, generate_exponential_samples
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .gray_test import GrayTest, gray_test
+from .hierarchical_binomial import (
+    ChainSummary,
+    HierarchicalBinomialFit,
+    hierarchical_binomial,
+    summarize_chains,
+)
 from .intervals import (
     binomial_interval,
     bp1ci_binomial_interval,
@@ -302,6 +308,10 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "ChainSummary",
+    "HierarchicalBinomialFit",
+    "hierarchical_binomial",
+    "summarize_chains",
     "BayesianMonitoringDesign",
     "MonitoringOperatingCharacteristics",
     "MonitoringState",

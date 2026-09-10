@@ -1,0 +1,19 @@
+{
+  "retrieved_at": "2026-09-10T03:10:52.615091+00:00",
+  "manual_url": "https://biostatistics.mdanderson.org/shinyapps/BHM-BLN/BHM_BLN.pdf",
+  "manual_sha256": "290f30207d4ad617d5db1136ca2c37ed2744c549496cf2e12f63a2d2043d3783",
+  "manual_bytes": 451802,
+  "application_url": "https://biostatistics.mdanderson.org/shinyapps/BHM-BLN/",
+  "application_html_sha256": "95e6266c100bdbbd76dc376774f0172ea4dcbd30db8e28eab8aa46bac95e36cf",
+  "live_defaults": {
+    "prior_mean": 0,
+    "prior_mean_precision": 1e-06,
+    "precision_shape": 0.01,
+    "precision_rate": 0.01,
+    "independent_prior": [
+      0.5,
+      0.5
+    ]
+  },
+  "sampler_reference": "https://proceedings.mlr.press/v9/murray10a.html"
+}

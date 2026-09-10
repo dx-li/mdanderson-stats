@@ -628,3 +628,11 @@ calculate stopping boundaries, patient histories and exact operating
 characteristics, including sample-size distributions and stopping-induced bias
 in observed rates. Predictive calculations use a vectorized backward
 beta-binomial recursion.
+
+## Hierarchical binomial data
+
+[BHM-BLN](docs/hierarchical-binomial.md) adds a logistic-normal hierarchical
+model with multiple-chain posterior sampling, independent and pooled beta
+comparisons, retained group/global draws and Monte Carlo diagnostics. NumPy
+elliptical slice and Gibbs updates replace the source application's JAGS
+dependency. Diagnostic limitations and weak-prior mixing concerns are explicit.
