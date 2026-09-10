@@ -1,0 +1,39 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CONFINT/CONFINT_V2.0.zip",
+      "artifact": "archive.zip",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1082290,
+      "sha256": "6083815064938e6863ba0e77d85851dd597171fbe10c34dea4232d5ae956d13f"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CONFINT/CONFINT_V2.0.zip",
+      "artifact": "confint-2.0/DOC/confint.tex",
+      "retrieved_date": "2026-09-10",
+      "bytes": 56725,
+      "sha256": "b6c92d6f9b762e75c829e8f7338c3fed234c6aeb2c25a3fa35614d359becb51c"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CONFINT/CONFINT_V2.0.zip",
+      "artifact": "confint-2.0/SOURCE/normal_mean_ci_mod.f90",
+      "retrieved_date": "2026-09-10",
+      "bytes": 4802,
+      "sha256": "c5617707d699ec9dc28c6ede715a699812cb4e4349781d70835d32db9e60e257"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CONFINT/CONFINT_V2.0.zip",
+      "artifact": "confint-2.0/SOURCE/normal_sd_ci_mod.f90",
+      "retrieved_date": "2026-09-10",
+      "bytes": 4921,
+      "sha256": "a8f452aebc608549cab3d94ff7cb27730a2d682d57b095450a607a66c4c20a1d"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CONFINT/CONFINT_V2.0.zip",
+      "artifact": "confint-2.0/SOURCE/normal2_mean_ci_mod.f90",
+      "retrieved_date": "2026-09-10",
+      "bytes": 5110,
+      "sha256": "c1aef3727d6ecd0a4f1954b5285878353d4948d150f607450d0a91128ca6060c"
+    }
+  ]
+}

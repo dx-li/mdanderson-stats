@@ -179,6 +179,11 @@ from .chi_square_order_bounds import ChiSquareOrderBounds, chi_square_order_boun
 from .cid2bp import BinomialDifferenceInterval, cid2bp_interval
 from .condis import CondiSImputation, condis_impute
 from .condis_linear import CondiSLinearRefinement, condis_linear_refine
+from .confint_normal import (
+    confint_normal_probability,
+    confint_normal_sample_size,
+    confint_normal_sd_limit,
+)
 from .conjugate_ess import conjugate_prior_ess
 from .continuous_sample_size import (
     ContinuousSampleSize,
@@ -484,6 +489,9 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "confint_normal_probability",
+    "confint_normal_sample_size",
+    "confint_normal_sd_limit",
     "BinomialDifferenceInterval",
     "cid2bp_interval",
     "SurvivalPriorESS",

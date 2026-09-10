@@ -2080,9 +2080,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Normal CI-length assurance for one-sample mean, one-sample SD, and independent equal-variance mean difference",
+        "Vectorized population-SD limits and minimal integer sample-size planning, with log-scale numerical evaluation",
+        "Corrected pooled two-sample pivot including the degrees-of-freedom factor omitted in the archived source"
+      ],
+      "validation": [
+        "Manual worked examples, independent R probabilities, normal-data simulation, inversion minimality and extreme unit/tail checks; tests/test_confint_normal.py",
+        "Pending binomial, binomial-difference, Poisson, exponential-survival and session/report workflows; docs/confint.md"
+      ]
     },
     {
       "id": 65,

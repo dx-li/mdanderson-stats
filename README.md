@@ -842,3 +842,7 @@ information criterion analytically, avoiding Monte Carlo noise and patient loops
 [CID2BP](docs/cid2bp.md) adds all nine confidence-interval menu options for independent
 binomial differences, including Cox–Snell profile likelihood and native boundary
 adjustments and exact binomial-tail inversion. Session/report interfaces remain pending.
+
+[CONFINT](docs/confint.md) adds CI-length assurance, population-SD limits, and
+minimum integer sample sizes for normal means, normal SDs, and independent
+pooled mean differences. Other CONFINT distributions remain pending.
