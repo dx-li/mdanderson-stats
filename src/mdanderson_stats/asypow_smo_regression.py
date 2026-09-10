@@ -41,7 +41,7 @@ def asypow_smo_regression(
     subtract_df: bool = True,
     tolerance: float = 1e-8,
 ) -> SMOPower:
-    """Linear/quadratic logistic, log-mean Poisson or log-rate survival SMO.
+    """Linear/quadratic logistic/cloglog, Poisson or exponential-survival SMO.
 
     Rows contain intercept, slope and optional quadratic coefficient. Original
     one-based constraints index flattened coefficient rows. Positive design
@@ -53,8 +53,8 @@ def asypow_smo_regression(
         theta = theta[None, :]
     if theta.ndim != 2 or theta.shape[1] not in (2, 3) or not 1 <= theta.size <= 500:
         raise ValueError("parameters need 2 or 3 columns and at most 500 coefficients")
-    if family not in ("logistic", "poisson", "exponential"):
-        raise ValueError("family must be logistic, poisson, or exponential")
+    if family not in ("logistic", "cloglog", "poisson", "exponential"):
+        raise ValueError("family must be logistic, cloglog, poisson, or exponential")
     groups, columns = theta.shape
     length = None
     if family == "exponential":
@@ -93,21 +93,31 @@ def asypow_smo_regression(
             eta = np.sum(design * q.reshape(theta.shape)[group_index], axis=1)
         return finite(eta, "linear predictors")
 
+    def binary_logs(eta: FloatArray) -> tuple[FloatArray, FloatArray]:
+        if family != "cloglog":
+            return -np.logaddexp(0, -eta), -np.logaddexp(0, eta)
+        with np.errstate(over="ignore", under="ignore", divide="ignore"):
+            hazard = np.exp(eta)
+            first = np.where(eta < -36, eta, np.log(-np.expm1(-hazard)))
+        return finite(first, "cloglog log probabilities"), finite(-hazard, "cloglog log survival")
+
     eta = predictors(theta.ravel())
-    log_p = -np.logaddexp(0, -eta)
-    log_s = -np.logaddexp(0, eta)
+    log_p, log_s = binary_logs(eta)
     # Normalize likelihood curvature for optimization; restore its original
     # scale in the returned per-observation divergence (essential for rare means).
     log_information = _log_information(eta, family, None if length is None else length[group_index])
     log_scale = float(logsumexp(log_weight + log_information))
+    if not np.isfinite(log_scale):
+        raise ArithmeticError("alternative predictor information is numerically unresolved")
 
     def likelihood(_p: FloatArray, q: FloatArray) -> float:
         candidate = predictors(q)
         if family in ("poisson", "exponential"):
             log_kl = log_information + _log_exp_remainder(candidate - eta)
         else:
-            first = log_p + _log_exp_remainder(-np.logaddexp(0, -candidate) - log_p)
-            second = log_s + _log_exp_remainder(-np.logaddexp(0, candidate) - log_s)
+            candidate_p, candidate_s = binary_logs(candidate)
+            first = log_p + _log_exp_remainder(candidate_p - log_p)
+            second = log_s + _log_exp_remainder(candidate_s - log_s)
             log_kl = np.logaddexp(first, second)
         with np.errstate(over="ignore", under="ignore"):
             return -float(np.exp(logsumexp(log_weight + log_kl) - log_scale))
@@ -122,6 +132,19 @@ def asypow_smo_regression(
             log_difference[~large] = np.log(np.abs(np.expm1(delta[~large])))
         if family in ("poisson", "exponential"):
             log_score = log_weight + log_information + log_difference - log_scale
+        elif family == "cloglog":
+            # p_alt-p_null = exp(-z_null)-exp(-z_alt), z=exp(eta).
+            # Preserve the difference even when z or the probabilities underflow.
+            log_gap = eta + log_difference
+            log_drop = np.zeros_like(log_gap)
+            small = log_gap < -36
+            log_drop[small] = log_gap[small]
+            ordinary = ~small & (log_gap < 36)
+            log_drop[ordinary] = np.log(-np.expm1(-np.exp(log_gap[ordinary])))
+            candidate_p, _ = binary_logs(candidate)
+            with np.errstate(under="ignore"):
+                minimum_hazard = np.exp(np.minimum(eta, candidate))
+            log_score = log_weight + candidate - candidate_p - minimum_hazard + log_drop - log_scale
         else:
             log_score = log_weight + log_p - np.logaddexp(0, candidate) + log_difference - log_scale
         with np.errstate(over="ignore", under="ignore"):

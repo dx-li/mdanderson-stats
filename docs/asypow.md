@@ -657,8 +657,51 @@ bounds whose predictors and likelihoods remain representable; overflow and rank
 failure raise errors. `tolerance` controls a scaled gradient criterion, so very
 small effects should be checked for sensitivity to a tighter tolerance. The
 logistic and Poisson expected likelihoods are concave, subject to identifiable
-designs. Complementary-log-log, ordinal and arbitrary design-matrix regression SMO
-wrappers remain pending.
+designs. Ordinal and arbitrary design-matrix regression SMO wrappers remain pending.
+
+## Complementary-log-log regression SMO
+
+`asypow_smo_regression(..., family="cloglog")` implements the other binomial
+link in the original design routine: p=1-exp(-exp(eta)), where eta is the
+linear/quadratic predictor. It uses the same parameter layout, design weights,
+coefficient constraints, bounds and convergence checks. Duration is not used.
+
+```python
+from mdanderson_stats import asypow_smo_regression
+
+design = asypow_smo_regression(
+    [-0.5, 0.4],
+    [-1, 0, 1, 2],
+    family="cloglog",
+    constraints=[1, 2, 0],
+    lower=-3,
+    upper=3,
+    observations=[1, 2, 3, 4],
+)
+assert abs(design.null_parameters[0] + 0.089424265273979) < 1e-8
+assert abs(design.sample_size() - 109.445826048983) < 1e-8
+```
+
+With `link=2`, the original `noncent.binomial.design.s` expected-likelihood body
+run in R gives w=0.080851511919384444 for this example. The intercept under a
+zero-slope null is independently obtained by applying the inverse link to the
+allocation-weighted event probability. The original SMO power formula and an
+independent R root agree with the sample size above. The two-group quadratic
+fully fixed-null example gives w=0.07424557446553437.
+
+The implementation keeps event and survival probabilities in log form, avoiding
+native rounding to exactly zero or one. Its analytic predictor score is
+`exp(candidate_eta)*(p_alternative-p_candidate)/p_candidate`; the probability
+difference is evaluated using stable survival-probability differences. KL is
+computed from nonnegative exponential remainders. Alternative predictor
+information scales the optimization, as for the other regression families.
+
+A -600 intercept shift agrees with the rare-event Poisson limit. A design with
+predictors near 4 has event probabilities that round to one in ordinary binary64
+arithmetic; its fitted intercept and divergence agree with a 100-digit Decimal
+likelihood calculation. Unrepresentable log probabilities or unresolved total
+predictor information raise errors. Bounds must keep callback evaluations
+numerically meaningful; the generic convergence limitations continue to apply.
 
 ## Exponential-survival regression SMO
 
