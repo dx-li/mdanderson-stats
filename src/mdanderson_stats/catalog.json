@@ -2987,9 +2987,19 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Single-agent local BOIN boundaries with custom indifference probabilities and optional 1/3 and 2/6 rules",
+        "Sticky posterior overdose elimination, extra-safe lowest-dose stopping and stay-only precision stopping",
+        "Inverse-variance isotonic MTD estimation and selection, optional selection bound, source reporting intervals and overdose probabilities",
+        "Complete-outcome fixed-cohort trial simulation with trial-level counts, selection probabilities and Monte Carlo standard errors; titration and 3+3 comparison remain pending"
+      ],
+      "validation": [
+        "Six published boundary pairs and .30-target cohort table; rational posterior safety identities",
+        "64 original BOIN 2.7.2 MTD and estimate fixtures; 10000-trial native operating-characteristic comparison",
+        "Independent deterministic trial paths and one-cohort binomial-law simulation checks",
+        "docs/boin.md"
+      ]
     },
     {
       "id": 121,

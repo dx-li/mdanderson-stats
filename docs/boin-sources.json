@@ -1,0 +1,66 @@
+{
+  "retrieved_at": "2026-09-10T04:07:24.582860+00:00",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOIN/Guide%20v3.pdf",
+      "sha256": "fe872b26f236e14c87db38270e0b7b5b81259baebc62ddd73b3fb7b4d4556663",
+      "bytes": 901098
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOIN/Probability.pdf",
+      "sha256": "3f98effab7d3fbe281135b0df007446e57bbdb7eaa3f9c7584d3f86693dda9ae",
+      "bytes": 128672
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOIN/Safety.pdf",
+      "sha256": "ac2ada0f9f0853a8d1f3a57514567b515f80202fec460e1b84ec913a32ed8174",
+      "bytes": 118124
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOIN/rule_modify.pdf",
+      "sha256": "4024a70f49961fbf8f6a368f04755587f45456e7797d50c0f982aab500c4af71",
+      "bytes": 42650
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOIN/rule_modify2.pdf",
+      "sha256": "c8cb1af7921efbbec6109d76ebd738dea7ced5a90cb4624f0ee9ff4801cf2a39",
+      "bytes": 22901
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOIN/Doses_Samplesize.pdf",
+      "sha256": "0bff6646d945cf437daff1f08743864e6c1b930bd6cea6d10bc746d2e2de0e97",
+      "bytes": 121426
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOIN/Titration.pdf",
+      "sha256": "a00aa0a3ed0aefa4ad3276051792998a04c1ca7f4f9915cee832d11ef1f2a0f4",
+      "bytes": 124204
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOIN/plus3.pdf",
+      "sha256": "2964b1b41bc0b0ca9d20a615cc5a1251e27704a55225c4c4362d4c323ef30c0b",
+      "bytes": 117411
+    },
+    {
+      "url": "https://www.jstatsoft.org/index.php/jss/article/view/v094i13/1375",
+      "sha256": "203706cd1dcdc2964c2845b9f15e063232484d396f92c4e3cd4be2e9f3f6ebb1",
+      "bytes": 1185214
+    }
+  ],
+  "application": {
+    "url": "https://biostatistics.mdanderson.org/shinyapps/BOIN/",
+    "version": "3.0.20.0",
+    "updated": "2026-09-04"
+  },
+  "native_reference": {
+    "package": "BOIN",
+    "version": "2.7.2",
+    "url": "https://cran.r-project.org/web/packages/BOIN/index.html",
+    "runner": "tools/boin_reference.R",
+    "seed": 120,
+    "fixtures": {
+      "tests/fixtures/boin-reference.csv": "2274775c50f31d336d2d09b3e38de23293b27dd9e360e2f2daf242c745eb29e3",
+      "tests/fixtures/boin-oc-reference.csv": "ef62e2ceaf9fc2531a808a91c2bb611448b823327332b81cc99148a47ee37edd"
+    }
+  }
+}

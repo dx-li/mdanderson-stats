@@ -47,6 +47,8 @@ from .binomial_design import (
 from .binomial_null import BinomialNull, binomial_null
 from .binomial_sample_size import binomial_sample_size
 from .binormal_roc import BinormalROC, BinormalROCPoint
+from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
+from .boin_simulation import BOINSimulation, simulate_boin
 from .bp1ci import BP1CIResult, bp1ci
 from .cdflib_array_format import format_cdflib_array
 from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
@@ -341,6 +343,12 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "BOINBoundaryTable",
+    "BOINDecision",
+    "BOINDesign",
+    "BOINSelection",
+    "BOINSimulation",
+    "simulate_boin",
     "SurvivalSampleSize",
     "exponential_event_probability",
     "survival_event_power",

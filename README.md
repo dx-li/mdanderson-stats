@@ -674,3 +674,10 @@ one- and two-arm survival comparisons, including equivalence and directional
 margins. Median and hazard inputs broadcast over accrual/follow-up scenarios.
 Source approximations and exact uniform-accrual event probabilities are explicit,
 with conservative and joint-normal equivalence options.
+
+## BOIN dose finding
+
+[BOIN](docs/boin.md) provides single-agent dose decisions, overdose safeguards,
+weighted isotonic MTD selection and fixed-cohort trial simulation. Published
+boundaries and original R results validate the core. This catalog entry remains
+partial while accelerated titration and the 3+3 comparison are pending.
