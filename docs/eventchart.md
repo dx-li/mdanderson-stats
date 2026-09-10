@@ -1,6 +1,6 @@
 # EVENTCHART: event timelines
 
-`event_convert` expands numeric time/event-code pairs into one time column per
+`event_convert` expands numeric or categorical time/event-code pairs into one time column per
 observed event type. `event_chart_data` prepares calendar or elapsed-time event
 charts, and `plot_event_chart` renders them using the optional `plot` extra.
 
@@ -19,19 +19,49 @@ axes.figure.savefig("event-chart.png")
 
 ## Data and geometry
 
-Inputs are numeric matrices with NaN for missing entries. Infinity and complex
-values are rejected. Limits are one million rows, 1000 columns and two million
-matrix entries; conversion also limits its expanded output to two million entries.
+Chart inputs are numeric matrices with NaN for missing entries. The converter
+also accepts mixed matrices with string event codes and None for missing values.
+Infinity and complex event times/codes are rejected. Limits are one million rows, 1000 columns and two million
+matrix entries; conversion also limits its expanded output and total row/pair
+combinations to two million each.
 Negative times are allowed, including events before the reference time.
 Numerical result arrays are immutable.
 
 `event_convert(data, time_columns=(0,), code_columns=(1,))` uses zero-based column
-indices. Supply equal-length index vectors for multiple time/code pairs. Codes
-are sorted numerically within each pair; pair order is retained. NaN codes create
-no event, and missing times remain NaN. With no observed codes, the result has
-zero event columns. `names` optionally supplies names for all input columns;
+indices. Supply equal-length index vectors for up to 1000 time/code pairs; repeated
+indices allow one time column to be reused with different event codes. Pair
+order is retained. Each code column must contain only strings or only numbers,
+plus optional None/NaN. Numeric codes sort numerically; strings sort by Unicode
+code point, independent of the machine locale. None/NaN codes create no event,
+and missing times remain NaN. Empty strings and the literal string "NA" are
+valid categories, not missing-value tokens. With no observed or declared codes,
+the result has zero event columns. Only selected time/code columns are interpreted;
+unselected columns may contain other metadata. `names` optionally supplies names for all input columns;
 output names combine the time-column name and code (e.g. `V1.0`, `V1.1`).
-`source_columns` and `codes` retain the mapping to each output column.
+`source_columns` and `codes` retain the mapping to each output column. Numeric
+category identity is preserved, including distinct integer codes beyond 2**53
+when they are supplied as integers (rather than already-rounded floats).
+
+`code_levels` supplies one category sequence or None per time/code pair. Explicit
+sequences preserve their order and include unobserved categories as all-missing
+columns, matching the original factor input. Categories must be unique, nonmissing
+and of the same type as the corresponding code column; every observed code must
+be declared. None selects automatic sorting for that pair.
+
+```python
+converted = event_convert(
+    [[5, "death", "10"], [6, "censored", "2"], [None, "death", "2"]],
+    time_columns=(0, 0),
+    code_columns=(1, 2),
+    names=("time", "cause", "status"),
+    code_levels=(("death", "censored", "relapse"), None),
+)
+# Columns: time.death, time.censored, time.relapse, time.10, time.2
+```
+
+This interface does not require pandas. If an input array was already converted
+to strings or floats before the call, its original category types cannot be
+recovered; a mixed Python list or object array preserves them.
 
 `event_chart_data` accepts these layout options:
 
@@ -132,6 +162,9 @@ assignment syntax. Graphics callbacks captured its line and point coordinates.
 The fixture compares calendar charts, reference-subtracted/scaled interval charts,
 and multi-key sorted subsets with renumbering. The original `event.convert`
 function ran unchanged for two time/code pairs with five output event columns.
+A second unchanged-source fixture checks string codes, explicit factor order,
+an unobserved factor level, and reuse of one time column for two code columns.
+Python additionally checks missing codes and exact large-integer category identity.
 Focused tests also cover missing references, aligned interval overlays, source-row
 provenance, absent codes, deterministic jitter, overflow rejection and rendering.
 
@@ -152,8 +185,7 @@ Corrections to the original implementation:
 
 **Status: partial.** Calendar, elapsed-time and Goldman charts are now available.
 Remaining work includes line styles grouped by covariates, fuller legend/style
-controls, general calendar-covariate layouts beyond the entry-date Goldman chart,
-and categorical (non-numeric) coded-event inputs. The current geometry does not stand in for those workflows.
+controls and general calendar-covariate layouts beyond the entry-date Goldman chart. The current geometry does not stand in for those workflows.
 
 Source: [MD Anderson EVENTCHART](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/32),
 [original archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EVENTCHART/EVENTCHART_V1.tar.gz).

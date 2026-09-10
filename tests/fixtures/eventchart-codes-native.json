@@ -1,0 +1,46 @@
+{
+  "times": [
+    [
+      5.0,
+      null,
+      null,
+      5.0,
+      null
+    ],
+    [
+      null,
+      6.0,
+      null,
+      null,
+      6.0
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      1.0,
+      null,
+      null,
+      1.0,
+      null
+    ],
+    [
+      null,
+      2.0,
+      null,
+      null,
+      2.0
+    ]
+  ],
+  "names": [
+    "time.death",
+    "time.censored",
+    "time.relapse",
+    "time.10",
+    "time.2"
+  ]
+}

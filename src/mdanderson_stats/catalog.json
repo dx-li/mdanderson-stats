@@ -1275,12 +1275,13 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Numeric coded-event conversion; calendar/elapsed-time event geometry, reference alignment and scaling, stable multi-key ordering, row provenance, missing-data handling, numeric covariate placement and local jitter, interval overlays and optional rendering. Goldman entry-date charts with calendar-consistent or original current-date boundaries and calendar date conversion/formatting. Grouped styles, general calendar-covariate layouts and categorical codes remain pending."
+        "Numeric/string coded-event conversion with factor levels and shared time columns; calendar/elapsed-time event geometry, reference alignment and scaling, stable multi-key ordering, row provenance, missing-data handling, numeric covariate placement and local jitter, interval overlays and optional rendering. Goldman entry-date charts with calendar-consistent or original current-date boundaries and calendar date conversion/formatting. Grouped styles and general calendar-covariate layouts remain pending."
       ],
       "validation": [
         "Original S event.chart translated mechanically to R assignment syntax: calendar, interval and sorted-subset point/span coordinates; original event.convert with multiple pairs; tests/fixtures/eventchart-native.json",
         "Missing-reference/overlay regression, ordering and provenance, missing codes, jitter replay, overflow and rendering; tests/test_eventchart.py; docs/eventchart.md; docs/eventchart-sources.json",
-        "Native Goldman full/subset event coordinates and boundary slopes; corrected calendar identity, leap-year conversion and scaled ticks; tests/test_eventchart_goldman.py; tests/fixtures/eventchart-goldman-native.json"
+        "Native Goldman full/subset event coordinates and boundary slopes; corrected calendar identity, leap-year conversion and scaled ticks; tests/test_eventchart_goldman.py; tests/fixtures/eventchart-goldman-native.json",
+        "Original event.convert factor/string inputs with an unobserved level and shared time column; tests/fixtures/eventchart-codes-native.json; tests/test_eventchart_codes.py"
       ]
     },
     {

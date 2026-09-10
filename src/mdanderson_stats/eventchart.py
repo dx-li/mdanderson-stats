@@ -10,6 +10,7 @@ from numpy.typing import ArrayLike
 
 from ._cdflib import _freeze
 from ._validation import FloatArray
+from .eventchart_codes import EventCode, _code_levels
 
 if TYPE_CHECKING:
     from matplotlib.axes import Axes
@@ -30,11 +31,11 @@ def _matrix(data: ArrayLike) -> FloatArray:
     return x
 
 
-def _indices(value: ArrayLike, n: int, name: str) -> np.ndarray:
+def _indices(value: ArrayLike, n: int, name: str, *, allow_repeats: bool = False) -> np.ndarray:
     v = np.asarray(value)
     if v.ndim != 1 or v.size == 0 or v.dtype.kind not in "iu" or np.any((v < 0) | (v >= n)):
         raise ValueError(f"{name} must contain nonempty zero-based integer indices in range")
-    if np.unique(v).size != v.size:
+    if not allow_repeats and np.unique(v).size != v.size:
         raise ValueError(f"{name} must not repeat indices")
     return v.astype(np.int64)
 
@@ -44,7 +45,7 @@ class ConvertedEvents:
     times: FloatArray
     names: tuple[str, ...]
     source_columns: tuple[int, ...]
-    codes: tuple[float, ...]
+    codes: tuple[EventCode, ...]
 
 
 def event_convert(
@@ -53,32 +54,62 @@ def event_convert(
     time_columns: ArrayLike = (0,),
     code_columns: ArrayLike = (1,),
     names: tuple[str, ...] | None = None,
+    code_levels: tuple[tuple[EventCode, ...] | None, ...] | None = None,
 ) -> ConvertedEvents:
-    """Expand each time/code column pair into one time column per observed code.
+    """Expand time/code pairs, retaining numeric or string category identity.
 
-    Codes are finite numeric values, sorted within each pair. NaN codes create
-    no event; NaN times remain missing. Output columns retain input-pair order.
+    None/NaN codes create no event. Codes are sorted within each pair unless
+    code_levels explicitly supplies their order, including unobserved levels.
+    String sorting uses Unicode order, independent of system locale.
     """
-    x = _matrix(data)
-    tc = _indices(time_columns, x.shape[1], "time_columns")
-    cc = _indices(code_columns, x.shape[1], "code_columns")
+    x = np.asarray(data, dtype=object)
+    if (
+        x.ndim != 2
+        or not 1 <= x.shape[0] <= 1_000_000
+        or not 1 <= x.shape[1] <= 1000
+        or x.size > 2_000_000
+    ):
+        raise ValueError("data must be a nonempty matrix with <=2000000 entries")
+    tc = _indices(time_columns, x.shape[1], "time_columns", allow_repeats=True)
+    cc = _indices(code_columns, x.shape[1], "code_columns", allow_repeats=True)
+    if x.shape[0] * tc.size > 2_000_000:
+        raise ValueError("conversion exceeds 2000000 row/pair combinations")
+    if tc.size > 1000:
+        raise ValueError("at most 1000 time/code pairs are supported")
     if tc.size != cc.size:
         raise ValueError("time_columns and code_columns must have equal lengths")
     if names is None:
         names = tuple(f"V{i + 1}" for i in range(x.shape[1]))
     if len(names) != x.shape[1] or any(not isinstance(n, str) for n in names):
         raise ValueError("names must contain one string per data column")
-    levels = [np.unique(x[~np.isnan(x[:, c]), c]) for c in cc]
-    if x.shape[0] * sum(v.size for v in levels) > 2_000_000:
+    if code_levels is None:
+        code_levels = (None,) * tc.size
+    if len(code_levels) != tc.size:
+        raise ValueError("code_levels must have one item per time/code pair")
+    prepared = [
+        _code_levels(x[:, c], declared) for c, declared in zip(cc, code_levels, strict=True)
+    ]
+    size = sum(len(levels) for _, levels in prepared)
+    if x.shape[0] * size > 2_000_000:
         raise ValueError("expanded event matrix exceeds 2000000 entries")
-    columns, labels, sources, codes = [], [], [], []
-    for t, c, values in zip(tc, cc, levels, strict=True):
-        for v in values:
-            columns.append(np.where(x[:, c] == v, x[:, t], np.nan))
-            labels.append(f"{names[t]}.{v:g}")
+    times = np.full((x.shape[0], size), np.nan)
+    labels, sources, codes = [], [], []
+    column = 0
+    for t, (values, levels) in zip(tc, prepared, strict=True):
+        # Convert only selected time columns; other columns may contain metadata.
+        if any(isinstance(v, (complex, np.complexfloating)) for v in x[:, t]):
+            raise ValueError("event times must be real")
+        time = np.asarray(x[:, t], dtype=float)
+        if np.isinf(time).any():
+            raise ValueError("event times must not contain infinity")
+        for v in levels:
+            mask = values == v
+            times[mask, column] = time[mask]
+            label = v if isinstance(v, str) else str(v) if isinstance(v, int) else f"{v:.17g}"
+            labels.append(f"{names[t]}.{label}")
             sources.append(int(t))
-            codes.append(float(v))
-    times = np.column_stack(columns) if columns else np.empty((x.shape[0], 0))
+            codes.append(v)
+            column += 1
     return ConvertedEvents(_freeze(times), tuple(labels), tuple(sources), tuple(codes))
 
 

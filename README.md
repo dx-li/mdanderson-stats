@@ -920,5 +920,7 @@ lines, centered/baseline placement, and all six point patterns.
 elapsed-time subject timelines, with sorting, reference alignment, covariate
 placement, interval overlays and immutable plotting geometry. Goldman entry-date
 charts add current-date boundaries, optional native-boundary compatibility and
-calendar date conversion/formatting. Grouped styles and remaining display
+calendar date conversion/formatting. Categorical conversion supports string codes,
+explicit factor order, unobserved categories and shared time columns. Grouped
+styles and remaining display
 workflows are still pending.
