@@ -79,5 +79,6 @@ sampling, legacy endpoint guards, report composition and total output limits.
 The numerical kernels and historical sampler retain their independent native and
 mathematical validation; this workflow adds integration evidence.
 
-SPPCR remains partial: main-menu/CLI behavior, file routing, repeated application
-sessions and the final source-interface completion audit remain.
+[File workflows](sppcr-files.md) provide bounded input reads and staged report
+publication. SPPCR remains partial: main-menu/CLI behavior, interactive routing,
+repeated application sessions and the final source-interface completion audit remain.

@@ -226,6 +226,7 @@ from .sppcr_bootstrap import (
 )
 from .sppcr_data import SPPCRData, sppcr_data
 from .sppcr_filemaker import format_sppcr_filemaker, parse_sppcr_filemaker
+from .sppcr_files import read_sppcr_file, write_sppcr_reports
 from .sppcr_fit import SPPCRMeanFit, sppcr_fit_means
 from .sppcr_frequencies import SPPCREstimate, SPPCRFrequencies, SPPCRProportion, sppcr_frequencies
 from .sppcr_generate import (
@@ -276,6 +277,8 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "read_sppcr_file",
+    "write_sppcr_reports",
     "SPPCRAnalysis",
     "SPPCRReports",
     "sppcr_analyze",

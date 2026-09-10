@@ -607,7 +607,9 @@ parameter reports disclose units and simulation choices without implicit file wr
 Reusable observed/truth analysis workflows use explicit modern or historical RNG
 state and always draw initial simulated data from truth, repairing the source
 bootstrap-choice dependence on uninitialized counts.
-Remaining SPPCR application/file components are not yet implemented. The archive includes
+File workflows use bounded read-only input and complete staged report files with
+exclusive publication by default and explicit replacement. Remaining SPPCR menu
+and interactive application components are not yet implemented. The archive includes
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native
 source and historical binaries are not bundled in the Python package.
