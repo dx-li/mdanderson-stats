@@ -900,3 +900,7 @@ while correcting legacy approximation and cancellation problems.
 original-unit labels, with grids, explicit limits, and overlays that reuse the
 transform contract. A plotting-independent interface exposes transformed pairs
 and any omitted row indices.
+
+[SURVAN](docs/survan.md) adds multi-group log-rank and Gehan–Breslow tests,
+including stratification, tied events, and group score/covariance diagnostics.
+Its remaining estimation and reporting workflows are still pending.

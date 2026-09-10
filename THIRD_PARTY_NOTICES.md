@@ -616,3 +616,14 @@ protecting inputs and named active streams, and bounding append reads. The archi
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native
 source and historical binaries are not bundled in the Python package.
+
+## SURVAN
+
+`survan_tests.py` implements SURVAN's log-rank and Gehan–Breslow calculations
+with NumPy risk tables and covariance eigendecomposition. This adaptation is
+maintained independently of the original authors. Original copyright, use terms
+and warranty text are preserved in
+[`notices/mdanderson-survan-LEGALITIES.txt`](notices/mdanderson-survan-LEGALITIES.txt).
+Those terms are not replaced by a different project license. Source provenance
+and validation are described in `docs/survan.md` and `docs/survan-sources.json`.
+Original Fortran programs and binaries are not redistributed.

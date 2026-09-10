@@ -2008,9 +2008,14 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Multi-group log-rank and Gehan–Breslow survival comparisons, optional stratification, tied-event hypergeometric covariance, scores and effective-rank chi-square tests. Native KM confidence/quantile conventions, multivariable Cox/logistic regression and reporting remain pending."
+      ],
+      "validation": [
+        "Original Fortran LRC/GBC calculations on the manual example and three-group stratified tied data; tests/test_survan_tests.py",
+        "Analytic tied-censor risk-set example, stratum addition and disconnected-group rank checks"
+      ]
     },
     {
       "id": 60,

@@ -1,0 +1,46 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SURVAN/SURVAN_V1.tar.gz",
+      "artifact": "archive.tar.gz",
+      "bytes": 392601,
+      "sha256": "497694442376acc7fd6e40996f489e2129245ae207cff21f5dd95c0134b76b3c",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SURVAN/SURVAN_V1.tar.gz",
+      "artifact": "source/SURVAN1.f",
+      "bytes": 139822,
+      "sha256": "fac9e0ec913ad80f18663926b491e8c83afb828a892c2b273e55eb5f02e3e423",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SURVAN/SURVAN_V1.tar.gz",
+      "artifact": "source/SURVAN2.f",
+      "bytes": 130897,
+      "sha256": "b72a2619b5b7a524582c74ce8409b1178ce8ed27c0e25ebee61f808169116b16",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SURVAN/SURVAN_V1.tar.gz",
+      "artifact": "source/SURVAN3.f",
+      "bytes": 144228,
+      "sha256": "4bdbf3163fff423287ba55371347d4710d336f065533ddb6a21b3575dce474ba",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SURVAN/SURVAN_V1.tar.gz",
+      "artifact": "source/survan.doc",
+      "bytes": 47251,
+      "sha256": "0859e5bb518b062e4ae459df2836a80dc573370e725f6f232a2c02b3276c45f0",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SURVAN/SURVAN_V1.tar.gz",
+      "artifact": "source/sexample.dat",
+      "bytes": 348,
+      "sha256": "cd4a591f0ce527a2685449fd8b8406524d51d8ee150fbbba522a445261c603f4",
+      "retrieved_date": "2026-09-10"
+    }
+  ]
+}
