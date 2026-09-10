@@ -273,6 +273,13 @@
       "retrieved_date": "2026-09-10",
       "bytes": 10064,
       "sha256": "63764dff178bf17597028eb69f7af73dd5d626dd9c3576ce788050acdee2490f"
+    },
+    {
+      "url": "https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v002i02/asypow-2.1.tar.Z.tar",
+      "artifact": "original/asypow/S/noncent.expsurv.design.s",
+      "retrieved_date": "2026-09-10",
+      "bytes": 10825,
+      "sha256": "b3b13acae468acb1dadac1971efae268ce50a03a97838650e5f31ad72bad8184"
     }
   ],
   "original_s_plus_version": "2.1"

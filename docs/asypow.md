@@ -561,7 +561,7 @@ Omitting `null_rates` tests equality of all G>=2 rates, with df=G-1. Supplying
 null rates fixes every group rate, with df=G. The result is `SMOPower`, with the
 same power, sample-size and significance methods and correction options above.
 Mixed fixed/equality constraints are supported as described above. Survival
-regression SMO remains pending.
+regression SMO is also available through the regression interface below.
 
 For rate p and duration L, let d=1-(1-exp(-p*L))/(p*L), the probability of an
 observed event. Expected observed follow-up is d/p. The expected log likelihood
@@ -657,8 +657,57 @@ bounds whose predictors and likelihoods remain representable; overflow and rank
 failure raise errors. `tolerance` controls a scaled gradient criterion, so very
 small effects should be checked for sensitivity to a tighter tolerance. The
 logistic and Poisson expected likelihoods are concave, subject to identifiable
-designs. Complementary-log-log, exponential-survival, ordinal and arbitrary
-design-matrix regression SMO wrappers remain pending.
+designs. Complementary-log-log, ordinal and arbitrary design-matrix regression SMO
+wrappers remain pending.
+
+## Exponential-survival regression SMO
+
+`asypow_smo_regression(..., family="exponential", duration=...)` uses the
+same linear/quadratic coefficient layout, allocations, constraints and bounds,
+with the linear predictor representing log event rate. Duration is required
+and must be a positive scalar or one value per group. The censoring model is
+uniform entry during each group's study period, followed until that study ends;
+there is no additional follow-up period. Other families reject `duration`.
+
+At a design point with alternative log rate eta, let d be the probability of an
+observed event. If the candidate log rate is eta+delta, the censored-record KL
+is `d*(expm1(delta)-delta)` and its negative-likelihood score in the candidate
+predictor is `-d*expm1(delta)`. The implementation evaluates both in log space
+and reuses the stable event-probability calculation, including its small-rate
+limit. Optimization is scaled by total expected event probability before the
+original per-observation divergence is restored.
+
+```python
+from mdanderson_stats import asypow_smo_regression
+
+design = asypow_smo_regression(
+    [-0.5, 0.4],
+    [-1, 0, 1, 2],
+    family="exponential",
+    duration=5,
+    constraints=[1, 2, 0],
+    lower=-3,
+    upper=3,
+    observations=[1, 2, 3, 4],
+)
+assert abs(design.null_parameters[0] + 0.132340229608785) < 1e-8
+assert abs(design.sample_size() - 73.1047329754253) < 1e-8
+```
+
+The original `noncent.expsurv.design.s` expected-log-likelihood body, evaluated
+unchanged in R, gives w=0.12104360619579624 for this example. The null intercept
+also follows analytically from expected deaths divided by expected observed
+person-time across design points. The original SMO power formula and a tight R
+root give the displayed sample size. A two-group quadratic design with durations
+(2,5) and a fully fixed null gives w=0.07580219137112798 in both implementations.
+These comparisons execute the source likelihood body, not its S-plus/Fortran
+optimization wrapper.
+
+Numerical checks preserve divergence under time-unit changes of 1e-200 and
+1e200. An intercept shift of -600 agrees with the rare-event limit: survival
+KL approaches Poisson KL multiplied by duration/2. Constraints, convergence
+checks and numerical limitations otherwise follow the regression and generic
+interfaces described here.
 
 ## Generic expected-log-likelihood SMO
 
