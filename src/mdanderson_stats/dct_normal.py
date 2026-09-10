@@ -29,6 +29,8 @@ def dct_normal_sample_size(
     onsite_sd: float,
     offsite_sd: float,
     *,
+    onsite_experimental_sd: float | None = None,
+    offsite_experimental_sd: float | None = None,
     offsite_fraction: float = 0.75,
     relative_bias: float = 0,
     randomization_ratio: float = 1,
@@ -40,8 +42,9 @@ def dct_normal_sample_size(
     alpha: float = 0.05,
     sides: int = 2,
 ) -> DCTNormalSampleSize:
-    """Plan the optimal weighted z-test with equal arm variances within each site.
+    """Plan the optimal weighted z-test with stratum- and arm-specific variances.
 
+    onsite_sd/offsite_sd are control SDs. Experimental SDs default to these.
     effect is the onsite effect; offsite effect is (1+relative_bias)*effect.
     fraction 0/1 selects entirely onsite/offsite data. Allocation rows are onsite,
     offsite; columns are control, experimental. Each continuous arm count is
@@ -50,6 +53,17 @@ def dct_normal_sample_size(
     """
     delta = scalar(effect, "effect")
     sd = np.array([scalar(onsite_sd, "onsite_sd"), scalar(offsite_sd, "offsite_sd")])
+    experimental = np.array(
+        [
+            sd[0]
+            if onsite_experimental_sd is None
+            else scalar(onsite_experimental_sd, "onsite_experimental_sd"),
+            sd[1]
+            if offsite_experimental_sd is None
+            else scalar(offsite_experimental_sd, "offsite_experimental_sd"),
+        ]
+    )
+    sd = np.column_stack((sd, experimental))
     fraction = scalar(offsite_fraction, "offsite_fraction")
     bias = scalar(relative_bias, "relative_bias")
     ratio = scalar(randomization_ratio, "randomization_ratio")
@@ -73,9 +87,10 @@ def dct_normal_sample_size(
     fractions = np.array([1 - fraction, fraction])
     arm_fractions = np.array([1 / (1 + ratio), ratio / (1 + ratio)])
     log_effect = np.log(delta) + [0, np.log1p(bias)]
-    log_information = 2 * (log_effect - np.log(sd)) - np.log(factors)
+    log_variance_rate = logsumexp(2 * np.log(sd) - np.log(arm_fractions), axis=1) + np.log(factors)
+    log_information = 2 * log_effect - log_variance_rate
     with np.errstate(divide="ignore"):
-        log_rate = logsumexp(np.log(fractions) + log_information) + np.log(arm_fractions).sum()
+        log_rate = logsumexp(np.log(fractions) + log_information)
     critical = -float(ndtri(error / sides))
     shift = critical + float(ndtri(target))
     if shift <= 0:
@@ -85,9 +100,13 @@ def dct_normal_sample_size(
         raise ArithmeticError("sample size is not representable or exceeds one billion units")
     allocation = np.ceil(required * fractions[:, None] * arm_fractions).astype(np.int64)
     active = fractions > 0
+    allocation[active] = np.maximum(allocation[active], 1)
     n = allocation[active].astype(float)
     # Recompute information after independent rounding changes allocation ratios.
-    log_actual = log_information[active] - np.log(1 / n[:, 0] + 1 / n[:, 1])
+    log_actual_variance = logsumexp(2 * np.log(sd[active]) - np.log(n), axis=1) + np.log(
+        factors[active]
+    )
+    log_actual = 2 * log_effect[active] - log_actual_variance
     noncentrality = float(np.exp(0.5 * logsumexp(log_actual)))
     attained = float(ndtr(noncentrality - critical))
     if sides == 2:

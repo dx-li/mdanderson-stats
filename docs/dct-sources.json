@@ -11,7 +11,15 @@
       "retrieved_date": "2026-09-10",
       "bytes": 1110175,
       "sha256": "29129767b175d60e68950ffe847d726a6b25ce10b37dd643528b216908bb2a4a"
+    },
+    {
+      "url": "https://academic.oup.com/ije/article/54/3/dyaf053/8139148",
+      "linked_file": "dyaf053_supplementary_data.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 426889,
+      "sha256": "092a7dbf0c2c3fe27ab5b1841e451cd22383b19b231db0affd24e49844a01a40",
+      "inspection": "Sections A/B unequal variances and E binary endpoints; page 20 rendered to inspect theta inconsistency."
     }
   ],
-  "scope": "Paper equations 2.3 and 2.5, continuous equal-arm-variance planning. Native rounding, binary and unequal-arm-variance methods pending."
+  "scope": "Continuous and binary weighted-z planning, including unequal arm variances and correlated outcomes. Native rounding and reporting pending."
 }

@@ -3648,12 +3648,12 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Continuous-endpoint weighted-z sample sizes for fully/partially decentralized trials with independent or exchangeably correlated outcomes",
+        "Continuous and binary weighted-z sample sizes for fully/partially decentralized trials with independent or exchangeably correlated outcomes and unequal treatment-arm variances",
         "Explicit stratum/arm rounding and recomputed achieved power; known offsite bias and unequal randomization"
       ],
       "validation": [
-        "Three focused tests: paper equations 2.3/2.5, app-help totals 228/136/76, direct achieved power and extreme-scale invariance; tests/test_dct_normal.py",
-        "Pending binary endpoints, unequal treatment-arm variances, native rounding and reports; docs/dct-normal.md"
+        "Six focused tests: equations 2.3/2.5 and binary variance derivation, app-help totals 228/136/76/284/246, direct power, Gaussian simulation and extreme-scale invariance; tests/test_dct_normal.py and tests/test_dct_binary.py",
+        "Pending native rounding and reports; supplement binary standardization inconsistency documented in docs/dct-normal.md"
       ]
     },
     {
