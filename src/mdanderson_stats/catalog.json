@@ -1349,9 +1349,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Wald, continuity-corrected and Yates difference-of-binomial intervals with source Peskun boundary adjustments",
+        "Cox-Snell profile-likelihood interval with constrained concave optimization and exact probability-boundary handling"
+      ],
+      "validation": [
+        "Archive reference output, analytic profile endpoints, sample-exchange symmetry and special boundary adjustments; tests/test_cid2bp.py",
+        "Pending methods 4/6/7/8/9 and session/report interfaces; docs/cid2bp.md"
+      ]
     },
     {
       "id": 39,

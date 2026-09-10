@@ -176,6 +176,7 @@ from .cdflib_strings import (
 )
 from .cdflib_t import CDFStudentT, ccum_t, cdf_t, cum_t, inv_t
 from .chi_square_order_bounds import ChiSquareOrderBounds, chi_square_order_bounds
+from .cid2bp import BinomialDifferenceInterval, cid2bp_interval
 from .condis import CondiSImputation, condis_impute
 from .condis_linear import CondiSLinearRefinement, condis_linear_refine
 from .conjugate_ess import conjugate_prior_ess
@@ -483,6 +484,8 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "BinomialDifferenceInterval",
+    "cid2bp_interval",
     "SurvivalPriorESS",
     "survival_prior_ess",
     "conjugate_prior_ess",

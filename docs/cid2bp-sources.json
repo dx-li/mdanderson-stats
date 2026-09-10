@@ -1,0 +1,32 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CID2BP/CID2BP_V1.2.zip",
+      "artifact": "archive.zip",
+      "retrieved_date": "2026-09-10",
+      "bytes": 348375,
+      "sha256": "91c0d2e47ca1ed8fa9f3efa9f608fd87cb83453976f6658a23ef0e54352c939e"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CID2BP/CID2BP_V1.2.zip",
+      "artifact": "CID2BP_V1/source/all.f",
+      "retrieved_date": "2026-09-10",
+      "bytes": 299893,
+      "sha256": "0c0e3b092c364793e715ee48882dd0a550bdd4e2280182549caae905edeb1ffc"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CID2BP/CID2BP_V1.2.zip",
+      "artifact": "CID2BP_V1/source/readme.txt",
+      "retrieved_date": "2026-09-10",
+      "bytes": 6766,
+      "sha256": "725e1d66022bc9ded071a7c1a492d3631eda5b1d2d60c324af3d60adc7f905f3"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CID2BP/CID2BP_V1.2.zip",
+      "artifact": "CID2BP_V1/source/TestOut_Orig.txt",
+      "retrieved_date": "2026-09-10",
+      "bytes": 4995,
+      "sha256": "65f4d9ea344636bd21857df3e7642df3e984343da3ce070756576356ebece4d3"
+    }
+  ]
+}
