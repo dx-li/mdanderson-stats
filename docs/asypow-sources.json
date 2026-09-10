@@ -245,6 +245,13 @@
       "retrieved_date": "2026-09-10",
       "bytes": 6586,
       "sha256": "b0ec65df98386b26e9fe69f0ca69bfc1ea7f1fc89d981c97b91bb537f1eea484"
+    },
+    {
+      "url": "https://www.jstatsoft.org/index.php/jss/article/downloadSuppFile/v002i02/asypow-2.1.tar.Z.tar",
+      "artifact": "original/asypow/S/fix.constraints.s",
+      "retrieved_date": "2026-09-10",
+      "bytes": 2041,
+      "sha256": "29d540e02f0b708844b8d1c1061ad6c721d5ca88d7220f4b5769cd2f9547cb83"
     }
   ],
   "original_s_plus_version": "2.1"

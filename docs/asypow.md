@@ -4,7 +4,7 @@ MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
 including regression, ordinal, multinomial and general design-matrix models.
-Remaining S-plus SMO models, mixed constraints and complete native workflow coverage remain
+Remaining S-plus SMO models, categorical mixed constraints and complete native workflows remain
 pending; the catalog status is **partial**.
 
 The original S-plus 2.1 archive has a broader scope than the later R archive.
@@ -313,8 +313,8 @@ chi-square wrapper supplied its distribution calculations; statistical formulas
 were unchanged. Inversion was independently checked with a tighter R root.
 
 The significance inverse uses actual df, correcting the original `self.sig.s`
-hardcoded df=1, just as the LR inverse does. Mixed fixed/equality constraints,
-regression SMO and generic expected-likelihood optimization remain pending. These tests are asymptotic approximations, not
+hardcoded df=1, just as the LR inverse does. Regression SMO and generic
+expected-likelihood optimization remain pending. These tests are asymptotic approximations, not
 finite-sample exact binomial tests.
 
 ## SMO Poisson designs
@@ -324,7 +324,7 @@ provides the same fixed-null and all-groups-equal hypotheses for positive Poisso
 means. The equality null uses allocation-weighted means and df=G-1; a specified
 null fixes all G means and uses df=G. Inputs support up to 500 groups. The result
 is `SMOPower`, with the same correction, inversion and noncentrality limits
-as the binomial method above. Mixed constraints remain pending.
+as the binomial method above. Mixed constraints are described below.
 
 The per-observation divergence is twice the weighted sum of
 `p*log(p/q) - p + q`. Near-equal means use a stable log remainder; large or small
@@ -344,6 +344,57 @@ Compatibility changes were limited to converting the multi-value return to an
 R list and aliasing `is.inf` to `is.infinite`; the later R chi-square wrapper
 provided distribution calculations. The statistical formulas were unchanged.
 Sample size was independently inverted with a tight R root tolerance.
+
+## Mixed constraints for binomial, Poisson and exponential survival
+
+`asypow_smo_binomial`, `asypow_smo_poisson` and `asypow_smo_exponential` accept
+`constraints=` as an alternative to the fully specified null argument. This
+uses the original ASYPOW three-column format with **one-based group indices**:
+
+- `[1, i, value]` fixes group i's parameter to the supplied value.
+- `[2, i, j]` sets parameters of groups i and j equal.
+
+A single row or a matrix of up to 10,000 rows is supported. Unconstrained groups
+retain their alternative values and contribute zero divergence. Equality
+components pool allocation-weighted probabilities/means for binomial/Poisson,
+and expected-exposure-weighted rates for survival. Fixing any member fixes its
+whole equality component. Fixed probabilities must lie in (0,1); fixed means
+and rates must be positive. All inputs must be finite.
+
+```python
+from mdanderson_stats import asypow_smo_binomial
+
+# Compare groups 1 and 2, fix group 3, and leave group 4 free.
+design = asypow_smo_binomial(
+    [0.1, 0.2, 0.4, 0.6],
+    group_size=[1, 2, 3, 4],
+    constraints=[[2, 1, 2], [1, 3, 0.3]],
+)
+assert design.degrees_of_freedom == 2
+assert abs(design.divergence_per_observation - 0.01870861387683265) < 1e-14
+```
+
+Degrees of freedom count independent restrictions: an unfixed equality component
+of m groups contributes m-1, while a fixed component contributes m. Redundant
+rows and cycles do not increase df. Row order has no effect. A hypothesis with
+no effective restriction, conflicting fixed values in one component, invalid
+indices, or simultaneous `constraints` and a fully specified null is rejected.
+Two specified fixed values must agree exactly; no tolerance merges different
+hypotheses.
+
+Original binomial and Poisson noncentrality routines agree for the mixed example
+above (Poisson scales the probabilities and fixed value by 10). The corresponding
+Poisson w is 0.13412909456623945. Survival with rates (0.1,0.2,0.4,0.6), durations
+(5,8,4,2) and the same allocation/constraints gives w=0.02105833508977506 when
+compared with the original expected-log-likelihood function body.
+
+The original equality bookkeeping can lose connections when two existing chains
+join. For p=(0.1,0.2,0.4,0.8), allocation=(1,2,3,4) and equalities (1,4), (2,3),
+(3,4), the null requires all four probabilities to equal 0.49. The original code
+instead leaves group 1 at 0.1 and pools only the other three to 0.5333333. This
+port preserves every connection. It also accepts consistent redundant rows that
+the native constraint checker rejects, while counting their independent rank.
+These extensions do not apply yet to categorical SMO or regression models.
 
 ## SMO multinomial and ordinal designs
 
@@ -409,7 +460,8 @@ durations and relative group sizes must be finite and positive, with at most
 Omitting `null_rates` tests equality of all G>=2 rates, with df=G-1. Supplying
 null rates fixes every group rate, with df=G. The result is `SMOPower`, with the
 same power, sample-size and significance methods and correction options above.
-Mixed constraints and survival regression SMO remain pending.
+Mixed fixed/equality constraints are supported as described above. Survival
+regression SMO remains pending.
 
 For rate p and duration L, let d=1-(1-exp(-p*L))/(p*L), the probability of an
 observed event. Expected observed follow-up is d/p. The expected log likelihood

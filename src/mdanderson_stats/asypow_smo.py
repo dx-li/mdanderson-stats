@@ -8,6 +8,7 @@ from scipy.special import logsumexp
 
 from ._validation import FloatArray, finite, scalar
 from .asypow import AsymptoticPower, _probability
+from .asypow_constraints import _group_null
 from .boin import _owned
 from .cdflib_elementary import rlog1
 
@@ -65,6 +66,7 @@ def asypow_smo_binomial(
     probabilities: ArrayLike,
     *,
     null_probabilities: ArrayLike | None = None,
+    constraints: ArrayLike | None = None,
     group_size: ArrayLike = 1,
     subtract_df: bool = True,
 ) -> SMOPower:
@@ -73,7 +75,7 @@ def asypow_smo_binomial(
     Omit null_probabilities to test equality of G>=2 probabilities (df=G-1).
     Supply a scalar/vector to fix all G null probabilities (df=G). The null for
     equality is the allocation-weighted mean, maximizing expected likelihood.
-    Mixed fixed/equality constraints and regression SMO remain separate work.
+    Alternatively supply original ASYPOW constraints with one-based indices.
     """
     p = _probability(probabilities, "probabilities")
     if p.ndim != 1 or not 1 <= p.size <= 500:
@@ -84,17 +86,8 @@ def asypow_smo_binomial(
     if np.any(weights <= 0):
         raise ValueError("group_size must be positive")
     log_weights = np.log(weights) - logsumexp(np.log(weights))
-    if null_probabilities is None:
-        if p.size < 2:
-            raise ValueError("equality testing requires at least two groups")
-        normalized = np.exp(log_weights)
-        normalized /= normalized.sum()
-        mean = float(np.clip(p.min() + normalized @ (p - p.min()), p.min(), p.max()))
-        q = np.full_like(p, mean)
-        df = p.size - 1
-    else:
-        q = np.broadcast_to(_probability(null_probabilities, "null_probabilities"), p.shape)
-        df = p.size
+    q, df = _group_null(p, log_weights, null_probabilities, constraints)
+    _probability(q, "null probabilities")
     delta = q - p
     near = np.abs(delta) <= 0.125 * np.minimum(p, 1 - p)
     kl = np.empty_like(p)
@@ -115,6 +108,7 @@ def asypow_smo_poisson(
     means: ArrayLike,
     *,
     null_means: ArrayLike | None = None,
+    constraints: ArrayLike | None = None,
     group_size: ArrayLike = 1,
     subtract_df: bool = True,
 ) -> SMOPower:
@@ -128,19 +122,9 @@ def asypow_smo_poisson(
     if np.any(weights <= 0):
         raise ValueError("group_size must be positive")
     log_weights = np.log(weights) - logsumexp(np.log(weights))
-    if null_means is None:
-        if p.size < 2:
-            raise ValueError("equality testing requires at least two groups")
-        normalized = np.exp(log_weights)
-        normalized /= normalized.sum()
-        mean = np.clip(normalized @ (p / p.max()), 0, 1) * p.max()
-        q = np.full_like(p, np.clip(mean, p.min(), p.max()))
-        df = p.size - 1
-    else:
-        q = np.broadcast_to(finite(null_means, "null_means"), p.shape)
-        if np.any(q <= 0):
-            raise ValueError("null_means must be positive")
-        df = p.size
+    q, df = _group_null(p, log_weights, null_means, constraints)
+    if np.any(q <= 0):
+        raise ValueError("null means must be positive")
     with np.errstate(over="ignore", under="ignore"):
         w = float(np.exp(np.log(2) + logsumexp(log_weights + _poisson_log_kl(p, q))))
     if not np.isfinite(w):

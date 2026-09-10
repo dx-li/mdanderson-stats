@@ -5,6 +5,7 @@ from numpy.typing import ArrayLike
 from scipy.special import logsumexp
 
 from ._validation import finite
+from .asypow_constraints import _group_null
 from .asypow_regression import _log_information
 from .asypow_smo import SMOPower, _poisson_log_kl
 from .boin import _owned
@@ -15,6 +16,7 @@ def asypow_smo_exponential(
     duration: ArrayLike,
     *,
     null_rates: ArrayLike | None = None,
+    constraints: ArrayLike | None = None,
     group_size: ArrayLike = 1,
     subtract_df: bool = True,
 ) -> SMOPower:
@@ -36,26 +38,11 @@ def asypow_smo_exponential(
     log_weight = np.log(weight) - logsumexp(np.log(weight))
     log_events = _log_information(log_p, "exponential", length)
     log_exposure = log_weight + log_events - log_p
-    if null_rates is None:
-        if p.size < 2:
-            raise ValueError("equality testing requires at least two groups")
-        # Expected deaths divided by expected observed person-time maximizes
-        # the null likelihood. Center close rates to preserve small differences.
-        if p.min() >= 0.5 * p.max():
-            normalized = np.exp(log_exposure - logsumexp(log_exposure))
-            normalized /= normalized.sum()
-            mean = p.min() + normalized @ (p - p.min())
-        else:
-            log_mean = logsumexp(log_weight + log_events) - logsumexp(log_exposure)
-            with np.errstate(over="ignore", under="ignore"):
-                mean = np.exp(np.clip(log_mean, log_p.min(), log_p.max()))
-        q = np.full_like(p, np.clip(mean, p.min(), p.max()))
-        df = p.size - 1
-    else:
-        q = np.broadcast_to(finite(null_rates, "null_rates"), p.shape)
-        if np.any(q <= 0):
-            raise ValueError("null_rates must be positive")
-        df = p.size
+    # Exposure-weighted pooling is the expected-likelihood maximizer for
+    # every equality component, including components with unequal durations.
+    q, df = _group_null(p, log_exposure, null_rates, constraints)
+    if np.any(q <= 0):
+        raise ValueError("null rates must be positive")
     # KL for the censored record = P(event)/p * KL(Pois(p), Pois(q)).
     with np.errstate(over="ignore", under="ignore"):
         w = float(np.exp(np.log(2) + logsumexp(log_exposure + _poisson_log_kl(p, q))))

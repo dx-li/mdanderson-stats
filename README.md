@@ -869,4 +869,6 @@ ordinal regression information, general logistic/multiplicative-binomial designs
 multinomial information and information reparameterization are also available.
 SMO binomial, Poisson, multinomial, ordinal and censored exponential-survival
 fixed-null/equality designs are available with both df conventions.
-Other SMO models, mixed constraints and full native workflows remain pending.
+Mixed fixed/equality constraints are supported for binomial, Poisson and survival
+groups. Categorical mixed constraints, other SMO models and full native workflows
+remain pending.
