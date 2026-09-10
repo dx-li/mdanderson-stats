@@ -115,3 +115,7 @@ path decisions and final inconclusiveness; and validate a 400-patient rare-null
 case with log Bayes factor above 5,000 against direct integration. Reported native
 Monte Carlo results agree within their simulation uncertainty. No new CI
 workflow is introduced.
+
+The optional `imom_shape` and `strict_thresholds` arguments extend this design
+for explicit-shape [BFMonitor workflows](bfmonitor.md); their defaults preserve
+the desktop model and strict stopping rules described above.

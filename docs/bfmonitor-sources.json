@@ -1,0 +1,49 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BFMonitor/Guide.pdf",
+      "retrieved_date": "2026-09-10",
+      "sha256": "c3571f5cfb420bad18293ef753b0e9aafd1b3b1ffb7100abfbd0fbd34c93c3eb",
+      "bytes": 372643
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_xml/PMC9308506/unicode",
+      "retrieved_date": "2026-09-10",
+      "sha256": "87509b11d1072d5b4b9bcd70a252e4c758372a8d317219bbbcbbf05182781073",
+      "bytes": 176808
+    }
+  ],
+  "live_app": {
+    "url": "https://biostatistics.mdanderson.org/shinyapps/BFMonitor/",
+    "pid": 1027,
+    "version": "2.0.1.0",
+    "last_updated_display": "01/06/2026",
+    "input": {
+      "null_rate": 0.2,
+      "alternative_rate": 0.4,
+      "effective_sample_size": 5,
+      "purpose": "superiority only",
+      "bayes_factor_cutoff": 9,
+      "min_subjects": 10,
+      "cohort_size": 5,
+      "max_subjects": 50
+    },
+    "prior_plot_display": {
+      "k": 1.25,
+      "nu": 2.5,
+      "tau": 0.0524
+    },
+    "superiority_min": [
+      6,
+      7,
+      9,
+      11,
+      12,
+      14,
+      15,
+      17,
+      18
+    ]
+  },
+  "scope": "Explicit prior-shape extension and inclusive stopping semantics; ESS-to-shape calibration and native protocol/export parity remain unverified."
+}

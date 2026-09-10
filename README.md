@@ -761,3 +761,7 @@ and numerical error estimates.
 [Bayes Factor Binary](docs/bayes-factor-binary.md) adds nonlocal iMOM trial monitoring,
 exact operating characteristics, simulation and text-input/HTML reporting, preserving
 superiority, inferiority and inconclusive conclusions.
+
+[BFMonitor](docs/bfmonitor.md) extends iMOM monitoring to variable prior shapes and
+inclusive cutoffs. Its default online boundaries are reproduced; ESS calibration
+and native protocol/export coverage remain pending.

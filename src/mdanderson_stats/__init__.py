@@ -219,6 +219,7 @@ from .hierarchical_binomial import (
     summarize_chains,
 )
 from .hierarchical_normal import HierarchicalNormalFit, hierarchical_normal
+from .imom_prior import IMOMBinaryPrior
 from .inequality import InequalityProbability, inequality_probability
 from .intervals import (
     binomial_interval,
@@ -438,6 +439,7 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "IMOMBinaryPrior",
     "BayesFactorBinaryJob",
     "BayesFactorBinaryReport",
     "parse_bayes_factor_binary_input",

@@ -24,6 +24,8 @@ class BayesFactorBinaryReport:
     def to_html(self) -> str:
         """Return HTML containing input provenance, exact and Monte Carlo results."""
         job, design = self.job, self.job.design
+        lower_symbol = "<" if design.strict_thresholds else "<="
+        upper_symbol = ">" if design.strict_thresholds else ">="
         parameters = {
             "Implementation": "mdanderson-stats independent Python implementation",
             "Random seed": job.seed,
@@ -31,9 +33,12 @@ class BayesFactorBinaryReport:
             "Maximum patients": design.max_subjects,
             "Null response rate": design.null_rate,
             "Alternative prior mode": design.alternative_mode,
-            "iMOM prior": "k=1, nu=2, normalized on (null rate, 1); equal prior model odds",
-            "Inferiority cutoff (strict <)": design.inferiority_cutoff,
-            "Superiority cutoff (strict >)": design.superiority_cutoff,
+            "iMOM prior": (
+                f"k={design.imom_shape:g}, nu={2 * design.imom_shape:g}, "
+                "normalized on (null rate, 1); equal prior model odds"
+            ),
+            f"Inferiority cutoff ({lower_symbol})": design.inferiority_cutoff,
+            f"Superiority cutoff ({upper_symbol})": design.superiority_cutoff,
             "Analysis sample sizes": ", ".join(map(str, design.looks)),
         }
 

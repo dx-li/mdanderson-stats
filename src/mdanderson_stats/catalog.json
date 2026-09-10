@@ -3341,12 +3341,22 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BFMonitor",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BFMonitor",
-      "references": [],
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/BFMonitor/Guide.pdf",
+        "https://doi.org/10.1002/pst.2139"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Variable-shape one-sided iMOM priors with nu=2*k, normalized density/CDF/quantiles and stable log Bayes factors",
+        "Inclusive or strict monitoring, exact operating characteristics and simulation using explicit prior shape; live default boundaries reproduced"
+      ],
+      "validation": [
+        "Live default: ESS=5 displays k=1.25, nu=2.5, tau=0.0524; all nine superiority boundaries reproduced from explicit shape",
+        "Independent density/likelihood integration at four shapes; prior quantile inversion; equality stopping policies; existing desktop regression tests",
+        "Pending: verify ESS-to-shape calibration conventions, protocol and export parity; see docs/bfmonitor.md"
+      ]
     },
     {
       "id": 144,

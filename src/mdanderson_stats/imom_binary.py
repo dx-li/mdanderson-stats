@@ -1,26 +1,29 @@
-"""Normalized one-sided iMOM binary Bayes factors (k=1, nu=2)."""
+"""Normalized one-sided iMOM binary Bayes factors (nu=2*k)."""
 
 import numpy as np
 from scipy.special import logsumexp, roots_legendre
 
 from ._validation import FloatArray
+from .imom_prior import IMOMBinaryPrior
 
 
-def _log_marginal(n: int, p0: float, mode: float, order: int) -> FloatArray:
-    logc = np.log(1.5) + 2 * (np.log(mode - p0) - np.log1p(-p0))
-    c = float(np.exp(logc))
-    # t=log((theta-p0)/sqrt(tau)). Its prior density is
-    # 2 exp(-2t-exp(-2t)+c), t < -log(c)/2.
+def _log_marginal(n: int, p0: float, mode: float, order: int, shape: float = 1) -> FloatArray:
+    logc, c = IMOMBinaryPrior(p0, mode, shape)._constants()
+    # t=k*log((theta-p0)/sqrt(tau)). Its prior density is
+    # 2 exp(-2t-exp(-2t)+c), t < -k*log(tau/(1-p0)^2)/2.
     # Excluded prior mass is exp(-cutoff), far below the likelihood scale.
     cutoff = n * max(-np.log(p0), -np.log1p(-p0)) + 80
-    lower, upper = -0.5 * np.log(c + cutoff), -0.5 * logc
-    edges = np.linspace(lower, upper, int(np.ceil(upper - lower)) + 1)
+    lower, upper = -0.5 * np.log(c + cutoff), -0.5 * shape * logc
+    panels = int(np.ceil(upper - lower))
+    if not 1 <= panels <= 2048:
+        raise ArithmeticError("iMOM quadrature requires more than 2048 integration panels")
+    edges = np.linspace(lower, upper, panels + 1)
     nodes, weights = roots_legendre(order)
     half = np.diff(edges) / 2
     t = ((edges[:-1] + half)[:, None] + half[:, None] * nodes).ravel()
     log_weights = (np.log(half)[:, None] + np.log(weights)).ravel()
     log_weights += np.log(2) - 2 * t - np.exp(-2 * t) + c
-    logv = t + 0.5 * logc
+    logv = t / shape + 0.5 * logc
     success = np.logaddexp(np.log(p0), np.log1p(-p0) + logv)
     failure = np.log1p(-p0) + np.log(-np.expm1(logv))
     result = np.empty(n + 1)
@@ -32,10 +35,10 @@ def _log_marginal(n: int, p0: float, mode: float, order: int) -> FloatArray:
     return result
 
 
-def _imom_log_bayes_table(n: int, p0: float, mode: float) -> FloatArray:
-    previous = _log_marginal(n, p0, mode, 8)
+def _imom_log_bayes_table(n: int, p0: float, mode: float, shape: float = 1) -> FloatArray:
+    previous = _log_marginal(n, p0, mode, 8, shape)
     for order in (16, 32, 64, 128, 256):
-        current = _log_marginal(n, p0, mode, order)
+        current = _log_marginal(n, p0, mode, order, shape)
         if np.all(np.isfinite(current)) and np.max(np.abs(current - previous)) < 2e-10:
             break
         previous = current

@@ -10,6 +10,7 @@ from ._validation import FloatArray, count, finite
 from .bayesian_monitoring import _integer, _prob
 from .beta_binomial import _owned
 from .imom_binary import _imom_log_bayes_table
+from .imom_prior import IMOMBinaryPrior
 
 
 def _readonly(value):
@@ -87,6 +88,12 @@ class BayesFactorBinaryDesign:
     inferiority_max: NDArray[np.int64]
     superiority_min: NDArray[np.int64]
     log_bayes_factor: FloatArray
+    imom_shape: float = 1
+    strict_thresholds: bool = True
+
+    @property
+    def prior(self) -> IMOMBinaryPrior:
+        return IMOMBinaryPrior(self.null_rate, self.alternative_mode, self.imom_shape)
 
     def monitor(self, events: ArrayLike, sample_size: ArrayLike) -> BayesFactorBinaryState:
         m, n = np.broadcast_arrays(count(events, "events"), count(sample_size, "sample_size"))
@@ -215,8 +222,10 @@ def bayes_factor_binary_design(
     superiority_cutoff: float = 0.9,
     min_subjects: int = 10,
     cohort_size: int = 5,
+    imom_shape: float = 1,
+    strict_thresholds: bool = True,
 ) -> BayesFactorBinaryDesign:
-    """Guide's k=1, nu=2 iMOM design, with strict cutoffs and three final decisions.
+    """iMOM design with nu=2*k, configurable shape and three final decisions.
 
     The alternative is a normalized prior on (null_rate,1), parameterized by
     its mode; it is not a point alternative. Final unresolved trials are inconclusive.
@@ -249,15 +258,29 @@ def bayes_factor_binary_design(
             "require 0<null_rate<alternative_mode<1 and inferiority_cutoff<superiority_cutoff"
         )
     looks = np.arange(max(first, step), n + 1, step, dtype=np.int64)
-    table = _imom_log_bayes_table(n, p0, mode)
+    prior = IMOMBinaryPrior(p0, mode, imom_shape)
+    if not isinstance(strict_thresholds, bool):
+        raise ValueError("strict_thresholds must be boolean")
+    table = _imom_log_bayes_table(n, p0, mode, prior.shape)
     lower, upper = [], []
     for size in looks:
         row = table[size, : size + 1]
         if np.any(np.diff(row) < -1e-10):
             raise ArithmeticError("iMOM Bayes factor failed monotonicity check")
-        lo, hi = np.flatnonzero(row < logit(low)), np.flatnonzero(row > logit(high))
+        lo = np.flatnonzero(row < logit(low) if strict_thresholds else row <= logit(low))
+        hi = np.flatnonzero(row > logit(high) if strict_thresholds else row >= logit(high))
         lower.append(int(lo[-1]) if len(lo) else -1)
         upper.append(int(hi[0]) if len(hi) else int(size + 1))
     return BayesFactorBinaryDesign(
-        n, p0, mode, low, high, _readonly(looks), _readonly(lower), _readonly(upper), table
+        n,
+        p0,
+        mode,
+        low,
+        high,
+        _readonly(looks),
+        _readonly(lower),
+        _readonly(upper),
+        table,
+        prior.shape,
+        strict_thresholds,
     )
