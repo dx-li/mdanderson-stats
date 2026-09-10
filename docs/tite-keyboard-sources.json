@@ -37,6 +37,12 @@
       "url": "https://arxiv.org/pdf/1807.08393",
       "bytes": 461884,
       "sha256": "e95af3ff7e874e6d3e060da9e413598de0cc3a5fadc7a7b4ade7f0da96885871"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/cran/CFO/master/R/lateonset.simu.R",
+      "bytes": 13319,
+      "sha256": "53ed05281f22943be3558be990988b0bd0482a1422104a155042502b63ccd151",
+      "role": "Related-method Weibull calibration reference; not TITE-Keyboard application code"
     }
   ]
 }

@@ -3151,17 +3151,19 @@
       "implemented_features": [
         "Uniform and informative three-piece conditional time-to-DLT weights and batched effective sample-size calculator",
         "Interim TITE-Keyboard posterior decisions using the effective beta-likelihood approximation, with enrolled-count overdose control, sticky exclusions, pending-fraction suspension and two-observed-patient escalation requirement",
-        "Weibull/log-logistic timing calibration, flowcharts and integrated reports remain pending",
+        "Flowcharts and integrated reports remain pending",
         "Precomputed effective non-DLT follow-up transition brackets and batched ordinary-decision lookup, with enrolled-count safety tables",
         "Calendar-time trial replay with potential outcomes, staggered fixed-dose cohorts, event-driven accrual suspension, final follow-up and auditable interim histories",
-        "Calendar-time simulations with fixed/exponential arrival gaps and uniform/piecewise-uniform conditional DLT timing, separated from analysis timing weights"
+        "Calendar-time simulations with fixed/exponential arrival gaps and uniform/piecewise-uniform conditional DLT timing, separated from analysis timing weights",
+        "Vectorized window-censored Weibull/log-logistic event quantiles calibrated to dose toxicity and late-half probabilities, integrated into calendar simulation"
       ],
       "validation": [
         "Published ESS and delayed-outcome examples; independent piecewise weights and fractional-beta interval identity",
         "Published rounded effective non-DLT thresholds, time-scale invariance, complete-data reduction and safety/suspension precedence",
         "docs/tite-keyboard.md",
         "Published one-to-four-DLT follow-up thresholds, independent fractional-beta crossings, adjacent-endpoint checks and 10000 posterior/table comparisons",
-        "Published staggered-cohort/day-165 trial prefix, future-outcome causality, precision-stop follow-up, timing/arrival distribution checks and full fixed/exponential multi-dose runs"
+        "Published staggered-cohort/day-165 trial prefix, future-outcome causality, precision-stop follow-up, timing/arrival distribution checks and full fixed/exponential multi-dose runs",
+        "Independent 340-digit quantile calculations, half-window calibration, extreme probability/time scaling and one-patient incidence/late-fraction Monte Carlo checks"
       ]
     },
     {

@@ -701,5 +701,5 @@ weights, effective sample sizes and dose decisions with pending toxicity outcome
 The likelihood approximation, enrolled-count safety rule and accrual suspension
 are explicit. Precomputed effective-follow-up boundaries provide numerical lookup
 without rounded cutoffs. Calendar-time replay and simulation support staggered
-enrollment and outcome-driven pauses. Weibull/log-logistic timing calibration and
-integrated reports remain pending.
+enrollment and outcome-driven pauses, with calibrated Weibull/log-logistic toxicity
+timing scenarios. Flowcharts and integrated reports remain pending.

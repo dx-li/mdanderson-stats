@@ -360,8 +360,10 @@ from .tite_keyboard import (
 from .tite_keyboard_boundaries import TITEKeyboardBoundaries, tite_keyboard_boundaries
 from .tite_keyboard_simulation import TITEKeyboardSimulation, simulate_tite_keyboard
 from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_keyboard_trial
+from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "toxicity_time_quantile",
     "TITEKeyboardStep",
     "TITEKeyboardTrial",
     "run_tite_keyboard_trial",

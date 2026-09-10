@@ -5,7 +5,7 @@ is partially implemented for its ESS calculator, informative trimester weights,
 approximate posterior-key calculations and interim dose decisions with pending
 outcomes. Calendar-time replay and simulation with uniform/piecewise-uniform DLT
 timing, numerical effective-follow-up boundaries and lookup tables are available.
-Weibull/log-logistic timing calibration, flowcharts and integrated reports remain pending.
+Calibrated Weibull/log-logistic timing is available; flowcharts and integrated reports remain pending.
 
 The app snapshot identifies version 1.2.2.0, updated December 15, 2025. Its technical
 PDFs and the authors' [methodological paper](https://arxiv.org/abs/1807.08393) are
@@ -249,7 +249,7 @@ Conditional DLT time is uniform over the window by default. Optional
 These scenario probabilities are distinct from `trimester_probabilities`, which
 specify the analysis weighting prior; they may deliberately differ to examine
 misspecification. Both support three nonnegative masses summing to one.
-Weibull/log-logistic timing and the app's late-half calibration remain pending.
+Calibrated Weibull and log-logistic timing are described below.
 
 The simulation result retains trial-level patient/toxicity counts, selected doses,
 durations, suspension times and stop reasons. Selection index zero means no MTD;
@@ -261,3 +261,78 @@ day-165 delayed-DLT decision, checks invariance to unobserved future events, con
 final follow-up after precision stopping, and checks conditional timing and arrival
 distributions against their known laws. Fixed/exponential 300-trial runs exercised
 full multi-dose timelines. No native calendar-simulation equivalence is claimed.
+
+
+## Calibrated Weibull and log-logistic scenarios
+
+The app offers these two distributions and a late-half probability slider.
+`simulate_tite_keyboard` now accepts `event_distribution="weibull"` or
+`"log-logistic"`, with `late_probability` defaulting to 0.5. A scalar applies to
+all doses; a dose-length vector specifies separate late probabilities. These
+settings affect generated event times, while `trimester_probabilities` still
+controls the analysis weights. Event trimester masses cannot be combined with
+these parametric distributions.
+
+Let $p$ be the dose's DLT probability, $W$ the assessment window, and $a$ the
+conditional fraction of DLTs occurring in its second half. We solve
+$F(W)=p$ and $F(W/2)=(1-a)p$. This interpretation is consistent with the paper's
+simulation description. The related [CFO source](https://github.com/cran/CFO/blob/master/R/lateonset.simu.R)
+uses the same two-quantile Weibull calibration, with its parameter instead denoting
+the **first-half** fraction. This is supporting methodology, not the source of the
+TITE-Keyboard app; its unpublished implementation has not been independently
+matched. Source hashes are retained in `tite-keyboard-sources.json`.
+
+For Weibull, write $H(x)=-\log(1-x)$ and
+
+$$
+k=\frac{\log[H(p)/H((1-a)p)]}{\log 2},\qquad
+F(t)=1-\exp[-H(p)(t/W)^k].
+$$
+
+For log-logistic, write $O(x)=x/(1-x)$ and
+
+$$
+k=\frac{\log[O(p)/O((1-a)p)]}{\log 2},\qquad
+F(t)=\frac{O(p)(t/W)^k}{1+O(p)(t/W)^k}.
+$$
+
+`toxicity_time_quantile(u,p,W,...)` exposes the vectorized inverse: `u` is an
+**unconditional** probability in `[0,1]`, so values greater than `p` return
+positive infinity (no toxicity within the window). Values at `p` return `W`;
+zero returns zero when `p>0`. A zero toxicity probability always returns infinity.
+It also supports conditional-uniform event timing via `distribution="uniform"`.
+
+```python
+from mdanderson_stats import toxicity_time_quantile
+
+# 80% of DLTs in the late half: F(W/2) = (1-.8)*.3 = .06.
+np.testing.assert_allclose(
+    toxicity_time_quantile(0.06, 0.3, 90, distribution="weibull", late_probability=0.8),
+    45,
+)
+late_calendar = simulate_tite_keyboard(
+    KeyboardDesign(),
+    [0.05, 0.15, 0.3, 0.45, 0.6],
+    3,
+    2,
+    event_distribution="log-logistic",
+    late_probability=0.8,
+    trials=100,
+    rng=139,
+)
+print(late_calendar.selection_probability)
+```
+
+For either continuous parametric family, a nondegenerate calibration requires
+`0 < p < 1` and `0 < a < 1`. The implementation permits `p=0` as the no-event
+scenario and rejects `p=1` or late fractions zero/one, which have no finite positive
+shape/scale solution. Conditional uniform timing permits `p=1` and has no adjustable
+late fraction. It rejects an explicit `late_probability` instead of ignoring it.
+
+Calculations use scaled hazards, `log1p`, and log-domain inversion, avoiding
+subtraction of near-unit survival probabilities and large time powers. Extremely
+early quantiles can round to zero. Validation compares both families with an
+independent 340-digit calculation, checks half-window constraints and censoring,
+and covers probabilities down to `1e-300`, near-one probabilities, and windows
+from `1e-200` to `1e200`. One-patient Monte Carlo checks confirm both DLT incidence
+and the late-half fraction without adaptive assignment obscuring those laws.
