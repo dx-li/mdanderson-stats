@@ -9,11 +9,11 @@ labelled 1.1. The README incorrectly describes a binomial-design program; this
 port follows the actual ACCFLF source and manual. File hashes are recorded in
 [accflf-sources.json](accflf-sources.json).
 
-**Coverage is partial.** The log-F probability/derivative engine, fixed-(p,q)
+**The supplied ACCFLF workflow is implemented.** The log-F probability/derivative engine, fixed-(p,q)
 likelihood, regression fitting, survival prediction, profile shape searches,
 rectangular grids and all six named-model comparisons are implemented.
-Covariate selection/update workflows, source-format readers and reports remain
-pending.
+Named-table input, covariate selection/addition, covariate-averaged survival
+and fit/search/grid/comparison reports complete the supplied workflow.
 No bundled ACM/Fortran implementation or original patient dataset is distributed.
 
 ## Model and shape convention
@@ -154,7 +154,7 @@ likelihoods:
 | Log-logistic | -21.6134298844 | -21.6134 |
 
 These checks establish the supplied fixed-shape computations; shape search
-validation is described below. The complete file/report workflow remains pending.
+validation is described below.
 
 A local throughput check evaluated all nine kernel outputs for 100,000 positions
 (df=3,8; w from -10 to 10) in 0.041 seconds, excluding package import. This is
@@ -257,5 +257,139 @@ The complete six-model run took about 43 seconds locally.
 
 The synthetic data, independent R reference, KP grid values and comparison
 summaries are recorded in [accflf-search.json](../tests/fixtures/accflf-search.json).
-Original KP patient data remain excluded. Covariate manipulation and original
-file/report adapters are still pending.
+Original KP patient data remain excluded. File, covariate and report adapters
+are described below.
+
+
+## Original table, covariate and reporting workflow
+
+`read_accflf_data(path, covariates=(...))` implements the numeric table reader and
+column-role assignment. It reuses the existing QLEX lexer, accepts optional
+identifier headers, ignores blank and full-line comment records (default `#`),
+and rejects mixed text/numeric or ragged records. Names are uppercase and
+truncated to eight characters, matching the native reader; collisions after
+truncation raise an error. Headerless columns receive X1, X2, ... . Named roles
+are case-insensitive, or can be supplied as **zero-based** integer indices.
+Use explicit `time` and `event` roles when TIME and STATUS names are absent.
+
+A column named MULTI is detected automatically; `multiplicity=None` disables
+that role, and an explicit name/index selects another column. File multiplicity
+must contain positive integers, matching the native input check. Time must be
+positive, status must be zero or one, and all values must be finite. Numeric
+lexer overflow/underflow is rejected instead of silently importing a truncated
+value. At most 20,000 rows and 200 columns are supported. Inline comments are
+not part of the source table grammar.
+
+The returned `AccflfData` retains the full immutable table, including unselected
+covariates. `.select((...))` replaces the covariate set, `.add((...))` adds unused
+columns, and `.select(())` gives an intercept-only model. They return new data
+views without mutating earlier selections or fit results. `.available_covariates`
+identifies unused eligible columns. Duplicate selections, reserved time/status/
+multiplicity columns and more than sixteen covariates raise errors. Selecting
+columns is an explicit modeling choice, not automatic statistical selection.
+This replaces the source's covariate menus without its special-case allocation
+and label-indexing problems when only one covariate remains.
+
+```python
+from pathlib import Path
+from mdanderson_stats import (
+    read_accflf_data,
+    fit_accflf,
+    accflf_marginal_survival,
+    accflf_report,
+)
+
+# Supply a source-format file containing TIME, STATUS and COV columns.
+data = read_accflf_data("KP.data").add(("COV",))
+fit = fit_accflf(
+    data.time,
+    data.event,
+    covariates=data.covariates,
+    weights=data.weights,
+    p=0,
+    q=1,
+)
+report = accflf_report(fit, covariate_names=data.covariate_names)
+Path("fit-report.txt").write_text(report)
+survival = accflf_marginal_survival(
+    [50, 100, 200],
+    p=fit.p,
+    q=fit.q,
+    sigma=fit.sigma,
+    coefficients=fit.coefficients,
+    covariates=data.covariates,
+)
+```
+
+The same selected data feed `search_accflf`, `scan_accflf` and `compare_accflf`.
+Calling `.select` or `.add` and fitting the resulting design is the native
+change/add-covariate workflow. Reading another file replaces the source's
+change-dataset menu. Supplied parameter evaluation uses `accflf_loglikelihood`
+and the prediction functions without requiring a fit object.
+
+`fit_accflf` exposes `tolerance` (default 1e-6) and `max_iterations` (default 500).
+The tolerance is the maximum normalized score error in standardized coordinates,
+with a tighter internal optimizer target. This is an explicit Python convergence
+criterion, not the native optimizer's relative-function criterion. Supported
+ranges are 1e-10..1e-2 and 1..10,000 iterations. Search tolerances/limits remain
+separate as described above; fixed-shape failures do not return fake converged fits.
+
+### Covariate-averaged survival
+
+`accflf_marginal_survival` ports the source's `srvprb`: for **each** requested
+time, it averages survival over **all** supplied covariate rows. This differs
+from `accflf_survival`, which pairs one time with one covariate row. The native
+routine uses equal row weights and **ignores MULTI**, even when multiplicity
+weighted the fit; Python preserves that convention explicitly. To average over
+individuals represented by frequency counts, supply the expanded covariate rows.
+That is a different averaging population from the default native report.
+
+Repeated linear predictor values are grouped with their counts, preserving
+row frequencies while reducing work. Time batches limit temporary arrays;
+up to 20 million distinct predictor/time pairs are supported. `log=True` returns
+the logarithm of the averaged survival, calculated with log-sum-exp, not the
+average of log survival. Supply `data.time` for predictions at every observed
+time, or any positive-time vector. Nonpositive times raise an error instead of
+being silently discarded as in the interactive native time-list handler.
+
+`accflf_report` accepts a fixed fit, shape search, grid or six-model comparison.
+Fit reports include p,q,sigma,mu,covariate coefficients, df/tau and clipping flags,
+both likelihood conventions and conditional covariance with its coordinates.
+Search reports include every start and failed shape plus local-convergence
+status; grid reports retain numerical errors at their original points; model
+comparisons retain failed-model records. Reports are returned as text for
+printing or explicit file writing. This preserves numerical report content,
+not the native terminal prompt layout or optimizer iteration trajectory.
+
+The original 40-row KP table matches the unchanged compiled `read_table` output
+elementwise. A synthetic eight-time/four-covariate-row average using unchanged
+native `tailf` and the `srvprb` loop agrees within 1.2e-16; its fixture is
+[accflf-marginal.json](../tests/fixtures/accflf-marginal.json). Integration checks
+cover covariate changes, frequency input validation, report writing, duplicate-row
+averaging, extreme log survival and an explicit iteration-limit failure. A
+separate native-data run completed all six fits, observed-time marginal
+predictions and every report variant. Original patient data are not redistributed.
+
+## Source coverage reconciliation
+
+| Original role | Python coverage |
+| --- | --- |
+| pqtodf and df bounds | accflf_shape; near-origin limit and explicit clipping |
+| lldrlf, ltlf, tailf and auxiliary series | accflf_logf; stable beta factors/tails and analytic derivatives |
+| compute_f_and_derivatives, find_ll | accflf_loglikelihood and analytic weighted score/information |
+| pqnll, iniest, mvlogf | fit_accflf; fixed-shape optimization and moment initialization |
+| psftdo, perform_optimization | search_accflf; profile shape search and explicit local termination |
+| single_fit and fit_all_models | Fixed/custom shape fitting, generalized-gamma/F searches and compare_accflf |
+| scan_over_several_values | scan_accflf rectangular grid |
+| read_table, tokenizer, get_parameters_columns, read_in_data | read_accflf_data and existing QLEX lexer; named roles, validation and frequency counts |
+| add_covariates, get_new_covariates, covariate displays | AccflfData.add/select and available/selected names |
+| srvprb and find_survival_probabilities | accflf_marginal_survival over observed or supplied time lists |
+| enter_parameters | Explicit model parameters in likelihood and prediction APIs |
+| change_convergence_criterion | Fixed-fit score tolerance and shape-search tolerances/limits |
+| Header, constraints, parameter, df/tau, grid/model reports | accflf_report and standard Python text/file output |
+| Bundled math, sorting, strings, interface and David Gay optimizer | Existing package numerics/QLEX, NumPy/SciPy, typed arguments and result objects |
+
+The source's interactive menus, memory management, stale binary-cache comments,
+and platform build scripts introduce no additional statistical methods. Coverage
+is complete for the supplied workflow with the documented Python semantics;
+local optimization, finite-df bounds and shape identifiability limitations remain.

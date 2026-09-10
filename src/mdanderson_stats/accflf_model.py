@@ -111,6 +111,8 @@ def fit_accflf(
     covariates: ArrayLike | None = None,
     weights: ArrayLike | None = None,
     fixed_sigma: float | None = None,
+    tolerance: float = 1e-6,
+    max_iterations: int = 500,
 ) -> AccflfFit:
     """Fit an ACCFLF submodel at fixed p,q using analytic likelihood derivatives.
 
@@ -118,6 +120,15 @@ def fit_accflf(
     Covariance coordinates are [log(sigma), intercept, covariate coefficients];
     the fixed log-sigma row/column are zero. This does not estimate p or q.
     """
+    tolerance = scalar(tolerance, "tolerance")
+    if not 1e-10 <= tolerance <= 1e-2:
+        raise ValueError("tolerance must lie in [1e-10,1e-2]")
+    if (
+        isinstance(max_iterations, bool)
+        or not isinstance(max_iterations, int)
+        or not 1 <= max_iterations <= 10000
+    ):
+        raise ValueError("max_iterations must be an integer in [1,10000]")
     y, e, x, weight = _data(time, event, covariates, weights)
     shape = accflf_shape(p, q)
     if not np.any(e == 1) or np.linalg.matrix_rank(x) != x.shape[1]:
@@ -151,10 +162,14 @@ def fit_accflf(
         return value / weight.sum(), gradient[free] / weight.sum()
 
     result = minimize(
-        evaluate, initial[free], jac=True, method="BFGS", options={"gtol": 1e-8, "maxiter": 500}
+        evaluate,
+        initial[free],
+        jac=True,
+        method="BFGS",
+        options={"gtol": tolerance / 100, "maxiter": max_iterations},
     )
     error = float(np.max(np.abs(result.jac)))
-    if not np.isfinite(error) or error > 1e-6:
+    if not np.isfinite(error) or error > tolerance:
         raise ArithmeticError(f"fixed-shape log-F fit did not converge: {result.message}")
     parameters = initial.copy()
     parameters[free] = result.x

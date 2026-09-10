@@ -977,4 +977,5 @@ prediction. It covers the source's fixed-shape Weibull, exponential, lognormal
 and log-logistic submodels with their documented finite-df boundary convention.
 Profile shape estimation, rectangular grids and all six named-model comparisons
 are also available, with explicit local-search and boundary diagnostics.
-Covariate-update and source file/report workflows remain pending.
+Source-format table input, covariate changes, covariate-averaged survival and
+fit/search/grid/model reports complete the supplied workflow.

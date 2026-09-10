@@ -2,7 +2,9 @@
 
 from . import cdflib_aux, cdflib_constants, dcdflib_support
 from .accflf import AccflfLogF, AccflfShape, accflf_logf, accflf_shape
+from .accflf_data import AccflfData, read_accflf_data
 from .accflf_model import AccflfFit, accflf_loglikelihood, accflf_survival, fit_accflf
+from .accflf_reporting import accflf_marginal_survival, accflf_report
 from .accflf_search import (
     AccflfGrid,
     AccflfModelResult,
@@ -655,6 +657,10 @@ from .windows import (
 )
 
 __all__ = [
+    "AccflfData",
+    "read_accflf_data",
+    "accflf_marginal_survival",
+    "accflf_report",
     "AccflfGrid",
     "AccflfSearchRun",
     "AccflfShapeSearch",

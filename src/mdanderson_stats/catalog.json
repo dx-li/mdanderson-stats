@@ -309,18 +309,20 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "accflf_shape: stable Prentice p,q conversion with explicit native df bounds and clipping flags.",
         "accflf_logf: normalized log-F density, log CDF/survival and first/second w derivatives, stable centers and underflowed tail fractions.",
         "accflf_loglikelihood, fit_accflf and accflf_survival: weighted right-censored AFT regression at fixed p,q, optional fixed sigma, analytic score/information, covariance and survival predictions.",
-        "scan_accflf, search_accflf and compare_accflf: rectangular fixed-shape grids, profile p/q or q-only estimation with multiple starts, all six named models and explicit failure/convergence diagnostics. Remaining: covariate update/selection and source input/report workflow; docs/accflf.md."
+        "scan_accflf, search_accflf and compare_accflf: rectangular fixed-shape grids, profile p/q or q-only estimation with multiple starts, all six named models and explicit failure/convergence diagnostics.",
+        "read_accflf_data and immutable AccflfData selection/addition, native equal-row marginal survival, full numerical reports and configurable fixed-fit tolerance/iteration limit complete the supplied workflow. Source-role reconciliation in docs/accflf.md."
       ],
       "validation": [
         "91 cases from unchanged compiled native LLDRLF: values and first/second derivatives across df bounds and w=+-1000. Normalized density factor, tails, reflection and integration checked. Asymmetric near-one beta-coordinate cancellation fixed and checked against additional native tails.",
         "Independent R fixed-shape censored regression agrees within 9e-8; analytic gradient/Hessian, weighted replication, time rescaling, observed covariance and exponential limit checked.",
         "Four KP example fixed-model likelihoods reproduce all printed manual digits. Archive hashes and legal qualifications recorded; no original data or ACM source bundled.",
-        "Profile generalized-gamma search agrees with independent R within 3e-7 in parameters and 2e-10 in log likelihood; all 25 manual grid values and six named-model likelihoods reproduce printed digits. General-F boundary ridge and failed search evaluations explicitly documented."
+        "Profile generalized-gamma search agrees with independent R within 3e-7 in parameters and 2e-10 in log likelihood; all 25 manual grid values and six named-model likelihoods reproduce printed digits. General-F boundary ridge and failed search evaluations explicitly documented.",
+        "Original KP table matches unchanged native read_table elementwise; SRVPRB-style average agrees with unchanged native tailf within 1.2e-16. Input/covariate/report integration and complete native-data six-model/observed-time prediction/report workflow validated."
       ]
     },
     {

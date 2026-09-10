@@ -802,3 +802,8 @@ in `docs/accflf.md`. This is modified Python software, not the original ACCFLF.
 workflows in `psftdo`, `pqnll`, `scan_over_several_values` and `fit_all_models`.
 It uses SciPy's bounded Nelder-Mead algorithm rather than copying ACM Algorithm
 611. Failed evaluations, boundary clipping and local convergence are explicit.
+
+`accflf_data.py` and `accflf_reporting.py` complete the source table/covariate,
+`SRVPRB` averaging and report workflows with explicit Python semantics. They
+reuse the package QLEX implementation and preserve native equal-row averaging
+independently of multiplicity. Original patient data are not included.
