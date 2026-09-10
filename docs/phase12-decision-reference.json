@@ -1,0 +1,8 @@
+{
+  "cases": 100,
+  "seed": 8531,
+  "early_selections": 9,
+  "arm_closures": 9,
+  "futility_stops": 9,
+  "scope": "Unmodified extracted C++ PickWinner, EvaluateStoppingRules and CalculateToxRate methods with in-memory state and supplied posterior adapters; no numerical integration or calendar controller parity claimed."
+}

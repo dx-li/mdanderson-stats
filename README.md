@@ -1010,3 +1010,7 @@ Python replay matches 24 native C decision histories, with independent R checks
 of 179 posterior comparisons. The later C++ variant now has its shared six-dose
 logistic response fit, beta toxicity updates and calendar outcome snapshots;
 integrated trial conduct remains pending.
+
+The six-dose phase I/II source-rule evaluator now covers posterior allocation,
+suspension, closure and early/final selection, checked against 100 C++ cases.
+Its documented source quirks remain explicit; full calendar trial conduct is pending.

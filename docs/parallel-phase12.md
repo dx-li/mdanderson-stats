@@ -135,7 +135,7 @@ Reproduce the audits after retrieving the archive with
 Original source is used only from the ignored research directory; audit tooling
 and generated numerical fixtures are bundled, not original code or trial data.
 
-Remaining: the later C++ six-arm trial-conduct and allocation workflow, calendar
+Remaining: the later C++ six-arm integrated trial-conduct workflow, calendar
 simulation, configurable inputs/reports, native adaptive-importance-sampler
 parity and full published operating-characteristic replication. The C++ source explicitly prohibits redistribution
 of the original program. No original archive files are shipped; this is an
@@ -201,9 +201,9 @@ The posterior is shared across doses through the response regression; it is
 not six independent beta efficacy models. This Python sampler differs from the
 C++ adaptive mixture importance integrator. Diagnostics do not guarantee
 convergence or precise indicator probabilities, especially near a decision
-threshold; retained chains allow further precision assessment. Complete source
-trial allocation, stopping, calendar simulation and native integration parity
-remain pending, so a fitted model alone is not a trial-conduct implementation.
+threshold; retained chains allow further precision assessment. The source posterior decision rules are supplied below. Integrated calendar
+trial conduct and native integration parity remain pending, so a fitted model
+alone is not a trial-conduct implementation.
 
 Validation uses an [independent R importance calculation](phase12-model-reference.json)
 with 200,000 draws from an inflated-Laplace/prior-normal mixture (importance ESS
@@ -213,3 +213,53 @@ draws have maximum split R-hat below 1.04 in the checked dataset. Separate check
 cover prior recovery, the analytic dose contrast, extreme log likelihoods and
 independent observation of calendar outcomes. Reference generation is in
 `tools/reference_phase12_model.R`.
+
+
+## Six-dose source decision rules
+
+`phase12_source_decision(fit, enrolled, phase_one_admissible=..., closed=...,
+suspended=...)` applies the archived C++ posterior decision logic to a
+`Phase12ModelFit`. Masks and enrollment counts each have six entries. Omit
+`closed` to initialize it from phase-I inadmissibility; pass the returned masks
+on subsequent evaluations. Toxicity closure is permanent; suspension can reverse.
+The caller determines when a calendar analysis is due.
+
+The evaluator closes doses when toxicity exceedance probability is strictly
+above .95. Reference-superiority weights normalize over nonclosed doses, and
+initially admissible, still-open doses suspend below .01 normalized weight.
+A stopping analysis is enabled when four doses have at least five patients,
+or all nonclosed doses have at least five (`cohort_size` defaults to five).
+These are enrollment counts, not counts with observed response outcomes.
+
+Futility uses the maximum efficacy probability among **all phase-I-admissible
+doses**, including subsequently closed doses, and stops below .05. Early
+selection requires efficacy probability above .90 and pairwise superiority above
+.80 against every other dose. The archived selection loop includes closed and
+suspended candidates and comparators. This API deliberately reproduces that
+behavior: `selected_eligible=False` identifies an ineligible source winner. It
+is a source-rule evaluator, not a corrected clinical selection algorithm.
+
+`phase12_source_final_selection(fit, closed=..., suspended=...)` excludes closed
+and suspended doses and chooses the first maximum future-study probability
+strictly above .90. The archive actually uses its early-selection rule slot here;
+the separately configured .80 future-study confidence setting is unused.
+
+Results distinguish the source's trial-termination flag from its arm-closure
+flag. Assignment probabilities are zero after either stopping condition, rather
+than exposing stale source randomization weights. With every dose closed, the
+zero-denominator normalization is skipped while retaining defined source stopping
+results. Open-dose weights summing to zero raise an explicit numerical error.
+
+The [decision audit](phase12-decision-reference.json) compiles the unchanged
+extracted `EvaluateStoppingRules`, `CalculateToxRate` and `PickWinner` methods
+against small in-memory adapters. Across 100 supplied posterior/state cases,
+Python matches masks, weights, termination, closure and early/final selections.
+Nine cases selected early and nine stopped for futility. Focused checks also
+cover reversible suspension, permanent closure, strict cutoffs, enrollment gates,
+the ineligible-winner quirk and final tie handling. Run
+`tools/reference_phase12_decision.py` after retrieving the archive to reproduce
+this audit; original methods are read from ignored research files, not bundled.
+
+Six-dose phase-I progression, calendar analysis scheduling, full trial simulation
+and native input/report workflows remain outstanding. These decision functions
+extend the model layer without claiming complete C++ trial-controller coverage.

@@ -450,6 +450,11 @@ from .parallel_phase12 import (
     parallel_phase12_replay,
     simulate_parallel_phase12,
 )
+from .parallel_phase12_decision import (
+    Phase12SourceDecision,
+    phase12_source_decision,
+    phase12_source_final_selection,
+)
 from .parallel_phase12_model import (
     Phase12ModelFit,
     Phase12Snapshot,
@@ -717,6 +722,9 @@ from .windows import (
 )
 
 __all__ = [
+    "Phase12SourceDecision",
+    "phase12_source_decision",
+    "phase12_source_final_selection",
     "Phase12ModelFit",
     "Phase12Snapshot",
     "fit_phase12_model",
