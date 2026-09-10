@@ -1014,3 +1014,7 @@ integrated trial conduct remains pending.
 The six-dose phase I/II source-rule evaluator now covers posterior allocation,
 suspension, closure and early/final selection, checked against 100 C++ cases.
 Its documented source quirks remain explicit; full calendar trial conduct is pending.
+
+Six-dose phase-I progression and phase-specific accrual readiness are available,
+with 948 transitions checked against the C++ rules. The integrated calendar
+simulator and native reporting remain outstanding.

@@ -1,0 +1,8 @@
+{
+  "trials": 100,
+  "states": 948,
+  "coin_paths_per_state": 4,
+  "seed": 8541,
+  "lowest_dose_closures": 55,
+  "scope": "Original extracted GetNextDose, IsTrialOver, OpenDoses and Randomize; complete phase-I histories with supplied Bernoulli outcomes and all coin branches, assuming outcomes observed before each decision. Calendar scheduling checked separately."
+}

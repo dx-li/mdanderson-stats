@@ -260,6 +260,68 @@ the ineligible-winner quirk and final tie handling. Run
 `tools/reference_phase12_decision.py` after retrieving the archive to reproduce
 this audit; original methods are read from ignored research files, not bundled.
 
-Six-dose phase-I progression, calendar analysis scheduling, full trial simulation
-and native input/report workflows remain outstanding. These decision functions
+The six-dose progression and accrual-readiness primitives are supplied below.
+Integrated calendar scheduling, full trial simulation and native input/report
+workflows remain outstanding. These decision functions
 extend the model layer without claiming complete C++ trial-controller coverage.
+
+
+## Six-dose phase-I progression and accrual readiness
+
+`phase12_phase_one(enrolled, toxicities, current_dose=..., opened=..., closed=...,
+admissible=...)` applies one `DF3Plus3` transition. Pass six per-dose enrollment
+counts, observed positive toxicity counts, and masks retained from the preceding
+transition. Initial defaults open only dose zero. Counts per dose cannot exceed
+six. The current dose is the actual last assignment (zero initially).
+
+```python
+from mdanderson_stats import phase12_phase_one
+
+step = phase12_phase_one([3, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0])
+print(step.probability)  # [0, .5, .5, 0, 0, 0]
+```
+
+Returned assignment probabilities analytically average the source's fair coins,
+so no random generator is needed to evaluate a transition. Sample the next dose
+from these weights and pass that actual dose on the next call. `done` ends phase
+I; `trial_closed` specifically identifies lowest-dose rejection. A completed
+phase I returns zero assignment weights, even where the source retains an unused
+next-dose value. The controller must handle the separate rule that phase II does
+not start with at most one admissible dose.
+
+The six-dose variant rejects **two or more toxicities**, including 2/6; it differs
+from the four-arm C program. Zero of three or at most one of six declares a dose
+admissible. One of three forces the next patient onto the same dose. At other
+intermediate counts, unresolved paired doses can randomize again. Doses 1/2 and
+3/4 form the randomization pairs; this is not three additional patients forced
+to one dose after every 1/3 result.
+
+The opening graph is asymmetric. Clearing dose zero opens doses 1 and 2. If dose
+2 clears and dose 1 closes, only dose 4 opens. Clearing both 1 and 2 opens both
+3 and 4. If dose 1 clears and dose 2 closes, phase I ends. Dose 5 opens only when
+both 3 and 4 clear. A pair with no unresolved available dose ends phase I. These
+are the archived branches, not a substituted generic combination 3+3 design.
+
+`phase12_accrual_ready(records, time=..., phase_two_start=None)` uses the same
+six-column chronological records as `phase12_snapshot`. In phase I it permits
+partial cohorts, but at each multiple of three enrolled patients it waits until
+all three most recent toxicity observation times have passed. For phase II,
+provide the number enrolled before phase II as `phase_two_start`: every multiple
+of five phase-II patients waits for the last five response observations. The
+first partial cohort of phase II does not wait for earlier phase-I responses.
+Equality with the observation time is sufficient. The function also respects
+`trial_closed` and the default 80-patient maximum. All supplied patients must have
+already entered; this helper does not advance time or generate arrivals.
+
+The [native progression audit](phase12-progression-reference.json) runs 100
+complete source phase-I histories, comparing 948 transitions and all four
+combinations of up to two fair coins per transition. Open/closed/admissible masks,
+phase completion, lowest-dose closure and assignment probabilities agree.
+Outcomes are supplied as observed before decisions in this audit; calendar
+readiness is checked separately at phase boundaries and exact observation times.
+Run `tools/reference_phase12_progression.py` after retrieving the archive to
+reproduce it. Original C++ methods remain in ignored research files.
+
+Still pending: the integrated six-dose calendar simulator, arrival rounding and
+attempt scheduling, complete follow-up/final-selection orchestration, native
+input/report workflows and full published operating-characteristic validation.

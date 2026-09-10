@@ -2704,14 +2704,16 @@
         "Stable direct beta tails, cached pairwise beta quadrature and explicit integration-error checks before normalizing small allocation weights",
         "Six-dose C++ logistic response model with independent normal coefficient priors, elliptical-slice posterior fitting, response/reference/pairwise comparisons, analytical beta toxicity exceedance and separate endpoint calendar snapshots",
         "Six-dose source posterior allocation, reversible suspension, permanent toxicity closure, enrollment-gated futility/early selection and final selection; source eligibility and final-cutoff quirks are explicit",
-        "Remaining: six-dose phase-I progression, calendar scheduling/simulation, native input/report workflows, native integration parity and published operating-characteristic replication"
+        "Six-dose phase-I asymmetric dose opening, 3/6-patient toxicity resolution and analytically marginalized fair-coin assignment; phase-I toxicity/phase-II response cohort-boundary accrual readiness",
+        "Remaining: integrated six-dose calendar simulator, rounded arrival/attempt scheduling and final-follow-up orchestration, native input/report workflows, native integration parity and published operating-characteristic replication"
       ],
       "validation": [
         "Python replay matches final selection and all outcome/enrollment counts for 24 trials run through original C control flow; numerical and RNG callbacks replace missing/platform-specific dependencies and are explicitly disclosed",
         "179 beta-ordering probabilities independently checked against R quadrature, maximum absolute difference 1.14e-10; representative regression fixtures retained",
         "Focused partial-cohort, 2/6 clearance/admissibility, invalid assignment, post-stop history, simulation/replay and certain-toxicity checks; existing beta quadrature validation reused",
         "Six-dose posterior checked against independent R mixture importance integration (200000 draws, ESS about 145977): all four coefficient and six response means within six combined Monte Carlo errors; source-prior recovery, analytic dose contrast, extreme log likelihood and calendar availability checks",
-        "100 posterior/state cases match extracted original C++ EvaluateStoppingRules, CalculateToxRate and PickWinner methods; focused strict-threshold, suspension, closure, eligibility-quirk and final-tie checks"
+        "100 posterior/state cases match extracted original C++ EvaluateStoppingRules, CalculateToxRate and PickWinner methods; focused strict-threshold, suspension, closure, eligibility-quirk and final-tie checks",
+        "100 complete original C++ phase-I histories: 948 states with all four fair-coin branches match masks, completion, closure and assignment probabilities; separate boundary-time checks for phase-specific accrual readiness"
       ]
     },
     {
