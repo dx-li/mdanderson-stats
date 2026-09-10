@@ -648,7 +648,8 @@ Archive hashes and numerical comparisons are documented in `docs/blip.md` and
 
 ## EVENTCHART
 
-`eventchart.py` independently implements event conversion and timeline geometry
+`eventchart.py` and `eventchart_goldman.py` independently implement event conversion,
+calendar/interval/Goldman timelines and the original current-date boundary geometry
 from the MD Anderson EVENTCHART distribution by J. Jack Lee, K. R. Hess and
 J. A. Dubin. See Lee JJ, Hess KR, Dubin JA, “Extensions and applications of
 event charts,” The American Statistician 54:63–70 (2000). Source provenance and

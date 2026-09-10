@@ -279,6 +279,8 @@ from .eventchart import (
     event_convert,
     plot_event_chart,
 )
+from .eventchart_dates import event_date_labels, event_dates
+from .eventchart_goldman import GoldmanChart, goldman_chart_data, plot_goldman_chart
 from .expsurv import ExploratorySurvival, exploratory_survival
 from .expsurv_alignment import SurvivalAlignmentPlot, plot_survival_alignment
 from .expsurv_box import CensoredBox, censored_box
@@ -574,6 +576,11 @@ from .windows import (
 )
 
 __all__ = [
+    "event_dates",
+    "event_date_labels",
+    "GoldmanChart",
+    "goldman_chart_data",
+    "plot_goldman_chart",
     "ConvertedEvents",
     "EventChart",
     "event_convert",

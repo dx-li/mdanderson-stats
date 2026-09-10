@@ -918,5 +918,7 @@ lines, centered/baseline placement, and all six point patterns.
 
 [EVENTCHART](docs/eventchart.md) provides coded-event conversion and calendar or
 elapsed-time subject timelines, with sorting, reference alignment, covariate
-placement, interval overlays and immutable plotting geometry. Goldman charts and
-remaining display workflows are still pending.
+placement, interval overlays and immutable plotting geometry. Goldman entry-date
+charts add current-date boundaries, optional native-boundary compatibility and
+calendar date conversion/formatting. Grouped styles and remaining display
+workflows are still pending.

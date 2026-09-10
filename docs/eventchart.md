@@ -59,14 +59,71 @@ output names combine the time-column name and code (e.g. `V1.0`, `V1.1`).
 
 The result contains `times`, vertical `positions`, rowwise minimum/maximum
 `spans`, extra `overlays`, original `rows` and `columns`, retained `labels`, the
-`x_range`, and whether coordinates are `relative` to a reference. Missing-only
+`x_range`, whether coordinates are `relative` to a reference, and the `time_scale` divisor. Missing-only
 spans are NaN, not infinite pseudo-endpoints. A chart needs at least one retained
 row and an observed event in its requested range.
 
 The renderer returns its Axes without showing or saving. It accepts event labels,
-marker shapes, span color and x-axis label; extra intervals are dashed. Numeric
-calendar coordinates are accepted, but automatic calendar date formatting is
-not yet provided. Use the returned Axes for styling and additional annotations.
+marker shapes, span color and x-axis label; extra intervals are dashed. `calendar=True` formats absolute x coordinates as calendar dates, using the
+stored `time_scale` to recover days and `date_origin="1960-01-01"` by default.
+Calendar formatting is rejected for reference-subtracted elapsed times. Use the returned Axes for styling and additional annotations.
+
+## Dates and Goldman charts
+
+`event_dates(("1980-01-01", "1980-02-01", None))` converts ISO dates or Python
+`date` objects into days since `origin="1960-01-01"`; None becomes NaN.
+`event_date_labels(day_offsets)` returns ISO date strings, rounding finite day
+offsets to the nearest day. An explicit origin must be an ISO date. Conversion
+uses the proleptic Gregorian calendar, validates years 1..9999 and handles leap
+years without a time zone or an additional date-library dependency. The formatter
+uses four-digit ISO years rather than the source's month/day/two-digit-year style.
+
+```python
+from mdanderson_stats import goldman_chart_data, plot_goldman_chart
+
+chart = goldman_chart_data(
+    [[7305, 7400, 8000], [7340, 7700, 8100], [7600, 8000, 8500]],
+    reference=0,
+    scale=365,
+)
+axes = plot_goldman_chart(chart, xlabel="Years since entry")
+axes.figure.savefig("goldman-chart.png")
+```
+
+![Goldman event chart](eventchart-goldman-demo.png)
+
+`goldman_chart_data` places subjects at their reference-column calendar dates and
+plots their elapsed event times horizontally. It accepts selected `columns` and
+`rows`, positive `scale`, missing-row removal and interval `line_pairs`.
+`now` is an explicit calendar day; by default it is the largest observed event
+date over the selected columns in all original rows, matching the source.
+The result wraps the ordinary immutable `chart` geometry plus a two-endpoint
+`boundary`, `now`, and the `native_boundary` flag.
+
+The default boundary is the calendar identity
+`elapsed = (now - entry_date) / scale`, evaluated at the retained entry-date
+extrema. It is unchanged by other subjects being included or omitted. The source
+instead computes a slope from global event minima, minimum elapsed time and the
+retained minimum entry date. These rules agree in the standard full-cohort setup,
+but can disagree when subsetting or when earlier events precede the reference.
+Set `native_boundary=True` to reproduce that source intercept/slope exactly.
+A zero source denominator or an unrepresentable boundary raises an error.
+The current-date boundary is an annotation, not a filter: events after a supplied
+`now` remain visible.
+
+`plot_goldman_chart` draws the current-date boundary as a dashed line and formats
+five calendar y ticks using `origin`; `calendar_labels=False` uses numeric ticks.
+Event labels, existing Axes and the x-axis label are configurable. Limits include
+both observed events and the boundary; historical graphics-device square-layout
+and legend-placement conventions are not reproduced automatically.
+
+The additional native fixture uses synthetic calendar records with missing
+events. It compares original event coordinates and the original boundary slope
+for both a full cohort and a subset. The numerical statements in `event.chart`
+were unchanged; graphics callbacks captured the result. Separate checks cover
+the corrected boundary identity, leap-day/date round trips, scaled calendar ticks
+and both Goldman/calendar rendering. Source example patient records are not
+redistributed.
 
 ## Native validation and deliberate corrections
 
@@ -93,11 +150,10 @@ Corrections to the original implementation:
 - Descending sorting keeps the requested missing-key placement. NumPy jitter is
   reproducible but does not reproduce S random numbers.
 
-**Status: partial.** Remaining work includes Goldman/calendar-covariate charts
-and their current-date boundary, calendar tick formatting and date conversion,
-line styles grouped by covariates, fuller legend/style controls, and categorical
-(non-numeric) coded-event inputs. Current calendar/interval geometry does not stand
-in for those workflows.
+**Status: partial.** Calendar, elapsed-time and Goldman charts are now available.
+Remaining work includes line styles grouped by covariates, fuller legend/style
+controls, general calendar-covariate layouts beyond the entry-date Goldman chart,
+and categorical (non-numeric) coded-event inputs. The current geometry does not stand in for those workflows.
 
 Source: [MD Anderson EVENTCHART](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/32),
 [original archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EVENTCHART/EVENTCHART_V1.tar.gz).

@@ -93,6 +93,7 @@ class EventChart:
     labels: tuple[str, ...]
     x_range: tuple[float, float]
     relative: bool
+    time_scale: float = 1.0
 
 
 def event_chart_data(
@@ -216,6 +217,7 @@ def event_chart_data(
         tuple(labels[i] for i in order),
         (float(observed.min()), float(observed.max())),
         reference is not None,
+        float(scale),
     )
 
 
@@ -227,10 +229,22 @@ def plot_event_chart(
     markers: tuple[str, ...] | None = None,
     color: str = "#52636a",
     xlabel: str | None = None,
+    calendar: bool = False,
+    date_origin: str = "1960-01-01",
 ) -> Axes:
     """Render calendar/interval event geometry on linear numeric axes."""
     from matplotlib import pyplot as plt
 
+    if not isinstance(calendar, bool):
+        raise ValueError("calendar must be boolean")
+    calendar_ticks = None
+    if calendar:
+        from .eventchart_dates import event_date_labels
+
+        if data.relative:
+            raise ValueError("calendar labels require absolute event times")
+        calendar_ticks = np.unique(np.linspace(*data.x_range, 5))
+        calendar_labels = event_date_labels(calendar_ticks * data.time_scale, origin=date_origin)
     count = len(data.columns)
     if event_labels is None:
         event_labels = tuple(f"Event {c + 1}" for c in data.columns)
@@ -264,5 +278,7 @@ def plot_event_chart(
     axes.set_xlabel(
         xlabel if xlabel is not None else ("Elapsed time" if data.relative else "Event time")
     )
+    if calendar_ticks is not None:
+        axes.set_xticks(calendar_ticks, labels=calendar_labels)
     axes.legend()
     return axes
