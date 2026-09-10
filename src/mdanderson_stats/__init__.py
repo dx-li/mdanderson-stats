@@ -655,6 +655,7 @@ from .u2oet_decision import (
     u2oet_allocation,
     u2oet_posterior,
 )
+from .u2oet_fit import U2OETFit, fit_u2oet, u2oet_parameter_names
 from .windows import (
     WindowCrossValidation,
     WindowNeighborCrossValidation,
@@ -665,6 +666,9 @@ from .windows import (
 )
 
 __all__ = [
+    "U2OETFit",
+    "fit_u2oet",
+    "u2oet_parameter_names",
     "U2OETAllocation",
     "U2OETCriteria",
     "U2OETPosterior",

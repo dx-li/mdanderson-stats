@@ -3,7 +3,7 @@
 Entry 77 is **partial**. The Python implementation supplies PDS, CMI and hybrid
 model probabilities, grouped likelihoods and conditional expected utilities.
 Posterior summaries and new-cohort allocation from supplied posterior draws
-are also available. Posterior sampling, prior calibration, full trial conduct,
+and posterior fitting are also available. Prior calibration, full trial conduct,
 simulation and native input/report workflows remain pending. GAO with its Gaussian copula is
 also pending; it is not replaced with the FGM model.
 
@@ -109,8 +109,8 @@ a fixed reference table; R is not a runtime or CI dependency.
 Remaining coverage includes:
 
 - GAO continuation probabilities and its Gaussian copula.
-- Priors, pseudosampling prior centers, effective sample size calibration and
-  posterior fitting with convergence assessment.
+- Pseudosampling prior centers and effective sample size calibration.
+  Explicit-prior posterior fitting is now supplied below.
 - Open-cohort conduct, delayed/partial outcomes and final selection.
   Posterior acceptability and new-cohort allocation are now supplied below.
 - Calendar-based simulation, operating characteristics, scenario/native-file
@@ -179,8 +179,118 @@ surplus comparison against a lower-ranked third pair, top-two/all-pair
 randomization and greedy allocation. These validate the published decision
 rules, not native executable parity.
 
-Still pending: generating the posterior draws, managing an open cohort (the
+Still pending: managing an open cohort (the
 guide rechecks acceptability at every arrival and may close a cohort early),
 handling delayed/partial outcomes, accrual calendars, final selection and trial
 simulation. The cohort-boundary function must not be used to silently rerandomize
 patients within an existing cohort.
+
+## Posterior fitting
+
+`fit_u2oet` now fits the PDS, CMI and hybrid models to fully observed ordinal
+outcomes. Counts have the same four axes as `U2OETProbabilities.joint`.
+All prior means and standard deviations must be supplied explicitly. Obtain
+the Python coordinate names with `u2oet_parameter_names(LE, LT, model=...)`:
+
+- Each outcome's intercepts, then threshold-major agent-1/agent-2 slopes.
+- Log PDS powers (omitted for CMI), then log link shape.
+- A shared interaction coefficient for CMI/hybrid (omitted for PDS).
+- Association last, after both outcomes.
+
+`prior_mean` and `prior_sd` cover all coordinates **except association**, which
+has the published uniform [-1,1] prior. Intercepts and interaction coefficients
+have independent normal priors. Slopes have independent normals truncated below
+at zero; supplied means and SDs describe the underlying normals, not their
+truncated moments. Log powers and log link shapes have normal priors, giving
+lognormal physical parameters. This follows section 2.3 of the paper and the
+CMI extension. The Python ordering is explicit and does not claim compatibility
+with the unverified native prior-file packing.
+
+```python
+from mdanderson_stats import (
+    fit_u2oet,
+    u2oet_parameter_names,
+    summarize_chains,
+    U2OETCriteria,
+    u2oet_posterior,
+    u2oet_allocation,
+)
+
+# Illustrative priors and data; these are not the source trial's calibrated priors.
+names = u2oet_parameter_names(2, 2)
+mean = np.zeros(len(names) - 1)
+sd = np.full(mean.size, 0.2)
+for i, name in enumerate(names[:-1]):
+    if ".slope." in name:
+        mean[i] = 0.5
+counts = np.zeros((3, 3, 2, 2))
+counts[1, 1, 1, 0] = 3
+fit = fit_u2oet(
+    [1, 2, 3],
+    [1, 2, 3],
+    counts,
+    prior_mean=mean,
+    prior_sd=sd,
+    draws=1000,
+    warmup=500,
+    chains=4,
+    rng=np.random.default_rng(77),
+)
+diagnostics = summarize_chains(fit.parameters)
+posterior = u2oet_posterior(
+    fit.joint.reshape((-1, 3, 3, 2, 2)),
+    [[10, 0], [100, 40]],
+    criteria=U2OETCriteria(efficacy_level=1, toxicity_level=1),
+)
+treated = np.zeros((3, 3))
+treated[1, 1] = 3
+allocation = u2oet_allocation(posterior, treated)
+```
+
+The sampler updates each outcome's normal coordinates as a block with elliptical
+slice sampling, treating positive slope constraints as part of the likelihood
+support. Association uses an independent uniform proposal and a Metropolis
+likelihood ratio. This targets the stated posterior without tuning proposal
+scales or adding transformed-slope Jacobians. It is a new Python sampling
+algorithm, not a reproduction of the executable's Gibbs sampler. Unchanged
+marginals are cached during each block update; only positive-count cells enter
+the likelihood. Every retained sweep includes both outcome updates and the
+association update. No thinning is applied.
+
+Arrays retain `(chain, draw, ...)` axes. `fit.parameters` uses the named
+coordinates, including log powers/link; `fit.joint` stores joint probabilities;
+`fit.log_likelihood` omits parameter-independent multinomial constants. The
+result also records association acceptance per chain and likelihood evaluations.
+Use `summarize_chains` on parameters **and** quantities relevant to decisions.
+Its classic split R-hat and batch-means Monte Carlo errors are diagnostics,
+not convergence guarantees. The default starts use prior centers with positive
+slopes, identically across chains. Supply dispersed `initial` rows for stronger
+convergence assessment, especially with diffuse priors or weak identification.
+
+Each run requires an explicit NumPy generator, at least two chains and eight
+retained draws per chain. At most 20 million joint probability cells are stored.
+A failed slice bracket or a power/link transform outside floating-point range
+raises an error; proposals are not silently clipped to a different prior.
+Proper priors make zero-observation fitting meaningful. Highly diffuse priors
+and sparse outcome categories may still yield slow mixing.
+
+Three focused numerical checks validate the sampler:
+
+- A concentrated-nuisance CMI example reduces to a logistic-normal posterior
+  for 3 successes in 10 trials. Independent R integration gives intercept mean
+  -0.61233147641579189 and success-probability mean 0.36123314764157921.
+  Four chains agree within five estimated Monte Carlo standard errors.
+- With no observations, retained slope means recover the positive-truncated
+  normal prior, other named coordinates recover their normal means, and
+  association updates recover the uniform prior.
+- A full PDS example with four complete observations compares all 13 parameter
+  means against 200,000 independent R prior-importance samples. The importance
+  effective sample size is approximately 165,118. All means agree within six
+  combined Monte Carlo errors and fitted classic split R-hats are below 1.05.
+  The independent [R script](../tests/fixtures/u2oet-posterior-importance.R)
+  evaluates the published equations directly; it is not vendor source.
+
+These checks validate the target and sampling implementation in the tested
+settings. They do not establish convergence for other priors/data or reproduce
+the published trial operating characteristics. Pseudosampling prior calibration,
+ESS calibration, GAO, partial outcomes and full trial simulation remain pending.

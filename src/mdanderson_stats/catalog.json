@@ -2511,13 +2511,15 @@
       "implemented_features": [
         "PDS dose standardization and Aranda-Ordaz generalized continuation-ratio ordinal probabilities",
         "PDS, conventional multiplicative interaction and hybrid marginals with FGM joint probabilities",
-        "Log-space grouped complete-outcome likelihood and conditional expected utility; posterior fitting and trial conduct remain pending",
-        "Equal-weight posterior-draw utility/acceptability summaries and new-cohort greedy/adaptive allocation with surplus and per-agent no-skipping rules; full posterior fitting and trial conduct pending"
+        "Log-space grouped complete-outcome likelihood and conditional expected utility; full trial conduct remains pending",
+        "Equal-weight posterior-draw utility/acceptability summaries and new-cohort greedy/adaptive allocation with surplus and per-agent no-skipping rules; full trial conduct pending",
+        "Explicit normal/truncated-normal/lognormal priors and multi-chain elliptical-slice posterior fitting of PDS, CMI and hybrid models for complete outcomes; uniform association Metropolis updates, retained predictions and diagnostics support"
       ],
       "validation": [
         "Independent R implementation of published equations: 549 joint cells across five cases, 2-4 categories, three models, two centerings and FGM association endpoints",
         "Analytic extreme logistic/FGM log-tail checks, marginal preservation, normalization, dose-unit invariance and likelihood/utility checks; no native executable parity claimed",
-        "Hand-computable posterior risk cutoff boundaries and cohort histories: all-candidate surplus, escalation, starting pair, stopping and top-two/all-pair allocation"
+        "Hand-computable posterior risk cutoff boundaries and cohort histories: all-candidate surplus, escalation, starting pair, stopping and top-two/all-pair allocation",
+        "Posterior sampler checked against R logistic-normal quadrature, no-data prior recovery and 200,000-sample independent R PDS importance integration; all full-model parameter means within six combined Monte Carlo errors"
       ]
     },
     {
