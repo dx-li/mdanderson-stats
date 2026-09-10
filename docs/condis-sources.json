@@ -5,11 +5,17 @@
       "retrieved_date": "2026-09-10",
       "bytes": 21614,
       "sha256": "0b893a5342860f2d48fb016cfbcddf17d3987959fdcd50a365a8c4f5a53282a6"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/topepo/caret/main/inst/models/models.RData",
+      "retrieved_date": "2026-09-10",
+      "bytes": 103091,
+      "sha256": "1debd07591774e6b4ca52f2c79ddd11d23910aee2fbb6ba51c33c4342c2f92ae"
     }
   ],
   "references": [
     "https://doi.org/10.1016/j.jbi.2022.104117",
     "https://pubmed.ncbi.nlm.nih.gov/35801895/"
   ],
-  "scope": "Independent base CondiS imputation with exact segment integration for native linear interpolation or explicit KM step interpolation. Native CondiS 0.1.2 function executed with survival for numerical comparisons. CondiS-X remains pending."
+  "scope": "Independent base CondiS imputation with exact segment integration for native linear interpolation or explicit KM step interpolation. Native CondiS 0.1.2 function executed with survival for numerical comparisons. Default CondiS-X Gaussian identity-link refinement added; caret model fit executed independently. Seven other learners and native resampling remain pending."
 }

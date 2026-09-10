@@ -3612,11 +3612,13 @@
       "status": "partial",
       "implemented_features": [
         "Base censored-lifetime restricted conditional-mean imputation using native linear or explicit KM-step interpolation",
-        "Vectorized exact segment integration with horizon restriction, event preservation, retained KM curve and stable time scaling"
+        "Vectorized exact segment integration with horizon restriction, event preservation, retained KM curve and stable time scaling",
+        "Default CondiS-X Gaussian linear refinement including native status predictor, event restoration, rank-revealing fit and raw censoring diagnostics with optional lower-bound clipping"
       ],
       "validation": [
         "Hand conditional means, unmodified R CondiS 0.1.2 fixture, tied/unsorted data, degenerate samples and extreme time scales; tests/test_condis.py",
-        "Pending eight CondiS-X refinement learners, tuning/resampling and interactive input/report workflows; docs/condis.md"
+        "Pending seven other CondiS-X learners, native tuning/resampling and interactive input/report workflows; docs/condis.md",
+        "Native caret Gaussian final-fit fixture, event restoration, bound diagnostics, explicit clipping and rank/scale invariance; tests/test_condis_linear.py"
       ]
     },
     {

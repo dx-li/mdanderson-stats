@@ -73,6 +73,51 @@ within the training data/folds rather than using held-out survival outcomes to
 construct training targets. This function does not provide a fitted transform
 for applying a training curve to a separate held-out sample.
 
+## Default CondiS-X linear refinement
+
+`condis_linear_refine(imputation, covariates)` adds the native default `glm`
+refinement. Its regression uses an intercept, the **censoring status column**,
+and every supplied numeric covariate column to predict the base imputed times.
+The native source includes status through its `pred_time ~ .` formula. After
+fitting on all supplied rows, observed event times are restored unchanged.
+Supply covariates in the same row order, with categorical factors explicitly
+encoded as numeric columns.
+
+The verified caret model uses a Gaussian family with identity link. There is no
+hyperparameter to tune for this model: a scaled least-squares solve reproduces
+the final full-sample fit without running repeated cross-validation. Native
+resampling metrics are not returned. Column centering/scaling with an intercept
+preserves fitted values; a rank-revealing solve handles dependent or constant
+columns. Responses are scaled to support very small or large time units. The
+implementation accepts up to 500 covariate columns and 2 million covariate cells.
+
+```python
+from mdanderson_stats import condis_linear_refine
+
+base = condis_impute(
+    [8, 1, 2, 2, 4, 6, 10, 10, 12, 15],
+    [0, 1, 0, 1, 1, 0, 1, 0, 1, 0],
+)
+refined = condis_linear_refine(base, np.zeros((10, 1)))
+assert refined.below_censoring[-1]
+bounded = condis_linear_refine(base, np.zeros((10, 1)), enforce_censoring=True)
+assert bounded.refined_time[-1] == 15
+```
+
+`CondiSLinearRefinement` retains raw `fitted_time` for all rows, `refined_time`
+after event restoration and optional clipping, raw censored-prediction flags
+`below_censoring` and `above_horizon`, design rank, residual degrees of freedom,
+and training residual RMSE against base imputed targets. This RMSE is not an
+out-of-sample prediction error or uncertainty estimate.
+
+As in native CondiS-X, unconstrained fitted times can be negative, below a known
+censoring time, or above the base horizon. The default returns those predictions
+with diagnostic flags. `enforce_censoring=True` is an explicit Python extension
+that clips censored predictions at their observed lower bound. It does not cap
+them at the horizon, refit the model, or change the raw predictions/flags. This is
+a refinement of the supplied sample, not a deployable survival prediction model:
+future censoring status is generally unavailable for new patients.
+
 ## Validation and remaining coverage
 
 Three focused tests cover hand-computed linear/step integrals and a partial
@@ -87,6 +132,12 @@ A 100,000-observation example took approximately 0.033 seconds in the developmen
 environment. The imputed times remained between observed times and maximum
 follow-up. This is a local benchmark, not a cross-platform guarantee.
 
-**Catalog status is partial.** Base CondiS imputation is implemented. CondiS-X's
-eight covariate-refinement learners, their tuning/resampling behavior, interactive
+Three further tests cover the executed caret Gaussian model, event restoration,
+censoring diagnostics and explicit clipping, and rank/scale invariance. The
+comparison isolates the native final fit using exact base targets; it does not
+claim reproduction of caret's full resampling pipeline.
+
+**Catalog status is partial.** Base CondiS and the default linear CondiS-X refinement are implemented. The
+seven other CondiS-X learners (ridge, lasso, GBM, random forest, SVM, kNN, neural
+network), their tuning/resampling behavior, interactive
 input handling and native graphical reports remain pending.

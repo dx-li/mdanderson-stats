@@ -819,4 +819,5 @@ R implementation and independent regression calculations.
 
 [CondiS](docs/condis.md) adds censored-lifetime imputation using conditional
 restricted survival means, with native linear and KM-step interpolation.
-CondiS-X covariate-refinement learners remain pending.
+Its default CondiS-X linear refinement is also available, with explicit censoring
+diagnostics. Seven other refinement learners remain pending.
