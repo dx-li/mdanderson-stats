@@ -374,12 +374,50 @@ opposite movement of the inferred efficacy intercept while preserving balanced
 allocation and all trial diagnostics. No 1000-replicate clinical calibration
 or published operating-characteristic reproduction is claimed.
 
-**Diffuse-default limitation:** an additional PDS check used the guide's SD 100,
+**Earlier block-only sampler limitation:** an additional PDS check used the guide's SD 100,
 100 patients per pair, a 2×2 dose grid with binary uniform joint scenarios, two
 pseudo trials, four chains, 2000 warmup and 2000 retained sweeps per chain
 (seed 7708). Maximum classic split R-hats were **51.95 and 7.27**. Thus this
 configuration did not mix adequately, and its finite prior-center estimates
 must not be treated as calibrated. A shorter 64-draw check also failed strongly.
-The SD-.5 workflow checks above do not validate the diffuse default. Improving
-sampling for this regime is outstanding before reproducing the guide's complete
-calibration workflow or trial operating characteristics.
+The SD-.5 workflow checks above do not validate the diffuse default. The
+additional updates described below address this failure on the first dataset;
+complete calibration and trial operating-characteristic reproduction remain
+outstanding.
+
+## Updates for diffuse priors
+
+`fit_u2oet(..., coordinate_updates=True)` now combines each outcome-block
+elliptical slice move with scalar elliptical slice moves and a joint
+link/intercept/slope move. `calibrate_u2oet_prior` enables these extra moves by
+default. The standalone fitter retains its previous, cheaper default;
+`coordinate_updates=False` reproduces that update schedule. The fit result
+records the setting. The prior distributions and likelihood are unchanged.
+
+For the joint move, a symmetric normal increment changes log link shape. Each
+threshold intercept is transformed to preserve its continuation probability
+at **zero standardized covariates**, and its two slopes are scaled by the
+inverse-link derivative. A shared interaction uses the first threshold's
+scale. This map is invertible; its log Jacobian is three times the sum of the
+log scales, plus the first log scale when an interaction is present. The
+Metropolis acceptance probability includes both the normal-prior density ratio
+and this Jacobian. Preserving the probability at zero covariates alone would
+not justify accepting the proposal without that correction.
+
+Numerical checks verify reversal using the opposite increment, the analytic
+Jacobian against finite differences, and the preserved center probabilities
+for PDS, CMI and hybrid models. The independent full-PDS R importance comparison
+now exercises these extra updates. This tests the posterior target as well as
+mixing. Added updates cost more per sweep, so compare Monte Carlo precision per
+elapsed time rather than raw iteration counts.
+
+On the first previously failing pseudo dataset (the exact counts are recorded in
+[u2oet-diffuse-validation.json](u2oet-diffuse-validation.json)), the original
+block-only sampler had maximum split R-hat 51.95. Adding scalar moves alone
+reduced this to 1.193 in a 1000-warmup/1000-draw, four-chain run. Including the
+joint link move gave maximum parameter split R-hat **1.003** with 1500 warmup
+and 1500 retained draws per chain, seed 7711. That run took about 145 seconds
+in this environment. The record also includes parameter means, Monte Carlo
+errors and joint-probability diagnostics. This is a targeted difficult-case
+check, not a universal convergence guarantee or a completed 1000-trial
+calibration study.

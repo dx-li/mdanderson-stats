@@ -986,5 +986,5 @@ log probabilities, likelihoods and expected utilities. Posterior-draw summaries
 and new-cohort allocation include acceptability, patient-surplus randomization
 and escalation restrictions. Multi-chain posterior fitting supports explicit
 priors and complete outcomes. IID prior draws, beta-moment prior information
-and pseudo-trial prior calibration are available. The diffuse SD-100 calibration
-requires improved sampling; full trial conduct remains pending.
+and pseudo-trial prior calibration are available. Additional coordinate and joint
+link moves address diffuse-prior mixing; full trial conduct remains pending.

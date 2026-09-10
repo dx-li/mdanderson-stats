@@ -44,16 +44,20 @@ def calibrate_u2oet_prior(
     draws: int = 1000,
     warmup: int = 500,
     chains: int = 4,
+    coordinate_updates: bool = True,
     rng: np.random.Generator,
 ) -> U2OETCalibration:
     """Guide section 1.3: balanced pseudo data, diffuse zero-mean prior, averaging.
 
     The guide recommends >=1000 pseudo trials. Repetitions are explicit to make
     the potentially substantial computation visible. No convergence threshold
-    is silently waived or used to discard difficult pseudo trials.
+    is silently waived or used to discard difficult pseudo trials. Coordinate
+    and joint-link moves are enabled by default for the diffuse pseudo prior.
     """
     if not isinstance(rng, np.random.Generator):
         raise ValueError("rng must be an explicit NumPy Generator")
+    if not isinstance(coordinate_updates, (bool, np.bool_)):
+        raise ValueError("coordinate_updates must be boolean")
     d1, d2 = _real(doses1, "doses1"), _real(doses2, "doses2")
     u2oet_standardize(d1)
     u2oet_standardize(d2)
@@ -106,6 +110,7 @@ def calibrate_u2oet_prior(
             draws=draws,
             warmup=warmup,
             chains=chains,
+            coordinate_updates=coordinate_updates,
             rng=rng,
         )
         summary = summarize_chains(fit.parameters[..., :-1])

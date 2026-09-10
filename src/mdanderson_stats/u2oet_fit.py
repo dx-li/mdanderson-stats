@@ -54,6 +54,46 @@ def _parameters(values: FloatArray, levels: int, model: str) -> U2OETMarginal | 
     return U2OETMarginal(values[:length], beta, positive[:2], float(positive[2]), interaction)
 
 
+def _link_move(
+    values: FloatArray, levels: int, model: str, delta: float
+) -> tuple[FloatArray, float]:
+    """Change link while preserving continuation probabilities at zero covariates.
+
+    Slopes follow the derivative of the inverse-link mapping. This invertible
+    deterministic proposal has Jacobian s**3 per ordinal threshold, plus s[0]
+    for a shared interaction. Its inverse uses -delta.
+    """
+    length = levels - 1
+    link_index = 3 * length + (2 if model != "cmi" else 0)
+    log_phi = values[link_index]
+    z = log_phi + values[:length]
+    log_softplus = np.empty_like(z)
+    small = z < -36
+    log_softplus[small] = z[small]
+    log_softplus[~small] = np.log(np.logaddexp(0, z[~small]))
+    log_c = log_softplus + delta
+    with np.errstate(over="ignore", under="ignore", divide="ignore"):
+        c = np.exp(log_c)
+        log_expm1 = c + np.log(-np.expm1(-c))
+        log_gamma = np.log(-np.expm1(-c))
+    tiny = log_c < -36
+    log_expm1[tiny] = log_c[tiny]
+    log_gamma[tiny] = log_c[tiny]
+    log_scale = delta - np.logaddexp(0, -z) - log_gamma
+    proposal = values.copy()
+    proposal[:length] = log_expm1 - (log_phi + delta)
+    proposal[link_index] += delta
+    scale = np.exp(log_scale)
+    proposal[length : 3 * length] *= np.repeat(scale, 2)
+    jacobian = 3 * float(log_scale.sum())
+    if model != "pds":
+        proposal[-1] *= scale[0]
+        jacobian += float(log_scale[0])
+    if not np.all(np.isfinite(proposal)) or not np.isfinite(jacobian):
+        raise ArithmeticError("link proposal exceeds floating-point range")
+    return proposal, jacobian
+
+
 @dataclass(frozen=True)
 class U2OETFit:
     """Retained coordinates and probabilities with explicit chain/draw axes.
@@ -70,6 +110,7 @@ class U2OETFit:
     likelihood_evaluations: int
     warmup: int
     model: str
+    coordinate_updates: bool = False
 
 
 def fit_u2oet(
@@ -85,6 +126,7 @@ def fit_u2oet(
     warmup: int = 500,
     chains: int = 4,
     initial: ArrayLike | None = None,
+    coordinate_updates: bool = False,
     rng: np.random.Generator,
 ) -> U2OETFit:
     """Blocked elliptical slice plus independent-uniform association updates.
@@ -92,10 +134,14 @@ def fit_u2oet(
     Prior arrays follow u2oet_parameter_names, excluding association. Means/SDs
     for slopes describe the underlying normal before truncation. Initial rows
     follow the full ordering (one row per chain); no Jacobian is needed because
-    retained power/link coordinates themselves are normal logarithms.
+    retained power/link coordinates themselves are normal logarithms. With
+    coordinate_updates=True, each block is followed by scalar slice moves and
+    a joint link/intercept/slope move with its density Jacobian correction.
     """
     if not isinstance(rng, np.random.Generator):
         raise ValueError("rng must be an explicit NumPy Generator")
+    if not isinstance(coordinate_updates, (bool, np.bool_)):
+        raise ValueError("coordinate_updates must be boolean")
     d1, d2 = _real(doses1, "doses1"), _real(doses2, "doses2")
     u2oet_standardize(d1)
     u2oet_standardize(d2)
@@ -168,34 +214,62 @@ def fit_u2oet(
             raise ValueError("initial state must have finite likelihood")
         for iteration in range(warmup + draws):
             for which, block in enumerate(blocks):
-                centered = state[block] - mu[block]
-                direction = rng.normal(size=centered.size) * sd[block]
-                height = ll + np.log1p(-rng.random())
-                angle = rng.uniform(0, 2 * np.pi)
-                lower, upper = angle - 2 * np.pi, angle
-                for _ in range(1000):
-                    proposal = mu[block] + centered * np.cos(angle) + direction * np.sin(angle)
-                    marginal = _parameters(proposal, levels[which], model)
-                    if marginal is not None:
-                        candidate = _marginal(d1, d2, marginal, centering)
-                        e, t = (
-                            (candidate, marginals[1]) if which == 0 else (marginals[0], candidate)
+                size = block.stop - block.start
+                groups = [np.arange(size)]
+                if coordinate_updates:
+                    groups.extend(np.array([i]) for i in range(size))
+                for selected in groups:
+                    centered = state[block][selected] - mu[block][selected]
+                    direction = rng.normal(size=centered.size) * sd[block][selected]
+                    height = ll + np.log1p(-rng.random())
+                    angle = rng.uniform(0, 2 * np.pi)
+                    lower, upper = angle - 2 * np.pi, angle
+                    for _ in range(1000):
+                        proposal = state[block].copy()
+                        proposal[selected] = (
+                            mu[block][selected]
+                            + centered * np.cos(angle)
+                            + direction * np.sin(angle)
                         )
-                        trial_ll, trial_joint = evaluate(e, t, float(state[-1]))
-                        if trial_ll >= height:
-                            state[block] = proposal
-                            marginals[which] = candidate
-                            ll, log_joint = trial_ll, trial_joint
-                            break
-                    if angle < 0:
-                        lower = angle
+                        marginal = _parameters(proposal, levels[which], model)
+                        if marginal is not None:
+                            candidate = _marginal(d1, d2, marginal, centering)
+                            e, t = (
+                                (candidate, marginals[1])
+                                if which == 0
+                                else (marginals[0], candidate)
+                            )
+                            trial_ll, trial_joint = evaluate(e, t, float(state[-1]))
+                            if trial_ll >= height:
+                                state[block] = proposal
+                                marginals[which] = candidate
+                                ll, log_joint = trial_ll, trial_joint
+                                break
+                        if angle < 0:
+                            lower = angle
+                        else:
+                            upper = angle
+                        angle = rng.uniform(lower, upper)
                     else:
-                        upper = angle
-                    angle = rng.uniform(lower, upper)
-                else:
-                    raise ArithmeticError(
-                        f"elliptical slice failed at chain {chain}, iteration {iteration}"
+                        raise ArithmeticError(
+                            f"elliptical slice failed at chain {chain}, iteration {iteration}"
+                        )
+                if coordinate_updates:
+                    proposal, jacobian = _link_move(
+                        state[block], levels[which], model, rng.normal()
                     )
+                    marginal = _parameters(proposal, levels[which], model)
+                    assert marginal is not None
+                    candidate = _marginal(d1, d2, marginal, centering)
+                    e, t = (candidate, marginals[1]) if which == 0 else (marginals[0], candidate)
+                    trial_ll, trial_joint = evaluate(e, t, float(state[-1]))
+                    new = (proposal - mu[block]) / sd[block]
+                    old = (state[block] - mu[block]) / sd[block]
+                    prior_ratio = -0.5 * float(np.sum((new - old) * (new + old)))
+                    if np.log1p(-rng.random()) < trial_ll - ll + prior_ratio + jacobian:
+                        state[block] = proposal
+                        marginals[which] = candidate
+                        ll, log_joint = trial_ll, trial_joint
             rho = rng.uniform(-1, 1)
             trial_ll, trial_joint = evaluate(marginals[0], marginals[1], rho)
             if np.log1p(-rng.random()) < trial_ll - ll:
@@ -217,4 +291,5 @@ def fit_u2oet(
         evaluations,
         warmup,
         model,
+        bool(coordinate_updates),
     )

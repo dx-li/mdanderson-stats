@@ -1,0 +1,140 @@
+{
+  "scenario": "Uniform binary joint scenario; first pseudo dataset from seed 7708, 100 patients per dose pair, doses [1,2] for both agents",
+  "counts": [
+    [
+      [
+        [
+          24.0,
+          29.0
+        ],
+        [
+          22.0,
+          25.0
+        ]
+      ],
+      [
+        [
+          19.0,
+          20.0
+        ],
+        [
+          31.0,
+          30.0
+        ]
+      ]
+    ],
+    [
+      [
+        [
+          22.0,
+          26.0
+        ],
+        [
+          33.0,
+          19.0
+        ]
+      ],
+      [
+        [
+          17.0,
+          27.0
+        ],
+        [
+          33.0,
+          23.0
+        ]
+      ]
+    ]
+  ],
+  "underlying_prior_mean": 0,
+  "underlying_prior_sd": 100,
+  "sampler_seed": 7711,
+  "chains": 4,
+  "warmup": 1500,
+  "draws": 1500,
+  "seconds": 145.049414542038,
+  "coordinate_updates": true,
+  "maximum_parameter_split_rhat": 1.0029672763236415,
+  "maximum_joint_probability_split_rhat": 1.001389026443757,
+  "maximum_joint_probability_mcse": 0.0005935694496377069,
+  "parameters": [
+    {
+      "name": "efficacy.intercept.1",
+      "mean": 144.68249169165315,
+      "mcse": 1.9299690675051449,
+      "split_rhat": 1.0004368935260255
+    },
+    {
+      "name": "efficacy.slope.1.1",
+      "mean": 20.71442362977254,
+      "mcse": 0.4104267191204579,
+      "split_rhat": 1.0011675491996332
+    },
+    {
+      "name": "efficacy.slope.1.2",
+      "mean": 46.50222417995642,
+      "mcse": 0.6933726635687315,
+      "split_rhat": 1.0008151283831372
+    },
+    {
+      "name": "efficacy.log_power.1",
+      "mean": 2.458681144582419,
+      "mcse": 1.3547209301831973,
+      "split_rhat": 1.0004584959091043
+    },
+    {
+      "name": "efficacy.log_power.2",
+      "mean": 2.2945392872515393,
+      "mcse": 1.3791456873931458,
+      "split_rhat": 0.9998258662382584
+    },
+    {
+      "name": "efficacy.log_link",
+      "mean": 5.115612270234864,
+      "mcse": 0.017816748838347028,
+      "split_rhat": 1.0009485372347862
+    },
+    {
+      "name": "toxicity.intercept.1",
+      "mean": 152.21166958341388,
+      "mcse": 1.6333250437560196,
+      "split_rhat": 1.0029672763236415
+    },
+    {
+      "name": "toxicity.slope.1.1",
+      "mean": 15.74575169648916,
+      "mcse": 0.30193774834729514,
+      "split_rhat": 1.001137829925933
+    },
+    {
+      "name": "toxicity.slope.1.2",
+      "mean": 24.590231735980534,
+      "mcse": 0.42312702980576694,
+      "split_rhat": 1.0000118931507467
+    },
+    {
+      "name": "toxicity.log_power.1",
+      "mean": -2.0600655625599167,
+      "mcse": 1.3393132334502147,
+      "split_rhat": 0.9997545547511373
+    },
+    {
+      "name": "toxicity.log_power.2",
+      "mean": -0.5474609669482312,
+      "mcse": 1.2828582564163309,
+      "split_rhat": 0.9995589442587899
+    },
+    {
+      "name": "toxicity.log_link",
+      "mean": 5.319860857892241,
+      "mcse": 0.013060078505392281,
+      "split_rhat": 1.0029065872037555
+    },
+    {
+      "name": "association",
+      "mean": -0.4013595048517402,
+      "mcse": 0.005153593400116575,
+      "split_rhat": 1.0005608139508009
+    }
+  ]
+}

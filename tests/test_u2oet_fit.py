@@ -87,6 +87,7 @@ def test_full_pds_posterior_matches_independent_r_importance_sampling():
         counts,
         prior_mean=mean,
         prior_sd=sd,
+        coordinate_updates=True,
         draws=1500,
         warmup=300,
         chains=4,
@@ -96,3 +97,37 @@ def test_full_pds_posterior_matches_independent_r_importance_sampling():
     combined = np.sqrt(summary.batch_mean_mcse**2 + reference[:, 1] ** 2)
     assert np.all(np.abs(summary.mean - reference[:, 0]) < 6 * combined)
     assert np.all(summary.split_rhat < 1.05)
+
+
+def test_joint_link_move_is_reversible_with_the_correct_density_jacobian():
+    from mdanderson_stats.u2oet import _marginal
+    from mdanderson_stats.u2oet_fit import _link_move, _parameters
+
+    for model in ("pds", "cmi", "pds+cmi"):
+        x = np.array(
+            [-0.4, 0.8, 0.4, 0.5, 0.7, 0.9]
+            + ([0.0, 0.0] if model != "cmi" else [])
+            + [0.3]
+            + ([0.2] if model != "pds" else [])
+        )
+        y, log_jac = _link_move(x, 3, model, 1.2)
+        back, inverse_jac = _link_move(y, 3, model, -1.2)
+        assert_allclose(back, x, atol=2e-14)
+        assert_allclose(log_jac + inverse_jac, 0, atol=2e-14)
+        h = 1e-5
+        columns = []
+        for j in range(x.size):
+            direction = np.eye(x.size)[j] * h
+            columns.append(
+                (
+                    _link_move(x + direction, 3, model, 1.2)[0]
+                    - _link_move(x - direction, 3, model, 1.2)[0]
+                )
+                / (2 * h)
+            )
+        sign, numeric_jac = np.linalg.slogdet(np.column_stack(columns))
+        assert sign == 1
+        assert_allclose(log_jac, numeric_jac, atol=2e-9)
+        original = _marginal([1, 2, 3], [1, 2, 3], _parameters(x, 3, model), "log")
+        proposed = _marginal([1, 2, 3], [1, 2, 3], _parameters(y, 3, model), "log")
+        assert_allclose(original[1, 1], proposed[1, 1], atol=2e-14)
