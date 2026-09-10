@@ -1,0 +1,16 @@
+{
+  "retrieved_at": "2026-09-10T07:41:04.964613+00:00",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PredictiveProbabilit/PredictiveInterimAnalysis.pdf",
+      "bytes": 149924,
+      "sha256": "324fe6d3ab27e96ee0c7ebfeae2f0bd4995a78e02b8001b33c5c8028d843d23d"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PredictiveProbabilit/PredictiveProbabilitiesUsersGuide.pdf",
+      "bytes": 1540684,
+      "sha256": "ae8673b5b135e5152fe15dd7b7fbc6b57502f8ed9564d467a027e13ab52a610a"
+    }
+  ],
+  "scope": "Binary model, comparison rules, interim and trial-planning workflows; independent implementation."
+}

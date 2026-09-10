@@ -170,9 +170,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Binary two-arm posterior prediction of frequentist pooled-z or Bayesian superiority decisions, direct inconclusive probability and future-outcome decision tables",
+        "Binary first-stage planning tables using shared final decision boundaries and matrix products of conditional beta-binomial kernels",
+        "Time-to-event prediction and integrated report history remain pending"
+      ],
+      "validation": [
+        "Published Cook example, exact rational small-grid enumeration, planning/interim agreement, symmetry and strict integer-beta cutoff equality; tests/test_predictive_binary.py",
+        "docs/predictive-binary.md; docs/predictive-probabilities-sources.json"
+      ]
     },
     {
       "id": 12,

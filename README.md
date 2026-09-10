@@ -741,3 +741,7 @@ sample-size searches. Two-arm/joint survival models and integrated reports remai
 
 [Beta Binomial Distribution Demo](docs/beta-binomial-demo.md) combines sequential
 updating, credible sets, cohort simulation and prior/posterior history plots.
+
+[Predictive Probabilities: binary outcomes](docs/predictive-binary.md) provides
+two-arm interim predictions and first-stage planning tables for frequentist or
+Bayesian final comparisons. Time-to-event prediction remains pending.

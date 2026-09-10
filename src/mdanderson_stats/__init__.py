@@ -253,6 +253,12 @@ from .numerics import invert_monotone, normal_tails
 from .onesample import OneSampleTest, binomial_test, poisson_test
 from .onesample_workflow import OneSampleResult, one_sample
 from .pehaz import PiecewiseHazard, pehaz
+from .predictive_binary import (
+    BinaryPredictivePlan,
+    BinaryPredictiveProbabilities,
+    plan_predictive_binary,
+    predictive_binary,
+)
 from .pvalue_models import (
     OrderStatisticDiagnostics,
     clustered_pvalues,
@@ -408,6 +414,10 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "BinaryPredictiveProbabilities",
+    "BinaryPredictivePlan",
+    "predictive_binary",
+    "plan_predictive_binary",
     "plot_beta_binomial_sequence",
     "BOP2SurvivalSampleSizeOptimization",
     "optimize_bop2_survival_sample_size",
