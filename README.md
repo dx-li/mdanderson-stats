@@ -863,5 +863,6 @@ pending.
 
 [ASYPOW](docs/asypow.md) adds information-matrix power, sample-size and
 significance calculations with independent-group binomial, Poisson and
-exponential-survival information. Regression and ordinal/multinomial models
-remain pending.
+exponential-survival information, including linear/quadratic regression designs
+and complementary-log-log binomial models. Ordinal/multinomial models remain
+pending.

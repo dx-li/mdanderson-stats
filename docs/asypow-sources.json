@@ -63,6 +63,48 @@
       "retrieved_date": "2026-09-10",
       "bytes": 1255,
       "sha256": "db2cebe6549abcc7cdbb36b88138a2a0ecd1c80048ab648de06c937403cdce33"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.binomial.one.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1940,
+      "sha256": "b88c19ff3a79c6684a19c537a29835cd6ea625bb8c911dc7db9f5c0957336ac2"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.binomial.design.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 2855,
+      "sha256": "73912df5a912e6c6875833f333a7ec0ebe8341203edf974db53eb5f5b88f97dc"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.poisson.one.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1481,
+      "sha256": "b5a68d87f0d3153face60e6a3a4e892fbfe61f0cc1492753a1ebd550c85ca067"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.poisson.design.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 2722,
+      "sha256": "6179b741abe9fc366cd7251dabd9efee4fc0621b4a29400bf7ba098854c0f381"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.expsurv.one.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 1434,
+      "sha256": "bb42bd0a615fee018f2413738b006708c8a3de751eda7e42ecc3db176cb6cf5f"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/asypow/asypow_2015.6.25.tar.gz",
+      "artifact": "asypow/R/info.expsurv.design.R",
+      "retrieved_date": "2026-09-10",
+      "bytes": 2931,
+      "sha256": "d501570be21b70de6050aa65a3e2015f5cb422d6c9f7aad12e60128f0881005a"
     }
   ]
 }

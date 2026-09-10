@@ -2,8 +2,8 @@
 
 MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
-and independent-group binomial, Poisson and exponential-survival information.
-Regression, ordinal/multinomial families and the complete native workflow remain
+and independent-group binomial, Poisson and exponential-survival information,
+including regression designs. Ordinal/multinomial families and the complete native workflow remain
 pending; the catalog status is **partial**.
 
 ```python
@@ -60,6 +60,60 @@ The port reuses the package's stable exponential event-probability calculation
 and a log-domain small-rate limit when the probability itself underflows.
 Unrepresentable information raises an error rather than returning zero/infinity.
 
+## Regression designs
+
+`asypow_regression_information(parameters, covariates, family="logistic",
+observations=1, group_size=1, duration=None)` computes per-observation information
+for the native linear and quadratic regression families.
+
+```python
+from mdanderson_stats import asypow_regression_information, asypow_information
+
+theta = [-0.7, 0.3, -0.1]  # intercept, slope, quadratic coefficient
+information = asypow_regression_information(theta, [-2, -1, 0, 1, 2])
+design = asypow_information(theta, information, [0, 1, 0])  # zero slope
+n = design.sample_size()
+assert abs(float(design.power(n)) - 0.8) < 1e-12
+```
+
+One parameter vector defines one group; a matrix defines independent groups
+by row. Each row has 2 coefficients for a linear predictor or 3 for a quadratic
+predictor. A covariate vector is shared across groups, while a matrix supplies
+one row per group. `observations` broadcasts over the covariate matrix and may
+be zero at unused points; each group must retain a positive allocation.
+`group_size` is a positive scalar or vector with one value per group.
+
+Point weights are proportional to `group_size[g] * observations[g,j]`, normalized
+across **all** groups and points. Thus groups with different total observations
+need not receive the same final allocation even when `group_size` is equal.
+Information is block diagonal, ordered by group and then coefficient. Pass
+parameters flattened in that order to `asypow_information` for cross-group
+contrasts. At most 500 coefficients and 1,000,000 covariate entries are supported.
+
+For design vector v=(1,x) or (1,x,x²), each point contributes a scalar information
+weight times `v vᵀ`:
+
+| Family | Predictor eta | Information weight |
+| --- | --- | --- |
+| `logistic` | log odds | p(1-p), p=logistic(eta) |
+| `cloglog` | log negative-log survival | z²/[exp(z)-1], z=exp(eta) |
+| `poisson` | log mean | exp(eta) |
+| `exponential` | log event rate | observed-event probability |
+
+Exponential survival uses the same uniform-entry model as the group calculation;
+`duration` is required and may be scalar or one value per group. Other families
+reject it. For exponential log-rate parameters, the rate-squared transformation
+cancels the rate-squared denominator of raw-rate information.
+
+Predictor information and allocation normalization are calculated in log space.
+Weighted design vectors are formed before their matrix product, retaining small
+information weights that can be offset by large covariates. Zero-allocation
+points are skipped before polynomial evaluation. Stable small-rate and saturated
+limits replace native cancellation/overflow. A zero or singular information
+matrix can legitimately result from an uninformative design or saturated
+response; the shared power constructor rejects non-positive-definite information.
+An overflowing polynomial or information matrix raises a rescaling error.
+
 ## Power and inversions
 
 `design.power(sample_size, significance=0.05)` uses a noncentral chi-square
@@ -100,6 +154,12 @@ Two source issues are corrected:
 Focused tests check native power examples, tighter R sample-size inversion,
 forward/inverse consistency, multiple constraints, parameter/contrast rescaling,
 null power, and exponential information at rates too small for a direct formula.
+All four regression families also match the unmodified R source on two-group
+quadratic designs with unequal covariate allocations. Fixtures in
+`tests/fixtures/asypow-regression.json` were generated from those R calculations.
+Additional checks cover cross-group slope tests, extremely small information
+weights combined with large covariates, allocation scaling by `1e300`, and
+survival time units scaled by `1e-200` and `1e200`.
 The software archive is retained only in ignored research storage, with hashes
 in `asypow-sources.json`; no native files are redistributed in the wheel.
 
