@@ -772,3 +772,8 @@ requires the block-independence needed by its base-covariance update.
 `anovaddp_mcmc.py` assembles these adapted conditional transitions according to
 `anovaddp.cpp`, retaining the documented source corrections. It returns posterior
 states independently of the original R interface and predictive plot routines.
+
+`anovaddp_prediction.py` adapts `Newpatient`, `Baseline`, `PREDSTEP`, `NADIRSTEP`
+and the predictive assembly in `anovaddp.cpp` under the same attribution and
+terms. Source study transformations, shared-atom and nominal-nadir conventions
+are documented; original implementation files are not redistributed.

@@ -966,4 +966,5 @@ follow-up, allocation summaries and Monte Carlo errors.
 curve, Gaussian likelihood, subject-level parameter sweep and residual-variance
 conditional, plus atom, cluster, covariance and concentration updates.
 `fit_anovaddp` runs the complete fitting chain and returns immutable posterior
-states. Prediction/reporting workflows remain pending.
+states. `predict_anovaddp` adds new-subject curves, native study components and
+nadir summaries; file/plot adapters remain pending.

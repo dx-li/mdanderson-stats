@@ -10,8 +10,9 @@ curve parameters depends on subject covariates through a DDP mixture.
 conditional Gaussian amplitude update, complete subject-level transition and
 residual-variance conditional, Gaussian atom posterior and cluster sweep are
 available, together with covariance, base-mean and concentration updates and
-the complete `fit_anovaddp` MCMC routine. New-subject prediction, study contrasts,
-nadir summaries, source data readers and plotting workflow remain to be ported.
+the complete `fit_anovaddp` MCMC routine and all seven native predictive output
+families. Source data readers, output adapters and plotting workflow remain to
+be ported.
 The low-level conditional kernels are components of the fitting routine; they
 do not independently fit a DDP model.
 
@@ -263,7 +264,8 @@ innovations. The sweep exercises singleton deletion, new-atom generation and
 final resampling. Differences were below 5e-15. The comparison uses the corrected
 Gaussian/assignment formulas, not an unchanged compiled native sampler. Two
 focused tests additionally cover the single-subject case, coherent label/count
-invariants, immutable results and density-underflow inputs. Predictive/reporting workflows remain pending.
+invariants, immutable results and density-underflow inputs. The predictive
+functions below assemble these blocks; file/plot workflows remain pending.
 
 
 ## Hyperparameter transition
@@ -341,7 +343,7 @@ Carlo standard errors; the scalar case matches inverse gamma exactly up to
 floating-point rounding. Focused checks also verify the retained S update,
 positive definiteness, unchanged fixed base-covariance blocks, and rejection of
 unsupported cross-block dependence. These do not establish convergence of a
-complete chain; prediction/reporting workflows are still pending.
+complete chain; file/plot workflows are still pending.
 
 
 ## Complete MCMC fitting routine
@@ -430,8 +432,8 @@ convergence has occurred.
 Memory/work limits are checked before sampling: at most 50 million stored
 numeric values under a conservative all-subjects-in-separate-clusters bound,
 5 million subject transitions and 100 million observation-iterations. Original
-predictive plotting, study contrasts and nadir summaries are still pending;
-the chain supplies the posterior states needed to implement them.
+file adapters and plotting remain pending. The prediction functions
+below consume the retained posterior states for study and nadir summaries.
 
 Integration checks verify unchanged trajectories under thinning, normalized
 log likelihood reconstructed from retained states, positive covariance draws,
@@ -462,3 +464,108 @@ A separate four-subject integration run also exercised the native seven-covariat
 five-conditional-effect geometry (35 atom coefficients), retaining coherent
 35-column atom histories and positive-definite random-effect covariances. This
 was a short dimensional/wiring check, not a convergence experiment.
+
+
+## New-patient and study prediction
+
+`anovaddp_new_atom` ports `Newpatient`. It selects an occupied cluster with
+probability n_k/(N+M), or the Gaussian base measure with probability M/(N+M).
+An existing cluster's coefficients are **freshly sampled** from their Gaussian
+conditional given its subjects, rather than copied from the last saved atom.
+The new-cluster option draws from N(base_mean,base_covariance). Returned weights
+list occupied clusters first and the base option last; selected cluster -1 means
+the base option. This neither adds a patient to the training allocation nor
+changes its cluster counts.
+
+`anovaddp_baseline_curves(coefficients,time)` constructs the exact ten nonlinear
+transformations in `Baseline`, including its prediction-time knot repair. It
+requires 35 coefficients (seven covariate blocks of five). These component
+curves reproduce the supplied study layout; they are not differences between
+otherwise identical fitted patient curves, and the function does not treat
+them as generic ANOVA contrasts for an arbitrary covariate encoding.
+
+`predict_anovaddp(fit,training_design,prediction_design,time=...,seed=...)`
+assembles all seven C++ predictive families from each retained fit state. Pass
+the exact training design used in fitting; it cannot be reconstructed from the
+parameter draws. Both designs must have seven columns and an intercept of one.
+At least three prediction rows are required for the source's nadir output. The
+default grid is -1,0,...,30, matching the source, but arbitrary nonempty time
+vectors are supported in place of the fixed native 32-column buffers.
+
+```python
+import numpy as np
+from mdanderson_stats import anovaddp_curve, fit_anovaddp, predict_anovaddp
+
+x = np.array(
+    [
+        [1, 0, 0, 1, 0, 0, 0],
+        [1, 1, 0, 0, 1, 0, 0],
+        [1, 0, 1, 0, 0, 1, 0],
+        [1, 1, 1, 0, 0, 0, 1],
+    ]
+)
+times = np.tile([0, 1, 2, 3, 4, 6], 4)
+subject = np.repeat(np.arange(4), 6)
+initial = np.tile([2, 0.5, 1.8, 1, 3, 0.2], (4, 1))
+y = np.tile(anovaddp_curve(initial[0], times[:6]), 4)
+y += 0.1 * np.cos(np.arange(24))
+fit = fit_anovaddp(
+    times,
+    y,
+    subject,
+    x,
+    initial_parameters=initial,
+    initial_covariance=np.diag([1, 1, 1, 0.2, 0.2, 0.1]),
+    base_prior=np.r_[initial[0, 1:], np.zeros(30)],
+    base_covariance=np.eye(35),
+    iterations=40,
+    burn_in=20,
+    seed=6707,
+)
+prediction = predict_anovaddp(fit, x, x[:3], time=[0, 2, 4, 6], seed=67)
+print(prediction.prediction_mean)
+```
+
+This is a wiring example, not a converged scientific analysis. The fit's mixing
+limitations and need for multiple-chain assessment apply equally to predictions.
+Python predictions use complete retained post-sweep states. The native program
+produces predictions partway through a sweep and consumes the same global random
+stream as fitting; exact iteration-by-iteration native prediction parity is not
+claimed. Python prediction has its own generator and does not alter the fit.
+
+| Native C++ output | Python result | Meaning |
+| --- | --- | --- |
+| comeff | common_effect | Per-draw curve for `[2, new_atom[:5]]` |
+| predstudy3 | study3 | Per-draw curve for a Gaussian random subject around that mean |
+| nadir | nadir | Independent subject draws for the first three prediction rows, transformed as below |
+| base | baseline_mean | Posterior Monte Carlo mean of the ten Baseline component curves |
+| base2 | baseline_second_moment | Mean squared baseline curve values, not a variance |
+| prediction | prediction_mean | Mean latent subject curves for all prediction rows |
+| prediction2 | prediction_second_moment | Mean squared latent subject curve values, not a variance |
+
+The R wrapper returns only five of these (`m`, `a0`, `a02`, `f0`, `f02`), dropping
+predstudy3 and nadir. Python exposes all seven, plus baseline/prediction draw
+arrays, sampled atoms and selected cluster IDs. All result arrays are immutable.
+
+One new atom is shared by every study/design row within each posterior draw,
+as in the original simulation. Independent Gaussian subject effects with the
+current six-dimensional covariance then produce each latent response curve.
+The first study-3 draw is separate from these design-row draws. **No observation
+noise is added:** this follows `PREDSTEP`, which draws curve parameters using S
+but never uses residual observation variance. Thus these are latent response
+curves, not future noisy measurement realizations.
+
+The nadir routine draws three further independent subjects, one per first
+prediction row, and returns `z2 + z3*expit(-2)`. That is the curve's nominal
+value at tau2 for ordered knots. It need not be the global minimum when slope,
+amplitude sign or knot ordering differ, so the name retains a source convention
+rather than making a minimization claim. These nadir draws do not reuse the
+subject draws in prediction_draws, also matching the source.
+
+Two focused tests compare all ten Baseline rows over the original 32-point grid
+against independent R results (maximum difference below 5e-15), verify a
+closed-form one-dimensional existing/base atom draw and its weights, and exercise
+the full 35-coefficient prediction workflow. The latter checks output shapes,
+raw second moments, common-effect construction, independent subject variation,
+replay and immutable arrays. Predictions are limited to 30 million saved values.
+File export adapters and plot reproduction remain pending.

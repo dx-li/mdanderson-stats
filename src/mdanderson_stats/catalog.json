@@ -2304,7 +2304,8 @@
         "anovaddp_atom_posterior and anovaddp_cluster_sweep: covariate-dependent Gaussian atom conditional, sequential allocation with integrated new-cluster weights, coherent singleton deletion and final atom resampling; log-density normalization.",
         "anovaddp_hyperparameter_update: Gaussian base mean, inverse-Wishart base-intercept and random-effect covariances, and Escobar-West concentration transition. Retains discarded native S update; validates base intercept block independence.",
         "fit_anovaddp: complete corrected nonlinear ANOVA DDP MCMC, source initialization and hyperparameter defaults, warmup/thinning, immutable full posterior states, occupied-atom history, normalized likelihood and per-subject acceptance traces.",
-        "Remaining: new-patient prediction, contrasts/nadirs, file readers and plots. Complete fitting chain retains documented variance, singleton and covariance-update corrections; docs/anovaddp.md."
+        "anovaddp_new_atom, anovaddp_baseline_curves and predict_anovaddp: all seven C++ predictive outputs, fresh cluster/base atom draws, ten study components, latent subject curves, independent nadir draws and raw second moments.",
+        "Remaining: source data readers, output adapters and plotting workflow. Complete fit and predictive calculations retain documented corrections and source shared-atom/nadir conventions; docs/anovaddp.md."
       ],
       "validation": [
         "Three parameter vectors at eight times match unchanged native C++ regressione outputs exactly; correlated Gaussian conditional agrees with independent R calculations within 5e-15.",
@@ -2313,7 +2314,8 @@
         "Native-dimension (5 parameters x 7 covariates) atom posterior and full corrected cluster sweep agree with independent R formulas within 1e-13; singleton removal/creation and Gaussian-density underflow checked.",
         "Hyperparameter conditional parameters agree with independent R calculations; inverse-Wishart matrix/scalar moments and scale, retained random-effect covariance, fixed base blocks and unsupported cross-block rejection checked.",
         "Full-chain integration checks: thinning preserves states, normalized likelihood matches retained state, covariance remains positive definite, labels/atoms remain coherent, inputs/history immutable. Independent R-chain distributional comparison recorded separately.",
-        "Four 8000-iteration chains per Python/R implementation: monitored means within 1.1 combined MCSE. One Python fitted-response summary has classical split R-hat 1.072; mixing limitation explicitly documented, no convergence certification. tests/fixtures/anovaddp-chain-comparison.json."
+        "Four 8000-iteration chains per Python/R implementation: monitored means within 1.1 combined MCSE. One Python fitted-response summary has classical split R-hat 1.072; mixing limitation explicitly documented, no convergence certification. tests/fixtures/anovaddp-chain-comparison.json.",
+        "Ten Baseline transformations on the original 32-point grid agree with independent R within 5e-15; closed-form new-atom mixture and full 35-coefficient predictive wiring, replay and moments checked."
       ]
     },
     {
