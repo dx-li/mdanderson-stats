@@ -48,8 +48,6 @@ def run_tite_boin_trial(
     minimum = scalar(minimum_pending_followup, "minimum_pending_followup")
     if not 0.25 <= complete <= 1 or not 0 <= minimum <= 1:
         raise ValueError("require completion fraction in [.25,1] and minimum follow-up in [0,1]")
-    if design.stay_at_one_of_three or design.deescalate_at_two_of_six:
-        raise NotImplementedError("TITE-BOIN optional 3+3 rule modifications are not implemented")
 
     def decide(
         n: ArrayLike, y: ArrayLike, times: list[FloatArray], current: int, excluded: ArrayLike

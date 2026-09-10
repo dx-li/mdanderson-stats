@@ -1,0 +1,61 @@
+{
+  "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/",
+  "version": "2.5.4.0",
+  "retrieved_at": "2026-09-10T05:50:46.908669+00:00",
+  "columns": [
+    "enrolled",
+    "DLTs",
+    "pending",
+    "suspend",
+    "escalate",
+    "stay",
+    "deescalate"
+  ],
+  "observations": [
+    {
+      "target": 0.25,
+      "option": "stay_at_one_of_three",
+      "enabled": true,
+      "minimum_complete_fraction": 0.51,
+      "minimum_pending_followup": 0.25,
+      "rows": [
+        [
+          "3*",
+          "1",
+          "0",
+          "No",
+          "No",
+          "Yes",
+          "No"
+        ],
+        [
+          "3",
+          "1",
+          "1,2",
+          "No",
+          "No",
+          "No",
+          "Yes"
+        ]
+      ]
+    },
+    {
+      "target": 0.3,
+      "option": "deescalate_at_two_of_six",
+      "enabled": true,
+      "minimum_complete_fraction": 0.51,
+      "minimum_pending_followup": 0.25,
+      "rows": [
+        [
+          "6*",
+          "2, 3",
+          "<=4",
+          "No",
+          "No",
+          "No",
+          "Yes"
+        ]
+      ]
+    }
+  ]
+}

@@ -36,8 +36,6 @@ def tite_boin_estimate(
     """
     if not isinstance(design, BOINDesign):
         raise ValueError("design must be a BOINDesign")
-    if design.stay_at_one_of_three or design.deescalate_at_two_of_six:
-        raise NotImplementedError("TITE-BOIN optional 3+3 rule modifications are not implemented")
     n, y, c, follow = np.broadcast_arrays(
         count(patients, "patients"),
         count(toxicities, "toxicities"),
@@ -66,6 +64,16 @@ def tite_boin_estimate(
         1,
         np.where((observed_rate > design.target) & (rate >= design.deescalation_boundary), -1, 0),
     ).astype(np.int64)
+    if design.stay_at_one_of_three:
+        modified = (n == 3) & (y == 1) & (c == 0)
+        move = np.where(modified, 0, move)
+        escalation = np.where(modified, np.inf, escalation)
+        deescalation = np.where(modified, -np.inf, deescalation)
+    if design.deescalate_at_two_of_six:
+        modified = (n == 6) & (y == 2)
+        move = np.where(modified, -1, move)
+        escalation = np.where(modified, np.inf, escalation)
+        deescalation = np.where(modified, np.inf, deescalation)
     return TITEBOINEstimate(
         *map(_owned, (posterior, imputed, rate, escalation, deescalation, move))
     )
@@ -134,11 +142,16 @@ def tite_boin_decision(
     next_j = max(0, min(j + int(estimate.move), len(n) - 1))
     if excluded[next_j]:
         next_j = j
+    modified_deescalation = design.deescalate_at_two_of_six and n[j] == 6 and y[j] == 2
     if excluded[0]:
         action, next_dose = "stop_safety", None
     elif excluded[j]:
         action, next_dose = "deescalate", int(np.flatnonzero(~excluded)[-1]) + 1
-    elif (n[j] - pending[j]) / n[j] < complete and y[j] / n[j] < design.deescalation_boundary:
+    elif (
+        (n[j] - pending[j]) / n[j] < complete
+        and y[j] / n[j] < design.deescalation_boundary
+        and not modified_deescalation
+    ):
         action, next_dose = "suspend_pending", None
     elif next_j > j and shortest < minimum:
         action, next_dose = "suspend_followup", None

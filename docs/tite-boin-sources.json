@@ -48,5 +48,10 @@
     }
   ],
   "application_version": "2.5.4.0",
-  "application_updated": "2025-11-20"
+  "application_updated": "2025-11-20",
+  "decision_table_observations": {
+    "file": "tests/fixtures/tite-boin-modifications.json",
+    "sha256": "bd090a1ae5edfb24aa0004c08a97de62f950fa9e5a182b98e94a68134b4d22c2",
+    "method": "Visible live app decision-table rows after enabling each option at target .25/.30; default completion and follow-up gates"
+  }
 }
