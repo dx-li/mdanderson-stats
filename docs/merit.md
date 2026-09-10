@@ -1,7 +1,8 @@
 # MERIT dose optimization
 
 The Python implementation covers fixed-size MERIT dose selection, simulation,
-sample-size/boundary search, and a standalone Bayesian interim decision.
+sample-size/boundary search, Bayesian interim decisions, and trial replay/simulation
+with persistent arm-specific stopping.
 The [MD Anderson application](https://biostatistics.mdanderson.org/shinyapps/MERIT/)
 is catalog entry 160, version 1.1.3.0 (displayed update 01/06/2026).
 The algorithm source is Yang et al.'s [author manuscript, version 2](https://arxiv.org/abs/2302.09612v2),
@@ -100,17 +101,76 @@ with estimated maximum corner error .0988 and minimum power II .6156.
 Timing is illustrative, not a general performance guarantee. Changing the seed
 or simulation size can change the selected boundary or sample size.
 
-Four focused tests compare isotonic pooling with SciPy's solver, every boundary
+Seven focused tests compare isotonic pooling with SciPy's solver, every boundary
 against exhaustive three-dose count enumeration, monitoring probabilities with
 Beta distribution calculations, independent endpoint simulation with exact
 binomial probabilities, correlated endpoints with an analytic Gaussian orthant
-probability, and searched designs with independent scenario simulations.
+probability, and searched designs with independent scenario simulations. Interim tests also
+compare boundary events with direct Beta probabilities, enumerate complete
+small-trial stopping paths, verify stopped-arm data are frozen, and reproduce
+the fixed-size simulator exactly when interims are disabled.
+
+## Trials with interim stopping
+
+The app's [interim help](https://biostatistics.mdanderson.org/shinyapps/MERIT/InterimsHelp.pdf)
+describes arm-specific monitoring and separate endpoint schedules.
+`MERITInterims` takes explicit integer patient counts, avoiding ambiguity about
+how fractional information times are rounded. An empty schedule disables that
+endpoint. Every interim must precede the final per-arm sample size.
+`boundaries(n)` returns integer toxicity stopping minima and efficacy stopping
+maxima, alongside flags indicating which endpoint is assessed. A toxicity
+boundary of `n+1` or efficacy boundary of `-1` cannot trigger a stop.
+These integer boundaries apply to raw counts, not fractional pooled counts.
+
+`simulate_merit_interims` stops each arm permanently when either criterion is
+met, and retains the actual patients and event counts at that stop. Endpoint
+assessments are complete when the corresponding monitoring look is reached.
+It supports different toxicity and efficacy monitoring schedules, but does not
+model pending outcomes or calendar-time accrual. Surviving arms continue to the
+original per-arm maximum; unused enrollment is not reallocated.
+
+The runner uses **unpooled arm-specific interim monitoring** and applies the
+design's final isotonic pooling to surviving arms only. All survivors have the
+same final sample size. Stopped arms are permanently excluded from selection and
+pooling. This is an explicit Python convention; the public sources do not establish
+the native app's treatment of stopped-arm data in subsequent pooling.
+
+```python
+from mdanderson_stats import MERITDesign, MERITInterims, simulate_merit_interims
+
+policy = MERITInterims(
+    toxicity_target=0.2,
+    efficacy_target=0.4,
+    toxicity_looks=[8, 17],
+    efficacy_looks=[13],
+)
+trial = simulate_merit_interims(
+    MERITDesign(26, 7, 9),
+    policy,
+    [0.2, 0.4],
+    [0.4, 0.4],
+    trials=10000,
+    truly_admissible=[True, False],
+    rng=160,
+)
+assert (trial.patients <= 26).all()
+assert not (trial.admissible & (trial.stopped_toxicity | trial.stopped_futility)).any()
+```
+
+`run_merit_trial(design, policy, toxicity_outcomes, efficacy_outcomes)` replays
+binary matrices with patient positions as rows and doses as columns. Rows may
+end early once every arm has stopped; missing outcomes while an arm remains
+active raise an error. Entries after a particular arm has stopped are ignored
+and may be zero placeholders, never counted as observations. Returned arrays
+retain a trial axis, with one row for replay and one row per simulation replicate.
+They include actual enrollment, event counts, separate stopping reasons,
+admissible sets, selection probabilities/Monte Carlo errors, and optional powers.
 
 ## Remaining coverage
 
-**Catalog status is partial.** A complete trial runner with persistent interim
-stopping, unequal arm sizes after stopping, separate endpoint assessment schedules,
-interim boundary tables, app scenario files and reports remain pending. The
-simulation and optimization currently use fixed-size trials without interim
-stopping. Current app source/default and published-version parity also remain
-subject to audit; the numerical implementation is based on the public v2 manuscript.
+**Catalog status is partial.** Native stopped-arm pooling, fractional-look rounding,
+current app source/default and published-version parity, scenario files and reports
+remain pending. Sample-size search still optimizes fixed-size trials; the interim
+simulator can evaluate the resulting design with monitoring but does not recalibrate
+its boundaries automatically. The implementation is based on the public v2
+manuscript and app help, with the differences described above.

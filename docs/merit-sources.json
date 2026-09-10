@@ -11,7 +11,31 @@
       "retrieved_date": "2026-09-10",
       "bytes": 52182,
       "sha256": "28d4cbc38fe818edafebc200b8ca45981d155c7242a8ed876d24b5ce295cd16e"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/MERIT/InterimsHelp.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 105567,
+      "sha256": "2d517684d6954bb1f2f3c73a3e10465ed6c2589c4c5904e3adad7ff93aa64585"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/MERIT/InputHelp_1.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 107776,
+      "sha256": "cb794d1bf5649bc13576443ed65160d07941597e0d899d32e740b90b0bc3b48e"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/MERIT/InputHelp_2.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 102810,
+      "sha256": "8c403f7a8cd1c6d913ee0267ee2d3c2457d2370ba6f9c8717b0016efd855abfa"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/MERIT/simHelp.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 7396,
+      "sha256": "12c4344ef631e878c621ea54a99cf8544dd20813ea1b29105991f62267b5da83"
     }
   ],
-  "scope": "Author manuscript v2 sections 2.2-2.5, Table 2. Fixed-size decisions, simulation and Monte Carlo search; standalone equal-size interim monitoring. Native app workflows remain partial."
+  "scope": "Author manuscript v2 sections 2.2-2.5, Table 2 and public app help. Fixed-size search plus explicit-convention interim boundaries, replay and simulation. Native stopped-arm pooling and app reports remain partial."
 }

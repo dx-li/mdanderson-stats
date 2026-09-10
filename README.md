@@ -797,4 +797,5 @@ conventions and reporting remain pending.
 
 [MERIT](docs/merit.md) adds isotonic dose selection, Bayesian interim decisions,
 correlated endpoint simulation and sample-size/boundary optimization for randomized
-dose-optimization trials. Persistent interim stopping and native reports remain pending.
+dose-optimization trials. Trial replay and simulation support separate interim
+schedules and permanent arm stops. Native pooling conventions and reports remain pending.

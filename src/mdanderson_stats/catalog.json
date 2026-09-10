@@ -3622,12 +3622,14 @@
       "implemented_features": [
         "Batched isotonic toxicity/efficacy admissible-set selection and explicit-prior Bayesian interim monitoring",
         "Gaussian-latent correlated binary endpoint simulation with dose selection probabilities and both generalized powers",
-        "Vectorized Monte Carlo sample-size and boundary search across all published corner null and alternative configurations"
+        "Vectorized Monte Carlo sample-size and boundary search across all published corner null and alternative configurations",
+        "Independent-arm integer interim boundaries, separate endpoint looks, persistent-stop trial replay and simulation with survivor-only final isotonic pooling"
       ],
       "validation": [
         "Four focused tests: independent PAVA reference, exhaustive boundary-event enumeration, beta/binomial/Gaussian probability checks and independent search validation; tests/test_merit.py",
         "Seeded Table 2 example reproduces n=26, toxicity_max=7, efficacy_min=9; docs/merit.md",
-        "Pending persistent interim trial simulation, unequal arm sizes, separate assessment schedules, interim tables, native source/version parity and app reports"
+        "Three additional checks: direct posterior boundary equivalence, frozen-stop replay/survivor pooling and exact stopping-path probabilities; tests/test_merit_interims.py",
+        "Pending native stopped-arm pooling, fractional-look rounding, source/version parity and app reports; sample-size search is fixed-size without interim recalibration"
       ]
     },
     {
