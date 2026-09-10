@@ -179,6 +179,12 @@ from .chi_square_order_bounds import ChiSquareOrderBounds, chi_square_order_boun
 from .cid2bp import BinomialDifferenceInterval, cid2bp_interval
 from .condis import CondiSImputation, condis_impute
 from .condis_linear import CondiSLinearRefinement, condis_linear_refine
+from .confint_binomial import (
+    confint_binomial_event_limit,
+    confint_binomial_length,
+    confint_binomial_probability,
+    confint_binomial_sample_size,
+)
 from .confint_normal import (
     confint_normal_probability,
     confint_normal_sample_size,
@@ -489,6 +495,10 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "confint_binomial_probability",
+    "confint_binomial_sample_size",
+    "confint_binomial_length",
+    "confint_binomial_event_limit",
     "confint_normal_probability",
     "confint_normal_sample_size",
     "confint_normal_sd_limit",

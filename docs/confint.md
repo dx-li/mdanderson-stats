@@ -91,5 +91,68 @@ sd = confint_normal_sd_limit(45, 1, assurance=[0.05, 0.5, 0.95], confidence=0.9)
 assert sd.shape == (3,)
 ```
 
-**Catalog status is partial.** Binomial, binomial-difference, Poisson,
+## One-binomial calculations
+
+For `X ~ Binomial(n,p)`, the interval is the equal-tail Clopper–Pearson
+interval. The successful outcomes satisfy `width(X,n) <= max_length`.
+CONFINT uses the symmetry of interval width and its increase toward the middle
+count. Python searches **integer counts** on the lower half and sums the two
+disjoint binomial tails with CDF/SF functions. A cutoff of zero includes the
+zero/all-event outcomes; no qualifying outcomes and all qualifying outcomes
+are handled separately. The native manual explicitly treats monotonicity of
+Clopper–Pearson width toward the middle as an assumption; Python retains it.
+Focused checks compare this search with enumeration of every count.
+
+| API | Result |
+|---|---|
+| `confint_binomial_probability` | Probability that the CI has at most the requested total length; inputs broadcast |
+| `confint_binomial_length` | Smallest attainable length whose cumulative probability reaches `assurance` |
+| `confint_binomial_event_limit` | p* such that assurance holds for p ≤p* or p ≥1−p*; `None` if impossible, .5 if all probabilities qualify |
+| `confint_binomial_sample_size` | First qualifying integer sample size, searching from 1 up to the supplied bound |
+
+The last three functions handle one design at a time. Sample sizes must be
+1–1,000,000; maximum lengths in (0,1]; event probabilities in [0,1]. Confidence
+and assurance use the same ranges as the normal APIs. Probability outputs
+are read-only arrays, with at most two million broadcast designs.
+
+**Sample-size assurance need not increase monotonically with n.** Consequently,
+Python scans successive sizes in batches of up to 4096, finding the first
+success. The native continuous root plus rounding does not establish this
+minimum. Sample-size planning is more costly than a fixed-n calculation;
+it requires O(N log N) interval evaluations in the worst case. An inadequate
+search bound raises an error. It does not guarantee that every larger sample
+size will also attain the requested assurance.
+
+### Corrections to the manual's worked examples
+
+The manual's fractional-cutoff search uses a tolerance of .005 on the event
+proportion, which can shift the count boundary. At n=250, p=.25, confidence=.9,
+and maximum length .1, the exact qualifying lower cutoff is **77**, not 78.
+Python's width probability is .9842333927, rather than the reported .9890.
+
+For p=.7, confidence=.8, maximum length .1 and assurance .8, the manual reports
+n=162. Direct Clopper–Pearson enumeration gives assurance .7501050966 at 162;
+Python finds the first qualifying size **164**, with assurance .8173377771.
+Independent R `qbeta`/`dbinom` enumeration confirms all three probabilities.
+The Python results intentionally follow the stated interval definition rather
+than the approximate reference numbers.
+
+```python
+from mdanderson_stats import (
+    confint_binomial_probability,
+    confint_binomial_sample_size,
+    confint_binomial_length,
+    confint_binomial_event_limit,
+)
+
+p = confint_binomial_probability(250, 0.1, 0.25, confidence=0.9)
+assert abs(float(p) - 0.9842333927) < 1e-9
+assert confint_binomial_sample_size(0.1, 0.7, confidence=0.8, assurance=0.8) == 164
+length = confint_binomial_length(250, 0.25, confidence=0.9, assurance=0.9)
+assert confint_binomial_probability(250, length, 0.25, confidence=0.9) >= 0.9
+limit = confint_binomial_event_limit(250, 0.1, confidence=0.9, assurance=0.5)
+assert abs(limit - 0.3102536151) < 1e-9
+```
+
+**Catalog status is partial.** Binomial-difference, Poisson,
 exponential-survival, and native session/report workflows remain pending.

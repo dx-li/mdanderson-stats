@@ -845,4 +845,6 @@ adjustments and exact binomial-tail inversion. Session/report interfaces remain 
 
 [CONFINT](docs/confint.md) adds CI-length assurance, population-SD limits, and
 minimum integer sample sizes for normal means, normal SDs, and independent
-pooled mean differences. Other CONFINT distributions remain pending.
+pooled mean differences. Binomial width assurance, attainable lengths, event-
+probability limits and discrete sample-size planning are also available. Other
+CONFINT distributions remain pending.
