@@ -1,7 +1,7 @@
-# BLiP standard distribution plots
+# BLiP distribution plots
 
-BLiP's standard boxplots, histograms and frequency polygons are available as
-plotting-independent geometry plus an optional Matplotlib renderer.
+BLiP's standard and custom distribution plots are available as
+plotting-independent geometry plus optional Matplotlib renderers.
 
 ```python
 from mdanderson_stats import blip_data, plot_blip
@@ -73,10 +73,100 @@ loss or accidental inclusion just outside the requested range. The source's
 nonuniform histogram and polygon label branches refer to an undefined
 `freqtext`; Python labels the calculated counts directly.
 
-BLiP remains **partial**: its custom percentile boxes, fixed/variable widths,
-percentile lines, mean/SD/SE overlays, six point patterns and associated custom
-layout controls still need implementation. The standard modes here do not stand
-in for those methods.
+## Custom boxes, lines and points
+
+```python
+from mdanderson_stats import blip_custom_data, plot_blip_custom
+
+geometry = blip_custom_data(
+    [0, 1, 1, 2, 3, 4, 5, 8],
+    [-1, 0, 0, 0, 2, 3, 5, 7, 9, 10],
+    boxes=((0.2, 0.4), (0.6, 0.8)),
+    lines=((0.4, 0.6),),
+    width="variable",
+    point_pattern="jittered",
+    mean=True,
+)
+axes = plot_blip_custom(geometry, percentile_labels=True)
+axes.figure.savefig("blip-custom.png")
+```
+
+![BLiP custom boxes and point patterns](blip-custom-demo.png)
+
+`boxes` and `lines` contain separate percentile sequences; `()` disables them.
+This replaces the source's zero separators. Probabilities in each piece must be
+strictly increasing in [0,1]. Line pieces require at least two probabilities;
+a single-probability box piece draws an isolated percentile bar, including the
+source's optional minimum/maximum bars. Such isolated bars do not hide points.
+Pieces may overlap deliberately; the source's restrictions on overlapping
+boxes and percentile lines are not imposed. Each collection is limited to 100
+pieces, with at most 1000 probabilities per piece.
+
+`width="fixed"` uses the full group region. `width="variable"` evaluates the
+linearly interpolated empirical CDF at q ± delta, where delta is the data range
+divided by `2*nclass`. Ties have their largest rank. Outside the sample range,
+the CDF is zero/one. The CDF difference sets local thickness, divided by its
+maximum over observed distinct values; box-percentile thickness is capped at
+that maximum. This is the original smoothing rule, not a KDE.
+
+With `uniform=True`, the range and maximum thickness are shared across groups,
+and thickness is additionally multiplied by group size / largest group size.
+With `uniform=False`, each group uses its own range and maximum. Variable widths
+require at least two distinct values in every group. `placement="centered"`
+centers variable widths and line overlays in each region; `"based"` anchors them
+to the lower edge. Fixed widths occupy the whole region with either placement.
+
+`mean=True` adds a mean marker. `sd=k` and `se=k` add mean ± k sample SD or sample
+SE intervals, with SE = SD / sqrt(n); they require at least two observations.
+Calculations scale horizontal units and center before squaring to preserve small
+spreads on large offsets. Unresolved combined input ranges and nonfinite overlay
+endpoints raise errors. Observations inside any box, percentile line or SD/SE
+interval are omitted from the point layer, including endpoints. Missing values
+follow the standard-mode conventions.
+
+All six original point patterns are supported:
+
+- `on-line`: points on the reference line.
+- `stacking`: tied observations use equal increments, determined by the largest
+  tie count among remaining observations (shared or per group). As in the source,
+  this pattern uses the full region even with variable widths.
+- `evenly-spaced`: ties span the available width. A singleton is centered, except
+  fixed/based singletons sit on the baseline, matching the source.
+- `jittered`: uniform random locations within the available width.
+- `max-range`: points at the upper edge of the available width.
+- `vertical-bar`: each remaining observation spans its available width.
+
+`seed=500` controls a local NumPy generator restarted for each group, preserving
+replay without mutating global random state. Exact S random-number parity is
+not claimed. Empty point groups work normally, avoiding the source's empty
+`1:0` loops. Constant data work with fixed widths.
+
+The immutable custom result exposes each group's boxes, line coordinates, mean,
+remaining `points`, and `point_lower` / `point_upper` vertical coordinates. These
+are equal for ordinary points and delimit the segments for vertical bars.
+
+`plot_blip_custom` accepts `axes`, `color`, `fill`, `xlabel`, `marker`, and
+`percentile_labels`. `bars` is a boolean or a boolean vector over all box
+percentiles, reused for every group. `point_type` is `p` (points), `l` (lines),
+`b` (both), or `n` (neither); vertical bars remain visible in all four cases,
+as in the original. Mean markers use diamonds. Use the returned Matplotlib Axes
+and artists for limits, typography, visibility, shading and other styling.
+Historical S graphics-device options are not emulated.
+
+The original `draw.box` and `draw.point` routines were also executed under R.
+Besides mechanical assignment translation, the former's S multi-value return
+was wrapped in `list(...)`; the numerical and drawing statements were unchanged.
+The native fixture covers three box layouts (fixed, shared variable and separate
+variable widths), centered/based placement, tied observations and fifteen
+nonrandom point layouts. Coordinates match within 1e-14 absolute tolerance.
+Additional focused checks cover exclusion/overlays, large offsets, SD/SE at
+scales 1e-200 and 1e200, repeatable jitter and all six rendered point patterns.
+R's warnings about collapsing repeated interpolation abscissae are expected:
+tied ranks already agree, so averaging them does not change the CDF.
+
+**Coverage:** all advertised standard and custom statistical plot families are
+implemented. The Python interface and Matplotlib styling replace the original
+S calling convention and graphics device, rather than reproducing them exactly.
 
 Source: [MD Anderson BLIP](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/36),
 [archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BLIP/BLIP_V1.tar.gz).

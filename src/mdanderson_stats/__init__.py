@@ -89,6 +89,13 @@ from .binomial_null import BinomialNull, binomial_null
 from .binomial_sample_size import binomial_sample_size
 from .binormal_roc import BinormalROC, BinormalROCPoint
 from .blip import BLiPGroup, BLiPPlot, blip_data, plot_blip
+from .blip_custom import (
+    BLiPBox,
+    BLiPCustomGroup,
+    BLiPCustomPlot,
+    blip_custom_data,
+    plot_blip_custom,
+)
 from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
 from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
@@ -560,6 +567,11 @@ from .windows import (
 )
 
 __all__ = [
+    "BLiPBox",
+    "BLiPCustomGroup",
+    "BLiPCustomPlot",
+    "blip_custom_data",
+    "plot_blip_custom",
     "BLiPGroup",
     "BLiPPlot",
     "blip_data",

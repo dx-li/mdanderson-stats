@@ -1370,13 +1370,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
-        "Standard BLiP boxplot, histogram and frequency-polygon geometry with grouped rendering, shared/per-group scaling, explicit bins and original interpolated whiskers. Custom percentile-box, line and point-pattern modes remain pending."
+        "Standard BLiP boxplots, histograms and frequency polygons; custom fixed/variable percentile boxes, disconnected percentile lines, mean/SD/SE overlays, all six point patterns and centered/based shared/per-group layouts. Immutable geometry and optional Matplotlib rendering replace S graphics-device conventions."
       ],
       "validation": [
         "Original S standard-plot routines translated mechanically to R assignment syntax: box/whisker and histogram polygon coordinates; tests/test_blip.py",
-        "Right-closed bin checks, missing-value/scaling checks and rendered three-mode example"
+        "Right-closed bin checks, missing-value/scaling checks and rendered three-mode example",
+        "Original draw.box/draw.point geometry: three box layouts and fifteen deterministic point layouts; tests/fixtures/blip-custom-native.json; tests/test_blip_custom.py",
+        "SD/SE extreme-unit and offset checks, exclusions, replayable jitter and all six point patterns rendered; docs/blip.md"
       ]
     },
     {

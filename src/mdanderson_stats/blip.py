@@ -33,23 +33,13 @@ class BLiPPlot:
     groups: tuple[BLiPGroup, ...]
 
 
-def blip_data(
-    *groups: ArrayLike,
-    mode: str = "boxplot",
-    labels: tuple[str, ...] | None = None,
-    nclass: int = 5,
-    breaks: ArrayLike | None = None,
-    uniform: bool = True,
-    region: tuple[float, float] = (0.25, 0.75),
-) -> BLiPPlot:
-    """Standard BLiP geometry; groups are positional vectors, NaNs are omitted.
-
-    Histogram/polygon bins are right-closed, including both exterior endpoints.
-    Boxplot whiskers are interpolated 1.5-IQR fences clipped to sample extrema,
-    not snapped to observed values. Custom BLiP layouts are not yet included.
-    """
-    if mode not in ("boxplot", "histogram", "polygon"):
-        raise ValueError("mode must be boxplot, histogram or polygon")
+def _prepare_groups(
+    groups: tuple[ArrayLike, ...],
+    labels: tuple[str, ...] | None,
+    nclass: int,
+    uniform: bool,
+    region: tuple[float, float],
+) -> tuple[list[FloatArray], list[int], tuple[str, ...], FloatArray]:
     if not 1 <= len(groups) <= 100:
         raise ValueError("provide 1..100 group vectors")
     if not isinstance(uniform, bool):
@@ -77,6 +67,27 @@ def blip_data(
         data.append(x)
     if sum(x.size for x in data) > 1_000_000:
         raise ValueError("combined nonmissing observations must not exceed 1000000")
+    return data, missing, labels, rr
+
+
+def blip_data(
+    *groups: ArrayLike,
+    mode: str = "boxplot",
+    labels: tuple[str, ...] | None = None,
+    nclass: int = 5,
+    breaks: ArrayLike | None = None,
+    uniform: bool = True,
+    region: tuple[float, float] = (0.25, 0.75),
+) -> BLiPPlot:
+    """Standard BLiP geometry; groups are positional vectors, NaNs are omitted.
+
+    Histogram/polygon bins are right-closed, including both exterior endpoints.
+    Boxplot whiskers are interpolated 1.5-IQR fences clipped to sample extrema,
+    not snapped to observed values. See blip_custom_data for custom layouts.
+    """
+    if mode not in ("boxplot", "histogram", "polygon"):
+        raise ValueError("mode must be boxplot, histogram or polygon")
+    data, missing, labels, rr = _prepare_groups(groups, labels, nclass, uniform, region)
     explicit = None if breaks is None else finite(breaks, "breaks")
     if explicit is not None and (
         explicit.ndim != 1 or not 2 <= explicit.size <= 1001 or np.any(np.diff(explicit) <= 0)

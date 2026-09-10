@@ -913,4 +913,5 @@ complete its [seven advertised calculation families](docs/survan-coverage.md).
 
 [BLiP](docs/blip.md) adds its standard grouped boxplots, histograms and frequency
 polygons, with plotting-independent geometry and optional Matplotlib rendering.
-Custom percentile boxes, lines and point patterns remain pending.
+Custom layouts include fixed/variable percentile boxes, percentile and mean/SD/SE
+lines, centered/baseline placement, and all six point patterns.
