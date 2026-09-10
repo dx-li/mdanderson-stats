@@ -144,6 +144,7 @@ from .hierarchical_binomial import (
     hierarchical_binomial,
     summarize_chains,
 )
+from .hierarchical_normal import HierarchicalNormalFit, hierarchical_normal
 from .intervals import (
     binomial_interval,
     bp1ci_binomial_interval,
@@ -308,6 +309,8 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "HierarchicalNormalFit",
+    "hierarchical_normal",
     "ChainSummary",
     "HierarchicalBinomialFit",
     "hierarchical_binomial",

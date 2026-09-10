@@ -1,0 +1,7 @@
+{
+  "retrieved_at": "2026-09-10T03:18:08.128903+00:00",
+  "url": "https://biostatistics.mdanderson.org/shinyapps/BHM-NN/BHM_NN.pdf",
+  "sha256": "7a42ec2cb4b7f9024f222c93316a2b5b3533a4a65ec660fb739927200f6bf17b",
+  "bytes": 356091,
+  "comparison_note": "Page 6 descriptive normal curves use empirical outcome spread, distinguished from posterior uncertainty in mean parameters."
+}

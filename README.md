@@ -636,3 +636,10 @@ model with multiple-chain posterior sampling, independent and pooled beta
 comparisons, retained group/global draws and Monte Carlo diagnostics. NumPy
 elliptical slice and Gibbs updates replace the source application's JAGS
 dependency. Diagnostic limitations and weak-prior mixing concerns are explicit.
+
+## Hierarchical normal data
+
+[BHM-NN](docs/hierarchical-normal.md) adds a normal-normal hierarchy with unknown
+group and between-group precisions. Vectorized Gibbs updates retain multiple
+chains for group means, the overall mean and both precision levels. Empirical
+normal comparisons are explicitly distinguished from posterior mean uncertainty.
