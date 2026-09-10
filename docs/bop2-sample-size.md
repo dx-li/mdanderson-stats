@@ -7,8 +7,9 @@ sample-size criteria in section 2.3 of
 [Zhou, Lee and Yuan (2017), DOI 10.1002/sim.7338](https://onlinelibrary.wiley.com/doi/10.1002/sim.7338)
 ([paper mirror](https://eurekamag.com/research/059/454/059454786.pdf)).
 The joint search retains the additional BOP2-TE partial-null constraints.
-[Survival monitoring and Monte Carlo calibration](bop2-survival.md) are available;
-survival sample-size searches remain pending.
+[Survival monitoring, Monte Carlo calibration and sample-size searches](bop2-survival.md)
+are also available. Survival searches use simulated estimates and independent
+validation rather than exact categorical operating characteristics.
 
 ## Binary search over maximum sample sizes
 

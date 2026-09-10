@@ -2924,7 +2924,7 @@
         "Joint efficacy/toxicity monitoring with separate assessment schedules, exact correlated operating characteristics and power calibration under three null error constraints",
         "Binary, ordinal/multiple efficacy and joint efficacy/toxicity expected-sample-size and minimax searches with exact null-error and power constraints",
         "Single-arm exponential/inverse-gamma survival posterior monitoring, follow-up-time boundaries, calendar replay and vectorized Monte Carlo operating characteristics",
-        "Monte Carlo survival parameter calibration for power or expected enrollment, with independent validation and separate informative analysis prior; survival sample-size search, two-arm/joint survival models and integrated reports remain pending"
+        "Monte Carlo survival parameter calibration for power or expected enrollment, with independent validation and separate informative analysis prior; survival expected-enrollment/minimax size searches with recorded per-size streams; two-arm/joint survival models and integrated reports remain pending"
       ],
       "validation": [
         "Exact rational beta-binomial tails in both endpoint directions, cutoff equality, complete binary-path enumeration, reflected efficacy/toxicity grid calibration and separation of informative analysis prior",
@@ -2932,7 +2932,7 @@
         "Exact Dirichlet marginal identities and complete ordinal/multiple outcome enumeration; docs/bop2-paired.md",
         "Joint efficacy/toxicity rational posterior checks, all-path enumeration, independent error identity and three-null grid optimum; docs/bop2-efftox.md",
         "Independent full size/parameter grid enumeration for all five categorical endpoint types and both sample-size objectives; docs/bop2-sample-size.md",
-        "High-precision Erlang posterior identity, time-unit invariance, censored calendar replay, analytic single-look survival OC, full-grid simulation optimum and independent calibration holdout; docs/bop2-survival.md"
+        "High-precision Erlang posterior identity, time-unit invariance, censored calendar replay, analytic single-look survival OC, full size/parameter-grid simulation optimum, independent calibration holdout and per-size stream isolation; docs/bop2-survival.md"
       ]
     },
     {

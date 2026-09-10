@@ -736,5 +736,5 @@ and calibration against global and partial null hypotheses.
 expected enrollment or minimum maximum sample size under error and power constraints.
 [Survival monitoring](docs/bop2-survival.md) adds exponential/inverse-gamma
 posterior decisions, calendar replay, simulation and Monte Carlo parameter
-calibration with independent validation. Survival sample-size searches and
-integrated reports remain pending.
+calibration with independent validation, plus expected-enrollment and minimax
+sample-size searches. Two-arm/joint survival models and integrated reports remain pending.

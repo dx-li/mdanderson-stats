@@ -3,8 +3,8 @@
 BOP2 catalog **112** now includes specified-parameter survival monitoring,
 follow-up-time boundaries, calendar replay, and Monte Carlo operating
 characteristics, plus Monte Carlo grid calibration with independent validation.
-Survival sample-size searches, two-arm/joint survival models and integrated reports
-remain pending.
+Expected-enrollment and minimax sample-size searches are also available.
+Two-arm/joint survival models and integrated reports remain pending.
 
 The model is the exponential/inverse-gamma model described by
 [Zhou et al. (2020), DOI 10.1002/pst.2030](https://pubmed.ncbi.nlm.nih.gov/32524679/).
@@ -218,3 +218,75 @@ standalone trial simulations, checks both objectives under fixed and Poisson
 arrivals, reproduces the independent holdout, crosses the 5,000-trial batch
 boundary, verifies closest-error ranking, and confirms that an informative
 analysis prior leaves selection unchanged.
+
+
+## Survival sample-size search
+
+`optimize_bop2_survival_sample_size` searches a declared, strictly increasing grid
+of maximum sample sizes in `1..200`. It applies the same expected-enrollment and
+minimax criteria as the [categorical searches](bop2-sample-size.md), using Monte
+Carlo estimates rather than exact categorical operating characteristics.
+
+```python
+from mdanderson_stats import optimize_bop2_survival_sample_size
+
+search = optimize_bop2_survival_sample_size(
+    [20, 25, 30, 35, 40],
+    null_median=6,
+    alternative_median=10,
+    minimum_power=0.8,
+    accrual_rate=1.5,
+    final_followup=12,
+    type1_error=0.1,
+    objective="expected_sample_size",
+    n_trials=10000,
+    n_validation=10000,
+    rng=112,
+)
+best = search.best
+print(search.feasible_sample_sizes)
+print(best.calibration_design.max_subjects, best.cutoff_scale, best.gamma)
+print(best.calibration_oc.expected_sample_size)
+print(best.validation_oc.success_probability, best.validation_oc.success_mcse)
+```
+
+Every size is searched, including sizes after an infeasible one. Within each size,
+the selected candidate minimizes estimated null enrollment subject to estimated
+null error at or below `type1_error` and estimated power at or above
+`minimum_power`; power breaks enrollment ties. Across sizes,
+`objective="expected_sample_size"` selects minimum estimated null enrollment,
+then smaller maximum size, then higher estimated power. `objective="minimax"`
+selects the smallest feasible maximum size, then smaller estimated null
+enrollment and higher power. The result retains one empirically feasible fit per
+size in `feasible_designs`, and the complete requested grid in
+`searched_sample_sizes`. An entirely infeasible grid raises `BOP2InfeasibleError`;
+invalid input and numerical failures propagate separately.
+
+`interim_looks` supplies a common schedule of positive enrolled-patient counts.
+For each maximum size `N`, keep supplied counts below `N` and append `N` as the
+final analysis. An empty schedule requests a single final analysis. If omitted,
+the standard `min_subjects=10, cohort_size=5` schedule is used for each size.
+Final follow-up, accrual rate and arrival law have the same meaning as in the
+fixed-size optimizer. A fixed follow-up duration after the last enrollment means
+calendar duration can differ across maximum sizes.
+
+The parent random generator draws one integer seed for **every searched size**,
+including infeasible sizes. These are returned in `simulation_seeds`, aligned
+with `searched_sample_sizes`; pass a recorded seed as `rng` to the fixed-size
+optimizer with the same settings to reproduce that size's fit. Each size has its
+own random stream. Changing `n_validation` or supplying an informative
+`analysis_prior` leaves all size-specific calibration samples unchanged.
+Changing the ordered size grid changes how seeds are assigned.
+
+Only calibration estimates determine feasibility and ranking. Each feasible
+size retains independent validation, and optional informative-prior evaluation,
+from the fixed-size optimizer. The final chosen size's validation data were not
+used in size selection. **Validation estimates may miss either requested error
+or power target**; the search does not discard such results or silently select a
+different size. Searching more candidates increases selection uncertainty, so
+interpret calibration and independent validation separately. This is a finite,
+Monte Carlo design search, not a claim of exact error control or global optimality.
+
+Validation enumerates complete trial simulations over both sample size and
+parameter grids under fixed and Poisson enrollment, checks both size objectives,
+and verifies that analysis-prior and validation-size changes preserve selection.

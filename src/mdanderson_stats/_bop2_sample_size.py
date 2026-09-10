@@ -1,4 +1,4 @@
-"""Shared discrete-size search for the three BOP2 calibration families."""
+"""Shared discrete-size search for categorical and survival BOP2 calibration families."""
 
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -10,8 +10,14 @@ from ._validation import FloatArray, count, scalar
 from .bop2_binary import BOP2BinaryOptimization, BOP2InfeasibleError
 from .bop2_efftox_optimization import BOP2EffToxOptimization
 from .bop2_paired_optimization import BOP2PairedOptimization
+from .bop2_survival_optimization import BOP2SurvivalOptimization
 
-type _Fit = BOP2BinaryOptimization | BOP2PairedOptimization | BOP2EffToxOptimization
+type _Fit = (
+    BOP2BinaryOptimization
+    | BOP2PairedOptimization
+    | BOP2EffToxOptimization
+    | BOP2SurvivalOptimization
+)
 
 
 @dataclass(frozen=True)
