@@ -1,0 +1,42 @@
+{
+  "retrieved_at": "2026-09-10T05:01:40.871502+00:00",
+  "application_version": "1.2.2.0",
+  "application_updated": "2025-12-15",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD/Doses.pdf",
+      "bytes": 172800,
+      "sha256": "27d12b2359197d7a54d18ea42a495dccb51c0bb8e4191825be4445e26f30245e"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD/Guide.pdf",
+      "bytes": 375661,
+      "sha256": "2c06c977898eeeb1cb7d01b73b48516c3dff45ce5eb880f0b5f1bf0def850364"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD/Probability.pdf",
+      "bytes": 440580,
+      "sha256": "32301b9cad97d1135ecb9c997e3dfd7d959e502c502bd0a7939f07c397beb089"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD/Safety.pdf",
+      "bytes": 70245,
+      "sha256": "354754e8c30f23f5ff5ba803e9cd5a9e783c840d5dc12a67326b8ff9226a75b5"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD/Samplesize.pdf",
+      "bytes": 6012,
+      "sha256": "0a017876bd4895ccbc85e12fc67eb2c74ae986832d1d69ddf0fff3d5319565ea"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD/",
+      "bytes": 47768,
+      "sha256": "cb7ba56f833b271174e4a0a9bc9e39678d0e9d7f2139c74a7a55266ecb17f5bc"
+    },
+    {
+      "url": "https://arxiv.org/pdf/1807.08393",
+      "bytes": 461884,
+      "sha256": "e95af3ff7e874e6d3e060da9e413598de0cc3a5fadc7a7b4ade7f0da96885871"
+    }
+  ]
+}

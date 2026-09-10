@@ -3147,9 +3147,17 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Uniform and informative three-piece conditional time-to-DLT weights and batched effective sample-size calculator",
+        "Interim TITE-Keyboard posterior decisions using the effective beta-likelihood approximation, with enrolled-count overdose control, sticky exclusions, pending-fraction suspension and two-observed-patient escalation requirement",
+        "Calendar-time trial simulation, timing scenario generation, follow-up boundary tables and integrated reports remain pending"
+      ],
+      "validation": [
+        "Published ESS and delayed-outcome examples; independent piecewise weights and fractional-beta interval identity",
+        "Published rounded effective non-DLT thresholds, time-scale invariance, complete-data reduction and safety/suspension precedence",
+        "docs/tite-keyboard.md"
+      ]
     },
     {
       "id": 137,

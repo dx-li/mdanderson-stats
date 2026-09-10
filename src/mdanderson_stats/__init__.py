@@ -350,8 +350,20 @@ from .three_plus_three import (
     compare_boin_three_plus_three,
     simulate_three_plus_three,
 )
+from .tite_keyboard import (
+    TITEEffectiveSampleSize,
+    TITEKeyboardDecision,
+    tite_effective_sample_size,
+    tite_keyboard_decision,
+    toxicity_followup_weights,
+)
 
 __all__ = [
+    "TITEEffectiveSampleSize",
+    "TITEKeyboardDecision",
+    "toxicity_followup_weights",
+    "tite_effective_sample_size",
+    "tite_keyboard_decision",
     "KeyboardDesign",
     "KeyboardPosterior",
     "KeyboardSelection",

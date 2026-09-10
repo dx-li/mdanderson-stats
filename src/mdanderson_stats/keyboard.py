@@ -103,6 +103,10 @@ class KeyboardDesign:
         n, y = np.broadcast_arrays(count(patients, "patients"), count(toxicities, "toxicities"))
         if np.any((n < 1) | (n > 200) | (y > n)):
             raise ValueError("require 1 <= patients <= 200 and toxicities <= patients")
+        return self._posterior_effective(n, y)
+
+    def _posterior_effective(self, n: FloatArray, y: FloatArray) -> KeyboardPosterior:
+        """Shared kernel for validated observed or effective fractional counts."""
         a, b = y[..., None] + 1, (n - y)[..., None] + 1
         lo, hi = self.intervals.T
         cdf_hi = betainc(a, b, hi)

@@ -693,3 +693,10 @@ isotonic MTD selection and batched simulation. The paper's complete-key conventi
 and the R package's adjusted endpoint convention are explicit. Native R comparisons
 and independent exact interval probabilities validate the statistical core;
 integrated reports remain pending.
+
+## TITE-Keyboard interim decisions
+
+[TITE-Keyboard](docs/tite-keyboard.md) adds uniform and informative follow-up
+weights, effective sample sizes and dose decisions with pending toxicity outcomes.
+The likelihood approximation, enrolled-count safety rule and accrual suspension
+are explicit. Calendar-time simulation and integrated reports remain pending.
