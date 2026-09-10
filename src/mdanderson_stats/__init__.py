@@ -16,6 +16,7 @@ from .beta_binomial import (
     beta_binomial_sequence,
     simulate_beta_binomial,
 )
+from .beta_binomial_plot import plot_beta_binomial_sequence
 from .beta_comparison import BetaComparison, compare_beta_binomial
 from .beta_mixture import BetaMixture
 from .beta_mixture_bootstrap import BetaMixtureBootstrap, beta_mixture_bootstrap
@@ -407,6 +408,7 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "plot_beta_binomial_sequence",
     "BOP2SurvivalSampleSizeOptimization",
     "optimize_bop2_survival_sample_size",
     "BOP2SurvivalOperatingCharacteristics",

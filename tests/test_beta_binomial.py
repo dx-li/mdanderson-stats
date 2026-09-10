@@ -169,3 +169,17 @@ def test_invalid_counts_and_simulation_do_not_consume_rng():
     with pytest.raises(ValueError):
         simulate_beta_binomial(0.2, alpha=[1, 2], trials=3, rng=rng)
     assert rng.bit_generator.state == before
+
+
+def test_bbdd_guide_three_cohorts_and_posterior_mean_correction():
+    path = beta_binomial_sequence([10, 8, 12], [10, 12, 8])
+    assert_array_equal(path.posterior.alpha, [1, 11, 19, 31])
+    assert_array_equal(path.posterior.beta, [1, 11, 23, 31])
+    assert_allclose(path.posterior.mean, [0.5, 0.5, 19 / 42, 0.5])
+    # Guide p.4 has an extra -x in the denominator; the conjugate posterior
+    # above implies (a+x)/(a+b+n), including the all-success case.
+    assert BetaBinomialPosterior().update(10, 0).mean == 11 / 12
+    regions = path.posterior.credible_set().intervals[:, 0]
+    assert_allclose(
+        path.posterior.cdf(regions[:, 1]) - path.posterior.cdf(regions[:, 0]), 0.95, atol=2e-10
+    )

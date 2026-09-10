@@ -1,0 +1,12 @@
+{
+  "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BBDD/BetaBinomialDistributionDemoUsersGuide.pdf",
+  "sha256": "7819778d8cc3cd276140da9ff1bc44336a663f2109e353cdd37477357ec095ba",
+  "bytes": 1166984,
+  "retrieved_at": "2026-09-10T07:34:19.447678+00:00",
+  "pages_checked": [
+    4,
+    10,
+    11
+  ],
+  "note": "Independent implementation; no source program or guide redistribution."
+}

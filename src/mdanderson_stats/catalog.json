@@ -2592,9 +2592,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Sequential beta-binomial updating, highest-density credible sets and vectorized fixed-probability cohort simulation with continuation, reusing the common beta updating engine",
+        "Optional staged prior/posterior history plots with cohort summaries and disconnected credible regions; docs/beta-binomial-demo.md"
+      ],
+      "validation": [
+        "Guide pages 10–11 posterior sequence, corrected posterior mean denominator, existing exact beta identities, credible-set geometry, simulation moments and continuation; tests/test_beta_binomial.py",
+        "Rendered worked-example and U-shaped prior plots; docs/beta-binomial-demo-source.json"
+      ]
     },
     {
       "id": 97,
@@ -3341,12 +3347,17 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BayesianSurvival",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BayesianSurvival",
-      "references": [],
+      "references": [
+        "https://doi.org/10.1002/cncr.33370",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC8058232/"
+      ],
       "downloads": [],
       "retrieval_error": null,
       "status": "pending",
       "implemented_features": [],
-      "validation": []
+      "validation": [
+        "Live app inspected 2026-09-10: fitted conditional oropharyngeal survival regression, not a generic conjugate survival calculator; implementation requires fitted posterior/model data. See docs/bayesian-survival-source-status.md"
+      ]
     },
     {
       "id": 147,

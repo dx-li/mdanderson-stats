@@ -738,3 +738,6 @@ expected enrollment or minimum maximum sample size under error and power constra
 posterior decisions, calendar replay, simulation and Monte Carlo parameter
 calibration with independent validation, plus expected-enrollment and minimax
 sample-size searches. Two-arm/joint survival models and integrated reports remain pending.
+
+[Beta Binomial Distribution Demo](docs/beta-binomial-demo.md) combines sequential
+updating, credible sets, cohort simulation and prior/posterior history plots.
