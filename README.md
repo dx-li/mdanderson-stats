@@ -799,3 +799,7 @@ conventions and reporting remain pending.
 correlated endpoint simulation and sample-size/boundary optimization for randomized
 dose-optimization trials. Trial replay and simulation support separate interim
 schedules and permanent arm stops. Native pooling conventions and reports remain pending.
+
+[ESS Regression](docs/regression-ess.md) adds normal and logistic regression prior
+effective sample sizes, including parameter subvectors, using direct expected
+curvature calculations. Native R inputs and covariate defaults remain pending.

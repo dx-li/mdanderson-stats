@@ -2382,9 +2382,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Normal and logistic regression prior ESS for independent normal/gamma coefficients, gamma residual precision, and parameter subvectors",
+        "Exact finite-support logistic expected information and normal second-moment calculations replace Monte Carlo outcome simulation; log-domain ratios preserve extreme-tail information"
+      ],
+      "validation": [
+        "Four focused tests: published logistic table and normal examples, independent curvature derivatives, gamma shape below one and extreme predictors/weights; tests/test_regression_ess.py",
+        "Pending native R input/covariate defaults and example fixtures; docs/regression-ess.md"
+      ]
     },
     {
       "id": 81,

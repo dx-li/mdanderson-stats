@@ -1,0 +1,28 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ESSRegression/ESS_Method_Readme.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 90066,
+      "sha256": "984c77b1f524877f235ed243c271d4243131ae87ad3cd45c2276fe76de4ee1be"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ESSRegression/ReadMe_FIRST.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 156642,
+      "sha256": "01e2c75ffa528c81d21e39caca3451bb64bc0ae9a6a3e17ba1d04fe901eaa2d8"
+    },
+    {
+      "url": "https://web.ma.utexas.edu/users/pmueller/pap/MTM08.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 194230,
+      "sha256": "f8b2b80add8ebfe60eebd97aa1cd24f9edb1bb26f8a332f7e930d803a2a69631"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3081791/",
+      "retrieved_date": "2026-09-10",
+      "used": "Absolute-value distance definition, logistic Table 3."
+    }
+  ],
+  "scope": "Normal and logistic regression with independent normal/gamma priors; explicit covariate distributions and direct expected-curvature ratios. Native R workflows remain pending."
+}
