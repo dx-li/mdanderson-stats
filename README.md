@@ -721,3 +721,11 @@ comparison and integrated reports remain pending.
 calendar replay and simulation, including the six-patient capacity, pending-outcome
 escalation rule and downward completion. Results distinguish a found MTD from a
 highest-dose recommendation. Dedicated comparison reports remain pending.
+
+
+## BOP2 binary efficacy
+
+[BOP2 binary efficacy](docs/bop2-binary.md) provides posterior stopping boundaries,
+exact operating characteristics and power-maximizing grid calibration. Calibration
+and informative-prior analysis are reported separately. The other BOP2 endpoint
+types and integrated reports remain pending.

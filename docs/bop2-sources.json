@@ -1,0 +1,53 @@
+{
+  "retrieved_at": "2026-09-10T06:03:02.547527+00:00",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/BEhelp.pdf",
+      "bytes": 96914,
+      "sha256": "afe39db6fcb632fd9de84ebf25caba27932740908d0209640d2e6d23edb12c1e"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/EndpointsHelp.pdf",
+      "bytes": 74986,
+      "sha256": "146e024b831c711f3c306dc0ce23f543b25982059c06e8348d60b6c2a328a064"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Null1Help.pdf",
+      "bytes": 55959,
+      "sha256": "17f88bc6ce971aeb864b2bb6232e40ddcdcc2368ba6eb8031cb85393f3dd9080"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Alter1Help.pdf",
+      "bytes": 60763,
+      "sha256": "aea6f6a8c290249e1780e3b63b44c8564e0fc419d861078e4108b970b760c13b"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/T1e1Help.pdf",
+      "bytes": 49326,
+      "sha256": "ac35933a77a0f818a2e83616b01fae66c174013c09ea2520e6a7a21578c2aaf0"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/InterimsHelp.pdf",
+      "bytes": 63034,
+      "sha256": "8da82e0006ff15941bc2f32486275ad986486d60364bd5f4e1413b9c702d77ac"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/ETprior.pdf",
+      "bytes": 20639,
+      "sha256": "c2ca0dbef797fb3b93de7fa4e99bce04013f732e9f8af53f855002f1b45383e8"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/",
+      "bytes": 165906,
+      "sha256": "bc7e51a8d1a05052ee772d356c662f9bba9bb7e3bdf411ff0c253e8e3f21c97c"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2408.05816",
+      "bytes": 726424,
+      "sha256": "435d883fb5f20872c48d4fb16151f2c9e7eb6daca9b816374d298a1f5bfe814a",
+      "role": "Related-method explanation of probability cutoff and exponent range"
+    }
+  ],
+  "application_version": "1.4.27.0",
+  "application_updated": "2026-09-04"
+}
