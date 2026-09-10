@@ -8,7 +8,7 @@ from numpy.typing import ArrayLike
 
 from ._validation import FloatArray, finite
 from .bayesian_monitoring import _owned
-from .bop2_binary import _boundaries, _candidate
+from .bop2_binary import BOP2InfeasibleError, _boundaries, _candidate, _objective_constraints
 from .bop2_efftox import bop2_efftox_design
 from .bop2_paired import BOP2PairedDesign, BOP2PairedOperatingCharacteristics, _cells
 
@@ -24,6 +24,8 @@ class BOP2EffToxOptimization:
     analysis_oc: BOP2PairedOperatingCharacteristics
     distinct_boundaries: int
     parameter_triples: int
+    objective: str = "power"
+    minimum_power: float | None = None
 
 
 def optimize_bop2_efftox(
@@ -39,17 +41,22 @@ def optimize_bop2_efftox(
     toxicity_scales: ArrayLike | None = None,
     gammas: ArrayLike | None = None,
     analysis_prior: ArrayLike | None = None,
+    objective: str = "power",
+    minimum_power: float | None = None,
     toxicity_exponent_factor: float = 1 / 3,
     equality_continues: bool = False,
     min_subjects: int = 10,
     cohort_size: int = 5,
 ) -> BOP2EffToxOptimization:
-    """Maximize exact power subject to three point-null error constraints.
+    """Optimize power or null expected sample size with three null error constraints.
+
+    Expected-sample-size optimization requires minimum_power. All constraints are strict.
 
     Scenario order: futile/toxic, futile/safe, efficacious/toxic, efficacious/safe.
     Default joint rates assume independence; supply all four joint probabilities
     to calibrate correlated scenarios. Constraints apply to these specified points.
     """
+    power_floor = _objective_constraints(objective, minimum_power)
     null, alt = finite(null_rates, "null_rates"), finite(alternative_rates, "alternative_rates")
     if (
         null.shape != (2,)
@@ -136,11 +143,16 @@ def optimize_bop2_efftox(
         oc = design.operating_characteristics(scenarios)
         if np.any(oc.success_probability[:3] > alpha):
             continue
-        key = (-float(oc.success_probability[3]), float(oc.expected_sample_size[0]))
+        power, en = float(oc.success_probability[3]), float(oc.expected_sample_size[0])
+        if power_floor is not None and power < power_floor:
+            continue
+        key = (-power, en) if objective == "power" else (en, -power)
         if best_key is None or key < best_key:
             best_key, best = key, (float(se), float(st), float(gamma), design, oc)
     if best is None:
-        raise ValueError("no grid candidate satisfies all three error constraints; expand the grid")
+        raise BOP2InfeasibleError(
+            "no grid candidate satisfies the three errors and power constraint; expand the grid"
+        )
     se, st, gamma, calibration, calibration_oc = best
     analysis = (
         calibration
@@ -171,4 +183,6 @@ def optimize_bop2_efftox(
         analysis_oc,
         len(seen),
         triples,
+        objective,
+        power_floor,
     )

@@ -732,6 +732,6 @@ and informative-prior analysis are reported separately.
 exact correlated operating characteristics with grid calibration.
 [Joint efficacy/toxicity](docs/bop2-efftox.md) adds separate assessment schedules
 and calibration against global and partial null hypotheses.
-[Binary sample-size optimization](docs/bop2-sample-size.md) searches for minimum
+[Categorical sample-size optimization](docs/bop2-sample-size.md) searches for minimum
 expected enrollment or minimum maximum sample size under error and power constraints.
 Time-to-event endpoints and integrated reports remain pending.

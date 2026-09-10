@@ -6,7 +6,7 @@ import numpy as np
 from numpy.typing import ArrayLike
 
 from ._validation import finite, scalar
-from .bop2_binary import _boundaries, _candidate
+from .bop2_binary import BOP2InfeasibleError, _boundaries, _candidate, _objective_constraints
 from .bop2_paired import (
     BOP2PairedDesign,
     BOP2PairedOperatingCharacteristics,
@@ -25,6 +25,8 @@ class BOP2PairedOptimization:
     analysis_oc: BOP2PairedOperatingCharacteristics
     distinct_boundaries: int
     parameter_pairs: int
+    objective: str = "power"
+    minimum_power: float | None = None
 
 
 def optimize_bop2_paired(
@@ -41,15 +43,20 @@ def optimize_bop2_paired(
     gammas: ArrayLike | None = None,
     analysis_prior: ArrayLike | None = None,
     error_control: str = "strict",
+    objective: str = "power",
+    minimum_power: float | None = None,
     min_subjects: int = 10,
     cohort_size: int = 5,
 ) -> BOP2PairedOptimization:
-    """Maximize exact point-alternative power over the supplied finite grid.
+    """Optimize power or null expected sample size on the supplied finite grid.
+
+    Expected-sample-size optimization requires minimum_power and strict error control.
 
     Calibrate with an ESS-one Dirichlet prior centered on the null cell probabilities.
     Control error only at the specified joint null distribution. A separate analysis
     prior can change the achieved error. 'closest' permits error above nominal.
     """
+    power_floor = _objective_constraints(objective, minimum_power, error_control)
     null = _cells(null_rates, null_joint_rate, endpoint)
     alternative = _cells(alternative_rates, alternative_joint_rate, endpoint)
     if not np.any(np.asarray(alternative_rates, dtype=float) > np.asarray(null_rates, dtype=float)):
@@ -110,14 +117,17 @@ def optimize_bop2_paired(
             error, power = map(float, oc.success_probability)
             if error_control == "strict" and error > alpha:
                 continue
-            key = ((abs(error - alpha),) if error_control == "closest" else ()) + (
-                -power,
-                float(oc.expected_sample_size[0]),
-            )
+            if power_floor is not None and power < power_floor:
+                continue
+            en = float(oc.expected_sample_size[0])
+            ranking = (-power, en) if objective == "power" else (en, -power)
+            key = ((abs(error - alpha),) if error_control == "closest" else ()) + ranking
             if best_key is None or key < best_key:
                 best_key, best = key, (float(scale), float(exponent), design, oc)
     if best is None:
-        raise ValueError("no grid candidate satisfies the type I error constraint; expand the grid")
+        raise BOP2InfeasibleError(
+            "no grid candidate satisfies the error and power constraints; expand the grid"
+        )
     scale, exponent, calibration, calibration_oc = best
     analysis = (
         calibration
@@ -145,4 +155,6 @@ def optimize_bop2_paired(
         analysis_oc,
         len(seen),
         int(scales.size * powers.size),
+        objective,
+        power_floor,
     )

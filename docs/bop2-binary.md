@@ -5,7 +5,7 @@ is partially implemented for binary efficacy and toxicity: specified-parameter m
 exact operating characteristics, and power-maximizing finite-grid calibration.
 [Ordinal and multiple efficacy](bop2-paired.md) and
 [joint efficacy/toxicity](bop2-efftox.md) are also available. Time-to-event endpoints
-and integrated reports remain pending. Binary [sample-size optimization](bop2-sample-size.md)
+and integrated reports remain pending. Categorical [sample-size optimization](bop2-sample-size.md)
 is available.
 
 The app snapshot is version 1.4.27.0, updated September 4, 2026. Its binary-prior

@@ -3,8 +3,9 @@
 Catalog **112** now supports specified-parameter designs, monitoring of fully
 observed outcomes, exact operating characteristics, and power-maximizing grid
 calibration for two more BOP2 endpoint types. Binary efficacy/toxicity are described
-[separately](bop2-binary.md). [Joint efficacy/toxicity](bop2-efftox.md) is also available. Time-to-event endpoints,
-sample-size optimization for paired endpoints and integrated reports remain pending.
+[separately](bop2-binary.md). [Joint efficacy/toxicity](bop2-efftox.md) is also available. Time-to-event endpoints
+and integrated reports remain pending. [Sample-size optimization](bop2-sample-size.md)
+is available.
 
 The method follows sections 2.1–2.3, examples 2 and 3 of
 [Zhou, Lee and Yuan (2017), DOI 10.1002/sim.7338](https://onlinelibrary.wiley.com/doi/10.1002/sim.7338)
@@ -120,7 +121,7 @@ print(fit.calibration_oc.success_probability)  # point-null type I error, point-
 print(fit.distinct_boundaries, fit.parameter_pairs)
 ```
 
-The optimizer uses a common scale and exponent for both efficacy margins, defaults
+By default, the optimizer maximizes power using a common scale and exponent for both efficacy margins, defaults
 to 1,050 parameter pairs (`0.50,...,0.99` by `0,0.05,...,1`), and evaluates each
 unique pair of integer boundary sequences once. It maximizes exact alternative
 power subject to the specified null error constraint. Ties favor lower null

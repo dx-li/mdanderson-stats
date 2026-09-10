@@ -19,6 +19,19 @@ class BOP2InfeasibleError(ValueError):
     """No design in the declared grid meets the requested operating constraints."""
 
 
+def _objective_constraints(
+    objective: str, minimum_power: float | None, error_control: str = "strict"
+) -> float | None:
+    if objective not in ("power", "expected_sample_size"):
+        raise ValueError("objective must be power or expected_sample_size")
+    power_floor = None if minimum_power is None else scalar(minimum_power, "minimum_power")
+    if power_floor is not None and not 0 < power_floor <= 1:
+        raise ValueError("minimum_power must lie in (0,1]")
+    if objective == "expected_sample_size" and (power_floor is None or error_control != "strict"):
+        raise ValueError("expected_sample_size requires minimum_power and strict error control")
+    return power_floor
+
+
 def bop2_binary_design(
     max_subjects: int,
     null_rate: float,
@@ -179,13 +192,7 @@ def optimize_bop2_binary(
     null expected sample size, then input grid order. Informative analysis priors
     never alter calibration and may change the achieved type I error.
     """
-    if objective not in ("power", "expected_sample_size"):
-        raise ValueError("objective must be power or expected_sample_size")
-    power_floor = None if minimum_power is None else scalar(minimum_power, "minimum_power")
-    if power_floor is not None and not 0 < power_floor <= 1:
-        raise ValueError("minimum_power must lie in (0,1]")
-    if objective == "expected_sample_size" and (power_floor is None or error_control != "strict"):
-        raise ValueError("expected_sample_size requires minimum_power and strict error control")
+    power_floor = _objective_constraints(objective, minimum_power, error_control)
     p0, p1, alpha = (
         scalar(x, name)
         for x, name in (

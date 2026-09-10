@@ -56,6 +56,12 @@ from .bop2_binary import (
     bop2_binary_design,
     optimize_bop2_binary,
 )
+from .bop2_complex_sample_size import (
+    BOP2EffToxSampleSizeOptimization,
+    BOP2PairedSampleSizeOptimization,
+    optimize_bop2_efftox_sample_size,
+    optimize_bop2_paired_sample_size,
+)
 from .bop2_efftox import bop2_efftox_design
 from .bop2_efftox_optimization import BOP2EffToxOptimization, optimize_bop2_efftox
 from .bop2_paired import (
@@ -385,6 +391,10 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "BOP2PairedSampleSizeOptimization",
+    "BOP2EffToxSampleSizeOptimization",
+    "optimize_bop2_paired_sample_size",
+    "optimize_bop2_efftox_sample_size",
     "BOP2InfeasibleError",
     "BOP2BinarySampleSizeOptimization",
     "optimize_bop2_binary_sample_size",
