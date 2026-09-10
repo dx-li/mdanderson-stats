@@ -600,6 +600,8 @@ replace fixed-width overflow and ambiguous unavailable values with explicit outp
 Native RNG draws and state have been reconciled with existing RANDLIB. An explicit
 legacy sampling path retains float32 probabilities and source cell ordering;
 RANDLIB repairs the source all-stream reseeding defect and rejects unsafe inputs.
+Truth-generation designs preserve native normalization and model DNA units, with
+stable weight scaling and explicit validation replacing invalid truth parameters.
 Remaining SPPCR workflow components are not yet implemented. The archive includes
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native

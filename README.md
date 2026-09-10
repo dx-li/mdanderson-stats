@@ -577,5 +577,7 @@ parsing/formatting. [FileMaker-style exports](docs/sppcr-filemaker.md) use the
 same validated data model. [Interactive entry](docs/sppcr-interactive.md) adds
 bounded data collection and corrections. [Analysis and replicate reports](docs/sppcr-reporting.md)
 retain identities, units and diagnostics. [Historical random streams](docs/sppcr-random.md)
-are reconciled through RANDLIB with an explicit legacy sampling path. SPPCR remains
+are reconciled through RANDLIB with an explicit legacy sampling path.
+[Truth designs](docs/sppcr-truth.md) normalize allele weights and prepare explicit
+simulation parameters in model DNA units. SPPCR remains
 partial: truth-parameter entry/reporting and the full application workflow remain.
