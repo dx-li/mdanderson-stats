@@ -2223,9 +2223,17 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Vectorized mTPI unit-probability-mass decisions and full decision table under uniform beta priors",
+        "Paper safety rules, persistent exclusions and isotonic posterior-mean MTD selection with explicit weights",
+        "Batched complete-outcome cohort simulation with allocations, selections, safety stops and Monte Carlo uncertainty"
+      ],
+      "validation": [
+        "Exact rational beta-polynomial probabilities and extreme tails; published Excel screenshot columns at n=3,6,12,30",
+        "Exhaustive small-trial response-path operating characteristics, safety sequence, isotonic ties and seeded replay; tests/test_mtpi.py",
+        "Pending original 2007 TPI/calibration, native source/weight audit, prior sensitivity, posterior isotonic intervals and spreadsheet/report workflows; docs/mtpi.md"
+      ]
     },
     {
       "id": 74,

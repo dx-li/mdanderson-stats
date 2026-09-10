@@ -774,3 +774,7 @@ input/report workflows remain pending.
 signal and conditional gene-expression calculations, plus joint fitting of stacking
 energies, position weights, expression and background. Native CEL/file/QC/display
 workflows remain pending.
+
+[Toxicity Probability Intervals](docs/mtpi.md) adds mTPI decision tables, paper
+safety rules, isotonic final selection and batched trial simulation. Original TPI
+calibration and native software workflow audits remain pending.

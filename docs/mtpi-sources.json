@@ -1,0 +1,17 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/TPI/TPI.gif",
+      "retrieved_date": "2026-09-10",
+      "bytes": 43914,
+      "sha256": "b086c1070b5183220cc4cdba63bd56f4aaf5fcfbd55131998732ee4c3648d75d"
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_xml/PMC5038924/unicode",
+      "retrieved_date": "2026-09-10",
+      "bytes": 190067,
+      "sha256": "0be9c2d73bb11b49ee2c6df0c418bbf2d8172cb5f401420f556f93e64e781a85"
+    }
+  ],
+  "scope": "mTPI uniform-prior UPM decisions, paper safety timing, explicitly weighted isotonic selection and complete-outcome simulation. Original TPI and native software audit remain pending."
+}

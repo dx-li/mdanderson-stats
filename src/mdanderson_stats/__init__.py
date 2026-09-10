@@ -250,6 +250,8 @@ from .ksbin2_probability import (
 from .ksbin2_study import KSTwoSampleStudy, ksbin2_study
 from .kstage_binomial import KStageBinomial
 from .microarray_normalization import quantile_normalize
+from .mtpi import MTPIDesign, MTPIPosterior, MTPISelection, MTPITable
+from .mtpi_simulation import MTPISimulation, simulate_mtpi
 from .muhaz import MuhazFixed, muhaz_fixed
 from .muhaz_global import MuhazGlobal, muhaz_global
 from .muhaz_knn import MuhazKNN, muhaz_knn
@@ -449,6 +451,12 @@ from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
     "quantile_normalize",
+    "MTPIDesign",
+    "MTPIPosterior",
+    "MTPISelection",
+    "MTPITable",
+    "MTPISimulation",
+    "simulate_mtpi",
     "PDNNExpression",
     "PDNNConvergenceError",
     "PDNNFit",
