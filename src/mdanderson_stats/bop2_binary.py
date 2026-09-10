@@ -62,7 +62,11 @@ def bop2_binary_design(
 
 
 def _boundaries(
-    baseline: BayesianMonitoringDesign, scale: float, exponent: float
+    baseline: BayesianMonitoringDesign,
+    scale: float,
+    exponent: float,
+    *,
+    equality_continues: bool = True,
 ) -> tuple[int, ...]:
     toxicity = baseline.method == "bop2_binary_toxicity"
     go = baseline.low_probability if toxicity else baseline.high_probability
@@ -70,9 +74,22 @@ def _boundaries(
     if np.any(cutoff == 0):
         raise ArithmeticError("posterior cutoff underflows; increase cutoff_scale")
     return tuple(
-        int(np.count_nonzero(go[size, : size + 1] >= limit))
+        int(
+            np.count_nonzero(
+                go[size, : size + 1] >= limit
+                if equality_continues
+                else go[size, : size + 1] > limit
+            )
+        )
         if toxicity
-        else int(np.count_nonzero(go[size, : size + 1] < limit)) - 1
+        else int(
+            np.count_nonzero(
+                go[size, : size + 1] < limit
+                if equality_continues
+                else go[size, : size + 1] <= limit
+            )
+        )
+        - 1
         for size, limit in zip(baseline.looks, cutoff)
     )
 

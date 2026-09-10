@@ -45,7 +45,7 @@
       "url": "https://arxiv.org/pdf/2408.05816",
       "bytes": 726424,
       "sha256": "435d883fb5f20872c48d4fb16151f2c9e7eb6daca9b816374d298a1f5bfe814a",
-      "role": "Related-method explanation of probability cutoff and exponent range"
+      "role": "Primary BOP2-TE joint model, strict go rule, toxicity exponent gamma/3, and three-null error calibration; also explains original BOP2 exponent range"
     },
     {
       "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/BThelp.pdf",
@@ -107,6 +107,30 @@
       "retrieved_at": "2026-09-10T06:30:16.263630+00:00",
       "role": "Original paper sections 2.1-2.3: Dirichlet model and AND stopping rule for ordinal/multiple efficacy",
       "retrieval": "Read via web PDF extraction; direct archive download returned HTTP 403"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Null3Help-YY.pdf",
+      "bytes": 10141,
+      "sha256": "f172e1d0f5a6542fac5adc3d430ddd6f5246d285cc7add5ba793db5de255abdf",
+      "retrieved_at": "2026-09-10T06:40:44.280648+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Alter3Help-YY.pdf",
+      "bytes": 34740,
+      "sha256": "e4740e8899cdbad24e90a96e298e85a940b450a0d2308b335cc03c4ba62ce59e",
+      "retrieved_at": "2026-09-10T06:40:44.281010+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/EffToxT1e1Help-YY.pdf",
+      "bytes": 9792,
+      "sha256": "aca44d38b94094d9cc24a8cff1e6cd8639bd9c20c8e194e313efe1908bde0d27",
+      "retrieved_at": "2026-09-10T06:40:44.281174+00:00"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BOP2/Interims2Help.pdf",
+      "bytes": 66956,
+      "sha256": "8b653c1412d5835a448186b78f815df8f21ccfc8486199499f2b5bfe85dd8d14",
+      "retrieved_at": "2026-09-10T06:40:44.281610+00:00"
     }
   ],
   "application_version": "1.4.27.0",

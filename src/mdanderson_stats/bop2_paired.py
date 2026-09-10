@@ -1,4 +1,4 @@
-"""BOP2 ordinal and multiple efficacy: Dirichlet monitoring and exact paired-count OC."""
+"""BOP2 paired endpoints: Dirichlet monitoring and exact paired-count OC."""
 
 from dataclasses import dataclass
 
@@ -61,10 +61,11 @@ class BOP2PairedOperatingCharacteristics:
 
 @dataclass(frozen=True)
 class BOP2PairedDesign:
-    """Both marginal futility conditions must hold, including at the final look.
+    """Efficacy pairs stop when both futile; efficacy/toxicity stops on either failure.
 
     Category order: ordinal (CR, PR, other); multiple (11, 10, 01, 00).
-    Construct with bop2_paired_design. All observations must be fully evaluated.
+    Efficacy/toxicity also uses (11, 10, 01, 00), with efficacy first.
+    Construct with a factory. All observations must be fully evaluated.
     """
 
     endpoint: str
@@ -77,11 +78,28 @@ class BOP2PairedDesign:
 
     @property
     def looks(self) -> NDArray[np.int64]:
+        if self.endpoint == "efficacy_toxicity":
+            looks = np.union1d(self.marginals[0].looks, self.marginals[1].looks)
+            looks.flags.writeable = False
+            return looks
         return self.marginals[0].looks
 
     @property
     def futility_max(self) -> NDArray[np.int64]:
-        bounds = np.stack([m.futility_max for m in self.marginals], axis=-1)
+        bounds = np.full((self.looks.size, 2), -1, dtype=np.int64)
+        for j, m in enumerate(self.marginals):
+            bounds[np.searchsorted(self.looks, m.looks), j] = m.futility_max
+        bounds.flags.writeable = False
+        return bounds
+
+    @property
+    def toxicity_min(self) -> NDArray[np.int64]:
+        """Unsafe toxicity count at union looks; n+1 when toxicity is not assessed."""
+        if self.endpoint != "efficacy_toxicity":
+            raise ValueError("toxicity_min applies only to efficacy/toxicity designs")
+        m = self.marginals[1]
+        bounds = self.looks + 1
+        bounds[np.searchsorted(self.looks, m.looks)] = m.positive_min
         bounds.flags.writeable = False
         return bounds
 
@@ -94,11 +112,21 @@ class BOP2PairedDesign:
             raise ValueError("total counts exceed max_subjects")
         events = x @ np.array(_increments(self.endpoint))
         states = [m.monitor(events[..., j], n) for j, m in enumerate(self.marginals)]
-        bad = np.logical_and.reduce(
-            [(s.decision == "stop_futility") | (s.decision == "final_negative") for s in states]
-        )
+        futile = (states[0].decision == "stop_futility") | (states[0].decision == "final_negative")
         decisions = np.full(n.shape, "continue", dtype="U24")
-        decisions[bad & (n < self.max_subjects)] = "stop_futility"
+        if self.endpoint == "efficacy_toxicity":
+            unsafe = (states[1].decision == "stop_toxicity") | (
+                states[1].decision == "final_positive"
+            )
+            bad = futile | unsafe
+            decisions[futile & (n < self.max_subjects)] = "stop_futility"
+            decisions[unsafe & (n < self.max_subjects)] = "stop_toxicity"
+            decisions[futile & unsafe & (n < self.max_subjects)] = "stop_futility_toxicity"
+        else:
+            bad = futile & (
+                (states[1].decision == "stop_futility") | (states[1].decision == "final_negative")
+            )
+            decisions[bad & (n < self.max_subjects)] = "stop_futility"
         decisions[(n == self.max_subjects) & bad] = "final_negative"
         decisions[(n == self.max_subjects) & ~bad] = "final_positive"
         decisions.flags.writeable = False
@@ -106,7 +134,17 @@ class BOP2PairedDesign:
             _owned(n),
             _owned(x),
             _owned(x + self.prior),
-            _owned(np.stack([s.high_probability for s in states], axis=-1)),
+            _owned(
+                np.stack(
+                    [
+                        states[0].high_probability,
+                        states[1].low_probability
+                        if self.endpoint == "efficacy_toxicity"
+                        else states[1].high_probability,
+                    ],
+                    axis=-1,
+                )
+            ),
             decisions,
         )
 
@@ -149,16 +187,23 @@ class BOP2PairedDesign:
             raise ValueError("scenario batch too large; split into smaller batches")
         surviving = np.ones((*p.shape[:-1], 1, 1))
         stop = np.zeros((*p.shape[:-1], self.looks.size))
-        bounds = self.futility_max
+        looks, bounds = self.looks, self.futility_max
+        toxicity = self.toxicity_min if self.endpoint == "efficacy_toxicity" else None
         index = 0
         for n in range(1, self.max_subjects + 1):
             arriving = np.zeros((*p.shape[:-1], n + 1, n + 1))
             for k, (a, b) in enumerate(_increments(self.endpoint)):
                 arriving[..., a : a + n, b : b + n] += surviving * p[..., k, None, None]
-            if n == self.looks[index]:
+            if n == looks[index]:
                 a, b = bounds[index] + 1
-                stop[..., index] = arriving[..., :a, :b].sum(axis=(-2, -1))
-                arriving[..., :a, :b] = 0
+                if toxicity is None:
+                    stop[..., index] = arriving[..., :a, :b].sum(axis=(-2, -1))
+                    arriving[..., :a, :b] = 0
+                else:
+                    stop[..., index] = arriving[..., :a, :].sum(axis=(-2, -1))
+                    arriving[..., :a, :] = 0
+                    stop[..., index] += arriving[..., toxicity[index] :].sum(axis=(-2, -1))
+                    arriving[..., toxicity[index] :] = 0
                 index += 1
             surviving = arriving
         success = surviving.sum(axis=(-2, -1))

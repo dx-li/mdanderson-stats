@@ -3,8 +3,8 @@
 Catalog entry **112**, [BOP2](https://biostatistics.mdanderson.org/shinyapps/BOP2/),
 is partially implemented for binary efficacy and toxicity: specified-parameter monitoring,
 exact operating characteristics, and power-maximizing finite-grid calibration.
-[Ordinal and multiple efficacy](bop2-paired.md) are also available. Joint
-efficacy/toxicity, time-to-event endpoints,
+[Ordinal and multiple efficacy](bop2-paired.md) and
+[joint efficacy/toxicity](bop2-efftox.md) are also available. Time-to-event endpoints,
 minimum-expected-sample-size optimization and integrated reports remain pending.
 
 The app snapshot is version 1.4.27.0, updated September 4, 2026. Its binary-prior
@@ -13,7 +13,7 @@ method is Zhou, Lee and Yuan (2017), DOI 10.1002/sim.7338. The strict futility
 rule and power-function cutoff are also given in the clinical-methods study
 [Bayesian sequential monitoring strategies for trials of digestive cancer therapeutics](https://link.springer.com/article/10.1186/s12874-024-02278-3).
 The related [BOP2-TE paper](https://arxiv.org/abs/2408.05816) explains the restriction
-of the power exponent to `[0,1]`; its joint efficacy/toxicity design is not implemented here.
+of the power exponent to `[0,1]`; its joint efficacy/toxicity design is implemented [separately](bop2-efftox.md).
 
 ## A specified efficacy design
 

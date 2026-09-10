@@ -51,6 +51,8 @@ from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
 from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
 from .bop2_binary import BOP2BinaryOptimization, bop2_binary_design, optimize_bop2_binary
+from .bop2_efftox import bop2_efftox_design
+from .bop2_efftox_optimization import BOP2EffToxOptimization, optimize_bop2_efftox
 from .bop2_paired import (
     BOP2PairedDesign,
     BOP2PairedOperatingCharacteristics,
@@ -377,6 +379,9 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "bop2_efftox_design",
+    "BOP2EffToxOptimization",
+    "optimize_bop2_efftox",
     "BOP2PairedDesign",
     "BOP2PairedState",
     "BOP2PairedOperatingCharacteristics",

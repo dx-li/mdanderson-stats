@@ -729,5 +729,7 @@ highest-dose recommendation. Dedicated comparison reports remain pending.
 exact operating characteristics and power-maximizing grid calibration. Calibration
 and informative-prior analysis are reported separately.
 [Ordinal and multiple efficacy](docs/bop2-paired.md) add Dirichlet monitoring and
-exact correlated operating characteristics with grid calibration. Joint
-efficacy/toxicity, time-to-event endpoints and integrated reports remain pending.
+exact correlated operating characteristics with grid calibration.
+[Joint efficacy/toxicity](docs/bop2-efftox.md) adds separate assessment schedules
+and calibration against global and partial null hypotheses. Time-to-event
+endpoints and integrated reports remain pending.
