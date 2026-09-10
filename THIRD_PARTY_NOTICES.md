@@ -815,3 +815,14 @@ equations in Thall, Nguyen and Zinner, JRSS Series C 66 (2017), 201–224,
 doi:10.1111/rssc.12162. Original executables, papers, examples and comparator
 code are not bundled. No general redistribution grant was found in the inspected
 U2OET 1.8 guide or README. See `docs/u2oet.md` for provenance and limitations.
+
+## CATBUB Design (entry 97)
+
+Independent Python implementation of categorical utility comparison and sequential
+design methods of Murray, Thall and Yuan, *Utility-Based Designs for Randomized
+Comparative Trials with Categorical Outcomes*. The reference archive is
+`SoftwareFiles/BUBDesign/CATBUBDesign.zip` on MD Anderson's download site. No
+explicit general redistribution license was found in the inspected R code or
+README. Original source, papers and examples are not bundled. Python reuses the
+package's beta-comparison quadrature; provenance, validation and corrections to
+source analysis/reporting behavior are documented in `docs/catbub.md`.

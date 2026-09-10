@@ -185,6 +185,21 @@ from .bop2_survival_trial import (
     simulate_bop2_survival,
 )
 from .bp1ci import BP1CIResult, bp1ci
+from .catbub import (
+    CatbubComparison,
+    catbub_binary_compare,
+    catbub_compare,
+    catbub_simulate_counts,
+)
+from .catbub_design import (
+    CatbubAnalysis,
+    CatbubDesign,
+    CatbubOperatingCharacteristics,
+    catbub_analysis,
+    catbub_design,
+    catbub_operating_characteristics,
+    catbub_thresholds,
+)
 from .cdflib_array_format import format_cdflib_array
 from .cdflib_beta import CDFBeta, ccum_beta, cdf_beta, cum_beta, inv_beta
 from .cdflib_beta_asymptotic import basym
@@ -689,6 +704,17 @@ from .windows import (
 )
 
 __all__ = [
+    "CatbubComparison",
+    "catbub_compare",
+    "catbub_binary_compare",
+    "catbub_simulate_counts",
+    "CatbubDesign",
+    "CatbubAnalysis",
+    "CatbubOperatingCharacteristics",
+    "catbub_design",
+    "catbub_analysis",
+    "catbub_thresholds",
+    "catbub_operating_characteristics",
     "U2OETOperatingCharacteristics",
     "summarize_u2oet_trials",
     "U2OETTrial",

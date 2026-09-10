@@ -994,3 +994,11 @@ calendar simulation includes pending outcomes and explicit final-selection
 conventions. Multi-trial summaries report selection, enrollment, duration and
 normalized utility performance with Monte Carlo errors. Native final-selection
 parity and published operating-characteristic validation remain pending.
+
+[CATBUB](docs/catbub.md) provides categorical-utility posterior comparisons,
+Dirichlet Monte Carlo, a success-only binary comparator, sequential multinomial
+simulation, group-sequential sample-size/boundary calibration and observed-data
+analysis. It supports arbitrary categorical outcomes and utility vectors, with
+explicit priors, alpha spending and first-stop operating characteristics.
+Identical source-generated trials reproduce the R boundaries and operating
+characteristics; source analysis/reporting corrections are documented.

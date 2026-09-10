@@ -2932,9 +2932,20 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Scaled-beta moment-matched and actual Dirichlet Monte Carlo posterior utility ordering for batched two-arm categorical counts; success-only beta-binomial comparator",
+        "Vectorized fixed and cumulative sequential multinomial counts, with equal or unequal arm sizes and explicit random state",
+        "Survivor-conditional alpha-spending boundaries, bounded target-power sample-size calibration and evaluation of additional scenarios",
+        "Observed-data analysis with pooled-null recalibration, explicit priors, actual look sizes and separate incremental/cumulative spending",
+        "First-stop directional operating characteristics, per-arm enrollment and Monte Carlo errors; source reversal-counting and reporting defects corrected explicitly"
+      ],
+      "validation": [
+        "Five tightened R posterior fixtures; binary Dirichlet Monte Carlo agrees with beta comparison; extreme utility scaling and constant-utility ties checked",
+        "Unmodified R design captured 250 null and 250 target trials at per-arm N=20,40; 1000 Python posterior comparisons within 1.84e-8; identical .9906/.9704 boundaries, .052 null stop rate and .784 target power",
+        "Hand-calculated conditional quantiles, first stopping without later reversal and MCSEs; end-to-end unequal-arm count simulation, sample-size calibration, interim and first-look analysis",
+        "Source differences and finite simulation precision documented in docs/catbub.md; no exact random-stream or full manuscript-table replication claimed"
+      ]
     },
     {
       "id": 98,

@@ -1,0 +1,46 @@
+{
+  "source_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BUBDesign/CATBUBDesign.zip",
+  "sha256": "4539edca8ab3443d627e6225e5c0c361df6214a6f721abc277a3973abef4d507",
+  "r_seed": 9703,
+  "trials_null": 250,
+  "trials_target": 250,
+  "sample_sizes_per_arm": [
+    20,
+    40
+  ],
+  "cutoffs": [
+    0.9906,
+    0.9704
+  ],
+  "max_posterior_difference_vs_original_r": 1.834129204070223e-08,
+  "null_first_stop_probabilities": [
+    [
+      0.008,
+      0.0
+    ],
+    [
+      0.02,
+      0.024
+    ]
+  ],
+  "target_first_stop_probabilities": [
+    [
+      0.324,
+      0.0
+    ],
+    [
+      0.46,
+      0.0
+    ]
+  ],
+  "null_mean_n_per_arm": [
+    39.84,
+    39.84
+  ],
+  "target_mean_n_per_arm": [
+    33.52,
+    33.52
+  ],
+  "elapsed_seconds": 1.1685982081107795,
+  "interpretation": "Identical source-generated data; small validation run, not a precision calibration for clinical use."
+}
