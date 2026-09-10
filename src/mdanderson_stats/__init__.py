@@ -1,6 +1,18 @@
 """Independent Python implementations of MD Anderson catalog methods."""
 
 from . import cdflib_aux, cdflib_constants, dcdflib_support
+from .bayes_factor_binary import (
+    BayesFactorBinaryDesign,
+    BayesFactorBinaryOC,
+    BayesFactorBinarySimulation,
+    BayesFactorBinaryState,
+    bayes_factor_binary_design,
+)
+from .bayes_factor_binary_report import (
+    BayesFactorBinaryJob,
+    BayesFactorBinaryReport,
+    parse_bayes_factor_binary_input,
+)
 from .bayesian_monitoring import (
     BayesianMonitoringDesign,
     MonitoringOperatingCharacteristics,
@@ -426,6 +438,14 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "BayesFactorBinaryJob",
+    "BayesFactorBinaryReport",
+    "parse_bayes_factor_binary_input",
+    "BayesFactorBinaryDesign",
+    "BayesFactorBinaryState",
+    "BayesFactorBinaryOC",
+    "BayesFactorBinarySimulation",
+    "bayes_factor_binary_design",
     "InequalityProbability",
     "inequality_probability",
     "ParameterDistribution",

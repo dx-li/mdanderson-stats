@@ -2576,9 +2576,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Normalized one-sided k=1, nu=2 iMOM Bayes factors, strict superiority/inferiority monitoring and final inconclusive decisions",
+        "Exact operating characteristics, cohort simulation with Monte Carlo errors, enrollment distributions and quantiles",
+        "Guide-compatible commented text input and standalone HTML reporting with optional stopping boundaries"
+      ],
+      "validation": [
+        "Complete published 50-patient boundary table; independent prior integration; exhaustive small-trial paths and simulation; 400-patient rare-null stability; tests/test_bayes_factor_binary.py",
+        "Independent algorithms and NumPy random stream; see docs/bayes-factor-binary.md"
+      ]
     },
     {
       "id": 95,

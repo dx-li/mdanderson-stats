@@ -757,3 +757,7 @@ with parameter, moment and two-quantile input modes and vectorized density/tail 
 [Inequality Calculator](docs/inequality-calculator.md) compares independent variables
 from all six families, including additive shifts, direct complementary probabilities
 and numerical error estimates.
+
+[Bayes Factor Binary](docs/bayes-factor-binary.md) adds nonlocal iMOM trial monitoring,
+exact operating characteristics, simulation and text-input/HTML reporting, preserving
+superiority, inferiority and inconclusive conclusions.
