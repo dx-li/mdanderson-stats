@@ -371,7 +371,7 @@ a unique global solution, or every admissible value. Some curves are
 nonmonotone. For a hazard-width interval, two different hazards can produce
 the same assurance. Bracket the lower or upper crossing separately. A broad
 bracket enclosing both can have same-sign endpoints and be rejected despite
-containing roots. Automatic peak/range search remains pending.
+containing roots. Use `confint_survival_hazard_range` below to locate peaks and crossings automatically.
 
 Independent R full-mixture inversions give, for h=1, accrual rate 5, accrual
 10, follow-up 0 and confidence .95:
@@ -413,5 +413,58 @@ assert abs(followup.value - 0.629882372084) < 1e-9
 assert abs(followup.achieved.probability - 0.8) < 1e-10
 ```
 
-**Catalog status is partial.** Automatic hazard-maximum/range search and native
-session/report workflows remain pending.
+## Automatic hazard peaks and admissible ranges
+
+`confint_survival_hazard_range(accrual_rate,accrual_time,followup_time,max_length)`
+finds a numerical peak and the hazard ranges attaining `assurance`. The default
+`hazard_bounds=(1e-4,1000)` match the native outer range for a reference hazard
+of 1. Bounds are in the user's inverse-time units and must be positive and
+increasing, with a resolvable separation in log coordinates. All evaluations
+must meet the forward calculation's resource limits.
+
+A logarithmic grid (65 points by default, configurable from 17 to 1025) locates
+candidate extrema. Both local maxima and minima are refined before each target
+crossing is bracketed. Evaluations are cached within the search. The result
+`CONFINTSurvivalHazardRange` contains:
+
+- `peak_hazard` and its forward `peak` result, including the omitted-mass bound;
+- `intervals`, an immutable tuple of admissible `(lower,upper)` pairs;
+- the search `bounds`, plus `lower_clipped` and `upper_clipped` flags;
+- `peak_at_boundary`, identifying whether the selected peak is at a search endpoint.
+
+An empty interval tuple means no qualifying range was found. If a range extends
+to an accepted search endpoint, the corresponding flag is true: that endpoint
+is a search limit, not a solved threshold. Both hazard-width and mean-width
+targets are supported. Flat probabilities near one can make the numerical peak
+location nonunique or sensitive to rounding; the crossing thresholds remain
+the useful design quantities in that case.
+
+This grid/refinement procedure is a numerical search, **not a proof of a global
+maximum or exhaustive detection of arbitrarily narrow components**. Increasing
+`grid_points` or choosing a more focused search interval can check resolution.
+The manual assumes a single peak for hazard-width assurance; Python can return
+multiple detected admissible intervals.
+
+The native `set_hazard_info` call passes accrual duration as follow-up during
+peak search. Python consistently uses the supplied follow-up duration.
+For accrual rate 5, duration 10, follow-up 0 and maximum length .5 at confidence
+.95, independent R calculations give peak hazard .1564455377 with probability
+.999978426873. At assurance .5, the hazard-width range is approximately
+[.002858333869,.840906351881]. For mean-width assurance, the crossing is
+1.197442895773 and the accepted range continues to the upper search limit.
+Tests verify these values, restricted-bound clipping, insufficient designs,
+grid refinement and changes of time units by 1e±200.
+
+```python
+from mdanderson_stats import confint_survival_hazard_range
+
+result = confint_survival_hazard_range(5, 10, 0, 0.5, assurance=0.5)
+assert abs(result.peak_hazard - 0.1564455377) < 1e-6
+assert len(result.intervals) == 1
+low, high = result.intervals[0]
+assert abs(low - 0.002858333869) < 1e-9
+assert abs(high - 0.840906351881) < 1e-9
+assert not result.lower_clipped and not result.upper_clipped
+```
+
+**Catalog status is partial.** Native session/report workflows remain pending.

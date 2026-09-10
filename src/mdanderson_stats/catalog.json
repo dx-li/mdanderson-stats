@@ -2089,16 +2089,18 @@
         "Poisson Garwood rate-CI width probability, attainable-length quantile, rate limit and earliest exposure by enumerating event-count thresholds",
         "Independent binomial-difference Wald-width assurance, event-probability inversion, and first qualifying balanced sample size with complete tail accounting",
         "Exponential-survival hazard/mean CI-width assurance for fixed event counts and Poisson accrual, with stable expected events and explicit summation truncation bounds",
-        "Bracketed survival inversions for interval-length quantiles, accrual rate/duration, follow-up and either hazard branch, with achieved assurance and truncation metadata"
+        "Bracketed survival inversions for interval-length quantiles, accrual rate/duration, follow-up and either hazard branch, with achieved assurance and truncation metadata",
+        "Automatic numerical hazard-peak and admissible-range search within explicit bounds, including crossing refinement, clipped endpoints and mean-survival targets"
       ],
       "validation": [
         "Manual worked examples, independent R probabilities, normal-data simulation, inversion minimality and extreme unit/tail checks; tests/test_confint_normal.py",
-        "Pending automatic hazard-maximum/range search and session/report workflows; docs/confint.md",
+        "Pending native session/report workflows; docs/confint.md",
         "Independent R enumeration, all-count probability checks, discontinuous length inversion, and nonmonotone sample-size examples; tests/test_confint_binomial.py",
         "Independent R gamma/Poisson calculations, zero/one-count corrections, full count sums, exposure-threshold minimality and extreme unit scaling; tests/test_confint_poisson.py",
         "Independent R joint enumeration, midpoint upper-tail correction, sample/complement symmetries and balanced-search minimum; tests/test_confint_binomial_difference.py",
         "Independent R full-mixture reference, exponential-sample conditional widths, reciprocal interval relation, unit scaling and underflow-resistant expected counts; tests/test_confint_survival.py",
-        "Independent R roots for both interval targets and hazard branches, impossible quantiles and extreme time-unit changes; tests/test_confint_survival_inverse.py"
+        "Independent R roots for both interval targets and hazard branches, impossible quantiles and extreme time-unit changes; tests/test_confint_survival_inverse.py",
+        "Independent R peak/crossings, mean-target range, clipping and empty cases, grid refinement and extreme time-unit scaling; tests/test_confint_survival_range.py"
       ]
     },
     {
