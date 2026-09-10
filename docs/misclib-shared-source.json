@@ -1,0 +1,397 @@
+{
+  "normalization": "Procedure blocks; omit comments, whitespace, IMPLICIT NONE, terminal RETURN, and biomath_ module prefix. Preserve string literals, token boundaries, executable expressions and internal procedure order; lowercase only nonliteral tokens.",
+  "procedures": [
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "algdiv",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "32179e795913191ff08083c04f8d2e621bb012f0c86fa158748a1fd55703a099",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "alngam",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "f2301d460e8c792cfdf053f6d5a4eace7d6602481f3339db5d3f88d1a1611186",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "alnrel",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "6794df591baa6da3eb5a77d7137a8e4d00f84a0b91a2fdd37903713f1a35fd7f",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "apser",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "367ac80524542b3782a910c2a11356b43264b5cca6dc7d7a41cc20c7990f1e44",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "basym",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "4f2e3b2d5f5de3125509314e73e80a344009184779d2bf051c005e7bf4caef66",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "bcorr",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "269955d3ac35a808470a0d167134132f4f93ea213e57d0f72c681f795628152b",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "betaln",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "bae98a6571f2da9db716168f07e3c61e4784adfaf7de58f092e3a2dc23eff5e6",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "bfrac",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "56a82f35cd4ecffce33cfdb7c4d4d51fffad74bc8bdb697230f5a8d5b114f4f6",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "bgrat",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "7c11e00d68d650ea69cabe790f14ce14594f8e3976fd2cdd57e9c06d23b9d58f",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "bpser",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "39696149751394f024c4ee108a318ba4665f79ba64097440733b88de8811bfc5",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "bratio",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "bfad969582d54ab108ebb48b61fd097e7b275b596008931d4fae8730b3a0a02e",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "brcmp1",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "4039e62ce4c23db0dee110cb761335d01035d1e1fa8e3cb4d5a9636aa334beff",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "brcomp",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "979c1fadb38b91ddd3618d1f78793dbc04161103560d523f8c62003e926bdd7b",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "bup",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "1160cfff267700ad5d55ead75d37422d40546924a76cd228a4e078eb9b51f8bf",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "erf",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "15480876145ee761ea2d6d7917d5ee84bbdaa2e03a4500ffab0e6408e366cdbe",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "erfc1",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "2132f0aa138f8cd710a813b916b127407183f8da2fe4933fc541fdf9b4d86682",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "esum",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "cc45910b3d700b7eb24be3174c64e2b1b37ca15c50b20172bbc91bace3a42c9f",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "evaluate_polynomial",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "9c29c335b8c3d369163584db98bab164dd7a14442b4f72c4deee30d49eb9ded4",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "exparg",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "7b8904d2824afce7ae13ee50b74451d3b7a47b80726fffedf24f7348ab6e00eb",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "fpser",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "110b427cd38f83dcbef2858f065836c3a8c80a232ddbaa4af9315ca29e2b8de1",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "gam1",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "d5f59030261e2b69a73331439b8d95aa66ab67816967ef9dc6172aff8d3f8c6b",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "gamln",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "47fbfa86abf25f286dc12d44b0c25d167602c2700592e1ea04870c1bc7081f07",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "gamln1",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "8eb7f5ba3f26eb58ea21d347ca5788faab5d776bee6531a0dade3179a67723ee",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "gamma",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "98b78403ec907b4c7fc3c2a09a58c93655d6f79a9899054105c620262fb13e5d",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "grat1",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "bc47b47e0011115e83b33893dbb6ba172ba8c2e23f53b93afddbb7a2481fb9eb",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "gratio",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "66344429f93e0f03d2211577af6294c7cc5bb7191d9fc4b2702a463e5eda509c",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "gsumln",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "b2b13ccf3cc1761afd11711e6174ef3a3db18428538100b5e6f30f666d00e65d",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "log_beta",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "e3d77741d100c88117d176ac196c3326d529fa7d41d6f4c7e318d97b29351c70",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "log_bicoef",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "ede5016d23c03f1e36bc65dcd5e34a70a9cb15370ae076296996be5eb6547116",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "log_gamma",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "ad16b69bbf82b2188badadaadb41678cb8fe6343a51ae1d002e11d418f45c703",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "psi",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "53389cb6515cfdb1a7307c92a020aea03702710d0c9129aa17175a805d5ed2cc",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "rcomp",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "d1205fa3f97d8bf4b8d36f84d52b4d0140783d3de5592e1835a377e912771b3e",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "rexp",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "16bebfc3aa0b256f815d9dcb3c30f1422f8f58a284f980290d607d17294aa9b6",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "rlog",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "3144ba8f0b5ef774bdc577a94b65e800fa4312076e2add9ebd1286632fc76abe",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "mathlib_mod.f90",
+      "procedure": "rlog1",
+      "cdflib_source": "biomath_mathlib_mod.f90",
+      "normalized_sha256": "2c8fcca6c090ba11b359daeffda35154cf4cf21eaa61e3904a78716cf978e151",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "strings_mod.f90",
+      "procedure": "lower_case_char",
+      "cdflib_source": "biomath_strings_mod.f90",
+      "normalized_sha256": "d7b0ba76f39edb9ac1c5aa6a3d0f284c6648f1dc13bb22742947748b16f209ba",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "strings_mod.f90",
+      "procedure": "lower_case_string",
+      "cdflib_source": "biomath_strings_mod.f90",
+      "normalized_sha256": "4cafad787babcc7284120cd94f6ca42725e9644d2564fc7d3a11fa241ccdc93a",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "strings_mod.f90",
+      "procedure": "qlex",
+      "cdflib_source": "biomath_strings_mod.f90",
+      "normalized_sha256": "22a22eafe13bfafdf2defb98cbf39ed0e874121967266a7d84c3d71df57fea11",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "strings_mod.f90",
+      "procedure": "upper_case_char",
+      "cdflib_source": "biomath_strings_mod.f90",
+      "normalized_sha256": "5f09249aad06b1a02a59ed7edb0c8ef0c75734569fe70585e4b51c266fd90cfa",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "strings_mod.f90",
+      "procedure": "upper_case_string",
+      "cdflib_source": "biomath_strings_mod.f90",
+      "normalized_sha256": "c238ca18092736cfe854d717f48146ddb5bd165d1bff862f9edcb8139d324984",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "zero_finder_mod.f90",
+      "procedure": "final_zf_state",
+      "cdflib_source": "zero_finder.f90",
+      "normalized_sha256": "dc627a8d246805fdcec8e410f1bf8d55076575463348345e962dbfead0fed025",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "zero_finder_mod.f90",
+      "procedure": "interval_zf",
+      "cdflib_source": "zero_finder.f90",
+      "normalized_sha256": "bd64513989822b0902cd41d3dacea04d5afedb183f5d22ad0b091e5b3be79aa0",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "zero_finder_mod.f90",
+      "procedure": "rc_interval_local_zf",
+      "cdflib_source": "zero_finder.f90",
+      "normalized_sha256": "e4058a400e71135468bf87b3df76eda280d7d665bd43f755abcc51192a674c0a",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "zero_finder_mod.f90",
+      "procedure": "rc_interval_zf",
+      "cdflib_source": "zero_finder.f90",
+      "normalized_sha256": "6ee9c1a08f040b2ca00fbabed36346a23fae10a41074b5f87c68b981eb91a1d7",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "zero_finder_mod.f90",
+      "procedure": "rc_step_local_zf",
+      "cdflib_source": "zero_finder.f90",
+      "normalized_sha256": "59efeca4c4c9dccd553fc98fbfe5a701fdc406f733419aa19bf4fbd3a5340ccf",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "zero_finder_mod.f90",
+      "procedure": "rc_step_zf",
+      "cdflib_source": "zero_finder.f90",
+      "normalized_sha256": "c3e5da442464c019d272a72eda3b0db1b8fb33b168941e93808af1650b2acc7b",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "zero_finder_mod.f90",
+      "procedure": "set_zero_finder",
+      "cdflib_source": "zero_finder.f90",
+      "normalized_sha256": "99f60514f84f11b493b87f079a78db80d9f883c1dca72f8b3d879a91be627a04",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "zero_finder_mod.f90",
+      "procedure": "step_zf",
+      "cdflib_source": "zero_finder.f90",
+      "normalized_sha256": "9654784dd0ee0c3410805563b538609f2334194835439ab75582b319cce13b89",
+      "identical_to_cdflib": true
+    },
+    {
+      "module": "sort_mod.f90",
+      "procedure": "sort_list_char",
+      "cdflib_source": "biomath_sort_mod.f90",
+      "normalized_sha256": "36d55a90e6e76e0f8919b9f9094c5aef6262af633eb9522a4b0b85fa8b46adbe",
+      "identical_to_cdflib": false
+    },
+    {
+      "module": "sort_mod.f90",
+      "procedure": "sort_list_dbl",
+      "cdflib_source": "biomath_sort_mod.f90",
+      "normalized_sha256": "a88dbd93403bc352d63cb1635cd37122bff30087ba86fef7a002842aa8c808e2",
+      "identical_to_cdflib": false
+    },
+    {
+      "module": "sort_mod.f90",
+      "procedure": "sort_list_int",
+      "cdflib_source": "biomath_sort_mod.f90",
+      "normalized_sha256": "a7e08b3aa38f8fa751e2fdeb9685ae971a275fb71464f8ac547316ba70567b75",
+      "identical_to_cdflib": false
+    },
+    {
+      "module": "sort_mod.f90",
+      "procedure": "sort_list_real",
+      "cdflib_source": "biomath_sort_mod.f90",
+      "normalized_sha256": "085bd769f6f3a818140522dbbe39324d220359b62afc7385f47ac7b0c12b6efd",
+      "identical_to_cdflib": false
+    },
+    {
+      "module": "sort_mod.f90",
+      "procedure": "sort_matrix_char",
+      "cdflib_source": "biomath_sort_mod.f90",
+      "normalized_sha256": "0effcf2d10927d8dbbd06a5ba04d923c77718868b78ff8ae9c6d486cd1d5831e",
+      "identical_to_cdflib": false
+    },
+    {
+      "module": "sort_mod.f90",
+      "procedure": "sort_matrix_dbl",
+      "cdflib_source": "biomath_sort_mod.f90",
+      "normalized_sha256": "508e35c3dcce9a4d177fabb0c21ff41e00c45a695942734fd8e65fdc8d05f426",
+      "identical_to_cdflib": false
+    },
+    {
+      "module": "sort_mod.f90",
+      "procedure": "sort_matrix_int",
+      "cdflib_source": "biomath_sort_mod.f90",
+      "normalized_sha256": "00dcf3c021481cc6e6672b644d02473b7ea4c079f66080eced7cea09fcc3e693",
+      "identical_to_cdflib": false
+    },
+    {
+      "module": "sort_mod.f90",
+      "procedure": "sort_matrix_real",
+      "cdflib_source": "biomath_sort_mod.f90",
+      "normalized_sha256": "88b356b38ad0584c7a41d035f6130ad1e11ae1033ecaed87474708c7c763f968",
+      "identical_to_cdflib": false
+    }
+  ]
+}

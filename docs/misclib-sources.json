@@ -1,0 +1,151 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "misclib.zip",
+      "bytes": 378655,
+      "sha256": "f16f2389a0ac1fbadb5959a559f58f315d378fe82cdd8f466111dd4b1712742d",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/DOC/misclib.pdf",
+      "bytes": 171731,
+      "sha256": "6212267b36961c390ee55cc0d85f453e3c7675783d19e0e04a790d1bc8b76009",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/DOC/misclib.ps",
+      "bytes": 243846,
+      "sha256": "e168d8de390b950cc85575885762e4ba86820a16856ebd536547f2b5467e1397",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/DOC/misclib.tex",
+      "bytes": 50244,
+      "sha256": "de0732c8d5ae3e12559682a4c7818e9488a060fe759d72824c7e043d4d44c672",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/COMPILE.IT",
+      "bytes": 336,
+      "sha256": "413f80e943cbe80facb3e9e85a2726daeef2177a4e117520d17ccaf310fb92ba",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/INSTALL.txt",
+      "bytes": 1084,
+      "sha256": "324a88442774533ea3e9d857da6367f0a5c2d8bc5cdb4faa4bf9671b2315750f",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/LEGALITIES.txt",
+      "bytes": 5126,
+      "sha256": "a23afdcbb973cfef2bf39d2dbdad25cae58cd7a3910be31fc63a978bf7762077",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/constants_mod.f90",
+      "bytes": 1702,
+      "sha256": "1f0161a12dadaa70deb3fa5dc612cbd714810a5c0e9d89d5a143f922d234643d",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/format_number_mod.f90",
+      "bytes": 17202,
+      "sha256": "5b90c7ff009213e93196a6483c81669824435a13c9c0417c60aa2e99c589e387",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/format_specs",
+      "bytes": 25851,
+      "sha256": "ba575b33aa0c72a6f5530a73fb00be543a9fef6a1036d5b8e57178928ce36067",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/get_values_from_user_mod.f90",
+      "bytes": 67101,
+      "sha256": "e074a777565e9bd21d7867f6cff431fb15d97872a4cf50d97eb1c3585a4afacc",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/interface_mod.f90",
+      "bytes": 75353,
+      "sha256": "7f254a813e06f9aac3ccf8dde9b7d367a93fa3b2d8dbb109a2b2393c06f50ba5",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/mathlib_mod.f90",
+      "bytes": 99045,
+      "sha256": "e88b1305d910ead44321a145c5847705aa348044cd61f625d570b670c34eeb4d",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/max_fun_mod.f90",
+      "bytes": 15259,
+      "sha256": "f4f67a56ecb9e52d044104460b4b98c517c4dd6da6dfe6e83ef793a6812b801f",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/open_file.f90",
+      "bytes": 29213,
+      "sha256": "482a86e32b76f9b5de86b81cadd085de5aed9ed0878c9477647a8f25a8335186",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/print_it_mod.f90",
+      "bytes": 21312,
+      "sha256": "020947f3d3a8f8ce6c06cbda364fb647777bf4147ce5a8a9455e08f24f370d3f",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/sort_mod.f90",
+      "bytes": 69904,
+      "sha256": "fb0d3839e1a916eb55a3611665eb70bbcdd82a457aea9fa036d5060514d7ee40",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/sort_permutation_mod.f90",
+      "bytes": 54989,
+      "sha256": "d1e7fbb4a3d1c5c64550cffb3c401834422b834855f842aa39044abcf09130f3",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/strings_mod.f90",
+      "bytes": 43065,
+      "sha256": "69f42609664df36bd106835da61857e9ccb9fd0e162ac31c1011320ccd6bf73c",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/SOURCE/zero_finder_mod.f90",
+      "bytes": 50417,
+      "sha256": "93b81de2890d8e5f3e1b8e37bfb0349fe26f1beb47cdc79d890138718811441e",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/misclib/misclib_V1.0f.zip",
+      "artifact": "extracted/misclib-1.0/install.txt",
+      "bytes": 1115,
+      "sha256": "915130265cbc9a5b42d246e4e13ebcd76773899e1c3707b6fa8e17c4469a413c",
+      "retrieved_date": "2026-09-10"
+    }
+  ]
+}

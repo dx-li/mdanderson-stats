@@ -933,3 +933,8 @@ and donor-length summaries to the same backcross generation.
 [SORTF90](docs/sortf90.md) provides `sortf90(source)` to alphabetize Fortran
 program units and nested contained procedures. It returns text for review and
 matches the original separator and inter-unit comment handling.
+
+[Misclib](docs/misclib.md) adds bounded scalar maximization with `fun_max` and
+independent reverse-communication searches. Its 35 mathematical helpers and
+shared root/string routines reuse the existing CDFLIB implementations; remaining
+formatting and matrix-permutation utilities are tracked explicitly.

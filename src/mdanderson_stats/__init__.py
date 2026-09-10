@@ -347,6 +347,13 @@ from .merit_search import MERITSearch, merit_sample_size
 from .merit_simulation import MERITSimulation, simulate_merit
 from .merit_trial import MERITTrialResult, run_merit_trial, simulate_merit_interims
 from .microarray_normalization import quantile_normalize
+from .misclib_maximum import (
+    FunctionMaximizer,
+    FunctionMaximum,
+    fun_max,
+    rc_fun_max,
+    set_fun_max,
+)
 from .mtpi import MTPIDesign, MTPIPosterior, MTPISelection, MTPITable
 from .mtpi_simulation import MTPISimulation, simulate_mtpi
 from .muhaz import MuhazFixed, muhaz_fixed
@@ -588,6 +595,11 @@ from .windows import (
 )
 
 __all__ = [
+    "FunctionMaximum",
+    "FunctionMaximizer",
+    "fun_max",
+    "rc_fun_max",
+    "set_fun_max",
     "sortf90",
     "SOGSSimulation",
     "sogs_simulate",

@@ -679,3 +679,16 @@ Texas M. D. Anderson Cancer Center, in SORTF90. The downloaded archive contains
 no separate software license grant. Original Perl source and documentation are
 not redistributed. See `docs/sortf90.md` and `docs/sortf90-sources.json` for
 scope, differences, source provenance and native-output validation.
+
+## Misclib
+
+`misclib_maximum.py` adapts the scalar maximizer in Misclib's `max_fun_mod.f90`,
+which credits Forsythe, Malcolm and Moler, *Computer Methods for Mathematical
+Computations*, p. 185, and Richard Brent, *Algorithms for Minimization without
+Derivatives* (1973). The archive places MD Anderson's own efforts in the public
+domain while identifying separate terms for ACM and other incorporated code;
+the [original legal notice](notices/mdanderson-misclib-Legal.txt) is retained.
+Existing CDFLIB implementations cover identical math, string and root-finder
+source procedures under their documented implementation choices and notices.
+See `docs/misclib.md`, `docs/misclib-shared-source.json` and
+`docs/misclib-sources.json`. Original implementation sources are not bundled.
