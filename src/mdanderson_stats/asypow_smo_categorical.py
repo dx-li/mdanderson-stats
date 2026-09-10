@@ -52,7 +52,7 @@ def _categorical(
     if constraints is not None:
         if null is not None:
             raise ValueError("supply either null parameters or constraints, not both")
-        q, df = _fixed_categorical_null(p, mass, constraints, ordinal)
+        q, df = _fixed_categorical_null(p, mass, constraints, ordinal, log_weight)
     elif null is None:
         if len(p) < 2:
             raise ValueError("equality testing requires at least two groups")

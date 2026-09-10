@@ -1289,12 +1289,12 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Local information-matrix noncentrality and null projection for linear contrasts; noncentral chi-square power, continuous sample size and significance inversion; independent-group binomial, Poisson and uniformly accrued exponential-survival information. Remaining SMO models, unanchored categorical equality constraints and full native workflow coverage remain pending.",
+        "Local information-matrix noncentrality and null projection for linear contrasts; noncentral chi-square power, continuous sample size and significance inversion; independent-group binomial, Poisson and uniformly accrued exponential-survival information. Remaining regression/generic SMO models and full native workflow coverage remain pending.",
         "Linear/quadratic regression information for logistic and complementary-log-log binomial, Poisson and exponential-survival models; multiple independent groups and covariate-specific allocations.",
         "Ordinal cumulative-probability information and logistic/cloglog ordinal regression designs with linear/quadratic shared slopes and multiple independent groups.",
         "General design-matrix logistic and multiplicative-binomial log-linear information, plus delta-method information reparameterization using a supplied Jacobian.",
         "Original S-plus multinomial information for free category probabilities, corrected to include the implicit final category contribution.",
-        "SMO binomial, Poisson, multinomial, ordinal and censored exponential-survival fixed-null and all-groups-equal tests, with optional df subtraction, stable expected-log-likelihood divergence and power/sample-size/significance inversion. Mixed fixed/equality constraints for binomial, Poisson and exponential-survival groups, with connected equality components and independent restriction counts. Partial fixed multinomial/ordinal nulls with corrected expected-likelihood redistribution of unconstrained category mass."
+        "SMO binomial, Poisson, multinomial, ordinal and censored exponential-survival fixed-null and all-groups-equal tests, with optional df subtraction, stable expected-log-likelihood divergence and power/sample-size/significance inversion. Mixed fixed/equality constraints for binomial, Poisson and exponential-survival groups, with connected equality components and independent restriction counts. Partial fixed multinomial/ordinal nulls with corrected expected-likelihood redistribution of unconstrained category mass; general categorical fixed/equality components fitted by a positive-interior concave likelihood solver."
       ],
       "validation": [
         "tests/test_asypow.py",
@@ -1308,7 +1308,8 @@
         "tests/test_asypow_smo_categorical.py",
         "tests/test_asypow_smo_exponential.py",
         "tests/test_asypow_constraints.py",
-        "tests/test_asypow_categorical_constraints.py"
+        "tests/test_asypow_categorical_constraints.py",
+        "tests/test_asypow_categorical_fit.py"
       ]
     },
     {

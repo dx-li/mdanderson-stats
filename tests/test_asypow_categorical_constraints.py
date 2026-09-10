@@ -39,8 +39,6 @@ def test_fixed_components_multiple_groups_and_invalid_constraints():
     unchanged = asypow_smo_multinomial(p, constraints=[1, 1, 0.2])
     assert unchanged.divergence_per_observation == 0
     assert not x.null_parameters.flags.writeable
-    with pytest.raises(NotImplementedError, match="unfixed"):
-        asypow_smo_multinomial(p, constraints=[2, 1, 3])
     with pytest.raises(ValueError, match="sum to less"):
         asypow_smo_multinomial([0.2, 0.3], constraints=[[1, 1, 0.6], [1, 2, 0.5]])
     with pytest.raises(ValueError, match="increase strictly"):

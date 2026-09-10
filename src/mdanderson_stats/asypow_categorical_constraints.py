@@ -6,11 +6,12 @@ import numpy as np
 from numpy.typing import ArrayLike
 
 from ._validation import FloatArray
+from .asypow_categorical_fit import _equality_categorical_null
 from .asypow_constraints import _components
 
 
 def _fixed_categorical_null(
-    p: FloatArray, mass: FloatArray, constraints: ArrayLike, ordinal: bool
+    p: FloatArray, mass: FloatArray, constraints: ArrayLike, ordinal: bool, log_weight: FloatArray
 ) -> tuple[FloatArray, int]:
     fixed = np.full(p.size, np.nan)
     for indices, value in _components(constraints, p.size):
@@ -19,9 +20,7 @@ def _fixed_categorical_null(
                 raise ValueError("fixed categorical parameters must be strictly within (0,1)")
             fixed[indices] = value
         elif len(indices) > 1:
-            raise NotImplementedError(
-                "unfixed categorical equality components are not yet supported"
-            )
+            return _equality_categorical_null(p, mass, constraints, ordinal, log_weight)
     df = int(np.count_nonzero(~np.isnan(fixed)))
     if df == 0:
         raise ValueError("constraints must impose at least one independent restriction")

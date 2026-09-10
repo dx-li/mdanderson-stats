@@ -4,7 +4,7 @@ MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
 including regression, ordinal, multinomial and general design-matrix models.
-Remaining S-plus SMO models, unanchored categorical equality constraints and complete native workflows remain
+Remaining S-plus regression/generic SMO models and complete native workflows remain
 pending; the catalog status is **partial**.
 
 The original S-plus 2.1 archive has a broader scope than the later R archive.
@@ -410,7 +410,7 @@ Omitting the null compares the complete distributions across G>=2 groups.
 The null is the allocation-weighted pooled distribution, with df=(G-1)*(K-1).
 Supplying null parameters fixes every free parameter, with df=G*(K-1); a
 single vector broadcasts to all groups. Partial fixed constraints are supported
-as described below; unanchored equality components remain pending. Null parameters in
+as described below, including unanchored equality components. Null parameters in
 `SMOPower` are always a G by (K-1) matrix in the input parameterization.
 
 The two parameterizations produce the same divergence and power for the same
@@ -453,9 +453,9 @@ Both categorical SMO functions now accept `constraints=` using the original
 three-column format. Indices are one-based, flattened group by group across
 K-1 free category probabilities or cumulative thresholds. A row `[1,i,value]`
 fixes the selected parameter. An equality component is also supported when it
-contains a fixed value, which fixes all its members. An equality component with
-no fixed value raises `NotImplementedError`; its constrained optimization remains
-pending. The existing all-distributions-equal shortcut is still available by
+contains a fixed value, which fixes all its members. Equality components without
+a fixed value use the constrained likelihood fit described below. The existing
+all-distributions-equal shortcut is still available by
 omitting both the null and constraints arguments.
 
 For multinomial outcomes, fixing some probabilities leaves the remaining mass
@@ -490,6 +490,62 @@ with w=0.040821994520255173. Tests check the conditional allocations, likelihood
 score, power inversion, fixed components across groups and infeasible nulls.
 The original ordinal duplicate-marker rejection described above also affects
 some partial fixed hypotheses.
+
+## General categorical equality constraints
+
+Categorical `constraints=` now supports arbitrary combinations of fixed values
+and equalities among the K-1 free parameters, including components spanning
+groups. Components without fixed values are fitted jointly. Multinomial
+constraints act on category probabilities; ordinal constraints act on cumulative
+thresholds. The implicit last category/terminal cumulative probability is not
+indexed directly. Unconstrained parameters are also fitted, since normalization
+couples categories within each group.
+
+```python
+from mdanderson_stats import asypow_smo_multinomial
+
+# Share the first probability, allowing conditional distributions to differ.
+design = asypow_smo_multinomial(
+    [[0.2, 0.3], [0.4, 0.1]],
+    constraints=[2, 1, 3],
+    group_size=[1, 3],
+)
+assert abs(design.null_parameters[0, 0] - 0.35) < 1e-10
+assert abs(design.null_parameters[0, 1] - 0.24375) < 1e-10
+assert abs(design.null_parameters[1, 1] - 0.65 / 6) < 1e-10
+assert design.degrees_of_freedom == 1
+```
+
+The component representation satisfies equalities and fixed values by
+construction. Category masses are affine functions of the remaining parameters.
+A HiGHS linear program locates a strictly positive feasible start; a damped
+Newton iteration then maximizes the concave expected log likelihood. Column
+scaling and an SVD solve avoid explicitly forming/inverting the Hessian.
+Backtracking keeps every category positive and checks likelihood improvement.
+The fit stops when its Newton correction changes category masses relatively by
+at most 1e-10, applying that final correction before returning. The iteration
+limit is 200. Positive alternative masses and allocations make the interior
+optimum unique whenever the constraints are feasible.
+
+Degrees of freedom equal the number of independent restrictions. Reordered,
+repeated or cyclic equalities describe the same test. Infeasible ordinal ties
+within a group are rejected because they force a category to zero. Contradictory
+fixed values are also rejected. The analytical path remains in use for fixed
+constraints alone and for the default complete-distribution equality test.
+
+This numerical path can reject extremely ill-conditioned hypotheses or problems
+whose positive interior cannot be resolved at floating-point/linear-programming
+tolerances. It also rejects allocation/category weights that underflow after
+relative scaling, unresolved curvature, and failed convergence. It does not
+return a partially optimized fit or insert positive probability floors. The
+analytical shortcuts retain their previously documented extreme-input behavior.
+
+Validation includes complete equality against the original example, partial
+equality reduced to the independent binomial calculation, and a coupled
+three-group null with an analytical profile-likelihood solution. Likelihood
+scores at the fitted solution are checked directly. Tests also cover mixed fixed
+and equality constraints, within-group multinomial equality, reordered/redundant
+constraints, infeasible ordinal nulls, and small near-null divergences.
 
 ## SMO exponential survival
 
