@@ -35,6 +35,8 @@ class IBOINDesign:
     safe_probability: float | None = None
     toxic_probability: float | None = None
     elimination_probability: float = 0.95
+    robust_prior: bool = False
+    effective_prior_ess: NDArray[np.int64] = field(init=False)
     log_hypothesis_probability: FloatArray = field(init=False, repr=False)
     _boin: BOINDesign = field(init=False, repr=False)
 
@@ -57,10 +59,21 @@ class IBOINDesign:
             raise ValueError(
                 "require 2..100 ordered probabilities and matching integer ESS 0..10000"
             )
+        if not isinstance(self.robust_prior, (bool, np.bool_)):
+            raise ValueError("robust_prior must be boolean")
+        effective = ess.astype(np.int64)
+        if self.robust_prior:
+            matches = np.flatnonzero(q == base.target)
+            if matches.size != 1:
+                raise ValueError("robust prior requires exactly one skeleton value equal to target")
+            prior_mtd = int(matches[0]) + 1
+            if 2 * prior_mtd >= q.size:
+                effective[prior_mtd:] = 0
+        object.__setattr__(self, "effective_prior_ess", _owned(effective))
         phi = np.array([base.target, base.safe_probability, base.toxic_probability], dtype=float)
         log_prior = np.empty((q.size, 3))
         # Vectorize historical counts and hypotheses, keeping memory O(max ESS).
-        for j, (probability, size) in enumerate(zip(q, ess, strict=True)):
+        for j, (probability, size) in enumerate(zip(q, effective, strict=True)):
             x = np.arange(int(size) + 1)
             likelihood = x[:, None] * np.log(phi) + (size - x[:, None]) * np.log1p(-phi)
             hypothesis = likelihood - logsumexp(likelihood, axis=1, keepdims=True)

@@ -27,6 +27,20 @@
       "retrieved_date": "2026-09-10",
       "bytes": 34205,
       "sha256": "80aba642501193a41686e16d95a39283832c7fb251a845a5b3e03aae49015104"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/iBOIN/iBOINRobust.pdf",
+      "artifact": "robust.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 122559,
+      "sha256": "dac07926f244670fab6f97184159b28296ec7ad29e9eaabc17c8f25e51b1d093"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/iBOIN/",
+      "artifact": "robust-browser/page-2026-09-10T11-33-04-183Z.yml",
+      "retrieved_date": "2026-09-10",
+      "bytes": 34212,
+      "sha256": "7886aaa064a70cda7a559159ee7aaa1f691cf54bf4ea4cc333bb1c26e7b2d466"
     }
   ],
   "native_settings": "V1.6.3.0, target .25, skeleton [.06,.14,.25,.38,.50], ESS 2 at each dose, robust prior unchecked; captured default table for n=1..12."

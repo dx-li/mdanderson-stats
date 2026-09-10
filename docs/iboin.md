@@ -34,6 +34,34 @@ ESS zero gives equal hypothesis probabilities and ordinary BOIN decisions.
 Default safe and toxic alternatives are .6 and 1.4 times the target. Target and
 alternative validation follows the package's existing `BOINDesign`.
 
+## Robust historical borrowing
+
+Set `robust_prior=True` to apply the rule in the app's dedicated
+[robust-prior help](https://biostatistics.mdanderson.org/shinyapps/iBOIN/iBOINRobust.pdf).
+If the one-based prior MTD index is at least half the number of doses, historical
+ESS is set to zero for doses strictly above that index. Otherwise all supplied
+ESS values remain in use. The dedicated help explicitly includes equality at the
+midpoint; the main guide omits this equality case. The default is `False`.
+
+This option requires exactly one skeleton probability equal to the target,
+matching the help's definition of the prior MTD. Ambiguous or missing matches
+raise instead of assuming a nearest-dose or tie-breaking convention.
+`prior_ess` retains the supplied values; read-only `effective_prior_ess` shows the
+values actually used, whether or not robust borrowing is enabled.
+
+```python
+from mdanderson_stats import IBOINDesign
+
+robust = IBOINDesign(
+    [0.10, 0.19, 0.30, 0.42, 0.54], [2, 3, 4, 2, 2], target=0.30, robust_prior=True
+)
+assert robust.effective_prior_ess.tolist() == [2, 3, 4, 0, 0]
+```
+
+The two worked help examples are checked, including the even-dose midpoint case.
+A live robust-prior table confirms that higher-dose boundaries revert to ordinary
+BOIN for the default five-dose skeleton while the first three remain unchanged.
+
 ## Boundaries and conduct
 
 `boundaries(patients)` returns dose-by-sample-size matrices. Patient counts must
@@ -80,12 +108,12 @@ assert step.action == "escalate" and step.next_dose == 2
 
 ## Validation and remaining scope
 
-Three focused tests check all 100 published Table 1 escalation/de-escalation
+Focused tests check all 100 published Table 1 escalation/de-escalation
 cells, all 120 live default escalation/de-escalation cells and safety thresholds,
 an independent direct finite-sum prior calculation, extreme ESS/log probabilities,
 reduction to ordinary BOIN at ESS zero, and prior-independent safety stopping.
 
-**Catalog status remains partial.** Robust-prior automation, accelerated titration,
+**Catalog status remains partial.** Accelerated titration,
 optional extra safety/precision stopping, final MTD estimation with optional prior
 borrowing, operating-characteristic simulation and native report generation are
 not yet implemented. The guide contains additional conventions for these options;

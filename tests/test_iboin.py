@@ -92,3 +92,31 @@ def test_zero_information_reduces_to_boin_and_safety_ignores_history():
     native = IBOINDesign([0.06, 0.14, 0.25, 0.38, 0.5], [2] * 5)
     assert native.next_dose([0, 0, 0, 1, 0], [0] * 5, 4).action == "stay"
     assert native.next_dose([0, 0, 0, 0, 1], [0] * 5, 5).next_dose == 4
+
+
+def test_robust_prior_preserves_or_discards_history_as_native_guide_specifies():
+    ess = [2, 3, 4, 2, 2]
+    lower = IBOINDesign([0.1, 0.30, 0.42, 0.54, 0.6], ess, target=0.3, robust_prior=True)
+    upper = IBOINDesign([0.1, 0.19, 0.30, 0.42, 0.54], ess, target=0.3, robust_prior=True)
+    np.testing.assert_array_equal(lower.effective_prior_ess, ess)
+    np.testing.assert_array_equal(upper.effective_prior_ess, [2, 3, 4, 0, 0])
+    np.testing.assert_array_equal(upper.prior_ess, ess)
+    # Dedicated help uses >= J/2, including the midpoint in an even dose range.
+    middle = IBOINDesign([0.1, 0.3, 0.42, 0.54], [2] * 4, target=0.3, robust_prior=True)
+    np.testing.assert_array_equal(middle.effective_prior_ess, [2, 2, 0, 0])
+    ordinary = BOINDesign(target=0.3).boundary_table(12)
+    table = upper.boundaries(np.arange(1, 13))
+    np.testing.assert_array_equal(table.escalate_max[3:], np.tile(ordinary.escalate_max, (2, 1)))
+    np.testing.assert_array_equal(
+        table.deescalate_min[3:], np.tile(ordinary.deescalate_min, (2, 1))
+    )
+    assert not upper.effective_prior_ess.flags.writeable
+    assert ess == [2, 3, 4, 2, 2]
+    native = IBOINDesign([0.06, 0.14, 0.25, 0.38, 0.5], [2] * 5, robust_prior=True)
+    native_table = native.boundaries(np.arange(1, 13))
+    np.testing.assert_array_equal(
+        native_table.escalate_max[3:], [[0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2]] * 2
+    )
+    np.testing.assert_array_equal(
+        native_table.deescalate_min[3:], [[1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4]] * 2
+    )
