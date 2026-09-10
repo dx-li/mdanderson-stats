@@ -967,4 +967,6 @@ curve, Gaussian likelihood, subject-level parameter sweep and residual-variance
 conditional, plus atom, cluster, covariance and concentration updates.
 `fit_anovaddp` runs the complete fitting chain and returns immutable posterior
 states. `predict_anovaddp` adds new-subject curves, native study components and
-nadir summaries; file/plot adapters remain pending.
+nadir summaries. Source-format readers, predictive text exports and all five
+report figures complete the supplied workflow; see the documented MCMC mixing
+limitations before scientific use.

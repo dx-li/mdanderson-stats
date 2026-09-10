@@ -9,8 +9,11 @@ from mdanderson_stats import (
     anovaddp_baseline_curves,
     anovaddp_curve,
     anovaddp_new_atom,
+    anovaddp_r_outputs,
     fit_anovaddp,
     predict_anovaddp,
+    read_anovaddp_data,
+    write_anovaddp_prediction,
 )
 
 
@@ -38,7 +41,7 @@ def test_baseline_native_rows_and_new_atom_weights():
         assert fit.coefficients[0] == pytest.approx(z if u >= 0.5 else 1 + np.sqrt(0.5) * z)
 
 
-def test_complete_predictive_workflow_and_moments():
+def test_complete_predictive_workflow_and_moments(tmp_path):
     x = np.array(
         [[1, 0, 0, 1, 0, 0, 0], [1, 1, 0, 0, 1, 0, 0], [1, 0, 1, 0, 0, 1, 0], [1, 1, 1, 0, 0, 0, 1]]
     )
@@ -81,3 +84,45 @@ def test_complete_predictive_workflow_and_moments():
     assert not np.array_equal(prediction.common_effect, prediction.study3)
     with pytest.raises(ValueError):
         prediction.baseline_mean[0, 0] = 0
+
+    # Exercise source-format files through fitting inputs and all output families.
+    inputs = dict(
+        time=t,
+        observations=y,
+        observations_per_subject=[6, 6, 6, 6],
+        design=x,
+        prediction_design=x[:3],
+        initial_parameters=th,
+        initial_covariance=np.diag([1, 1, 1, 0.2, 0.2, 0.1]),
+        base_covariance=np.eye(35),
+        base_prior=np.r_[th[0, 1:], np.zeros(30)],
+    )
+    paths = {}
+    for name, value in inputs.items():
+        path = tmp_path / (name + ".txt")
+        np.savetxt(path, value)
+        paths[name] = path
+    data = read_anovaddp_data(**paths)
+    assert np.array_equal(data.subject, ids)
+    for name, value in inputs.items():
+        assert np.array_equal(getattr(data, name), value)
+    assert not data.subject.flags.writeable
+    outputs = write_anovaddp_prediction(prediction, tmp_path / "outputs")
+    expected = [
+        prediction.common_effect,
+        prediction.study3,
+        prediction.nadir,
+        prediction.baseline_mean,
+        prediction.baseline_second_moment,
+        prediction.prediction_mean,
+        prediction.prediction_second_moment,
+        prediction.time,
+    ]
+    for path, value in zip(outputs, expected):
+        assert np.array_equal(np.loadtxt(path), value)
+    assert anovaddp_r_outputs(prediction)["a02"] is prediction.baseline_second_moment
+    with pytest.raises(FileExistsError):
+        write_anovaddp_prediction(prediction, tmp_path / "outputs")
+    np.savetxt(paths["observations_per_subject"], [6, 6, 6, 5])
+    with pytest.raises(ValueError, match="subject counts"):
+        read_anovaddp_data(**paths)

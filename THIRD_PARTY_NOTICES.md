@@ -777,3 +777,8 @@ states independently of the original R interface and predictive plot routines.
 and the predictive assembly in `anovaddp.cpp` under the same attribution and
 terms. Source study transformations, shared-atom and nominal-nadir conventions
 are documented; original implementation files are not redistributed.
+
+`anovaddp_io.py` and `anovaddp_plots.py` adapt the numeric input roles, native
+predictive output mapping and five figures in `R/anovaddpio.R`, `anovaddp.cpp`
+and `R/plotResults.R` under the same attribution and terms. No original data
+files are redistributed.

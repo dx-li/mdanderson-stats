@@ -1,4 +1,4 @@
-# ANOVA DDP: nonlinear observation and conditional-update kernels
+# ANOVA DDP: nonlinear fitting, prediction and reports
 
 MD Anderson entry 67 implements the ANOVA dependent Dirichlet-process model of
 De Iorio, Müller, Rosner and MacEachern, “An ANOVA Model for Dependent Random
@@ -6,13 +6,14 @@ Measures,” JASA 99(465):205–215 (2004). Its response model describes repeate
 measurements using subject-specific nonlinear curves; the distribution of those
 curve parameters depends on subject covariates through a DDP mixture.
 
-**Coverage is partial.** The observation curve, Gaussian likelihood and
+**Supplied software workflow is implemented.** The observation curve, Gaussian likelihood and
 conditional Gaussian amplitude update, complete subject-level transition and
 residual-variance conditional, Gaussian atom posterior and cluster sweep are
 available, together with covariance, base-mean and concentration updates and
 the complete `fit_anovaddp` MCMC routine and all seven native predictive output
-families. Source data readers, output adapters and plotting workflow remain to
-be ported.
+families, source-format input readers, predictive text outputs and all five
+report figures. The documented numerical corrections and mixing limitations
+below remain applicable; implemented coverage does not certify convergence.
 The low-level conditional kernels are components of the fitting routine; they
 do not independently fit a DDP model.
 
@@ -93,13 +94,14 @@ The archived `vardati` signature accepts beta0 but never uses it; it draws
 residual variance with inverse-gamma shape `(alpha0+N)/2` and scale `SSE/2`.
 The R manual instead specifies inverse-gamma prior shape alpha0/2 and scale
 beta0/2, which would give posterior scale `(beta0+SSE)/2`. The variance API now makes this discrepancy explicit: its default follows the
-documented prior, while `mode="source"` reproduces the omission. Whole-sampler
-comparisons will need to state which variance target they use.
+documented prior, while `mode="source"` reproduces the omission. The whole-sampler
+comparison below uses the documented variance target.
 
-Other native routines and the DDP model structure remain under audit. The source
-also offers replacement of `regressione.cpp` for user-defined response curves;
-that extension point will require a consistent likelihood/conditional-update
-contract rather than a callback attached only to the prediction function.
+The source describes editing and recompiling `regressione.cpp` for other
+response curves. This is source-level customization, not a supplied alternative
+statistical model or runtime callback API. In Python, changing the response model
+likewise requires consistent edits to its likelihood and conditional updates;
+the supplied model has six parameters and Gaussian-linear amplitude coordinates.
 
 ## Validation and provenance
 
@@ -265,7 +267,7 @@ final resampling. Differences were below 5e-15. The comparison uses the correcte
 Gaussian/assignment formulas, not an unchanged compiled native sampler. Two
 focused tests additionally cover the single-subject case, coherent label/count
 invariants, immutable results and density-underflow inputs. The predictive
-functions below assemble these blocks; file/plot workflows remain pending.
+functions below assemble these blocks; file/plot workflows are described below.
 
 
 ## Hyperparameter transition
@@ -343,7 +345,7 @@ Carlo standard errors; the scalar case matches inverse gamma exactly up to
 floating-point rounding. Focused checks also verify the retained S update,
 positive definiteness, unchanged fixed base-covariance blocks, and rejection of
 unsupported cross-block dependence. These do not establish convergence of a
-complete chain; file/plot workflows are still pending.
+complete chain; file/plot workflows are described below.
 
 
 ## Complete MCMC fitting routine
@@ -432,7 +434,7 @@ convergence has occurred.
 Memory/work limits are checked before sampling: at most 50 million stored
 numeric values under a conservative all-subjects-in-separate-clusters bound,
 5 million subject transitions and 100 million observation-iterations. Original
-file adapters and plotting remain pending. The prediction functions
+file adapters and plotting are described below. The prediction functions
 below consume the retained posterior states for study and nadir summaries.
 
 Integration checks verify unchanged trajectories under thinning, normalized
@@ -568,4 +570,116 @@ closed-form one-dimensional existing/base atom draw and its weights, and exercis
 the full 35-coefficient prediction workflow. The latter checks output shapes,
 raw second moments, common-effect construction, independent subject variation,
 replay and immutable arrays. Predictions are limited to 30 million saved values.
-File export adapters and plot reproduction remain pending.
+File export adapters and plot reproduction are described below.
+
+
+## Source files and reports
+
+`read_anovaddp_data` covers the nine input roles in `anovaddpio.R`. Pass
+whitespace-separated file paths for time, observations, initial covariance,
+initial parameters, base covariance, observations per subject, training design
+and prediction design. `base_prior` accepts either a numeric vector or a file.
+Vectors may wrap across lines; matrices have one row per subject/scenario and
+need no transpose. Empty, nonfinite or inconsistent inputs raise an error.
+Unlike the original matrix readers, extra rows are not silently truncated.
+
+Observation records must be grouped by subject in design-row order. The reader
+expands positive integer `observations_per_subject` counts into zero-based
+`subject` IDs, checks their sum against both observation vectors, checks matrix
+dimensions and intercepts, and validates the covariance assumptions required by
+the fitting routine. Returned arrays are immutable. The original eight data
+files (3,096 observations, 608 subjects, seven covariates and ten prediction
+scenarios) were compared elementwise with the unchanged R readers and agreed
+exactly. Original patient data are not redistributed.
+
+For a directory containing the source's data files:
+
+```python
+from pathlib import Path
+import numpy as np
+from mdanderson_stats import (
+    read_anovaddp_data,
+    fit_anovaddp,
+    predict_anovaddp,
+    write_anovaddp_prediction,
+    plot_anovaddp,
+)
+
+source = Path("path/to/anovaddp/data")
+data = read_anovaddp_data(
+    time=source / "time.txt",
+    observations=source / "dati.txt",
+    initial_covariance=source / "var.txt",
+    initial_parameters=source / "start.txt",
+    base_covariance=source / "covmu.txt",
+    observations_per_subject=source / "npat.txt",
+    design=source / "dnew.txt",
+    prediction_design=source / "dprednew.txt",
+    base_prior=np.r_[[0.5, 1.8, 7, 16, 0.2], np.zeros(20), [-2.5, 2, -3, -7, 0.3] * 2],
+)
+fit = fit_anovaddp(
+    data.time,
+    data.observations,
+    data.subject,
+    data.design,
+    initial_parameters=data.initial_parameters,
+    initial_covariance=data.initial_covariance,
+    base_prior=data.base_prior,
+    base_covariance=data.base_covariance,
+    seed=67,
+)
+prediction = predict_anovaddp(fit, data.design, data.prediction_design, seed=68)
+write_anovaddp_prediction(prediction, "anovaddp-output")
+for i, figure in enumerate(plot_anovaddp(prediction), 1):
+    figure.savefig(f"anovaddp-output/figure-{i}.png")
+```
+
+This uses the native iteration defaults; assess mixing and run additional chains
+before scientific interpretation. `write_anovaddp_prediction` writes the seven
+native filenames (`comeff.txt`, `predstudy3.txt`, `nadir.txt`, `base.txt`,
+`base2.txt`, `prediction.txt`, `prediction2.txt`) with unchanged matrix
+orientation, plus `time.txt` to preserve the grid. Values use 17 significant
+digits for float64 round trips; these are numeric text adapters, not bytewise
+reproductions of NewMat's lower-precision formatting. Existing output paths
+raise `FileExistsError`; an I/O failure during writing can leave partial files.
+`anovaddp_r_outputs` returns the five original R names m/a0/a02/f0/f02 as a
+dictionary sharing the immutable result arrays.
+
+`plot_anovaddp` uses the existing optional `[plot]` dependency and returns figures
+without opening windows. Figure 1 plots the column mean of m in the upper half
+of a 2-by-1 layout. Figures 2–5 plot a0, a02, f0 and f02 in blue on 2-by-5 grids,
+with the original titles. Default x coordinates are R's implicit indices 1..T;
+`use_time=True` uses the physical time grid. Fewer than ten scenarios leave
+unused panels blank; additional scenarios produce additional pages. This fixes
+the R loop's hard-coded ten-row access while retaining its supplied ten-scenario
+layout. Second-moment panels remain raw second moments, not uncertainty bands.
+
+Validation extended the existing prediction integration check with input-count
+validation, immutable reader results and exact round trips of all eight output
+files. A separate headless run verified every plotted series, the five native
+layouts and twelve-scenario pagination; all five rendered figures were visually
+reviewed. These checks complement the numerical comparisons above.
+
+## Source coverage reconciliation
+
+The complete archive hash inventory is in [anovaddp-sources.json](anovaddp-sources.json).
+
+| Source role | Python coverage |
+| --- | --- |
+| regressione, fittare, loglik | anovaddp_curve and anovaddp_loglikelihood |
+| simtheta, logpost, vardati | Subject Gaussian/Metropolis transitions and variance conditional; logpost's conditional slope penalty is included in the slope acceptance ratio |
+| clusters, musimul, mynormpdf, countelements | Cluster sweep and atom posterior; stable Gaussian log densities and coherent allocation counts |
+| Basesim, SampleCovmu, S_Sample, M_sample | Base-mean, base-covariance, random-effect covariance and concentration updates |
+| MvnS_rand, wishart, rand.cpp, bundled matrix/RNG libraries | NumPy Cholesky/solves and local generators; Bartlett inverse-Wishart sampler; native RNG trajectories are not reproduced |
+| Newpatient, Baseline, PREDSTEP, NADIRSTEP | New-atom, baseline and complete predictive workflow |
+| anovaddp.cpp, R/anovaddp.R, native R bindings | Fitting/prediction orchestration, structured results and R output-name adapter |
+| anovaddpio.R | All nine numeric input roles and subject-count expansion |
+| Native seven-file output | write_anovaddp_prediction, with explicit time-grid export |
+| plotResults.R | All five figures, with scenario pagination and optional physical time |
+| zzz.R, package/build metadata | Standard Python imports/packaging; no R attach banner or dynamic-library bindings needed |
+
+The demonstration's fitting, prediction and plotting path is available in
+Python. Distribution metadata, bundled dependencies and development/debug
+comparison scaffolding do not introduce additional statistical methods. Source
+corrections, fixed study conventions and convergence limitations are explicitly
+retained in this document rather than hidden by the coverage designation.
