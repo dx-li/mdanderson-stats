@@ -1,0 +1,39 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BLIP/BLIP_V1.tar.gz",
+      "artifact": "archive.tar.gz",
+      "bytes": 10896,
+      "sha256": "d8a9acffaa2152e7844b3a0a73ba073671127b50943007d91248ff4caab9bd98",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BLIP/BLIP_V1.tar.gz",
+      "artifact": "S/blip/blip.s",
+      "bytes": 37854,
+      "sha256": "eb64a516d5e7c7d4e67f405f4130a272880bc99e0605e49914369b015ea5e347",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BLIP/BLIP_V1.tar.gz",
+      "artifact": "S/blip/blip",
+      "bytes": 5939,
+      "sha256": "5f5ced72cf82bde57c0d32b81acc0d3e7da6cd64c68b6f7dc48cd50960f9c601",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BLIP/BLIP_V1.tar.gz",
+      "artifact": "S/blip/readme",
+      "bytes": 1244,
+      "sha256": "027442e9dd561c129e4ad040730172cfaaad6bfe09f6fb36308523484b9682d6",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BLIP/BLIP_V1.tar.gz",
+      "artifact": "S/blip/paper.s",
+      "bytes": 4733,
+      "sha256": "6abd0541fbc746407954fa179649fa0d3d1377f1fcac584ce6096230c89a3265",
+      "retrieved_date": "2026-09-10"
+    }
+  ]
+}

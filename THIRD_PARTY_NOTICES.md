@@ -634,3 +634,14 @@ and warranty text are preserved in
 Those terms are not replaced by a different project license. Source provenance
 and validation are described in `docs/survan.md` and `docs/survan-sources.json`.
 Original Fortran programs and binaries are not redistributed.
+
+## BLiP
+
+`blip.py` implements BLiP standard distribution-plot geometry and rendering.
+Original source: Lee, J. Jack and Tu, Z. Nora (1997), “A Versatile
+One-dimensional Distribution Plot: The BLiP Plot,” The American Statistician
+51:353–358. The archive permits noncommercial use and distribution with source
+citation; its [readme](notices/mdanderson-blip-readme.txt) is preserved. This
+independent adaptation does not replace those terms with another license.
+Archive hashes and numerical comparisons are documented in `docs/blip.md` and
+`docs/blip-sources.json`. Original S code and archives are not redistributed.

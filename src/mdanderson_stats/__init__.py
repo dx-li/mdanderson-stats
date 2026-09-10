@@ -88,6 +88,7 @@ from .binomial_design import (
 from .binomial_null import BinomialNull, binomial_null
 from .binomial_sample_size import binomial_sample_size
 from .binormal_roc import BinormalROC, BinormalROCPoint
+from .blip import BLiPGroup, BLiPPlot, blip_data, plot_blip
 from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
 from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
@@ -559,6 +560,10 @@ from .windows import (
 )
 
 __all__ = [
+    "BLiPGroup",
+    "BLiPPlot",
+    "blip_data",
+    "plot_blip",
     "SurvanDescription",
     "SurvanFrequencies",
     "survan_describe",

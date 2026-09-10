@@ -910,3 +910,7 @@ adds fitted probabilities and coefficient/likelihood inference.
 [Kalbfleisch–Prentice baseline survival](docs/survan-baseline.md) and profile
 prediction. [Frequency tables and descriptive summaries](docs/survan-descriptive.md)
 complete its [seven advertised calculation families](docs/survan-coverage.md).
+
+[BLiP](docs/blip.md) adds its standard grouped boxplots, histograms and frequency
+polygons, with plotting-independent geometry and optional Matplotlib rendering.
+Custom percentile boxes, lines and point patterns remain pending.
