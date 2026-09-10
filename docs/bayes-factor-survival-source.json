@@ -1,0 +1,8 @@
+{
+  "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BayesFactorTTE/UsersGuide_BayesFactorTTE.pdf",
+  "guide_version": "1.0.0, May 21, 2012",
+  "retrieved_date": "2026-09-10",
+  "bytes": 210001,
+  "sha256": "34dc7db199ad6f33c838b539470a2276033c6c848b2ce3799831a125c6121a13",
+  "scope": "Exponential/iMOM posterior monitoring and continuous time-on-test boundaries; native calendar simulation, input/report workflow and integer-day parity remain pending."
+}

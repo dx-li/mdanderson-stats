@@ -13,6 +13,12 @@ from .bayes_factor_binary_report import (
     BayesFactorBinaryReport,
     parse_bayes_factor_binary_input,
 )
+from .bayes_factor_survival import (
+    BayesFactorSurvivalBoundaries,
+    BayesFactorSurvivalState,
+    bayes_factor_survival,
+    bayes_factor_survival_boundaries,
+)
 from .bayesian_monitoring import (
     BayesianMonitoringDesign,
     MonitoringOperatingCharacteristics,
@@ -439,6 +445,10 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "BayesFactorSurvivalState",
+    "BayesFactorSurvivalBoundaries",
+    "bayes_factor_survival",
+    "bayes_factor_survival_boundaries",
     "IMOMBinaryPrior",
     "BayesFactorBinaryJob",
     "BayesFactorBinaryReport",

@@ -2508,9 +2508,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Exponential survival with normalized one-sided iMOM prior: broadcast posterior monitoring from event counts and total time on test",
+        "Continuous total-time-on-test stopping boundaries with strict cutoffs, explicit median-to-mean conversion and dimensionless log-space integration"
+      ],
+      "validation": [
+        "Independent original-mean-coordinate integration, all displayed guide boundary rows within 1.5 days, root residuals, extreme evidence and unit invariance; tests/test_bayes_factor_survival.py",
+        "Pending calendar simulation, accrual/check schedule audit, native day discretization and input/report workflow; docs/bayes-factor-survival.md"
+      ]
     },
     {
       "id": 90,

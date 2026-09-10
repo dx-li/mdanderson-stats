@@ -765,3 +765,7 @@ superiority, inferiority and inconclusive conclusions.
 [BFMonitor](docs/bfmonitor.md) extends iMOM monitoring to variable prior shapes and
 inclusive cutoffs. Its default online boundaries are reproduced; ESS calibration
 and native protocol/export coverage remain pending.
+
+[Bayes Factor TTE](docs/bayes-factor-survival.md) adds exponential/iMOM posterior
+monitoring and continuous time-on-test boundaries. Calendar simulation and native
+input/report workflows remain pending.
