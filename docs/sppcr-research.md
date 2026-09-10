@@ -107,17 +107,19 @@ and uncertainty workflows must retain these distinctions.
 `data_in_struct_mod.values_to_structures` doubles input DNA amounts when
 converting genome equivalents to allele equivalents, removes never-seen allele
 columns and maps progenitor sizes to the retained indices. The numerical Python
-APIs accept model DNA amounts directly; a future file parser must make this unit
-conversion explicit. The native removal test sums all 50 rows of `seen_in`, not
-only `1:n_dna_in`, so repeated-input state requires a dedicated native probe.
-Removing an unobserved progenitor can also leave its mapped index at -1. Neither
-behavior should become an implicit Python input policy.
+APIs accept model DNA amounts directly; the batch data object retains both units
+and performs this conversion explicitly. The native removal test sums all 50 rows of `seen_in`, not
+only `1:n_dna_in`; an injected stale-row probe now confirms that this changes
+retained columns. Removing an unobserved progenitor also leaves its mapped index
+at -1 in the native fixture. Python only examines active rows and requires the
+retain-all policy when a progenitor is unobserved.
 
 The batch reader requires ordered `nallele`, `nrun`, `nwell`, `allelesizes`,
 `progenitor` records followed by the specified number of `run` records. Each run
-contains a DNA amount and one integer count per allele. Its lexical and comment
-rules, FileMaker input, interactive input and malformed-data handling still need
-full reconciliation and validation.
+contains a DNA amount and one integer count per allele. Its lexical/comment rules
+and valid conversion results now have native probes
+and a validated Python batch parser. The native negative-count probe also confirms
+sign loss, which Python rejects. FileMaker and interactive inputs remain pending.
 
 ## Remaining implementation scope
 
@@ -126,7 +128,7 @@ full reconciliation and validation.
 | `fit_mu_mod`, `fit_freq_mod`, `sppcr_aux_mod` | Mean fitting, curvature, summaries, transforms and support-aware inverse-transform confidence intervals implemented |
 | `generate_mod`, `one_data_set_mod`, `accumulate_mod` | Probability models, explicit-state NumPy simulation, replicate fits and stable population summaries implemented; simulation reports remain with output workflows |
 | `ecuyer_cote_mod`, random modules, seed helpers | Reconcile existing RANDLIB support with this source version; explicit reproducible RNG state |
-| `problem_in_mod`, `data_in_struct_mod` | Validate batch and FileMaker-derived formats, interactive inputs and progenitor identities |
+| `problem_in_mod`, `data_in_struct_mod` | Batch parsing/formatting, units, identities and validated data implemented; FileMaker and interactive inputs remain |
 | `results_out_mod` | Structured confidence intervals and diagnostics implemented; formatted data, analysis and simulation reports remain |
 | Main program, structures, file/format/input helpers | Complete reusable analysis workflow, CLI/stream behavior, safe file handling and source-interface reconciliation |
 

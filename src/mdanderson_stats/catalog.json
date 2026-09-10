@@ -882,7 +882,8 @@
         "Vectorized allele-frequency, calibration and mutant-frequency summaries with direct complementary groups, independent-mean delta variances, stable arcsine transforms, immutable results and explicit unavailable/structurally constant uncertainty",
         "Stable Poisson detection probabilities, original-count empirical probabilities and vectorized independent binomial generation with explicit NumPy Generator state, batched replicates and immutable count results",
         "Batched bootstrap generation and replicate fitting with original-count or explicit probability models, stable population summaries, retained replicate values and explicit undefined-frequency diagnostics",
-        "Vectorized observed-centered bootstrap confidence intervals for calibration, reciprocal calibration, allele and mutant frequencies, with support clipping, unbounded reciprocal limits and unavailable-uncertainty diagnostics"
+        "Vectorized observed-centered bootstrap confidence intervals for calibration, reciprocal calibration, allele and mutant frequencies, with support clipping, unbounded reciprocal limits and unavailable-uncertainty diagnostics",
+        "Validated immutable experiment data and native batch parsing/formatting with explicit DNA-unit conversion, allele/progenitor identity mapping, continued lists, comments, canonical round trips and disclosed unseen-allele policy"
       ],
       "validation": [
         "docs/sppcr-research.md",
@@ -915,7 +916,13 @@
         "tests/fixtures/sppcr_intervals.json",
         "docs/sppcr-intervals.md",
         "tools/benchmark_sppcr_intervals.py",
-        "docs/sppcr-intervals-benchmark.json"
+        "docs/sppcr-intervals-benchmark.json",
+        "src/mdanderson_stats/sppcr_data.py",
+        "src/mdanderson_stats/sppcr_batch.py",
+        "tests/test_sppcr_batch.py",
+        "tools/reference_sppcr_batch.py",
+        "tests/fixtures/sppcr_batch.json",
+        "docs/sppcr-batch.md"
       ]
     },
     {

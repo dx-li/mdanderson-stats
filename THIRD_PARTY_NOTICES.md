@@ -587,7 +587,10 @@ replicate fits retain all observations and mark undefined frequencies explicitly
 Centered, scaled population summaries replace cancellation-prone raw squared sums.
 Confidence limits use the source multiplier and observed centers, with explicit
 support clipping and unbounded reciprocal calibration limits replacing invalid
-wrapped or negative limits.
+wrapped or negative limits. The batch reader retains explicit DNA-unit conversion
+and valid-file semantics, while checking identities/counts, disclosing omitted
+alleles and repairing sign loss, stale-storage dependence and invalid progenitor
+indices. Python tokenization reuses the package's checked CDFLIB lexer.
 Remaining SPPCR workflow components are not yet implemented. The archive includes
 misplaced SOGS documentation and examples, which are not SPPCR validation evidence.
 Its exact [Legal.doc](notices/mdanderson-sppcr-Legal.doc.txt) is retained. Native

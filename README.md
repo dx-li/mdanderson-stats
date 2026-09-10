@@ -571,6 +571,7 @@ delta-method uncertainty and stable forward transforms.
 reproducible batched binomial samples. [Bootstrap analysis](docs/sppcr-bootstrap.md)
 adds replicate fitting, stable population summaries and undefined-frequency
 diagnostics. [Confidence limits](docs/sppcr-intervals.md) add support-aware
-calibration, reciprocal calibration and transformed frequency intervals. SPPCR
-remains partial: historical RNG reconciliation, input formats and the full
-reporting/application workflow remain.
+calibration, reciprocal calibration and transformed frequency intervals.
+[Batch input](docs/sppcr-batch.md) adds validated experiment data and canonical
+parsing/formatting. SPPCR remains partial: FileMaker and interactive input,
+historical RNG reconciliation and the full reporting/application workflow remain.

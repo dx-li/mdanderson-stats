@@ -1,0 +1,56 @@
+{
+  "archive_sha256": "98e0937e26a5209421144c20178a2bd9c77d3baad7a3b28606d0f0f6555e2c98",
+  "driver": "program probe\nuse problem_in_mod, only: read_one_bat\nuse data_in_struct_mod, only: seen_in,size_in,n_well_in\nuse structures_mod\nimplicit none\ninteger :: i,tail\nread(*,*) tail\nseen_in=0\nsize_in=0\nn_well_in=0\nseen_in(50,3)=tail\ncall read_one_bat(5)\nwrite(*,'(A,2I8)') 'dimensions ',n_dna,n_allele\nwrite(*,'(A,100ES25.16E3)') 'dna ',dna\nwrite(*,'(A,100ES25.16E3)') 'wells ',n_well\nwrite(*,'(A,100I8)') 'sizes ',allele_size\nwrite(*,'(A,2I8)') 'parents ',progenitor\ndo i=1,n_dna\nwrite(*,'(A,100ES25.16E3)') 'seen ',seen(i,:,data)\nend do\nend program\n",
+  "scope": "Original batch reader and conversion; unused storage explicitly initialized, with one injected stale-row case",
+  "cases": {
+    "basic": {
+      "input": "nallele 3\nnrun 2\nnwell 20 30\nallelesizes 100 102 104\nprogenitor 100 102\nrun 0.5 4 8 2\nrun 1 10 15 5\n",
+      "unused_row_value": 0,
+      "returncode": 0,
+      "stdout": "dimensions        2       3\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      100     102     104\nparents        1       2\nseen   4.0000000000000000E+000  8.0000000000000000E+000  2.0000000000000000E+000\nseen   1.0000000000000000E+001  1.5000000000000000E+001  5.0000000000000000E+000\n",
+      "stderr": ""
+    },
+    "continued_comments": {
+      "input": "NALLELE 3\nNRUN 2\nNWELL 20 # continue\n30 / done\nALLELESIZES\n100 102\n104\nPROGENITOR 100 102\nRUN 0.5 4 8 2\nRUN 1 10 15 5\n",
+      "unused_row_value": 0,
+      "returncode": 0,
+      "stdout": "dimensions        2       3\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      100     102     104\nparents        1       2\nseen   4.0000000000000000E+000  8.0000000000000000E+000  2.0000000000000000E+000\nseen   1.0000000000000000E+001  1.5000000000000000E+001  5.0000000000000000E+000\n",
+      "stderr": ""
+    },
+    "exponent_dna": {
+      "input": "nallele 3\nnrun 2\nnwell 20 30\nallelesizes 100 102 104\nprogenitor 100 102\nrun 5d-1 4 8 2\nrun 1e0 10 15 5\n",
+      "unused_row_value": 0,
+      "returncode": 0,
+      "stdout": "dimensions        2       3\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      100     102     104\nparents        1       2\nseen   4.0000000000000000E+000  8.0000000000000000E+000  2.0000000000000000E+000\nseen   1.0000000000000000E+001  1.5000000000000000E+001  5.0000000000000000E+000\n",
+      "stderr": ""
+    },
+    "drop_unseen": {
+      "input": "nallele 3\nnrun 2\nnwell 20 30\nallelesizes 100 102 104\nprogenitor 100 102\nrun 0.5 4 8 0\nrun 1 10 15 0\n",
+      "unused_row_value": 0,
+      "returncode": 0,
+      "stdout": "dimensions        2       2\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      100     102\nparents        1       2\nseen   4.0000000000000000E+000  8.0000000000000000E+000\nseen   1.0000000000000000E+001  1.5000000000000000E+001\n",
+      "stderr": ""
+    },
+    "unseen_parent": {
+      "input": "nallele 3\nnrun 2\nnwell 20 30\nallelesizes 100 102 104\nprogenitor 100 102\nrun 0.5 0 8 2\nrun 1 0 15 5\n",
+      "unused_row_value": 0,
+      "returncode": 0,
+      "stdout": "dimensions        2       2\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      102     104\nparents       -1       1\nseen   8.0000000000000000E+000  2.0000000000000000E+000\nseen   1.5000000000000000E+001  5.0000000000000000E+000\n",
+      "stderr": ""
+    },
+    "stale_unused_row": {
+      "input": "nallele 3\nnrun 2\nnwell 20 30\nallelesizes 100 102 104\nprogenitor 100 102\nrun 0.5 4 8 0\nrun 1 10 15 0\n",
+      "unused_row_value": 1,
+      "returncode": 0,
+      "stdout": "dimensions        2       3\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      100     102     104\nparents        1       2\nseen   4.0000000000000000E+000  8.0000000000000000E+000  0.0000000000000000E+000\nseen   1.0000000000000000E+001  1.5000000000000000E+001  0.0000000000000000E+000\n",
+      "stderr": ""
+    },
+    "negative_seen": {
+      "input": "nallele 3\nnrun 2\nnwell 20 30\nallelesizes 100 102 104\nprogenitor 100 102\nrun 0.5 -4 8 2\nrun 1 10 15 5\n",
+      "unused_row_value": 0,
+      "returncode": 0,
+      "stdout": "dimensions        2       3\ndna   1.0000000000000000E+000  2.0000000000000000E+000\nwells   2.0000000000000000E+001  3.0000000000000000E+001\nsizes      100     102     104\nparents        1       2\nseen   4.0000000000000000E+000  8.0000000000000000E+000  2.0000000000000000E+000\nseen   1.0000000000000000E+001  1.5000000000000000E+001  5.0000000000000000E+000\n",
+      "stderr": ""
+    }
+  }
+}
