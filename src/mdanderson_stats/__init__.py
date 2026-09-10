@@ -283,6 +283,12 @@ from .intervals import (
 from .ipdfromkm import ReconstructedIPD, reconstruct_ipd
 from .ipdfromkm_cox import IPDCoxComparison, ipd_cox_compare
 from .ipdfromkm_preprocess import PreparedKMCurve, prepare_km_coordinates
+from .ipdfromkm_survival import (
+    IPDSurvivalCurve,
+    IPDSurvivalQuantiles,
+    IPDSurvivalSummary,
+    ipd_survival_summary,
+)
 from .keyboard import KeyboardDesign, KeyboardPosterior, KeyboardSelection
 from .keyboard_simulation import KeyboardSimulation, simulate_keyboard
 from .kphaz import KPHazard, kphaz
@@ -516,6 +522,10 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "IPDSurvivalCurve",
+    "IPDSurvivalQuantiles",
+    "IPDSurvivalSummary",
+    "ipd_survival_summary",
     "IPDCoxComparison",
     "ipd_cox_compare",
     "PreparedKMCurve",

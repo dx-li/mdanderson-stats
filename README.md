@@ -857,5 +857,6 @@ searches are also available. Native reporting remains pending.
 [IPDfromKM](docs/ipdfromkm.md) reconstructs approximate patient survival records
 from Kaplan–Meier coordinates, with native coordinate cleaning, optional reported
 risk counts and total events. It returns fitted curves and reconstruction errors;
-two-arm Efron Cox comparisons are also available. Digitizing and remaining
-survival reports are pending.
+two-arm Efron Cox comparisons, survival confidence intervals, landmark summaries
+and survival quantiles are also available. Digitizing and native graphics remain
+pending.

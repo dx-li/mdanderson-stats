@@ -79,8 +79,9 @@ Records are sorted by time, with events before censors at a tied time.
   error even when the reconstructed drop is exact.
 - Input cleaning is explicit: malformed/nonmonotone coordinates are rejected.
   Native coordinate cleaning is available separately below. Interactive image
-  digitizing, graphical reports, KS diagnostic and survival confidence/quantile
-  reports are not yet ported. The two-arm Cox comparison is available below.
+  digitizing, graphical reports and the native KS diagnostic are not yet ported.
+  Survival confidence/quantile summaries and the two-arm Cox comparison are
+  available below.
   Catalog entry 151 remains **partial**.
 
 ## Preparing digitized coordinates
@@ -128,6 +129,49 @@ native preprocessing, excess risk times are not silently truncated.
 
 The implementation uses array operations and cumulative minima, with sorting
 cost O(m log m) for m coordinates.
+
+## Survival confidence and quantile summaries
+
+`ipd_survival_summary(time, event, confidence=0.95)` adds the statistical estimates
+used in native survival reports. It reuses the existing grouped Kaplan–Meier
+calculation. The returned `IPDSurvivalCurve` contains that fit as `km` and a
+read-only `estimates` table with time, survival, standard error, confidence limits,
+Nelson–Aalen cumulative hazard, and its standard error.
+
+```python
+from mdanderson_stats import ipd_survival_summary
+
+fit = ipd_survival_summary([1, 2, 3, 4], [1, 1, 1, 1])
+landmarks = fit.at([0, 1, 2, 3])
+assert list(landmarks.survival) == [1.0, 0.75, 0.5, 0.25]
+quantiles = fit.quantiles([0.75, 0.5, 0.25])
+assert list(quantiles.time) == [1.5, 2.5, 3.5]
+```
+
+At each distinct time, let `n` be the number at risk and `d` the failures.
+The Greenwood log-survival variance is the cumulative sum of `d/[n(n-d)]`.
+Survival SE is survival times its square root. The native default confidence
+transform is log survival: exponentiate `log(S) ± z*SE(log(S))`, capping the
+upper bound at one. At zero survival the SE and limits are NaN, matching R's
+summary convention rather than claiming a zero-width confidence interval.
+For Nelson–Aalen, the cumulative hazard is the sum of `d/n`, with variance
+the sum of `d/n²`. These are distinct from `-log(S)` and its variance.
+
+`fit.at(times)` returns right-continuous estimates at requested landmarks. Times
+must lie between zero and maximum observed follow-up; before the first record,
+survival and both confidence limits are one and hazard/SEs are zero. Pass any
+desired regular interval grid explicitly. Results retain numerical precision
+instead of the native report's four-decimal presentation rounding.
+
+`fit.quantiles(survival_probability)` inverts the curve and its confidence bands.
+Inputs are survival levels strictly between zero and one, rather than cumulative
+failure probabilities. An exact plateau returns its midpoint, extending a
+terminal plateau through the maximum follow-up time. This matches R's quantile
+convention and differs from EXPSURV's first-crossing option. The default matching
+tolerance is `sqrt(machine epsilon)` on the probability scale and is adjustable.
+Unreached estimates are NaN; as in native `survreport.R`, both confidence limits
+are then also NaN, even if one confidence curve crosses the requested level.
+The API preserves the caller's query order and shape.
 
 ## Comparing two arms
 
@@ -198,6 +242,14 @@ records: log-HR `-0.33276379386731858`, SE `0.12873930990874974`, score statisti
 `6.742778035806654`, and p-value `0.009412793550808497`. Focused tests check a
 separate tied-event fixture, arm reversal, times scaled by `1e-200`/`1e200`,
 separation, no events, and simultaneous failures in both arms.
+
+Survival summaries were checked against R `survfit` and `quantile.survfit`, with
+the native report's masking of confidence bounds for unreached quantiles.
+All curve columns and quantile values for both reconstructed radiation-study
+arms agree within `1e-12`. Their median survival estimates are 14.8 and 25.4 in
+the source's time units. Tests additionally cover tied censoring/events,
+Greenwood and hazard SEs, exact and terminal plateaus, no-event curves, exhausted
+risk sets and extreme rescaling of time units.
 
 Reference source: [CRAN package](https://CRAN.R-project.org/package=IPDfromKM),
 [versioned R source](https://github.com/cran/IPDfromKM/tree/16ea3e163b8ad409e51e035154c52803dcb1c28b),
