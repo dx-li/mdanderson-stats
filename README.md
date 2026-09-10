@@ -906,5 +906,6 @@ including stratification, tied events, and group score/covariance diagnostics.
 Its [Kaplan–Meier tables](docs/survan-km.md) include Simon–Lee survival and
 quantile confidence calculations. [Logistic regression](docs/survan-logistic.md)
 adds fitted probabilities and coefficient/likelihood inference.
-[Cox regression](docs/survan-cox.md) adds multivariable Breslow-tie fits. Native
-baseline survival, time-dependent covariates and remaining reporting are pending.
+[Cox regression](docs/survan-cox.md) adds multivariable Breslow-tie fits, with
+[Kalbfleisch–Prentice baseline survival](docs/survan-baseline.md) and profile
+prediction. Time-dependent covariates and remaining reporting are pending.

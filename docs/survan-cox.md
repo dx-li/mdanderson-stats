@@ -70,7 +70,7 @@ Limits are 100,000 records, 1..100 covariates and 2,000,000 design entries. Ther
 are no individual case weights, delayed entry, stratified baseline hazards or
 time-varying covariates in this interface.
 
-## Validation and remaining baseline workflow
+## Validation and baseline workflow
 
 The original PHLD routine was compiled unchanged, with a harness providing its
 observation iterator, scratch allocation and small initialization/index helpers.
@@ -86,6 +86,6 @@ risk predictors separated by 2,000 log units, two independent moment-accumulatio
 paths, monotone likelihood, rank deficiency, and covariate units 1e-100 and 1e100.
 
 SURVAN's separate HZC/FHZPT baseline survivor estimator uses the
-Kalbfleisch–Prentice method. It is **still pending**; this interface does not
-substitute the common Breslow cumulative-baseline-hazard estimator for it.
+Kalbfleisch–Prentice method. It is available through
+[survan_baseline](survan-baseline.md), using supplied fitted linear predictors.
 See [SURVAN coverage and source provenance](survan.md).

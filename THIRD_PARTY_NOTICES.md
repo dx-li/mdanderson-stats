@@ -622,6 +622,8 @@ source and historical binaries are not bundled in the Python package.
 `survan_km.py` implements its Kaplan–Meier and Simon–Lee confidence calculations.
 `survan_cox.py` and `survan_cox_likelihood.py` implement its Breslow-tie Cox
 likelihood and inference with new scaled numerical and separation calculations.
+`survan_baseline.py` implements the Kalbfleisch–Prentice survivor calculation
+with log-domain roots and explicit limiting cases.
 `survan_tests.py` implements SURVAN's log-rank and Gehan–Breslow calculations
 with NumPy risk tables and covariance eigendecomposition. This adaptation is
 maintained independently of the original authors. Original copyright, use terms

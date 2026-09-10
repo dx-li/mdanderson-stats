@@ -55,6 +55,13 @@
       "bytes": 135184,
       "sha256": "7c92d233aa73b2dc75e9ea0f665f9590b77d9f1200113745e7ee6d0d5a30d685",
       "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SURVAN/SURVAN_V1.tar.gz",
+      "artifact": "source/SURVAN6.f",
+      "bytes": 103235,
+      "sha256": "0dcd70426f6a869afdbb9e7c45aa3653bbaa5757aba3539a1f00bb3abd741f01",
+      "retrieved_date": "2026-09-10"
     }
   ]
 }
