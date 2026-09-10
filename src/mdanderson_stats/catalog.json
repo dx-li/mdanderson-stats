@@ -1353,12 +1353,14 @@
       "implemented_features": [
         "Wald, continuity-corrected and Yates difference-of-binomial intervals with source Peskun boundary adjustments",
         "Cox-Snell profile-likelihood interval with constrained concave optimization and exact probability-boundary handling",
-        "Vectorized native Peskun grid correction with explicit source upper-gap behavior"
+        "Vectorized native Peskun grid correction with explicit source upper-gap behavior",
+        "Conservative and mid-P weighted-likelihood intervals using shared polynomial quadrature, exact integer ties and native automatic method choice"
       ],
       "validation": [
         "Archive reference output, analytic profile endpoints, sample-exchange symmetry and special boundary adjustments; tests/test_cid2bp.py",
-        "Pending methods 6/7/8/9 and session/report interfaces; docs/cid2bp.md",
-        "Compiled original cfpesk comparisons, including asymmetric upper-gap case; tests/test_cid2bp_peskun.py"
+        "Pending method 9 and session/report interfaces; docs/cid2bp.md",
+        "Compiled original cfpesk comparisons, including asymmetric upper-gap case; tests/test_cid2bp_peskun.py",
+        "Archive weighted examples, independent adaptive integration, automatic cutoff and sample-exchange/boundary cases; tests/test_cid2bp_weighted.py"
       ]
     },
     {

@@ -1,6 +1,6 @@
 # CID2BP: difference between two binomial proportions
 
-`cid2bp_interval` implements five methods from catalog entry **38**,
+`cid2bp_interval` implements eight menu options from catalog entry **38**,
 [CID2BP](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/38).
 The [version 1.2 archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CID2BP/CID2BP_V1.2.zip)
 contains complete Fortran 77 source, build instructions and reference output.
@@ -27,10 +27,14 @@ must lie between zero and trials. Confidence must be in `[1e-6,1-1e-12]`.
 | `yates` | 3 | Wald half-width plus `1/(2*n1)+1/(2*n2)` |
 | `peskun_native` | 4 | Native discrete-grid correction, including its upper-gap branch behavior |
 | `cox_snell` | 5 | Profile binomial likelihood-ratio interval using a chi-squared(1) threshold |
+| `weighted_mid_p` | 6 | Likelihood-weighted tail with half of tied probability |
+| `weighted_likelihood` | 7 | Likelihood-weighted tail including all tied probability |
+| `auto` | 8 | Method 7 if total trials ≤50, otherwise method 5 |
 
 `continuity_corrected` requires at least two observations in each sample.
 The default is explicitly `cox_snell`; it is **not** the native menu's automatic
-method 8, which switches between weighted-likelihood and Cox–Snell intervals.
+method 8, which is available explicitly as `auto`. The result records the actual selected
+method, rather than the string `auto`.
 
 The three normal methods include the native `adjust` routine's Peskun boundary
 adjustments. These replace bounds when the observed difference is exactly ±1
@@ -39,6 +43,34 @@ The exact adjustments use log probabilities and `expm1` rather than large powers
 As in the native program, final bounds are restricted to [-1,1]. The normal
 approximations can still be degenerate or have poor small-sample coverage;
 these adjustments do not make every interval an exact-coverage procedure.
+
+## Likelihood-weighted intervals
+
+For each proposed difference `d`, integrate over `p1` on
+`[max(0,d), min(1,1+d)]`, with `p2=p1-d`. The nuisance-parameter weight is
+proportional to the observed binomial likelihood. At each probability pair,
+compute the probability that an independent replicate difference is at least
+(or at most) the observed difference. Integrating that tail against the normalized
+likelihood gives the weighted tail used for inversion.
+
+The conservative variant includes all tied probability; mid-P includes half.
+Integer cross products compare differences and identify ties exactly, avoiding
+the native floating-point equality issue. These likelihood-weighted intervals
+are distinct from method 9's exact procedure; the word conservative is the
+native variant's name and is not an unconditional coverage guarantee.
+
+The numerator has polynomial degree at most `2*(n1+n2)`. A shared Gauss–Legendre
+rule with `n1+n2+1` nodes therefore integrates it exactly in exact arithmetic.
+Binomial CDFs replace enumeration of every second-sample count. Log likelihoods
+and log-sum-exp normalize quadrature weights without the source's 1e300 scaling.
+Explicit weighted methods permit at most 200 total observations.
+
+Python searches the full difference domain [-1,1] with explicit degenerate
+endpoint limits, rather than stopping at the Fortran ±.999 bracket. Combined
+with exact tie handling and more precise integration/root finding, this can
+change extreme cases or final printed decimals. Independent adaptive integration
+checks both variants' tail equations, and tests verify sample-exchange symmetry
+and extreme data through the 200-observation limit.
 
 ## Native Peskun calculation
 
@@ -87,6 +119,9 @@ assert abs(result.lower - (-0.001238004)) < 1e-8
 assert abs(result.upper - 0.752218058) < 1e-8
 native = cid2bp_interval(7, 12, 1, 7, method="peskun_native")
 assert abs(native.upper - 0.7662527684207924) < 1e-12
+weighted = cid2bp_interval(7, 12, 1, 7, method="auto")
+assert weighted.method == "weighted_likelihood"
+assert abs(weighted.lower - (-0.0247382734)) < 1e-8
 ```
 
 The returned `BinomialDifferenceInterval` contains the estimate, limits,
@@ -99,6 +134,5 @@ special normal-method adjustments. Native output comparisons allow its stated
 1e-4 solver tolerance. The full original executable has not been rebuilt or run;
 its supplied reference output and computational source were used, plus the compiled Peskun subroutine.
 
-**Catalog status remains partial.** Weighted likelihood mid-P (6), conservative
-weighted likelihood (7), automatic selection (8), exact intervals (9), and native session/report interfaces remain
-pending.
+**Catalog status remains partial.** Exact intervals (9) and native session/report
+interfaces remain pending.
