@@ -80,7 +80,8 @@ repairs, domains and Python semantics.
 | `max_fun_mod` | New `set_fun_max`, `fun_max`, `rc_fun_max` and per-search state, described above |
 | `constants_mod` | Existing `cdflib_constants` appears equivalent; final source-contract audit pending |
 | `sort_mod`, `sort_permutation_mod` | Matrix-column sorting, gather indices, direct/reversed gathers and callback contracts implemented below. Existing `sort_list` offers list sorting; its Misclib-specific source comparison remains pending |
-| `format_number_mod`, `print_it_mod`, `format_specs` | Number/template formatting needs a Misclib-specific audit/port |
+| `format_number_mod` | Integer/single/double number formatting implemented below, including alignment, scaling, trimming and fit reporting |
+| `print_it_mod`, `format_specs` | Template compilation and message printing need a Misclib-specific audit/port |
 | `get_values_from_user_mod`, `open_file` | Existing console helpers offer related behavior; exact prompting/file contracts not yet audited |
 | `interface_mod`, build/install files | Fortran interfaces and installation need final reconciliation with Python packaging |
 
@@ -169,3 +170,66 @@ row/column movement and all three option signs. A separate character case checks
 blank padding against punctuation and a tab. Results are in
 `tests/fixtures/misclib-sort-native.json`; tests also check stable ties, exact
 large integers, malformed permutations and immutable ownership.
+
+## Number formatting
+
+`format_number(x, *, justi=1, width=20, maxf=1e6, minf=1e-4, ndecf=4,
+npe=1, ndece=4, qpad=True)` returns an immutable `FormattedNumber` containing
+`text`, `width` and `fit`. It covers the integer, single-real and double-real
+procedures of `format_number_mod` with a scalar Python API.
+
+```python
+from mdanderson_stats import format_number
+
+assert format_number(12.5, justi=-1, qpad=False).text == "12.5"
+assert format_number(1.25e-20, justi=-1).text == "1.2500D-20"
+assert format_number(123, width=2).fit is False
+```
+
+`justi=-1` returns unpadded text and its used width; `0` centers, placing an odd
+extra blank on the right; `1` right-aligns within the requested width. A failed
+fit returns `text=None`, `fit=False`, and the unchanged requested width, avoiding
+the source's undefined character output. Width can be 0..10000.
+
+Integer inputs are formatted exactly, without conversion to float, and ignore
+the floating-format options. Python/NumPy floating values must be finite.
+NumPy float32 selects the source single-real E notation and single-precision
+thresholds; other supported real inputs use double-real D notation. Thresholds
+satisfy `0 <= minf < maxf`. Zero always uses fixed notation. Other values use
+fixed notation only when `minf < abs(x) < maxf`: the executable uses strict
+inequalities at **both** thresholds, despite inconsistent manual wording.
+
+`ndecf` and `ndece` specify 0..100 decimal places in the displayed fixed number
+or scaled exponential mantissa. `npe` is the Fortran scale factor: 1 yields
+`1.2500D-20`, 0 yields `0.1250D-19`, and 2 yields `12.5000D-21` for the example
+above. Supported `npe` is `1-ndece` through 100, satisfying the native negative
+scale restriction. `qpad=False` removes trailing fractional zeros while keeping
+at least one fractional digit when precision is positive. With zero decimal
+places, the decimal point remains. Like the executable, fit is checked **before**
+trailing-zero removal. Defaults are Python conveniences; the source requires
+all formatting parameters explicitly.
+
+Decimal arithmetic formats the exact represented binary floating value with
+round-to-nearest, ties-to-even. It avoids fixed-size native scratch buffers and
+integer conversion when measuring a floating number's width. Documented repairs:
+
+- Formatting 9.999 to two fixed decimal places produces `10.00`; the original
+  compiled routine produces `****` and nevertheless reports success because it
+  allocates the internal field before rounding. Python measures the rounded
+  text and reports failure if the requested field cannot hold it.
+- Large integer values retain exact digits, including values beyond 2**53 and
+  the signed-int32 minimum. Native integer negation and REAL/log10 digit counting
+  can overflow or miscount; Python uses integer string conversion.
+- Three-digit exponents retain the E/D letter. For 1e300 the compiled original
+  emits `1.0000+300`; Python emits the unambiguous `1.0000D+300`.
+- Negative floating zero is displayed as positive zero, matching the ordinary
+  source zero branch.
+
+An unchanged `format_number_mod.f90` compiled with `-O2 -fcheck=all` matched 240
+ordinary cases spanning integer/single/double types, all justifications,
+padded/trimmed decimals, fixed/scientific thresholds and scale factors -2, 0, 1,
+2. A compact representative selection is retained in
+`tests/fixtures/misclib-format-native.json`. Focused checks in
+`tests/test_misclib_format.py` cover these outputs plus field failure, rounding
+carry, large integers, subnormal values and extreme exponents. Native rounding-carry, omitted-exponent-letter and pre-trimming field-failure
+examples were separately reproduced before documenting differences.

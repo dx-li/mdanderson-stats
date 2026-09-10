@@ -347,6 +347,7 @@ from .merit_search import MERITSearch, merit_sample_size
 from .merit_simulation import MERITSimulation, simulate_merit
 from .merit_trial import MERITTrialResult, run_merit_trial, simulate_merit_interims
 from .microarray_normalization import quantile_normalize
+from .misclib_format import FormattedNumber, format_number
 from .misclib_maximum import (
     FunctionMaximizer,
     FunctionMaximum,
@@ -596,6 +597,8 @@ from .windows import (
 )
 
 __all__ = [
+    "FormattedNumber",
+    "format_number",
     "permutation_sort_matrix",
     "permute_matrix",
     "sort_matrix",

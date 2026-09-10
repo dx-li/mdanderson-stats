@@ -939,3 +939,6 @@ independent reverse-communication searches. Its 35 mathematical helpers and
 shared root/string routines reuse the existing CDFLIB implementations; remaining
 formatting and console utilities are tracked explicitly. Matrix-column sorting,
 gather indices and direct/reversed permutations support numeric and string records.
+
+Misclib’s `format_number` formats integer and floating values with alignment,
+fixed/scientific thresholds, exponent scaling and explicit field-fit reporting.

@@ -697,3 +697,8 @@ See `docs/misclib.md`, `docs/misclib-shared-source.json` and
 using NumPy and Python sorting, with stable ties. The original sorting modules
 credit Robert Sedgewick, “Implementing Quicksort Programs,” CACM 21(10):847–857
 (1978). The original quicksort code is not copied into this implementation.
+
+`misclib_format.py` independently implements the integer/single/double
+number-formatting contracts from `format_number_mod.f90`, using Python integer
+and decimal arithmetic. Native buffer and exponent-display repairs are described
+in `docs/misclib.md`.
