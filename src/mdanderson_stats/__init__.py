@@ -462,6 +462,8 @@ from .sogs import (
     sogs_recombine,
     sogs_screen,
 )
+from .sogs_reporting import SOGSSummary, format_sogs, sogs_summary
+from .sogs_simulation import SOGSSimulation, sogs_simulate
 from .sppcr_analysis import (
     SPPCRAnalysis,
     SPPCRReports,
@@ -585,6 +587,11 @@ from .windows import (
 )
 
 __all__ = [
+    "SOGSSimulation",
+    "sogs_simulate",
+    "SOGSSummary",
+    "sogs_summary",
+    "format_sogs",
     "SOGS_MOUSE_LENGTHS",
     "SOGSCrossover",
     "SOGSScreen",

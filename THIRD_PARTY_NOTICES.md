@@ -660,7 +660,8 @@ not include a separate software license grant.
 
 ## SOGS
 
-`sogs.py` implements chromosome recombination, screening and offspring eligibility
+`sogs.py`, `sogs_simulation.py` and `sogs_reporting.py` implement chromosome
+recombination, screening, offspring selection, replicate breeding and reporting
 from SOGS by Michael M. Weil, Barry W. Brown and Dan M. Seachitopol. Copyright
 (1997), The University of Texas, M. D. Anderson Cancer Center, Department of
 Biomathematics. The [original legal notice](notices/mdanderson-sogs-Legal.txt)

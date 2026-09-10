@@ -925,6 +925,7 @@ explicit factor order, unobserved categories and shared time columns. Grouped
 styles, general calendar-covariate layouts, square plots and separate legend pages
 complete the [advertised plotting families](docs/eventchart-coverage.md).
 
-[SOGS](docs/sogs.md) adds donor-segment recombination, marker screening and all
-four offspring eligibility rules for genotype-selection breeding. The stochastic
-multi-generation simulator and reports remain pending.
+[SOGS](docs/sogs.md) implements chromosome-level genotype-selection breeding,
+including marker error, all four selection rules, chromosome exclusions, variable
+offspring schedules and replicate simulations. Reports align chromosome counts
+and donor-length summaries to the same backcross generation.

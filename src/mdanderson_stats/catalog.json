@@ -1938,13 +1938,14 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
-        "Deterministic donor-segment crossover, source approximately 5-cM marker screening, original mouse chromosome lengths and all four offspring eligibility rules. Stochastic crossover/offspring generation, multi-generation replicate simulation and reports remain pending."
+        "Chromosome-level genotype-selection breeding with Poisson crossover, soft 0/5/10-cM avoidance, approximately 5-cM marker screening, chromosome exclusions, all four selection rules, variable offspring schedules, replicate simulation and generation-aligned CDF/mean/Monte Carlo SE reports."
       ],
       "validation": [
         "Unchanged Fortran one_event/is_missed/b_stretch and controlled one_simulation eligibility; tests/test_sogs.py; tests/fixtures/sogs-native-kernels.json",
-        "Conservation, probe-endpoint and invalid-interval checks; docs/sogs.md; docs/sogs-sources.json"
+        "Conservation, probe-endpoint and invalid-interval checks; docs/sogs.md; docs/sogs-sources.json",
+        "Eight compiled-native Monte Carlo scenarios covering every selection rule with/without screening, plus independent random-breeding identities and invariants; tests/test_sogs_simulation.py; tests/fixtures/sogs-native-simulation.json. Native IGNPOI cache requires persistent locals; SAVE pp diagnosis documented."
       ]
     },
     {

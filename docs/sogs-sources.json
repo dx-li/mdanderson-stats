@@ -55,6 +55,41 @@
       "bytes": 19285,
       "sha256": "dc83efc46fe3f6a339cca191a26a464756e7c4a9b99e498cf5793d6005f147f8",
       "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/source/ignpoi.f90",
+      "bytes": 9009,
+      "sha256": "685b07ac843404efcb5795874864c92082b9c938de3dd81f8c160fb9dfefe162",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/source/ignuin.f90",
+      "bytes": 2499,
+      "sha256": "fc9ad1e738f347f28f1e2cab918db546af5f721e8f537ce66883ef628cff678b",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/source/genunf.f90",
+      "bytes": 1078,
+      "sha256": "a433f3c517edaf60a3043ac21292d381420dfacd55aec450a3b6b61a9c92fd82",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/source/ranf.f90",
+      "bytes": 1032,
+      "sha256": "a14b12b49ef51b32fb6e9e997a03138032f766f555fe09814cc8c4599731cef4",
+      "retrieved_date": "2026-09-10"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SOGS/SOGS_V1.tar.gz",
+      "artifact": "source/sogs/source/setall.f90",
+      "bytes": 2967,
+      "sha256": "853eb890412c0a0a47195834331b925fd513d4bdc3ade1d29532357e0ae2f64d",
+      "retrieved_date": "2026-09-10"
     }
   ]
 }
