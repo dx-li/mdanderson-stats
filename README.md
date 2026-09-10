@@ -586,3 +586,20 @@ truth input to modern/historical sampling, fitting and reports.
 and an [output-file dialogue](docs/sppcr-output.md) complete the application.
 The [coverage mapping](docs/sppcr-coverage.md) reconciles all 27 source files and
 documents deliberate changes to the historical behavior.
+
+## Bayesian updating for binary outcomes
+
+[BU1BB and BU2BB](docs/beta-updating.md) provide vectorized beta-binomial
+posterior updates, prior sensitivity, highest-density credible sets, sequential
+cohort histories, seeded trial simulation and independent two-arm ordering
+probabilities. Distribution values and histories are available for community
+analysis and plotting without a Shiny session.
+
+```python
+from mdanderson_stats import BetaBinomialPosterior, compare_beta_binomial
+
+control = BetaBinomialPosterior().update(successes=1, failures=3)
+treatment = BetaBinomialPosterior(0.5, 0.5).update(successes=6, failures=4)
+probability = compare_beta_binomial(control, treatment).treatment_greater
+# approximately 0.86272321
+```

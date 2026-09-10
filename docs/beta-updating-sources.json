@@ -1,0 +1,17 @@
+{
+  "retrieved_at": "2026-09-10T02:30:47.033497+00:00",
+  "sources": [
+    {
+      "name": "BU1BB",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BU1BB/BU1BB.pdf",
+      "sha256": "4402451ba67b498b253111952222497f4df1fa1758dd88fb5a934dad7e7e51da",
+      "bytes": 529308
+    },
+    {
+      "name": "BU2BB",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BU2BB/BU2BB.pdf",
+      "sha256": "62a9422469c0e5ca67d70878bd1a4df7a4523fbf554f36ea5b2e1737e0295e81",
+      "bytes": 1101306
+    }
+  ]
+}

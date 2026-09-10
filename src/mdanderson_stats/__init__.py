@@ -1,6 +1,14 @@
 """Independent Python implementations of MD Anderson catalog methods."""
 
 from . import cdflib_aux, cdflib_constants, dcdflib_support
+from .beta_binomial import (
+    BetaBinomialPosterior,
+    BetaBinomialSequence,
+    BetaCredibleSet,
+    beta_binomial_sequence,
+    simulate_beta_binomial,
+)
+from .beta_comparison import BetaComparison, compare_beta_binomial
 from .beta_mixture import BetaMixture
 from .beta_mixture_bootstrap import BetaMixtureBootstrap, beta_mixture_bootstrap
 from .beta_mixture_fit import (
@@ -279,6 +287,13 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "BetaComparison",
+    "compare_beta_binomial",
+    "BetaBinomialPosterior",
+    "BetaBinomialSequence",
+    "BetaCredibleSet",
+    "beta_binomial_sequence",
+    "simulate_beta_binomial",
     "SPPCRSavedFiles",
     "sppcr_output_dialogue",
     "SPPCRRun",

@@ -2690,12 +2690,23 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BU1BB/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BU1BB/",
-      "references": [],
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/BU1BB/BU1BB.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Broadcast proper beta-binomial conjugate updating, sequential posterior reuse, prior/data sensitivity, means, variances, densities, direct probability tails and quantiles",
+        "Highest-density credible sets including disconnected U-shaped regions, monotone boundaries, direct endpoint complements and equal-tail option",
+        "Vectorized cohort histories and seeded independent trial simulation with complete outcomes, posterior paths and continuation through explicit RNG state"
+      ],
+      "validation": [
+        "src/mdanderson_stats/beta_binomial.py",
+        "tests/test_beta_binomial.py",
+        "docs/beta-updating.md",
+        "docs/beta-updating-sources.json"
+      ]
     },
     {
       "id": 102,
@@ -2703,12 +2714,24 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BU2BB/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BU2BB/",
-      "references": [],
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/BU2BB/BU2BB.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Broadcast proper beta-binomial conjugate updating, sequential posterior reuse, prior/data sensitivity, means, variances, densities, direct probability tails and quantiles",
+        "Independent two-arm beta ordering probabilities before or after data, with logit-coordinate quadrature, logarithmic endpoint tails, both directions evaluated directly and explicit absolute error estimates"
+      ],
+      "validation": [
+        "src/mdanderson_stats/beta_binomial.py",
+        "tests/test_beta_binomial.py",
+        "docs/beta-updating.md",
+        "docs/beta-updating-sources.json",
+        "src/mdanderson_stats/beta_comparison.py",
+        "tests/test_beta_comparison.py"
+      ]
     },
     {
       "id": 103,
