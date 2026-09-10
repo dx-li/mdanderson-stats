@@ -2992,15 +2992,17 @@
         "Single-agent local BOIN boundaries with custom indifference probabilities and optional 1/3 and 2/6 rules",
         "Sticky posterior overdose elimination, extra-safe lowest-dose stopping and actual-stay precision stopping",
         "Inverse-variance isotonic MTD estimation and selection, optional selection bound, source reporting intervals and overdose probabilities",
-        "Complete-outcome fixed-cohort trial simulation with trial-level counts, selection probabilities and Monte Carlo standard errors; 3+3 comparison remains pending",
-        "Accelerated single-patient titration with DLT/second grade-2 stopping, lower dose caps, cohort completion and strict total enrollment cap"
+        "Complete-outcome fixed-cohort trial simulation with trial-level counts, selection probabilities and Monte Carlo standard errors",
+        "Accelerated single-patient titration with DLT/second grade-2 stopping, lower dose caps, cohort completion and strict total enrollment cap",
+        "Vectorized conventional 3+3 trials and BOIN comparison with MTD expansion or per-trial BOIN enrollment caps matched to realized 3+3 sample sizes"
       ],
       "validation": [
         "Six published boundary pairs and .30-target cohort table; rational posterior safety identities",
         "64 original BOIN 2.7.2 MTD and estimate fixtures; 10000-trial native operating-characteristic comparison",
         "Independent deterministic trial paths and one-cohort binomial-law simulation checks",
         "docs/boin.md",
-        "10000-trial original R accelerated-titration comparison; exact competing-event duration probabilities and deterministic transition/enrollment paths"
+        "10000-trial original R accelerated-titration comparison; exact competing-event duration probabilities and deterministic transition/enrollment paths",
+        "Independent analytical two-dose selection probabilities in three 100000-trial scenarios; deterministic six-patient confirmation and de-escalation paths; trial-level matching conservation"
       ]
     },
     {

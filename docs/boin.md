@@ -3,8 +3,8 @@
 Catalog entry **120**, the [BOIN application](https://biostatistics.mdanderson.org/shinyapps/BOIN/),
 is **partially implemented**: single-agent local BOIN boundaries, cohort decisions,
 overdose elimination, final MTD selection, fixed-cohort simulation and accelerated titration are available.
-Direct boundary-to-probability inversion, the app's 3+3
-comparators, protocol generation and animation remain pending. Desktop entry 99
+The 3+3 comparison includes both sample-size matching options.
+Direct boundary-to-probability inversion, protocol generation and animation remain pending. Desktop entry 99
 and BOIN combination/time-to-event variants are separate, unaudited entries.
 
 The application was inspected at version **3.0.20.0**, updated September 4, 2026.
@@ -159,3 +159,60 @@ accelerated = simulate_boin(
 )
 assert (accelerated.patients.sum(axis=1) <= 30).all()
 ```
+
+## Conventional 3+3 comparison
+
+`simulate_three_plus_three` implements the rules in the site's
+[3+3 technical note](https://biostatistics.mdanderson.org/shinyapps/BOIN/plus3.pdf).
+At a dose, 0/3 DLTs escalates, 1/3 expands to six patients, and at least two DLTs
+eliminates that and higher doses. With at most 1/6 DLTs, escalation continues when
+an admissible higher dose exists. After de-escalation, a lower candidate with only
+three patients receives three more before selection. The highest dose also needs
+six patients before selection. Selection therefore always requires at most one
+DLT among six patients. Elimination of the lowest dose produces no MTD.
+
+The simulator advances independent trials in NumPy batches. Its count arrays have
+shape `(trials, doses)`; selection index zero means no MTD. Probabilities and Monte
+Carlo standard errors have bins `[no MTD, dose 1, ..., dose J]`. Arbitrary true dose
+probabilities, including nonmonotone scenarios, are allowed. Dose-finding enrollment
+is random, never more than six patients per dose.
+
+`compare_boin_three_plus_three` runs both designs with independent outcome draws
+from a reproducible NumPy stream, and implements these `matching` options:
+
+* `none`: BOIN uses the requested cohort count; 3+3 follows its natural stopping rule.
+* `expand_three_plus_three`: when both designs select an MTD, add patients at the
+  original 3+3 MTD until its total matches realized BOIN enrollment. No patients are
+  removed when 3+3 already enrolled more. The expansion produces additional DLT
+  outcomes but does not revise the original selected MTD or apply BOIN safety rules.
+* `match_boin`: each BOIN trial uses `ceil(realized_3plus3_enrollment/cohort_size)`
+  cohorts as its cap. This uses realized 3+3 enrollment, not the theoretical `6*J`
+  maximum. BOIN stopping rules can still reduce enrollment below that cap.
+
+Early stopping, absent selections, cohort rounding and a naturally larger 3+3
+sample can prevent equal realized sample sizes. The result exposes `boin_max_patients`
+and `expansion_patients` per trial. The 3+3 `patients`/`toxicities` arrays include
+expansion; `dose_finding_patients`/`dose_finding_toxicities` preserve pre-expansion
+counts. Both full result objects remain accessible for custom summaries.
+`simulate_boin` also accepts one cohort count per trial to support these varying caps.
+
+```python
+from mdanderson_stats import compare_boin_three_plus_three
+
+comparison = compare_boin_three_plus_three(
+    design,
+    [0.05, 0.15, 0.3, 0.45, 0.6],
+    matching="expand_three_plus_three",
+    trials=1000,
+    rng=120,
+)
+print(comparison.boin.selection_probability)
+print(comparison.three_plus_three.selection_probability)
+```
+
+Independent two-dose path calculations validate selection probabilities in three
+scenarios with 100,000 simulated trials each. If `a_j=P(0/3)` and `b_j=P(1/3)`,
+write `s_j=a_j**2+2*a_j*b_j`. Then selection probabilities are
+`P(MTD=1)=(1-s_2)*s_1` and `P(MTD=2)=a_1*(1+b_1)*s_2`; the remaining mass is no MTD.
+Deterministic paths check top-dose confirmation and downward expansion, and paired
+trial accounting checks both matching modes without assuming they force equality.

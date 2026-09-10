@@ -341,8 +341,18 @@ from .tdtasp_power import TDTASPFixedPower, TDTASPPower, tdtasp_fixed_power, tdt
 from .tdtasp_sample_size import TDTASPSampleSize, tdtasp_fixed_sample_size, tdtasp_sample_size
 from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
+from .three_plus_three import (
+    BOINThreePlusThreeComparison,
+    ThreePlusThreeSimulation,
+    compare_boin_three_plus_three,
+    simulate_three_plus_three,
+)
 
 __all__ = [
+    "BOINThreePlusThreeComparison",
+    "ThreePlusThreeSimulation",
+    "compare_boin_three_plus_three",
+    "simulate_three_plus_three",
     "BOINBoundaryTable",
     "BOINDecision",
     "BOINDesign",

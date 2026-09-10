@@ -36,7 +36,7 @@ def simulate_boin(
     design: BOINDesign,
     true_toxicity: ArrayLike,
     *,
-    cohorts: int = 10,
+    cohorts: ArrayLike = 10,
     cohort_size: int = 3,
     trials: int = 1000,
     start_dose: int = 1,
@@ -51,7 +51,8 @@ def simulate_boin(
     precision stopping. Optional titration uses single-patient escalation until
     a DLT, the second grade-2 event, or a dose cap. Grade-2 probabilities are
     unconditional and mutually exclusive with DLTs; omitted means zero. Delayed
-    outcomes and 3+3 comparison are not included. Streams differ from R seeds.
+    outcomes are not included. Use compare_boin_three_plus_three for comparisons.
+    Cohorts may be a scalar or one count per trial. Streams differ from R seeds.
     """
     if not isinstance(design, BOINDesign):
         raise ValueError("design must be a BOINDesign")
@@ -62,11 +63,16 @@ def simulate_boin(
         or np.any((probability < 0) | (probability > 1))
     ):
         raise ValueError("true_toxicity must contain 2..100 probabilities in [0,1]")
-    sizes = count([cohorts, cohort_size, trials, start_dose], "simulation sizes")
-    if sizes.shape != (4,) or np.any(sizes < 1):
+    sizes = count([cohort_size, trials, start_dose], "simulation sizes")
+    if sizes.shape != (3,) or np.any(sizes < 1):
         raise ValueError("cohorts, cohort_size, trials and start_dose must be positive integers")
-    nc, size, repetitions, start = map(int, sizes)
-    if start > probability.size or nc * size > 100_000 or repetitions > 1_000_000:
+    size, repetitions, start = map(int, sizes)
+    if repetitions > 1_000_000:
+        raise ValueError("require at most 1000000 trials")
+    cohort_counts = np.broadcast_to(count(cohorts, "cohorts"), (repetitions,))
+    if np.any(cohort_counts < 1):
+        raise ValueError("cohorts must contain positive integers")
+    if start > probability.size or np.any(cohort_counts * size > 100_000):
         raise ValueError("require a valid start dose, at most 100000 patients and 1000000 trials")
     if not isinstance(titration, (bool, np.bool_)):
         raise ValueError("titration must be boolean")
@@ -92,8 +98,8 @@ def simulate_boin(
     titration_counts = np.zeros(repetitions, dtype=np.int64)
     moderate_counts = np.zeros_like(patients)
     titration_reasons = []
-    maximum = nc * size
     for trial in range(repetitions):
+        maximum = int(cohort_counts[trial]) * size
         dose = start
         excluded = np.zeros(probability.size, dtype=bool)
         reason = "max_patients"
