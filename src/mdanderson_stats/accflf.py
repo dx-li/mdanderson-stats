@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 from numpy.typing import ArrayLike
-from scipy.special import betainc, expit
+from scipy.special import betainc, betaincc, expit
 
 from ._cdflib import _freeze
 from ._validation import FloatArray, finite, scalar
@@ -114,7 +114,15 @@ def accflf_logf(w: ArrayLike, numerator_df: float, denominator_df: float) -> Acc
     # when the probability is below the smallest representable float.
     left = x <= (a + 1) / (a + b + 2)
     ta, tb, tx = np.where(left, a, b), np.where(left, b, a), np.where(left, x, y)
-    probability = betainc(ta, tb, tx)
+    # Evaluate with the smaller coordinate: rounding its near-one complement
+    # can destroy accuracy for strongly unequal degrees of freedom.
+    coordinate_left = x <= y
+    ca, cb = np.where(coordinate_left, a, b), np.where(coordinate_left, b, a)
+    coordinate = np.minimum(x, y)
+    use_lower = left == coordinate_left
+    probability = np.empty(z.shape)
+    probability[use_lower] = betainc(ca[use_lower], cb[use_lower], coordinate[use_lower])
+    probability[~use_lower] = betaincc(ca[~use_lower], cb[~use_lower], coordinate[~use_lower])
     with np.errstate(divide="ignore"):
         small = np.log(probability)
     underflow = probability < 1e-280

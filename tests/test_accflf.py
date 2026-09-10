@@ -25,6 +25,8 @@ def test_native_logf_tails_and_derivatives():
         result = accflf_logf(cases[:, 2], n, d)
         for i, name in enumerate(FIXTURE["columns"][3:], 3):
             assert_allclose(getattr(result, name), cases[:, i], rtol=1e-8, atol=1e-9)
+        if n == 8 and d == 1e10:
+            assert_allclose(result.log_survival, cases[:, 5], rtol=1e-12, atol=1e-12)
         assert_allclose(np.logaddexp(result.log_cdf, result.log_survival), 0, atol=1e-14)
         reflected = accflf_logf(-cases[:, 2], d, n)
         assert_allclose(result.log_cdf, reflected.log_survival, rtol=1e-12, atol=1e-10)

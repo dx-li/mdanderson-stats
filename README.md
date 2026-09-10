@@ -975,4 +975,6 @@ limitations before scientific use.
 right-censored accelerated failure-time regression at fixed shape, and survival
 prediction. It covers the source's fixed-shape Weibull, exponential, lognormal
 and log-logistic submodels with their documented finite-df boundary convention.
-Shape optimization and the remaining original workflow are still pending.
+Profile shape estimation, rectangular grids and all six named-model comparisons
+are also available, with explicit local-search and boundary diagnostics.
+Covariate-update and source file/report workflows remain pending.

@@ -797,3 +797,8 @@ data are not bundled here. Python uses the existing NumPy/SciPy dependencies,
 package beta factors, independently expressed derivatives and a beta continued
 fraction. Explicit differences from the source and native validation are recorded
 in `docs/accflf.md`. This is modified Python software, not the original ACCFLF.
+
+`accflf_search.py` follows the profile-refitting, rectangular-grid and six-model
+workflows in `psftdo`, `pqnll`, `scan_over_several_values` and `fit_all_models`.
+It uses SciPy's bounded Nelder-Mead algorithm rather than copying ACM Algorithm
+611. Failed evaluations, boundary clipping and local convergence are explicit.
