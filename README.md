@@ -746,3 +746,7 @@ updating, credible sets, cohort simulation and prior/posterior history plots.
 two-arm interim predictions and first-stage planning tables for frequentist or
 Bayesian final comparisons. [Time-to-event prediction](docs/predictive-survival.md)
 adds posterior simulation with patient, time and event accrual limits.
+
+[Phase II Predictive Probability](docs/phase2-predictive.md) adds strict
+Lee–Liu stopping rules and exact cutoff/sample-size searches for power or
+expected enrollment.

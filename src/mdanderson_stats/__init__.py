@@ -253,6 +253,13 @@ from .numerics import invert_monotone, normal_tails
 from .onesample import OneSampleTest, binomial_test, poisson_test
 from .onesample_workflow import OneSampleResult, one_sample
 from .pehaz import PiecewiseHazard, pehaz
+from .phase2_predictive import (
+    Phase2PredictiveCandidate,
+    Phase2PredictiveInfeasibleError,
+    Phase2PredictiveOptimization,
+    optimize_phase2_predictive,
+    phase2_predictive_design,
+)
 from .predictive_binary import (
     BinaryPredictivePlan,
     BinaryPredictiveProbabilities,
@@ -416,6 +423,11 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .toxicity_timing import toxicity_time_quantile
 
 __all__ = [
+    "Phase2PredictiveCandidate",
+    "Phase2PredictiveOptimization",
+    "Phase2PredictiveInfeasibleError",
+    "phase2_predictive_design",
+    "optimize_phase2_predictive",
     "SurvivalPredictiveComparison",
     "compare_predictive_survival",
     "SurvivalPredictiveProbabilities",

@@ -245,6 +245,8 @@ def _design(
     low_stop: NDArray[np.bool_],
     high_stop: NDArray[np.bool_],
     final_cutoff: float,
+    *,
+    final_success: NDArray[np.bool_] | None = None,
 ) -> BayesianMonitoringDesign:
     lo, hi = np.full(looks.size, -1, dtype=np.int64), looks.copy() + 1
     for i, size in enumerate(looks):
@@ -260,7 +262,9 @@ def _design(
             raise ValueError(
                 "futility and positive early-stopping rules overlap at a scheduled look"
             )
-    final_events = np.flatnonzero(final[n, : n + 1] >= final_cutoff)
+    final_events = np.flatnonzero(
+        final[n, : n + 1] >= final_cutoff if final_success is None else final_success
+    )
     final_min = int(final_events[0]) if final_events.size else n + 1
     for value in (lo, hi):
         value.flags.writeable = False
@@ -327,8 +331,11 @@ def predictive_efficacy_design(
     predictive_upper: float = 0.9,
     stop_futility: bool = True,
     stop_efficacy: bool = True,
+    strict_thresholds: bool = False,
 ) -> BayesianMonitoringDesign:
-    """BEMPR: predictive probability < lower or >= upper; exact backward recursion."""
+    """BEMPR uses >= efficacy cutoffs; strict_thresholds selects Phase II PP > rules."""
+    if not isinstance(strict_thresholds, bool):
+        raise ValueError("strict_thresholds must be boolean")
     if not isinstance(stop_futility, bool) or not isinstance(stop_efficacy, bool):
         raise ValueError("stopping switches must be boolean")
     n, prior_pair, schedule = _inputs(max_subjects, prior, looks, min_subjects, cohort_size)
@@ -341,7 +348,12 @@ def predictive_efficacy_design(
     cutoff = _prob(final_probability, "final_probability")
     final = _tail_table(n, prior_pair, _prob(target_rate, "target_rate"), upper=True)
     prediction = np.full_like(final, np.nan)
-    prediction[n] = (final[n] >= cutoff).astype(float)
+    success_at_final = final[n] > cutoff if strict_thresholds else final[n] >= cutoff
+    if strict_thresholds and cutoff == 0:
+        # A proper beta distribution has positive upper mass for any target below 1,
+        # even when the floating-point tail underflows to zero.
+        success_at_final = np.full(n + 1, target_rate < 1, dtype=bool)
+    prediction[n] = success_at_final.astype(float)
     a, b = prior_pair
     for size in range(n - 1, -1, -1):
         r = np.arange(size + 1)
@@ -362,8 +374,9 @@ def predictive_efficacy_design(
         prediction,
         final,
         (prediction < lower) & stop_futility,
-        (prediction >= upper) & stop_efficacy,
+        ((prediction > upper) if strict_thresholds else (prediction >= upper)) & stop_efficacy,
         cutoff,
+        final_success=success_at_final,
     )
 
 

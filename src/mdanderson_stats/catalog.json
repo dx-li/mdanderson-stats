@@ -2400,9 +2400,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Lee–Liu strict predictive futility/efficacy and final posterior stopping rules, complete response-path monitoring and exact Bernoulli operating characteristics",
+        "Constrained sample-size and cutoff-grid searches maximizing power or minimizing null expected enrollment, deduplicated boundaries and equivalent discrete threshold pairs"
+      ],
+      "validation": [
+        "Exact rational predictive sums, strict-cutoff equality, complete response-path enumeration, both grid objectives and preservation of BEMPR defaults; tests/test_phase2_predictive.py",
+        "docs/phase2-predictive.md; docs/phase2-predictive-source.json"
+      ]
     },
     {
       "id": 85,
