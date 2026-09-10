@@ -2036,9 +2036,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Fixed-width boxcar/biquadratic mean, linear/quadratic fits, first derivatives, min/max, population standard deviation, midpoint weighted quantiles, counts and observed spans. Leave-one-observation-out bandwidth cross-validation for mean/linear/quadratic fits. Explicit native inverse polynomial weights, centered SVD fits and per-window status. Nearest-neighbor windows and full native workflow remain pending."
+      ],
+      "validation": [
+        "tests/test_windows.py",
+        "tests/fixtures/windows-native.json",
+        "docs/windows.md",
+        "docs/windows-sources.json"
+      ]
     },
     {
       "id": 62,

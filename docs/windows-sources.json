@@ -1,0 +1,39 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WINDOWS/WINDOWS_V1.tar.gz",
+      "artifact": "archive.tar.gz",
+      "retrieved_date": "2026-09-10",
+      "bytes": 254973,
+      "sha256": "1eb9de88d76433cd2aa45b95d5bbb27473dc637b6bb3369c2dab0e3ee54ac0d6"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WINDOWS/WINDOWS_V1.tar.gz",
+      "artifact": "S/windows/windowing.f",
+      "retrieved_date": "2026-09-10",
+      "bytes": 95094,
+      "sha256": "1f7cd789feac22cc3964fa99788a54c3ed9c09f06ff2a07db251005b22165257"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WINDOWS/WINDOWS_V1.tar.gz",
+      "artifact": "S/windows/windowing.s",
+      "retrieved_date": "2026-09-10",
+      "bytes": 6705,
+      "sha256": "01398bbc6843463935664057e6133728bd3076b0a2a44b47de1128e97fa6a964"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WINDOWS/WINDOWS_V1.tar.gz",
+      "artifact": "S/windows/windowing.d",
+      "retrieved_date": "2026-09-10",
+      "bytes": 2214,
+      "sha256": "8e94863dd55e68c4123faba0db79267596390c1648eeccfe616a50a7b8138250"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WINDOWS/WINDOWS_V1.tar.gz",
+      "artifact": "S/windows/crossval.s",
+      "retrieved_date": "2026-09-10",
+      "bytes": 6494,
+      "sha256": "c2643fa28ba066b6be0d61dbca2b86788a13c1ebf014c7aba4f4009b76005be4"
+    }
+  ]
+}
