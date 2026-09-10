@@ -237,6 +237,8 @@ from .sppcr_intervals import (
 from .sppcr_legacy_generate import sppcr_generate_legacy
 from .sppcr_reporting import format_sppcr_report, format_sppcr_simulations
 from .sppcr_truth import SPPCRTruth, sppcr_truth
+from .sppcr_truth_console import SPPCRSimulationRequest, read_sppcr_truth
+from .sppcr_truth_reporting import format_sppcr_truth
 from .stattab_console import STATTABRun, run_stattab
 from .stattab_files import STATTABFile, stattab_open_file, stattab_report_file_dialogue
 from .stattab_probability import (
@@ -267,6 +269,9 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "SPPCRSimulationRequest",
+    "read_sppcr_truth",
+    "format_sppcr_truth",
     "SPPCRTruth",
     "sppcr_truth",
     "sppcr_generate_legacy",

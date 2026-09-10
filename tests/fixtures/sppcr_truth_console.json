@@ -1,0 +1,61 @@
+{
+  "archive_sha256": "98e0937e26a5209421144c20178a2bd9c77d3baad7a3b28606d0f0f6555e2c98",
+  "source_sha256": {
+    "accumulate_mod.f90": "9efbc0923374d5f563aec63bb2e4ca6061185bed29ad7501c58cf26267849cf5",
+    "print_it.f90": "4e90e92c9430bd71e7baf95ddccfd3569766fd2b1c2d3e9ae717749a866ee9e9",
+    "banner.f90": "7c4446868fdb079dc8e16116f46bfe239ff4b712deeaa6533aba1a1602e722e9",
+    "zero_finder.f90": "8954729dafe5a2f227a361c4c1ba218d955f8c9c87c0cf3f4c564980508c5119",
+    "cdf_aux_mod.f90": "d33e600f340887282c12e5710cb8bb51486854aa61c33151dcfa7e46d1d3a727",
+    "cdf_normal_mod.f90": "54df4c9dc752a3867c00bc3da7bf2e9930e476d33c234485a9cdf46fec381f2f",
+    "print_array_mod.f90": "0175cf63b011858958cb3d7fcb149f787a2e2204a1fe0d90e14a1e45ab57b826",
+    "structures_mod.f90": "b10ea0115e6fd353f9825a97c3c918cdcebbab9608b513f0edd4a7bbc7d1f7f3",
+    "data_in_struct_mod.f90": "f6aaa2785690c4df270014f7679e668570b902e11ad4b5697133d24dd702fb7a",
+    "ecuyer_cote_mod.f90": "61de4b11fb1a523573a2ce1a7f6d3ab4386cd87e9ecc25914775aa453001b205",
+    "file_mod.f90": "c1037f2d3c52d2b824ad904e85f30e7cfdb0708561a9e5cc455199beb5e6eaad",
+    "sppcr_aux_mod.f90": "e0a8ffb4b893858edab7959343d49c6d0ba18a604425121f58d29bdf8940adfd",
+    "fit_freq_mod.f90": "fbd7306e5bddab062f49652da8f901b1e4f2cd4311d17fa138a7f74553e610b0",
+    "fit_mu_mod.f90": "cc1604983a3814c634f1c8c7dd2b18da3071ebf90e975aee51bd8c5b397d569d",
+    "random_standard_uniform_mod.f90": "983fb8224149c4d86cd0cfad792b4443a97eecf44ea868e0017fdf10afe57135",
+    "random_binomial_mod.f90": "2599954570bd44e2cc05c735dc6a97c5fdc3da9d35a2735948892556eb8ab239",
+    "resize_mod.f90": "c86b2963cdb1f8ca41888265b5c713007c35490e0ba48fe906e78abbe13ef886",
+    "generate_mod.f90": "6d3c6708b7185be046e8c85438ce6ecb652cdf315f2f33978cdfba297488853e",
+    "get_numbers_mod.f90": "73f312e821a00d90df4680ef8ae7d4293f0a6f3dcc55fb1b7c35162581e99c28",
+    "set_seeds_mod.f90": "b43aae4b0a246f3f5e468c327dfa9a5eee53d354509c88d93daccefe6bb4ab41",
+    "one_data_set_mod.f90": "4975c8d0e843ad61470419374bfe9cb34d9c409e81ee010da8ca9a9ad4aefc15",
+    "open_file_mod.f90": "4ba95dec1751e283d8e14b429f9ed3bb836a7a959e62fb73aea4cf26c36360bf",
+    "phrase_to_seed.f90": "054d4d96b868b4ce6a131a9ff8e5e473ee7c25d4d3a69b34353c03778a1a0c79",
+    "qlex_mod.f90": "1cd1df8407030a63538edf5283b493e24fde9bcf28470c81ea9eae68490010dc",
+    "results_out_mod.f90": "420c66a437c3faa4a6370ee477a50f6c517aa538cdbe896109346e110cc03f69",
+    "problem_in_mod.f90": "fc24daea43b0b48cd77c579b8307a508319005adf3e0f1c5beebfdae4f181ff0"
+  },
+  "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+  "flags": [
+    "gfortran",
+    "-std=legacy",
+    "-O0",
+    "-ffp-contract=off",
+    "-fcheck=all"
+  ],
+  "driver": "program probe\nuse structures_mod\nuse problem_in_mod, only: generate_parameters_in\nimplicit none\nlogical :: from_truth, simulations\nopen(unit=10,status=\"scratch\",action=\"write\")\ncall generate_parameters_in(from_truth,simulations,10)\nclose(10)\nwrite(*,'(A,100ES25.16E3)') 'DNA ',dna\nwrite(*,'(A,100ES25.16E3)') 'WELLS ',n_well\nwrite(*,'(A,100ES25.16E3)') 'FREQUENCY ',true_freq\nwrite(*,'(A,ES25.16E3)') 'CALIBRATION ',true_calibrate\nwrite(*,'(A,2I8)') 'PARENTS ',progenitor\nwrite(*,'(A,2L3)') 'CHOICES ',from_truth,simulations\nend program\n",
+  "scope": "Unchanged truth dialogue and report; clock-seeded counts excluded from comparison",
+  "cases": {
+    "basic": {
+      "input": "2 3\n100\n2 5 3\n.25 1\n1.7\n1 2\ny\nn\n",
+      "stdout": "     Enter (1) The number of dna amounts to be simulated\n           (2) The number of alleles to be simulated\n\n     This program does not allow  the number of wells (replicates) per\n     run to vary from run to run.\n\n     Enter the number of wells per run for the simulated data.\n\n >  Enter the frequencies of the   3 alleles.\n  The frequencies will be normalized to add to one.\n\n\n     The is one DNA amount per run and you have spocified   2 runs for this\n     experiment.\n\n     Enter   2 DNA amounts, one for each run.\n > \n     The  calibration  parameter  is  the  number  of  g.e.'s  in  the\n     experimenter's DNA unit.\n\n     Enter the calibration parameter for the simulated data.\n\n > \n     Enter the indices (ordinal number) of the two progenitor alleles.\n     If  the simulated  sample  is homozygous,  enter  the same  index\n     twice.\n\n > \n     Do you  want bootstrapping to  use the values you  entered rather\n     than those from the first data set generated?\n\n     Enter 'y' for this option else 'n'.\n\n Please enter one of [yn]: > \n     Do  you want  the  simulated values  (mu, calibration,  frequency\n     estimation) written to a file for further processing?\n\n     Enter 'y' for this option else 'n'.\n\n     This  option is  usually  used only  by  those investigating  the\n     properties of  the statistical method  -- not by  those analysing\n     data.\n\n Please enter one of [yn]: > \n     *********************************************************************\n\n                PARAMETERS ENTERED FOR GENERATING DATA\n\n     *********************************************************************\n\n The number of runs (dna amounts) simulated is:   2\n\n The number of alleles simulated is:   3\n\n\n The number of wells per run is the same for all runs.\n The common  number of wells is:   100\n\n\n                      Allele Frequencies Used to Generate the Data\n\n\n(  1) 0.200000  (  2) 0.500000  (  3) 0.300000  (\n\n\n The calibration factor is the number of genome equivalents\n in one experimenter's unit.\n\n The calibration factor used to generate the data is:    1.700\n\n The indices of the progenitor alleles are:    1   2\n\n\nDNA   2.5000000000000000E-001  1.0000000000000000E+000\nWELLS   1.0000000000000000E+002  1.0000000000000000E+002\nFREQUENCY   2.0000000000000001E-001  5.0000000000000000E-001  2.9999999999999999E-001\nCALIBRATION   1.7000000000000000E+000\nPARENTS        1       2\nCHOICES   T  F\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    "continued_homozygous": {
+      "input": "2\n3\n20\n0 1\n0\n.1\n.5\n2\n2 2\ny\ny\n",
+      "stdout": "     Enter (1) The number of dna amounts to be simulated\n           (2) The number of alleles to be simulated\n\n     This program does not allow  the number of wells (replicates) per\n     run to vary from run to run.\n\n     Enter the number of wells per run for the simulated data.\n\n >  Enter the frequencies of the   3 alleles.\n  The frequencies will be normalized to add to one.\n\n\n     The is one DNA amount per run and you have spocified   2 runs for this\n     experiment.\n\n     Enter   2 DNA amounts, one for each run.\n > \n     The  calibration  parameter  is  the  number  of  g.e.'s  in  the\n     experimenter's DNA unit.\n\n     Enter the calibration parameter for the simulated data.\n\n > \n     Enter the indices (ordinal number) of the two progenitor alleles.\n     If  the simulated  sample  is homozygous,  enter  the same  index\n     twice.\n\n > \n     Do you  want bootstrapping to  use the values you  entered rather\n     than those from the first data set generated?\n\n     Enter 'y' for this option else 'n'.\n\n Please enter one of [yn]: > \n     Do  you want  the  simulated values  (mu, calibration,  frequency\n     estimation) written to a file for further processing?\n\n     Enter 'y' for this option else 'n'.\n\n     This  option is  usually  used only  by  those investigating  the\n     properties of  the statistical method  -- not by  those analysing\n     data.\n\n Please enter one of [yn]: > \n     *********************************************************************\n\n                PARAMETERS ENTERED FOR GENERATING DATA\n\n     *********************************************************************\n\n The number of runs (dna amounts) simulated is:   2\n\n The number of alleles simulated is:   3\n\n\n The number of wells per run is the same for all runs.\n The common  number of wells is:    20\n\n\n                      Allele Frequencies Used to Generate the Data\n\n\n(  1) 0.000000  (  2) 1.000000  (  3) 0.000000  (\n\n\n The calibration factor is the number of genome equivalents\n in one experimenter's unit.\n\n The calibration factor used to generate the data is:    2.000\n\n The indices of the progenitor alleles are:    2   2\n\n\nDNA   1.0000000000000001E-001  5.0000000000000000E-001\nWELLS   2.0000000000000000E+001  2.0000000000000000E+001\nFREQUENCY   0.0000000000000000E+000  1.0000000000000000E+000  0.0000000000000000E+000\nCALIBRATION   2.0000000000000000E+000\nPARENTS        2       2\nCHOICES   T  T\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    "correct_wells": {
+      "input": "1 1\n1001\n1000\n2\n.001\n.4\n1 1\ny\nn\n",
+      "stdout": "     Enter (1) The number of dna amounts to be simulated\n           (2) The number of alleles to be simulated\n\n     This program does not allow  the number of wells (replicates) per\n     run to vary from run to run.\n\n     Enter the number of wells per run for the simulated data.\n\n > The value entered > the upper bound allowed.\nThe value entered was:                 1001\nThe upper bound is:                 1000\n Please try again.\n\n     This program does not allow  the number of wells (replicates) per\n     run to vary from run to run.\n\n     Enter the number of wells per run for the simulated data.\n\n >  Enter the frequencies of the   1 alleles.\n  The frequencies will be normalized to add to one.\n\n\n     The is one DNA amount per run and you have spocified   1 runs for this\n     experiment.\n\n     Enter   1 DNA amounts, one for each run.\n > \n     The  calibration  parameter  is  the  number  of  g.e.'s  in  the\n     experimenter's DNA unit.\n\n     Enter the calibration parameter for the simulated data.\n\n > \n     Enter the indices (ordinal number) of the two progenitor alleles.\n     If  the simulated  sample  is homozygous,  enter  the same  index\n     twice.\n\n > \n     Do you  want bootstrapping to  use the values you  entered rather\n     than those from the first data set generated?\n\n     Enter 'y' for this option else 'n'.\n\n Please enter one of [yn]: > \n     Do  you want  the  simulated values  (mu, calibration,  frequency\n     estimation) written to a file for further processing?\n\n     Enter 'y' for this option else 'n'.\n\n     This  option is  usually  used only  by  those investigating  the\n     properties of  the statistical method  -- not by  those analysing\n     data.\n\n Please enter one of [yn]: > \n     *********************************************************************\n\n                PARAMETERS ENTERED FOR GENERATING DATA\n\n     *********************************************************************\n\n The number of runs (dna amounts) simulated is:   1\n\n The number of alleles simulated is:   1\n\n\n The number of wells per run is the same for all runs.\n The common  number of wells is:  1000\n\n\n                      Allele Frequencies Used to Generate the Data\n\n\n(  1) 1.000000  (\n\n\n The calibration factor is the number of genome equivalents\n in one experimenter's unit.\n\n The calibration factor used to generate the data is:    0.400\n\n The indices of the progenitor alleles are:    1   1\n\n\nDNA   1.0000000000000000E-003\nWELLS   1.0000000000000000E+003\nFREQUENCY   1.0000000000000000E+000\nCALIBRATION   4.0000000000000002E-001\nPARENTS        1       1\nCHOICES   T  F\n",
+      "stderr": "",
+      "returncode": 0
+    }
+  }
+}

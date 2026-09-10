@@ -579,5 +579,6 @@ bounded data collection and corrections. [Analysis and replicate reports](docs/s
 retain identities, units and diagnostics. [Historical random streams](docs/sppcr-random.md)
 are reconciled through RANDLIB with an explicit legacy sampling path.
 [Truth designs](docs/sppcr-truth.md) normalize allele weights and prepare explicit
-simulation parameters in model DNA units. SPPCR remains
-partial: truth-parameter entry/reporting and the full application workflow remain.
+simulation parameters in model DNA units, with bounded interactive entry and
+parameter reports. SPPCR remains partial: the full application workflow and final
+source-interface audit remain.

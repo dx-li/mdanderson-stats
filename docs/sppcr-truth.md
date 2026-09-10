@@ -77,5 +77,60 @@ This is finite reference evidence, not a promise of matching all native rounding
 or platform behavior. Decimal checks independently validate normalization and
 probabilities; integration tests exercise both bootstrap choices.
 
-SPPCR remains partial. Truth-parameter dialogue/reporting, full application and
-file workflows, and the final source-interface completion audit remain.
+SPPCR remains partial. Full application and file workflows and the final
+source-interface completion audit remain.
+
+## Interactive parameter entry and reporting
+
+`read_sppcr_truth(input_stream=None, output_stream=None, *, max_attempts=3,
+max_records=10000, max_line_length=10000)` returns an immutable
+`SPPCRSimulationRequest` containing `truth`, `bootstrap_from_truth`, and
+`write_simulations`. It uses caller-owned streams (standard input/output by default).
+No random draws or file operations occur. These flags describe the requested
+subsequent analysis and output; callers still perform generation and route reports.
+
+Input order follows `generate_parameters_in`:
+
+1. DNA-level and allele counts together, each bounded to 1..50.
+2. Common wells, 1..1000.
+3. Nonnegative allele weights, normalized by the truth factory.
+4. Model DNA amounts, .001..10000, without doubling.
+5. Calibration, .001..1000.
+6. Two **one-based** progenitor indices, converted to zero-based in the result.
+7. Whether to bootstrap from truth (`y`) or observed fractions (`n`).
+8. Whether to request replicate estimates for output (`y`/`n`).
+
+The source does not bound its first dimension input or validate weights. Python
+bounds dimensions consistently with other SPPCR entry APIs, rejects negative
+weights and permits correction of all-zero lists. Numeric corrections restart
+the complete requested vector. Numeric and all-zero-list retries have separate
+`max_attempts` bounds; `max_records` applies per input request, and line length is
+bounded. Continuations, commas, repeat syntax, and excess-final-record handling
+reuse the CDFLIB console contract. EOF returns no partial request; stream failures,
+exhausted retries, and numerical underflow propagate explicitly.
+
+`format_sppcr_truth(request, *, precision=10, max_characters=1000000)` returns a
+bounded tab-separated report. It includes native parameter-report quantities
+(dimensions, normalized frequencies, calibration, progenitors and wells), plus
+explicit simulation choices, model DNA, allele means and detection probabilities.
+It prints one-based indices and lists every run's wells, supporting unequal-well
+programmatic designs. It validates consistency of public truth records and never
+silently renormalizes reported values. Precision is 1..17 significant digits.
+
+```python
+from io import StringIO
+from mdanderson_stats import read_sppcr_truth, format_sppcr_truth
+
+request = read_sppcr_truth(StringIO("2 3\n100\n2 5 3\n.25 1\n1.7\n1 2\ny\nn\n"), StringIO())
+text = format_sppcr_truth(request)
+```
+
+`tools/reference_sppcr_truth_console.py` calls the unchanged native dialogue,
+including its parameter report, for ordinary, continued/homozygous, and corrected
+well-count transcripts. It supplies an open scratch report unit: the source
+`asterisks` routine writes to any supplied unit even when its caller considers
+reporting disabled. Clock-seeded counts from the native dialogue are excluded from
+comparison. Tests compare all entered parameters and choices, report quantities,
+corrections, EOF, stream ownership, repeated entry and output bounds.
+
+Full application orchestration, CLI/file routing and final completion audit remain.

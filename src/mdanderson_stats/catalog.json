@@ -888,7 +888,8 @@
         "Interactive experiment entry over caller-owned streams in native field order and ranges, with bounded numeric/identity corrections, explicit EOF/failure semantics and shared validated data conversion",
         "Bounded analysis and replicate text reports with original counts, explicit DNA units, labeled estimates and uncertainty, confidence limits, sampling probabilities, all replicate rows and boundary/missingness diagnostics",
         "Native random-stream reconciliation and explicit legacy SPPCR binomial generation through existing RANDLIB, preserving source cell order and float32 probabilities with validated state and reseeding safeguards",
-        "Validated immutable truth-generation designs with stable weight normalization, explicit model DNA units, calibration and progenitor mapping, reconciled against seeded native truth generation"
+        "Validated immutable truth-generation designs with stable weight normalization, explicit model DNA units, calibration and progenitor mapping, reconciled against seeded native truth generation",
+        "Bounded native-order truth-parameter dialogue with explicit bootstrap/output choices and formatted parameter reports, reconciled against unchanged native dialogue transcripts"
       ],
       "validation": [
         "docs/sppcr-research.md",
@@ -950,7 +951,12 @@
         "tests/test_sppcr_truth.py",
         "tools/reference_sppcr_truth.py",
         "tests/fixtures/sppcr_truth.json",
-        "docs/sppcr-truth.md"
+        "docs/sppcr-truth.md",
+        "src/mdanderson_stats/sppcr_truth_console.py",
+        "src/mdanderson_stats/sppcr_truth_reporting.py",
+        "tests/test_sppcr_truth_console.py",
+        "tools/reference_sppcr_truth_console.py",
+        "tests/fixtures/sppcr_truth_console.json"
       ]
     },
     {
