@@ -234,6 +234,7 @@ from .sppcr_intervals import (
     sppcr_bootstrap_intervals,
     sppcr_intervals,
 )
+from .sppcr_reporting import format_sppcr_report, format_sppcr_simulations
 from .stattab_console import STATTABRun, run_stattab
 from .stattab_files import STATTABFile, stattab_open_file, stattab_report_file_dialogue
 from .stattab_probability import (
@@ -264,6 +265,8 @@ from .tdtasp_study import TDTASPStudy, format_tdtasp_study, tdtasp_study
 from .tdtasp_template import TDTASPTemplate, format_tdtasp_template, parse_tdtasp_template
 
 __all__ = [
+    "format_sppcr_report",
+    "format_sppcr_simulations",
     "read_sppcr_interactive",
     "parse_sppcr_filemaker",
     "format_sppcr_filemaker",

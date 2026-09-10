@@ -575,5 +575,6 @@ calibration, reciprocal calibration and transformed frequency intervals.
 [Batch input](docs/sppcr-batch.md) adds validated experiment data and canonical
 parsing/formatting. [FileMaker-style exports](docs/sppcr-filemaker.md) use the
 same validated data model. [Interactive entry](docs/sppcr-interactive.md) adds
-bounded data collection and corrections. SPPCR remains partial: historical RNG
-reconciliation and the full reporting/application workflow remain.
+bounded data collection and corrections. [Analysis and replicate reports](docs/sppcr-reporting.md)
+retain identities, units and diagnostics. SPPCR remains partial: historical RNG
+reconciliation, truth-parameter entry/reporting and the full application workflow remain.

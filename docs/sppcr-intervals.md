@@ -2,8 +2,9 @@
 
 `sppcr_bootstrap_intervals` constructs the confidence limits used by the SPPCR
 report from observed estimates and bootstrap standard deviations. The lower-level
-`sppcr_intervals` accepts those inputs explicitly. Historical RNG compatibility,
-input formats and the full reporting/application workflow remain outstanding.
+`sppcr_intervals` accepts those inputs explicitly. [Analysis reports](sppcr-reporting.md)
+include these limits. Historical RNG compatibility and the full application
+workflow remain outstanding.
 
 ```python
 import numpy as np
