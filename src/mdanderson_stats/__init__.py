@@ -238,6 +238,7 @@ from .hierarchical_binomial import (
     summarize_chains,
 )
 from .hierarchical_normal import HierarchicalNormalFit, hierarchical_normal
+from .iboin import IBOINBoundaries, IBOINDesign
 from .imom_prior import IMOMBinaryPrior
 from .inequality import InequalityProbability, inequality_probability
 from .interaction_index import InteractionIndex, interaction_index, interaction_index_ray
@@ -480,6 +481,8 @@ from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 
 __all__ = [
+    "IBOINBoundaries",
+    "IBOINDesign",
     "RareDisease123Decision",
     "RareDisease123Design",
     "RareDisease123Simulation",

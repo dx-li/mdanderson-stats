@@ -826,3 +826,7 @@ diagnostics. Seven other refinement learners remain pending.
 efficacy/toxicity dose assignment, OBD selection and batched trial simulation with
 correlated endpoints and patient-allocation summaries. The efficacy prior is explicit
 because the public protocol omits it; default decision tables are reproduced.
+
+[iBOIN](docs/iboin.md) adds historical-prior elicitation, dose-specific decision
+boundaries and complete-outcome dose assignment, verified against published and
+live-app tables. Simulation and final MTD estimation options remain pending.

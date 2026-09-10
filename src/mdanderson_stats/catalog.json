@@ -3446,12 +3446,22 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/iBOIN",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/iBOIN",
-      "references": [],
+      "references": [
+        "https://pubmed.ncbi.nlm.nih.gov/33793044/",
+        "https://arxiv.org/abs/2004.12972",
+        "https://biostatistics.mdanderson.org/shinyapps/iBOIN/iBOINGuide.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Log-stable historical-binomial averaging to elicit dose-specific hypothesis priors from a skeleton and integer prior ESS",
+        "Sample-size-dependent iBOIN boundaries, live-app no-escalation cells and complete-outcome conduct with independent uniform-prior safety elimination"
+      ],
+      "validation": [
+        "100 published and 120 live default boundary cells, native safety thresholds, independent prior sums, extreme ESS, zero-information BOIN equivalence and safety; tests/test_iboin.py",
+        "Pending robust prior automation, titration, extra safety/precision options, final MTD estimation, simulation and reports; docs/iboin.md"
+      ]
     },
     {
       "id": 146,

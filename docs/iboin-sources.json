@@ -1,0 +1,33 @@
+{
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/iBOIN/iBOINGuide.pdf",
+      "artifact": "guide.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 608194,
+      "sha256": "8ee8bddb5304f04d68f8e80114d7564070fccff1e975ea2c1246feac32108b9f"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/iBOIN/iBOINPrior.pdf",
+      "artifact": "prior.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 47822,
+      "sha256": "cef1576ba6d9004eec1873e1819b5c37b5aa7ebe8c010ffc71f1f9187b5697cd"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2004.12972",
+      "artifact": "paper.pdf",
+      "retrieved_date": "2026-09-10",
+      "bytes": 663175,
+      "sha256": "903024ebc664aa37da2283b082478c4244da6e39a83ea40472a6cddb90059249"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/iBOIN/",
+      "artifact": "browser/page-2026-09-10T11-25-08-886Z.yml",
+      "retrieved_date": "2026-09-10",
+      "bytes": 34205,
+      "sha256": "80aba642501193a41686e16d95a39283832c7fb251a845a5b3e03aae49015104"
+    }
+  ],
+  "native_settings": "V1.6.3.0, target .25, skeleton [.06,.14,.25,.38,.50], ESS 2 at each dose, robust prior unchecked; captured default table for n=1..12."
+}
