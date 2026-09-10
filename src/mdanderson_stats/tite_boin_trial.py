@@ -1,4 +1,4 @@
-"""Calendar-time TITE-Keyboard trial replay."""
+"""Calendar-time TITE-BOIN trial replay."""
 
 from dataclasses import dataclass
 
@@ -6,22 +6,23 @@ from numpy.typing import ArrayLike
 
 from ._tite_calendar import CalendarStep, CalendarTrial, run_calendar_trial
 from ._validation import FloatArray, scalar
-from .keyboard import KeyboardDesign
-from .tite_keyboard import TITEKeyboardDecision, tite_keyboard_decision, toxicity_followup_weights
+from .boin import BOINDesign
+from .tite_boin import TITEBOINDecision, tite_boin_decision
+from .tite_keyboard import toxicity_followup_weights
 
 
 @dataclass(frozen=True)
-class TITEKeyboardStep(CalendarStep[TITEKeyboardDecision]):
+class TITEBOINStep(CalendarStep[TITEBOINDecision]):
     pass
 
 
 @dataclass(frozen=True)
-class TITEKeyboardTrial(CalendarTrial[TITEKeyboardStep]):
+class TITEBOINTrial(CalendarTrial[TITEBOINStep]):
     pass
 
 
-def run_tite_keyboard_trial(
-    design: KeyboardDesign,
+def run_tite_boin_trial(
+    design: BOINDesign,
     interarrival: ArrayLike,
     dlt_delays: ArrayLike,
     window: float,
@@ -29,27 +30,31 @@ def run_tite_keyboard_trial(
     cohort_size: int = 3,
     start_dose: int = 1,
     trimester_probabilities: ArrayLike | None = None,
-    pending_fraction_limit: float | None = 0.5,
-) -> TITEKeyboardTrial:
+    minimum_complete_fraction: float = 0.51,
+    minimum_pending_followup: float = 0.25,
+) -> TITEBOINTrial:
     """Conduct one trial from potential outcomes without exposing future events.
 
     dlt_delays[patient,dose] is time since enrollment to DLT, or +inf for no DLT
     within the window. Arrival gaps restart after suspensions; no queue builds up.
     Cohorts have a fixed dose and staggered enrollment. Decisions occur before
-    each new cohort, and at outcome ascertainments while that cohort is waiting.
+    each new cohort, at outcome ascertainments while waiting, and when the
+    minimum pending-follow-up threshold is reached.
     """
-    if not isinstance(design, KeyboardDesign):
-        raise ValueError("design must be a KeyboardDesign")
+    if not isinstance(design, BOINDesign):
+        raise ValueError("design must be a BOINDesign")
     toxicity_followup_weights([], window, trimester_probabilities=trimester_probabilities)
-    if pending_fraction_limit is not None:
-        limit = scalar(pending_fraction_limit, "pending_fraction_limit")
-        if not 0 < limit <= 0.65:
-            raise ValueError("pending_fraction_limit must be in (0,.65] or None")
+    complete = scalar(minimum_complete_fraction, "minimum_complete_fraction")
+    minimum = scalar(minimum_pending_followup, "minimum_pending_followup")
+    if not 0.25 <= complete <= 1 or not 0 <= minimum <= 1:
+        raise ValueError("require completion fraction in [.25,1] and minimum follow-up in [0,1]")
+    if design.stay_at_one_of_three or design.deescalate_at_two_of_six:
+        raise NotImplementedError("TITE-BOIN optional 3+3 rule modifications are not implemented")
 
     def decide(
         n: ArrayLike, y: ArrayLike, times: list[FloatArray], current: int, excluded: ArrayLike
-    ) -> TITEKeyboardDecision:
-        return tite_keyboard_decision(
+    ) -> TITEBOINDecision:
+        return tite_boin_decision(
             design,
             n,
             y,
@@ -57,14 +62,23 @@ def run_tite_keyboard_trial(
             current,
             window,
             trimester_probabilities=trimester_probabilities,
-            pending_fraction_limit=pending_fraction_limit,
+            minimum_complete_fraction=complete,
+            minimum_pending_followup=minimum,
             eliminated=excluded,
         )
 
     result = run_calendar_trial(
-        design, interarrival, dlt_delays, window, cohort_size, start_dose, decide, TITEKeyboardStep
+        design,
+        interarrival,
+        dlt_delays,
+        window,
+        cohort_size,
+        start_dose,
+        decide,
+        TITEBOINStep,
+        minimum,
     )
-    return TITEKeyboardTrial(
+    return TITEBOINTrial(
         result.enrollment_times,
         result.assigned_doses,
         result.dlt_times,

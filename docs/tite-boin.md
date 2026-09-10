@@ -7,9 +7,8 @@ mathematical appendix to *Time-to-event Bayesian Optimal Interval Design to
 Accelerate Phase I Trials*, DOI 10.1158/1078-0432.CCR-18-0246.
 
 The implementation provides vectorized single-mean imputation, ordinary follow-up
-thresholds, and interim dose decisions. Calendar replay/simulation, Rolling 6
-comparison, optional 3+3 modifications, flowcharts and integrated protocol reports
-remain pending. Final selection is available through `BOINDesign.select_mtd` once
+thresholds, and interim dose decisions. Calendar replay and simulation are available. Rolling 6 comparison, optional
+3+3 modifications, flowcharts and integrated protocol reports remain pending. Final selection is available through `BOINDesign.select_mtd` once
 all outcomes are ascertained.
 
 ## Imputation and follow-up thresholds
@@ -95,3 +94,80 @@ Table S1. Independent rational arithmetic checks imputation for all valid
 conduct agrees with ordinary BOIN, including safety. Focused checks cover both
 suspension gates, the observed-toxicity exception, precision stopping, informative
 weights, coherence despite inflated imputation, and time rescaling by `1e-200`.
+
+
+## Calendar replay and simulation
+
+`run_tite_boin_trial` takes nonnegative interarrival gaps and a matrix of potential
+DLT delays shaped `(planned_patients,doses)`. Delays are measured from individual
+enrollment; finite values in `[0,window]` indicate toxicity, and positive infinity
+means no DLT within the window. Only an assigned patient's observable history
+enters an interim decision.
+
+```python
+import numpy as np
+from mdanderson_stats import run_tite_boin_trial, simulate_tite_boin
+
+trial = run_tite_boin_trial(
+    design,
+    [0, 0, 80, 15, 15, 15],
+    np.full((6, 2), np.inf),
+    90,
+)
+# At day 95 two outcomes are known, but the last patient has only 15 days'
+# follow-up. Accrual resumes at day 102.5, when that patient reaches 22.5 days.
+assert [step.time for step in trial.steps] == [95, 102.5]
+assert trial.suspension_time == 7.5
+assert trial.final_time == 222.5
+
+simulation = simulate_tite_boin(
+    design,
+    [0.05, 0.15, 0.3, 0.45, 0.6],
+    window=3,
+    accrual_rate=2,
+    event_distribution="weibull",
+    late_probability=0.8,
+    trials=1000,
+    rng=129,
+)
+print(simulation.selection_probability)
+print(simulation.duration.mean(), simulation.suspension_time.mean())
+```
+
+The scheduler supports staggered enrollment within a cohort assigned one fixed
+dose. Decisions occur before the next cohort and, during suspension, when an
+outcome becomes ascertained. A minimum-follow-up suspension also schedules a
+reassessment when all currently pending patients at that dose reach the specified
+follow-up fraction. If an earlier DLT occurs, it is processed first and the
+assignment is reconsidered. There are no within-cohort stopping or dose changes;
+cohort size one permits decisions before each patient. Suspended accrual creates
+no queue: later arrival gaps begin at the preceding actual enrollment time.
+
+After enrollment stops, final analysis waits for all enrolled toxicity outcomes
+to become known. A DLT event ascertains its outcome immediately; a DLT-free patient
+requires the full assessment window. The final time also includes the last
+assignment/stopping decision. Stop reasons describe **why enrollment ended**:
+a trial ending at its enrollment cap can subsequently have no admissible MTD
+at final analysis. There is no additional enrollment decision after the cap.
+
+The replay result includes enrollment times, dose assignments, DLT event times,
+final counts/selection/exclusions, stop reason, final time, suspension time, and
+interim histories with full TITE-BOIN diagnostics. The simulation result retains
+per-trial counts, selected doses, duration, suspension time and stop reason, plus
+selection probabilities and marginal Monte Carlo standard errors. Selection zero
+means no MTD; probability bins are `[no MTD,dose 1,...]`. Arrays are read-only.
+
+Simulation uses the same [timing scenarios](tite-keyboard.md#calibrated-weibull-and-log-logistic-scenarios)
+as TITE-Keyboard: fixed or exponential arrivals (`arrival`), conditional-uniform
+or piecewise-uniform event times (`event_trimester_probabilities`), and calibrated
+Weibull/log-logistic scenarios (`event_distribution`, `late_probability`). True
+scenario timing and the analysis's `trimester_probabilities` are independent.
+The first patient also receives an arrival gap. Units must match the assessment
+window. Defaults are 10 cohorts of 3, 1,000 trials, and starting dose 1; planned
+enrollment is limited to 200, with at most 100,000 simulated trials per call.
+
+These are explicit Python scheduling conventions, not a claim of exact parity
+with the source app's unpublished scheduler or random-number sequence. Checks
+cover release before the next outcome, intervening DLTs without future-information
+leakage, time scaling, deterministic toxicity extremes and final follow-up. The
+shared scheduler also passes the existing TITE-Keyboard calendar and timing checks.

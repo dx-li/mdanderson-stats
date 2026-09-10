@@ -1,4 +1,4 @@
-"""Calendar-time TITE-Keyboard simulations with calibrated DLT timing scenarios."""
+"""Calendar-time TITE-BOIN simulations with calibrated DLT timing scenarios."""
 
 from dataclasses import dataclass
 
@@ -7,17 +7,17 @@ from numpy.typing import ArrayLike
 
 from ._tite_simulation import CalendarSimulation, simulate_calendar
 from ._validation import FloatArray
-from .keyboard import KeyboardDesign
-from .tite_keyboard_trial import TITEKeyboardTrial, run_tite_keyboard_trial
+from .boin import BOINDesign
+from .tite_boin_trial import TITEBOINTrial, run_tite_boin_trial
 
 
 @dataclass(frozen=True)
-class TITEKeyboardSimulation(CalendarSimulation):
+class TITEBOINSimulation(CalendarSimulation):
     pass
 
 
-def simulate_tite_keyboard(
-    design: KeyboardDesign,
+def simulate_tite_boin(
+    design: BOINDesign,
     true_toxicity: ArrayLike,
     window: float,
     accrual_rate: float,
@@ -31,9 +31,10 @@ def simulate_tite_keyboard(
     late_probability: ArrayLike | None = None,
     event_trimester_probabilities: ArrayLike | None = None,
     trimester_probabilities: ArrayLike | None = None,
-    pending_fraction_limit: float | None = 0.5,
+    minimum_complete_fraction: float = 0.51,
+    minimum_pending_followup: float = 0.25,
     rng: int | np.random.Generator | None = None,
-) -> TITEKeyboardSimulation:
+) -> TITEBOINSimulation:
     """Simulate binary DLT incidence and conditional DLT time separately.
 
     accrual_rate is patients per time unit used for window. The first arrival
@@ -46,8 +47,8 @@ def simulate_tite_keyboard(
 
     def replay(
         gaps: FloatArray, delays: FloatArray, duration: float, size: int, start: int
-    ) -> TITEKeyboardTrial:
-        return run_tite_keyboard_trial(
+    ) -> TITEBOINTrial:
+        return run_tite_boin_trial(
             design,
             gaps,
             delays,
@@ -55,7 +56,8 @@ def simulate_tite_keyboard(
             cohort_size=size,
             start_dose=start,
             trimester_probabilities=trimester_probabilities,
-            pending_fraction_limit=pending_fraction_limit,
+            minimum_complete_fraction=minimum_complete_fraction,
+            minimum_pending_followup=minimum_pending_followup,
         )
 
     result = simulate_calendar(
@@ -73,7 +75,7 @@ def simulate_tite_keyboard(
         event_trimester_probabilities,
         rng,
     )
-    return TITEKeyboardSimulation(
+    return TITEBOINSimulation(
         result.patients,
         result.toxicities,
         result.selected_dose,

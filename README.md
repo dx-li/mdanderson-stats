@@ -709,5 +709,6 @@ timing scenarios. Flowcharts and integrated reports remain pending.
 
 [TITE-BOIN](docs/tite-boin.md) adds vectorized pending-outcome imputation,
 standardized follow-up thresholds, and interim dose decisions with the current
-completion and minimum-follow-up suspension rules. Calendar simulation, Rolling 6
-comparison, optional 3+3 modifications and integrated reports remain pending.
+completion and minimum-follow-up suspension rules. Calendar replay and simulation
+include releases at minimum-follow-up thresholds and calibrated toxicity timing.
+Rolling 6 comparison, optional 3+3 modifications and integrated reports remain pending.
