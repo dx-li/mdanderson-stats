@@ -1,4 +1,4 @@
-"""U2OET posterior sampling with explicit priors and complete ordinal outcomes."""
+"""U2OET posterior sampling for complete and toxicity-only ordinal outcomes."""
 
 from dataclasses import dataclass
 
@@ -119,6 +119,7 @@ def fit_u2oet(
     counts: ArrayLike,
     *,
     prior_mean: ArrayLike,
+    toxicity_only: ArrayLike | None = None,
     prior_sd: ArrayLike,
     model: str = "pds",
     centering: str = "log",
@@ -137,6 +138,8 @@ def fit_u2oet(
     retained power/link coordinates themselves are normal logarithms. With
     coordinate_updates=True, each block is followed by scalar slice moves and
     a joint link/intercept/slope move with its density Jacobian correction.
+    toxicity_only counts contribute marginal toxicity likelihoods, following
+    the guide. Efficacy with pending toxicity does not enter this likelihood.
     """
     if not isinstance(rng, np.random.Generator):
         raise ValueError("rng must be an explicit NumPy Generator")
@@ -155,6 +158,20 @@ def fit_u2oet(
         or n.sum() >= 2**53
     ):
         raise ValueError("counts must be integer agent1-by-agent2-by-efficacy-by-toxicity cells")
+    nt = (
+        np.zeros((*n.shape[:2], n.shape[-1]))
+        if toxicity_only is None
+        else _real(toxicity_only, "toxicity_only")
+    )
+    if (
+        nt.shape != (*n.shape[:2], n.shape[-1])
+        or np.any(nt < 0)
+        or np.any(nt != np.floor(nt))
+        or n.sum() + nt.sum() >= 2**53
+    ):
+        raise ValueError("toxicity_only must be integer dose-by-dose-by-toxicity counts")
+    observed_toxicity = nt > 0
+    has_partial = bool(np.any(observed_toxicity))
     names = u2oet_parameter_names(n.shape[2], n.shape[3], model=model)
     if centering not in ("log", "linear") or (model == "cmi" and centering != "log"):
         raise ValueError("invalid centering; CMI requires log")
@@ -197,6 +214,8 @@ def fit_u2oet(
         evaluations += 1
         log_joint = _joint(e, t, rho)
         ll = float(np.sum(n[observed] * log_joint[observed]))
+        if has_partial:
+            ll += float(np.sum(nt[observed_toxicity] * t[observed_toxicity]))
         if np.isnan(ll) or ll == np.inf:
             raise ArithmeticError("invalid posterior likelihood")
         return ll, log_joint

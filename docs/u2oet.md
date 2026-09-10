@@ -7,7 +7,8 @@ and posterior fitting are also available, along with IID prior sampling,
 beta-moment information and pseudo-trial prior calibration. Full trial conduct,
 simulation and complete native input/report workflows remain pending. Gaussian
 scenario construction and native scenario/dose/utility readers are available;
-GAO model fitting is still pending.
+Patient snapshots, toxicity-only likelihoods and next-patient cohort decisions
+are also available. GAO model fitting is still pending.
 
 The sources are the [official U2OET 1.8 archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/U2OET/U2OET_V1.8.zip),
 its user guide and the [author-hosted paper](https://odin.mdacc.tmc.edu/~pfthall/main/JRCCS_2017_ph12_2agent_utility.pdf)
@@ -87,8 +88,8 @@ This also preserves tiny joint probabilities at association endpoints ±1.
 `joint` probabilities can underflow; use the log arrays for likelihood work.
 
 The grouped likelihood excludes parameter-independent multinomial constants.
-Counts describe fully observed efficacy/toxicity pairs; missing or delayed
-outcomes are not handled. Empty counts give zero log likelihood. Impossible or
+Complete counts describe fully observed efficacy/toxicity pairs. An optional
+`toxicity_only` array adds marginal contributions for pending efficacy. Empty counts give zero log likelihood. Impossible or
 unrepresentably small observed probabilities can give negative infinity;
 invalid finite inputs and overflowing linear predictors raise errors.
 
@@ -113,8 +114,8 @@ Remaining coverage includes:
 - GAO continuation probabilities and fitting (Gaussian scenario copulas are supplied).
 - Validation of complete trial operating characteristics.
   Explicit-prior fitting, pseudo-trial centers and prior ESS are supplied below.
-- Open-cohort conduct, delayed/partial outcomes and final selection.
-  Posterior acceptability and new-cohort allocation are now supplied below.
+- Calendar simulation, final selection and adaptive MCMC precision targets.
+  Open-cohort handling and toxicity-only likelihoods are supplied below.
 - Calendar-based simulation, operating characteristics, scenario/native-file
   import and reports.
 
@@ -181,11 +182,9 @@ surplus comparison against a lower-ranked third pair, top-two/all-pair
 randomization and greedy allocation. These validate the published decision
 rules, not native executable parity.
 
-Still pending: managing an open cohort (the
-guide rechecks acceptability at every arrival and may close a cohort early),
-handling delayed/partial outcomes, accrual calendars, final selection and trial
-simulation. The cohort-boundary function must not be used to silently rerandomize
-patients within an existing cohort.
+The new-cohort function must not silently rerandomize patients within an
+existing cohort. Use `u2oet_next_patient` below for open-cohort handling. Accrual
+calendars, final selection and trial simulation remain pending.
 
 ## Posterior fitting
 
@@ -294,8 +293,8 @@ Three focused numerical checks validate the sampler:
 
 These checks validate the target and sampling implementation in the tested
 settings. They do not establish convergence for other priors/data or reproduce
-the published trial operating characteristics. GAO, partial outcomes and full
-trial simulation remain pending. Prior calibration is now supplied below.
+the published trial operating characteristics. GAO and full trial simulation
+remain pending; toxicity-only outcomes are supported below. Prior calibration is now supplied below.
 
 ## Prior draws, information and pseudo-trial calibration
 
@@ -476,7 +475,7 @@ or missing cells, malformed numbers and inconsistent probabilities raise errors.
 An invalid single-number scenario header is rejected; the guide describes the
 native program defaulting invalid association to independence. The Python
 reader deliberately does not conceal that invalid input. Model/prior/trial
-parameter-file parsing and patient-data import remain pending.
+parameter-file parsing remains pending; patient-data import is supplied below.
 
 Two focused tests cover an independently written R integral over uniform
 quantiles, analytic Gaussian quadrant probabilities, correlations within 1e-12
@@ -493,3 +492,101 @@ and marginal checks passed. The maximum estimated quadrature error was
 paper's Table 4 to its printed one-decimal precision. This validates source
 scenario construction, not native posterior/trial simulation parity. Original
 scenario and utility files are not bundled.
+
+## Patient snapshots and next-patient decisions
+
+`read_u2oet_patients(path, dose_counts=(M1,M2), efficacy_levels=LE,
+toxicity_levels=LT)` reads the five fields in guide section 3.1: patient ID,
+one-based dose indices, and zero-based efficacy/toxicity levels. A pending
+outcome is -1. `u2oet_patients(records, ...)` accepts the same format as an array.
+IDs must start at 1 and strictly increase; gaps are allowed. An empty snapshot
+is permitted for the first assignment. At most 2500 patient rows are accepted.
+Invalid indices, duplicate/out-of-order IDs and malformed rows raise errors.
+
+The result preserves immutable source-format records and aggregates:
+
+- `treated`: every assigned patient, including those with pending outcomes.
+- `complete`: joint counts when both outcomes are observed.
+- `toxicity_only`: counts with observed toxicity and pending efficacy.
+- `ignored_outcomes`: number of patients whose toxicity is still pending.
+
+The last group remains in assignment counts. Following the guide, an efficacy
+observation is not used for fitting until toxicity has been recorded. This
+asymmetry is intentional. It does not mean efficacy-only data are generally
+uninformative in other statistical models.
+
+`fit_u2oet(..., toxicity_only=data.toxicity_only)` adds marginal toxicity log
+likelihood contributions to the complete joint counts. The two count arrays
+must represent disjoint patients. `U2OETProbabilities.loglikelihood` supports
+the same keyword for direct likelihood evaluation. Missing outcomes are not
+imputed or counted as responses; pending elapsed times are not used as
+additional likelihood information. With no toxicity-only records, the existing
+complete-data likelihood path is preserved.
+
+```python
+from mdanderson_stats import (
+    u2oet_patients,
+    fit_u2oet,
+    u2oet_posterior,
+    u2oet_next_patient,
+    U2OETCriteria,
+)
+
+patients = u2oet_patients(
+    [[1, 1, 1, 1, 0], [2, 1, 1, -1, 1], [3, 1, 1, 1, -1]],
+    dose_counts=(3, 3),
+    efficacy_levels=2,
+    toxicity_levels=2,
+)
+# Reuse explicit illustrative binary prior arrays mean/sd from the fitting example.
+fit = fit_u2oet(
+    [1, 2, 3],
+    [1, 2, 3],
+    patients.complete,
+    toxicity_only=patients.toxicity_only,
+    prior_mean=mean,
+    prior_sd=sd,
+    draws=1000,
+    warmup=500,
+    chains=4,
+    rng=np.random.default_rng(79),
+)
+posterior = u2oet_posterior(
+    fit.joint.reshape((-1, 3, 3, 2, 2)),
+    [[10, 0], [100, 40]],
+    criteria=U2OETCriteria(efficacy_level=1, toxicity_level=1),
+)
+next_patient = u2oet_next_patient(posterior, patients, cohort_size=3, max_patients=60)
+```
+
+Before assigning each patient, recompute the posterior from the latest snapshot
+and assess its Monte Carlo diagnostics. `u2oet_next_patient` follows the guide's
+open-cohort rule: take the trailing count of identical dose pairs modulo the
+cohort size. If nonzero and the last pair remains acceptable, continue there
+with probability one, even if another pair has greater posterior utility. If
+that pair has become unacceptable, close the cohort and apply the existing
+new-cohort allocation rule. Every assigned patient contributes to the trailing
+count, regardless of outcome availability.
+
+The result reports assignment weights, whether the cohort continues, the next
+position in the cohort and whether an unacceptable cohort was closed. A new
+cohort starts at position 1; stopping gives position 0 and all-zero weights.
+`surplus=None` uses the cohort size as the randomization surplus threshold;
+explicit `surplus`, `top` and `greedy` options pass through to the new-cohort
+rule. With no patients, supply an explicit zero-based `initial` pair. Reaching
+`max_patients` stops enrollment and does **not** silently select a final dose.
+
+This implements the guide's fixed cohort-size rule. The archive's separately
+named first/new-dose/old-dose cohort settings are not mapped without verifying
+their exact semantics. Calendar simulation, final selection, adaptive MCMC
+precision targets and integrated trial reports remain outstanding.
+
+Two focused tests cover mixed complete/partial/pending records, marginal
+likelihood contributions, open-cohort precedence, early cohort closure,
+multiple consecutive full cohorts and enrollment limits. A toxicity-only
+3-in-10 posterior agrees with the independently integrated logistic-normal
+reference; association proposals are all accepted because these observations
+carry no information about association. All three supplied example patient
+files were also read: each has 60 complete observations. The PDS/4E_4T and
+hybrid examples end in a seven-patient run at zero-based pair (1,1); the binary
+example ends in a three-patient run there. Original patient files are not bundled.

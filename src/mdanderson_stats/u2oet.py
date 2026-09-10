@@ -159,13 +159,20 @@ class U2OETProbabilities:
             raise ArithmeticError("expected utility exceeds floating-point range")
         return _freeze(answer)
 
-    def loglikelihood(self, counts: ArrayLike) -> float:
-        """Grouped complete outcomes; no multinomial combinatorial constant."""
+    def loglikelihood(self, counts: ArrayLike, *, toxicity_only: ArrayLike | None = None) -> float:
+        """Grouped joint/optional toxicity-only data, without combinatorial constants."""
         n = _real(counts, "counts")
         if n.shape != self.log_joint.shape or np.any(n < 0) or np.any(n != np.floor(n)):
             raise ValueError("counts must be nonnegative integers with the joint probability shape")
         observed = n > 0
-        return float(np.sum(n[observed] * self.log_joint[observed]))
+        value = float(np.sum(n[observed] * self.log_joint[observed]))
+        if toxicity_only is not None:
+            nt = _real(toxicity_only, "toxicity_only")
+            if nt.shape != self.log_toxicity.shape or np.any(nt < 0) or np.any(nt != np.floor(nt)):
+                raise ValueError("toxicity_only must be integer dose-by-dose-by-toxicity counts")
+            observed_t = nt > 0
+            value += float(np.sum(nt[observed_t] * self.log_toxicity[observed_t]))
+        return value
 
 
 def u2oet_probabilities(

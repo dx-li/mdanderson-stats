@@ -657,6 +657,13 @@ from .u2oet_decision import (
     u2oet_posterior,
 )
 from .u2oet_fit import U2OETFit, fit_u2oet, u2oet_parameter_names
+from .u2oet_patients import (
+    U2OETPatientDecision,
+    U2OETPatients,
+    read_u2oet_patients,
+    u2oet_next_patient,
+    u2oet_patients,
+)
 from .u2oet_prior import (
     U2OETPriorDraws,
     U2OETPriorESS,
@@ -680,6 +687,11 @@ from .windows import (
 )
 
 __all__ = [
+    "U2OETPatients",
+    "U2OETPatientDecision",
+    "u2oet_patients",
+    "read_u2oet_patients",
+    "u2oet_next_patient",
     "U2OETScenario",
     "u2oet_scenario",
     "read_u2oet_scenario",

@@ -988,4 +988,6 @@ and escalation restrictions. Multi-chain posterior fitting supports explicit
 priors and complete outcomes. IID prior draws, beta-moment prior information
 and pseudo-trial prior calibration are available. Additional coordinate and joint
 link moves address diffuse-prior mixing. Gaussian-copula scenario construction
-and native scenario/dose/utility readers are available; full trial conduct remains pending.
+and native scenario/dose/utility readers are available. Patient snapshots,
+toxicity-only likelihoods and open-cohort decisions are supported; calendar
+simulation and final selection remain pending.
