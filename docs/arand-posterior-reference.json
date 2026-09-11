@@ -1,0 +1,8 @@
+{
+  "probabilities": 52,
+  "maximum_absolute_error": 6.259404106145894e-11,
+  "elapsed_seconds": 1.1211335840635002,
+  "previous_scalar_cdf_seconds": 2.616770875174552,
+  "reference": "Independent R integration in original parameter domain, with 3 and 10 arms, both directions and families",
+  "scope": "Posterior/model kernel; not native simulation/controller parity"
+}

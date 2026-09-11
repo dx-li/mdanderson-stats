@@ -50,6 +50,13 @@ from .anovaddp_updates import (
 )
 from .apcoa import AdjustedPCoA, PCoAOrdination, adjusted_pcoa
 from .apcoa_plot import plot_adjusted_pcoa
+from .arand_posterior import (
+    ArandBestProbability,
+    ArandPosterior,
+    arand_best_probability,
+    arand_binary_posterior,
+    arand_survival_posterior,
+)
 from .asypow import AsymptoticPower, asypow_information
 from .asypow_design import asypow_design_information, asypow_reparameterize
 from .asypow_generic import asypow_smo_generic
@@ -744,6 +751,11 @@ from .windows import (
 )
 
 __all__ = [
+    "ArandBestProbability",
+    "ArandPosterior",
+    "arand_best_probability",
+    "arand_binary_posterior",
+    "arand_survival_posterior",
     "BlockArandDesign",
     "BlockArandPlan",
     "BlockArandDecision",

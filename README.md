@@ -1021,3 +1021,10 @@ and repeated-trial operating characteristics. The implementation preserves the
 archive's separate final cutoff and exact burn-in transition. Original compiled
 methods validate 5,914 block plans and 180 stopping cases; repeated simulations
 share a bounded posterior cache.
+
+[Adaptive Randomization](docs/arand.md) now has its binary and exponential
+survival posterior core for up to ten arms: largest/smallest parameter
+probabilities, mean/median survival parameterizations, threshold exceedance and
+stable exponential tuning. Vectorized multi-arm integration agrees with 52
+independent R calculations. Calendar conduct and native stopping/allocation
+controls remain pending.

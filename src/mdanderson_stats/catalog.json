@@ -2141,9 +2141,18 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Binary beta and exponential inverse-gamma conjugate posteriors, including censored exposure and mean/median time parameterizations",
+        "One-through-ten-arm largest/smallest parameter probabilities with exact exchangeability, reused two-arm identities and vectorized multi-arm quadrature",
+        "Stable exponential allocation tuning and per-arm threshold exceedance; explicit rejection of unresolved tails before fractional-power allocation",
+        "Remaining: native calendar simulation, allocation floors, reversible loser suspension, permanent futility, minimum-enrollment/stopping order, final follow-up and operating-characteristic reporting"
+      ],
+      "validation": [
+        "52 probabilities checked against independent R integration in original parameter coordinates: beta/inverse-gamma, 3/10 arms and both directions; maximum absolute difference 6.26e-11",
+        "Exact polynomial beta and exchangeability identities, posterior counts/censored exposure, mean/median conversion, 1e200/1e-200 time-unit invariance and unresolved-tail rejection; existing two-arm inequality checks reused",
+        "One measured reference pass reduced from 2.62 to 1.12 seconds by vectorizing competing-arm CDFs; no native controller or numerical-engine parity claim"
+      ]
     },
     {
       "id": 63,

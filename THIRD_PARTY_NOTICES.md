@@ -852,3 +852,15 @@ explicit general redistribution license; this notice grants none for those files
 
 Archive: https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BlockARAND/BlockARAND_V1.0_NoFX4.0.zip
 SHA-256: `36340570171e960a10c4a9ae52106e1e5e3e537f0d95b828b8c41ce968c167cf`.
+
+## Adaptive Randomization (ARAND)
+
+`arand_posterior.py` independently implements the beta and inverse-gamma posterior
+models, multi-arm stochastic ordering and exponential tuning documented in the
+MD Anderson Adaptive Randomization 5.2 guide. The guide prohibits redistribution
+of the original program. Original executables, native libraries, installer files
+and documents are not bundled or relicensed by this package. The archived 5.2.2
+installer is retained only in the ignored research directory for inspection.
+
+Archive: https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ARAND/AdaptiveRandomization_V5.2.2.zip
+SHA-256: `ff9c4d490a8876e1b3197d6fcb809bd8d001761be13f083a667e0e7db34fc877`.
