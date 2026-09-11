@@ -4,8 +4,8 @@ Catalog entry **85 remains partial**. The package now implements the complete
 four-arm beta-binomial workflow in the archive's `SwatiBiswasCode` C program,
 including patient-history replay, phase-I escalation, phase-II adaptive
 randomization, toxicity closure, efficacy/futility stopping and simulation.
-The later C++ response/toxicity model and calendar snapshots are now available
-below; its integrated trial-conduct implementation remains outstanding.
+The later six-dose C++ workflow now has an integrated calendar simulator,
+including pending outcomes, blocked arrivals and posterior decisions.
 
 Sources: [MD Anderson's entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85)
 and [P12Xuelin archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/P12Xuelin/P12Xuelin_V1.0_.zip),
@@ -135,11 +135,11 @@ Reproduce the audits after retrieving the archive with
 Original source is used only from the ignored research directory; audit tooling
 and generated numerical fixtures are bundled, not original code or trial data.
 
-Remaining: the later C++ six-arm integrated trial-conduct workflow, calendar
-simulation, configurable inputs/reports, native adaptive-importance-sampler
+Remaining: native configurable input/report workflows, multi-trial reporting,
+native adaptive-importance-sampler
 parity and full published operating-characteristic replication. The C++ source explicitly prohibits redistribution
 of the original program. No original archive files are shipped; this is an
-independent Python expression of the four-arm statistical workflow.
+independent Python expression of the statistical workflows.
 
 
 ## Six-dose C++ model and calendar snapshots
@@ -201,9 +201,9 @@ The posterior is shared across doses through the response regression; it is
 not six independent beta efficacy models. This Python sampler differs from the
 C++ adaptive mixture importance integrator. Diagnostics do not guarantee
 convergence or precise indicator probabilities, especially near a decision
-threshold; retained chains allow further precision assessment. The source posterior decision rules are supplied below. Integrated calendar
-trial conduct and native integration parity remain pending, so a fitted model
-alone is not a trial-conduct implementation.
+threshold; retained chains allow further precision assessment. The source posterior
+decision rules and integrated calendar simulator are supplied below. Native
+integration parity remains pending.
 
 Validation uses an [independent R importance calculation](phase12-model-reference.json)
 with 200,000 draws from an inflated-Laplace/prior-normal mixture (importance ESS
@@ -261,9 +261,8 @@ the ineligible-winner quirk and final tie handling. Run
 this audit; original methods are read from ignored research files, not bundled.
 
 The six-dose progression and accrual-readiness primitives are supplied below.
-Integrated calendar scheduling, full trial simulation and native input/report
-workflows remain outstanding. These decision functions
-extend the model layer without claiming complete C++ trial-controller coverage.
+The integrated calendar simulator below schedules these decisions. Native
+input/report workflows and complete C++ application parity remain outstanding.
 
 
 ## Six-dose phase-I progression and accrual readiness
@@ -322,6 +321,67 @@ readiness is checked separately at phase boundaries and exact observation times.
 Run `tools/reference_phase12_progression.py` after retrieving the archive to
 reproduce it. Original C++ methods remain in ignored research files.
 
-Still pending: the integrated six-dose calendar simulator, arrival rounding and
-attempt scheduling, complete follow-up/final-selection orchestration, native
-input/report workflows and full published operating-characteristic validation.
+## Integrated six-dose calendar simulation
+
+```python
+import numpy as np
+from mdanderson_stats import simulate_phase12_calendar
+
+trial = simulate_phase12_calendar(
+    [0.05, 0.1, 0.1, 0.15, 0.15, 0.2],
+    [0.1, 0.2, 0.2, 0.3, 0.3, 0.5],
+    rng=np.random.default_rng(8554),
+)
+print(trial.reason, trial.early_selected, trial.future_selected)
+```
+
+Defaults follow the C++ simulation setup: 80 patients, 72 attempted arrivals per
+365 days, response window 84 days and toxicity window 28 days. The first attempt
+occurs at zero. Exponential interarrival gaps are rounded with `floor(x + .5)`;
+blocked attempts consume time and generate another gap. Zero gaps are allowed.
+`max_attempts` raises an error if the simulation cannot finish within its bound.
+`max_duration` limits attempted arrival times, with a strict upper bound.
+
+Response and toxicity are independent Bernoulli outcomes conditional on dose.
+A positive event receives a rounded uniform delay from one day to its endpoint
+window, capped at that window; a negative outcome becomes known at the complete
+window. Dose indices and outcome records follow `phase12_snapshot` above.
+Phase-I transitions use currently observed toxicities and retained dose masks.
+Phase II starts only with at least two admissible doses, initially assigned
+uniformly. Posterior analyses occur after every five phase-II enrollments when
+the response-cohort readiness rule permits the next attempt. All observed data,
+including phase-I data, enter each analysis. Toxicity closure is assessed at
+these analyses, not after every intervening patient.
+
+**The archived controller does not complete follow-up before final selection.**
+At an enrollment or duration limit, it applies `PickWinner` at the last processed
+attempt time. Python preserves that default, including pending outcomes. Set
+`complete_followup=True` to move only this final analysis to the latest outcome
+observation time. This extension preserves the patient history and does not
+reopen an already stopped trial. Final selection uses the retained closed and
+suspended masks without another interim closure/futility update. If custom limits
+interrupt phase I, the source's posterior closed flags are still initially all
+false: final selection can consequently consider doses not declared admissible.
+
+The early-selection eligibility quirk described above is retained. Inspect
+`selected_eligible`: false means the early winner was closed or suspended.
+For a final winner, true means it passes those masks; it does not certify phase-I
+admissibility when custom limits interrupt phase I.
+
+Results retain patient records, per-patient phase (0/1), attempted arrivals
+(columns: time, prior enrollment, prior phase, blocked flag), phase-II starting
+enrollment, stopping reason/time, final-analysis time and selection. Each analysis
+retains its snapshot, decision (`None` for final selection), and maximum
+coefficient split-Rhat; `last_fit` retains the latest posterior draws. Independent
+returned data and posterior seeds isolate simulation randomness from posterior
+sampling. Unchanged tallies reuse the previous fit. No exact native random-stream
+or adaptive-importance-sampler equivalence is claimed.
+
+Focused integration checks reconstruct endpoint availability and accrual readiness
+from simulated histories, cover early toxicity termination, and compare default
+versus complete final follow-up. The [archived Case 1 pilot](phase12-calendar-pilot.json)
+is reproducible with `uv run python tools/pilot_phase12_calendar.py`. Its finite
+MCMC budget and diagnostic values are recorded; it is a workflow check, not a
+published operating-characteristic replication or proof of precision near decision
+thresholds. Native input/report workflows, multi-trial reporting and full published
+operating-characteristic validation remain pending.

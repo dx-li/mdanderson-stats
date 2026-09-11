@@ -1,0 +1,33 @@
+{
+  "scenario": "C++ SimulationCases Case 1: response and toxicity increasing",
+  "seed": 8554,
+  "draws": 2000,
+  "warmup": 1000,
+  "chains": 4,
+  "enrolled": 80,
+  "phase_two_start": 24,
+  "attempts": 283,
+  "blocked_attempts": 203,
+  "reason": "maximum enrollment",
+  "early_selected": null,
+  "future_selected": 3,
+  "selected_eligible": true,
+  "stop_time": 1497.0,
+  "final_analysis_time": 1497.0,
+  "analysis_max_split_rhat": [
+    1.006739404889628,
+    1.0102974877340034,
+    1.014347779742246,
+    1.0093363042838857,
+    1.0104128807737294,
+    1.0185878220615496,
+    1.0145319251033027,
+    1.0199147091632956,
+    1.0061458965188554,
+    1.0087041211461107,
+    1.0099815456270076,
+    1.0099815456270076
+  ],
+  "elapsed_seconds": 9.52977008279413,
+  "scope": "Integrated workflow pilot with finite MCMC budget, not native random-stream or published operating-characteristic replication."
+}

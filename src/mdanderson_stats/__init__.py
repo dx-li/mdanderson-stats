@@ -450,6 +450,11 @@ from .parallel_phase12 import (
     parallel_phase12_replay,
     simulate_parallel_phase12,
 )
+from .parallel_phase12_calendar import (
+    Phase12CalendarAnalysis,
+    Phase12CalendarTrial,
+    simulate_phase12_calendar,
+)
 from .parallel_phase12_decision import (
     Phase12SourceDecision,
     phase12_source_decision,
@@ -727,6 +732,9 @@ from .windows import (
 )
 
 __all__ = [
+    "Phase12CalendarTrial",
+    "Phase12CalendarAnalysis",
+    "simulate_phase12_calendar",
     "Phase12PhaseOne",
     "phase12_phase_one",
     "phase12_accrual_ready",

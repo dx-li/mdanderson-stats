@@ -1007,14 +1007,10 @@ characteristics; source analysis/reporting corrections are documented.
 C workflow: phase-I escalation, beta-binomial adaptive randomization, toxicity
 closure, efficacy/futility stopping, final selection and replayable simulation.
 Python replay matches 24 native C decision histories, with independent R checks
-of 179 posterior comparisons. The later C++ variant now has its shared six-dose
-logistic response fit, beta toxicity updates and calendar outcome snapshots;
-integrated trial conduct remains pending.
-
-The six-dose phase I/II source-rule evaluator now covers posterior allocation,
-suspension, closure and early/final selection, checked against 100 C++ cases.
-Its documented source quirks remain explicit; full calendar trial conduct is pending.
-
-Six-dose phase-I progression and phase-specific accrual readiness are available,
-with 948 transitions checked against the C++ rules. The integrated calendar
-simulator and native reporting remain outstanding.
+of 179 posterior comparisons. The later six-dose C++ variant now has an integrated
+calendar simulator combining the shared logistic response posterior, beta toxicity
+updates, phase-I progression, blocked accrual and phase-II allocation/stopping.
+Its component audits cover 100 native posterior-decision cases and 948 phase-I
+transitions. Source eligibility quirks and final analysis with pending outcomes
+are explicit; complete final follow-up is an optional extension. Native reporting
+and published operating-characteristic replication remain outstanding.
