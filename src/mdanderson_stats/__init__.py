@@ -143,6 +143,18 @@ from .blip_custom import (
     blip_custom_data,
     plot_blip_custom,
 )
+from .blockarand import (
+    BlockArandDecision,
+    BlockArandDesign,
+    BlockArandOperatingCharacteristics,
+    BlockArandPlan,
+    BlockArandTrial,
+    blockarand_block,
+    blockarand_decision,
+    blockarand_plan,
+    simulate_blockarand,
+    simulate_blockarand_oc,
+)
 from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
 from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
@@ -732,6 +744,16 @@ from .windows import (
 )
 
 __all__ = [
+    "BlockArandDesign",
+    "BlockArandPlan",
+    "BlockArandDecision",
+    "BlockArandTrial",
+    "BlockArandOperatingCharacteristics",
+    "blockarand_plan",
+    "blockarand_block",
+    "blockarand_decision",
+    "simulate_blockarand",
+    "simulate_blockarand_oc",
     "Phase12CalendarTrial",
     "Phase12CalendarAnalysis",
     "simulate_phase12_calendar",

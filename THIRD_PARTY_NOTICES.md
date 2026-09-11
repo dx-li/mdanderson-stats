@@ -838,3 +838,17 @@ main/functions have no explicit general redistribution grant. The separate C++
 trial-conduct workflow remains outstanding; its logistic response model, beta
 toxicity model and outcome snapshots are independently implemented in Python. Numerical and control-flow validation, adapters
 and reporting differences are documented in `docs/parallel-phase12.md`.
+
+## BlockARAND
+
+`blockarand.py` independently implements the statistical method in John D. Cook's
+*Block Adaptive Randomization* (2011), the MD Anderson BlockARAND user's guide
+(2012), and the workflow distributed by Suyu Liu, John Cook and Clift Norris.
+The archived .NET method bodies were inspected for rational-approximation tie
+handling, burn-in transition and stopping semantics. Reference tooling reads
+those binaries only from an ignored local research directory; original programs,
+DLLs and documents are not redistributed. The inspected archive contains no
+explicit general redistribution license; this notice grants none for those files.
+
+Archive: https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BlockARAND/BlockARAND_V1.0_NoFX4.0.zip
+SHA-256: `36340570171e960a10c4a9ae52106e1e5e3e537f0d95b828b8c41ce968c167cf`.

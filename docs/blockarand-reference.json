@@ -1,0 +1,7 @@
+{
+  "archive_sha256": "36340570171e960a10c4a9ae52106e1e5e3e537f0d95b828b8c41ce968c167cf",
+  "rational_plan_cases": 5914,
+  "stopping_cases": 180,
+  "method": "Interpret original DLL arithmetic and branches; compare Python outputs",
+  "scope": "Block selection and stopping parity; not original RNG or beta integrator parity"
+}

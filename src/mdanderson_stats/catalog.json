@@ -2826,9 +2826,19 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Two-arm rational block planning with source floating-point tie handling and uniform block permutation; bounded block sizes 2 through 10",
+        "Jeffreys-prior beta superiority, stable log-odds tuning, balanced burn-in and exact transition to adaptive blocks",
+        "Patient-wise strict posterior monitoring, including burn-in and prior-only stopping, separate .90 final cutoff and arm-zero precedence",
+        "Single-trial binary-response simulation with immutable histories and block plans; replicated scenario operating characteristics with MCSEs and bounded posterior cache",
+        "Python API replaces Windows input/report interface; no native RNG or numerical-engine bitwise parity claim"
+      ],
+      "validation": [
+        "5914 rational plans and 180 stopping cases match interpretation of the original DLL method bodies, including exact fractions, midpoints and cutoff ties",
+        "Existing independent beta quadrature checks reused; exact Beta(2,1) versus Beta(1,2) superiority identity and focused burn-in, stopping, sample cap and OC aggregation checks",
+        "Two shipped-guide scenarios simulated for 500 trials each with explicit priors, seeds, MCSEs and cache counts; historical rounded guide results not treated as exact fixtures"
+      ]
     },
     {
       "id": 92,

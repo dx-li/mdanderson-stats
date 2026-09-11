@@ -1014,3 +1014,10 @@ Its component audits cover 100 native posterior-decision cases and 948 phase-I
 transitions. Source eligibility quirks and final analysis with pending outcomes
 are explicit; complete final follow-up is an optional extension. Native reporting
 and published operating-characteristic replication remain outstanding.
+
+[BlockARAND](docs/blockarand.md) now supports two-arm block adaptive randomization:
+posterior allocation, rational block sizes, balanced burn-in, patient-wise stopping
+and repeated-trial operating characteristics. The implementation preserves the
+archive's separate final cutoff and exact burn-in transition. Original compiled
+methods validate 5,914 block plans and 180 stopping cases; repeated simulations
+share a bounded posterior cache.

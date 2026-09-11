@@ -1,0 +1,80 @@
+{
+  "design": {
+    "min_block": 2,
+    "max_block": 8,
+    "max_patients": 200,
+    "burnin": 50,
+    "early_cutoff": 0.95,
+    "final_cutoff": 0.9,
+    "tuning": 0.5,
+    "prior": [
+      [
+        0.5,
+        0.5
+      ],
+      [
+        0.5,
+        0.5
+      ]
+    ],
+    "tolerance": 1e-10
+  },
+  "scenarios": [
+    {
+      "truth": [
+        0.3,
+        0.8
+      ],
+      "seed": 9006,
+      "repetitions": 500,
+      "selection": [
+        0.018,
+        0.982
+      ],
+      "selection_mcse": [
+        0.005945754788081997,
+        0.005945754788082
+      ],
+      "no_selection": 0.0,
+      "mean_patients": [
+        4.266,
+        4.348
+      ],
+      "patients_mcse": [
+        0.17139790688619858,
+        0.173256537121433
+      ],
+      "comparisons": 774,
+      "cache_hits": 4033
+    },
+    {
+      "truth": [
+        0.5,
+        0.8
+      ],
+      "seed": 9007,
+      "repetitions": 500,
+      "selection": [
+        0.048,
+        0.952
+      ],
+      "selection_mcse": [
+        0.009559916317625379,
+        0.009559916317625384
+      ],
+      "no_selection": 0.0,
+      "mean_patients": [
+        8.65,
+        9.766
+      ],
+      "patients_mcse": [
+        0.43190285963434044,
+        0.5715416061978607
+      ],
+      "comparisons": 3246,
+      "cache_hits": 6462
+    }
+  ],
+  "elapsed_seconds": 6.633123167324811,
+  "scope": "Guide scenarios using NumPy RNG and direct beta quadrature; not native output parity"
+}
