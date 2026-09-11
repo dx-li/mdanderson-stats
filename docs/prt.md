@@ -2,10 +2,11 @@
 
 Catalog entry **69 remains partial**. Python now implements the discrete probit
 hazard likelihood, conditional remaining toxicity probabilities, PRT predictive
-criteria, cohort decisions and final selection. Fitting the state-space model,
-Bayesian isotonic transformation, patient-file conversion and full calendar trial
-simulation remain outstanding. The predictive function requires externally
-supplied, aligned isotonic posterior draws; it does not fit them automatically.
+criteria, cohort decisions and final selection. The state-space posterior fit and published covariance-weighted isotonic
+transformation are now available below. Native projection safeguards, patient-file
+conversion and full calendar trial simulation remain outstanding. The predictive
+function accepts aligned isotonic posterior draws; fitting and projection are
+separate steps.
 
 Sources: [MD Anderson entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/69),
 [conduct guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PRT/readme_conduct.pdf),
@@ -134,3 +135,73 @@ Focused tests additionally check exact beta moments and tails, predictive
 posterior dependence, chunk invariance, all decision branches, final selection,
 small hazards and extreme finite log likelihoods. This validates the implemented
 criteria, not a fitted PRT posterior, native executable or published trial OCs.
+
+
+## State-space posterior fit and isotonic transformation
+
+```python
+import numpy as np
+from mdanderson_stats import fit_prt_model, prt_isotonic_projection
+
+fit = fit_prt_model(
+    survived=[[3, 2]],
+    events=[[1, 3]],
+    prior_mean=0.3,
+    prior_variance=1.2,
+    rng=np.random.default_rng(6910),
+)
+# Remove the terminal zero-risk row before estimating covariance.
+raw = fit.conditional_toxicity[:, :, :-1, :]
+projected = prt_isotonic_projection(raw.reshape(-1, *raw.shape[-2:]))
+print(projected.probability.mean(axis=0))
+```
+
+`fit_prt_model` takes interval-by-dose survivor and event counts with 1–10
+assessment intervals and 2–10 doses. Counts in the next interval cannot exceed
+the preceding interval's survivors. Priors are independent between intervals.
+Within each interval, dose coefficients follow a Gaussian random walk starting
+from the fixed `prior_mean`, with every increment having `prior_variance`.
+Defaults -14 and 28 come from the archived settings. These are variance inputs,
+not standard deviations. Both can instead have one value per interval. The
+prior covariance between doses k and l (one-based) is `min(k,l)*variance`.
+
+The sampler targets the likelihood in equation (2.1) directly. Independent
+interval/chain blocks update together using elliptical slice sampling, avoiding
+latent-variable sign conventions and reproducing the stated posterior rather
+than the original Gibbs random stream. Uninformed intervals receive independent
+prior draws. Defaults retain 2,000 draws after 1,000 warmup iterations in each of
+four chains; random state is explicit. A failed bracket or nonfinite likelihood
+raises an error.
+
+Results retain coefficients and raw conditional risks with axes
+`(chain, draw, interval, dose)`. Risks have an additional terminal all-zero row.
+Coefficient and nonterminal risk summaries report means, intervals, classical
+split-Rhat and batch-means MCSE. These diagnostics estimate mixing and precision;
+they do not certify convergence or a threshold decision. Prior settings and
+likelihood-evaluation counts are retained with the immutable arrays.
+
+`prt_isotonic_projection` implements the Section 3 min-max formula literally,
+using the empirical full covariance matrix for each interval. It estimates
+covariance over flattened retained draws, solves principal submatrix systems by
+Cholesky factorization and processes the draw vectors with NumPy operations.
+It does not replace full covariance by diagonal variance weights. The result
+retains transformed draws, covariance matrices and the largest condition number.
+Singular/non-positive-definite covariance or condition numbers exceeding 1e12
+are rejected. No ridge or pseudoinverse is substituted.
+
+**The published formula can produce values outside the probability interval.**
+Inverse-covariance weights need not be nonnegative. In the [guide-history pilot](prt-fit-pilot.json),
+the raw fit's maximum coefficient split-Rhat was 1.002 or less, but the projection
+produced a minimum of about -0.0153. This is materially below zero, not roundoff.
+The API raises an error rather than clipping or feeding invalid probabilities
+to the predictive criteria. This finding concerns the literal published formula
+with estimated covariance; the original executable's handling remains unverified.
+Its resolution is required before claiming complete end-to-end PRT coverage.
+
+Independent R tensor Gauss-Hermite integration verifies a two-dose posterior,
+refining from 80 to 120 nodes per dimension. Both coefficient and risk means
+agree with the sampler within six estimated Monte Carlo standard errors.
+A separate R full-covariance min-max calculation verifies 180 transformed values;
+prior-only sampling verifies the random-walk covariance. Regenerate both fixtures
+with `Rscript tools/reference_prt_fit.R`. Run
+`uv run python tools/pilot_prt_fit.py` to reproduce the guide-history diagnostic.

@@ -1,0 +1,23 @@
+{
+  "scenario": "Guide history: doses 2/3, completed intervals (6,5,5)/(2,1,1), no events",
+  "seed": 6911,
+  "prior_mean": -14,
+  "increment_variance": 28,
+  "chains": 4,
+  "draws": 2000,
+  "warmup": 1000,
+  "raw_total_risk_mean": [
+    0.009238383658734547,
+    0.012394980536366347,
+    0.155484770628899,
+    0.3144938843099153,
+    0.4351910432200353,
+    0.5181814122357904
+  ],
+  "maximum_beta_split_rhat": 1.0012165751027629,
+  "fit_seconds": 0.3311709170229733,
+  "likelihood_evaluations": 76076,
+  "projection_status": "rejected",
+  "projection_reason": "published covariance-weighted projection leaves [0,1]: range [-0.0152853, 1]; no clipping applied",
+  "scope": "Raw posterior pilot; native implementation of projection remains unverified"
+}

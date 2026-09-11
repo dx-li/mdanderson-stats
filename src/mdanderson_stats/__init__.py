@@ -530,6 +530,12 @@ from .prt import (
     prt_interval_loglikelihood,
     prt_predictive_risk,
 )
+from .prt_fit import (
+    PRTIsotonicProjection,
+    PRTModelFit,
+    fit_prt_model,
+    prt_isotonic_projection,
+)
 from .pvalue_models import (
     OrderStatisticDiagnostics,
     clustered_pvalues,
@@ -760,6 +766,10 @@ from .windows import (
 )
 
 __all__ = [
+    "PRTModelFit",
+    "PRTIsotonicProjection",
+    "fit_prt_model",
+    "prt_isotonic_projection",
     "PRTDecision",
     "PRTPredictiveRisk",
     "prt_conditional_toxicity",

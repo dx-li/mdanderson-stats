@@ -1033,5 +1033,6 @@ controls remain pending.
 draws and applies the published cohort-suspension, dose-movement and final-selection
 rules. A bounded-memory count recursion replaces exponential enumeration of pending
 outcomes while preserving posterior dependence. Probit model components are also
-available; posterior fitting, isotonic transformation and calendar simulation remain
-pending.
+available, including the state-space posterior fit and full-covariance isotonic
+formula. The guide-history pilot exposes out-of-range projected risks, reported
+explicitly; native projection safeguards and calendar simulation remain pending.

@@ -2364,12 +2364,14 @@
         "Discrete probit hazard likelihood and stable raw conditional remaining-toxicity probabilities",
         "Moment-matched beta predictive negligible/excessive toxicity criteria from aligned isotonic posterior draws; dynamic count recursion preserves posterior-induced patient dependence without 2^m enumeration",
         "Published rules 3-6 for toxicity stopping, dose movement and accrual suspension, including pending-zero overrides and exact cutoff conventions; rule 7 final selection",
-        "Remaining: state-space posterior fitting, covariance-weighted Bayesian isotonic transformation, original patient-file conversion, calendar simulation and native/published operating-characteristic replication"
+        "Gaussian dose-random-walk posterior fitting by batched elliptical slice sampling, raw risk draws and chain diagnostics; literal full-covariance isotonic min-max transformation with explicit singularity/range failures",
+        "Remaining: verify native safeguards for out-of-range isotonic projections, original patient-file conversion, calendar simulation and native/published operating-characteristic replication"
       ],
       "validation": [
         "Predictive recursion compared with all 4096 outcome vectors for 512 draws and 12 pending patients; exact beta moments/tails and shared-posterior dependence checks",
         "Focused tests cover every published decision branch, cutoff equalities, no-pending overrides, final selection, chunk invariance and stable probit likelihood/risk calculations",
-        "Implements published paper equations and rules; supplied posterior draws are not generated or certified by this module and native executable parity is not claimed"
+        "Predictive criteria consume supplied draws; sampler diagnostics do not certify convergence, and native executable parity is not claimed",
+        "Two-dose posterior means checked against independent R 80/120-node tensor Gauss-Hermite integration; 180 isotonic values match R, prior covariance checked; archived-prior guide-history pilot explicitly reports a negative projected probability"
       ]
     },
     {
