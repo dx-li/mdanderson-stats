@@ -4063,12 +4063,23 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/ROSE",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/ROSE",
-      "references": [],
+      "references": [
+        "https://arxiv.org/abs/2505.03898"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "One- and two-stage normal and exact binomial ROSE design searches, unequal allocation and rounded interim enrollment",
+        "O’Brien–Fleming interim spending, strict high-dose boundaries with exact decimal tie handling and low-dose final ties",
+        "Exact operating characteristics for specified designs and seeded stage-wise binary simulations with Monte Carlo standard errors",
+        "Primary application method scope; supplementary free/joint interim-boundary optimization is not exposed; no original backend or RNG parity claim"
+      ],
+      "validation": [
+        "Eight published Table 1 normal sample sizes and the exact 23/19 per-arm design example reproduced",
+        "Independent direct joint-binomial enumeration for unequal-arm one- and two-stage designs agrees within 2e-14",
+        "Two 100000-trial simulations agree with exact selection and early-stop probabilities within six MCSEs; decimal ties and deterministic outcomes checked"
+      ]
     },
     {
       "id": 169,

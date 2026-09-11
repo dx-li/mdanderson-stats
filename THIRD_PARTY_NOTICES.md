@@ -876,3 +876,14 @@ explicit general redistribution grant. This notice does not license those files.
 
 Archive: https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PRT/PRT_V1.0.exe
 SHA-256: `0a3de4fee7c6cd0f113aa214c863f84ead79ef08a2ec2259b9f5d7cc2e3b4dd0`.
+
+## ROSE
+
+`rose.py` independently implements the published one- and two-stage ROSE and
+exact ROSE methods of Shuqi Wang, Ying Yuan and Suyu Liu, *ROSE: Randomized
+Optimal Selection Design for Dose Optimization* (2025), including its unequal
+allocation formulas. Sources: https://arxiv.org/abs/2505.03898 and
+https://biostatistics.mdanderson.org/shinyapps/ROSE/ (V1.2.1.0).
+No original source code, application assets or paper PDF is distributed.
+No original software redistribution license was identified; the paper and app
+are cited as mathematical references. See `docs/rose.md` for scope and validation.

@@ -1036,3 +1036,11 @@ outcomes while preserving posterior dependence. Probit model components are also
 available, including the state-space posterior fit and full-covariance isotonic
 formula. The guide-history pilot exposes out-of-range projected risks, reported
 explicitly; native projection safeguards and calendar simulation remain pending.
+
+[ROSE](docs/rose.md) provides one- and two-stage dose-selection designs using
+normal approximation or exact binomial constraints, including unequal allocation
+and O'Brien–Fleming interim spending. Exact operating characteristics, strict
+response-count decisions and seeded binary-response simulations with Monte Carlo
+errors are available. Published design sizes and independent outcome enumeration
+validate the port; the supplement's free interim-boundary optimization is outside
+this API's scope.

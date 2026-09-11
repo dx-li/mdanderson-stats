@@ -563,6 +563,15 @@ from .response_survival_simulation import ResponseSurvivalSimulation, simulate_r
 from .rolling_six import RollingSixDecision, RollingSixDesign, RollingSixSelection
 from .rolling_six_simulation import RollingSixSimulation, simulate_rolling_six
 from .rolling_six_trial import RollingSixStep, RollingSixTrial, run_rolling_six_trial
+from .rose import (
+    RoseDesign,
+    RoseOperatingCharacteristics,
+    RoseSimulation,
+    rose_design,
+    rose_operating_characteristics,
+    rose_select,
+    simulate_rose,
+)
 from .schweder import (
     SchwederBootstrap,
     SchwederFit,
@@ -766,6 +775,13 @@ from .windows import (
 )
 
 __all__ = [
+    "RoseDesign",
+    "RoseOperatingCharacteristics",
+    "RoseSimulation",
+    "rose_design",
+    "rose_operating_characteristics",
+    "rose_select",
+    "simulate_rose",
     "PRTModelFit",
     "PRTIsotonicProjection",
     "fit_prt_model",
