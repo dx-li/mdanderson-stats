@@ -521,6 +521,15 @@ from .proportional_density_bootstrap import (
     ProportionalDensityBootstrap,
     proportional_density_bootstrap,
 )
+from .prt import (
+    PRTDecision,
+    PRTPredictiveRisk,
+    prt_conditional_toxicity,
+    prt_decision,
+    prt_final_selection,
+    prt_interval_loglikelihood,
+    prt_predictive_risk,
+)
 from .pvalue_models import (
     OrderStatisticDiagnostics,
     clustered_pvalues,
@@ -751,6 +760,13 @@ from .windows import (
 )
 
 __all__ = [
+    "PRTDecision",
+    "PRTPredictiveRisk",
+    "prt_conditional_toxicity",
+    "prt_interval_loglikelihood",
+    "prt_predictive_risk",
+    "prt_decision",
+    "prt_final_selection",
     "ArandBestProbability",
     "ArandPosterior",
     "arand_best_probability",

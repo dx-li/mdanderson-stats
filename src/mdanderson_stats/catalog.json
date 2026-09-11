@@ -2359,9 +2359,18 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Discrete probit hazard likelihood and stable raw conditional remaining-toxicity probabilities",
+        "Moment-matched beta predictive negligible/excessive toxicity criteria from aligned isotonic posterior draws; dynamic count recursion preserves posterior-induced patient dependence without 2^m enumeration",
+        "Published rules 3-6 for toxicity stopping, dose movement and accrual suspension, including pending-zero overrides and exact cutoff conventions; rule 7 final selection",
+        "Remaining: state-space posterior fitting, covariance-weighted Bayesian isotonic transformation, original patient-file conversion, calendar simulation and native/published operating-characteristic replication"
+      ],
+      "validation": [
+        "Predictive recursion compared with all 4096 outcome vectors for 512 draws and 12 pending patients; exact beta moments/tails and shared-posterior dependence checks",
+        "Focused tests cover every published decision branch, cutoff equalities, no-pending overrides, final selection, chunk invariance and stable probit likelihood/risk calculations",
+        "Implements published paper equations and rules; supplied posterior draws are not generated or certified by this module and native executable parity is not claimed"
+      ]
     },
     {
       "id": 70,

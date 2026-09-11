@@ -1028,3 +1028,10 @@ probabilities, mean/median survival parameterizations, threshold exceedance and
 stable exponential tuning. Vectorized multi-arm integration agrees with 52
 independent R calculations. Calendar conduct and native stopping/allocation
 controls remain pending.
+
+[PRT](docs/prt.md) now computes predictive toxicity risks from aligned posterior
+draws and applies the published cohort-suspension, dose-movement and final-selection
+rules. A bounded-memory count recursion replaces exponential enumeration of pending
+outcomes while preserving posterior dependence. Probit model components are also
+available; posterior fitting, isotonic transformation and calendar simulation remain
+pending.

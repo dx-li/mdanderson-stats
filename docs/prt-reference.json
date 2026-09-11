@@ -1,0 +1,27 @@
+{
+  "seed": 6902,
+  "posterior_draws": 512,
+  "pending_patients": 12,
+  "enumerated_outcomes": 4096,
+  "maximum_count_probability_difference": 1.3877787807814457e-16,
+  "dynamic_seconds": 0.0039900001138448715,
+  "enumeration_seconds": 0.13011579122394323,
+  "predictive_negligible": 0.9040938612745827,
+  "predictive_excessive": 0.0007895182328062422,
+  "count_probability": [
+    0.2919829070847772,
+    0.2905532705057916,
+    0.2038695629356964,
+    0.11768812074831744,
+    0.05827754067363328,
+    0.024970238887324817,
+    0.009119502140322457,
+    0.002749338791330295,
+    0.000656089094012505,
+    0.00011758111990548816,
+    1.4685065661904895e-05,
+    1.123956690393506e-06,
+    3.899653595065586e-08
+  ],
+  "scope": "Synthetic aligned conditional posterior risks; not a fitted PRT model or native RNG audit"
+}

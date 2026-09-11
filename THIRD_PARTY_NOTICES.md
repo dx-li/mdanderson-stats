@@ -864,3 +864,15 @@ installer is retained only in the ignored research directory for inspection.
 
 Archive: https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ARAND/AdaptiveRandomization_V5.2.2.zip
 SHA-256: `ff9c4d490a8876e1b3197d6fcb809bd8d001761be13f083a667e0e7db34fc877`.
+
+## PRT (predicted risks of toxicity)
+
+`prt.py` independently expresses the probability model, predictive-risk equations
+and cohort/final decision rules in Bekele, Ji, Shen and Thall, *Monitoring late-onset
+toxicities in phase I trials using predicted risks*, Biostatistics 9 (2008), 442–457,
+doi:10.1093/biostatistics/kxm044. The PRT Windows archive and guides were inspected;
+no original program, data file or paper is redistributed. The archive has no
+explicit general redistribution grant. This notice does not license those files.
+
+Archive: https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/PRT/PRT_V1.0.exe
+SHA-256: `0a3de4fee7c6cd0f113aa214c863f84ead79ef08a2ec2259b9f5d7cc2e3b4dd0`.
