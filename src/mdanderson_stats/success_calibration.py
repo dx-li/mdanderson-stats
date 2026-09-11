@@ -10,8 +10,8 @@ from scipy.special import betainc, betaincc, ndtr, ndtri
 from scipy.stats import betabinom, binom
 
 from ._validation import finite, scalar
-from .beta_binomial import BetaBinomialPosterior
-from .beta_comparison import BetaComparison, compare_beta_binomial
+from .beta_binomial import BetaBinomialPosterior, _owned
+from .beta_comparison import BetaDifferenceComparison, compare_beta_difference
 
 
 @dataclass(frozen=True)
@@ -263,14 +263,77 @@ def binary_two_arm_success_oc(
     analysis_treatment: tuple[float, float] = (1.0, 1.0),
     analysis_control: tuple[float, float] = (1.0, 1.0),
     null_rate: float = 0.5,
+    margin: float = 0.0,
+    null_treatment_rate: float | None = None,
     direction: str = "greater",
     absolute_tolerance: float = 1e-10,
 ) -> SuccessOperatingCharacteristics:
-    """Two independent binary arms with zero risk-difference margin (paper S2.2.2).
+    """Two-arm binary success OCs with an arbitrary risk-difference margin.
 
-    Enumerates response-count pairs, using deterministic beta-order quadrature.
-    A cutoff indistinguishable from a computed posterior within its quadrature
-    error raises rather than choosing a potentially wrong discrete decision.
+    For many cutoffs, use prepare_binary_two_arm_success once and reuse its
+    evaluate method, avoiding repeated posterior quadrature.
+    """
+    table = prepare_binary_two_arm_success(
+        n_treatment,
+        n_control,
+        design_treatment=design_treatment,
+        design_control=design_control,
+        analysis_treatment=analysis_treatment,
+        analysis_control=analysis_control,
+        null_rate=null_rate,
+        margin=margin,
+        null_treatment_rate=null_treatment_rate,
+        direction=direction,
+        absolute_tolerance=absolute_tolerance,
+    )
+    return table.evaluate(cutoff)
+
+
+@dataclass(frozen=True)
+class BinarySuccessTable:
+    """Owned read-only response-count arrays reusable across cutoff searches."""
+
+    posterior_probability: np.ndarray
+    posterior_error: np.ndarray
+    effective_mass: np.ndarray
+    ineffective_mass: np.ndarray
+    null_mass: np.ndarray
+
+    def evaluate(self, cutoff: float) -> SuccessOperatingCharacteristics:
+        c = _cutoff(cutoff)
+        pa = self.posterior_probability
+        if 0 < c < 1 and np.any((self.posterior_error > 0) & (abs(pa - c) <= self.posterior_error)):
+            raise ArithmeticError("cutoff cannot be distinguished from posterior quadrature error")
+        success = (pa > c) | ((c == 0) & (self.posterior_error > 0))
+        tp, fp = (
+            float(self.effective_mass[success].sum()),
+            float(self.ineffective_mass[success].sum()),
+        )
+        tn, fn = (
+            float(self.ineffective_mass[~success].sum()),
+            float(self.effective_mass[~success].sum()),
+        )
+        return _result(tp, fp, tn, fn, float(self.null_mass[success].sum()))
+
+
+def prepare_binary_two_arm_success(
+    n_treatment: int,
+    n_control: int,
+    *,
+    design_treatment: tuple[float, float] = (1.0, 1.0),
+    design_control: tuple[float, float] = (1.0, 1.0),
+    analysis_treatment: tuple[float, float] = (1.0, 1.0),
+    analysis_control: tuple[float, float] = (1.0, 1.0),
+    null_rate: float = 0.5,
+    margin: float = 0.0,
+    null_treatment_rate: float | None = None,
+    direction: str = "greater",
+    absolute_tolerance: float = 1e-10,
+) -> BinarySuccessTable:
+    """Prepare quadrature and predictive masses once for repeated decisions.
+
+    null_rate is the control rate. Treatment defaults to the same rate for
+    compatibility; specify null_treatment_rate to evaluate a margin-boundary null.
     """
     nt, nc = scalar(n_treatment, "n_treatment"), scalar(n_control, "n_control")
     if any(n != np.floor(n) or not 1 <= n <= 1000 for n in (nt, nc)):
@@ -278,10 +341,18 @@ def binary_two_arm_success_oc(
     nt, nc = int(nt), int(nc)
     if (nt + 1) * (nc + 1) > 40000:
         raise ValueError("two-arm enumeration is limited to 40000 response-count pairs")
-    c, sign = _cutoff(cutoff), _direction(direction)
+    sign = _direction(direction)
+    delta = scalar(margin, "margin")
+    if not -1 <= delta <= 1:
+        raise ValueError("margin must be in [-1,1]")
     null = scalar(null_rate, "null_rate")
     if not 0 <= null <= 1:
         raise ValueError("null_rate must be in [0,1]")
+    null_t = (
+        null if null_treatment_rate is None else scalar(null_treatment_rate, "null_treatment_rate")
+    )
+    if not 0 <= null_t <= 1:
+        raise ValueError("null_treatment_rate must be in [0,1]")
     priors = [
         finite(v, name)
         for v, name in (
@@ -296,27 +367,25 @@ def binary_two_arm_success_oc(
     dt, dc, at, ac = priors
     t, control = np.arange(nt + 1)[:, None], np.arange(nc + 1)[None, :]
 
-    def compare(pt: np.ndarray, pc: np.ndarray) -> BetaComparison:
-        return compare_beta_binomial(
+    def compare(pt: np.ndarray, pc: np.ndarray) -> BetaDifferenceComparison:
+        return compare_beta_difference(
             BetaBinomialPosterior(pc[0] + control, pc[1] + nc - control),
             BetaBinomialPosterior(pt[0] + t, pt[1] + nt - t),
+            margin=delta,
             absolute_tolerance=absolute_tolerance,
         )
 
     analysis = compare(at, ac)
     design = analysis if np.array_equal(at, dt) and np.array_equal(ac, dc) else compare(dt, dc)
-    pa = analysis.treatment_greater if sign == 1 else analysis.control_greater
-    if 0 < c < 1 and np.any(
-        (analysis.absolute_error > 0) & (abs(pa - c) <= analysis.absolute_error)
-    ):
-        raise ArithmeticError("cutoff cannot be distinguished from posterior quadrature error")
-    effective = design.treatment_greater if sign == 1 else design.control_greater
-    ineffective = design.control_greater if sign == 1 else design.treatment_greater
+    pa = analysis.above_margin if sign == 1 else analysis.below_margin
+    effective = design.above_margin if sign == 1 else design.below_margin
+    ineffective = design.below_margin if sign == 1 else design.above_margin
     predictive = betabinom.pmf(t, nt, *dt) * betabinom.pmf(control, nc, *dc)
-    success = np.full(pa.shape, c == 0) if c in (0.0, 1.0) else pa > c
-    null_mass = binom.pmf(t, nt, null) * binom.pmf(control, nc, null)
-    tp = float(np.sum(predictive[success] * effective[success]))
-    fp = float(np.sum(predictive[success] * ineffective[success]))
-    tn = float(np.sum(predictive[~success] * ineffective[~success]))
-    fn = float(np.sum(predictive[~success] * effective[~success]))
-    return _result(tp, fp, tn, fn, float(null_mass[success].sum()))
+    null_mass = binom.pmf(t, nt, null_t) * binom.pmf(control, nc, null)
+    return BinarySuccessTable(
+        _owned(pa),
+        _owned(analysis.absolute_error),
+        _owned(predictive * effective),
+        _owned(predictive * ineffective),
+        _owned(null_mass),
+    )

@@ -1046,8 +1046,9 @@ validate the port; the supplement's free interim-boundary optimization is outsid
 this API's scope.
 
 [Bayesian success calibration](docs/success-calibration.md) now evaluates distinct
-design and analysis priors for single-arm binary, zero-margin two-arm binary,
+design and analysis priors for single-arm binary, arbitrary-margin two-arm binary,
 and one-/two-arm normal models, including the paper's log-hazard-ratio
 approximation. It reports joint decision/truth probabilities, Bayesian power and
 error metrics, and searches candidate cutoffs for a target probability of
-incorrect decision. Nonzero two-arm binary margins remain outstanding.
+incorrect decision. Reusable binary probability tables avoid repeating quadrature
+when evaluating or calibrating many cutoffs.

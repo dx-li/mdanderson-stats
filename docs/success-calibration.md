@@ -47,21 +47,51 @@ posterior tails are evaluated directly. The frequentist null defaults to the
 margin and can be explicitly changed with `null_rate`.
 
 `binary_two_arm_success_oc(n_treatment, n_control, cutoff, ...)` implements the
-paper's Section S2.2.2 **zero risk-difference margin** case. Supply separate beta
+paper's Section S2.2.2 response-count enumeration, generalized to any
+`margin` in `[-1,1]` for treatment minus control. Supply separate beta
 shape pairs as `design_treatment`, `design_control`, `analysis_treatment` and
-`analysis_control`; all default to `(1,1)`. The null uses a common `null_rate`
-(default `.5`) in the two arms. Every response-count pair is enumerated; posterior
-ordering probabilities use the existing deterministic beta quadrature. A cutoff
+`analysis_control`; all default to `(1,1)`. The null uses control `null_rate`
+(default `.5`) and an optional `null_treatment_rate` (defaulting to the same
+control rate for compatibility). To assess the margin-boundary null, explicitly
+specify treatment rate equal to control rate plus the margin, when valid. Every response-count pair is enumerated; posterior
+risk-difference probabilities use deterministic quadrature in logit coordinates,
+with both tails evaluated directly and splits at shifted support boundaries.
+The zero-margin case reuses the existing beta-ordering routine. A cutoff
 within its numerical error estimate raises an error, except exact symmetry ties
 are known to be `.5`. The default absolute integration tolerance is `1e-10`.
 
 Two-arm enumeration is bounded at 40,000 count pairs and 1,000 patients per arm;
 single-arm enumeration allows 100,000 patients. Two-arm computation is more
 expensive than single-arm: each posterior comparison requires quadrature.
-Repeated calibration calls currently recompute the two-arm comparison table.
-This is a remaining optimization opportunity; no native-app speed comparison is
-claimed. Absolute integration accuracy does not guarantee relative accuracy for
-arbitrarily rare conditioning events.
+Use `prepare_binary_two_arm_success` to retain the comparison and predictive
+mass tables in owned read-only arrays. Its `evaluate` method only performs
+vectorized masking and summation for each new cutoff. For example:
+
+```python
+from mdanderson_stats import prepare_binary_two_arm_success
+
+table = prepare_binary_two_arm_success(
+    20,
+    15,
+    margin=0.1,
+    design_treatment=(3, 7),
+    design_control=(2, 8),
+    null_rate=0.2,
+    null_treatment_rate=0.3,
+)
+curve = [table.evaluate(c) for c in np.linspace(0.6, 0.999, 500)]
+calibrated = calibrate_success_cutoff(
+    table.evaluate,
+    target=0.05,
+    candidates=np.linspace(0.6, 0.999, 500),
+)
+```
+
+The public `compare_beta_difference` also exposes the underlying independent
+beta risk-difference tails with broadcast shape parameters, scalar margin, and
+absolute error estimates. Exact support endpoints and zero-margin symmetry are
+handled explicitly. Absolute integration accuracy does not guarantee relative
+accuracy for arbitrarily rare conditioning events.
 
 ## Normal outcomes and survival approximation
 
@@ -134,8 +164,20 @@ independent simulation with unequal normal arm priors, direction-reflection
 identities, a success probability below `1e-20`, and a discrete calibration case.
 The separate beta-ordering routine has existing independent R validation.
 
-This catalog entry remains **partial**: nonzero binary risk-difference margins,
-original calibration-search parity, and native application report/plot parity
-remain unverified or unimplemented. Source PDF SHA-256:
+Nonzero binary margins are now supported. This catalog entry remains **partial**:
+original calibration-search parity and native application report/plot parity
+remain unverified or unimplemented. The application help specifies a default
+candidate range of `[0.6,0.999]` but does not describe its search algorithm; the
+Python API explicitly reports a grid-constrained result. Source PDF SHA-256:
 `eeb51252e5896c8fd2beedfd57d81de7f0d38d2978959af6a8478dbff22f4b81`.
 No original application code or paper PDF is distributed.
+
+
+Shifted beta tails additionally match 32 independent R integrals spanning four
+shape combinations and four positive/negative margins, including skewed and
+concentrated distributions (`tools/reference_beta_difference.R`). Tests include
+exact uniform risk-difference probabilities, support endpoints, reusable-table
+agreement with direct evaluation, and reflection with swapped arms and margins.
+A local 20-versus-15-patient timing evaluates 500 cached cutoffs separately from
+the one-time posterior calculation; performance depends on prior concentration
+and margin. No native-application performance parity is claimed.

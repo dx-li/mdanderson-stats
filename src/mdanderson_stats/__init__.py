@@ -111,7 +111,12 @@ from .beta_binomial import (
     simulate_beta_binomial,
 )
 from .beta_binomial_plot import plot_beta_binomial_sequence
-from .beta_comparison import BetaComparison, compare_beta_binomial
+from .beta_comparison import (
+    BetaComparison,
+    BetaDifferenceComparison,
+    compare_beta_binomial,
+    compare_beta_difference,
+)
 from .beta_mixture import BetaMixture
 from .beta_mixture_bootstrap import BetaMixtureBootstrap, beta_mixture_bootstrap
 from .beta_mixture_fit import (
@@ -683,12 +688,14 @@ from .stukel_objective import StukelObjective, stukel_objective
 from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
 from .success_calibration import (
+    BinarySuccessTable,
     SuccessCalibration,
     SuccessOperatingCharacteristics,
     binary_success_oc,
     binary_two_arm_success_oc,
     calibrate_success_cutoff,
     normal_success_oc,
+    prepare_binary_two_arm_success,
 )
 from .survan_baseline import SurvanBaseline, survan_baseline
 from .survan_cox import SurvanCox, survan_cox
@@ -783,6 +790,10 @@ from .windows import (
 )
 
 __all__ = [
+    "BetaDifferenceComparison",
+    "compare_beta_difference",
+    "BinarySuccessTable",
+    "prepare_binary_two_arm_success",
     "SuccessCalibration",
     "SuccessOperatingCharacteristics",
     "binary_success_oc",
