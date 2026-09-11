@@ -4147,12 +4147,25 @@
       "kind": "online",
       "detail_url": "https://www.trialdesign.org/one-page-shell.html#BayesianCalibration",
       "application_url": "https://www.trialdesign.org/one-page-shell.html#BayesianCalibration",
-      "references": [],
+      "references": [
+        "https://arxiv.org/abs/2603.20015",
+        "https://biostatistics.mdanderson.org/shinyapps/BayesianCalibration/"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Exact single-arm beta-binomial operating characteristics with distinct design and analysis priors and either decision direction",
+        "Two-arm binary response-count enumeration with zero risk-difference margin and existing deterministic beta-order quadrature",
+        "One- and two-arm known-variance normal operating characteristics, separate conjugate arm weights, direct joint decision/truth quadrant integration; log-hazard-ratio approximation supported through sampling SE",
+        "Bayesian power, conditional power, Bayesian Type I error, PID, FOR, point-null frequentist error and explicit-grid PID cutoff calibration; undefined conditional probabilities retained as None",
+        "Remaining: nonzero binary risk-difference margins, native calibration-search and report/plot parity; repeated two-arm cutoff evaluation can be optimized"
+      ],
+      "validation": [
+        "Exact uniform-prior binary identities for single and two arms and independent design-prior integration of single-arm rejection probabilities",
+        "Analytic normal quadrant identity, 300000-trial unequal-prior two-arm simulation, direction reflections and direct rare success tail below 1e-20",
+        "Discrete cutoff calibration and zero-success handling; reused beta-order routine has independent R validation"
+      ]
     },
     {
       "id": 174,

@@ -682,6 +682,14 @@ from .stukel_fit import StukelFit, StukelFitError, fit_stukel
 from .stukel_objective import StukelObjective, stukel_objective
 from .stukel_output import format_stukel, plot_stukel
 from .stukel_scan import scan_stukel
+from .success_calibration import (
+    SuccessCalibration,
+    SuccessOperatingCharacteristics,
+    binary_success_oc,
+    binary_two_arm_success_oc,
+    calibrate_success_cutoff,
+    normal_success_oc,
+)
 from .survan_baseline import SurvanBaseline, survan_baseline
 from .survan_cox import SurvanCox, survan_cox
 from .survan_descriptive import (
@@ -775,6 +783,12 @@ from .windows import (
 )
 
 __all__ = [
+    "SuccessCalibration",
+    "SuccessOperatingCharacteristics",
+    "binary_success_oc",
+    "binary_two_arm_success_oc",
+    "calibrate_success_cutoff",
+    "normal_success_oc",
     "RoseDesign",
     "RoseOperatingCharacteristics",
     "RoseSimulation",

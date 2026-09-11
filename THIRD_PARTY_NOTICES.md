@@ -887,3 +887,13 @@ https://biostatistics.mdanderson.org/shinyapps/ROSE/ (V1.2.1.0).
 No original source code, application assets or paper PDF is distributed.
 No original software redistribution license was identified; the paper and app
 are cited as mathematical references. See `docs/rose.md` for scope and validation.
+
+## Bayesian success calibration
+
+`success_calibration.py` is an independent implementation of the mathematical
+framework of Peng Yang, Li Wang and Ying Yuan, *On the Calibration of Bayesian
+Success Criteria and Operating Characteristics for Clinical Trials* (2026),
+https://arxiv.org/abs/2603.20015. The original application is
+https://biostatistics.mdanderson.org/shinyapps/BayesianCalibration/ (V1.0.1.0).
+No original code, paper or application assets are redistributed. See
+`docs/success-calibration.md` for numerical evidence and outstanding scope.

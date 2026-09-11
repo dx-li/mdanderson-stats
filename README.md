@@ -1044,3 +1044,10 @@ response-count decisions and seeded binary-response simulations with Monte Carlo
 errors are available. Published design sizes and independent outcome enumeration
 validate the port; the supplement's free interim-boundary optimization is outside
 this API's scope.
+
+[Bayesian success calibration](docs/success-calibration.md) now evaluates distinct
+design and analysis priors for single-arm binary, zero-margin two-arm binary,
+and one-/two-arm normal models, including the paper's log-hazard-ratio
+approximation. It reports joint decision/truth probabilities, Bayesian power and
+error metrics, and searches candidate cutoffs for a target probability of
+incorrect decision. Nonzero two-arm binary margins remain outstanding.
