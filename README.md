@@ -1065,3 +1065,9 @@ subtrial planning. Seeded cohort simulations report operating characteristics
 and Monte Carlo errors. Native R references distinguish the interactive
 selector from the simulator's unrounded selection rule. Titration, the 3+3
 run-in, full waterfall simulation and generated protocols remain open.
+
+[BOIN12](docs/boin12.md) now includes toxicity/efficacy posterior calculations,
+utility desirability tables, single-stage dose decisions, final OBD selection
+and joint-outcome cohort simulation. Independent R calculations validate the
+posterior, ranks and selection examples. Two-stage conduct, 3+3 run-in,
+nonadditive RDS enumeration and generated reports remain open.

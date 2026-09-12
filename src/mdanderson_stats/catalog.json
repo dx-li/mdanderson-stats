@@ -3821,12 +3821,27 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BOIN12",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BOIN12",
-      "references": [],
+      "references": [
+        "https://doi.org/10.1200/PO.20.00257",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC7713525/",
+        "https://cran.r-project.org/package=escalation"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Binary toxicity/efficacy marginal posterior admissibility and quasi-beta utility posterior; joint counts for nonadditive utilities",
+        "Bounded vectorized rank-based desirability tables for additive utilities, with global admissible-outcome ranks and average ties",
+        "Single-stage BOIN12 neighbor decisions with N-star restriction, configurable extra exploration, enrollment stopping and sticky exclusions",
+        "Empirical-toxicity isotonic final MTD and posterior-desirability OBD selection among treated admissible doses",
+        "Joint multinomial cohort simulation preserving efficacy/toxicity dependence, with trial-level counts, exclusions, selections and Monte Carlo standard errors",
+        "Remaining: nonadditive joint-outcome RDS enumeration, two-stage design, 3+3 run-in, tradeoff utility mode, multilevel endpoints and generated reports/protocols"
+      ],
+      "validation": [
+        "Independent escalation 0.2.3 executable references: 15 posterior cases, 166 RDS rows, complete-data decision cases and final isotonic OBD examples",
+        "Focused joint-count, inadmissibility, sticky-dose exclusion, tie, exploration and multinomial simulation checks; original MD Anderson backend parity not claimed",
+        "docs/boin12.md and docs/boin12-reference.md"
+      ]
     },
     {
       "id": 149,

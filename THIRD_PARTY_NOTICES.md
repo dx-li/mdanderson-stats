@@ -922,3 +922,16 @@ reference, with `Iso` supplying independent isotonic fits. Original R source,
 app assets and paper PDFs are not redistributed. Generated numerical fixtures
 and the independent reference runner are included. See
 `docs/boin-combination-source.md` for provenance and backend differences.
+
+## BOIN12
+
+`boin12.py` and `boin12_simulation.py` independently implement the binary
+single-stage BOIN12 method of Lin, Zhou, Yan, Li and Yuan (2020),
+*BOIN12: Bayesian Optimal Interval Phase I/II Trial Design for Utility-Based
+Dose Finding in Immunotherapy and Targeted Therapies*,
+doi:10.1200/PO.20.00257. The current MD Anderson app supplies workflow details.
+CRAN `escalation` 0.2.3 (GPL >= 3), whose BOIN12 routines credit Michael
+Sweeting and Kristian Brock, is an independent executable comparator rather
+than the original MD Anderson backend. Original code, paper PDFs and app assets
+are not redistributed. See `docs/boin12-reference.md` for source hashes and
+documented differences.
