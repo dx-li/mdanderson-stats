@@ -21,6 +21,22 @@ class BOP2DCPairedState:
 
 
 @dataclass(frozen=True)
+class BOP2DCPairedOperatingCharacteristics:
+    category_probability: FloatArray
+    looks: NDArray[np.int64]
+    stop_no_go: FloatArray
+    final_go: FloatArray
+    final_consider: FloatArray
+    final_no_go: FloatArray
+    sample_size_probability: FloatArray
+    expected_sample_size: FloatArray
+
+    @property
+    def no_go_probability(self) -> FloatArray:
+        return self.stop_no_go.sum(axis=-1) + self.final_no_go
+
+
+@dataclass(frozen=True)
 class BOP2DCPairedDesign:
     endpoint: str
     max_subjects: int
@@ -35,6 +51,40 @@ class BOP2DCPairedDesign:
     prior: FloatArray
     looks: NDArray[np.int64]
 
+    @staticmethod
+    def _strict_above(value: np.ndarray, threshold: float | np.ndarray) -> np.ndarray:
+        return value > threshold
+
+    @staticmethod
+    def _strict_below(value: np.ndarray, threshold: float | np.ndarray) -> np.ndarray:
+        return value < threshold
+
+    def _posterior_marginal(self, marginal: np.ndarray, total: int | np.ndarray) -> np.ndarray:
+        alpha = np.array([self.prior[[0, 1]].sum(), self.prior[[0, 2]].sum()])
+        beta = np.array([self.prior[[2, 3]].sum(), self.prior[[1, 3]].sum()])
+        if self.endpoint == "efficacy_toxicity":
+            alpha[1] = self.prior[[1, 3]].sum()
+            beta[1] = self.prior[[0, 2]].sum()
+        total_array = np.asarray(total)
+        a, b = alpha + marginal, beta + (total_array[..., None] - marginal)
+        posterior = np.stack(
+            (betaincc(a, b, self.success_lrv), betaincc(a, b, self.success_cmv)), axis=-1
+        )
+        # Symmetry gives an exact half probability; preserve strict cutoff semantics.
+        for j, threshold in enumerate((self.success_lrv, self.success_cmv)):
+            posterior[..., j] = np.where((a == b) & (threshold == 0.5), 0.5, posterior[..., j])
+        if self.endpoint == "efficacy_toxicity":
+            toxicity = total_array - marginal[..., 1]
+            toxicity_a = self.prior[[0, 2]].sum() + toxicity
+            toxicity_b = self.prior[[1, 3]].sum() + marginal[..., 1]
+            posterior[..., 1, 0] = betainc(toxicity_a, toxicity_b, self.lrv[1])
+            posterior[..., 1, 1] = betainc(toxicity_a, toxicity_b, self.cmv[1])
+            for j, threshold in enumerate((self.lrv[1], self.cmv[1])):
+                posterior[..., 1, j] = np.where(
+                    (toxicity_a == toxicity_b) & (threshold == 0.5), 0.5, posterior[..., 1, j]
+                )
+        return posterior
+
     def _marginal_counts(self, counts: np.ndarray) -> np.ndarray:
         if self.endpoint == "multiple_efficacy":
             return np.stack(
@@ -45,24 +95,93 @@ class BOP2DCPairedDesign:
         return np.stack((counts[..., 0] + counts[..., 1], counts[..., 1] + counts[..., 3]), axis=-1)
 
     def _posterior(self, counts: np.ndarray) -> np.ndarray:
-        marginal = self._marginal_counts(counts)
-        alpha = np.array([self.prior[[0, 1]].sum(), self.prior[[0, 2]].sum()])
-        beta = np.array([self.prior[[2, 3]].sum(), self.prior[[1, 3]].sum()])
+        return self._posterior_marginal(self._marginal_counts(counts), counts.sum(axis=-1))
+
+    def operating_characteristics(
+        self, category_probability: ArrayLike
+    ) -> BOP2DCPairedOperatingCharacteristics:
+        p = finite(category_probability, "category_probability")
+        if p.ndim == 0 or p.shape[-1] != 4 or np.any((p < 0) | (p > 1)):
+            raise ValueError("category_probability requires a final category axis of length four")
+        total_probability = p.sum(axis=-1)
+        if np.any(np.abs(total_probability - 1) > 1e-14):
+            raise ValueError("category probabilities must sum to one")
+        scenarios = p.size // 4
+        if scenarios * (self.max_subjects + 1) ** 3 > 5_000_000:
+            raise ValueError("scenario workload too large; split into smaller batches")
+        p = p / total_probability[..., None]
+        probabilities = p.reshape(scenarios, 4)
+        stop = np.zeros((scenarios, self.looks.size))
+        final_go = np.zeros(scenarios)
+        final_consider = np.zeros(scenarios)
+        final_no_go = np.zeros(scenarios)
+        increments = ((1, 1), (1, 0), (0, 1), (0, 0))
         if self.endpoint == "efficacy_toxicity":
-            alpha[1] = self.prior[[1, 3]].sum()
-            beta[1] = self.prior[[0, 2]].sum()
-        total = counts.sum(axis=-1)
-        a, b = alpha + marginal, beta + (total[..., None] - marginal)
-        posterior = np.stack(
-            (betaincc(a, b, self.success_lrv), betaincc(a, b, self.success_cmv)), axis=-1
+            increments = ((1, 0), (1, 1), (0, 0), (0, 1))
+        interim_looks = {int(look): j for j, look in enumerate(self.looks[:-1])}
+        for s, probabilities_s in enumerate(probabilities):
+            surviving = np.ones((1, 1))
+            for n in range(1, self.max_subjects + 1):
+                arriving = np.zeros((n + 1, n + 1))
+                for probability, (first, second) in zip(probabilities_s, increments):
+                    arriving[first : first + n, second : second + n] += surviving * probability
+                if n in interim_looks:
+                    m1: np.ndarray
+                    m2: np.ndarray
+                    m1, m2 = np.meshgrid(np.arange(n + 1), np.arange(n + 1), indexing="ij")
+                    posterior = self._posterior_marginal(np.stack((m1, m2), axis=-1), n)
+                    lrv_cut = self.lambda_lrv * (n / self.max_subjects) ** self.gamma_lrv
+                    cmv_cut = self.lambda_cmv * (n / self.max_subjects) ** self.gamma_cmv
+                    no_go = np.all(
+                        self._strict_below(posterior[..., :, 0], lrv_cut)
+                        & self._strict_below(posterior[..., :, 1], cmv_cut),
+                        axis=-1,
+                    )
+                    if self.endpoint == "efficacy_toxicity":
+                        no_go = np.any(
+                            self._strict_below(posterior[..., :, 0], lrv_cut)
+                            & self._strict_below(posterior[..., :, 1], cmv_cut),
+                            axis=-1,
+                        )
+                    j = interim_looks[n]
+                    stop[s, j] = arriving[no_go].sum()
+                    arriving[no_go] = 0
+                surviving = arriving
+            m1, m2 = np.meshgrid(
+                np.arange(self.max_subjects + 1),
+                np.arange(self.max_subjects + 1),
+                indexing="ij",
+            )
+            posterior = self._posterior_marginal(np.stack((m1, m2), axis=-1), self.max_subjects)
+            go = self._strict_above(posterior[..., :, 0], self.lambda_lrv) & self._strict_above(
+                posterior[..., :, 1], self.lambda_cmv
+            )
+            no_go = self._strict_below(posterior[..., :, 0], self.lambda_lrv) & self._strict_below(
+                posterior[..., :, 1], self.lambda_cmv
+            )
+            if self.endpoint == "multiple_efficacy":
+                final_go[s] = surviving[np.any(go, axis=-1)].sum()
+                final_no_go[s] = surviving[np.all(no_go, axis=-1)].sum()
+                consider = ~(np.any(go, axis=-1) | np.all(no_go, axis=-1))
+            else:
+                final_go[s] = surviving[np.all(go, axis=-1)].sum()
+                final_no_go[s] = surviving[np.any(no_go, axis=-1)].sum()
+                consider = ~(np.all(go, axis=-1) | np.any(no_go, axis=-1))
+            final_consider[s] = surviving[consider].sum()
+        sample_size_probability = stop.copy()
+        sample_size_probability[:, -1] = final_go + final_consider + final_no_go
+        expected = sample_size_probability @ self.looks
+        shape = p.shape[:-1]
+        return BOP2DCPairedOperatingCharacteristics(
+            _owned(p),
+            self.looks,
+            _owned(stop.reshape(*shape, self.looks.size)),
+            _owned(final_go.reshape(shape)),
+            _owned(final_consider.reshape(shape)),
+            _owned(final_no_go.reshape(shape)),
+            _owned(sample_size_probability.reshape(*shape, self.looks.size)),
+            _owned(expected.reshape(shape)),
         )
-        if self.endpoint == "efficacy_toxicity":
-            toxicity = counts[..., 0] + counts[..., 2]
-            toxicity_a = self.prior[[0, 2]].sum() + toxicity
-            toxicity_b = self.prior[[1, 3]].sum() + (total - toxicity)
-            posterior[..., 1, 0] = betainc(toxicity_a, toxicity_b, self.lrv[1])
-            posterior[..., 1, 1] = betainc(toxicity_a, toxicity_b, self.cmv[1])
-        return posterior
 
     def monitor(self, counts: ArrayLike) -> BOP2DCPairedState:
         x = count(counts, "counts")
@@ -81,22 +200,26 @@ class BOP2DCPairedDesign:
             for look in self.looks[:-1]:
                 at = n == look
                 bad = (
-                    posterior[..., j, 0]
-                    < self.lambda_lrv[j] * (look / self.max_subjects) ** self.gamma_lrv[j]
+                    self._strict_below(
+                        posterior[..., j, 0],
+                        self.lambda_lrv[j] * (look / self.max_subjects) ** self.gamma_lrv[j],
+                    )
                 ) & (
-                    posterior[..., j, 1]
-                    < self.lambda_cmv[j] * (look / self.max_subjects) ** self.gamma_cmv[j]
+                    self._strict_below(
+                        posterior[..., j, 1],
+                        self.lambda_cmv[j] * (look / self.max_subjects) ** self.gamma_cmv[j],
+                    )
                 )
                 endpoint_decision[..., j][at & bad] = "no_go"
             go = (
                 final
-                & (posterior[..., j, 0] > self.lambda_lrv[j])
-                & (posterior[..., j, 1] > self.lambda_cmv[j])
+                & self._strict_above(posterior[..., j, 0], self.lambda_lrv[j])
+                & self._strict_above(posterior[..., j, 1], self.lambda_cmv[j])
             )
             no = (
                 final
-                & (posterior[..., j, 0] < self.lambda_lrv[j])
-                & (posterior[..., j, 1] < self.lambda_cmv[j])
+                & self._strict_below(posterior[..., j, 0], self.lambda_lrv[j])
+                & self._strict_below(posterior[..., j, 1], self.lambda_cmv[j])
             )
             endpoint_decision[..., j][go] = "go"
             endpoint_decision[..., j][no] = "no_go"
