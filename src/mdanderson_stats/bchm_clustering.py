@@ -57,8 +57,8 @@ def _silhouette(row, values):
 
 
 def weighted_crp(
-    rates,
-    weights,
+    rates: object,
+    weights: object,
     *,
     mu=0.2,
     sigma02=20.0,
@@ -72,6 +72,8 @@ def weighted_crp(
     w = np.asarray(weights, dtype=float)
     if x.ndim != 1 or w.shape != x.shape or not 1 <= x.size <= 20:
         raise ValueError("rates and weights must match, <=20 groups")
+    if abs(mu) > 1e4 or sigma02 > 1e8 or sigmaD2 > 1e8 or alpha > 1e100 or alpha < 1e-300:
+        raise ValueError("clustering hyperparameters outside stable range")
     if (
         not np.all(np.isfinite(x))
         or not np.all(np.isfinite(w))
@@ -91,7 +93,12 @@ def weighted_crp(
         for v in (burn_in, iterations)
     ):
         raise ValueError("MCMC counts must be integers")
-    if burn_in < 0 or iterations < 1 or (burn_in + iterations) * x.size > 200000:
+    if (
+        burn_in < 0
+        or iterations < 1
+        or (burn_in + iterations) * x.size * x.size > 2_000_000
+        or iterations * x.size > 200_000
+    ):
         raise ValueError("allocation MCMC budget too large")
     rng = np.random.default_rng() if rng is None else rng
     if not isinstance(rng, np.random.Generator):
