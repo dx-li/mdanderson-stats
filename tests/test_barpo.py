@@ -107,3 +107,20 @@ def test_extreme_power_stopped_arm_cannot_overflow_eligible_weights():
     )
     assert result[0] == 0
     np.testing.assert_allclose(result[1:].sum(), 1)
+
+
+def test_symmetric_half_tail_is_exact():
+    result = barpo_monitor(
+        [0],
+        [0],
+        prior=[[7, 7]],
+        theta_fut=0.5,
+        pfut=0.5,
+        theta_eff=0.5,
+        peff=0.5,
+        theta_final=0.5,
+        pfinal=0.5,
+    )
+    assert result.futility_probability[0] == 0.5
+    assert result.efficacy_probability[0] == 0.5
+    assert result.final_efficacy_probability[0] == 0.5
