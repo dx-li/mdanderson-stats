@@ -947,8 +947,9 @@ Original source and app assets are not redistributed. See
 
 ## BOP2-DC
 
-`bop2_dc.py`, `bop2_dc_optimization.py` and `bop2_dc_paired.py` independently
-implement binary and paired dual-criterion monitoring and binary finite-grid
+`bop2_dc.py`, `bop2_dc_optimization.py`, `bop2_dc_paired.py` and
+`bop2_dc_survival.py` independently implement binary, paired and time-to-event
+dual-criterion monitoring and binary finite-grid
 calibration from
 Zhao, Li, Liu and Yuan (2023), doi:10.1002/pst.2296, using the authors’
 accessible preprint equations and the MD Anderson app description.

@@ -59,13 +59,10 @@ class BOP2DCSurvivalDesign:
             or np.any((ratio_cmv <= 0) | ~np.isfinite(ratio_cmv))
         ):
             raise ArithmeticError("posterior inverse-gamma scale is not representable")
-        return (
-            shape,
-            scale,
-            median_scale,
-            gammainc(shape, ratio_lrv),
-            gammainc(shape, ratio_cmv),
-        )
+        pl, pc = gammainc(shape, ratio_lrv), gammainc(shape, ratio_cmv)
+        if np.any(~np.isfinite(pl)) or np.any(~np.isfinite(pc)):
+            raise ArithmeticError("posterior gamma probability evaluation failed")
+        return shape, scale, median_scale, pl, pc
 
     def monitor(
         self, sample_size: ArrayLike, events: ArrayLike, total_time: ArrayLike

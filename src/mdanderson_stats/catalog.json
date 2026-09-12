@@ -3960,13 +3960,15 @@
         "Separate interim response-count boundaries for statistical and clinical criteria",
         "Exact binomial operating characteristics with absorbing interim stopping, total no-go risk and expected sample size",
         "Finite-grid binary calibration for maximum correct-go probability or minimum futile expected sample size under false-go, false-no-go and optional false-consider constraints",
-        "Paired Dirichlet-marginal monitoring for multiple efficacy and efficacy/toxicity, with endpoint-specific dual criteria and combined interim/final decisions"
+        "Paired Dirichlet-marginal monitoring for multiple efficacy and efficacy/toxicity, with endpoint-specific dual criteria and combined interim/final decisions",
+        "Time-to-event dual-criterion monitoring with exponential/inverse-gamma posteriors, censoring contributions and median survival thresholds"
       ],
       "validation": [
         "Five independent base-R posterior and decision cases match Python",
         "Closed-form four-patient design verifies exact outcome probabilities, equality-as-consider and interim stopping absorption",
         "Independent base-R enumeration of all 16 paths for six candidate designs validates both objectives, false-consider control and infeasibility",
-        "Nine independent base-R paired posterior and decision cases cover OR/AND composition, toxicity direction and interim stopping"
+        "Nine independent base-R paired posterior and decision cases cover OR/AND composition, toxicity direction and interim stopping",
+        "Seven independent base-R survival posterior cases cover zero events, interim stopping and all final decisions"
       ]
     },
     {

@@ -1084,5 +1084,6 @@ R posteriors and a closed-form early-stopping example validate the core.
 Finite-grid calibration maximizes correct-go probability or minimizes expected
 sample size while controlling false decisions. [Paired-endpoint monitoring](docs/bop2-dc-paired.md)
 supports multiple efficacy and efficacy/toxicity decisions with joint Dirichlet
-priors. Paired operating characteristics, paired calibration and time-to-event
-mode remain open.
+priors. [Time-to-event monitoring](docs/bop2-dc-survival.md) uses an exponential/
+inverse-gamma model with separate median survival criteria. Paired and survival
+operating characteristics and calibration remain open.
