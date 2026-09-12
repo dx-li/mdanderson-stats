@@ -3751,9 +3751,16 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Exact joint Dirichlet posterior utility means and variances for binary and categorical efficacy/toxicity, with explicit prior and category thresholds.",
+        "Inclusive Beta-marginal admissibility and winner, utility-proportional or equal allocation probabilities over caller-supplied eligibility."
+      ],
+      "validation": [
+        "Official U-BOIN V2.4.4.0 application and primary paper sources pinned in docs/uboin-sources.json; no hidden native prior or tie rule assumed.",
+        "Independent base-R Dirichlet cross moments and Beta tails cover binary, 3x3 and prior-only 2x3 outcomes.",
+        "Pending: stage-I/II controller, exploration, final OBD rules, titration/run-in, delayed-outcome imputation, operating characteristics and reports; see docs/uboin.md."
+      ]
     },
     {
       "id": 143,

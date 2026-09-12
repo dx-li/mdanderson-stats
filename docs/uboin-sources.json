@@ -1,0 +1,35 @@
+{
+  "catalog_id": 142,
+  "retrieved_at": "2026-09-12",
+  "application_version": "2.4.4.0",
+  "pid": 1014,
+  "published_paper": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7927960/",
+  "paper_doi": "10.1002/sim.8361",
+  "files": [
+    {
+      "filename": "app.html",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/UBOIN/",
+      "sha256": "c44f1c0bdc11f5ee1664ed01b1deebbc0119c0702a667f1646e1d4df0fd5be1b"
+    },
+    {
+      "filename": "Utility.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/UBOIN/Utility.pdf",
+      "sha256": "d3e5f52c8e0b474c1e128f0c81781fb3d4889f5ea3ca0289ce7496966031cc1e"
+    },
+    {
+      "filename": "PatientAssignment.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/UBOIN/PatientAssignment.pdf",
+      "sha256": "66eb0d8407d3f80799f2e16e880998046d921fab91e191b41dd37cbd89d18290"
+    },
+    {
+      "filename": "Admissible.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/UBOIN/Admissible.pdf",
+      "sha256": "eca571ef99dd4aca0aa3a6fa4d01f7f4b96635e35912495b81156b416db35474"
+    },
+    {
+      "filename": "DoseSize.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/UBOIN/DoseSize.pdf",
+      "sha256": "985ac9053a80242a95fa12384adc66ffa7d2bf6d898fd125a3d8403fe40c82da"
+    }
+  ]
+}

@@ -17,9 +17,9 @@ def test_binary_posterior_mean_variance_and_marginal_tails() -> None:
     expected_mean = np.sum((prior + counts[0]) * utilities) / (1 + counts[0].sum())
     assert result.mean_utility[0] == pytest.approx(expected_mean)
     probabilities = (prior + counts[0]) / (1 + counts[0].sum())
-    expected_variance = (
-        np.sum(probabilities * utilities**2) - expected_mean**2
-    ) / (1 + counts[0].sum() + 1)
+    expected_variance = (np.sum(probabilities * utilities**2) - expected_mean**2) / (
+        1 + counts[0].sum() + 1
+    )
     assert result.utility_variance[0] == pytest.approx(expected_variance)
     assert result.overdose_probability[1] == pytest.approx(0.5)
     assert result.low_efficacy_probability[1] == pytest.approx(0.5)

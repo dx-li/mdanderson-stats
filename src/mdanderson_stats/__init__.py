@@ -870,6 +870,7 @@ from .u2oet_scenario import (
 )
 from .u2oet_simulation import U2OETTrial, U2OETTrialDecision, simulate_u2oet_trial
 from .u2oet_summary import U2OETOperatingCharacteristics, summarize_u2oet_trials
+from .uboin import UBOINPosterior, uboin_allocation, uboin_posterior
 from .windows import (
     WindowCrossValidation,
     WindowNeighborCrossValidation,
@@ -880,6 +881,9 @@ from .windows import (
 )
 
 __all__ = [
+    "UBOINPosterior",
+    "uboin_allocation",
+    "uboin_posterior",
     "TITEBOIN12Decision",
     "TITEBOIN12Posterior",
     "tite_boin12_decision",

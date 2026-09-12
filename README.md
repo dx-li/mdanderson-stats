@@ -1137,3 +1137,8 @@ pending toxicity and efficacy, joint utility posteriors and interim dose
 conduct. The declared approximate-likelihood model is checked against base R;
 native pending-data safety details, final OBD selection and the full simulator
 remain open.
+
+[U-BOIN joint utilities](docs/uboin.md) add exact categorical Dirichlet
+posterior moments, toxicity/efficacy admissibility and winner, proportional or
+equal allocation probabilities. Priors and eligibility are explicit; complete
+two-stage trial conduct and delayed-outcome imputation remain open.
