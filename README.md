@@ -1099,3 +1099,8 @@ simulation and scheduling remain open.
 concurrent control comparisons. Explicit enrollment windows and observation
 cutoffs exclude pending and future outcomes. Platform arm replacement and
 simulation remain open.
+
+[TTEConduct](docs/tteconduct.md) adds single-arm exponential survival monitoring
+against an uncertain historical standard, with an additive improvement margin
+and continuous total-time-on-test stopping boundaries. Independent R integration
+checks the published guide example; native HTML report handling remains open.

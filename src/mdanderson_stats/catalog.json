@@ -2185,9 +2185,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "tteconduct_design and tteconduct_monitor: exponential/inverse-gamma survival monitoring against an uncertain historical standard, additive improvement margin, strict futility and maximum-patient accrual stops.",
+        "tteconduct_boundary_table: continuous minimum total time on test by event count, with explicit search cap, probability error and residual reporting; consistent caller-selected time units.",
+        "Inverse-gamma moment and two-quantile prior elicitation is available through the existing Parameter Solver APIs. Native HTML report save/reopen and rounded day-table parity remain open; see docs/tteconduct.md and docs/tteconduct-source.md."
+      ],
+      "validation": [
+        "Independent base-R gamma integration and root finding for the six-row TTEConduct guide example; continuous roots reproduce the published day table under an explicit ceiling and 365.25/12 conversion.",
+        "Focused analytic zero-margin boundary, strict cutoff, maximum accrual, cap exhaustion, input validation and time-unit stability checks. Source: TTEConduct 2.0 Users Guide, November 6, 2006."
+      ]
     },
     {
       "id": 64,

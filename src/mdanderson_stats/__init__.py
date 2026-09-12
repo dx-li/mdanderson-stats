@@ -796,6 +796,15 @@ from .toxicity_timing import toxicity_time_quantile
 from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 from .trax import TRAXData, TRAXPlot, trax, trax_data
+from .tteconduct import (
+    TTEConductBoundary,
+    TTEConductBoundaryTable,
+    TTEConductDesign,
+    TTEConductMonitor,
+    tteconduct_boundary_table,
+    tteconduct_design,
+    tteconduct_monitor,
+)
 from .u2oet import U2OETMarginal, U2OETProbabilities, u2oet_probabilities, u2oet_standardize
 from .u2oet_calibration import U2OETCalibration, calibrate_u2oet_prior
 from .u2oet_decision import (
@@ -838,6 +847,13 @@ from .windows import (
 )
 
 __all__ = [
+    "TTEConductBoundary",
+    "TTEConductBoundaryTable",
+    "TTEConductDesign",
+    "TTEConductMonitor",
+    "tteconduct_boundary_table",
+    "tteconduct_design",
+    "tteconduct_monitor",
     "PLBarpoControlMonitoring",
     "plbarpo_control_counts",
     "plbarpo_control_monitor",
