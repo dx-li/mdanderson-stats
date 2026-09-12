@@ -17,18 +17,25 @@ source is not copied into the repository.
 | [KeyboardComb Probability.pdf](https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/Probability.pdf) | app parameter help | `32301b9cad97d1135ecb9c997e3dfd7d959e502c502bd0a7939f07c397beb089` |
 | [KeyboardComb Safety.pdf](https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/Safety.pdf) | app parameter help | `1eef79de40991a06c86a056b70b30bb664ead4410f9f922183eaed1e0b573521` |
 | [Keyboard 0.1.3 source archive](https://cran.r-project.org/src/contrib/Keyboard_0.1.3.tar.gz) | packaged 2022-08-10, published 2022-08-11 | `909775234ead042c707f8af78a030ed718ab90beb8ab22a90decd90f72b0ccf9` |
-| [Pan, Lin, Zhou & Yuan (2020) paper](https://arxiv.org/abs/1712.06718) | *Statistical Properties of the Keyboard Design with Extension to Drug-Combination Trials* | `c352121f6eeb3d95c6d6111ee609ff4ead13c2c34d2862a90d2fa7d69f8bc8c2` |
+| [Pan, Lin & Yuan arXiv manuscript](https://arxiv.org/abs/1712.06718) | *Statistical Properties of the Keyboard Design with Extension to Drug-Combination Trials*, v1 (2017-12-18) | `c352121f6eeb3d95c6d6111ee609ff4ead13c2c34d2862a90d2fa7d69f8bc8c2` |
 
 The CRAN archive declares `License: GPL-2` in `DESCRIPTION` and imports `Iso`
 and `ggplot2`.  This work uses the package as an independent executable
 reference; it does not redistribute its source.  `Iso` 0.0-21 declares `GPL
 (>= 2)`.  The app page names Yanhong Zhou, Haitao Pan, Ruitao Lin, and Ying
 Yuan and links to both the 2017 single-agent paper and the 2020 combination
-paper.
+paper.  The published combination article is Pan H, Lin R, Zhou Y, Yuan Y.
+“Keyboard design for phase I drug-combination trials.” *Contemporary Clinical
+Trials* 92 (2020): 105972. DOI:
+[10.1016/j.cct.2020.105972](https://doi.org/10.1016/j.cct.2020.105972).
+The arXiv PDF above is the earlier properties manuscript by Haitao Pan, Ruitao
+Lin, and Ying Yuan; it is not the final CCT citation.
 
 ## Algorithm findings
 
-The Pan et al. paper describes five possible combination movement algorithms.
+The published Pan et al. (2020) CCT article describes five possible
+combination movement algorithms (the arXiv properties manuscript contains the
+same extension in an earlier form).
 The CRAN package implements the fixed non-diagonal algorithm (key1): from
 `(j,k)`, escalation candidates are `(j+1,k)` and `(j,k+1)` and de-escalation
 candidates are `(j-1,k)` and `(j,k-1)`.  Diagonal candidates are never used.
@@ -53,6 +60,14 @@ least three treated patients and, in the package code, uses the strict test
 `1 - pbeta(target, y + 1, n - y + 1) > cutoff.eli`.  The generated boundary
 fixture has 18 patients (six cohorts of three) and includes the extra-safe
 lowest-dose stopping cutoff.
+
+The low-target fixture uses target `.05` with a nondegenerate `.03-.07` key
+(`marginL = marginR = .02`) and target `.15` with the usual `.10-.20` key.
+For each target it records every `n = 3,...,15` and `y = 1,2`, the package
+boundary decision, the posterior overdose probability, and the safety result
+from the intended `n >= 3` guard.  This exposes the package boundary generator's
+historical `y >= 3` condition separately from the conduct/selection safety
+rule, which is based on treated-patient count.
 
 During `next.comb.kb`, every treated cell satisfying the elimination cutoff
 marks an upper-right rectangle `i:nrow, j:ncol` as unavailable.  If `(1,1)` is
@@ -104,6 +119,16 @@ simulation device; the CRAN `get.oc.comb.kb` function accepts a supplied
 
 * `keyboard-combination-boundaries.csv`: one row per treated-patient count,
   including escalation, de-escalation, elimination, and extra-safe cutoffs.
+* `keyboard-combination-low-target-boundaries.csv`: target `.05` and `.15`
+  cases for `n >= 3`, `y = 1,2`, including posterior overdose probabilities
+  and the count-guard safety result.
+* `keyboard-combination-biviso.csv`: 16 seeded 3-by-4, 3-by-5, 4-by-4, and
+  4-by-5 matrices (12 to 20 cells), with nonmonotone raw rates, unequal
+  `n + .1` weights, untreated `.1` weights, and 17-significant-digit
+  `Iso::biviso` fits.  Rows are keyed by case, row, and column.  The maximum
+  printed precision is 17 significant digits; comparisons should allow the
+  package solver's small convergence residuals (up to roughly `1.4e-8` in the
+  captured matrices).
 * `keyboard-combination-movements.csv`: package calls for escalation,
   retention, de-escalation, safety, precision-stop, eliminated-neighbor, and
   the observed low-count boundary error cases.  Matrices are row-major,

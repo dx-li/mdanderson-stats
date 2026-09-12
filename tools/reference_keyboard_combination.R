@@ -45,6 +45,61 @@ write_boundaries <- function() {
   write.csv(out, file.path(out_dir, "keyboard-combination-boundaries.csv"), row.names = FALSE, na = "NA")
 }
 
+write_low_target_boundaries <- function() {
+  # target=.05 with the app's default margins is degenerate (the lower key
+  # endpoint is zero and getkeys can repeat it), so use the nondegenerate
+  # .03-.07 target key for that target.  The .15 case uses the usual .10-.20
+  # key.  Include y=1 and y=2 after n>=3 to exercise the safety patient-count
+  # guard separately from the historical boundary generator's y>=3 guard.
+  settings <- data.frame(
+    target = c(0.05, 0.15),
+    marginL = c(0.02, 0.05),
+    marginR = c(0.02, 0.05)
+  )
+  rows <- list()
+  for (s in seq_len(nrow(settings))) {
+    target <- settings$target[s]
+    marginL <- settings$marginL[s]
+    marginR <- settings$marginR[s]
+    b <- get.boundary.comb.kb(
+      target = target, ncohort = 5, cohortsize = 3,
+      marginL = marginL, marginR = marginR,
+      cutoff.eli = 0.95, extrasafe = FALSE
+    )$boundary
+    for (n in 3:15) {
+      for (y in 1:2) {
+        eliminate_cutoff <- b[4, n]
+        decision <- if (!is.na(eliminate_cutoff) && y >= eliminate_cutoff) {
+          "DU"
+        } else if (y <= b[2, n]) {
+          "E"
+        } else if (y >= b[3, n]) {
+          "D"
+        } else {
+          "S"
+        }
+        posterior_over_target <- 1 - pbeta(target, y + 1, n - y + 1)
+        rows[[length(rows) + 1L]] <- data.frame(
+          target = target, marginL = marginL, marginR = marginR,
+          n = n, y = y,
+          escalate_if_dlt_le = as.integer(b[2, n]),
+          deescalate_if_dlt_ge = as.integer(b[3, n]),
+          eliminate_if_dlt_ge = as.integer(eliminate_cutoff),
+          package_boundary_decision = decision,
+          posterior_over_target = posterior_over_target,
+          n_guard_safety = posterior_over_target > 0.95,
+          stringsAsFactors = FALSE
+        )
+      }
+    }
+  }
+  write.csv(
+    do.call(rbind, rows),
+    file.path(out_dir, "keyboard-combination-low-target-boundaries.csv"),
+    row.names = FALSE, na = "NA"
+  )
+}
+
 run_next <- function(case, n, y, dose, ..., target = 0.3) {
   warnings <- character()
   result <- tryCatch(
@@ -110,6 +165,54 @@ write_movements <- function() {
   rows[[length(rows) + 1L]] <- run_next("all_adjacent_escalation_candidates_eliminated", n, y, c(1, 1))
 
   write.csv(do.call(rbind, rows), file.path(out_dir, "keyboard-combination-movements.csv"), row.names = FALSE, na = "NA")
+}
+
+write_biviso <- function() {
+  # Keep each matrix between 12 and 20 cells and generate unequal, positive
+  # weights from n + .1.  n=0 cells deliberately retain the .1 weight used by
+  # select.mtd.comb.kb rather than being dropped before isotonic regression.
+  shapes <- list(c(3, 4), c(3, 5), c(4, 4), c(4, 5))
+  seeds <- c(101:104, 201:204, 301:304, 401:404)
+  rows <- list()
+  case_no <- 0L
+  for (shape_index in seq_along(shapes)) {
+    nr <- shapes[[shape_index]][1]
+    nc <- shapes[[shape_index]][2]
+    for (replicate in 1:4) {
+      case_no <- case_no + 1L
+      seed <- seeds[case_no]
+      set.seed(seed)
+      n <- matrix(sample(0:12, nr * nc, replace = TRUE), nrow = nr, ncol = nc)
+      # Force two untreated cells, while preserving a seeded non-monotone draw.
+      n[1, 1] <- 0
+      n[nr, nc] <- 0
+      y <- matrix(vapply(as.vector(n), function(nn) {
+        if (nn == 0) 0 else sample.int(nn + 1, 1) - 1
+      }, numeric(1)), nrow = nr, ncol = nc)
+      raw <- (y + 0.05) / (n + 0.1)
+      weights <- n + 0.1
+      fit <- Iso::biviso(raw, weights, warn = TRUE)
+      case_name <- sprintf("seed_%d_%dx%d", seed, nr, nc)
+      for (i in seq_len(nr)) {
+        for (j in seq_len(nc)) {
+          rows[[length(rows) + 1L]] <- data.frame(
+            case = case_name, seed = seed, nrow = nr, ncol = nc,
+            row = i, col = j,
+            patients = as.integer(n[i, j]), toxicities = as.integer(y[i, j]),
+            raw_estimate = sprintf("%.17g", raw[i, j]),
+            weight = sprintf("%.17g", weights[i, j]),
+            biviso_fit = sprintf("%.17g", fit[i, j]),
+            stringsAsFactors = FALSE
+          )
+        }
+      }
+    }
+  }
+  write.csv(
+    do.call(rbind, rows),
+    file.path(out_dir, "keyboard-combination-biviso.csv"),
+    row.names = FALSE, quote = TRUE
+  )
 }
 
 run_selection <- function(case, n, y, ..., target = 0.3) {
@@ -192,6 +295,8 @@ write_simulation <- function() {
 }
 
 write_boundaries()
+write_low_target_boundaries()
 write_movements()
+write_biviso()
 write_selection()
 write_simulation()
