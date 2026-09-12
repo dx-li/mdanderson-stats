@@ -34,10 +34,19 @@ class BFBOINDecision(BOINDecision):
 
 
 def _vectors(*values: ArrayLike) -> tuple[np.ndarray, ...]:
-    arrays = tuple(count(v, name) for v, name in zip(values, ("patients", "toxicities", "assigned"), strict=True))
+    arrays = tuple(
+        count(v, name)
+        for v, name in zip(values, ("patients", "toxicities", "assigned"), strict=True)
+    )
     if any(a.ndim != 1 for a in arrays) or any(a.shape != arrays[0].shape for a in arrays[1:]):
         raise ValueError("patients, toxicities and assigned must be matching 1D vectors")
-    if arrays[0].size < 2 or arrays[0].size > 100 or np.any(arrays[1] > arrays[0]) or np.any(arrays[0] > arrays[2]):
+    if (
+        arrays[0].size < 2
+        or arrays[0].size > 100
+        or np.any(arrays[1] > arrays[0])
+        or np.any(arrays[0] > arrays[2])
+        or sum(a.sum() for a in arrays) >= 2**53
+    ):
         raise ValueError("require 2..100 doses, toxicities<=patients<=assigned")
     return arrays
 
@@ -89,7 +98,9 @@ class BFBOINDesign:
 
     def _closed(self, patients: np.ndarray, toxicities: np.ndarray) -> np.ndarray:
         """Current empirical backfill closure; this is intentionally not sticky."""
-        rate = np.divide(toxicities, patients, out=np.zeros(patients.shape, float), where=patients > 0)
+        rate = np.divide(
+            toxicities, patients, out=np.zeros(patients.shape, float), where=patients > 0
+        )
         closed = np.zeros(len(patients), dtype=bool)
         # A dose closes when both its own rate and its adjacent pooled rate
         # exceed lambda_d; closure then applies to the upper suffix.  Use
@@ -97,7 +108,10 @@ class BFBOINDesign:
         for j in range(len(patients) - 1):
             total_n = patients[j] + patients[j + 1]
             own_unsafe = patients[j] > 0 and rate[j] > self.deescalation_boundary
-            pooled_unsafe = total_n > 0 and (toxicities[j] + toxicities[j + 1]) / total_n > self.deescalation_boundary
+            pooled_unsafe = (
+                total_n > 0
+                and (toxicities[j] + toxicities[j + 1]) / total_n > self.deescalation_boundary
+            )
             if own_unsafe and pooled_unsafe:
                 closed[j:] = True
         return np.maximum.accumulate(closed)
@@ -109,14 +123,14 @@ class BFBOINDesign:
         assigned: ArrayLike,
         current_dose: int,
         *,
-        response_observed: ArrayLike | None = None,
+        response_observed: ArrayLike,
+        eliminated: ArrayLike | None = None,
     ) -> BFBOINBackfill:
         """Return lower doses eligible for backfill and a highest-dose allocation.
 
-        A lower dose is eligible when its evaluated empirical rate is at or
-        below ``lambda_d``; if outcomes from the current escalation cohort are
-        ``response_observed`` gates doses whose activity/response has not yet
-        been recorded.  Closure is recomputed from evaluated data each call.
+        A lower dose is eligible when its activity is recorded and its
+        cumulative evaluated data are not closed. Closure is recomputed from
+        evaluated data each call.
         """
         n, y, a = _vectors(patients, toxicities, assigned)
         current_value = scalar(current_dose, "current_dose")
@@ -125,18 +139,15 @@ class BFBOINDesign:
         c = int(current_value)
         if not 1 <= c <= len(n):
             raise ValueError("current_dose must be a valid one-based dose")
-        closed = self._closed(n, y) | (a >= self.n_cap)
+        observed = np.asarray(response_observed)
+        if observed.shape != n.shape or observed.dtype != np.bool_:
+            raise ValueError("response_observed must be a matching boolean vector")
+        observed = np.maximum.accumulate(observed)
+        safety = self._boin._state(n, y, eliminated)[2]
+        closed = self._closed(n, y) | (a >= self.n_cap) | safety
         eligible = np.zeros(len(n), dtype=bool)
         for j in range(c - 1):
-            safe = n[j] > 0 and y[j] / n[j] <= self.deescalation_boundary
-            eligible[j] = safe and not closed[j]
-        if response_observed is not None:
-            observed = np.asarray(response_observed)
-            if observed.shape != n.shape or observed.dtype != np.bool_:
-                raise ValueError("response_observed must be a matching boolean vector")
-            eligible &= observed
-        else:
-            eligible &= n > 0
+            eligible[j] = n[j] > 0 and observed[j] and not closed[j]
         dose = int(np.flatnonzero(eligible)[-1]) + 1 if np.any(eligible) else None
         return BFBOINBackfill(_owned(eligible), _owned(closed), dose)
 
@@ -149,6 +160,7 @@ class BFBOINDesign:
         *,
         backfilled: ArrayLike | None = None,
         eliminated: ArrayLike | None = None,
+        response_observed: ArrayLike | None = None,
     ) -> BFBOINDecision:
         """Apply BOIN movement, pooling conflicts caused by backfill."""
         n, y, a = _vectors(patients, toxicities, assigned)
@@ -165,14 +177,33 @@ class BFBOINDesign:
             if bf.shape != n.shape or bf.dtype != np.bool_:
                 raise ValueError("backfilled must be a matching boolean vector")
         decision = self._boin.next_dose(n, y, c, eliminated=eliminated)
-        eligibility = self.backfill_eligibility(n, y, a, c)
+        if response_observed is None:
+            eligibility = BFBOINBackfill(
+                _owned(np.zeros(n.shape, dtype=bool)),
+                _owned(self._closed(n, y) | (a >= self.n_cap) | decision.eliminated),
+                None,
+            )
+        else:
+            eligibility = self.backfill_eligibility(
+                n, y, a, c, response_observed=response_observed, eliminated=eliminated
+            )
         action, next_dose = decision.action, decision.next_dose
         current = c - 1
         rates = np.divide(y, n, out=np.zeros(n.shape, float), where=n > 0)
-        individual = np.where(rates <= self.escalation_boundary, 1, np.where(rates >= self.deescalation_boundary, -1, 0))
-        lower_conflict = np.flatnonzero(bf[:current] & ((individual[:current] < 0) | ((individual[:current] == 0) & (individual[current] > 0))))
+        individual = np.where(
+            rates <= self.escalation_boundary,
+            1,
+            np.where(rates > self.deescalation_boundary, -1, 0),
+        )
+        lower_conflict = np.flatnonzero(
+            bf[:current]
+            & (
+                (individual[:current] < 0)
+                | ((individual[:current] == 0) & (individual[current] > 0))
+            )
+        )
         # A safety stop/elimination is never replaced by conflict pooling.
-        if lower_conflict.size and action != "stop_safety" and not decision.eliminated[current] and decision.next_dose is not None:
+        if lower_conflict.size and action != "stop_safety" and decision.next_dose is not None:
             bstar = int(lower_conflict[-1])
             pool_n = np.cumsum(n[bstar : current + 1])
             pool_y = np.cumsum(y[bstar : current + 1])
@@ -182,14 +213,35 @@ class BFBOINDesign:
             elif q_current > self.deescalation_boundary:
                 safe = np.flatnonzero(pool_y / pool_n <= self.deescalation_boundary)
                 k = bstar + int(safe[-1]) if safe.size else bstar - 1
-                action, next_dose = "deescalate", (k + 1 if k >= 0 else None)
+                allowed = (
+                    np.flatnonzero(~decision.eliminated[: k + 1]) if k >= 0 else np.empty(0, int)
+                )
+                destination = int(allowed[-1]) + 1 if allowed.size else 1
+                action, next_dose = "deescalate", destination
             else:
                 action, next_dose = "stay", c
+        if (
+            action == "escalate"
+            and next_dose is not None
+            and (next_dose <= c or decision.eliminated[next_dose - 1])
+        ):
+            action, next_dose = "stay", c
+        if next_dose == c and action != "stop_safety":
+            action = "stay"
         if self.n_stop is not None and action == "stay" and a[current] >= self.n_stop:
             action, next_dose = "stop_precision", None
-        return BFBOINDecision(action, next_dose, decision.eliminated, decision.overdose_probability, eligibility.eligible, eligibility.closed)
+        return BFBOINDecision(
+            action,
+            next_dose,
+            decision.eliminated,
+            decision.overdose_probability,
+            eligibility.eligible,
+            eligibility.closed,
+        )
 
-    def select_mtd(self, patients: ArrayLike, toxicities: ArrayLike, *, eliminated: ArrayLike | None = None):
+    def select_mtd(
+        self, patients: ArrayLike, toxicities: ArrayLike, *, eliminated: ArrayLike | None = None
+    ):
         """Reuse BOIN's safety-filtered isotonic MTD selection."""
         n, y = count(patients, "patients"), count(toxicities, "toxicities")
         if n.ndim != 1 or n.shape != y.shape:
