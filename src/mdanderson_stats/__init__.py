@@ -129,6 +129,7 @@ from .beta_mixture_ml import fit_beta_mixture_ml
 from .beta_mixture_selection import BetaMixtureSelection, fit_beta_mixture_k, select_beta_mixture
 from .beta_mixture_testing import BetaMixtureTestingResult, beta_mixture_testing
 from .bf_boin import BFBOINBackfill, BFBOINDecision, BFBOINDesign
+from .bf_boin_simulation import BFBOINSimulation, simulate_bf_boin
 from .binary_sample_size import (
     BinarySampleSize,
     binary_proportion_power,
@@ -809,6 +810,8 @@ from .windows import (
 )
 
 __all__ = [
+    "BFBOINSimulation",
+    "simulate_bf_boin",
     "BFBOINBackfill",
     "BFBOINDecision",
     "BFBOINDesign",

@@ -1074,5 +1074,6 @@ nonadditive RDS enumeration and generated reports remain open.
 
 [BF-BOIN](docs/bf-boin.md) adds backfill eligibility, pooled dose decisions,
 posterior safety exclusions and final MTD selection. Assigned and evaluated
-patient counts are kept separate. Calendar simulation, expansion, titration
-and generated reports remain open.
+patient counts are kept separate. Calendar simulation includes delayed DLT and
+response observation, auditable patient histories and Monte Carlo errors.
+Expansion, titration and generated reports remain open.

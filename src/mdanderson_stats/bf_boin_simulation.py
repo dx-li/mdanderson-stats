@@ -129,7 +129,7 @@ def simulate_bf_boin(
     patients = np.zeros((repetitions, toxicity.size), dtype=np.int64)
     toxicities = np.zeros_like(patients)
     assigned = np.zeros_like(patients)
-    selected = np.zeros(repetitions, dtype=np.int64)
+    selected: NDArray[np.int64] = np.zeros(repetitions, dtype=np.int64)
     reasons, dose_histories, arrival_histories = [], [], []
     assessment_histories, dlt_histories, response_histories, backfill_histories = [], [], [], []
     escalation_ends, durations = np.zeros(repetitions), np.zeros(repetitions)
@@ -142,18 +142,15 @@ def simulate_bf_boin(
         # dlt_seen, response_seen, backfill
         records: list[_PatientRecord] = []
         next_arrival, clock, dose = 0.0, 0.0, start
-        first_arrival = True
         reason = "max_cohorts"
         arrival_steps = 0
         arrival_limit = 100_000
 
         def advance_arrival() -> float:
-            nonlocal first_arrival, next_arrival, arrival_steps
+            nonlocal next_arrival, arrival_steps
             if arrival_steps >= arrival_limit:
                 raise RuntimeError("BF-BOIN calendar arrival limit (100000) exceeded")
             arrival = next_arrival
-            if first_arrival:
-                first_arrival = False
             gap = (
                 generator.uniform(0, 2 / rate)
                 if arrival_distribution == "uniform"
@@ -176,6 +173,8 @@ def simulate_bf_boin(
                     r.response_seen = True
 
         def enroll(j: int, when: float, backfill: bool) -> int:
+            if not np.isfinite(when + window):
+                raise RuntimeError("BF-BOIN assessment time exceeds floating-point range")
             shape, scale = endpoints[j]
             dlt_time = (
                 np.inf

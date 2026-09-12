@@ -27,6 +27,7 @@ details and is not the MD Anderson app backend. See the
 [reference audit](bf-boin-reference.md) and
 [implementation notes](bf-boin-source.md) for those distinctions.
 
-Calendar-time simulation, post-escalation expansion, accelerated titration,
+[Calendar-time simulation](bf-boin-simulation.md) supports delayed observations
+and auditable patient histories. Post-escalation expansion, accelerated titration,
 and generated app reports remain to be implemented. This decision layer does
 not manage enrollment clocks or automatically determine cohort completion.

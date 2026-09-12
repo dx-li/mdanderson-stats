@@ -938,7 +938,7 @@ documented differences.
 
 ## BF-BOIN
 
-`bf_boin.py` independently implements the backfill decision method of Zhao,
+`bf_boin.py` and `bf_boin_simulation.py` independently implement the backfill method of Zhao,
 Yuan, Korn and Freidlin (2024), doi:10.1158/1078-0432.CCR-23-2585.
 The CRAN `bfboin` 0.1.1 package by Magirr and Zhang (GPL >= 3) supplies
 independent numerical references; it is not the MD Anderson app backend.
