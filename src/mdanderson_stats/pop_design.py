@@ -7,17 +7,50 @@ from numpy.typing import ArrayLike, NDArray
 from scipy.optimize import isotonic_regression
 from scipy.special import betaincc
 
+from ._validation import scalar
+from .boin import _owned as _freeze
 
-def _freeze(value: ArrayLike) -> NDArray:
-    result = np.asarray(value).copy()
-    result.setflags(write=False)
-    return result
+
+def _integer(value: int, name: str, lower: int, upper: int) -> int:
+    number = scalar(value, name)
+    if not lower <= number <= upper or number != int(number):
+        raise ValueError(f"{name} must be an integer in [{lower}, {upper}]")
+    return int(number)
+
+
+def _allocation(
+    j: int,
+    under: np.ndarray,
+    over: np.ndarray,
+    under_hit: bool,
+    over_hit: bool,
+    up: bool,
+    down: bool,
+) -> tuple[str, int | None, np.ndarray, np.ndarray]:
+    """Apply transition/exclusion indicators to owned, directionally closed masks."""
+    under, over = under.copy(), over.copy()
+    if under_hit:
+        under[: j + 1] = True
+    if over_hit:
+        over[j:] = True
+    excluded = under | over
+    if np.all(excluded):
+        return "stop", None, under, over
+    candidate = j + (1 if up else -1 if down else 0)
+    if not 0 <= candidate < under.size or excluded[candidate]:
+        candidate = j
+    if excluded[candidate]:
+        raise ArithmeticError("allocation cannot remain at an excluded dose")
+    action = "escalate" if candidate > j else "deescalate" if candidate < j else "stay"
+    return action, candidate + 1, under, over
 
 
 def predictive_bayes_factor(
     target: float, patients: ArrayLike, toxicities: ArrayLike, *, log: bool = False
 ) -> NDArray[np.float64]:
     """Return the PoP PrBF in favor of retaining a dose (H0 versus H1)."""
+    if not isinstance(log, (bool, np.bool_)):
+        raise ValueError("log must be boolean")
     phi = _validate_target(target)
     n, y = np.broadcast_arrays(
         np.asarray(patients, dtype=float), np.asarray(toxicities, dtype=float)
@@ -31,7 +64,7 @@ def predictive_bayes_factor(
     q = (y + 1.0) / (n + 2.0)
     with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
         logbf = 1.0 + y * np.log(phi / q) + (n - y) * np.log((1.0 - phi) / (1.0 - q))
-    return logbf if log else np.exp(logbf)
+    return _freeze(logbf if log else np.exp(logbf))
 
 
 @dataclass(frozen=True)
@@ -62,7 +95,7 @@ class PoPSelection:
 
 
 def _validate_target(value: float) -> float:
-    value = float(value)
+    value = scalar(value, "target")
     if not 0.05 <= value <= 0.6:
         raise ValueError("target must be in [0.05, 0.6]")
     return value
@@ -77,25 +110,20 @@ class PoPDesign:
 
     def __post_init__(self) -> None:
         phi = _validate_target(self.target)
-        c, e = float(self.cutoff), float(self.exclusion_cutoff)
+        c, e = scalar(self.cutoff, "cutoff"), scalar(self.exclusion_cutoff, "exclusion_cutoff")
         if not 1.0 < c < np.e or not 0.0 < e < c:
             raise ValueError("require 1 < cutoff < e and 0 < exclusion_cutoff < cutoff")
-        if (
-            int(self.safety_min_patients) != self.safety_min_patients
-            or self.safety_min_patients < 0
-        ):
-            raise ValueError("safety_min_patients must be a nonnegative integer")
+        minimum = _integer(self.safety_min_patients, "safety_min_patients", 0, 1000)
         object.__setattr__(self, "target", phi)
         object.__setattr__(self, "cutoff", c)
         object.__setattr__(self, "exclusion_cutoff", e)
-        object.__setattr__(self, "safety_min_patients", int(self.safety_min_patients))
+        object.__setattr__(self, "safety_min_patients", minimum)
 
     def boundaries(self, max_patients: int, *, cohort_size: int = 1) -> PoPBoundaries:
-        if int(max_patients) != max_patients or not 1 <= max_patients <= 1000:
-            raise ValueError("max_patients must be an integer in [1,1000]")
-        if int(cohort_size) != cohort_size or not 1 <= cohort_size <= max_patients:
-            raise ValueError("cohort_size must be a positive integer")
-        max_patients, cohort_size = int(max_patients), int(cohort_size)
+        max_patients = _integer(max_patients, "max_patients", 1, 1000)
+        cohort_size = _integer(cohort_size, "cohort_size", 1, max_patients)
+        if max_patients % cohort_size:
+            raise ValueError("max_patients must be divisible by cohort_size")
         ns: NDArray[np.int64] = np.arange(
             cohort_size, max_patients + 1, cohort_size, dtype=np.int64
         )
@@ -148,14 +176,11 @@ class PoPDesign:
         excluded_under: ArrayLike | None = None,
         excluded_over: ArrayLike | None = None,
         earlyterm: bool = True,
-        _boundary_table: PoPBoundaries | None = None,
     ) -> PoPDecision:
         if not isinstance(earlyterm, (bool, np.bool_)):
             raise ValueError("earlyterm must be boolean")
         n, y = self._state(patients, toxicities)
-        j = int(current_dose) - 1
-        if int(current_dose) != current_dose or not 0 <= j < n.size:
-            raise ValueError("current_dose must identify a valid dose")
+        j = _integer(current_dose, "current_dose", 1, n.size) - 1
         under = (
             np.zeros(n.size, dtype=bool)
             if excluded_under is None
@@ -172,51 +197,26 @@ class PoPDesign:
         raw_over = np.asarray(excluded_over) if excluded_over is not None else np.zeros(n.size)
         if np.any((raw_under != 0) & (raw_under != 1)) or np.any((raw_over != 0) & (raw_over != 1)):
             raise ValueError("exclusion masks must contain only boolean or 0/1 values")
+        if np.any(under):
+            under[: np.flatnonzero(under)[-1] + 1] = True
+        if np.any(over):
+            over[np.flatnonzero(over)[0] :] = True
         if (under[j] or over[j]) and not np.all(under | over):
             raise ValueError("current dose is excluded while an admissible dose remains")
         bf = float(predictive_bayes_factor(self.target, n[j], y[j]))
-        if n[j] == 0:
-            return PoPDecision("stay", j + 1, under, over, under | over, bf)
-        rate = y[j] / n[j]
-        if _boundary_table is not None:
-            k = int(n[j]) - 1
-            under_hit = y[j] <= _boundary_table.exclude_under_max[k]
-            over_hit = y[j] >= _boundary_table.exclude_over_min[k]
-            transition_up = y[j] <= _boundary_table.escalate_max[k]
-            transition_down = y[j] >= _boundary_table.deescalate_min[k]
-        else:
-            under_hit = over_hit = transition_up = transition_down = False
-        if earlyterm and (under_hit or over_hit or bf < self.exclusion_cutoff):
-            if under_hit or (not over_hit and rate < self.target and bf < self.exclusion_cutoff):
-                under[: j + 1] = True
-            else:
-                over[j:] = True
-        excluded = under | over
-        if np.all(excluded):
-            return PoPDecision("stop", None, _freeze(under), _freeze(over), _freeze(excluded), bf)
-        if _boundary_table is not None:
-            if transition_up:
-                direction = 1
-            elif transition_down:
-                direction = -1
-            else:
-                return PoPDecision(
-                    "stay", j + 1, _freeze(under), _freeze(over), _freeze(excluded), bf
-                )
-        elif bf >= self.cutoff:
-            return PoPDecision("stay", j + 1, _freeze(under), _freeze(over), _freeze(excluded), bf)
-        else:
-            direction = 1 if rate < self.target else -1
-        nxt = j + direction
-        if not 0 <= nxt < n.size or excluded[nxt]:
-            return PoPDecision("stay", j + 1, _freeze(under), _freeze(over), _freeze(excluded), bf)
+        low = bool(n[j] > 0 and y[j] / n[j] < self.target)
+        high = bool(n[j] > 0 and not low)
+        action, next_dose, under, over = _allocation(
+            j,
+            under,
+            over,
+            bool(earlyterm and bf < self.exclusion_cutoff and low),
+            bool(earlyterm and bf < self.exclusion_cutoff and high),
+            bool(bf < self.cutoff and low),
+            bool(bf < self.cutoff and high),
+        )
         return PoPDecision(
-            "escalate" if direction == 1 else "deescalate",
-            nxt + 1,
-            _freeze(under),
-            _freeze(over),
-            _freeze(excluded),
-            bf,
+            action, next_dose, _freeze(under), _freeze(over), _freeze(under | over), bf
         )
 
     def select_mtd(self, patients: ArrayLike, toxicities: ArrayLike) -> PoPSelection:

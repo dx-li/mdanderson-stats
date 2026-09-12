@@ -1,10 +1,11 @@
 import numpy as np
+import pytest
 
 from mdanderson_stats.pop_design import PoPDesign, predictive_bayes_factor
 from mdanderson_stats.pop_simulation import simulate_pop
 
 
-def test_prbf_is_low_in_both_tails_and_one_at_target() -> None:
+def test_predictive_bayes_factor_favors_central_counts() -> None:
     values = predictive_bayes_factor(0.25, 10, np.arange(11))
     assert values[0] < values[3]
     assert values[-1] < values[3]
@@ -41,3 +42,26 @@ def test_all_toxic_stops_without_selection() -> None:
     )
     assert np.all(result.early_stop)
     assert np.all(result.selections == 0)
+
+
+def test_sticky_exclusions_and_strict_threshold_equality() -> None:
+    design = PoPDesign()
+    low = design.decision(1, [15, 0, 0], [0, 0, 0])
+    assert low.next_dose == 2
+    assert np.array_equal(low.excluded_under, [True, False, False])
+    stopped = design.decision(2, [15, 3, 0], [0, 3, 0], excluded_under=low.excluded_under)
+    assert stopped.action == "stop" and stopped.next_dose is None
+    empty = design.decision(1, [0, 0], [0, 0], excluded_over=[True, False])
+    assert empty.action == "stop"  # Overdose exclusions include higher doses.
+    assert not empty.excluded.flags.writeable
+    bf = float(predictive_bayes_factor(0.25, 3, 0))
+    assert PoPDesign(cutoff=bf).decision(1, [3, 0], [0, 0]).action == "stay"
+    equality = PoPDesign(exclusion_cutoff=bf).decision(1, [3, 0], [0, 0])
+    assert equality.action == "escalate" and not equality.excluded.any()
+
+
+def test_resource_bounds_reject_oversized_simulation() -> None:
+    with pytest.raises(ValueError, match="simulation limits"):
+        simulate_pop(PoPDesign(), [0.1, 0.3], total_patients=1000, trials=101)
+    with pytest.raises(ValueError, match="divisible"):
+        PoPDesign().boundaries(10, cohort_size=3)

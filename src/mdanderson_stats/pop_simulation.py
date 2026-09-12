@@ -3,9 +3,10 @@
 from dataclasses import dataclass
 
 import numpy as np
-from numpy.typing import NDArray
+from numpy.typing import ArrayLike, NDArray
 
-from .pop_design import PoPDesign
+from ._validation import scalar
+from .pop_design import PoPDesign, _allocation, _integer
 
 
 @dataclass(frozen=True)
@@ -29,7 +30,7 @@ class PoPSimulation:
 
 def simulate_pop(
     design: PoPDesign,
-    skeleton: NDArray[np.float64],
+    skeleton: ArrayLike,
     *,
     total_patients: int,
     cohort_size: int = 3,
@@ -41,6 +42,8 @@ def simulate_pop(
     seed: int | None = 123,
 ) -> PoPSimulation:
     """Simulate complete-outcome PoP trials without allocating potential outcomes."""
+    if not isinstance(design, PoPDesign):
+        raise ValueError("design must be a PoPDesign")
     p = np.asarray(skeleton, dtype=float)
     if not isinstance(titration, (bool, np.bool_)) or not isinstance(earlyterm, (bool, np.bool_)):
         raise ValueError("titration and earlyterm must be boolean")
@@ -53,20 +56,15 @@ def simulate_pop(
         or np.any(np.diff(p) < 0)
     ):
         raise ValueError("skeleton must be a nondecreasing probability vector with 2..100 doses")
-    if int(total_patients) != total_patients or not 1 <= total_patients <= 1000:
-        raise ValueError("total_patients must be in [1,1000]")
-    if int(cohort_size) != cohort_size or not 1 <= cohort_size <= 4:
-        raise ValueError("cohort_size must be in [1,4]")
-    if (
-        int(trials) != trials
-        or not 1 <= trials
-        or trials * total_patients > 100000
-        or trials * p.size > 100000
-    ):
+    total_patients = _integer(total_patients, "total_patients", 1, 1000)
+    cohort_size = _integer(cohort_size, "cohort_size", 1, 4)
+    trials = _integer(trials, "trials", 1, 100000)
+    start_dose = _integer(start_dose, "start_dose", 1, p.size)
+    risk_cutoff = scalar(risk_cutoff, "risk_cutoff")
+    if not 0 <= risk_cutoff <= 1:
+        raise ValueError("risk_cutoff must be in [0,1]")
+    if trials * total_patients > 100000 or trials * p.size > 100000:
         raise ValueError("trials and allocation size exceed simulation limits")
-    if not 0 <= risk_cutoff <= 1 or int(start_dose) != start_dose or not 1 <= start_dose <= p.size:
-        raise ValueError("invalid start_dose or risk_cutoff")
-    trials, total_patients, cohort_size = int(trials), int(total_patients), int(cohort_size)
     rng = np.random.default_rng(seed)
     boundaries = design.boundaries(total_patients, cohort_size=1)
     selections: NDArray[np.int64] = np.zeros(trials, dtype=np.int64)
@@ -105,23 +103,24 @@ def simulate_pop(
             n[dose - 1] += take
             y[dose - 1] += dlt
             remaining -= take
-            decision = design.decision(
-                dose,
-                n,
-                y,
-                excluded_under=under,
-                excluded_over=over,
-                earlyterm=earlyterm,
-                _boundary_table=boundaries,
+            j = dose - 1
+            k = int(n[j]) - 1
+            action, next_dose, under, over = _allocation(
+                j,
+                under,
+                over,
+                bool(earlyterm and y[j] <= boundaries.exclude_under_max[k]),
+                bool(earlyterm and y[j] >= boundaries.exclude_over_min[k]),
+                bool(y[j] <= boundaries.escalate_max[k]),
+                bool(y[j] >= boundaries.deescalate_min[k]),
             )
-            under, over = decision.excluded_under, decision.excluded_over
-            if decision.action == "stop":
+            if action == "stop":
                 early[trial] = True
                 reasons[trial] = "all_excluded"
                 break
-            if decision.next_dose is None:
-                raise RuntimeError("non-stopping PoP decision has no next dose")
-            dose = decision.next_dose
+            if next_dose is None:
+                raise ArithmeticError("non-stopping PoP decision has no next dose")
+            dose = next_dose
         selected = design.select_mtd(n, y).dose
         selections[trial] = 0 if selected is None else selected
         patient_counts[trial] = n
