@@ -104,4 +104,5 @@ These hashes were recorded during the original audit. The temporary source
 worktree was lost after a machine crash; the committed generator and CSVs
 survived. The CRAN source archive was subsequently restored to ignored
 `research/raw/BF-BOIN` and its SHA-256 verified against the recorded value.
-The app snapshots have not yet been restored.
+The guide and backfilling help PDF were also restored and their SHA-256 values
+verified. The original app HTML snapshot has not been restored.
