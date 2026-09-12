@@ -1,0 +1,8 @@
+"case","target","nrow","ncol","patients","toxicities","current_a","current_b","next_a","next_b","warning","error"
+"escalate_equal_neighbor_tie",0.3,2,3,"3;0;0;0;0;0","0;0;0;0;0;0",1,1,2,1,"",""
+"escalate_prefer_higher_stay_mass",0.3,2,3,"3;3;0;0;0;0","0;1;0;0;0;0",1,1,1,2,"",""
+"deescalate_to_higher_posterior_neighbor",0.3,2,3,"0;0;0;0;3;0","0;0;0;0;3;0",2,2,2,1,"",""
+"retain_inside_interval",0.3,2,3,"0;0;0;0;3;0","0;0;0;0;1;0",2,2,2,2,"",""
+"lowest_dose_elimination_stop",0.3,2,3,"3;0;0;0;0;0","3;0;0;0;0;0",1,1,NA,NA,"",""
+"extra_safe_lowest_dose_stop",0.3,2,3,"3;0;0;0;0;0","2;0;0;0;0;0",1,1,NA,NA,"",""
+"precision_stop_current_dose",0.3,2,3,"9;0;0;0;0;0","0;0;0;0;0;0",1,1,NA,NA,"",""

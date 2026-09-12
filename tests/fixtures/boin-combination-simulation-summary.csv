@@ -1,0 +1,2 @@
+"scenario","total_patients","total_toxicities","pcs","patient_percent_at_mtd","percent_early_stop"
+"small_2x3_seed9",12,2,"10%","6.2%",0
