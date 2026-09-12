@@ -84,6 +84,9 @@ run_decision <- function(case, dat, ...) {
     tox_at_current = if (nrow(dat)) sum(dat$Dose == dat$Dose[nrow(dat)] & dat$Toxicity == 1) else 0,
     efficacy_at_current = if (nrow(dat)) sum(dat$Dose == dat$Dose[nrow(dat)] & dat$Efficacy == 1) else 0,
     next_dose = x$next_dose,
+    patients_by_dose = paste(tabulate(dat$Dose, nbins = 5), collapse = ";"),
+    toxicities_by_dose = paste(vapply(seq_len(5), function(d) sum(dat$Dose == d & dat$Toxicity == 1), integer(1)), collapse = ";"),
+    efficacies_by_dose = paste(vapply(seq_len(5), function(d) sum(dat$Dose == d & dat$Efficacy == 1), integer(1)), collapse = ";"),
     admissible = paste(x$admissible, collapse = ";"),
     utility = paste(sprintf("%.17g", x$utility), collapse = ";"),
     stringsAsFactors = FALSE
