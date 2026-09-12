@@ -45,7 +45,8 @@ The default prior is Beta(0.5, 0.5). Set `prior` explicitly or use
 `prior_probability` and `prior_ess` to select another prior. Defaults are
 illustrative and do not establish false-decision-rate control.
 
-Automatic parameter optimization, efficacy/toxicity, multiple-efficacy,
+[Finite-grid parameter optimization](bop2-dc-optimization.md) supports false-go,
+false-no-go and optional false-consider constraints. Efficacy/toxicity, multiple-efficacy,
 time-to-event and generated app reports remain pending. See
 [source notes](bop2-dc-source.md) and the
 [independent numerical references](bop2-dc-reference.md).

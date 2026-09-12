@@ -27,6 +27,9 @@ class BOP2DCOptimization:
     objective: str
     candidate_count: int
     grid: dict[str, FloatArray]
+    false_go_limit: float
+    false_no_go_limit: float
+    false_consider_limit: float | None
 
 
 def _grid(value: ArrayLike | None, default: np.ndarray, name: str) -> np.ndarray:
@@ -82,7 +85,7 @@ def optimize_bop2_dc(
         else scalar(false_consider_limit, "false_consider_limit")
     )
     if not 0 <= fg <= 1 or not 0 <= fn <= 1 or (fc is not None and not 0 <= fc <= 1):
-        raise ValueError("error limits must lie in (0,1]")
+        raise ValueError("error limits must lie in [0,1]")
     if objective not in ("cgr", "ess_futile"):
         raise ValueError("objective must be 'cgr' or 'ess_futile'")
     grids = {
@@ -159,6 +162,9 @@ def optimize_bop2_dc(
                         objective,
                         candidate_count,
                         {k: _grid(v, v, k) for k, v in grids.items()},
+                        fg,
+                        fn,
+                        fc,
                     )
                     key = (
                         (-cgr, ess, float(ll), float(lc), float(gl), float(gc))
@@ -169,17 +175,4 @@ def optimize_bop2_dc(
                         best = (key, metrics)
     if best is None:
         raise BOP2DCInfeasibleError("no finite-grid BOP2-DC candidate satisfies the constraints")
-    result = best[1]
-    return BOP2DCOptimization(
-        result.design,
-        result.futile_oc,
-        result.effective_oc,
-        result.false_go_rate,
-        result.false_no_go_rate,
-        result.correct_go_rate,
-        result.false_consider_rate,
-        result.futile_expected_sample_size,
-        result.objective,
-        candidate_count,
-        result.grid,
-    )
+    return best[1]

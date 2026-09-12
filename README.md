@@ -1081,4 +1081,5 @@ Expansion, titration and generated reports remain open.
 [BOP2-DC](docs/bop2-dc.md) adds binary efficacy monitoring with distinct
 go/consider/no-go outcomes and exact operating characteristics. Independent
 R posteriors and a closed-form early-stopping example validate the core.
-Parameter calibration and the other endpoint modes remain open.
+Finite-grid calibration maximizes correct-go probability or minimizes expected
+sample size while controlling false decisions. The other endpoint modes remain open.

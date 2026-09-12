@@ -3958,11 +3958,13 @@
       "implemented_features": [
         "Binary efficacy dual-criterion posterior monitoring with interim futility and final go/consider/no-go decisions",
         "Separate interim response-count boundaries for statistical and clinical criteria",
-        "Exact binomial operating characteristics with absorbing interim stopping, total no-go risk and expected sample size"
+        "Exact binomial operating characteristics with absorbing interim stopping, total no-go risk and expected sample size",
+        "Finite-grid binary calibration for maximum correct-go probability or minimum futile expected sample size under false-go, false-no-go and optional false-consider constraints"
       ],
       "validation": [
         "Five independent base-R posterior and decision cases match Python",
-        "Closed-form four-patient design verifies exact outcome probabilities, equality-as-consider and interim stopping absorption"
+        "Closed-form four-patient design verifies exact outcome probabilities, equality-as-consider and interim stopping absorption",
+        "Independent base-R enumeration of all 16 paths for six candidate designs validates both objectives, false-consider control and infeasibility"
       ]
     },
     {
