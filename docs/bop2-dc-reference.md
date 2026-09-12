@@ -44,3 +44,13 @@ The downloaded preprint is preserved in ignored `research/raw/BOP2-DC`.
 Its SHA-256 is
 `a344f088f564a218e29af1abb0c22e1799a344dba6820a41048769905705ad7a`.
 Original paper content is not redistributed in the package.
+
+## Time-to-event reference
+
+`tools/reference_bop2_dc_survival.R` uses base-R gamma probabilities to
+independently evaluate the exponential/inverse-gamma model in Section 2.1.3.
+The prior shape and scale describe the exponential **mean**, while LRV and
+CMV describe the **median**. Seven cases in
+`tests/fixtures/bop2-dc-survival.csv` cover interim stopping, all three final
+outcomes, zero events and the prior before enrollment. These are mathematical
+reference calculations, not captured outputs from the app backend.
