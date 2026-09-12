@@ -101,7 +101,7 @@ class BFBOINDesign:
         rate = np.divide(
             toxicities, patients, out=np.zeros(patients.shape, float), where=patients > 0
         )
-        closed = np.zeros(len(patients), dtype=bool)
+        closed: NDArray[np.bool_] = np.zeros(len(patients), dtype=bool)
         # A dose closes when both its own rate and its adjacent pooled rate
         # exceed lambda_d; closure then applies to the upper suffix.  Use
         # completed outcomes only and reopen on later data.
@@ -145,7 +145,7 @@ class BFBOINDesign:
         observed = np.maximum.accumulate(observed)
         safety = self._boin._state(n, y, eliminated)[2]
         closed = self._closed(n, y) | (a >= self.n_cap) | safety
-        eligible = np.zeros(len(n), dtype=bool)
+        eligible: NDArray[np.bool_] = np.zeros(len(n), dtype=bool)
         for j in range(c - 1):
             eligible[j] = n[j] > 0 and observed[j] and not closed[j]
         dose = int(np.flatnonzero(eligible)[-1]) + 1 if np.any(eligible) else None
@@ -171,7 +171,7 @@ class BFBOINDesign:
         if not 1 <= c <= len(n) or n[c - 1] == 0:
             raise ValueError("current_dose must identify a dose with evaluated patients")
         if backfilled is None:
-            bf = np.zeros(len(n), dtype=bool)
+            bf: NDArray[np.bool_] = np.zeros(len(n), dtype=bool)
         else:
             bf = np.asarray(backfilled)
             if bf.shape != n.shape or bf.dtype != np.bool_:
@@ -205,8 +205,8 @@ class BFBOINDesign:
         # A safety stop/elimination is never replaced by conflict pooling.
         if lower_conflict.size and action != "stop_safety" and decision.next_dose is not None:
             bstar = int(lower_conflict[-1])
-            pool_n = np.cumsum(n[bstar : current + 1])
-            pool_y = np.cumsum(y[bstar : current + 1])
+            pool_n: NDArray[np.float64] = np.cumsum(n[bstar : current + 1])
+            pool_y: NDArray[np.float64] = np.cumsum(y[bstar : current + 1])
             q_current = pool_y[-1] / pool_n[-1]
             if q_current <= self.escalation_boundary:
                 action, next_dose = "escalate", min(c + 1, len(n))

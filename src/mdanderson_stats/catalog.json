@@ -4053,9 +4053,16 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "BF-BOIN backfill eligibility with observed activity at or below dose, assigned-count caps and reversible empirical toxicity closure",
+        "Conflict-aware pooled escalation decisions with posterior safety exclusions and conditional assigned-count stopping",
+        "Final MTD selection using the shared BOIN isotonic estimator"
+      ],
+      "validation": [
+        "35 independent CRAN BOIN boundary rows agree with Python",
+        "Focused hand-computed conduct cases cover activity, caps, reopening, pooled movement and eliminated destinations"
+      ]
     },
     {
       "id": 164,

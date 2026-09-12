@@ -1071,3 +1071,8 @@ utility desirability tables, single-stage dose decisions, final OBD selection
 and joint-outcome cohort simulation. Independent R calculations validate the
 posterior, ranks and selection examples. Two-stage conduct, 3+3 run-in,
 nonadditive RDS enumeration and generated reports remain open.
+
+[BF-BOIN](docs/bf-boin.md) adds backfill eligibility, pooled dose decisions,
+posterior safety exclusions and final MTD selection. Assigned and evaluated
+patient counts are kept separate. Calendar simulation, expansion, titration
+and generated reports remain open.

@@ -935,3 +935,12 @@ Sweeting and Kristian Brock, is an independent executable comparator rather
 than the original MD Anderson backend. Original code, paper PDFs and app assets
 are not redistributed. See `docs/boin12-reference.md` for source hashes and
 documented differences.
+
+## BF-BOIN
+
+`bf_boin.py` independently implements the backfill decision method of Zhao,
+Yuan, Korn and Freidlin (2024), doi:10.1158/1078-0432.CCR-23-2585.
+The CRAN `bfboin` 0.1.1 package by Magirr and Zhang (GPL >= 3) supplies
+independent numerical references; it is not the MD Anderson app backend.
+Original source and app assets are not redistributed. See
+`docs/bf-boin-reference.md` for provenance and differences.
