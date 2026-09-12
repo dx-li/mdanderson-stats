@@ -8,12 +8,13 @@ multilevel endpoint extensions are intentionally outside its scope.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 from scipy.optimize import isotonic_regression
 from scipy.special import betainc, betaincc
+from scipy.stats import rankdata
 
 from ._validation import count, finite, scalar
 from .boin import BOINDesign, _owned
@@ -44,8 +45,8 @@ def _counts(
         raise ValueError("patients, toxicities, and efficacies must have matching shapes")
     if np.any(t > n) or np.any(e > n):
         raise ValueError("toxicities and efficacies cannot exceed patients")
-    if n.sum() > 1000:
-        raise ValueError("total patients must not exceed 1000")
+    if np.any(n > 1000):
+        raise ValueError("patients per dose must not exceed 1000")
     return n, t, e
 
 
@@ -60,7 +61,10 @@ def _utilities(value: ArrayLike) -> FloatArray:
 
 @dataclass(frozen=True)
 class BOIN12Posterior:
-    """Marginal endpoint and quasi-beta-binomial utility posterior summaries."""
+    """Marginal endpoint and quasi-beta-binomial utility posterior summaries.
+
+    ``utility_probability`` is reported on the BOIN12/RDS 0--100 scale.
+    """
 
     toxicity_overdose_probability: FloatArray
     efficacy_futility_probability: FloatArray
@@ -90,6 +94,21 @@ class BOIN12Selection:
     posterior: BOIN12Posterior
 
 
+@dataclass(frozen=True)
+class BOIN12RDSTable:
+    """Rank-based desirability scores for all binary outcomes at each sample size."""
+
+    patients: IntArray
+    toxicities: IntArray
+    efficacies: IntArray
+    admissible: NDArray[np.bool_]
+    rds: FloatArray
+
+
+def _additive_utilities(utilities: FloatArray) -> bool:
+    return abs(float(utilities[0] + utilities[3] - utilities[1] - utilities[2])) <= 1e-12
+
+
 def _joint_counts(
     n: FloatArray,
     t: FloatArray,
@@ -99,7 +118,7 @@ def _joint_counts(
 ) -> tuple[FloatArray, FloatArray, FloatArray, FloatArray]:
     """Return counts in (noT/E, noT/noE, T/E, T/noE) order."""
 
-    additive = np.isclose(utilities[0] + utilities[3], utilities[1] + utilities[2])
+    additive = _additive_utilities(utilities)
     if efficacy_without_toxicity is None:
         if not additive:
             raise ValueError(
@@ -153,9 +172,7 @@ def posterior(
     alpha, beta = scalar(prior_alpha, "prior_alpha"), scalar(prior_beta, "prior_beta")
     if alpha <= 0 or beta <= 0:
         raise ValueError("prior_alpha and prior_beta must be positive")
-    additive = np.isclose(
-        utilities_array[0] + utilities_array[3], utilities_array[1] + utilities_array[2]
-    )
+    additive = _additive_utilities(utilities_array)
     if efficacy_without_toxicity is None and additive:
         # The joint cell coefficient is zero, so marginal counts suffice.
         utility_sum = (
@@ -188,7 +205,7 @@ def posterior(
         _owned(betaincc(t + 1, n - t + 1, phi_t)),
         _owned(betainc(e + 1, n - e + 1, phi_e)),
         _owned(100.0 * shape_a / (shape_a + shape_b)),
-        _owned(betaincc(shape_a, shape_b, benchmark / 100.0)),
+        _owned(100.0 * betaincc(shape_a, shape_b, benchmark / 100.0)),
         _owned(utility_events),
     )
 
@@ -228,26 +245,75 @@ def admissibility(
     return _owned(mask)
 
 
+def rank_desirability(
+    sample_sizes: ArrayLike,
+    *,
+    toxicity_limit: float,
+    efficacy_limit: float,
+    utilities: ArrayLike = (100.0, 40.0, 60.0, 0.0),
+    toxicity_cutoff: float = 0.95,
+    efficacy_cutoff: float = 0.90,
+    prior_alpha: float = 1.0,
+    prior_beta: float = 1.0,
+) -> BOIN12RDSTable:
+    """Generate RDS ranks, averaging ties among admissible outcomes per ``N``."""
+
+    sizes = _vector(sample_sizes, "sample_sizes")
+    if np.any(sizes > 1000):
+        raise ValueError("sample_sizes must not exceed 1000")
+    rows: list[tuple[int, int, int]] = []
+    for size in sizes.astype(int):
+        rows.extend(
+            (int(size), tox, eff) for tox in range(int(size) + 1) for eff in range(int(size) + 1)
+        )
+    n = np.asarray([x[0] for x in rows], dtype=float)
+    t = np.asarray([x[1] for x in rows], dtype=float)
+    e = np.asarray([x[2] for x in rows], dtype=float)
+    result = posterior(
+        n,
+        t,
+        e,
+        toxicity_limit=toxicity_limit,
+        efficacy_limit=efficacy_limit,
+        utilities=utilities,
+        prior_alpha=prior_alpha,
+        prior_beta=prior_beta,
+    )
+    allowed = admissibility(
+        result, toxicity_cutoff=toxicity_cutoff, efficacy_cutoff=efficacy_cutoff
+    )
+    rds = np.full(n.shape, np.nan)
+    eligible = np.flatnonzero(allowed)
+    if eligible.size:
+        rds[eligible] = rankdata(result.utility_probability[eligible], method="average")
+    return BOIN12RDSTable(
+        np.asarray(n, dtype=np.int64),
+        np.asarray(t, dtype=np.int64),
+        np.asarray(e, dtype=np.int64),
+        _owned(allowed),
+        _owned(rds),
+    )
+
+
 @dataclass(frozen=True)
 class BOIN12Design:
     """Binary-endpoint BOIN12 design with explicit clinical limits."""
 
-    target_toxicity: float
     toxicity_limit: float
     efficacy_limit: float
     utilities: tuple[float, float, float, float] = (100.0, 40.0, 60.0, 0.0)
     toxicity_cutoff: float = 0.95
     efficacy_cutoff: float = 0.90
-    exploration_patients: int = 8
+    exploration_patients: int = 9
+    stay_patients: int = 6
     early_stop_patients: int | None = None
-    _boin: BOINDesign = None  # type: ignore[assignment]
+    _boin: BOINDesign = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
-        target = scalar(self.target_toxicity, "target_toxicity")
         limit = scalar(self.toxicity_limit, "toxicity_limit")
         efficacy = scalar(self.efficacy_limit, "efficacy_limit")
-        if not 0.05 <= target <= 0.6 or not 0 < target < limit < 1:
-            raise ValueError("require .05 <= target_toxicity < toxicity_limit < 1")
+        if not 0.05 <= limit <= 0.6:
+            raise ValueError("toxicity_limit must lie in [.05,.6]")
         _utilities(self.utilities)
         if not 0 < efficacy < 1:
             raise ValueError("efficacy_limit must lie in (0,1)")
@@ -256,11 +322,10 @@ class BOIN12Design:
             or self.exploration_patients < 0
         ):
             raise ValueError("exploration_patients must be a nonnegative integer")
-        object.__setattr__(self, "target_toxicity", target)
         object.__setattr__(self, "toxicity_limit", limit)
         object.__setattr__(self, "efficacy_limit", efficacy)
         object.__setattr__(self, "utilities", tuple(float(x) for x in self.utilities))
-        object.__setattr__(self, "_boin", BOINDesign(target=target))
+        object.__setattr__(self, "_boin", BOINDesign(target=limit))
 
     def posterior(
         self,
@@ -296,33 +361,43 @@ class BOIN12Design:
         if not 1 <= current <= n.size or n[current - 1] == 0:
             raise ValueError("current_dose must identify a treated dose")
         result = self.posterior(n, t, e, efficacy_without_toxicity=efficacy_without_toxicity)
-        allowed = admissibility(
+        all_allowed = admissibility(
             result, toxicity_cutoff=self.toxicity_cutoff, efficacy_cutoff=self.efficacy_cutoff
         )
-        if not np.any(allowed):
-            return BOIN12Decision("stop_no_admissible", None, allowed, result)
         index = current - 1
         rate = t[index] / n[index]
+        local = np.zeros(n.size, dtype=bool)
+        local[max(0, index - 1) : min(n.size, index + 2)] = True
+        local &= all_allowed
+        if self.early_stop_patients is not None and n[index] >= self.early_stop_patients:
+            return BOIN12Decision("stop_precision", None, local, result)
         if (
-            self.exploration_patients
-            and n[index] > self.exploration_patients
+            n[index] >= self.exploration_patients
             and rate < self._boin.deescalation_boundary
             and index + 1 < n.size
             and n[index + 1] == 0
-            and allowed[index + 1]
+            and all_allowed[index + 1]
         ):
-            return BOIN12Decision("explore_escalate", current + 1, allowed, result)
+            return BOIN12Decision("explore_escalate", current + 1, local, result)
+        if rate >= self._boin.deescalation_boundary:
+            # The app's admissibility rule remains a safety guard at the
+            # destination; do not force assignment to an inadmissible lower dose.
+            lower = max(current - 1, 1)
+            if all_allowed[lower - 1]:
+                return BOIN12Decision("deescalate", lower, local, result)
+            return BOIN12Decision("stop_no_admissible_neighbor", None, local, result)
         candidates = np.arange(max(0, index - 1), min(n.size, index + 2))
-        if rate <= self._boin.escalation_boundary:
-            candidates = candidates[candidates >= index]
-        elif rate >= self._boin.deescalation_boundary:
-            candidates = candidates[candidates <= index]
-        candidates = candidates[allowed[candidates]]
+        if rate > self._boin.escalation_boundary:
+            if n[index] < self.stay_patients:
+                candidates = candidates[candidates >= index]
+            else:
+                candidates = candidates[candidates <= index]
+        candidates = candidates[local[candidates]]
         if candidates.size == 0:
-            return BOIN12Decision("stop_no_admissible_neighbor", None, allowed, result)
+            return BOIN12Decision("stop_no_admissible_neighbor", None, local, result)
         best = int(candidates[np.argmax(result.utility_probability[candidates])])
         action = "stay" if best == index else "escalate" if best > index else "deescalate"
-        return BOIN12Decision(action, best + 1, allowed, result)
+        return BOIN12Decision(action, best + 1, local, result)
 
     def select_obd(
         self,
@@ -343,14 +418,17 @@ class BOIN12Design:
         fitted = np.full(n.shape, np.nan)
         treated = n > 0
         if np.any(treated):
-            fitted[treated] = isotonic_regression((t[treated] + 1) / (n[treated] + 2)).x
+            fitted[treated] = isotonic_regression(t[treated] / n[treated]).x
         if not np.any(allowed):
             return BOIN12Selection(None, None, allowed, _owned(fitted), result)
         observed = np.flatnonzero(treated)
-        mtd = int(observed[np.argmin(np.abs(fitted[observed] - self.toxicity_limit))])
+        distances = np.abs(fitted[observed] - self.toxicity_limit)
+        mtd = int(observed[np.flatnonzero(distances == distances.min())[-1]])
         eligible = np.flatnonzero(allowed & (np.arange(n.size) <= mtd))
         obd = (
-            None if eligible.size == 0 else int(eligible[np.argmax(result.utility_mean[eligible])])
+            None
+            if eligible.size == 0
+            else int(eligible[np.argmax(result.utility_probability[eligible])])
         )
         return BOIN12Selection(
             None if obd is None else obd + 1, mtd + 1, allowed, _owned(fitted), result
