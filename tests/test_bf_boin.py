@@ -9,7 +9,7 @@ from mdanderson_stats.bf_boin import BFBOINDesign
 def test_backfill_uses_assigned_cap_and_reopens_temporary_closure():
     design = BFBOINDesign(n_cap=12)
     open_state = design.backfill_eligibility(
-        [3, 3, 0], [0, 0, 0], [4, 5, 0], 3, response_observed=[True, True, False]
+        [3, 3, 0], [0, 0, 0], [4, 12, 0], 3, response_observed=[True, True, False]
     )
     assert open_state.dose == 2
     assert not open_state.eligible[1]
