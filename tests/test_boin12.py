@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from mdanderson_stats.boin12 import BOIN12Design, admissibility, posterior
+from mdanderson_stats.boin12 import BOIN12Design, admissibility, posterior, rank_desirability
 
 
 def test_quasi_beta_posterior_matches_marginal_utility_identity():
@@ -41,14 +41,44 @@ def test_admissibility_requires_both_safety_and_efficacy():
 
 
 def test_next_dose_explores_untreated_higher_dose_after_eight_patients():
-    design = BOIN12Design(0.30, 0.35, 0.25)
+    design = BOIN12Design(0.35, 0.25)
     decision = design.next_dose([9, 0, 0], [0, 0, 0], [4, 0, 0], current_dose=1)
     assert decision.action == "explore_escalate"
     assert decision.next_dose == 2
 
 
+def test_toxicity_boundary_forces_bounded_deescalation():
+    design = BOIN12Design(0.35, 0.25)
+    decision = design.next_dose([0, 0, 3], [0, 0, 3], [0, 0, 0], current_dose=3)
+    assert decision.action == "deescalate"
+    assert decision.next_dose == 2
+
+
 def test_final_obd_is_utility_maximum_at_or_below_isotonic_mtd():
-    design = BOIN12Design(0.30, 0.35, 0.25)
+    design = BOIN12Design(0.35, 0.25)
     result = design.select_obd([3, 6, 3], [0, 1, 2], [0, 3, 1])
     assert result.mtd == 2
     assert result.obd == 2
+
+
+def test_source_replay_uses_joint_outcomes_and_global_rds_ranks():
+    design = BOIN12Design(0.35, 0.25)
+    patients = np.array([3, 6, 3, 0, 0])
+    toxicities = np.array([0, 1, 2, 0, 0])
+    efficacies = np.array([0, 3, 1, 0, 0])
+    efficacy_without_toxicity = np.array([0, 3, 1, 0, 0])
+    decision = design.next_dose(
+        patients,
+        toxicities,
+        efficacies,
+        current_dose=2,
+        efficacy_without_toxicity=efficacy_without_toxicity,
+    )
+    assert decision.next_dose == 2
+    assert decision.admissible.tolist() == [True, True, True, False, False]
+    assert decision.posterior.utility_probability[:3].tolist() == pytest.approx(
+        [11.3400103432383, 28.6202018249043, 7.9969448125000]
+    )
+    table = rank_desirability([0, 3, 6, 9], toxicity_limit=0.35, efficacy_limit=0.25)
+    sample_three = np.flatnonzero(table.patients == 3)
+    assert table.rds[sample_three[:5]].tolist() == pytest.approx([35, 55, 76, 91, 24])
