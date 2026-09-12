@@ -33,12 +33,14 @@ def uboin_gumbel_probabilities(
     Rows are efficacy ``0,1`` and columns are toxicity ``0,1``.  The
     factored form remains finite for association values such as ``+/-1000``.
     """
+    tox_shape = np.shape(toxicity)
+    eff_shape = np.shape(efficacy)
+    if len(tox_shape) != 1 or len(eff_shape) != 1 or tox_shape != eff_shape:
+        raise ValueError("toxicity and efficacy must be same-shaped one-dimensional vectors")
+    if not 1 <= tox_shape[0] <= 100:
+        raise ValueError("toxicity and efficacy must contain 1..100 doses")
     tox = finite(toxicity, "toxicity")
     eff = finite(efficacy, "efficacy")
-    if tox.ndim != 1 or eff.ndim != 1 or tox.shape != eff.shape:
-        raise ValueError("toxicity and efficacy must be same-shaped one-dimensional vectors")
-    if tox.size < 1 or tox.size > 100:
-        raise ValueError("toxicity and efficacy must contain 1..100 doses")
     if np.any((tox < 0) | (tox > 1)) or np.any((eff < 0) | (eff > 1)):
         raise ValueError("toxicity and efficacy probabilities must lie in [0,1]")
     association = scalar(association, "association")
@@ -93,10 +95,10 @@ def simulate_uboin(
     if not 1 <= d <= 100 or (e, t) != design.prior.shape[-2:]:
         raise ValueError("joint_probabilities dimensions must match design")
     probabilities = finite(joint_probabilities, "joint_probabilities")
-    if np.any(probabilities < 0):
-        raise ValueError("joint_probabilities must be nonnegative")
+    if np.any((probabilities < 0) | (probabilities > 1)):
+        raise ValueError("joint_probabilities entries must lie in [0,1]")
     row_sums = probabilities.sum(axis=(1, 2))
-    if not np.all(np.isclose(row_sums, 1.0, rtol=1e-12, atol=1e-12)):
+    if not np.all(np.isclose(row_sums, 1.0, rtol=0, atol=1e-12)):
         raise ValueError("each dose joint probability table must sum to one")
     probabilities = probabilities / row_sums[:, None, None]
     cohort = _integer(cohort_size, "cohort_size", 1, 100)
@@ -158,7 +160,7 @@ def simulate_uboin(
 
     selection_probability = np.bincount(selections, minlength=d + 1).astype(float) / repetitions
     selection_mcse = np.sqrt(selection_probability * (1 - selection_probability) / repetitions)
-    early = selections == 0
+    early = patients.sum(axis=1) < design.max_patients
     early_probability = float(np.mean(early))
     early_mcse = float(np.sqrt(early_probability * (1 - early_probability) / repetitions))
     return UBOINSimulation(
