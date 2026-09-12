@@ -68,8 +68,8 @@ def _validate(successes, trials, *, require_prior=True):
 
 
 def bchm_cluster(
-    successes,
-    trials,
+    successes: object,
+    trials: object,
     *,
     mu=0.2,
     sigma02=20.0,
@@ -137,9 +137,9 @@ def _elliptical(theta, mu, tau, m, y, n, rng):
 
 
 def bchm_borrow(
-    successes,
-    trials,
-    similarity,
+    successes: object,
+    trials: object,
+    similarity: object,
     *,
     target=0,
     prior_mean=None,
@@ -225,8 +225,8 @@ def bchm_borrow(
 
 
 def bchm_fit(
-    successes,
-    trials,
+    successes: object,
+    trials: object,
     *,
     mu=0.2,
     sigma02=20.0,
