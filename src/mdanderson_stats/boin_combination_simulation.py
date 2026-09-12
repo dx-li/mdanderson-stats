@@ -96,12 +96,46 @@ def simulate_boin_combination(
         patients[rows, coordinates[:, 0], coordinates[:, 1]] += size
         toxicities[rows, coordinates[:, 0], coordinates[:, 1]] += events
         for trial_index in rows:
+            current_pair = current[trial_index]
+            i, j = current_pair[0] - 1, current_pair[1] - 1
+            current_n = int(patients[trial_index, i, j])
+            current_y = int(toxicities[trial_index, i, j])
+            if design.early_stop_patients is not None and current_n >= design.early_stop_patients:
+                state, _ = design._state(
+                    patients[trial_index], toxicities[trial_index], eliminated[trial_index]
+                )
+                if not state[0, 0]:
+                    boundary = design.boundary_table(current_n)
+                    index = current_n - 1
+                    at_top = i == shape[0] - 1 and j == shape[1] - 1
+                    blocked_up = i == shape[0] - 1 or state[i + 1, j]
+                    blocked_right = j == shape[1] - 1 or state[i, j + 1]
+                    converged = (
+                        current_y > boundary.escalate_max[index]
+                        or at_top
+                        or (i == shape[0] - 1 and blocked_right)
+                        or (j == shape[1] - 1 and blocked_up)
+                        or (
+                            i < shape[0] - 1
+                            and j < shape[1] - 1
+                            and blocked_up
+                            and blocked_right
+                        )
+                    ) and (
+                        current_y < boundary.deescalate_min[index] or (i == 0 and j == 0)
+                    )
+                    if converged:
+                        reasons[trial_index] = "stop_precision"
+                        active[trial_index] = False
+                        eliminated[trial_index] = state
+                        continue
             decision = design.next_dose(
                 patients[trial_index],
                 toxicities[trial_index],
                 current[trial_index],
                 eliminated=eliminated[trial_index],
                 rng=generator,
+                source_simulation=True,
             )
             if decision.next_dose is None:
                 reasons[trial_index] = decision.action
@@ -114,6 +148,7 @@ def simulate_boin_combination(
             patients[final_index],
             toxicities[final_index],
             eliminated=eliminated[final_index],
+            round_selection=False,
         )
         if result.dose is not None:
             selected[final_index] = result.dose
