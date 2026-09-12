@@ -112,7 +112,10 @@ class UBOINDesign:
             raise ValueError("s1 must not exceed max_patients")
         prior_shape = np.shape(self.prior)
         if len(prior_shape) not in (2, 3) or prior_shape[-2:] not in (
-            (2, 2), (2, 3), (3, 2), (3, 3)
+            (2, 2),
+            (2, 3),
+            (3, 2),
+            (3, 3),
         ):
             raise ValueError("prior must have shape (E,T) or (D,E,T), with E,T in {2,3}")
         if len(prior_shape) == 3 and not 1 <= prior_shape[0] <= 100:
@@ -130,9 +133,16 @@ class UBOINDesign:
         response = _int_scalar(self.response_level, "response_level", 1, prior_shape[-2] - 1)
         object.__setattr__(self, "prior", _readonly(prior))
         object.__setattr__(self, "utilities", _readonly(utilities))
-        for name, value in (("toxicity_limit", tox), ("efficacy_limit", eff), ("delta", delta),
-                            ("safety_cutoff", safety), ("efficacy_cutoff", efficacy),
-                            ("s1", s1), ("s2", s2), ("max_patients", maximum)):
+        for name, value in (
+            ("toxicity_limit", tox),
+            ("efficacy_limit", eff),
+            ("delta", delta),
+            ("safety_cutoff", safety),
+            ("efficacy_cutoff", efficacy),
+            ("s1", s1),
+            ("s2", s2),
+            ("max_patients", maximum),
+        ):
             object.__setattr__(self, name, value)
         object.__setattr__(self, "starting_dose", starting)
         object.__setattr__(self, "dlt_level", dlt)
@@ -222,6 +232,8 @@ class UBOINDesign:
         mask = self._mask(eliminated, d)
         n = observed.sum(axis=(1, 2))
         total = int(n.sum())
+        if stage == 2 and total == 0:
+            raise ValueError("stage 2 requires observed patients")
         if total and n[current - 1] == 0:
             raise ValueError("current_dose must have treated patients once data exist")
         posterior = self._posterior(observed)
@@ -241,22 +253,7 @@ class UBOINDesign:
         effective_stage = 2 if stage == 2 or np.any(n >= self.s1) else 1
         if mask[0]:
             return self._result(effective_stage, "stop_safety", posterior, mask, d)
-        if effective_stage == 1 and mask[current - 1]:
-            target = self._available_target(current - 1, current, mask)
-            if target is None:
-                return self._result(effective_stage, "stop_safety", posterior, mask, d)
-            return self._result(
-                effective_stage,
-                "deescalate",
-                posterior,
-                mask,
-                d,
-                self._onehot(d, target),
-                target,
-            )
         if total == 0:
-            if stage == 2:
-                raise ValueError("stage 2 requires observed patients")
             if mask[self.starting_dose - 1]:
                 return self._result(effective_stage, "stop_safety", posterior, mask, d)
             probabilities = np.zeros(d)
@@ -281,6 +278,20 @@ class UBOINDesign:
                 mask,
                 d,
                 selected=selection.dose,
+            )
+
+        if effective_stage == 1 and mask[current - 1]:
+            target = self._available_target(current - 1, current, mask)
+            if target is None:
+                return self._result(effective_stage, "stop_safety", posterior, mask, d)
+            return self._result(
+                effective_stage,
+                "deescalate",
+                posterior,
+                mask,
+                d,
+                self._onehot(d, target),
+                target,
             )
 
         if effective_stage == 1:
@@ -346,7 +357,7 @@ class UBOINDesign:
             return desired
         if desired > current:
             return current if not mask[current - 1] else None
-        lower = np.flatnonzero(~mask[:current - 1])
+        lower = np.flatnonzero(~mask[: current - 1])
         return int(lower[-1] + 1) if lower.size else None
 
     @staticmethod
