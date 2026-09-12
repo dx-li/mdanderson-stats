@@ -26,7 +26,7 @@ def test_effective_sample_size_and_pending_conditional_mean() -> None:
     assert np.allclose(result.ESS[:, 0], [1.5, 0.0])
     assert np.isclose(result.MLE[0, 0], 2 / 3)
     assert np.isnan(result.MLE[1, 0])
-    assert np.isclose(result.patient_conditional_means[1, 0], (2 / 3) * 0.5 / (1 - (2 / 3) * 0.5))
+    assert np.isclose(result.patient_conditional_means[1, 0], 0.5)
 
 
 def test_complete_joint_cells_and_nonadditive_utility() -> None:
@@ -121,4 +121,72 @@ def test_zero_effective_information_is_explicit_error_for_posterior() -> None:
             toxicity_window=1.0,
             efficacy_window=2.0,
             n_doses=1,
+        )
+
+
+def test_no_information_suspends_without_runtime_warning() -> None:
+    result = tite_boin12_decision(
+        design(),
+        [1],
+        [-1],
+        [-1],
+        [0],
+        [0],
+        toxicity_window=1.0,
+        efficacy_window=1.0,
+        n_doses=1,
+        current_dose=1,
+    )
+    assert result.action == "suspend_no_information"
+
+
+def test_all_prior_elimination_stops_before_pending_gate() -> None:
+    result = tite_boin12_decision(
+        design(),
+        [1],
+        [-1],
+        [-1],
+        [0],
+        [0],
+        toxicity_window=1.0,
+        efficacy_window=1.0,
+        n_doses=1,
+        current_dose=1,
+        eliminated=[True],
+    )
+    assert result.action == "stop_safety"
+
+
+def test_custom_cutoff_applies_to_untried_prior() -> None:
+    d = design()
+    object.__setattr__(d, "toxicity_cutoff", 0.5)
+    result = tite_boin12_posterior(
+        d,
+        [1],
+        [0],
+        [1],
+        [1],
+        [2],
+        toxicity_window=1.0,
+        efficacy_window=2.0,
+        n_doses=2,
+    )
+    assert not result.admissible[1]
+
+
+def test_invalid_cutoff_is_rejected_before_pending_suspension() -> None:
+    d = design()
+    object.__setattr__(d, "toxicity_cutoff", 1.0)
+    with pytest.raises(ValueError, match="toxicity_cutoff"):
+        tite_boin12_decision(
+            d,
+            [1],
+            [-1],
+            [-1],
+            [0],
+            [0],
+            toxicity_window=1.0,
+            efficacy_window=1.0,
+            n_doses=1,
+            current_dose=1,
         )
