@@ -7,10 +7,12 @@ are applied to `assigned`, so a dose at `n_cap` is closed even when its latest
 outcomes are not yet evaluable.
 
 Backfill eligibility is recalculated from the current evaluated data. A lower
-dose is eligible when its empirical DLT rate is at or below the BOIN
-de-escalation boundary and it has not reached the cap. Activity/response must
-be recorded before a dose can be backfilled. Empirical closure is temporary: if
-later evaluated data become safe, the dose can reopen. Posterior
+dose is eligible when its activity is recorded, it has not reached the cap, and
+it is not in the temporary empirical closure suffix. Closure requires both the
+dose's own rate and its adjacent pooled rate to exceed the BOIN de-escalation
+boundary. Activity/response must be recorded before a dose can be backfilled.
+Empirical closure is temporary: if later evaluated data become safe, the dose
+can reopen. Posterior
 BOIN safety elimination is returned separately through `eliminated` and remains
 the safety decision used by final MTD selection.
 
