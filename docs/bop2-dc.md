@@ -46,7 +46,9 @@ The default prior is Beta(0.5, 0.5). Set `prior` explicitly or use
 illustrative and do not establish false-decision-rate control.
 
 [Finite-grid parameter optimization](bop2-dc-optimization.md) supports false-go,
-false-no-go and optional false-consider constraints. Efficacy/toxicity, multiple-efficacy,
-time-to-event and generated app reports remain pending. See
+false-no-go and optional false-consider constraints. [Paired monitoring](bop2-dc-paired.md)
+supports efficacy/toxicity and multiple efficacy endpoints. Paired operating
+characteristics and calibration, time-to-event and generated app reports
+remain pending. See
 [source notes](bop2-dc-source.md) and the
 [independent numerical references](bop2-dc-reference.md).

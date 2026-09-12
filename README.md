@@ -1082,4 +1082,7 @@ Expansion, titration and generated reports remain open.
 go/consider/no-go outcomes and exact operating characteristics. Independent
 R posteriors and a closed-form early-stopping example validate the core.
 Finite-grid calibration maximizes correct-go probability or minimizes expected
-sample size while controlling false decisions. The other endpoint modes remain open.
+sample size while controlling false decisions. [Paired-endpoint monitoring](docs/bop2-dc-paired.md)
+supports multiple efficacy and efficacy/toxicity decisions with joint Dirichlet
+priors. Paired operating characteristics, paired calibration and time-to-event
+mode remain open.

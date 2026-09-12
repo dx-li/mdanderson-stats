@@ -203,6 +203,7 @@ from .bop2_dc_optimization import (
     BOP2DCOptimization,
     optimize_bop2_dc,
 )
+from .bop2_dc_paired import BOP2DCPairedDesign, BOP2DCPairedState, bop2_dc_paired_design
 from .bop2_efftox import bop2_efftox_design
 from .bop2_efftox_optimization import BOP2EffToxOptimization, optimize_bop2_efftox
 from .bop2_paired import (
@@ -824,6 +825,9 @@ __all__ = [
     "BOP2DCInfeasibleError",
     "BOP2DCOptimization",
     "optimize_bop2_dc",
+    "BOP2DCPairedDesign",
+    "BOP2DCPairedState",
+    "bop2_dc_paired_design",
     "BOP2DCDesign",
     "BOP2DCOperatingCharacteristics",
     "BOP2DCState",
