@@ -3,8 +3,8 @@
 Catalog entry **127**, [Keyboard](https://biostatistics.mdanderson.org/shinyapps/Keyboard/),
 has its single-agent statistical core implemented: posterior keys, dose decisions,
 overdose safety, integer tables, isotonic MTD selection and batched trial simulation.
-The entry remains **partial** for integrated protocol/report output. Combination
-and time-to-event Keyboard applications are separate pending catalog entries.
+The entry remains **partial** for integrated protocol/report output. [Combination](keyboard-combination.md) and [time-to-event](tite-keyboard.md)
+Keyboard implementations are documented separately.
 
 Sources include the app's technical PDFs, the authors'
 [statistical-properties paper](https://arxiv.org/abs/1712.06718), and independent

@@ -176,9 +176,7 @@ class KeyboardCombDesign:
     early_stop_patients: int | None = 100
     intervals: FloatArray = field(init=False, repr=False)
     target_key: int = field(init=False)
-    _cutoff_cache: dict[int, tuple[int, int, int]] = field(
-        init=False, repr=False, compare=False
-    )
+    _cutoff_cache: dict[int, tuple[int, int, int]] = field(init=False, repr=False, compare=False)
 
     def __post_init__(self) -> None:
         target = scalar(self.target, "target")
@@ -393,23 +391,18 @@ class KeyboardCombDesign:
             action, next_dose = "stop_precision", None
         else:
             escalate, deescalate, eliminate_here = self._cutoffs(int(n[i, j]))
-            move = (
-                1
-                if y[i, j] <= escalate
-                else -1
-                if y[i, j] >= deescalate
-                else 0
-            )
+            move = 1 if y[i, j] <= escalate else -1 if y[i, j] >= deescalate else 0
             if state[i, j] or int(y[i, j]) >= eliminate_here:
                 move = -1
             candidates = (
-                [(i + 1, j), (i, j + 1)] if move > 0 else
-                [(i - 1, j), (i, j - 1)] if move < 0 else []
+                [(i + 1, j), (i, j + 1)]
+                if move > 0
+                else [(i - 1, j), (i, j - 1)]
+                if move < 0
+                else []
             )
             candidates = [
-                (a, b)
-                for a, b in candidates
-                if 0 <= a < n.shape[0] and 0 <= b < n.shape[1]
+                (a, b) for a, b in candidates if 0 <= a < n.shape[0] and 0 <= b < n.shape[1]
             ]
             scored = self._neighbor_scores(n, y, candidates, state)
             if scored:
@@ -442,8 +435,13 @@ class KeyboardCombDesign:
         n, y = _validate_counts(patients, toxicities)
         state, safety = self._elimination_state(n, y, eliminated, closure="cross")
         if state[0, 0]:
-            return KeyboardCombSelection(None, state, _owned(np.full(n.shape, np.nan)),
-                                         _owned(np.full(n.shape, np.nan)), safety)
+            return KeyboardCombSelection(
+                None,
+                state,
+                _owned(np.full(n.shape, np.nan)),
+                _owned(np.full(n.shape, np.nan)),
+                safety,
+            )
         values = (y + 0.05) / (n + 0.1)
         fitted = _biviso(values, n + 0.1)
         report = betaincc(y + 0.05, n - y + 0.05, self.target)

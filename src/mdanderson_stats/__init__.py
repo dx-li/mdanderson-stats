@@ -411,6 +411,16 @@ from .ipdfromkm_survival import (
     ipd_survival_summary,
 )
 from .keyboard import KeyboardDesign, KeyboardPosterior, KeyboardSelection
+from .keyboard_combination import (
+    KeyboardCombBoundaryTable,
+    KeyboardCombDecision,
+    KeyboardCombDesign,
+    KeyboardCombSelection,
+)
+from .keyboard_combination_simulation import (
+    KeyboardCombinationSimulation,
+    simulate_keyboard_combination,
+)
 from .keyboard_simulation import KeyboardSimulation, simulate_keyboard
 from .kphaz import KPHazard, kphaz
 from .ksbin1 import KSBinomialOperatingCharacteristics, ksbin1_operating_characteristics
@@ -790,6 +800,12 @@ from .windows import (
 )
 
 __all__ = [
+    "KeyboardCombBoundaryTable",
+    "KeyboardCombDecision",
+    "KeyboardCombDesign",
+    "KeyboardCombSelection",
+    "KeyboardCombinationSimulation",
+    "simulate_keyboard_combination",
     "BetaDifferenceComparison",
     "compare_beta_difference",
     "BinarySuccessTable",

@@ -1,5 +1,8 @@
 """Numerical and safety checks for the two-dimensional Keyboard core."""
 
+import csv
+from pathlib import Path
+
 import numpy as np
 from numpy.testing import assert_allclose, assert_array_equal
 from scipy.special import betaincc
@@ -20,9 +23,7 @@ def test_bivariate_isotonic_regression_matches_iso_reference_with_unequal_weight
     values = np.array(
         [[0.8, 0.1, 0.2, 0.9], [0.3, 0.7, 0.4, 0.6], [0.5, 0.2, 0.8, 0.9], [0.1, 0.4, 0.6, 0.3]]
     )
-    weights = np.array(
-        [[2, 1, 3, 4], [1.5, 2.2, 4.4, 3.3], [5, 1, 2, 6], [3, 7, 2.5, 1.2]]
-    )
+    weights = np.array([[2, 1, 3, 4], [1.5, 2.2, 4.4, 3.3], [5, 1, 2, 6], [3, 7, 2.5, 1.2]])
     expected = np.array(
         [
             [0.35806452, 0.35806451, 0.35806451, 0.76438356],
@@ -34,18 +35,19 @@ def test_bivariate_isotonic_regression_matches_iso_reference_with_unequal_weight
     assert_allclose(_biviso(values, weights), expected, rtol=0, atol=5e-8)
 
 
-def test_biviso_matches_unrounded_cran_fixture_case():
-    patients = np.array([[0, 0, 11, 2], [8, 9, 10, 2], [6, 12, 5, 0]])
-    toxicities = np.array([[0, 0, 11, 0], [2, 1, 4, 1], [2, 3, 2, 0]])
-    expected = np.array(
-        [
-            [0.18390804597701152, 0.18390804597701152, 0.59803921567593965, 0.59803921283967276],
-            [0.18390804597701152, 0.18390804597701152, 0.59803921567593965, 0.59803921852703601],
-            [0.28021978021978022, 0.28021978021978022, 0.59803921567593965, 0.59803921852703601],
-        ]
-    )
-    result = _biviso((toxicities + 0.05) / (patients + 0.1), patients + 0.1)
-    assert_allclose(result, expected, rtol=0, atol=5e-8)
+def test_biviso_matches_unrounded_cran_fixtures():
+    groups = {}
+    path = Path(__file__).parent / "fixtures" / "keyboard-combination-biviso.csv"
+    with path.open() as source:
+        for row in csv.DictReader(source):
+            groups.setdefault(row["case"], []).append(row)
+    assert len(groups) == 16
+    for case, rows in groups.items():
+        shape = (int(rows[0]["nrow"]), int(rows[0]["ncol"]))
+        values = np.array([float(r["raw_estimate"]) for r in rows]).reshape(shape)
+        weights = np.array([float(r["weight"]) for r in rows]).reshape(shape)
+        expected = np.array([float(r["biviso_fit"]) for r in rows]).reshape(shape)
+        assert_allclose(_biviso(values, weights), expected, rtol=0, atol=5e-8, err_msg=case)
 
 
 def test_keyboard_comb_key_scores_use_stable_beta_tails_and_target_key():

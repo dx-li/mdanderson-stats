@@ -3406,12 +3406,26 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/",
-      "references": [],
+      "references": [
+        "https://doi.org/10.1016/j.cct.2020.105972",
+        "https://arxiv.org/abs/1712.06718",
+        "https://cran.r-project.org/src/contrib/Keyboard_0.1.3.tar.gz"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Non-diagonal combination dose decisions, target-key posterior neighbor scores and explicit random tie handling",
+        "Posterior overdose elimination, retained conduct masks, extra-safe lowest-dose stopping and enrollment stopping; integer boundary tables",
+        "Weighted bivariate isotonic final MTD selection with weak-prior untreated-cell contributions and source selection adjustment",
+        "Fully evaluated binary-cohort simulations with trial histories, final selections, mean enrollment/toxicities and Monte Carlo standard errors",
+        "Remaining: generated trial protocols/reports and other published movement variants; native low-count errors and fixed RNG behavior are not reproduced"
+      ],
+      "validation": [
+        "Original Keyboard0.1.3 boundary, conduct, selection and bounded simulation fixtures retained with source discrepancy audit",
+        "Independent unrounded Iso::biviso reference fixtures for16 nonmonotone unequal-weight matrices and low-target posterior safety reference cases",
+        "Focused real-design simulation checks for all-safe/all-toxic paths, seeded ties and nontrivial Monte Carlo errors; source RNG parity is not claimed"
+      ]
     },
     {
       "id": 127,

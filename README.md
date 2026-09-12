@@ -1052,3 +1052,9 @@ approximation. It reports joint decision/truth probabilities, Bayesian power and
 error metrics, and searches candidate cutoffs for a target probability of
 incorrect decision. Reusable binary probability tables avoid repeating quadrature
 when evaluating or calibrating many cutoffs.
+
+[KeyboardComb](docs/keyboard-combination.md) now supports two-drug dose decisions,
+posterior safety monitoring, weighted two-dimensional isotonic MTD selection and
+seeded cohort simulation with Monte Carlo errors. Independent R references cover
+movement, selection and the numerical fit; source discrepancies are documented.
+Generated trial protocols and the paper's other movement variants remain open.

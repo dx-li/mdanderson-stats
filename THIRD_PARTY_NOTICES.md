@@ -897,3 +897,16 @@ https://arxiv.org/abs/2603.20015. The original application is
 https://biostatistics.mdanderson.org/shinyapps/BayesianCalibration/ (V1.0.1.0).
 No original code, paper or application assets are redistributed. See
 `docs/success-calibration.md` for numerical evidence and outstanding scope.
+
+## Keyboard drug combinations
+
+`keyboard_combination.py` and `keyboard_combination_simulation.py` implement the
+non-diagonal drug-combination Keyboard method using independent Python numerical
+code. References include Pan, Lin, Zhou and Yuan (2020), *Keyboard design for
+phase I drug-combination trials*, doi:10.1016/j.cct.2020.105972, and the earlier
+Pan, Lin and Yuan (2017) methods manuscript, https://arxiv.org/abs/1712.06718.
+The original CRAN `Keyboard` 0.1.3 package declares GPL-2 and was used as an
+executable reference; `Iso` provides the independent bivariate-isotonic reference.
+Original R source, app assets and PDFs are not redistributed. Generated numerical
+fixtures and independent reference runners are included. Source versions, hashes
+and known differences are recorded in `docs/keyboard-combination-source.md`.

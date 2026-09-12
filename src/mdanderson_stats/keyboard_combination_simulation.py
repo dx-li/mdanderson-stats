@@ -157,9 +157,7 @@ def simulate_keyboard_combination(
                 current[trial_index] = next_pair
 
     for trial in range(repetitions):
-        result = design.select_mtd(
-            patients[trial], toxicities[trial], eliminated=eliminated[trial]
-        )
+        result = design.select_mtd(patients[trial], toxicities[trial], eliminated=eliminated[trial])
         chosen = _decision_pair(result.dose, *shape)
         if chosen is not None:
             selected[trial] = chosen
