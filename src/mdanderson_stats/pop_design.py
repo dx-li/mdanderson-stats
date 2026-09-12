@@ -8,6 +8,12 @@ from scipy.optimize import isotonic_regression
 from scipy.special import betaincc
 
 
+def _freeze(value: ArrayLike) -> NDArray:
+    result = np.asarray(value).copy()
+    result.setflags(write=False)
+    return result
+
+
 def predictive_bayes_factor(
     target: float, patients: ArrayLike, toxicities: ArrayLike, *, log: bool = False
 ) -> NDArray[np.float64]:
@@ -108,7 +114,7 @@ class PoPDesign:
                 )
             )
         a = np.asarray(rows, dtype=np.int64)
-        return PoPBoundaries(ns, a[:, 0], a[:, 1], a[:, 2], a[:, 3])
+        return PoPBoundaries(*[_freeze(v) for v in (ns, a[:, 0], a[:, 1], a[:, 2], a[:, 3])])
 
     def _state(self, patients: ArrayLike, toxicities: ArrayLike) -> tuple[np.ndarray, np.ndarray]:
         n, y = np.broadcast_arrays(
@@ -118,6 +124,7 @@ class PoPDesign:
             n.ndim != 1
             or n.size < 2
             or n.size > 100
+            or np.any(n > 1000)
             or np.any(~np.isfinite(n + y))
             or np.any(n < 0)
             or np.any(y < 0)
@@ -139,13 +146,14 @@ class PoPDesign:
         excluded_under: ArrayLike | None = None,
         excluded_over: ArrayLike | None = None,
         earlyterm: bool = True,
+        _boundary_table: PoPBoundaries | None = None,
     ) -> PoPDecision:
         if not isinstance(earlyterm, (bool, np.bool_)):
             raise ValueError("earlyterm must be boolean")
         n, y = self._state(patients, toxicities)
         j = int(current_dose) - 1
-        if int(current_dose) != current_dose or not 0 <= j < n.size or n[j] == 0:
-            raise ValueError("current_dose must identify a treated dose")
+        if int(current_dose) != current_dose or not 0 <= j < n.size:
+            raise ValueError("current_dose must identify a valid dose")
         under = (
             np.zeros(n.size, dtype=bool)
             if excluded_under is None
@@ -158,24 +166,55 @@ class PoPDesign:
         )
         if under.shape != n.shape or over.shape != n.shape:
             raise ValueError("exclusion masks must match dose counts")
+        raw_under = np.asarray(excluded_under) if excluded_under is not None else np.zeros(n.size)
+        raw_over = np.asarray(excluded_over) if excluded_over is not None else np.zeros(n.size)
+        if np.any((raw_under != 0) & (raw_under != 1)) or np.any((raw_over != 0) & (raw_over != 1)):
+            raise ValueError("exclusion masks must contain only boolean or 0/1 values")
+        if (under[j] or over[j]) and not np.all(under | over):
+            raise ValueError("current dose is excluded while an admissible dose remains")
         bf = float(predictive_bayes_factor(self.target, n[j], y[j]))
+        if n[j] == 0:
+            return PoPDecision("stay", j + 1, under, over, under | over, bf)
         rate = y[j] / n[j]
-        if earlyterm and bf < self.exclusion_cutoff:
-            if rate < self.target:
+        if _boundary_table is not None:
+            k = int(n[j]) - 1
+            under_hit = y[j] <= _boundary_table.exclude_under_max[k]
+            over_hit = y[j] >= _boundary_table.exclude_over_min[k]
+            transition_up = y[j] <= _boundary_table.escalate_max[k]
+            transition_down = y[j] >= _boundary_table.deescalate_min[k]
+        else:
+            under_hit = over_hit = transition_up = transition_down = False
+        if earlyterm and (under_hit or over_hit or bf < self.exclusion_cutoff):
+            if under_hit or (not over_hit and rate < self.target and bf < self.exclusion_cutoff):
                 under[: j + 1] = True
             else:
                 over[j:] = True
         excluded = under | over
         if np.all(excluded):
-            return PoPDecision("stop_safety", None, under, over, excluded, bf)
-        if bf >= self.cutoff:
-            return PoPDecision("stay", j + 1, under, over, excluded, bf)
-        direction = 1 if rate < self.target else -1
+            return PoPDecision("stop", None, _freeze(under), _freeze(over), _freeze(excluded), bf)
+        if _boundary_table is not None:
+            if transition_up:
+                direction = 1
+            elif transition_down:
+                direction = -1
+            else:
+                return PoPDecision(
+                    "stay", j + 1, _freeze(under), _freeze(over), _freeze(excluded), bf
+                )
+        elif bf >= self.cutoff:
+            return PoPDecision("stay", j + 1, _freeze(under), _freeze(over), _freeze(excluded), bf)
+        else:
+            direction = 1 if rate < self.target else -1
         nxt = j + direction
         if not 0 <= nxt < n.size or excluded[nxt]:
-            return PoPDecision("stay", j + 1, under, over, excluded, bf)
+            return PoPDecision("stay", j + 1, _freeze(under), _freeze(over), _freeze(excluded), bf)
         return PoPDecision(
-            "escalate" if direction == 1 else "deescalate", nxt + 1, under, over, excluded, bf
+            "escalate" if direction == 1 else "deescalate",
+            nxt + 1,
+            _freeze(under),
+            _freeze(over),
+            _freeze(excluded),
+            bf,
         )
 
     def select_mtd(self, patients: ArrayLike, toxicities: ArrayLike) -> PoPSelection:
@@ -190,20 +229,20 @@ class PoPDesign:
                 / ((n[treated] + 0.1) ** 2 * (n[treated] + 1.1))
             )
             estimate[treated] = isotonic_regression(mean, weights=1.0 / var).x
+            estimate[treated] += (np.arange(treated.sum()) + 1) * 1e-10
         safety_excluded = np.zeros(n.size, dtype=bool)
-        if self.safety_min_patients:
-            exceed = (n >= self.safety_min_patients) & (
-                betaincc(y + 1, n - y + 1, self.target) > 0.95
-            )
-            hits = np.flatnonzero(exceed)
-            if hits.size:
-                safety_excluded[hits[0] :] = True
+        exceed = (n >= self.safety_min_patients) & (betaincc(y + 1, n - y + 1, self.target) > 0.95)
+        hits = np.flatnonzero(exceed)
+        if hits.size:
+            safety_excluded[hits[0] :] = True
         eligible = treated & ~safety_excluded
         idx = np.flatnonzero(eligible)
         if not idx.size:
-            return PoPSelection(None, estimate, eligible, safety_excluded)
+            return PoPSelection(
+                None, _freeze(estimate), _freeze(eligible), _freeze(safety_excluded)
+            )
         eligible_rank = np.flatnonzero(eligible)
-        adjusted = estimate[eligible] + (eligible_rank + 1) * 1e-10
+        adjusted = estimate[eligible]
         distance = np.abs(adjusted - self.target)
         dose = int(eligible_rank[np.flatnonzero(distance == distance.min())[-1]]) + 1
-        return PoPSelection(dose, estimate, eligible, safety_excluded)
+        return PoPSelection(dose, _freeze(estimate), _freeze(eligible), _freeze(safety_excluded))

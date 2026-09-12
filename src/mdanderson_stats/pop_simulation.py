@@ -5,7 +5,7 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import NDArray
 
-from .pop_design import PoPDesign, predictive_bayes_factor
+from .pop_design import PoPDesign
 
 
 @dataclass(frozen=True)
@@ -21,6 +21,10 @@ class PoPSimulation:
     mean_toxicities: NDArray[np.float64]
     risk_under: float
     risk_over: float
+    early_stop_probability: float
+    early_stop_mcse: float
+    risk_under_mcse: float
+    risk_over_mcse: float
 
 
 def simulate_pop(
@@ -64,6 +68,7 @@ def simulate_pop(
         raise ValueError("invalid start_dose or risk_cutoff")
     trials, total_patients, cohort_size = int(trials), int(total_patients), int(cohort_size)
     rng = np.random.default_rng(seed)
+    boundaries = design.boundaries(total_patients, cohort_size=1)
     selections = np.zeros(trials, dtype=np.int64)
     patient_counts = np.zeros((trials, p.size), dtype=np.int64)
     toxicity_counts = np.zeros_like(patient_counts)
@@ -86,10 +91,11 @@ def simulate_pop(
                 remaining -= 1
                 if dlt or dose == p.size:
                     if dlt:
-                        rate = y[dose - 1] / n[dose - 1]
-                        bf = float(predictive_bayes_factor(design.target, n[dose - 1], y[dose - 1]))
-                        if bf < design.cutoff:
-                            direction = 1 if rate < design.target else -1
+                        if y[dose - 1] <= boundaries.escalate_max[0]:
+                            direction = 1
+                            dose = max(1, min(p.size, dose + direction))
+                        elif y[dose - 1] >= boundaries.deescalate_min[0]:
+                            direction = -1
                             dose = max(1, min(p.size, dose + direction))
                     break
                 dose += 1
@@ -100,10 +106,16 @@ def simulate_pop(
             y[dose - 1] += dlt
             remaining -= take
             decision = design.decision(
-                dose, n, y, excluded_under=under, excluded_over=over, earlyterm=earlyterm
+                dose,
+                n,
+                y,
+                excluded_under=under,
+                excluded_over=over,
+                earlyterm=earlyterm,
+                _boundary_table=boundaries,
             )
             under, over = decision.excluded_under, decision.excluded_over
-            if decision.action == "stop_safety":
+            if decision.action == "stop":
                 early[trial] = True
                 reasons[trial] = "all_excluded"
                 break
@@ -121,6 +133,15 @@ def simulate_pop(
     above = (
         patient_counts[:, true_mtd + 1 :].sum(axis=1) if true_mtd + 1 < p.size else np.zeros(trials)
     )
+    risk_under_value = float(np.mean(below > risk_cutoff * total_patients))
+    risk_over_value = float(np.mean(above > risk_cutoff * total_patients))
+    early_value = float(np.mean(early))
+    for array in (selections, patient_counts, toxicity_counts, early, reasons, probs, mcse):
+        array.setflags(write=False)
+    mean_patients = patient_counts.mean(axis=0)
+    mean_toxicities = toxicity_counts.mean(axis=0)
+    mean_patients.setflags(write=False)
+    mean_toxicities.setflags(write=False)
     return PoPSimulation(
         selections,
         patient_counts,
@@ -129,8 +150,12 @@ def simulate_pop(
         reasons,
         probs,
         mcse,
-        patient_counts.mean(axis=0),
-        toxicity_counts.mean(axis=0),
-        float(np.mean(below > risk_cutoff * total_patients)),
-        float(np.mean(above > risk_cutoff * total_patients)),
+        mean_patients,
+        mean_toxicities,
+        risk_under_value,
+        risk_over_value,
+        early_value,
+        float(np.sqrt(early_value * (1 - early_value) / trials)),
+        float(np.sqrt(risk_under_value * (1 - risk_under_value) / trials)),
+        float(np.sqrt(risk_over_value * (1 - risk_over_value) / trials)),
     )
