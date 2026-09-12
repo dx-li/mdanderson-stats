@@ -164,8 +164,12 @@ def barpo_monitor(
                 out[i] = comparison.treatment_greater if upper else comparison.control_greater
             return out
         if upper:
-            return np.asarray(betaincc(posterior.alpha, posterior.beta, theta))
-        return np.asarray(betainc(posterior.alpha, posterior.beta, theta))
+            result = np.asarray(betaincc(posterior.alpha, posterior.beta, theta))
+        else:
+            result = np.asarray(betainc(posterior.alpha, posterior.beta, theta))
+        equal_half = (theta == 0.5) & (posterior.alpha == posterior.beta)
+        result[equal_half] = 0.5
+        return result
 
     fut = probabilities(theta_fut or 0.0, upper=False) if pfut is not None else None
     eff = probabilities(theta_eff or 0.0, upper=True) if peff is not None else None
