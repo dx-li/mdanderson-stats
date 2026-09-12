@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
-from scipy.special import betaincc
+from scipy.special import betainc, betaincc
 
 from ._validation import FloatArray, count, finite, scalar
 from .boin import _owned
@@ -51,10 +51,18 @@ class BOP2DCPairedDesign:
         if self.endpoint == "efficacy_toxicity":
             alpha[1] = self.prior[[1, 3]].sum()
             beta[1] = self.prior[[0, 2]].sum()
-        a, b = alpha + marginal, beta + counts.sum(axis=-1)[..., None] - marginal
-        return np.stack(
+        total = counts.sum(axis=-1)
+        a, b = alpha + marginal, beta + (total[..., None] - marginal)
+        posterior = np.stack(
             (betaincc(a, b, self.success_lrv), betaincc(a, b, self.success_cmv)), axis=-1
         )
+        if self.endpoint == "efficacy_toxicity":
+            toxicity = counts[..., 0] + counts[..., 2]
+            toxicity_a = self.prior[[0, 2]].sum() + toxicity
+            toxicity_b = self.prior[[1, 3]].sum() + (total - toxicity)
+            posterior[..., 1, 0] = betainc(toxicity_a, toxicity_b, self.lrv[1])
+            posterior[..., 1, 1] = betainc(toxicity_a, toxicity_b, self.cmv[1])
+        return posterior
 
     def monitor(self, counts: ArrayLike) -> BOP2DCPairedState:
         x = count(counts, "counts")
