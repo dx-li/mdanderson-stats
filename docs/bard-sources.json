@@ -1,0 +1,45 @@
+{
+  "catalog_id": 165,
+  "retrieved_at": "2026-09-12",
+  "application_version": "1.0.5.0",
+  "pid": 1162,
+  "published_paper": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12240483/",
+  "paper_doi": "10.1177/17407745251350596",
+  "files": [
+    {
+      "filename": "app.html",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BARD/",
+      "sha256": "367150236818aa05ddfa6a3f7c5583c51ef4d7dce15f22c88047f9c83e644797"
+    },
+    {
+      "filename": "Guide.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BARD/Guide.pdf",
+      "sha256": "6e2eabf1a333cbf987e43d1a1b681e4e8d0b6227c71068d2fb18b9ed23d3946c"
+    },
+    {
+      "filename": "stage2.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BARD/stage2.pdf",
+      "sha256": "e9aaf481e5e10bcb566bb428efda4af46bdb2e2299ebc4b3fcf0a3bc32643ad0"
+    },
+    {
+      "filename": "stage2OBD.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BARD/stage2OBD.pdf",
+      "sha256": "2104a245072de3bd8171e0436ca8fb57e3e56fc4ab382bfa044e6409840f9ac3"
+    },
+    {
+      "filename": "patient_enroll.csv",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BARD/patient_enroll.csv",
+      "sha256": "0179aa13af7670c190736368289e6313503a7550d9df8c3819fd20749339f277"
+    },
+    {
+      "filename": "patient_data_sample.csv",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BARD/patient_data_sample.csv",
+      "sha256": "7f8a4edd5acd6d02f814b98cb8ee7eac80183a76ef57fc6c623bcc8a501521d8"
+    },
+    {
+      "filename": "paper.pdf",
+      "url": "https://arxiv.org/pdf/2409.15663",
+      "sha256": "65cc6704504b9dcddaa48038cdf400a345b88d2516bc8b22f718bb141fd3724b"
+    }
+  ]
+}
