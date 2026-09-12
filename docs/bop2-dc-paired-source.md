@@ -13,8 +13,9 @@ the final go rule and AND at the final no-go rule. Efficacy/toxicity uses AND
 for final go and OR for final no-go. Interim no-go uses AND for multiple
 efficacy and OR for efficacy/toxicity.
 
-For toxicity, the endpoint is transformed to success=`no toxicity`. Thus a
-toxicity LRV/CMV pair with `LRV > CMV` becomes no-toxicity thresholds
+For toxicity, the endpoint is transformed internally to success=`no toxicity`.
+The public `lrv` and `cmv` fields retain the user-supplied toxicity cutoffs;
+the posterior calculation uses the corresponding no-toxicity thresholds
 `1-LRV < 1-CMV`, preserving the lower-is-better toxicity interpretation.
 This module intentionally covers the paired monitoring core; simulation and
 finite-grid calibration for these paired modes remain separate work.

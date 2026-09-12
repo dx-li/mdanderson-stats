@@ -26,6 +26,8 @@ class BOP2DCPairedDesign:
     max_subjects: int
     lrv: FloatArray
     cmv: FloatArray
+    success_lrv: FloatArray
+    success_cmv: FloatArray
     lambda_lrv: FloatArray
     lambda_cmv: FloatArray
     gamma_lrv: FloatArray
@@ -45,18 +47,24 @@ class BOP2DCPairedDesign:
     def _posterior(self, counts: np.ndarray) -> np.ndarray:
         marginal = self._marginal_counts(counts)
         alpha = np.array([self.prior[[0, 1]].sum(), self.prior[[0, 2]].sum()])
+        beta = np.array([self.prior[[2, 3]].sum(), self.prior[[1, 3]].sum()])
         if self.endpoint == "efficacy_toxicity":
             alpha[1] = self.prior[[1, 3]].sum()
-        beta = self.prior.sum() - alpha
+            beta[1] = self.prior[[0, 2]].sum()
         a, b = alpha + marginal, beta + counts.sum(axis=-1)[..., None] - marginal
-        return np.stack((betaincc(a, b, self.lrv), betaincc(a, b, self.cmv)), axis=-1)
+        return np.stack(
+            (betaincc(a, b, self.success_lrv), betaincc(a, b, self.success_cmv)), axis=-1
+        )
 
     def monitor(self, counts: ArrayLike) -> BOP2DCPairedState:
         x = count(counts, "counts")
         if x.ndim == 0 or x.shape[-1] != 4:
             raise ValueError("counts must have final category axis of length four")
+        if x[..., 0].size > 100_000:
+            raise ValueError("count batch exceeds 100000 scenarios")
         if np.any(x.sum(axis=-1) > self.max_subjects):
             raise ValueError("total counts exceed max_subjects")
+        x = x.astype(np.int64)
         n = x.sum(axis=-1).astype(np.int64)
         posterior = self._posterior(x)
         endpoint_decision = np.full((*n.shape, 2), "continue", dtype="U16")
@@ -101,6 +109,8 @@ class BOP2DCPairedDesign:
         decision[final_go] = "final_go"
         decision[final_no] = "final_no_go"
         decision[final & ~(final_go | final_no)] = "final_consider"
+        endpoint_decision.flags.writeable = False
+        decision.flags.writeable = False
         return BOP2DCPairedState(
             _owned(n),
             _owned(x),
@@ -138,8 +148,8 @@ def bop2_dc_paired_design(
             raise ValueError(f"{name} must contain two values in (0,1)")
     if endpoint == "multiple_efficacy" and np.any(lower >= clinical):
         raise ValueError("each efficacy lrv must be below its cmv")
-    if endpoint == "efficacy_toxicity" and not lower[1] > clinical[1]:
-        raise ValueError("toxicity lrv must exceed toxicity cmv")
+    if endpoint == "efficacy_toxicity" and (lower[0] >= clinical[0] or not lower[1] > clinical[1]):
+        raise ValueError("efficacy lrv must be below cmv and toxicity lrv must exceed cmv")
     arrays = [
         finite(v, name)
         for v, name in (
@@ -158,31 +168,43 @@ def bop2_dc_paired_design(
     ):
         raise ValueError("cutoffs must be two values in (0,1), and gammas in [0,1]")
     if prior is None:
-        p11 = lower[0] * lower[1]
-        shapes = np.array([p11, lower[0] - p11, lower[1] - p11, 1 - lower.sum() + p11])
+        p, q = lower
+        shapes = np.array([p * q, p * (1 - q), (1 - p) * q, (1 - p) * (1 - q)])
     else:
         shapes = finite(prior, "prior")
     if shapes.shape != (4,) or np.any(shapes <= 0) or not np.isfinite(shapes.sum()):
         raise ValueError("prior must contain four positive finite shapes")
     if looks is None:
-        first, step = (
-            int(scalar(min_subjects, "min_subjects")),
-            int(scalar(cohort_size, "cohort_size")),
+        first_value, step_value = (
+            scalar(min_subjects, "min_subjects"),
+            scalar(cohort_size, "cohort_size"),
         )
+        first, step = int(first_value), int(step_value)
+        if first_value != first or step_value != step or first < 1 or step < 1 or first > n:
+            raise ValueError("min_subjects and cohort_size must be valid integers")
         schedule = np.unique(np.r_[np.arange(first, n, step), n]).astype(np.int64)
     else:
-        schedule = count(looks, "looks").astype(np.int64)
-        if schedule.ndim != 1 or schedule[-1] != n or np.any(np.diff(schedule) <= 0):
+        raw_schedule = count(looks, "looks")
+        if (
+            raw_schedule.ndim != 1
+            or not raw_schedule.size
+            or np.any(raw_schedule < 1)
+            or np.any(raw_schedule > n)
+        ):
+            raise ValueError("looks must be nonempty and lie in [1,max_subjects]")
+        schedule = raw_schedule.astype(np.int64)
+        if schedule[-1] != n or np.any(np.diff(schedule) <= 0):
             raise ValueError("looks must increase and end at max_subjects")
+    success_lrv, success_cmv = lower.copy(), clinical.copy()
     if endpoint == "efficacy_toxicity":
-        lower = lower.copy()
-        clinical = clinical.copy()
-        lower[1], clinical[1] = 1 - lower[1], 1 - clinical[1]
+        success_lrv[1], success_cmv[1] = 1 - lower[1], 1 - clinical[1]
     return BOP2DCPairedDesign(
         endpoint,
         n,
         _owned(lower),
         _owned(clinical),
+        _owned(success_lrv),
+        _owned(success_cmv),
         _owned(arrays[0]),
         _owned(arrays[1]),
         _owned(arrays[2]),
