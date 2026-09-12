@@ -47,3 +47,18 @@ def test_calendar_simulation_reproducible_and_conserves_assigned_patients():
 def test_fractional_current_settings_and_invalid_arrival_distribution_rejected():
     with pytest.raises(ValueError):
         simulate_bf_boin(BFBOINDesign(), [0.1, 0.2], [0.5, 0.5], arrival_distribution="bad")
+
+
+def test_arrivals_continue_as_a_renewal_process_between_cohorts():
+    result = simulate_bf_boin(
+        BFBOINDesign(n_cap=3),
+        [0.0, 0.0],
+        [0.0, 0.0],
+        cohorts=2,
+        cohort_size=3,
+        trials=1,
+        accrual_rate=6,
+        rng=1,
+    )
+    assert result.arrival_history[0][3] > result.assessment_history[0][2]
+    assert not np.any(np.isclose(result.arrival_history[0], result.assessment_history[0]))
