@@ -91,6 +91,13 @@ The runner asserts `bfboin` 0.1.1 and `BOIN` 2.7.2 and checks `0 <= y <= n`.
 It uses seeded Weibull DLT times and response probabilities of one; these are
 simulation fixtures, not claims about a native app random-number stream.
 
+`tools/reference_bf_boin_timing.R` requires only base R and generates
+`bf-boin-timing.csv`. Its six cases independently check the Weibull calibration
+used by the CRAN simulator: the event probability at the assessment window is
+the specified toxicity probability, and at half the window it is half that
+probability. The generator was run with R 4.4.1 and both CDF identities agreed
+within `1e-13`. These checks concern event timing, not full trial parity.
+
 Reference artifact hashes (SHA-256):
 
 | Artifact | SHA-256 |
