@@ -9,6 +9,7 @@ def test_quasi_beta_posterior_matches_marginal_utility_identity():
     # With no events, the default utility events are 40% of each patient.
     assert result.utility_events[0] == pytest.approx(1.2)
     assert result.utility_mean[0] == pytest.approx(44.0)
+    assert result.utility_probability[0] == pytest.approx(0.11340010343238265)
     assert result.toxicity_overdose_probability[0] == pytest.approx(0.65**4)
 
 
@@ -77,8 +78,22 @@ def test_source_replay_uses_joint_outcomes_and_global_rds_ranks():
     assert decision.next_dose == 2
     assert decision.admissible.tolist() == [True, True, True, False, False]
     assert decision.posterior.utility_probability[:3].tolist() == pytest.approx(
-        [11.3400103432383, 28.6202018249043, 7.9969448125000]
+        [0.113400103432383, 0.286202018249043, 0.079969448125000]
     )
     table = rank_desirability([0, 3, 6, 9], toxicity_limit=0.35, efficacy_limit=0.25)
     sample_three = np.flatnonzero(table.patients == 3)
     assert table.rds[sample_three[:5]].tolist() == pytest.approx([35, 55, 76, 91, 24])
+
+
+def test_eliminated_doses_are_sticky_and_take_safety_precedence():
+    design = BOIN12Design(0.35, 0.25)
+    decision = design.next_dose(
+        [3, 3, 0], [0, 0, 0], [0, 0, 0], current_dose=2, eliminated=[False, True, False]
+    )
+    assert decision.action == "stop_safety"
+    assert decision.next_dose is None
+
+
+def test_rds_rejects_unbounded_case_expansion_before_allocation():
+    with pytest.raises(ValueError, match="100000-case"):
+        rank_desirability(range(400), toxicity_limit=0.35, efficacy_limit=0.25)
