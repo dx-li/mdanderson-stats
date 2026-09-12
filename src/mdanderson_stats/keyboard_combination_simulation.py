@@ -1,27 +1,23 @@
 """Complete-outcome KeyboardComb trial simulation and operating characteristics.
 
-The combination design owns the posterior transition and final selection rules.
-This module only supplies cohort-wise Bernoulli outcomes, trial stopping, and
-Monte Carlo summaries.  ``KeyboardCombinationDesign`` is imported lazily so
-that this module remains useful while the design implementation is developed in
-parallel.
+The simulator enrolls complete cohorts, draws independent binary DLT outcomes,
+delegates safety and neighboring-dose transitions to ``KeyboardCombDesign``,
+and delegates final MTD selection to its matrix-isotonic selector. Results
+retain trial-level counts, stopping reasons, selection probabilities, and
+Monte Carlo standard errors.
 """
 
 from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 from ._validation import FloatArray, count, finite
 from .boin import _owned
-
-if TYPE_CHECKING:
-    from .keyboard_combination import KeyboardCombDesign
-
+from .keyboard_combination import KeyboardCombDesign
 
 Pair = tuple[int, int]
 
@@ -45,11 +41,6 @@ class KeyboardCombinationSimulation:
     mean_patients: FloatArray
     mean_toxicities: FloatArray
     stop_reason: tuple[str, ...]
-
-
-# This name is useful to callers that use the longer operating-characteristics
-# terminology used by other modules in the package.
-KeyboardCombinationOperatingCharacteristics = KeyboardCombinationSimulation
 
 
 def _pair(value: object, name: str, rows: int, columns: int) -> Pair:
@@ -144,12 +135,12 @@ def simulate_keyboard_combination(
         events = generator.binomial(size, probability)
         patients[rows, coords[:, 0], coords[:, 1]] += size
         toxicities[rows, coords[:, 0], coords[:, 1]] += events
-        for trial in rows:
+        for trial_index in rows:
             decision = design.next_dose(
-                patients[trial],
-                toxicities[trial],
-                current[trial],
-                eliminated=eliminated[trial],
+                patients[trial_index],
+                toxicities[trial_index],
+                current[trial_index],
+                eliminated=eliminated[trial_index],
                 rng=generator,
             )
             next_pair = _decision_pair(decision.next_dose, *shape)
@@ -158,12 +149,12 @@ def simulate_keyboard_combination(
                 raise ArithmeticError(
                     "Keyboard combination decision returned invalid elimination mask"
                 )
-            eliminated[trial] = updated
+            eliminated[trial_index] = updated
             if next_pair is None:
-                reasons[trial] = decision.action
-                active[trial] = False
+                reasons[trial_index] = decision.action
+                active[trial_index] = False
             else:
-                current[trial] = next_pair
+                current[trial_index] = next_pair
 
     for trial in range(repetitions):
         result = design.select_mtd(
@@ -187,37 +178,3 @@ def simulate_keyboard_combination(
         _owned(toxicities.mean(axis=0)),
         tuple(str(x) for x in reasons),
     )
-
-
-def simulate_keyboard_combination_oc(
-    design: KeyboardCombDesign,
-    true_toxicity: ArrayLike,
-    *,
-    cohorts: int = 20,
-    cohort_size: int = 3,
-    trials: int = 1000,
-    start_dose: Sequence[int] = (1, 1),
-    rng: int | np.random.Generator | None = None,
-) -> KeyboardCombinationOperatingCharacteristics:
-    """Run replicated KeyboardComb trials and return Monte Carlo OC summaries.
-
-    ``trials`` is the number of independent trial replicates;
-    therefore selection probabilities and MCSEs are estimated from those
-    replicates.  This explicit alias mirrors the ``*_oc`` APIs in the rest of
-    the package while retaining the trial-level records returned by the main
-    simulator.
-    """
-
-    return simulate_keyboard_combination(
-        design,
-        true_toxicity,
-        cohorts=cohorts,
-        cohort_size=cohort_size,
-        trials=trials,
-        start_dose=start_dose,
-        rng=rng,
-    )
-
-
-# Descriptive alias for callers who prefer the terminology used in the R app.
-simulate_keyboard_combination_trials = simulate_keyboard_combination
