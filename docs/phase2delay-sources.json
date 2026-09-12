@@ -1,0 +1,46 @@
+{
+  "catalog_id": 141,
+  "application_url": "https://biostatistics.mdanderson.org/shinyapps/Phase2Delay/",
+  "retrieved_at": "2026-09-12",
+  "version": "V1.0.1.0",
+  "updated": "2025-12-15",
+  "paper_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4435968/",
+  "files": [
+    {
+      "filename": "app.html",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Phase2Delay/",
+      "sha256": "c65168d51fbd204844a4f5985d7a129b93fcc3a58e0915102e5871a38a9f43b2"
+    },
+    {
+      "filename": "article.xml",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4435968/",
+      "sha256": "c32cdcb11846a54110220f261767b93f600940f9ec78f9bb63fd7645d6e773b9"
+    },
+    {
+      "filename": "data_Toxicity.txt",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Phase2Delay/data_Toxicity.txt",
+      "sha256": "06fc86d78ee4c2139f94441acb2f419ecff558c3b3e9e62a1b36943214c29148"
+    },
+    {
+      "filename": "futility.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Phase2Delay/futility.pdf",
+      "sha256": "4fca49e1d58e23f3f9a402a8c56322c13696e8e4d29100839bc85cf330711670"
+    },
+    {
+      "filename": "progression.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Phase2Delay/progression.pdf",
+      "sha256": "38bbef508148cf0bd06852e60432c1c317f613fec4d8bfcb235cade39d0eba83"
+    },
+    {
+      "filename": "safety.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Phase2Delay/safety.pdf",
+      "sha256": "91553af9a4a4696311572d6db864b68a97513d86343af007ff36e13e71893ed4"
+    },
+    {
+      "filename": "time_unit.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/Phase2Delay/time_unit.pdf",
+      "sha256": "379b6ab4a8bd6a07a52a5c9956b2b1d9897f39c307f0ade097906840fd16f0b1"
+    }
+  ],
+  "parameterization_note": "The paper labels Gamma(c_j,c_j/lambda_previous) as shape/scale but states mean lambda_previous. This port interprets its second parameter as a rate to satisfy the stated martingale mean. Exact Shiny server priors and sampler settings are not exposed."
+}
