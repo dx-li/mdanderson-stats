@@ -53,7 +53,7 @@ class BOP2DCDesign:
     def _probabilities(
         self, responses: np.ndarray, sample_size: np.ndarray
     ) -> tuple[np.ndarray, np.ndarray]:
-        a, b = self.prior[0] + responses, self.prior[1] + sample_size - responses
+        a, b = self.prior[0] + responses, self.prior[1] + (sample_size - responses)
         return betaincc(a, b, self.lrv), betaincc(a, b, self.cmv)
 
     def monitor(self, responses: ArrayLike, sample_size: ArrayLike) -> BOP2DCState:
@@ -199,8 +199,8 @@ def bop2_dc_design(
     no_l, no_c = [], []
     for look in schedule[:-1]:
         y = np.arange(look + 1)
-        pl = betaincc(prior_tuple[0] + y, prior_tuple[1] + look - y, r)
-        pc = betaincc(prior_tuple[0] + y, prior_tuple[1] + look - y, c)
+        pl = betaincc(prior_tuple[0] + y, prior_tuple[1] + (look - y), r)
+        pc = betaincc(prior_tuple[0] + y, prior_tuple[1] + (look - y), c)
         lr = ll * (look / n) ** gl
         lc_cut = lc * (look / n) ** gc
         no_l.append(int(np.flatnonzero(pl < lr)[-1]) if np.any(pl < lr) else -1)

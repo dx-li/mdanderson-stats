@@ -33,3 +33,12 @@ def test_exact_operating_characteristics_conserve_probability():
 def test_invalid_threshold_order_is_rejected():
     with pytest.raises(ValueError, match="lrv < cmv"):
         bop2_dc_design(10, 0.5, 0.4)
+
+
+def test_all_responses_preserve_a_tiny_positive_failure_prior():
+    near_one = np.nextafter(1.0, 0.0)
+    design = bop2_dc_design(4, 0.2, near_one, prior=(1.0, 1e-16), lambda_cmv=near_one, looks=[2, 4])
+    state = design.monitor(4, 4)
+    assert state.posterior_cmv < near_one
+    assert state.decision == "final_consider"
+    assert design.operating_characteristics(1.0).final_consider == 1.0
