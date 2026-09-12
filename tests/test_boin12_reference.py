@@ -8,7 +8,6 @@ from numpy.testing import assert_allclose
 
 from mdanderson_stats.boin12 import BOIN12Design, rank_desirability
 
-
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
@@ -29,14 +28,27 @@ def test_posterior_fixture_matches_quasi_beta_reference():
     rows = list(csv.DictReader((FIXTURES / "boin12-posterior.csv").open()))
     for row in rows:
         result = design.posterior(
-            [int(row["patients"])], [int(row["toxicities"])],
+            [int(row["patients"])],
+            [int(row["toxicities"])],
             [int(row["efficacies"])],
         )
         # Native R reports this probability on a 0--100 scale; Python exposes
         # the probability on a 0--1 scale.
-        assert_allclose(result.utility_probability[0] * 100, float(row["posterior_utility_gt_benchmark"]), atol=2e-12)
-        assert_allclose(result.toxicity_overdose_probability[0], float(row["posterior_tox_gt_limit"]), atol=2e-12)
-        assert_allclose(result.efficacy_futility_probability[0], float(row["posterior_eff_lt_limit"]), atol=2e-12)
+        assert_allclose(
+            result.utility_probability[0] * 100,
+            float(row["posterior_utility_gt_benchmark"]),
+            atol=2e-12,
+        )
+        assert_allclose(
+            result.toxicity_overdose_probability[0],
+            float(row["posterior_tox_gt_limit"]),
+            atol=2e-12,
+        )
+        assert_allclose(
+            result.efficacy_futility_probability[0],
+            float(row["posterior_eff_lt_limit"]),
+            atol=2e-12,
+        )
 
 
 def test_rds_fixture_matches_all_native_rows_by_outcome_key():
@@ -44,9 +56,14 @@ def test_rds_fixture_matches_all_native_rows_by_outcome_key():
     with (FIXTURES / "boin12-rds.csv").open() as source:
         for row in csv.DictReader(source):
             native[(int(row["Patients"]), int(row["Toxicity"]), int(row["Efficacy"]))] = row
-    result = rank_desirability([0, 3, 6, 9], toxicity_limit=.35, efficacy_limit=.25)
+    result = rank_desirability([0, 3, 6, 9], toxicity_limit=0.35, efficacy_limit=0.25)
     for n, t, e, allowed, rds in zip(
-        result.patients, result.toxicities, result.efficacies, result.admissible, result.rds, strict=True
+        result.patients,
+        result.toxicities,
+        result.efficacies,
+        result.admissible,
+        result.rds,
+        strict=True,
     ):
         row = native[(int(n), int(t), int(e))]
         assert bool(allowed) == (row["Admissible"] == "Admissible")
@@ -57,7 +74,7 @@ def test_rds_fixture_matches_all_native_rows_by_outcome_key():
 
 
 def test_decision_fixture_covers_exploration_stay_and_deescalation():
-    design = BOIN12Design(toxicity_limit=.35, efficacy_limit=.25)
+    design = BOIN12Design(toxicity_limit=0.35, efficacy_limit=0.25)
     expected = {
         row["case"]: row for row in csv.DictReader((FIXTURES / "boin12-decisions.csv").open())
     }
@@ -73,7 +90,7 @@ def test_decision_fixture_covers_exploration_stay_and_deescalation():
 
 
 def test_final_obd_fixture_matches_isotonic_toxicity_and_utility_selection():
-    design = BOIN12Design(toxicity_limit=.35, efficacy_limit=.25)
+    design = BOIN12Design(toxicity_limit=0.35, efficacy_limit=0.25)
     rows = list(csv.DictReader((FIXTURES / "boin12-obd.csv").open()))
     for row in rows:
         n, t, e = _outcomes(row["outcomes"])
@@ -85,7 +102,7 @@ def test_final_obd_fixture_matches_isotonic_toxicity_and_utility_selection():
 
 
 def test_final_selection_stops_when_all_treated_doses_are_inadmissible():
-    result = BOIN12Design(toxicity_limit=.35, efficacy_limit=.25).select_obd(
+    result = BOIN12Design(toxicity_limit=0.35, efficacy_limit=0.25).select_obd(
         [3, 3], [3, 3], [0, 0]
     )
     assert result.obd is None
