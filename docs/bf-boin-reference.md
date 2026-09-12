@@ -21,18 +21,21 @@ Primary sources:
 
 ## Conduct rules
 
-Backfill is considered only while the current escalation cohort is open and a
-lower dose has a recorded response.  A lower dose is eligible when its
-completed data are below the de-escalation boundary, or when adding the
-currently pending escalation-cohort outcomes remains below that boundary.  The
-source then applies a monotone closure: after the first unsafe lower dose,
-higher lower doses are also closed.  A dose is closed when the assigned count
-(escalation plus backfill) is at least `n_cap`; this assigned-count rule is
-explicit in the app help.  The CRAN source tests `assigned <= n_cap` before
-placing a patient, so a dose at `n_cap - 1` can receive one more patient.  Do
-not treat that pre-assignment predicate as a post-assignment invariant.  Among
-open doses the app offers highest, lowest, or
-random allocation; the CRAN reference's default is highest.
+The primary paper opens a lower dose for backfill when a response has been
+observed at that dose or below it. It closes a dose for toxicity only when both
+its own evaluable DLT rate and the pooled evaluable rate at that dose and the
+next dose exceed the de-escalation boundary. This also closes higher backfill
+doses. Such closures can reopen when later data no longer meet these conditions;
+posterior safety elimination is a separate rule. Pending outcomes must not be
+counted as completed non-DLTs.
+
+The assigned count (escalation plus backfill) closes backfill at `n_cap`, but
+does not prohibit later escalation-component enrollment at that dose. The CRAN
+source instead tests `assigned <= n_cap` before assignment and can exceed that
+cap by one. It also gates response at the exact dose, unlike the paper's
+at-or-below rule. The Python implementation follows the primary paper on these
+points. Highest-open allocation is the paper's default; lowest and random are
+discussed alternatives.
 
 The current escalation cohort is not used for a movement decision until all
 its DLT assessment times have passed the arrival clock.  Backfill DLTs are
@@ -44,17 +47,18 @@ detail.  Its final aggregation also excludes backfill events whose assessment
 is after the last escalation-cohort assessment, so the CRAN output is an
 evaluated-data estimand rather than an all-recruited-patients tally.
 
-At escalation completion, each dose receives the ordinary BOIN action
-(escalate, stay, de-escalate, or eliminate).  If actions conflict, the source
-pools from the highest conflicting lower dose (`b.star`) through the current
-dose.  It escalates when the pooled count is at or below the escalation
-boundary, de-escalates to the highest dose satisfying the strict cumulative
-`q_k < lambda_d` safety check when the pool is above the de-escalation
-boundary, and otherwise stays.  Eliminating the lowest dose stops the trial
-for safety and no MTD is selected.  The app additionally exposes a 2-DLT/6
-patients de-escalation option; `bfboin` 0.1.1 only exposes the older 1-DLT/3
-patients “modify de-escalation to stay” option, so it is not a complete app
-parity implementation.
+After a complete escalation cohort, the paper compares BOIN actions at the
+current dose and doses that have received backfill. A lower-dose stay conflicts
+with current-dose escalation; a lower-dose de-escalation or elimination conflicts
+with every current-dose action. Pool from the highest conflicting backfilled
+dose through the current dose. Escalate for pooled rate at or below the escalation
+boundary, and de-escalate for pooled rate above the de-escalation boundary.
+For de-escalation, search cumulative pools from that starting dose through each
+lower candidate dose; choose the highest candidate with rate at or below the
+de-escalation boundary, or move below the pooling start if none qualifies.
+The CRAN implementation uses different strictness at exact boundary equality.
+These distinctions preclude treating its trial outputs as exact Python parity
+fixtures. The app also exposes optional 1/3-stay and 2/6-de-escalation modifiers.
 
 The app's optional early stop is “assigned patients at the current dose >=
 `n_stop` and the next action is stay.”  The optional extra-safety rule requires
@@ -80,9 +84,6 @@ writes:
   simulation settings.  The first two cases contain more than the escalation
   cohort count at lower doses, demonstrating backfill; the third contains an
   upper-dose toxicity conflict.
-- `bf-boin-backfill-rules.csv`: bounded predicate cases for response gating,
-  pending-cohort safety, assigned-count cap, monotone safety closure, and
-  highest-open allocation.
 - `bf-boin-boundaries.csv`: BOIN boundaries used by the reference package at
   target 0.25.
 
@@ -99,5 +100,6 @@ Reference artifact hashes (SHA-256):
 | app `Guide.pdf` | `65b01bbaf620d92ac03222a3dffb1f1f755808e5eb79e606d6356da4f0257e7d` |
 | app `Backfilling.pdf` | `80edfd43fe7b70fb1f61597f6938e11bde607fe5b909e7719f474c5969654b19` |
 
-The downloaded app materials and source archive are kept in ignored
-`research/raw/BF-BOIN` for provenance and are not distributed by this change.
+These hashes were recorded during the original audit. The temporary source
+worktree was lost after a machine crash; the committed generator and CSVs
+survived. Re-download and verify archives before rerunning the reference.

@@ -49,26 +49,6 @@ write_trials <- function() {
   write.csv(do.call(rbind, rows), file.path(out_dir, "bf-boin-trials.csv"), row.names = FALSE)
 }
 
-write_rules <- function() {
-  # These rows exercise the exact source predicates.  `assigned` includes
-  # escalation and backfill patients, and `safe_after_closure` is the source's
-  # monotone closure after the first unsafe lower dose.
-  x <- data.frame(
-    case = c("all_conditions_open", "cap_reached", "pending_current_cohort",
-             "unsafe_closes_higher_doses"),
-    cond_response_observed = c(TRUE, TRUE, TRUE, TRUE),
-    cond_completed_safe = c(TRUE, TRUE, FALSE, FALSE),
-    cond_with_current_cohort_safe = c(TRUE, TRUE, TRUE, TRUE),
-    assigned = c(3L, 5L, 2L, 2L), n_cap = 5L,
-    safe_after_closure = c(TRUE, TRUE, TRUE, FALSE),
-    open_dose = c(2L, NA_integer_, 2L, NA_integer_),
-    expected_assignment = c("highest", "closed", "highest", "none"),
-    stringsAsFactors = FALSE)
-  x$cap_open <- x$assigned < x$n_cap
-  stopifnot(x$cap_open == c(TRUE, FALSE, TRUE, TRUE))
-  write.csv(x, file.path(out_dir, "bf-boin-backfill-rules.csv"), row.names = FALSE)
-}
-
 write_boundaries <- function() {
   b <- get.boundary(.25, ncohort = 35, cohortsize = 1, n.earlystop = 100)
   t <- b$boundary_tab
@@ -80,4 +60,4 @@ write_boundaries <- function() {
   write.csv(out, file.path(out_dir, "bf-boin-boundaries.csv"), row.names = FALSE)
 }
 
-write_trials(); write_rules(); write_boundaries()
+write_trials(); write_boundaries()

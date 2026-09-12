@@ -1,5 +1,0 @@
-"case","cond_response_observed","cond_completed_safe","cond_with_current_cohort_safe","assigned","n_cap","safe_after_closure","open_dose","expected_assignment","cap_open"
-"all_conditions_open",TRUE,TRUE,TRUE,3,5,TRUE,2,"highest",TRUE
-"cap_reached",TRUE,TRUE,TRUE,5,5,TRUE,NA,"closed",FALSE
-"pending_current_cohort",TRUE,FALSE,TRUE,2,5,TRUE,2,"highest",TRUE
-"unsafe_closes_higher_doses",TRUE,FALSE,TRUE,2,5,FALSE,NA,"none",TRUE
