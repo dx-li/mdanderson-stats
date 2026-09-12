@@ -96,7 +96,9 @@ class PoPDesign:
         if int(cohort_size) != cohort_size or not 1 <= cohort_size <= max_patients:
             raise ValueError("cohort_size must be a positive integer")
         max_patients, cohort_size = int(max_patients), int(cohort_size)
-        ns = np.arange(cohort_size, max_patients + 1, cohort_size, dtype=np.int64)
+        ns: NDArray[np.int64] = np.arange(
+            cohort_size, max_patients + 1, cohort_size, dtype=np.int64
+        )
         rows = []
         for n in ns:
             y = np.arange(n + 1)
@@ -230,7 +232,7 @@ class PoPDesign:
             )
             estimate[treated] = isotonic_regression(mean, weights=1.0 / var).x
             estimate[treated] += (np.arange(treated.sum()) + 1) * 1e-10
-        safety_excluded = np.zeros(n.size, dtype=bool)
+        safety_excluded: NDArray[np.bool_] = np.zeros(n.size, dtype=bool)
         exceed = (n >= self.safety_min_patients) & (betaincc(y + 1, n - y + 1, self.target) > 0.95)
         hits = np.flatnonzero(exceed)
         if hits.size:
