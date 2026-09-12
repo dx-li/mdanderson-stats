@@ -3951,9 +3951,17 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "tite_boin12_posterior: patient-level binary approximate likelihood, effective endpoint sizes and MLEs, conditional pending outcomes, nonadditive joint utility, quasi-Beta desirability and declared effective-binomial safety/activity posteriors.",
+        "tite_boin12_decision: separate pending-endpoint suspension, no-information suspension, persistent elimination and BOIN12 neighboring-dose conduct with configurable exploration and precision stopping.",
+        "Source-backed AL core with explicit native-parity limits. Supplement S7/S2 verification, native pending-data safety, final OBD details, BDA, categorical outcomes, 3+3 run-in, calendar simulation and native reports remain open; see docs/tite-boin12.md."
+      ],
+      "validation": [
+        "Official application 1.4.3.0 and source hashes in docs/tite-boin12-sources.json; author comparator and Lin-Yuan source inspected without executing vendor simulations.",
+        "Independent base-R references for all four ascertainment patterns, endpoint ESS/MLE, conditional probabilities, nonadditive joint utilities and Beta tails.",
+        "Focused checks cover exact complete-outcome BOIN12 reduction, prior-only untried doses, unit rescaling, suspension boundaries, persistent elimination and numerical edge conditions. Hidden native-backend parity is not claimed."
+      ]
     },
     {
       "id": 153,

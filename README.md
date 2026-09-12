@@ -1131,3 +1131,9 @@ results and exact small-trial enumeration validate the numerical core.
 combined stage-one/stage-two history, plus utility and noninferiority OBD
 selection. Priors, safety pooling weights and tie policies are explicit;
 the integrated trial simulator and native reports remain open.
+
+[TITE-BOIN12 AL methods](docs/tite-boin12.md) add patient-level handling of
+pending toxicity and efficacy, joint utility posteriors and interim dose
+conduct. The declared approximate-likelihood model is checked against base R;
+native pending-data safety details, final OBD selection and the full simulator
+remain open.

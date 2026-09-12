@@ -53,6 +53,11 @@
       "filename": "author_comparator/fun_TITE_PKBOIN12.R",
       "url": "https://raw.githubusercontent.com/EugeneHao/PKBOIN-12/9f2a6f233767a47e2a40464e4151726abdc22554/fun_TITE_PKBOIN12.R",
       "sha256": "e8da15149ebd1244f3b6403dff09055391e113351e0128f51cd2efa402f0f4f6"
+    },
+    {
+      "filename": "lin_yuan/get.oc.tite.R",
+      "url": "https://raw.githubusercontent.com/ruitaolin/TITE-MAD/630ea457df81e1b95e29634e2315f6e3c57fac9c/get.oc.tite.R",
+      "sha256": "df6bcface180564af978d2a085a6c128d29975484f9f0ede3fe5079257932b81"
     }
   ]
 }

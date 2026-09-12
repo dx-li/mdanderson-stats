@@ -803,6 +803,12 @@ from .three_plus_three import (
     simulate_three_plus_three,
 )
 from .tite_boin import TITEBOINDecision, TITEBOINEstimate, tite_boin_decision, tite_boin_estimate
+from .tite_boin12 import (
+    TITEBOIN12Decision,
+    TITEBOIN12Posterior,
+    tite_boin12_decision,
+    tite_boin12_posterior,
+)
 from .tite_boin_simulation import TITEBOINSimulation, simulate_tite_boin
 from .tite_boin_trial import TITEBOINStep, TITEBOINTrial, run_tite_boin_trial
 from .tite_keyboard import (
@@ -874,6 +880,10 @@ from .windows import (
 )
 
 __all__ = [
+    "TITEBOIN12Decision",
+    "TITEBOIN12Posterior",
+    "tite_boin12_decision",
+    "tite_boin12_posterior",
     "BARDMinimizationResult",
     "BARDSelectionResult",
     "bard_minimization",

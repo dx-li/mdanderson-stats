@@ -17,8 +17,8 @@ from scipy.special import betainc, betaincc
 from ._validation import scalar
 from .boin12 import BOIN12Design, BOIN12Posterior
 
-FloatArray = NDArray[np.float64]
-IntArray = NDArray[np.int64]
+type FloatArray = NDArray[np.float64]
+type IntArray = NDArray[np.int64]
 
 
 def _readonly(value: ArrayLike, dtype: type[np.generic] = np.float64) -> NDArray:
@@ -97,10 +97,10 @@ def _inputs(
 def _endpoint(
     y: IntArray, f: FloatArray, doses: IntArray, window: float, k: int
 ) -> tuple[IntArray, IntArray, IntArray, IntArray, FloatArray, FloatArray, FloatArray]:
-    n = np.bincount(doses, minlength=k + 1)[1:].astype(np.int64)
-    observed = np.bincount(doses[y >= 0], minlength=k + 1)[1:].astype(np.int64)
-    events = np.bincount(doses[y == 1], minlength=k + 1)[1:].astype(np.int64)
-    pending = np.bincount(doses[y == -1], minlength=k + 1)[1:].astype(np.int64)
+    n: IntArray = np.bincount(doses, minlength=k + 1)[1:].astype(np.int64)
+    observed: IntArray = np.bincount(doses[y >= 0], minlength=k + 1)[1:].astype(np.int64)
+    events: IntArray = np.bincount(doses[y == 1], minlength=k + 1)[1:].astype(np.int64)
+    pending: IntArray = np.bincount(doses[y == -1], minlength=k + 1)[1:].astype(np.int64)
     weights = np.zeros(y.size, dtype=float)
     pending_mask = y == -1
     weights[pending_mask] = f[pending_mask] / window
@@ -145,7 +145,7 @@ def tite_boin12_posterior(
     ne, _, ye, pe, ee, qe, me = _endpoint(e, ef, d, ew, k)
     if np.any((nt > 0) & (et <= 0)) or np.any((ne > 0) & (ee <= 0)):
         raise ValueError("a treated endpoint has zero effective sample size")
-    n = np.bincount(d, minlength=k + 1)[1:].astype(np.int64)
+    n: IntArray = np.bincount(d, minlength=k + 1)[1:].astype(np.int64)
     cond = np.full((d.size, 2), np.nan)
     cond_zero = np.full((d.size, 2), np.nan)
     for j, (y, f, window, p, q) in enumerate(((t, tf, tw, mt, qt), (e, ef, ew, me, qe))):
@@ -161,7 +161,7 @@ def tite_boin12_posterior(
         cond_zero[~pending, j] = 1.0 - y[~pending]
     pt_i, pe_i = cond[:, 0], cond[:, 1]
     pt_zero, pe_zero = cond_zero[:, 0], cond_zero[:, 1]
-    cells = np.zeros((k, 4), dtype=float)
+    cells: FloatArray = np.zeros((k, 4), dtype=float)
     for j, values in enumerate((pt_zero * pe_i, pt_zero * pe_zero, pt_i * pe_i, pt_i * pe_zero)):
         np.add.at(cells[:, j], d - 1, values)
     utilities = np.asarray(design.utilities, dtype=float)
