@@ -871,6 +871,8 @@ from .u2oet_scenario import (
 from .u2oet_simulation import U2OETTrial, U2OETTrialDecision, simulate_u2oet_trial
 from .u2oet_summary import U2OETOperatingCharacteristics, summarize_u2oet_trials
 from .uboin import UBOINPosterior, uboin_allocation, uboin_posterior
+from .uboin_conduct import UBOINDecision, UBOINDesign, UBOINSelection
+from .uboin_simulation import UBOINSimulation, simulate_uboin, uboin_gumbel_probabilities
 from .windows import (
     WindowCrossValidation,
     WindowNeighborCrossValidation,
@@ -881,6 +883,12 @@ from .windows import (
 )
 
 __all__ = [
+    "UBOINSimulation",
+    "simulate_uboin",
+    "uboin_gumbel_probabilities",
+    "UBOINDecision",
+    "UBOINDesign",
+    "UBOINSelection",
     "UBOINPosterior",
     "uboin_allocation",
     "uboin_posterior",

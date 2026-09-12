@@ -30,6 +30,16 @@
       "filename": "DoseSize.pdf",
       "url": "https://biostatistics.mdanderson.org/shinyapps/UBOIN/DoseSize.pdf",
       "sha256": "985ac9053a80242a95fa12384adc66ffa7d2bf6d898fd125a3d8403fe40c82da"
+    },
+    {
+      "filename": "RunIn3+3.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/UBOIN/RunIn3+3.pdf",
+      "sha256": "a3ad2f9c0af448ad4fb9ac945c9cacf8a8d1e3bee0185534a8ba519c11162a9d"
+    },
+    {
+      "filename": "GumbelModel.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/UBOIN/GumbelModel.pdf",
+      "sha256": "af48cdc352ca6a595ae514ae6558666d75dac86691297bffd53fae9d5dda6a23"
     }
   ]
 }

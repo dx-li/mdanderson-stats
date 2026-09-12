@@ -92,6 +92,4 @@ def test_probability_validation() -> None:
     with pytest.raises(ValueError):
         uboin_gumbel_probabilities([1.1], [0.3])
     with pytest.raises(ValueError):
-        simulate_uboin(
-            make_design(), np.array([[[1.0000000001, 0], [0, 0]]]), trials=1
-        )
+        simulate_uboin(make_design(), np.array([[[1.0000000001, 0], [0, 0]]]), trials=1)

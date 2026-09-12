@@ -3754,12 +3754,15 @@
       "status": "partial",
       "implemented_features": [
         "Exact joint Dirichlet posterior utility means and variances for binary and categorical efficacy/toxicity, with explicit prior and category thresholds.",
-        "Inclusive Beta-marginal admissibility and winner, utility-proportional or equal allocation probabilities over caller-supplied eligibility."
+        "Inclusive Beta-marginal admissibility and winner, utility-proportional or equal allocation probabilities over caller-supplied eligibility.",
+        "Complete-outcome stage-I/II controller, fixed uniform-Beta stage-I safety, optional 3+3 run-in, B1 exploration, sample-size stopping and final utility-based OBD selection with explicit candidate scope.",
+        "Bounded complete-outcome cohort simulation for joint categorical probabilities, stable native Gumbel binary scenario construction, selection/allocation summaries and Monte Carlo errors."
       ],
       "validation": [
         "Official U-BOIN V2.4.4.0 application and primary paper sources pinned in docs/uboin-sources.json; no hidden native prior or tie rule assumed.",
         "Independent base-R Dirichlet cross moments and Beta tails cover binary, 3x3 and prior-only 2x3 outcomes.",
-        "Pending: stage-I/II controller, exploration, final OBD rules, titration/run-in, delayed-outcome imputation, operating characteristics and reports; see docs/uboin.md."
+        "Independent base-R stage-I boundaries across four targets verify decisions around escalation, de-escalation and elimination cutoffs. Eight Gumbel reference cases and exact two-cohort trial enumeration verify joint cells and complete-trial selection probabilities.",
+        "Pending: accelerated titration, delayed-outcome/immune-response imputation, native simulation and report parity; see docs/uboin.md."
       ]
     },
     {

@@ -1140,5 +1140,7 @@ remain open.
 
 [U-BOIN joint utilities](docs/uboin.md) add exact categorical Dirichlet
 posterior moments, toxicity/efficacy admissibility and winner, proportional or
-equal allocation probabilities. Priors and eligibility are explicit; complete
-two-stage trial conduct and delayed-outcome imputation remain open.
+equal allocation probabilities. Two-stage conduct includes safety monitoring,
+3+3 run-in, exploration and final OBD selection. Bounded cohort simulation
+accepts categorical scenarios or binary Gumbel probabilities. Priors and
+candidate scope are explicit; titration and delayed-outcome imputation remain open.
