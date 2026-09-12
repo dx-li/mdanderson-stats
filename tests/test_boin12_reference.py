@@ -32,7 +32,9 @@ def test_posterior_fixture_matches_quasi_beta_reference():
             [int(row["patients"])], [int(row["toxicities"])],
             [int(row["efficacies"])],
         )
-        assert_allclose(result.utility_probability[0], float(row["posterior_utility_gt_benchmark"]), atol=2e-12)
+        # Native R reports this probability on a 0--100 scale; Python exposes
+        # the probability on a 0--1 scale.
+        assert_allclose(result.utility_probability[0] * 100, float(row["posterior_utility_gt_benchmark"]), atol=2e-12)
         assert_allclose(result.toxicity_overdose_probability[0], float(row["posterior_tox_gt_limit"]), atol=2e-12)
         assert_allclose(result.efficacy_futility_probability[0], float(row["posterior_eff_lt_limit"]), atol=2e-12)
 
@@ -56,17 +58,16 @@ def test_rds_fixture_matches_all_native_rows_by_outcome_key():
 
 def test_decision_fixture_covers_exploration_stay_and_deescalation():
     design = BOIN12Design(toxicity_limit=.35, efficacy_limit=.25)
-    cases = {
-        "extra_exploration_at_nine": ([9, 0, 0], [0, 0, 0], [0, 0, 0], 1),
-        "stay_interval_rds": ([3, 6, 3, 0, 0], [0, 0, 2, 0, 0], [0, 1, 1, 0, 0], 3),
-        "deescalate_toxic_current": ([0, 0, 3, 0, 0], [0, 0, 3, 0, 0], [0, 0, 0, 0, 0], 3),
-    }
     expected = {
         row["case"]: row for row in csv.DictReader((FIXTURES / "boin12-decisions.csv").open())
     }
-    for name, (n, t, e, current) in cases.items():
-        result = design.next_dose(n, t, e, current)
+    for name in ("extra_exploration_at_nine", "stay_interval_rds", "deescalate_toxic_current"):
         row = expected[name]
+        n = [int(v) for v in row["patients_by_dose"].split(";")]
+        t = [int(v) for v in row["toxicities_by_dose"].split(";")]
+        e = [int(v) for v in row["efficacies_by_dose"].split(";")]
+        current = int(row["current_dose"])
+        result = design.next_dose(n, t, e, current)
         assert result.next_dose == int(row["next_dose"])
         assert result.action in {"explore_escalate", "stay", "deescalate", "escalate"}
 
