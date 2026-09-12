@@ -82,3 +82,17 @@ def test_input_limits_and_both_decisions_are_explicit():
     )
     result = one_arm_tte_monitor(design, 1, 0, 0)
     assert result.reason == "both"
+
+
+def test_minimum_equals_maximum_does_not_construct_periodic_calendar():
+    design = one_arm_tte_design(
+        [1, 1],
+        [1, 1],
+        cutoff_inferiority=0.5,
+        max_patients=1,
+        minimum_patients=1,
+        periodic_interval=1e-320,
+    )
+    trial = one_arm_tte_trial(design, [1.0], [1.0])
+    assert trial.final_monitor.patients == 1
+    assert trial.monitor_history == ()

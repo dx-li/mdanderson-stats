@@ -76,9 +76,14 @@ def simulate_one_arm_tte(
     reps_int = int(reps)
     if reps_int * design.max_patients > 100_000:
         raise ValueError("total simulated patients cannot exceed 100000")
+    interarrival_mean = 1.0 / rate
     duration_mean = (
         mean_parameter if design.parameterization == "mean" else mean_parameter / np.log(2)
     )
+    if not np.isfinite(interarrival_mean) or interarrival_mean <= 0:
+        raise ArithmeticError("accrual interarrival scale is not representable")
+    if not np.isfinite(duration_mean) or duration_mean <= 0:
+        raise ArithmeticError("event duration scale is not representable")
     generator = np.random.default_rng(seed)
     sample_sizes: np.ndarray = np.empty(reps_int)
     events: np.ndarray = np.empty(reps_int)
@@ -91,7 +96,7 @@ def simulate_one_arm_tte(
     final_superior: np.ndarray = np.zeros(reps_int, dtype=bool)
     total_checks = 0
     for i in range(reps_int):
-        gaps = generator.exponential(1 / rate, design.max_patients)
+        gaps = generator.exponential(interarrival_mean, design.max_patients)
         enrollment: np.ndarray = np.cumsum(gaps)
         event_duration = generator.exponential(duration_mean, design.max_patients)
         trial = one_arm_tte_trial(design, enrollment, event_duration)

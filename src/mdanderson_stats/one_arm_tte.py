@@ -276,29 +276,30 @@ def one_arm_tte_trial(
         raise ValueError("enrollment times must be sorted and event durations positive")
     early = None
     history: list[tuple[float, OneArmTTEMonitor]] = []
-    next_period = design.periodic_interval
-    period_index = 1
     check_count = 0
     enrolled = 0
     stop_time: float = float(enrollment[-1])
+    # Accrue through the minimum without constructing or advancing a calendar.
+    while enrolled < design.minimum_patients:
+        stop_time = float(enrollment[enrolled])
+        enrolled += 1
+    next_period: float | None = None
+    period_index = 0
+    if enrolled < design.max_patients and design.periodic_interval is not None:
+        interval = design.periodic_interval
+        tick = np.floor(enrollment[enrolled - 1] / interval) + 1.0
+        if not np.isfinite(tick):
+            raise ArithmeticError("periodic monitoring calendar cannot advance")
+        period_index = int(tick)
+        candidate = period_index * interval
+        if not np.isfinite(candidate) or candidate <= enrollment[enrolled - 1]:
+            raise ArithmeticError("periodic monitoring calendar cannot advance")
+        next_period = float(candidate)
     while enrolled < design.max_patients:
         arrival = float(enrollment[enrolled])
         periodic = next_period is not None and next_period <= arrival
         if periodic:
             assert next_period is not None and design.periodic_interval is not None
-            # No calendar checks are allowed before minimum enrollment.  Jump
-            # directly to the first grid point strictly after this arrival.
-            if enrolled < design.minimum_patients:
-                interval = design.periodic_interval
-                tick = np.floor(arrival / interval) + 1.0
-                if not np.isfinite(tick):
-                    raise ArithmeticError("periodic monitoring calendar cannot advance")
-                period_index = int(tick)
-                candidate = period_index * interval
-                if not np.isfinite(candidate) or candidate <= arrival:
-                    raise ArithmeticError("periodic monitoring calendar cannot advance")
-                next_period = float(candidate)
-                continue
             if check_count >= 10_000:
                 raise ValueError("monitoring calendar exceeds 10000 checks")
             now = float(next_period)
