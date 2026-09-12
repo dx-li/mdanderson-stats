@@ -18,5 +18,11 @@ toxicity cutoffs. The posterior is evaluated directly as the lower tail of the
 toxicity-rate beta distribution. This is equivalent to transforming to
 success=`no toxicity` with thresholds `1-LRV < 1-CMV`, while avoiding loss of
 precision when a toxicity cutoff is extremely small.
-This module intentionally covers the paired monitoring core; simulation and
-finite-grid calibration for these paired modes remain separate work.
+Exact operating characteristics propagate probability over the two marginal
+event counts using the supplied joint four-cell outcome distribution. This
+state reduction is valid because the decision depends only on those marginals
+and the fixed prior; the joint transition probabilities still retain endpoint
+association. Early no-go states are absorbed before the next patient arrives.
+This independently implemented recursion is checked against exhaustive path
+enumeration, not against a recovered app backend. Calendar-time simulation and
+finite-grid calibration remain separate work.

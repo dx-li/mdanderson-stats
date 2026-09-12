@@ -1085,5 +1085,7 @@ Finite-grid calibration maximizes correct-go probability or minimizes expected
 sample size while controlling false decisions. [Paired-endpoint monitoring](docs/bop2-dc-paired.md)
 supports multiple efficacy and efficacy/toxicity decisions with joint Dirichlet
 priors. [Time-to-event monitoring](docs/bop2-dc-survival.md) uses an exponential/
-inverse-gamma model with separate median survival criteria. Paired and survival
-operating characteristics and calibration remain open.
+inverse-gamma model with separate median survival criteria. Paired modes include
+exact operating characteristics that preserve endpoint association and early
+stopping. Paired calibration and survival operating characteristics and
+calibration remain open.

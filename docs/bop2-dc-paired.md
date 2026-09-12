@@ -41,6 +41,32 @@ prior can express a different prior association. Decision composition uses
 the marginal posteriors; it does not multiply them or assume posterior
 independence.
 
-Paired operating-characteristic calculations and calibration remain pending.
+`design.operating_characteristics(category_probability)` computes exact trial
+outcome probabilities from four joint cell probabilities in the same order as
+observed counts. Supply the joint distribution explicitly; two marginal rates
+do not determine the association between endpoints.
+
+```python
+oc = design.operating_characteristics([0.06, 0.54, 0.04, 0.36])
+print(oc.final_go, oc.final_consider, oc.no_go_probability)
+print(oc.expected_sample_size)
+```
+
+`stop_no_go` gives early no-go probability at each look, with zero in its final
+entry. `final_no_go` excludes earlier stops; `no_go_probability` includes them.
+`sample_size_probability` gives the probability of stopping at each configured
+look, including every final decision. Expected sample size includes early
+stopping.
+
+A forward recursion tracks the two marginal event counts, using four joint
+outcome transitions. It preserves endpoint dependence without allocating the
+full table of four-category counts. Work is bounded before state allocation by
+`number_of_scenarios * (max_subjects + 1)**3 <= 5_000_000`, allowing up to 169
+subjects for one scenario. Split a large batch if necessary; larger individual
+designs exceed this OC limit even though monitoring supports them. This calculation assumes fully
+observed outcomes at the configured enrollment looks and does not model
+calendar-time accrual or delayed observations.
+
+Paired parameter calibration remains pending.
 See [source notes](bop2-dc-paired-source.md) and
 [independent references](bop2-dc-reference.md).

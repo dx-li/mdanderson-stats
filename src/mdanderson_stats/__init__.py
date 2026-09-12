@@ -203,7 +203,12 @@ from .bop2_dc_optimization import (
     BOP2DCOptimization,
     optimize_bop2_dc,
 )
-from .bop2_dc_paired import BOP2DCPairedDesign, BOP2DCPairedState, bop2_dc_paired_design
+from .bop2_dc_paired import (
+    BOP2DCPairedDesign,
+    BOP2DCPairedOperatingCharacteristics,
+    BOP2DCPairedState,
+    bop2_dc_paired_design,
+)
 from .bop2_dc_survival import (
     BOP2DCSurvivalDesign,
     BOP2DCSurvivalState,
@@ -833,6 +838,7 @@ __all__ = [
     "BOP2DCSurvivalDesign",
     "BOP2DCSurvivalState",
     "bop2_dc_survival_design",
+    "BOP2DCPairedOperatingCharacteristics",
     "BOP2DCPairedDesign",
     "BOP2DCPairedState",
     "bop2_dc_paired_design",
