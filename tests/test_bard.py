@@ -87,12 +87,20 @@ def test_noninferiority_exact_margin_and_zero_observation_reporting():
 
 def test_large_finite_prior_and_weights_are_stable():
     result = bard_select_obd(
-        [[0, 0, 0, 0], [0, 0, 0, 0]],
-        prior=[1e307] * 4,
+        [[7, 1, 2, 0], [0, 4, 1, 5]],
+        prior=[[0.1, 0.2, 0.3, 0.4], [0.4, 0.3, 0.2, 0.1]],
         safety_weights=[1e308, 1e308],
+    )
+    reference = bard_select_obd(
+        [[7, 1, 2, 0], [0, 4, 1, 5]],
+        prior=[[0.1, 0.2, 0.3, 0.4], [0.4, 0.3, 0.2, 0.1]],
+        safety_weights=[1, 1],
     )
     assert np.all(np.isfinite(result.mean_utility))
     assert np.all(np.isfinite(result.adjusted_overdose_probability))
+    assert np.allclose(
+        result.adjusted_overdose_probability, reference.adjusted_overdose_probability
+    )
 
 
 def test_minimization_probability_and_integer_validation():
