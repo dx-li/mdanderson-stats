@@ -96,7 +96,7 @@ def _inputs(
 
 def _endpoint(
     y: IntArray, f: FloatArray, doses: IntArray, window: float, k: int
-) -> tuple[IntArray, IntArray, IntArray, FloatArray, FloatArray, FloatArray]:
+) -> tuple[IntArray, IntArray, IntArray, IntArray, FloatArray, FloatArray, FloatArray]:
     n = np.bincount(doses, minlength=k + 1)[1:].astype(np.int64)
     observed = np.bincount(doses[y >= 0], minlength=k + 1)[1:].astype(np.int64)
     events = np.bincount(doses[y == 1], minlength=k + 1)[1:].astype(np.int64)
@@ -105,11 +105,12 @@ def _endpoint(
     pending_mask = y == -1
     weights[pending_mask] = f[pending_mask] / window
     ess = np.bincount(doses, weights=np.where(y >= 0, 1.0, weights), minlength=k + 1)[1:]
+    failure = np.bincount(doses, weights=np.where(y == 0, 1.0, weights), minlength=k + 1)[1:]
     mle = np.full(k, np.nan)
     treated = n > 0
     valid = treated & (ess > 0)
     mle[valid] = events[valid] / ess[valid]
-    return n, observed, events, pending, ess, mle
+    return n, observed, events, pending, ess, failure, mle
 
 
 def tite_boin12_posterior(
@@ -126,6 +127,10 @@ def tite_boin12_posterior(
 ) -> TITEBOIN12Posterior:
     if not isinstance(design, BOIN12Design):
         raise ValueError("design must be a BOIN12Design")
+    ct = scalar(design.toxicity_cutoff, "toxicity_cutoff")
+    ce = scalar(design.efficacy_cutoff, "efficacy_cutoff")
+    if not 0 < ct < 1 or not 0 < ce < 1:
+        raise ValueError("toxicity_cutoff and efficacy_cutoff must lie in (0,1)")
     d, t, e, tf, ef, tw, ew, k = _inputs(
         doses,
         toxicity,
@@ -136,38 +141,33 @@ def tite_boin12_posterior(
         efficacy_window,
         n_doses,
     )
-    nt, _, yt, pt, et, mt = _endpoint(t, tf, d, tw, k)
-    ne, _, ye, pe, ee, me = _endpoint(e, ef, d, ew, k)
+    nt, _, yt, pt, et, qt, mt = _endpoint(t, tf, d, tw, k)
+    ne, _, ye, pe, ee, qe, me = _endpoint(e, ef, d, ew, k)
     if np.any((nt > 0) & (et <= 0)) or np.any((ne > 0) & (ee <= 0)):
         raise ValueError("a treated endpoint has zero effective sample size")
     n = np.bincount(d, minlength=k + 1)[1:].astype(np.int64)
     cond = np.full((d.size, 2), np.nan)
-    for j, (y, f, window, p) in enumerate(((t, tf, tw, mt), (e, ef, ew, me))):
+    cond_zero = np.full((d.size, 2), np.nan)
+    for j, (y, f, window, p, q) in enumerate(((t, tf, tw, mt, qt), (e, ef, ew, me, qe))):
         pending = y == -1
         p_i = p[d[pending] - 1]
+        endpoint_ess = (et if j == 0 else ee)[d[pending] - 1]
+        q_i = q[d[pending] - 1] / endpoint_ess
         w_i = f[pending] / window
-        denom = (1.0 - p_i) + p_i * (1.0 - w_i)
+        denom = q_i + p_i * (1.0 - w_i)
         cond[pending, j] = p_i * (1.0 - w_i) / denom
+        cond_zero[pending, j] = q_i / denom
         cond[~pending, j] = y[~pending]
+        cond_zero[~pending, j] = 1.0 - y[~pending]
+    pt_i, pe_i = cond[:, 0], cond[:, 1]
+    pt_zero, pe_zero = cond_zero[:, 0], cond_zero[:, 1]
     cells = np.zeros((k, 4), dtype=float)
-    for i, dose in enumerate(d):
-        row = int(dose) - 1
-        if t[i] >= 0 and e[i] >= 0:
-            cell = {(0, 1): 0, (0, 0): 1, (1, 1): 2, (1, 0): 3}[(int(t[i]), int(e[i]))]
-            cells[row, cell] += 1.0
-        else:
-            pt_i = 1.0 if t[i] == 1 else 0.0 if t[i] == 0 else cond[i, 0]
-            pe_i = 1.0 if e[i] == 1 else 0.0 if e[i] == 0 else cond[i, 1]
-            cells[row] += (
-                (1 - pt_i) * pe_i,
-                (1 - pt_i) * (1 - pe_i),
-                pt_i * pe_i,
-                pt_i * (1 - pe_i),
-            )
+    for j, values in enumerate((pt_zero * pe_i, pt_zero * pe_zero, pt_i * pe_i, pt_i * pe_zero)):
+        np.add.at(cells[:, j], d - 1, values)
     utilities = np.asarray(design.utilities, dtype=float)
     x = cells @ utilities / 100.0
     alpha = 1.0 + x
-    beta = 1.0 + n - x
+    beta = 1.0 + (n - x)
     utility_mean = 100.0 * alpha / (alpha + beta)
     u = (
         utilities[0] * (1 - design.toxicity_limit) * design.efficacy_limit
@@ -177,9 +177,8 @@ def tite_boin12_posterior(
     )
     benchmark = u + (100 - u) / 2
     util_prob = betaincc(alpha, beta, benchmark / 100.0)
-    treated = n > 0
-    tox_over = betaincc(1 + yt, 1 + et - yt, design.toxicity_limit)
-    eff_futile = betainc(1 + ye, 1 + ee - ye, design.efficacy_limit)
+    tox_over = betaincc(1 + yt, 1 + qt, design.toxicity_limit)
+    eff_futile = betainc(1 + ye, 1 + qe, design.efficacy_limit)
     posterior = BOIN12Posterior(
         _readonly(tox_over),
         _readonly(eff_futile),
@@ -187,10 +186,9 @@ def tite_boin12_posterior(
         _readonly(util_prob),
         _readonly(x),
     )
-    admissible = np.ones(k, dtype=bool)
-    admissible[treated] = (tox_over[treated] < design.toxicity_cutoff) & (
-        eff_futile[treated] < design.efficacy_cutoff
-    )
+    admissible = (tox_over < ct) & (eff_futile < ce)
+    if not np.all(np.isfinite(np.concatenate((tox_over, eff_futile, util_prob)))):
+        raise ValueError("posterior probabilities are not finite")
     pending_both = np.column_stack((pt, pe)).astype(np.int64)
     events_both = np.column_stack((yt, ye)).astype(np.int64)
     ess_both = np.column_stack((et, ee))
@@ -224,6 +222,15 @@ def tite_boin12_decision(
     max_pending_toxicity: float = 0.5,
     max_pending_efficacy: float = 0.5,
 ) -> TITEBOIN12Decision:
+    if not isinstance(design, BOIN12Design):
+        raise ValueError("design must be a BOIN12Design")
+    ct = scalar(design.toxicity_cutoff, "toxicity_cutoff")
+    ce = scalar(design.efficacy_cutoff, "efficacy_cutoff")
+    if not 0 < ct < 1 or not 0 < ce < 1:
+        raise ValueError("toxicity_cutoff and efficacy_cutoff must lie in (0,1)")
+    current_value = scalar(current_dose, "current_dose")
+    if current_value != int(current_value):
+        raise ValueError("current_dose must be an integer dose index in [1,n_doses]")
     d, t, e, tf, ef, tw, ew, k = _inputs(
         doses,
         toxicity,
@@ -234,19 +241,23 @@ def tite_boin12_decision(
         efficacy_window,
         n_doses,
     )
-    if (
-        isinstance(current_dose, (bool, np.bool_))
-        or int(current_dose) != current_dose
-        or not 1 <= int(current_dose) <= k
-    ):
+    if not 1 <= int(current_value) <= k:
         raise ValueError("current_dose must be an integer dose index in [1,n_doses]")
     prior = np.zeros(k, dtype=bool) if eliminated is None else np.asarray(eliminated)
     if prior.shape != (k,) or not np.all(np.isin(prior, (False, True, 0, 1))):
         raise ValueError("eliminated must match n_doses")
     prior = prior.astype(bool)
-    nt, _, _, pt, et, _ = _endpoint(t, tf, d, tw, k)
-    ne, _, _, pe, ee, _ = _endpoint(e, ef, d, ew, k)
-    current = int(current_dose) - 1
+    nt, _, _, pt, et, _, _ = _endpoint(t, tf, d, tw, k)
+    ne, _, _, pe, ee, _, _ = _endpoint(e, ef, d, ew, k)
+    current = int(current_value) - 1
+    if np.all(prior):
+        return TITEBOIN12Decision(
+            "stop_safety",
+            None,
+            _readonly(prior, np.bool_),
+            _readonly(np.column_stack((pt, pe)), np.int64),
+            None,
+        )
     if nt[current] == 0 or ne[current] == 0:
         raise ValueError("current_dose must identify a treated dose")
     frac_t = pt[current] / nt[current]
@@ -280,8 +291,8 @@ def tite_boin12_decision(
             "stop_precision", None, _readonly(~allowed, np.bool_), result.pending_counts, result
         )
     if rate >= boin.deescalation_boundary:
-        target = current - 1
-        if target >= 0 and allowed[target]:
+        target = max(current - 1, 0)
+        if allowed[target]:
             return TITEBOIN12Decision(
                 "deescalate",
                 target + 1,
@@ -322,7 +333,7 @@ def tite_boin12_decision(
             result.pending_counts,
             result,
         )
-    best = int(candidates[np.nanargmax(result.posterior.utility_probability[candidates])])
+    best = int(candidates[np.argmax(result.posterior.utility_probability[candidates])])
     action = "stay" if best == current else "escalate" if best > current else "deescalate"
     return TITEBOIN12Decision(
         action, best + 1, _readonly(~allowed, np.bool_), result.pending_counts, result
