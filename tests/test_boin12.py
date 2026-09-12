@@ -85,15 +85,20 @@ def test_source_replay_uses_joint_outcomes_and_global_rds_ranks():
     assert table.rds[sample_three[:5]].tolist() == pytest.approx([35, 55, 76, 91, 24])
 
 
-def test_eliminated_doses_are_sticky_and_take_safety_precedence():
+def test_eliminated_current_dose_can_move_to_safe_neighbor():
     design = BOIN12Design(0.35, 0.25)
     decision = design.next_dose(
         [3, 3, 0], [0, 0, 0], [0, 0, 0], current_dose=2, eliminated=[False, True, False]
     )
-    assert decision.action == "stop_safety"
-    assert decision.next_dose is None
+    assert decision.action == "escalate"
+    assert decision.next_dose == 3
 
 
 def test_rds_rejects_unbounded_case_expansion_before_allocation():
     with pytest.raises(ValueError, match="100000-case"):
         rank_desirability(range(400), toxicity_limit=0.35, efficacy_limit=0.25)
+
+
+def test_rds_rejects_nonadditive_without_joint_cell_enumeration():
+    with pytest.raises(ValueError, match="nonadditive"):
+        rank_desirability([3], toxicity_limit=0.35, efficacy_limit=0.25, utilities=(100, 30, 60, 0))

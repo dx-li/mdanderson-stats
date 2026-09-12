@@ -263,6 +263,12 @@ def rank_desirability(
     sizes = _vector(sample_sizes, "sample_sizes")
     if np.any(sizes > 1000):
         raise ValueError("sample_sizes must not exceed 1000")
+    utilities_array = _utilities(utilities)
+    if not _additive_utilities(utilities_array):
+        raise ValueError(
+            "rank_desirability cannot enumerate nonadditive utilities; "
+            "provide joint outcome cells to a caller-specific enumerator"
+        )
     row_count = int(np.sum((sizes.astype(np.int64) + 1) ** 2))
     if row_count > 100_000:
         raise ValueError("RDS enumeration exceeds the 100000-case safety limit")
@@ -280,7 +286,7 @@ def rank_desirability(
         e,
         toxicity_limit=toxicity_limit,
         efficacy_limit=efficacy_limit,
-        utilities=utilities,
+        utilities=utilities_array,
         efficacy_without_toxicity=efficacy_without_toxicity,
         prior_alpha=prior_alpha,
         prior_beta=prior_beta,
@@ -328,16 +334,18 @@ class BOIN12Design:
             or self.exploration_patients < 0
         ):
             raise ValueError("exploration_patients must be a nonnegative integer")
-        for name, value in (
-            ("stay_patients", self.stay_patients),
-            ("early_stop_patients", self.early_stop_patients),
+        if (
+            isinstance(self.stay_patients, (bool, np.bool_))
+            or not isinstance(self.stay_patients, (int, np.integer))
+            or self.stay_patients < 0
         ):
-            if value is not None and (
-                isinstance(value, (bool, np.bool_))
-                or not isinstance(value, (int, np.integer))
-                or value <= 0
-            ):
-                raise ValueError(f"{name} must be a positive integer or None")
+            raise ValueError("stay_patients must be a nonnegative integer")
+        if self.early_stop_patients is not None and (
+            isinstance(self.early_stop_patients, (bool, np.bool_))
+            or not isinstance(self.early_stop_patients, (int, np.integer))
+            or self.early_stop_patients <= 0
+        ):
+            raise ValueError("early_stop_patients must be a positive integer or None")
         object.__setattr__(self, "toxicity_limit", limit)
         object.__setattr__(self, "efficacy_limit", efficacy)
         object.__setattr__(self, "utilities", tuple(float(x) for x in self.utilities))
@@ -394,7 +402,7 @@ class BOIN12Design:
         local = np.zeros(n.size, dtype=bool)
         local[max(0, index - 1) : min(n.size, index + 2)] = True
         local &= all_allowed
-        if excluded[index] or not np.any(all_allowed):
+        if not np.any(all_allowed):
             return BOIN12Decision("stop_safety", None, local, result)
         if self.early_stop_patients is not None and n[index] >= self.early_stop_patients:
             return BOIN12Decision("stop_precision", None, local, result)
@@ -414,13 +422,15 @@ class BOIN12Design:
                 return BOIN12Decision("deescalate", lower, local, result)
             return BOIN12Decision("stop_no_admissible_neighbor", None, local, result)
         candidates = np.arange(max(0, index - 1), min(n.size, index + 2))
-        if rate > self._boin.escalation_boundary and n[index] >= self.stay_patients:
+        stay_mode = rate > self._boin.escalation_boundary and n[index] >= self.stay_patients
+        if stay_mode:
             candidates = candidates[candidates <= index]
         candidates = candidates[local[candidates]]
         if candidates.size == 0:
             return BOIN12Decision("stop_no_admissible_neighbor", None, local, result)
         values = result.utility_probability[candidates]
-        best = int(candidates[np.flatnonzero(values == values.max())[-1]])
+        ties = np.flatnonzero(values == values.max())
+        best = int(candidates[ties[0] if stay_mode else ties[-1]])
         action = "stay" if best == index else "escalate" if best > index else "deescalate"
         return BOIN12Decision(action, best + 1, local, result)
 
