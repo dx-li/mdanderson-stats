@@ -54,3 +54,14 @@ CMV describe the **median**. Seven cases in
 `tests/fixtures/bop2-dc-survival.csv` cover interim stopping, all three final
 outcomes, zero events and the prior before enrollment. These are mathematical
 reference calculations, not captured outputs from the app backend.
+
+## Exact paired operating characteristics
+
+`tools/reference_bop2_dc_paired_oc.R` enumerates all 256 four-patient outcome
+paths with a look after two patients. It computes each path's Dirichlet
+posterior decisions independently with base R, retaining the first stop.
+`tests/fixtures/bop2-dc-paired-oc.csv` contains ten scenarios spanning both
+paired modes, positive/negative association, independence and deterministic
+outcomes. The three association scenarios have identical marginal event
+rates of 0.5, so they also test that the Python recursion preserves the
+supplied joint distribution. All inputs are explicit in the reference script.
