@@ -21,9 +21,14 @@ make_data <- function(dose, tox, eff) {
 counts_data <- function(n, y, e) {
   rows <- list()
   for (d in seq_along(n)) {
-    if (n[d] > 0) rows[[length(rows) + 1L]] <- make_data(
-      rep(d, n[d]), y[d], e[d]
-    )
+    if (n[d] > 0) {
+      tox <- c(rep(1L, y[d]), rep(0L, n[d] - y[d]))
+      eff <- c(rep(1L, e[d]), rep(0L, n[d] - e[d]))
+      stopifnot(length(tox) == n[d], length(eff) == n[d],
+                sum(tox) == y[d], sum(eff) == e[d],
+                all(tox %in% 0:1), all(eff %in% 0:1))
+      rows[[length(rows) + 1L]] <- make_data(rep(d, n[d]), tox, eff)
+    }
   }
   if (length(rows) == 0L) make_data(integer(), integer(), integer()) else do.call(rbind, rows)
 }
