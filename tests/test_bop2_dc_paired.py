@@ -52,3 +52,20 @@ def test_tiny_shapes_and_toxicity_cutoffs_remain_finite():
     )
     state = design.monitor([1, 0, 0, 0])
     assert np.all(np.isfinite(state.marginal_posterior))
+
+
+def test_symmetric_posterior_retains_strict_cutoff_comparison():
+    cutoff = np.nextafter(0.5, 0.0)
+    design = bop2_dc_paired_design(
+        4,
+        "multiple_efficacy",
+        [0.2, 0.2],
+        [0.5, 0.5],
+        prior=[0.25] * 4,
+        looks=[4],
+        lambda_lrv=[0.8, 0.8],
+        lambda_cmv=[cutoff, cutoff],
+    )
+    state = design.monitor([1, 1, 1, 1])
+    np.testing.assert_array_equal(state.marginal_posterior[:, 1], [0.5, 0.5])
+    assert state.decision == "final_go"
