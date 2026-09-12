@@ -1,0 +1,167 @@
+"Patients","Toxicity","Efficacy","Admissible","RDS","RDS_x"
+0,0,0,"Admissible","60",60
+3,0,0,"Admissible","35",35
+3,0,1,"Admissible","55",55
+3,0,2,"Admissible","76",76
+3,0,3,"Admissible","91",91
+3,1,0,"Admissible","24",24
+3,1,1,"Admissible","44",44
+3,1,2,"Admissible","63",63
+3,1,3,"Admissible","80",80
+3,2,0,"Admissible","13",13
+3,2,1,"Admissible","31",31
+3,2,2,"Admissible","48",48
+3,2,3,"Admissible","69",69
+3,3,0,"Not Admissible","E",NA
+3,3,1,"Not Admissible","E",NA
+3,3,2,"Not Admissible","E",NA
+3,3,3,"Not Admissible","E",NA
+6,0,0,"Admissible","22.5",22.5
+6,0,1,"Admissible","38.5",38.5
+6,0,2,"Admissible","51.5",51.5
+6,0,3,"Admissible","67.5",67.5
+6,0,4,"Admissible","81.5",81.5
+6,0,5,"Admissible","93",93
+6,0,6,"Admissible","100",100
+6,1,0,"Admissible","15.5",15.5
+6,1,1,"Admissible","27.5",27.5
+6,1,2,"Admissible","42.5",42.5
+6,1,3,"Admissible","56.5",56.5
+6,1,4,"Admissible","72.5",72.5
+6,1,5,"Admissible","87",87
+6,1,6,"Admissible","96",96
+6,2,0,"Admissible","8",8
+6,2,1,"Admissible","19",19
+6,2,2,"Admissible","34",34
+6,2,3,"Admissible","47",47
+6,2,4,"Admissible","64",64
+6,2,5,"Admissible","77",77
+6,2,6,"Admissible","90",90
+6,3,0,"Admissible","4",4
+6,3,1,"Admissible","12",12
+6,3,2,"Admissible","22.5",22.5
+6,3,3,"Admissible","38.5",38.5
+6,3,4,"Admissible","51.5",51.5
+6,3,5,"Admissible","67.5",67.5
+6,3,6,"Admissible","81.5",81.5
+6,4,0,"Admissible","1",1
+6,4,1,"Admissible","6",6
+6,4,2,"Admissible","15.5",15.5
+6,4,3,"Admissible","27.5",27.5
+6,4,4,"Admissible","42.5",42.5
+6,4,5,"Admissible","56.5",56.5
+6,4,6,"Admissible","72.5",72.5
+6,5,0,"Not Admissible","E",NA
+6,5,1,"Not Admissible","E",NA
+6,5,2,"Not Admissible","E",NA
+6,5,3,"Not Admissible","E",NA
+6,5,4,"Not Admissible","E",NA
+6,5,5,"Not Admissible","E",NA
+6,5,6,"Not Admissible","E",NA
+6,6,0,"Not Admissible","E",NA
+6,6,1,"Not Admissible","E",NA
+6,6,2,"Not Admissible","E",NA
+6,6,3,"Not Admissible","E",NA
+6,6,4,"Not Admissible","E",NA
+6,6,5,"Not Admissible","E",NA
+6,6,6,"Not Admissible","E",NA
+9,0,0,"Not Admissible","E",NA
+9,0,1,"Admissible","25.5",25.5
+9,0,2,"Admissible","36.5",36.5
+9,0,3,"Admissible","49.5",49.5
+9,0,4,"Admissible","61.5",61.5
+9,0,5,"Admissible","74.5",74.5
+9,0,6,"Admissible","85.5",85.5
+9,0,7,"Admissible","94.5",94.5
+9,0,8,"Admissible","99",99
+9,0,9,"Admissible","102",102
+9,1,0,"Not Admissible","E",NA
+9,1,1,"Admissible","17.5",17.5
+9,1,2,"Admissible","29.5",29.5
+9,1,3,"Admissible","40.5",40.5
+9,1,4,"Admissible","53.5",53.5
+9,1,5,"Admissible","65.5",65.5
+9,1,6,"Admissible","78.5",78.5
+9,1,7,"Admissible","88.5",88.5
+9,1,8,"Admissible","97",97
+9,1,9,"Admissible","101",101
+9,2,0,"Not Admissible","E",NA
+9,2,1,"Admissible","10.5",10.5
+9,2,2,"Admissible","20.5",20.5
+9,2,3,"Admissible","32.5",32.5
+9,2,4,"Admissible","45.5",45.5
+9,2,5,"Admissible","58.5",58.5
+9,2,6,"Admissible","70.5",70.5
+9,2,7,"Admissible","83.5",83.5
+9,2,8,"Admissible","92",92
+9,2,9,"Admissible","98",98
+9,3,0,"Not Admissible","E",NA
+9,3,1,"Admissible","7",7
+9,3,2,"Admissible","14",14
+9,3,3,"Admissible","25.5",25.5
+9,3,4,"Admissible","36.5",36.5
+9,3,5,"Admissible","49.5",49.5
+9,3,6,"Admissible","61.5",61.5
+9,3,7,"Admissible","74.5",74.5
+9,3,8,"Admissible","85.5",85.5
+9,3,9,"Admissible","94.5",94.5
+9,4,0,"Not Admissible","E",NA
+9,4,1,"Admissible","3",3
+9,4,2,"Admissible","9",9
+9,4,3,"Admissible","17.5",17.5
+9,4,4,"Admissible","29.5",29.5
+9,4,5,"Admissible","40.5",40.5
+9,4,6,"Admissible","53.5",53.5
+9,4,7,"Admissible","65.5",65.5
+9,4,8,"Admissible","78.5",78.5
+9,4,9,"Admissible","88.5",88.5
+9,5,0,"Not Admissible","E",NA
+9,5,1,"Admissible","2",2
+9,5,2,"Admissible","5",5
+9,5,3,"Admissible","10.5",10.5
+9,5,4,"Admissible","20.5",20.5
+9,5,5,"Admissible","32.5",32.5
+9,5,6,"Admissible","45.5",45.5
+9,5,7,"Admissible","58.5",58.5
+9,5,8,"Admissible","70.5",70.5
+9,5,9,"Admissible","83.5",83.5
+9,6,0,"Not Admissible","E",NA
+9,6,1,"Not Admissible","E",NA
+9,6,2,"Not Admissible","E",NA
+9,6,3,"Not Admissible","E",NA
+9,6,4,"Not Admissible","E",NA
+9,6,5,"Not Admissible","E",NA
+9,6,6,"Not Admissible","E",NA
+9,6,7,"Not Admissible","E",NA
+9,6,8,"Not Admissible","E",NA
+9,6,9,"Not Admissible","E",NA
+9,7,0,"Not Admissible","E",NA
+9,7,1,"Not Admissible","E",NA
+9,7,2,"Not Admissible","E",NA
+9,7,3,"Not Admissible","E",NA
+9,7,4,"Not Admissible","E",NA
+9,7,5,"Not Admissible","E",NA
+9,7,6,"Not Admissible","E",NA
+9,7,7,"Not Admissible","E",NA
+9,7,8,"Not Admissible","E",NA
+9,7,9,"Not Admissible","E",NA
+9,8,0,"Not Admissible","E",NA
+9,8,1,"Not Admissible","E",NA
+9,8,2,"Not Admissible","E",NA
+9,8,3,"Not Admissible","E",NA
+9,8,4,"Not Admissible","E",NA
+9,8,5,"Not Admissible","E",NA
+9,8,6,"Not Admissible","E",NA
+9,8,7,"Not Admissible","E",NA
+9,8,8,"Not Admissible","E",NA
+9,8,9,"Not Admissible","E",NA
+9,9,0,"Not Admissible","E",NA
+9,9,1,"Not Admissible","E",NA
+9,9,2,"Not Admissible","E",NA
+9,9,3,"Not Admissible","E",NA
+9,9,4,"Not Admissible","E",NA
+9,9,5,"Not Admissible","E",NA
+9,9,6,"Not Admissible","E",NA
+9,9,7,"Not Admissible","E",NA
+9,9,8,"Not Admissible","E",NA
+9,9,9,"Not Admissible","E",NA
