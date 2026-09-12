@@ -90,7 +90,7 @@ def _log_evidence(y: float, n: float, gamma: float, precision: float) -> tuple[f
         value -= 0.5 * precision * (eta - gamma) ** 2
         return float(np.exp(value - log_kernel_mode))
 
-    integral, error, _ = quad(
+    quadrature = quad(
         scaled,
         -np.inf,
         np.inf,
@@ -99,6 +99,13 @@ def _log_evidence(y: float, n: float, gamma: float, precision: float) -> tuple[f
         full_output=1,
         limit=200,
     )
+    if len(quadrature) == 3:
+        integral, error, _ = quadrature
+    elif len(quadrature) == 4:
+        integral, error, _, message = quadrature
+        raise ArithmeticError(f"classification quadrature failed: {message}")
+    else:
+        raise ArithmeticError("classification quadrature returned an invalid result")
     if not np.isfinite(integral) or integral <= 0 or not np.isfinite(error):
         raise ArithmeticError("classification quadrature failed")
     relative_error = float(error / integral)
@@ -144,24 +151,29 @@ def bacis_classify(
     if low >= high:
         raise ValueError("phi_low must be less than phi_high")
     if classification_precision is None:
-        separation = (np.log(high / (1 - high)) - np.log(low / (1 - low))) / 6
+        separation = (
+            (np.log(high) - np.log1p(-high)) - (np.log(low) - np.log1p(-low))
+        ) / 6
         precision = 1 / separation**2
     else:
         precision = scalar(classification_precision, "classification_precision")
     if not 1e-6 <= precision <= 1e6:
         raise ValueError("classification_precision must lie in [1e-6,1e6]")
     if classification_cutoff is None:
+        if adaptive_weighting not in ("subgroup", "patient"):
+            raise ValueError("adaptive_weighting must be 'subgroup' or 'patient'")
         cutoff = _adaptive_cutoff(y, n, low, high, adaptive_weighting)
     else:
         cutoff = _probability(classification_cutoff, "classification_cutoff")
-    gamma = (np.log(low / (1 - low)), np.log(high / (1 - high)))
+    gamma = (
+        np.log(low) - np.log1p(-low),
+        np.log(high) - np.log1p(-high),
+    )
     evidence = np.empty((y.size, 2), dtype=float)
     errors = np.empty((y.size, 2), dtype=float)
     for i, (success, total) in enumerate(zip(y, n, strict=True)):
         for j in range(2):
             evidence[i, j], errors[i, j] = _log_evidence(success, total, gamma[j], precision)
-    # The two latent clusters have equal prior probability 1/2.
-    evidence -= np.log(2.0)
     high_probability = expit(evidence[:, 1] - evidence[:, 0])
     low_probability = expit(evidence[:, 0] - evidence[:, 1])
     cluster = np.where(high_probability > cutoff, 2, 1)
@@ -209,6 +221,10 @@ def bacis_fit(
 ) -> BaCISFit:
     """Fit both BaCIS stages, reusing the repository logistic-normal sampler."""
     y, n = _validate_data(successes, trials)
+    low = _probability(phi_low, "phi_low")
+    high = _probability(phi_high, "phi_high")
+    if low >= high:
+        raise ValueError("phi_low must be less than phi_high")
     repetitions, burnin, chain_count = (
         _integer(draws, "draws", 8, 10_000),
         _integer(warmup, "warmup", 0, 10_000),
@@ -229,8 +245,8 @@ def bacis_fit(
     classification = bacis_classify(
         y,
         n,
-        phi_low=phi_low,
-        phi_high=phi_high,
+        phi_low=low,
+        phi_high=high,
         classification_precision=classification_precision,
         classification_cutoff=classification_cutoff,
         adaptive_weighting=adaptive_weighting,
@@ -238,10 +254,9 @@ def bacis_fit(
     rng = np.random.default_rng(seed)
     samples = np.empty((chain_count, repetitions, y.size), dtype=float)
     fits: list[HierarchicalBinomialFit | None] = [None, None]
-    for cluster_index, center in enumerate((phi_low, phi_high), start=1):
-        members = np.flatnonzero(classification.cluster == cluster_index + 0)
+    for cluster_index, center in enumerate((low, high), start=1):
+        members = np.flatnonzero(classification.cluster == cluster_index)
         if members.size == 0:
-            samples[:, :, members] = np.empty((chain_count, repetitions, 0))
             continue
         if members.size == 1:
             member = int(members[0])
@@ -269,8 +284,8 @@ def bacis_fit(
     summary = summarize_chains(samples)
     posterior_mean = summary.mean.copy()
     posterior_sd = summary.standard_deviation.copy()
-    efficacy_probability = np.mean(samples > phi_low, axis=(0, 1))
-    high_probability = np.mean(samples > phi_high, axis=(0, 1))
+    efficacy_probability = np.mean(samples > low, axis=(0, 1))
+    high_probability = np.mean(samples > high, axis=(0, 1))
     for i, cluster in enumerate(classification.cluster):
         if np.count_nonzero(classification.cluster == cluster) == 1:
             a = 1 + y[i]
