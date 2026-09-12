@@ -1,0 +1,48 @@
+{
+  "catalog_id": 98,
+  "version": "3.0.9",
+  "retrieved_at": "2026-09-12",
+  "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/98",
+  "download_url": "https://biostatistics.mdanderson.org/SoftwareDownload/FileDownloader/Index/470",
+  "archive": "One_Arm_Time_to_Event_Simulator_V3.0.9.zip",
+  "archive_sha256": "9d5f365c8b631a349e6b5ca78e232bb81fb07d08565d4ee4636b04fc1ab8372f",
+  "extraction": "ZIP MSI member contains a contiguous embedded cabinet at byte 703488, length 790612. Extracted with system tar, without executing the installer. Cabinet filenames below are original hashed installer identifiers.",
+  "help": {
+    "monitoring": {
+      "cabinet_filename": "_63B52236FE56C7B10DC034497F70F4D4",
+      "sha256": "d670523fdf615d6c258e59c76a5aa50473d41ffc73d6650472c07774156f466c"
+    },
+    "stopping_rules": {
+      "cabinet_filename": "_4C29E94CB74098B381B75AACEF4FB437",
+      "sha256": "6feffdb0a0cbd20af7e3e859955f9922b85dfecf0d591cd947f848603154677b"
+    },
+    "followup": {
+      "cabinet_filename": "_3F6BAD77304740479607FA98E400359F",
+      "sha256": "b0113f675ac1848115c812f6cd79db0847d3010a0cfd1acfa7cde3f26f163244"
+    },
+    "sample_size": {
+      "cabinet_filename": "_B41A26F2F8367090EFD535EF2F13DE8F",
+      "sha256": "c7f6db7841dc14d3b4aa48233e3e33d16a85f8ff1acc1a17b86a5144d0588473"
+    },
+    "parameterization": {
+      "cabinet_filename": "_6D4BF99E2D44BCADD54763F1792E43DC",
+      "sha256": "718f920aaad6c6a4c2700626273523640e5a2934e6e04c00afc16504f3b3d6b5"
+    },
+    "priors": {
+      "cabinet_filename": "_EA1E95BFD2E0FFAF022F94B0292972AC",
+      "sha256": "d032bf77c55bef57e0315f38258d4db078e60201233fae3c49ef8140fe89bf90"
+    },
+    "scenarios": {
+      "cabinet_filename": "_C6097499C47C8703F7FB028BB33EE844",
+      "sha256": "0b3c778a84f6e4f25b0e399234fa77469f8479bcb73f90a68442d340bc3789b5"
+    },
+    "quantiles": {
+      "cabinet_filename": "_F540A96269F24D157296CB9D09F36645",
+      "sha256": "5df21e6db89125ad43c4e48a444213017abc603ba82743d4415a4bf3eae8a42c"
+    },
+    "simulation_output": {
+      "cabinet_filename": "_F00E562F8E2C371B583A10679BD47280",
+      "sha256": "c41723d3905d1f8836f2268d22fd9bb409f8fc23d81720fb6487f0aed132ed48"
+    }
+  }
+}

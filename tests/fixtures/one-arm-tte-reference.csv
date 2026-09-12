@@ -1,0 +1,13 @@
+"parameterization","goal","delta","probability","posterior_shape","posterior_scale"
+"mean","maximize",-1,0.737061702639157,4,8
+"mean","minimize",-1,0.262938297360843,4,8
+"mean","maximize",0,0.5,4,8
+"mean","minimize",0,0.5,4,8
+"mean","maximize",1,0.262938297360843,4,8
+"mean","minimize",1,0.737061702639157,4,8
+"median","maximize",-1,0.665642178559999,4,6.46573590279973
+"median","minimize",-1,0.334357821440001,4,6.46573590279973
+"median","maximize",0,0.385290921491554,4,6.46573590279973
+"median","minimize",0,0.614709078508447,4,6.46573590279973
+"median","maximize",1,0.169521287504429,4,6.46573590279973
+"median","minimize",1,0.830478712495571,4,6.46573590279973
