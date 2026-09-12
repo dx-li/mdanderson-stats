@@ -70,6 +70,7 @@ from .asypow_smo_design import asypow_smo_design
 from .asypow_smo_exponential import asypow_smo_exponential
 from .asypow_smo_ordinal_regression import asypow_smo_ordinal_regression
 from .asypow_smo_regression import asypow_smo_regression
+from .bard import BARDMinimizationResult, BARDSelectionResult, bard_minimization, bard_select_obd
 from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
 from .bayes_factor_binary import (
     BayesFactorBinaryDesign,
@@ -873,6 +874,10 @@ from .windows import (
 )
 
 __all__ = [
+    "BARDMinimizationResult",
+    "BARDSelectionResult",
+    "bard_minimization",
+    "bard_select_obd",
     "PoPBoundaries",
     "PoPDecision",
     "PoPDesign",

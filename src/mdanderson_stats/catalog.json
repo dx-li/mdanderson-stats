@@ -4163,9 +4163,17 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "bard_minimization: two-arm conditional covariate minimization using combined eligible stage-one/stage-two history, configurable randomization/ties and reproducible assignment.",
+        "bard_select_obd: joint Dirichlet posterior mean utility and observed-rate noninferiority selection with inclusive safety/activity screening and explicit weighted isotonic safety probabilities.",
+        "Explicit priors, safety weights and tie policies; guide-consistent negative noninferiority margin. Integrated calendar simulation, BF-BLRM, titration/expansion/caps, calibration and native reports remain open; see docs/bard.md."
+      ],
+      "validation": [
+        "Official BARD application 1.0.5.0, guides and examples pinned in docs/bard-sources.json; discrepancies between official help and paper equations documented.",
+        "Independent base-R references for six posterior arm states and every one of the twelve prognostic profiles in the official enrollment example.",
+        "Focused numerical checks cover noninferiority equality, safety/activity admissibility, explicit tie policies, stable utility/weight normalization and bounded inputs. Native hidden settings and RNG parity are not claimed."
+      ]
     },
     {
       "id": 166,

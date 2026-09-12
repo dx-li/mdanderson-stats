@@ -1126,3 +1126,8 @@ to exact Beta posterior monitoring; native calibration and reports remain open.
 sticky dose exclusions, weighted isotonic MTD selection, and memory-bounded
 cohort simulation with accelerated titration. Published table values, native R
 results and exact small-trial enumeration validate the numerical core.
+
+[BARD stage-two methods](docs/bard.md) add covariate-adaptive allocation using
+combined stage-one/stage-two history, plus utility and noninferiority OBD
+selection. Priors, safety pooling weights and tie policies are explicit;
+the integrated trial simulator and native reports remain open.
