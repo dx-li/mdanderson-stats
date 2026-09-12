@@ -25,7 +25,7 @@ def _outcomes(text: str, ndoses: int = 5):
 
 
 def test_posterior_fixture_matches_quasi_beta_reference():
-    design = BOIN12Design(0.30, 0.35, 0.25)
+    design = BOIN12Design(toxicity_limit=0.35, efficacy_limit=0.25)
     rows = list(csv.DictReader((FIXTURES / "boin12-posterior.csv").open()))
     for row in rows:
         result = design.posterior(
@@ -55,7 +55,7 @@ def test_rds_fixture_matches_all_native_rows_by_outcome_key():
 
 
 def test_decision_fixture_covers_exploration_stay_and_deescalation():
-    design = BOIN12Design(.30, .35, .25)
+    design = BOIN12Design(toxicity_limit=.35, efficacy_limit=.25)
     cases = {
         "extra_exploration_at_nine": ([9, 0, 0], [0, 0, 0], [0, 0, 0], 1),
         "stay_interval_rds": ([3, 6, 3, 0, 0], [0, 0, 2, 0, 0], [0, 1, 1, 0, 0], 3),
@@ -72,7 +72,7 @@ def test_decision_fixture_covers_exploration_stay_and_deescalation():
 
 
 def test_final_obd_fixture_matches_isotonic_toxicity_and_utility_selection():
-    design = BOIN12Design(.30, .35, .25)
+    design = BOIN12Design(toxicity_limit=.35, efficacy_limit=.25)
     rows = list(csv.DictReader((FIXTURES / "boin12-obd.csv").open()))
     for row in rows:
         n, t, e = _outcomes(row["outcomes"])
@@ -84,7 +84,9 @@ def test_final_obd_fixture_matches_isotonic_toxicity_and_utility_selection():
 
 
 def test_final_selection_stops_when_all_treated_doses_are_inadmissible():
-    result = BOIN12Design(.30, .35, .25).select_obd([3, 3], [3, 3], [0, 0])
+    result = BOIN12Design(toxicity_limit=.35, efficacy_limit=.25).select_obd(
+        [3, 3], [3, 3], [0, 0]
+    )
     assert result.obd is None
     assert result.mtd is None
     assert not result.admissible.any()
