@@ -45,7 +45,23 @@ def test_tiny_prior_remains_finite_at_zero_exposure():
 def test_time_unit_rescaling_preserves_posterior_tails():
     base = bop2_dc_survival_design(4, 1.0, 2.0, prior_shape=2.0, prior_scale=3.0, looks=[4])
     scaled = bop2_dc_survival_design(4, 1e150, 2e150, prior_shape=2.0, prior_scale=3e150, looks=[4])
+    small = bop2_dc_survival_design(
+        4, 1e-150, 2e-150, prior_shape=2.0, prior_scale=3e-150, looks=[4]
+    )
     first = base.monitor(2, 1, 1.5)
     second = scaled.monitor(2, 1, 1.5e150)
+    third = small.monitor(2, 1, 1.5e-150)
     np.testing.assert_allclose(first.posterior_lrv, second.posterior_lrv)
     np.testing.assert_allclose(first.posterior_cmv, second.posterior_cmv)
+    np.testing.assert_allclose(first.posterior_lrv, third.posterior_lrv)
+    np.testing.assert_allclose(first.posterior_cmv, third.posterior_cmv)
+
+
+def test_overflowed_raw_scale_keeps_representable_median_scale():
+    design = bop2_dc_survival_design(
+        2, 1e308, 1.5e308, prior_shape=2.0, prior_scale=1e308, looks=[2]
+    )
+    state = design.monitor(1, 0, 1e308)
+    assert np.isinf(state.posterior_scale)
+    np.testing.assert_allclose(state.posterior_median_scale, (1e308 * np.log(2.0)) * 2)
+    assert np.all(np.isfinite(state.posterior_lrv))

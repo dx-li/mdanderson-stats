@@ -44,18 +44,25 @@ class BOP2DCSurvivalDesign:
             scale = self.prior_scale + total_time
             anchor = np.maximum(self.prior_scale, total_time)
             normalized_scale = self.prior_scale / anchor + total_time / anchor
-            ratio_lrv = (anchor / self.lrv) * normalized_scale * _LOG2
-            ratio_cmv = (anchor / self.cmv) * normalized_scale * _LOG2
+            ratio_lrv = (anchor / self.lrv) * (normalized_scale * _LOG2)
+            ratio_cmv = (anchor / self.cmv) * (normalized_scale * _LOG2)
+            ratio_lrv = np.where(
+                np.isfinite(ratio_lrv), ratio_lrv, (anchor * _LOG2) / self.lrv * normalized_scale
+            )
+            ratio_cmv = np.where(
+                np.isfinite(ratio_cmv), ratio_cmv, (anchor * _LOG2) / self.cmv * normalized_scale
+            )
+            median_scale = (anchor * _LOG2) * normalized_scale
         if (
             np.any(~np.isfinite(shape))
-            or np.any(~np.isfinite(ratio_lrv))
-            or np.any(~np.isfinite(ratio_cmv))
+            or np.any((ratio_lrv <= 0) | ~np.isfinite(ratio_lrv))
+            or np.any((ratio_cmv <= 0) | ~np.isfinite(ratio_cmv))
         ):
             raise ArithmeticError("posterior inverse-gamma scale is not representable")
         return (
             shape,
             scale,
-            scale * _LOG2,
+            median_scale,
             gammainc(shape, ratio_lrv),
             gammainc(shape, ratio_cmv),
         )
@@ -148,4 +155,6 @@ def bop2_dc_survival_design(
         schedule = raw.astype(np.int64)
         if schedule[-1] != n or np.any(np.diff(schedule) <= 0):
             raise ValueError("looks must increase and end at max_subjects")
+    if ll * (schedule[0] / n) ** gl == 0 or lc * (schedule[0] / n) ** gc == 0:
+        raise ArithmeticError("interim cutoff underflows; increase cutoff scales")
     return BOP2DCSurvivalDesign(n, lower, clinical, ll, lc, gl, gc, a, b, _owned(schedule))

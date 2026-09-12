@@ -13,6 +13,9 @@ exceeds threshold `m` is
 `gammainc(a + d, (b + t) * log(2) / m)`.
 The implementation forms this ratio from normalized prior and observed-time
 contributions to preserve time-unit invariance for large finite scales.
+The raw `posterior_scale` field may be infinite when `prior_scale + total_time`
+is outside floating-point range; the normalized median scale and posterior
+probabilities are still returned when their values are representable.
 
 Interim no-go requires both posterior tails to be below their scheduled
 cutoffs. At the final look, both tails must exceed their controls for go, both
