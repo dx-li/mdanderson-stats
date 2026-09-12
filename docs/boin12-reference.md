@@ -79,7 +79,10 @@ the observed toxicity rates and chooses the MTD whose fitted rate is closest to
 below that MTD with the highest estimated utility. The OBD fixture preserves
 the fitted toxicity vector, utility vector, admissibility indicators, MTD, and
 OBD for the published example, a plateau-efficacy example, and a pooled
-toxicity example.
+toxicity example. The package's raw OBD helper evaluates utility at doses at or
+below the MTD; the higher-level `when="finally"` selector preserves an
+upstream `NA` recommendation, so an all-inadmissible trial cannot resurrect a
+dose. The fixture and Python tests include this no-OBD safety condition.
 
 ## App/package scope and known differences
 
@@ -95,4 +98,3 @@ rechecking admissibility; this is retained in the decision fixture as backend
 behavior. Its internal implementation also uses an app-compatible high-dose
 tie resolution in the desirability branch. These are implementation details to
 verify explicitly rather than infer from a generic BOIN implementation.
-
