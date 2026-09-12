@@ -7,7 +7,7 @@ from numpy.typing import ArrayLike
 from scipy.optimize import brentq
 
 from ._validation import count, scalar
-from .inequality import inequality_probability
+from .inequality import _integrate_ordering, inequality_probability
 from .parameter_distribution import ParameterDistribution
 
 
@@ -119,26 +119,21 @@ def _probability(design: TTEConductDesign, events: int, total_time: float) -> tu
         raise ArithmeticError("inverse-gamma posterior parameters overflow")
     experimental = ParameterDistribution("inverse_gamma", shape, scale)
     standard = ParameterDistribution("inverse_gamma", design.alpha_standard, design.beta_standard)
-    try:
+    if design.delta == 0:
         result = inequality_probability(
             experimental,
             standard,
-            delta=design.delta,
+            delta=0,
             absolute_tolerance=design.absolute_tolerance,
         )
-    except ArithmeticError:
-        # QUADPACK can occasionally miss its subdivision target at an isolated
-        # root probe. Retry at a boundedly looser tolerance and report that
-        # resulting error rather than fabricating a converged value.
-        result = inequality_probability(
-            experimental,
-            standard,
-            delta=design.delta,
-            absolute_tolerance=min(1e-3, design.absolute_tolerance * 10),
+        probability, error = result.x_greater, result.absolute_error
+    else:
+        probability, error = _integrate_ordering(
+            experimental, standard, design.delta, design.absolute_tolerance
         )
-    if not np.isfinite(result.x_greater) or not np.isfinite(result.absolute_error):
+    if not np.isfinite(probability) or not np.isfinite(error):
         raise ArithmeticError("inverse-gamma stopping probability is unresolved")
-    return float(result.x_greater), float(result.absolute_error)
+    return float(probability), float(error)
 
 
 def tteconduct_monitor(
@@ -218,7 +213,7 @@ def _boundary(design: TTEConductDesign, events: int) -> TTEConductBoundary:
         probability, _ = _probability(design, events, bracket * normalized_time)
         return probability - design.cutoff
 
-    root = brentq(objective, low, 1.0, xtol=1e-14, rtol=1e-14, maxiter=100)
+    root = brentq(objective, low, 1.0, xtol=1e-9, rtol=1e-12, maxiter=100)
     high = bracket * root
     probability, error = _probability(design, events, high)
     return TTEConductBoundary(events, high, probability, error, probability - design.cutoff, False)

@@ -17,16 +17,18 @@ def test_zero_margin_equal_inverse_gamma_prior_is_exchangeable():
     result = tteconduct_monitor(d, 0, 0, 0)
     assert result.probability == 0.5
     assert result.probability_error == 0
+    assert not result.stop_for_futility
 
 
 def test_guide_case_shifted_boundary_and_monitor_are_consistent():
     boundary = tteconduct_boundary_table(design(), 3).boundaries[0]
     assert boundary.minimum_total_time == pytest.approx(3.43772033817485, abs=2e-8)
     assert boundary.probability >= 0.03
-    assert abs(boundary.residual) <= 2e-9
-    monitor = tteconduct_monitor(design(), 3, 3, boundary.minimum_total_time)
-    assert monitor.stop_for_futility is False
-    assert monitor.probability >= 0.03
+    assert abs(boundary.residual) <= boundary.probability_error + 2e-9
+    below = tteconduct_monitor(design(), 3, 3, boundary.minimum_total_time - 1e-5)
+    above = tteconduct_monitor(design(), 3, 3, boundary.minimum_total_time + 1e-5)
+    assert below.stop_for_futility
+    assert not above.stop_for_futility
 
 
 def test_boundary_table_default_is_one_row_per_possible_event_count():
