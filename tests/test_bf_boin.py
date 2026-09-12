@@ -57,6 +57,19 @@ def test_precision_stop_requires_assigned_current_count_and_stay():
     assert moving.action == "escalate"
 
 
+def test_pooled_stay_cannot_rescue_an_eliminated_current_dose():
+    result = BFBOINDesign().next_dose(
+        [3, 30, 3],
+        [0, 6, 3],
+        [3, 30, 3],
+        3,
+        backfilled=[False, True, False],
+        response_observed=[True, True, True],
+    )
+    assert result.action == "deescalate"
+    assert result.next_dose == 2
+
+
 def test_invalid_fractional_current_dose_is_rejected():
     with pytest.raises(ValueError):
         BFBOINDesign().next_dose([3, 0], [0, 0], [3, 0], 1.5)

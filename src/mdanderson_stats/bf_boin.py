@@ -13,7 +13,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 from ._validation import count, scalar
-from .boin import BOINDecision, BOINDesign, _owned
+from .boin import BOINDecision, BOINDesign, BOINSelection, _owned
 
 
 @dataclass(frozen=True)
@@ -220,11 +220,14 @@ class BFBOINDesign:
                 action, next_dose = "deescalate", destination
             else:
                 action, next_dose = "stay", c
-        if (
-            action == "escalate"
-            and next_dose is not None
-            and (next_dose <= c or decision.eliminated[next_dose - 1])
-        ):
+        if next_dose is not None and decision.eliminated[next_dose - 1]:
+            allowed = np.flatnonzero(~decision.eliminated[:next_dose])
+            if allowed.size:
+                next_dose = int(allowed[-1]) + 1
+                action = "stay" if next_dose == c else "deescalate"
+            else:
+                action, next_dose = "stop_safety", None
+        elif action == "escalate" and next_dose is not None and next_dose <= c:
             action, next_dose = "stay", c
         if next_dose == c and action != "stop_safety":
             action = "stay"
@@ -241,7 +244,7 @@ class BFBOINDesign:
 
     def select_mtd(
         self, patients: ArrayLike, toxicities: ArrayLike, *, eliminated: ArrayLike | None = None
-    ):
+    ) -> BOINSelection:
         """Reuse BOIN's safety-filtered isotonic MTD selection."""
         n, y = count(patients, "patients"), count(toxicities, "toxicities")
         if n.ndim != 1 or n.shape != y.shape:
