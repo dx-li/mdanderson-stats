@@ -12,7 +12,7 @@ def make_design(**kwargs: object) -> UBOINDesign:
     kwargs.setdefault("candidate_scope", "tried")
     return UBOINDesign(
         prior=np.full((2, 2), 0.25),
-        utilities=np.array([[0, 30], [50, 100]]),
+        utilities=np.array([[30, 0], [100, 50]]),
         **kwargs,
     )
 
@@ -48,6 +48,24 @@ def test_safe_response_path_reproducible_and_partial_last_cohort() -> None:
     assert np.all(first.stop_reason == "stop_max_patients")
 
 
+def test_early_stop_is_patient_capacity_not_selection_status() -> None:
+    safe = np.zeros((1, 2, 2))
+    safe[0, 1, 0] = 1
+    early = simulate_uboin(
+        make_design(s1=3, s2=6, max_patients=12), safe, cohort_size=3, trials=1, seed=1
+    )
+    assert early.selections[0] == 1
+    assert early.early_stop_probability == 1
+
+    futile = np.zeros((1, 2, 2))
+    futile[0, 0, 0] = 1
+    at_cap = simulate_uboin(
+        make_design(s1=3, s2=9, max_patients=6), futile, cohort_size=3, trials=1, seed=1
+    )
+    assert at_cap.selections[0] == 0
+    assert at_cap.early_stop_probability == 0
+
+
 def test_categorical_simulation_and_guards() -> None:
     design = UBOINDesign(
         prior=np.full((3, 3), 1 / 9),
@@ -73,3 +91,7 @@ def test_probability_validation() -> None:
         uboin_gumbel_probabilities([0.1, 0.2], [0.3])
     with pytest.raises(ValueError):
         uboin_gumbel_probabilities([1.1], [0.3])
+    with pytest.raises(ValueError):
+        simulate_uboin(
+            make_design(), np.array([[[1.0000000001, 0], [0, 0]]]), trials=1
+        )
