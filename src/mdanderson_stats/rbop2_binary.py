@@ -154,7 +154,6 @@ class Rbop2BinaryDesign:
                     exact < Fraction(str(lower)),
                     exact >= Fraction(str(upper)),
                 )
-            raise ArithmeticError("posterior probability is too close to cutoff to resolve")
         if near:
             tighter = max(1e-12, self.absolute_tolerance / 10)
             if tighter < self.absolute_tolerance:
@@ -238,14 +237,12 @@ class Rbop2BinaryDesign:
         )
         if np.any((er < 0) | (er > 1) | (cr < 0) | (cr > 1)):
             raise ValueError("rates must be in [0,1]")
-        ne, nc = map(int, self.looks[-1])
         work = 0
         old_e = old_c = 0
         for look_e, look_c in self.looks:
-            de, dc = int(look_e) - old_e, int(look_c) - old_c
-            work += (int(look_e) + 1) * (old_e + 1) * (de + 1) + (int(look_e) + 1) * (
-                int(look_c) + 1
-            ) * (dc + 1)
+            new_e, new_c = int(look_e), int(look_c)
+            work += (new_e + 1) * (old_e + 1) * (old_c + 1)
+            work += (new_e + 1) * (old_c + 1) * (new_c + 1)
             old_e, old_c = int(look_e), int(look_c)
         if er.size * work > 5_000_000:
             raise ValueError("operating-characteristic state space exceeds 5000000")
