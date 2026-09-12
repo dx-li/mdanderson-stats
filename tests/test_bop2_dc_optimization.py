@@ -28,3 +28,34 @@ def test_ess_objective_and_infeasible_constraints():
     assert result.objective == "ess_futile"
     with pytest.raises(BOP2DCInfeasibleError):
         optimize_bop2_dc(4, 0.2, 0.5, 0.1, 0.7, false_go_limit=1e-8, **_settings())
+
+
+def test_work_budget_and_grid_domains_are_checked_before_search():
+    with pytest.raises(ValueError, match="work budget"):
+        optimize_bop2_dc(
+            40,
+            0.2,
+            0.5,
+            0.1,
+            0.7,
+            lambda_lrv_grid=np.linspace(0.5, 0.99, 2000),
+            lambda_cmv_grid=[0.2],
+            gamma_lrv_grid=[0.5],
+            gamma_cmv_grid=[0.5],
+            looks=[20, 40],
+            prior=[1, 1],
+        )
+    with pytest.raises(ValueError, match="lambda_cmv"):
+        optimize_bop2_dc(
+            4,
+            0.2,
+            0.5,
+            0.1,
+            0.7,
+            lambda_lrv_grid=[0.8],
+            lambda_cmv_grid=[1.0],
+            gamma_lrv_grid=[0.5],
+            gamma_cmv_grid=[0.5],
+            looks=[2, 4],
+            prior=[1, 1],
+        )
