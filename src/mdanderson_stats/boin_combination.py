@@ -14,7 +14,7 @@ from numpy.typing import ArrayLike, NDArray
 from scipy.special import betainc, betaincc
 
 from ._validation import FloatArray, count
-from .boin import BOINDesign, _owned
+from .boin import BOINBoundaryTable, BOINDesign, _owned
 from .keyboard_combination import _biviso
 
 DoseCombination = tuple[int, int]
@@ -54,9 +54,9 @@ def _counts(value: ArrayLike, name: str) -> FloatArray:
 def _validate_counts(patients: ArrayLike, toxicities: ArrayLike) -> tuple[FloatArray, FloatArray]:
     n = _counts(patients, "patients")
     y = _counts(toxicities, "toxicities")
-    if y.shape != n.shape or np.any(y > n) or n.sum() > 200:
+    if y.shape != n.shape or np.any(y > n) or n.sum() > 1000:
         raise ValueError(
-            "require matching matrices, toxicities <= patients, and total patients <= 200"
+            "require matching matrices, toxicities <= patients, and total patients <= 1000"
         )
     return n, y
 
@@ -111,6 +111,10 @@ class BOINCombDesign:
     @property
     def deescalation_boundary(self) -> float:
         return self._base.deescalation_boundary
+
+    def boundary_table(self, max_patients: int = 150) -> BOINBoundaryTable:
+        """Return the scalar BOIN cutoffs shared by every combination cell."""
+        return self._base.boundary_table(max_patients)
 
     def _state(
         self,
