@@ -1,9 +1,8 @@
-"""The weighted Chinese-restaurant clustering used by BCHM."""
+"""Weighted Chinese-restaurant clustering used by BCHM."""
 
 from dataclasses import dataclass
 
 import numpy as np
-from scipy.spatial.distance import cdist
 from scipy.special import logsumexp
 
 
@@ -16,22 +15,42 @@ def _owned(x):
 @dataclass(frozen=True)
 class BCHMClusterResult:
     allocations: np.ndarray
+    raw_similarity: np.ndarray
     similarity: np.ndarray
     representative: np.ndarray
     representative_score: float
 
 
-def _log_marginal(sum_x, sum_x2, weight, mu, var0, vard):
-    """Integrated normal likelihood, up to constants common to assignments."""
-    post_var = 1.0 / (1.0 / var0 + weight / vard)
-    post_mean = post_var * (mu / var0 + sum_x / vard)
-    return 0.5 * (
-        -sum_x2 / vard
-        + post_mean * post_mean / post_var
-        + np.log(post_var)
-        - mu * mu / var0
-        - np.log(var0)
-    )
+def _assignment_probabilities(x, w, counts, sums, mu, var0, vard, alpha):
+    counts = np.asarray(counts, dtype=float)
+    sums = np.asarray(sums, dtype=float)
+    if counts.ndim != 1 or sums.shape != counts.shape:
+        raise ValueError("counts and sums must match")
+    denom = np.sum(counts) + alpha
+    out = []
+    for count, total in zip(counts, sums):
+        pv = 1 / (1 / var0 + count / vard)
+        pm = pv * (mu / var0 + total / vard)
+        lp = -0.5 * np.log1p(w * pv / vard) - 0.5 * w * (x - pm) ** 2 / (vard + w * pv)
+        out.append(np.log(count) - np.log(denom) + lp)
+    lp = -0.5 * np.log1p(w * var0 / vard) - 0.5 * w * (x - mu) ** 2 / (vard + w * var0)
+    out.append(np.log(alpha) - np.log(denom) + lp)
+    return np.exp(np.asarray(out) - logsumexp(out))
+
+
+def _silhouette(row, values):
+    labels = np.unique(row)
+    if len(labels) <= 1 or len(labels) >= len(row):
+        return -0.1
+    dist = np.abs(values[:, None] - values[None, :])
+    scores = []
+    for i in range(len(row)):
+        own = row == row[i]
+        own[i] = False
+        a = np.mean(dist[i, own]) if np.any(own) else 0.0
+        b = min(np.mean(dist[i, row == lab]) for lab in labels if lab != row[i])
+        scores.append((b - a) / max(a, b) if max(a, b) else 0.0)
+    return float(np.mean(scores))
 
 
 def weighted_crp(
@@ -46,89 +65,62 @@ def weighted_crp(
     iterations=2000,
     rng=None,
 ):
-    """Sample BCHM allocations; weights are patient counts, as in native R."""
     x = np.asarray(rates, dtype=float)
     w = np.asarray(weights, dtype=float)
     if x.ndim != 1 or w.shape != x.shape or not 1 <= x.size <= 20:
-        raise ValueError("rates and weights must be matching vectors of <=20 groups")
+        raise ValueError("rates and weights must match, <=20 groups")
     if (
         not np.all(np.isfinite(x))
         or not np.all(np.isfinite(w))
         or np.any((x < 0) | (x > 1))
         or np.any(w <= 0)
     ):
-        raise ValueError("rates must be in [0,1] and weights positive finite")
-    for value, name in ((mu, "mu"), (sigma02, "sigma02"), (sigmaD2, "sigmaD2"), (alpha, "alpha")):
-        if not np.isfinite(value) or value <= 0 and name != "mu":
-            raise ValueError(f"{name} must be finite and positive (except mu)")
+        raise ValueError("invalid rates or weights")
     if (
-        isinstance(burn_in, (bool, np.bool_))
-        or isinstance(iterations, (bool, np.bool_))
-        or burn_in < 0
-        or iterations < 1
+        not all(np.isfinite(v) for v in (mu, sigma02, sigmaD2, alpha))
+        or sigma02 < 1e-8
+        or sigmaD2 < 1e-8
+        or alpha <= 0
     ):
-        raise ValueError("burn_in >= 0 and iterations >= 1 are required")
-    if burn_in + iterations > 2_000_000:
-        raise ValueError("MCMC allocation budget is too large")
+        raise ValueError("invalid clustering hyperparameters")
+    if any(
+        isinstance(v, (bool, np.bool_)) or not isinstance(v, (int, np.integer))
+        for v in (burn_in, iterations)
+    ):
+        raise ValueError("MCMC counts must be integers")
+    if burn_in < 0 or iterations < 1 or (burn_in + iterations) * x.size > 200000:
+        raise ValueError("allocation MCMC budget too large")
     rng = np.random.default_rng() if rng is None else rng
     if not isinstance(rng, np.random.Generator):
         raise TypeError("rng must be numpy.random.Generator")
     k = x.size
-    z = np.zeros(k, dtype=int)
-    tables = np.empty((iterations, k), dtype=int)
+    z = np.zeros(k, dtype=np.int16)
+    tables = np.empty((iterations, k), dtype=np.int16)
+    co = np.zeros((k, k), dtype=np.int64)
+    best = -np.inf
+    rep = z.copy()
     for it in range(burn_in + iterations):
         for i in range(k):
-            old = z[i]
-            if old:
-                members = z == old
-                members[i] = False
-                if not np.any(members):
-                    z[z > old] -= 1
-                    z[i] = 0
-            labels = np.unique(z[z > 0])
-            labels = labels.tolist()
-            logp = []
-            for lab in labels:
-                mask = z == lab
-                sx = np.sum(w[mask] * x[mask])
-                sx2 = np.sum(w[mask] * x[mask] ** 2)
-                sw = np.sum(w[mask])
-                old_l = _log_marginal(sx, sx2, sw, mu, sigma02, sigmaD2)
-                new_l = _log_marginal(
-                    sx + w[i] * x[i], sx2 + w[i] * x[i] ** 2, sw + w[i], mu, sigma02, sigmaD2
-                )
-                logp.append(np.log(sw) - np.log(np.sum(w[z > 0]) + alpha) + new_l - old_l)
-            logp.append(
-                np.log(alpha)
-                - np.log(np.sum(w[z > 0]) + alpha)
-                + _log_marginal(w[i] * x[i], w[i] * x[i] ** 2, w[i], mu, sigma02, sigmaD2)
+            old = int(z[i])
+            z[i] = 0
+            if old and not np.any(z == old):
+                z[z > old] -= 1
+            labels = np.unique(z[z > 0]).tolist()
+            counts = np.array([np.sum(w[z == lab]) for lab in labels])
+            sums = np.array([np.sum(w[z == lab] * x[z == lab]) for lab in labels])
+            p = _assignment_probabilities(x[i], w[i], counts, sums, mu, sigma02, sigmaD2, alpha)
+            choice = int(rng.choice(len(p), p=p))
+            z[i] = (
+                (max(labels) + 1)
+                if choice == len(labels) and labels
+                else (1 if not labels else labels[choice])
             )
-            prob = np.exp(np.asarray(logp) - logsumexp(logp))
-            choice = int(rng.choice(len(prob), p=prob))
-            if choice == len(labels):
-                z[i] = (max(labels) + 1) if labels else 1
-            else:
-                z[i] = labels[choice]
         if it >= burn_in:
-            tables[it - burn_in] = z
-    sim = np.mean(tables[:, :, None] == tables[:, None, :], axis=0)
-    best = -0.1
-    rep = tables[0].copy()
-    if k > 1:
-        dist = cdist(x[:, None], x[:, None], metric="euclidean")
-        for row in tables:
-            ncl = len(np.unique(row))
-            if ncl <= 1 or ncl >= k:
-                score = -0.1
-            else:
-                vals = []
-                for i in range(k):
-                    own = row == row[i]
-                    own[i] = False
-                    a = np.mean(dist[i, own]) if np.any(own) else 0.0
-                    b = min(np.mean(dist[i, row == lab]) for lab in np.unique(row) if lab != row[i])
-                    vals.append((b - a) / max(a, b) if max(a, b) else 0.0)
-                score = float(np.mean(vals))
+            j = it - burn_in
+            tables[j] = z
+            co += z[:, None] == z[None, :]
+            score = _silhouette(z, x)
             if score > best:
-                best, rep = score, row.copy()
-    return BCHMClusterResult(_owned(tables), _owned(sim), _owned(rep), float(best))
+                best, rep = score, z.copy()
+    raw = co / iterations
+    return BCHMClusterResult(_owned(tables), _owned(raw), _owned(raw), _owned(rep), float(best))

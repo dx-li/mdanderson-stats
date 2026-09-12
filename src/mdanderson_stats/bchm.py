@@ -45,11 +45,13 @@ class BCHMFit:
     summaries: tuple
 
 
-def _validate(successes, trials):
+def _validate(successes, trials, *, require_prior=True):
     y = np.asarray(successes, dtype=float)
     n = np.asarray(trials, dtype=float)
     if y.ndim != 1 or n.shape != y.shape or not 1 <= y.size <= 20:
         raise ValueError("successes and trials must be matching vectors of 1..20 groups")
+    if np.any(y != np.floor(y)) or np.any(n != np.floor(n)):
+        raise ValueError("successes and trials must be integers")
     if (
         not np.all(np.isfinite(y))
         or not np.all(np.isfinite(n))
@@ -60,7 +62,7 @@ def _validate(successes, trials):
         raise ValueError("require finite 0 <= successes <= positive trials")
     if np.any(n > 10000):
         raise ValueError("each trial count must be <=10000")
-    if np.all(y == 0) or np.all(y == n):
+    if require_prior and (np.all(y == 0) or np.all(y == n)):
         raise ValueError("empirical prior mean is undefined at all-zero or all-one data")
     return y, n
 
@@ -101,7 +103,11 @@ def bchm_cluster(
         _owned(y / n),
         _owned(n),
         res.__class__(
-            res.allocations, _owned(floored), res.representative, res.representative_score
+            res.allocations,
+            res.raw_similarity,
+            _owned(floored),
+            res.representative,
+            res.representative_score,
         ),
     )
 
@@ -148,14 +154,19 @@ def bchm_borrow(
     chains=2,
     seed=None,
 ):
-    y, n = _validate(successes, trials)
+    y, n = _validate(successes, trials, require_prior=prior_mean is None)
+    if isinstance(target, (bool, np.bool_)) or not isinstance(target, (int, np.integer)):
+        raise ValueError("target must be an integer")
     m = np.asarray(similarity, dtype=float)
     if m.ndim == 2:
         if m.shape != (y.size, y.size):
             raise ValueError("similarity matrix must be square")
-        m = m[int(target)] if isinstance(target, (int, np.integer)) else m[0]
-    if m.shape != y.shape or np.any(~np.isfinite(m)) or np.any(m <= 0):
+        if np.any(~np.isfinite(m)) or np.any((m < 0) | (m > 1)):
+            raise ValueError("similarity matrix must be finite in [0,1]")
+        m = m[int(target)]
+    if m.shape != y.shape or np.any(~np.isfinite(m)) or np.any((m < 0) | (m > 1)):
         raise ValueError("similarity must be positive and match groups")
+    m = np.maximum(m, 0.001)
     if not 0 <= target < y.size:
         raise ValueError("target out of range")
     if prior_mean is None:
@@ -163,9 +174,21 @@ def bchm_borrow(
     if not np.isfinite(prior_mean):
         raise ValueError("prior_mean must be finite")
     for v, name in ((alpha1, "alpha1"), (beta1, "beta1"), (tau2, "tau2")):
-        if not np.isfinite(v) or v <= 0:
+        if not np.isfinite(v) or v <= 0 or v > 1e12:
             raise ValueError(f"{name} must be positive finite")
-    if chains < 2 or draws < 8 or warmup < 0:
+    if (
+        any(
+            isinstance(v, (bool, np.bool_)) or not isinstance(v, (int, np.integer))
+            for v in (chains, draws, warmup)
+        )
+        or chains < 2
+        or chains > 4
+        or draws < 8
+        or draws > 10000
+        or warmup < 0
+        or warmup > 10000
+        or chains * (draws + warmup) * y.size > 1_000_000
+    ):
         raise ValueError("require chains>=2 and draws>=8")
     rng = np.random.default_rng(seed)
     k = y.size
@@ -187,6 +210,16 @@ def bchm_borrow(
         if it >= warmup:
             out[:, it - warmup] = expit(th[:, target])
     summary = summarize_chains(out[:, :, None])
+    if not (
+        np.isfinite(phi1)
+        and 0 <= phi1 <= 1
+        and np.isfinite(deltaT)
+        and deltaT >= 0
+        and phi1 + deltaT <= 1
+        and np.isfinite(thetaT)
+        and 0 <= thetaT <= 1
+    ):
+        raise ValueError("invalid efficacy thresholds")
     prob = float(np.mean(out > phi1 + deltaT))
     return BCHMBorrowResult(target, _owned(out), float(np.mean(out)), prob, _owned(m), summary)
 
@@ -214,6 +247,16 @@ def bchm_fit(
     seed=None,
 ):
     y, n = _validate(successes, trials)
+    if (
+        chains < 2
+        or chains > 4
+        or draws < 8
+        or draws > 10000
+        or warmup < 0
+        or warmup > 10000
+        or chains * (draws + warmup) * y.size * y.size > 1_000_000
+    ):
+        raise ValueError("fit MCMC budget is too large")
     cl = bchm_cluster(
         y,
         n,
@@ -257,7 +300,7 @@ def bchm_fit(
         _owned(raw),
         _owned(native),
         _owned(dec),
-        cl.result.similarity,
+        np.maximum(cl.result.similarity, 0.001),
         cl.result.allocations,
         tuple(b.summary for b in bor),
     )
