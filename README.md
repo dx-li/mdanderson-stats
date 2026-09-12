@@ -1110,3 +1110,8 @@ priors, separate inferiority and superiority rules, and calendar simulation.
 Periodic and pre-accrual monitoring, minimum enrollment, and final follow-up
 follow the extracted native help. Simulations retain compact per-trial summaries
 with Monte Carlo errors and central sample quantiles.
+
+[rBOP2 binary designs](docs/rbop2-binary.md) add two-arm efficacy and toxicity
+monitoring with signed margins, supplied look-specific cutoffs, boundary tables,
+and exact operating characteristics. Declared arm sizes support unequal
+allocation; native calibration and paired-endpoint rules remain open.

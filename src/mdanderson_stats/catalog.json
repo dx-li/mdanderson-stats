@@ -3899,9 +3899,17 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "rbop2_binary_design: supplied-cutoff two-arm binary efficacy/toxicity monitoring, independent beta priors, signed risk-difference margins, strict futility and inclusive superiority decisions.",
+        "Boundary tables and exact independent-binomial operating characteristics with early absorption, final versus overall conclusions, sample-size probabilities and expected arm/total enrollment for explicit per-arm looks.",
+        "Bounded sequential scenario evaluation and shared decision tables. Native automatic calibration, informative-prior calibration/analysis separation, allocation rounding, paired-endpoint decisions and report export remain open; see docs/rbop2-binary.md."
+      ],
+      "validation": [
+        "Native V1.1.9.0 application and binary help PDFs pinned in docs/rbop2-binary-sources.json; source equations visually checked.",
+        "Independent base-R integration and enumeration of all 16 four-outcome paths, ten endpoint/scenario combinations, exact 4/5 inclusive-cutoff cases, and six fractional-prior signed-margin posterior references.",
+        "Focused checks cover early absorbing decisions, declared unequal arm sizes, probability conservation and numerical/resource guards."
+      ]
     },
     {
       "id": 151,

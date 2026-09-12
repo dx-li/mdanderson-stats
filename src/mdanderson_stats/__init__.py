@@ -619,6 +619,14 @@ from .ranlist_session import RanlistAssignments, RanlistSession, RanlistSpecific
 from .ranlist_unrestricted import UnrestrictedAllocation, ranlist_unrestricted
 from .rare_disease_123 import RareDisease123Decision, RareDisease123Design
 from .rare_disease_123_simulation import RareDisease123Simulation, simulate_rare_disease_123
+from .rbop2_binary import (
+    Rbop2BinaryBoundaryTable,
+    Rbop2BinaryDesign,
+    Rbop2BinaryLookTable,
+    Rbop2BinaryMonitor,
+    Rbop2BinaryOperatingCharacteristics,
+    rbop2_binary_design,
+)
 from .regression_ess import RegressionESS, logistic_regression_ess, normal_regression_ess
 from .response_survival import ResponseSurvivalPosterior, response_survival_posterior
 from .response_survival_simulation import ResponseSurvivalSimulation, simulate_response_survival
@@ -856,6 +864,12 @@ from .windows import (
 )
 
 __all__ = [
+    "Rbop2BinaryBoundaryTable",
+    "Rbop2BinaryDesign",
+    "Rbop2BinaryLookTable",
+    "Rbop2BinaryMonitor",
+    "Rbop2BinaryOperatingCharacteristics",
+    "rbop2_binary_design",
     "OneArmTTEDesign",
     "OneArmTTEMonitor",
     "OneArmTTESimulation",
