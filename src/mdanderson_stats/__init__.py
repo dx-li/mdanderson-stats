@@ -561,6 +561,7 @@ from .phase2_predictive import (
     optimize_phase2_predictive,
     phase2_predictive_design,
 )
+from .phase2delay import Phase2DelayResult, phase2_delay_monitor
 from .plbarpo_control import (
     PLBarpoControlMonitoring,
     plbarpo_control_counts,
@@ -864,6 +865,8 @@ from .windows import (
 )
 
 __all__ = [
+    "Phase2DelayResult",
+    "phase2_delay_monitor",
     "Rbop2BinaryBoundaryTable",
     "Rbop2BinaryDesign",
     "Rbop2BinaryLookTable",

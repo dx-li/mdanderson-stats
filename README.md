@@ -1115,3 +1115,9 @@ with Monte Carlo errors and central sample quantiles.
 monitoring with signed margins, supplied look-specific cutoffs, boundary tables,
 and exact operating characteristics. Declared arm sizes support unequal
 allocation; native calibration and paired-endpoint rules remain open.
+
+[Phase2Delay](docs/phase2delay.md) adds interim monitoring for delayed response,
+toxicity and progression using correlated piecewise-exponential hazards and
+multiple imputation. Explicit priors, posterior traces and Monte Carlo error
+estimates make the Python sampling choices inspectable. Complete data reduce
+to exact Beta posterior monitoring; native calibration and reports remain open.

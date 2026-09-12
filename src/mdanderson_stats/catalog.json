@@ -3730,9 +3730,17 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "phase2_delay_monitor: interim delayed binary response, toxicity and progression monitoring using correlated piecewise-exponential hazard posteriors, multiple imputation and strict Beta-tail stopping rules.",
+        "Explicit Beta and Gamma martingale priors, normalized log-hazard slice-within-Gibbs sampling, direct posterior tails, exact complete-data reduction, read-only hazard/log-hazard/probability traces and nested-imputation batch Monte Carlo errors.",
+        "Bounded subjects, sampler sweeps, imputation work and remaining-exposure calculations. Native sampler defaults and priors are unpublished; calendar simulation, calibration, upload/report parity remain open. See docs/phase2delay.md."
+      ],
+      "validation": [
+        "Official V1.0.1.0 application, endpoint help, toxicity data and linked Cai-Liu-Yuan (2014) paper pinned in docs/phase2delay-sources.json. Rate interpretation resolves the paper's Gamma scale/conditional-mean inconsistency.",
+        "Independent base-R Gamma Laplace-transform and correlated two-interval quadrature references check all three endpoint directions and posterior hazard means.",
+        "Focused checks cover exact Beta reduction, reproducibility, tiny prior shapes, very small thresholds, time-unit invariance and diffuse c=.01 hazards. Official 20-patient example exercised with explicit Python priors and bounded sampling; native numeric parity is not claimed."
+      ]
     },
     {
       "id": 142,
