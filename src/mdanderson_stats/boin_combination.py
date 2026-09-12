@@ -21,6 +21,14 @@ DoseCombination = tuple[int, int]
 BoolMatrix = NDArray[np.bool_]
 
 
+def _interval_probability(a: float, b: float, lower: float, upper: float) -> float:
+    """Stable posterior mass between the BOIN indifference probabilities."""
+    cdf_upper = betainc(a, b, upper)
+    if cdf_upper <= 0.5:
+        return float(cdf_upper - betainc(a, b, lower))
+    return float(betaincc(a, b, lower) - betaincc(a, b, upper))
+
+
 @dataclass(frozen=True)
 class BOINCombDecision:
     """Recommended next dose pair and the sticky safety state."""
@@ -183,9 +191,8 @@ class BOINCombDesign:
                 ):
                     continue
                 aa, bb = y[a, b] + 0.5, n[a, b] - y[a, b] + 0.5
-                score = float(
-                    betainc(aa, bb, self.deescalation_boundary)
-                    - betainc(aa, bb, self.escalation_boundary)
+                score = _interval_probability(
+                    aa, bb, self.escalation_boundary, self.deescalation_boundary
                 )
                 candidates.append((score + n[a, b] * 0.0005, (a, b)))
             action = "escalate"
@@ -197,21 +204,45 @@ class BOINCombDesign:
                 if a < 0 or b < 0 or state[a, b]:
                     continue
                 aa, bb = y[a, b] + 0.5, n[a, b] - y[a, b] + 0.5
-                score = float(
-                    betainc(aa, bb, self.deescalation_boundary)
-                    - betainc(aa, bb, self.escalation_boundary)
+                score = _interval_probability(
+                    aa, bb, self.escalation_boundary, self.deescalation_boundary
                 )
                 candidates.append((score + n[a, b] * 0.0005, (a, b)))
             action = "deescalate"
         else:
             return BOINCombDecision("stay", dose, state, posterior)
         if not candidates:
+            if state[i, j]:
+                return BOINCombDecision("stop_safety", None, state, posterior)
             return BOINCombDecision("stay", dose, state, posterior)
         best = max(score for score, _ in candidates)
         tied = [candidate for score, candidate in candidates if score == best]
         generator = np.random.default_rng(rng)
         chosen = tied[int(generator.integers(len(tied)))]
         return BOINCombDecision(action, (chosen[0] + 1, chosen[1] + 1), state, posterior)
+
+    def desirability_table(
+        self, patients: ArrayLike, toxicities: ArrayLike, *, eliminated: ArrayLike | None = None
+    ) -> FloatArray:
+        """Return posterior target-interval desirability for every dose cell.
+
+        The BOIN combination guide ranks candidate cells by
+        ``Pr(lambda_e < p <= lambda_d | data)`` under a Beta(.5,.5) working
+        prior.  Cells in the sticky safety set are assigned ``-inf`` so they
+        cannot win a ranking.  The table is useful for inspecting the same
+        desirability values used by adjacent-dose movement.
+        """
+        n, y = _validate_counts(patients, toxicities)
+        state, _ = self._state(n, y, eliminated)
+        a, b = y + 0.5, n - y + 0.5
+        score = np.empty(n.shape, dtype=float)
+        for index in np.ndindex(n.shape):
+            score[index] = _interval_probability(
+                float(a[index]), float(b[index]),
+                self.escalation_boundary, self.deescalation_boundary,
+            )
+        score[state] = -np.inf
+        return _owned(score)
 
     def select_mtd(
         self, patients: ArrayLike, toxicities: ArrayLike, *, eliminated: ArrayLike | None = None,
@@ -232,24 +263,24 @@ class BOINCombDesign:
         fitted = _biviso(values, n + 0.1)
         fitted[n == 0] = np.nan
         fitted[state] = np.nan
+        source_fit = np.round(fitted, 2)
         admissible = (n > 0) & ~state
         if bound_mtd:
-            admissible &= fitted <= self.deescalation_boundary
+            admissible &= source_fit <= self.deescalation_boundary
         if not np.any(admissible):
             chosen = None
             contour: tuple[DoseCombination, ...] | None = tuple() if mtd_contour else None
         elif not mtd_contour:
             rank = np.where(
                 admissible,
-                np.abs(fitted - self.target)
-                + 1e-5 * (np.indices(n.shape).sum(0) + 2),
+                np.abs(source_fit + 1e-5 * (np.indices(n.shape).sum(0) + 2) - self.target),
                 np.inf,
             )
-            row, col = np.unravel_index(np.argmin(rank), rank.shape)
+            col, row = np.unravel_index(np.argmin(rank.T), rank.T.shape)
             chosen, contour = (int(row + 1), int(col + 1)), None
         else:
             selected: list[DoseCombination] = []
-            previous: int = int(n.shape[1] + 1)
+            previous: int | None = None
             for a_raw in range(n.shape[0] - 1, -1, -1):
                 a = int(a_raw)
                 cols = np.flatnonzero(admissible[a])
@@ -258,9 +289,9 @@ class BOINCombDesign:
                 selected_col: int = int(
                     cols[np.argmin(np.abs(fitted[a, cols] - self.target))]
                 )
-                if previous <= n.shape[1] and selected_col > previous:
-                    selected_col = previous
-                if not selected or selected_col != selected[-1][1]:
+                if previous == n.shape[1] - 1 and selected_col == n.shape[1] - 1:
+                    continue
+                if not selected or selected_col != selected[-1][1] - 1:
                     selected.append((a + 1, selected_col + 1))
                 previous = selected_col
             chosen, contour = None, tuple(reversed(selected))
