@@ -49,9 +49,9 @@ same units.
 
 The separate One Arm Time to Event Simulator (catalog 98, version 3.0.9)
 advertises additional calendar simulation and superiority rules. Those
-features are not implied by this conduct-table implementation. Its Windows
-installer contains embedded help whose full scheduling semantics still need
-verification.
+features are not implied by this conduct-table implementation. Its extracted
+Windows help and scheduling semantics are documented separately in the
+[One Arm Time to Event Simulator source review](one-arm-tte-source.md).
 
 Validation on September 12, 2026 ran eight focused tests, including the
 independent R fixture, time-unit scaling by `1e-100` and `1e100`, and a search

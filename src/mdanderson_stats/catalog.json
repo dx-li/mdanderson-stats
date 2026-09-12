@@ -3020,9 +3020,18 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "one_arm_tte_design/monitor: independent inverse-gamma mean or median survival priors; larger- or smaller-is-better goals; separate signed margins and strict inferiority/superiority rules, including simultaneous flags.",
+        "one_arm_tte_trial: deterministic Poisson-grid-compatible calendar conduct, minimum enrollment, pre-accrual and periodic monitoring, maximum enrollment, post-accrual follow-up and separate final classification.",
+        "simulate_one_arm_tte: bounded sequential exponential-event/Poisson-arrival simulation with compact per-replication summaries, Monte Carlo standard errors and configurable central sample quantiles.",
+        "Existing inverse-gamma moment/two-quantile elicitation supports prior specification. Native scenario editor, report history and HTML save/reopen remain open; RNG, exact ties and quantile interpolation use documented Python conventions. See docs/one-arm-tte.md."
+      ],
+      "validation": [
+        "Version 3.0.9 embedded installer help extracted without executing the installer; source SHA-256 records in docs/one-arm-tte-sources.json.",
+        "Independent base-R integration checks both goals, both parameterizations and negative/zero/positive margins; hand-calculated calendar examples check pre-accrual event ties, periodic stopping and changed final follow-up classification.",
+        "Focused bounded simulation checks include Poisson-accrual expected calendar duration, reproducibility and numerical input/resource guards."
+      ]
     },
     {
       "id": 99,

@@ -48,7 +48,7 @@ class OneArmTTEMonitor:
 class OneArmTTETrial:
     enrollment_time: np.ndarray
     event_time: np.ndarray
-    event_observed_time: np.ndarray
+    event_calendar_time: np.ndarray
     early_monitor: OneArmTTEMonitor | None
     final_monitor: OneArmTTEMonitor
     accrual_stop_time: float

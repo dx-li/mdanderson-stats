@@ -1104,3 +1104,9 @@ simulation remain open.
 against an uncertain historical standard, with an additive improvement margin
 and continuous total-time-on-test stopping boundaries. Independent R integration
 checks the published guide example; native HTML report handling remains open.
+
+[One Arm Time to Event Simulator](docs/one-arm-tte.md) adds mean/median survival
+priors, separate inferiority and superiority rules, and calendar simulation.
+Periodic and pre-accrual monitoring, minimum enrollment, and final follow-up
+follow the extracted native help. Simulations retain compact per-trial summaries
+with Monte Carlo errors and central sample quantiles.

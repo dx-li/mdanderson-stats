@@ -510,6 +510,15 @@ from .nonparametric import NonparametricFit, NonparametricFitError, nonparametri
 from .nonparametric_testing import NonparametricTestingResult, nonparametric_testing
 from .normal_updating import NormalInverseGamma, NormalMeanPosterior, NormalSample
 from .numerics import invert_monotone, normal_tails
+from .one_arm_tte import (
+    OneArmTTEDesign,
+    OneArmTTEMonitor,
+    OneArmTTETrial,
+    one_arm_tte_design,
+    one_arm_tte_monitor,
+    one_arm_tte_trial,
+)
+from .one_arm_tte_simulation import OneArmTTESimulation, simulate_one_arm_tte
 from .onesample import OneSampleTest, binomial_test, poisson_test
 from .onesample_workflow import OneSampleResult, one_sample
 from .parallel_phase12 import (
@@ -847,6 +856,14 @@ from .windows import (
 )
 
 __all__ = [
+    "OneArmTTEDesign",
+    "OneArmTTEMonitor",
+    "OneArmTTESimulation",
+    "OneArmTTETrial",
+    "one_arm_tte_design",
+    "one_arm_tte_monitor",
+    "one_arm_tte_trial",
+    "simulate_one_arm_tte",
     "TTEConductBoundary",
     "TTEConductBoundaryTable",
     "TTEConductDesign",
