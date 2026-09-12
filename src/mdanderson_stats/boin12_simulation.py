@@ -111,16 +111,13 @@ def simulate_boin12(
                 efficacy_cutoff=design.efficacy_cutoff,
             )
             eliminated[trial] |= ~allowed
-            if eliminated[trial, dose]:
-                reasons[trial] = "stop_no_admissible_neighbor"
-                active[trial] = False
-                continue
             decision = design.next_dose(
                 patients[trial],
                 toxicities[trial],
                 efficacies[trial],
                 int(current[trial]),
                 efficacy_without_toxicity=efficacy_without_toxicity[trial],
+                eliminated=eliminated[trial],
             )
             if decision.next_dose is None:
                 reasons[trial] = decision.action
@@ -137,6 +134,7 @@ def simulate_boin12(
             toxicities[final_trial],
             efficacies[final_trial],
             efficacy_without_toxicity=efficacy_without_toxicity[final_trial],
+            eliminated=eliminated[final_trial],
         )
         if result.obd is not None:
             selected_obd[final_trial] = result.obd
