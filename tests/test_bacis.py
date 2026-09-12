@@ -22,6 +22,8 @@ def test_adaptive_cutoff_exposes_native_weighting_variants() -> None:
     assert subgroup.cutoff != patient.cutoff
     with pytest.raises(ValueError):
         bacis_classify([1], [2], adaptive_weighting="invalid")
+    with pytest.raises(ValueError):
+        bacis_classify([1], [2], classification_cutoff=0.5, adaptive_weighting="invalid")
 
 
 def test_singleton_cluster_uses_exact_beta_summary() -> None:

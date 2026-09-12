@@ -1144,3 +1144,8 @@ equal allocation probabilities. Two-stage conduct includes safety monitoring,
 3+3 run-in, exploration and final OBD selection. Bounded cohort simulation
 accepts categorical scenarios or binary Gumbel probabilities. Priors and
 candidate scope are explicit; titration and delayed-outcome imputation remain open.
+
+[BaCIS subgroup borrowing](docs/bacis.md) adds deterministic low/high response
+classification and within-cluster hierarchical inference, including native
+singleton handling. Both documented adaptive cutoff definitions are supported;
+posterior draws include convergence and Monte Carlo error diagnostics.

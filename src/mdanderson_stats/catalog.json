@@ -3982,9 +3982,16 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "BaCIS latent-sign subgroup classification using stable deterministic logistic-normal quadrature, strict classification and both native-R and official-help adaptive cutoff definitions.",
+        "Within-cluster logistic-normal hierarchical borrowing with separate low/high centers, native singleton Beta(1,1) fallback, response-tail decisions and bounded posterior sampling with diagnostics."
+      ],
+      "validation": [
+        "Official application v1.0.1.0, help and author bacistool 1.0.0 source pinned in docs/bacis-sources.json; source conflicts and displayed-versus-CRAN prior defaults documented.",
+        "Independent base-R classification integrals cover 19 subgroup cases and both adaptive weighting conventions; exact singleton Beta posteriors and concentrated-hyperprior borrowing references verify numerical inference.",
+        "Pending: DIC, native ESS and density plots, report/data formats and operating-characteristic simulation; native random-stream parity is not claimed. See docs/bacis.md."
+      ]
     },
     {
       "id": 154,

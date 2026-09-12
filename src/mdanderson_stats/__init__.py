@@ -70,6 +70,7 @@ from .asypow_smo_design import asypow_smo_design
 from .asypow_smo_exponential import asypow_smo_exponential
 from .asypow_smo_ordinal_regression import asypow_smo_ordinal_regression
 from .asypow_smo_regression import asypow_smo_regression
+from .bacis import BaCISClassification, BaCISFit, bacis_classify, bacis_fit
 from .bard import BARDMinimizationResult, BARDSelectionResult, bard_minimization, bard_select_obd
 from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
 from .bayes_factor_binary import (
@@ -883,6 +884,10 @@ from .windows import (
 )
 
 __all__ = [
+    "BaCISClassification",
+    "BaCISFit",
+    "bacis_classify",
+    "bacis_fit",
     "UBOINSimulation",
     "simulate_uboin",
     "uboin_gumbel_probabilities",

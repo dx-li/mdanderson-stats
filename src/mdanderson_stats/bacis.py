@@ -73,6 +73,7 @@ def _adaptive_cutoff(
 
 def _log_evidence(y: float, n: float, gamma: float, precision: float) -> tuple[float, float]:
     """Integrate one logistic-normal binomial evidence term stably."""
+
     def score(eta: float) -> float:
         return y - n * expit(eta) - precision * (eta - gamma)
 
@@ -151,17 +152,15 @@ def bacis_classify(
     if low >= high:
         raise ValueError("phi_low must be less than phi_high")
     if classification_precision is None:
-        separation = (
-            (np.log(high) - np.log1p(-high)) - (np.log(low) - np.log1p(-low))
-        ) / 6
+        separation = ((np.log(high) - np.log1p(-high)) - (np.log(low) - np.log1p(-low))) / 6
         precision = 1 / separation**2
     else:
         precision = scalar(classification_precision, "classification_precision")
     if not 1e-6 <= precision <= 1e6:
         raise ValueError("classification_precision must lie in [1e-6,1e6]")
+    if adaptive_weighting not in ("subgroup", "patient"):
+        raise ValueError("adaptive_weighting must be 'subgroup' or 'patient'")
     if classification_cutoff is None:
-        if adaptive_weighting not in ("subgroup", "patient"):
-            raise ValueError("adaptive_weighting must be 'subgroup' or 'patient'")
         cutoff = _adaptive_cutoff(y, n, low, high, adaptive_weighting)
     else:
         cutoff = _probability(classification_cutoff, "classification_cutoff")
@@ -237,9 +236,10 @@ def bacis_fit(
     mean_precision = scalar(mean_precision, "mean_precision")
     precision_shape = scalar(precision_shape, "precision_shape")
     precision_rate = scalar(precision_rate, "precision_rate")
-    if min(mean_precision, precision_shape, precision_rate) <= 0 or max(
-        mean_precision, precision_shape, precision_rate
-    ) > 1e12:
+    if (
+        min(mean_precision, precision_shape, precision_rate) <= 0
+        or max(mean_precision, precision_shape, precision_rate) > 1e12
+    ):
         raise ValueError("hierarchical precision hyperparameters must lie in (0,1e12]")
     efficacy_cutoff = _probability(efficacy_cutoff, "efficacy_cutoff")
     classification = bacis_classify(
@@ -269,7 +269,7 @@ def bacis_fit(
         fit = hierarchical_binomial(
             y[members],
             n[members],
-            prior_mean=float(np.log(center / (1 - center))),
+            prior_mean=float(np.log(center) - np.log1p(-center)),
             prior_mean_precision=mean_precision,
             precision_shape=precision_shape,
             precision_rate=precision_rate,
@@ -293,8 +293,8 @@ def bacis_fit(
             total = a + b
             posterior_mean[i] = a / total
             posterior_sd[i] = np.sqrt(a * b / (total**2 * (total + 1)))
-            efficacy_probability[i] = betaincc(a, b, phi_low)
-            high_probability[i] = betaincc(a, b, phi_high)
+            efficacy_probability[i] = betaincc(a, b, low)
+            high_probability[i] = betaincc(a, b, high)
     efficacious = efficacy_probability > efficacy_cutoff
     return BaCISFit(
         classification,
