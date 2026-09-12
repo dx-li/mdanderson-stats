@@ -71,6 +71,11 @@ def bard_minimization(
     added.  ``history_*`` are the combined eligible stage-one/stage-two rows
     supplied by the caller.
     """
+    factor_shape = np.shape(history_factors)
+    if len(factor_shape) != 2 or factor_shape[1] < 1 or factor_shape[1] > 5:
+        raise ValueError("history_factors must be a two-dimensional array with 1..5 factors")
+    if factor_shape[0] * factor_shape[1] > 100000:
+        raise ValueError("history contains more than 100000 factor cells")
     arms = count(history_arms, "history_arms")
     if arms.ndim != 1 or np.any((arms != 1) & (arms != 2)):
         raise ValueError("history_arms must be a one-dimensional array of arm codes 1 or 2")
@@ -78,20 +83,18 @@ def bard_minimization(
     new = count(new_factors, "new_factors")
     if new.ndim != 1 or new.size != factors.shape[1] or np.any(new < 1):
         raise ValueError("new_factors must have one positive categorical value per factor")
-    if arms.size * factors.shape[1] > 100000:
-        raise ValueError("history contains more than 100000 factor cells")
     p = scalar(probability, "probability")
     tie = scalar(tie_probability, "tie_probability")
-    if not 0 <= p <= 1 or not 0 <= tie <= 1:
-        raise ValueError("probability and tie_probability must lie in [0,1]")
+    if not 0.5 <= p <= 1 or not 0 <= tie <= 1:
+        raise ValueError("probability must lie in [.5,1], and tie_probability in [0,1]")
 
     scores: NDArray[np.float64] = np.zeros(2, dtype=np.float64)
-    for candidate in (1, 2):
-        for factor in range(factors.shape[1]):
-            matching = factors[:, factor] == new[factor]
-            arm1 = np.count_nonzero((arms == 1)[matching]) + (candidate == 1)
-            arm2 = np.count_nonzero((arms == 2)[matching]) + (candidate == 2)
-            scores[candidate - 1] += abs(arm1 - arm2)
+    for factor in range(factors.shape[1]):
+        matching = factors[:, factor] == new[factor]
+        difference = np.count_nonzero((arms == 1)[matching]) - np.count_nonzero(
+            (arms == 2)[matching]
+        )
+        scores += (abs(difference + 1), abs(difference - 1))
     probability1 = tie if scores[0] == scores[1] else p if scores[0] < scores[1] else 1 - p
     probabilities = np.array([probability1, 1 - probability1])
     assigned = 1 if np.random.default_rng(seed).random() < probability1 else 2
@@ -177,27 +180,48 @@ def bard_select_obd(
         or not 0 <= eff_cut <= 1
     ):
         raise ValueError("limits and cutoffs must lie in [0,1]")
+    tie_value = scalar(tie_arm, "tie_arm")
     if (
         delta < 0
         or method not in ("utility", "noninferiority", "noninferior")
-        or tie_arm not in (1, 2)
+        or tie_value != int(tie_value)
+        or tie_value not in (1, 2)
     ):
         raise ValueError("invalid method, margin, or tie_arm")
     u = finite(utilities, "utilities")
     if u.shape != (4,):
         raise ValueError("utilities must contain four finite values")
-    posterior = prior2 + n
-    totals = posterior.sum(axis=1)
+    if np.any((u < 0) | (u > 100)) or u[0] != 0 or u[3] != 100:
+        raise ValueError("utilities must lie in [0,100] with endpoints 0 and 100")
+    with np.errstate(over="ignore", invalid="ignore"):
+        posterior = prior2 + n
+        totals = posterior.sum(axis=1)
     if np.any(~np.isfinite(totals)) or np.any(totals <= 0):
         raise ArithmeticError("posterior sums are not finite")
-    mean_utility = posterior @ u / totals
+    with np.errstate(over="ignore", invalid="ignore"):
+        posterior_probability = posterior / totals[:, None]
+        mean_utility = posterior_probability @ u
     tox_a, tox_b = posterior[:, 0] + posterior[:, 2], posterior[:, 1] + posterior[:, 3]
     eff_a, eff_b = posterior[:, 2] + posterior[:, 3], posterior[:, 0] + posterior[:, 1]
-    overdose = betaincc(tox_a, tox_b, tox_limit)
-    low_eff = betainc(eff_a, eff_b, eff_limit)
+    with np.errstate(over="ignore", invalid="ignore"):
+        overdose = betaincc(tox_a, tox_b, tox_limit)
+        low_eff = betainc(eff_a, eff_b, eff_limit)
+    if (
+        np.any(~np.isfinite(mean_utility))
+        or np.any(~np.isfinite(overdose))
+        or np.any(~np.isfinite(low_eff))
+    ):
+        raise ArithmeticError("posterior probability evaluation was not finite")
     adjusted = overdose.copy()
     if overdose[0] > overdose[1]:
-        adjusted[:] = np.average(overdose, weights=weights)
+        scaled_weights = weights / np.max(weights)
+        adjusted[:] = np.sum(overdose * scaled_weights) / np.sum(scaled_weights)
+    if method in ("noninferiority", "noninferior"):
+        totals_observed = n.sum(axis=1)
+        if np.any(totals_observed < 1):
+            raise ValueError(
+                "noninferiority selection requires at least one observed outcome per arm"
+            )
     admissible = (adjusted <= safe_cut) & (low_eff <= eff_cut)
     selected: int | None
     eligible = np.flatnonzero(admissible)
@@ -206,11 +230,7 @@ def bard_select_obd(
     elif eligible.size == 1:
         selected = int(eligible[0]) + 1
     elif method in ("noninferiority", "noninferior"):
-        totals_observed = n[:, 0] + n[:, 1] + n[:, 2] + n[:, 3]
-        if np.any(totals_observed < 1):
-            raise ValueError(
-                "noninferiority selection requires at least one observed outcome per arm"
-            )
+        totals_observed = n.sum(axis=1)
         margin_fraction = Fraction(str(delta))
         left = int(n[0, 2] + n[0, 3]) * int(totals_observed[1])
         right = int(n[1, 2] + n[1, 3]) * int(totals_observed[0])
@@ -221,12 +241,12 @@ def bard_select_obd(
         )
     else:
         best = max(mean_utility[eligible])
-        tied = eligible[
-            np.isclose(mean_utility[eligible], best, rtol=0, atol=32 * np.finfo(float).eps)
-        ]
-        selected = tie_arm if tie_arm - 1 in tied else int(tied[0]) + 1
+        tied = eligible[mean_utility[eligible] == best]
+        selected = int(tie_value) if int(tie_value) - 1 in tied else int(tied[0]) + 1
     observed_total = n.sum(axis=1)
-    observed_rates = (n[:, 2] + n[:, 3]) / np.where(observed_total == 0, 1, observed_total)
+    observed_rates = np.full(2, np.nan)
+    observed = observed_total > 0
+    observed_rates[observed] = (n[observed, 2] + n[observed, 3]) / observed_total[observed]
     return BARDSelectionResult(
         _readonly(posterior),
         _readonly(mean_utility),
