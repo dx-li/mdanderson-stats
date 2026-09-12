@@ -60,6 +60,8 @@ def _weibull_endpoint(probability: float, window: float) -> tuple[float, float]:
     b = -np.log1p(-probability / 2)
     shape = np.log(a / b) / np.log(2.0)
     scale = np.exp(np.log(window) - np.log(a) / shape)
+    if not np.isfinite(shape) or not np.isfinite(scale) or scale <= 0:
+        raise ValueError("true_toxicity and dlt_window exceed finite Weibull calibration range")
     return float(shape), float(scale)
 
 
@@ -120,6 +122,8 @@ def simulate_bf_boin(
     bound = repetitions * (int(np.max(cohort_counts)) * size + toxicity.size * design.n_cap)
     if bound > 100_000:
         raise ValueError("requested trials and retained patient records exceed 100000")
+    if int(np.max(cohort_counts)) * size + toxicity.size * design.n_cap > 1_000:
+        raise ValueError("a trial may retain at most 1000 patient records")
     generator = np.random.default_rng(rng)
     endpoints = tuple(_weibull_endpoint(float(p), window) for p in toxicity)
     patients = np.zeros((repetitions, toxicity.size), dtype=np.int64)
@@ -138,9 +142,28 @@ def simulate_bf_boin(
         # dlt_seen, response_seen, backfill
         records: list[_PatientRecord] = []
         next_arrival, clock, dose = 0.0, 0.0, start
+        first_arrival = True
         reason = "max_cohorts"
         arrival_steps = 0
-        arrival_limit = 4 * (int(np.max(cohort_counts)) * size + toxicity.size * design.n_cap + 1)
+        arrival_limit = 100_000
+
+        def advance_arrival() -> float:
+            nonlocal first_arrival, next_arrival, arrival_steps
+            if arrival_steps >= arrival_limit:
+                raise RuntimeError("BF-BOIN calendar arrival limit (100000) exceeded")
+            arrival = next_arrival
+            if first_arrival:
+                first_arrival = False
+            gap = (
+                generator.uniform(0, 2 / rate)
+                if arrival_distribution == "uniform"
+                else generator.exponential(1 / rate)
+            )
+            next_arrival = arrival + gap
+            if not np.isfinite(next_arrival) or next_arrival <= arrival:
+                raise RuntimeError("BF-BOIN calendar failed to advance at an arrival")
+            arrival_steps += 1
+            return arrival
 
         def observe(until: float) -> None:
             for r in records:
@@ -176,24 +199,15 @@ def simulate_bf_boin(
         for _ in range(int(cohort_counts[trial])):
             current: list[int] = []
             while len(current) < size:
-                clock = next_arrival
+                clock = advance_arrival()
                 observe(clock)
                 current.append(enroll(dose - 1, clock, False))
-                next_arrival = clock + (
-                    generator.uniform(0, 2 / rate)
-                    if arrival_distribution == "uniform"
-                    else generator.exponential(1 / rate)
-                )
             while not all(records[i].dlt_seen for i in current):
                 next_dlt = min(
                     records[i].dlt_assessment for i in current if not records[i].dlt_seen
                 )
                 if next_arrival < next_dlt:
-                    arrival_steps += 1
-                    if arrival_steps > arrival_limit:
-                        next_arrival = next_dlt
-                        continue
-                    clock = next_arrival
+                    clock = advance_arrival()
                     observe(clock)
                     eligibility = design.backfill_eligibility(
                         evaluated,
@@ -205,13 +219,8 @@ def simulate_bf_boin(
                     )
                     if eligibility.dose is not None:
                         enroll(eligibility.dose - 1, clock, True)
-                        next_arrival = clock + (
-                            generator.uniform(0, 2 / rate)
-                            if arrival_distribution == "uniform"
-                            else generator.exponential(1 / rate)
-                        )
-                    else:
-                        next_arrival = next_dlt
+                    # An ineligible arrival is referred away, but still
+                    # advances the same renewal process.
                 else:
                     clock = next_dlt
                     observe(clock)
