@@ -125,9 +125,12 @@ run_selection <- function(case, n, y, ..., target = .3) {
     error = function(e) structure(list(message = conditionMessage(e)), class = "reference_error"))
   is_error <- inherits(result, "reference_error")
   mtd <- if (is_error || length(result$MTD) == 1L) c(NA, NA) else as.integer(result$MTD[1, ])
+  contour <- if (is_error || length(result$MTD) == 1L) "" else {
+    paste(sprintf("(%d,%d)", result$MTD[, 1], result$MTD[, 2]), collapse = ";")
+  }
   data.frame(case = case, target = target, nrow = nrow(n), ncol = ncol(n),
              patients = matrix_int_text(n), toxicities = matrix_int_text(y),
-             mtd_a = mtd[1], mtd_b = mtd[2],
+             mtd_a = mtd[1], mtd_b = mtd[2], contour = contour,
              isotonic_estimate_rounded = if (is_error) "" else matrix_text(result$p_est),
              warning = gsub("\\s+", " ", trimws(paste(warnings, collapse = " | "))),
              error = if (is_error) result$message else "", stringsAsFactors = FALSE)

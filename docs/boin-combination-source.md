@@ -70,10 +70,11 @@ raw = (y + .05) / (n + .1)
 fit = Iso::biviso(raw, n + .1)
 ```
 
-and the displayed `p_est` is rounded to two decimals. Untreated cells display
-`NA`. Selection adds a tiny row-plus-column perturbation (`1e-5`) only to break
-distance ties; it does not change the displayed fit. `boundMTD=TRUE` rejects
-candidate fitted estimates above the de-escalation boundary. With
+and the fitted matrix is rounded to two decimals **before** MTD selection and
+`boundMTD` filtering. Untreated cells display `NA`. Selection adds a tiny
+row-plus-column perturbation (`1e-5`) only to break distance ties; it does not
+change the displayed fit. `boundMTD=TRUE` rejects candidate rounded fitted
+estimates above the de-escalation boundary. With
 `mtd.contour=TRUE`, the package chooses one admissible dose per row and applies
 the contour continuity rule.
 
@@ -106,6 +107,12 @@ error because `phat.out.noCI` was not created on that branch. The all-toxic row
 in the selection fixture records this observed behavior. A compatible Python
 implementation should expose a clean no-MTD result while retaining the native
 safety decision; this row is a source-parity warning, not a statistical rule.
+
+There is also a backend inconsistency: the standalone `select.mtd.comb()` path
+rounds the isotonic fit before choosing an MTD, while the nested selector used
+inside `get.oc.comb()` selects from its unrounded fit. The selection fixtures
+and focused Python tests target the standalone app-selection path; operating
+characteristic parity should treat the simulator's nested path separately.
 
 The app guide describes accelerated titration and a 3+3 run-in that are app
 wrappers around the standard method. They should not be inferred from
