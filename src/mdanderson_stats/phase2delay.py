@@ -39,6 +39,15 @@ class Phase2DelayResult:
     probability_trace: NDArray[np.float64]
 
 
+def _beta_tail(alpha: float, beta: float, threshold: float, upper: bool) -> float:
+    """Evaluate either tail through the complementary identity for tiny shapes."""
+    if upper:
+        value = float(betaincc(alpha, beta, threshold))
+        return value if value > 0 or threshold == 0 else float(betainc(beta, alpha, 1.0 - threshold))
+    value = float(betainc(alpha, beta, threshold))
+    return value if value > 0 or threshold == 1 else float(betaincc(beta, alpha, 1.0 - threshold))
+
+
 def _validate_inputs(
     event: ArrayLike,
     event_time: ArrayLike,
@@ -92,8 +101,8 @@ def _exposure_counts(event: np.ndarray, event_time: np.ndarray, followup: np.nda
 
 
 def _log_density(z: float, j: int, log_hazards: np.ndarray, exposure: np.ndarray,
-                 events: np.ndarray, c: np.ndarray, lambda0: float) -> float:
-    previous_z = log(lambda0) if j == 0 else log_hazards[j - 1]
+                 events: np.ndarray, c: np.ndarray, initial_log_hazard: float) -> float:
+    previous_z = initial_log_hazard if j == 0 else log_hazards[j - 1]
     value = (events[j] + c[j] - (c[j + 1] if j + 1 < c.size else 0.0)) * z
     if exposure[j] > 0:
         value -= float(np.exp(log(exposure[j]) + z))
@@ -192,10 +201,8 @@ def phase2_delay_monitor(
     n_pending = int(pending.sum())
     if n_pending == 0:
         a = prior_alpha + observed_events
-        b = prior_beta + event.size - observed_events
-        probability = float(betainc(a, b, threshold))
-        if endpoint in {"toxicity", "progression"}:
-            probability = float(betaincc(a, b, threshold))
+        b = prior_beta + (event.size - observed_events)
+        probability = _beta_tail(a, b, threshold, endpoint in {"toxicity", "progression"})
         stopped = probability > cutoff
         decision = ("stop_futility" if endpoint == "response" else "stop_safety" if endpoint == "toxicity" else "stop_futility") if stopped else "continue"
         empty_h = np.empty((0, intervals), dtype=float); empty_lh = np.empty((0, intervals), dtype=float); empty_p = np.empty(0, dtype=float)
@@ -203,11 +210,12 @@ def phase2_delay_monitor(
         return Phase2DelayResult(decision, stopped, probability, float(threshold), float(cutoff), endpoint, event.size,
                                  event.size, 0, observed_events, 0.0, 0.0, 0, 0, empty_h, empty_p, empty_lh)
     rng = np.random.default_rng(seed)
-    log_hazards = np.full(intervals, float(np.log(lambda0 * window)), dtype=float)
+    log_hazards = np.full(intervals, float(np.log(lambda0) + np.log(window)), dtype=float)
     total_sweeps = burn_in + hazard_draws
     probability_trace = np.empty(hazard_draws * imputations_per_draw, dtype=float)
-    beta_tails = np.array([(betaincc if endpoint in {"toxicity", "progression"} else betainc)(
-        prior_alpha + observed_events + k, prior_beta + n - observed_events - k, threshold
+    beta_tails = np.array([_beta_tail(
+        prior_alpha + observed_events + k, prior_beta + (n - observed_events - k),
+        threshold, endpoint in {"toxicity", "progression"}
     ) for k in range(n_pending + 1)])
     draw_means = np.empty(hazard_draws, dtype=float)
     hazard_trace = np.empty((hazard_draws, intervals), dtype=float)
@@ -220,12 +228,16 @@ def phase2_delay_monitor(
     pos = 0
     for sweep in range(total_sweeps):
         for j in range(intervals):
-            log_hazards[j] = _slice_log_hazard(log_hazards[j], j, log_hazards, exposure, events, c, lambda0 * window, rng)
+            log_hazards[j] = _slice_log_hazard(
+                log_hazards[j], j, log_hazards, exposure, events, c,
+                float(np.log(lambda0) + np.log(window)), rng
+            )
         if sweep < burn_in:
             continue
         draw = sweep - burn_in
-        log_hazard_trace[draw] = log_hazards
-        hazard_trace[draw] = np.exp(log_hazards) / window
+        log_hazard_trace[draw] = log_hazards - np.log(window)
+        with np.errstate(over="raise"):
+            hazard_trace[draw] = np.exp(log_hazard_trace[draw])
         omega = np.empty(n_pending)
         for k, rem in enumerate(remaining_exposure):
             used = rem > 0
