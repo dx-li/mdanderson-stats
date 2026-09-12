@@ -166,12 +166,22 @@ class BOINCombDesign:
         return _owned(state), _owned(posterior)
 
     def next_dose(
-        self, patients: ArrayLike, toxicities: ArrayLike, current_dose: Iterable[int], *,
+        self,
+        patients: ArrayLike,
+        toxicities: ArrayLike,
+        current_dose: Iterable[int],
+        *,
         eliminated: ArrayLike | None = None,
         rng: np.random.Generator | int | None = None,
         source_simulation: bool = False,
     ) -> BOINCombDecision:
-        """Choose an adjacent combination after a complete cohort."""
+        """Choose an adjacent combination after a complete cohort.
+
+        ``source_simulation=True`` uses the native simulator's movement rules:
+        empirical escalation blockers and the unconditional enrollment stop
+        are omitted. The simulation controller applies its own convergence
+        stop. Safety monitoring remains active in both modes.
+        """
         n, y = _validate_counts(patients, toxicities)
         dose = _validate_dose(current_dose, n.shape)
         i, j = dose[0] - 1, dose[1] - 1
@@ -180,7 +190,11 @@ class BOINCombDesign:
         state, posterior = self._state(n, y, eliminated)
         if state[0, 0]:
             return BOINCombDecision("stop_safety", None, state, posterior)
-        if self.early_stop_patients is not None and n[i, j] >= self.early_stop_patients:
+        if (
+            not source_simulation
+            and self.early_stop_patients is not None
+            and n[i, j] >= self.early_stop_patients
+        ):
             return BOINCombDecision("stop_precision", None, state, posterior)
         table = self._base.boundary_table(max(1, int(n[i, j])))
         k = int(n[i, j]) - 1
@@ -195,9 +209,8 @@ class BOINCombDesign:
                 if a >= n.shape[0] or b >= n.shape[1] or state[a, b]:
                     continue
                 if not source_simulation and (
-                    (di and np.any(raw[a, : j + 1] >= self.deescalation_boundary)) or (
-                    dj and np.any(raw[: i + 1, b] >= self.deescalation_boundary)
-                    )
+                    (di and np.any(raw[a, : j + 1] >= self.deescalation_boundary))
+                    or (dj and np.any(raw[: i + 1, b] >= self.deescalation_boundary))
                 ):
                     continue
                 aa, bb = y[a, b] + 0.5, n[a, b] - y[a, b] + 0.5
@@ -251,19 +264,30 @@ class BOINCombDesign:
         score = np.empty(n.shape, dtype=float)
         for index in np.ndindex(n.shape):
             score[index] = _interval_probability(
-                float(a[index]), float(b[index]),
-                self.escalation_boundary, self.deescalation_boundary,
+                float(a[index]),
+                float(b[index]),
+                self.escalation_boundary,
+                self.deescalation_boundary,
             )
         score[state] = -np.inf
         return _owned(score)
 
     def select_mtd(
-        self, patients: ArrayLike, toxicities: ArrayLike, *, eliminated: ArrayLike | None = None,
+        self,
+        patients: ArrayLike,
+        toxicities: ArrayLike,
+        *,
+        eliminated: ArrayLike | None = None,
         mtd_contour: bool = False,
         bound_mtd: bool = False,
         round_selection: bool = True,
     ) -> BOINCombSelection:
-        """Select a single MTD, or one closest-to-target dose in each contour row."""
+        """Select a single MTD or the native row-wise MTD contour.
+
+        Rounded working estimates reproduce the standalone R selector.
+        ``round_selection=False`` uses the unrounded estimates used inside
+        the native simulator. Returned isotonic means are always unrounded.
+        """
         n, y = _validate_counts(patients, toxicities)
         state, safety = self._state(n, y, eliminated, closure="cross")
         if state[0, 0]:
@@ -304,14 +328,10 @@ class BOINCombDesign:
                 lower = selected_by_row[a + 1] if a + 1 < n.shape[0] else None
                 if lower == n.shape[1] - 1:
                     continue
-                selected_col: int = int(
-                    cols[np.argmin(np.abs(ranked_fit[a, cols] - self.target))]
-                )
+                selected_col: int = int(cols[np.argmin(np.abs(ranked_fit[a, cols] - self.target))])
                 selected_by_row[a] = selected_col
             contour = tuple(
-                (a + 1, col + 1)
-                for a, col in enumerate(selected_by_row)
-                if col is not None
+                (a + 1, col + 1) for a, col in enumerate(selected_by_row) if col is not None
             )
             chosen = None
         return BOINCombSelection(chosen, contour, state, _owned(fitted), safety)

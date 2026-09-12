@@ -46,9 +46,7 @@ def test_contour_returns_one_based_pairs_and_respects_monotonicity() -> None:
     patients = np.array([[6, 9, 0], [6, 9, 6]])
     toxicities = np.array([[0, 1, 0], [1, 3, 2]])
 
-    result = BOINCombDesign(target=0.3).select_mtd(
-        patients, toxicities, mtd_contour=True
-    )
+    result = BOINCombDesign(target=0.3).select_mtd(patients, toxicities, mtd_contour=True)
 
     assert result.dose is None
     assert result.contour

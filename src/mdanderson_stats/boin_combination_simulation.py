@@ -115,15 +115,8 @@ def simulate_boin_combination(
                         or at_top
                         or (i == shape[0] - 1 and blocked_right)
                         or (j == shape[1] - 1 and blocked_up)
-                        or (
-                            i < shape[0] - 1
-                            and j < shape[1] - 1
-                            and blocked_up
-                            and blocked_right
-                        )
-                    ) and (
-                        current_y < boundary.deescalate_min[index] or (i == 0 and j == 0)
-                    )
+                        or (i < shape[0] - 1 and j < shape[1] - 1 and blocked_up and blocked_right)
+                    ) and (current_y < boundary.deescalate_min[index] or (i == 0 and j == 0))
                     if converged:
                         reasons[trial_index] = "stop_precision"
                         active[trial_index] = False
