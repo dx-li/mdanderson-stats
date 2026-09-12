@@ -1,0 +1,11 @@
+"endpoint","experimental_rate","control_rate","early_futility","early_superiority","final_negative","final_positive","positive_probability","expected_total"
+"efficacy",0.3,0.3,0.21,0.21,0.4582,0.1218,0.3318,3.16
+"efficacy",0.6,0.3,0.12,0.42,0.2668,0.1932,0.6132,2.92
+"efficacy",0.5,0.5,0.25,0.25,0.375,0.125,0.375,3
+"efficacy",1,0,0,1,0,0,1,2
+"efficacy",0,1,1,0,0,0,0,2
+"toxicity",0.3,0.3,0.21,0.21,0.4582,0.1218,0.3318,3.16
+"toxicity",0.6,0.3,0.42,0.12,0.4048,0.0552,0.1752,2.92
+"toxicity",0.5,0.5,0.25,0.25,0.375,0.125,0.375,3
+"toxicity",1,0,1,0,0,0,0,2
+"toxicity",0,1,0,1,0,0,1,2

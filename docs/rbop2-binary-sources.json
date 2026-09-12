@@ -1,0 +1,60 @@
+{
+  "catalog_id": 150,
+  "application_url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2/",
+  "retrieved_at": "2026-09-12",
+  "version": "V1.1.9.0",
+  "updated": "2025-12-02",
+  "paper_doi": "10.1080/19466315.2022.2050290",
+  "files": [
+    {
+      "filename": "BEhelp1.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2/BEhelp1.pdf",
+      "sha256": "afe39db6fcb632fd9de84ebf25caba27932740908d0209640d2e6d23edb12c1e"
+    },
+    {
+      "filename": "BEhelp2.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2/BEhelp2.pdf",
+      "sha256": "49bffbb0cccb891b727d91849b031ca922246bb288ed237ea948632fead74880"
+    },
+    {
+      "filename": "BThelp1.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2/BThelp1.pdf",
+      "sha256": "c9c207343748e17711dac2a66f2350fc6c4bbb378126e9b405c1f2fd290c48e4"
+    },
+    {
+      "filename": "BThelp2.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2/BThelp2.pdf",
+      "sha256": "80c180e0ee62d81cf4b7c1e74695ca1a10d4dbca9f54693b563c903c2ed5a9f1"
+    },
+    {
+      "filename": "CEhelp1.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2/CEhelp1.pdf",
+      "sha256": "e501e2154ba9d506c77253e7ad3e1c0d60381e5d25a841fe88b17fef9f634cb8"
+    },
+    {
+      "filename": "EThelp1.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2/EThelp1.pdf",
+      "sha256": "e0c9c2c5fddb37eeeee44c20197aed6d178a8af67c8ab723419577d25781206b"
+    },
+    {
+      "filename": "SimNumberHelp.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2/SimNumberHelp.pdf",
+      "sha256": "87ee204e778bcfe1d0ce557526ea739af529a3ffc09cdfb3ab2b73eeaf05ecb1"
+    },
+    {
+      "filename": "endpoints_help.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2/endpoints_help.pdf",
+      "sha256": "0fc0fc70dfc817fc0d4dc18dab29940f4b0b29dae1f2c9d9e3a8fc0cc5658461"
+    },
+    {
+      "filename": "index.html",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2/",
+      "sha256": "02db63d72b4a9c0159ddeb59bc99557646b876823720e9525f1ea3260453b4a1"
+    },
+    {
+      "filename": "interims_help.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/rBOP2/interims_help.pdf",
+      "sha256": "bdb5b7a87d5c95c783f7c2f792fcee3480eac5354e151ecd7102a5b31cbdd6f9"
+    }
+  ]
+}
