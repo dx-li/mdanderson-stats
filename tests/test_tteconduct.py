@@ -55,3 +55,15 @@ def test_beyond_cap_is_explicit():
     row = tteconduct_boundary_table(d, 3).boundaries[0]
     assert row.beyond_cap
     assert np.isinf(row.minimum_total_time)
+
+
+def test_extreme_time_units_do_not_overflow_bracket_ratio():
+    ordinary = tteconduct_design(3, 1, 3, 1, 0, 0.9, 3, max_total_time=100)
+    extreme = tteconduct_design(3, 1e-200, 3, 1e-200, 0, 0.9, 3, max_total_time=1e200)
+    ordinary_boundary = tteconduct_boundary_table(ordinary, 1).boundaries[0]
+    extreme_boundary = tteconduct_boundary_table(extreme, 1).boundaries[0]
+    assert np.isfinite(extreme_boundary.minimum_total_time)
+    assert extreme_boundary.minimum_total_time < extreme.max_total_time
+    assert extreme_boundary.minimum_total_time / 1e-200 == pytest.approx(
+        ordinary_boundary.minimum_total_time, rel=1e-12
+    )

@@ -119,12 +119,23 @@ def _probability(design: TTEConductDesign, events: int, total_time: float) -> tu
         raise ArithmeticError("inverse-gamma posterior parameters overflow")
     experimental = ParameterDistribution("inverse_gamma", shape, scale)
     standard = ParameterDistribution("inverse_gamma", design.alpha_standard, design.beta_standard)
-    result = inequality_probability(
-        experimental,
-        standard,
-        delta=design.delta,
-        absolute_tolerance=design.absolute_tolerance,
-    )
+    try:
+        result = inequality_probability(
+            experimental,
+            standard,
+            delta=design.delta,
+            absolute_tolerance=design.absolute_tolerance,
+        )
+    except ArithmeticError:
+        # QUADPACK can occasionally miss its subdivision target at an isolated
+        # root probe. Retry at a boundedly looser tolerance and report that
+        # resulting error rather than fabricating a converged value.
+        result = inequality_probability(
+            experimental,
+            standard,
+            delta=design.delta,
+            absolute_tolerance=min(1e-3, design.absolute_tolerance * 10),
+        )
     if not np.isfinite(result.x_greater) or not np.isfinite(result.absolute_error):
         raise ArithmeticError("inverse-gamma stopping probability is unresolved")
     return float(result.x_greater), float(result.absolute_error)
@@ -182,21 +193,33 @@ def _boundary(design: TTEConductDesign, events: int) -> TTEConductBoundary:
     at_zero, error_zero = _probability(design, events, 0.0)
     if at_zero >= design.cutoff:
         return TTEConductBoundary(events, 0.0, at_zero, error_zero, at_zero - design.cutoff, False)
-    at_cap, error_cap = _probability(design, events, design.max_total_time)
-    if at_cap < design.cutoff:
-        return TTEConductBoundary(events, np.inf, at_cap, error_cap, at_cap - design.cutoff, True)
+    # Grow a finite time bracket rather than forming cap / beta_E, which can
+    # overflow even when both input quantities are representable.
+    high = min(design.beta_experimental, design.max_total_time)
+    probability, error = _probability(design, events, high)
+    for _ in range(2048):
+        if probability >= design.cutoff:
+            break
+        if high >= design.max_total_time:
+            return TTEConductBoundary(
+                events, np.inf, probability, error, probability - design.cutoff, True
+            )
+        high = design.max_total_time if high >= design.max_total_time / 2 else high * 2
+        probability, error = _probability(design, events, high)
+    else:
+        raise ArithmeticError("could not bracket TTEConduct boundary")
+
+    # Solve on a dimensionless fraction of the discovered bracket. The
+    # bracket is scaled locally, preserving unit invariance and root precision.
     low = 0.0
-    # Solve on a dimensionless total-time scale relative to the experimental
-    # prior scale. This keeps the root search invariant under unit changes.
-    scale = design.beta_experimental
-    cap_scaled = design.max_total_time / scale
+    bracket = high
 
     def objective(normalized_time: float) -> float:
-        probability, _ = _probability(design, events, scale * normalized_time)
+        probability, _ = _probability(design, events, bracket * normalized_time)
         return probability - design.cutoff
 
-    root = brentq(objective, low, cap_scaled, xtol=1e-14, rtol=1e-14, maxiter=100)
-    high = scale * root
+    root = brentq(objective, low, 1.0, xtol=1e-14, rtol=1e-14, maxiter=100)
+    high = bracket * root
     probability, error = _probability(design, events, high)
     return TTEConductBoundary(events, high, probability, error, probability - design.cutoff, False)
 
