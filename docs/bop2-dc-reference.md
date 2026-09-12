@@ -31,6 +31,15 @@ size, with all design inputs. This oracle uses path enumeration rather than
 the Python recursion and distinguishes maximum-go and minimum-sample-size
 objectives. Its base-R run also checks conservation of total probability.
 
+`tools/reference_bop2_dc_paired.R` generates nine Dirichlet-marginal reference
+cases for multiple efficacy and efficacy/toxicity. Cell order is both events,
+first only, second only, neither. The four prior shapes are 0.25 each.
+The CSV records each clinical threshold and both posterior tails for each
+endpoint. Toxicity uses lower tails, with its clinically meaningful threshold
+below its reference threshold. The cases cover all final outcomes and interim
+continue/stop decisions. They validate marginal decision composition without
+assuming independence of the paired endpoints.
+
 The downloaded preprint is preserved in ignored `research/raw/BOP2-DC`.
 Its SHA-256 is
 `a344f088f564a218e29af1abb0c22e1799a344dba6820a41048769905705ad7a`.
