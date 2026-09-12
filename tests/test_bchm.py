@@ -14,8 +14,14 @@ def test_weighted_cluster_returns_raw_allocations_and_d0_floor():
 def test_borrowing_keeps_target_samples_and_similarity_floor():
     similarity = np.array([1.0, 0.4, 0.001])
     result = bchm_borrow(
-        [1, 2, 8], [15, 18, 20], similarity, target=2,
-        draws=8, warmup=2, chains=2, seed=2,
+        [1, 2, 8],
+        [15, 18, 20],
+        similarity,
+        target=2,
+        draws=8,
+        warmup=2,
+        chains=2,
+        seed=2,
     )
     assert result.samples.shape == (2, 8)
     assert np.all((result.samples >= 0) & (result.samples <= 1))
@@ -24,8 +30,14 @@ def test_borrowing_keeps_target_samples_and_similarity_floor():
 
 def test_fit_exposes_raw_and_native_rounded_decisions():
     result = bchm_fit(
-        [1, 2, 8], [15, 18, 20], iterations=12, burn_in=8,
-        draws=8, warmup=2, chains=2, seed=3,
+        [1, 2, 8],
+        [15, 18, 20],
+        iterations=12,
+        burn_in=8,
+        draws=8,
+        warmup=2,
+        chains=2,
+        seed=3,
     )
     assert np.allclose(result.native_probability, np.round(result.raw_probability, 3))
     assert np.array_equal(result.decision, result.native_probability > 0.5)
@@ -35,4 +47,4 @@ def test_fit_exposes_raw_and_native_rounded_decisions():
 @pytest.mark.parametrize("successes,trials", [([0, 0], [5, 8]), ([5, 8], [5, 8])])
 def test_empirical_prior_boundary_is_rejected(successes, trials):
     with pytest.raises(ValueError, match="empirical prior"):
-        bchm_cluster(successes, trials)
+        bchm_borrow(successes, trials, np.ones(2))

@@ -5,7 +5,7 @@ from dataclasses import dataclass
 import numpy as np
 from scipy.special import expit, logit
 
-from .bchm_clustering import weighted_crp
+from .bchm_clustering import BCHMClusterResult, weighted_crp
 from .hierarchical_binomial import ChainSummary, summarize_chains
 
 
@@ -19,7 +19,7 @@ def _owned(x):
 class BCHMCluster:
     rates: np.ndarray
     trials: np.ndarray
-    result: object
+    result: BCHMClusterResult
 
 
 @dataclass(frozen=True)
@@ -40,12 +40,18 @@ class BCHMFit:
     raw_probability: np.ndarray
     native_probability: np.ndarray
     decision: np.ndarray
+    raw_similarity: np.ndarray
     similarity: np.ndarray
+    borrowing_similarity: np.ndarray
     allocations: np.ndarray
-    summaries: tuple
+    summaries: tuple[ChainSummary, ...]
 
 
 def _validate(successes, trials, *, require_prior=True):
+    if np.asarray(successes).ndim != 1 or np.asarray(trials).ndim != 1:
+        raise ValueError("successes and trials must be one-dimensional")
+    if np.asarray(successes).dtype == np.dtype(bool) or np.asarray(trials).dtype == np.dtype(bool):
+        raise ValueError("successes and trials must be integer counts")
     y = np.asarray(successes, dtype=float)
     n = np.asarray(trials, dtype=float)
     if y.ndim != 1 or n.shape != y.shape or not 1 <= y.size <= 20:
@@ -80,7 +86,7 @@ def bchm_cluster(
     iterations=2000,
     seed=None,
 ):
-    y, n = _validate(successes, trials)
+    y, n = _validate(successes, trials, require_prior=False)
     for v, name in ((sigma02, "sigma02"), (sigmaD2, "sigmaD2"), (alpha, "alpha")):
         if not np.isfinite(v) or v <= 0:
             raise ValueError(f"{name} must be positive finite")
@@ -157,6 +163,8 @@ def bchm_borrow(
     y, n = _validate(successes, trials, require_prior=prior_mean is None)
     if isinstance(target, (bool, np.bool_)) or not isinstance(target, (int, np.integer)):
         raise ValueError("target must be an integer")
+    if not 0 <= target < y.size:
+        raise ValueError("target out of range")
     m = np.asarray(similarity, dtype=float)
     if m.ndim == 2:
         if m.shape != (y.size, y.size):
@@ -167,12 +175,12 @@ def bchm_borrow(
     if m.shape != y.shape or np.any(~np.isfinite(m)) or np.any((m < 0) | (m > 1)):
         raise ValueError("similarity must be positive and match groups")
     m = np.maximum(m, 0.001)
-    if not 0 <= target < y.size:
-        raise ValueError("target out of range")
     if prior_mean is None:
         prior_mean = float(logit(np.mean(y / n)))
     if not np.isfinite(prior_mean):
         raise ValueError("prior_mean must be finite")
+    if abs(prior_mean) > 1e4:
+        raise ValueError("prior_mean is outside the stable range")
     for v, name in ((alpha1, "alpha1"), (beta1, "beta1"), (tau2, "tau2")):
         if not np.isfinite(v) or v <= 0 or v > 1e12:
             raise ValueError(f"{name} must be positive finite")
@@ -190,6 +198,16 @@ def bchm_borrow(
         or chains * (draws + warmup) * y.size > 1_000_000
     ):
         raise ValueError("require chains>=2 and draws>=8")
+    if not (
+        np.isfinite(phi1)
+        and 0 <= phi1 <= 1
+        and np.isfinite(deltaT)
+        and deltaT >= 0
+        and phi1 + deltaT <= 1
+        and np.isfinite(thetaT)
+        and 0 <= thetaT <= 1
+    ):
+        raise ValueError("invalid efficacy thresholds")
     rng = np.random.default_rng(seed)
     k = y.size
     th = np.broadcast_to(logit((y + 0.5) / (n + 1)), (chains, k)).copy() + rng.normal(
@@ -207,21 +225,18 @@ def bchm_borrow(
             ) + rng.normal() / np.sqrt(prec)
             rate = beta1 + 0.5 * np.sum(m * (th[c] - mu[c]) ** 2)
             tau[c] = rng.gamma(alpha1 + k / 2, 1 / rate)
+            if (
+                not np.all(np.isfinite(th[c]))
+                or not np.isfinite(mu[c])
+                or not np.isfinite(tau[c])
+                or tau[c] <= 0
+            ):
+                raise ArithmeticError("BCHM sampler reached non-finite state")
         if it >= warmup:
             out[:, it - warmup] = expit(th[:, target])
     summary = summarize_chains(out[:, :, None])
-    if not (
-        np.isfinite(phi1)
-        and 0 <= phi1 <= 1
-        and np.isfinite(deltaT)
-        and deltaT >= 0
-        and phi1 + deltaT <= 1
-        and np.isfinite(thetaT)
-        and 0 <= thetaT <= 1
-    ):
-        raise ValueError("invalid efficacy thresholds")
     prob = float(np.mean(out > phi1 + deltaT))
-    return BCHMBorrowResult(target, _owned(out), float(np.mean(out)), prob, _owned(m), summary)
+    return BCHMBorrowResult(int(target), _owned(out), float(np.mean(out)), prob, _owned(m), summary)
 
 
 def bchm_fit(
@@ -247,6 +262,16 @@ def bchm_fit(
     seed=None,
 ):
     y, n = _validate(successes, trials)
+    if not (
+        np.isfinite(phi1)
+        and 0 <= phi1 <= 1
+        and np.isfinite(deltaT)
+        and deltaT >= 0
+        and phi1 + deltaT <= 1
+        and np.isfinite(thetaT)
+        and 0 <= thetaT <= 1
+    ):
+        raise ValueError("invalid efficacy thresholds")
     if (
         chains < 2
         or chains > 4
@@ -257,6 +282,8 @@ def bchm_fit(
         or chains * (draws + warmup) * y.size * y.size > 1_000_000
     ):
         raise ValueError("fit MCMC budget is too large")
+    master = np.random.default_rng(seed)
+    cluster_seed = int(master.integers(2**31))
     cl = bchm_cluster(
         y,
         n,
@@ -267,9 +294,9 @@ def bchm_fit(
         d0=d0,
         burn_in=burn_in,
         iterations=iterations,
-        seed=seed,
+        seed=cluster_seed,
     )
-    rng = np.random.default_rng(seed)
+    rng = master
     bor = []
     for i in range(y.size):
         bor.append(
@@ -291,7 +318,7 @@ def bchm_fit(
             )
         )
     raw = np.array([b.probability for b in bor])
-    native = np.round(raw, 3)
+    native = np.array([round(float(v), 3) for v in raw])
     dec = native > thetaT
     return BCHMFit(
         cl,
@@ -300,7 +327,9 @@ def bchm_fit(
         _owned(raw),
         _owned(native),
         _owned(dec),
-        np.maximum(cl.result.similarity, 0.001),
+        _owned(cl.result.raw_similarity),
+        _owned(cl.result.similarity),
+        _owned(np.maximum(cl.result.similarity, 0.001)),
         cl.result.allocations,
         tuple(b.summary for b in bor),
     )
