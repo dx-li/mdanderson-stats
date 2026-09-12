@@ -1,0 +1,58 @@
+{
+  "catalog_id": 152,
+  "retrieved_at": "2026-09-12",
+  "application_version": "1.4.3.0",
+  "pid": 1062,
+  "paper_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9199061/",
+  "paper_doi": "10.1002/sim.9337",
+  "approximate_likelihood_reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8559898/",
+  "supplement_status": "PMC supplement returned an HTML challenge; S7 and S2 not verified. No invalid PDF retained.",
+  "comparator_scope": "Author code for a later PK extension corroborates endpoint ESS/MLE and conditional imputation only; not the native TITE-BOIN12 backend or its final selection.",
+  "files": [
+    {
+      "filename": "app.html",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12/",
+      "sha256": "fa3b6cffe92c748b4c9b5faf48a4dfdc057557855619a621129fe4e886af0b65"
+    },
+    {
+      "filename": "TITEBOIN12Admissible.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12/TITEBOIN12Admissible.pdf",
+      "sha256": "9dea1cbea685514e7d76b87194d2264f96f3ffdf72c1acefc42f607904997bd8"
+    },
+    {
+      "filename": "TITEBOIN12Stop.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12/TITEBOIN12Stop.pdf",
+      "sha256": "ba21bc52cab138b837ac6bad5df702cf5ebc970dcbb2ebbe4359e76fb7b6d2e2"
+    },
+    {
+      "filename": "TITEBOIN12Nextdose.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12/TITEBOIN12Nextdose.pdf",
+      "sha256": "d3f95b77519572adbfb6a19b178e221d98b36b8808bf3c46a11f1b3cd2906a26"
+    },
+    {
+      "filename": "TITEBOIN12OBD.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12/TITEBOIN12OBD.pdf",
+      "sha256": "7bcd8509020408fd028b3a3cf39f7b7e2d94d34ba9a3047860a98591b41b4be7"
+    },
+    {
+      "filename": "TITEBOIN12Utility.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12/TITEBOIN12Utility.pdf",
+      "sha256": "a2e376a6098ad37b9c057522214c2427eb8b119ee2ff3b2150c70ca91a543b2f"
+    },
+    {
+      "filename": "TITEBOIN12_interim_template.csv",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12/TITEBOIN12_interim_template.csv",
+      "sha256": "0b9b8eb121f31533fb4aa381b02e7b5081d76fade10218b7d31cfc59d7a82c30"
+    },
+    {
+      "filename": "author_comparator/fun_TITE_PK_update.R",
+      "url": "https://raw.githubusercontent.com/EugeneHao/PKBOIN-12/9f2a6f233767a47e2a40464e4151726abdc22554/fun_TITE_PK_update.R",
+      "sha256": "663e7483d421443576d7eaae3b2699525d1f050a08cfd45150cf3a66d396742a"
+    },
+    {
+      "filename": "author_comparator/fun_TITE_PKBOIN12.R",
+      "url": "https://raw.githubusercontent.com/EugeneHao/PKBOIN-12/9f2a6f233767a47e2a40464e4151726abdc22554/fun_TITE_PKBOIN12.R",
+      "sha256": "e8da15149ebd1244f3b6403dff09055391e113351e0128f51cd2efa402f0f4f6"
+    }
+  ]
+}
