@@ -1,0 +1,7 @@
+"case","target","nrow","ncol","patients","toxicities","mtd_a","mtd_b","isotonic_estimate_rounded","warning","error"
+"paper_package_documented_example",0.3,3,4,"3;5;0;0;7;6;15;0;0;0;4;0","0;1;0;0;1;1;4;0;0;0;2;0",2,3,"0.02;0.19;NA;NA;0.15;0.19;0.27;NA;NA;NA;0.50;NA","",""
+"safety_cross_closure",0.3,3,4,"3;3;3;0;3;3;3;0;3;3;3;0","0;3;0;0;0;0;0;0;0;0;0;0",3,3,"0.02;0.18;0.18;NA;0.02;0.18;0.18;NA;0.02;0.18;0.18;NA","",""
+"lowest_dose_safety_stop",0.3,2,3,"3;0;0;0;0;0","3;0;0;0;0;0",NA,NA,"NA;NA;NA;NA;NA;NA","All tested doses are overly toxic. No MTD is selected!",""
+"extra_safe_lowest_dose_stop",0.3,2,3,"3;0;0;0;0;0","2;0;0;0;0;0",NA,NA,"NA;NA;NA;NA;NA;NA","All tested doses are overly toxic. No MTD is selected!",""
+"equal_matrix_estimates_deterministic_tie",0.3,2,3,"3;3;3;3;3;3","1;1;1;1;1;1",1,1,"0.34;0.34;0.34;0.34;0.34;0.34","",""
+"all_doses_untreated",0.3,2,3,"0;0;0;0;0;0","0;0;0;0;0;0",1,1,"NA;NA;NA;NA;NA;NA","",""

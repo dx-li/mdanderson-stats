@@ -1,0 +1,2 @@
+"scenario","target","ncohort","cohortsize","n_earlystop","ntrial","pcs","total_patients","total_toxicities","pct_early_stop"
+"small_2x3_seed6",0.3,4,3,9,20,60,11.8,2.1,0
