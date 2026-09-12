@@ -47,7 +47,10 @@ def _silhouette(row, values):
     for i in range(len(row)):
         own = row == row[i]
         own[i] = False
-        a = np.mean(dist[i, own]) if np.any(own) else 0.0
+        if not np.any(own):
+            scores.append(0.0)
+            continue
+        a = np.mean(dist[i, own])
         b = min(np.mean(dist[i, row == lab]) for lab in labels if lab != row[i])
         scores.append((b - a) / max(a, b) if max(a, b) else 0.0)
     return float(np.mean(scores))
