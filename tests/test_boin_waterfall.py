@@ -14,12 +14,13 @@ def test_next_subtrial_matches_boin_waterfall_example():
     assert plan.current_subtrial == 3
 
 
-def test_r_keyword_aliases_and_terminal_first_row():
-    patients = np.array([[6, 0, 0], [6, 10, 12]])
-    toxicities = np.array([[0, 0, 0], [1, 1, 4]])
-    plan = next_subtrial(target=0.3, npts=patients, ntox=toxicities)
-    assert plan.next_subtrial is not None
-    assert plan.starting_dose[0] == 1
+def test_accumulated_subtrials_use_lowest_occupied_slice():
+    patients = np.array([[6, 0, 0, 0], [6, 10, 12, 0], [9, 12, 0, 0]])
+    toxicities = np.array([[0, 0, 0, 0], [1, 1, 4, 0], [2, 3, 0, 0]])
+    plan = next_subtrial(0.3, patients, toxicities)
+    assert plan.current_subtrial == 2
+    assert plan.next_subtrial == ((1, 2), (1, 3), (1, 4))
+    assert plan.starting_dose == (1, 4)
 
     complete = next_subtrial(
         0.3,

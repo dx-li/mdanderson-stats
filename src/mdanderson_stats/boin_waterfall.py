@@ -9,12 +9,14 @@ within a slice is delegated to :class:`~mdanderson_stats.boin.BOINDesign`.
 from __future__ import annotations
 
 from dataclasses import dataclass
+
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
+from scipy.optimize import isotonic_regression
 from scipy.special import betaincc
 
-from .boin import BOINDesign, _owned
 from ._validation import scalar
+from .boin import BOINDesign, _owned
 
 DoseCombination = tuple[int, int]
 BoolMatrix = NDArray[np.bool_]
@@ -39,23 +41,6 @@ def _validate_counts(patients: ArrayLike, toxicities: ArrayLike) -> tuple[NDArra
     if np.any(y > n):
         raise ValueError("toxicities cannot exceed patients")
     return n, y
-
-
-def _pava(values: NDArray, weights: NDArray) -> NDArray:
-    levels: list[float] = []
-    weights_out: list[float] = []
-    sizes: list[int] = []
-    for value, weight in zip(values, weights, strict=True):
-        levels.append(float(value))
-        weights_out.append(float(weight))
-        sizes.append(1)
-        while len(levels) > 1 and levels[-2] > levels[-1]:
-            total = weights_out[-2] + weights_out[-1]
-            levels[-2] = (levels[-2] * weights_out[-2] + levels[-1] * weights_out[-1]) / total
-            weights_out[-2] = total
-            sizes[-2] += sizes[-1]
-            levels.pop(); weights_out.pop(); sizes.pop()
-    return np.repeat(np.asarray(levels), sizes)
 
 
 def _initial_space(rows: int, columns: int) -> tuple[DoseCombination, ...]:
@@ -102,7 +87,7 @@ def _candidate(
     y: NDArray,
     space: tuple[DoseCombination, ...],
     *,
-    extrasafe: bool,
+    extra_safe: bool,
     cutoff: float,
     offset: float,
 ) -> tuple[DoseCombination | None, bool | None, BoolMatrix, str]:
@@ -110,19 +95,42 @@ def _candidate(
     eliminated = np.zeros(n.shape, dtype=bool)
     for i, j in zip(*np.where((n >= 3) & (posterior > cutoff)), strict=True):
         eliminated[i:, j:] = True
-    if extrasafe and n[0, 0] >= 3 and posterior[0, 0] > cutoff - offset:
-        eliminated[:, :] = True
-    if eliminated[0, 0]:
+    # The R helper applies elimination in the one-dimensional order of the
+    # active slice.  In particular, extrasafe is checked at that slice's first
+    # dose, rather than at matrix cell (1, 1).
+    slice_eliminated = np.zeros(len(space), dtype=bool)
+    for index, (i, j) in enumerate(space):
+        if n[i - 1, j - 1] >= 3 and posterior[i - 1, j - 1] > cutoff:
+            slice_eliminated[index:] = True
+            break
+    first_i, first_j = space[0]
+    if (
+        extra_safe
+        and n[first_i - 1, first_j - 1] >= 3
+        and posterior[first_i - 1, first_j - 1] > cutoff - offset
+    ):
+        slice_eliminated[:] = True
+    for (i, j), excluded in zip(space, slice_eliminated, strict=True):
+        if excluded:
+            eliminated[i - 1 :, j - 1 :] = True
+    if slice_eliminated[0]:
         return None, None, _owned(eliminated), "stop_safety"
 
-    active = [(i - 1, j - 1) for i, j in space if n[i - 1, j - 1] > 0 and not eliminated[i - 1, j - 1]]
+    active = [
+        (i - 1, j - 1)
+        for (i, j), excluded in zip(space, slice_eliminated, strict=True)
+        if n[i - 1, j - 1] > 0 and not excluded
+    ]
     if not active:
         return None, None, _owned(eliminated), "stop_no_data"
     observed = np.asarray([y[i, j] for i, j in active], dtype=float)
     treated = np.asarray([n[i, j] for i, j in active], dtype=float)
     estimate = (observed + 0.05) / (treated + 0.1)
-    variance = (observed + 0.05) * (treated - observed + 0.05) / ((treated + 0.1) ** 2 * (treated + 1.1))
-    fitted = _pava(estimate, 1.0 / variance) + np.arange(1, len(active) + 1) * 1e-10
+    variance = (
+        (observed + 0.05) * (treated - observed + 0.05) / ((treated + 0.1) ** 2 * (treated + 1.1))
+    )
+    fitted = isotonic_regression(estimate, weights=1.0 / variance).x
+    fitted = fitted + np.arange(1, len(active) + 1) * 1e-10
     chosen = int(np.argmin(np.abs(fitted - design.target)))
     candidate = (active[chosen][0] + 1, active[chosen][1] + 1)
     boundary = design.boundary_table(max(150, int(np.max(treated)))).escalate_max
@@ -133,21 +141,14 @@ def _candidate(
 
 def next_subtrial(
     target: float,
-    patients: ArrayLike | None = None,
-    toxicities: ArrayLike | None = None,
+    patients: ArrayLike,
+    toxicities: ArrayLike,
     *,
-    npts: ArrayLike | None = None,
-    ntox: ArrayLike | None = None,
     safe_probability: float | None = None,
     toxic_probability: float | None = None,
     elimination_probability: float = 0.95,
     extra_safe: bool = False,
     safety_offset: float = 0.05,
-    p_saf: float | None = None,
-    p_tox: float | None = None,
-    cutoff_eli: float | None = None,
-    extrasafe: bool | None = None,
-    offset: float | None = None,
 ) -> WaterfallPlan:
     """Determine the next dose-searching slice and its starting dose.
 
@@ -157,36 +158,6 @@ def next_subtrial(
     is one row lower and starts one column to the right of that candidate.
     """
 
-    if patients is None:
-        patients = npts
-    elif npts is not None:
-        raise ValueError("provide patients or npts, not both")
-    if toxicities is None:
-        toxicities = ntox
-    elif ntox is not None:
-        raise ValueError("provide toxicities or ntox, not both")
-    if patients is None or toxicities is None:
-        raise TypeError("patients and toxicities are required")
-    if p_saf is not None:
-        if safe_probability is not None:
-            raise ValueError("provide safe_probability or p_saf, not both")
-        safe_probability = p_saf
-    if p_tox is not None:
-        if toxic_probability is not None:
-            raise ValueError("provide toxic_probability or p_tox, not both")
-        toxic_probability = p_tox
-    if cutoff_eli is not None:
-        if elimination_probability != 0.95:
-            raise ValueError("provide elimination_probability or cutoff_eli, not both")
-        elimination_probability = cutoff_eli
-    if extrasafe is not None:
-        if extra_safe:
-            raise ValueError("provide extra_safe or extrasafe, not both")
-        extra_safe = extrasafe
-    if offset is not None:
-        if safety_offset != 0.05:
-            raise ValueError("provide safety_offset or offset, not both")
-        safety_offset = offset
     n, y = _validate_counts(patients, toxicities)
     rows, columns = n.shape
     design = BOINDesign(
@@ -197,20 +168,49 @@ def next_subtrial(
         extra_safe=extra_safe,
         safety_offset=safety_offset,
     )
-    occupied = [i for i in range(rows, 0, -1) if np.any(n[np.asarray(_space_for_subtrial(i, rows, columns)).T[0] - 1, np.asarray(_space_for_subtrial(i, rows, columns)).T[1] - 1] > 0)]
+    occupied = []
+    for i in range(1, rows + 1):
+        space_i = _space_for_subtrial(i, rows, columns)
+        indices = np.asarray(space_i, dtype=int) - 1
+        if np.any(n[indices[:, 0], indices[:, 1]] > 0):
+            occupied.append(i)
     if not occupied:
-        return WaterfallPlan(None, None, None, None, None, _owned(np.zeros_like(n, dtype=bool)), "no_data")
+        return WaterfallPlan(
+            None, None, None, None, None, _owned(np.zeros_like(n, dtype=bool)), "no_data"
+        )
     current = occupied[0]
     space = _space_for_subtrial(current, rows, columns)
     candidate, escalation, eliminated, action = _candidate(
-        design, n, y, space, extrasafe=extra_safe, cutoff=elimination_probability, offset=safety_offset
+        design,
+        n,
+        y,
+        space,
+        extra_safe=extra_safe,
+        cutoff=elimination_probability,
+        offset=safety_offset,
     )
     if current == 1 or candidate is None:
-        return WaterfallPlan(None, None, current, candidate, escalation, eliminated, action if current != 1 else "complete")
+        return WaterfallPlan(
+            None,
+            None,
+            current,
+            candidate,
+            escalation,
+            eliminated,
+            action if current != 1 else "complete",
+        )
     next_row = max(1, candidate[0] - 1)
     next_col = min(columns, candidate[1] + 1)
     next_space = _row_space(next_row, columns)
-    return WaterfallPlan(next_space, (next_row, next_col), current, candidate, escalation, eliminated, "next_subtrial")
+    return WaterfallPlan(
+        next_space,
+        (next_row, next_col),
+        current,
+        candidate,
+        escalation,
+        eliminated,
+        "next_subtrial",
+    )
 
 
 @dataclass(frozen=True)
