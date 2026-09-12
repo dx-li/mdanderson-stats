@@ -63,7 +63,8 @@ def _utilities(value: ArrayLike) -> FloatArray:
 class BOIN12Posterior:
     """Marginal endpoint and quasi-beta-binomial utility posterior summaries.
 
-    ``utility_probability`` is reported on the BOIN12/RDS 0--100 scale.
+    ``utility_probability`` is a probability in ``[0, 1]``.  RDS display
+    adapters may convert it to the source application's percentage scale.
     """
 
     toxicity_overdose_probability: FloatArray
@@ -205,7 +206,7 @@ def posterior(
         _owned(betaincc(t + 1, n - t + 1, phi_t)),
         _owned(betainc(e + 1, n - e + 1, phi_e)),
         _owned(100.0 * shape_a / (shape_a + shape_b)),
-        _owned(100.0 * betaincc(shape_a, shape_b, benchmark / 100.0)),
+        _owned(betaincc(shape_a, shape_b, benchmark / 100.0)),
         _owned(utility_events),
     )
 
@@ -255,12 +256,16 @@ def rank_desirability(
     efficacy_cutoff: float = 0.90,
     prior_alpha: float = 1.0,
     prior_beta: float = 1.0,
+    efficacy_without_toxicity: ArrayLike | None = None,
 ) -> BOIN12RDSTable:
-    """Generate RDS ranks, averaging ties among admissible outcomes per ``N``."""
+    """Generate global RDS ranks, averaging ties among admissible outcomes."""
 
     sizes = _vector(sample_sizes, "sample_sizes")
     if np.any(sizes > 1000):
         raise ValueError("sample_sizes must not exceed 1000")
+    row_count = int(np.sum((sizes.astype(np.int64) + 1) ** 2))
+    if row_count > 100_000:
+        raise ValueError("RDS enumeration exceeds the 100000-case safety limit")
     rows: list[tuple[int, int, int]] = []
     for size in sizes.astype(int):
         rows.extend(
@@ -276,6 +281,7 @@ def rank_desirability(
         toxicity_limit=toxicity_limit,
         efficacy_limit=efficacy_limit,
         utilities=utilities,
+        efficacy_without_toxicity=efficacy_without_toxicity,
         prior_alpha=prior_alpha,
         prior_beta=prior_beta,
     )
@@ -322,6 +328,16 @@ class BOIN12Design:
             or self.exploration_patients < 0
         ):
             raise ValueError("exploration_patients must be a nonnegative integer")
+        for name, value in (
+            ("stay_patients", self.stay_patients),
+            ("early_stop_patients", self.early_stop_patients),
+        ):
+            if value is not None and (
+                isinstance(value, (bool, np.bool_))
+                or not isinstance(value, (int, np.integer))
+                or value <= 0
+            ):
+                raise ValueError(f"{name} must be a positive integer or None")
         object.__setattr__(self, "toxicity_limit", limit)
         object.__setattr__(self, "efficacy_limit", efficacy)
         object.__setattr__(self, "utilities", tuple(float(x) for x in self.utilities))
@@ -353,6 +369,7 @@ class BOIN12Design:
         current_dose: int,
         *,
         efficacy_without_toxicity: ArrayLike | None = None,
+        eliminated: ArrayLike | None = None,
     ) -> BOIN12Decision:
         n, t, e = _counts(patients, toxicities, efficacies)
         if isinstance(current_dose, (bool, np.bool_)) or int(current_dose) != current_dose:
@@ -363,12 +380,22 @@ class BOIN12Design:
         result = self.posterior(n, t, e, efficacy_without_toxicity=efficacy_without_toxicity)
         all_allowed = admissibility(
             result, toxicity_cutoff=self.toxicity_cutoff, efficacy_cutoff=self.efficacy_cutoff
+        ).copy()
+        excluded = (
+            np.zeros(n.size, dtype=bool)
+            if eliminated is None
+            else np.asarray(eliminated, dtype=bool)
         )
+        if excluded.shape != n.shape:
+            raise ValueError("eliminated must match the dose vector")
+        all_allowed &= ~excluded
         index = current - 1
         rate = t[index] / n[index]
         local = np.zeros(n.size, dtype=bool)
         local[max(0, index - 1) : min(n.size, index + 2)] = True
         local &= all_allowed
+        if excluded[index] or not np.any(all_allowed):
+            return BOIN12Decision("stop_safety", None, local, result)
         if self.early_stop_patients is not None and n[index] >= self.early_stop_patients:
             return BOIN12Decision("stop_precision", None, local, result)
         if (
@@ -387,15 +414,13 @@ class BOIN12Design:
                 return BOIN12Decision("deescalate", lower, local, result)
             return BOIN12Decision("stop_no_admissible_neighbor", None, local, result)
         candidates = np.arange(max(0, index - 1), min(n.size, index + 2))
-        if rate > self._boin.escalation_boundary:
-            if n[index] < self.stay_patients:
-                candidates = candidates[candidates >= index]
-            else:
-                candidates = candidates[candidates <= index]
+        if rate > self._boin.escalation_boundary and n[index] >= self.stay_patients:
+            candidates = candidates[candidates <= index]
         candidates = candidates[local[candidates]]
         if candidates.size == 0:
             return BOIN12Decision("stop_no_admissible_neighbor", None, local, result)
-        best = int(candidates[np.argmax(result.utility_probability[candidates])])
+        values = result.utility_probability[candidates]
+        best = int(candidates[np.flatnonzero(values == values.max())[-1]])
         action = "stay" if best == index else "escalate" if best > index else "deescalate"
         return BOIN12Decision(action, best + 1, local, result)
 
@@ -406,6 +431,7 @@ class BOIN12Design:
         efficacies: ArrayLike,
         *,
         efficacy_without_toxicity: ArrayLike | None = None,
+        eliminated: ArrayLike | None = None,
     ) -> BOIN12Selection:
         n, t, e = _counts(patients, toxicities, efficacies)
         result = self.posterior(n, t, e, efficacy_without_toxicity=efficacy_without_toxicity)
@@ -414,7 +440,12 @@ class BOIN12Design:
             toxicity_cutoff=self.toxicity_cutoff,
             efficacy_cutoff=self.efficacy_cutoff,
             patients=n,
-        )
+        ).copy()
+        if eliminated is not None:
+            excluded = np.asarray(eliminated, dtype=bool)
+            if excluded.shape != n.shape:
+                raise ValueError("eliminated must match the dose vector")
+            allowed &= ~excluded
         fitted = np.full(n.shape, np.nan)
         treated = n > 0
         if np.any(treated):
