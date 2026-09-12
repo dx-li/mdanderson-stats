@@ -552,6 +552,11 @@ from .phase2_predictive import (
     optimize_phase2_predictive,
     phase2_predictive_design,
 )
+from .plbarpo_control import (
+    PLBarpoControlMonitoring,
+    plbarpo_control_counts,
+    plbarpo_control_monitor,
+)
 from .predictive_binary import (
     BinaryPredictivePlan,
     BinaryPredictiveProbabilities,
@@ -833,6 +838,9 @@ from .windows import (
 )
 
 __all__ = [
+    "PLBarpoControlMonitoring",
+    "plbarpo_control_counts",
+    "plbarpo_control_monitor",
     "BarpoMonitoring",
     "BarpoPosterior",
     "barpo_allocation",

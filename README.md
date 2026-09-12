@@ -1094,3 +1094,8 @@ calibration remain open.
 and four adaptive allocation methods: BARCP, BARN2N, BARMTV and explicit-target
 DBCD. It accounts for pending assignment counts and allocation floors; trial
 simulation and scheduling remain open.
+
+[PLBARPO control monitoring](docs/plbarpo-control.md) adds entire-trial and
+concurrent control comparisons. Explicit enrollment windows and observation
+cutoffs exclude pending and future outcomes. Platform arm replacement and
+simulation remain open.

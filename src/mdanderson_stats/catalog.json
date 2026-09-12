@@ -3629,12 +3629,21 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/PLBARPO/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/PLBARPO/",
-      "references": [],
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/PLBARPO/PLBARPO.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Entire-trial and treatment-specific concurrent control beta posterior comparisons with independent futility and efficacy criteria",
+        "Control observation selection using explicit enrollment windows and observation-time cutoffs, including pending outcomes"
+      ],
+      "validation": [
+        "Eight independent base-R control comparisons at two observation dates verify posterior tails and decision criteria",
+        "Staggered enrollment windows verify exclusion of future observations and preservation of closed-window counts; docs/plbarpo-control-reference.md",
+        "Automatic arm replacement, platform allocation, scheduling, simulation and reports remain pending"
+      ]
     },
     {
       "id": 138,

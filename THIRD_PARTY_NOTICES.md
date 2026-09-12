@@ -964,3 +964,13 @@ by J. Jack Lee, Ying-Wei Kuo and Nan Chen. It reuses this package's beta posteri
 integration. DBCD takes an explicit target; simultaneous allocation floors use
 a documented Python policy. Original app code and guide assets are not
 redistributed. See `docs/barpo-reference.md`.
+
+## PLBARPO
+
+`plbarpo_control.py` independently implements entire-trial and concurrent
+control posterior comparisons described by J. Jack Lee, Ying-Wei Kuo and Nan
+Chen in the [PLBARPO guide](https://biostatistics.mdanderson.org/shinyapps/PLBARPO/PLBARPO.pdf).
+Explicit half-open enrollment windows and outcome availability define the
+Python selection contract; exact app boundary parity is unverified. It reuses
+the package's beta comparison kernels. Original app and guide assets are not
+redistributed. See `docs/plbarpo-control-reference.md`.
