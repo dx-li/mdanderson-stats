@@ -34,6 +34,20 @@ def test_bivariate_isotonic_regression_matches_iso_reference_with_unequal_weight
     assert_allclose(_biviso(values, weights), expected, rtol=0, atol=5e-8)
 
 
+def test_biviso_matches_unrounded_cran_fixture_case():
+    patients = np.array([[0, 0, 11, 2], [8, 9, 10, 2], [6, 12, 5, 0]])
+    toxicities = np.array([[0, 0, 11, 0], [2, 1, 4, 1], [2, 3, 2, 0]])
+    expected = np.array(
+        [
+            [0.18390804597701152, 0.18390804597701152, 0.59803921567593965, 0.59803921283967276],
+            [0.18390804597701152, 0.18390804597701152, 0.59803921567593965, 0.59803921852703601],
+            [0.28021978021978022, 0.28021978021978022, 0.59803921567593965, 0.59803921852703601],
+        ]
+    )
+    result = _biviso((toxicities + 0.05) / (patients + 0.1), patients + 0.1)
+    assert_allclose(result, expected, rtol=0, atol=5e-8)
+
+
 def test_keyboard_comb_key_scores_use_stable_beta_tails_and_target_key():
     design = KeyboardCombDesign(target=0.3)
     assert design.target_key == 3
@@ -76,7 +90,7 @@ def test_final_selection_uses_cross_safety_closure_and_weighted_isotonic_fit():
     assert np.isfinite(result.isotonic_mean[0, 1])
     assert np.isfinite(result.isotonic_mean[1, 2])
     empty = design.select_mtd(np.zeros((2, 3)), np.zeros((2, 3)))
-    assert empty.dose == (1, 1)
+    assert empty.dose is None
     assert np.isnan(empty.isotonic_mean).all()
 
 
@@ -98,6 +112,17 @@ def test_low_target_safety_allows_one_dlt_when_three_patients_are_evaluable():
     step = design.next_dose(patients, toxicities, (1, 1))
     assert step.action == "stop_safety"
     assert step.eliminated.all()
+
+
+def test_low_target_boundaries_match_reference_guard_and_cutoffs():
+    design = KeyboardCombDesign(
+        target=0.05,
+        margin_left=0.02,
+        margin_right=0.02,
+        early_stop_patients=None,
+    )
+    assert design._cutoffs(3) == (0, 1, 1)
+    assert design._cutoffs(6) == (0, 1, 1)
 
 
 def test_eliminated_current_dose_never_falls_back_to_reenrollment():

@@ -72,8 +72,8 @@ def _validate_counts(patients: ArrayLike, toxicities: ArrayLike) -> tuple[FloatA
         raise ValueError(
             "patients and toxicities must have matching dimensions with rows <= columns"
         )
-    if np.any(y > n) or n.sum() >= 2**53:
-        raise ValueError("require toxicities <= patients and total patients < 2**53")
+    if np.any(y > n) or n.sum() > 200:
+        raise ValueError("require toxicities <= patients and total patients <= 200")
     return n, y
 
 
@@ -162,7 +162,7 @@ class KeyboardCombDesign:
     """Keyboard dose-finding design for a rectangular two-agent grid.
 
     ``target`` is constrained to the range supported by the public R
-    implementation.  ``marginL`` and ``marginR`` define the target key.  The
+    implementation.  ``margin_left`` and ``margin_right`` define the target key.  The
     implementation accepts complete, evaluable binomial outcomes; delayed or
     fractional outcomes require a separate TITE extension.
     """
@@ -189,11 +189,12 @@ class KeyboardCombDesign:
         if not 0.05 <= target <= 0.6:
             raise ValueError("target must be in [0.05, 0.6]")
         if not (0 < margin_l and 0 < margin_r):
-            raise ValueError("marginL and marginR must be positive")
+            raise ValueError("margin_left and margin_right must be positive")
         lower, upper = target - margin_l, target + margin_r
         if not 0 <= lower < target < upper <= 1:
             raise ValueError(
-                "target key must satisfy 0 <= target-marginL < target < target+marginR <= 1"
+                "target key must satisfy "
+                "0 <= target-margin_left < target < target+margin_right <= 1"
             )
         if not 0 < cutoff < 1 or not 0 <= offset < cutoff:
             raise ValueError("require cutoff_eli in (0,1) and 0 <= safety_offset < cutoff_eli")
@@ -223,18 +224,6 @@ class KeyboardCombDesign:
         object.__setattr__(self, "intervals", _owned(np.column_stack((edges[:-1], edges[1:]))))
         object.__setattr__(self, "target_key", target_key)
         object.__setattr__(self, "_cutoff_cache", {})
-
-    @property
-    def marginL(self) -> float:
-        """R Keyboard spelling retained as a read-only compatibility alias."""
-
-        return self.margin_left
-
-    @property
-    def marginR(self) -> float:
-        """R Keyboard spelling retained as a read-only compatibility alias."""
-
-        return self.margin_right
 
     @property
     def keys(self) -> FloatArray:
@@ -463,11 +452,8 @@ class KeyboardCombDesign:
         output[n == 0] = np.nan
         admissible = (n > 0) & ~state
         if not np.any(admissible):
-            # This is the package's deterministic behavior for an entirely
-            # untreated grid: the first cell is returned even though its
-            # reported estimate is missing.  Once any cell has been treated,
-            # an empty admissible set means that no MTD can be selected.
-            chosen = (1, 1) if not np.any(n > 0) else None
+            # Untreated and fully excluded grids have no admissible MTD.
+            chosen = None
         else:
             tie_break = np.indices(n.shape).sum(axis=0) + 2
             ranking = np.where(
@@ -479,9 +465,3 @@ class KeyboardCombDesign:
             col, row = np.unravel_index(np.argmin(ranking.T), ranking.T.shape)
             chosen = (int(row + 1), int(col + 1))
         return KeyboardCombSelection(chosen, state, _owned(output), _owned(report), safety)
-
-
-# Descriptive aliases keep the public name discoverable without duplicating code.
-KeyboardCombinationDesign = KeyboardCombDesign
-KeyboardCombinationDecision = KeyboardCombDecision
-KeyboardCombinationSelection = KeyboardCombSelection
