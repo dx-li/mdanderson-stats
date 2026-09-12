@@ -1,7 +1,7 @@
 """Planning helpers for the BOIN-waterfall combination design.
 
 The waterfall design partitions a ``J`` by ``K`` dose matrix into an initial
-staircase (the first column followed by the top row), then one row slice at a
+staircase (the first column followed by the last row), then one row slice at a
 time.  This module plans the next slice from completed dose counts; conduct
 within a slice is delegated to :class:`~mdanderson_stats.boin.BOINDesign`.
 """
@@ -15,7 +15,7 @@ from numpy.typing import ArrayLike, NDArray
 from scipy.optimize import isotonic_regression
 from scipy.special import betaincc
 
-from ._validation import scalar
+from ._validation import count, scalar
 from .boin import BOINDesign, _owned
 
 DoseCombination = tuple[int, int]
@@ -23,7 +23,7 @@ BoolMatrix = NDArray[np.bool_]
 
 
 def _counts(value: ArrayLike, name: str) -> NDArray[np.float64]:
-    result = np.asarray(value, dtype=float)
+    result = count(value, name)
     if result.ndim != 2 or result.shape[0] < 2 or result.shape[1] < 2:
         raise ValueError(f"{name} must be a matrix with at least 2 rows and 2 columns")
     if result.shape[0] > result.shape[1] or not np.all(np.isfinite(result)):
@@ -40,6 +40,8 @@ def _validate_counts(patients: ArrayLike, toxicities: ArrayLike) -> tuple[NDArra
         raise ValueError("patients and toxicities must have matching dimensions")
     if np.any(y > n):
         raise ValueError("toxicities cannot exceed patients")
+    if n.sum() > 1000:
+        raise ValueError("total patients must not exceed 1000")
     return n, y
 
 
@@ -133,8 +135,8 @@ def _candidate(
     fitted = fitted + np.arange(1, len(active) + 1) * 1e-10
     chosen = int(np.argmin(np.abs(fitted - design.target)))
     candidate = (active[chosen][0] + 1, active[chosen][1] + 1)
-    boundary = design.boundary_table(max(150, int(np.max(treated)))).escalate_max
     count = int(treated[chosen])
+    boundary = design.boundary_table(max(1, count)).escalate_max
     escalate = int(observed[chosen]) <= int(boundary[count - 1])
     return candidate, bool(escalate), _owned(eliminated), "continue"
 
@@ -152,7 +154,7 @@ def next_subtrial(
 ) -> WaterfallPlan:
     """Determine the next dose-searching slice and its starting dose.
 
-    This is the Python equivalent of BOIN's ``next.subtrial``.  The highest
+    This is the Python equivalent of BOIN's ``next.subtrial``.  The lowest
     indexed slice containing data is treated as current.  Its candidate is
     estimated by weighted one-dimensional isotonic regression; the next slice
     is one row lower and starts one column to the right of that candidate.
@@ -197,7 +199,7 @@ def next_subtrial(
             candidate,
             escalation,
             eliminated,
-            action if current != 1 else "complete",
+            action if action != "continue" else "complete",
         )
     next_row = max(1, candidate[0] - 1)
     next_col = min(columns, candidate[1] + 1)

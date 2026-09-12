@@ -40,3 +40,13 @@ def test_safety_stop_and_validation():
     assert plan.next_subtrial is None
     with pytest.raises(ValueError, match="cannot exceed"):
         next_subtrial(0.3, np.ones((2, 2)), np.array([[0, 2], [0, 0]]))
+
+
+def test_extra_safe_applies_to_first_dose_of_current_slice():
+    patients = np.array([[3, 0, 0], [0, 3, 0]])
+    toxicities = np.array([[2, 0, 0], [0, 2, 0]])
+    ordinary = next_subtrial(0.3, patients, toxicities)
+    strict = next_subtrial(0.3, patients, toxicities, extra_safe=True)
+    assert ordinary.action == "next_subtrial"
+    assert strict.action == "stop_safety"
+    assert strict.current_subtrial == 2
