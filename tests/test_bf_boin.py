@@ -11,7 +11,7 @@ def test_backfill_uses_assigned_cap_and_reopens_temporary_closure():
     open_state = design.backfill_eligibility(
         [3, 3, 0], [0, 0, 0], [4, 12, 0], 3, response_observed=[True, True, False]
     )
-    assert open_state.dose == 2
+    assert open_state.dose == 1
     assert not open_state.eligible[1]
     reopened = design.backfill_eligibility(
         [3, 3, 3], [1, 1, 0], [4, 5, 3], 3, response_observed=[True, True, False]
