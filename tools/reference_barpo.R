@@ -1,5 +1,5 @@
 # Independent base-R posterior integrals and four BARPO allocation formulas.
-a <- c(2,5,9); b <- c(5,3,2)
+a <- c(2,5,9); b <- c(4,3,2)
 assigned <- c(5,8,12); maximum <- 50
 best <- vapply(seq_along(a), function(i) integrate(function(z)
   dbeta(z,a[i],b[i])*vapply(z,function(t)prod(pbeta(t,a[-i],b[-i])),numeric(1)),

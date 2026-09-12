@@ -3512,12 +3512,21 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BARPO/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BARPO/",
-      "references": [],
+      "references": [
+        "https://biostatistics.mdanderson.org/shinyapps/BARPO/BARPO.pdf"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Independent beta posterior best-arm probabilities and futility/efficacy monitoring with fixed references or a control arm",
+        "BARCP, BARN2N, BARMTV and explicit-target DBCD allocation formulas with pending-assignment counts, stopped-arm exclusion and allocation floors"
+      ],
+      "validation": [
+        "Independent base-R quadrature for three-arm best probabilities, control comparisons and threshold probabilities",
+        "Twelve base-R allocation scenarios across all four methods and no, control-only and simultaneous floors; docs/barpo-reference.md",
+        "Trial simulation, burn-in scheduling, native DBCD target construction and reports remain pending"
+      ]
     },
     {
       "id": 132,

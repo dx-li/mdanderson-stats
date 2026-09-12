@@ -955,3 +955,12 @@ Zhao, Li, Liu and Yuan (2023), doi:10.1002/pst.2296, using the authors’
 accessible preprint equations and the MD Anderson app description.
 Base-R calculations provide independent numerical references. No original
 backend code or paper content is redistributed. See `docs/bop2-dc-reference.md`.
+
+## BARPO
+
+`barpo.py` independently implements posterior monitoring and allocation formulas
+from the [MD Anderson BARPO support guide](https://biostatistics.mdanderson.org/shinyapps/BARPO/BARPO.pdf),
+by J. Jack Lee, Ying-Wei Kuo and Nan Chen. It reuses this package's beta posterior
+integration. DBCD takes an explicit target; simultaneous allocation floors use
+a documented Python policy. Original app code and guide assets are not
+redistributed. See `docs/barpo-reference.md`.

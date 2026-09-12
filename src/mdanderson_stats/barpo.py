@@ -284,14 +284,14 @@ def barpo_allocation(
             raise ValueError("max_n must be a positive integer for barn2n")
         if np.sum(assigned) > max_n_value:
             raise ValueError("assigned total cannot exceed max_n")
-        exponent = float(np.sum(assigned) / (2 * max_n_value))
+        exponent = float((np.sum(assigned) / max_n_value) / 2)
     else:
         exponent = tau
     p = np.asarray(posterior.best_probability)
     if np.any(p < 0) or not np.isclose(p.sum(), 1, rtol=0, atol=2e-7):
         raise ValueError("posterior best probabilities must be a valid partition")
     active = ~stopped_array
-    if method in ("barcp", "barn2n", "barmtv") and np.any(
+    if (method == "barmtv" or (method in ("barcp", "barn2n") and exponent > 0)) and np.any(
         p[active] <= posterior.best_probability_error[active]
     ):
         raise ArithmeticError("best-arm probability tail is unresolved for allocation")
@@ -299,10 +299,12 @@ def barpo_allocation(
         variance = np.asarray(posterior.variance)
         if np.any(~np.isfinite(variance[active])) or np.any(variance[active] <= 0):
             raise ArithmeticError("posterior variance is invalid for barmtv allocation")
-        log_raw = 0.5 * (np.log(p) + np.log(variance) - np.log(assigned + 1))
-        log_raw -= np.max(log_raw[active])
+        log_raw = 0.5 * (
+            np.log(p[active]) + np.log(variance[active]) - np.log(assigned[active] + 1)
+        )
+        log_raw -= np.max(log_raw)
         raw = np.zeros(k)
-        raw[active] = np.exp(log_raw[active])
+        raw[active] = np.exp(log_raw)
     elif method == "dbcd":
         if target_probability is None:
             raise ValueError("target_probability is required for dbcd")
@@ -327,10 +329,9 @@ def barpo_allocation(
                     log_target - log_target[np.argmax(np.where(active, delta, -np.inf))]
                 ) + tau * (delta - anchor)
             score -= np.max(score[active])
-            raw[active] = np.exp(tau1 * score[active])
+            with np.errstate(over="ignore", under="ignore"):
+                raw[active] = np.exp(tau1 * score[active])
     else:
-        if np.any(p[active] <= 0):
-            raise ArithmeticError("best-arm probability is unresolved for allocation")
         raw = np.zeros(k)
         if exponent == 0:
             raw[active] = 1.0

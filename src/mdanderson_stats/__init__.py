@@ -70,6 +70,7 @@ from .asypow_smo_design import asypow_smo_design
 from .asypow_smo_exponential import asypow_smo_exponential
 from .asypow_smo_ordinal_regression import asypow_smo_ordinal_regression
 from .asypow_smo_regression import asypow_smo_regression
+from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
 from .bayes_factor_binary import (
     BayesFactorBinaryDesign,
     BayesFactorBinaryOC,
@@ -832,6 +833,11 @@ from .windows import (
 )
 
 __all__ = [
+    "BarpoMonitoring",
+    "BarpoPosterior",
+    "barpo_allocation",
+    "barpo_monitor",
+    "barpo_posterior",
     "BOP2DCInfeasibleError",
     "BOP2DCOptimization",
     "optimize_bop2_dc",

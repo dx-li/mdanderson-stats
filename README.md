@@ -1089,3 +1089,8 @@ inverse-gamma model with separate median survival criteria. Paired modes include
 exact operating characteristics that preserve endpoint association and early
 stopping. Paired calibration and survival operating characteristics and
 calibration remain open.
+
+[BARPO](docs/barpo.md) adds binary posterior monitoring with or without a control
+and four adaptive allocation methods: BARCP, BARN2N, BARMTV and explicit-target
+DBCD. It accounts for pending assignment counts and allocation floors; trial
+simulation and scheduling remain open.
