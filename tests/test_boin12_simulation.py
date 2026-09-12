@@ -46,3 +46,23 @@ def test_joint_rows_are_validated_and_all_toxic_trials_stop_without_selection() 
     assert np.all(result.selected_obd == 0)
     assert np.all(result.selected_mtd == 0)
     assert set(result.stop_reason) == {"stop_no_admissible_neighbor"}
+
+
+def test_inadmissible_upper_current_dose_deescalates_to_admissible_lower_dose() -> None:
+    design = BOIN12Design(target_toxicity=0.3, toxicity_limit=0.35, efficacy_limit=0.25)
+    patients = np.array([3, 3, 0])
+    toxicities = np.array([0, 3, 0])
+    efficacies = np.array([1, 1, 0])
+    efficacy_without_toxicity = np.array([1, 0, 0])
+
+    decision = design.next_dose(
+        patients,
+        toxicities,
+        efficacies,
+        2,
+        efficacy_without_toxicity=efficacy_without_toxicity,
+        eliminated=np.array([False, True, False]),
+    )
+
+    assert decision.action == "deescalate"
+    assert decision.next_dose == 1
