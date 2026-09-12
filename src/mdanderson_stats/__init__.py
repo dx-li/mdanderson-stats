@@ -192,6 +192,12 @@ from .bop2_complex_sample_size import (
     optimize_bop2_efftox_sample_size,
     optimize_bop2_paired_sample_size,
 )
+from .bop2_dc import (
+    BOP2DCDesign,
+    BOP2DCOperatingCharacteristics,
+    BOP2DCState,
+    bop2_dc_design,
+)
 from .bop2_efftox import bop2_efftox_design
 from .bop2_efftox_optimization import BOP2EffToxOptimization, optimize_bop2_efftox
 from .bop2_paired import (
@@ -810,6 +816,10 @@ from .windows import (
 )
 
 __all__ = [
+    "BOP2DCDesign",
+    "BOP2DCOperatingCharacteristics",
+    "BOP2DCState",
+    "bop2_dc_design",
     "BFBOINSimulation",
     "simulate_bf_boin",
     "BFBOINBackfill",

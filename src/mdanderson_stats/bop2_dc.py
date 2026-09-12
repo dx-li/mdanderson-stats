@@ -63,7 +63,7 @@ class BOP2DCDesign:
         y, n = y.astype(np.int64), n.astype(np.int64)
         pl, pc = self._probabilities(y, n)
         decision = np.full(n.shape, "continue", dtype="U16")
-        for j, look in enumerate(self.looks[:-1]):
+        for look in self.looks[:-1]:
             at = n == look
             decision[
                 at
@@ -182,7 +182,10 @@ def bop2_dc_design(
             raise ValueError("invalid interim schedule")
         schedule = np.unique(np.r_[np.arange(first, n, step), n]).astype(np.int64)
     else:
-        schedule = count(looks, "looks").astype(np.int64)
+        schedule = count(looks, "looks")
+        if np.any(schedule > n):
+            raise ValueError("looks cannot exceed max_subjects")
+        schedule = schedule.astype(np.int64)
         if (
             schedule.ndim != 1
             or not schedule.size
@@ -191,6 +194,8 @@ def bop2_dc_design(
             or np.any(np.diff(schedule) <= 0)
         ):
             raise ValueError("looks must increase and end at max_subjects")
+    if ll * (schedule[0] / n) ** gl == 0 or lc * (schedule[0] / n) ** gc == 0:
+        raise ArithmeticError("interim cutoff underflows; increase cutoff scales")
     no_l, no_c = [], []
     for look in schedule[:-1]:
         y = np.arange(look + 1)
@@ -209,7 +214,7 @@ def bop2_dc_design(
         gl,
         gc,
         prior_tuple,
-        schedule,
-        np.asarray(no_l, dtype=np.int64),
-        np.asarray(no_c, dtype=np.int64),
+        _owned(schedule),
+        _owned(np.asarray(no_l, dtype=np.int64)),
+        _owned(np.asarray(no_c, dtype=np.int64)),
     )

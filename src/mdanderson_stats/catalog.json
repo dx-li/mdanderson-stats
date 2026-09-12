@@ -3948,12 +3948,22 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BOP2-DC",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BOP2-DC",
-      "references": [],
+      "references": [
+        "https://doi.org/10.1002/pst.2296",
+        "https://arxiv.org/abs/2112.10880"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Binary efficacy dual-criterion posterior monitoring with interim futility and final go/consider/no-go decisions",
+        "Separate interim response-count boundaries for statistical and clinical criteria",
+        "Exact binomial operating characteristics with absorbing interim stopping, total no-go risk and expected sample size"
+      ],
+      "validation": [
+        "Five independent base-R posterior and decision cases match Python",
+        "Closed-form four-patient design verifies exact outcome probabilities, equality-as-consider and interim stopping absorption"
+      ]
     },
     {
       "id": 157,

@@ -1077,3 +1077,8 @@ posterior safety exclusions and final MTD selection. Assigned and evaluated
 patient counts are kept separate. Calendar simulation includes delayed DLT and
 response observation, auditable patient histories and Monte Carlo errors.
 Expansion, titration and generated reports remain open.
+
+[BOP2-DC](docs/bop2-dc.md) adds binary efficacy monitoring with distinct
+go/consider/no-go outcomes and exact operating characteristics. Independent
+R posteriors and a closed-form early-stopping example validate the core.
+Parameter calibration and the other endpoint modes remain open.

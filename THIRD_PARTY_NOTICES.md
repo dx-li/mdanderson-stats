@@ -944,3 +944,11 @@ The CRAN `bfboin` 0.1.1 package by Magirr and Zhang (GPL >= 3) supplies
 independent numerical references; it is not the MD Anderson app backend.
 Original source and app assets are not redistributed. See
 `docs/bf-boin-reference.md` for provenance and differences.
+
+## BOP2-DC
+
+`bop2_dc.py` independently implements binary dual-criterion monitoring from
+Zhao, Li, Liu and Yuan (2023), doi:10.1002/pst.2296, using the authors’
+accessible preprint equations and the MD Anderson app description.
+Base-R calculations provide independent numerical references. No original
+backend code or paper content is redistributed. See `docs/bop2-dc-reference.md`.
