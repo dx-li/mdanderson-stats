@@ -41,7 +41,7 @@ def plbarpo_control_counts(
     windows: ArrayLike,
     *,
     as_of: float,
-) -> tuple[np.ndarray, np.ndarray]:
+) -> np.ndarray:
     """Aggregate observed binary outcomes into half-open enrollment windows.
 
     Each window is ``[open, close)``.  Enrollment exactly at ``close`` belongs
@@ -51,9 +51,13 @@ def plbarpo_control_counts(
     ``as_of``.  Pending outcomes are represented by infinite observation time.
     """
     enrollment = finite(enrollment_time, "enrollment_time")
+    if enrollment.ndim != 1:
+        raise ValueError("enrollment_time must be one-dimensional")
+    if len(enrollment) > 100_000:
+        raise ValueError("at most 100000 records are supported")
     outcome = np.asarray(outcomes, dtype=np.float64)
     observation = np.asarray(observation_time, dtype=np.float64)
-    if enrollment.ndim != 1 or outcome.shape != enrollment.shape:
+    if outcome.shape != enrollment.shape:
         raise ValueError("enrollment_time and outcomes must be one-dimensional with equal length")
     if observation.shape != enrollment.shape:
         raise ValueError("observation_time must have one entry per record")
@@ -74,22 +78,17 @@ def plbarpo_control_counts(
         raise ValueError("window starts must be finite and window closes may only be +inf")
     if np.any(np.isneginf(raw_window[:, 1])):
         raise ValueError("window closes may only be positive infinity")
-    window = np.where(np.isposinf(raw_window), np.finfo(float).max, raw_window)
-    if np.any(window[:, 0] >= window[:, 1]):
+    if np.any(raw_window[:, 0] >= raw_window[:, 1]):
         raise ValueError("each window must satisfy open < close")
-    # A positive-infinite close is allowed; no other infinity can occur after
-    # finite() validation, so check it explicitly while preserving that case.
-    if len(enrollment) > 100_000:
-        raise ValueError("at most 100000 records are supported")
 
     eligible = (enrollment <= cutoff) & (observation <= cutoff)
-    successes: np.ndarray = np.zeros(len(window), dtype=np.float64)
-    failures: np.ndarray = np.zeros(len(window), dtype=np.float64)
+    successes: np.ndarray = np.zeros(len(raw_window), dtype=np.float64)
+    failures: np.ndarray = np.zeros(len(raw_window), dtype=np.float64)
     for i, (opening, closing) in enumerate(raw_window):
         in_window = eligible & (enrollment >= opening) & (enrollment < closing)
         successes[i] = np.sum(in_window & (outcome == 1))
         failures[i] = np.sum(in_window & (outcome == 0))
-    return _readonly_counts(successes), _readonly_counts(failures)
+    return _readonly_counts(np.column_stack((successes, failures)))
 
 
 @dataclass(frozen=True)
@@ -157,7 +156,9 @@ def plbarpo_control_monitor(
         raise ValueError("prior must have shape (K, 2), with 1 <= K <= 100")
     k = k_prior.shape[0]
     p = _prior(k_prior, "prior", k)
-    control_shape = _prior(control_prior, "control_prior")[0]
+    control_shape = finite(control_prior, "control_prior")
+    if control_shape.shape != (2,) or np.any(control_shape <= 0):
+        raise ValueError("control_prior must have shape (2,) with positive shapes")
     s = _counts(successes, "successes", (k,))
     f = _counts(failures, "failures", (k,))
     if control_mode == "entire":

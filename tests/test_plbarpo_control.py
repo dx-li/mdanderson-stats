@@ -8,17 +8,15 @@ from mdanderson_stats.plbarpo_control import (
 
 
 def test_control_counts_use_half_open_windows_and_as_of():
-    successes, failures = plbarpo_control_counts(
+    counts = plbarpo_control_counts(
         [0, 1, 2, 3, 4],
         [1, 0, 1, 0, 1],
         [0, 1, np.inf, 3, 4],
         [[0, 2], [2, 4], [4, np.inf]],
         as_of=4,
     )
-    np.testing.assert_array_equal(successes, [1, 0, 1])
-    np.testing.assert_array_equal(failures, [1, 1, 0])
-    assert not successes.flags.writeable
-    assert not failures.flags.writeable
+    np.testing.assert_array_equal(counts, [[1, 1], [0, 1], [1, 0]])
+    assert not counts.flags.writeable
 
 
 def test_control_counts_reject_invalid_records_and_windows():
@@ -26,11 +24,8 @@ def test_control_counts_reject_invalid_records_and_windows():
         plbarpo_control_counts([1], [1], [0], [[0, 2]], as_of=2)
     with pytest.raises(ValueError, match="open < close"):
         plbarpo_control_counts([1], [1], [1], [[2, 2]], as_of=2)
-    successes, failures = plbarpo_control_counts(
-        [1, 2], [np.nan, 1], [np.inf, 2], [[0, 3]], as_of=2
-    )
-    np.testing.assert_array_equal(successes, [1])
-    np.testing.assert_array_equal(failures, [0])
+    counts = plbarpo_control_counts([1, 2], [np.nan, 1], [np.inf, 2], [[0, 3]], as_of=2)
+    np.testing.assert_array_equal(counts, [[1, 0]])
     with pytest.raises(ValueError, match="missing outcomes"):
         plbarpo_control_counts([1], [np.nan], [1], [[0, 3]], as_of=2)
 

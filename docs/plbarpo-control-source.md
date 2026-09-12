@@ -1,6 +1,8 @@
 # PLBARPO control monitoring
 
-`plbarpo_control_counts` aggregates dated binary records into explicit
+`plbarpo_control_counts` aggregates dated binary records into a read-only
+`(K, 2)` array whose columns are successes and failures, suitable for passing
+directly as concurrent `control_counts`. It uses explicit
 half-open enrollment windows `[open, close)`. A record is counted only when its
 enrollment time is at or before `as_of` and its outcome observation time is at
 or before `as_of`; an infinite observation time remains pending. Window
