@@ -23,6 +23,14 @@ prior, clinical thresholds, tuning parameters, posterior tails and cutoffs.
 The generator ran successfully with R 4.4.1. These are equation-level
 references, not outputs from the Shiny app's backend.
 
+`tools/reference_bop2_dc_grid.R` enumerates all 16 response paths for a
+four-patient trial with an interim at two patients. Six cutoff pairs are
+evaluated under futile and effective response rates. The resulting
+`bop2-dc-grid.csv` includes go, total no-go, consider and expected sample
+size, with all design inputs. This oracle uses path enumeration rather than
+the Python recursion and distinguishes maximum-go and minimum-sample-size
+objectives. Its base-R run also checks conservation of total probability.
+
 The downloaded preprint is preserved in ignored `research/raw/BOP2-DC`.
 Its SHA-256 is
 `a344f088f564a218e29af1abb0c22e1799a344dba6820a41048769905705ad7a`.
