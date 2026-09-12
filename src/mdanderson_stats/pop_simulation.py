@@ -69,11 +69,11 @@ def simulate_pop(
     trials, total_patients, cohort_size = int(trials), int(total_patients), int(cohort_size)
     rng = np.random.default_rng(seed)
     boundaries = design.boundaries(total_patients, cohort_size=1)
-    selections = np.zeros(trials, dtype=np.int64)
+    selections: NDArray[np.int64] = np.zeros(trials, dtype=np.int64)
     patient_counts = np.zeros((trials, p.size), dtype=np.int64)
     toxicity_counts = np.zeros_like(patient_counts)
-    early = np.zeros(trials, dtype=bool)
-    reasons = np.full(trials, "completed", dtype="U16")
+    early: NDArray[np.bool_] = np.zeros(trials, dtype=bool)
+    reasons: NDArray[np.str_] = np.full(trials, "completed", dtype="U16")
     true_mtd = int(np.argmin(np.abs(p - design.target)))
 
     for trial in range(trials):
