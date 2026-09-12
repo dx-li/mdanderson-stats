@@ -39,3 +39,16 @@ def test_joint_prior_and_counts_are_preserved():
 def test_invalid_toxicity_reference_order_is_rejected():
     with pytest.raises(ValueError, match="toxicity lrv"):
         bop2_dc_paired_design(4, "efficacy_toxicity", [0.3, 0.1], [0.45, 0.2])
+
+
+def test_tiny_shapes_and_toxicity_cutoffs_remain_finite():
+    design = bop2_dc_paired_design(
+        1,
+        "efficacy_toxicity",
+        [0.2, 2e-300],
+        [0.4, 1e-300],
+        prior=[1e-300] * 4,
+        looks=[1],
+    )
+    state = design.monitor([1, 0, 0, 0])
+    assert np.all(np.isfinite(state.marginal_posterior))
