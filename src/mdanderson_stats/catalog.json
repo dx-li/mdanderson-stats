@@ -4314,9 +4314,17 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "PoPDesign and predictive_bayes_factor: vectorized stable PrBF calculations, full/cohort decision boundaries, strict transition and directional sticky exclusion rules, and weighted isotonic MTD selection with dose-label-safe filtering.",
+        "simulate_pop: bounded complete-outcome cohort simulation, optional accelerated titration, final partial cohorts, configurable starting dose and exclusion, selection/early-stop/risk probabilities with Monte Carlo errors, and compact per-trial counts.",
+        "Paper n>=3 final safety guard by default (zero reproduces package guard), consistent selection ties, corrected untried-dose indexing and honored risk cutoff. Native plots, protocol/report generation and scenario-file handling remain open; see docs/pop-design.md."
+      ],
+      "validation": [
+        "Published Table 1 and PoPdesign 1.1.0 source/manual pinned alongside official application version1.0.0.0 in docs/pop-design-sources.json.",
+        "360 native boundary rows at six targets, 39 native log-PrBF references, 30 native MTD states, and exact two-dose cohort-outcome enumeration for four scenarios.",
+        "Focused tests cover titration, all-zero/all-toxic outcomes, strict equality, sticky exclusions, untried dose labels, paper versus native safety minimum, readonly results and pre-allocation resource bounds. Package and seeded simulation smoke checks use small sequential runs."
+      ]
     }
   ]
 }

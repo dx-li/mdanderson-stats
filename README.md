@@ -1121,3 +1121,8 @@ toxicity and progression using correlated piecewise-exponential hazards and
 multiple imputation. Explicit priors, posterior traces and Monte Carlo error
 estimates make the Python sampling choices inspectable. Complete data reduce
 to exact Beta posterior monitoring; native calibration and reports remain open.
+
+[PoPdesign](docs/pop-design.md) adds predictive Bayes-factor boundaries,
+sticky dose exclusions, weighted isotonic MTD selection, and memory-bounded
+cohort simulation with accelerated titration. Published table values, native R
+results and exact small-trial enumeration validate the numerical core.

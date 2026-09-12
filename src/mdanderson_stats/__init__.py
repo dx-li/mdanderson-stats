@@ -567,6 +567,14 @@ from .plbarpo_control import (
     plbarpo_control_counts,
     plbarpo_control_monitor,
 )
+from .pop_design import (
+    PoPBoundaries,
+    PoPDecision,
+    PoPDesign,
+    PoPSelection,
+    predictive_bayes_factor,
+)
+from .pop_simulation import PoPSimulation, simulate_pop
 from .predictive_binary import (
     BinaryPredictivePlan,
     BinaryPredictiveProbabilities,
@@ -865,6 +873,13 @@ from .windows import (
 )
 
 __all__ = [
+    "PoPBoundaries",
+    "PoPDecision",
+    "PoPDesign",
+    "PoPSelection",
+    "PoPSimulation",
+    "predictive_bayes_factor",
+    "simulate_pop",
     "Phase2DelayResult",
     "phase2_delay_monitor",
     "Rbop2BinaryBoundaryTable",

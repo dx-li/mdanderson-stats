@@ -1,0 +1,48 @@
+{
+  "catalog_id": 175,
+  "retrieved_at": "2026-09-12",
+  "application_url": "https://biostatistics.mdanderson.org/shinyapps/PoPdesign/",
+  "application_version": "1.0.0.0",
+  "pid": 1190,
+  "native_reference_package": "PoPdesign",
+  "native_reference_version": "1.1.0",
+  "native_reference_license": "GPL-2",
+  "paper_doi": "10.1080/01621459.2025.2484044",
+  "files": [
+    {
+      "filename": "app.html",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/PoPdesign/",
+      "sha256": "6cb24cb4376d594de4d67a6bd0d73ae443d95402b191773878229cb16c610ba0"
+    },
+    {
+      "filename": "paper_pmc.html",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12700609/",
+      "sha256": "4c1f07dbc4b922b783ece1bc6034b62204e30c62e0920dbf0b1775d02a99b58f"
+    },
+    {
+      "filename": "PoPdesign.pdf",
+      "url": "https://cran.r-project.org/web/packages/PoPdesign/PoPdesign.pdf",
+      "sha256": "bba31b9f812b0c4f56314db37d90e56ea8331ac01708c2df4295408d712481c2"
+    },
+    {
+      "filename": "PoPdesign_dose_samplesize.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/PoPdesign/PoPdesign_dose_samplesize.pdf",
+      "sha256": "61b5e2fa5856f79ea14526ecf788b721e22510b440fdf7aa17de8feb3d9cf7af"
+    },
+    {
+      "filename": "PoPdesign_target_probability.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/PoPdesign/PoPdesign_target_probability.pdf",
+      "sha256": "2235a519bfe86035a3b107c1a73d9f35cedf7491868d3bbaa1f26fd990e49d0f"
+    },
+    {
+      "filename": "jasa_PoP.R",
+      "url": "https://raw.githubusercontent.com/staceyfu1029/PoP-design/308a1e3c6ba73355e6508efc69548082d114913d/JASA/code/PoP.R",
+      "sha256": "014839f4aeee625c1cec6f980477b248cdf23fb07c1136c2a99ef4340a789f3b"
+    },
+    {
+      "filename": "PoPdesign_1.1.0.tar.gz",
+      "url": "https://cran.r-project.org/src/contrib/PoPdesign_1.1.0.tar.gz",
+      "sha256": "8b19a6de2548691f4cf489de93fc5ba1c848c026c8ef009f1b8ff284bfec6f93"
+    }
+  ]
+}
