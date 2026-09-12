@@ -910,3 +910,15 @@ executable reference; `Iso` provides the independent bivariate-isotonic referenc
 Original R source, app assets and PDFs are not redistributed. Generated numerical
 fixtures and independent reference runners are included. Source versions, hashes
 and known differences are recorded in `docs/keyboard-combination-source.md`.
+
+## BOIN drug combinations and waterfall
+
+`boin_combination.py`, `boin_combination_simulation.py` and `boin_waterfall.py`
+independently implement the combination BOIN and waterfall methods described by
+Lin and Yin (2017), doi:10.1177/0962280215594494; Zhang and Yuan (2016),
+doi:10.1002/sim.7095; and Yan et al. (2020), doi:10.18637/jss.v094.i13.
+The CRAN `BOIN` 2.7.2 package declares GPL-2 and serves as an executable
+reference, with `Iso` supplying independent isotonic fits. Original R source,
+app assets and paper PDFs are not redistributed. Generated numerical fixtures
+and the independent reference runner are included. See
+`docs/boin-combination-source.md` for provenance and backend differences.

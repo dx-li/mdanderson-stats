@@ -1058,3 +1058,10 @@ posterior safety monitoring, weighted two-dimensional isotonic MTD selection and
 seeded cohort simulation with Monte Carlo errors. Independent R references cover
 movement, selection and the numerical fit; source discrepancies are documented.
 Generated trial protocols and the paper's other movement variants remain open.
+
+[BOINComb](docs/boin-combination.md) adds ordinary combination dose decisions,
+posterior safety monitoring, final MTD and contour selection, and waterfall
+subtrial planning. Seeded cohort simulations report operating characteristics
+and Monte Carlo errors. Native R references distinguish the interactive
+selector from the simulator's unrounded selection rule. Titration, the 3+3
+run-in, full waterfall simulation and generated protocols remain open.

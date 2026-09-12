@@ -3456,12 +3456,28 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BOINComb/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BOINComb/",
-      "references": [],
+      "references": [
+        "https://doi.org/10.1177/0962280215594494",
+        "https://doi.org/10.1002/sim.7095",
+        "https://doi.org/10.18637/jss.v094.i13",
+        "https://cran.r-project.org/src/contrib/BOIN_2.7.2.tar.gz"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Ordinary combination BOIN boundaries, axis-adjacent dose decisions, posterior interval desirability and explicit random ties",
+        "Posterior overdose elimination, retained safety masks, extra-safe stopping and enrollment stopping",
+        "Weighted bivariate isotonic single-MTD and contour selection with native rounding, selection adjustment and optional bound-MTD restriction",
+        "Waterfall next-subtrial planning from accumulated data with weighted one-dimensional isotonic selection and subtrial safety",
+        "Complete-outcome ordinary combination cohort simulation with trial-level counts, selection probabilities and Monte Carlo errors",
+        "Remaining: accelerated titration, 3+3 run-in, full waterfall simulation, enumerated desirability-rank tables and generated protocols/reports"
+      ],
+      "validation": [
+        "BOIN 2.7.2 native boundary, movement, selection and waterfall references; independent unrounded Iso::biviso fits",
+        "Full native contour pairs, source rounding and cross-closure checks; safety and accumulated-subtrial replay",
+        "Seeded simulation and numerical stability checks; source/backend differences documented in docs/boin-combination-source.md"
+      ]
     },
     {
       "id": 129,

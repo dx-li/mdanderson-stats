@@ -168,8 +168,11 @@ from .blockarand import (
     simulate_blockarand_oc,
 )
 from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
+from .boin_combination import BOINCombDecision, BOINCombDesign, BOINCombSelection
+from .boin_combination_simulation import BOINCombinationSimulation, simulate_boin_combination
 from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
+from .boin_waterfall import BOINWaterfall, WaterfallPlan, next_subtrial
 from .bop2_binary import (
     BOP2BinaryOptimization,
     BOP2InfeasibleError,
@@ -1285,6 +1288,14 @@ __all__ = [
     "BOINSelection",
     "BOINSimulation",
     "simulate_boin",
+    "BOINCombDecision",
+    "BOINCombDesign",
+    "BOINCombSelection",
+    "BOINCombinationSimulation",
+    "simulate_boin_combination",
+    "BOINWaterfall",
+    "WaterfallPlan",
+    "next_subtrial",
     "SurvivalSampleSize",
     "exponential_event_probability",
     "survival_event_power",

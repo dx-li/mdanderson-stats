@@ -41,18 +41,20 @@ movement rules in `next.comb()`.
 uniform-prior safety probability `Pr(p > target | y+1,n-y+1)`. At the current
 cell, escalation occurs when `y` is at or below the escalation boundary and
 de-escalation when `y` is at or above the de-escalation boundary. It considers
-only the two diagonal-neighbor moves `(j+1,k)` and `(j,k+1)` for escalation and
+only the two axis-adjacent moves `(j+1,k)` and `(j,k+1)` for escalation and
 `(j-1,k)` and `(j,k-1)` for de-escalation. The candidate with the largest
 
 ```
 Pr(lambda_e < p <= lambda_d | y + .5, n - y + .5) + .0005*n
 ```
 
-is selected; an exact tie is resolved using R's `runif`. Eliminated candidates
-are excluded. A southeast rectangle is eliminated after an observed cell
-crosses the safety cutoff. The lowest-dose elimination, extra-safe rule, and
-precision stopping rule return `(99,99)` in the native R object rather than a
-normal dose pair.
+is selected; an exact tie is resolved using R's `runif`. Escalation excludes
+eliminated candidates and candidates blocked by empirical toxicity estimates
+in the preceding part of their row or column. The original de-escalation path
+does not filter an inherited elimination mask; Python excludes such candidates.
+A southeast rectangle is eliminated after an observed cell crosses the safety
+cutoff. The lowest-dose elimination, extra-safe rule, and precision stopping
+rule leave the native `next_dc` unavailable; Python returns `next_dose=None`.
 
 The movement fixture includes unequal neighboring information, an exact
 posterior tie, retention, de-escalation, safety closure, extra-safe stopping,
@@ -63,6 +65,7 @@ one-based dose coordinates.
 
 `select.mtd.comb()` uses a cross-shaped elimination closure: an eliminated cell
 marks cells to its right in the same row and cells below it in the same column.
+The scan stops at the first unsafe cell in each row.
 The final working estimate is
 
 ```
@@ -72,8 +75,8 @@ fit = Iso::biviso(raw, n + .1)
 
 and the fitted matrix is rounded to two decimals **before** MTD selection and
 `boundMTD` filtering. Untreated cells display `NA`. Selection adds a tiny
-row-plus-column perturbation (`1e-5`) only to break distance ties; it does not
-change the displayed fit. `boundMTD=TRUE` rejects candidate rounded fitted
+row-plus-column perturbation (`1e-5`) before computing distance to the target;
+it does not change the displayed fit. `boundMTD=TRUE` rejects adjusted rounded
 estimates above the de-escalation boundary. With
 `mtd.contour=TRUE`, the package chooses one admissible dose per row and applies
 the contour continuity rule.
@@ -85,7 +88,7 @@ and the bound-MTD option.
 
 ## Waterfall, stopping, and simulation
 
-`next.subtrial()` identifies the current diagonal subtrial, performs a weighted
+`next.subtrial()` identifies the lowest-indexed occupied subtrial, performs a weighted
 one-dimensional isotonic selection among its treated, noneliminated cells, and
 returns the next subtrial's start and search space. The native documented
 waterfall example is retained in `boin-combination-waterfall.csv`.
@@ -113,6 +116,11 @@ rounds the isotonic fit before choosing an MTD, while the nested selector used
 inside `get.oc.comb()` selects from its unrounded fit. The selection fixtures
 and focused Python tests target the standalone app-selection path; operating
 characteristic parity should treat the simulator's nested path separately.
+The native simulator also omits the interactive helper's empirical escalation
+blockers. Its enrollment stop requires a retention condition (including blocked
+escalation at the grid boundary), whereas `next.comb()` stops unconditionally
+at the current-dose enrollment limit. These are different executable contracts
+within the same package.
 
 The app guide describes accelerated titration and a 3+3 run-in that are app
 wrappers around the standard method. They should not be inferred from
