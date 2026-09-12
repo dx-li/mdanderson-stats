@@ -9,13 +9,18 @@ time zero. A DLT endpoint is calibrated with a Weibull distribution satisfying
 time and the window. At `p=0` no DLT occurs and assessment is at the window;
 at `p=1` the limiting DLT time is `window/2`.
 
-Each escalation cohort is enrolled at its current dose. While its outcomes are
+The required `true_response` vector is sampled at enrollment and observed at
+the DLT window; positive observed responses gate backfill activity. Each
+escalation cohort is enrolled at its current dose. While its outcomes are
 pending, subsequent arrivals may be assigned to the highest eligible lower dose
 under the core BF-BOIN rules. Only observed assessments affect eligibility and
 decisions. The `assigned` result counts every assignment, while `patients` and
 `toxicities` are final evaluated counts after follow-up. Per-trial assignment
-counts and assessment times are retained in `assigned_history` and
-`final_assessments` for reproducibility checks.
+counts and per-patient dose, arrival, assessment, DLT, response, and backfill
+records are retained in the corresponding history fields for reproducibility
+checks. Escalation decisions occur only after the current escalation cohort's
+DLT assessments are complete; pending backfill outcomes are carried into final
+follow-up.
 `escalation_end` records the last escalation decision; `trial_duration` includes
 final follow-up.
 

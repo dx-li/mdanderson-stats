@@ -25,12 +25,14 @@ def test_calendar_simulation_reproducible_and_conserves_assigned_patients():
     first = simulate_bf_boin(
         BFBOINDesign(n_cap=3),
         [0.0, 0.0],
+        [1.0, 1.0],
         rng=17,
         **{k: v for k, v in kwargs.items() if k != "n_cap"},
     )
     second = simulate_bf_boin(
         BFBOINDesign(n_cap=3),
         [0.0, 0.0],
+        [1.0, 1.0],
         rng=17,
         **{k: v for k, v in kwargs.items() if k != "n_cap"},
     )
@@ -38,10 +40,10 @@ def test_calendar_simulation_reproducible_and_conserves_assigned_patients():
     np.testing.assert_array_equal(first.patients, second.patients)
     np.testing.assert_array_equal(first.assigned, first.patients)
     assert len(first.assigned_history) == 3
-    assert all(a.size > 0 for a in first.final_assessments)
+    assert all(a.size > 0 for a in first.assessment_history)
     assert np.all(first.trial_duration >= first.escalation_end)
 
 
 def test_fractional_current_settings_and_invalid_arrival_distribution_rejected():
     with pytest.raises(ValueError):
-        simulate_bf_boin(BFBOINDesign(), [0.1, 0.2], arrival_distribution="bad")
+        simulate_bf_boin(BFBOINDesign(), [0.1, 0.2], [0.5, 0.5], arrival_distribution="bad")
