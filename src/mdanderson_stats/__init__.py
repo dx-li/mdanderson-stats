@@ -798,6 +798,17 @@ from .stplan_correlation import (
     stplan_correlation_one_sample_power,
     stplan_correlation_two_sample_power,
 )
+from .stplan_discrete import (
+    stplan_arcsine_binomial_two_sample_power,
+    stplan_binomial_k_sample_power,
+    stplan_exact_binomial_power,
+    stplan_exact_poisson_power,
+    stplan_fisher_exact_approx_power,
+    stplan_historical_binomial_power,
+    stplan_median_split_power,
+    stplan_responder_normal_approximation_power,
+    stplan_retention_probability,
+)
 from .stukel import predict_stukel, stukel_log_odds, stukel_probability
 from .stukel_comparison import StukelComparison, compare_stukel, stukel_demo
 from .stukel_fit import StukelFit, StukelFitError, fit_stukel
@@ -940,6 +951,15 @@ from .windows import (
 )
 
 __all__ = [
+    "stplan_arcsine_binomial_two_sample_power",
+    "stplan_median_split_power",
+    "stplan_historical_binomial_power",
+    "stplan_responder_normal_approximation_power",
+    "stplan_binomial_k_sample_power",
+    "stplan_retention_probability",
+    "stplan_fisher_exact_approx_power",
+    "stplan_exact_binomial_power",
+    "stplan_exact_poisson_power",
     "stplan_normal_one_sample_power",
     "stplan_normal_two_sample_power",
     "stplan_welch_two_sample_power",

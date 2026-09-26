@@ -1182,8 +1182,10 @@ Single-outcome allocation supports target selection, an escalation cap and
 cohort stopping rules with explicit probability estimates.
 The bivariate association model and full native simulation workflow remain open.
 
-[STPLAN study planning](docs/stplan.md) adds one- and two-sample normal,
-Welch, log-normal, uncensored exponential, and correlation power methods.
-Twenty-three reference cases match the original Fortran routines. The API
-preserves STPLAN's dominant-tail convention for two-sided planning and supports
-fractional planning sizes. Other method families and inverse planning remain open.
+[STPLAN study planning](docs/stplan.md) provides 17 power and retention
+procedures for normal, log-normal, exponential, correlation, binary, and Poisson
+outcomes. These include exact one-sample count tests, historical controls,
+K-group comparisons, and attrition. Forty-eight reference cases from the original
+Fortran routines verify the numerical methods and documented compatibility
+differences. Inverse planning, censored survival, and several specialized designs
+remain open.

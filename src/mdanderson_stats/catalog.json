@@ -1561,9 +1561,14 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Eight STPLAN 4.5 continuous/correlation power procedures: unknown-variance normal one sample, pooled and Welch normal two sample, common-CV lognormal, uncensored exponential one/two sample, and corrected Fisher-transform correlation one/two sample. Native dominant-tail convention, fractional planning sizes, bounded broadcasting, and independent mathematical implementation. Remaining families and inverse planning are explicitly open."
+        "Eight STPLAN 4.5 continuous/correlation power procedures: unknown-variance normal one sample, pooled and Welch normal two sample, common-CV lognormal, uncensored exponential one/two sample, and corrected Fisher-transform correlation one/two sample. Native dominant-tail convention, fractional planning sizes, bounded broadcasting, and independent mathematical implementation. Remaining families and inverse planning are explicitly open.",
+        "Nine discrete-outcome procedures: two-binomial arcsine and median-split approximations; historical-control and conservative-responder approximations; K-sample noncentral chi-square with native two-group significance convention; subject-retention probabilities; native Fisher-test planning approximation; exact one-sample binomial and Poisson powers. Integer-tail selection and explicit empty-region power zero replace native failure sentinels. Case-control, matched case-control, two-sample Poisson, survival, inverse planning, and reports remain open."
       ],
       "validation": [
+        "tests/test_stplan_discrete.py",
+        "tests/test_stplan_discrete_native.py",
+        "tests/fixtures/stplan-discrete.csv",
+        "tools/reference_stplan_discrete.f90",
         "tests/test_stplan_continuous.py",
         "tests/test_stplan_native.py",
         "tests/fixtures/stplan-continuous.csv",
