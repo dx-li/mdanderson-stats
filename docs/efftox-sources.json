@@ -1,0 +1,39 @@
+{
+  "catalog_id": 2,
+  "retrieved_at": "2026-09-26",
+  "application_version": "5.2.3",
+  "application_modified_at": "2026-06-24",
+  "download_filename": "EffTox_V5.2.3.0.zip",
+  "evidence": "Published mathematical definitions and official tutorial inspected through web retrieval. No native Windows kernel execution or binary parity claim.",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2",
+      "role": "Catalog version, application scope and original references."
+    },
+    {
+      "url": "https://www.johndcook.com/efftox.pdf",
+      "doi": "10.1111/j.0006-341X.2004.00218.x",
+      "role": "Thall and Cook (2004): centered log doses, bivariate binary likelihood, Gaussian priors and original assignment rule."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EffTox/NewTradeOffFunctions.pdf",
+      "report": "UTMDABTR-003-06, April 18, 2006",
+      "role": "Cook: bivariate Lp trade-off contour replacing inverse-quadratic contours from versions up to 2.8."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EffTox/EfftoxTutorial.html",
+      "role": "Current prior elicitation workflow and rounded utility example for the contour through (.5,0), (.7,.25), (1,.65)."
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4229398/",
+      "doi": "10.1177/1740774514547397",
+      "role": "Thall et al. (2014): revised prior calibration by effective sample size; audited as remaining scope."
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5520236/",
+      "doi": "10.1186/s12874-017-0381-x",
+      "role": "Brock et al. (2017): native 4.0.12 no-skipping rules in both directions, posterior-mean utility and dose-ambivalence discussion."
+    }
+  ],
+  "excluded_source": "research/raw/BOP2/EffToxT1e1Help-YY.pdf describes BOP2 monitoring, not the EffTox dose-response model."
+}

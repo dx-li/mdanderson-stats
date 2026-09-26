@@ -37,9 +37,17 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Bivariate binary Gumbel efficacy/toxicity model, centered log doses, explicit Gaussian priors with optional positive toxicity slope, and bounded posterior fitting.",
+        "Modern Lp contour, posterior-mean utility, strict admissibility, explicit exploration and no-skipping policies, and interim/final dose selection.",
+        "Retained readonly posterior draws, latent-logit tail decisions, convergence diagnostics and pre-allocation resource bounds."
+      ],
+      "validation": [
+        "Independent base-R joint likelihood, concave/convex contour and posterior integration references; official tutorial utilities; tests/test_efftox_reference.py.",
+        "Extreme-logit analytical limits, constrained prior draws, no-skipping/final decisions and bounded allocation checks; tests/test_efftox_core.py.",
+        "Pending elicited-prior ESS calibration, trinary outcomes, legacy contours, trial simulation, native files/reports and direct Windows-kernel parity; docs/efftox.md."
+      ]
     },
     {
       "id": 3,

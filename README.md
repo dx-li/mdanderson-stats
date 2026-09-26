@@ -1154,3 +1154,8 @@ posterior draws include convergence and Monte Carlo error diagnostics.
 co-clustering similarities and a separate similarity-weighted hierarchy for each
 subgroup. It preserves the native similarity floors and rounded efficacy rule,
 with bounded sampling and independent R numerical references.
+
+[EffTox dose finding](docs/efftox.md) adds the bivariate efficacy/toxicity
+model, explicit Gaussian priors, bounded posterior fitting, Lp trade-off
+contours and interim/final dose selection. Published no-skipping and exploration
+rules are explicit; prior calibration and full trial simulation remain open.

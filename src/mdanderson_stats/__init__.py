@@ -395,6 +395,16 @@ from .diagnostic_population import (
     diagnostic_population_from_counts,
 )
 from .drdist import drdist
+from .efftox_decision import EffToxContour, EffToxDecision, efftox_decision
+from .efftox_model import (
+    EffToxFit,
+    EffToxPrior,
+    efftox_log_joint_probabilities,
+    efftox_log_likelihood,
+    efftox_predict,
+    efftox_standardize,
+    fit_efftox,
+)
 from .eventchart import (
     ConvertedEvents,
     EventChart,
@@ -886,6 +896,16 @@ from .windows import (
 )
 
 __all__ = [
+    "EffToxPrior",
+    "EffToxFit",
+    "EffToxContour",
+    "EffToxDecision",
+    "efftox_standardize",
+    "efftox_log_joint_probabilities",
+    "efftox_log_likelihood",
+    "efftox_predict",
+    "fit_efftox",
+    "efftox_decision",
     "BCHMBorrowResult",
     "BCHMCluster",
     "BCHMClusterResult",
