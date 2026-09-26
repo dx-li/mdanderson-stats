@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 import numpy as np
 from numpy.typing import ArrayLike
+from scipy.special import expit
 from scipy.stats import truncnorm
 
 from ._validation import FloatArray, finite
@@ -45,8 +46,8 @@ class EffToxPrior:
     monotone_toxicity: bool = True
 
     def __post_init__(self) -> None:
-        raw_mean = np.asarray(self.mean, dtype=np.float64)
-        raw_sd = np.asarray(self.sd, dtype=np.float64)
+        raw_mean = np.asarray(self.mean)
+        raw_sd = np.asarray(self.sd)
         if raw_mean.shape != (6,) or raw_sd.shape != (6,):
             raise ValueError("prior mean and sd must each contain six coefficients")
         mean = _real(raw_mean, "prior mean")
@@ -64,7 +65,7 @@ class EffToxPrior:
 
 def efftox_standardize(doses: ArrayLike, *, zero_dose_shift: bool = True) -> FloatArray:
     """Return centered log doses, supporting the original zero-dose convention."""
-    candidate = np.asarray(doses, dtype=np.float64)
+    candidate = np.asarray(doses)
     if candidate.ndim != 1 or not 2 <= candidate.size <= 20:
         raise ValueError("doses must be a 1D array of 2 to 20 nonnegative values")
     raw = _real(candidate, "doses")
@@ -114,7 +115,7 @@ def _log_cells_from_logits(eta_e: FloatArray, eta_t: FloatArray, psi: FloatArray
         log_e_factor[..., :, None] + log_1t_factor[..., None, :],
     )
     with np.errstate(divide="ignore", invalid="ignore"):
-        log_abs_rho = np.log(np.abs(np.tanh(psi / 2.0)))
+        log_abs_rho: FloatArray = np.log(np.abs(np.tanh(psi / 2.0)))
     log_one_minus_abs_rho = np.log(2.0) - np.logaddexp(0.0, np.abs(psi))
     # Cell parity is (-1)^(a+b); positive rho therefore subtracts in 01/10.
     parity = np.array([[1.0, -1.0], [-1.0, 1.0]])
@@ -125,7 +126,7 @@ def _log_cells_from_logits(eta_e: FloatArray, eta_t: FloatArray, psi: FloatArray
         log_abs_rho[..., None, None] + log_one_minus_a,
     )
     correction = np.where(sign < 0, negative, positive)
-    correction = np.where(np.isneginf(log_abs_rho)[..., None, None], 0.0, correction)
+    correction = np.where(np.asarray(np.isneginf(log_abs_rho))[..., None, None], 0.0, correction)
     result = logits + correction
     if np.any(np.isnan(result)) or np.any(np.isposinf(result)):
         raise ArithmeticError("joint EffTox cell log probability is nonfinite")
@@ -134,8 +135,8 @@ def _log_cells_from_logits(eta_e: FloatArray, eta_t: FloatArray, psi: FloatArray
 
 def efftox_log_joint_probabilities(dose_codes: ArrayLike, parameters: ArrayLike) -> FloatArray:
     """Evaluate log Pr(E=a,T=b) for every supplied coefficient vector and dose."""
-    raw_x = np.asarray(dose_codes, dtype=np.float64)
-    raw_theta = np.asarray(parameters, dtype=np.float64)
+    raw_x = np.asarray(dose_codes)
+    raw_theta = np.asarray(parameters)
     if raw_x.ndim != 1 or not 2 <= raw_x.size <= 20:
         raise ValueError("dose_codes must be 1D and parameters must end in six coefficients")
     if raw_theta.ndim < 1 or raw_theta.shape[-1] != 6:
@@ -162,10 +163,10 @@ def efftox_log_likelihood(
     dose_codes: ArrayLike, counts: ArrayLike, parameters: ArrayLike
 ) -> FloatArray:
     """Return log likelihood for integer dose-by-efficacy-by-toxicity counts."""
-    candidate_x = np.asarray(dose_codes, dtype=np.float64)
+    candidate_x = np.asarray(dose_codes)
     if candidate_x.ndim != 1 or not 2 <= candidate_x.size <= 20:
         raise ValueError("dose_codes must contain between 2 and 20 dose values")
-    candidate = np.asarray(counts, dtype=np.float64)
+    candidate = np.asarray(counts)
     if candidate.shape != (candidate_x.size, 2, 2):
         raise ValueError("counts must be nonnegative integers with shape (dose,2,2)")
     x = _real(candidate_x, "dose_codes")
@@ -286,12 +287,12 @@ def fit_efftox(
         raise ValueError("prior must be an EffToxPrior")
     if not isinstance(rng, np.random.Generator):
         raise ValueError("rng must be an explicit NumPy Generator")
-    candidate_doses = np.asarray(doses, dtype=np.float64)
+    candidate_doses = np.asarray(doses)
     if candidate_doses.ndim != 1 or not 2 <= candidate_doses.size <= 20:
         raise ValueError("doses must be a 1D array of 2 to 20 values")
     raw_doses = _real(candidate_doses, "doses")
     x = efftox_standardize(raw_doses, zero_dose_shift=zero_dose_shift)
-    candidate_counts = np.asarray(counts, dtype=np.float64)
+    candidate_counts = np.asarray(counts)
     if candidate_counts.shape != (x.size, 2, 2):
         raise ValueError("counts must be nonnegative integers with shape (dose,2,2)")
     n = _real(candidate_counts, "counts")
@@ -311,7 +312,7 @@ def fit_efftox(
         if prior.monotone_toxicity and starts[0, 1] <= 0:
             starts[:, 1] = max(float(prior.mean[1]), float(prior.sd[1]), 1e-8)
     else:
-        raw_starts = np.asarray(initial, dtype=np.float64)
+        raw_starts = np.asarray(initial)
         if raw_starts.shape != (chain_count, 6):
             raise ValueError("initial must contain one valid six-coefficient row per chain")
         starts = _real(raw_starts, "initial").copy()
@@ -323,8 +324,8 @@ def fit_efftox(
         if prior.monotone_toxicity and np.any(starts[:, 1] <= 0):
             raise ValueError("initial beta_T values must be positive")
 
-    parameter_draws = np.empty((chain_count, draw_count, 6), dtype=np.float64)
-    likelihood_draws = np.empty((chain_count, draw_count), dtype=np.float64)
+    parameter_draws: FloatArray = np.empty((chain_count, draw_count, 6), dtype=np.float64)
+    likelihood_draws: FloatArray = np.empty((chain_count, draw_count), dtype=np.float64)
     evaluations = 0
     if n.sum() == 0:
         parameter_draws = _sample_prior(prior, (chain_count, draw_count), rng)
@@ -342,8 +343,6 @@ def fit_efftox(
     if n.sum() == 0:
         likelihood_draws.fill(0.0)
     joint = efftox_predict(x, parameter_draws)
-    efficacy = joint[..., 1, :].sum(axis=-1)
-    toxicity = joint[..., :, 1].sum(axis=-1)
     mu_t, beta_t, mu_e, beta_e1, beta_e2 = np.moveaxis(parameter_draws, -1, 0)[:5]
     eta_t = mu_t[..., None] + beta_t[..., None] * x
     eta_e = mu_e[..., None] + beta_e1[..., None] * x + beta_e2[..., None] * x**2
@@ -353,8 +352,8 @@ def fit_efftox(
         _owned(n),
         _owned(parameter_draws),
         joint,
-        _owned(efficacy),
-        _owned(toxicity),
+        _owned(expit(eta_e)),
+        _owned(expit(eta_t)),
         _owned(eta_e),
         _owned(eta_t),
         _owned(likelihood_draws),

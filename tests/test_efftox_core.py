@@ -37,6 +37,26 @@ def test_joint_log_cells_keep_extreme_cancellation_terms() -> None:
     assert logp[0, 1, 0] == pytest.approx(-3000.0 + np.log(4.0), abs=1e-9)
 
 
+def test_resource_limits_reject_large_views_and_broadcasts() -> None:
+    # Broadcast views contain almost no storage; reject before materializing.
+    parameters = np.broadcast_to(np.zeros(6, dtype=np.uint8), (100_001, 6))
+    with pytest.raises(ValueError, match="200000"):
+        efftox_predict([-0.5, 0.5], parameters)
+    contour = EffToxContour.from_points(0.3, 0.6, 0.65, 0.25)
+    with pytest.raises(ValueError, match="200000"):
+        contour.utility(np.zeros((1000, 1)), np.zeros((1, 1000)))
+    with pytest.raises(ValueError, match="budget"):
+        fit_efftox(
+            np.arange(1, 21),
+            np.zeros((20, 2, 2)),
+            prior=EffToxPrior(np.zeros(6), np.ones(6)),
+            draws=2000,
+            warmup=10_000,
+            chains=4,
+            rng=np.random.default_rng(1),
+        )
+
+
 def test_l_p_contour_fits_three_equal_desirability_points() -> None:
     contour = EffToxContour.from_points(0.3, 0.6, 0.65, 0.25)
     points = contour.utility([0.3, 0.65, 1.0], [0.0, 0.25, 0.6])

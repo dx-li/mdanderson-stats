@@ -91,18 +91,19 @@ class EffToxContour:
 
     def utility(self, efficacy: ArrayLike, toxicity: ArrayLike) -> FloatArray:
         """Evaluate Lp desirability at marginal efficacy/toxicity probability pairs."""
-        e, t = finite(efficacy, "efficacy"), finite(toxicity, "toxicity")
+        raw_e, raw_t = np.asarray(efficacy), np.asarray(toxicity)
+        try:
+            output_shape = np.broadcast_shapes(raw_e.shape, raw_t.shape)
+        except ValueError as exc:
+            raise ValueError("efficacy and toxicity inputs are not broadcast-compatible") from exc
+        if max(raw_e.size, raw_t.size, prod(output_shape)) > 200_000:
+            raise ValueError("contour utility output exceeds 200000 cells")
+        e, t = finite(raw_e, "efficacy"), finite(raw_t, "toxicity")
         if np.any((e < 0) | (e > 1)) or np.any((t < 0) | (t > 1)):
             raise ValueError("efficacy and toxicity must lie in [0,1]")
         with np.errstate(divide="ignore", invalid="ignore"):
             a = self.shape * (np.log1p(-e) - np.log1p(-self.efficacy_intercept))
             b = self.shape * (np.log(t) - np.log(self.toxicity_intercept))
-        try:
-            output_shape = np.broadcast_shapes(np.shape(a), np.shape(b))
-        except ValueError as exc:
-            raise ValueError("efficacy and toxicity inputs are not broadcast-compatible") from exc
-        if prod(output_shape) > 200_000:
-            raise ValueError("contour utility output exceeds 200000 cells")
         a, b = np.broadcast_arrays(a, b)
         log_norm = logsumexp(np.stack((a, b)), axis=0) / self.shape
         utility = -np.expm1(log_norm)
