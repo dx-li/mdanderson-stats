@@ -118,6 +118,8 @@ def toxfinder_stage1(
         raise ValueError(
             "toxicities must contain one nonnegative integer count per treated-dose row"
         )
+    if np.any((history == 0).all(axis=1) & (y > 0)):
+        raise ValueError("toxicity is impossible at the zero-dose origin")
     coordinate = _line_coordinate(history, levels) if history.size else np.empty(0)
 
     if draws.shape[0] * len(levels) > _MAX_POSTERIOR_DOSES:
@@ -152,7 +154,7 @@ def toxfinder_stage1(
         # node means. Add every target crossing in that continuous lower segment.
         for i in range(r):
             left, right = node_mean[i], node_mean[i + 1]
-            if (left - goal) * (right - goal) < 0:
+            if left < goal < right:
                 candidate_scalars.append(
                     scalars[i] + (goal - left) * (scalars[i + 1] - scalars[i]) / (right - left)
                 )
@@ -175,7 +177,7 @@ def toxfinder_stage1(
         )
     if history.size == 0:
         eligible = np.zeros(candidate_scalars_array.shape, dtype=bool)
-        selected = int(np.flatnonzero(np.isclose(candidate_scalars_array, scalars[start_index]))[0])
+        selected = start_index
         eligible[selected] = True
     else:
         last = coordinate[-1]
@@ -190,7 +192,12 @@ def toxfinder_stage1(
                 break
         selected = -1
     if history.size:
-        selected = int(np.flatnonzero(eligible)[np.argmin(np.abs(candidate_mean[eligible] - goal))])
+        indices = np.flatnonzero(eligible)
+        distance = np.abs(candidate_mean[eligible] - goal)
+        # Resolve arithmetic ties towards the lower dose in this ordered array.
+        selected = int(
+            indices[np.flatnonzero(distance <= distance.min() + 8 * np.finfo(float).eps)[0]]
+        )
     return ToxFinderStage1Result(
         _readonly(candidates[selected]),
         float(candidate_mean[selected]),
@@ -219,7 +226,7 @@ def toxfinder_contour(
     x2_bounds: tuple[float, float] = (0.0, 1.0),
     log_parameters: bool = False,
 ) -> ToxFinderContour:
-    """Find mean-toxicity target crossings at requested x1 values by bisection."""
+    """Find mean-toxicity target crossings with bounded bracketed root finding."""
     draws = _draws(parameters, log_parameters)
     raw_x1 = np.asarray(x1)
     if raw_x1.size > 200 or raw_x1.ndim > 1:
@@ -256,7 +263,7 @@ def toxfinder_contour(
             root = low
         elif f_high == 0:
             root = high
-        elif f_low * f_high > 0:
+        elif f_low > 0 or f_high < 0:
             continue
         else:
             root = float(
