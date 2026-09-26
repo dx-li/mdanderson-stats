@@ -174,5 +174,6 @@ Original source is not redistributed. See [provenance](stplan-sources.json).
 Native automatic bound/branch selection, discrete significance planning by
 critical-region selection, integer allocation of proportional K-group totals,
 joint accrual-time/control-allocation optimization for historical controls,
-alternative survival-curve parameter conversions, the inactive matched-pairs
-procedure, and session/report workflows remain open.
+the inactive matched-pairs procedure, and session/report workflows remain open.
+Alternative survival-curve inputs are available through the
+[survival input converters](stplan-survival-inputs.md).

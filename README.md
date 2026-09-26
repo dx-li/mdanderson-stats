@@ -1192,4 +1192,5 @@ including corrected matched/Poisson mixtures and piecewise-survival integrals.
 [Bounded inverse planning](docs/stplan-planning.md) solves for sample sizes,
 effects, significance, and timing, with integer attainment searches and K-group
 allocation. Native automatic planning workflows, some discrete inverse questions,
-alternative survival-curve parameterizations, and reporting remain open.
+and reporting remain open. [Survival input conversions](docs/stplan-survival-inputs.md)
+cover medians, survival percentages, historical person-time, and piecewise curves.

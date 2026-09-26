@@ -5,6 +5,8 @@ current main menu. They assume uniform accrual, administrative censoring at the
 end of follow-up, and no dropout or competing risks. These are the source's
 planning models and approximations, not a simulation of a fitted survival model.
 See [STPLAN coverage](stplan.md) for other outcome families and remaining work.
+The [survival input converters](stplan-survival-inputs.md) accept medians,
+survival probabilities, historical person-time, and two-segment curve points.
 
 ```python
 from mdanderson_stats import (

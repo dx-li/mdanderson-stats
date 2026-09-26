@@ -368,11 +368,11 @@
     },
     "remaining": [
       "Native automatic inverse bounds and branch discovery; discrete significance planning by critical-region selection; integer allocation of proportional K-group totals; joint historical-control accrual-time/allocation optimization.",
-      "Alternative exponential and piecewise-survival curve parameter conversions.",
       "Legacy matched-pairs option ampd, commented out of the current main menu.",
       "Native session and report workflows."
     ],
-    "bounded_inverse_methods": 25
+    "bounded_inverse_methods": 25,
+    "survival_curve_conversions": true
   },
   "planning_reference": {
     "native_harness": "tools/reference_stplan_inverse.f90",

@@ -822,6 +822,12 @@ from .stplan_survival import (
     stplan_information_survival_power,
     stplan_piecewise_survival_power,
 )
+from .stplan_survival_inputs import (
+    STPLANPiecewiseModel,
+    stplan_exponential_hazard,
+    stplan_historical_control_hazard,
+    stplan_piecewise_from_survival,
+)
 from .stukel import predict_stukel, stukel_log_odds, stukel_probability
 from .stukel_comparison import StukelComparison, compare_stukel, stukel_demo
 from .stukel_fit import StukelFit, StukelFitError, fit_stukel
@@ -964,6 +970,10 @@ from .windows import (
 )
 
 __all__ = [
+    "STPLANPiecewiseModel",
+    "stplan_exponential_hazard",
+    "stplan_historical_control_hazard",
+    "stplan_piecewise_from_survival",
     "STPLAN_METHODS",
     "STPLANMethod",
     "STPLANSolution",

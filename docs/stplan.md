@@ -126,6 +126,10 @@ historical controls, and piecewise-exponential survival. They assume uniform
 accrual and administrative censoring. The piecewise method corrects the native
 survival integral; independent R quadrature verifies it. Historical-control
 power retains the source's fixed direction favoring lower experimental hazard.
+[Survival input converters](stplan-survival-inputs.md) support exponential
+medians/means, survival at a specified time, historical person-time, and the two
+survival-curve specifications for a piecewise hazard, including an inferred change
+time and an explicit flag when no unique change is identifiable.
 
 ## Inverse planning
 
@@ -178,7 +182,7 @@ source files are not redistributed.
 Still open: native automatic inverse bounds and branch discovery, discrete
 significance planning by critical-region selection, integer allocation of
 proportional K-group totals, joint historical-control accrual-time/allocation
-optimization, alternative survival-curve parameterizations, and native session/report
+optimization, and native session/report
 workflows. The old matched-pairs option is present in the archive
 but commented out of the current main menu; it will be tracked separately from
 active menu features. See [source provenance](stplan-sources.json) for the archive
