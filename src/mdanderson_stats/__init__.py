@@ -786,6 +786,18 @@ from .stattab_results import (
     stattab_solve,
 )
 from .stattab_session import STATTABRequest, STATTABSession, parse_stattab_request
+from .stplan_continuous import (
+    stplan_exponential_one_sample_power,
+    stplan_exponential_two_sample_power,
+    stplan_lognormal_two_sample_power,
+    stplan_normal_one_sample_power,
+    stplan_normal_two_sample_power,
+    stplan_welch_two_sample_power,
+)
+from .stplan_correlation import (
+    stplan_correlation_one_sample_power,
+    stplan_correlation_two_sample_power,
+)
 from .stukel import predict_stukel, stukel_log_odds, stukel_probability
 from .stukel_comparison import StukelComparison, compare_stukel, stukel_demo
 from .stukel_fit import StukelFit, StukelFitError, fit_stukel
@@ -928,6 +940,14 @@ from .windows import (
 )
 
 __all__ = [
+    "stplan_normal_one_sample_power",
+    "stplan_normal_two_sample_power",
+    "stplan_welch_two_sample_power",
+    "stplan_lognormal_two_sample_power",
+    "stplan_exponential_one_sample_power",
+    "stplan_exponential_two_sample_power",
+    "stplan_correlation_one_sample_power",
+    "stplan_correlation_two_sample_power",
     "BCRMDecision",
     "bcrm_decision",
     "BCRMCurve",

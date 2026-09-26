@@ -1559,9 +1559,18 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Eight STPLAN 4.5 continuous/correlation power procedures: unknown-variance normal one sample, pooled and Welch normal two sample, common-CV lognormal, uncensored exponential one/two sample, and corrected Fisher-transform correlation one/two sample. Native dominant-tail convention, fractional planning sizes, bounded broadcasting, and independent mathematical implementation. Remaining families and inverse planning are explicitly open."
+      ],
+      "validation": [
+        "tests/test_stplan_continuous.py",
+        "tests/test_stplan_native.py",
+        "tests/fixtures/stplan-continuous.csv",
+        "tools/reference_stplan_continuous.f90",
+        "docs/stplan.md",
+        "docs/stplan-sources.json"
+      ]
     },
     {
       "id": 42,

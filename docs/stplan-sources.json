@@ -1,0 +1,107 @@
+{
+  "catalog_ids": [
+    41
+  ],
+  "retrieved_at": "2026-09-26",
+  "application": {
+    "name": "STPLAN",
+    "version": "4.5",
+    "modified_at": "2010-10-22"
+  },
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/41",
+      "role": "Application identity, archive and manual links, documented survival significance issue."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/DSTPLAN/DSTPLAN_V4.5v.zip",
+      "sha256": "05cb3eb2e2aef84958205f6c0748b9310ea93648854766c3e77261c67877b648",
+      "bytes": 3185586,
+      "role": "Original Fortran routines and separate mathematical/user documentation; locally compiled numerical references. Original source and binaries are not bundled."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/DSTPLAN/stplan.pdf",
+      "role": "User manual, February 2010, including the one-sample normal power example (difference 1, SD 10, n 156, power 0.344)."
+    }
+  ],
+  "implementation": "Independent mathematical implementations. No original Fortran routine or manual text is incorporated in the package.",
+  "reference": {
+    "harness": "tools/reference_stplan_continuous.f90",
+    "fixture": "tests/fixtures/stplan-continuous.csv",
+    "cases": 23,
+    "original_source_directory": "stplan-4.5/SOURCE",
+    "source_files": [
+      "d1mach.f",
+      "i1mach.f",
+      "psi.f",
+      "apser.f",
+      "bcorr.f",
+      "exparg.f",
+      "erfc1.f",
+      "rlog1.f",
+      "basym.f",
+      "alnrel.f",
+      "algdiv.f",
+      "gamln1.f",
+      "gamln.f",
+      "gsumln.f",
+      "betaln.f",
+      "gam1.f",
+      "brcomp.f",
+      "bfrac.f",
+      "erf.f",
+      "rexp.f",
+      "grat1.f",
+      "bgrat.f",
+      "bpser.f",
+      "esum.f",
+      "brcmp1.f",
+      "bup.f",
+      "fpser.f",
+      "bratio.f",
+      "cumnor.f",
+      "cumbet.f",
+      "cumt.f",
+      "cumtnc.f",
+      "caxt.f",
+      "devlpl.f",
+      "stvaln.f",
+      "dinvnr.f",
+      "qstzro.f",
+      "qstinv.f",
+      "invt.f",
+      "pnor1.f",
+      "pnev2.f",
+      "pnuv2.f",
+      "gamma.f",
+      "rlog.f",
+      "gratio.f",
+      "cumgam.f",
+      "cumchi.f",
+      "caxchi.f",
+      "invchi.f",
+      "pexp1.f",
+      "cumf.f",
+      "caxf.f",
+      "invf.f",
+      "pexp2.f",
+      "cor_nor_app_mod.f90",
+      "pcor1.f90",
+      "pcor2.f90"
+    ],
+    "compiler": "gfortran",
+    "flags": [
+      "-O0",
+      "-std=legacy",
+      "-fallow-argument-mismatch",
+      "-ffree-line-length-none"
+    ],
+    "reproduction": "In an empty build directory, compile the listed original source files in order together with the repository harness, using the listed flags and -o reference_stplan. Run reference_stplan and capture stdout as the CSV fixture. The original archive must be acquired separately."
+  },
+  "compatibility": [
+    "Two-sided power halves alpha and retains only the dominant rejection tail.",
+    "Correlation formulas follow current cor_nor_app_mod, pcor1 and pcor2, including the null SD for one-sample power.",
+    "Lognormal CV is SD/mean, consistent with qlgn2 and its formula.",
+    "Modern tail evaluation does not reproduce original quantile probability clamps."
+  ]
+}
