@@ -1,5 +1,6 @@
 """Bayesian two-agent toxicity model used by ToxFinder."""
 
+from collections.abc import Callable
 from dataclasses import dataclass
 
 import numpy as np
@@ -9,7 +10,6 @@ from scipy.special import logsumexp, polygamma
 from ._validation import FloatArray, count, finite
 from .hierarchical_binomial import ChainSummary, summarize_chains
 
-_LOG_MAX = float(np.log(np.finfo(float).max))
 _MAX_PAIRS = 100
 _MAX_SUBJECTS = 10_000
 _MAX_EVALS = 2_000_000
@@ -90,9 +90,11 @@ def toxfinder_standardize(doses: ArrayLike, reference_doses: ArrayLike) -> Float
         or np.any(reference <= 0)
     ):
         raise ValueError("doses must end in two nonnegative values; references must be positive")
-    if dose.size > _MAX_PAIRS * 2:
-        raise ValueError("at most 100 dose pairs are supported")
-    return _readonly(dose / reference)
+    with np.errstate(over="ignore", under="ignore"):
+        result = dose / reference
+    if np.any(~np.isfinite(result)) or np.any((dose > 0) & (result == 0)):
+        raise ValueError("standardized positive doses must be representable")
+    return _readonly(result)
 
 
 def _dose_array(doses: ArrayLike) -> FloatArray:
@@ -241,7 +243,6 @@ def _log_posterior(
     shape: FloatArray,
     scale: FloatArray,
     fixed: NDArray[np.bool_],
-    fixed_z: FloatArray,
 ) -> float:
     free = ~fixed
     with np.errstate(over="ignore", invalid="ignore"):
@@ -254,16 +255,19 @@ def _log_posterior(
 
 
 def _slice_coordinate(
-    z: FloatArray, index: int, logp: float, width: float, rng: np.random.Generator, objective
-) -> tuple[FloatArray, float, int]:
-    evaluations = 0
+    z: FloatArray,
+    index: int,
+    logp: float,
+    width: float,
+    rng: np.random.Generator,
+    objective: Callable[[FloatArray], float],
+) -> tuple[FloatArray, float]:
     height = logp + np.log1p(-rng.random())
     left = z[index] - width * rng.random()
     right = left + width
     for _ in range(128):
         trial = z.copy()
         trial[index] = left
-        evaluations += 1
         if objective(trial) <= height:
             break
         left -= width
@@ -272,7 +276,6 @@ def _slice_coordinate(
     for _ in range(128):
         trial = z.copy()
         trial[index] = right
-        evaluations += 1
         if objective(trial) <= height:
             break
         right += width
@@ -282,10 +285,8 @@ def _slice_coordinate(
         proposal = z.copy()
         proposal[index] = rng.uniform(left, right)
         value = objective(proposal)
-        evaluations += 1
         if value >= height:
-            proposal.flags.writeable = True
-            return proposal, value, evaluations
+            return proposal, value
         if proposal[index] < z[index]:
             left = proposal[index]
         else:
@@ -345,46 +346,50 @@ def fit_toxfinder(
             or value < lower
         ):
             raise ValueError(f"{name} must be an integer >= {lower}")
-    if chains > 4 or draws > 10_000 or (warmup + draws) * chains * 6 * y.size > _MAX_EVALS:
+    if (
+        chains > 4
+        or draws > 10_000
+        or chains * draws * 6 > 200_000
+        or chains * draws * y.size > 200_000
+        or (warmup + draws) * chains * 6 * y.size > _MAX_EVALS
+    ):
         raise ValueError("requested fit exceeds resource limits")
     if not isinstance(rng, np.random.Generator):
         raise TypeError("rng must be a numpy.random.Generator")
+    if not isinstance(prior, ToxFinderPrior):
+        raise TypeError("prior must be a ToxFinderPrior")
     shape, scale = prior.shape, prior.scale
     fixed = prior.variance == 0
     fixed_z = np.log(prior.mean)
     all_z = np.empty((chains, draws, 6))
     all_ll = np.empty((chains, draws))
     evaluations = 0
+    no_data = not np.any(n)
+    free_indices = np.flatnonzero(~fixed)
+
+    def objective(value: FloatArray) -> float:
+        nonlocal evaluations
+        evaluations += 1
+        if evaluations * y.size > _MAX_EVALS:
+            raise ValueError("actual sampler parameter-dose evaluations exceed the resource limit")
+        return _log_posterior(value, dose, y, n, shape, scale, fixed)
+
     for chain in range(chains):
         z = fixed_z.copy()
-        for j in np.flatnonzero(~fixed):
+        for j in free_indices:
             z[j] = _log_gamma_draw(float(shape[j]), float(scale[j]), rng)
-
-        objective_evaluations = 0
-
-        def objective(value: FloatArray) -> float:
-            nonlocal objective_evaluations
-            objective_evaluations += 1
-            if objective_evaluations > _MAX_EVALS:
-                raise ValueError("actual sampler evaluations exceed the resource limit")
-            return _log_posterior(value, dose, y, n, shape, scale, fixed, fixed_z)
-
         lp = objective(z)
-        evaluations += 1
         if not np.isfinite(lp):
             raise ArithmeticError("initial log posterior is not representable")
         widths = np.ones(6)
         widths[~fixed] = np.sqrt(np.maximum(polygamma(1, shape[~fixed]), 1e-4))
         for iteration in range(warmup + draws):
-            if y.sum() == 0 and n.sum() == 0:
-                for j in np.flatnonzero(~fixed):
+            if no_data:
+                for j in free_indices:
                     z[j] = _log_gamma_draw(float(shape[j]), float(scale[j]), rng)
-                lp = objective(z)
-                evaluations += 1
             else:
-                for j in np.flatnonzero(~fixed):
-                    z, lp, used = _slice_coordinate(z, int(j), lp, float(widths[j]), rng, objective)
-                    evaluations += used
+                for j in free_indices:
+                    z, lp = _slice_coordinate(z, int(j), lp, float(widths[j]), rng, objective)
             if iteration >= warmup:
                 k = iteration - warmup
                 all_z[chain, k] = z
