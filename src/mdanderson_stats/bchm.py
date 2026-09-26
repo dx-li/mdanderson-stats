@@ -1,15 +1,18 @@
 """Bayesian Cluster Hierarchical Model (BCHM), with bounded NumPy sampling."""
 
 from dataclasses import dataclass
+from math import floor
 
 import numpy as np
+from numpy.typing import ArrayLike, NDArray
 from scipy.special import expit, logit
 
+from ._validation import FloatArray, scalar
 from .bchm_clustering import BCHMClusterResult, weighted_crp
 from .hierarchical_binomial import ChainSummary, summarize_chains
 
 
-def _owned(x):
+def _owned[T: np.generic](x: NDArray[T]) -> NDArray[T]:
     a = np.asarray(x).copy()
     a.setflags(write=False)
     return a
@@ -17,39 +20,44 @@ def _owned(x):
 
 @dataclass(frozen=True)
 class BCHMCluster:
-    rates: np.ndarray
-    trials: np.ndarray
+    rates: FloatArray
+    trials: FloatArray
     result: BCHMClusterResult
 
 
 @dataclass(frozen=True)
 class BCHMBorrowResult:
     target: int
-    samples: np.ndarray
+    samples: FloatArray
     posterior_mean: float
     probability: float
-    similarity: np.ndarray
+    native_probability: float
+    decision: bool
+    similarity: FloatArray
     summary: ChainSummary
 
 
 @dataclass(frozen=True)
 class BCHMFit:
     cluster: BCHMCluster
-    borrowing: tuple
-    posterior_mean: np.ndarray
-    raw_probability: np.ndarray
-    native_probability: np.ndarray
-    decision: np.ndarray
-    raw_similarity: np.ndarray
-    similarity: np.ndarray
-    borrowing_similarity: np.ndarray
-    allocations: np.ndarray
+    borrowing: tuple[BCHMBorrowResult, ...]
+    posterior_mean: FloatArray
+    raw_probability: FloatArray
+    native_probability: FloatArray
+    decision: NDArray[np.bool_]
+    raw_similarity: FloatArray
+    similarity: FloatArray
+    borrowing_similarity: FloatArray
+    allocations: NDArray[np.int16]
     summaries: tuple[ChainSummary, ...]
 
 
-def _validate(successes, trials, *, require_prior=True):
-    if np.asarray(successes).ndim != 1 or np.asarray(trials).ndim != 1:
-        raise ValueError("successes and trials must be one-dimensional")
+def _validate(
+    successes: ArrayLike, trials: ArrayLike, *, require_prior: bool = True
+) -> tuple[FloatArray, FloatArray]:
+    shape = np.shape(successes)
+    if len(shape) != 1 or not 1 <= shape[0] <= 20 or np.shape(trials) != shape:
+        raise ValueError("successes and trials must be matching vectors of 1..20 groups")
     if np.asarray(successes).dtype == np.dtype(bool) or np.asarray(trials).dtype == np.dtype(bool):
         raise ValueError("successes and trials must be integer counts")
     y = np.asarray(successes, dtype=float)
@@ -73,24 +81,71 @@ def _validate(successes, trials, *, require_prior=True):
     return y, n
 
 
+def _sampling(draws: int, warmup: int, chains: int, groups: int, *, all_targets: bool) -> None:
+    if any(
+        isinstance(v, (bool, np.bool_)) or not isinstance(v, (int, np.integer))
+        for v in (draws, warmup, chains)
+    ):
+        raise ValueError("draws, warmup and chains must be integers")
+    if not (2 <= chains <= 4 and 8 <= draws <= 10000 and 0 <= warmup <= 10000):
+        raise ValueError("require 2..4 chains, 8..10000 draws and 0..10000 warmup")
+    targets = groups if all_targets else 1
+    if chains * (draws + warmup) * groups * targets > 1_000_000:
+        raise ValueError("borrowing MCMC work budget exceeds 1000000")
+    if chains * draws * targets > 200_000:
+        raise ValueError("retained borrowing sample budget exceeds 200000")
+
+
+def _borrow_parameters(
+    alpha1: float, beta1: float, tau2: float, phi1: float, deltaT: float, thetaT: float
+) -> tuple[float, float, float, float, float]:
+    a, b, t = (
+        scalar(v, name) for v, name in ((alpha1, "alpha1"), (beta1, "beta1"), (tau2, "tau2"))
+    )
+    if not all(0 < v <= 1e12 for v in (a, b, t)):
+        raise ValueError("alpha1, beta1 and tau2 must be positive and <=1e12")
+    phi, delta, cutoff = (
+        scalar(v, name) for v, name in ((phi1, "phi1"), (deltaT, "deltaT"), (thetaT, "thetaT"))
+    )
+    if not (0 <= phi <= 1 and delta >= 0 and phi + delta <= 1 and 0 <= cutoff <= 1):
+        raise ValueError("invalid efficacy thresholds")
+    return a, b, t, phi + delta, cutoff
+
+
+def _native_probability(probability: float) -> float:
+    """Nearest floating-point thousandth, resolving equal distances to even.
+
+    Matches the R 4.4.1 reference. Python's scalar round and NumPy's scaled
+    rounding can both disagree with this rule at decimal-looking ties.
+    """
+    lower = floor(1000 * probability)
+    selected = min(
+        (lower, lower + 1),
+        key=lambda index: (abs(index / 1000 - probability), index % 2),
+    )
+    return selected / 1000
+
+
 def bchm_cluster(
-    successes: object,
-    trials: object,
+    successes: ArrayLike,
+    trials: ArrayLike,
     *,
-    mu=0.2,
-    sigma02=20.0,
-    sigmaD2=0.01,
-    alpha=0.001,
-    d0=0.0,
-    burn_in=1000,
-    iterations=2000,
-    seed=None,
-):
+    mu: float = 0.2,
+    sigma02: float = 20.0,
+    sigmaD2: float = 0.01,
+    alpha: float = 0.001,
+    d0: float = 0.0,
+    burn_in: int = 1000,
+    iterations: int = 2000,
+    seed: int | None = None,
+) -> BCHMCluster:
+    """Estimate native patient-weighted CRP similarity; allocation labels are one-based."""
     y, n = _validate(successes, trials, require_prior=False)
     for v, name in ((sigma02, "sigma02"), (sigmaD2, "sigmaD2"), (alpha, "alpha")):
         if not np.isfinite(v) or v <= 0:
             raise ValueError(f"{name} must be positive finite")
-    if not np.isfinite(d0) or not 0 <= d0 <= 1:
+    d0 = scalar(d0, "d0")
+    if not 0 <= d0 <= 1:
         raise ValueError("d0 must be in [0,1]")
     res = weighted_crp(
         y / n,
@@ -118,7 +173,15 @@ def bchm_cluster(
     )
 
 
-def _elliptical(theta, mu, tau, m, y, n, rng):
+def _elliptical(
+    theta: FloatArray,
+    mu: float,
+    tau: float,
+    m: FloatArray,
+    y: FloatArray,
+    n: FloatArray,
+    rng: np.random.Generator,
+) -> FloatArray:
     center = theta - mu
     direction = rng.normal(size=theta.size) / np.sqrt(tau * m)
     ll = -y * np.logaddexp(0, -theta) - (n - y) * np.logaddexp(0, theta)
@@ -143,28 +206,35 @@ def _elliptical(theta, mu, tau, m, y, n, rng):
 
 
 def bchm_borrow(
-    successes: object,
-    trials: object,
-    similarity: object,
+    successes: ArrayLike,
+    trials: ArrayLike,
+    similarity: ArrayLike,
     *,
-    target=0,
-    prior_mean=None,
-    alpha1=30.0,
-    beta1=6.0,
-    tau2=0.1,
-    phi1=0.2,
-    deltaT=0.15,
-    thetaT=0.5,
-    draws=1000,
-    warmup=500,
-    chains=2,
-    seed=None,
-):
+    target: int = 0,
+    prior_mean: float | None = None,
+    alpha1: float = 30.0,
+    beta1: float = 6.0,
+    tau2: float = 0.1,
+    phi1: float = 0.2,
+    deltaT: float = 0.15,
+    thetaT: float = 0.5,
+    draws: int = 1000,
+    warmup: int = 500,
+    chains: int = 2,
+    seed: int | None = None,
+) -> BCHMBorrowResult:
+    """Fit one target-specific hierarchy from a supplied similarity row or matrix.
+
+    ``target`` is zero-based. Zero similarities are floored at 0.001. A supplied
+    ``prior_mean`` is on the logit scale and overrides the native empirical center.
+    """
     y, n = _validate(successes, trials, require_prior=prior_mean is None)
     if isinstance(target, (bool, np.bool_)) or not isinstance(target, (int, np.integer)):
         raise ValueError("target must be an integer")
     if not 0 <= target < y.size:
         raise ValueError("target out of range")
+    if np.shape(similarity) not in ((y.size,), (y.size, y.size)):
+        raise ValueError("similarity must be a subgroup vector or square matrix")
     m = np.asarray(similarity, dtype=float)
     if m.ndim == 2:
         if m.shape != (y.size, y.size):
@@ -177,37 +247,13 @@ def bchm_borrow(
     m = np.maximum(m, 0.001)
     if prior_mean is None:
         prior_mean = float(logit(np.mean(y / n)))
-    if not np.isfinite(prior_mean):
-        raise ValueError("prior_mean must be finite")
+    prior_mean = scalar(prior_mean, "prior_mean")
     if abs(prior_mean) > 1e4:
         raise ValueError("prior_mean is outside the stable range")
-    for v, name in ((alpha1, "alpha1"), (beta1, "beta1"), (tau2, "tau2")):
-        if not np.isfinite(v) or v <= 0 or v > 1e12:
-            raise ValueError(f"{name} must be positive finite")
-    if (
-        any(
-            isinstance(v, (bool, np.bool_)) or not isinstance(v, (int, np.integer))
-            for v in (chains, draws, warmup)
-        )
-        or chains < 2
-        or chains > 4
-        or draws < 8
-        or draws > 10000
-        or warmup < 0
-        or warmup > 10000
-        or chains * (draws + warmup) * y.size > 1_000_000
-    ):
-        raise ValueError("require chains>=2 and draws>=8")
-    if not (
-        np.isfinite(phi1)
-        and 0 <= phi1 <= 1
-        and np.isfinite(deltaT)
-        and deltaT >= 0
-        and phi1 + deltaT <= 1
-        and np.isfinite(thetaT)
-        and 0 <= thetaT <= 1
-    ):
-        raise ValueError("invalid efficacy thresholds")
+    _sampling(draws, warmup, chains, y.size, all_targets=False)
+    alpha1, beta1, tau2, response_target, thetaT = _borrow_parameters(
+        alpha1, beta1, tau2, phi1, deltaT, thetaT
+    )
     rng = np.random.default_rng(seed)
     k = y.size
     th = np.broadcast_to(logit((y + 0.5) / (n + 1)), (chains, k)).copy() + rng.normal(
@@ -216,9 +262,11 @@ def bchm_borrow(
     mu = np.full(chains, prior_mean)
     tau = np.ones(chains)
     out = np.empty((chains, draws))
+    logit_target = float(logit(response_target))
+    exceedances = 0
     for it in range(warmup + draws):
         for c in range(chains):
-            th[c] = _elliptical(th[c], mu[c], tau[c], m, y, n, rng)
+            th[c] = _elliptical(th[c], float(mu[c]), float(tau[c]), m, y, n, rng)
             prec = tau[c] * np.sum(m) + tau2
             mu[c] = (
                 (tau[c] * np.sum(m * th[c]) + tau2 * prior_mean) / prec
@@ -234,54 +282,48 @@ def bchm_borrow(
                 raise ArithmeticError("BCHM sampler reached non-finite state")
         if it >= warmup:
             out[:, it - warmup] = expit(th[:, target])
+            exceedances += int(np.count_nonzero(th[:, target] > logit_target))
     summary = summarize_chains(out[:, :, None])
-    prob = float(np.mean(out > phi1 + deltaT))
-    return BCHMBorrowResult(int(target), _owned(out), float(np.mean(out)), prob, _owned(m), summary)
+    prob = exceedances / (chains * draws)
+    native = _native_probability(prob)
+    return BCHMBorrowResult(
+        int(target),
+        _owned(out),
+        float(np.mean(out)),
+        prob,
+        native,
+        native > thetaT,
+        _owned(m),
+        summary,
+    )
 
 
 def bchm_fit(
-    successes: object,
-    trials: object,
+    successes: ArrayLike,
+    trials: ArrayLike,
     *,
-    mu=0.2,
-    sigma02=20.0,
-    sigmaD2=0.01,
-    alpha=0.001,
-    d0=0.0,
-    alpha1=30.0,
-    beta1=6.0,
-    tau2=0.1,
-    phi1=0.2,
-    deltaT=0.15,
-    thetaT=0.5,
-    burn_in=1000,
-    iterations=2000,
-    draws=1000,
-    warmup=500,
-    chains=2,
-    seed=None,
-):
+    mu: float = 0.2,
+    sigma02: float = 20.0,
+    sigmaD2: float = 0.01,
+    alpha: float = 0.001,
+    d0: float = 0.0,
+    alpha1: float = 30.0,
+    beta1: float = 6.0,
+    tau2: float = 0.1,
+    phi1: float = 0.2,
+    deltaT: float = 0.15,
+    thetaT: float = 0.5,
+    burn_in: int = 1000,
+    iterations: int = 2000,
+    draws: int = 1000,
+    warmup: int = 500,
+    chains: int = 2,
+    seed: int | None = None,
+) -> BCHMFit:
+    """Run BCHM clustering followed by each target-specific borrowing model."""
     y, n = _validate(successes, trials)
-    if not (
-        np.isfinite(phi1)
-        and 0 <= phi1 <= 1
-        and np.isfinite(deltaT)
-        and deltaT >= 0
-        and phi1 + deltaT <= 1
-        and np.isfinite(thetaT)
-        and 0 <= thetaT <= 1
-    ):
-        raise ValueError("invalid efficacy thresholds")
-    if (
-        chains < 2
-        or chains > 4
-        or draws < 8
-        or draws > 10000
-        or warmup < 0
-        or warmup > 10000
-        or chains * (draws + warmup) * y.size * y.size > 1_000_000
-    ):
-        raise ValueError("fit MCMC budget is too large")
+    _sampling(draws, warmup, chains, y.size, all_targets=True)
+    _borrow_parameters(alpha1, beta1, tau2, phi1, deltaT, thetaT)
     master = np.random.default_rng(seed)
     cluster_seed = int(master.integers(2**31))
     cl = bchm_cluster(
@@ -318,7 +360,7 @@ def bchm_fit(
             )
         )
     raw = np.array([b.probability for b in bor])
-    native = np.array([round(float(v), 3) for v in raw])
+    native = np.array([b.native_probability for b in bor])
     dec = native > thetaT
     return BCHMFit(
         cl,

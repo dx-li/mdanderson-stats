@@ -3,10 +3,13 @@
 from dataclasses import dataclass
 
 import numpy as np
+from numpy.typing import ArrayLike, NDArray
 from scipy.special import logsumexp
 
+from ._validation import FloatArray, scalar
 
-def _owned(x):
+
+def _owned[T: np.generic](x: NDArray[T]) -> NDArray[T]:
     a = np.asarray(x).copy()
     a.setflags(write=False)
     return a
@@ -14,31 +17,43 @@ def _owned(x):
 
 @dataclass(frozen=True)
 class BCHMClusterResult:
-    allocations: np.ndarray
-    raw_similarity: np.ndarray
-    similarity: np.ndarray
-    representative: np.ndarray
+    allocations: NDArray[np.int16]
+    raw_similarity: FloatArray
+    similarity: FloatArray
+    representative: NDArray[np.int16]
     representative_score: float
 
 
-def _assignment_probabilities(x, w, counts, sums, mu, var0, vard, alpha):
+def _assignment_probabilities(
+    x: float,
+    w: float,
+    counts: FloatArray,
+    sums: FloatArray,
+    mu: float,
+    var0: float,
+    vard: float,
+    alpha: float,
+) -> FloatArray:
+    """Existing patient-weighted clusters followed by one new-cluster option."""
     counts = np.asarray(counts, dtype=float)
     sums = np.asarray(sums, dtype=float)
     if counts.ndim != 1 or sums.shape != counts.shape:
         raise ValueError("counts and sums must match")
-    denom = np.sum(counts) + alpha
-    out = []
-    for count, total in zip(counts, sums):
-        pv = 1 / (1 / var0 + count / vard)
-        pm = pv * (mu / var0 + total / vard)
-        lp = -0.5 * np.log1p(w * pv / vard) - 0.5 * w * (x - pm) ** 2 / (vard + w * pv)
-        out.append(np.log(count) - np.log(denom) + lp)
-    lp = -0.5 * np.log1p(w * var0 / vard) - 0.5 * w * (x - mu) ** 2 / (vard + w * var0)
-    out.append(np.log(alpha) - np.log(denom) + lp)
-    return np.exp(np.asarray(out) - logsumexp(out))
+    pv = 1 / (1 / var0 + counts / vard)
+    pm = pv * (mu / var0 + sums / vard)
+    variance: FloatArray = np.append(pv, var0)
+    mean: FloatArray = np.append(pm, mu)
+    increment = -0.5 * np.log1p(w * variance / vard)
+    increment -= 0.5 * w * (x - mean) ** 2 / (vard + w * variance)
+    # The common CRP denominator cancels in normalization.
+    log_weights = np.log(np.append(counts, alpha)) + increment
+    probability = np.exp(log_weights - logsumexp(log_weights))
+    if not np.all(np.isfinite(probability)):
+        raise ArithmeticError("BCHM assignment probabilities are non-finite")
+    return probability
 
 
-def _silhouette(row, values):
+def _silhouette(row: NDArray[np.int16], values: FloatArray) -> float:
     labels = np.unique(row)
     if len(labels) <= 1 or len(labels) >= len(row):
         return -0.1
@@ -57,21 +72,34 @@ def _silhouette(row, values):
 
 
 def weighted_crp(
-    rates: object,
-    weights: object,
+    rates: ArrayLike,
+    weights: ArrayLike,
     *,
-    mu=0.2,
-    sigma02=20.0,
-    sigmaD2=0.01,
-    alpha=0.001,
-    burn_in=1000,
-    iterations=2000,
-    rng=None,
-):
+    mu: float = 0.2,
+    sigma02: float = 20.0,
+    sigmaD2: float = 0.01,
+    alpha: float = 0.001,
+    burn_in: int = 1000,
+    iterations: int = 2000,
+    rng: np.random.Generator | None = None,
+) -> BCHMClusterResult:
+    """Bounded native allocation sweeps with streaming co-clustering counts."""
+    shape = np.shape(rates)
+    if len(shape) != 1 or not 1 <= shape[0] <= 20 or np.shape(weights) != shape:
+        raise ValueError("rates and weights must match, <=20 groups")
     x = np.asarray(rates, dtype=float)
     w = np.asarray(weights, dtype=float)
     if x.ndim != 1 or w.shape != x.shape or not 1 <= x.size <= 20:
         raise ValueError("rates and weights must match, <=20 groups")
+    mu, sigma02, sigmaD2, alpha = (
+        scalar(value, name)
+        for value, name in (
+            (mu, "mu"),
+            (sigma02, "sigma02"),
+            (sigmaD2, "sigmaD2"),
+            (alpha, "alpha"),
+        )
+    )
     if abs(mu) > 1e4 or sigma02 > 1e8 or sigmaD2 > 1e8 or alpha > 1e100 or alpha < 1e-300:
         raise ValueError("clustering hyperparameters outside stable range")
     if (
@@ -79,6 +107,8 @@ def weighted_crp(
         or not np.all(np.isfinite(w))
         or np.any((x < 0) | (x > 1))
         or np.any(w <= 0)
+        or np.any(w > 10000)
+        or np.any(w != np.floor(w))
     ):
         raise ValueError("invalid rates or weights")
     if (
@@ -116,8 +146,8 @@ def weighted_crp(
             if old and not np.any(z == old):
                 z[z > old] -= 1
             labels = np.unique(z[z > 0]).tolist()
-            counts = np.array([np.sum(w[z == lab]) for lab in labels])
-            sums = np.array([np.sum(w[z == lab] * x[z == lab]) for lab in labels])
+            counts = np.bincount(z, weights=w, minlength=len(labels) + 1)[1:]
+            sums = np.bincount(z, weights=w * x, minlength=len(labels) + 1)[1:]
             p = _assignment_probabilities(x[i], w[i], counts, sums, mu, sigma02, sigmaD2, alpha)
             choice = int(rng.choice(len(p), p=p))
             z[i] = (
