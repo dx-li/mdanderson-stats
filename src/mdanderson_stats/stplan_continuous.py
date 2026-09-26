@@ -166,8 +166,17 @@ def stplan_exponential_two_sample_power(
     if np.any(m1 <= 0) or np.any(m2 <= 0) or np.any(first <= 0) or np.any(second <= 0):
         raise ValueError("means and sample sizes must be positive")
     reverse = m1 > m2
-    ratio = np.maximum(m1, m2) / np.minimum(m1, m2)
+    log_ratio = np.log(np.maximum(m1, m2)) - np.log(np.minimum(m1, m2))
     dfn = np.where(reverse, first, second) * 2
     dfd = np.where(reverse, second, first) * 2
-    cutoff = f.isf(a, dfn, dfd)
-    return _power(f.sf(cutoff / ratio, dfn, dfd))
+    reciprocal_cutoff = f.ppf(a, dfd, dfn)
+    if np.any(~np.isfinite(reciprocal_cutoff) | (reciprocal_cutoff <= 0)):
+        raise ArithmeticError("F critical value is not representable at this alpha")
+    log_argument = log_ratio + np.log(reciprocal_cutoff)
+    float_info = np.finfo(float)
+    min_log = np.log(np.nextafter(0.0, 1.0))
+    max_log = np.log(float_info.max)
+    argument = np.exp(np.clip(log_argument, min_log, max_log))
+    argument = np.where(log_argument < min_log, 0.0, argument)
+    argument = np.where(log_argument > max_log, np.inf, argument)
+    return _power(f.cdf(argument, dfd, dfn))

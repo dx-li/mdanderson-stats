@@ -53,6 +53,15 @@ def test_exponential_power_matches_native_chi_square_and_f_equations():
     )
 
 
+def test_exponential_f_power_preserves_extreme_upper_tail_significance():
+    assert_allclose(
+        stplan_exponential_two_sample_power(1, 1, 10, 20, alpha=1e-20),
+        1e-20,
+        rtol=2e-7,
+        atol=0,
+    )
+
+
 def test_correlation_methods_have_baseline_and_increasing_effect_power():
     assert_allclose(stplan_correlation_one_sample_power(0, 0, 40), 0.05)
     assert stplan_correlation_one_sample_power(0, 0.45, 40) > 0.05
