@@ -1561,8 +1561,9 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Eight STPLAN 4.5 continuous/correlation power procedures: unknown-variance normal one sample, pooled and Welch normal two sample, common-CV lognormal, uncensored exponential one/two sample, and corrected Fisher-transform correlation one/two sample. Native dominant-tail convention, fractional planning sizes, bounded broadcasting, and independent mathematical implementation. Remaining families and inverse planning are explicitly open.",
-        "Nine discrete-outcome procedures: two-binomial arcsine and median-split approximations; historical-control and conservative-responder approximations; K-sample noncentral chi-square with native two-group significance convention; subject-retention probabilities; native Fisher-test planning approximation; exact one-sample binomial and Poisson powers. Integer-tail selection and explicit empty-region power zero replace native failure sentinels. Case-control, matched case-control, two-sample Poisson, survival, inverse planning, and reports remain open."
+        "Eight STPLAN 4.5 continuous/correlation power procedures: unknown-variance normal one sample, pooled and Welch normal two sample, common-CV lognormal, uncensored exponential one/two sample, and corrected Fisher-transform correlation one/two sample. Native dominant-tail convention, fractional planning sizes, bounded broadcasting, and independent mathematical implementation. Inverse planning remains open.",
+        "Nine discrete-outcome procedures: two-binomial arcsine and median-split approximations; historical-control and conservative-responder approximations; K-sample noncentral chi-square with native two-group significance convention; subject-retention probabilities; native Fisher-test planning approximation; exact one-sample binomial and Poisson powers. Integer-tail selection and explicit empty-region power zero replace native failure sentinels. Survival, inverse planning, and reports remain open.",
+        "Unmatched case-control power with current disease-risk parameterization; exact matched discordance mixture with corrected null/alternative argument order and fixed upper-tail direction; two-sample Poisson conditional-test mixture with an explicit truncation bound, replacing the native 99% renormalized sum and large-mean substitution. Bounded broadcast inputs and aggregate support work; independent R finite-sum references."
       ],
       "validation": [
         "tests/test_stplan_discrete.py",
@@ -1574,7 +1575,14 @@
         "tests/fixtures/stplan-continuous.csv",
         "tools/reference_stplan_continuous.f90",
         "docs/stplan.md",
-        "docs/stplan-sources.json"
+        "docs/stplan-sources.json",
+        "tests/test_stplan_case_control_poisson.py",
+        "tests/test_stplan_mixture_references.py",
+        "tests/fixtures/stplan-case-control-native.csv",
+        "tests/fixtures/stplan-mixtures-r.csv",
+        "tools/reference_stplan_case_control.f90",
+        "tools/reference_stplan_mixtures.R",
+        "docs/stplan-mixtures.md"
       ]
     },
     {

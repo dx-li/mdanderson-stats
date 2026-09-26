@@ -786,6 +786,10 @@ from .stattab_results import (
     stattab_solve,
 )
 from .stattab_session import STATTABRequest, STATTABSession, parse_stattab_request
+from .stplan_case_control import (
+    stplan_case_control_power,
+    stplan_matched_case_control_power,
+)
 from .stplan_continuous import (
     stplan_exponential_one_sample_power,
     stplan_exponential_two_sample_power,
@@ -809,6 +813,7 @@ from .stplan_discrete import (
     stplan_responder_normal_approximation_power,
     stplan_retention_probability,
 )
+from .stplan_poisson import stplan_poisson_two_sample_power
 from .stukel import predict_stukel, stukel_log_odds, stukel_probability
 from .stukel_comparison import StukelComparison, compare_stukel, stukel_demo
 from .stukel_fit import StukelFit, StukelFitError, fit_stukel
@@ -951,6 +956,9 @@ from .windows import (
 )
 
 __all__ = [
+    "stplan_case_control_power",
+    "stplan_matched_case_control_power",
+    "stplan_poisson_two_sample_power",
     "stplan_arcsine_binomial_two_sample_power",
     "stplan_median_split_power",
     "stplan_historical_binomial_power",

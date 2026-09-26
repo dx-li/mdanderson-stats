@@ -2,8 +2,8 @@
 
 STPLAN 4.5 (catalog entry 41) combines power and inverse planning procedures for
 binary, count, continuous, survival, and correlation outcomes. Python coverage is
-partial. Seventeen power and retention procedures are available as independent mathematical
-implementations with comparison against the original Fortran routines.
+partial. Twenty power and retention procedures are available as independent mathematical
+implementations, checked against original Fortran output and independent probability sums.
 
 ## Continuous and correlation power
 
@@ -107,6 +107,15 @@ The original interactive routine rejects slack at or below `1e-8`; Python's
 extension is useful for showing low power outside the favorable alternative.
 Its `confidence` must be strictly between 0.5 and 1.
 
+## Case-control and two-sample Poisson power
+
+Three further procedures cover unmatched case-control studies, matched
+case-control studies, and comparisons of independent Poisson counts. See
+[case-control and Poisson methods](stplan-mixtures.md) for their inputs, direction
+conventions, and numerical bounds. The matched and Poisson mixtures correct
+identified defects in the original routines; independent R probability sums
+provide their numerical references.
+
 ## Source conventions and numerical evaluation
 
 The log-normal conversion uses log-scale SD `sqrt(log(1 + cv**2))` and the
@@ -146,8 +155,7 @@ procedures, with explicit treatment of the two native empty-region sentinels.
 The second probe is `tools/reference_stplan_discrete.f90`. Original software and
 source files are not redistributed.
 
-Still open: case-control and matched case-control methods, two-sample Poisson
-power, all censored-survival procedures, inverse calculations for sample
+Still open: all censored-survival procedures, inverse calculations for sample
 size/effect/significance, and native
 session/report workflows. The old matched-pairs option is present in the archive
 but commented out of the current main menu; it will be tracked separately from
