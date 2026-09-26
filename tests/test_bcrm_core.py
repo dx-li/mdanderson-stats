@@ -8,6 +8,7 @@ from mdanderson_stats.bcrm_model import (
     BCRMCurve,
     bcrm_log_likelihood,
     bcrm_log_probabilities,
+    bcrm_probabilities,
     fit_bcrm,
 )
 
@@ -56,5 +57,28 @@ def test_invalid_shapes_and_limits_fail_at_the_boundary():
         BCRMCurve([0.1, 0.1])
     with pytest.raises(ValueError, match="beta-dose"):
         bcrm_log_probabilities(np.zeros(100), np.zeros(2001))
+    with pytest.raises(ValueError, match="beta-dose"):
+        bcrm_probabilities([], np.zeros(200_001))
     with pytest.raises(ValueError, match="total subjects"):
         bcrm_log_likelihood([0], [0], [10001], [1])
+    with pytest.raises(ValueError, match="alpha"):
+        BCRMCurve([0.1], alpha=51)
+
+
+def test_multidimensional_beta_shape_and_negative_dose_interval_order():
+    doses = np.array([-2.0, -1.0, 0.0, 1.0])
+    slopes = np.arange(6, dtype=float).reshape(2, 3)
+    assert bcrm_probabilities(doses, slopes).shape == (2, 3, 4)
+    assert bcrm_log_probabilities(doses, 1.0).shape == (4, 2)
+    assert bcrm_log_likelihood(doses, [0, 1, 2, 3], [3, 3, 3, 3], slopes).shape == (2, 3)
+
+    curve = BCRMCurve([0.05, 0.10, 0.20])
+    result = fit_bcrm(curve, [0, 1, 2], [4, 4, 4])
+    assert np.all(np.diff(result.dose_interval, axis=1) >= 0)
+
+
+def test_sharp_endpoint_posterior_is_resolved():
+    curve = BCRMCurve([0.05])
+    result = fit_bcrm(curve, [10_000], [10_000], prior_bounds=(0, 3))
+    assert result.beta_mean < 0.001
+    assert result.beta_interval[1] < 0.002
