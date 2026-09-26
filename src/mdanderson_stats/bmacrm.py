@@ -398,8 +398,17 @@ def fit_bmacrm(
         raise ArithmeticError("model evidence is not representable")
     log_model_mass = log_prior_weights + log_evidence
     posterior_weights = np.exp(log_model_mass - logsumexp(log_model_mass))
+    posterior_weights /= np.sum(posterior_weights)
     dose_mean = posterior_weights @ model_means
     overdose_probability = posterior_weights @ model_overdose
+    for name, value in (
+        ("model-averaged dose mean", dose_mean),
+        ("model-averaged overdose probability", overdose_probability),
+    ):
+        if np.any(~np.isfinite(value) | (value < -1e-12) | (value > 1 + 1e-12)):
+            raise ArithmeticError(f"{name} is not representable in [0,1]")
+    dose_mean = np.clip(dose_mean, 0, 1)
+    overdose_probability = np.clip(overdose_probability, 0, 1)
     return BMACRMPosterior(
         _freeze(raw_skeletons),
         _freeze(raw_events),

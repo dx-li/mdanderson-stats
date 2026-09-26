@@ -35,6 +35,11 @@ def test_identical_models_preserve_prior_weight_ratios_and_single_model_fits():
     assert_allclose(duplicated.posterior_model_weights, [0.25, 0.75], atol=2e-12)
     assert_allclose(duplicated.model_dose_mean[0], duplicated.model_dose_mean[1])
 
+    repeated_extreme = fit_bmacrm([[0.2, 0.2]] * 3, [5000, 0], [5000, 5000], target=1e-10)
+    assert_allclose(repeated_extreme.posterior_model_weights.sum(), 1, atol=0)
+    assert np.all(repeated_extreme.model_overdose_probability <= 1)
+    assert np.all(repeated_extreme.overdose_probability <= 1)
+
     single = fit_bmacrm(skeleton, [0, 1, 0], [3, 4, 2], target=0.25)
     assert single.skeletons.shape == (1, 3)
     assert single.model_dose_mean.shape == (1, 3)
