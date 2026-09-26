@@ -34,7 +34,7 @@ def dacrm_uniform_prior(
     dispersion: float = 2.0,
     alpha_sd: float = sqrt(2),
 ) -> DACRMPrior:
-    """Build the paper's decreasing-mean hazard prior over equal intervals.
+    """Build the paper's increasing-mean hazard prior over equal intervals.
 
     Interval ``k`` has mean hazard ``K / (window * (K-k+0.5))`` for
     one-based ``k`` and Gamma rate ``1/dispersion``. Dispersion therefore
@@ -48,7 +48,7 @@ def dacrm_uniform_prior(
     if not 1 <= count <= 20:
         raise ValueError("intervals must be an integer from 1 to 20")
     positions = np.arange(1, count + 1, dtype=float)
-    means = count / (window_value * (count - positions + 0.5))
+    means = (count / window_value) / (count - positions + 0.5)
     if np.any(~np.isfinite(means)):
         raise ValueError("window is too small to represent prior mean hazards")
     return _prior(window_value, means, dispersion_value, alpha_sd)

@@ -240,6 +240,25 @@ def _freeze_summary(summary: ChainSummary) -> ChainSummary:
     )
 
 
+def _scaled_summary(draws: FloatArray) -> ChainSummary:
+    """Summarize wide-scale parameters without squaring extreme draws."""
+    scales = np.maximum(1.0, np.max(np.abs(draws), axis=(0, 1)))
+    summary = summarize_chains(draws / scales)
+    interval_scales = scales.reshape((-1,) + (1,) * (summary.interval.ndim - 1))
+    with np.errstate(over="ignore", invalid="ignore"):
+        restored = [
+            summary.mean * scales,
+            summary.median * scales,
+            summary.standard_deviation * scales,
+            summary.interval * interval_scales,
+            summary.split_rhat,
+            summary.batch_mean_mcse * scales,
+        ]
+    if any(np.any(~np.isfinite(value)) for value in restored):
+        raise ArithmeticError("DA-CRM posterior summary moments are not representable")
+    return _freeze_summary(ChainSummary(*restored))
+
+
 def _gamma_draw(
     rng: np.random.Generator, shape: FloatArray, rate: FloatArray, *, name: str
 ) -> FloatArray:
@@ -419,7 +438,7 @@ def fit_dacrm(
     threshold = np.log(-np.log(target_value)) - log_neglog
     overdose_probability = np.mean(alpha_draws[:, :, None] < threshold[None, None, :], axis=(0, 1))
     parameter_draws = np.concatenate((alpha_draws[:, :, None], hazard_draws), axis=-1)
-    parameter_summary = _freeze_summary(summarize_chains(parameter_draws))
+    parameter_summary = _scaled_summary(parameter_draws)
     dose_summary = _freeze_summary(summarize_chains(dose_probability))
     pending_summary = (
         _freeze_summary(summarize_chains(pending_draws)) if pending_indices.size else None
