@@ -3719,12 +3719,26 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BMACRM",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BMACRM",
-      "references": [],
+      "references": [
+        "https://saasresearch.hku.hk/~gyin/materials/2009YinYuanJASA.pdf",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC5026535/"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Independent power-model CRM/BMA posterior integration and Bayesian model selection (BMS), as exposed by the online application",
+        "Separate full posterior and aggregation weights; log-space model comparisons and original raw priors retained across decisions",
+        "Paper-based Occam-window averaging with explicit strict threshold, renormalization and model reentry",
+        "BMA/BMS/Occam options throughout Python calendar decisions, exact bounded look-ahead, trial replay and serial simulation under the documented CRM Suite conduct policy; see docs/crm-model-selection.md",
+        "Automatic skeleton calibration, online hidden prior/conduct conventions, native output and random-sequence parity remain open"
+      ],
+      "validation": [
+        "BMS and Occam estimates compared with independent base-R model posteriors for mixed outcomes, zero prior mass and a tiny prior rescued by data",
+        "Distinct-skeleton prior ties, strict Occam cutoff, zero-prior exclusion and model reentry in completed-outcome look-ahead",
+        "Multi-model calendar example where BMA and BMS select different final doses, plus existing CRM calendar/replay/simulation regressions",
+        "No native online output, hidden-default, large-study operating-characteristic or random-sequence parity claimed"
+      ]
     },
     {
       "id": 134,

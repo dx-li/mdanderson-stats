@@ -25,5 +25,5 @@
     "Separate patient-generation and posterior-sampling random streams; retain compact summaries and release posterior draws.",
     "Serial simulation and explicit likelihood-evaluation budgets; exhaustion raises rather than producing partial operating characteristics."
   ],
-  "limitations": "No native scheduler, random-sequence, hidden MCMC setting, or executable parity. The newer CRM Suite policy differs from the older desktop DA safety-wait convention. Native files/reports and online model-selection/calibration choices remain separate work."
+  "limitations": "No native scheduler, random-sequence, hidden MCMC setting, or executable parity. The newer CRM Suite policy differs from the older desktop DA safety-wait convention. Native files/reports and online automatic calibration and hidden conventions remain separate work."
 }

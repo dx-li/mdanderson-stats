@@ -179,6 +179,6 @@ replay and automatic complete-data routing. [Trial simulation](crm-simulation.md
 adds cohort scheduling and operating characteristics. Native files/reports and
 the older desktop safety-wait convention remain separate work.
 The current desktop uses six hazard intervals; the paper's simulation study
-uses nine. Online entry 133 remains pending until its own conventions can be
-verified. See
+uses nine. Online entry 133 has partial [model-selection coverage](crm-model-selection.md),
+with native conventions and automatic skeleton calibration still open. See
 [source provenance](dacrm-sources.json).

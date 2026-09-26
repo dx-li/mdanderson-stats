@@ -124,4 +124,5 @@ outcome histories, not the dates when a database received or corrected those
 records. [Trial replay and simulation](crm-simulation.md) add cohort scheduling
 and operating characteristics. Native files/reports and older-version conduct
 differences remain separate work. Catalog entries 81 and 132 therefore remain
-partial, and online entry 133 requires its own model-selection/calibration audit.
+partial. Online entry 133 has partial [model-selection coverage](crm-model-selection.md);
+its automatic skeleton calibration and hidden conduct conventions remain open.

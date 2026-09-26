@@ -25,6 +25,8 @@ For model `k`, the dose probability is `p[k, j] ** exp(alpha)` and alpha has a
 zero-mean normal prior. The default prior variance is two. Each model is fitted
 separately, then its evidence updates the prior model weight. Dose means and
 overdose probabilities average across the resulting model probabilities.
+Optional [BMS and Occam-window aggregation](crm-model-selection.md) select the
+best-supported model or average within a retained subset. The default remains BMA.
 
 The inputs `p` are **prior medians**, as in BMA-CRM 2.2.4 and CRM Suite 1.0.0.
 They are not converted from prior means. This follows the current
@@ -112,7 +114,8 @@ handles delayed outcomes, and [calendar decisions](crm-conduct.md) add bounded
 pending-outcome look-ahead and time-specific record replay.
 [Trial simulation](crm-simulation.md) provides cohort scheduling and operating
 characteristics. Native file/report workflows and older-version conduct
-differences remain separate work. Online entry 133 remains pending until its own
-model-selection and calibration conventions can be verified. No Windows executable parity or
+differences remain separate work. Online entry 133 now has partial coverage
+through [model selection](crm-model-selection.md); automatic skeleton calibration
+and hidden native conventions remain open. No Windows executable parity or
 random-seed parity is claimed.
 Original programs and manuals are not bundled. See [source provenance](bmacrm-sources.json).

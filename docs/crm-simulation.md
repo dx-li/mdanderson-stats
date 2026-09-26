@@ -51,7 +51,8 @@ therefore distinct from `final_time`; `suspension_time` counts enrollment waits
 and excludes ordinary final follow-up.
 
 The default method is CRM when one skeleton is supplied and BMA-CRM with
-multiple skeletons. Pending outcomes use exact bounded look-ahead. For DA-CRM,
+multiple skeletons. [BMS and Occam-window aggregation](crm-model-selection.md)
+are also available for this route. Pending outcomes use exact bounded look-ahead. For DA-CRM,
 set `method="dacrm"` and supply a matching `da_prior`, explicit
 `minimum_observed`, and a NumPy random generator. Completed outcomes use
 deterministic CRM integration. The newer CRM Suite decision policy applies;
@@ -154,5 +155,5 @@ adequate Monte Carlo precision within them.
 
 This adds scientific simulation coverage for the CRM components of catalog
 entries 81 and 132. Native saved files/reports, older-version differences and
-the online entry's separate model-selection/calibration choices remain open.
+the online entry's automatic skeleton calibration and hidden conventions remain open.
 See [source provenance](crm-simulation-sources.json).

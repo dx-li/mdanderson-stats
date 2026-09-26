@@ -1203,6 +1203,9 @@ add fixed-dose cohorts, enrollment waits, calibrated toxicity timing and serial
 study replication. Compact decision records retain sampling diagnostics without
 accumulating posterior draws. Native reports and older-version conduct
 differences remain open for BMA-CRM Simulator and CRM Suite.
+[Bayesian model selection and Occam's window](docs/crm-model-selection.md)
+add alternative model aggregation throughout these CRM workflows, with original
+priors preserved so excluded models can reenter as observations accumulate.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
