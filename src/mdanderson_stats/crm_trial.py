@@ -33,6 +33,8 @@ from .dacrm_decision import DACRMDecision
 _MAX_PATIENTS = 200
 _MAX_DOSES = 20
 _MAX_COHORT_SIZE = 4
+_DEFAULT_PER_CALL_EVALUATIONS = 200_000
+_DEFAULT_TOTAL_EVALUATIONS = 2_000_000
 _MAX_PER_CALL_EVALUATIONS = 2_000_000
 _MAX_TOTAL_EVALUATIONS = 20_000_000
 
@@ -107,7 +109,7 @@ def _step(
     if isinstance(decision, BMACRMLookAhead):
         action, dose, reason = decision.action, decision.dose, decision.reason
         safety_probability = (
-            float(result.posterior.overdose_probability[current_dose or 0])
+            float(result.posterior.overdose_probability[0])
             if hasattr(result.posterior, "overdose_probability")
             else float("nan")
         )
@@ -164,8 +166,8 @@ def run_crm_trial(
     warmup: int = 1000,
     chains: int = 2,
     max_completions: int = 128,
-    max_evaluations: int = _MAX_PER_CALL_EVALUATIONS,
-    max_total_evaluations: int = _MAX_TOTAL_EVALUATIONS,
+    max_evaluations: int = _DEFAULT_PER_CALL_EVALUATIONS,
+    max_total_evaluations: int = _DEFAULT_TOTAL_EVALUATIONS,
 ) -> CRMTrial:
     """Replay one staggered, fixed-dose-cohort CRM trial.
 
