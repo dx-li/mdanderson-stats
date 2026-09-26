@@ -101,3 +101,29 @@ only on full-information CRM. The newer CRM Suite guide states a general safety
 cutoff and does not repeat that exception. The current `crm_suite` policy follows
 the newer written rule. A future older-desktop profile must state this difference
 explicitly instead of claiming both native programs behave identically.
+
+The authors' JASA paper is available at a working institutional URL:
+https://saasresearch.hku.hk/~gyin/materials/2009YinYuanJASA.pdf
+
+It explicitly defines BMS as choosing the skeleton with highest posterior
+model probability at each allocation. It also defines an Occam-window variant
+that retains models whose posterior weight divided by the largest weight
+exceeds a threshold. These are source-backed scientific additions for a later
+batch; the short MD Anderson method PDF describes averaging only.
+For reproducing the JASA simulation tables, its stated alpha standard
+deviation is 2, whereas the short method guide uses variance 2. Pass the
+appropriate explicit `prior_sd`; do not compare the tables using the package's
+sqrt(2) default and attribute differences solely to random sampling.
+
+The Pan/Yuan paper's indexed full text supplies the Lee/Cheung indifference
+interval recursion and defines nonequivalence as one minus average regression
+R-squared for the log skeleton vectors:
+https://pmc.ncbi.nlm.nih.gov/articles/PMC5026535/
+
+Direct page access currently shows a browser challenge. Its indexed equation
+for Q contains an inconsistent second equality, so verify the PDF or author
+code before implementing that expression. Also establish whether regressions
+include an intercept. Candidate-set ranking alone is not the paper's full
+calibration: it subsequently compares simulation-based correct-selection rates
+across representative scenarios. Use bounded work and report Monte Carlo
+uncertainty; do not label the highest-Q set as the statistically optimal set.

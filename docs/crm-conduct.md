@@ -121,6 +121,7 @@ These are independent Python implementations of the documented statistical and
 conduct rules. They do not claim native executable parity, hidden sampler
 settings or random-sequence parity. Calendar snapshots describe corrected
 outcome histories, not the dates when a database received or corrected those
-records. Full cohort scheduling, operating-characteristic simulation and native
-files/reports remain separate work. Catalog entries 81 and 132 therefore remain
-partial, and online entry 133 requires its own source audit.
+records. [Trial replay and simulation](crm-simulation.md) add cohort scheduling
+and operating characteristics. Native files/reports and older-version conduct
+differences remain separate work. Catalog entries 81 and 132 therefore remain
+partial, and online entry 133 requires its own model-selection/calibration audit.

@@ -1198,8 +1198,11 @@ and final selection. Sampling is serial with explicit memory and work limits.
 [Calendar decisions and pending-outcome look-ahead](docs/crm-conduct.md) connect
 these methods to time-specific record replay. Look-ahead acts only when all
 possible completed outcomes agree; completed DA records use deterministic CRM.
-Full cohort scheduling and operating-characteristic simulation remain open for
-BMA-CRM Simulator and CRM Suite.
+[Trial replay and operating-characteristic simulation](docs/crm-simulation.md)
+add fixed-dose cohorts, enrollment waits, calibrated toxicity timing and serial
+study replication. Compact decision records retain sampling diagnostics without
+accumulating posterior draws. Native reports and older-version conduct
+differences remain open for BMA-CRM Simulator and CRM Suite.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson

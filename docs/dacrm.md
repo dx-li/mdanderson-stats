@@ -175,8 +175,9 @@ counts, waiting, raw-rate restrictions and final selection.
 This adds DA posterior inference to the partial implementations of BMA-CRM
 Simulator and CRM Suite (catalog 81 and 132), together with paper and desktop
 dose-decision policies. [Calendar decisions](crm-conduct.md) provide record
-replay and automatic complete-data routing. Full trial scheduling,
-operating-characteristic simulation, and native files/reports remain separate work.
+replay and automatic complete-data routing. [Trial simulation](crm-simulation.md)
+adds cohort scheduling and operating characteristics. Native files/reports and
+the older desktop safety-wait convention remain separate work.
 The current desktop uses six hazard intervals; the paper's simulation study
 uses nine. Online entry 133 remains pending until its own conventions can be
 verified. See

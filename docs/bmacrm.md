@@ -109,9 +109,10 @@ the patient counts are synthetic audit cases, not native simulation output.
 
 This is partial coverage of catalog entries 81 and 132. [DA-CRM](dacrm.md)
 handles delayed outcomes, and [calendar decisions](crm-conduct.md) add bounded
-pending-outcome look-ahead and time-specific record replay. Full trial scheduling,
-operating-characteristic simulation, and native file/report workflows remain
-separate work. Online entry 133 remains pending until its own model-selection
-and calibration conventions can be verified. No Windows executable parity or
+pending-outcome look-ahead and time-specific record replay.
+[Trial simulation](crm-simulation.md) provides cohort scheduling and operating
+characteristics. Native file/report workflows and older-version conduct
+differences remain separate work. Online entry 133 remains pending until its own
+model-selection and calibration conventions can be verified. No Windows executable parity or
 random-seed parity is claimed.
 Original programs and manuals are not bundled. See [source provenance](bmacrm-sources.json).

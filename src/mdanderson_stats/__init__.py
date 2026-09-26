@@ -382,6 +382,8 @@ from .crm_calendar import (
     crm_calendar_decision,
     crm_calendar_snapshot,
 )
+from .crm_simulation import CRMSimulation, simulate_crm
+from .crm_trial import CRMTrial, CRMTrialStep, run_crm_trial
 from .cta import ContingencyChiSquare, contingency_chi_square
 from .cta_binomial import BinomialComparison, binomial_comparison
 from .cta_diagnostic import DiagnosticAccuracy, diagnostic_accuracy
@@ -1031,6 +1033,11 @@ __all__ = [
     "CRMCalendarDecision",
     "crm_calendar_snapshot",
     "crm_calendar_decision",
+    "CRMTrial",
+    "CRMTrialStep",
+    "run_crm_trial",
+    "CRMSimulation",
+    "simulate_crm",
     "DACRMPosterior",
     "DACRMPrior",
     "fit_dacrm",

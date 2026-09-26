@@ -2752,7 +2752,8 @@
         "DA paper and CRM Suite decision policies with one-level moves, safety stopping, observed-outcome escalation waits, raw-rate caps and final eligibility rules",
         "Exact bounded pending-count look-ahead for CRM/BMA-CRM, with completion witnesses and original model priors preserved for lossless refits",
         "Retrospective calendar snapshots and explicit deterministic CRM, look-ahead or DA posterior routing; see docs/crm-conduct.md",
-        "Full cohort scheduling, operating-characteristic simulation, native files and reports remain pending; see docs/bmacrm.md, docs/dacrm.md and docs/crm-conduct.md"
+        "Fixed-dose cohort calendar replay and serial operating-characteristic simulation with calibrated event timing, separate patient/sampler randomness, compact diagnostics and global work limits; see docs/crm-simulation.md",
+        "Native files/reports and older-version conduct differences, including the older desktop DA safety-wait convention, remain pending"
       ],
       "validation": [
         "Ten independent base-R posterior scenarios including ordinary CRM, the guide skeletons, unequal/zero priors, extreme probabilities and 10000-patient concentrated or boundary data",
@@ -2762,7 +2763,9 @@
         "DA hazard-prior formulas, reproducibility, input and allocation bounds, and finite-state checks; no native MCMC or random-seed parity claimed",
         "Published DA paper Table 3 allocation sequence from supplied posterior means, and focused pending/observed count, waiting, raw-rate and final-selection policy checks",
         "Exhaustive grouped-completion agreement/disagreement cases, explicit work-limit waits, and an extreme raw-prior preservation regression with independent R posterior support",
-        "Calendar boundary and future-outcome masking checks, completed-data DA/CRM equivalence without RNG consumption, and pending-data routing checks"
+        "Calendar boundary and future-outcome masking checks, completed-data DA/CRM equivalence without RNG consumption, and pending-data routing checks",
+        "All four complete two-patient CRM histories checked against independent base-R quadrature, plus fixed-cohort enrollment, wait timing and safety-stop follow-up checks",
+        "Serial simulation reproducibility, count conservation and independent DA/patient random-stream checks; final nonselection distinguished from early termination"
       ]
     },
     {
@@ -3694,7 +3697,8 @@
         "DA paper and CRM Suite decision policies with one-level moves, safety stopping, observed-outcome escalation waits, raw-rate caps and final eligibility rules",
         "Exact bounded pending-count look-ahead for CRM/BMA-CRM, with completion witnesses and original model priors preserved for lossless refits",
         "Retrospective calendar snapshots and explicit deterministic CRM, look-ahead or DA posterior routing; see docs/crm-conduct.md",
-        "Full cohort scheduling, operating-characteristic simulation, native files and reports remain pending; see docs/bmacrm.md, docs/dacrm.md and docs/crm-conduct.md"
+        "Fixed-dose cohort calendar replay and serial operating-characteristic simulation with calibrated event timing, separate patient/sampler randomness, compact diagnostics and global work limits; see docs/crm-simulation.md",
+        "Native files/reports and older-version conduct differences, including the older desktop DA safety-wait convention, remain pending"
       ],
       "validation": [
         "Ten independent base-R posterior scenarios including ordinary CRM, the guide skeletons, unequal/zero priors, extreme probabilities and 10000-patient concentrated or boundary data",
@@ -3704,7 +3708,9 @@
         "DA hazard-prior formulas, reproducibility, input and allocation bounds, and finite-state checks; no native MCMC or random-seed parity claimed",
         "Published DA paper Table 3 allocation sequence from supplied posterior means, and focused pending/observed count, waiting, raw-rate and final-selection policy checks",
         "Exhaustive grouped-completion agreement/disagreement cases, explicit work-limit waits, and an extreme raw-prior preservation regression with independent R posterior support",
-        "Calendar boundary and future-outcome masking checks, completed-data DA/CRM equivalence without RNG consumption, and pending-data routing checks"
+        "Calendar boundary and future-outcome masking checks, completed-data DA/CRM equivalence without RNG consumption, and pending-data routing checks",
+        "All four complete two-patient CRM histories checked against independent base-R quadrature, plus fixed-cohort enrollment, wait timing and safety-stop follow-up checks",
+        "Serial simulation reproducibility, count conservation and independent DA/patient random-stream checks; final nonselection distinguished from early termination"
       ]
     },
     {

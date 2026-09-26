@@ -1,0 +1,29 @@
+{
+  "catalog_ids": [81, 132],
+  "retrieved_at": "2026-09-26",
+  "scope": "CRM, BMA-CRM and DA-CRM calendar trial replay and serial operating-characteristic simulation",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/BMA-CRMSimulatorHelp.pdf",
+      "version": "1.0.0, October 25, 2018",
+      "role": "Design limits, cohort decisions, pending-data waits, Poisson arrivals, Weibull timing calibrated by window incidence and conditional late-event fraction, and operating-characteristic outputs."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/BMA-CRM_Description.pdf",
+      "role": "CRM/BMA posterior inference and adaptive dose assignment across cohorts."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/DA-CRM_Description.pdf",
+      "role": "Data augmentation for delayed toxicity; separate from the simulation's true event-time distribution."
+    }
+  ],
+  "implementation_choices": [
+    "Zero-based dose indices, fixed-dose staggered cohorts, and outcome-triggered reanalysis while enrollment is suspended.",
+    "The prospective patient is enrolled when a wait resolves; subsequent gaps run from actual enrollment and no queue accumulates.",
+    "Safety stopping is assessed at cohort boundaries; after maximum enrollment, final selection waits for complete ascertainment.",
+    "A safety stop remains a stop while enrolled patients finish follow-up; decision and final ascertainment times are reported separately.",
+    "Separate patient-generation and posterior-sampling random streams; retain compact summaries and release posterior draws.",
+    "Serial simulation and explicit likelihood-evaluation budgets; exhaustion raises rather than producing partial operating characteristics."
+  ],
+  "limitations": "No native scheduler, random-sequence, hidden MCMC setting, or executable parity. The newer CRM Suite policy differs from the older desktop DA safety-wait convention. Native files/reports and online model-selection/calibration choices remain separate work."
+}
