@@ -20,9 +20,7 @@ def test_curve_maps_skeleton_and_respects_bounded_asymptotes_and_log_tails():
     assert not curve.standardized_doses.flags.writeable
 
     bounded = BCRMCurve([0.12, 0.28, 0.62], alpha=1.2, lower=0.1, upper=0.8)
-    assert_allclose(
-        bounded.probabilities([1])[0], [0.12, 0.28, 0.62], atol=2e-16, rtol=0
-    )
+    assert_allclose(bounded.probabilities([1])[0], [0.12, 0.28, 0.62], atol=2e-16, rtol=0)
     logs = bcrm_log_probabilities([-1e6, 1e6], [0, 1], alpha=0)
     assert np.isfinite(logs).all()
     assert_allclose(np.exp(logs).sum(axis=-1), 1, atol=2e-16)
@@ -43,9 +41,16 @@ def test_grouped_likelihood_is_invariant_to_splitting_binomial_rows():
     curve = BCRMCurve([0.05, 0.10, 0.20, 0.35])
     grouped = bcrm_log_likelihood(curve.standardized_doses, [0, 1, 2, 2], [4, 4, 4, 4], [0.4, 1.2])
     split = bcrm_log_likelihood(
-        [curve.standardized_doses[0], curve.standardized_doses[0], curve.standardized_doses[1],
-         curve.standardized_doses[2], curve.standardized_doses[3]],
-        [0, 0, 1, 2, 2], [2, 2, 4, 4, 4], [0.4, 1.2],
+        [
+            curve.standardized_doses[0],
+            curve.standardized_doses[0],
+            curve.standardized_doses[1],
+            curve.standardized_doses[2],
+            curve.standardized_doses[3],
+        ],
+        [0, 0, 1, 2, 2],
+        [2, 2, 4, 4, 4],
+        [0.4, 1.2],
     )
     assert_allclose(grouped, split, atol=2e-14, rtol=0)
     result = fit_bcrm(curve, [0, 1, 2, 2], [4, 4, 4, 4])

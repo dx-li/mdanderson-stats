@@ -137,12 +137,8 @@ def bcrm_log_probabilities(
         raise ValueError("beta-dose linear predictor produced an undefined value")
     span = hi - lo
     log_span = np.log(span)
-    log_event = np.logaddexp(
-        -np.inf if lo == 0 else np.log(lo), log_span + log_expit(z)
-    )
-    log_nonevent = np.logaddexp(
-        -np.inf if hi == 1 else np.log1p(-hi), log_span + log_expit(-z)
-    )
+    log_event = np.logaddexp(-np.inf if lo == 0 else np.log(lo), log_span + log_expit(z))
+    log_nonevent = np.logaddexp(-np.inf if hi == 1 else np.log1p(-hi), log_span + log_expit(-z))
     return np.stack((log_nonevent, log_event), axis=-1)
 
 
@@ -170,9 +166,7 @@ def bcrm_log_likelihood(
     totals = count(raw_subjects, "subjects")
     if np.any(successes > totals) or np.sum(totals) > 10_000:
         raise ValueError("events must not exceed subjects and total subjects must be <= 10000")
-    logs = bcrm_log_probabilities(
-        doses, raw_beta, alpha=alpha, lower=lower, upper=upper
-    )
+    logs = bcrm_log_probabilities(doses, raw_beta, alpha=alpha, lower=lower, upper=upper)
     event_term = np.zeros_like(logs[..., 1])
     nonevent_term = np.zeros_like(logs[..., 0])
     np.multiply(successes, logs[..., 1], out=event_term, where=successes != 0)
@@ -252,8 +246,10 @@ def fit_bcrm(
     mode_points: list[float] = []
     for left, right in zip(boundaries[:-1], boundaries[1:], strict=True):
         optimized = minimize_scalar(
-            lambda b: -loglike(float(b)), bounds=(float(left), float(right)),
-            method="bounded", options={"xatol": 1e-12},
+            lambda b: -loglike(float(b)),
+            bounds=(float(left), float(right)),
+            method="bounded",
+            options={"xatol": 1e-12},
         )
         if optimized.success:
             mode = float(optimized.x)
@@ -275,7 +271,8 @@ def fit_bcrm(
         if bracket is not None:
             shoulder = brentq(
                 lambda b: loglike(b) - peak + 40,
-                min(peak_beta, bracket[0]), max(peak_beta, bracket[0]),
+                min(peak_beta, bracket[0]),
+                max(peak_beta, bracket[0]),
                 xtol=1e-14,
             )
             if beta_lo < shoulder < beta_hi:
@@ -292,8 +289,13 @@ def fit_bcrm(
     ) -> tuple[float, float]:
         points = [p for p in integration_points if left < p < right]
         value, error = quad(
-            lambda b: density(b) * function(b), left, right,
-            epsabs=2e-12, epsrel=2e-10, limit=300, points=points or None,
+            lambda b: density(b) * function(b),
+            left,
+            right,
+            epsabs=2e-12,
+            epsrel=2e-10,
+            limit=300,
+            points=points or None,
         )
         scale = max(abs(value), normalizer_scale or 1e-12)
         tolerance = 2e-8 * scale
@@ -329,14 +331,14 @@ def fit_bcrm(
 
         dose_mean[index] = integrate(dose_probability)[0] / normalizer
         dose_interval[index] = [
-            *sorted((
-                lo + (hi - lo) * expit(intercept + interval[0] * dose),
-                lo + (hi - lo) * expit(intercept + interval[1] * dose),
-            )),
+            *sorted(
+                (
+                    lo + (hi - lo) * expit(intercept + interval[0] * dose),
+                    lo + (hi - lo) * expit(intercept + interval[1] * dose),
+                )
+            ),
         ]
-    plugin = bcrm_probabilities(
-        doses, np.array([mean]), alpha=intercept, lower=lo, upper=hi
-    )[0]
+    plugin = bcrm_probabilities(doses, np.array([mean]), alpha=intercept, lower=lo, upper=hi)[0]
     return BCRMPosterior(
         beta_mean=mean,
         beta_sd=float(np.sqrt(variance)),
