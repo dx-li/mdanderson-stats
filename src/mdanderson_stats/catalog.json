@@ -3477,9 +3477,18 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Double-sided isotonic efficacy estimation with patient-count PAVA weights, unweighted split scores and distinct split/peak indices.",
+        "Calibrated common Beta toxicity prior, pooled posterior overdose probabilities, strict admissibility and complete-outcome interim/final OBD decisions.",
+        "Observed-dose mapping, lowest-dose efficacy ties, safe exploration, safety overrides and stopping when no dose is admissible.",
+        "Bounded serial cohort simulation with compact per-trial counts, dose selection, early stopping, no-selection probabilities and Monte Carlo errors; docs/mtadf.md."
+      ],
+      "validation": [
+        "Independent base-R min-max isotonic reference for seven curves, plus five calibrated priors and 20 posterior-tail cases; tests/test_mtadf_reference.py.",
+        "Focused weighted fitting, noncontiguous observed-dose mapping, untried final exclusion, all-unsafe stopping and serial simulation checks; tests/test_mtadf.py.",
+        "Paper-based policy; native hidden prior/settings, inclusive cutoff convention, complete raw-source comparison, reports and random-sequence equivalence remain unverified; docs/mtadf-sources.json."
+      ]
     },
     {
       "id": 119,

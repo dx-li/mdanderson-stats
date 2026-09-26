@@ -1207,6 +1207,13 @@ differences remain open for BMA-CRM Simulator and CRM Suite.
 add alternative model aggregation throughout these CRM workflows, with original
 priors preserved so excluded models can reenter as observations accumulate.
 
+[MTADF optimal biological dose finding](docs/mtadf.md) adds double-sided
+isotonic efficacy fitting, elicited beta priors and pooled posterior toxicity
+monitoring. Adaptive decisions include exploration, lowest-dose efficacy ties
+and safety stopping. A serial simulator reports dose allocation, selection and
+Monte Carlo uncertainty. Independent R calculations check the numerical core;
+native application settings and output equivalence remain open.
+
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
 outcomes. These include exact one-sample count tests, historical controls,

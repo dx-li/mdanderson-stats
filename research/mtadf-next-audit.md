@@ -1,5 +1,8 @@
 # MTADF implementation target
 
+Historical source audit before implementation. The isotonic core and serial
+simulation are now integrated; see mtadf-audit.md for results and remaining scope.
+
 Catalog entry 114 remains pending. Its current application was read on
 2026-09-26:
 https://biostatistics.mdanderson.org/shinyapps/MTADF/

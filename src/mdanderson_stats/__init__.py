@@ -524,6 +524,15 @@ from .misclib_maximum import (
 )
 from .misclib_messages import MisclibMessage, compile_misclib_messages, print_misclib_message
 from .misclib_sort import permutation_sort_matrix, permute_matrix, sort_matrix
+from .mtadf import (
+    MTADFDecision,
+    MTADFIsotonicFit,
+    MTADFPrior,
+    double_sided_isotonic,
+    mtadf_decision,
+    mtadf_toxicity_prior,
+)
+from .mtadf_simulation import MTADFSimulation, simulate_mtadf
 from .mtpi import MTPIDesign, MTPIPosterior, MTPISelection, MTPITable
 from .mtpi_simulation import MTPISimulation, simulate_mtpi
 from .muhaz import MuhazFixed, muhaz_fixed
@@ -1534,6 +1543,14 @@ __all__ = [
     "MTPITable",
     "MTPISimulation",
     "simulate_mtpi",
+    "MTADFDecision",
+    "MTADFIsotonicFit",
+    "MTADFPrior",
+    "MTADFSimulation",
+    "double_sided_isotonic",
+    "mtadf_decision",
+    "mtadf_toxicity_prior",
+    "simulate_mtadf",
     "PDNNExpression",
     "PDNNConvergenceError",
     "PDNNFit",

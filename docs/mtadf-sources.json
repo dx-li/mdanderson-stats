@@ -1,0 +1,34 @@
+{
+  "catalog_ids": [114],
+  "retrieved_at": "2026-09-26",
+  "scope": "MTADF double-sided isotonic efficacy estimation, beta-binomial toxicity monitoring, adaptive dose decisions and serial simulation",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/MTADF/",
+      "version": "1.0.5.0, updated 2026-01-06",
+      "role": "Identifies double-sided isotonic regression as the implemented method, provides complete-count trial conduct and operating-characteristic settings, and cites Zang, Lee and Yuan (2014)."
+    },
+    {
+      "url": "https://odin.mdacc.tmc.edu/~yyuan/Software/TargetAgent/OBD_rev.pdf",
+      "role": "Primary mathematical specification: Section 2.1 beta-binomial safety and prior elicitation; Section 2.3 weighted PAVA, unweighted split scores, lowest-dose efficacy ties and adaptive exploration."
+    },
+    {
+      "url": "https://odin.mdacc.tmc.edu/~yyuan/index_code.html",
+      "role": "Authors' institutional index linking the paper and reference R implementation."
+    },
+    {
+      "url": "https://odin.mdacc.tmc.edu/~yyuan/Software/TargetAgent/targetAgentDF.r",
+      "role": "Rendered source exposes a fixed prior calibration, inclusive safety cutoff, forced retention of at least the lowest dose and independent marginal outcome generation. The complete raw source could not be obtained; truncated expressions are not treated as a specification."
+    }
+  ],
+  "implementation_choices": [
+    "Independent implementation of the paper's isotonic method; dose indices are zero-based.",
+    "Pool posterior overdose probabilities with equal PAVA weights and require strict probability below the safety cutoff; stop if no dose is admissible.",
+    "Calibrate a common Beta prior from the requested toxicity limit, cutoff, margin and concentration instead of a fixed hidden prior.",
+    "Fit efficacy only at observed doses using patient-count PAVA weights; rank candidate splits by unweighted squared error as printed in the paper.",
+    "Interpret the apparent y_k/n_k index typo inside the paper's sum over j as the observed rate y_j/n_j.",
+    "Safety takes priority over one-level movement; final recommendations require observed outcomes, and unobserved efficacy remains undefined.",
+    "Simulation uses independent binary toxicity and efficacy margins, complete cohort ascertainment, serial trials and bounded work."
+  ],
+  "limitations": "Native application prior, boundary conventions, full raw R behavior, output files and random-sequence parity remain unverified. The paper's global and local logistic variants are separate methods, not claimed as part of this isotonic implementation."
+}
