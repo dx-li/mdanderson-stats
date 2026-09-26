@@ -1173,3 +1173,11 @@ It also supplies first-stage dose decisions and posterior target contours.
 Independent base-R calculations verify published scenario surfaces and a reduced
 posterior. Native second-stage information selection and full simulations remain
 open; the documentation records the source ambiguity.
+
+[bCRM single-outcome dose finding](docs/bcrm.md) adds the fixed-intercept
+logistic CRM, bounded asymptotes and deterministic uniform-slope posterior
+summaries. It separates mean probabilities from probabilities at the mean
+slope, with independent R checks of ordinary and concentrated posteriors.
+Single-outcome allocation supports target selection, an escalation cap and
+cohort stopping rules with explicit probability estimates.
+The bivariate association model and full native simulation workflow remain open.

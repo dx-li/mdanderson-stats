@@ -324,9 +324,19 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Single-outcome fixed-intercept logistic CRM with dose skeleton transformation, fixed asymptotes and stable grouped log likelihood",
+        "Bounded uniform-slope posterior integration with slope moments, equal-tailed intervals, posterior mean probabilities and distinct mean-slope plugin probabilities",
+        "Explicit single-outcome below/nearest/above target selection, starting dose, highest-tried escalation cap and cohort/enrollment stopping rules",
+        "Bivariate association model, two-stage conduct, extra allocation, futility, four-parameter post-trial fit, full simulations and native files remain pending; see docs/bcrm.md"
+      ],
+      "validation": [
+        "Independent base-R posterior integrals for the official Goodman skeleton, bounded asymptotes and concentrated or boundary posteriors with 10000 observations",
+        "Focused checks of skeleton mapping, stable log tails, grouped likelihood, batch shape, interval order and bounded allocations",
+        "Deterministic decision checks for target modes and ties, unattainable fallbacks, starting allocation, escalation and minimum/maximum enrollment",
+        "Original 1.1.3 archive inspected without executing installer or native engine; no native numerical or random-seed parity claim"
+      ]
     },
     {
       "id": 16,

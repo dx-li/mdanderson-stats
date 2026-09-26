@@ -107,6 +107,15 @@ from .bayesian_monitoring import (
 )
 from .bchm import BCHMBorrowResult, BCHMCluster, BCHMFit, bchm_borrow, bchm_cluster, bchm_fit
 from .bchm_clustering import BCHMClusterResult
+from .bcrm_decision import BCRMDecision, bcrm_decision
+from .bcrm_model import (
+    BCRMCurve,
+    BCRMPosterior,
+    bcrm_log_likelihood,
+    bcrm_log_probabilities,
+    bcrm_probabilities,
+    fit_bcrm,
+)
 from .berds import BackwardElimination, BERDSResult, backward_elimination, berds
 from .beta_binomial import (
     BetaBinomialPosterior,
@@ -919,6 +928,14 @@ from .windows import (
 )
 
 __all__ = [
+    "BCRMDecision",
+    "bcrm_decision",
+    "BCRMCurve",
+    "BCRMPosterior",
+    "bcrm_probabilities",
+    "bcrm_log_probabilities",
+    "bcrm_log_likelihood",
+    "fit_bcrm",
     "ToxFinderContour",
     "ToxFinderStage1Result",
     "toxfinder_contour",
