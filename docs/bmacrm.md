@@ -35,9 +35,13 @@ which supersede the elicitation convention in the
 `model_log_evidence` includes binomial coefficients for grouped counts. These
 common factors cancel when calculating posterior model weights. The model
 weights default to equal values; `model_prior` accepts nonnegative relative
-weights, including zero. `alpha_mean` and `alpha_sd` describe each conditional
-model posterior, not a single shared alpha distribution. `target` defines the
-event `toxicity probability > target` for every returned overdose probability.
+weights, including zero. `input_model_prior` preserves these original relative
+weights for later refits, while `prior_model_weights` contains normalized
+probabilities. Use the original inputs for refitting: very unequal finite
+weights can underflow to zero during normalization. `alpha_mean` and `alpha_sd`
+describe each conditional model posterior, not a single shared alpha
+distribution. `target` defines the event `toxicity probability > target` for
+every returned overdose probability.
 
 The implementation uses stable log likelihoods and adaptive integration over
 the entire normal prior support, centered and scaled at each posterior mode.
@@ -103,9 +107,11 @@ a tiny prior model weight rescued by strongly informative data.
 The skeleton in the first eight scenarios comes from the official guide;
 the patient counts are synthetic audit cases, not native simulation output.
 
-This is partial coverage of catalog entries 81 and 132. DA-CRM, partially
-observed outcomes, look-ahead conduct, event-time simulation, operating
-characteristics, and native file/report workflows remain separate work. The
-online entry 133 remains pending until its own interface and conventions can
-be verified. No Windows executable parity or random-seed parity is claimed.
+This is partial coverage of catalog entries 81 and 132. [DA-CRM](dacrm.md)
+handles delayed outcomes, and [calendar decisions](crm-conduct.md) add bounded
+pending-outcome look-ahead and time-specific record replay. Full trial scheduling,
+operating-characteristic simulation, and native file/report workflows remain
+separate work. Online entry 133 remains pending until its own model-selection
+and calibration conventions can be verified. No Windows executable parity or
+random-seed parity is claimed.
 Original programs and manuals are not bundled. See [source provenance](bmacrm-sources.json).

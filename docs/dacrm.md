@@ -120,6 +120,12 @@ branch-order parity is not claimed. An irregular supplied history with an
 untried lower dose also blocks upward movement. Safety stopping precedes these
 post-initial rules; a cutoff of one disables it.
 
+This policy follows the newer CRM Suite guide. The
+[older BMA-CRM Simulator guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BMACRM/BMA-CRMSimulatorHelp.pdf)
+instead describes waiting after a DA safety signal until full-information CRM
+can decide whether to stop. That older desktop behavior is not implemented by
+the `crm_suite` profile; native behavior across versions is not claimed identical.
+
 This helper uses the supplied posterior, including any Monte Carlo uncertainty.
 It does not refit, determine cohort completion, advance patient follow-up, or
 decide whether final assessment is appropriate. A final decision may therefore
@@ -127,7 +133,9 @@ use pending outcomes when the caller explicitly requests it. Retain and assess
 the posterior diagnostics before interpreting a decision near a boundary.
 The helper continues to apply the chosen DA rules when all outcomes are known;
 it does not automatically switch to ordinary CRM. For that separate complete-data
-workflow, use `fit_bmacrm` with one skeleton and `bmacrm_decision`.
+workflow, use `fit_bmacrm` with one skeleton and `bmacrm_decision`, or the
+[calendar decision router](crm-conduct.md), which switches inference methods
+according to the outcomes visible in its snapshot.
 
 ## Output and numerical precision
 
@@ -166,9 +174,10 @@ counts, waiting, raw-rate restrictions and final selection.
 
 This adds DA posterior inference to the partial implementations of BMA-CRM
 Simulator and CRM Suite (catalog 81 and 132), together with paper and desktop
-dose-decision policies. Calendar conduct, operating-characteristic simulation,
-automatic complete-data routing, and native files/reports remain separate work.
+dose-decision policies. [Calendar decisions](crm-conduct.md) provide record
+replay and automatic complete-data routing. Full trial scheduling,
+operating-characteristic simulation, and native files/reports remain separate work.
 The current desktop uses six hazard intervals; the paper's simulation study
-uses nine. Online entry 133 remains
-pending until its own conventions can be verified. See
+uses nine. Online entry 133 remains pending until its own conventions can be
+verified. See
 [source provenance](dacrm-sources.json).

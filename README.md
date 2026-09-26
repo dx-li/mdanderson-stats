@@ -1195,8 +1195,11 @@ hazard-prior calibration. Six independent base-R integrations check posterior
 moments, overdose probabilities, and pending-outcome probabilities. Separate
 paper and CRM Suite decision policies cover dose moves, waiting, safety stopping,
 and final selection. Sampling is serial with explicit memory and work limits.
-Full trial conduct and operating-characteristic simulation remain open for BMA-CRM Simulator and
-CRM Suite.
+[Calendar decisions and pending-outcome look-ahead](docs/crm-conduct.md) connect
+these methods to time-specific record replay. Look-ahead acts only when all
+possible completed outcomes agree; completed DA records use deterministic CRM.
+Full cohort scheduling and operating-characteristic simulation remain open for
+BMA-CRM Simulator and CRM Suite.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson

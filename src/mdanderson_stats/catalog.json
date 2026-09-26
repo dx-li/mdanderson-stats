@@ -2750,7 +2750,9 @@
         "DA-CRM posterior inference with observed and pending outcomes, piecewise exponential event timing, gamma hazard priors, and serial bounded data augmentation",
         "Paper midpoint-uniform and CRM Suite six-interval trimester hazard-prior calibration with explicit dispersion; see docs/dacrm.md",
         "DA paper and CRM Suite decision policies with one-level moves, safety stopping, observed-outcome escalation waits, raw-rate caps and final eligibility rules",
-        "Pending-outcome look-ahead, calendar and operating-characteristic simulation, automatic complete-data routing, native files and reports remain pending; see docs/bmacrm.md and docs/dacrm.md"
+        "Exact bounded pending-count look-ahead for CRM/BMA-CRM, with completion witnesses and original model priors preserved for lossless refits",
+        "Retrospective calendar snapshots and explicit deterministic CRM, look-ahead or DA posterior routing; see docs/crm-conduct.md",
+        "Full cohort scheduling, operating-characteristic simulation, native files and reports remain pending; see docs/bmacrm.md, docs/dacrm.md and docs/crm-conduct.md"
       ],
       "validation": [
         "Ten independent base-R posterior scenarios including ordinary CRM, the guide skeletons, unequal/zero priors, extreme probabilities and 10000-patient concentrated or boundary data",
@@ -2758,7 +2760,9 @@
         "Focused deterministic decision checks against the documented CRM Suite Appendix II rules; no native executable or random-seed parity claimed",
         "Six exact small-state DA posterior references from independent base-R integration, covering complete/pending data, prior-only cases, and interval-boundary DLTs; moments and probabilities compared using Monte Carlo standard errors",
         "DA hazard-prior formulas, reproducibility, input and allocation bounds, and finite-state checks; no native MCMC or random-seed parity claimed",
-        "Published DA paper Table 3 allocation sequence from supplied posterior means, and focused pending/observed count, waiting, raw-rate and final-selection policy checks"
+        "Published DA paper Table 3 allocation sequence from supplied posterior means, and focused pending/observed count, waiting, raw-rate and final-selection policy checks",
+        "Exhaustive grouped-completion agreement/disagreement cases, explicit work-limit waits, and an extreme raw-prior preservation regression with independent R posterior support",
+        "Calendar boundary and future-outcome masking checks, completed-data DA/CRM equivalence without RNG consumption, and pending-data routing checks"
       ]
     },
     {
@@ -3688,7 +3692,9 @@
         "DA-CRM posterior inference with observed and pending outcomes, piecewise exponential event timing, gamma hazard priors, and serial bounded data augmentation",
         "Paper midpoint-uniform and CRM Suite six-interval trimester hazard-prior calibration with explicit dispersion; see docs/dacrm.md",
         "DA paper and CRM Suite decision policies with one-level moves, safety stopping, observed-outcome escalation waits, raw-rate caps and final eligibility rules",
-        "Pending-outcome look-ahead, calendar and operating-characteristic simulation, automatic complete-data routing, native files and reports remain pending; see docs/bmacrm.md and docs/dacrm.md"
+        "Exact bounded pending-count look-ahead for CRM/BMA-CRM, with completion witnesses and original model priors preserved for lossless refits",
+        "Retrospective calendar snapshots and explicit deterministic CRM, look-ahead or DA posterior routing; see docs/crm-conduct.md",
+        "Full cohort scheduling, operating-characteristic simulation, native files and reports remain pending; see docs/bmacrm.md, docs/dacrm.md and docs/crm-conduct.md"
       ],
       "validation": [
         "Ten independent base-R posterior scenarios including ordinary CRM, the guide skeletons, unequal/zero priors, extreme probabilities and 10000-patient concentrated or boundary data",
@@ -3696,7 +3702,9 @@
         "Focused deterministic decision checks against the documented CRM Suite Appendix II rules; no native executable or random-seed parity claimed",
         "Six exact small-state DA posterior references from independent base-R integration, covering complete/pending data, prior-only cases, and interval-boundary DLTs; moments and probabilities compared using Monte Carlo standard errors",
         "DA hazard-prior formulas, reproducibility, input and allocation bounds, and finite-state checks; no native MCMC or random-seed parity claimed",
-        "Published DA paper Table 3 allocation sequence from supplied posterior means, and focused pending/observed count, waiting, raw-rate and final-selection policy checks"
+        "Published DA paper Table 3 allocation sequence from supplied posterior means, and focused pending/observed count, waiting, raw-rate and final-selection policy checks",
+        "Exhaustive grouped-completion agreement/disagreement cases, explicit work-limit waits, and an extreme raw-prior preservation regression with independent R posterior support",
+        "Calendar boundary and future-outcome masking checks, completed-data DA/CRM equivalence without RNG consumption, and pending-data routing checks"
       ]
     },
     {

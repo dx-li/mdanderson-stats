@@ -1,0 +1,26 @@
+{
+  "catalog_ids": [81, 132],
+  "retrieved_at": "2026-09-26",
+  "scope": "Bounded CRM/BMA-CRM look-ahead, retrospective patient snapshots, and explicit complete-data or DA-CRM routing",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/BMA-CRMSimulatorHelp.pdf",
+      "version": "1.0.0, October 25, 2018",
+      "role": "Appendix II defines acting before all outcomes are observed when all possible completions give the same action. Trial conduct sections describe decisions at chosen dates and distinguish observed DLTs, completed non-DLT windows, and pending follow-up."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/DA-CRM_Description.pdf",
+      "authors": "Suyu Liu, Guosheng Yin and Ying Yuan",
+      "year": 2013,
+      "role": "DA-CRM binary and event-time working likelihood. When binary outcomes are fully observed, alpha inference reduces to the complete-data power-model CRM posterior."
+    }
+  ],
+  "implementation_choices": [
+    "Enumerate grouped pending counts lazily and require all mixed completions to agree; early exit is permitted only after a disagreeing witness.",
+    "Bound completion count and numerical work explicitly; work-limit waits do not assert invariance.",
+    "Retain original relative model-prior inputs because normalized weights may underflow and updated posterior weights would double-count data on refit.",
+    "Calendar replay assumes fully ascertained historical or simulated outcomes; positive infinity denotes a full confirmed no-DLT window and cannot denote missing ascertainment.",
+    "The router reports whether it used deterministic complete-data CRM, bounded look-ahead, or DA sampling. Complete-data DA requests use ordinary CRM conduct rules without consuming RNG draws."
+  ],
+  "limitations": "No native executable, hidden branch-order, or random-sequence parity is claimed. Cohort scheduling, operating-characteristic simulation, database availability timestamps and native file/report workflows remain outside this batch. Online entry 133 remains unaudited."
+}

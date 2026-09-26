@@ -185,6 +185,7 @@ from .blockarand import (
 )
 from .bmacrm import BMACRMPosterior, fit_bmacrm
 from .bmacrm_decision import BMACRMDecision, bmacrm_decision
+from .bmacrm_lookahead import BMACRMLookAhead, bmacrm_lookahead
 from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
 from .boin12 import BOIN12Decision, BOIN12Design, BOIN12Posterior, BOIN12RDSTable, BOIN12Selection
 from .boin12 import admissibility as boin12_admissibility
@@ -374,6 +375,12 @@ from .continuous_sample_size import (
     correlation_sample_size,
     normal_mean_power,
     normal_mean_sample_size,
+)
+from .crm_calendar import (
+    CRMCalendarDecision,
+    CRMCalendarSnapshot,
+    crm_calendar_decision,
+    crm_calendar_snapshot,
 )
 from .cta import ContingencyChiSquare, contingency_chi_square
 from .cta_binomial import BinomialComparison, binomial_comparison
@@ -1018,6 +1025,12 @@ __all__ = [
     "fit_bmacrm",
     "BMACRMDecision",
     "bmacrm_decision",
+    "BMACRMLookAhead",
+    "bmacrm_lookahead",
+    "CRMCalendarSnapshot",
+    "CRMCalendarDecision",
+    "crm_calendar_snapshot",
+    "crm_calendar_decision",
     "DACRMPosterior",
     "DACRMPrior",
     "fit_dacrm",

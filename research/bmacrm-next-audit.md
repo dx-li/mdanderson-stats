@@ -75,3 +75,29 @@ discarding pending outcomes or fractional-binomial fitting as DA-CRM.
 If reusing grouped CRM evidence to compare individual missing-outcome
 completions, remove its binomial coefficients: those factors are constant
 across skeletons for fixed data, but not across different completed outcomes.
+
+## Follow-up after the CRM conduct batch
+
+The DA posterior, prior calibration, decisions and bounded look-ahead now exist;
+see `dacrm-audit.md` and `crm-conduct-audit.md`. Remaining implementation should
+prioritize trial/cohort simulation and uncovered scientific choices rather than
+more small validation cases for existing functions.
+
+The online page was reachable on 2026-09-26 with its trailing slash:
+https://biostatistics.mdanderson.org/shinyapps/BMACRM/
+
+It identifies version 1.0.2.0, updated 2025-12-15, and exposes both Bayesian model
+averaging (BMA) and Bayesian model selection (BMS). It cites Yin and Yuan (2009)
+and Pan and Yuan (2016/2017), *A Default Method to Specify Skeletons for Bayesian
+Model Averaging Continual Reassessment Method for Phase I Clinical Trials*.
+Its visible surface has simulation and trial-conduct tabs with complete counts.
+This confirms that the online entry has additional choices; it does not verify
+hidden priors, safety rules, skeleton generation or executable parity. Entry
+133 remains pending until these choices have a source-backed Python contract.
+
+Version distinction to preserve: the older BMA-CRM Simulator guide explicitly
+describes waiting when a DA safety calculation recommends stopping, then stopping
+only on full-information CRM. The newer CRM Suite guide states a general safety
+cutoff and does not repeat that exception. The current `crm_suite` policy follows
+the newer written rule. A future older-desktop profile must state this difference
+explicitly instead of claiming both native programs behave identically.
