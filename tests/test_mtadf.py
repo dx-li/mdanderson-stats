@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from scipy.special import betainc
+from scipy.special import betainc, betaincc
 
 from mdanderson_stats.mtadf import (
     MTADFPrior,
@@ -8,6 +8,7 @@ from mdanderson_stats.mtadf import (
     mtadf_decision,
     mtadf_toxicity_prior,
 )
+from mdanderson_stats.mtadf_simulation import simulate_mtadf
 
 
 def test_prior_calibration_and_weighted_double_sided_fit() -> None:
@@ -68,3 +69,31 @@ def test_final_selection_excludes_untried_and_stops_when_all_unsafe() -> None:
     )
     assert unsafe.action == "stop"
     assert unsafe.dose is None
+
+    # Preserve a tiny prior beta parameter when every treated patient is toxic.
+    tiny_beta = MTADFPrior(0.2, 1e-20)
+    all_events = mtadf_decision(
+        [10],
+        [10],
+        [0],
+        current_dose=0,
+        prior=tiny_beta,
+        toxicity_limit=0.2,
+        safety_cutoff=0.99,
+    )
+    assert all_events.raw_overdose_probability[0] == pytest.approx(
+        betaincc(10.2, 1e-20, 0.2), abs=0
+    )
+
+
+def test_small_simulation_reproducibility_and_conservation() -> None:
+    args = ([0.05, 0.2, 0.4], [0.1, 0.8, 0.3])
+    first = simulate_mtadf(*args, cohorts=3, cohort_size=2, trials=4, rng=71)
+    second = simulate_mtadf(*args, cohorts=3, cohort_size=2, trials=4, rng=71)
+    assert first.selected_dose.tolist() == second.selected_dose.tolist()
+    assert first.patients.tolist() == second.patients.tolist()
+    assert np.all(first.toxicities <= first.patients)
+    assert np.all(first.responses <= first.patients)
+    assert np.all(first.patients.sum(axis=1) <= 6)
+    assert np.sum(first.selection_probability) + first.no_selection_probability == pytest.approx(1)
+    assert not first.patients.flags.writeable

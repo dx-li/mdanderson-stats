@@ -32,12 +32,6 @@ def _scalar(value: object, name: str) -> float:
     return result
 
 
-def _freeze_int(values: NDArray[np.int64]) -> NDArray[np.int64]:
-    return np.frombuffer(np.ascontiguousarray(values).tobytes(), dtype=np.int64).reshape(
-        values.shape
-    )
-
-
 @dataclass(frozen=True)
 class MTADFPrior:
     """Beta prior for toxicity, parameterized by positive ``alpha`` and ``beta``."""
@@ -244,7 +238,7 @@ def mtadf_decision(
         if current is not None and n[current] == 0 and not final:
             raise ValueError("current_dose must have at least one observed subject")
 
-    raw_safe = betaincc(beta_prior.alpha + y, beta_prior.beta + n - y, phi)
+    raw_safe = betaincc(beta_prior.alpha + y, beta_prior.beta + (n - y), phi)
     if not np.all(np.isfinite(raw_safe)):
         raise ArithmeticError("Beta posterior tail probability is not representable")
     adjusted = _pava(np.asarray(raw_safe, dtype=float), np.ones(n.size, dtype=float))
