@@ -215,7 +215,7 @@ def _fit_model(
     max_cut = float(np.max(np.abs(scaled_thresholds)))
     if not np.isfinite(max_cut):
         raise ArithmeticError("overdose threshold is not representable in posterior coordinates")
-    scaffold_power = max(0, int(np.ceil(np.log2(max_cut))))
+    scaffold_power = int(np.ceil(np.log2(max(1.0, max_cut))))
     scaffold = np.ldexp(1.0, np.arange(scaffold_power + 1, dtype=int))
     cuts = np.unique(
         np.concatenate(([-4.0, -1.0, 0.0, 1.0, 4.0], scaffold, -scaffold, scaled_thresholds))

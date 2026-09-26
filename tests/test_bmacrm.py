@@ -20,6 +20,11 @@ def test_no_data_retains_model_prior_and_analytic_overdose_probability():
     assert_allclose(result.alpha_sd, np.sqrt(2), rtol=2e-8)
     assert_allclose(result.overdose_probability, prior @ result.model_overdose_probability)
 
+    centered = fit_bmacrm([0.3], [0], [0], target=0.3)
+    assert_allclose(centered.overdose_probability, [0.5], atol=1e-14)
+    assert_allclose(centered.alpha_mean, 0, atol=2e-9)
+    assert_allclose(centered.alpha_sd, np.sqrt(2), rtol=2e-8)
+
     narrow = fit_bmacrm([0.05, 0.2], [0, 0], [0, 0], target=1e-100, prior_sd=1e-3)
     threshold = np.log(-np.log(1e-100)) - np.log(-np.log([0.05, 0.2]))
     assert_allclose(narrow.model_overdose_probability[0], norm.cdf(threshold / 1e-3), atol=1e-14)
