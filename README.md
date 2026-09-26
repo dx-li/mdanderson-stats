@@ -1194,3 +1194,5 @@ effects, significance, and timing, with integer attainment searches and K-group
 allocation. Native automatic planning workflows, some discrete inverse questions,
 and reporting remain open. [Survival input conversions](docs/stplan-survival-inputs.md)
 cover medians, survival percentages, historical person-time, and piecewise curves.
+The [historical-control planner](docs/stplan-historical-planning.md) also finds
+accrual duration and new-control allocation jointly, including boundary solutions.

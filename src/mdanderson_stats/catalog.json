@@ -1566,7 +1566,8 @@
         "Unmatched case-control power with current disease-risk parameterization; exact matched discordance mixture with corrected null/alternative argument order and fixed upper-tail direction; two-sample Poisson conditional-test mixture with an explicit truncation bound, replacing the native 99% renormalized sum and large-mean substitution. Bounded broadcast inputs and aggregate support work; independent R finite-sum references.",
         "All five current censored-survival forward procedures: one-sample Poisson-event mixture, George–Desu randomized exponential model, randomized information-time model, fixed historical controls with optional continued follow-up, and corrected piecewise-exponential event integration. This completes the 25 active main-menu forward power/retention calculations. Native automatic inverse planning, the inactive legacy matched-pairs option, and session/report workflows remain open.",
         "Bounded inverse planning across all 25 forward methods for sample sizes, effects, probabilities, SD/CV, significance, and study timing. Verified continuous roots; exhaustive smallest/largest integer attainment; equal-group tied sizes; K-group total allocation and indexed parameter solving; immutable completed designs. Native automatic branch/bound discovery, discrete significance critical-region selection, and proportional integer allocation remain open.",
-        "Exponential median/mean/survival-point and historical person-time hazard conversions; two-point survival curves with specified hazard-change time and three-point curves with inferred change time. Bounded batch broadcasting, stable log differences, curve reconstruction checks, and explicit constant-hazard nonidentifiability."
+        "Exponential median/mean/survival-point and historical person-time hazard conversions; two-point survival curves with specified hazard-change time and three-point curves with inferred change time. Bounded batch broadcasting, stable log differences, curve reconstruction checks, and explicit constant-hazard nonidentifiability.",
+        "Historical-control survival planning jointly searches bounded accrual duration and new-control allocation using the existing fixed-history power model, explicit endpoint comparisons, a shared evaluation budget, and final achieved-power verification. Independent R and original Fortran references include both native manual examples."
       ],
       "validation": [
         "tests/test_stplan_discrete.py",
@@ -1604,7 +1605,14 @@
         "tests/test_stplan_survival_inputs_references.py",
         "tests/fixtures/stplan-survival-inputs-r.csv",
         "tools/reference_stplan_survival_inputs.R",
-        "docs/stplan-survival-inputs.md"
+        "docs/stplan-survival-inputs.md",
+        "tests/test_stplan_historical_planning.py",
+        "tests/test_stplan_historical_planning_references.py",
+        "tests/fixtures/stplan-historical-allocation-native.csv",
+        "tests/fixtures/stplan-historical-allocation-r.csv",
+        "tools/reference_stplan_historical_allocation.f90",
+        "tools/reference_stplan_historical_allocation.R",
+        "docs/stplan-historical-planning.md"
       ]
     },
     {

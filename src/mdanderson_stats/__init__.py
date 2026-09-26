@@ -813,6 +813,10 @@ from .stplan_discrete import (
     stplan_responder_normal_approximation_power,
     stplan_retention_probability,
 )
+from .stplan_historical_planning import (
+    STPLANHistoricalAllocationPlan,
+    stplan_historical_allocation_plan,
+)
 from .stplan_planning import STPLAN_METHODS, STPLANMethod, STPLANSolution, stplan_solve
 from .stplan_poisson import stplan_poisson_two_sample_power
 from .stplan_survival import (
@@ -970,6 +974,8 @@ from .windows import (
 )
 
 __all__ = [
+    "STPLANHistoricalAllocationPlan",
+    "stplan_historical_allocation_plan",
     "STPLANPiecewiseModel",
     "stplan_exponential_hazard",
     "stplan_historical_control_hazard",

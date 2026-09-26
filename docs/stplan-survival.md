@@ -89,6 +89,8 @@ The signed effect is `log(control_hazard/experimental_hazard)`: the rejection
 direction favors longer experimental survival. Reversing the effect lowers
 power. The native historical-control interface is one-sided. Python's `sides=2`
 option is an extension that halves alpha while retaining this fixed direction.
+[The allocation planner](stplan-historical-planning.md) searches accrual duration
+and the fraction assigned to new controls jointly under this same model.
 
 ## Piecewise-exponential survival
 
