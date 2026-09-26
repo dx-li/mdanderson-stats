@@ -5,13 +5,14 @@ summaries for a uniform, bounded prior on its nonnegative slope. It does not
 implement allocation rules or a joint toxicity/efficacy association model.
 """
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 from scipy.integrate import quad
 from scipy.optimize import brentq, minimize_scalar
-from scipy.special import expit, log_expit, logit
+from scipy.special import expit, log_expit
 
 from ._validation import count, finite, scalar
 
@@ -32,7 +33,7 @@ def _bounds(lower: float, upper: float) -> tuple[float, float]:
     return lo, hi
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, init=False)
 class BCRMCurve:
     """A Goodman CRM dose skeleton with explicit probability asymptotes."""
 
@@ -42,16 +43,28 @@ class BCRMCurve:
     upper: float = 1.0
     standardized_doses: FloatArray = field(init=False, repr=False, compare=False)
 
-    def __post_init__(self) -> None:
-        alpha = scalar(self.alpha, "alpha")
-        lower, upper = _bounds(self.lower, self.upper)
-        raw = finite(self.skeleton, "skeleton")
-        if raw.ndim != 1 or not 1 <= raw.size <= 100:
+    def __init__(
+        self,
+        skeleton: ArrayLike,
+        *,
+        alpha: float = 3.0,
+        lower: float = 0.0,
+        upper: float = 1.0,
+    ) -> None:
+        alpha = scalar(alpha, "alpha")
+        if abs(alpha) > 50:
+            raise ValueError("curve alpha must satisfy abs(alpha) <= 50")
+        lower, upper = _bounds(lower, upper)
+        input_skeleton = np.asarray(skeleton)
+        if input_skeleton.ndim != 1 or not 1 <= input_skeleton.size <= 100:
             raise ValueError("skeleton must be a one-dimensional array of 1 to 100 levels")
+        raw = finite(input_skeleton, "skeleton")
         if np.any(np.diff(raw) <= 0) or np.any((raw <= lower) | (raw >= upper)):
             raise ValueError("skeleton must be strictly increasing inside its asymptotes")
-        scaled = (raw - lower) / (upper - lower)
-        doses = (logit(scaled) - alpha).astype(np.float64)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            doses = np.log(raw - lower) - np.log(upper - raw) - alpha
+        if not np.all(np.isfinite(doses)):
+            raise ValueError("standardized doses must be finite")
         object.__setattr__(self, "skeleton", _readonly(raw))
         object.__setattr__(self, "alpha", alpha)
         object.__setattr__(self, "lower", lower)
@@ -82,7 +95,7 @@ def bcrm_probabilities(
     raw_beta = np.asarray(beta)
     if raw_x.ndim != 1 or raw_x.size > 100:
         raise ValueError("x must be one-dimensional with at most 100 doses")
-    if raw_beta.size * raw_x.size > 200_000:
+    if raw_beta.size > 200_000 or raw_beta.size * raw_x.size > 200_000:
         raise ValueError("beta-dose prediction exceeds 200000 pairs")
     doses = finite(raw_x, "x")
     slopes = finite(raw_beta, "beta")
@@ -90,7 +103,10 @@ def bcrm_probabilities(
         raise ValueError("beta must be nonnegative")
     intercept = scalar(alpha, "alpha")
     lo, hi = _bounds(lower, upper)
-    linear = intercept + slopes.reshape((-1, 1)) * doses.reshape((1, -1))
+    with np.errstate(over="ignore", invalid="ignore"):
+        linear = intercept + slopes[..., np.newaxis] * doses
+    if np.any(np.isnan(linear)):
+        raise ValueError("beta-dose linear predictor produced an undefined value")
     return np.asarray(lo + (hi - lo) * expit(linear), dtype=np.float64)
 
 
@@ -107,7 +123,7 @@ def bcrm_log_probabilities(
     raw_beta = np.asarray(beta)
     if raw_x.ndim != 1 or raw_x.size > 100:
         raise ValueError("x must be one-dimensional with at most 100 doses")
-    if raw_beta.size * raw_x.size > 200_000:
+    if raw_beta.size > 200_000 or raw_beta.size * raw_x.size > 200_000:
         raise ValueError("beta-dose prediction exceeds 200000 pairs")
     doses = finite(raw_x, "x")
     slopes = finite(raw_beta, "beta")
@@ -115,7 +131,10 @@ def bcrm_log_probabilities(
         raise ValueError("beta must be nonnegative")
     intercept = scalar(alpha, "alpha")
     lo, hi = _bounds(lower, upper)
-    z = intercept + slopes.reshape((-1, 1)) * doses.reshape((1, -1))
+    with np.errstate(over="ignore", invalid="ignore"):
+        z = intercept + slopes[..., np.newaxis] * doses
+    if np.any(np.isnan(z)):
+        raise ValueError("beta-dose linear predictor produced an undefined value")
     span = hi - lo
     log_span = np.log(span)
     log_event = np.logaddexp(
@@ -144,7 +163,7 @@ def bcrm_log_likelihood(
         raise ValueError("x must be one-dimensional with at most 100 rows")
     if raw_events.shape != raw_x.shape or raw_subjects.shape != raw_x.shape:
         raise ValueError("x, events and subjects must have matching one-dimensional shapes")
-    if raw_beta.size * raw_x.size > 200_000:
+    if raw_beta.size > 200_000 or raw_beta.size * raw_x.size > 200_000:
         raise ValueError("beta-row likelihood exceeds 200000 pairs")
     doses = finite(raw_x, "x")
     successes = count(raw_events, "events")
@@ -182,14 +201,14 @@ def fit_bcrm(
     *,
     prior_bounds: tuple[float, float] = (0.0, 3.0),
     probability: float = 0.95,
-    alpha: float | None = None,
-    lower: float | None = None,
-    upper: float | None = None,
 ) -> BCRMPosterior:
     """Integrate a one-dimensional uniform-slope posterior deterministically.
 
-    Adaptive QUADPACK integrations are scaled by the maximum log likelihood;
-    their reported error is checked before summaries are returned.
+    Adaptive QUADPACK integrations are scaled by local likelihood maxima;
+    their reported error is checked before summaries are returned. The bounded
+    prior support is limited to [0, 3] and the intercept to [-50, 50] for
+    predictable numerical work. Integration stops after 200000 likelihood
+    evaluations.
     """
     if not isinstance(curve, BCRMCurve):
         raise TypeError("curve must be a BCRMCurve")
@@ -197,16 +216,14 @@ def fit_bcrm(
         raise ValueError("prior_bounds must contain lower and upper values")
     beta_lo = scalar(prior_bounds[0], "prior lower bound")
     beta_hi = scalar(prior_bounds[1], "prior upper bound")
-    if beta_lo < 0 or beta_hi <= beta_lo:
-        raise ValueError("prior bounds must satisfy 0 <= lower < upper")
+    if beta_lo < 0 or beta_hi <= beta_lo or beta_hi > 3:
+        raise ValueError("prior bounds must satisfy 0 <= lower < upper <= 3")
     level = scalar(probability, "probability")
     if not 0 < level < 1:
         raise ValueError("probability must lie strictly between zero and one")
-    intercept = curve.alpha if alpha is None else scalar(alpha, "alpha")
-    lo, hi = _bounds(
-        curve.lower if lower is None else lower,
-        curve.upper if upper is None else upper,
-    )
+    intercept, lo, hi = curve.alpha, curve.lower, curve.upper
+    if abs(intercept) > 50:
+        raise ValueError("fit_bcrm requires abs(curve.alpha) <= 50")
     doses = curve.standardized_doses
     raw_events, raw_subjects = np.asarray(events), np.asarray(subjects)
     if raw_events.shape != doses.shape or raw_subjects.shape != doses.shape:
@@ -215,34 +232,71 @@ def fit_bcrm(
     if np.any(successes > totals) or np.sum(totals) > 10_000:
         raise ValueError("events must not exceed subjects and total subjects must be <= 10000")
 
+    evaluations = 0
+
     def loglike(beta: float) -> float:
+        nonlocal evaluations
+        evaluations += 1
+        if evaluations > 200_000:
+            raise ArithmeticError("posterior integration exceeded 200000 likelihood evaluations")
         return float(
             bcrm_log_likelihood(
                 doses, successes, totals, np.array([beta]), alpha=intercept, lower=lo, upper=hi
             )[0]
         )
 
-    optimized = minimize_scalar(
-        lambda b: -loglike(float(b)), bounds=(beta_lo, beta_hi), method="bounded",
-        options={"xatol": 1e-12},
-    )
-    candidates = [(beta_lo, loglike(beta_lo)), (beta_hi, loglike(beta_hi))]
-    if optimized.success:
-        candidates.append((float(optimized.x), loglike(float(optimized.x))))
+    # Segment the bounded support before optimizing. This catches separated
+    # local modes and gives the quadrature explicit breaks at each mode.
+    boundaries = np.linspace(beta_lo, beta_hi, 17)
+    candidates = [(float(b), loglike(float(b))) for b in boundaries]
+    mode_points: list[float] = []
+    for left, right in zip(boundaries[:-1], boundaries[1:], strict=True):
+        optimized = minimize_scalar(
+            lambda b: -loglike(float(b)), bounds=(float(left), float(right)),
+            method="bounded", options={"xatol": 1e-12},
+        )
+        if optimized.success:
+            mode = float(optimized.x)
+            candidates.append((mode, loglike(mode)))
+            mode_points.append(mode)
     peak_beta, peak = max(candidates, key=lambda pair: pair[1])
-    del peak_beta
+    mode_points = sorted({b for b in mode_points if beta_lo < b < beta_hi})
     if not np.isfinite(peak):
         raise ArithmeticError("posterior likelihood is not finite")
+
+    # Explicitly bracket the likelihood's material mass around the global
+    # maximum. This resolves sharply concentrated endpoint and interior modes.
+    shoulder_points: list[float] = []
+    grid_values = [(b, value) for b, value in candidates if b in boundaries]
+    for side in (-1, 1):
+        side_values = [pair for pair in grid_values if (pair[0] - peak_beta) * side > 0]
+        side_values.sort(key=lambda pair: abs(pair[0] - peak_beta))
+        bracket = next((pair for pair in side_values if pair[1] <= peak - 40), None)
+        if bracket is not None:
+            shoulder = brentq(
+                lambda b: loglike(b) - peak + 40,
+                min(peak_beta, bracket[0]), max(peak_beta, bracket[0]),
+                xtol=1e-14,
+            )
+            if beta_lo < shoulder < beta_hi:
+                shoulder_points.append(shoulder)
+    integration_points = sorted(set(mode_points + shoulder_points))
 
     def density(beta: float) -> float:
         return float(np.exp(loglike(beta) - peak))
 
-    def integrate(function) -> tuple[float, float]:
+    normalizer_scale: float | None = None
+
+    def integrate(
+        function: Callable[[float], float], left: float = beta_lo, right: float = beta_hi
+    ) -> tuple[float, float]:
+        points = [p for p in integration_points if left < p < right]
         value, error = quad(
-            lambda b: density(b) * function(b), beta_lo, beta_hi,
-            epsabs=2e-12, epsrel=2e-10, limit=250,
+            lambda b: density(b) * function(b), left, right,
+            epsabs=2e-12, epsrel=2e-10, limit=300, points=points or None,
         )
-        tolerance = 2e-8 * max(abs(value), 1e-12)
+        scale = max(abs(value), normalizer_scale or 1e-12)
+        tolerance = 2e-8 * scale
         if not np.isfinite(value) or not np.isfinite(error) or error > tolerance:
             raise ArithmeticError("posterior quadrature did not meet its error tolerance")
         return float(value), float(error)
@@ -250,18 +304,15 @@ def fit_bcrm(
     normalizer, norm_error = integrate(lambda _b: 1.0)
     if normalizer <= 0:
         raise ArithmeticError("posterior normalization underflowed")
+    normalizer_scale = normalizer
     first, first_error = integrate(lambda b: b)
-    second, second_error = integrate(lambda b: b * b)
     mean = first / normalizer
-    variance = max(0.0, second / normalizer - mean * mean)
+    centered_second, second_error = integrate(lambda b: (b - mean) ** 2)
+    variance = centered_second / normalizer
     tail = (1 - level) / 2
 
     def cdf(beta: float) -> float:
-        val, err = quad(
-            density, beta_lo, beta, epsabs=2e-12, epsrel=2e-10, limit=250
-        )
-        if err > 2e-8 * max(abs(val), 1e-12):
-            raise ArithmeticError("posterior quantile integration did not converge")
+        val, _ = integrate(lambda _b: 1.0, beta_lo, beta)
         return float(val / normalizer)
 
     interval = [
@@ -271,12 +322,17 @@ def fit_bcrm(
     dose_mean = np.empty(doses.size)
     dose_interval = np.empty((doses.size, 2))
     for index, dose in enumerate(doses):
-        dose_mean[index] = integrate(
-            lambda b, x=float(dose): lo + (hi - lo) * expit(intercept + b * x)
-        )[0] / normalizer
+        dose_value = float(dose)
+
+        def dose_probability(beta_value: float) -> float:
+            return float(lo + (hi - lo) * expit(intercept + beta_value * dose_value))
+
+        dose_mean[index] = integrate(dose_probability)[0] / normalizer
         dose_interval[index] = [
-            lo + (hi - lo) * expit(intercept + interval[0] * dose),
-            lo + (hi - lo) * expit(intercept + interval[1] * dose),
+            *sorted((
+                lo + (hi - lo) * expit(intercept + interval[0] * dose),
+                lo + (hi - lo) * expit(intercept + interval[1] * dose),
+            )),
         ]
     plugin = bcrm_probabilities(
         doses, np.array([mean]), alpha=intercept, lower=lo, upper=hi
