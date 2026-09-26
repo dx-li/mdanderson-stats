@@ -100,3 +100,21 @@ def test_interval_boundary_event_and_input_work_bounds():
             warmup=0,
             max_evaluations=1,
         )
+
+
+def test_wide_finite_hazard_draws_keep_parameter_summaries_representable():
+    prior = DACRMPrior([0, 1], [2], [1e-300])
+    result = fit_dacrm(
+        [0.2],
+        [0],
+        [-1],
+        [0],
+        prior=prior,
+        target=0.3,
+        rng=np.random.default_rng(6),
+        draws=8,
+        warmup=0,
+        chains=2,
+    )
+    assert np.all(np.isfinite(result.parameter_summary.standard_deviation))
+    assert np.max(result.parameter_summary.mean) > 1e299
