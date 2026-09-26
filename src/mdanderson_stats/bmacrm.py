@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from math import log, pi, sqrt
+from typing import Literal
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -47,6 +48,9 @@ class BMACRMPosterior:
     integration_error: FloatArray
     evaluations: int
     input_model_prior: FloatArray | None = None
+    aggregation: Literal["bma", "bms", "occam"] = "bma"
+    occam_threshold: float | None = None
+    aggregation_model_weights: FloatArray | None = None
 
 
 class _Budget:
@@ -315,6 +319,8 @@ def fit_bmacrm(
     model_prior: ArrayLike | None = None,
     prior_sd: float = sqrt(2),
     max_evaluations: int = _MAX_EVALUATIONS,
+    aggregation: Literal["bma", "bms", "occam"] = "bma",
+    occam_threshold: float | None = None,
 ) -> BMACRMPosterior:
     """Fit model-averaged CRM posterior summaries for binomial dose outcomes.
 
@@ -327,6 +333,10 @@ def fit_bmacrm(
     extension allows ``prior_sd`` in ``[1e-3, 10]``; the native default is
     ``sqrt(2)``. ``input_model_prior`` retains the supplied relative weights,
     or all ones for the equal-weight default, to support faithful refits.
+    ``aggregation`` selects summaries from BMA, the highest-posterior model
+    (BMS), or the strict Occam window. Occam includes models whose posterior
+    weight divided by the maximum exceeds ``occam_threshold``. Full posterior
+    model probabilities remain available regardless of the summary method.
     """
     raw_skeletons = _raw_numeric(skeletons, "skeletons", _MAX_MODELS * _MAX_DOSES)
     raw_events = _raw_numeric(events, "events", _MAX_DOSES)
@@ -367,6 +377,18 @@ def fit_bmacrm(
         raise ValueError("target must lie strictly between 0 and 1")
     if not np.isfinite(sd_value) or not 1e-3 <= sd_value <= 10:
         raise ValueError("prior_sd must lie in [1e-3,10]")
+    if aggregation not in {"bma", "bms", "occam"}:
+        raise ValueError("aggregation must be 'bma', 'bms' or 'occam'")
+    if aggregation == "occam":
+        if occam_threshold is None:
+            raise ValueError("occam_threshold is required for aggregation='occam'")
+        threshold_value = _scalar_value(occam_threshold, "occam_threshold")
+        if not 0 <= threshold_value < 1:
+            raise ValueError("occam_threshold must lie in [0,1)")
+    else:
+        if occam_threshold is not None:
+            raise ValueError("occam_threshold applies only to aggregation='occam'")
+        threshold_value = None
     if (
         isinstance(max_evaluations, bool)
         or not isinstance(max_evaluations, (int, np.integer))
@@ -375,6 +397,7 @@ def fit_bmacrm(
         raise ValueError(f"max_evaluations must be an integer from 1 to {_MAX_EVALUATIONS}")
     if model_prior is None:
         log_prior_weights = np.full(model_count, -np.log(model_count))
+        log_relative_prior = np.zeros(model_count)
         input_model_prior = np.ones(model_count, dtype=float)
     else:
         raw_prior = _raw_numeric(model_prior, "model_prior", _MAX_MODELS)
@@ -384,6 +407,7 @@ def fit_bmacrm(
             raise ValueError("model_prior weights must have positive sum")
         raw_log_prior = np.log(raw_prior, where=raw_prior > 0, out=np.full_like(raw_prior, -np.inf))
         log_prior_weights = raw_log_prior - logsumexp(raw_log_prior)
+        log_relative_prior = raw_log_prior
         input_model_prior = raw_prior.copy()
     prior_weights = np.exp(log_prior_weights)
 
@@ -405,11 +429,29 @@ def fit_bmacrm(
         ) = _fit_model(raw_skeletons[k], raw_events, raw_subjects, target_value, sd_value, budget)
     if np.any(~np.isfinite(log_evidence)):
         raise ArithmeticError("model evidence is not representable")
-    log_model_mass = log_prior_weights + log_evidence
+    log_model_mass = log_relative_prior + log_evidence
     posterior_weights = np.exp(log_model_mass - logsumexp(log_model_mass))
     posterior_weights /= np.sum(posterior_weights)
-    dose_mean = posterior_weights @ model_means
-    overdose_probability = posterior_weights @ model_overdose
+    if aggregation == "bma":
+        aggregation_weights = posterior_weights.copy()
+    elif aggregation == "bms":
+        aggregation_weights = np.zeros(model_count)
+        aggregation_weights[int(np.argmax(log_model_mass))] = 1.0
+    else:
+        if threshold_value is None:
+            raise RuntimeError("Occam aggregation lost its validated threshold")
+        maximum_log_mass = float(np.max(log_model_mass))
+        if threshold_value == 0:
+            included = np.isfinite(log_relative_prior)
+        else:
+            included = log_model_mass - maximum_log_mass > log(threshold_value)
+        if not np.any(included):
+            raise ArithmeticError("Occam window retained no positive-prior models")
+        selected_log_mass = np.where(included, log_model_mass, -np.inf)
+        aggregation_weights = np.exp(selected_log_mass - logsumexp(selected_log_mass))
+        aggregation_weights /= np.sum(aggregation_weights)
+    dose_mean = aggregation_weights @ model_means
+    overdose_probability = aggregation_weights @ model_overdose
     for name, value in (
         ("model-averaged dose mean", dose_mean),
         ("model-averaged overdose probability", overdose_probability),
@@ -436,4 +478,7 @@ def fit_bmacrm(
         _freeze(errors),
         budget.count,
         _freeze(input_model_prior),
+        aggregation,
+        threshold_value,
+        _freeze(aggregation_weights),
     )

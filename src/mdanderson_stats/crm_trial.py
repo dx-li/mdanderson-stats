@@ -159,6 +159,8 @@ def run_crm_trial(
     da_prior: DACRMPrior | None = None,
     model_prior: ArrayLike | None = None,
     prior_sd: float | None = None,
+    aggregation: Literal["bma", "bms", "occam"] = "bma",
+    occam_threshold: float | None = None,
     safety_cutoff: float = 0.9,
     minimum_observed: int | None = None,
     rng: np.random.Generator | None = None,
@@ -236,6 +238,8 @@ def run_crm_trial(
         sd_value = sqrt(2) if prior_sd is None else scalar(prior_sd, "prior_sd")
         if not 1e-3 <= sd_value <= 10:
             raise ValueError("prior_sd must lie in [1e-3,10]")
+    elif aggregation != "bma" or occam_threshold is not None:
+        raise ValueError("non-default aggregation options apply only to method='bmacrm'")
     else:
         if model_prior is not None or prior_sd is not None:
             raise ValueError("model_prior and prior_sd apply only to method='bmacrm'")
@@ -299,6 +303,8 @@ def run_crm_trial(
             da_prior=da_prior,
             model_prior=model_prior,
             prior_sd=prior_sd,
+            aggregation=aggregation,
+            occam_threshold=occam_threshold,
             current_dose=current,
             starting_dose=start,
             safety_cutoff=cutoff,

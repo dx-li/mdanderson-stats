@@ -235,6 +235,8 @@ def crm_calendar_decision(
     da_prior: DACRMPrior | None = None,
     model_prior: ArrayLike | None = None,
     prior_sd: float | None = None,
+    aggregation: Literal["bma", "bms", "occam"] = "bma",
+    occam_threshold: float | None = None,
     current_dose: int | None = None,
     starting_dose: int = 0,
     safety_cutoff: float = 0.9,
@@ -297,6 +299,8 @@ def crm_calendar_decision(
             model_prior=model_prior,
             prior_sd=sd_value,
             max_evaluations=min(_MAX_BMA_EVALUATIONS, remaining),
+            aggregation=aggregation,
+            occam_threshold=occam_threshold,
         )
         evaluations = posterior.evaluations
         pending = snapshot.pending_counts
@@ -332,6 +336,8 @@ def crm_calendar_decision(
 
     if model_prior is not None or prior_sd is not None:
         raise ValueError("model_prior and prior_sd apply only to method='bmacrm'")
+    if aggregation != "bma" or occam_threshold is not None:
+        raise ValueError("non-default aggregation options apply only to method='bmacrm'")
     if raw_skeletons.ndim == 2 and raw_skeletons.shape[0] != 1:
         raise ValueError("method='dacrm' requires exactly one dose skeleton")
     if da_prior is None or not isinstance(da_prior, DACRMPrior):

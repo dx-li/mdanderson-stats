@@ -62,6 +62,23 @@ def _validate(
     events = _raw_numeric(posterior.events, "posterior.events", _MAX_DOSES)
     subjects = _raw_numeric(posterior.subjects, "posterior.subjects", _MAX_DOSES)
     weights = _raw_numeric(posterior.prior_model_weights, "posterior.prior_model_weights", 5)
+    if posterior.aggregation not in {"bma", "bms", "occam"}:
+        raise ValueError("posterior aggregation is invalid")
+    if posterior.aggregation == "occam":
+        if (
+            posterior.occam_threshold is None
+            or not 0 <= _scalar_value(posterior.occam_threshold, "posterior.occam_threshold") < 1
+        ):
+            raise ValueError("posterior Occam threshold is invalid")
+    elif posterior.occam_threshold is not None:
+        raise ValueError("posterior Occam threshold is only valid for Occam aggregation")
+    aggregation_weights = (
+        weights
+        if posterior.aggregation_model_weights is None
+        else _raw_numeric(
+            posterior.aggregation_model_weights, "posterior.aggregation_model_weights", 5
+        )
+    )
     input_weights = (
         weights
         if posterior.input_model_prior is None
@@ -74,6 +91,7 @@ def _validate(
         or events.shape != (skeletons.shape[1],)
         or subjects.shape != events.shape
         or weights.shape != (skeletons.shape[0],)
+        or aggregation_weights.shape != (skeletons.shape[0],)
         or input_weights.shape != (skeletons.shape[0],)
     ):
         raise ValueError("posterior has inconsistent skeleton, count, or model-prior shapes")
@@ -88,6 +106,8 @@ def _validate(
         or np.sum(subjects) > _MAX_SUBJECTS
         or np.any(~np.isfinite(weights) | (weights < 0))
         or not np.any(weights > 0)
+        or np.any(~np.isfinite(aggregation_weights) | (aggregation_weights < 0))
+        or not np.isclose(np.sum(aggregation_weights), 1)
         or np.any(~np.isfinite(input_weights) | (input_weights < 0))
         or not np.any(input_weights > 0)
         or not 0 < _scalar_value(posterior.target, "posterior.target") < 1
@@ -219,6 +239,8 @@ def bmacrm_lookahead(
             prior_sd=posterior.prior_sd,
             model_prior=model_prior,
             max_evaluations=min(_MAX_FIT_EVALUATIONS, remaining),
+            aggregation=posterior.aggregation,
+            occam_threshold=posterior.occam_threshold,
         )
         used_evaluations += fitted.evaluations
         decision = bmacrm_decision(
