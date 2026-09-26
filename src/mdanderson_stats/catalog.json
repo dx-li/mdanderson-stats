@@ -288,9 +288,19 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Six-parameter two-agent toxicity surface, dose standardization, zero-alpha scenario support and stable grouped log likelihood",
+        "Explicit independent gamma priors and bounded log-coordinate slice sampling; authoritative log draws preserve the paper's tiny-shape interaction prior",
+        "Stage-one dose decisions with explicit starting row, upward no-skip, post-toxicity midpoint expansion and lower-continuum mean interpolation",
+        "Posterior target contours within explicit bounds, including endpoint crossings and residual-checked roots",
+        "Physician-prior elicitation, native second-stage information criterion, full simulations and native file/report parity remain pending; see docs/toxfinder.md"
+      ],
+      "validation": [
+        "Independent base-R evaluation of four official case-study surfaces and zero-alpha scenarios; scalar nonconjugate posterior quadrature and analytic log-gamma moments",
+        "Analytic workflow checks of offset L1 interpolation, direct higher-midpoint predictions, starting dose, revisited levels, no-skip and contour endpoints",
+        "Focused numerical checks for subnormal doses, interaction-exponent cancellation, reproducibility and allocation limits; no native executable or random-seed parity claim"
+      ]
     },
     {
       "id": 15,

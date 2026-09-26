@@ -846,6 +846,21 @@ from .top_binary import TOPBinaryBoundaries, TOPBinaryDecision, TOPBinaryDesign
 from .top_calendar import TOPBinarySimulation, TOPBinaryTrial, TOPCalendarStep, run_top_binary_trial
 from .top_calibration import TOPBinaryOptimization, TOPInfeasibleError, optimize_top_binary
 from .top_simulation import simulate_top_binary
+from .toxfinder_decision import (
+    ToxFinderContour,
+    ToxFinderStage1Result,
+    toxfinder_contour,
+    toxfinder_stage1,
+)
+from .toxfinder_model import (
+    ToxFinderFit,
+    ToxFinderPrior,
+    fit_toxfinder,
+    toxfinder_log_likelihood,
+    toxfinder_log_probabilities,
+    toxfinder_probabilities,
+    toxfinder_standardize,
+)
 from .toxicity_timing import toxicity_time_quantile
 from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
@@ -904,6 +919,17 @@ from .windows import (
 )
 
 __all__ = [
+    "ToxFinderContour",
+    "ToxFinderStage1Result",
+    "toxfinder_contour",
+    "toxfinder_stage1",
+    "ToxFinderPrior",
+    "ToxFinderFit",
+    "fit_toxfinder",
+    "toxfinder_standardize",
+    "toxfinder_probabilities",
+    "toxfinder_log_probabilities",
+    "toxfinder_log_likelihood",
     "MultcBoundaries",
     "MultcLeanDesign",
     "MultcOperatingCharacteristics",

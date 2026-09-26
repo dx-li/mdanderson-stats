@@ -1165,3 +1165,11 @@ against fixed or beta-distributed historical rates, shifted comparisons, cohort
 rules, full and reachable boundaries, and exact joint stopping probabilities.
 The calculation retains outcome association and separates sample-cap completion
 from early stopping. Duration simulation and general Multc99 designs remain open.
+
+[ToxFinder two-agent dose finding](docs/toxfinder.md) adds its six-parameter
+toxicity surface, explicit gamma priors and Bayesian posterior fitting with
+log-parameter draws that preserve the paper's very small interaction exponents.
+It also supplies first-stage dose decisions and posterior target contours.
+Independent base-R calculations verify published scenario surfaces and a reduced
+posterior. Native second-stage information selection and full simulations remain
+open; the documentation records the source ambiguity.

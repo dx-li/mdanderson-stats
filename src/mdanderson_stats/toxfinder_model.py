@@ -21,7 +21,7 @@ def _readonly(value: ArrayLike) -> FloatArray:
     return result
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, init=False)
 class ToxFinderPrior:
     """Independent gamma priors in (alpha1,beta1,alpha2,beta2,alpha3,beta3) order.
 
@@ -29,11 +29,11 @@ class ToxFinderPrior:
     at its mean. Positive variances use the usual gamma shape/scale conversion.
     """
 
-    mean: ArrayLike
-    variance: ArrayLike
+    mean: FloatArray
+    variance: FloatArray
 
-    def __post_init__(self) -> None:
-        raw_mean, raw_variance = np.asarray(self.mean), np.asarray(self.variance)
+    def __init__(self, mean: ArrayLike, variance: ArrayLike) -> None:
+        raw_mean, raw_variance = np.asarray(mean), np.asarray(variance)
         if raw_mean.shape != (6,) or raw_variance.shape != (6,):
             raise ValueError("prior mean and variance must each have six values")
         mean, variance = finite(raw_mean, "prior mean"), finite(raw_variance, "prior variance")

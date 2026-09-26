@@ -974,3 +974,15 @@ Explicit half-open enrollment windows and outcome availability define the
 Python selection contract; exact app boundary parity is unverified. It reuses
 the package's beta comparison kernels. Original app and guide assets are not
 redistributed. See `docs/plbarpo-control-reference.md`.
+
+## ToxFinder
+
+`toxfinder_model.py` and `toxfinder_decision.py` independently implement the model
+and first-stage/contour methods of Thall, Millikan,
+Mueller and Lee (2003), *Dose-Finding with Two Agents in Phase I Oncology Trials*,
+Biometrics 59:487–496, doi:10.1111/1541-0420.00058, with contracts clarified by
+MD Anderson's official ToxFinder guides. The Python sampling algorithm differs
+from the original implementation. Base-R mathematical calculations provide
+independent references. Original source, executable and guide assets are not
+redistributed. See `docs/toxfinder.md` and `docs/toxfinder-sources.json` for
+provenance, numerical scope and the unresolved second-stage criterion.

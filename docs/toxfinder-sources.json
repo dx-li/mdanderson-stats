@@ -1,0 +1,41 @@
+{
+  "catalog_ids": [14],
+  "retrieved_at": "2026-09-26",
+  "application": {
+    "name": "ToxFinder",
+    "version": "1.1.1",
+    "modified_at": "2005-10-30",
+    "download": "ToxFinder_V1.1.1.zip"
+  },
+  "evidence": "Independent implementation from the primary paper and official guides. The guides describe version 1.0.0 under author review, earlier than the catalog's 1.1.1. Original source/archive retrieval was unavailable; no native simulator execution or random-seed parity is claimed.",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14",
+      "role": "Application identity, download, version and supporting guides."
+    },
+    {
+      "url": "https://odin.mdacc.tmc.edu/~jjlee/clinical_trials2012/Thall/References/11_Biometrics%20Two%20Agents%202003.pdf",
+      "doi": "10.1111/1541-0420.00058",
+      "authors": "Thall, Millikan, Mueller and Lee",
+      "year": 2003,
+      "role": "Dose standardization, six-parameter toxicity model, independent gamma priors, single-agent historical likelihood, stage-one expansion and interpolation, posterior target contour, and second-stage criteria."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ToxFinder/ToxFinder-SUG-simulation-guide-v1.r4.m1.pdf",
+      "version": "V1.R4.M1, June 13, 2005",
+      "role": "Scenario surfaces including zero alpha coefficients, prior inputs and native use of second-derivative information in place of the paper's displayed formula."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ToxFinder/ToxFinder-SUG-trial-guide-v1.r2.m1.pdf",
+      "version": "V1.R2.M1, June 13, 2005",
+      "role": "Trial conduct, patient data and native files."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ToxFinder/ToxFinder-SUG-case-study-v1.r2.m1.pdf",
+      "version": "V1.R2.M1, June 8, 2005",
+      "role": "Four named truth surfaces; revised beta3 prior with mean1 and variance0.9, distinct from the paper's mean0.05 and variance3."
+    }
+  ],
+  "stage_two_limitation": "Our mathematical audit finds that the paper's equation12 is a six-dimensional outer product, so its single-patient information matrix has rank at most one. Equation13 therefore cannot supply a finite log-determinant ranking as written. The guide substitutes second derivatives without enough detail for a faithful implementation. No silent regularization or substitute information criterion is used.",
+  "validation_reference": "tools/reference_toxfinder.R independently evaluates official example surfaces, integrates a nonconjugate scalar posterior, and calculates analytic log-gamma prior moments in base R. The script contains no original program source."
+}
