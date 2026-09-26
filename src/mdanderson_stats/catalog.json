@@ -2747,12 +2747,18 @@
         "Power-model CRM and Bayesian model averaging with prior-median skeletons, normal alpha prior, model evidences and posterior model probabilities",
         "Model-specific and averaged dose toxicity means and overdose probabilities for fully observed integer counts",
         "Complete-outcome starting dose, first-untried restriction, current/intervening raw-toxicity escalation caps, mixture safety stop and final MTD selection with the three-patient fallback",
-        "DA-CRM, pending-outcome look-ahead, event-time and operating-characteristic simulation, native files and reports remain pending; see docs/bmacrm.md"
+        "DA-CRM posterior inference with observed and pending outcomes, piecewise exponential event timing, gamma hazard priors, and serial bounded data augmentation",
+        "Paper midpoint-uniform and CRM Suite six-interval trimester hazard-prior calibration with explicit dispersion; see docs/dacrm.md",
+        "DA paper and CRM Suite decision policies with one-level moves, safety stopping, observed-outcome escalation waits, raw-rate caps and final eligibility rules",
+        "Pending-outcome look-ahead, calendar and operating-characteristic simulation, automatic complete-data routing, native files and reports remain pending; see docs/bmacrm.md and docs/dacrm.md"
       ],
       "validation": [
         "Ten independent base-R posterior scenarios including ordinary CRM, the guide skeletons, unequal/zero priors, extreme probabilities and 10000-patient concentrated or boundary data",
         "Log-prior weight recovery under strongly informative data, full normal-support integration, tiny-prior and floating-point endpoint checks with bounded serial work",
-        "Focused deterministic decision checks against the documented CRM Suite Appendix II rules; no native executable or random-seed parity claimed"
+        "Focused deterministic decision checks against the documented CRM Suite Appendix II rules; no native executable or random-seed parity claimed",
+        "Six exact small-state DA posterior references from independent base-R integration, covering complete/pending data, prior-only cases, and interval-boundary DLTs; moments and probabilities compared using Monte Carlo standard errors",
+        "DA hazard-prior formulas, reproducibility, input and allocation bounds, and finite-state checks; no native MCMC or random-seed parity claimed",
+        "Published DA paper Table 3 allocation sequence from supplied posterior means, and focused pending/observed count, waiting, raw-rate and final-selection policy checks"
       ]
     },
     {
@@ -3679,12 +3685,18 @@
         "Power-model CRM and Bayesian model averaging with prior-median skeletons, normal alpha prior, model evidences and posterior model probabilities",
         "Model-specific and averaged dose toxicity means and overdose probabilities for fully observed integer counts",
         "Complete-outcome starting dose, first-untried restriction, current/intervening raw-toxicity escalation caps, mixture safety stop and final MTD selection with the three-patient fallback",
-        "DA-CRM, pending-outcome look-ahead, event-time and operating-characteristic simulation, native files and reports remain pending; see docs/bmacrm.md"
+        "DA-CRM posterior inference with observed and pending outcomes, piecewise exponential event timing, gamma hazard priors, and serial bounded data augmentation",
+        "Paper midpoint-uniform and CRM Suite six-interval trimester hazard-prior calibration with explicit dispersion; see docs/dacrm.md",
+        "DA paper and CRM Suite decision policies with one-level moves, safety stopping, observed-outcome escalation waits, raw-rate caps and final eligibility rules",
+        "Pending-outcome look-ahead, calendar and operating-characteristic simulation, automatic complete-data routing, native files and reports remain pending; see docs/bmacrm.md and docs/dacrm.md"
       ],
       "validation": [
         "Ten independent base-R posterior scenarios including ordinary CRM, the guide skeletons, unequal/zero priors, extreme probabilities and 10000-patient concentrated or boundary data",
         "Log-prior weight recovery under strongly informative data, full normal-support integration, tiny-prior and floating-point endpoint checks with bounded serial work",
-        "Focused deterministic decision checks against the documented CRM Suite Appendix II rules; no native executable or random-seed parity claimed"
+        "Focused deterministic decision checks against the documented CRM Suite Appendix II rules; no native executable or random-seed parity claimed",
+        "Six exact small-state DA posterior references from independent base-R integration, covering complete/pending data, prior-only cases, and interval-boundary DLTs; moments and probabilities compared using Monte Carlo standard errors",
+        "DA hazard-prior formulas, reproducibility, input and allocation bounds, and finite-state checks; no native MCMC or random-seed parity claimed",
+        "Published DA paper Table 3 allocation sequence from supplied posterior means, and focused pending/observed count, waiting, raw-rate and final-selection policy checks"
       ]
     },
     {

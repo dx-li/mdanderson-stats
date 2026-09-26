@@ -1,0 +1,32 @@
+{
+  "catalog_ids": [
+    81,
+    132
+  ],
+  "retrieved_at": "2026-09-26",
+  "method": "Bayesian data augmentation continual reassessment method with delayed toxicity",
+  "evidence": "Independent implementation of the published DA-CRM working likelihood and posterior full conditionals. No original program is redistributed and no native executable or random-seed parity is claimed.",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/DA-CRM_Description.pdf",
+      "authors": "Suyu Liu, Guosheng Yin and Ying Yuan",
+      "year": 2013,
+      "role": "Section 2.3: Bernoulli pending-outcome imputation, normal-prior power-model posterior, and gamma hazard updates. The paper's illustrative uniform-time prior uses midpoint hazard means and dispersion two; simulation studies use nine intervals. Section 2.4 supplies one-level interim changes, nearest-target final selection, and the paper safety threshold."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/BMA-CRMSimulatorHelp.pdf",
+      "version": "1.0.0, October 25, 2018",
+      "role": "Patient time conventions, current six-interval trimester prior calibration, and separate DA trial-conduct policies. The terminal cumulative probability is approximated by 0.99; gamma dispersion is not separately specified in this guide. The Python decision policy implements the documented escalation gate, raw-rate cap, and final-selection rules; it explicitly checks the observation gate first because the guide does not resolve simultaneous constraints."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/81",
+      "role": "BMA-CRM Simulator version 2.2.4 includes both BMA-CRM and DA-CRM."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132",
+      "role": "CRM Suite version 1.0.0 includes ordinary CRM, BMA-CRM, and DA-CRM."
+    }
+  ],
+  "validation_reference": "tools/reference_dacrm.R integrates the hazards analytically and enumerates small missing-outcome configurations, with independent scalar alpha-space quadrature. Synthetic data are not native simulation output.",
+  "limitations": "The alpha sampling algorithm and precision controls are Python choices. Full calendar conduct and simulations, automatic complete-data routing, hidden native MCMC settings, and native files/reports remain pending. Decision profiles use supplied posterior summaries; native branch-order parity is not claimed."
+}

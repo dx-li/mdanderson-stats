@@ -1187,9 +1187,16 @@ weights, dose toxicity estimates, and overdose probabilities using the current
 prior-median skeleton convention. Stable, bounded quadrature is checked against
 independent R calculations, including 10,000-patient and extreme-prior cases.
 Complete-outcome dose decisions include safety stopping, no-skipping and raw-rate
-escalation restrictions, and the three-patient final MTD rule. This begins
-coverage of BMA-CRM Simulator and CRM Suite; delayed-outcome methods
-and full simulation/conduct workflows remain open.
+escalation restrictions, and the three-patient final MTD rule.
+
+[DA-CRM for delayed toxicity](docs/dacrm.md) adds joint inference for observed
+and pending outcomes, piecewise exponential event timing, and source-based
+hazard-prior calibration. Six independent base-R integrations check posterior
+moments, overdose probabilities, and pending-outcome probabilities. Separate
+paper and CRM Suite decision policies cover dose moves, waiting, safety stopping,
+and final selection. Sampling is serial with explicit memory and work limits.
+Full trial conduct and operating-characteristic simulation remain open for BMA-CRM Simulator and
+CRM Suite.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson

@@ -386,6 +386,9 @@ from .cta_study import CTAStudy, CTAStudySpecification
 from .cuminc_plot import plot_cuminc
 from .cuminc_study import CumIncStudy, cuminc
 from .cumulative_incidence import CumulativeIncidence, IncidenceSummary, cumulative_incidence
+from .dacrm import DACRMPosterior, DACRMPrior, dacrm_pending_probability, fit_dacrm
+from .dacrm_decision import DACRMDecision, dacrm_decision
+from .dacrm_priors import dacrm_trimester_prior, dacrm_uniform_prior
 from .dcdflib_beta import DCDFLIBBeta, cdfbet, cumbet
 from .dcdflib_binomial import DCDFLIBBinomial, cdfbin, cumbin
 from .dcdflib_chisq import DCDFLIBChiSquare, cdfchi, cumchi
@@ -1015,6 +1018,14 @@ __all__ = [
     "fit_bmacrm",
     "BMACRMDecision",
     "bmacrm_decision",
+    "DACRMPosterior",
+    "DACRMPrior",
+    "fit_dacrm",
+    "dacrm_pending_probability",
+    "dacrm_uniform_prior",
+    "dacrm_trimester_prior",
+    "DACRMDecision",
+    "dacrm_decision",
     "BCRMDecision",
     "bcrm_decision",
     "BCRMCurve",
