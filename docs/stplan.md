@@ -4,7 +4,8 @@ STPLAN 4.5 (catalog entry 41) combines power and inverse planning procedures for
 binary, count, continuous, survival, and correlation outcomes. Python coverage is
 partial. All 25 power and retention procedures in the current main menu have
 independent Python implementations, checked against original Fortran output and
-independent probability sums or integration. Inverse planning remains open.
+independent probability sums or integration. Bounded inverse planning is also
+available across these methods; native automatic planning workflows remain partial.
 
 ## Continuous and correlation power
 
@@ -126,6 +127,15 @@ accrual and administrative censoring. The piecewise method corrects the native
 survival integral; independent R quadrature verifies it. Historical-control
 power retains the source's fixed direction favoring lower experimental hazard.
 
+## Inverse planning
+
+[`stplan_solve`](stplan-planning.md) finds a numerical design parameter from a
+target power within explicit bounds. Continuous solutions verify achieved power;
+integer attainment searches examine every candidate in the requested direction,
+preserving the nonmonotonic behavior of exact tests. Shared group sizes, indexed
+K-group parameters, and proportional total-size planning are supported.
+The result includes completed forward inputs and the achieved probability.
+
 ## Source conventions and numerical evaluation
 
 The log-normal conversion uses log-scale SD `sqrt(log(1 + cv**2))` and the
@@ -165,9 +175,11 @@ procedures, with explicit treatment of the two native empty-region sentinels.
 The second probe is `tools/reference_stplan_discrete.f90`. Original software and
 source files are not redistributed.
 
-Still open: inverse calculations for sample size/effect/significance and study
-timing, conversions from alternative survival-curve parameterizations, and native
-session/report workflows. The old matched-pairs option is present in the archive
+Still open: native automatic inverse bounds and branch discovery, discrete
+significance planning by critical-region selection, integer allocation of
+proportional K-group totals, joint historical-control accrual-time/allocation
+optimization, alternative survival-curve parameterizations, and native session/report
+workflows. The old matched-pairs option is present in the archive
 but commented out of the current main menu; it will be tracked separately from
 active menu features. See [source provenance](stplan-sources.json) for the archive
 identity and reproduction inputs.

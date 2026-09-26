@@ -1189,5 +1189,7 @@ K-group comparisons, attrition, matched/unmatched case-control studies, and
 two-sample Poisson counts, and all five censored-survival menu methods. Original
 Fortran references and independent R sums/integration check numerical behavior,
 including corrected matched/Poisson mixtures and piecewise-survival integrals.
-Inverse planning, alternative survival-curve parameterizations, and native
-reporting remain open.
+[Bounded inverse planning](docs/stplan-planning.md) solves for sample sizes,
+effects, significance, and timing, with integer attainment searches and K-group
+allocation. Native automatic planning workflows, some discrete inverse questions,
+alternative survival-curve parameterizations, and reporting remain open.

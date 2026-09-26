@@ -813,6 +813,7 @@ from .stplan_discrete import (
     stplan_responder_normal_approximation_power,
     stplan_retention_probability,
 )
+from .stplan_planning import STPLAN_METHODS, STPLANMethod, STPLANSolution, stplan_solve
 from .stplan_poisson import stplan_poisson_two_sample_power
 from .stplan_survival import (
     stplan_censored_exponential_one_sample_power,
@@ -963,6 +964,10 @@ from .windows import (
 )
 
 __all__ = [
+    "STPLAN_METHODS",
+    "STPLANMethod",
+    "STPLANSolution",
+    "stplan_solve",
     "stplan_censored_exponential_one_sample_power",
     "stplan_george_desu_survival_power",
     "stplan_historical_survival_power",

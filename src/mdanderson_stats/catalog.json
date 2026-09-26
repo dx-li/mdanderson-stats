@@ -1561,10 +1561,11 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Eight STPLAN 4.5 continuous/correlation power procedures: unknown-variance normal one sample, pooled and Welch normal two sample, common-CV lognormal, uncensored exponential one/two sample, and corrected Fisher-transform correlation one/two sample. Native dominant-tail convention, fractional planning sizes, bounded broadcasting, and independent mathematical implementation. Inverse planning remains open.",
-        "Nine discrete-outcome procedures: two-binomial arcsine and median-split approximations; historical-control and conservative-responder approximations; K-sample noncentral chi-square with native two-group significance convention; subject-retention probabilities; native Fisher-test planning approximation; exact one-sample binomial and Poisson powers. Integer-tail selection and explicit empty-region power zero replace native failure sentinels. Inverse planning and reports remain open.",
+        "Eight STPLAN 4.5 continuous/correlation power procedures: unknown-variance normal one sample, pooled and Welch normal two sample, common-CV lognormal, uncensored exponential one/two sample, and corrected Fisher-transform correlation one/two sample. Native dominant-tail convention, fractional planning sizes, bounded broadcasting, and independent mathematical implementation. Native automatic inverse planning workflows remain open.",
+        "Nine discrete-outcome procedures: two-binomial arcsine and median-split approximations; historical-control and conservative-responder approximations; K-sample noncentral chi-square with native two-group significance convention; subject-retention probabilities; native Fisher-test planning approximation; exact one-sample binomial and Poisson powers. Integer-tail selection and explicit empty-region power zero replace native failure sentinels. Discrete critical-region inverse planning and reports remain open.",
         "Unmatched case-control power with current disease-risk parameterization; exact matched discordance mixture with corrected null/alternative argument order and fixed upper-tail direction; two-sample Poisson conditional-test mixture with an explicit truncation bound, replacing the native 99% renormalized sum and large-mean substitution. Bounded broadcast inputs and aggregate support work; independent R finite-sum references.",
-        "All five current censored-survival forward procedures: one-sample Poisson-event mixture, George–Desu randomized exponential model, randomized information-time model, fixed historical controls with optional continued follow-up, and corrected piecewise-exponential event integration. This completes the 25 active main-menu forward power/retention calculations. Inverse planning, alternative survival-curve parameterizations, the inactive legacy matched-pairs option, and session/report workflows remain open."
+        "All five current censored-survival forward procedures: one-sample Poisson-event mixture, George–Desu randomized exponential model, randomized information-time model, fixed historical controls with optional continued follow-up, and corrected piecewise-exponential event integration. This completes the 25 active main-menu forward power/retention calculations. Native automatic inverse planning, alternative survival-curve parameterizations, the inactive legacy matched-pairs option, and session/report workflows remain open.",
+        "Bounded inverse planning across all 25 forward methods for sample sizes, effects, probabilities, SD/CV, significance, and study timing. Verified continuous roots; exhaustive smallest/largest integer attainment; equal-group tied sizes; K-group total allocation and indexed parameter solving; immutable completed designs. Native automatic branch/bound discovery, discrete significance critical-region selection, and proportional integer allocation remain open."
       ],
       "validation": [
         "tests/test_stplan_discrete.py",
@@ -1590,7 +1591,14 @@
         "tests/fixtures/stplan-survival-r.csv",
         "tools/reference_stplan_survival.f90",
         "tools/reference_stplan_survival.R",
-        "docs/stplan-survival.md"
+        "docs/stplan-survival.md",
+        "tests/test_stplan_planning.py",
+        "tests/test_stplan_planning_references.py",
+        "tests/fixtures/stplan-inverse-native.csv",
+        "tests/fixtures/stplan-planning-r.csv",
+        "tools/reference_stplan_inverse.f90",
+        "tools/reference_stplan_planning.R",
+        "docs/stplan-planning.md"
       ]
     },
     {
