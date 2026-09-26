@@ -105,6 +105,8 @@ from .bayesian_monitoring import (
     predictive_efficacy_design,
     toxicity_monitoring_design,
 )
+from .bchm import BCHMBorrowResult, BCHMCluster, BCHMFit, bchm_borrow, bchm_cluster, bchm_fit
+from .bchm_clustering import BCHMClusterResult
 from .berds import BackwardElimination, BERDSResult, backward_elimination, berds
 from .beta_binomial import (
     BetaBinomialPosterior,
@@ -884,6 +886,13 @@ from .windows import (
 )
 
 __all__ = [
+    "BCHMBorrowResult",
+    "BCHMCluster",
+    "BCHMClusterResult",
+    "BCHMFit",
+    "bchm_borrow",
+    "bchm_cluster",
+    "bchm_fit",
     "BaCISClassification",
     "BaCISFit",
     "bacis_classify",

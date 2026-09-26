@@ -4081,9 +4081,17 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Native patient-weighted Gaussian CRP clustering, streaming co-clustering, d0 and 0.001 similarity floors, and maximum-silhouette representative partition.",
+        "Target-specific similarity-weighted logistic-normal borrowing with Gamma shape/rate precision, bounded sequential sampling and posterior diagnostics.",
+        "Separate raw and R-compatible three-decimal efficacy probabilities, strict decisions and explicit app versus CRAN parameter configurations."
+      ],
+      "validation": [
+        "Native R integrated allocation references, exact three-subgroup partition enumeration, random-mean borrowing quadrature and official five-subgroup help example; tests/test_bchm_reference.py.",
+        "Silhouette, resource-budget, empirical-prior and endpoint regressions; tests/test_bchm.py.",
+        "Pending native plot/report and file workflows and direct Shiny/JAGS parity; docs/bchm.md."
+      ]
     },
     {
       "id": 159,

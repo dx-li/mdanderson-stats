@@ -1149,3 +1149,8 @@ candidate scope are explicit; titration and delayed-outcome imputation remain op
 classification and within-cluster hierarchical inference, including native
 singleton handling. Both documented adaptive cutoff definitions are supported;
 posterior draws include convergence and Monte Carlo error diagnostics.
+
+[BCHM subgroup borrowing](docs/bchm.md) adds patient-weighted clustering,
+co-clustering similarities and a separate similarity-weighted hierarchy for each
+subgroup. It preserves the native similarity floors and rounded efficacy rule,
+with bounded sampling and independent R numerical references.
