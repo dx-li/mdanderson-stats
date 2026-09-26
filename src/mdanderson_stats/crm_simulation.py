@@ -9,7 +9,7 @@ from numpy.typing import ArrayLike, NDArray
 
 from ._cdflib import _freeze
 from ._validation import FloatArray, scalar
-from .bmacrm import _raw_numeric
+from .bmacrm import _raw_numeric, _scalar_value
 from .crm_trial import CRMTrial, _count_setting, run_crm_trial
 from .dacrm import (
     _MAX_RETAINED_CELLS,
@@ -75,6 +75,8 @@ def simulate_crm(
     da_prior: DACRMPrior | None = None,
     model_prior: ArrayLike | None = None,
     prior_sd: float | None = None,
+    aggregation: Literal["bma", "bms", "occam"] = "bma",
+    occam_threshold: float | None = None,
     safety_cutoff: float = 0.9,
     minimum_observed: int | None = None,
     rng: int | np.random.Generator | None = None,
@@ -101,6 +103,16 @@ def simulate_crm(
     """
     if method not in {"bmacrm", "dacrm"}:
         raise ValueError("method must be 'bmacrm' or 'dacrm'")
+    if aggregation not in {"bma", "bms", "occam"}:
+        raise ValueError("aggregation must be 'bma', 'bms' or 'occam'")
+    if aggregation == "occam":
+        if (
+            occam_threshold is None
+            or not 0 <= _scalar_value(occam_threshold, "occam_threshold") < 1
+        ):
+            raise ValueError("Occam aggregation requires occam_threshold in [0,1)")
+    elif occam_threshold is not None:
+        raise ValueError("occam_threshold applies only to Occam aggregation")
     if sampler_rng is not None and not isinstance(sampler_rng, np.random.Generator):
         raise TypeError("sampler_rng must be a numpy.random.Generator")
     if arrival not in {"fixed", "exponential"}:
@@ -181,6 +193,8 @@ def simulate_crm(
     else:
         if model_prior is not None or prior_sd is not None:
             raise ValueError("model_prior and prior_sd apply only to method='bmacrm'")
+        if aggregation != "bma" or occam_threshold is not None:
+            raise ValueError("non-default aggregation options apply only to method='bmacrm'")
         if not isinstance(da_prior, DACRMPrior) or da_prior.breaks[-1] != duration:
             raise ValueError("DA-CRM requires a prior ending at window")
         if minimum_observed is None:
@@ -262,6 +276,8 @@ def simulate_crm(
             da_prior=da_prior,
             model_prior=model_prior,
             prior_sd=prior_sd,
+            aggregation=aggregation,
+            occam_threshold=occam_threshold,
             safety_cutoff=cutoff,
             minimum_observed=minimum_observed,
             rng=sampler_rng,
