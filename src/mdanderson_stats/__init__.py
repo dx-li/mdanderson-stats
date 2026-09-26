@@ -511,6 +511,14 @@ from .muhaz_mse import MuhazMSE, muhaz_mse
 from .muhaz_neighbors import NeighborBandwidths, muhaz_neighbor_bandwidths
 from .muhaz_plot import plot_kphaz, plot_muhaz, plot_pehaz
 from .muhaz_summary import MuhazSummary, summarize_muhaz
+from .multc_core import (
+    MultcBoundaries,
+    MultcLeanDesign,
+    MultcOperatingCharacteristics,
+    MultcPotentialBoundaries,
+    MultcState,
+    multc_lean_design,
+)
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
 from .multinomial_power import MultinomialPower, format_multinomial_power, multinomial_power
@@ -896,6 +904,12 @@ from .windows import (
 )
 
 __all__ = [
+    "MultcBoundaries",
+    "MultcLeanDesign",
+    "MultcOperatingCharacteristics",
+    "MultcPotentialBoundaries",
+    "MultcState",
+    "multc_lean_design",
     "EffToxPrior",
     "EffToxFit",
     "EffToxContour",

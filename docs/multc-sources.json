@@ -1,0 +1,42 @@
+{
+  "catalog_ids": [12, 3],
+  "retrieved_at": "2026-09-26",
+  "applications": [
+    {"id": 12, "name": "Multc Lean", "version": "2.1.0", "modified_at": "2013-07-25", "download": "MultcLean_V2.1.0_WithFX4.0.zip"},
+    {"id": 3, "name": "Multc99", "version": "2.1", "modified_at": "2012-05-03", "download": "Multc99_V2.1.zip"}
+  ],
+  "evidence": "Independent implementation of published probability rules and reference examples. No native Windows/DOS kernel execution or binary parity claim. Archive retrieval was unavailable because shell DNS resolution failed; general Multc99 source coverage remains unaudited.",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12",
+      "role": "Multc Lean version, scope and fixed historical-rate addition in version 2.1."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/3",
+      "role": "Multc99 version and broader multiple-outcome command-line scope."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcTutorial.pdf",
+      "authors": "John Cook and John Venier",
+      "revised_at": "2013-05-16",
+      "role": "Thall-Simon-Estey marginal beta rules, N=30 numerical example, full versus reachable boundaries, joint outcome scenarios and look-ahead accrual."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcUsersGuide.pdf",
+      "version": "2.1, July 17, 2013",
+      "role": "Input ranges, margin conventions, pretrial rejection, cohorts, scenario order, exact operating characteristics and separate duration simulation. Original software redistribution is restricted; no original code or binaries are redistributed."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/Multc99vsMultcLean.pdf",
+      "author": "John Venier",
+      "date": "2012-09-24",
+      "role": "Multc99 Phase IIa fixed-reference probability rule, complementary response cutoff, N=15 numerical tables and distinct display conventions. Final-cap placeholders are not posterior adverse-outcome thresholds."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcLogistics.pdf",
+      "role": "Minimum/cohort enrollment rules and suspension of accrual only when pending outcomes could change the decision; duration behavior remains outside this implementation."
+    }
+  ],
+  "method_reference": "Thall, Simon and Estey (1995), Bayesian sequential monitoring designs for single-arm clinical trials with multiple outcomes, Statistics in Medicine 14:357-379.",
+  "validation_reference": "tools/reference_multc.R generates independent direct beta integrals, fixed-reference boundaries and full paired-outcome path enumeration. The script contains no native program source."
+}

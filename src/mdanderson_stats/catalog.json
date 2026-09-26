@@ -70,9 +70,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Documented Multc99 Phase IIa fixed-historical-rate marginal stopping rules via multc_lean_design; native lower response cutoff mapped to complementary upper cutoff",
+        "Response-only, toxicity-only or combined monitoring with explicit cutoff-one disabling; Python exact joint trial probabilities extend the native Phase IIa subset",
+        "General Multc99 multiple-event workflows, native source/archive audit and file/report interfaces remain pending; see docs/multc.md"
+      ],
+      "validation": [
+        "Official Multc99-versus-Multc-Lean N=15 fixed-reference example and independent base-R beta-CDF boundary calculation",
+        "Mathematical subset verified; native final-cap placeholders and exact floating-point cutoff parity are not claimed"
+      ]
     },
     {
       "id": 6,
@@ -242,9 +249,19 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Multc Lean response/toxicity monitoring with beta or fixed historical rates and additive margins; strict posterior cutoffs with exact support handling",
+        "Continuous/cohort monitoring, minimum enrollment, explicit prior-only screen and sequential first-stop outcomes",
+        "Full marginal stopping bounds and compact reachable first-crossing count intervals",
+        "Bounded exact joint response/toxicity operating characteristics: separate stop reasons, sample-size distribution, mean/SD and expected event counts; explicit independence helper",
+        "Duration simulation, native configuration/report formats and protocol memo remain pending; see docs/multc.md"
+      ],
+      "validation": [
+        "Official N=30 statistical tutorial full/potential boundaries before the sample cap",
+        "Independent base-R direct shifted-beta integrations and complete 4^6 paired-outcome path enumeration for cohort sizes 1 and 2 with different associations",
+        "Focused checks for support endpoints, tail underflow, strict symmetry ties, pretrial rejection and allocation caps; no native binary execution"
+      ]
     },
     {
       "id": 14,

@@ -1159,3 +1159,9 @@ with bounded sampling and independent R numerical references.
 model, explicit Gaussian priors, bounded posterior fitting, Lp trade-off
 contours and interim/final dose selection. Published no-skipping and exploration
 rules are explicit; prior calibration and full trial simulation remain open.
+
+[Multc Lean and Multc99 Phase IIa](docs/multc.md) add response/toxicity monitoring
+against fixed or beta-distributed historical rates, shifted comparisons, cohort
+rules, full and reachable boundaries, and exact joint stopping probabilities.
+The calculation retains outcome association and separates sample-cap completion
+from early stopping. Duration simulation and general Multc99 designs remain open.
