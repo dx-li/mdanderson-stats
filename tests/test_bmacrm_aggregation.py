@@ -85,7 +85,7 @@ def test_lookahead_refit_uses_original_prior_and_can_restore_excluded_model():
         assert (decision.action, decision.dose) == (expected.action, expected.dose)
 
 
-def test_aggregation_routes_through_calendar_trial_and_simulation():
+def test_calendar_decision_uses_requested_model_aggregation():
     skeletons = [[0.02, 0.05, 0.15, 0.6], [0.05, 0.2, 0.25, 0.35]]
     doses = np.repeat([0, 1, 2], 3)
     delays = np.full(9, np.inf)
