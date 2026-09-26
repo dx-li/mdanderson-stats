@@ -1182,10 +1182,12 @@ Single-outcome allocation supports target selection, an escalation cap and
 cohort stopping rules with explicit probability estimates.
 The bivariate association model and full native simulation workflow remain open.
 
-[STPLAN study planning](docs/stplan.md) provides 20 power and retention
+[STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
 outcomes. These include exact one-sample count tests, historical controls,
 K-group comparisons, attrition, matched/unmatched case-control studies, and
-two-sample Poisson counts. Original Fortran references and independent R sums
-check numerical behavior, including corrected matched and Poisson mixtures.
-Inverse planning, censored survival, and native reporting remain open.
+two-sample Poisson counts, and all five censored-survival menu methods. Original
+Fortran references and independent R sums/integration check numerical behavior,
+including corrected matched/Poisson mixtures and piecewise-survival integrals.
+Inverse planning, alternative survival-curve parameterizations, and native
+reporting remain open.

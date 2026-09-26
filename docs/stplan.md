@@ -2,8 +2,9 @@
 
 STPLAN 4.5 (catalog entry 41) combines power and inverse planning procedures for
 binary, count, continuous, survival, and correlation outcomes. Python coverage is
-partial. Twenty power and retention procedures are available as independent mathematical
-implementations, checked against original Fortran output and independent probability sums.
+partial. All 25 power and retention procedures in the current main menu have
+independent Python implementations, checked against original Fortran output and
+independent probability sums or integration. Inverse planning remains open.
 
 ## Continuous and correlation power
 
@@ -116,6 +117,15 @@ conventions, and numerical bounds. The matched and Poisson mixtures correct
 identified defects in the original routines; independent R probability sums
 provide their numerical references.
 
+## Censored-survival power
+
+Five [survival planning methods](stplan-survival.md) cover the one-sample
+Poisson-event mixture, randomized George–Desu and information-time models,
+historical controls, and piecewise-exponential survival. They assume uniform
+accrual and administrative censoring. The piecewise method corrects the native
+survival integral; independent R quadrature verifies it. Historical-control
+power retains the source's fixed direction favoring lower experimental hazard.
+
 ## Source conventions and numerical evaluation
 
 The log-normal conversion uses log-scale SD `sqrt(log(1 + cv**2))` and the
@@ -155,8 +165,8 @@ procedures, with explicit treatment of the two native empty-region sentinels.
 The second probe is `tools/reference_stplan_discrete.f90`. Original software and
 source files are not redistributed.
 
-Still open: all censored-survival procedures, inverse calculations for sample
-size/effect/significance, and native
+Still open: inverse calculations for sample size/effect/significance and study
+timing, conversions from alternative survival-curve parameterizations, and native
 session/report workflows. The old matched-pairs option is present in the archive
 but commented out of the current main menu; it will be tracked separately from
 active menu features. See [source provenance](stplan-sources.json) for the archive

@@ -814,6 +814,13 @@ from .stplan_discrete import (
     stplan_retention_probability,
 )
 from .stplan_poisson import stplan_poisson_two_sample_power
+from .stplan_survival import (
+    stplan_censored_exponential_one_sample_power,
+    stplan_george_desu_survival_power,
+    stplan_historical_survival_power,
+    stplan_information_survival_power,
+    stplan_piecewise_survival_power,
+)
 from .stukel import predict_stukel, stukel_log_odds, stukel_probability
 from .stukel_comparison import StukelComparison, compare_stukel, stukel_demo
 from .stukel_fit import StukelFit, StukelFitError, fit_stukel
@@ -956,6 +963,11 @@ from .windows import (
 )
 
 __all__ = [
+    "stplan_censored_exponential_one_sample_power",
+    "stplan_george_desu_survival_power",
+    "stplan_historical_survival_power",
+    "stplan_information_survival_power",
+    "stplan_piecewise_survival_power",
     "stplan_case_control_power",
     "stplan_matched_case_control_power",
     "stplan_poisson_two_sample_power",

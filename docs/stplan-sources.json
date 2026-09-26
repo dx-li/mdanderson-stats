@@ -99,7 +99,7 @@
     "reproduction": "In an empty build directory, compile the listed original source files in order together with the repository harness, using the listed flags and -o reference_stplan. Run reference_stplan and capture stdout as the CSV fixture. The original archive must be acquired separately."
   },
   "compatibility": [
-    "Two-sided power halves alpha and retains only the dominant rejection tail.",
+    "Two-sided planning halves alpha and retains one rejection direction. Most procedures follow the alternative; case-control and historical-survival one-sided conventions preserve their documented fixed direction.",
     "Correlation formulas follow current cor_nor_app_mod, pcor1 and pcor2, including the null SD for one-sample power.",
     "Lognormal CV is SD/mean, consistent with qlgn2 and its formula.",
     "Modern tail evaluation does not reproduce original quantile probability clamps."
@@ -267,6 +267,110 @@
     "native_defects": [
       "fmcaco passes case-only probability as the binomial null and 0.5 as its alternative, contrary to the intended null of 0.5.",
       "ppoi2 uses a renormalized 99% Poisson sum, can duplicate integer modes, and substitutes a single test at the mean above 200 events."
+    ]
+  },
+  "survival_reference": {
+    "native_harness": "tools/reference_stplan_survival.f90",
+    "native_fixture": "tests/fixtures/stplan-survival-native.csv",
+    "native_cases": 15,
+    "native_correctness_targets": 12,
+    "native_defect_contrasts": 3,
+    "original_source_directory": "stplan-4.5/SOURCE",
+    "source_files": [
+      "exp_death_mod.f90",
+      "d1mach.f",
+      "erf.f",
+      "i1mach.f",
+      "exparg.f",
+      "erfc1.f",
+      "gam1.f",
+      "gamma.f",
+      "rexp.f",
+      "rlog.f",
+      "gratio.f",
+      "cumgam.f",
+      "cumchi.f",
+      "cumpoi.f",
+      "caxchi.f",
+      "cumnor.f",
+      "devlpl.f",
+      "stvaln.f",
+      "dinvnr.f",
+      "qstzro.f",
+      "qstinv.f",
+      "invchi.f",
+      "pexp1.f",
+      "p1exp.f",
+      "psi.f",
+      "apser.f",
+      "bcorr.f",
+      "rlog1.f",
+      "basym.f",
+      "alnrel.f",
+      "algdiv.f",
+      "gamln1.f",
+      "gamln.f",
+      "gsumln.f",
+      "betaln.f",
+      "brcomp.f",
+      "bfrac.f",
+      "grat1.f",
+      "bgrat.f",
+      "bpser.f",
+      "esum.f",
+      "brcmp1.f",
+      "bup.f",
+      "fpser.f",
+      "bratio.f",
+      "cumf.f",
+      "caxf.f",
+      "invf.f",
+      "pexp2.f",
+      "prct2.f90",
+      "inv_normal.f90",
+      "pint2.f90",
+      "pschc.f",
+      "p2exp_mod.f90"
+    ],
+    "compiler": "GNU Fortran (Homebrew GCC 14.2.0) 14.2.0",
+    "flags": [
+      "-O0",
+      "-std=legacy",
+      "-fallow-argument-mismatch",
+      "-ffree-line-length-none"
+    ],
+    "reproduction": "Compile the listed original source files in order with the repository harness in an empty build directory using the listed flags. Run the resulting executable and capture stdout as the native CSV fixture. Original source must be acquired separately.",
+    "independent_harness": "tools/reference_stplan_survival.R",
+    "independent_fixture": "tests/fixtures/stplan-survival-r.csv",
+    "independent_cases": 18,
+    "independent_runtime": "R 4.4.1, base and stats packages only",
+    "independent_reproduction": "Rscript tools/reference_stplan_survival.R tests/fixtures/stplan-survival-native.csv tests/fixtures/stplan-survival-r.csv",
+    "independent_method": "Reads only the argument columns of native cases. Adaptive quadrature integrates uniform-accrual event probabilities, splitting at the piecewise hazard breakpoint. R distribution functions evaluate the planning formulas; a wide finite Poisson sum has omitted mass below 1e-14. Three additional R-only cases cover an interior hazard breakpoint and zero hazard in either segment.",
+    "native_differences": [
+      "p1exp stops on small weighted contributions; the bounded Python Poisson sum instead controls omitted probability. Observed native difference from the independent reference is at most 8.6e-8.",
+      "prct2 uses original quantile solvers with approximately 1e-7 tolerance; observed reference differences are at most 1.1e-8.",
+      "pint2 and pschc match the independently computed normal approximations to floating-point rounding.",
+      "p2exp_mod fails to normalize survival integrals and can evaluate unclamped entry intervals. Two native cases produce NaN and the third differs from corrected quadrature.",
+      "The a2exp interface and p2exp_mod disagree about numeric model-arm labels. Python names the supplied lower- or higher-hazard arm explicitly.",
+      "The historical-control menu is one-sided. Python sides=2 is an explicit extension that halves alpha while retaining the fixed direction toward lower experimental hazard."
+    ]
+  },
+  "coverage": {
+    "active_menu_forward_procedures": 25,
+    "menu_source": "stplan-4.5/SOURCE/stplan.f90",
+    "families": {
+      "binomial_including_case_control_and_retention": 10,
+      "poisson": 2,
+      "normal_including_lognormal": 4,
+      "uncensored_exponential": 2,
+      "censored_survival": 5,
+      "correlation": 2
+    },
+    "remaining": [
+      "Inverse calculations for sample size, effects, significance, and study timing.",
+      "Alternative piecewise-survival curve parameter conversions.",
+      "Legacy matched-pairs option ampd, commented out of the current main menu.",
+      "Native session and report workflows."
     ]
   }
 }
