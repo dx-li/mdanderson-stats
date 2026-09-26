@@ -14,6 +14,12 @@ from .beta_comparison import compare_beta_difference
 type IntArray = NDArray[np.int64]
 
 
+def _scalar(value: ArrayLike, name: str) -> float:
+    if np.shape(value) != ():
+        raise ValueError(f"{name} must be scalar")
+    return scalar(value, name)
+
+
 def _int_owned(value: ArrayLike) -> IntArray:
     result = np.array(value, dtype=np.int64, copy=True)
     result.flags.writeable = False
@@ -38,7 +44,7 @@ class MultcState:
 
 @dataclass(frozen=True)
 class MultcBoundaries:
-    """Raw marginal boundaries at scheduled looks; values -1/N+1 mean never/all."""
+    """Stop at response <= bound or toxicity >= bound; -1/n+1 mean never."""
 
     looks: IntArray
     response_stop_max: IntArray
@@ -103,6 +109,8 @@ class MultcLeanDesign:
         posterior = prior.update(events, n - events)
         if historical.constant is not None:
             threshold = historical.constant + margin
+            if threshold == 0.5 and posterior.alpha == posterior.beta:
+                return 0.5
             if response:
                 if threshold <= 0:
                     return 0.0
@@ -115,14 +123,21 @@ class MultcLeanDesign:
                 return 0.0
             return float(betaincc(float(posterior.alpha), float(posterior.beta), threshold))
         assert historical.prior is not None
+        if (
+            margin == 0
+            and historical.prior.alpha == historical.prior.beta
+            and posterior.alpha == posterior.beta
+        ):
+            # Reflection about 1/2 swaps the two ordering events, even when the
+            # beta concentrations differ. Preserve this exact strict-cutoff tie.
+            return 0.5
         cutoff = self.response_cutoff if response else self.toxicity_cutoff
-        tolerance = 1e-8
         if cutoff in (0.0, 1.0):
             result = compare_beta_difference(
                 historical.prior, posterior, margin, absolute_tolerance=1e-8
             )
             return float(result.below_margin if response else result.above_margin)
-        for _ in range(3):
+        for tolerance in (1e-8, 1e-10, 1e-12):
             result = compare_beta_difference(
                 historical.prior, posterior, margin, absolute_tolerance=tolerance
             )
@@ -130,7 +145,6 @@ class MultcLeanDesign:
             error = float(result.absolute_error)
             if error == 0 or abs(probability - cutoff) > error:
                 return probability
-            tolerance /= 100
         raise ArithmeticError(
             "Multc stopping decision remains unresolved after quadrature refinement"
         )
@@ -183,17 +197,9 @@ class MultcLeanDesign:
                 pr[ix], pt[ix] = self._prob("response", ni, ri), self._prob("toxicity", ni, ti)
             stop_r = self._stop("response", float(pr[ix]))
             stop_t = self._stop("toxicity", float(pt[ix]))
-            if ni == 0:
-                if not self.pretrial_check:
-                    stop_r = stop_t = False
-            if ni == 0 and self.pretrial_check:
-                if stop_r and stop_t:
-                    decisions[ix] = "stop_both"
-                elif stop_r:
-                    decisions[ix] = "stop_response"
-                elif stop_t:
-                    decisions[ix] = "stop_toxicity"
-            elif ni < self.max_subjects:
+            if ni == 0 and not self.pretrial_check:
+                stop_r = stop_t = False
+            if ni < self.max_subjects:
                 if stop_r and stop_t:
                     decisions[ix] = "stop_both"
                 elif stop_r:
@@ -207,36 +213,31 @@ class MultcLeanDesign:
         )
 
     def monitor_outcomes(self, outcomes: ArrayLike) -> MultcState:
+        """Evaluate ordered binary pairs through the first stop, including the prior screen."""
         outcome_shape = np.shape(outcomes)
         if len(outcome_shape) != 2 or outcome_shape[1] != 2 or outcome_shape[0] > self.max_subjects:
             raise ValueError("outcomes must have shape (n,2), with n <= max_subjects")
         x = count(outcomes, "outcomes")
-        if x.ndim != 2 or x.shape[1] != 2 or x.shape[0] > self.max_subjects:
-            raise ValueError("outcomes must have shape (n,2), with n <= max_subjects")
         if np.any(x > 1):
             raise ValueError("outcomes must contain binary response/toxicity indicators")
         n = x.shape[0]
         cs = np.concatenate((np.zeros((1, 2)), np.cumsum(x, axis=0)), axis=0)
         sizes = np.arange(n + 1)
-        mask = np.isin(sizes, self.looks) | ((sizes == 0) & self.pretrial_check)
-        mask[0] = True
-        sizes, cs = sizes[mask], cs[mask]
-        result = self.monitor_counts(cs[:, 0], cs[:, 1], sizes)
-        stopping = np.flatnonzero(
-            np.isin(result.decision, ["stop_response", "stop_toxicity", "stop_both"])
+        sizes = sizes[np.isin(sizes, self.looks) | (sizes == 0)]
+        history: list[MultcState] = []
+        for size in sizes:
+            state = self.monitor(cs[size, 0], cs[size, 1], size)
+            history.append(state)
+            if state.decision.item() != "continue":
+                break
+        return MultcState(
+            _owned([s.sample_size.item() for s in history]),
+            _owned([s.responses.item() for s in history]),
+            _owned([s.toxicities.item() for s in history]),
+            _owned([s.response_probability.item() for s in history]),
+            _owned([s.toxicity_probability.item() for s in history]),
+            _str_owned([s.decision.item() for s in history]),
         )
-        if stopping.size:
-            stop_at = int(stopping[0])
-            stop_at += 1
-            return MultcState(
-                result.sample_size[:stop_at],
-                result.responses[:stop_at],
-                result.toxicities[:stop_at],
-                result.response_probability[:stop_at],
-                result.toxicity_probability[:stop_at],
-                _str_owned(result.decision[:stop_at]),
-            )
-        return result
 
     def stopping_bounds(self) -> MultcBoundaries:
         return self._bounds
@@ -287,7 +288,7 @@ class MultcLeanDesign:
         if np.shape(scenario_probabilities) != (4,):
             raise ValueError("scenario_probabilities must have four entries")
         p = finite(scenario_probabilities, "scenario_probabilities")
-        if p.shape != (4,) or np.any(p < 0) or not np.isclose(p.sum(), 1.0, atol=1e-12, rtol=0):
+        if np.any((p < 0) | (p > 1)) or not np.isclose(p.sum(), 1.0, atol=1e-12, rtol=0):
             raise ValueError("scenario_probabilities must be [p11,p10,p01,p00] summing to one")
         if sum((n + 1) ** 2 for n in range(1, self.max_subjects + 1)) > 10_000_000:
             raise ValueError("Multc exact OC exceeds the 10-million-state calculation limit")
@@ -319,7 +320,6 @@ class MultcLeanDesign:
                     _owned(expected_r),
                     _owned(expected_t),
                 )
-        prev = 0
         live: FloatArray = np.ones((1, 1), dtype=float)
         prev = 0
         for n0 in self.looks:
@@ -349,7 +349,7 @@ class MultcLeanDesign:
                 dist[n] += cap
             prev = n
         mean = float(dist @ np.arange(self.max_subjects + 1))
-        variance = float(dist @ np.arange(self.max_subjects + 1) ** 2 - mean**2)
+        variance = float(dist @ (np.arange(self.max_subjects + 1) - mean) ** 2)
         # Bounded stopping time and iid paired outcomes give Wald's identity.
         expected_r = mean * float(p[0] + p[1])
         expected_t = mean * float(p[0] + p[2])
@@ -370,7 +370,7 @@ class MultcLeanDesign:
     def operating_characteristics_independent(
         self, response_rate: float, toxicity_rate: float
     ) -> MultcOperatingCharacteristics:
-        pr, pt = scalar(response_rate, "response_rate"), scalar(toxicity_rate, "toxicity_rate")
+        pr, pt = _scalar(response_rate, "response_rate"), _scalar(toxicity_rate, "toxicity_rate")
         if not 0 <= pr <= 1 or not 0 <= pt <= 1:
             raise ValueError("true rates must lie in [0,1]")
         return self.operating_characteristics(
@@ -382,11 +382,11 @@ def _historical(value: float | tuple[float, float], name: str) -> _Historical:
     if isinstance(value, tuple):
         if len(value) != 2:
             raise ValueError(f"{name} beta prior must have two shapes")
-        a, b = (scalar(v, name) for v in value)
+        a, b = (_scalar(v, name) for v in value)
         if not (0 < a <= 1000 and 0 < b <= 1000):
             raise ValueError(f"{name} beta shapes must lie in (0,1000]")
         return _Historical(None, BetaBinomialPosterior(a, b))
-    p = scalar(value, name)
+    p = _scalar(value, name)
     if not 0 <= p <= 1:
         raise ValueError(f"{name} must lie in [0,1]")
     return _Historical(p, None)
@@ -407,7 +407,7 @@ def multc_lean_design(
     cohort_size: int = 1,
     pretrial_check: bool = True,
 ) -> MultcLeanDesign:
-    """Build a frozen Multc Lean design using independent response/toxicity marginals."""
+    """Build a frozen Multc Lean design with separate response/toxicity marginal rules."""
     ints = (max_subjects, min_subjects, cohort_size)
     if any(isinstance(v, (bool, np.bool_)) or not isinstance(v, (int, np.integer)) for v in ints):
         raise ValueError("sample-size controls must be integers")
@@ -422,12 +422,18 @@ def multc_lean_design(
     for pair, name in ((response_prior, "response_prior"), (toxicity_prior, "toxicity_prior")):
         if len(pair) != 2:
             raise ValueError(f"{name} requires two shapes")
-        a, b = (scalar(v, name) for v in pair)
+        a, b = (_scalar(v, name) for v in pair)
         if not (0 < a <= 100 and 0 < b <= 100):
             raise ValueError(f"{name} shapes must lie in (0,100]")
         priors.append(BetaBinomialPosterior(a, b))
-    mr, mt = scalar(response_margin, "response_margin"), scalar(toxicity_margin, "toxicity_margin")
-    cr, ct = scalar(response_cutoff, "response_cutoff"), scalar(toxicity_cutoff, "toxicity_cutoff")
+    mr, mt = (
+        _scalar(response_margin, "response_margin"),
+        _scalar(toxicity_margin, "toxicity_margin"),
+    )
+    cr, ct = (
+        _scalar(response_cutoff, "response_cutoff"),
+        _scalar(toxicity_cutoff, "toxicity_cutoff"),
+    )
     if not -1 < mr < 1 or not -1 < mt < 1 or (mr < 0 and mt > 0):
         raise ValueError(
             "margins must lie in (-1,1), and cannot have response<0 and toxicity>0 together"
@@ -469,6 +475,10 @@ def multc_lean_design(
     for n0 in schedule:
         n = int(n0)
         lo, hi = -1, n + 1
+        # End cutoffs follow from support alone, avoiding unnecessary quadrature.
+        if cr in (0, 1):
+            lo = n if design._stop("response", 0.0) else -1
+            hi = lo + 1
         while hi - lo > 1:
             mid = (lo + hi) // 2
             comparisons += 1
@@ -480,6 +490,9 @@ def multc_lean_design(
                 hi = mid
         rb.append(lo)
         lo, hi = -1, n + 1
+        if ct in (0, 1):
+            hi = 0 if design._stop("toxicity", 0.0) else n + 1
+            lo = hi - 1
         while hi - lo > 1:
             mid = (lo + hi) // 2
             comparisons += 1
