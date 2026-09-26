@@ -242,7 +242,8 @@ def _freeze_summary(summary: ChainSummary) -> ChainSummary:
 
 def _scaled_summary(draws: FloatArray) -> ChainSummary:
     """Summarize wide-scale parameters without squaring extreme draws."""
-    scales = np.maximum(1.0, np.max(np.abs(draws), axis=(0, 1)))
+    scales = np.max(np.abs(draws), axis=(0, 1))
+    scales = np.where(scales == 0, 1.0, scales)
     summary = summarize_chains(draws / scales)
     interval_scales = scales.reshape((-1,) + (1,) * (summary.interval.ndim - 1))
     with np.errstate(over="ignore", invalid="ignore"):
@@ -254,7 +255,8 @@ def _scaled_summary(draws: FloatArray) -> ChainSummary:
             summary.split_rhat,
             summary.batch_mean_mcse * scales,
         ]
-    if any(np.any(~np.isfinite(value)) for value in restored):
+    # Constant chains have undefined R-hat; it is a diagnostic, not a moment.
+    if any(np.any(~np.isfinite(restored[index])) for index in (0, 1, 2, 3, 5)):
         raise ArithmeticError("DA-CRM posterior summary moments are not representable")
     return _freeze_summary(ChainSummary(*restored))
 

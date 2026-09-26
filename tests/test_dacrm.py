@@ -118,3 +118,20 @@ def test_wide_finite_hazard_draws_keep_parameter_summaries_representable():
     )
     assert np.all(np.isfinite(result.parameter_summary.standard_deviation))
     assert np.max(result.parameter_summary.mean) > 1e299
+
+
+def test_constant_underflowed_hazards_preserve_undefined_rhat():
+    result = fit_dacrm(
+        [0.2],
+        [],
+        [],
+        [],
+        prior=DACRMPrior([0, 1], [1e-300], [1]),
+        target=0.3,
+        rng=np.random.default_rng(6),
+        draws=8,
+        warmup=0,
+    )
+    assert np.all(result.hazard_draws == 0)
+    assert result.parameter_summary.standard_deviation[1] == 0
+    assert np.isnan(result.parameter_summary.split_rhat[1])
