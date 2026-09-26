@@ -183,6 +183,8 @@ from .blockarand import (
     simulate_blockarand,
     simulate_blockarand_oc,
 )
+from .bmacrm import BMACRMPosterior, fit_bmacrm
+from .bmacrm_decision import BMACRMDecision, bmacrm_decision
 from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
 from .boin12 import BOIN12Decision, BOIN12Design, BOIN12Posterior, BOIN12RDSTable, BOIN12Selection
 from .boin12 import admissibility as boin12_admissibility
@@ -1009,6 +1011,10 @@ __all__ = [
     "stplan_exponential_two_sample_power",
     "stplan_correlation_one_sample_power",
     "stplan_correlation_two_sample_power",
+    "BMACRMPosterior",
+    "fit_bmacrm",
+    "BMACRMDecision",
+    "bmacrm_decision",
     "BCRMDecision",
     "bcrm_decision",
     "BCRMCurve",

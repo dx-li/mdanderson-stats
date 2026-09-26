@@ -1182,6 +1182,15 @@ Single-outcome allocation supports target selection, an escalation cap and
 cohort stopping rules with explicit probability estimates.
 The bivariate association model and full native simulation workflow remain open.
 
+[BMA-CRM and ordinary power-model CRM](docs/bmacrm.md) add posterior model
+weights, dose toxicity estimates, and overdose probabilities using the current
+prior-median skeleton convention. Stable, bounded quadrature is checked against
+independent R calculations, including 10,000-patient and extreme-prior cases.
+Complete-outcome dose decisions include safety stopping, no-skipping and raw-rate
+escalation restrictions, and the three-patient final MTD rule. This begins
+coverage of BMA-CRM Simulator and CRM Suite; delayed-outcome methods
+and full simulation/conduct workflows remain open.
+
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
 outcomes. These include exact one-sample count tests, historical controls,

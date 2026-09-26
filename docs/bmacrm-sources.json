@@ -1,0 +1,36 @@
+{
+  "catalog_ids": [81, 132],
+  "retrieved_at": "2026-09-26",
+  "applications": [
+    {"name": "BMA-CRM Simulator", "version": "2.2.4", "modified_at": "2018-02-26"},
+    {"name": "CRM Suite", "version": "1.0.0", "modified_at": "2018-10-25"}
+  ],
+  "evidence": "Independent implementation of the documented power-model CRM and Bayesian model averaging. Current skeleton inputs are prior medians. Source formulas and policy descriptions were read from official pages and manuals; no native executable was run and no original program is redistributed.",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/81",
+      "role": "Current version, prior-median convention, and 2.2.2 escalation and final MTD changes."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BMACRM/BMA-CRM_Description.pdf",
+      "version": "August 26, 2009",
+      "role": "Power model, normal prior variance two, evidence-weighted posterior means, and mixture safety probability. Its prior-mean elicitation predates the current input convention."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BMACRM/BMA-CRMSimulatorHelp.pdf",
+      "version": "2.2.1",
+      "role": "Prior medians, three-skeleton example, model limits, and distinction between BMA and DA workflows."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132",
+      "role": "CRM Suite identity and confirmation that it succeeds BMA-CRM Simulator."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CRMSuite/BMA-CRMSimulatorHelp.pdf",
+      "version": "1.0.0, October 25, 2018",
+      "role": "Nondecreasing skeletons and Appendix II trial-conduct rules, including first-untried restriction and raw toxicity at intervening doses."
+    }
+  ],
+  "validation_reference": "tools/reference_bmacrm.R uses base-R binomial densities and scalar alpha-space quadrature for ten independent audit scenarios. Counts are synthetic; no native output parity is claimed.",
+  "limitations": "DA-CRM, pending-outcome and look-ahead workflows, timing and operating-characteristic simulation, and native files/reports remain pending. Online catalog entry 133 was not accessible and is not assumed equivalent."
+}
