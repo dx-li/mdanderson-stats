@@ -23,7 +23,12 @@ _EPS = np.finfo(float).eps
 
 @dataclass(frozen=True)
 class BMACRMPosterior:
-    """Immutable model-specific and model-averaged BMA-CRM posterior summaries."""
+    """Immutable model-specific and model-averaged BMA-CRM posterior summaries.
+
+    ``prior_model_weights`` are normalized probabilities. The optional
+    ``input_model_prior`` retains the original relative weights before
+    normalization can round a very small positive weight to zero.
+    """
 
     skeletons: FloatArray
     events: FloatArray
@@ -41,6 +46,7 @@ class BMACRMPosterior:
     alpha_sd: FloatArray
     integration_error: FloatArray
     evaluations: int
+    input_model_prior: FloatArray | None = None
 
 
 class _Budget:
@@ -319,7 +325,8 @@ def fit_bmacrm(
     The adaptive integrations cover the full real prior domain and share the
     ``max_evaluations`` budget across all candidate models. The Python
     extension allows ``prior_sd`` in ``[1e-3, 10]``; the native default is
-    ``sqrt(2)``.
+    ``sqrt(2)``. ``input_model_prior`` retains the supplied relative weights,
+    or all ones for the equal-weight default, to support faithful refits.
     """
     raw_skeletons = _raw_numeric(skeletons, "skeletons", _MAX_MODELS * _MAX_DOSES)
     raw_events = _raw_numeric(events, "events", _MAX_DOSES)
@@ -368,6 +375,7 @@ def fit_bmacrm(
         raise ValueError(f"max_evaluations must be an integer from 1 to {_MAX_EVALUATIONS}")
     if model_prior is None:
         log_prior_weights = np.full(model_count, -np.log(model_count))
+        input_model_prior = np.ones(model_count, dtype=float)
     else:
         raw_prior = _raw_numeric(model_prior, "model_prior", _MAX_MODELS)
         if raw_prior.ndim != 1 or raw_prior.shape != (model_count,) or np.any(raw_prior < 0):
@@ -376,6 +384,7 @@ def fit_bmacrm(
             raise ValueError("model_prior weights must have positive sum")
         raw_log_prior = np.log(raw_prior, where=raw_prior > 0, out=np.full_like(raw_prior, -np.inf))
         log_prior_weights = raw_log_prior - logsumexp(raw_log_prior)
+        input_model_prior = raw_prior.copy()
     prior_weights = np.exp(log_prior_weights)
 
     budget = _Budget(int(max_evaluations))
@@ -426,4 +435,5 @@ def fit_bmacrm(
         _freeze(alpha_sds),
         _freeze(errors),
         budget.count,
+        _freeze(input_model_prior),
     )
