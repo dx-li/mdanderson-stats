@@ -27,6 +27,7 @@ class SurvanCox:
     column_scale: FloatArray
     column_center: FloatArray
     scaled_coefficients: FloatArray
+    ties: str = "breslow"
 
     def log_relative_hazard(self, x: ArrayLike) -> FloatArray:
         """Log hazard relative to the training covariate means, not baseline survival."""
@@ -44,13 +45,18 @@ class SurvanCox:
         return _freeze(eta)
 
 
-def survan_cox(time: ArrayLike, event: ArrayLike, x: ArrayLike) -> SurvanCox:
-    """Fit static-covariate proportional hazards with Breslow ties and no intercept.
+def survan_cox(
+    time: ArrayLike, event: ArrayLike, x: ArrayLike, *, ties: str = "breslow"
+) -> SurvanCox:
+    """Fit a static-covariate proportional-hazards model without an intercept.
 
-    Events=1 and right censors=0. Tied censors remain in the risk set. Rank
+    Events=1 and right censors=0. Tied censors remain in risk sets. ``ties`` is
+    ``"breslow"`` (the backward-compatible default) or ``"efron"``. Rank
     deficiency and monotone likelihood raise errors. Time-varying covariates,
     delayed entry, case weights and baseline survival estimation are not included.
     """
+    if ties not in ("breslow", "efron"):
+        raise ValueError("ties must be 'breslow' or 'efron'")
     if any(np.iscomplexobj(a) for a in (time, event, x)):
         raise ValueError("time, event and x must be real")
     t, e, xx = finite(time, "time"), count(event, "event"), finite(x, "x")
@@ -82,7 +88,7 @@ def survan_cox(time: ArrayLike, event: ArrayLike, x: ArrayLike) -> SurvanCox:
     design = normalized - center
     if np.linalg.matrix_rank(design) < p:
         raise ValueError("Cox design is rank deficient; do not include an intercept")
-    model = _CoxLikelihood(t, e, design)
+    model = _CoxLikelihood(t, e, design, ties=ties)
     beta = np.zeros(p)
     null_nll, gradient, info, _ = model.evaluate(beta)
     if np.linalg.matrix_rank(info) < p:
@@ -137,4 +143,5 @@ def survan_cox(time: ArrayLike, event: ArrayLike, x: ArrayLike) -> SurvanCox:
         _freeze(scale),
         _freeze(center),
         _freeze(beta),
+        ties,
     )
