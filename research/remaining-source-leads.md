@@ -30,6 +30,39 @@ for the fitted cause at sorted distinct cause-event times, with zero prepended
 if absent. It plots cumulative incidence, not survival. The existing CUMINC
 nonparametric estimators do not substitute for this Fine–Gray regression model.
 
+## Fine–Gray executable reference lead
+
+For the next competing-risk model, the CRAN mirror
+[`cmprsk` 2.2-12](https://github.com/cran/cmprsk/tree/f81411e1e3f57822796bae2a6870657e455362e9)
+was pinned at `f81411e1e3f57822796bae2a6870657e455362e9` (2024-05-20).
+The original author is Robert Gray and DESCRIPTION declares GPL >=2. Exact
+source-only downloads were saved under ignored `research/raw/cmprsk` and
+verified against their Git blob hashes:
+
+| File | Git blob |
+| --- | --- |
+| DESCRIPTION | `5ab1f6ef57c855b343a4e6020d77e74d5f63beed` |
+| R/cmprsk.R | `759528f90b7c7706e421518d21edab69b893046e` |
+| src/crr.f | `f2f473eb0e881ad0e565c1cc430521bf42e562ec` |
+
+The `crr` wrapper supports fixed covariates, covariates multiplied by supplied
+time functions, and separate censoring-distribution groups. It computes
+left-limit censoring Kaplan–Meier estimates and passes them to the Fortran
+likelihood/score/information routines. Prior competing failures remain in the
+subdistribution risk set with censoring-survival-ratio weights; prior target
+events and censors do not. Tied target events use a common risk denominator.
+This is not ordinary cause-specific Cox regression.
+
+`crrfsv`, `crrf`, `crrvv`, `crrsr` and `crrfit` supply the objective/derivatives,
+variance ingredients, score residuals and baseline increments. The R wrapper
+forms a sandwich covariance from `crrvv`, rather than substituting inverse
+information. `predict.crr` transforms cumulative subdistribution hazard to
+incidence with `1-exp(-H)`; Python should use the stable equivalent `-expm1(-H)`.
+The existing local Fortran compiler is available, so compiling the unchanged
+small source as a reference may avoid installing the larger app stack. No
+compilation or numerical job was run during this source audit, and no Fine–Gray
+coverage is claimed yet.
+
 ## BLESS model coefficients and baseline survival
 
 The [primary paper](https://doi.org/10.1016/j.chest.2021.03.059), Molina et al.,
