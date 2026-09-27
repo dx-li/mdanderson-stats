@@ -9,10 +9,32 @@ from ._validation import FloatArray
 
 
 class _CoxLikelihood:
-    def __init__(self, time: FloatArray, event: FloatArray, x: FloatArray, ties: str = "breslow"):
+    def __init__(
+        self,
+        time: FloatArray,
+        event: FloatArray,
+        x: FloatArray,
+        ties: str = "breslow",
+        strata: FloatArray | None = None,
+    ):
         if ties not in ("breslow", "efron"):
             raise ValueError("ties must be 'breslow' or 'efron'")
         self.ties = ties
+        if strata is not None:
+            levels = np.unique(strata)
+            self.parts = tuple(
+                _CoxLikelihood(
+                    time[strata == level],
+                    event[strata == level],
+                    x[strata == level] - np.mean(x[strata == level], axis=0),
+                    ties,
+                )
+                for level in levels
+            )
+            self.x = x
+            self.event = event
+            return
+        self.parts = ()
         order = np.argsort(-time, kind="stable")
         self.x, self.event = x[order], event[order]
         self.time = time[order]
@@ -23,6 +45,18 @@ class _CoxLikelihood:
         self.event_x = self.x.T @ self.event
 
     def evaluate(self, beta: FloatArray) -> tuple[float, FloatArray, FloatArray, FloatArray]:
+        if self.parts:
+            nll = 0.0
+            gradient = np.zeros_like(beta)
+            information = np.zeros((beta.size, beta.size))
+            risk_values: list[FloatArray] = []
+            for part in self.parts:
+                part_nll, part_gradient, part_info, part_risk = part.evaluate(beta)
+                nll += part_nll
+                gradient += part_gradient
+                information += part_info
+                risk_values.append(part_risk)
+            return nll, gradient, information, np.concatenate(risk_values)
         x, d = self.x, self.deaths
         eta = x @ beta
         if not np.isfinite(eta).all():
@@ -146,6 +180,67 @@ class _CoxLikelihood:
         return nll, gradient - self.event_x, (info + info.T) / 2, log_risk
 
     def check_separation(self, null_gradient: FloatArray) -> None:
+        if self.parts:
+            p = self.x.shape[1]
+            row_blocks: list[np.ndarray] = []
+            column_blocks: list[np.ndarray] = []
+            value_blocks: list[np.ndarray] = []
+            row_offset = 0
+            nuisance_offset = p
+            for part in self.parts:
+                if not np.any(part.event):
+                    continue
+                rows, columns, values, nrows, nnuisance = part._separation_rows()
+                row_blocks.append(rows + row_offset)
+                column_blocks.append(np.where(columns < p, columns, columns + nuisance_offset - p))
+                value_blocks.append(values)
+                row_offset += nrows
+                nuisance_offset += nnuisance
+            if row_offset == 0:
+                return
+            matrix_rows = np.concatenate(row_blocks)
+            matrix_columns = np.concatenate(column_blocks)
+            matrix_values = np.concatenate(value_blocks)
+            constraints = coo_array(
+                (matrix_values, (matrix_rows, matrix_columns)),
+                shape=(row_offset, nuisance_offset),
+            ).tocsr()
+            objective = np.r_[
+                null_gradient / max(1, np.max(np.abs(null_gradient))),
+                np.zeros(nuisance_offset - p),
+            ]
+            result = linprog(
+                objective,
+                A_ub=constraints,
+                b_ub=np.zeros(row_offset),
+                bounds=[(-1, 1)] * p + [(None, None)] * (nuisance_offset - p),
+                method="highs",
+            )
+            if not result.success:
+                raise ArithmeticError(f"Cox separation check failed: {result.message}")
+            if result.fun < -1e-7:
+                raise ValueError("Cox monotone likelihood: no finite coefficient maximum")
+            return
+        rows, columns, values, nrows, nnuisance = self._separation_rows()
+        constraints = coo_array(
+            (values, (rows, columns)), shape=(nrows, self.x.shape[1] + nnuisance)
+        ).tocsr()
+        objective = np.r_[
+            null_gradient / max(1, np.max(np.abs(null_gradient))), np.zeros(nnuisance)
+        ]
+        result = linprog(
+            objective,
+            A_ub=constraints,
+            b_ub=np.zeros(constraints.shape[0]),
+            bounds=[(-1, 1)] * self.x.shape[1] + [(None, None)] * nnuisance,
+            method="highs",
+        )
+        if not result.success:
+            raise ArithmeticError(f"Cox separation check failed: {result.message}")
+        if result.fun < -1e-7:
+            raise ValueError("Cox monotone likelihood: no finite coefficient maximum")
+
+    def _separation_rows(self) -> tuple[np.ndarray, np.ndarray, np.ndarray, int, int]:
         # One auxiliary risk maximum per time replaces all event/risk pairs.
         x = self.x
         n, p = x.shape
@@ -171,19 +266,7 @@ class _CoxLikelihood:
         values = np.r_[
             x.ravel(), -np.ones(n), -x[deaths].ravel(), np.ones(ne), np.ones(m - 1), -np.ones(m - 1)
         ]
-        constraints = coo_array((values, (rows, columns)), shape=(n + ne + m - 1, p + m)).tocsr()
-        objective = np.r_[null_gradient / max(1, np.max(np.abs(null_gradient))), np.zeros(m)]
-        result = linprog(
-            objective,
-            A_ub=constraints,
-            b_ub=np.zeros(constraints.shape[0]),
-            bounds=[(-1, 1)] * p + [(None, None)] * m,
-            method="highs",
-        )
-        if not result.success:
-            raise ArithmeticError(f"Cox separation check failed: {result.message}")
-        if result.fun < -1e-7:
-            raise ValueError("Cox monotone likelihood: no finite coefficient maximum")
+        return rows, columns, values, n + ne + m - 1, m
 
 
 def _weighted_moments(
