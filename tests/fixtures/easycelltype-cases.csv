@@ -1,0 +1,10 @@
+"case","query_rows","reference_rows","reference_types","tested_types"
+"mixed",4,20,4,3
+"duplicate_query",5,20,4,2
+"duplicate_reference",3,14,3,2
+"exact_ties",3,14,3,2
+"score_tiebreak",2,12,3,2
+"no_overlap",2,20,4,0
+"equal_gate",2,2,1,0
+"top_five",7,77,8,7
+"small_tail",20,1020,2,1

@@ -7,7 +7,10 @@ links the author's [repository](https://github.com/rx-li/EasyCellType).
 GitHub reads verified commit `e85e8187c540f66994b5ca12fe95f5d9eb95f1f5`
 (2024-02-22), whose DESCRIPTION reports 1.5.4 and Artistic-2.0. This is an
 author-source snapshot, not the current Bioconductor release. A later
-Bioconductor source should be checked before final version claims.
+Bioconductor source was also checked: `bioc/EasyCellType`'s `devel` branch
+reports 1.15.0, and its `R/test_fisher.R` has the identical blob
+`cbbe227b6561eeb12eaa1b6ba45d663247b4042a`. This verifies the unusual Fisher
+table persists in newer development source, not just the older author snapshot.
 
 Four source-only files are saved under ignored `research/raw/EasyCellType/R`:
 `easyct.R`, `test_fisher.R`, `process_results.R` and `coremarkers.R`.
@@ -33,13 +36,20 @@ actual two-by-two table is `[[k,T],[L-k,N-T-L+k]]`, with a greater-tail Fisher
 test. This unusual table must be compared with the article and newer source;
 do not silently replace it with a conventional gene-universe enrichment test.
 Negative table cells need an explicit failure contract.
+The accessible article's section 2.2 confirms Fisher testing, BH adjustment and
+expression-score ranking, but does not specify the table entries. Source
+compatibility must therefore be labeled as such, without claiming that its
+unusual table is the unique interpretation of the paper.
 
 For tested types it reports mean expression score among matching query rows,
-the overlapping IDs, raw p and BH-adjusted p. Adjustment includes NA placeholders
-for untested reference types, so the exact R `p.adjust` denominator must be
-verified independently. Result processing sorts by increasing adjusted p and
-then decreasing absolute mean score, selects one hard label and up to five
-soft labels per cluster, and retains the contributing genes. Empty-result,
+the overlapping IDs, raw p and BH-adjusted p. Adjustment receives NA placeholders
+for untested reference types. Base R 4.4.1 source and execution verify that its
+lazy default `n=length(p)` is evaluated after NA removal:
+`p.adjust(c(.01,NA,.04), "BH")` gives `(.02,NA,.04)`. The denominator is the
+number of tested types, not all reference types.
+Result processing sorts by increasing adjusted p and then decreasing absolute
+mean score, selects up to five labels per cluster including one hard label,
+and retains the contributing genes. Empty-result,
 duplicate-gene and exact-tie behavior require explicit contracts.
 
 The GSEA branch sorts scores and delegates to `clusterProfiler::GSEA` with
@@ -52,6 +62,25 @@ after the waterfall checkpoint, while root verifies the unusual table against
 the primary paper/newer source and creates independent base-R references.
 Use explicit caller-supplied marker associations first if database redistribution
 terms or binary retrieval remain unresolved; identify that as partial scope.
-No database snapshot, gene-annotation package, GSEA implementation or clinical
-cell labels have yet been ported. No installation or numerical job was run for
-this scouting audit, and catalog entry 159 remains pending.
+No database snapshot, gene-annotation package or GSEA implementation has yet
+been ported. Catalog entry 159 remains pending until the implementation is
+integrated and independently verified.
+
+## Original-R reference checkpoint
+
+`tools/reference_easycelltype.R` loads the pinned `test_fisher.R` unchanged,
+verifies its source checksum, and uses base R only. It generated nine cases
+covering mixed overlap, duplicate query/reference rows, exact ties, absolute
+score tie-breaking, no overlap, equality at the enrichment gate, top-five
+selection and a tail probability of approximately `1.84e-31`. Inputs and
+outputs are preserved in four `tests/fixtures/easycelltype-*.csv` files.
+The top-label ordering uses the original base-R ordering expression; no
+single-cell or dplyr installation is required. The generator also asserts
+the NA/BH denominator example above.
+
+The original Fisher branch uses unsorted query rows, so contributing genes
+retain first-occurrence query order. It counts duplicate query rows in the
+query size and matched-score mean, but overlap cardinality remains unique.
+The new Python interface will reject missing/nonfinite inputs instead of
+silently dropping rows, and retain untested rows for inspection. The source
+wrapper drops such result rows. These differences must be documented explicitly.
