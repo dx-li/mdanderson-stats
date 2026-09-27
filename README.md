@@ -1230,6 +1230,14 @@ selection support study analysis. Independent R integration checks hazards,
 histories and a reduced posterior. Calendar simulation and native workflows
 remain open.
 
+[CiBolus](docs/cibolus.md) models immediate and subsequent response to a bolus
+plus continuous infusion, with response-dependent toxicity. Exact and interval
+observations, explicit priors, bounded posterior fitting and utility-based
+concentration/bolus selection preserve the published treatment structure.
+Independent R quadrature provides probability, likelihood and reduced-posterior
+references. Full trial simulation, prior calibration and native workflows
+remain open.
+
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
 outcomes. These include exact one-sample count tests, historical controls,

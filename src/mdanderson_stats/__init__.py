@@ -333,6 +333,20 @@ from .cdflib_strings import (
 )
 from .cdflib_t import CDFStudentT, ccum_t, cdf_t, cum_t, inv_t
 from .chi_square_order_bounds import ChiSquareOrderBounds, chi_square_order_bounds
+from .cibolus import (
+    CiBolusObservation,
+    CiBolusPrediction,
+    CiBolusPrior,
+    CiBolusResponse,
+    cibolus_loglikelihood,
+    cibolus_parameter_names,
+    cibolus_predict,
+    cibolus_published_prior,
+    cibolus_response,
+    cibolus_toxicity,
+)
+from .cibolus_decision import CiBolusDecision, cibolus_decision
+from .cibolus_fit import CiBolusFit, fit_cibolus
 from .cid2bp import BinomialDifferenceInterval, cid2bp_interval
 from .condis import CondiSImputation, condis_impute
 from .condis_linear import CondiSLinearRefinement, condis_linear_refine
@@ -1065,6 +1079,20 @@ __all__ = [
     "run_crm_trial",
     "CRMSimulation",
     "simulate_crm",
+    "CiBolusObservation",
+    "CiBolusPrediction",
+    "CiBolusPrior",
+    "CiBolusResponse",
+    "cibolus_loglikelihood",
+    "cibolus_parameter_names",
+    "cibolus_predict",
+    "cibolus_published_prior",
+    "cibolus_response",
+    "cibolus_toxicity",
+    "CiBolusDecision",
+    "CiBolusFit",
+    "cibolus_decision",
+    "fit_cibolus",
     "DoseSchedulePatient",
     "DoseSchedulePrior",
     "DoseScheduleFit",

@@ -1,0 +1,28 @@
+{
+  "catalog_ids": [86],
+  "retrieved_at": "2026-09-26",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86",
+      "role": "Catalog entry and recorded CIBOLUS_V1.1.zip archive; live detail access failed during this audit."
+    },
+    {
+      "url": "https://odin.mdacc.tmc.edu/~pfthall/main/Biometrics_IAtPA_2011.pdf",
+      "role": "Author-hosted published paper identifying the response/toxicity model, observed-interval likelihood, utility criterion, prior and allocation constraints.",
+      "citation": "Thall PF, Szabo A, Nguyen HQ, Amlie-Lefond C, Zaidat OO (2011). Optimizing the Concentration and Bolus of a Drug Delivered by Continuous Infusion. Biometrics 67:1638–1646. doi:10.1111/j.1541-0420.2011.01580.x."
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3137757/",
+      "role": "Earlier indexed primary record links the paper to CiBolus; full-page access returned a browser challenge."
+    }
+  ],
+  "implementation_choices": [
+    "Positive concentration, bolus fraction in [0,1] and standardized time relative to the maximum infusion duration.",
+    "Immediate response, exact response, detected interval response and no response are distinct observations. Interval toxicity uses the detection endpoint.",
+    "The explicit failure effect in the toxicity model is retained for no response, resolving the printed likelihood's ambiguous use of time one. Response exactly at one does not incur this effect.",
+    "The safety criterion uses conditional toxicity for response at one, not marginal toxicity and not toxicity following failure.",
+    "Explicit independent normal priors on log parameters; fixed coordinates are a Python extension for reduced models. The published prior is study-specific.",
+    "Serial posterior computation and lexicographic selection ties are Python implementation choices; native random streams and executable decisions have not been compared."
+  ],
+  "limitations": "Prior elicitation/calibration, complete trial simulation, native input/report workflows and executable parity remain to be covered."
+}

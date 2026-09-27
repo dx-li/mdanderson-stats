@@ -1,5 +1,7 @@
 # Next uncovered method: CiBolus
 
+Historical scouting note, superseded by the [CiBolus implementation audit](cibolus-audit.md).
+
 Catalog entry 86 is pending, with a recorded `CIBOLUS_V1.1.zip` archive.
 Its official detail URL did not open through the web reader during the
 Dose Schedule Finder pass. The [primary article record](https://pmc.ncbi.nlm.nih.gov/articles/PMC3137757/)

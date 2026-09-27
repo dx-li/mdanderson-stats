@@ -2896,9 +2896,26 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Bolus and continuous response model, response-dependent toxicity, exact/interval/no-response likelihoods and stable joint category probabilities",
+        "Explicit independent lognormal priors and the published study prior; bounded serial elliptical-slice posterior fitting, direct prior draws and chain diagnostics",
+        "Strict posterior toxicity and efficacy screens, posterior expected-utility allocation, concentration no-skip restrictions, initial assignment and final selection",
+        "Prior elicitation/calibration, full trial simulation, native input/report workflows and executable equivalence remain pending"
+      ],
+      "validation": [
+        "tests/test_cibolus.py",
+        "tests/test_cibolus_fit.py",
+        "tests/test_cibolus_reference.py",
+        "tools/reference_cibolus.R",
+        "tests/fixtures/cibolus-probabilities.csv",
+        "tests/fixtures/cibolus-joint.csv",
+        "tests/fixtures/cibolus-likelihood.csv",
+        "tests/fixtures/cibolus-posterior.csv",
+        "docs/cibolus.md",
+        "docs/cibolus-sources.json",
+        "research/cibolus-audit.md"
+      ]
     },
     {
       "id": 87,

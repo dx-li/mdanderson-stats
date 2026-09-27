@@ -1,0 +1,2 @@
+"log_beta0_prior_mean","log_beta0_prior_sd","log_beta0_mean","log_beta0_sd","beta0_mean","beta0_sd","concentration","bolus","response_at_one_toxicity_mean","toxicity_limit","overdose_probability"
+-2,0.6,-1.73648389773205,0.532054792449199,0.202164169283463,0.110361371720653,0.2,0.1,0.222807878172775,0.2,0.547491959505442
