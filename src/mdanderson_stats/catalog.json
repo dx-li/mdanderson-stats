@@ -2611,9 +2611,25 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Triangular per-administration toxicity hazards, cumulative hazards and event/censoring likelihoods for actual variable-dose histories",
+        "Explicit independent lognormal priors on positive area increments and hazard timing, plus published approximate moment elicitation and optional unstructured areas",
+        "Bounded serial elliptical-slice posterior fitting, direct prior draws without observations, dose-by-schedule risk predictions and chain diagnostics",
+        "Strict posterior overdose screening and nearest-target selection with explicit no-skip conventions, initial allocation and final-selection rules; full calendar simulation, operating-characteristic calibration and native file/report equivalence remain pending"
+      ],
+      "validation": [
+        "tests/test_dose_schedule.py",
+        "tests/test_dose_schedule_reference.py",
+        "tools/reference_dose_schedule.R",
+        "tests/fixtures/dose-schedule-hazards.csv",
+        "tests/fixtures/dose-schedule-histories.csv",
+        "tests/fixtures/dose-schedule-prior.csv",
+        "tests/fixtures/dose-schedule-posterior.csv",
+        "docs/dose-schedule.md",
+        "docs/dose-schedule-sources.json",
+        "research/dose-schedule-audit.md"
+      ]
     },
     {
       "id": 77,

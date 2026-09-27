@@ -1,0 +1,2 @@
+"log_area_prior_mean","log_area_prior_sd","peak","tail","event_count","exposure","log_area_mean","log_area_sd","area_mean","area_sd","two_administration_risk","toxicity_limit","overdose_probability"
+-1,0.7,2,3,2,5.3,-1.04721190796185,0.49872965777088,0.395537892938717,0.197120889376872,0.515190870280698,0.3,0.907812262194788

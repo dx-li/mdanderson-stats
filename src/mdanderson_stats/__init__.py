@@ -417,6 +417,16 @@ from .diagnostic_population import (
     diagnostic_population,
     diagnostic_population_from_counts,
 )
+from .dose_schedule import (
+    DoseSchedulePatient,
+    dose_schedule_cumulative_hazard,
+    dose_schedule_hazard,
+    dose_schedule_parameter_names,
+    dose_schedule_patient_loglikelihood,
+)
+from .dose_schedule_decision import DoseScheduleDecision, dose_schedule_decision
+from .dose_schedule_fit import DoseScheduleFit, fit_dose_schedule
+from .dose_schedule_prior import DoseSchedulePrior, dose_schedule_moment_prior
 from .drdist import drdist
 from .efftox_decision import EffToxContour, EffToxDecision, efftox_decision
 from .efftox_model import (
@@ -1055,6 +1065,17 @@ __all__ = [
     "run_crm_trial",
     "CRMSimulation",
     "simulate_crm",
+    "DoseSchedulePatient",
+    "DoseSchedulePrior",
+    "DoseScheduleFit",
+    "DoseScheduleDecision",
+    "dose_schedule_cumulative_hazard",
+    "dose_schedule_hazard",
+    "dose_schedule_parameter_names",
+    "dose_schedule_patient_loglikelihood",
+    "dose_schedule_moment_prior",
+    "fit_dose_schedule",
+    "dose_schedule_decision",
     "DACRMPosterior",
     "DACRMPrior",
     "fit_dacrm",

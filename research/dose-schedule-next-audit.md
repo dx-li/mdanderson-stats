@@ -1,5 +1,9 @@
 # Next uncovered method: Dose Schedule Finder
 
+Historical planning note from the UAROET checkpoint. The subsequent
+[Dose Schedule Finder audit](dose-schedule-audit.md) records implementation and
+validation progress; use that record for current coverage.
+
 Entry 75 is pending. The official page was verified during the UAROET
 checkpoint: [Dose Schedule Finder 2.2.0](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75),
 last modified January 6, 2009. It explicitly identifies Braun, Thall, Nguyen

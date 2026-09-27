@@ -1,0 +1,26 @@
+{
+  "catalog_ids": [75],
+  "retrieved_at": "2026-09-26",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75",
+      "version": "Dose Schedule Finder 2.2.0, last modified 2009-01-06",
+      "role": "Identifies the native application and its 2007 method."
+    },
+    {
+      "url": "https://odin.mdacc.tmc.edu/~pfthall/main/ClinTrials%20dose-sched%202007.pdf",
+      "role": "Published author-hosted paper: triangular administration hazards, actual-history likelihood, approximate lognormal prior elicitation, posterior safety and nearest-target allocation."
+    }
+  ],
+  "implementation_choices": [
+    "Discrete zero-based dose indices and nested candidate schedules; actual patient histories may have variable doses and irregular administration times.",
+    "Independent Gaussian priors on log hazard-area increments, log peak time and log tail duration. Zero standard deviations explicitly fix coordinates in reduced models.",
+    "Paper moment elicitation is approximate: it uses a transformed mean toxicity and assumes completed per-administration hazard when relating shortest-schedule risk to total area.",
+    "Posterior fitting uses bounded serial elliptical slice sampling rather than reproducing the native coordinate Metropolis sampler or its random-number stream.",
+    "Each regimen risk is evaluated directly. Ordered total areas alone do not ensure finite-horizon risk ordering when peak times and tail durations differ.",
+    "Safety uses a strict toxicity-tail event and a strict upper probability cutoff. Exact selection ties use lowest dose then shortest schedule.",
+    "No-skip policies are explicit Python conventions for ambiguous histories: coordinate_max uses separate largest tried coordinates; observed_pair requires a candidate to be at most one level above both coordinates of a tried pair.",
+    "The first assignment defaults to the lowest pair and bypasses posterior exclusion while retaining the computed safety mask. An alternative starting pair is a Python extension. Final selection requires prior treatment and removes no-skip restrictions; the caller ensures completed follow-up."
+  ],
+  "limitations": "Native files/settings/report equivalence, the original executable, full calendar simulation and extensive operating-characteristic calibration are not yet covered. The distinct 2013 within-patient adaptation method is not substituted."
+}

@@ -1,0 +1,98 @@
+# Dose Schedule Finder coverage audit
+
+Baseline main `ac0f0b9`. Previous goal turn: progress. UAROET's core workflow
+was committed, checked against independent references, and verified from the
+built wheel. The current catalog has 62 implemented, 59 partial and 17 pending
+entries; the full catalog/publication goal remains active and incomplete.
+
+This pass targets pending entry 75. Root uses `feat/dose-schedule-core`; one
+Luna agent uses `feat/dose-schedule-luna` in the existing independent checkout.
+Only one numerical job runs at a time, with BLAS/OpenMP thread counts set to
+one. System memory reported 46% free at the initial check.
+
+The official application page identifies the 2007 Braun/Thall/Nguyen/de Lima
+method. The institutional paper's probability, prior, allocation and appendix
+sections were read. PDF screenshot calls failed; geometric hazard descriptions,
+the extracted equations and the worked prior values provide cross-checks.
+No native archive was retrieved or executed. The later 2013 adaptation design
+is a different method.
+
+The patient likelihood must use actual administration histories, including
+variable dose indices. Censored observations avoid multiplying zero by a log
+zero hazard. An event outside all active triangular hazards has a genuine zero
+likelihood, unlike a numerical failure. Candidate schedules are nested and use
+a constant dose within each regimen.
+
+The paper's moment-elicited prior is approximate, including transformed mean
+toxicity and assumed hazard completion. For ordered areas, normal coordinates
+describe log positive increments rather than log cumulative areas. Timing can
+vary by dose, so finite-horizon risks need not inherit area ordering; evaluate
+every candidate directly instead of propagating unsafe labels by index.
+
+Safety has strict inner and outer inequalities. No-skip is an enrollment rule;
+final selection uses acceptable regimens. Python tie handling and ambiguous
+no-skip history conventions must be explicit, without claiming native parity.
+
+The independent base-R generator ran successfully in 0.19 seconds with warnings
+treated as errors. It numerically integrates triangles and provides six actual
+history cases. The published approximate prior values match to the printed
+precision. In the reduced model, the area likelihood is proportional to
+`a^2 * exp(-5.3*a)` with `log(a) ~ Normal(-1, .7^2)` and fixed peak/tail of 2/3.
+Direct integration yields mean log area -1.04721190796185 and mean area
+.395537892938717; the fully accumulated two-administration risk has mean
+.515190870280698. The integrated Python checks below compare these references.
+
+## Integrated checkpoint
+
+Luna commit `67bb24f` was integrated as `43b8f89`. Root added public exports,
+independent references, user documentation and the coverage record. Entry 75
+moves from pending to partial: 138 catalog entries now comprise 62 implemented,
+60 partial and 16 pending. This remains an incomplete catalog/publication goal.
+
+The four modules provide administration hazards, actual-history likelihoods,
+explicit and moment-elicited priors, serial posterior sampling, regimen risks
+and allocation. The sampler distinguishes a genuinely impossible event time
+from numerical failure. Event hazards are summed in log space. Cumulative
+hazards use positive components on the falling segment, avoiding subtraction
+of nearly equal probabilities. Every regimen is evaluated independently of
+area ordering. The fit preserves dose/schedule axes in the risk summaries.
+
+The first assignment bypasses exclusion but still reports the actual safety
+mask. Masks are immutable booleans. Final selection requires treatment history;
+the caller is responsible for complete follow-up. Two documented no-skip
+conventions cover histories with non-dominating tried pairs. These conventions,
+tie handling and an optional starting-pair override are not native-equivalence
+claims.
+
+Validation used one numerical process at a time and one BLAS/OpenMP thread:
+
+- All seven focused tests passed in 3.97 seconds with warnings treated as
+  errors. Measured process elapsed time was 4.076 seconds, peak RSS 133.28 MiB
+  and zero process swaps.
+- Independent base-R integrations cover 24 triangular-hazard/time cases and
+  six actual variable-dose histories. Published prior values are checked
+  against separate moment calculations.
+- The reduced posterior uses two chains of 1,200 retained draws after 400
+  warmup iterations. Posterior log area, area, two-administration risk and
+  overdose probability agree with direct integration within the recorded
+  Monte Carlo tolerances. Each checked quantity has split R-hat below 1.05.
+  This reference does not establish convergence for every data set or prior.
+- Ruff and format checks passed on seven affected Python files. Mypy passed
+  for all four new source modules with `--follow-imports=silent`.
+- The wheel and source distribution built using cached Hatchling. Isolated
+  wheel imports confirmed all 11 public exports and exact module/catalog
+  bytes. Both documented examples ran; the posterior example used 1,043
+  likelihood calls and 27,165 administration/prediction work units.
+- Compact packaged checks verified strict safety boundaries, initial safety
+  reporting, all-unsafe stopping, empty final-analysis rejection, immutable
+  boolean masks, finite event log likelihood when ordinary hazards underflow,
+  and resource rejection before random-number consumption. This process took
+  2.152 seconds, peaked at 114.77 MiB and had zero process swaps. No native
+  binaries, archives or article PDFs are included in the wheel.
+
+No full-suite run, large simulation, dependency installation or CI change was
+performed. Full calendar simulation, operating-characteristic calibration,
+native input/report workflows and executable parity remain open. CiBolus is
+the next pending method, with a primary-paper lead recorded separately. The
+earlier GitHub write restriction remains unresolved; this checkpoint is local
+and no alternative publication transport was attempted.

@@ -1222,6 +1222,14 @@ allocation weights. Independent R integration checks the probability model and
 a reduced posterior. Prior calibration, full trial simulation and native
 workflow equivalence remain open.
 
+[Dose Schedule Finder](docs/dose-schedule.md) adds a time-to-toxicity model for
+choosing dose and administration schedule together. Triangular hazards account
+for each patient's actual administration times and dose changes. Approximate
+prior elicitation, bounded posterior fitting and safety-constrained nearest-target
+selection support study analysis. Independent R integration checks hazards,
+histories and a reduced posterior. Calendar simulation and native workflows
+remain open.
+
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
 outcomes. These include exact one-sample count tests, historical controls,
