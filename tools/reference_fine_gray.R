@@ -18,10 +18,18 @@ data <- data.frame(time=c(0, rep(1:12, each=3), 13, 14, 15),
   x2=round(cos(id*.9) - id/100, 6), group=rep(c("A","B","B","A"),10))
 write.csv(data, "tests/fixtures/fine-gray-input.csv", row.names=FALSE)
 metric_rows <- event_rows <- prediction_rows <- list()
-cases <- c("fixed_one", "fixed_groups", "mixed_groups", "time_only", "target_two")
+cases <- c("fixed_one", "fixed_groups", "mixed_groups", "time_only", "target_two",
+  "zero_censor")
 for (case in cases) {
   args <- list(ftime=data$time, fstatus=data$status, gtol=1e-10, maxiter=100)
-  if (case != "fixed_one") args$cengroup <- data$group
+  if (!(case %in% c("fixed_one", "zero_censor"))) args$cengroup <- data$group
+  if (case == "zero_censor") {
+    # Put target, competing and censor events at zero. A common positive time
+    # translation preserves this fixed-effect model and avoids the native
+    # approximate-left-limit wrapper's exact-zero defect.
+    args$ftime[2:4] <- 0
+    args$ftime <- args$ftime + 1
+  }
   if (case != "time_only") args$cov1 <- as.matrix(data[,c("x1","x2")])
   if (case == "mixed_groups") {
     args$cov2 <- as.matrix(data["x1"])
@@ -34,6 +42,7 @@ for (case in cases) {
   if (case == "target_two") args$failcode <- 2
   fit <- do.call(crr, args)
   stopifnot(fit$converged, all(is.finite(fit$coef)))
+  if (case == "zero_censor") fit$uftime <- fit$uftime - 1
   for (metric in c("coef", "score", "inf", "var", "invinf", "loglik", "loglik.null")) {
     a <- as.matrix(fit[[metric]])
     for (i in seq_len(nrow(a))) for (j in seq_len(ncol(a))) {
@@ -72,4 +81,4 @@ for (name in c("metric", "event", "prediction")) {
   write.csv(do.call(rbind,get(paste0(name,"_rows"))),
     paste0("tests/fixtures/fine-gray-",name,".csv"),row.names=FALSE)
 }
-cat("Verified five native Fine-Gray fits, sandwich covariance, residuals and CIFs.\n")
+cat("Verified six native Fine-Gray fits, sandwich covariance, residuals and CIFs.\n")
