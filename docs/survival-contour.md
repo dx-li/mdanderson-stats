@@ -1,8 +1,10 @@
 # SurvivalContour Cox surfaces
 
 `survival_cox_contour` fits an ordinary right-censored Cox model and predicts
-survival over time and one continuous covariate. This implements the first
-model family of [SurvivalContour](https://biostatistics.mdanderson.org/shinyapps/survivalContour/),
+survival over time and one continuous covariate. Its stratified counterpart,
+`survival_stratified_cox_contour`, fits common covariate effects with separate
+group baselines. These implement the right-censored Cox families of
+[SurvivalContour](https://biostatistics.mdanderson.org/shinyapps/survivalContour/),
 catalog entry 166. It returns the surface, pointwise confidence limits and
 curves at selected covariate quantiles. Plotting uses the existing optional
 `plot` extra.
@@ -75,10 +77,66 @@ This baseline differs from SURVAN's separate Kalbfleisch–Prentice estimator in
 `survan_baseline`. See the [implementation audit](../research/survival-contour-audit.md)
 for formulas and pinned source provenance.
 
+## Stratified Cox models
+
+Use `survival_stratified_cox_contour` when the baseline hazard differs between
+groups while the covariate effects are shared. Supply a parallel `strata`
+vector of nonempty strings or integers, with at most 100 strata. Labels retain
+first-seen order; missing,
+nonfinite, boolean and nested labels are rejected. Categorical covariates in
+`x` still require caller encoding, but stratum labels do not.
+
+```python
+from mdanderson_stats import survival_stratified_cox_contour, plot_survival_contour_2d
+
+# Small illustration: opposite covariate patterns with different follow-up times.
+grouped = survival_stratified_cox_contour(
+    time=[1, 2, 2, 4], event=[1, 0, 1, 0], x=[0, 1, 1, 0],
+    continuous_column=0, strata=["early", "early", "late", "late"],
+)
+assert grouped.stratum_labels == ("early", "late")
+early = grouped.for_stratum("early")
+late = grouped.for_stratum("late")
+assert early.fit is late.fit
+assert list(early.times) == [0, 1, 2]
+assert list(late.times) == [0, 2, 4]
+ax = plot_survival_contour_2d(late)
+```
+
+`fit` contains the shared coefficients, covariance and inference. `contours`
+contains one ordinary `SurvivalCoxContour` per label, so both existing plotters
+work on each group. The empirical covariate grid, quantile probabilities and
+mean/explicit adjustment profile use the whole training sample. Only the risk
+sets, baseline estimates and default observed-time grids differ by stratum.
+A supplied `times` vector instead evaluates every group on the same times.
+
+Default group timelines include zero if absent. If an event occurs at zero,
+the value at zero is post-event, following the right-continuous prediction
+contract. A group with no events has estimated survival and pointwise bounds
+one; it does not provide evidence that its true event risk is zero. The other
+groups must identify the shared coefficients. A covariate constant within
+each group cannot be estimated from between-group differences alone.
+
+The original author helper was checked unchanged and repeats the modal group's
+predictions across groups with the standard `strata(group)` formula. Its 3D
+helper can also return mismatched time and surface dimensions. Python uses the
+correctly specified separate group predictions, verified directly against R
+`survfit`. The [stratified audit](../research/survival-stratified-audit.md)
+records the source versions and executable discrepancy evidence.
+
+Both tie methods, mean and explicit profiles, default and common time grids,
+and five covariate-quantile curves are checked against direct R references.
+The 780 surface rows and 780 quantile rows include a group without events and
+an event at time zero. Probability and confidence-limit differences are below
+`7.2e-11`. Additional checks cover joint separation, within-group offsets of
+`1e8`, unit and row-order invariance, mixed string/integer labels, and the
+combined memory budget. The root numerical check peaked at 118.2 MiB; the
+three-group plot peaked at 157.3 MiB, with zero reported process swaps.
+
 ## Coverage
 
-This interface covers ordinary, unweighted, right-censored Cox models with
-static numeric covariates. Stratified and interval-censored Cox models,
+These interfaces cover ordinary and stratified, unweighted, right-censored Cox
+models with static numeric covariates. Interval-censored Cox models,
 parametric/spline models, Fine–Gray cumulative incidence, forests, neural
 models and the full native app workflow remain open. Entry 166 stays partial.
 
@@ -92,6 +150,8 @@ design entries. Main grids contain 2..2,000 values; quantile summaries contain
 1..20 distinct probabilities strictly between zero and one. A combined
 two-million-cell budget covers the five main surfaces, five quantile surfaces,
 profile matrices and grid vectors. Oversized output is rejected before fitting.
+For stratified predictions this budget applies to all groups combined, not to
+each group separately.
 These are allocation bounds, not guarantees about fitting time for large designs.
 
 Risk sets are accumulated with separately scaled event and censor weights.

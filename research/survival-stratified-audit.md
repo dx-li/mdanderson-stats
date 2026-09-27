@@ -76,3 +76,45 @@ are `[-0.105603215946071, 0.630305239381879]`; Breslow coefficients are
 `[-0.119793462266714, 0.624593511301248]`. Prediction errors are converted from
 `summary.survfit`'s SE(S) back to SE(log S) by division by survival, which is
 positive for this fixture.
+
+## Integrated implementation and verification
+
+Luna commit `efa3889` was integrated as `bbfd4dc`. `survan_cox` now accepts
+optional string/integer strata and retains their first-seen labels on the fit.
+`survival_stratified_cox_contour` returns `SurvivalStratifiedCoxContour`, with a
+shared fit and separate `SurvivalCoxContour` results accessible by label. Both
+existing plotters work on individual groups. The ordinary contour builder was
+factored into a private helper, without exposing internal fit overrides in the
+public interface.
+
+The likelihood aggregates within-stratum contributions and centers each part
+to reduce cancellation from group-specific offsets. One sparse LP uses shared
+coefficient columns and separate risk-set variables. Array blocks are retained
+instead of expanding sparse entries into Python scalar lists. Information
+matrices are summed sequentially. Up to 100 groups are allowed within the
+existing row/design limits; the two-million-cell output budget sums actual
+per-group timeline sizes and covers all groups before fitting.
+
+The worker's nine focused ordinary/stratified Cox tests, targeted Ruff and mypy
+checks passed. Root independently ran all direct-R comparisons with warnings
+as errors: maximum errors were `7.1052e-11` for survival, `6.2879e-11` for
+confidence limits, `3.4305e-10` for cumulative hazards and `3.7413e-10` for
+SE(log survival). Fits and covariance, all 780 surface rows and all 780 quantile
+rows agreed at their specified tolerances. The same check verified unit scaling
+by `1e100`/`1e-100`, reversed row/stratum order, shared fit identity, no-event
+groups, and post-event zero-time values. It took 0.178 seconds after imports,
+peaked at 118.1875 MiB and reported zero swaps.
+
+Additional root checks verified aggregate preflight before a patched fitter
+could run, acceptance of 100 small strata, and preservation of distinct labels
+`1` and `"1"`. A scalar string was incorrectly accepted as a character sequence;
+root reproduced it, added a focused regression and rejected scalar strings and
+bytes at the input boundary. The three affected stratified tests then passed
+in 1.34 seconds. No broad suite was repeated.
+
+The reference generator was tightened to assert equality of the third native
+3D group as well, then rerun successfully; fixture values were unchanged.
+Two group contours and the third group's flat 3D surface were rendered and
+visually inspected. Export margins were adjusted to retain the 3D axis labels.
+The final rendering peaked at 157.25 MiB with zero swaps. No dependency or CI
+configuration was added, and no worker remains active.

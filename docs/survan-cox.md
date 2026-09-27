@@ -23,6 +23,15 @@ censoring. A one-dimensional x means a single covariate, otherwise use an
 observations-by-covariates matrix. Censors at an event time remain in its risk
 set. Only exactly equal times are tied. Covariates are static throughout follow-up.
 
+Pass `strata=labels` to fit a stratified Cox model with common coefficients
+and separate risk sets. Stratum labels are strings or integers in a matching
+one-dimensional vector, with at most 100 distinct groups. First-seen order is
+retained. The returned
+`strata_labels` records the groups (empty for an ordinary fit). The model sums
+within-stratum likelihoods instead of estimating separate coefficients for
+each group. A stratum without events is allowed when the other groups identify
+the coefficients. A covariate varying only between strata is not identifiable.
+
 The result exposes coefficients in input column order, information covariance,
 standard errors, one- and two-sided coefficient p-values, negative log likelihood,
 null negative log likelihood, likelihood-ratio statistic, df, p-value and Newton
@@ -36,6 +45,12 @@ model-based information and asymptotic chi-square/normal approximations.
 covariate means. Differences between two returned values are log hazard ratios.
 This avoids requiring finite exponentiated hazard ratios. Returned arrays are
 immutable.
+
+For stratified fits these log hazards describe covariate effects relative to
+the global training means. They do not include the different baseline hazards,
+so they are not absolute hazard comparisons between strata. Use the
+[stratified contour workflow](survival-contour.md#stratified-cox-models) for
+stratum-specific survival predictions.
 
 ## Likelihood and numerical treatment
 
@@ -70,9 +85,14 @@ if it cannot converge within 100 iterations. Numerically singular information,
 failed line searches/LP checks, or unrepresentable coefficients and covariance
 raise errors. Solver paths differ from the original David Gay optimizer.
 
+For stratified models the separation constraints share the coefficient variables
+but have separate risk-set variables for each stratum. Separation is checked
+jointly: opposite directions of separation in individual groups can yield a
+finite shared fit.
+
 Limits are 100,000 records, 1..100 covariates and 2,000,000 design entries. There
-are no individual case weights, delayed entry, stratified baseline hazards or
-time-varying covariates in this interface.
+are no individual case weights, delayed entry or time-varying covariates in
+this interface.
 
 ## Validation and baseline workflow
 

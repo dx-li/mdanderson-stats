@@ -168,6 +168,8 @@ def survan_cox(
 
 
 def _encode_strata(values: ArrayLike) -> tuple[np.ndarray, tuple[str | int, ...]]:
+    if isinstance(values, (str, bytes)):
+        raise ValueError("strata must be a label sequence, not a scalar string")
     if isinstance(values, np.ndarray):
         if values.ndim != 1 or values.size > 100_000:
             raise ValueError("strata must be a one-dimensional vector of at most 100,000 labels")

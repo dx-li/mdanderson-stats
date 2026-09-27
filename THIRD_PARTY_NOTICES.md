@@ -920,6 +920,12 @@ not redistributed; the repository contains a reference harness and generated
 numeric fixtures. See `docs/survival-contour.md` and the source audit for
 model scope, prediction conventions and verification.
 
+The stratified extension also uses unchanged `coxStrataContour.R` and
+`coxStrata3DContour.R` from that revision to audit native behavior. Corrected
+stratum-specific predictions are checked directly against R `survival` 3.6-4;
+the original helper's repeated-group and mismatched-dimension defects are
+recorded in `research/survival-stratified-audit.md`.
+
 ## Bayesian success calibration
 
 `success_calibration.py` is an independent implementation of the mathematical

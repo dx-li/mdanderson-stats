@@ -54,3 +54,5 @@ def test_stratified_cox_is_stable_to_large_stratum_specific_offsets():
     assert_allclose(fit.covariance, [[2.0]], atol=1e-8)
     with pytest.raises(ValueError, match="labels"):
         survan_cox(time, event, design, strata=["A", np.nan, "B", "B"])
+    with pytest.raises(ValueError, match="sequence"):
+        survan_cox(time, event, design, strata="AABB")

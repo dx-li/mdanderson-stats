@@ -1264,11 +1264,13 @@ Fisher table and duplicate-row conventions, reports adjusted p-values and
 contributing genes, and ranks hard/soft labels. GSEA, bundled marker databases
 and gene-ID conversion remain open.
 
-[SurvivalContour Cox surfaces](docs/survival-contour.md) fits Efron or Breslow
-models for right-censored data and returns survival surfaces, pointwise
+[SurvivalContour Cox surfaces](docs/survival-contour.md) fits ordinary or
+stratified Efron/Breslow models for right-censored data and returns survival
+surfaces, pointwise
 confidence limits and curves at selected covariate quantiles. Numeric adjustment
 profiles and optional two-/three-dimensional plots support exploration of a
-continuous predictor. Other SurvivalContour model families remain open.
+continuous predictor. Stratified models share coefficients and estimate separate
+baseline hazards for each group. Other SurvivalContour model families remain open.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson

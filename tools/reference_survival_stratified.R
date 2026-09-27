@@ -46,7 +46,8 @@ for(ties in c("efron","breslow")) {
   native_3d <- native$coxStrata3DContour(data,fit,"x1",nCovEval=5,CI3D=TRUE)
   stopifnot(identical(native_2d[[1]],native_2d[[2]]),
     identical(native_2d[[1]],native_2d[[3]]),
-    identical(native_3d$prediction$surv[[1]],native_3d$prediction$surv[[2]]))
+    identical(native_3d$prediction$surv[[1]],native_3d$prediction$surv[[2]]),
+    identical(native_3d$prediction$surv[[1]],native_3d$prediction$surv[[3]]))
   native_rows[[length(native_rows)+1L]] <- data.frame(ties=ties,
     native_xlevel_name=names(fit$xlevels)[1],
     all_native_2d_surfaces_equal=TRUE,all_native_3d_surfaces_equal=TRUE,
