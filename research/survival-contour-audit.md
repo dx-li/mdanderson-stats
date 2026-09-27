@@ -129,3 +129,26 @@ The root's final preflight edit passed its targeted check and Ruff after line
 formatting. No full suite, large simulation or package installation was run.
 Catalog entry 166 advances to **partial**, with all other model families still
 listed explicitly. Totals are now 62 implemented, 66 partial and 10 pending.
+
+## Package checkpoint and next work
+
+The wheel and source archive built with the already available Hatch backend.
+All 465 Python module files in both distributions matched the working source.
+The wheel catalog and every notice file matched; the source archive also
+contained the guide, audit, original-R harness and four numeric fixtures.
+An isolated interpreter imported directly from the wheel, ran the public guide's
+plotting example and reproduced the first original-R survival value. It peaked
+at 145.78125 MiB with zero reported swaps. No environment installation was used.
+
+Public exposure and allocation preflight are committed in `a7e043c`; this audit
+is the final checkpoint record. Final artifacts are rebuilt after recording it.
+The next method family is stratified Cox, with shared coefficients and separate
+risk sets/baselines; pinned source details are in
+[remaining source leads](remaining-source-leads.md). No worker or numerical job
+is left running. This turn made implementation progress, so the overall goal
+remains active and is not marked complete or blocked.
+
+GitHub publication remains blocked by the previous automatic approval review
+rejection requiring approval that this environment cannot obtain. No GitHub
+write or alternate transport was retried. The completed checkpoint is retained
+locally for eventual authorized publication.
