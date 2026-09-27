@@ -86,12 +86,12 @@ one minus this quantity is subdistribution survival, not all-cause survival.
 
 `tools/reference_fine_gray.R` checks exact source MD5 hashes and generates four
 CSV fixtures. Forty deterministic records include tied target, competing and
-censoring times, two censoring groups, and a target event at zero. Five models
+censoring times, two censoring groups, and a target event at zero. Six models
 cover fixed effects with one or two censoring distributions, fixed plus time
 effects, time effects alone, and selection of cause two. References retain
 coefficients, score, information, inverse information, sandwich covariance,
 fitted/null pseudo-log-likelihood, baseline increments, score residuals and
-1,020 incidence values across mean/explicit profiles and native/custom times.
+1,220 incidence values across mean/explicit profiles and native/custom times.
 
 An initial native `gtol=1e-12` attempt hit line-search roundoff for the mixed
 model despite a maximum score around 1.9e-10. The final harness uses `1e-10`
@@ -99,3 +99,14 @@ and asserts convergence; all five fits completed in 0.75 seconds. Its prediction
 calls use one profile at a time: the native time-effects-only multiple-profile
 path references an absent `cov1` argument. That wrapper defect is avoided in
 the reference and need not constrain Python's matrix prediction interface.
+
+A sixth case places target, competing and censor events together at zero.
+The native R wrapper uses a relative epsilon to approximate G(t-), but this
+does not move t=0 to its left. Its G(0) value can misweight earlier competing
+events at later target times. To obtain a correct native reference, all times
+are translated by +1 for fitting, and returned event times by -1. This fixed-
+effect model is invariant to common time translation. The unshifted native
+coefficients `[-0.2023311730, 0.3371024821]` differ from the correctly translated
+`[-0.2039769254, 0.3359332899]`. Python must use exact left limits, including
+G(0-)=1. The six-case reference generator and discrepancy probe ran in 0.79
+seconds. The final fixtures contain 79 event rows and 125 scalar fit metrics.
