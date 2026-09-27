@@ -5,8 +5,10 @@ is **partially implemented**: single-agent local BOIN boundaries, cohort decisio
 overdose elimination, final MTD selection, fixed-cohort simulation and accelerated titration are available.
 The 3+3 comparison includes both sample-size matching options.
 Direct boundary-to-probability inversion and English/Chinese statistical protocol
-text are available; animation and the original HTML/Word report formats remain pending. Desktop entry 99
-and BOIN combination/time-to-event variants are separate, unaudited entries.
+text are available; animation and the original HTML/Word report formats remain pending.
+[Combination BOIN](boin-combination.md) and [TITE-BOIN](tite-boin.md) have separate
+implementations and audits. The [desktop coverage map](boin-desktop.md) links
+entry 99 to these shared methods and identifies the remaining desktop workflows.
 
 The application was inspected at version **3.0.20.0**, updated September 4, 2026.
 Its technical PDFs and the [BOIN R-package paper](https://doi.org/10.18637/jss.v094.i13)

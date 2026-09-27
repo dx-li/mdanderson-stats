@@ -1,0 +1,45 @@
+{
+  "catalog_ids": [
+    99,
+    129
+  ],
+  "audited_at_utc": "2026-09-27",
+  "desktop_version": "1.1.0",
+  "desktop_modified": "2021-12-22",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99",
+      "role": "Desktop 1.1.0 capability specification; embedded help and installer behavior are not verified."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/Guide.pdf",
+      "role": "Rolling Six comparison/report workflow and STFT example; web-app contract, not desktop executable output."
+    },
+    {
+      "url": "https://odin.mdacc.tmc.edu/~yyuan/Software/BOIN/BOIN2.4_manual.pdf",
+      "role": "Historical single-agent, combination and waterfall R interfaces."
+    },
+    {
+      "url": "https://doi.org/10.18637/jss.v094.i13",
+      "role": "BOIN package method/reference shared with the existing single-agent and combination ports."
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/BOIN_2.7.2.tar.gz",
+      "sha256": "be643939639ccc70dd236712047056e051f7aa019a7230d09caf1f646dd0060e",
+      "role": "Previously acquired numerical reference source; inspected for shared contracts and outstanding waterfall workflow."
+    }
+  ],
+  "local_reference_source_sha256": {
+    "get.boundary.R": "cb1f46a26bd9c94afa5594db582a748c65795d461bfaab1aa0dd2604306eb7d7",
+    "get.oc.comb.R": "0bcd01f550cece9b7caae5b6070c259475cd6298f46d8d0d5b06f5b41a610814",
+    "next.subtrial.R": "d07c83883b871c7b22dbb0ab4984d4c7b614235e966125d273e4b8b30cbfe67f",
+    "select.mtd.comb.R": "fb4d5b25a6ba8bcbff458f2c87cb47c6ee7a77dbb5df2ff392dc31f86a08d1e7"
+  },
+  "existing_reference_records": [
+    "docs/boin-sources.json",
+    "docs/tite-boin-sources.json",
+    "docs/rolling-six-sources.json",
+    "docs/boin-combination-source.md"
+  ],
+  "limitations": "Shared method implementations and explicit Python simulation/report conventions; desktop installer, embedded help, native project/report formats and random/scheduling equivalence are not verified."
+}

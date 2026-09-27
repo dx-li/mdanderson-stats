@@ -196,6 +196,12 @@ from .boin_combination import BOINCombDecision, BOINCombDesign, BOINCombSelectio
 from .boin_combination_simulation import BOINCombinationSimulation, simulate_boin_combination
 from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
+from .boin_time_comparison import (
+    OperatingCharacteristicsSummary,
+    TITEBOINRollingSixComparison,
+    compare_tite_boin_rolling_six,
+    tite_boin_rolling_six_report,
+)
 from .boin_waterfall import BOINWaterfall, WaterfallPlan, next_subtrial
 from .bop2_binary import (
     BOP2BinaryOptimization,
@@ -1762,6 +1768,10 @@ __all__ = [
     "BOINSelection",
     "BOINSimulation",
     "simulate_boin",
+    "OperatingCharacteristicsSummary",
+    "TITEBOINRollingSixComparison",
+    "compare_tite_boin_rolling_six",
+    "tite_boin_rolling_six_report",
     "BOIN12Decision",
     "BOIN12Design",
     "BOIN12Posterior",

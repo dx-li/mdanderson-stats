@@ -112,8 +112,10 @@ The replay additionally retains individual enrollment/event times and decisions.
 
 To compare with TITE-BOIN, run both designs under the same toxicity, timing and
 arrival scenario and compare selection, allocation, duration and suspension time.
-Each design's enrollment rules and sample size remain distinct. A dedicated
-comparison report and native-app equivalence checks remain pending.
+Each design's enrollment rules and sample size remain distinct.
+`compare_tite_boin_rolling_six` now coordinates these simulations and provides
+[numerical summaries and a Markdown report](boin-time-comparison.md).
+Native-app scheduler and report equivalence remain unverified.
 
 Validation covers all 84 feasible single-dose count states through six patients,
 plus downward completion, exclusions, terminal interpretations, the one-pending

@@ -1,5 +1,9 @@
 # Next catalog reconciliation: BOIN desktop
 
+Historical scouting notes. See [boin-desktop-audit.md](boin-desktop-audit.md) for
+the current reconciliation and [boin-waterfall-next-audit.md](boin-waterfall-next-audit.md)
+for the next missing simulation method.
+
 Entry 99 remains pending. Its [official page](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99)
 is readable and identifies version 1.1.0, modified December 22, 2021. It covers
 single-agent BOIN, late-toxicity TITE-BOIN, combination single-MTD and combination

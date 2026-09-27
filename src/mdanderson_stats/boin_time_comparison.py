@@ -351,6 +351,11 @@ def tite_boin_rolling_six_report(
         f"deescalate_at_two_of_six={comparison.tite_boin_design.deescalate_at_two_of_six}, "
         f"bound_mtd={comparison.tite_boin_design.bound_mtd}; Rolling Six "
         f"require_complete_before_escalation={comparison.rolling_six_design.require_complete_before_escalation}.",
+        f"BOIN alternatives: safe={comparison.tite_boin_design.safe_probability!r}, "
+        f"toxic={comparison.tite_boin_design.toxic_probability!r}; "
+        f"elimination probability={comparison.tite_boin_design.elimination_probability!r}, "
+        f"safety offset={comparison.tite_boin_design.safety_offset!r}, "
+        f"precision stop={comparison.tite_boin_design.early_stop_patients!r}.",
         "",
         "The designs use independent outcomes and retain distinct conduct rules; no sample-size "
         "matching is applied. TITE-BOIN and a Rolling Six highest-dose recommendation are not "

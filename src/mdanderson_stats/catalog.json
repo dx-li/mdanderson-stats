@@ -3242,9 +3242,20 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Shared single-agent BOIN conduct, safety, isotonic selection, titration and 3+3 comparison; documented desktop capability map in docs/boin-desktop.md",
+        "TITE-BOIN and Rolling Six calendar simulations with common-scenario comparison, allocation/toxicity/duration summaries, Monte Carlo errors and Markdown reporting",
+        "Ordinary combination simulation, final contour selection and interactive waterfall subtrial planning",
+        "Standardized or informative-prior toxicity follow-up weights and single-agent English/Chinese statistical protocol text",
+        "Remaining: full waterfall simulation, combination titration/run-in, TITE/combination protocols, native Word/HTML and saved-project formats; desktop executable equivalence is not verified"
+      ],
+      "validation": [
+        "Capability specification from desktop 1.1.0 and TITE-BOIN guide; docs/boin-desktop-sources.json links shared method source records",
+        "Existing published and original-R BOIN/combination references, published TITE-BOIN thresholds, and exhaustive published Rolling Six decision-table states",
+        "Focused comparison safety/highest-dose/reproducibility/preflight checks; independent aggregation/MCSE, 1e100 time rescaling and finite 1e308 duration summaries; tests/test_boin_time_comparison.py",
+        "Documented STFT example yields 1.7; comparison usage executed with bounded serial simulations"
+      ]
     },
     {
       "id": 100,
@@ -3701,7 +3712,7 @@
         "Broadcast single-mean imputation and coherent STFT escalation/de-escalation thresholds using the published weak prior with mean target/2",
         "Interim conduct with informative trimester weights, enrolled-count overdose control, sticky exclusions, current completion/minimum-follow-up suspension rules and precision stopping",
         "Final complete-data MTD selection through BOINDesign.select_mtd",
-        "Dedicated Rolling 6 comparison reports, flowcharts and integrated reports remain pending",
+        "Common-scenario TITE-BOIN/Rolling Six simulations with preserved per-trial results/statuses, numerical summaries and Markdown comparison report; flowcharts and integrated protocol exports remain pending",
         "Calendar replay and simulation with outcome/minimum-follow-up accrual releases, final complete-data selection, fixed/exponential arrivals and calibrated uniform/Weibull/log-logistic timing",
         "Optional complete-outcome 1/3 stay and pending-inclusive 2/6 de-escalation, including completion-suspension override, available in conduct/replay/simulation",
         "Rolling Six comparator conduct, calendar replay and calibrated simulation, with explicit strict-completion variant and terminal MTD/highest-dose interpretation"
@@ -3711,7 +3722,8 @@
         "docs/tite-boin.md",
         "Deterministic follow-up release before next outcome, intervening toxicity with causal history, time scaling, toxicity extremes and existing shared TITE-Keyboard calendar/timing checks",
         "Live app 2.5.4.0 decision-row capture for both optional 3+3 modifications, guide screenshot, complete-data modified-BOIN reduction, pending counts and safety precedence",
-        "Published Rolling Six decision-table states, downward completion, six-patient capacity, deterministic calendars and shared scheduling checks; docs/rolling-six.md"
+        "Published Rolling Six decision-table states, downward completion, six-patient capacity, deterministic calendars and shared scheduling checks; docs/rolling-six.md",
+        "Bounded comparison safety/highest-dose cases, seed replay, RNG-preserving preflight, independent aggregation/MCSE, time-unit rescaling and overflow-safe duration means; docs/boin-time-comparison.md"
       ]
     },
     {
