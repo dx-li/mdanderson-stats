@@ -1,0 +1,7 @@
+"case","events","earlystop","extrasafe","start","bound","cohorts","patients","toxicities","eliminated","selected_a","selected_b","is_escalation","total_patients","total_toxicities"
+"safe_staircase","0;0;0;0",12,FALSE,1,FALSE,4,"3;0;0;3;3;3","0;0;0;0;0;0","0;0;0;0;0;0",2,3,1,12,0
+"lowest_dose_safety","3;0;0;0",12,FALSE,1,FALSE,1,"3;0;0;0;0;0","3;0;0;0;0;0","1;0;0;1;1;1",0,0,0,3,3
+"precision_at_retained_dose","0;1;1;1;1;1",9,FALSE,1,FALSE,4,"3;0;0;9;0;0","0;0;0;3;0;0","0;0;0;0;0;0",2,1,0,12,3
+"precision_after_downward_move","0;1;0;2;0;0",6,FALSE,1,FALSE,4,"3;0;0;6;3;0","0;0;0;1;2;0","0;0;0;0;0;0",2,1,1,12,3
+"subtrial_extra_safe","2;0;0;0",12,TRUE,1,FALSE,1,"3;0;0;0;0;0","2;0;0;0;0;0","1;0;0;1;1;1",0,0,0,3,2
+"start_interior_then_deescalate","2;0;0;1;1;1",12,FALSE,3,FALSE,5,"0;0;0;3;12;0","0;0;0;0;4;0","0;0;0;0;0;0",2,2,0,15,4

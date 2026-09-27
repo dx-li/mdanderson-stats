@@ -1,0 +1,7 @@
+"case","events","budgets","consumed_cohorts","subtrials","native_patients","native_toxicities","native_selected","actual_total_patients","actual_total_toxicities","native_total_patients","native_total_toxicities"
+"safe_two_rows","0;0;0;0;0;0","4;2",6,2,"3;0;6;3;3;3","0;0;0;0;0;0","0;0;1;0;0;1",18,0,18,0
+"failed_first_subtrial","3;0;0;0;0;0","4;2",1,1,"0;0;0;0;0;0","0;0;0;0;0;0","0;0;0;0;0;0",3,3,0,0
+"failed_later_subtrial","0;0;0;0;3;3","4;2",6,2,"3;0;0;3;3;3","0;0;0;0;0;0","0;0;1;0;0;1",18,6,12,0
+"special_same_row","0;3;0;0;0;0","4;2",6,2,"9;3;3;3;0;0","0;0;0;3;0;0","0;0;1;0;0;0",18,3,18,3
+"special_same_row_fallback","0;3;0;0;3;0","4;2",5,2,"9;3;0;3;0;0","0;3;0;3;0;0","1;0;0;0;0;0",15,6,15,6
+"earlier_row_without_escalation","1;1;1;1;1;1","4;2",4,1,"12;0;0;0;0;0","4;0;0;0;0;0","1;0;0;0;0;0",12,4,12,4
