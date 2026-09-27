@@ -1,5 +1,25 @@
 # Third-party notices
 
+## Pinnacle wavelet processing
+
+`pinnacle_wavelet.py` adapts the periodic redundant wavelet transform,
+Daubechies filter construction and hard-thresholding conventions of the
+Rice Wavelet Toolbox 2.4, with a NumPy implementation and explicit resource
+bounds. Original contributors include Markus Lang, Ramesh Gopinath,
+Jan Erik Odegard and Haitao Guo. This adaptation is maintained independently.
+
+This product includes software developed by Rice University, Houston, Texas
+and its contributors. The complete original copyright, conditions and disclaimer
+are preserved in [notices/rice-wavelet-LICENSE.txt](notices/rice-wavelet-LICENSE.txt).
+The original transform C source is used only for local reference calculations;
+it is not included in the package. Reference provenance is recorded in
+[research/pinnacle-audit.md](research/pinnacle-audit.md).
+
+The surrounding Pinnacle image-analysis methods follow the published algorithm
+and official manual. No Pinnacle executable or application source is bundled.
+The manual identifies US patent 8,031,925; this project makes no representation
+about that patent's status or scope.
+
 ## RANGE2 and KWRANGE
 
 The optional legacy grouping procedure in `mdanderson_stats/ranges.py` is a
