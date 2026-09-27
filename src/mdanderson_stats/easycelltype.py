@@ -251,7 +251,7 @@ def easycelltype_fisher(
 def easycelltype_labels(
     result: EasyCellTypeFisherResult, *, top_n: int = 5
 ) -> tuple[EasyCellTypeLabel, ...]:
-    """Select one hard and up to ``top_n`` soft labels per cluster.
+    """Select up to ``top_n`` labels per cluster, including one hard label.
 
     ``top_n`` is the total number of rows, including the hard label, and is
     bounded by five as in the source. Ordering is adjusted p-value ascending,
@@ -261,7 +261,7 @@ def easycelltype_labels(
     if not isinstance(result, EasyCellTypeFisherResult):
         raise ValueError("result must be an EasyCellTypeFisherResult")
     if isinstance(top_n, (bool, np.bool_)) or not isinstance(top_n, (int, np.integer)):
-        raise ValueError("top_n must be a nonnegative integer")
+        raise ValueError("top_n must be an integer from 1 through 5")
     if not 1 <= top_n <= 5:
         raise ValueError("top_n must be an integer from 1 through 5")
     labels: list[EasyCellTypeLabel] = []

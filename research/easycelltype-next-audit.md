@@ -84,3 +84,44 @@ query size and matched-score mean, but overlap cardinality remains unique.
 The new Python interface will reject missing/nonfinite inputs instead of
 silently dropping rows, and retain untested rows for inspection. The source
 wrapper drops such result rows. These differences must be documented explicitly.
+
+## Integrated implementation and verification
+
+Luna committed `85aeb52`, integrated as `a3720d5`. The new
+`easycelltype_fisher` and `easycelltype_labels` APIs expose immutable cluster,
+test and label records. Root added public exports and the
+[usage guide](../docs/easycelltype.md). Entry 159 moves from pending to partial:
+the catalog now has 62 implemented, 65 partial and 11 pending entries.
+GSEA, bundled databases, metadata filters, gene-ID conversion and native plots
+remain open.
+
+Review corrected implicit identifier coercion, avoided repeated full query
+scans for every type and preserved contributing-gene order within each cluster.
+Per-gene score summaries retain duplicate-row weights and scale only the
+matched summaries; an unrelated `1e308` score no longer erases matched
+`1e-100` values. Input/result/retained-ID limits bound memory before large
+outputs are built. One Luna worker was active, and numerical jobs were serial
+with one BLAS/OpenMP thread.
+
+The worker passed three focused tests in 1.16 seconds, all nine original-R
+cases, Ruff formatting/lint, targeted mypy and diff checks. Root independently
+compared the nine R cases and recomputed all nineteen tested tails with exact
+integer combinations and rational arithmetic, matching within `2e-12` relative
+tolerance even at the smallest tail. Separate checks covered multicluster
+contributing-ID order, finite means at `1e308`, exact cancellation, empty input,
+missing/nested identifiers and excessive result dimensions. The root check took
+0.008 seconds after import, peaked at 113.64 MiB and recorded zero swaps.
+
+A rebuilt wheel was imported in an isolated interpreter with warnings as errors.
+All six EasyCellType exports and the documented example passed; changed module,
+catalog and notice bytes matched source. The source archive contains the new
+guides and reference fixtures and excludes raw downloads and environments.
+This check took 0.135 seconds after import, peaked at 117.55 MiB and recorded
+zero swaps. No full suite, large simulation, CI expansion or installation was
+performed. Numerical checks target the source contract and meaningful edge cases.
+
+The next uncovered-method lead is recorded in
+[survival-contour-next-audit.md](survival-contour-next-audit.md). The full
+catalog/publication goal remains active. GitHub publication is still blocked:
+automatic approval review rejected the write and required approval is unavailable
+under this session's permissions. No alternate write transport was attempted.

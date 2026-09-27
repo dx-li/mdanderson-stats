@@ -71,3 +71,14 @@ stopping, movement and the destination-dose precision rule. Full waterfall
 implementation is now assigned to the same single Luna worker. No publication
 is claimed: the prior automatic approval review rejected the GitHub write,
 and this session does not permit the required approval.
+
+## Subsequent integration
+
+The complete no-titration waterfall workflow has since been integrated and
+validated; see [boin-waterfall-workflow-audit.md](boin-waterfall-workflow-audit.md)
+for source defects, Python contracts and resource measurements. Four new
+comparison/desktop/waterfall examples passed in an isolated wheel. The retired
+BOP2 desktop entry is also mapped to its documented online successor's existing
+Python methods, without claiming old executable parity. EasyCellType's Fisher
+branch subsequently added another partial entry; its source audit carries the
+current catalog totals.

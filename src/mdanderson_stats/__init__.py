@@ -459,6 +459,14 @@ from .dose_schedule_decision import DoseScheduleDecision, dose_schedule_decision
 from .dose_schedule_fit import DoseScheduleFit, fit_dose_schedule
 from .dose_schedule_prior import DoseSchedulePrior, dose_schedule_moment_prior
 from .drdist import drdist
+from .easycelltype import (
+    EasyCellTypeCluster,
+    EasyCellTypeFisherResult,
+    EasyCellTypeLabel,
+    EasyCellTypeTest,
+    easycelltype_fisher,
+    easycelltype_labels,
+)
 from .efftox_decision import EffToxContour, EffToxDecision, efftox_decision
 from .efftox_model import (
     EffToxFit,
@@ -1062,6 +1070,12 @@ from .windows import (
 )
 
 __all__ = [
+    "EasyCellTypeCluster",
+    "EasyCellTypeFisherResult",
+    "EasyCellTypeLabel",
+    "EasyCellTypeTest",
+    "easycelltype_fisher",
+    "easycelltype_labels",
     "STPLANHistoricalAllocationPlan",
     "stplan_historical_allocation_plan",
     "STPLANPiecewiseModel",

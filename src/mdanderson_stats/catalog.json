@@ -4351,12 +4351,24 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/EasyCellType/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/EasyCellType/",
-      "references": [],
+      "references": [
+        "https://academic.oup.com/bioinformaticsadvances/article/3/1/vbad029/7085606",
+        "https://github.com/rx-li/EasyCellType/tree/e85e8187c540f66994b5ca12fe95f5d9eb95f1f5"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Source-compatible modified greater-tail Fisher annotation from explicit marker lists and caller-supplied cell-type associations; preserves reference/query row multiplicity and unique gene overlap.",
+        "Per-cluster BH adjustment over tested types, stable matched-score means, ordered contributing genes, explicit untested records and up to five labels including one hard label.",
+        "Bounded input/output memory, scalar identifier validation and indexed per-cluster overlap summaries; docs/easycelltype.md.",
+        "Remaining: GSEA, bundled CellMarker/Clustermole/PanglaoDB references, species/tissue metadata, gene-ID conversion, native plots and app workflow parity."
+      ],
+      "validation": [
+        "Nine original-R author-source cases, including duplicates, ties, top-five ranking, strict enrichment gate, empty overlap and a 1.84e-31 tail; tools/reference_easycelltype.R.",
+        "Nineteen independent exact-rational conditional-tail sums agree; root checks include multicluster ID order, finite 1e308 score means, missing/nested input rejection and resource bounds.",
+        "Three focused behavior checks and isolated wheel example; tests/test_easycelltype.py and research/easycelltype-next-audit.md."
+      ]
     },
     {
       "id": 160,

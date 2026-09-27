@@ -1258,6 +1258,12 @@ references. Native image/project formats and application workflow equivalence
 remain open. This product includes software developed by Rice University,
 Houston, Texas and its contributors; see the [preserved license](notices/rice-wavelet-LICENSE.txt).
 
+[EasyCellType Fisher annotation](docs/easycelltype.md) accepts marker lists and
+caller-supplied cell-type associations. It preserves the author's modified
+Fisher table and duplicate-row conventions, reports adjusted p-values and
+contributing genes, and ranks hard/soft labels. GSEA, bundled marker databases
+and gene-ID conversion remain open.
+
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
 outcomes. These include exact one-sample count tests, historical controls,
