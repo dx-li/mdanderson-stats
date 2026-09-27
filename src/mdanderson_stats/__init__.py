@@ -640,6 +640,22 @@ from .phase2_predictive import (
     phase2_predictive_design,
 )
 from .phase2delay import Phase2DelayResult, phase2_delay_monitor
+from .pinnacle import (
+    PinnaclePeaks,
+    PinnacleQuantification,
+    pinnacle_detect_peaks,
+    pinnacle_mean_image,
+    pinnacle_quantify,
+)
+from .pinnacle_pipeline import PinnacleAnalysis, run_pinnacle
+from .pinnacle_wavelet import (
+    PinnacleDenoiseResult,
+    PinnacleWaveletTransform,
+    pinnacle_daubechies_filter,
+    pinnacle_denoise,
+    pinnacle_irdwt,
+    pinnacle_rdwt,
+)
 from .plbarpo_control import (
     PLBarpoControlMonitoring,
     plbarpo_control_counts,
@@ -1093,6 +1109,19 @@ __all__ = [
     "CiBolusFit",
     "cibolus_decision",
     "fit_cibolus",
+    "PinnacleAnalysis",
+    "PinnacleDenoiseResult",
+    "PinnaclePeaks",
+    "PinnacleQuantification",
+    "PinnacleWaveletTransform",
+    "pinnacle_daubechies_filter",
+    "pinnacle_denoise",
+    "pinnacle_detect_peaks",
+    "pinnacle_irdwt",
+    "pinnacle_mean_image",
+    "pinnacle_quantify",
+    "pinnacle_rdwt",
+    "run_pinnacle",
     "DoseSchedulePatient",
     "DoseSchedulePrior",
     "DoseScheduleFit",

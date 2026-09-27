@@ -1,0 +1,31 @@
+{
+  "catalog_ids": [95],
+  "retrieved_at": "2026-09-26",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/95",
+      "role": "Pinnacle catalog entry; archive recorded as Pinnacle_V1.2.6_v.zip. The executable has not been inspected for equivalence."
+    },
+    {
+      "url": "https://academic.oup.com/bioinformatics/article/24/4/529/206532",
+      "role": "Published average-gel, undecimated wavelet, peak detection and quantification algorithm.",
+      "citation": "Morris JS, Clark BN, Gutstein HB (2008). Pinnacle: a fast, automatic and accurate method for detecting and quantifying protein spots in 2-dimensional gel electrophoresis data. Bioinformatics 24:529–536. doi:10.1093/bioinformatics/btm590."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/Pinnacle/Pinnacle%20detailed%20demo%20and%20specifications.pdf",
+      "role": "Later GUI settings, regions, quantile background and normalization options. Identifies US patent 8,031,925."
+    },
+    {
+      "url": "https://github.com/ricedsp/rwt/blob/ba7587cef713cd23f17de8c7c788b63a5d2c9454/dist/2.4/rwt.tar.gz",
+      "sha256": "cf242020f598718768f4fc6f7dfdcffee997caae1cf55b051af837afbf51b207",
+      "role": "Original RWT 2.4 source used for transform conventions and independent C references. Allocation-lifetime shim changes no transform arithmetic; complete license preserved."
+    }
+  ],
+  "implementation_choices": [
+    "Separate published-paper and native-RWT noise/threshold settings; the paper MAD wording is interpreted as median-centered absolute deviation.",
+    "Periodic wavelet boundaries, explicit dyadic divisibility and no implicit padding.",
+    "Zero-based row/column coordinates, half-open regions, clipped windows, strict intensity threshold and descending-intensity greedy square suppression with lexicographic ties.",
+    "Streaming image passes, explicit bounds, immutable results and no silent clipping of negative background-corrected values."
+  ],
+  "limitations": "Optional per-gel denoising during quantification, rectangular background windows, native TIFF/project-file ingestion, interactive peak editing, reports and Pinnacle executable equivalence remain open."
+}

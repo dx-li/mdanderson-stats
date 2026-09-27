@@ -3099,9 +3099,29 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Streaming aligned-gel average, region-aware peak detection, per-gel maxima, four background modes and four normalization modes",
+        "Periodic redundant Daubechies transform, inverse reconstruction and explicit paper/RWT hard-threshold denoising conventions with bounded memory",
+        "Replayable two-pass workflow with raw-gel averaging before denoising, full-image peak coordinates and streamed input identity checks",
+        "Optional per-gel denoising during quantification, rectangular background windows, native image/project formats, interactive editing, reporting and executable equivalence remain pending"
+      ],
+      "validation": [
+        "tests/test_pinnacle.py",
+        "tests/test_pinnacle_wavelet.py",
+        "tests/test_pinnacle_reference.py",
+        "tools/reference_pinnacle.py",
+        "tools/reference_pinnacle_filters.R",
+        "tools/reference_pinnacle_measurements.R",
+        "tests/fixtures/pinnacle-filters.csv",
+        "tests/fixtures/pinnacle-images.csv",
+        "tests/fixtures/pinnacle-peaks.csv",
+        "tests/fixtures/pinnacle-quantification.csv",
+        "tests/fixtures/pinnacle-wavelet.json",
+        "docs/pinnacle.md",
+        "docs/pinnacle-sources.json",
+        "research/pinnacle-audit.md"
+      ]
     },
     {
       "id": 96,

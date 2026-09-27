@@ -1238,6 +1238,15 @@ Independent R quadrature provides probability, likelihood and reduced-posterior
 references. Full trial simulation, prior calibration and native workflows
 remain open.
 
+[Pinnacle](docs/pinnacle.md) detects and quantifies protein spots in aligned
+two-dimensional gel images. It combines streaming image averaging, undecimated
+Daubechies wavelet denoising, peak detection, background correction and
+normalization. Explicit resource limits bound image processing. Independent R
+calculations and original Rice Wavelet Toolbox C outputs provide numerical
+references. Native image/project formats and application workflow equivalence
+remain open. This product includes software developed by Rice University,
+Houston, Texas and its contributors; see the [preserved license](notices/rice-wavelet-LICENSE.txt).
+
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
 outcomes. These include exact one-sample count tests, historical controls,

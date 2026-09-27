@@ -47,3 +47,71 @@ allocation/free. Transform arithmetic is unmodified. Three tiny square/rectangul
 image cases reconstructed successfully; six denoising references compare
 thresholded inverse outputs. No MATLAB runtime or additional package was
 installed.
+
+## Implemented checkpoint
+
+Luna's image primitives (`3a63b08`) and wavelet/workflow implementation
+(`af1ce26`) were integrated as `15734bf` and `532f2fd`. Reference fixtures and
+their source/license records were committed separately as `dccc45c`.
+`run_pinnacle` averages raw gels, denoises the single average, detects peaks,
+and quantifies the original individual gels in a second pass. It checks
+ordered pixel identity with a streaming digest, preserves original-image
+coordinates for cropped regions, and never caches an image stack.
+
+The NumPy implementation covers minimum-phase Daubechies lengths 2–20,
+periodic redundant forward/inverse transforms, explicit paper/RWT denoising
+conventions, four background modes and four normalization modes. Review
+corrected the direct-filter high-pass sign, separated native transform and
+denoiser level defaults, and included immutable copies/temporaries in a
+conservative `(3*levels+16)` image-buffer budget. Nonrepresentable wavelet
+coefficients raise an explicit arithmetic error.
+
+The GUI's optional per-gel denoising during quantification, independently sized
+row/column background windows, native TIFF/project formats, interactive editing
+and report/executable equivalence remain open. Catalog entry 95 is **partial**.
+The catalog now has **62 implemented, 62 partial and 14 pending** entries.
+
+## Validation and resource use
+
+Luna ran the following from its independent checkout, using the root Python
+environment and one BLAS/OpenMP thread:
+
+```sh
+PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+  '/Users/dxli2/math stats/mdanderson-stats/.venv/bin/pytest' -W error \
+  tests/test_pinnacle.py tests/test_pinnacle_wavelet.py \
+  '/Users/dxli2/math stats/mdanderson-stats/tests/test_pinnacle_reference.py' -q
+```
+
+All **11 tests passed in 2.08 seconds**. These include ten independent R filter
+coefficient sets, three original-C forward/inverse cases, six original-C
+denoising cases, all sixteen R background/normalization combinations, cropped
+coordinates and replay identity. The original C comparison checks coefficients
+as well as reconstructed images, so a reversed high-pass sign cannot hide
+behind a successful round trip. Luna's final Ruff and three-module mypy checks
+passed after guard/typing cleanup. Root's integrated Ruff and format checks
+passed on eight affected Python files.
+
+Root built a wheel and source archive with the cached Hatch backend, without
+installation or network access. An isolated, warnings-as-errors Python process
+imported the wheel, verified all thirteen public names, compared packaged source,
+catalog and notice bytes, checked source-archive documentation/license contents,
+and verified that `research/raw` was excluded. The documented replayable example
+found two peaks and passed its coordinate, shape and normalization assertions.
+A patched decomposition entry point confirmed that an insufficient memory budget
+is rejected before the coefficient pyramid is allocated. An extreme finite input
+confirmed explicit overflow failure.
+
+System memory was 48% free immediately before the representative check. A single
+1024-by-1024 synthetic gel, default length-eight filter and ten levels denoised
+in **1.005 seconds**. Output was finite, immutable and preserved the image mean.
+The entire isolated verification process took **3.175 seconds**, peaked at
+**415.48 MiB RSS**, and reported **zero process swaps**. This is one local
+measurement, not a guarantee for every image or machine. Numerical jobs stayed
+serial with one thread; no large gel stack, full repository suite or dependency
+installation was run.
+
+This goal turn made progress. The complete catalog/publication objective remains
+active. The existing GitHub write approval block is unchanged; no alternate
+publication transport was attempted. Next reconcile BOIN desktop entry 99 with
+the already implemented method families and identify its actual remaining gaps.

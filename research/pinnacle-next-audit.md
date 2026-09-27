@@ -1,5 +1,8 @@
 # Next uncovered method: Pinnacle
 
+Historical scouting notes from before the port. The implemented core and
+remaining scope are now recorded in [pinnacle-audit.md](pinnacle-audit.md).
+
 Entry 95 is pending. The indexed [official page](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/95)
 identifies version 1.2.6, updated August 27, 2014. The catalog records
 `Pinnacle_V1.2.6_v.zip`; the native archive has not been inspected in this pass.
