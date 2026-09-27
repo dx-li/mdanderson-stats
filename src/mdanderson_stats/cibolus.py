@@ -24,10 +24,13 @@ def _real(value: ArrayLike, name: str, maximum: int = _MAX_GRID_CELLS) -> FloatA
 
 
 def _scalar(value: object, name: str) -> float:
-    answer = _real(value, name, 1)
-    if answer.ndim != 0:
+    raw = np.asarray(value)
+    if raw.ndim != 0 or raw.dtype.kind not in "iuf":
         raise ValueError(f"{name} must be scalar")
-    return float(answer)
+    answer = float(raw)
+    if not np.isfinite(answer):
+        raise ValueError(f"{name} must be finite")
+    return answer
 
 
 def _log_softplus(value: float) -> float:
@@ -144,6 +147,8 @@ def _bolus_logmass(alpha: FloatArray, concentration: float, bolus: float) -> tup
     if bolus == 0:
         return -np.inf, 0.0
     log_mass_hazard = np.log(alpha[0]) + alpha[1] * np.log(concentration) + alpha[2] * np.log(bolus)
+    if np.isnan(log_mass_hazard):
+        raise ArithmeticError("bolus response predictor is indeterminate")
     if log_mass_hazard > np.log(np.finfo(float).max):
         return 0.0, np.inf
     mass_hazard = float(np.exp(log_mass_hazard))
@@ -188,7 +193,10 @@ def _continuous_hazard_log(
             extra = float(np.log(alpha[5]) - logd - np.logaddexp(0.0, -z))
         else:
             extra = float(np.log(alpha[4]) + np.log(alpha[5]) + (alpha[5] - 1) * logd)
-    return float(np.logaddexp(np.log(alpha[3]), extra))
+    result = float(np.logaddexp(np.log(alpha[3]), extra))
+    if np.isnan(result):
+        raise ArithmeticError("continuous hazard is indeterminate")
+    return result
 
 
 def _log_continuous_increment(
@@ -248,7 +256,10 @@ def _log_continuous_increment(
                         "positive interval lost precision in its hazard increment"
                     )
                 log_extra = float(np.log(difference) - logk)
-    return float(np.logaddexp(np.log(alpha[3]) + np.log(duration), log_extra))
+    result = float(np.logaddexp(np.log(alpha[3]) + np.log(duration), log_extra))
+    if np.isnan(result):
+        raise ArithmeticError("continuous hazard increment is indeterminate")
+    return result
 
 
 def _continuous_cumulative(
@@ -257,6 +268,8 @@ def _continuous_cumulative(
     if time <= 0:
         return 0.0
     logvalue = _log_continuous_increment(alpha, concentration, bolus, 0.0, time)
+    if np.isnan(logvalue):
+        raise ArithmeticError("continuous cumulative hazard is indeterminate")
     if logvalue > np.log(np.finfo(float).max):
         return np.inf
     with np.errstate(under="ignore"):
@@ -336,8 +349,12 @@ def cibolus_response(
         time = float(t[index])
         cumulative[index] = _continuous_cumulative(alpha, concentration_value, bolus, time)
         survival[index] = -bolus_hazard - cumulative[index]
+        if np.isnan(survival[index]) or np.isnan(cumulative[index]):
+            raise ArithmeticError("response survival or cumulative hazard is indeterminate")
         cdf[index] = -np.expm1(survival[index]) if np.isfinite(survival[index]) else 1.0
         loghazard = _continuous_hazard_log(alpha, concentration_value, bolus, time)
+        if np.isnan(loghazard):
+            raise ArithmeticError("continuous hazard is indeterminate")
         if loghazard > np.log(np.finfo(float).max):
             hazard[index] = np.inf
         elif loghazard < np.log(np.nextafter(0.0, 1.0)):
@@ -380,6 +397,13 @@ def _toxicity_log_probability(
     return -exponent
 
 
+def _toxicity_probability(
+    beta: FloatArray, concentration: float, bolus: float, time: float, failure: bool
+) -> float:
+    log_not = _toxicity_log_probability(beta, concentration, bolus, time, failure, False)
+    return 1.0 if log_not == -np.inf else float(-np.expm1(log_not))
+
+
 def cibolus_toxicity(
     times: ArrayLike,
     concentration: float,
@@ -403,10 +427,9 @@ def cibolus_toxicity(
     _, beta = _physical(log_parameters)
     output = np.empty(t.shape)
     for index in np.ndindex(t.shape):
-        log_not = _toxicity_log_probability(
-            beta, concentration_value, bolus, float(t[index]), failure, False
+        output[index] = _toxicity_probability(
+            beta, concentration_value, bolus, float(t[index]), failure
         )
-        output[index] = -np.expm1(log_not)
     return _freeze(output)
 
 
@@ -423,16 +446,10 @@ class CiBolusPrediction:
     marginal_toxicity: FloatArray
 
 
-def cibolus_predict(
-    log_parameters: ArrayLike,
-    concentrations: ArrayLike,
-    bolus_fractions: ArrayLike,
-    endpoints: ArrayLike,
-    *,
-    utility: ArrayLike,
-) -> CiBolusPrediction:
-    """Return response-category/toxicity probabilities and utility on a regimen grid."""
-    alpha, beta = _physical(log_parameters)
+def _prediction_inputs(
+    concentrations: ArrayLike, bolus_fractions: ArrayLike, endpoints: ArrayLike, utility: ArrayLike
+) -> tuple[FloatArray, FloatArray, FloatArray, FloatArray]:
+    """Validate small prediction grids before constructing any model outputs."""
     concentrations_value = _real(concentrations, "concentrations", 20)
     bolus_value = _real(bolus_fractions, "bolus_fractions", 20)
     endpoint_value = _real(endpoints, "endpoints", 20)
@@ -454,10 +471,29 @@ def cibolus_predict(
     ):
         raise ValueError("invalid concentration, bolus or endpoint grids")
     if (
-        np.prod((concentrations_value.size, bolus_value.size, endpoint_value.size + 2, 2))
+        int(np.prod((concentrations_value.size, bolus_value.size, endpoint_value.size + 2, 2)))
         > _MAX_GRID_CELLS
     ):
         raise ValueError("prediction grid exceeds 200,000 category cells")
+    categories = endpoint_value.size + 2
+    if utility_value.shape != (categories, 2):
+        raise ValueError("utility must have one row per response category and two toxicity columns")
+    return concentrations_value, bolus_value, endpoint_value, utility_value
+
+
+def cibolus_predict(
+    log_parameters: ArrayLike,
+    concentrations: ArrayLike,
+    bolus_fractions: ArrayLike,
+    endpoints: ArrayLike,
+    *,
+    utility: ArrayLike,
+) -> CiBolusPrediction:
+    """Return response-category/toxicity probabilities and utility on a regimen grid."""
+    alpha, beta = _physical(log_parameters)
+    concentrations_value, bolus_value, endpoint_value, utility_value = _prediction_inputs(
+        concentrations, bolus_fractions, endpoints, utility
+    )
     categories = endpoint_value.size + 2  # bolus, endpoint intervals, failure
     if utility_value.shape != (categories, 2):
         raise ValueError("utility must have one row per response category and two toxicity columns")
@@ -473,8 +509,8 @@ def cibolus_predict(
             log_bolus, _, _, _ = _response_terms(alpha, float(concentration), float(bolus), 0.0)
             bolus_mass = 0.0 if log_bolus == -np.inf else float(np.exp(log_bolus))
             response[ci, qi, 0] = bolus_mass
-            joint[ci, qi, 0, 1] = (
-                bolus_mass * cibolus_toxicity([0.0], concentration, bolus, log_parameters)[0]
+            joint[ci, qi, 0, 1] = bolus_mass * _toxicity_probability(
+                beta, float(concentration), float(bolus), 0.0, False
             )
             joint[ci, qi, 0, 0] = bolus_mass - joint[ci, qi, 0, 1]
             lower = 0.0
@@ -485,7 +521,9 @@ def cibolus_predict(
                 mass = 0.0 if log_mass == -np.inf else float(np.exp(log_mass))
                 category = ei + 1
                 response[ci, qi, category] = mass
-                toxicity = float(cibolus_toxicity([upper], concentration, bolus, log_parameters)[0])
+                toxicity = _toxicity_probability(
+                    beta, float(concentration), float(bolus), float(upper), False
+                )
                 joint[ci, qi, category, 1] = mass * toxicity
                 joint[ci, qi, category, 0] = mass - joint[ci, qi, category, 1]
                 lower = float(upper)
@@ -494,15 +532,13 @@ def cibolus_predict(
             )
             failure_mass = 0.0 if not np.isfinite(log_failure) else float(np.exp(log_failure))
             response[ci, qi, -1] = failure_mass
-            tox_fail = float(
-                cibolus_toxicity([1.0], concentration, bolus, log_parameters, failure=True)[0]
-            )
+            tox_fail = _toxicity_probability(beta, float(concentration), float(bolus), 1.0, True)
             joint[ci, qi, -1, 1] = failure_mass * tox_fail
             joint[ci, qi, -1, 0] = failure_mass - joint[ci, qi, -1, 1]
             risk_one[ci, qi] = risk
-            toxicity_response[ci, qi] = cibolus_toxicity(
-                [1.0], concentration, bolus, log_parameters
-            )[0]
+            toxicity_response[ci, qi] = _toxicity_probability(
+                beta, float(concentration), float(bolus), 1.0, False
+            )
             toxicity_failure[ci, qi] = tox_fail
             marginal_tox[ci, qi] = np.sum(joint[ci, qi, :, 1])
             utility_result[ci, qi] = np.sum(joint[ci, qi] * utility_value)
