@@ -99,8 +99,10 @@ def survival_cox_contour(
         design = design[:, None]
     if design.ndim != 2 or not 0 <= continuous_column < design.shape[1]:
         raise ValueError("x must be a matrix and continuous_column must index a column")
-    if design.shape[0] > 100_000 or design.shape[1] > 100:
-        raise ValueError("x is limited to 100,000 rows and 100 numeric covariates")
+    if not 2 <= design.shape[0] <= 100_000 or design.shape[1] > 100 or design.size > 2_000_000:
+        raise ValueError(
+            "x requires 2..100,000 rows, 1..100 covariates and at most 2,000,000 entries"
+        )
     if any(np.iscomplexobj(a) for a in (time, event)):
         raise ValueError("time and event must be real")
     t = finite(time, "time")
@@ -137,7 +139,7 @@ def survival_cox_contour(
         grid_values = finite(grid, "grid")
         if grid_values.ndim != 1 or not 2 <= grid_values.size <= 2000:
             raise ValueError("grid must be a one-dimensional array of 2..2000 values")
-        if np.any(np.diff(grid_values) <= 0):
+        if np.any(grid_values[1:] <= grid_values[:-1]):
             raise ValueError("grid values must be strictly increasing")
     if not np.isfinite(grid_values).all():
         raise ArithmeticError("continuous-covariate grid is not representable")

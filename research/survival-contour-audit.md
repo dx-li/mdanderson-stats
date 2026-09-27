@@ -81,3 +81,51 @@ Stratified and interval-censored Cox, parametric/spline models, Fine–Gray,
 forests, neural models and full native app workflows remain later coverage
 requirements. Entry 166 is still pending until this implementation is integrated
 and verified. Final API and validation results will be recorded below.
+
+## Integrated ordinary Cox workflow
+
+Luna commit `395ca37` was integrated as `11f5417`. Public entry points are
+`survival_cox_contour`, `SurvivalCoxContour`, `plot_survival_contour_2d` and
+`plot_survival_contour_3d`. Results retain fit/tie metadata, confidence level,
+adjustment profile, grid, times, five primary prediction arrays and five
+covariate-quantile prediction arrays. Plot imports are lazy. The old
+`survan_cox` Breslow default remains unchanged; Efron is an explicit new option.
+
+Root review identified and the implementation addressed separate event/censor
+weight scaling, log-space baseline accumulation, standard errors without
+squared-hazard intermediates, and rejection of excessive output before the
+fit starts. Root then moved the existing two-million-design-entry constraint
+before normalization as well. Inputs are bounded to 100,000 observations and
+100 covariates; a combined two-million-cell surface/profile/vector budget is
+checked before fitting. No dependencies or CI configuration were added.
+
+Six targeted existing/new Cox checks passed in the worker (1.25 seconds),
+including Efron score/information finite differences with multiple tied deaths,
+extreme tied event/censor predictors and existing original-SURVAN regressions.
+Worker Ruff format/check, targeted mypy and diff checks passed. The worker also
+compared all four original-R surface and quantile-curve scenarios. Root's
+independent integration check, with warnings as errors, compared all four fits,
+coefficient covariances, likelihoods, primary surfaces and quantile curves.
+Maximum probability/limit error was `7.78e-16`; maximum cumulative-hazard or
+log-survival-standard-error error was `5.11e-15`.
+
+Additional root checks covered simultaneous time scaling by `1e100` and
+covariate scaling by `[1e100, 1e-100]`, right-continuous values between events,
+censor-only plateaus, survival one before the first event, flat survival after
+the final event, and read-only results. The integrated numerical check took
+0.055 seconds after imports and peaked at 115.3125 MiB with zero reported swaps.
+
+A direct baseline/prediction check used predictors at +1000 and -1000 with a
+low-risk late event: both Efron and Breslow produced the analytic survival
+`exp(-1)`, hazard 1 and standard error 1 at the final time, despite individually
+unrepresentable baseline hazard and variance in ordinary units. Oversized
+output was rejected before a patched fit could run; an oversized design was
+likewise rejected before fitting. The 2D contour and 3D surface were rendered
+and visually inspected together. That process peaked at 161.453125 MiB and
+reported zero swaps. Plot interpolation is documented separately from the
+right-continuous numerical predictions.
+
+The root's final preflight edit passed its targeted check and Ruff after line
+formatting. No full suite, large simulation or package installation was run.
+Catalog entry 166 advances to **partial**, with all other model families still
+listed explicitly. Totals are now 62 implemented, 66 partial and 10 pending.

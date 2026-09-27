@@ -908,6 +908,18 @@ No original source code, application assets or paper PDF is distributed.
 No original software redistribution license was identified; the paper and app
 are cited as mathematical references. See `docs/rose.md` for scope and validation.
 
+## SurvivalContour Cox workflow
+
+`survival_contour.py` and the Efron extension to the SURVAN Cox fitter are
+independent Python numerical implementations. The author package
+https://github.com/YushuShi/survivalContour at commit
+`d4645f69f23fc1146c07432f576b4c40f85e1bba` declares GPL >=2. Its unchanged
+`coxContour.R` and `cox3DContour.R` helpers and R `survival` 3.6-4 were used
+as executable prediction references. Original R source and app assets are
+not redistributed; the repository contains a reference harness and generated
+numeric fixtures. See `docs/survival-contour.md` and the source audit for
+model scope, prediction conventions and verification.
+
 ## Bayesian success calibration
 
 `success_calibration.py` is an independent implementation of the mathematical

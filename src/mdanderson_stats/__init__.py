@@ -947,6 +947,12 @@ from .survan_descriptive import (
 from .survan_km import SurvanKM, SurvanQuantiles, survan_km
 from .survan_logistic import SurvanLogistic, survan_logistic
 from .survan_tests import SurvivalGroupTest, survan_group_test
+from .survival_contour import (
+    SurvivalCoxContour,
+    plot_survival_contour_2d,
+    plot_survival_contour_3d,
+    survival_cox_contour,
+)
 from .survival_ess import SurvivalPriorESS, survival_prior_ess
 from .survival_sample_size import (
     SurvivalSampleSize,
@@ -1521,6 +1527,10 @@ __all__ = [
     "survan_baseline",
     "SurvanCox",
     "survan_cox",
+    "SurvivalCoxContour",
+    "survival_cox_contour",
+    "plot_survival_contour_2d",
+    "plot_survival_contour_3d",
     "SurvanLogistic",
     "survan_logistic",
     "SurvanKM",

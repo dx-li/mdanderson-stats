@@ -14,6 +14,22 @@ generalized-gamma model and joint uncertainty used by `flexsurv`. The original
 SurvivalContour `paraContour.R` is saved and pinned in the source audit. Future
 coverage must verify each distribution's parameterization and interval method.
 
+The same pinned author revision contains
+[`coxStrataContour.R`](https://github.com/YushuShi/survivalContour/blob/d4645f69f23fc1146c07432f576b4c40f85e1bba/R/coxStrataContour.R)
+(blob `46cbd57ff949c18a934c3a94461727b191533ff7`). It predicts separately for
+each fitted stratum, uses a common global continuous-covariate grid and adjustment
+profile, and prepends time zero with survival one to each surface. Its histograms
+use the observations in each stratum. A future port needs a shared coefficient
+fit with stratum-specific risk sets and baselines, rather than independently
+fitting one model per stratum. Use direct R `survfit` predictions to verify that
+the helper's flattened-result reconstruction has the intended matrix ordering.
+
+[`FGContour.R`](https://github.com/YushuShi/survivalContour/blob/d4645f69f23fc1146c07432f576b4c40f85e1bba/R/FGContour.R)
+(blob `f8abb256eb13cec172cbdb480760834015ebcce1`) calls `riskRegression::predictRisk`
+for the fitted cause at sorted distinct cause-event times, with zero prepended
+if absent. It plots cumulative incidence, not survival. The existing CUMINC
+nonparametric estimators do not substitute for this Fine–Gray regression model.
+
 ## BLESS model coefficients and baseline survival
 
 The [primary paper](https://doi.org/10.1016/j.chest.2021.03.059), Molina et al.,

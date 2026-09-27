@@ -1,8 +1,9 @@
 # SURVAN Cox proportional-hazards regression
 
 `survan_cox(time, event, x)` fits multivariable proportional hazards using the
-original SURVAN **Breslow tied-event partial likelihood**. This differs from the
-existing two-arm IPDfromKM Efron fit. The model has no intercept.
+original SURVAN **Breslow tied-event partial likelihood** by default. The optional
+`ties="efron"` adds Efron's tied-event approximation for interoperability with
+the [SurvivalContour workflow](survival-contour.md). The model has no intercept.
 
 ```python
 import numpy as np
@@ -25,7 +26,8 @@ set. Only exactly equal times are tied. Covariates are static throughout follow-
 The result exposes coefficients in input column order, information covariance,
 standard errors, one- and two-sided coefficient p-values, negative log likelihood,
 null negative log likelihood, likelihood-ratio statistic, df, p-value and Newton
-iteration count. The null sets every coefficient to zero. As in SURVAN's report,
+iteration count and selected tie method. The null sets every coefficient to zero.
+As in SURVAN's report,
 `one_sided_pvalues` is the smaller normal tail `Phi(-abs(beta/SE))`, not a test of
 a prespecified direction. `two_sided_pvalues` is twice that value. Inference uses
 model-based information and asymptotic chi-square/normal approximations.
@@ -41,9 +43,11 @@ For each failure time t with d tied events, SURVAN contributes
 
 sum(event linear predictors) − d log(sum(risk-set exponential predictors)).
 
-The Python implementation uses this same likelihood and its analytic first and
-second derivatives. Covariates are scaled and centered before fitting; estimates
-and covariance are transformed back to original units. Constant columns and
+The default Python implementation uses this same likelihood and its analytic
+first and second derivatives. The Efron option instead progressively removes
+fractions of the tied-event risk weight from each denominator. Covariates are
+scaled and centered before fitting; estimates and covariance are transformed
+back to original units. Constant columns and
 unidentified risk-set effects are rejected.
 
 For ordinary predictor ranges, cumulative weighted risk sums and matrix products

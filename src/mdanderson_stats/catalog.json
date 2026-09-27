@@ -4478,12 +4478,23 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/survivalContour/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/survivalContour/",
-      "references": [],
+      "references": [
+        "https://github.com/YushuShi/survivalContour/tree/d4645f69f23fc1146c07432f576b4c40f85e1bba"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Ordinary right-censored Cox survival surfaces with Efron or Breslow ties, caller-encoded numeric covariates, mean or explicit adjustment profiles and default or supplied covariate/time grids.",
+        "Pointwise log-survival confidence limits, cumulative hazards and standard errors, plus configurable covariate-quantile curves; stable log-risk accumulation and bounded preflight allocation.",
+        "Optional two-dimensional contours and three-dimensional survival or confidence-limit surfaces through the existing plotting extra; docs/survival-contour.md.",
+        "Remaining: stratified/interval-censored Cox, parametric/spline, Fine-Gray, forests, neural models, categorical encoding and full native app workflows."
+      ],
+      "validation": [
+        "Four original-author R Cox helper surface cases (Efron/Breslow by mean/explicit profiles), plus corresponding R quantile curves, coefficient covariance, likelihoods and standard errors; tools/reference_survival_contour.R.",
+        "Six focused Cox/contour tests, tied-event likelihood derivatives, extreme event/censor risks, covariate/time unit invariance, right-continuous predictions and output preflight; research/survival-contour-audit.md.",
+        "Root probability/confidence-limit differences below 8e-16; bounded numerical audit 115.4 MiB peak RSS, two plot renders 161.5 MiB, zero reported process swaps."
+      ]
     },
     {
       "id": 168,
