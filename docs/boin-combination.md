@@ -1,8 +1,8 @@
 # BOIN drug-combination designs
 
 The Python implementation covers ordinary combination dose decisions and final
-MTD selection, including an MTD contour, plus the waterfall planner used to move
-between subtrials. It corresponds to catalog entry 128,
+MTD selection, including an MTD contour, plus interactive waterfall planning and
+[complete waterfall trials and simulation](boin-waterfall.md). It corresponds to catalog entry 128,
 [BOINComb](https://biostatistics.mdanderson.org/shinyapps/BOINComb/).
 The [source audit](boin-combination-source.md) records the original package,
 app versions, numerical references and backend differences.
@@ -72,6 +72,11 @@ Later subtrials search columns 2 through the last column of a lower drug A row.
 counts. It identifies the latest occupied subtrial and uses weighted
 one-dimensional isotonic selection to choose the next start and search space.
 The planner does not itself enroll patients or decide when a subtrial ends.
+Use `run_boin_waterfall_trial` for complete deterministic replay and
+`simulate_boin_waterfall` for serial simulation of the initial staircase,
+ordinary row searches and special same-row transitions. The
+[waterfall guide](boin-waterfall.md) explains stopping conventions, retained
+observations and the explicit treatment of inadmissible contour destinations.
 
 ```python
 from mdanderson_stats import next_subtrial
@@ -125,7 +130,7 @@ enrollment threshold when convergence has not yet occurred.
 ## Scope
 
 Accelerated titration, moderate-toxicity stopping during titration, the app's
-3+3 run-in, full waterfall simulation, enumerated desirability-rank tables and
+3+3 run-in, enumerated desirability-rank tables and
 generated trial protocols/reports remain outside this API.
 These are tracked as outstanding coverage rather than inferred from the
 ordinary combination movement rule.

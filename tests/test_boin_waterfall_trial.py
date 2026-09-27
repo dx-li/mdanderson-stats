@@ -15,7 +15,7 @@ def _uniform_tape(events: list[int], total: int, cohort_size: int = 3) -> np.nda
     return tape
 
 
-def test_replay_runs_staircase_and_special_same_row_subtrial() -> None:
+def test_replay_runs_staircase_and_earlier_row_subtrial() -> None:
     result = run_boin_waterfall_trial(
         BOINCombDesign(target=0.3),
         np.full((2, 3), 0.3),

@@ -69,4 +69,52 @@ are kept in the reference files, and the Python port must not reproduce the
 loss of observations. Four other cases return complete counts and provide
 direct final-selection comparisons.
 
-The final Python API and its verification will be recorded after integration.
+## Integrated Python workflow
+
+Luna implemented the workflow in `a3a07bd`, integrated as `3b5ab30`.
+`run_boin_waterfall_trial` consumes an explicit per-patient uniform tape;
+`simulate_boin_waterfall` generates tapes serially. Both cover the staircase,
+ordinary row searches, special same-row search and its failed-subtrial fallback.
+Results retain actual observations, cumulative subtrial snapshots, cohort
+assignments, exclusions, candidates and source/final contour diagnostics.
+The workflow's precision threshold is checked after movement, independently
+of the ordinary combination design's stopping parameter.
+
+Python preserves every enrolled patient, uses actual simulation denominators,
+honors supplied boundary parameters and withholds inadmissible continuity
+destinations while retaining their source candidates. It does not claim full
+native-output parity. Titration, the app's 3+3 run-in and generated reports
+remain outside this API. Catalog entries 99 and 128 remain partial.
+
+## Validation and resource use
+
+The worker passed three focused waterfall checks and two comparison checks,
+Ruff, formatting and targeted mypy. Root independently checked all six original
+subtrial cases and all six workflow traces, including exact actual patient/DLT
+accounting in the two defective native cases. The four cases without source
+count loss match final selections, exclusions and unrounded fits. An additional
+3-by-3 traversal and independent aggregation of 32 simulated trials checked
+row selection/no-selection probabilities, Monte Carlo errors and count totals.
+An oversized request fails before advancing the supplied random generator.
+
+The bounded root check completed in 0.043 seconds after import, with peak
+resident memory 112.30 MiB and zero swaps. An initial verification adapter
+mistakenly treated the final API's full-grid subtrial snapshots as local vectors;
+correcting that adapter resolved its shape error without an algorithm change.
+
+The wheel and source distribution were built with cached Hatch tooling. An
+isolated wheel import verified all eleven new comparison/waterfall exports and
+executed four documentation examples. That check took 0.108 seconds after import,
+peaked at 115.02 MiB and recorded zero swaps. Packaged module/catalog bytes and
+third-party notices match the source. Focused formatting/lint checks passed.
+The full repository suite and large Monte Carlo runs were intentionally omitted;
+checks targeted source numerical behavior and the new public workflows. Jobs
+were serial, with one BLAS/OpenMP thread, and no dependency installation.
+
+Source review identified another conditional difference: native interim
+extra-safe evaluation sits inside `!is.na(b.elim[n])`. At high targets/cutoffs,
+no ordinary elimination count may exist at that sample size, although the
+weaker extra-safe condition could stop. Python deliberately applies the
+specified extra-safe rule whenever `n>=3`, without that source availability
+gate, and retains final-subtrial safety exclusions. These are documented
+safety contracts, not claims of bit-for-bit native behavior for all settings.

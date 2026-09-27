@@ -88,7 +88,7 @@ class WaterfallCohort:
 class WaterfallSubtrial:
     """Executed slice and cumulative snapshots.
 
-    The snapshot's exclusion matrix also reflects final weak-prior selector
+    The snapshot's exclusion matrix also reflects final Beta(1,1) selector
     safety checks. This makes final-only extra-safe rejection visible, whereas
     the original nested routine returned its conduct-only mask.
     """
@@ -113,7 +113,8 @@ class BOINWaterfallTrial:
     ``row_candidates`` stores the candidates before source continuity is
     applied. ``selected_contour`` follows that continuity when it remains on
     an observed, non-eliminated cell; otherwise that row is left unselected and
-    ``continuity_blocked`` records the source-continuity destination.
+    ``continuity_blocked`` flags that row. ``source_contour`` records the
+    destination before this admissibility check.
     """
 
     patients: NDArray[np.int64]

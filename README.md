@@ -1069,10 +1069,13 @@ Generated trial protocols and the paper's other movement variants remain open.
 
 [BOINComb](docs/boin-combination.md) adds ordinary combination dose decisions,
 posterior safety monitoring, final MTD and contour selection, and waterfall
-subtrial planning. Seeded cohort simulations report operating characteristics
+subtrial planning. [Full waterfall replay and serial simulation](docs/boin-waterfall.md)
+cover staircase, row and special same-row searches, with auditable observations
+and contour diagnostics. Seeded simulations report operating characteristics
 and Monte Carlo errors. Native R references distinguish the interactive
-selector from the simulator's unrounded selection rule. Titration, the 3+3
-run-in, full waterfall simulation and generated protocols remain open.
+selector from the simulator's unrounded selection rule and expose native
+dropped-observation defects. Titration, the 3+3 run-in and generated protocols
+remain open.
 
 [BOIN12](docs/boin12.md) now includes toxicity/efficacy posterior calculations,
 utility desirability tables, single-stage dose decisions, final OBD selection

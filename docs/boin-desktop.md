@@ -13,7 +13,7 @@ maintaining a second statistical backend for the desktop entry.
 | Late-onset toxicity | `tite_boin_estimate`, `tite_boin_decision`, `run_tite_boin_trial`, `simulate_tite_boin` | Imputation, follow-up gates, calendar replay, simulation and final complete-data selection |
 | Rolling Six comparison | `compare_tite_boin_rolling_six`, `tite_boin_rolling_six_report` | Common scenario inputs, independent serial simulations and comparative summaries |
 | Combination single MTD | `BOINCombDesign`, `simulate_boin_combination` | Conduct, safety, weighted bivariate isotonic selection and ordinary cohort simulation |
-| Combination MTD contour | `BOINCombDesign.select_mtd(mtd_contour=True)`, `next_subtrial` | Final contour estimation and interactive waterfall subtrial planning; full waterfall simulation remains open |
+| Combination MTD contour | `BOINCombDesign.select_mtd(mtd_contour=True)`, `next_subtrial`, `run_boin_waterfall_trial`, `simulate_boin_waterfall` | Final contour estimation, interactive planning, full no-titration replay and serial simulation |
 | Standardized follow-up calculator | `toxicity_followup_weights` | Per-patient ordinary or informative-prior weights, summed to STFT/WSTFT |
 | Statistical protocol text | `boin_protocol` | Single-agent Markdown methods text in English or Chinese |
 
@@ -23,7 +23,9 @@ Detailed conventions and numerical references are in the
 documentation. The [source record](boin-desktop-sources.json) distinguishes
 desktop documentation from the separately audited R and web implementations.
 The [time-to-toxicity comparison example](boin-time-comparison.md) demonstrates
-the coordinated TITE-BOIN/Rolling Six workflow.
+the coordinated TITE-BOIN/Rolling Six workflow. The
+[waterfall guide](boin-waterfall.md) documents complete subtrial transitions
+and numerical differences from the original R simulator.
 
 ## Standardized follow-up
 
@@ -45,11 +47,9 @@ follow-up times. No separate numerical engine is needed for the calculator.
 
 ## What remains
 
-Entry 99 is partial. Full waterfall simulation, combination titration/run-in
+Entry 99 is partial. Combination titration/run-in
 workflows, combination and TITE-specific protocol generation, native Word/HTML
-layouts and saved-project interoperability remain open. The existing interactive
-waterfall planner is not a full simulator; the R simulator has additional
-subtrial transitions and stopping conventions.
+layouts and saved-project interoperability remain open.
 
 The desktop installer and its embedded help have not been executed or inspected
 for numerical equivalence. The Python APIs follow the cited methods and audited

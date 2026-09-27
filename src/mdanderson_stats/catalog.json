@@ -3248,13 +3248,15 @@
         "TITE-BOIN and Rolling Six calendar simulations with common-scenario comparison, allocation/toxicity/duration summaries, Monte Carlo errors and Markdown reporting",
         "Ordinary combination simulation, final contour selection and interactive waterfall subtrial planning",
         "Standardized or informative-prior toxicity follow-up weights and single-agent English/Chinese statistical protocol text",
-        "Remaining: full waterfall simulation, combination titration/run-in, TITE/combination protocols, native Word/HTML and saved-project formats; desktop executable equivalence is not verified"
+        "Complete no-titration waterfall replay and serial simulation, including special same-row/fallback transitions, actual observations, contour diagnostics and Monte Carlo errors; docs/boin-waterfall.md",
+        "Remaining: combination titration/run-in, TITE/combination protocols, native Word/HTML and saved-project formats; desktop executable equivalence is not verified"
       ],
       "validation": [
         "Capability specification from desktop 1.1.0 and TITE-BOIN guide; docs/boin-desktop-sources.json links shared method source records",
         "Existing published and original-R BOIN/combination references, published TITE-BOIN thresholds, and exhaustive published Rolling Six decision-table states",
         "Focused comparison safety/highest-dose/reproducibility/preflight checks; independent aggregation/MCSE, 1e100 time rescaling and finite 1e308 duration summaries; tests/test_boin_time_comparison.py",
-        "Documented STFT example yields 1.7; comparison usage executed with bounded serial simulations"
+        "Documented STFT example yields 1.7; comparison usage executed with bounded serial simulations",
+        "Six original-R subtrial and six full-workflow references, independent exhaustive isotonic oracle, source count-loss regression and bounded simulation aggregation; research/boin-waterfall-workflow-audit.md"
       ]
     },
     {
@@ -3690,12 +3692,14 @@
         "Weighted bivariate isotonic single-MTD and contour selection with native rounding, selection adjustment and optional bound-MTD restriction",
         "Waterfall next-subtrial planning from accumulated data with weighted one-dimensional isotonic selection and subtrial safety",
         "Complete-outcome ordinary combination cohort simulation with trial-level counts, selection probabilities and Monte Carlo errors",
-        "Remaining: accelerated titration, 3+3 run-in, full waterfall simulation, enumerated desirability-rank tables and generated protocols/reports"
+        "Complete no-titration waterfall replay and serial simulation, including special same-row/fallback transitions, actual observations, contour diagnostics and Monte Carlo errors; docs/boin-waterfall.md",
+        "Remaining: accelerated titration, 3+3 run-in, enumerated desirability-rank tables and generated protocols/reports"
       ],
       "validation": [
         "BOIN 2.7.2 native boundary, movement, selection and waterfall references; independent unrounded Iso::biviso fits",
         "Full native contour pairs, source rounding and cross-closure checks; safety and accumulated-subtrial replay",
-        "Seeded simulation and numerical stability checks; source/backend differences documented in docs/boin-combination-source.md"
+        "Seeded simulation and numerical stability checks; source/backend differences documented in docs/boin-combination-source.md",
+        "Six original-R subtrial and six full-workflow references, independent exhaustive isotonic oracle, source count-loss regression and bounded simulation aggregation; research/boin-waterfall-workflow-audit.md"
       ]
     },
     {

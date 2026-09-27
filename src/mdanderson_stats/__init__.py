@@ -203,6 +203,17 @@ from .boin_time_comparison import (
     tite_boin_rolling_six_report,
 )
 from .boin_waterfall import BOINWaterfall, WaterfallPlan, next_subtrial
+from .boin_waterfall_simulation import (
+    BOINWaterfallSimulation,
+    WaterfallTrialHistory,
+    simulate_boin_waterfall,
+)
+from .boin_waterfall_trial import (
+    BOINWaterfallTrial,
+    WaterfallCohort,
+    WaterfallSubtrial,
+    run_boin_waterfall_trial,
+)
 from .bop2_binary import (
     BOP2BinaryOptimization,
     BOP2InfeasibleError,
@@ -1788,6 +1799,13 @@ __all__ = [
     "BOINCombinationSimulation",
     "simulate_boin_combination",
     "BOINWaterfall",
+    "BOINWaterfallSimulation",
+    "WaterfallTrialHistory",
+    "simulate_boin_waterfall",
+    "BOINWaterfallTrial",
+    "WaterfallCohort",
+    "WaterfallSubtrial",
+    "run_boin_waterfall_trial",
     "WaterfallPlan",
     "next_subtrial",
     "SurvivalSampleSize",

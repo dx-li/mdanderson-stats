@@ -127,3 +127,14 @@ wrappers around the standard method. They should not be inferred from
 `next.comb()` itself. The published method and package code also use different
 labels in places (`n.earlystop` precision stop versus app wording); fixtures
 record the returned native values rather than UI text.
+
+## Complete waterfall workflow
+
+The [waterfall guide](boin-waterfall.md) documents the complete no-titration
+replay and simulator. Six original-R subtrial references and six full-wrapper
+references cover the staircase, ordinary row traversal, same-row search,
+fallback and safety stops. The full-wrapper generator substitutes an independent
+exhaustive six-cell isotonic oracle for the unavailable `Iso` call; the conduct
+and selection code remains original. The [workflow audit](../research/boin-waterfall-workflow-audit.md)
+records source count-loss defects and explicit Python differences in safety,
+admissible continuity, caller settings and simulation denominators.
