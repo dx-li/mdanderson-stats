@@ -1,0 +1,3 @@
+"ties","native_xlevel_name","all_native_2d_surfaces_equal","all_native_3d_surfaces_equal","native_time_count","native_3d_time_count","native_3d_surface_columns"
+"efron","strata(group)",TRUE,TRUE,10,46,10
+"breslow","strata(group)",TRUE,TRUE,10,46,10
