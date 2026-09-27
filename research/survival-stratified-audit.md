@@ -118,3 +118,27 @@ Two group contours and the third group's flat 3D surface were rendered and
 visually inspected. Export margins were adjusted to retain the 3D axis labels.
 The final rendering peaked at 157.25 MiB with zero swaps. No dependency or CI
 configuration was added, and no worker remains active.
+
+## Package checkpoint and continuation
+
+Exposure and root validation are committed in `7398d36`. Wheel and source
+archives built with the cached Hatch backend. All 465 Python module files in
+both artifacts matched source bytes, as did the wheel catalog and notices.
+The source archive retained all five stratified CSV fixtures, reference harness,
+guide and audit, without ignored raw downloads. An isolated interpreter loaded
+the wheel and ran both the ordinary and stratified public plotting examples.
+It peaked at 136.03125 MiB with zero swaps. Final artifacts are rebuilt after
+this audit record is committed.
+
+Coverage counts remain 62 implemented, 66 partial and 10 pending: this
+checkpoint completes another model family within partial entry 166. It does
+not close the interval-censored, parametric/spline, Fine–Gray, forest, neural
+or remaining native workflow requirements. The next implementation is Fine–Gray
+competing-risk regression; source and executable-reference leads are pinned
+in [remaining source leads](remaining-source-leads.md).
+
+This turn made implementation progress. The overall goal remains active.
+GitHub publication remains subject to the prior automatic approval review
+rejection requiring unavailable approval; no write retry or alternate transport
+was attempted. Local source, documentation and distribution artifacts are
+preserved for eventual publication.
