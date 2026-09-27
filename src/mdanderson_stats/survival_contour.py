@@ -10,7 +10,7 @@ explicit probabilities (.10, .25, .50, .75, .90), a Python convention.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from math import isfinite
 from typing import Any
 
@@ -20,7 +20,7 @@ from scipy.special import logsumexp, ndtri
 
 from ._cdflib import _freeze
 from ._validation import FloatArray, count, finite
-from .survan_cox import SurvanCox, survan_cox
+from .survan_cox import SurvanCox, _encode_strata, survan_cox
 from .survan_cox_likelihood import _combine_moments, _CoxLikelihood, _weighted_moments
 
 _MAX_SURFACE_CELLS = 2_000_000
@@ -52,6 +52,22 @@ class SurvivalCoxContour:
     quantile_se_log_survival: FloatArray
 
 
+@dataclass(frozen=True)
+class SurvivalStratifiedCoxContour:
+    """One shared Cox fit with an independently estimated baseline per stratum."""
+
+    fit: SurvanCox
+    stratum_labels: tuple[str | int, ...]
+    contours: tuple[SurvivalCoxContour, ...]
+
+    def for_stratum(self, label: str | int) -> SurvivalCoxContour:
+        """Return the contour for a first-seen stratum label."""
+        try:
+            return self.contours[self.stratum_labels.index(label)]
+        except ValueError as exc:
+            raise KeyError(label) from exc
+
+
 def survival_cox_contour(
     time: ArrayLike,
     event: ArrayLike,
@@ -65,6 +81,38 @@ def survival_cox_contour(
     confidence: float = 0.95,
     quantile_probabilities: ArrayLike = _DEFAULT_QUANTILES,
     ties: str = "efron",
+) -> SurvivalCoxContour:
+    """Fit Cox regression and predict a continuous-covariate survival contour."""
+    return _cox_contour_impl(
+        time,
+        event,
+        x,
+        continuous_column,
+        grid=grid,
+        profile=profile,
+        times=times,
+        n_grid=n_grid,
+        confidence=confidence,
+        quantile_probabilities=quantile_probabilities,
+        ties=ties,
+    )
+
+
+def _cox_contour_impl(
+    time: ArrayLike,
+    event: ArrayLike,
+    x: ArrayLike,
+    continuous_column: int,
+    *,
+    grid: ArrayLike | None = None,
+    profile: ArrayLike | None = None,
+    times: ArrayLike | None = None,
+    n_grid: int = 30,
+    confidence: float = 0.95,
+    quantile_probabilities: ArrayLike = _DEFAULT_QUANTILES,
+    ties: str = "efron",
+    fit_override: SurvanCox | None = None,
+    baseline_data: tuple[ArrayLike, ArrayLike, ArrayLike] | None = None,
 ) -> SurvivalCoxContour:
     """Fit Cox regression and predict a continuous-covariate survival contour.
 
@@ -177,12 +225,37 @@ def survival_cox_contour(
         + probabilities.size
         + prediction_times.size
     )
+
     if cells > _MAX_SURFACE_CELLS:
         raise ValueError("combined Cox contour output exceeds the 2,000,000-cell limit")
 
-    fit = survan_cox(t, e, design, ties=ties)
+    fit = fit_override if fit_override is not None else survan_cox(t, e, design, ties=ties)
 
-    event_times, baseline = _cox_baseline(t, e, normalized - center, fit.scaled_coefficients, ties)
+    if baseline_data is None:
+        baseline_time, baseline_event = t, e
+    else:
+        baseline_time, baseline_event, baseline_design = (
+            finite(baseline_data[0], "baseline time"),
+            count(baseline_data[1], "baseline event"),
+            finite(baseline_data[2], "baseline design"),
+        )
+        if (
+            baseline_time.ndim != 1
+            or baseline_event.shape != baseline_time.shape
+            or baseline_design.shape != (baseline_time.size, design.shape[1])
+            or baseline_time.size == 0
+            or np.any(baseline_time < 0)
+            or np.any(baseline_event > 1)
+        ):
+            raise ValueError(
+                "baseline data must be nonempty matching nonnegative times and binary events"
+            )
+    normalized_baseline = (
+        normalized - center if baseline_data is None else baseline_design / scale - center
+    )
+    event_times, baseline = _cox_baseline(
+        baseline_time, baseline_event, normalized_baseline, fit.scaled_coefficients, ties
+    )
     zcrit = float(-ndtri((1 - conf) / 2))
     scaled_covariance = fit.covariance * scale[:, None] * scale[None, :]
 
@@ -241,6 +314,179 @@ def survival_cox_contour(
         _freeze(q_hazard),
         _freeze(q_se),
     )
+
+
+def survival_stratified_cox_contour(
+    time: ArrayLike,
+    event: ArrayLike,
+    x: ArrayLike,
+    continuous_column: int,
+    *,
+    strata: ArrayLike,
+    grid: ArrayLike | None = None,
+    profile: ArrayLike | None = None,
+    times: ArrayLike | None = None,
+    n_grid: int = 30,
+    confidence: float = 0.95,
+    quantile_probabilities: ArrayLike = _DEFAULT_QUANTILES,
+    ties: str = "efron",
+) -> SurvivalStratifiedCoxContour:
+    """Fit shared effects and return separate baseline contours by first-seen stratum.
+
+    The default times are each stratum's distinct observed times with zero
+    prepended when needed. An event recorded at zero is therefore shown
+    post-event at zero; this explicit Python boundary convention avoids an
+    artificial pre-event survival value at the same timestamp. Caller times
+    are common to all strata and use the same right-continuous step rule as
+    :func:`survival_cox_contour`.
+    """
+    codes, labels = _encode_strata(strata)
+    if any(np.iscomplexobj(value) for value in (time, event, x)):
+        raise ValueError("time, event and x must be real")
+    t = finite(time, "time")
+    e = count(event, "event")
+    raw_design = np.asarray(x)
+    if raw_design.ndim == 1:
+        design_shape = (raw_design.size, 1)
+    else:
+        design_shape = raw_design.shape
+    if (
+        t.ndim != 1
+        or t.size != codes.size
+        or e.shape != t.shape
+        or len(design_shape) != 2
+        or design_shape[0] != codes.size
+        or not 1 <= design_shape[1] <= 100
+        or codes.size > 100_000
+        or codes.size < 2
+        or codes.size * design_shape[1] > 2_000_000
+        or np.any(t < 0)
+        or np.any(e > 1)
+    ):
+        raise ValueError(
+            "require matching 2..100,000 rows, valid events and at most 2e6 design entries"
+        )
+    design = finite(x, "x")
+    if design.ndim == 1:
+        design = design[:, None]
+
+    # Bound the complete retained surface before fitting the shared model.
+    if times is None:
+        time_count = sum(
+            np.unique(t[codes == group]).size + int(not np.any(t[codes == group] == 0))
+            for group in range(len(labels))
+        )
+    else:
+        if np.iscomplexobj(times):
+            raise ValueError("times must be real")
+        raw_times = finite(times, "times")
+        if (
+            raw_times.ndim != 1
+            or raw_times.size == 0
+            or raw_times.size > 100_000
+            or np.any(raw_times < 0)
+            or np.any(np.diff(raw_times) <= 0)
+        ):
+            raise ValueError("times must be a nonempty vector of at most 100,000 values")
+        time_count = raw_times.size
+    if grid is None:
+        if isinstance(n_grid, (bool, np.bool_)) or not isinstance(n_grid, (int, np.integer)):
+            raise ValueError("n_grid must be an integer")
+        grid_count = int(n_grid)
+    else:
+        if np.iscomplexobj(grid):
+            raise ValueError("grid must be real")
+        raw_grid = np.asarray(grid)
+        if raw_grid.ndim != 1:
+            raise ValueError("grid must be one-dimensional")
+        grid_count = raw_grid.size
+    if not 2 <= grid_count <= 2000:
+        raise ValueError("grid must contain 2..2,000 points")
+    if isinstance(continuous_column, (bool, np.bool_)) or not isinstance(
+        continuous_column, (int, np.integer)
+    ):
+        raise ValueError("continuous_column must be an integer column index")
+    if not 0 <= continuous_column < design.shape[1]:
+        raise ValueError("continuous_column must index a design column")
+    if (
+        isinstance(n_grid, (bool, np.bool_))
+        or not isinstance(n_grid, (int, np.integer))
+        or not 2 <= n_grid <= 2000
+    ):
+        raise ValueError("n_grid must be in 2..2000")
+    _scalar_probability(confidence, "confidence", open_interval=True)
+    if ties not in ("breslow", "efron"):
+        raise ValueError("ties must be 'breslow' or 'efron'")
+    if profile is not None:
+        if np.iscomplexobj(profile):
+            raise ValueError("profile must be real")
+        profile_values = finite(profile, "profile")
+        if profile_values.ndim != 1 or profile_values.size != design.shape[1]:
+            raise ValueError("profile must contain one value per covariate")
+    if np.iscomplexobj(quantile_probabilities):
+        raise ValueError("quantile_probabilities must be real")
+    raw_quantiles = np.asarray(quantile_probabilities)
+    if raw_quantiles.ndim != 1 or not 1 <= raw_quantiles.size <= 20:
+        raise ValueError("quantile_probabilities must contain 1..20 values")
+    quantile_values = finite(quantile_probabilities, "quantile_probabilities")
+    if (
+        np.any((quantile_values <= 0) | (quantile_values >= 1))
+        or np.unique(quantile_values).size != quantile_values.size
+    ):
+        raise ValueError("quantile_probabilities must be distinct values in (0,1)")
+    grid_values = None if grid is None else finite(grid, "grid")
+    if grid_values is not None and (
+        grid_values.ndim != 1
+        or grid_values.size != grid_count
+        or np.any(grid_values[1:] <= grid_values[:-1])
+    ):
+        raise ValueError("grid must be a strictly increasing vector")
+    n_times_by_stratum = (
+        [
+            np.unique(t[codes == group]).size + int(not np.any(t[codes == group] == 0))
+            for group in range(len(labels))
+        ]
+        if times is None
+        else [time_count] * len(labels)
+    )
+    cells_by_stratum = [
+        5 * (grid_count + quantile_values.size) * size
+        + (grid_count + quantile_values.size) * design.shape[1]
+        + grid_count
+        + quantile_values.size
+        + size
+        for size in n_times_by_stratum
+    ]
+    if sum(cells_by_stratum) > _MAX_SURFACE_CELLS:
+        raise ValueError("combined stratified Cox surfaces exceed the 2,000,000-cell limit")
+
+    shared_fit = survan_cox(t, e, design, ties=ties, strata=codes)
+    shared_fit = replace(shared_fit, strata_labels=tuple(labels))
+    contours: list[SurvivalCoxContour] = []
+    for stratum_index in range(len(labels)):
+        selected = codes == stratum_index
+        local_times = (
+            np.r_[0.0, np.unique(t[selected])] if times is None else finite(times, "times")
+        )
+        local_times = np.unique(local_times) if times is None else local_times
+        contours.append(
+            _cox_contour_impl(
+                t,
+                e,
+                design,
+                continuous_column,
+                grid=grid_values,
+                profile=profile,
+                times=local_times,
+                n_grid=n_grid,
+                confidence=confidence,
+                quantile_probabilities=quantile_probabilities,
+                ties=ties,
+                fit_override=shared_fit,
+                baseline_data=(t[selected], e[selected], design[selected]),
+            )
+        )
+    return SurvivalStratifiedCoxContour(shared_fit, tuple(labels), tuple(contours))
 
 
 def plot_survival_contour_2d(

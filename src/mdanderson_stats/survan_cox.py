@@ -1,6 +1,8 @@
 """SURVAN multivariable Cox regression with Breslow tied-event likelihood."""
 
+from collections.abc import Sequence
 from dataclasses import dataclass
+from typing import cast
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -28,6 +30,7 @@ class SurvanCox:
     column_center: FloatArray
     scaled_coefficients: FloatArray
     ties: str = "breslow"
+    strata_labels: tuple[str | int, ...] = ()
 
     def log_relative_hazard(self, x: ArrayLike) -> FloatArray:
         """Log hazard relative to the training covariate means, not baseline survival."""
@@ -46,19 +49,28 @@ class SurvanCox:
 
 
 def survan_cox(
-    time: ArrayLike, event: ArrayLike, x: ArrayLike, *, ties: str = "breslow"
+    time: ArrayLike,
+    event: ArrayLike,
+    x: ArrayLike,
+    *,
+    ties: str = "breslow",
+    strata: ArrayLike | None = None,
 ) -> SurvanCox:
     """Fit a static-covariate proportional-hazards model without an intercept.
 
-    Events=1 and right censors=0. Tied censors remain in risk sets. ``ties`` is
+    Events=1 and right censors=0. Tied censors remain in risk sets. Optional
+    string or integer ``strata`` labels fit shared covariate effects with separate baseline
+    hazards. ``ties`` is
     ``"breslow"`` (the backward-compatible default) or ``"efron"``. Rank
     deficiency and monotone likelihood raise errors. Time-varying covariates,
     delayed entry, case weights and baseline survival estimation are not included.
     """
     if ties not in ("breslow", "efron"):
         raise ValueError("ties must be 'breslow' or 'efron'")
-    if any(np.iscomplexobj(a) for a in (time, event, x)):
-        raise ValueError("time, event and x must be real")
+    if any(np.iscomplexobj(a) for a in (time, event, x)) or (
+        strata is not None and np.iscomplexobj(strata)
+    ):
+        raise ValueError("time, event, x and strata must be real")
     t, e, xx = finite(time, "time"), count(event, "event"), finite(x, "x")
     if xx.ndim == 1:
         xx = xx[:, None]
@@ -79,6 +91,13 @@ def survan_cox(
         )
     if not e.any():
         raise ValueError("Cox regression requires events")
+    if strata is None:
+        strata_codes = None
+        strata_labels: tuple[str | int, ...] = ()
+    else:
+        strata_codes, strata_labels = _encode_strata(strata)
+        if strata_codes.shape != t.shape:
+            raise ValueError("strata must contain one label per row")
     p = xx.shape[1]
     scale = np.max(np.abs(xx), axis=0)
     if np.any(scale == 0):
@@ -88,7 +107,7 @@ def survan_cox(
     design = normalized - center
     if np.linalg.matrix_rank(design) < p:
         raise ValueError("Cox design is rank deficient; do not include an intercept")
-    model = _CoxLikelihood(t, e, design, ties=ties)
+    model = _CoxLikelihood(t, e, design, ties=ties, strata=strata_codes)
     beta = np.zeros(p)
     null_nll, gradient, info, _ = model.evaluate(beta)
     if np.linalg.matrix_rank(info) < p:
@@ -144,4 +163,42 @@ def survan_cox(
         _freeze(center),
         _freeze(beta),
         ties,
+        strata_labels,
     )
+
+
+def _encode_strata(values: ArrayLike) -> tuple[np.ndarray, tuple[str | int, ...]]:
+    if isinstance(values, np.ndarray):
+        if values.ndim != 1 or values.size > 100_000:
+            raise ValueError("strata must be a one-dimensional vector of at most 100,000 labels")
+        raw = values.astype(object, copy=False)
+    else:
+        try:
+            sequence = cast(Sequence[object], values)
+            length = len(sequence)
+        except TypeError as exc:
+            raise ValueError("strata must be a bounded one-dimensional label sequence") from exc
+        if length > 100_000:
+            raise ValueError("strata must contain at most 100,000 labels")
+        raw = np.fromiter(sequence, dtype=object, count=length)
+    if raw.ndim != 1 or raw.size > 100_000:
+        raise ValueError("strata must be a one-dimensional vector of at most 100,000 labels")
+    labels: list[str | int] = []
+    lookup: dict[str | int, int] = {}
+    codes = np.empty(raw.size, dtype=np.int64)
+    for index, value in enumerate(raw.tolist()):
+        if isinstance(value, (bool, np.bool_)):
+            raise ValueError("stratum labels cannot be booleans")
+        if isinstance(value, (int, np.integer)):
+            label: str | int = int(value)
+        elif isinstance(value, (str, np.str_)) and str(value):
+            label = str(value)
+        else:
+            raise ValueError("stratum labels must be nonempty strings or integers")
+        if label not in lookup:
+            lookup[label] = len(labels)
+            labels.append(label)
+        codes[index] = lookup[label]
+    if not labels or len(labels) > 100:
+        raise ValueError("require 1..100 strata")
+    return codes, tuple(labels)
