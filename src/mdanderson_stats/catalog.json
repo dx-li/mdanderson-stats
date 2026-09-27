@@ -2992,7 +2992,9 @@
       "kind": "desktop",
       "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/92",
       "application_url": null,
-      "references": [],
+      "references": [
+        "https://odin.mdacc.tmc.edu/~pfthall/main/JBS_AR_Utility2012.pdf"
+      ],
       "downloads": [
         {
           "id": 442,
@@ -3002,9 +3004,18 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Saturated logistic continuation marginals, Gaussian copula, optional monotone dose increments and stable independent-outcome log probabilities.",
+        "Explicit normal/truncated-normal priors, serial posterior fitting with fixed or inferred correlation, direct prior sampling, retained draws and chain diagnostics.",
+        "Global near-optimality and probability-best criteria, strict toxicity monitoring, good-outcome adaptive randomization, no-skipping escalation and explicit final-selection policies.",
+        "Bounded retained memory and combined likelihood/rectangle work; docs/uaroet.md."
+      ],
+      "validation": [
+        "Independent base-R integration of six copula scenarios, including published radiation-therapy probabilities, and reduced logistic-normal posterior moments; tests/test_uaroet_reference.py.",
+        "Focused monotone logits, limiting copulas, prior-only fitting, all-tied-best events, good-outcome weights and final-policy checks; tests/test_uaroet.py. Small inferred-correlation fit completed with finite draws.",
+        "Native prior files, automatic pseudo-trial/ESS calibration, complete trial simulation and native executable/report parity remain open."
+      ]
     },
     {
       "id": 94,

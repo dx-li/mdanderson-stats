@@ -984,6 +984,14 @@ from .u2oet_scenario import (
 )
 from .u2oet_simulation import U2OETTrial, U2OETTrialDecision, simulate_u2oet_trial
 from .u2oet_summary import U2OETOperatingCharacteristics, summarize_u2oet_trials
+from .uaroet import (
+    UAROETProbabilities,
+    uaroet_logits,
+    uaroet_parameter_names,
+    uaroet_probabilities,
+)
+from .uaroet_decision import UAROETAllocation, uaroet_allocation
+from .uaroet_fit import UAROETFit, fit_uaroet
 from .uboin import UBOINPosterior, uboin_allocation, uboin_posterior
 from .uboin_conduct import UBOINDecision, UBOINDesign, UBOINSelection
 from .uboin_simulation import UBOINSimulation, simulate_uboin, uboin_gumbel_probabilities
@@ -1253,6 +1261,14 @@ __all__ = [
     "catbub_analysis",
     "catbub_thresholds",
     "catbub_operating_characteristics",
+    "UAROETAllocation",
+    "UAROETFit",
+    "UAROETProbabilities",
+    "fit_uaroet",
+    "uaroet_allocation",
+    "uaroet_logits",
+    "uaroet_parameter_names",
+    "uaroet_probabilities",
     "U2OETOperatingCharacteristics",
     "summarize_u2oet_trials",
     "U2OETTrial",

@@ -1,5 +1,12 @@
 # Next uncovered method: UAROET
 
+Historical planning note from the MTADF checkpoint. The subsequent
+[UAROET audit](uaroet-audit.md) records the implemented probability,
+explicit-prior posterior and allocation workflow; entry 92 is now partial.
+The model below was preliminary: the verified method has a toxicity safety
+criterion and utility-based efficacy selection, not a separate marginal
+efficacy-futility cutoff.
+
 Entry 92 remains pending. The official desktop page was verified on 2026-09-26:
 https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/92
 

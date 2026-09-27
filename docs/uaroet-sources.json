@@ -1,0 +1,29 @@
+{
+  "catalog_ids": [92],
+  "retrieved_at": "2026-09-26",
+  "sources": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/92",
+      "version": "UAROET 1.8, last modified 2016-06-28",
+      "role": "Identifies the desktop program and its Thall/Nguyen (2012) method."
+    },
+    {
+      "url": "https://odin.mdacc.tmc.edu/~pfthall/main/JBS_AR_Utility2012.pdf",
+      "role": "Published primary specification: Sections 3–5 give saturated continuation marginals, Gaussian copula, monotone increments, independent normal/truncated-normal priors, allocation criteria and the radiation-therapy example."
+    },
+    {
+      "url": "https://statmodeling.stat.columbia.edu/wp-content/uploads/2012/07/ph12utilar_preprint.pdf",
+      "role": "Author preprint with legible mathematical text, used to cross-check the published PDF's character encoding."
+    }
+  ],
+  "implementation_choices": [
+    "Independent paper-based implementation with efficacy-by-toxicity array axes and zero-based doses/categories.",
+    "Logistic continuation probabilities; monotone endpoints use baseline logits plus nonnegative increments. Nonmonotone endpoints use free logits at each dose.",
+    "Explicit underlying normal prior means and standard deviations; positive increments have truncated-normal priors. The common Gaussian-copula correlation is uniform on (-1,1) unless explicitly fixed.",
+    "The strict toxicity event in equation 6 is used; Section 5's inclusive example differs only at exact equality.",
+    "Near-optimality and probability-of-being-best are defined across all doses before safety filtering, following equations 7–9. All tied maxima count toward probability-of-being-best.",
+    "Adaptive randomization is proportional to predictive good-outcome probability, not mean utility. No untried dose may be skipped during escalation.",
+    "Final selection exposes both an acceptable-set maximum and the literal Section 4.4 global maximum gated by a nonempty acceptable set; the distinction is explicit because these differ when the global best is unsafe."
+  ],
+  "limitations": "Native prior files, hidden sampler settings, automatic elicitation/ESS calibration, full trial simulation and executable/output parity remain separate work. The original executable and paper are not redistributed."
+}

@@ -1214,6 +1214,14 @@ and safety stopping. A serial simulator reports dose allocation, selection and
 Monte Carlo uncertainty. Independent R calculations check the numerical core;
 native application settings and output equivalence remain open.
 
+[UAROET ordinal dose finding](docs/uaroet.md) adds continuation-logit outcome
+models joined by a Gaussian copula, explicit-prior posterior fitting and
+utility-based adaptive randomization. Safety, near-optimality and probability
+of being best determine acceptable doses; good-outcome probabilities determine
+allocation weights. Independent R integration checks the probability model and
+a reduced posterior. Prior calibration, full trial simulation and native
+workflow equivalence remain open.
+
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
 outcomes. These include exact one-sample count tests, historical controls,
