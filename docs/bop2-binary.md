@@ -8,6 +8,9 @@ exact operating characteristics, and power-maximizing finite-grid calibration.
 integrated reports remain pending. Categorical [sample-size optimization](bop2-sample-size.md)
 is available.
 
+The retired [desktop entry 144](bop2-desktop.md) explicitly points to this
+online successor; the shared Python coverage is mapped there.
+
 The app snapshot is version 1.4.27.0, updated September 4, 2026. Its binary-prior
 and error-control guides are pinned in [provenance](bop2-sources.json). The original
 method is Zhou, Lee and Yuan (2017), DOI 10.1002/sim.7338. The strict futility

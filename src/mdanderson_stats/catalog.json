@@ -4039,9 +4039,17 @@
       ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Retired desktop distribution: the official entry explicitly directs users to online BOP2 (catalog 112); shared successor coverage is documented in docs/bop2-desktop.md",
+        "Existing successor methods cover binary efficacy/toxicity, ordinal/multiple efficacy, joint efficacy/toxicity and single-arm survival monitoring, operating characteristics, calibration and sample-size searches",
+        "Retired desktop numerical equivalence, native protocol/report formats and animation remain unverified; later successor features are not attributed to the 2020 desktop build"
+      ],
+      "validation": [
+        "Official desktop retirement notice verified 2026-09-27 UTC: version 1.3.6.1, dated 2020-04-15, points to the online BOP2 application",
+        "Existing exact rational/enumeration categorical references and independent survival/calibration checks are recorded under catalog 112 and docs/bop2-sources.json; no new numerical engine or duplicate tests",
+        "Current successor endpoint list observed at 1.4.29.0 (2026-09-16); numerical source snapshot remains 1.4.27.0 (2026-09-04), without a new-build parity claim"
+      ]
     },
     {
       "id": 145,

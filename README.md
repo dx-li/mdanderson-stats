@@ -730,6 +730,9 @@ alongside selection probabilities, allocation, toxicity and duration summaries.
 
 ## BOP2 efficacy and toxicity monitoring
 
+The [retired BOP2 desktop entry](docs/bop2-desktop.md) directs users to the
+online method family implemented below.
+
 [BOP2 binary efficacy and toxicity](docs/bop2-binary.md) provides posterior stopping boundaries,
 exact operating characteristics and power-maximizing grid calibration. Calibration
 and informative-prior analysis are reported separately.
