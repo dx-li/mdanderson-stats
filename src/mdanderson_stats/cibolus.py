@@ -219,8 +219,14 @@ def _log_continuous_increment(
     else:
         log_ratio_arg = log1mv + np.log(duration) - logwl
         log_dz = np.log(alpha[5]) + _log_softplus(log_ratio_arg)
+        z_lower = np.log(alpha[4]) + alpha[5] * (logx + logwl)
         if z_upper < -36:
-            log_correction = log_dz if log_dz < -36 else _log1mexp(-float(np.exp(log_dz)))
+            if log_dz < -36:
+                log_correction = log_dz
+            elif log_dz > np.log(np.finfo(float).max):
+                log_correction = 0.0
+            else:
+                log_correction = _log1mexp(-float(np.exp(log_dz)))
             log_extra = (
                 np.log(alpha[4])
                 + (alpha[5] - 1) * logx
@@ -229,21 +235,13 @@ def _log_continuous_increment(
                 - log1mv
             )
         elif log_dz < np.log(50.0):
-            z_lower = np.log(alpha[4]) + alpha[5] * (logx + logwl)
             log_expm1_dz = log_dz if log_dz < -36 else _log_expm1(float(np.exp(log_dz)))
             log_term = -float(np.logaddexp(0.0, -z_lower)) + log_expm1_dz
             log_extra = _log_softplus(log_term) - logk
         else:
-            if z_upper < -36:
-                log_extra = (
-                    np.log(alpha[4]) + (alpha[5] - 1) * logx + alpha[5] * logwu + log_dz - log1mv
-                )
-            elif z_lower > 36:
+            if z_lower > 36:
                 log_extra = float(log_dz - logk)
             else:
-                dz = float(np.exp(log_dz))
-                z_lower = np.log(alpha[4]) + alpha[5] * (logx + logwl)
-                z_upper = z_lower + dz
                 difference = float(np.logaddexp(0.0, z_upper) - np.logaddexp(0.0, z_lower))
                 if difference <= 0:
                     raise ArithmeticError(
@@ -271,7 +269,11 @@ def _response_terms(
     log_bolus, bolus_hazard = _bolus_logmass(alpha, concentration, bolus)
     continuous = _continuous_cumulative(alpha, concentration, bolus, time)
     log_survival = -bolus_hazard - continuous
-    log_density = log_survival + _continuous_hazard_log(alpha, concentration, bolus, time)
+    log_density = (
+        -np.inf
+        if log_survival == -np.inf
+        else log_survival + _continuous_hazard_log(alpha, concentration, bolus, time)
+    )
     if time == 0:
         log_density = -np.inf
     if log_survival > 0 or np.isnan(log_survival):
@@ -279,6 +281,28 @@ def _response_terms(
     with np.errstate(under="ignore"):
         cdf = float(-np.expm1(log_survival))
     return log_bolus, log_survival, log_density, cdf
+
+
+def _response_interval_logmass(
+    alpha: FloatArray, concentration: float, bolus: float, lower: float, upper: float
+) -> float:
+    """Log response mass in (lower, upper], using the integrated increment directly."""
+    bolus_log, bolus_hazard = _bolus_logmass(alpha, concentration, bolus)
+    del bolus_log
+    lower_cumulative = _continuous_cumulative(alpha, concentration, bolus, lower)
+    log_survival_lower = -bolus_hazard - lower_cumulative
+    if log_survival_lower == -np.inf:
+        return -np.inf
+    log_increment = _log_continuous_increment(alpha, concentration, bolus, lower, upper)
+    if log_increment == -np.inf:
+        return -np.inf
+    if log_increment < -36:
+        # 1-exp(-x) = x with relative error below 1e-16 for x<exp(-36).
+        return float(log_survival_lower + log_increment)
+    if log_increment > np.log(np.finfo(float).max):
+        return float(log_survival_lower)
+    increment = float(np.exp(log_increment))
+    return float(log_survival_lower + _log1mexp(-increment))
 
 
 @dataclass(frozen=True)
@@ -314,7 +338,12 @@ def cibolus_response(
         survival[index] = -bolus_hazard - cumulative[index]
         cdf[index] = -np.expm1(survival[index]) if np.isfinite(survival[index]) else 1.0
         loghazard = _continuous_hazard_log(alpha, concentration_value, bolus, time)
-        hazard[index] = 0.0 if loghazard < np.log(np.nextafter(0.0, 1.0)) else np.exp(loghazard)
+        if loghazard > np.log(np.finfo(float).max):
+            hazard[index] = np.inf
+        elif loghazard < np.log(np.nextafter(0.0, 1.0)):
+            hazard[index] = 0.0
+        else:
+            hazard[index] = np.exp(loghazard)
     return CiBolusResponse(
         bolus_probability,
         _freeze(cdf),
@@ -450,19 +479,9 @@ def cibolus_predict(
             joint[ci, qi, 0, 0] = bolus_mass - joint[ci, qi, 0, 1]
             lower = 0.0
             for ei, upper in enumerate(endpoint_value):
-                _, log_low, _, _ = _response_terms(alpha, float(concentration), float(bolus), lower)
-                log_increment = _log_continuous_increment(
+                log_mass = _response_interval_logmass(
                     alpha, float(concentration), float(bolus), lower, float(upper)
                 )
-                if log_low == -np.inf:
-                    log_mass = -np.inf
-                elif log_increment == -np.inf:
-                    log_mass = -np.inf
-                elif log_increment > np.log(np.finfo(float).max):
-                    log_mass = log_low
-                else:
-                    increment = float(np.exp(log_increment))
-                    log_mass = log_low + _log1mexp(-increment)
                 mass = 0.0 if log_mass == -np.inf else float(np.exp(log_mass))
                 category = ei + 1
                 response[ci, qi, category] = mass
@@ -535,10 +554,9 @@ def cibolus_loglikelihood(
             tox_time, failure = row.time, False
         elif row.kind == "interval":
             assert row.lower is not None and row.upper is not None
-            _, low, _, _ = _response_terms(alpha, row.concentration, row.bolus_fraction, row.lower)
-            _, high, _, _ = _response_terms(alpha, row.concentration, row.bolus_fraction, row.upper)
-            delta = high - low
-            log_response = low + _log1mexp(delta)
+            log_response = _response_interval_logmass(
+                alpha, row.concentration, row.bolus_fraction, row.lower, row.upper
+            )
             tox_time, failure = row.upper, False
         else:
             _, log_response, _, _ = _response_terms(
