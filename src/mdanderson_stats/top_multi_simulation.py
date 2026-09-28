@@ -31,6 +31,62 @@ class TOPMultiEndpointSimulation:
     combined_stop_probability: float
 
 
+@dataclass(frozen=True)
+class _TopMultiUniforms:
+    """Parameter-independent random numbers reused by calibration scenarios."""
+
+    arrival: FloatArray
+    joint_cell: FloatArray
+    timing_component: FloatArray
+    timing_within: FloatArray
+
+
+def _draw_multiendpoint_uniforms(
+    generator: np.random.Generator, shape: tuple[int, int]
+) -> _TopMultiUniforms:
+    return _TopMultiUniforms(
+        generator.random(shape),
+        generator.random(shape),
+        generator.random((*shape, 2)),
+        generator.random((*shape, 2)),
+    )
+
+
+def _multiendpoint_potential_from_uniforms(
+    design: TOPMultiEndpointDesign,
+    truth: FloatArray,
+    accrual_rate: float,
+    arrival: str,
+    timing: FloatArray,
+    uniforms: _TopMultiUniforms,
+) -> tuple[FloatArray, FloatArray]:
+    """Transform shared uniforms into one scenario's potential calendar data."""
+    shape = uniforms.joint_cell.shape
+    gaps = (
+        np.full(shape, 1 / accrual_rate)
+        if arrival == "fixed"
+        else -np.log1p(-uniforms.arrival) / accrual_rate
+    )
+    cell_cdf = np.cumsum(truth)
+    cell_cdf /= cell_cdf[-1]
+    cell = np.searchsorted(cell_cdf, uniforms.joint_cell, side="right")
+    event = np.stack((np.isin(cell, (0, 1)), np.isin(cell, (0, 2))), axis=-1)
+    delays = np.full((*shape, 2), np.inf)
+    windows = np.asarray(design.windows)
+    for endpoint in range(2):
+        component_cdf = np.cumsum(timing[endpoint])
+        component_cdf /= component_cdf[-1]
+        component = np.searchsorted(
+            component_cdf,
+            uniforms.timing_component[..., endpoint],
+            side="right",
+        )
+        within = uniforms.timing_within[..., endpoint]
+        potential = ((component + within) / 3) * windows[endpoint]
+        delays[..., endpoint] = np.where(event[..., endpoint], potential, np.inf)
+    return gaps, delays
+
+
 def _timing_probabilities(value: ArrayLike, name: str) -> FloatArray:
     if np.shape(value) not in ((3,), (2, 3)):
         raise ValueError(f"{name} must be a triple or two nonnegative triples summing to one")
@@ -69,6 +125,8 @@ def simulate_top_multiendpoint(
     At most 2 million endpoint-patient cells are materialized, and only compact
     per-trial summaries are retained (no trial-by-time histories).
     """
+    if not isinstance(design, TOPMultiEndpointDesign):
+        raise TypeError("design must be a TOPMultiEndpointDesign")
     n_trials = _integer(trials, "trials")
     if not 1 <= n_trials <= 100_000:
         raise ValueError("trials must be an integer from 1 through 100,000")
@@ -98,20 +156,10 @@ def simulate_top_multiendpoint(
     )
     generator = np.random.default_rng(rng)
     shape = (n_trials, design.max_subjects)
-    gaps = (
-        np.full(shape, 1 / rate)
-        if arrival == "fixed"
-        else generator.exponential(1 / rate, size=shape)
+    uniforms = _draw_multiendpoint_uniforms(generator, shape)
+    gaps, delays = _multiendpoint_potential_from_uniforms(
+        design, truth, rate, arrival, timing, uniforms
     )
-    cell = generator.choice(4, size=shape, p=truth)
-    event = np.stack((np.isin(cell, (0, 1)), np.isin(cell, (0, 2))), axis=-1)
-    delays = np.full((n_trials, design.max_subjects, 2), np.inf)
-    windows = np.asarray(design.windows)
-    for endpoint in range(2):
-        component = generator.choice(3, size=shape, p=timing[endpoint])
-        within = generator.random(size=shape)
-        potential = ((component + within) / 3) * windows[endpoint]
-        delays[..., endpoint] = np.where(event[..., endpoint], potential, np.inf)
 
     result = _run_top_multiendpoint_batch(design, gaps, delays)
     success = result.decisions == "success"
