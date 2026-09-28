@@ -43,8 +43,9 @@ uv run --extra plot pytest
 ```
 
 GitHub validation runs on pushes to `main`, pull requests targeting `main` or
-`master`, and manual dispatches. Publishing historical or backup branches does
-not start new validation runs; `master` mirrors the checkpoint tested on `main`.
+`master`, and manual dispatches. Pushes outside `main` do not trigger validation
+by themselves; updates to open pull requests targeting `main` or `master` still
+run validation. `master` mirrors the checkpoint tested on `main`.
 Formatting, lint, types and packaging must pass before the Python 3.12–3.14
 test matrix starts. At most two matrix jobs run at once, with a 25-minute limit
 per job; a newer run cancels a superseded run for the same branch or pull request.
