@@ -51,7 +51,7 @@ checks before any native compatibility claim.
 Next implementation should preserve the coefficient-level covariance and
 mixture shrinkage model, with bounded sampling and explicit assumptions.
 Neither a generic mixed-model wrapper nor wavelet denoising alone completes
-WFMM. No implementation or native example execution is claimed here.
+WFMM. No native example execution is claimed here.
 
 ## Independent reduced-posterior reference
 
@@ -86,3 +86,20 @@ coefficient quantiles. Simultaneous bands require a maximum standardized
 deviation over the time grid for each draw, a distinct calculation from
 pointwise quantiles. This is follow-on coverage after the model and transform
 layers; native output-file parity remains separate.
+
+## Python transform checkpoint
+
+The public basis API now supports identity, custom square orthogonal matrices,
+and periodic decimated Daubechies db1–db10 transforms. Coefficients are packed
+as `[a_J,d_J,...,d_1]`, using even-index decimation with forward tap offsets;
+scale and partition labels accompany the immutable result. The default level
+is the largest power of two dividing the curve length. The transform uses
+bounded row-wise filtering rather than constructing a dense wavelet matrix.
+Custom matrices use `D=Y*W` and `Y=D*W.T` after an orthogonality check.
+
+Three focused checks pass after integration with explicit absolute tolerances:
+hand-computed Haar coefficients, a scalar db4 reference, energy conservation,
+inverse reconstruction, custom/identity transforms and a 12-point curve.
+These verify the stated Python convention, not native boundary extension or
+coefficient ordering. The statistical model and posterior summaries are still
+under implementation, so entry 70 remains pending at this checkpoint.

@@ -15,6 +15,10 @@ The original transform C source is used only for local reference calculations;
 it is not included in the package. Reference provenance is recorded in
 [research/pinnacle-audit.md](research/pinnacle-audit.md).
 
+`wfmm_basis.py` reuses the same Daubechies filter construction for its
+orthogonal decimated transform. The Rice Wavelet Toolbox notice also applies
+to that shared filter component.
+
 The surrounding Pinnacle image-analysis methods follow the published algorithm
 and official manual. No Pinnacle executable or application source is bundled.
 The manual identifies US patent 8,031,925; this project makes no representation

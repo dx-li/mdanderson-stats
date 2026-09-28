@@ -1161,6 +1161,7 @@ from .uaroet_fit import UAROETFit, fit_uaroet
 from .uboin import UBOINPosterior, uboin_allocation, uboin_posterior
 from .uboin_conduct import UBOINDecision, UBOINDesign, UBOINSelection
 from .uboin_simulation import UBOINSimulation, simulate_uboin, uboin_gumbel_probabilities
+from .wfmm_basis import WFMMBasis, WFMMTransformed, wfmm_basis, wfmm_inverse, wfmm_transform
 from .windows import (
     WindowCrossValidation,
     WindowNeighborCrossValidation,
@@ -1171,6 +1172,11 @@ from .windows import (
 )
 
 __all__ = [
+    "WFMMBasis",
+    "WFMMTransformed",
+    "wfmm_basis",
+    "wfmm_transform",
+    "wfmm_inverse",
     "EasyCellTypeCluster",
     "EasyCellTypeFisherResult",
     "EasyCellTypeLabel",

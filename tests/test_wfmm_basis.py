@@ -17,7 +17,9 @@ def test_haar_packing_is_hand_computable_and_parseval_holds():
     np.testing.assert_allclose(
         np.sum(transformed.coefficients**2), np.sum(curve**2), rtol=2e-15, atol=0
     )
-    np.testing.assert_allclose(wfmm_inverse(transformed.coefficients, basis), curve, atol=2e-15)
+    np.testing.assert_allclose(
+        wfmm_inverse(transformed.coefficients, basis), curve, rtol=0, atol=5e-15
+    )
     assert not transformed.coefficients.flags.writeable
 
 
@@ -50,18 +52,20 @@ def test_db4_periodic_transform_inverts_and_custom_orthogonal_basis_roundtrips()
             current = low
             details.append(detail)
         reference_rows.append(np.concatenate((current, *details[::-1])))
-    np.testing.assert_allclose(coefficients.coefficients[:1], reference_rows, atol=3e-15)
+    np.testing.assert_allclose(coefficients.coefficients[:1], reference_rows, rtol=0, atol=3e-15)
 
     np.testing.assert_allclose(
-        np.sum(coefficients.coefficients**2, axis=1), np.sum(curves**2, axis=1), atol=2e-12
+        np.sum(coefficients.coefficients**2, axis=1), np.sum(curves**2, axis=1), rtol=0, atol=2e-12
     )
-    np.testing.assert_allclose(wfmm_inverse(coefficients.coefficients, wavelet), curves, atol=2e-12)
+    np.testing.assert_allclose(
+        wfmm_inverse(coefficients.coefficients, wavelet), curves, rtol=0, atol=2e-12
+    )
 
     orthogonal, _ = np.linalg.qr(np.random.default_rng(72).normal(size=(32, 32)))
     custom = wfmm_basis(32, transform="custom", custom_matrix=orthogonal)
     custom_coefficients = wfmm_transform(curves, custom)
     np.testing.assert_allclose(
-        wfmm_inverse(custom_coefficients.coefficients, custom), curves, atol=2e-14
+        wfmm_inverse(custom_coefficients.coefficients, custom), curves, rtol=0, atol=2e-14
     )
     np.testing.assert_array_equal(custom.coefficient_partition, np.zeros(32, dtype=np.int64))
 
@@ -79,6 +83,7 @@ def test_identity_and_level_preflight_are_explicit():
     np.testing.assert_allclose(
         wfmm_inverse(wfmm_transform(non_power_of_two, default_basis).coefficients, default_basis),
         non_power_of_two,
+        rtol=0,
         atol=2e-14,
     )
     with pytest.raises(ValueError, match="orthonormal"):
