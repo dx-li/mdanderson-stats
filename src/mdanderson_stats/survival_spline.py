@@ -33,9 +33,7 @@ def _normal_upper_mills(value: FloatArray) -> tuple[FloatArray, FloatArray]:
         inverse = 1 / x[asymptotic]
         inverse2 = inverse * inverse
         excess[asymptotic] = inverse * (
-            1
-            + inverse2
-            * (-2 + inverse2 * (10 + inverse2 * (-74 + inverse2 * 706)))
+            1 + inverse2 * (-2 + inverse2 * (10 + inverse2 * (-74 + inverse2 * 706)))
         )
         regular = ~asymptotic
         excess[regular] = ratio[regular] - x[regular]
@@ -112,16 +110,10 @@ def _basis(knots: FloatArray, values: FloatArray, derivative: int = 0) -> FloatA
         pos_left = np.maximum(zm - a, 0.0)
         pos_right = np.maximum(zm - b, 0.0)
         if derivative == 0:
-            cubic = (
-                pos_internal**3
-                - lam[None, :] * pos_left**3
-                - (1 - lam)[None, :] * pos_right**3
-            )
+            cubic = pos_internal**3 - lam[None, :] * pos_left**3 - (1 - lam)[None, :] * pos_right**3
         else:
             cubic = 3 * (
-                pos_internal**2
-                - lam[None, :] * pos_left**2
-                - (1 - lam)[None, :] * pos_right**2
+                pos_internal**2 - lam[None, :] * pos_left**2 - (1 - lam)[None, :] * pos_right**2
             )
         result[middle, 2:] = cubic
     if np.any(right):
@@ -186,11 +178,7 @@ def _link_terms(
         ordinary = (~positive_tail) & (eta > -8)
         negative_tail = eta <= -8
         with np.errstate(over="ignore", under="ignore", invalid="ignore"):
-            log_ratio = (
-                -0.5 * eta[ordinary] ** 2
-                - 0.5 * _LOG_2PI
-                - log_survival[ordinary]
-            )
+            log_ratio = -0.5 * eta[ordinary] ** 2 - 0.5 * _LOG_2PI - log_survival[ordinary]
             ratio = np.exp(log_ratio)
             first_survival[ordinary] = -ratio
             second_survival[ordinary] = -ratio * (ratio - eta[ordinary])
@@ -201,9 +189,7 @@ def _link_terms(
         if np.any(negative_tail):
             # The lower-tail ratio underflows harmlessly for very negative eta.
             ratio = np.exp(
-                -0.5 * eta[negative_tail] ** 2
-                - 0.5 * _LOG_2PI
-                - log_survival[negative_tail]
+                -0.5 * eta[negative_tail] ** 2 - 0.5 * _LOG_2PI - log_survival[negative_tail]
             )
             first_survival[negative_tail] = -ratio
             second_survival[negative_tail] = -ratio * (ratio - eta[negative_tail])
@@ -245,8 +231,7 @@ def _loglikelihood(
     ) = _link_terms(eta, scale)
     selected = np.where(
         event == 1,
-        np.log(np.maximum(derivative, np.finfo(float).tiny))
-        + log_density_factor,
+        np.log(np.maximum(derivative, np.finfo(float).tiny)) + log_density_factor,
         log_survival,
     )
     if not np.isfinite(selected).all():
@@ -265,9 +250,7 @@ def _loglikelihood(
     observed = (design.T * (-eta_second)) @ design
     inverse_derivative_squared = np.zeros(derivative.shape)
     np.divide(1.0, derivative**2, out=inverse_derivative_squared, where=event == 1)
-    observed[:m, :m] += (
-        derivative_basis.T * inverse_derivative_squared
-    ) @ derivative_basis
+    observed[:m, :m] += (derivative_basis.T * inverse_derivative_squared) @ derivative_basis
     observed = (observed + observed.T) / 2
     if not np.isfinite(observed).all():
         raise ArithmeticError("spline observed information exceeds numerical range")
@@ -321,9 +304,11 @@ def fit_survival_spline(
     tol = scalar(tolerance, "tolerance")
     if not 1e-10 <= tol <= 1e-2:
         raise ValueError("tolerance must be in [1e-10, 1e-2]")
-    if isinstance(max_iterations, (bool, np.bool_)) or not isinstance(
-        max_iterations, (int, np.integer)
-    ) or not 1 <= max_iterations <= 10_000:
+    if (
+        isinstance(max_iterations, (bool, np.bool_))
+        or not isinstance(max_iterations, (int, np.integer))
+        or not 1 <= max_iterations <= 10_000
+    ):
         raise ValueError("max_iterations must be an integer in [1, 10000]")
     t, event_values, raw_design = _data(time, event, covariates)
     positive = t > 0
@@ -337,17 +322,17 @@ def fit_survival_spline(
 
     if internal_knots is None:
         knot_count = 4 if k is None else k
-        if isinstance(knot_count, (bool, np.bool_)) or not isinstance(
-            knot_count, (int, np.integer)
-        ) or not 0 <= knot_count <= _MAX_INTERNAL_KNOTS:
+        if (
+            isinstance(knot_count, (bool, np.bool_))
+            or not isinstance(knot_count, (int, np.integer))
+            or not 0 <= knot_count <= _MAX_INTERNAL_KNOTS
+        ):
             raise ValueError(f"k must be an integer in [0, {_MAX_INTERNAL_KNOTS}]")
         if knot_count > 0 and knot_count >= event_times.size:
             raise ValueError("k must be smaller than the number of exact event times")
         probabilities = np.arange(1, int(knot_count) + 1) / (int(knot_count) + 1)
         inner = (
-            np.quantile(event_times, probabilities, method="linear")
-            if knot_count
-            else np.empty(0)
+            np.quantile(event_times, probabilities, method="linear") if knot_count else np.empty(0)
         )
     else:
         if np.iscomplexobj(internal_knots):
@@ -368,9 +353,7 @@ def fit_survival_spline(
     if knot_count > 0 and boundary[0] >= boundary[1]:
         raise ValueError("distinct positive event times are required to identify spline knots")
     if inner.size and (
-        np.any(np.diff(inner) <= 0)
-        or inner[0] <= boundary[0]
-        or inner[-1] >= boundary[-1]
+        np.any(np.diff(inner) <= 0) or inner[0] <= boundary[0] or inner[-1] >= boundary[-1]
     ):
         raise ValueError("internal knots must be distinct and strictly inside event boundaries")
     raw_knots = np.r_[boundary[0], inner, boundary[1]]
@@ -421,6 +404,7 @@ def fit_survival_spline(
     failures: list[str] = []
     for start in starts:
         try:
+
             def loss(theta: FloatArray) -> float:
                 try:
                     return actual_loss(theta)[0]
@@ -452,8 +436,7 @@ def fit_survival_spline(
                 or min_slope <= 0
             ):
                 failures.append(
-                    f"{result.message}; score={score_error:.3g}; "
-                    f"minimum slope={min_slope:.3g}"
+                    f"{result.message}; score={score_error:.3g}; minimum slope={min_slope:.3g}"
                 )
                 continue
             _, _, observed_information = _loglikelihood(
@@ -652,12 +635,8 @@ def predict_survival_spline(
             se_block = np.sqrt(np.maximum(variance, 0.0))
             standard_error[profile_index, destination] = se_block
             with np.errstate(over="ignore", under="ignore", invalid="ignore"):
-                lower[profile_index, destination] = np.exp(
-                    -np.exp(log_h_block + zcrit * se_block)
-                )
-                upper[profile_index, destination] = np.exp(
-                    -np.exp(log_h_block - zcrit * se_block)
-                )
+                lower[profile_index, destination] = np.exp(-np.exp(log_h_block + zcrit * se_block))
+                upper[profile_index, destination] = np.exp(-np.exp(log_h_block - zcrit * se_block))
     log_survival[:, ~positive] = 0.0
     cumulative_hazard[:, ~positive] = 0.0
     lower[:, ~positive] = 1.0

@@ -976,6 +976,17 @@ stable near-zero shape expansions, log-tail recovery, normalized fitting and
 bounded prediction surfaces. See `research/generalized-gamma-audit.md` for
 provenance, native-wrapper limitations and verification scope.
 
+`survival_spline.py` independently implements the Royston–Parmar natural cubic
+spline survival likelihood on hazard, odds and normal scales. The basis,
+distribution definitions and log-time knot conventions were checked against
+`src/splines.cpp`, `R/spline.R`, `R/deriv.R` and `R/deriv2.R` at the same
+GPL >=2 flexsurv revision. Unchanged native basis/distribution kernels supply
+numerical references through an independent base-R fitting harness; the full
+flexsurv formula/fitting stack is not executed or redistributed. Python uses
+analytic observed information, normalized fitting, complete-support
+monotonicity checks, linear-tail extrapolation and bounded predictions.
+See `research/survival-spline-audit.md` for reference scope and limitations.
+
 ## Bayesian success calibration
 
 `success_calibration.py` is an independent implementation of the mathematical

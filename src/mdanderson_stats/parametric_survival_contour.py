@@ -1,9 +1,9 @@
-"""Continuous-covariate contours for exact parametric survival AFT fits."""
+"""Continuous-covariate contours for parametric and spline survival fits."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -19,6 +19,7 @@ from .parametric_survival import (
 
 if TYPE_CHECKING:
     from .generalized_gamma import GeneralizedGammaFit, GeneralizedGammaPrediction
+    from .survival_spline import SurvivalSplineFit, SurvivalSplinePrediction
 
 _DEFAULT_QUANTILES = (0.10, 0.25, 0.50, 0.75, 0.90)
 _MAX_CELLS = 2_000_000
@@ -28,7 +29,7 @@ _MAX_CELLS = 2_000_000
 class ParametricSurvivalContour:
     """Parametric fit with primary and continuous-covariate quantile surfaces."""
 
-    fit: ParametricSurvivalFit | GeneralizedGammaFit
+    fit: ParametricSurvivalFit | GeneralizedGammaFit | SurvivalSplineFit
     continuous_column: int
     confidence: float
     profile: FloatArray
@@ -62,8 +63,10 @@ def parametric_survival_contour(
     n_grid: int = 30,
     confidence: float = 0.95,
     quantile_probabilities: ArrayLike = _DEFAULT_QUANTILES,
+    spline_k: int | None = None,
+    spline_internal_knots: ArrayLike | None = None,
 ) -> ParametricSurvivalContour:
-    """Fit a parametric AFT model and predict its continuous-covariate contour.
+    """Fit a survival model and predict its continuous-covariate contour.
 
     Other covariates default to their training means, or to ``profile`` when
     supplied. Default prediction times are zero followed by distinct failures.
@@ -72,7 +75,18 @@ def parametric_survival_contour(
     limits use a deterministic delta method on log cumulative hazard.
     ``distribution="gengamma"`` selects Prentice generalized gamma;
     ``"gengamma.orig"`` selects the original Stacy parameterization.
+    ``"spline_hazard"``, ``"spline_odds"`` and ``"spline_normal"`` select
+    Royston–Parmar models. They default to four internal log-time knots;
+    ``spline_k`` or ``spline_internal_knots`` can specify the knot choice.
     """
+    spline_scales: dict[str, Literal["hazard", "odds", "normal"]] = {
+        "spline_hazard": "hazard",
+        "spline_odds": "odds",
+        "spline_normal": "normal",
+    }
+    is_spline = distribution in tuple(spline_scales)
+    if not is_spline and (spline_k is not None or spline_internal_knots is not None):
+        raise ValueError("spline knot options require a spline distribution")
     if isinstance(continuous_column, (bool, np.bool_)) or not isinstance(
         continuous_column, (int, np.integer)
     ):
@@ -192,10 +206,26 @@ def parametric_survival_contour(
     quantile_profiles = np.repeat(base_profile[None, :], probabilities.size, axis=0)
     quantile_profiles[:, continuous_column] = covariate_quantiles
     # Fit only after both profile grids and their aggregate allocation are valid.
-    fit: ParametricSurvivalFit | GeneralizedGammaFit
-    main: ParametricSurvivalPrediction | GeneralizedGammaPrediction
-    quantile: ParametricSurvivalPrediction | GeneralizedGammaPrediction
-    if distribution in ("gengamma", "gengamma.orig"):
+    fit: ParametricSurvivalFit | GeneralizedGammaFit | SurvivalSplineFit
+    main: ParametricSurvivalPrediction | GeneralizedGammaPrediction | SurvivalSplinePrediction
+    quantile: ParametricSurvivalPrediction | GeneralizedGammaPrediction | SurvivalSplinePrediction
+    if is_spline:
+        from .survival_spline import fit_survival_spline, predict_survival_spline
+
+        spline_fit = fit_survival_spline(
+            t,
+            e,
+            design,
+            scale=spline_scales[distribution],
+            k=spline_k,
+            internal_knots=spline_internal_knots,
+        )
+        main = predict_survival_spline(spline_fit, prediction_times, main_profiles, confidence=conf)
+        quantile = predict_survival_spline(
+            spline_fit, prediction_times, quantile_profiles, confidence=conf
+        )
+        fit = spline_fit
+    elif distribution in ("gengamma", "gengamma.orig"):
         from .generalized_gamma import fit_generalized_gamma, predict_generalized_gamma
 
         generalized_fit = fit_generalized_gamma(

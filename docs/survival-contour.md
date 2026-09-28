@@ -141,8 +141,9 @@ contours](fine-gray.md) provide the right-censored competing-risk family.
 [Parametric AFT models](parametric-survival.md) add Weibull, log-normal and
 log-logistic fitting, prediction and contours.
 [Generalized-gamma models](generalized-gamma.md) add the Prentice and Stacy
-parameterizations to that workflow. Interval-censored Cox and competing-risk
-models, spline models, forests, neural models, native simulated parametric
+parameterizations to that workflow. [Spline models](survival-spline.md) add
+Royston–Parmar hazard, odds and normal links with joint covariance and contours.
+Interval-censored Cox and competing-risk models, forests, neural models, native simulated parametric
 intervals and the full native app workflow remain open. Entry 166 stays partial.
 
 The original author's two- and three-dimensional Cox helper outputs provide

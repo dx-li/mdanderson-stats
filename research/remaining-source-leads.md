@@ -18,7 +18,8 @@ The first exact Weibull, log-normal and log-logistic AFT checkpoint is tracked
 in [the parametric-survival audit](parametric-survival-audit.md). The verified
 native source is `flexsurv` 2.3.2 at
 `2aae4c8ac56823d0eac30c1a9ad654ac599b5938`. The generalized-gamma public workflow
-is now integrated at `7abe64e`; spline implementation remains in progress.
+is integrated at `7abe64e`; the spline workflow is also implemented and checked
+as recorded in the [spline audit](survival-spline-audit.md).
 Its small native generalized-gamma implementation and
 headers are saved as exact source bytes under ignored `research/raw/flexsurv`:
 `src/gengamma.cpp` (`34c799553ec1f74aa587854148bcf95834f607df`) and
@@ -91,9 +92,10 @@ first/second derivatives are available in the retrieved sources. A small
 native-kernel fitting harness has now executed without installing the
 whole package: six model fits, joint information/covariance and surface
 references are committed at `ee0b3b5` and described in the
-[spline audit](survival-spline-audit.md). Python implementation is in progress.
+[spline audit](survival-spline-audit.md). Python fitting, full joint covariance,
+stable predictions and contours are implemented for all three links.
 
-Two numerical requirements need deliberate treatment: evaluate the linear
+Two numerical requirements governed the implementation: evaluate the linear
 tails of the natural spline without subtracting huge cubics, and verify that
 its transformed cumulative hazard has positive derivative over the required
 domain. Native density truncates nonpositive derivative values to zero only

@@ -48,9 +48,7 @@ def test_native_basis_and_distribution_values() -> None:
             log_survival[0], float(row["log_survival"]), rtol=2e-9, atol=2e-10
         )
         log_density = (
-            log_density_factor[0]
-            + np.log(float(row["slope"]))
-            - np.log(float(row["time"]))
+            log_density_factor[0] + np.log(float(row["slope"])) - np.log(float(row["time"]))
         )
         np.testing.assert_allclose(log_density, float(row["log_density"]), rtol=2e-9, atol=2e-10)
 
@@ -129,4 +127,6 @@ def test_native_fits_joint_information_and_predictions() -> None:
         np.testing.assert_array_equal(zero.survival, np.ones_like(zero.survival))
         np.testing.assert_array_equal(zero.se_log_cumulative_hazard, np.zeros_like(zero.survival))
 
-    assert max(covariance_errors) < 1.2e-2
+    # Native optimHess uses finite differences in the unscaled spline basis.
+    # Its inverse amplifies the small information error for four-knot models.
+    assert max(covariance_errors) < 1e-3

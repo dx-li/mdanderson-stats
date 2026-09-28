@@ -1286,8 +1286,11 @@ survival predictions. Continuous-covariate contours and selected percentile
 curves include deterministic delta-method pointwise bounds.
 [Generalized-gamma survival models](docs/generalized-gamma.md) extend this
 workflow with stable Prentice and original Stacy fits, full joint covariance,
-predictions and the same contour plots. Spline and native simulation-based
-interval workflows remain open.
+predictions and the same contour plots.
+[Royston–Parmar spline models](docs/survival-spline.md) add hazard, odds and
+normal links with configurable log-time knots, globally monotone survival
+curves, joint covariance, predictions and contours. Forests, neural models,
+interval-censored models and native simulation-based intervals remain open.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson

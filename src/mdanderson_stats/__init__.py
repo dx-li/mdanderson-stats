@@ -982,6 +982,12 @@ from .survival_sample_size import (
     survival_event_power,
     survival_sample_size,
 )
+from .survival_spline import (
+    SurvivalSplineFit,
+    SurvivalSplinePrediction,
+    fit_survival_spline,
+    predict_survival_spline,
+)
 from .tdtasp_ascertainment import TDTASPAscertainment, tdtasp_ascertainment
 from .tdtasp_genetics import TDTASPGenetics, tdtasp_genetics, tdtasp_haplotype_frequencies
 from .tdtasp_power import TDTASPFixedPower, TDTASPPower, tdtasp_fixed_power, tdtasp_power
@@ -1573,6 +1579,10 @@ __all__ = [
     "fit_parametric_survival",
     "predict_parametric_survival",
     "parametric_survival_contour",
+    "SurvivalSplineFit",
+    "SurvivalSplinePrediction",
+    "fit_survival_spline",
+    "predict_survival_spline",
     "SurvanLogistic",
     "survan_logistic",
     "SurvanKM",
