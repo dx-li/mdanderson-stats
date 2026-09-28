@@ -109,6 +109,8 @@ zero covariance and seeded replay, and retain reversed slopes and negative limit
 
 **Both catalog entries remain partial.** CI of Interaction Index still needs its
 median-effect plots, source case-study fixtures and native
-workflow audit. SYNERGY additionally needs its other response-surface models,
-semiparametric methods and associated workflows. Pooled measurement-error
+workflow audit. SYNERGY also supports the [semiparametric response-surface
+fit](synergy-surface.md), with raw/log-dose baselines and REML smoothing.
+Its other parametric surfaces, wild-bootstrap intervals and associated
+workflows remain open. Pooled measurement-error
 estimation and native file/report conventions have not been silently inferred.

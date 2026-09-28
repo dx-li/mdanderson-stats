@@ -4,7 +4,8 @@ The [official catalog entry 18](https://biostatistics.mdanderson.org/SoftwareDow
 lists four one-parameter response surfaces from Lee et al. (2007),
 DOI `10.1080/10543400701199593`, and the 2008 semiparametric method. Existing
 `interaction_index.py` covers the separate median-effect/Loewe interval methods.
-These additional surfaces remain unimplemented.
+The semiparametric fit is now available; the four parametric surfaces and
+wild-bootstrap inference remain open.
 
 ## Semiparametric source contract
 
@@ -120,3 +121,30 @@ BioC XML and PMC XML view was inaccessible. Indexed searches exposed neither
 the bootstrap SD equation nor an original author-code supplement. The exact
 SD centering and denominator remain unresolved; that inference gap is separate
 from the now independently checked surface-fitting calculations.
+
+## Public implementation checkpoint
+
+`fit_synergy_surface` and `predict_synergy_surface` expose both marginal
+baseline classes and the constrained thin-plate surface. Automatic smoothing
+screens 61 log-lambda values in `[-30,30]`, refines candidate minima and compares
+endpoints, reporting convergence and boundary status without claiming a global
+optimum. Explicit smoothing values are also supported. Prediction constructs
+bounded kernel chunks, checks broadcast shape products with Python integers
+and rejects oversized grids before expansion.
+
+The implementation rejects affine residuals to numerical precision because
+the REML variance estimate is degenerate. Log-dose training rows with both
+doses zero contribute only a zero spline pseudo-response and report undefined
+baseline/total values; the corresponding prediction is rejected. There is no
+invented control-dose offset or bootstrap standard-error convention.
+
+Three focused tests passed in 1.10 seconds in the implementation checkout,
+covering raw marginal recovery, affine constraints, direct penalized equations,
+log-dose inverse-dose additivity, REML and exact-fit rejection. Ruff and mypy
+passed. The integrated public guide example and independent R references then
+passed together: all 72 predictions agreed within `3.78e-15`, lambda within
+`1.52e-8` relative error, unscaled objective within `1.07e-14`, and residual
+variance within `9.07e-9` relative error. The selected interior fit used 70
+profile evaluations. An oversized broadcast prediction grid was rejected
+before allocation. The combined public/reference check took 0.0067 seconds
+after import, with 116.0 MiB process peak memory and no process swaps.

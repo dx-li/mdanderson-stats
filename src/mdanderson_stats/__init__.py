@@ -1055,6 +1055,12 @@ from .survival_spline import (
     fit_survival_spline,
     predict_survival_spline,
 )
+from .synergy_surface import (
+    SynergySurfaceFit,
+    SynergySurfacePrediction,
+    fit_synergy_surface,
+    predict_synergy_surface,
+)
 from .tdtasp_ascertainment import TDTASPAscertainment, tdtasp_ascertainment
 from .tdtasp_genetics import TDTASPGenetics, tdtasp_genetics, tdtasp_haplotype_frequencies
 from .tdtasp_power import TDTASPFixedPower, TDTASPPower, tdtasp_fixed_power, tdtasp_power
@@ -1187,6 +1193,10 @@ __all__ = [
     "fit_wfmm_coefficients",
     "WFMMPosteriorSummary",
     "wfmm_summarize",
+    "SynergySurfaceFit",
+    "SynergySurfacePrediction",
+    "fit_synergy_surface",
+    "predict_synergy_surface",
     "EasyCellTypeCluster",
     "EasyCellTypeFisherResult",
     "EasyCellTypeLabel",
