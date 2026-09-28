@@ -72,3 +72,32 @@ mypy also passed. Final selection remains pending: the native form could not
 be inspected because the in-app browser was unavailable, and the publisher's
 Appendix S1 link returned a cache miss. No weighting or tie convention was
 inferred from these failed retrievals.
+
+## Verified accelerated-titration conduct
+
+The archived main guide, Remarks 1 on PDF pages 1–2, specifies a separate
+one-patient-per-dose opening phase. Begin at the prespecified starting dose
+and advance one dose at a time. With the default cap at the highest dose,
+the first DLT, the second moderate (grade-2) toxicity across the titration
+patients, or reaching the highest dose ends this phase. Enroll another
+`m-1` patients at that same dose, then use cohorts of size `m`.
+
+With a lower titration cap, either toxicity trigger still requires the
+`m-1` top-up at the current dose. Reaching the cap without either trigger
+instead starts a full `m`-patient cohort at the next higher dose. Toxicity
+therefore takes precedence over the lower-cap transition.
+
+A deterministic conduct interface can consume observed outcomes and hand
+completed cohorts to `IBOINDesign.next_dose`, retaining all titration patients
+in the cumulative counts. No grade-2 event probability, final-selection
+weight, tie convention or native random stream is needed for this workflow.
+The source does not specify the Python event representation or partial-cohort
+data API; those must be explicit interface conventions.
+
+`boin_simulation.py` contains related scheduling inline, but it is coupled to
+BOIN simulation and is not a reusable conduct function. Its guard skips
+titration when starting at the highest dose or with cohort size one; those
+guards should not be silently treated as verified iBOIN guide rules. A start
+at the highest dose can follow the stated first-patient-then-top-up rule;
+cohort size one makes the top-up empty. Neither edge has a separately
+documented native application trace. Implementation remains pending.
