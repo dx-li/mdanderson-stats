@@ -1,0 +1,13 @@
+"case","scope","ess"
+"normal","whole",1.15666253333405
+"normal","coefficients",0.746833703126705
+"normal","precision_or_slopes",5.9994
+"logistic","whole",6.88317010451593
+"logistic","coefficients",6.88317010451593
+"logistic","precision_or_slopes",9.61412193121395
+"flat_logistic","whole",7.26750588136202
+"flat_logistic","coefficients",7.26750588136202
+"flat_logistic","precision_or_slopes",12.3167251837274
+"unreached_logistic","whole",NA
+"unreached_logistic","coefficients",NA
+"unreached_logistic","precision_or_slopes",NA

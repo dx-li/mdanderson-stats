@@ -1,0 +1,14 @@
+"case","model","parameter","family","parameter1","parameter2"
+"normal","normal",1,"normal",0.2,1
+"normal","normal",2,"gamma",2,1
+"normal","normal",3,"normal",-0.4,2
+"normal","normal",4,"gamma",3,2
+"logistic","logistic",1,"normal",-0.4,1
+"logistic","logistic",2,"normal",0.7,2
+"logistic","logistic",3,"gamma",2,1
+"flat_logistic","logistic",1,"normal",0,1
+"flat_logistic","logistic",2,"normal",0,1
+"flat_logistic","logistic",3,"normal",0,1
+"unreached_logistic","logistic",1,"normal",10,1
+"unreached_logistic","logistic",2,"normal",0,1
+"unreached_logistic","logistic",3,"normal",0,1
