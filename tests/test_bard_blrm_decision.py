@@ -66,3 +66,5 @@ def test_probability_contract_rejects_incoherent_or_nonmonotone_pod() -> None:
         bard_blrm_next_dose([0.2, 0.3], [0.4, 0.2], 1)
     with pytest.raises(ValueError, match="responses and evaluable"):
         bard_blrm_backfill([0.1], [2], [1], 1, cap=4)
+    with pytest.raises(ValueError, match="pod must be real-valued"):
+        bard_blrm_backfill([0.1 + 0.2j], [0], [0], 1, cap=4)

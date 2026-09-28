@@ -150,6 +150,8 @@ def bard_blrm_backfill(
     dose_shape = np.shape(pod)
     if len(dose_shape) != 1 or not 1 <= dose_shape[0] <= 100:
         raise ValueError("pod must be a vector for 1..100 doses")
+    if np.iscomplexobj(pod):
+        raise ValueError("pod must be real-valued")
     overdose = finite(pod, "pod")
     if np.any((overdose < 0) | (overdose > 1)) or np.any(
         overdose[1:] < overdose[:-1] - 32 * np.finfo(float).eps
