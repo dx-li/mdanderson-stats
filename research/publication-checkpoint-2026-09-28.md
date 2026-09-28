@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `71db42e` adds the fixed-shape Weibull
-Bayesian goodness-of-fit workflow and Proportional Density's full-data
-bootstrap. Local `master` contains this validated checkpoint. Fresh read-only
+Latest verified package checkpoint: `7c68ec3` adds BOP2-DC survival trial replay
+and operating-characteristic simulation and the lognormal joint-posterior
+goodness-of-fit workflow. Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
 been confirmed published. See the final section for current package checks.
@@ -538,3 +538,46 @@ and connector approval rejection remain publication barriers. No rejected
 transport was retried or bypassed. Packages and a refreshed, verified all-refs
 bundle preserve committed root and Luna work locally; ignored raw files are
 excluded. BOP2-DC survival workflow triage remains read-only at this checkpoint.
+
+## Survival trial and lognormal diagnostic checkpoint
+
+BOP2-DC survival calendar replay and simulation are integrated at `25f688c`.
+They use first-stop decisions, as-of censoring, relative risk times and explicit
+fixed/Poisson arrival schedules. Outcome probabilities, Monte Carlo errors,
+compact trial summaries and replay seeds are returned. Eight independent
+base-R histories match 18 looks, including no events, all terminal outcomes,
+boundary events, calendar shifts and extreme time-unit changes. An analytic
+one-patient OC case matches 16,000 simulations within 1.447 estimated Monte
+Carlo errors. The reference check takes 0.0141 seconds after imports, peaks at
+124.31 MiB and reports no swaps. Four focused new checks plus the existing
+survival reference pass. Calibration remains a separate open feature.
+
+The lognormal Bayesian diagnostic is integrated at `f9704d5`. It jointly fits
+log-location and log-variance with an explicit proper Normal-Inverse-Gamma
+prior. Centered coordinates and separate posterior weights preserve time-unit
+invariance and tiny, material prior contributions. Six independent base-R
+cases verify posterior parameters, predictive CDFs and integrated joint
+Johnson diagnostics. All 88 summaries agree within 2.851 estimated Monte Carlo
+errors. The final comparison takes 0.0682 seconds after imports, peaks at
+123.59 MiB and reports zero swaps. Two focused checks cover conjugate/CDF
+identities, extreme unit changes, weak-prior means and pre-RNG resource bounds.
+Native prior defaults, censoring and rounded observations remain open.
+
+Public interfaces, guides and reference tooling are committed at
+`7c68ec39dd5a25c75df2bb0f272460e5cab48432`. Cached wheel and source builds pass.
+The isolated wheel check verifies all 1,487 public exports, exact committed
+bytes for 540 source/data files, licenses/notices, all 138 catalog entries
+and three executable examples across the two affected guides. It takes
+16.643 seconds, peaks at 111.88 MiB and reports zero swaps. Targeted Ruff,
+format and type checks pass. No broad numerical suite, additional CI workflow
+or dependency was introduced. Coverage labels remain 63 implemented,
+66 partial and 9 pending; these additions expand two partial programs.
+
+Local `master` is fast-forwarded to the verified code plus this audit. Fresh
+read-only GitHub checks still show `master` and `main` at `45b6e307`, with
+104 newer commits at the verified code checkpoint. The recorded shell DNS
+failure and connector approval rejection still block publication. No rejected
+transport was retried or bypassed. Updated packages and a verified all-refs
+bundle preserve committed root and Luna checkpoints locally. Ignored raw
+files and the next in-progress survival calibration work are not included in
+the validated package or local `master`.
