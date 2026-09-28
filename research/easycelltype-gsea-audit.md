@@ -193,6 +193,12 @@ C++ cumulative kernel. It keeps mixed zero weights at zero and falls back to
 equal weights only when all hits are zero. This branch depends on the number
 of tested sets, not the number of genes in a set. The full Python pilot must
 preserve it; C++ epsilon fixtures alone cannot validate the one-set branch.
+The base-R null generator now also writes
+`easycelltype-gsea-single-prefix.csv`: 66 R scores using the same explicit
+ordered subsets as the C++ fixture. For example, the mixed-zero two-hit case
+has R ES `5/6`, versus cumulative C++ ES `0.833333330078125`. Repeated draws
+of that subset therefore exercise different inclusive-tail counts at `5/6`,
+making this a meaningful branch regression rather than a rounding-only detail.
 
 Additional pinned source dependencies retrieved for backend implementation:
 

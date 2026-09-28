@@ -40,3 +40,24 @@ write.csv(data.frame(gene=names(ranks),score=unname(ranks)),
           'tests/fixtures/easycelltype-gsea-null-ranks.csv',row.names=FALSE)
 write.csv(do.call(rbind,rows),'tests/fixtures/easycelltype-gsea-null.csv',row.names=FALSE)
 cat('Enumerated',length(rows),'small-set signed-null reference cases.\n')
+
+# fgseaSimpleImpl uses this R kernel for exactly one retained gene set.
+# Reuse the explicit ordered subset inputs from the C++ reference to expose
+# the branch's different mixed-zero behavior without changing random streams.
+inputs <- read.csv('tests/fixtures/easycelltype-gsea-cpp-inputs.csv')
+single_rows <- list()
+for(name in unique(inputs$scenario)) {
+  input <- inputs[inputs$scenario==name,]
+  input <- input[order(input$rank),]
+  keep <- input$selected_order>0
+  selected <- (input$rank[keep]+1L)[order(input$selected_order[keep])]
+  prepared <- abs(input$score)^input$exponent
+  for(mode in c('std','pos','neg')) for(k in seq_along(selected)) {
+    es <- native$calcGseaStat(prepared,selected[seq_len(k)],gseaParam=1,scoreType=mode)
+    single_rows[[length(single_rows)+1L]] <- data.frame(scenario=name,
+      score_type=mode,prefix_size=k,ES=es)
+  }
+}
+write.csv(do.call(rbind,single_rows),
+          'tests/fixtures/easycelltype-gsea-single-prefix.csv',row.names=FALSE)
+cat('Generated',length(single_rows),'unchanged R single-set pilot scores.\n')
