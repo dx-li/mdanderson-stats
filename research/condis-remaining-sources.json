@@ -1,0 +1,70 @@
+{
+  "retrieved_date": "2026-09-28",
+  "scope": "Primary-source leads for the four remaining CondiS-X learners; no implementation or native parity claim. Current source pins require historical compatibility review.",
+  "files": [
+    {
+      "repository": "https://github.com/cran/nnet",
+      "revision": "d409ca312e7b103c72547b84460c5a32acd2ae93",
+      "path": "DESCRIPTION",
+      "git_blob": "792ac22c650ea7d3fa36531f3ee4af28d4d0e556",
+      "sha256": "3cbb28c25e3d069ce370371527d40f833a74500b595cfa0f7fc890bb5bd60b7a",
+      "bytes": 823
+    },
+    {
+      "repository": "https://github.com/cran/nnet",
+      "revision": "d409ca312e7b103c72547b84460c5a32acd2ae93",
+      "path": "R/nnet.R",
+      "git_blob": "32257cee30ab4eb670c095189f8e2a00fd6e72ba",
+      "sha256": "bda0291065df16baf00e6c625f76ff157399addfbc42528764a2ae3c6d916dcf",
+      "bytes": 12932
+    },
+    {
+      "repository": "https://github.com/cran/randomForest",
+      "revision": "0ad64d71e886bff5b241cbc31a3240bf0e822914",
+      "path": "DESCRIPTION",
+      "git_blob": "feb7ff0634cdb24e7c2f5b5cd6a5c1e244bd23d6",
+      "sha256": "f4ad154f9e6f1e073d669a899a1f589d34448a6012b46d52be90099100f69c17",
+      "bytes": 1169
+    },
+    {
+      "repository": "https://github.com/cran/randomForest",
+      "revision": "0ad64d71e886bff5b241cbc31a3240bf0e822914",
+      "path": "R/randomForest.default.R",
+      "git_blob": "565b003a3054c078e1044a4416537135f18b9d47",
+      "sha256": "fcfe6125f17a29a32de5e5f7b6af15e5fee6a32a4d6f1928335d161acd132c46",
+      "bytes": 21734
+    },
+    {
+      "repository": "https://github.com/cran/kernlab",
+      "revision": "d8f05c9b1b8d220deb98fdf28cd33471f17d5eae",
+      "path": "DESCRIPTION",
+      "git_blob": "d8fa315c05192d8686890d6ffbbe2bd865f49f49",
+      "sha256": "19ee0cecceb96e93f9d5fbc87de7ef153977d2cbd550009482b0df92bf26b921",
+      "bytes": 1494
+    },
+    {
+      "repository": "https://github.com/cran/kernlab",
+      "revision": "d8f05c9b1b8d220deb98fdf28cd33471f17d5eae",
+      "path": "R/ksvm.R",
+      "git_blob": "bafb164893e140982c28d325fc13eeb2d27ec80f",
+      "sha256": "26a480ffd00c56b085fcfd7c38668bac97f96e6d5bcac0176b50ff5b6baa26ad",
+      "bytes": 118044
+    },
+    {
+      "repository": "https://github.com/cran/gbm",
+      "revision": "638b95f74de63e5d9c0212aeb11c38c08608c14b",
+      "path": "DESCRIPTION",
+      "git_blob": "021457dc9e490bc3328565dc7e201f895532b52f",
+      "sha256": "ad765a92ca0afa6a9d6909aff589311297c822c20c83eb42f4606b85bbc49a5c",
+      "bytes": 2728
+    },
+    {
+      "repository": "https://github.com/cran/gbm",
+      "revision": "638b95f74de63e5d9c0212aeb11c38c08608c14b",
+      "path": "R/gbm.R",
+      "git_blob": "d1e35c7d228dcb340f1d35c5b2b1585dd35a7102",
+      "sha256": "1d0358f977475e7b9dbaa2402c04b8bf70b9f5f7b07f2c97135c564e02fd595c",
+      "bytes": 22667
+    }
+  ]
+}

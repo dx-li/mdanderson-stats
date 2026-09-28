@@ -119,3 +119,43 @@ The reference run completed on 2026-09-28 with R 4.4.1, in 5.34 seconds using
 and the small C compilation ran sequentially with optimization disabled and
 one build job. No R package was installed. Python learner agreement is checked
 separately; successful reference generation alone does not prove a port correct.
+
+The ordinary sample selects ridge lambda 0.01, lasso lambda 0.01 and k=7;
+the wide sample selects ridge lambda 10, lasso lambda 0.01 and k=5. The
+ordinary Gaussian paths contain 100 ridge points and 62 lasso points; the
+wide paths each contain 100 points. In the wide ridge fit, the smallest fitted
+lambda is approximately 25.45, so every requested value in 0.01..10 clamps to
+the same full-sample path endpoint. This fixture exercises endpoint behavior
+and tuning ties rather than only checking a fixed-penalty solution.
+
+The native k=1 prediction at zero for training coordinates
+`[1, 1, sqrt(0.99999)]` and responses `[10, 20, 30]` is 20. Putting the closest
+coordinate first, with coordinates `[sqrt(0.99999), 1, 1]` and those same
+responses, yields 10. A simple sort followed by an inclusive distance-tolerance
+mask would miss this insertion-order distinction.
+
+## Source leads for the remaining learners
+
+[`condis-remaining-sources.json`](condis-remaining-sources.json) records eight
+verified primary files for nnet 7.3-21, randomForest 4.7-1.2, kernlab 0.9-33 and
+gbm 2.3.1. These are research leads, not implemented coverage or assertions
+that current package defaults match every dependency version used in 2022.
+Their source snapshots remain ignored under `research/raw/CondiS/future-learners`.
+
+CondiS-X calls caret's `nnet` regression with a linear output; its extra range
+preprocessing object is also unused. The nnet wrapper exposes a single hidden
+layer, random initial weights, weight decay and an iteration limit. Verify
+the caret size/decay grid, initialization and resampling/refit seed schedule
+before implementing that remaining learner.
+
+The random-forest branch supplies `mtry=sqrt(ncol(covariates))`, even though
+status is included in the actual design matrix. This is not the backend's
+default one-third-of-predictors rule. The native regression backend defaults
+to 500 trees, bootstrap sampling with replacement and terminal node size five;
+its handling of the noninteger supplied mtry must be preserved explicitly.
+
+The SVM branch calls caret's `svmRadial`, while gradient boosting uses `gbm`.
+Their backend scaling and objective definitions, caret-generated tuning grids,
+training randomness and final refit behavior require separate native checks.
+Existing survival forests are not a substitute for regression forests, and the
+three learners in the current checkpoint do not substitute for these four.
