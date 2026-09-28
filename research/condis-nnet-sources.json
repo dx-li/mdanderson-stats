@@ -24,5 +24,19 @@
       "bytes": 813,
       "sha256": "88a21f5bfbc2f43c96a6e17284a73a1f377ee520f9cc12b38c820d2c72053a64"
     }
-  ]
+  ],
+  "optimizer_source": {
+    "repository": "https://github.com/wch/r-source",
+    "revision": "f46b4cd47b4f4b2bb5ef40137a7f48f91b66469e",
+    "svn_revision": 85143,
+    "source_date": "2023-09-14",
+    "directory": "future-learners/r-optimizer",
+    "scope": "Pinned R vmmin implementation preceding R 4.4.1. A future port must validate against the installed native optimizer; this is not a verified whole-R release snapshot.",
+    "file": {
+      "path": "src/appl/optim.c",
+      "git_blob": "49ffe17628f6f5fd8b9ca59e5b5f2cfe8b3bbaff",
+      "bytes": 20452,
+      "sha256": "b96c51ec4f69a38210304d82b55b2b15a5e769dc9769319fd567fa41cc27989d"
+    }
+  }
 }

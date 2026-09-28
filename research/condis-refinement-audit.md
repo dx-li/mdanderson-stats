@@ -262,3 +262,11 @@ weights for cross-language numerical comparisons and must report its optimizer
 status; different random streams or an alternative optimizer can lead to
 different local solutions. Merely fitting a generic neural network would not
 reproduce this contract.
+
+The same provenance file pins R's `src/appl/optim.c` at SVN revision 85143
+through its Git mirror. This is a source lead predating R 4.4.1, not a verified
+complete snapshot of that release. `vmmin` uses an identity inverse-Hessian
+start, Armijo acceptance coefficient 1e-4, step reduction by 0.2, curvature
+updates and restarts, and its specific absolute/relative objective stopping
+rules. These details are available for the next implementation; equivalence
+must still be checked against the installed native optimizer.
