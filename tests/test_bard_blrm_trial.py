@@ -187,6 +187,20 @@ def test_highest_dose_reach_topups_without_waiting_and_disabled_mode_rejects_ext
     assert [patient.arrival_time for patient in highest.patients] == [0.0, 1.0, 1.1]
     assert highest.titration_exit_reason == "highest_dose"
 
+    cap_at_highest = _titration_run(
+        doses=[1.0, 2.0],
+        potential_toxicities=np.zeros((7, 2), dtype=bool),
+        potential_responses=np.ones((7, 2), dtype=bool),
+        dlt_assessment_delays=np.ones((7, 2)),
+        response_assessment_delays=np.zeros((7, 2)),
+        potential_grade2_toxicities=np.zeros((7, 2), dtype=bool),
+        grade2_assessment_delays=np.full((7, 2), 0.1),
+        max_escalation_patients=2,
+        arrival_times=np.array([0.0, 1.0, 1.1, 2.0, 3.0, 4.0, 5.0]),
+    )
+    assert [patient.role for patient in cap_at_highest.patients] == ["titration", "titration"]
+    assert cap_at_highest.titration_exit_reason == "escalation_patient_cap"
+
     with pytest.raises(ValueError, match="require accelerated_titration"):
         _run(potential_grade2_toxicities=np.zeros((17, 3)))
 
