@@ -34,12 +34,25 @@ automatic variance initialization and additional native workflows remain open.
 ## Development
 
 ```
-uv sync --group dev --extra plot
-uv run --extra plot pytest
+uv sync --locked --group dev --extra plot
 uv run ruff check .
+uv run ruff format --check .
 uv run mypy src
 uv build
+uv run --extra plot pytest
 ```
+
+GitHub validation runs on pushes to `main`, pull requests targeting `main` or
+`master`, and manual dispatches. Pushes outside `main` do not trigger validation
+by themselves; updates to open pull requests targeting `main` or `master` still
+run validation. `master` mirrors the checkpoint tested on `main`.
+Formatting, lint, types and packaging must pass before the Python 3.12–3.14
+test matrix starts. At most two matrix jobs run at once, with a 25-minute limit
+per job; a newer run cancels a superseded run for the same branch or pull request.
+
+The old `.github/workflows/ci.yml` workflow is disabled in GitHub because retained
+historical branches still contain its unrestricted push trigger. Keep it disabled;
+the active workflow is `.github/workflows/validation.yml`.
 
 Refresh the catalog with `uv run python tools/inventory.py`. Original downloads
 and research snapshots are kept under the ignored `research/raw/` directory;

@@ -46,13 +46,19 @@ from mdanderson_stats import ToxFinderPrior, fit_toxfinder, toxfinder_standardiz
 
 # Paper Table1 single-agent priors plus its interaction prior.
 prior = ToxFinderPrior(
-    mean=[.4286, 7.6494, .4286, 7.8019, 1, .05],
-    variance=[.1054, 5.7145, .0791, 3.9933, 3, 3],
+    mean=[0.4286, 7.6494, 0.4286, 7.8019, 1, 0.05],
+    variance=[0.1054, 5.7145, 0.0791, 3.9933, 3, 3],
 )
 doses = toxfinder_standardize([[300, 150], [480, 240]], [1200, 600])
 fit = fit_toxfinder(
-    doses, toxicities=[0, 1], subjects=[2, 2], prior=prior,
-    rng=np.random.default_rng(2026), draws=500, warmup=250, chains=2,
+    doses,
+    toxicities=[0, 1],
+    subjects=[2, 2],
+    prior=prior,
+    rng=np.random.default_rng(2026),
+    draws=500,
+    warmup=250,
+    chains=2,
 )
 posterior_mean_toxicity = fit.probabilities[..., 1].mean(axis=(0, 1))
 ```
@@ -98,14 +104,18 @@ from mdanderson_stats import toxfinder_stage1, toxfinder_contour
 
 # A simple single-agent surface embedded in the two-agent model: p=x1/(1+x1).
 theta = [1, 1, 0, 1, 0, 1]
-levels = [[.1, .1], [.3, .3], [.6, .6], [1, 1]]
+levels = [[0.1, 0.1], [0.3, 0.3], [0.6, 0.6], [1, 1]]
 decision = toxfinder_stage1(
-    levels, theta, levels[:3], [0, 0, 1], target=.2,
+    levels,
+    theta,
+    levels[:3],
+    [0, 0, 1],
+    target=0.2,
 )
 # decision.dose is [.256, .256]; interpolated toxicity is .2.
 
 # The additive surface q=x1+x2 has target .5 on x1+x2=1.
-contour = toxfinder_contour([1, 1, 1, 1, 0, 1], [0, .25, 1], target=.5)
+contour = toxfinder_contour([1, 1, 1, 1, 0, 1], [0, 0.25, 1], target=0.5)
 # contour.doses: [[0, 1], [.25, .75], [1, 0]]
 ```
 

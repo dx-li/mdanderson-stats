@@ -40,13 +40,16 @@ from mdanderson_stats import stplan_piecewise_from_survival
 
 # Survival curve with hazards 0.2 before time 4, and 0.05 afterward.
 model = stplan_piecewise_from_survival(
-    [2, 8], np.exp([-0.4, -1.0]), change_time=4,
+    [2, 8],
+    np.exp([-0.4, -1.0]),
+    change_time=4,
 )
 # model.hazard_before = 0.2, model.hazard_after = 0.05
 
 # Infer the change time from three points instead.
 inferred = stplan_piecewise_from_survival(
-    [2, 8, 10], np.exp([-0.4, -1.0, -1.1]),
+    [2, 8, 10],
+    np.exp([-0.4, -1.0, -1.1]),
 )
 # inferred.change_time = 4
 ```

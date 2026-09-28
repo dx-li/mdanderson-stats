@@ -8,15 +8,26 @@ version 3.0.9 embedded help; see the [source review](one-arm-tte-source.md).
 from mdanderson_stats import one_arm_tte_design, simulate_one_arm_tte
 
 design = one_arm_tte_design(
-    standard_prior=[4, 12], experimental_prior=[1, 3],
-    parameterization="mean", maximize=True,
-    cutoff_inferiority=0.05, delta_inferiority=0,
-    cutoff_superiority=0.95, delta_superiority=0,
-    max_patients=40, minimum_patients=5,
-    periodic_interval=1, monitor_at_accrual=True, followup_period=3,
+    standard_prior=[4, 12],
+    experimental_prior=[1, 3],
+    parameterization="mean",
+    maximize=True,
+    cutoff_inferiority=0.05,
+    delta_inferiority=0,
+    cutoff_superiority=0.95,
+    delta_superiority=0,
+    max_patients=40,
+    minimum_patients=5,
+    periodic_interval=1,
+    monitor_at_accrual=True,
+    followup_period=3,
 )
 result = simulate_one_arm_tte(
-    design, true_tte=6, accrual_rate=2, repetitions=100, seed=98,
+    design,
+    true_tte=6,
+    accrual_rate=2,
+    repetitions=100,
+    seed=98,
 )
 print(result.early_inferior_probability, result.final_superior_probability)
 ```

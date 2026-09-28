@@ -16,7 +16,7 @@ plan = stplan_solve(
     bounds=(2, 1000),
     parameters={"difference": 0.5, "sd": 1},
 )
-print(plan.value)           # approximately 26.137504
+print(plan.value)  # approximately 26.137504
 print(plan.achieved_power)  # approximately 0.8
 ```
 

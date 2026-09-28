@@ -156,7 +156,11 @@ covariates = np.column_stack((np.sin(row / 3), row % 5))
 base = condis_impute(time, status)
 refinements = {
     method: condis_regularized_refine(
-        base, covariates, method=method, folds=5, random_state=7,
+        base,
+        covariates,
+        method=method,
+        folds=5,
+        random_state=7,
     )
     for method in ("ridge", "lasso", "knn")
 }
@@ -265,7 +269,8 @@ from mdanderson_stats import condis_svm_refine
 
 svm = condis_svm_refine(base, covariates, folds=5, random_state=7)
 np.testing.assert_array_equal(
-    svm.refined_time[status == 1], time[status == 1],
+    svm.refined_time[status == 1],
+    time[status == 1],
 )
 selected_cost, estimated_sigma = svm.best_cost, svm.sigma
 ```
@@ -355,7 +360,10 @@ forest_status = (forest_rows % 4 != 0).astype(int)
 forest_x = np.column_stack((np.sin(forest_rows / 3), forest_rows % 5))
 forest_base = condis_impute(forest_time, forest_status)
 forest = condis_forest_refine(
-    forest_base, forest_x, folds=4, random_state=7,
+    forest_base,
+    forest_x,
+    folds=4,
+    random_state=7,
 )
 np.testing.assert_array_equal(
     predict_condis_forest(forest.fit, np.column_stack((forest_status, forest_x))),
@@ -412,7 +420,10 @@ boosting_status = (boosting_rows % 4 != 0).astype(int)
 boosting_x = np.column_stack((np.sin(boosting_rows / 3), boosting_rows % 5))
 boosting_base = condis_impute(boosting_time, boosting_status)
 boosted = condis_boosting_refine(
-    boosting_base, boosting_x, folds=4, random_state=7,
+    boosting_base,
+    boosting_x,
+    folds=4,
+    random_state=7,
 )
 assert boosted.fold_rmse.shape == (1, 4, 9)
 np.testing.assert_array_equal(

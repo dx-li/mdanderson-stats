@@ -35,9 +35,9 @@ This correlation is not the Pearson correlation of the ordinal outcome scores.
 from mdanderson_stats import uaroet_probabilities
 
 model = uaroet_probabilities(
-    efficacy_logits=[[-1.0, .2], [-.3, .7]],
-    toxicity_logits=[[-1.5, -.4], [-.8, .1]],
-    association=.3,
+    efficacy_logits=[[-1.0, 0.2], [-0.3, 0.7]],
+    toxicity_logits=[[-1.5, -0.4], [-0.8, 0.1]],
+    association=0.3,
 )
 utility = [[20, 10, 0], [60, 40, 5], [100, 70, 10]]
 print(model.expected_utility(utility))
@@ -87,8 +87,8 @@ names = uaroet_parameter_names(2, 2, 2)
 print(names)  # Efficacy baseline/increment, then toxicity baseline/increment.
 fit = fit_uaroet(
     counts=[[[4, 0], [2, 0]], [[1, 1], [3, 1]]],
-    prior_mean=[0, .3, -1, .3],
-    prior_sd=[.7, .4, .7, .4],
+    prior_mean=[0, 0.3, -1, 0.3],
+    prior_sd=[0.7, 0.4, 0.7, 0.4],
     association=0,
     draws=128,
     warmup=64,
@@ -99,9 +99,9 @@ allocation = uaroet_allocation(
     fit,
     utility=[[20, 0], [100, 40]],
     treated=[6, 6],
-    toxicity_limit=.5,
+    toxicity_limit=0.5,
     p_L=0,
-    p_U=.9,
+    p_U=0.9,
     utility_tolerance=100,
     good_utility_cutoff=40,
 )

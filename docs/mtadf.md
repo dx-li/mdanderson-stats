@@ -10,9 +10,8 @@ implementation exposes its assumptions and does not claim native app parity.
 ```python
 from mdanderson_stats import mtadf_decision, mtadf_toxicity_prior
 
-prior = mtadf_toxicity_prior(toxicity_limit=.30, safety_cutoff=.80)
-counts = dict(subjects=[3, 6, 3, 0], toxicities=[0, 1, 1, 0],
-              responses=[0, 4, 1, 0])
+prior = mtadf_toxicity_prior(toxicity_limit=0.30, safety_cutoff=0.80)
+counts = dict(subjects=[3, 6, 3, 0], toxicities=[0, 1, 1, 0], responses=[0, 4, 1, 0])
 interim = mtadf_decision(**counts, current_dose=2, prior=prior)
 final = mtadf_decision(**counts, final=True, prior=prior)
 print(interim.dose, final.dose)  # zero-based dose indices
@@ -83,8 +82,8 @@ requirement for the marginal decision calculation.
 from mdanderson_stats import simulate_mtadf
 
 simulation = simulate_mtadf(
-    true_toxicity=[.05, .10, .25, .45],
-    true_efficacy=[.10, .35, .55, .50],
+    true_toxicity=[0.05, 0.10, 0.25, 0.45],
+    true_efficacy=[0.10, 0.35, 0.55, 0.50],
     cohorts=4,
     cohort_size=3,
     trials=20,

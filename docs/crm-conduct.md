@@ -10,9 +10,7 @@ and reconstruct the information visible at a chosen calendar time.
 ```python
 from mdanderson_stats import fit_bmacrm, bmacrm_lookahead
 
-observed = fit_bmacrm(
-    [.1, .25, .5], events=[0, 0, 0], subjects=[6, 0, 0], target=.3
-)
+observed = fit_bmacrm([0.1, 0.25, 0.5], events=[0, 0, 0], subjects=[6, 0, 0], target=0.3)
 look = bmacrm_lookahead(observed, pending=[1, 0, 0], current_dose=0)
 print(look.action, look.dose, look.reason)
 ```
@@ -58,7 +56,7 @@ snapshot = crm_calendar_snapshot(
     at=2.5,
     dose_count=3,
 )
-recommendation = crm_calendar_decision(snapshot, [.1, .25, .5], target=.3)
+recommendation = crm_calendar_decision(snapshot, [0.1, 0.25, 0.5], target=0.3)
 print(snapshot.outcomes, snapshot.times)
 print(recommendation.routing, recommendation.decision.action)
 ```
@@ -89,10 +87,10 @@ from mdanderson_stats import dacrm_trimester_prior
 
 da = crm_calendar_decision(
     snapshot,
-    [.1, .25, .5],
-    target=.3,
+    [0.1, 0.25, 0.5],
+    target=0.3,
     method="dacrm",
-    da_prior=dacrm_trimester_prior(3, [.05, .15, .8], dispersion=2),
+    da_prior=dacrm_trimester_prior(3, [0.05, 0.15, 0.8], dispersion=2),
     minimum_observed=2,
     rng=np.random.default_rng(381),
     draws=1000,

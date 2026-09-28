@@ -23,16 +23,19 @@ from mdanderson_stats import fit_synergy_surface, predict_synergy_surface
 
 # Single-drug, combination and repeated-dose observations.
 index = np.r_[np.arange(9), 0, 2, 4, 8]
-dose1 = np.tile([0., .5, 1.], 3)[index]
-dose2 = np.repeat([0., .75, 1.5], 3)[index]
+dose1 = np.tile([0.0, 0.5, 1.0], 3)[index]
+dose2 = np.repeat([0.0, 0.75, 1.5], 3)[index]
 response = (
-    1.1 - .2 * dose1 - .15 * dose2 - .3 * dose1 * dose2
-    + .025 * np.sin(np.arange(1, len(index) + 1))
+    1.1
+    - 0.2 * dose1
+    - 0.15 * dose2
+    - 0.3 * dose1 * dose2
+    + 0.025 * np.sin(np.arange(1, len(index) + 1))
 )
 fit = fit_synergy_surface(dose1, dose2, response, baseline="raw")
-prediction = predict_synergy_surface(fit, [.2, .7], [.6, 1.2])
+prediction = predict_synergy_surface(fit, [0.2, 0.7], [0.6, 1.2])
 print(prediction.baseline)
-print(prediction.surface)   # departure from the additive baseline
+print(prediction.surface)  # departure from the additive baseline
 print(prediction.response)  # baseline plus departure
 print(fit.smoothing_parameter, fit.smoothing_at_boundary)
 ```

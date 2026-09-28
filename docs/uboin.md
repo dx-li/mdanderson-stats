@@ -12,12 +12,10 @@ from mdanderson_stats import uboin_posterior, uboin_allocation
 
 posterior = uboin_posterior(
     [[[2, 1], [5, 2]], [[3, 0], [4, 1]]],
-    prior=[[.25, .25], [.25, .25]],
+    prior=[[0.25, 0.25], [0.25, 0.25]],
     utilities=[[30, 0], [100, 50]],
 )
-probabilities = uboin_allocation(
-    posterior, eligible=[True, True], method="proportional"
-)
+probabilities = uboin_allocation(posterior, eligible=[True, True], method="proportional")
 ```
 
 Counts have shape `(dose, efficacy, toxicity)`, with both category axes in
@@ -61,12 +59,14 @@ Dose indices are one-based.
 from mdanderson_stats import UBOINDesign
 
 trial = UBOINDesign(
-    prior=[[.25, .25], [.25, .25]], utilities=[[30, 0], [100, 50]],
-    candidate_scope="tried", s1=12, s2=24, max_patients=54,
+    prior=[[0.25, 0.25], [0.25, 0.25]],
+    utilities=[[30, 0], [100, 50]],
+    candidate_scope="tried",
+    s1=12,
+    s2=24,
+    max_patients=54,
 )
-decision = trial.decision(
-    [[[0, 0], [12, 0]], [[0, 0], [0, 0]]], current_dose=1, stage=1
-)
+decision = trial.decision([[[0, 0], [12, 0]], [[0, 0], [0, 0]]], current_dose=1, stage=1)
 assert decision.stage == 2
 assert decision.next_dose == 2  # Explore above the highest tried safe dose.
 ```
@@ -130,7 +130,7 @@ escalation, de-escalation and toxicity elimination against base R.
 ```python
 from mdanderson_stats import simulate_uboin, uboin_gumbel_probabilities
 
-joint = uboin_gumbel_probabilities([.15, .35], [.35, .65], association=.2)
+joint = uboin_gumbel_probabilities([0.15, 0.35], [0.35, 0.65], association=0.2)
 operating = simulate_uboin(trial, joint, trials=100, cohort_size=3, seed=142)
 print(operating.selection_probability)  # no OBD, dose 1, dose 2
 print(operating.selection_mcse)

@@ -11,28 +11,25 @@ import numpy as np
 from mdanderson_stats import fit_interval_competing_risk, predict_interval_competing_risk
 
 index = np.arange(1, 121)
-x = np.column_stack((np.cos(index*.71) + index/200,
-                     np.sin(index*1.31) - index/250))
-u1 = ((index*37) % 127 + .5)/127
-u2 = ((index*53) % 131 + .5)/131
-t1 = -np.log(u1)/(.3*np.exp(.4*x[:, 0] + .2*x[:, 1]))
-t2 = -np.log(u2)/(.25*np.exp(-.2*x[:, 0] + .1*x[:, 1]))
+x = np.column_stack((np.cos(index * 0.71) + index / 200, np.sin(index * 1.31) - index / 250))
+u1 = ((index * 37) % 127 + 0.5) / 127
+u2 = ((index * 53) % 131 + 0.5) / 131
+t1 = -np.log(u1) / (0.3 * np.exp(0.4 * x[:, 0] + 0.2 * x[:, 1]))
+t2 = -np.log(u2) / (0.25 * np.exp(-0.2 * x[:, 0] + 0.1 * x[:, 1]))
 latent = np.minimum(t1, t2)
 event = np.where(t1 < t2, 1, 2)
-visit_spacing = .3 + .013*(index % 11)
-lower = np.floor(latent/visit_spacing)*visit_spacing
+visit_spacing = 0.3 + 0.013 * (index % 11)
+lower = np.floor(latent / visit_spacing) * visit_spacing
 upper = lower + visit_spacing
-censor_time = 2 + .023*(index % 13)
+censor_time = 2 + 0.023 * (index % 13)
 right = upper > censor_time
 lower[right] = censor_time[right]
 upper[right] = np.inf
 event[right] = 0
 
-fit = fit_interval_competing_risk(
-    lower, upper, event, x, alpha=(0, 0), k=.5, tolerance=1e-9
-)
+fit = fit_interval_competing_risk(lower, upper, event, x, alpha=(0, 0), k=0.5, tolerance=1e-9)
 times = np.linspace(fit.boundary_knots[0], fit.boundary_knots[1], 51)
-prediction = predict_interval_competing_risk(fit, times, [[0, 0], [.5, -.25]])
+prediction = predict_interval_competing_risk(fit, times, [[0, 0], [0.5, -0.25]])
 assert np.all(prediction.cif1 + prediction.cif2 <= 1 + 1e-7)
 ```
 

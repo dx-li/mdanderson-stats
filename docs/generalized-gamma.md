@@ -15,7 +15,7 @@ from mdanderson_stats import fit_generalized_gamma, predict_generalized_gamma
 
 rng = np.random.default_rng(7)
 x = rng.normal(size=(100, 2))
-latent = np.exp(.8 + .35*x[:, 0] - .25*x[:, 1]) * rng.gamma(2.5, size=100)**.7
+latent = np.exp(0.8 + 0.35 * x[:, 0] - 0.25 * x[:, 1]) * rng.gamma(2.5, size=100) ** 0.7
 time = np.minimum(latent, 6.0)
 event = (latent <= 6.0).astype(int)
 

@@ -9,14 +9,22 @@ from mdanderson_stats import barpo_posterior, barpo_allocation, barpo_monitor
 
 posterior = barpo_posterior([1, 4, 8], [3, 2, 1], prior=[[1, 1]] * 3)
 allocation = barpo_allocation(
-    posterior, assigned=[5, 8, 12], method="barn2n", max_n=50,
+    posterior,
+    assigned=[5, 8, 12],
+    method="barn2n",
+    max_n=50,
     minimum_probability=[0.2, 0, 0],
 )
 monitor = barpo_monitor(
-    [1, 4, 8], [3, 2, 1], prior=[[1, 1]] * 3,
-    theta_fut=0.25, pfut=0.45,
-    theta_eff=0.65, peff=0.9,
-    theta_final=0.5, pfinal=0.95,
+    [1, 4, 8],
+    [3, 2, 1],
+    prior=[[1, 1]] * 3,
+    theta_fut=0.25,
+    pfut=0.45,
+    theta_eff=0.65,
+    peff=0.9,
+    theta_final=0.5,
+    pfinal=0.95,
 )
 print(allocation)
 print(monitor.futile, monitor.efficacious, monitor.final_efficacious)

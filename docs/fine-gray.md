@@ -11,9 +11,9 @@ from mdanderson_stats import fine_gray, fine_gray_predict
 fit = fine_gray(
     time=[1, 2, 2, 3, 4, 5, 6, 7],
     status=[1, 2, 0, 1, 2, 1, 0, 1],
-    x=[.2, .7, -.4, .1, .9, -.8, .3, .6],
+    x=[0.2, 0.7, -0.4, 0.1, 0.9, -0.8, 0.3, 0.6],
 )
-prediction = fine_gray_predict(fit, [[.2], [.8]], times=[0, 1, 2, 4, 7])
+prediction = fine_gray_predict(fit, [[0.2], [0.8]], times=[0, 1, 2, 4, 7])
 assert prediction.cumulative_incidence.shape == (2, 5)
 assert (prediction.cumulative_incidence[:, 0] == 0).all()
 ```
@@ -105,7 +105,7 @@ from mdanderson_stats import fine_gray_contour, plot_fine_gray_contour_2d
 contour = fine_gray_contour(
     time=[1, 2, 2, 3, 4, 5, 6, 7],
     status=[1, 2, 0, 1, 2, 1, 0, 1],
-    x=[.2, .7, -.4, .1, .9, -.8, .3, .6],
+    x=[0.2, 0.7, -0.4, 0.1, 0.9, -0.8, 0.3, 0.6],
     continuous_column=0,
 )
 assert contour.cumulative_incidence.shape == (30, 5)

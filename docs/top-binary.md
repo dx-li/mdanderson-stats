@@ -58,10 +58,15 @@ fractions in [0,1]; follow-up evaluation and calendar replay use the same mixtur
 from mdanderson_stats import TOPBinaryDesign
 
 early_timing = TOPBinaryDesign(
-    10, .2, .8, 0, prior=[1, 1], looks=[10],
+    10,
+    0.2,
+    0.8,
+    0,
+    prior=[1, 1],
+    looks=[10],
     timing_probabilities=[1, 0, 0],
 )
-weighted = early_timing.evaluate_followup(7, 2, [.25, .5, .75], 1)
+weighted = early_timing.evaluate_followup(7, 2, [0.25, 0.5, 0.75], 1)
 assert weighted.effective_sample_size == 9.75  # 7 + .75 + 1 + 1
 ```
 

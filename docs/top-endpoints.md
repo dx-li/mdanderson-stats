@@ -55,13 +55,18 @@ import numpy as np
 from mdanderson_stats import TOPMultiEndpointDesign
 
 design = TOPMultiEndpointDesign(
-    45, [.15, .30, .15, .40], .94, .50,
-    mode="coprimary", looks=[15, 30, 45], windows=[2, 4],
+    45,
+    [0.15, 0.30, 0.15, 0.40],
+    0.94,
+    0.50,
+    mode="coprimary",
+    looks=[15, 30, 45],
+    windows=[2, 4],
 )
 table = design.boundaries()
 np.testing.assert_array_equal(table.complete_event_threshold, [[7, 5], [16, 12], [26, 19]])
 np.testing.assert_allclose(table.effective_size_crossing[0, 0, 5], 10.64809344313821)
-assert design.evaluate(15, [5, 4], [4, 4], [.5, .5]).decision == "continue"
+assert design.evaluate(15, [5, 4], [4, 4], [0.5, 0.5]).decision == "continue"
 assert design.evaluate(15, [5, 4], [4, 4], [2, 2]).decision == "stop_futility"
 ```
 

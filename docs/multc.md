@@ -18,12 +18,12 @@ from mdanderson_stats import multc_lean_design
 # Published tutorial example; tuples contain beta success/failure shapes.
 design = multc_lean_design(
     30,
-    response_prior=(.6, 1.4),
-    toxicity_prior=(.5, 1.5),
+    response_prior=(0.6, 1.4),
+    toxicity_prior=(0.5, 1.5),
     historical_response=(30, 70),
     historical_toxicity=(20, 60),
-    response_cutoff=.95,
-    toxicity_cutoff=.95,
+    response_cutoff=0.95,
+    toxicity_cutoff=0.95,
 )
 state = design.monitor(responses=0, toxicities=0, sample_size=6)
 print(state.response_probability, state.decision)  # about .964594; stop_response
@@ -91,12 +91,12 @@ explains the differences between full and potential representations.
 
 ```python
 # Category order: both, response only, toxicity only, neither.
-oc = design.operating_characteristics([.12, .28, .18, .42])
+oc = design.operating_characteristics([0.12, 0.28, 0.18, 0.42])
 print(oc.expected_sample_size, oc.expected_responses, oc.expected_toxicities)
 print(oc.sample_size_probability)  # index n, including possible n=0
 
 # Explicit independence assumption; equivalent to the above four probabilities.
-independent = design.operating_characteristics_independent(.4, .3)
+independent = design.operating_characteristics_independent(0.4, 0.3)
 ```
 
 A two-dimensional recursion advances joint response/toxicity count mass one

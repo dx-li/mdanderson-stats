@@ -41,7 +41,7 @@ observations must be complete; pending outcomes are not imputed.
 from mdanderson_stats import BCRMCurve, fit_bcrm
 
 # Skeleton from the official Goodman example; counts are illustrative.
-curve = BCRMCurve([.05, .10, .20, .35, .50, .70], alpha=3)
+curve = BCRMCurve([0.05, 0.10, 0.20, 0.35, 0.50, 0.70], alpha=3)
 fit = fit_bcrm(curve, events=[0, 0, 1, 2, 0, 0], subjects=[2, 4, 6, 4, 0, 0])
 mean_event_probability = fit.dose_mean
 probability_interval = fit.dose_interval  # one [lower, upper] row per dose
@@ -86,9 +86,15 @@ does not silently select a convention or refit the posterior.
 from mdanderson_stats import bcrm_decision
 
 decision = bcrm_decision(
-    fit.dose_mean, [2, 4, 6, 4, 0, 0], target=.2,
-    max_subjects=24, min_subjects=18, cohort_size=2,
-    stop_at_target=6, selection="nearest", max_increment=1,
+    fit.dose_mean,
+    [2, 4, 6, 4, 0, 0],
+    target=0.2,
+    max_subjects=24,
+    min_subjects=18,
+    cohort_size=2,
+    stop_at_target=6,
+    selection="nearest",
+    max_increment=1,
 )
 # next_index is a zero-based dose index, or None if the trial should stop.
 ```

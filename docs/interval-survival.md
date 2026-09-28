@@ -10,10 +10,9 @@ import numpy as np
 from mdanderson_stats import fit_interval_survival, predict_interval_survival
 
 index = np.arange(1, 97)
-x = np.column_stack((np.cos(index*.71) + index/200,
-                     np.sin(index*1.31) - index/250))
-probability = ((index*37) % 97 + .5)/97
-latent = 3*(-np.log(probability)/np.exp(.45*x[:, 0] - .3*x[:, 1]))**(1/1.4)
+x = np.column_stack((np.cos(index * 0.71) + index / 200, np.sin(index * 1.31) - index / 250))
+probability = ((index * 37) % 97 + 0.5) / 97
+latent = 3 * (-np.log(probability) / np.exp(0.45 * x[:, 0] - 0.3 * x[:, 1])) ** (1 / 1.4)
 lower = np.floor(latent)
 upper = lower + 1
 exact = (index % 7 == 0) & (latent < 6)
@@ -22,7 +21,7 @@ lower[latent >= 6] = 6
 upper[latent >= 6] = np.inf
 
 fit = fit_interval_survival(lower, upper, x)
-prediction = predict_interval_survival(fit, [0, 1, 2, 4.5, 6, 8], [[0, 0], [1, -.5]])
+prediction = predict_interval_survival(fit, [0, 1, 2, 4.5, 6, 8], [[0, 0], [1, -0.5]])
 assert np.all(prediction.survival_lower <= prediction.survival_upper)
 ```
 

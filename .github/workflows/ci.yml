@@ -1,19 +1,17 @@
-name: validate
-on: [push, pull_request]
+# Retain this path so GitHub can keep its historical workflow ID disabled.
+# Older branches still contain the unrestricted push workflow at this path.
+# Run .github/workflows/validation.yml for current validation instead.
+name: retired-validation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
-  test:
+  retired:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python: ['3.12', '3.13', '3.14']
+    timeout-minutes: 1
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-        with:
-          python-version: ${{ matrix.python }}
-      - run: uv sync --locked --group dev --extra plot
-      - run: uv run --extra plot pytest
-      - run: uv run ruff check .
-      - run: uv run ruff format --check .
-      - run: uv run mypy src
-      - run: uv build
+      - run: echo 'Use validation.yml; this historical workflow remains disabled.'

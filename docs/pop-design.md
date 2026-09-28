@@ -18,8 +18,13 @@ decision = design.decision(1, [3, 0, 0], [0, 0, 0])
 assert decision.next_dose == 2
 
 result = simulate_pop(
-    design, [0.1, 0.25, 0.45], total_patients=30,
-    cohort_size=3, trials=1000, titration=True, seed=175,
+    design,
+    [0.1, 0.25, 0.45],
+    total_patients=30,
+    cohort_size=3,
+    trials=1000,
+    titration=True,
+    seed=175,
 )
 print(result.selection_probability)  # [no selection, dose 1, dose 2, dose 3]
 print(result.selection_mcse)

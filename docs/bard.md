@@ -58,9 +58,7 @@ unobserved arms in utility mode.
 ```python
 from mdanderson_stats import bard_minimization, bard_select_obd
 
-allocation = bard_minimization(
-    [1, 1, 2], [[1, 1], [1, 2], [2, 1]], [1, 1], seed=165
-)
+allocation = bard_minimization([1, 1, 2], [[1, 1], [1, 2], [2, 1]], [1, 1], seed=165)
 selection = bard_select_obd(
     [[2, 2, 0, 4], [0, 2, 4, 1]],
     prior=[0.25, 0.25, 0.25, 0.25],

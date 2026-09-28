@@ -10,9 +10,9 @@ from mdanderson_stats import fit_parametric_survival, predict_parametric_surviva
 
 time = [1, 2, 2, 3, 4, 5, 6, 7]
 event = [1, 1, 0, 1, 1, 0, 1, 1]
-x = [.2, .7, -.4, .1, .9, -.8, .3, .6]
+x = [0.2, 0.7, -0.4, 0.1, 0.9, -0.8, 0.3, 0.6]
 fit = fit_parametric_survival(time, event, x, distribution="weibull")
-prediction = predict_parametric_survival(fit, [0, 1, 2, 4, 7], [[.2], [.8]])
+prediction = predict_parametric_survival(fit, [0, 1, 2, 4, 7], [[0.2], [0.8]])
 assert prediction.survival.shape == (2, 5)
 assert (prediction.survival[:, 0] == 1).all()
 ```
@@ -82,9 +82,7 @@ diagnostics. The default remains `"delta"`; see the
 ```python
 from mdanderson_stats import parametric_survival_contour, plot_survival_contour_2d
 
-contour = parametric_survival_contour(
-    time, event, x, continuous_column=0, distribution="lognormal"
-)
+contour = parametric_survival_contour(time, event, x, continuous_column=0, distribution="lognormal")
 ax = plot_survival_contour_2d(contour)  # optional plot extra
 ```
 

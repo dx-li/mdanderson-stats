@@ -20,13 +20,15 @@ from mdanderson_stats import run_pinnacle
 row, col = np.indices((32, 32))
 base = (
     2.0
-    + 25 * np.exp(-((row - 10)**2 + (col - 11)**2) / 4)
-    + 18 * np.exp(-((row - 21)**2 + (col - 20)**2) / 6)
+    + 25 * np.exp(-((row - 10) ** 2 + (col - 11) ** 2) / 4)
+    + 18 * np.exp(-((row - 21) ** 2 + (col - 20) ** 2) / 6)
 )
+
 
 def gels():
     for scale in (0.8, 1.0, 1.2):
         yield scale * base + 0.1
+
 
 result = run_pinnacle(
     gels,

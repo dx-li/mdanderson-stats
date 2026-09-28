@@ -30,17 +30,24 @@ import numpy as np
 from mdanderson_stats import TOPMultiEndpointDesign, run_top_multiendpoint_trial
 
 design = TOPMultiEndpointDesign(
-    4, [.25, .25, .25, .25], .5, 0,
-    mode="coprimary", looks=[2, 4], windows=[1, 2],
+    4,
+    [0.25, 0.25, 0.25, 0.25],
+    0.5,
+    0,
+    mode="coprimary",
+    looks=[2, 4],
+    windows=[1, 2],
 )
 trial = run_top_multiendpoint_trial(
-    design, np.zeros(4), np.tile([.5, np.inf], (4, 1)),
+    design,
+    np.zeros(4),
+    np.tile([0.5, np.inf], (4, 1)),
 )
 assert trial.decision == "success"
 assert trial.final_time == 1
 assert trial.pending.tolist() == [0, 4]
-assert trial.interim_suspension_time == .5
-assert trial.final_followup_time == .5
+assert trial.interim_suspension_time == 0.5
+assert trial.final_followup_time == 0.5
 ```
 
 The result contains enrollment times, observed event times, observed 0/1/NaN
@@ -71,8 +78,12 @@ different event timing while retaining the design's analysis weights.
 from mdanderson_stats import simulate_top_multiendpoint
 
 simulation = simulate_top_multiendpoint(
-    design, [.3, .2, .1, .4], accrual_rate=2,
-    trials=200, truth_timing_probabilities=[.2, .3, .5], rng=134,
+    design,
+    [0.3, 0.2, 0.1, 0.4],
+    accrual_rate=2,
+    trials=200,
+    truth_timing_probabilities=[0.2, 0.3, 0.5],
+    rng=134,
 )
 print(simulation.success_probability, simulation.success_mcse)
 print(simulation.duration.mean(), simulation.patients.mean())

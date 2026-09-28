@@ -12,8 +12,14 @@ from mdanderson_stats import simulate_bacis_oc
 
 # A small single-subgroup workflow example; no between-group borrowing occurs.
 result = simulate_bacis_oc(
-    [.3], trials_per_group=25, replications=32,
-    draws=32, warmup=0, chains=2, outcome_rng=153, sampler_rng=1153,
+    [0.3],
+    trials_per_group=25,
+    replications=32,
+    draws=32,
+    warmup=0,
+    chains=2,
+    outcome_rng=153,
+    sampler_rng=1153,
 )
 assert result.successes.shape == (32, 1)
 assert result.single_cluster_probability == 1
