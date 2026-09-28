@@ -3896,7 +3896,8 @@
         "Finite-grid binary calibration with shared potential outcomes, power-based selection and independent validation with Monte Carlo standard errors",
         "Co-primary efficacy and efficacy/toxicity monitoring with a four-cell Dirichlet prior, endpoint-specific marginal Beta approximations, published decision combinations, separate assessment windows, mixture-uniform timing weights, batched patient/summary APIs and unrounded boundary tables.",
         "Two-endpoint calendar replay and batched simulation preserving four-cell joint binary outcome probabilities, endpoint-specific event timing, observed-only analysis histories, accrual pauses, final waiting and compact operating-characteristic summaries",
-        "Nonuniform binary TOP analysis weights from a three-part conditional timing mixture, propagated through follow-up, calendar replay and every calibration candidate independently of the simulated timing truth"
+        "Nonuniform binary TOP analysis weights from a three-part conditional timing mixture, propagated through follow-up, calendar replay and every calibration candidate independently of the simulated timing truth",
+        "Finite-grid multi-endpoint calibration over explicit joint null scenarios and one alternative, with shared random numbers, feasibility across supplied nulls, and independent holdout validation"
       ],
       "validation": [
         "Three focused tests: published Table 4, pending follow-up example, extreme time units, suspension/equality behavior and complete-data BOP2 equivalence; tests/test_top_binary.py",
@@ -3904,9 +3905,10 @@
         "Three calibration checks: exact final-only binomial power, delayed-outcome stage reproducibility and infeasible-grid failure; tests/test_top_calibration.py",
         "Four focused multiple-endpoint checks cover 98 independent R posterior rows, 394 boundary rows, published combination rules, timing mixtures, batching and preservation of tiny prior shapes; tests/test_top_endpoints.py and research/top-endpoints-audit.md.",
         "Three focused two-endpoint calendar checks cover hand-computed pending-endpoint paths, large time-unit rescaling, caller-array preservation and final-only success against an independent exact multinomial reference; tests/test_top_multi_calendar.py",
+        "Three focused calibration checks compare the composite-null example with independent exact enumeration, exercise both mode-specific hypothesis rules, replay holdout seeds and verify timing ownership and preflight/runtime work limits; tests/test_top_multi_calibration.py and research/top-multiendpoint-calibration-audit.md.",
         "Four binary timing checks cover hand mixture weights, uniform compatibility, calendar and calibration propagation, and tiny prior preservation; tests/test_top_binary_timing.py",
         "Public calendar/simulation and nonuniform binary guide examples executed; read-only truth timing inputs, reproducibility and terminal action probabilities checked; research/top-endpoints-audit.md",
-        "Pending multiple-endpoint calibration, native tuning grids, reports and app parity; docs/top-endpoints.md and docs/top-binary.md."
+        "Native tuning grids, native reports and app parity remain pending; docs/top-endpoints.md and docs/top-binary.md."
       ]
     },
     {

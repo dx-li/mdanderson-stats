@@ -56,3 +56,23 @@ Native optimizer equivalence, arbitrary composite-null error control and
 clinical suitability are not established by this calculation. The calendar's
 conditional event-time independence and accrual conventions are specified in
 the [simulation guide](../docs/top-endpoints-simulation.md).
+
+## Python calibration validation
+
+`tests/test_top_multi_calibration.py` checks the final-only 12-patient example
+against the independent exact rows above with a five-Monte-Carlo-standard-error
+tolerance. At C=.8, the both-boundary null alone is below .1, but the two
+partial-null scenarios are above .1; the optimizer therefore marks C=.8
+infeasible and selects C=.95 on the supplied grid. The same test replays the
+alternative holdout using `simulate_top_multiendpoint(..., rng=result.validation_seed)`
+and matches its probability and mean enrollment exactly.
+
+The public guide's 200-trial example ran with seed 134 and selected
+`[C, gamma]=[.95,.5]`; its four holdout success estimates were
+`[.005,.015,.055,.395]`, with appreciable Monte Carlo uncertainty. A separate
+runtime-budget check sets `max_work` exactly at the one-analysis-per-look
+preflight estimate and confirms that repeated final suspension analyses exhaust
+the shared scan budget with an explicit error. The focused TOP endpoint,
+calendar, and calibration tests passed (10 tests); Ruff, mypy, JSON parsing and
+format checks passed. These small checks do not establish composite-null
+control beyond the supplied scenarios or native optimizer parity.

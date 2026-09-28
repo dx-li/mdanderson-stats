@@ -97,5 +97,8 @@ a two-million-cell limit checked before allocating broadcast results.
 to patient arrivals and delayed, jointly generated endpoint outcomes. They report
 success probabilities, Monte Carlo uncertainty, enrollment and duration.
 
-Entry 134 remains partial. Multiple-endpoint calibration, native reports and
-app version parity require further work.
+[Finite-grid calibration](top-endpoints-calibration.md) searches explicit joint
+null scenarios and one alternative with common random numbers and an independent
+holdout. It does not claim error control outside the supplied scenarios. Entry
+134 remains partial: native optimizer grids, reports, and app-version parity
+remain unimplemented.

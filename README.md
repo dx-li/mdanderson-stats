@@ -846,7 +846,10 @@ with independent validation.
 efficacy/toxicity monitoring, endpoint-specific pending outcomes and nonuniform
 timing weights. Its [calendar replay and simulation](docs/top-endpoints-simulation.md)
 preserve joint endpoint outcomes and report observed decisions, enrollment and
-duration. Multiple-endpoint calibration and native reports remain pending.
+duration. [Finite-grid calibration](docs/top-endpoints-calibration.md) evaluates
+explicit joint null scenarios and one alternative with independent holdout
+validation. Native optimizer parity, reports and broader composite-null guarantees
+remain pending.
 
 [Original TPI](docs/tpi.md) adds posterior-SD intervals, original-paper decision
 tables, two-patient safety gating, isotonic MTD selection and batched simulation,
