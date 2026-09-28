@@ -92,3 +92,22 @@ and module type checking. The public guide example gives total DIC
 `21.949475646360167` for the native five-subgroup data. The root reference and
 guide audit took .276 seconds after import, peaked at 114.8 MiB resident memory
 and reported zero swaps. No JAGS run or native random-stream match is claimed.
+
+## Native chain initialization limitation
+
+The native `OneTrial` and `ModelOne` DIC calls supply five chains with one
+named initialization list containing the same `.RNG.name` and `.RNG.seed`.
+The [rjags initialization source](https://github.com/cran/rjags/blob/master/R/jags.R)
+copies a named list to every chain. In contrast, a list of chain-specific lists
+or a function can supply different initializations. The source snapshot was
+retrieved on 2026-09-28 and has SHA256
+`773884b71e6c2954e8079d6a136b06145437f73e59c5cbcdb90cfb8172b5cbb3`;
+it is archived outside the distribution at
+`research/raw/BaCIS/rjags-initialization.R`.
+
+The repeated RNG initialization can produce identical chain trajectories,
+undermining the independent-chain comparison required by the native penalty.
+This is an additional reason to distinguish the Python population expectation
+from the native finite-chain result. The initialization behavior is verified
+from source; identical trajectories or a zero native penalty have not been
+demonstrated by running JAGS and are not claimed here.

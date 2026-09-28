@@ -174,6 +174,11 @@ borrowing priors do not enter this score. Its deterministic integrals target
 the population expectations of the native JAGS monitor, avoiding the sampling
 variation of that monitor's finite chains.
 
+The native wrapper also supplies the same random-generator initialization to
+all five DIC chains. That can undermine their independence. The source audit
+records this limitation; Python evaluates the independent-draw population
+definition directly rather than reproducing that initialization behavior.
+
 DIC is an asymptotic model-comparison approximation. A separated or multimodal
 posterior can violate the assumptions behind its interpretation; a successfully
 computed score alone does not establish that it is suitable for selecting a
