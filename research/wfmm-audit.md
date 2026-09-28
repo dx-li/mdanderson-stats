@@ -169,3 +169,30 @@ conditional statistics, optimized parameters and full log densities; Python's
 relative log likelihood must subtract the standard-normal baseline before
 comparison. Base-R generation completed in 0.15 seconds. Comparison with the
 Python calibration is a separate validation step.
+
+## Verified covariance and prediction scope
+
+The official guide, PDF pages 8–10, describes separate random-effect and
+residual-stratum covariance outputs. For `D=Y*W`, each data-space covariance
+is `W*diag(omega)*W.T`, the guide's two-dimensional inverse transform of the
+diagonal coefficient-space matrix. It describes `sigma` as a **variance**
+function and `rho` as a correlation matrix, both reconstructed from
+`omega_mean`. The covariance reconstructed from mean omega is also the
+elementwise posterior mean covariance by linearity. Correlation normalization
+and square roots are nonlinear, so plug-in correlations/SDs differ in general
+from posterior means of draw-wise correlations/SDs.
+
+Native univariate covariance samples are available only for fewer than 1,000
+time points, and plug-in rho/sigma for fewer than 1,500; the guide explicitly
+cites memory restrictions. A Python implementation should bound the full
+draw/component/time-by-time product and offer a diagonal-only path or streaming
+summaries. An individual time-point cap alone does not bound retained draws.
+
+[Morris and Carroll, Section 5.1](https://pmc.ncbi.nlm.nih.gov/articles/PMC2744105/)
+also describes integrating future-curve predictions over posterior draws of
+fixed effects, random effects and variance components. The guide documents
+fitted fixed/random functions and covariance outputs, but no predicted-curve
+output. Existing-subject latent means, future replicates conditional on existing
+random effects, and new random-effect levels are distinct prediction targets.
+An explicit Python API separating them would be a model-consistent extension;
+the available sources do not establish native prediction-interface parity.
