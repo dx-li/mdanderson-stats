@@ -32,9 +32,10 @@ display features, but do not represent an absent ordination method.
 ## Next source-backed workflow candidates
 
 The subsequent triage distinguishes native workflow gaps from new mathematical
-extensions. The current Luna assignment is Dose Schedule Finder calendar
-replay, while PLBARPO control operating characteristics continue separately. Both build on
-implemented posterior calculations and supply missing trial workflows.
+extensions. Dose Schedule Finder calendar replay and Multc Lean pending-outcome
+accrual are now the Luna assignments. PLBARPO control operating characteristics
+are integrated. These additions build on implemented posterior calculations
+and supply missing trial workflows.
 
 | Entry | Concrete missing work | Available source / qualification |
 | --- | --- | --- |
@@ -47,3 +48,25 @@ implemented posterior calculations and supply missing trial workflows.
 The BOIN12 extension is feasible, but should not displace a missing advertised
 statistical workflow merely because it is smaller to implement. These findings
 do not change catalog completion labels.
+
+## Named-method gaps after guide and module review
+
+A further read-only audit checked the current module coverage against the
+remaining-scope paragraphs in the guides. These are more specific than the
+catalog's partial-entry count. Each still needs its exact primary-source
+contract checked before implementation; this is not permission to substitute
+a generic method with a similar name.
+
+| Entry | Remaining named method or workflow | Qualification / evidence |
+| --- | --- | --- |
+| SYNERGY #18 | Four 2007 parametric response surfaces and 2008 wild-bootstrap intervals | Current semiparametric surface fitting is present; [guide](../docs/synergy-surface.md). |
+| U2OET #77 | GAO continuation-ratio probabilities and model fitting | PDS/CMI/hybrid fitting, calendar replay and aggregate OCs already exist; [guide](../docs/u2oet.md). Gaussian-copula scenario generation is also present and is a different feature. |
+| BARD #165 | BF-BLRM route and integrated stages with titration/expansion | Existing covariate minimization and OBD selection remain useful; hidden native settings need explicit caller configuration or further source evidence; [guide](../docs/bard.md). |
+| SurvivalContour #166 | Stratified interval-censored Cox, neural models and interval-model bootstrap uncertainty | Existing right-censored Cox/AFT and implemented interval families are separate completed components; [contour guide](../docs/survival-contour.md), [interval guide](../docs/interval-survival.md). Verify advertised native scope before extending model families. |
+| Proportional Density #78 | Full-data disease-curve bootstrap, unequal-censoring calibration and bootstrap parameter uncertainty | Existing failure-only bootstrap is present. The downloaded archive has no bootstrap code; distinguish paper workflows/extensions from missing native routines; [guide](../docs/proportional-density.md). |
+| BOIN12 #148 | Two-stage mode, 3+3 run-in, tradeoff utility and multilevel endpoints | Existing joint decisions/simulation are present. The proposed nonadditive joint RDS helper still lacks native-feature evidence and must remain an extension; [guide](../docs/boin12.md). |
+
+This audit confirms that substantial statistical work remains alongside many
+presentation-only or parity gaps. No percentage or fixed completion date can
+be inferred from 63 implemented / 66 partial / 9 pending, and inaccessible
+primary sources remain a separate constraint on full coverage.
