@@ -81,6 +81,14 @@ default integration tolerances. The complete R run took about .4 seconds;
 no installation or large simulation was required. Python comparisons remain
 pending.
 
+`tools/reference_crm_curvature.py` independently differentiates the Bernoulli
+log likelihood and evaluates the result with 90-digit standard-library decimal
+arithmetic. With t=-log(d), a DLT contributes t and a non-DLT contributes
+`d*t*(t-(1-d))/(1-d)**2`. The 26 reference values include skeletons from
+1e-300 through the largest float64 value below one. In particular, the native
+algebra can lose precision near one; numerical agreement with its cancellation
+artifacts is not a correctness target.
+
 ## TITE branch remains separate
 
 The pinned simulator confirms that `arrival` contains enrollment times. The
