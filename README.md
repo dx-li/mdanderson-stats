@@ -7,7 +7,9 @@ implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
 63 implemented, 66 partial, and 9 pending. Each method's guide explains its
-supported scope, validation and remaining limitations.
+supported scope, validation and remaining limitations. These labels cover
+complete software workflows: a partial entry can already include every
+advertised statistical endpoint while report or native-compatibility gaps remain.
 
 With Python 3.12 or newer, install a downloaded checkout using
 `python -m pip install .`; use `python -m pip install '.[plot]'` for optional

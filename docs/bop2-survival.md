@@ -4,7 +4,9 @@ BOP2 catalog **112** now includes specified-parameter survival monitoring,
 follow-up-time boundaries, calendar replay, and Monte Carlo operating
 characteristics, plus Monte Carlo grid calibration with independent validation.
 Expected-enrollment and minimax sample-size searches are also available.
-Two-arm/joint survival models and integrated reports remain pending.
+Integrated reports and native optimizer parity remain open. The archived app
+advertises a single-arm time-to-event endpoint; two-arm and joint-survival
+models would be extensions beyond that advertised endpoint set.
 
 The model is the exponential/inverse-gamma model described by
 [Zhou et al. (2020), DOI 10.1002/pst.2030](https://pubmed.ncbi.nlm.nih.gov/32524679/).

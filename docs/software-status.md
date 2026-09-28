@@ -11,7 +11,8 @@ implemented features, validation evidence and source provenance for each entry.
 | Pending | 9 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
-A partial entry may already contain useful, numerically checked methods. Read
+A partial entry may already cover every advertised statistical endpoint while
+report or native-compatibility gaps remain, as in [online BOP2](bop2-binary.md). Read
 its guide for supported inputs, numerical limits and differences from native
 software. The project is independent of MD Anderson.
 

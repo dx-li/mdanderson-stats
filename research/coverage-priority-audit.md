@@ -128,3 +128,24 @@ continuations. Accelerated-titration sequencing from the cached guide is now
 implemented with explicit assessment timing and BF-BLRM safety conventions. Expansion has
 unresolved cap-counting and response-eligibility differences between the app
 help and paper; these are not silently substituted.
+
+## BOP2 endpoint-scope correction
+
+The cached #112 app snapshot, `research/raw/BOP2/app.html`, version
+1.4.27.0 updated September 4, 2026, lists exactly six endpoint options: binary
+efficacy, binary toxicity, efficacy and toxicity, multiple efficacy, ordinal
+efficacy, and time to event. The existing Python monitoring, operating-
+characteristic, calibration and sample-size guides cover those six families.
+The TTE primary guide specifies the single-arm exponential/inverse-gamma model.
+There is no advertised control-arm or joint-survival endpoint in this snapshot.
+The separately recorded September 27 check observed version 1.4.29.0; the
+endpoint mapping above does not assert optimizer parity with that newer build.
+
+Earlier remaining-scope wording incorrectly presented two-arm/joint survival
+as a missing #112 feature. It is now identified as a potential extension.
+Native optimizer/report equivalence remains unverified; this correction does
+not promote the catalog status or claim full native equivalence. The retired
+#144 desktop, rBOP2 #150 and BOP2-DC #156 remain distinct catalog products.
+See [BOP2 source provenance](../docs/bop2-sources.json),
+[the survival guide](../docs/bop2-survival.md) and
+[the desktop mapping](../docs/bop2-desktop.md).
