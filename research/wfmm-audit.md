@@ -143,3 +143,29 @@ Remaining coverage includes empirical-Bayes shrinkage, automatic variance and
 proposal initialization, the native `delta_omega` mapping, additional transform
 families and boundary conventions, compression, covariance/prediction workflows
 and native files. The catalog remains partial until these gaps are resolved.
+
+The wheel and source distribution built successfully from revision `c7f3a97`.
+All 490 Python modules, the catalog and source notices matched the committed
+files byte for byte; raw research downloads and local compiled binaries were
+excluded. This offline packaging check used 74.75 MiB peak process memory and
+reported no swaps. It checks distribution contents, not additional statistical
+methods or native software parity.
+
+## Independent shrinkage-calibration reference
+
+`tools/reference_wfmm_shrinkage.R` supplies six curves, twelve coefficients,
+two correlated fixed effects, two random-effect variance groups and two
+residual strata. It computes joint GLS fixed-effect estimates and the required
+conditional variances independently in base R. Joint GLS covariance diagonals
+are also retained to detect accidentally substituting them for the conditional
+variances; in this example the ratio exceeds two.
+
+For each of the four fixed-effect/partition groups, the script maximizes the
+two-component normal-mixture likelihood directly by BFGS from nine initial
+values. It does not use the Python EM recurrence. The selected solutions have
+positive definite objective Hessians and improve on both all-spike and all-slab
+boundary likelihoods. The `wfmm-shrinkage-*.csv` fixtures retain inputs,
+conditional statistics, optimized parameters and full log densities; Python's
+relative log likelihood must subtract the standard-normal baseline before
+comparison. Base-R generation completed in 0.15 seconds. Comparison with the
+Python calibration is a separate validation step.
