@@ -41,6 +41,25 @@ Python simulator targets decision and classification rates; averages of
 subgroup ESS remain separate work. A small integration run is not evidence
 of reproducing the paper's five-thousand-trial estimates or of MCMC convergence.
 
+## Unresolved paper classification discrepancy
+
+The paper states that the classification cutoff is fixed at .5 across its
+operating-characteristic scenarios. In the pinned package's `model1Str`,
+both logit centers and both precisions are fixed, with independent
+subgroup-specific latent signs and response logits. A subgroup's posterior
+classification probability therefore depends only on its own response count
+and sample size. With a fixed cutoff, identical n=25, p=.1 subgroups must
+have the same population classification rate regardless of other subgroups.
+
+However, Table 1 reports .159 for the lone low-response group in scenario 1
+and .039 for the first group in the global-null scenario. The package's
+adaptive cutoff uses an overall observed-response summary and would permit
+such dependence. It is a possible explanation, not a verified account of
+how the published table was generated. The Python simulator can expose
+both archived-software cutoff modes, but neither the table's exact
+classification results nor its calibrated efficacy rates are certified
+reference targets without resolving that discrepancy.
+
 ## Independent singleton oracle
 
 For a subgroup in a singleton cluster, the native second stage uses
