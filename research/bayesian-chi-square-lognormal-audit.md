@@ -30,6 +30,23 @@ to avoid exponentiating an extreme scale.
 
 The implementation centers log times around a reference observation and uses
 `log1p` for nearby relative times. All posterior arrays and the Johnson
-diagnostic are included in the preflight storage bound. Numerical references
-will be compared with independent conjugate posterior integration before
-integration.
+diagnostic are included in the preflight storage bound. Posterior mean weights
+are computed separately as `kappa0/kappa_n` and `n/kappa_n`; subtracting the
+latter from one can erase a tiny weight with a still-material prior-location
+contribution.
+
+Independent base-R references in `tools/reference_lognormal_bayesian_gof.R`
+cover conjugate posterior parameters, moments and Student-t predictive CDFs.
+The joint diagnostic is integrated by conditioning on Gamma precision:
+conditional Normal location intervals have constant observation bin patterns,
+whose probabilities are integrated analytically, followed by one-dimensional
+Gamma quadrature split at every change in interval ordering. Six cases include
+concentrated priors, broad/equal times and time units changed by `1e-200` and
+`1e200`. All 88 posterior, joint-draw, CDF and diagnostic summaries agree
+within 2.850523 estimated Monte Carlo standard errors using 16,000 draws each.
+
+The final integrated-code reference check took 0.0682 seconds after imports,
+with 123.59 MiB peak resident memory and zero reported swaps. Two focused
+tests cover conjugate/CDF identities, paired parameter use, unit invariance,
+weak-prior location preservation and pre-RNG workspace rejection. Worker Ruff,
+mypy and diff checks passed. No broad suite or new CI workflow was run.

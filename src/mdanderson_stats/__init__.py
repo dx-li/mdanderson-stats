@@ -285,6 +285,12 @@ from .bop2_dc_survival import (
     BOP2DCSurvivalState,
     bop2_dc_survival_design,
 )
+from .bop2_dc_survival_trial import (
+    BOP2DCSurvivalSimulation,
+    BOP2DCSurvivalTrial,
+    run_bop2_dc_survival_trial,
+    simulate_bop2_dc_survival,
+)
 from .bop2_efftox import bop2_efftox_design
 from .bop2_efftox_optimization import BOP2EffToxOptimization, optimize_bop2_efftox
 from .bop2_paired import (
@@ -703,6 +709,7 @@ from .ksbin2_probability import (
 )
 from .ksbin2_study import KSTwoSampleStudy, ksbin2_study
 from .kstage_binomial import KStageBinomial
+from .lognormal_bayesian_gof import LognormalBayesianGOF, lognormal_complete_data_bayesian_gof
 from .median_effect import MedianEffectFit, fit_median_effect
 from .merit import MERITDesign, MERITMonitoring, MERITSelection, merit_monitor
 from .merit_interims import MERITInterimBoundaries, MERITInterims
@@ -1639,6 +1646,10 @@ __all__ = [
     "BOP2DCSurvivalDesign",
     "BOP2DCSurvivalState",
     "bop2_dc_survival_design",
+    "BOP2DCSurvivalSimulation",
+    "BOP2DCSurvivalTrial",
+    "run_bop2_dc_survival_trial",
+    "simulate_bop2_dc_survival",
     "BOP2DCPairedOperatingCharacteristics",
     "BOP2DCPairedDesign",
     "BOP2DCPairedState",
@@ -2119,6 +2130,8 @@ __all__ = [
     "exponential_bayesian_gof",
     "WeibullBayesianGOF",
     "weibull_fixed_shape_bayesian_gof",
+    "LognormalBayesianGOF",
+    "lognormal_complete_data_bayesian_gof",
     "dct_binary_sample_size",
     "DCTNormalSampleSize",
     "dct_normal_sample_size",

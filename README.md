@@ -840,7 +840,10 @@ and reports remain pending.
 [Bayesian Chi Square TTE Fit](docs/bayesian-chi-square.md) adds the complete-data
 posterior diagnostic, exact exponential-posterior workflow and dependent
 order-statistic bounds. The [fixed-shape Weibull workflow](docs/weibull-bayesian-gof.md)
-adds exact Gamma-prior inference with stable centered rate draws. Censoring,
+adds exact Gamma-prior inference with stable centered rate draws. The
+[lognormal workflow](docs/lognormal-bayesian-gof.md) jointly fits log-location
+and log-variance with an explicit conjugate prior and independent integrated
+diagnostic references. Censoring,
 unknown Weibull shape and other family fits, BIC/DIC, native rank/trim
 conventions and reporting remain pending.
 
@@ -1174,8 +1177,9 @@ supports multiple efficacy and efficacy/toxicity decisions with joint Dirichlet
 priors. [Time-to-event monitoring](docs/bop2-dc-survival.md) uses an exponential/
 inverse-gamma model with separate median survival criteria. Paired modes include
 exact operating characteristics that preserve endpoint association and early
-stopping. Paired calibration and survival operating characteristics and
-calibration remain open.
+stopping. Survival adds calendar replay, bounded exponential-trial simulation,
+replay seeds and Monte Carlo errors, with independent calendar and analytic
+operating-characteristic references. Paired and survival calibration remain open.
 
 [BARPO](docs/barpo.md) adds binary posterior monitoring with or without a control
 and four adaptive allocation methods: BARCP, BARN2N, BARMTV and explicit-target

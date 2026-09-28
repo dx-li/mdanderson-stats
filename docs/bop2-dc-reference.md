@@ -55,6 +55,15 @@ CMV describe the **median**. Seven cases in
 outcomes, zero events and the prior before enrollment. These are mathematical
 reference calculations, not captured outputs from the app backend.
 
+`tools/reference_bop2_dc_survival_trial.R` independently observes eight supplied
+calendar histories and evaluates all 18 resulting posteriors with base R.
+It covers no events, early no-go, all final decisions, boundary events,
+calendar shifts and time units changed by `1e-200` and `1e200`. It also derives
+an analytic one-patient OC scenario: survival to the final follow-up is go,
+and an observed event is no-go. The companion Python check matches the
+calendar rows and compares 16,000 trials with the exact probabilities and
+expected observed follow-up, within 1.447 estimated Monte Carlo errors.
+
 ## Exact paired operating characteristics
 
 `tools/reference_bop2_dc_paired_oc.R` enumerates all 256 four-patient outcome

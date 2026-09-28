@@ -58,3 +58,21 @@ The serial simulator limits survival-path cells, summed repeated-look work,
 and retained per-trial summary cells before consuming the caller's RNG. Paths
 are generated in bounded chunks; only compact per-trial summary arrays and
 the current path chunk are retained.
+
+## Independent verification
+
+`tools/reference_bop2_dc_survival_trial.R` independently computes eight calendar
+cases and 18 looks using base-R Gamma probabilities. All sample sizes, event
+counts, stopping labels, observed follow-up and posterior tails match Python,
+including unit multipliers `1e-200`/`1e200` and shifted calendar origins.
+An analytic one-patient scenario with a three-unit final follow-up and true
+median six has go probability `exp(-3*log(2)/6)` and expected observed time
+`6/log(2)*(1-exp(-3*log(2)/6))`. A 16,000-trial simulation agrees with all
+analytic summaries within 1.446707 estimated Monte Carlo standard errors.
+Returned seed replay reproduces decisions and exposures exactly.
+
+The Python reference check took 0.0141 seconds after imports, with peak resident
+memory 124.31 MiB and zero reported swaps. Worker validation passed four new
+focused tests plus the existing survival reference test, Ruff and mypy on the
+new module. No full suite or new CI workflow was run. `duration` is explicitly
+the terminal analysis time measured from calendar origin zero.

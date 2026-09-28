@@ -20,5 +20,8 @@ probabilities are still returned when their values are representable.
 Interim no-go requires both posterior tails to be below their scheduled
 cutoffs. At the final look, both tails must exceed their controls for go, both
 must be below them for no-go, and equality or mixed results produce consider.
-This module accepts sufficient statistics and does not implement simulation or
-operating-characteristic calibration.
+The monitor accepts sufficient statistics. The accompanying
+[calendar replay and simulator](bop2-dc-survival.md#trial-replay-and-operating-characteristics)
+apply it at enrollment-based interim looks with final administrative follow-up.
+Fixed and Poisson arrival schedules are explicit Python conventions; the paper
+does not specify a gap law. Operating-characteristic calibration remains open.
