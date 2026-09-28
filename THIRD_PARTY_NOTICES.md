@@ -1124,3 +1124,22 @@ from the original implementation. Base-R mathematical calculations provide
 independent references. Original source, executable and guide assets are not
 redistributed. See `docs/toxfinder.md` and `docs/toxfinder-sources.json` for
 provenance, numerical scope and the unresolved second-stage criterion.
+
+## CondiS and CondiS-X learners
+
+`condis.py` and its refinement interfaces implement the imputation method of
+Yizhuo Wang, Christopher Flowers, Ziyi Li and Xuelin Huang (2022),
+doi:10.1016/j.jbi.2022.104117. The original CondiS 0.1.2 package declares GPL-2.
+Source provenance is recorded in `docs/condis-sources.json`.
+
+The ridge, lasso and nearest-neighbor workflows were checked against Max Kuhn
+and contributors' caret 7.0-1 (GPL >=2) and Jerome Friedman, Trevor Hastie,
+Rob Tibshirani and contributors' glmnet 4.1-10 (GPL-2). caret's nearest-neighbor
+kernel credits W. N. Venables and B. D. Ripley, with modifications by Andre
+Williams; its R regression interface also credits Max Kuhn and Chris Keefer.
+The Python implementation expresses the numerical models in NumPy and follows
+the verified tuning, scaling, path interpolation and retained-neighbor rules.
+The original Gaussian and nearest-neighbor kernels are compiled only for local
+reference calculations, without installing their packages. Original R/C/C++
+source and compiled objects are not redistributed. See
+`research/condis-refinement-audit.md` for the reference scope and source pins.

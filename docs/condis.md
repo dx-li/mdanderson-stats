@@ -118,6 +118,86 @@ them at the horizon, refit the model, or change the raw predictions/flags. This 
 a refinement of the supplied sample, not a deployable survival prediction model:
 future censoring status is generally unavailable for new patients.
 
+## Ridge, lasso and nearest-neighbor refinement
+
+`condis_regularized_refine(imputation, covariates, method=...)` tunes and refits
+three additional CondiS-X learners. As in the linear refinement, the predictors
+include status and every supplied numeric covariate, and observed events are
+restored after prediction. These are in-sample refinements of imputed times.
+
+| Method | Default tuning grid | Predictor handling |
+| --- | --- | --- |
+| `"ridge"` | 10 lambdas spaced linearly from 0.01 to 10 | Gaussian glmnet-style standardized path, alpha=0 |
+| `"lasso"` | Same lambda grid | Gaussian glmnet-style standardized path, alpha=1 |
+| `"knn"` | k=5,7,9 | Raw Euclidean distances, including status; mean neighbor response |
+
+The default is ten folds and one repeat, matching the original
+`trainControl(method="repeatedcv")` defaults. `folds`, `repeats` and
+`random_state` make the resampling explicit. Native R and NumPy random streams
+are different; equal seeds do not imply equal fold assignments. Supply
+`fold_ids` to reuse or externally specify held-out folds, with zero-based labels
+and shape `(repeats, n)` or `(n,)` for one repeat.
+For fewer observations than requested folds, the effective fold count is the
+sample size. At least two observations are required.
+
+Tuning minimizes the unweighted mean of fold RMSEs. Equal scores select the
+larger lambda or larger k. The chosen learner is then fitted to all supplied
+rows. These RMSEs measure errors against the supplied imputed targets; because
+the base imputation precedes learner tuning, they do not estimate held-out
+survival prediction performance for the complete pipeline.
+
+```python
+from mdanderson_stats import condis_regularized_refine
+
+row = np.arange(30)
+time = 2 + (row * 7 % 31) / 2
+status = (row % 4 != 0).astype(int)
+covariates = np.column_stack((np.sin(row / 3), row % 5))
+base = condis_impute(time, status)
+refinements = {
+    method: condis_regularized_refine(
+        base, covariates, method=method, folds=5, random_state=7,
+    )
+    for method in ("ridge", "lasso", "knn")
+}
+selected_settings = {name: result.best_value for name, result in refinements.items()}
+```
+
+`CondiSRegularizedRefinement` retains raw fitted times, refined times,
+censoring-bound diagnostics, sorted tuning values, mean and sample-SD fold
+RMSEs, individual `fold_rmse` values with shape `(repeats, effective_folds,
+n_candidates)`, the selected index/value, fold assignments and seed metadata. As for the
+linear method, `enforce_censoring=True` explicitly clips censored predictions
+at their observed lower bounds after model selection, without changing raw
+fits, tuning scores or diagnostic flags. No upper-horizon clipping is applied.
+
+For ridge/lasso, `lambda_grid` replaces the requested tuning values. The
+underlying path is automatic: up to 100 points, native response and predictor
+scaling, native early-stopping rules, and linear coefficient interpolation at
+each requested lambda. Values outside that fitted path are clamped to its
+endpoints. This is different from solving only at the requested lambdas. The
+default penalty grid depends on the units of time; to compare a change of units,
+multiply the explicit `lambda_grid` by the same time conversion factor.
+
+For kNN, `neighbor_grid` replaces the k values. Raw predictor units affect
+distances: CondiS computes a preprocessing object but does not use it in the
+learner fit. Full-sample predictions include each observation itself. The
+implementation follows caret's retained-neighbor tie convention, whose
+near-tie behavior can depend on input order. Numerical provenance and details
+are recorded in the [learner audit](../research/condis-refinement-audit.md).
+Values of k larger than a training sample are clipped to its size, with a
+warning when this occurs in cross-validation.
+
+The implementations bound computation rather than launching parallel workers.
+Inputs allow up to 500 covariates and 2 million covariate cells, at most 100
+requested folds, ten repeats and 100 tuning values. Additional bounds account
+for distance and penalty-path work; oversized requests raise an error.
+Regularized fits also have bounded coordinate iterations and raise on failure
+to converge. kNN requests require k below 1,000 and reject tie sets exceeding
+the native retained-neighbor buffer. Constant responses or designs with no
+varying predictors produce finite intercept-only mean predictions for ridge
+and lasso; this well-defined extension is not a native degenerate-fit parity claim.
+
 ## Validation and remaining coverage
 
 Three focused tests cover hand-computed linear/step integrals and a partial
@@ -137,7 +217,16 @@ censoring diagnostics and explicit clipping, and rank/scale invariance. The
 comparison isolates the native final fit using exact base targets; it does not
 claim reproduction of caret's full resampling pipeline.
 
-**Catalog status is partial.** Base CondiS and the default linear CondiS-X refinement are implemented. The
-seven other CondiS-X learners (ridge, lasso, GBM, random forest, SVM, kNN, neural
-network), their tuning/resampling behavior, interactive
+Ridge, lasso and kNN are checked against the source-loaded caret 7.0-1 and
+glmnet 4.1-10 kernels using identical input targets and held-out folds. The
+comparisons cover tuning scores, selection and refitted predictions. A
+collinear lasso case uses an independently checked, tighter native convergence
+reference: the original default tolerance leaves measurable optimization error.
+The Python fit preserves the objective without reproducing that stopping error.
+Extreme time-unit checks from 1e-200 to 1e200 preserve fitted values after
+rescaling; penalty grids must scale with the response units.
+
+**Catalog status is partial.** Base CondiS and four CondiS-X learners (linear,
+ridge, lasso and kNN) are implemented. Gradient boosting, random forest, SVM
+and neural-network learners, their tuning/resampling behavior, interactive
 input handling and native graphical reports remain pending.

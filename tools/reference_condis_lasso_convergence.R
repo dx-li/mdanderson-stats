@@ -1,11 +1,14 @@
-# Resolve native stopping error in the underdetermined CondiS lasso fixture.
+# Resolve native stopping error in the ordinary or wide CondiS lasso fixture.
 # The source-only setup verifies pins and installs no packages.
 source("tools/reference_condis_models.R")
-case <- input$cases$wide
+arguments <- commandArgs(trailingOnly = TRUE)
+case_name <- if (length(arguments)) arguments[[1L]] else "wide"
+stopifnot(case_name %in% c("wide", "ordinary"))
+case <- input$cases[[case_name]]
 x <- cbind(status = case$status, as.matrix(case$covariates))
 y <- case$imputed_time
-fold_ids <- answers$wide$fold_ids
-requested <- answers$wide$learners$lasso$tuning
+fold_ids <- answers[[case_name]]$fold_ids
+requested <- answers[[case_name]]$learners$lasso$tuning
 
 certificate <- function(fit, x, y) {
   sx <- sqrt(colMeans(sweep(x, 2L, colMeans(x))^2))
@@ -42,12 +45,14 @@ for (fold in sort(unique(fold_ids))) {
     default = certificate(original, x[train, , drop = FALSE], y[train]),
     tight = certificate(fit, x[train, , drop = FALSE], y[train]))
 }
-result <- list(case = "wide", threshold = 1e-15, tuning = requested,
+result <- list(case = case_name, threshold = 1e-15, tuning = requested,
   fold_ids = fold_ids, default = certificate(default, x, y),
   tight = certificate(tight, x, y), fold_certificates = fold_certificates,
   all_fitted = as.matrix(predict(tight, x, s = requested)),
   fold_rmse = rmse, mean_rmse = colMeans(rmse))
-jsonlite::write_json(result, "tests/fixtures/condis-lasso-converged.json",
+fixture <- if (case_name == "wide") "condis-lasso-converged.json" else
+  "condis-lasso-ordinary-converged.json"
+jsonlite::write_json(result, file.path("tests/fixtures", fixture),
                      auto_unbox = TRUE, digits = 17, pretty = TRUE)
 cat("Native final-point KKT default:", tail(result$default$kkt, 1L),
     "tight:", tail(result$tight$kkt, 1L), "\n")

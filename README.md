@@ -827,8 +827,9 @@ R implementation and independent regression calculations.
 
 [CondiS](docs/condis.md) adds censored-lifetime imputation using conditional
 restricted survival means, with native linear and KM-step interpolation.
-Its default CondiS-X linear refinement is also available, with explicit censoring
-diagnostics. Seven other refinement learners remain pending.
+CondiS-X linear, ridge, lasso and nearest-neighbor refinements are available,
+including learner tuning, full-sample refits and explicit censoring diagnostics.
+Gradient boosting, random forest, SVM and neural-network refinements remain pending.
 
 [1+2+3 rare-disease design](docs/rare-disease-123.md) adds cohort-based
 efficacy/toxicity dose assignment, OBD selection and batched trial simulation with

@@ -2,8 +2,9 @@
 
 Catalog entry 157 uses CondiS 0.1.2. Its base imputation and Gaussian linear
 refinement were previously implemented. This checkpoint covers the source
-contracts and native references for ridge, lasso and nearest-neighbor
-refinement; it does not complete the other CondiS-X learners or the application.
+contracts, native references and Python tuning/refit workflows for ridge,
+lasso and nearest-neighbor refinement; it does not complete the other CondiS-X
+learners or the application.
 
 ## Pinned primary sources
 
@@ -156,6 +157,60 @@ The tighter reference, including the original reference setup, completed in
 6.57 seconds with 300.3 MiB peak resident memory and zero swaps. It installs
 nothing and does not change a fitting formula, penalty path or random fold
 assignment. The original default-tolerance references are retained separately.
+
+The integrated public-API comparison also isolated smaller stopping error in
+fold 8 of the ordinary sample: at requested lambda 0.01, default-native RMSE
+is 2.413015715534771, tighter-native RMSE is 2.4130258325643044 and Python
+RMSE is 2.413025827506931. Across all ordinary folds and requested lambdas,
+Python and the tighter native reference agree within 2.10e-9 elementwise
+relative error. The full-sample fitted values agree within 3.59e-11.
+The affected fold's endpoint KKT violation drops from 2.58e-6 to 2.15e-12
+under the tighter native tolerance, with objective decreasing from
+0.2578008581822215 to 0.2578008581774756.
+
+Running `tools/reference_condis_lasso_convergence.R ordinary` saves this
+additional reference in `tests/fixtures/condis-lasso-ordinary-converged.json`.
+It completed in 5.54 seconds using 303.6 MiB peak resident memory and zero
+swaps. Both ordinary and wide lasso regression checks use tightened references;
+the original default references remain available to diagnose compatibility
+differences rather than making Python reproduce their stopping errors.
+
+## Python implementation checks
+
+`condis_regularized_refine` exposes the three learners through one tuning/refit
+interface and returns each held-out fold score, mean and sample-SD RMSEs,
+selected setting, full-sample predictions and event-restored refined times.
+The implementation uses bounded NumPy operations without parallel processes.
+
+The implementation worker compared every grid prediction and fold score with
+the native fixtures. Its relative errors below divide the maximum absolute
+difference by the maximum absolute reference value over the whole prediction
+or fold-score matrix; they are not maxima of elementwise relative errors.
+kNN differences were approximately 1e-15. Ridge fitted
+surfaces agreed within 9e-9 relative and fold scores within 1.2e-7; the ordinary
+lasso surface agreed within 1.1e-8 and its fold scores within 1.6e-6. Against
+the tighter wide-data lasso reference, surface differences were at most
+1.75e-7 relative and fold-score differences at most 8.66e-7. Its full-sample
+endpoint objective was approximately 0.01786546 with KKT violation 2.88e-8,
+consistent with the independently tightened native solver.
+
+Changing time units by 1e-200 and 1e200, scaling requested lambdas with those
+units, preserved fitted predictions after rescaling within 2.64e-16 relative
+in the worker's bounded check. Constant responses and entirely constant
+designs produced finite intercept-only mean predictions. kNN averaged retained
+ties. These degenerate regularized fits are deliberate Python extensions.
+
+The compact persisted regression compares ordinary shared-fold scores,
+selection and final predictions for all three learners and the tighter
+wide-data lasso reference. Existing behavioral checks cover event restoration,
+explicit folds, seeded reproducibility and native kNN tie insertion. Reference
+generation and full native solvers are not part of ordinary CI.
+
+The integrated base, linear and regularized CondiS checks passed all 18 tests
+in 3.66 seconds (3.99 seconds including process setup), with 136.8 MiB peak
+child resident memory and zero swaps. Targeted Ruff lint/format and mypy
+checks also passed. Validation ran with one BLAS/OpenMP thread. The full
+repository test suite was not rerun for this focused learner addition.
 
 ## Source leads for the remaining learners
 
