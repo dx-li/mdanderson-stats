@@ -8,7 +8,7 @@ remote history. Incomplete source-catalog entries retain their `partial` or
 `pending` status; a validated component does not imply complete native software
 coverage.
 
-## Remote state and publishing restriction
+## Earlier remote state and publishing restriction
 
 The read-only GitHub API showed `main` at
 `ddf440f76615bdba7f6776e0feec6b8f2b9bb1f7`, last pushed September 12.
@@ -95,3 +95,31 @@ Git bundle under ignored `dist/`. The bundle captures committed history and
 branch references at creation; it does not include ignored native downloads or
 uncommitted work in an active implementation checkout. Local artifacts and the
 local `master` branch do not resolve the remote publishing restriction above.
+
+## Subsequent UAROET / EasyCellType checkpoint
+
+During the same day's continuation, the remote state changed. A fresh read-only
+GitHub API check verified **both `master` and `main` at `e20e582`**, and local
+remote-tracking reflogs record that checkpoint as pushed. The earlier restriction
+above describes the failed initial attempt; it is no longer evidence that the
+previous checkpoint is absent from GitHub. This continuation did not observe
+which external action completed that publication.
+
+The next validated code checkpoint is `2d54cff`. It adds complete-outcome UAROET
+trial simulation and the observed-score EasyCellType GSEA core, with public APIs,
+guides, independent R references and retained upstream license notices. Their
+catalog entries remain partial for the explicitly documented remaining workflows.
+Counts stay 63 implemented, 66 partial and 9 pending.
+
+The two new modules pass targeted mypy. Focused worker checks and root numerical
+reference comparisons are recorded in the individual method audits. Cached
+wheel/source builds pass without new dependencies. An isolated wheel check
+verifies all 1,409 exports, all 515 packaged source/data files against committed
+Git bytes, included licenses/notices, and three examples across the two new
+guides. It took 11.15 seconds, peaked at 108.48 MiB and reported zero swaps.
+The full numerical suite was not rerun; no new CI pipeline was added.
+
+These validated additions are ready for a fast-forward publication. A push still
+needs its own success result and fresh remote-SHA verification; the observed
+publication of the earlier checkpoint alone does not establish that the new
+additions have reached GitHub.
