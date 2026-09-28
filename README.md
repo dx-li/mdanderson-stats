@@ -1358,8 +1358,11 @@ plus continuous infusion, with response-dependent toxicity. Exact and interval
 observations, explicit priors, bounded posterior fitting and utility-based
 concentration/bolus selection preserve the published treatment structure.
 Independent R quadrature provides probability, likelihood and reduced-posterior
-references. Full trial simulation, prior calibration and native workflows
-remain open.
+references. [Complete-outcome trials](docs/cibolus-trials.md) generate joint
+response/toxicity categories, update after each cohort and apply concentration
+no-skip and unrestricted final selection, with replayable outcome inputs and
+cumulative work limits. Calendar conduct, aggregate calibration and native
+workflows remain open.
 
 [Pinnacle](docs/pinnacle.md) detects and quantifies protein spots in aligned
 two-dimensional gel images. It combines streaming image averaging, undecimated

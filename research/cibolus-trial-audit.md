@@ -38,6 +38,21 @@ The unrestricted final recommendation is the untried regimen `(2,1)`. The
 second path keeps the same truth while fixing the prior baseline toxicity
 parameter at three; it stops after the first cohort without a recommendation.
 
-Python comparisons remain pending while the isolated Luna implementation is
-in progress. These references do not validate arbitrary prior convergence,
-calendar timing or operating characteristics over large simulated populations.
+The Python implementation matches all 36 joint rows with maximum absolute
+error `5.27e-16`, all six patient records, all 18 regimen/look rows and both
+trial summaries. Maximum posterior utility error is `2.84e-14`. The safe path
+fits exactly twice; the unsafe path fits once and keeps no recommendation.
+The model generates the declared dependent outcome cells and interprets their
+observation intervals correctly.
+
+A separate four-patient replay allows log baseline toxicity to vary. Its two
+cohort fits match sequential calls to the actual fitter exactly under the same
+random stream: utility grids, likelihood evaluations and work counts agree.
+The independent comparison takes 0.947 seconds after imports, peaks at
+117.50 MiB process RSS and reports zero swaps.
+
+Luna checkpoint `232601f` adds the simulator and three focused tests. All three
+pass in 1.57 seconds; module lint, formatting, typing and diff checks pass.
+No new CI or large simulation was introduced. These references do not validate
+arbitrary prior convergence, calendar timing or operating characteristics over
+large simulated populations.

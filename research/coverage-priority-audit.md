@@ -107,8 +107,9 @@ Substituting ordinary BOIN movement would be an explicit Python protocol
 choice, not a verified port of the native option. No such substitution was
 added. The existing BOIN and BOIN12 kernels remain available separately.
 
-The next source review instead targets CiBolus complete-outcome trial conduct,
-building on its existing likelihood, posterior fit, safety and allocation
-components. Numeric survival-forest out-of-bag predictions and source-defined
-variable importance are another substantial gap supported by cached native
-source. Neither is yet counted as implemented.
+CiBolus complete-outcome cohort simulation has since been implemented and
+checked against independent R outcome/decision references and sequential
+actual posterior fits; [guide](../docs/cibolus-trials.md). Calendar conduct and
+aggregate operating characteristics remain open. Numeric survival-forest
+out-of-bag predictions and source-defined variable importance are another
+substantial gap supported by cached native source; they remain unimplemented.

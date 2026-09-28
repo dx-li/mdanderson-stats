@@ -183,6 +183,9 @@ underflowed concentration powers, mixed observation types and a reduced
 one-dimensional posterior. See the [audit](../research/cibolus-audit.md) for
 the checks actually completed.
 
-Full prior elicitation and calibration, complete trial simulation, native
-input/report workflows and executable parity remain open. The article and
-original executable are not bundled.
+[Complete-outcome cohort simulation](cibolus-trials.md) now generates the
+joint response/toxicity cells, fits after each cohort and applies the allocation
+and final-selection rules. Full prior elicitation/calibration, calendar and
+pending-outcome conduct, aggregate operating characteristics, native input/report
+workflows and executable parity remain open. The article and original
+executable are not bundled.

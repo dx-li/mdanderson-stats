@@ -400,6 +400,12 @@ from .cibolus import (
 )
 from .cibolus_decision import CiBolusDecision, cibolus_decision
 from .cibolus_fit import CiBolusFit, fit_cibolus
+from .cibolus_trial import (
+    CiBolusTrial,
+    CiBolusTrialPatient,
+    CiBolusTrialStep,
+    simulate_cibolus_trial,
+)
 from .cid2bp import BinomialDifferenceInterval, cid2bp_interval
 from .condis import CondiSImputation, condis_impute
 from .condis_boosting import CondiSBoostingRefinement, condis_boosting_refine
@@ -1396,6 +1402,10 @@ __all__ = [
     "CiBolusFit",
     "cibolus_decision",
     "fit_cibolus",
+    "CiBolusTrial",
+    "CiBolusTrialPatient",
+    "CiBolusTrialStep",
+    "simulate_cibolus_trial",
     "PinnacleAnalysis",
     "PinnacleDenoiseResult",
     "PinnaclePeaks",

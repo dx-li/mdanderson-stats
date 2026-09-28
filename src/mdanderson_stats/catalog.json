@@ -2954,7 +2954,8 @@
         "Bolus and continuous response model, response-dependent toxicity, exact/interval/no-response likelihoods and stable joint category probabilities",
         "Explicit independent lognormal priors and the published study prior; bounded serial elliptical-slice posterior fitting, direct prior draws and chain diagnostics",
         "Strict posterior toxicity and efficacy screens, posterior expected-utility allocation, concentration no-skip restrictions, initial assignment and final selection",
-        "Prior elicitation/calibration, full trial simulation, native input/report workflows and executable equivalence remain pending"
+        "Complete-outcome CiBolus cohort simulation from joint response-category/toxicity truth, explicit outcome uniforms, once-per-cohort posterior fitting, concentration-only no-skip and unrestricted final selection; compact diagnostics and cumulative work bounds, docs/cibolus-trials.md.",
+        "Prior elicitation/calibration, calendar/pending-outcome conduct, aggregate operating characteristics, native input/report workflows and executable equivalence remain pending"
       ],
       "validation": [
         "tests/test_cibolus.py",
@@ -2967,7 +2968,9 @@
         "tests/fixtures/cibolus-posterior.csv",
         "docs/cibolus.md",
         "docs/cibolus-sources.json",
-        "research/cibolus-audit.md"
+        "research/cibolus-audit.md",
+        "Three focused simulator tests plus independent base-R quadrature/ledgers: 36 joint-category rows (max error 5.27e-16), six patient records and 18 regimen/look rows (utility error 2.84e-14); final untried-regimen selection and first-cohort stop.",
+        "Two free-prior cohort fits reproduce sequential actual fitter calls exactly; root comparison 0.947 seconds after imports, 117.50 MiB peak RSS and zero reported swaps; tools/reference_cibolus_trial.R and research/cibolus-trial-audit.md."
       ]
     },
     {
