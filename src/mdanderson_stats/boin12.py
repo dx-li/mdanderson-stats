@@ -9,6 +9,7 @@ multilevel endpoint extensions are intentionally outside its scope.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Self
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -57,6 +58,22 @@ def _utilities(value: ArrayLike) -> FloatArray:
     if not utilities[0] > utilities[3]:
         raise ValueError("utilities must score no-toxicity/efficacy above toxicity/no-efficacy")
     return utilities
+
+
+def boin12_tradeoff_utilities(weight: float) -> tuple[float, float, float, float]:
+    """Map ``pi_efficacy - weight*pi_toxicity`` to the binary utility table.
+
+    The returned order is ``(noT/E, noT/noE, T/E, T/noE)``. For a tradeoff
+    weight in [0, 1], ``E[utility]/100`` is the positive affine transform
+    ``(weight + pi_efficacy - weight*pi_toxicity)/(1+weight)``. This lets the
+    tradeoff use the ordinary BOIN12 posterior and decision machinery.
+    """
+    if isinstance(weight, (bool, np.bool_)):
+        raise ValueError("weight must be a finite scalar in [0,1]")
+    w = scalar(weight, "weight")
+    if not 0.0 <= w <= 1.0:
+        raise ValueError("weight must lie in [0,1]")
+    return (100.0, 100.0 * w / (1.0 + w), 100.0 / (1.0 + w), 0.0)
 
 
 @dataclass(frozen=True)
@@ -350,6 +367,35 @@ class BOIN12Design:
         object.__setattr__(self, "efficacy_limit", efficacy)
         object.__setattr__(self, "utilities", tuple(float(x) for x in self.utilities))
         object.__setattr__(self, "_boin", BOINDesign(target=limit))
+
+    @classmethod
+    def from_tradeoff(
+        cls,
+        toxicity_limit: float,
+        efficacy_limit: float,
+        *,
+        weight: float,
+        toxicity_cutoff: float = 0.95,
+        efficacy_cutoff: float = 0.90,
+        exploration_patients: int = 9,
+        stay_patients: int = 6,
+        early_stop_patients: int | None = None,
+    ) -> Self:
+        """Build a design using the app's ``pi_E - weight*pi_T`` tradeoff.
+
+        The mapped binary utility table follows the ordinary quasi-beta
+        inference, admissibility, candidate, and tie rules.
+        """
+        return cls(
+            toxicity_limit=toxicity_limit,
+            efficacy_limit=efficacy_limit,
+            utilities=boin12_tradeoff_utilities(weight),
+            toxicity_cutoff=toxicity_cutoff,
+            efficacy_cutoff=efficacy_cutoff,
+            exploration_patients=exploration_patients,
+            stay_patients=stay_patients,
+            early_stop_patients=early_stop_patients,
+        )
 
     def posterior(
         self,
