@@ -337,3 +337,11 @@ were unchanged. Independent reconstruction of the new checkpoint objectives,
 gradients and held-out predictions agreed within 2.28e-13, 1.21e-13 and
 7.11e-15 absolute, respectively. Each final checkpoint exactly reproduces
 the corresponding saved native CV fit.
+
+`cv_trajectory_fold_one` adds the same nine limits for zero-based fold 1 of
+each case, including the ordinary fit where an initial Python optimizer
+draft diverged most. These 18 additional checkpoints reproduce their saved
+native final fits exactly. Independent objective, gradient and prediction
+reconstruction agrees within 9.10e-13, 2.28e-13 and 3.56e-15 absolute. All
+earlier fixture results remain unchanged. Comparison of a Python optimizer's
+path with these checkpoints is a separate validation step.

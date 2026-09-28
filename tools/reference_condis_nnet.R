@@ -92,29 +92,31 @@ for (name in c("ordinary", "wide")) {
   # Larger networks can amplify floating-point differences during BFGS. Save
   # an actual CV fit at intermediate limits to distinguish this from a fold,
   # starting-weight or optimizer-control-flow mismatch.
-  cv_fold <- min(folds)
-  cv_test <- which(folds == cv_fold)
-  cv_train <- which(folds != cv_fold)
-  cv_j <- which(grid$size == 5L & grid$decay == 0.1)[1L]
-  cv_start <- fold_fits[[cv_fold + 1L]][[cv_j]]$initial_weights
-  cv_path <- lapply(c(0L, 1L, 2L, 5L, 10L, 20L, 40L, 60L, 100L), function(limit) {
-    fit <- fit_one(cv_train, cv_j, cv_start, maxit = limit)
-    derivative <- native_gradient(fit, x[cv_train, , drop = FALSE],
-                                  y[cv_train], fit$wts)
-    list(maxit = limit, fitted_weights = fit$wts, objective = fit$value,
-         gradient = derivative$gradient,
-         prediction = as.vector(predict(fit, as.data.frame(x[cv_test, , drop = FALSE]))),
-         convergence = fit$convergence)
-  })
+  cv_trace <- function(cv_fold) {
+    cv_test <- which(folds == cv_fold)
+    cv_train <- which(folds != cv_fold)
+    cv_j <- which(grid$size == 5L & grid$decay == 0.1)[1L]
+    cv_start <- fold_fits[[cv_fold + 1L]][[cv_j]]$initial_weights
+    cv_path <- lapply(c(0L, 1L, 2L, 5L, 10L, 20L, 40L, 60L, 100L), function(limit) {
+      fit <- fit_one(cv_train, cv_j, cv_start, maxit = limit)
+      derivative <- native_gradient(fit, x[cv_train, , drop = FALSE],
+                                    y[cv_train], fit$wts)
+      list(maxit = limit, fitted_weights = fit$wts, objective = fit$value,
+           gradient = derivative$gradient,
+           prediction = as.vector(predict(fit, as.data.frame(x[cv_test, , drop = FALSE]))),
+           convergence = fit$convergence)
+    })
+    list(fold_id = cv_fold, size = 5L, decay = 0.1,
+         initial_weights = cv_start, train_rows = cv_train - 1L,
+         test_rows = cv_test - 1L, fits = cv_path)
+  }
   answers[[name]] <- list(grid = grid, fold_ids = folds,
     fold_rmse = rmse, mean_rmse = means, convergence = convergence,
     best_index = best - 1L, selected_size = grid$size[best],
     selected_decay = grid$decay[best], fold_fits = fold_fits, full_fits = full,
     trajectory = list(size = 3L, decay = 0.1, initial_weights = starts,
                       initial_derivative = derivative, fits = trajectory),
-    cv_trajectory = list(fold_id = cv_fold, size = 5L, decay = 0.1,
-      initial_weights = cv_start, train_rows = cv_train - 1L,
-      test_rows = cv_test - 1L, fits = cv_path))
+    cv_trajectory = cv_trace(0L), cv_trajectory_fold_one = cv_trace(1L))
 }
 # A four-row analytical example checks weight order, bias decay and gradient
 # independently of BFGS and of the statistical training fixtures above.
