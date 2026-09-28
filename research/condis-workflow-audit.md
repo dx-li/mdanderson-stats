@@ -50,9 +50,11 @@ invent these contracts or count them as implemented from the page labels.
 
 ## Coverage priority
 
-Finish the random-forest and gradient-boosting numerical workflows before
-adding presentation conveniences. Then provide reusable summary/curve data
-and an explicitly defined regression prediction workflow where supported
-by source evidence. Exact app input/report compatibility remains a separate
-unverified item. CondiS stays partial until its remaining scope is resolved;
-adding all eight learners alone is not evidence of complete app parity.
+All eight numerical learner workflows are now implemented, with numerical
+and native-comparison limits recorded in their respective audits. Remaining
+CondiS work includes reusable summary/curve data and an explicitly defined
+regression prediction workflow where supported by source evidence. Exact
+app input/report compatibility remains a separate unverified item. CondiS
+stays partial until its remaining scope is resolved; all eight learners
+alone are not evidence of complete app parity. Missing statistical methods
+elsewhere in the catalog take priority over presentation conveniences.

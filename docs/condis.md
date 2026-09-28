@@ -330,6 +330,65 @@ and bounded vectors; CV has separate kernel-work and pair-update limits.
 Featurewise kernel differences preserve nearby points with large common
 offsets without allocating an observations-by-observations-by-features array.
 
+## Random-forest refinement
+
+`condis_forest_refine` implements the numeric regression-forest learner.
+The native setting uses 500 bootstrap trees and samples `round(sqrt(p))`
+candidate predictors at each split, where `p` is the original covariate
+count **excluding status**. Status is nevertheless included once in the
+design matrix. Raw covariate values are used. Nodes with at most five
+bootstrap observations stop growing; this is not a minimum child size.
+
+The function evaluates this one setting across folds, then fits a fresh
+forest to the full sample. Predictions average all trees, including trees
+trained on a given row; these are not out-of-bag predictions. Observed event
+times are restored after refinement. `enforce_censoring=True` clips only
+censored predictions at their observed lower bounds. `folds`, `fold_ids`,
+`random_state` and `n_trees` expose the resampling choices and tree count.
+
+```python
+from mdanderson_stats import condis_forest_refine, predict_condis_forest
+
+forest_rows = np.arange(40)
+forest_time = 2 + (forest_rows * 7 % 31) / 2
+forest_status = (forest_rows % 4 != 0).astype(int)
+forest_x = np.column_stack((np.sin(forest_rows / 3), forest_rows % 5))
+forest_base = condis_impute(forest_time, forest_status)
+forest = condis_forest_refine(
+    forest_base, forest_x, folds=4, random_state=7,
+)
+np.testing.assert_array_equal(
+    predict_condis_forest(forest.fit, np.column_stack((forest_status, forest_x))),
+    forest.fitted_time,
+)
+```
+
+`CondiSForestRefinement` retains fold RMSEs and their mean/sample standard
+deviation, fold assignments, actual tree-node/split-work counts, the full
+forest, predictions and censoring diagnostics. There is no optimizer
+convergence code for a fixed-size forest. RMSE summaries normalize response
+units before squaring or computing variance, preserving tiny and large time
+scales.
+
+`fit_condis_forest(predictors, target, ...)` and `predict_condis_forest`
+also expose standalone fitting/prediction with an explicit numeric predictor
+matrix. This lower-level fit never inserts status. Its omitted `mtry` uses
+the rounded square root of the supplied predictor count; the CondiS wrapper
+sets its own covariate-based value explicitly. `keep_inbag=True` retains
+bootstrap multiplicities, and `individual=True` returns per-tree predictions.
+Those optional matrices have explicit size limits. Ordinary prediction uses
+one working vector and compact trees.
+
+Explicit `uniform_draws` support controlled single-fit comparisons with saved
+native draws. The first three ordinary reference trees match their structure
+and predictions. A later equal-gain split selects a different predictor and
+changes subsequent random consumption; full native tree or equal-seed parity
+is not promised. If a native-style zero-gain candidate would produce an empty
+child, Python keeps that node terminal. The
+[forest audit](../research/condis-random-forest-audit.md) records these limits.
+The wrapper bounds total CV/refit bootstrap work to two million sampled rows,
+so large datasets may need fewer trees or folds.
+
 ## Gaussian gradient-boosting refinement
 
 `condis_boosting_refine` adds the Gaussian `gbm` learner. Its default tuning
@@ -415,9 +474,9 @@ The Python fit preserves the objective without reproducing that stopping error.
 Extreme time-unit checks from 1e-200 to 1e200 preserve fitted values after
 rescaling; penalty grids must scale with the response units.
 
-**Catalog status is partial.** Base CondiS and seven CondiS-X learners (linear,
-ridge, lasso, kNN, neural, SVM and gradient boosting) are implemented. Random
-forest refinement, remaining input/report workflows and the separately
+**Catalog status is partial.** Base CondiS and all eight CondiS-X learners
+(linear, ridge, lasso, kNN, neural, SVM, random forest and gradient boosting)
+are implemented. Remaining input/report workflows and the separately
 illustrated regression prediction workflow remain pending. The
 [workflow audit](../research/condis-workflow-audit.md) distinguishes the
 vignette's examples from unverified interactive app behavior.

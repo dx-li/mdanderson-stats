@@ -1,7 +1,6 @@
 # CondiS-X regression-forest source contract
 
-This is preparation for the remaining random-forest learner, not implemented
-coverage. The Python package does not yet expose this CondiS-X learner.
+The Python package implements the numeric random-forest CondiS-X learner.
 [`condis-random-forest-sources.json`](condis-random-forest-sources.json) pins
 ten files from randomForest 4.7-1.2 at commit
 `0ad64d71e886bff5b241cbc31a3240bf0e822914`. The downloaded files were verified
@@ -102,16 +101,44 @@ terminal when the sampled predictors do not provide a split. All-tree and
 out-of-bag predictions differ by as much as 3.9113 and 4.0200 on these inputs,
 so the fixture distinguishes those outputs clearly.
 
-## Python work still required
+## Python implementation and numerical limits
 
-The references validate native calculations and prepare direct numerical
-checks. They do not constitute a Python forest learner, random-stream replay
-or a completed CondiS-X refinement. A future implementation must verify
-construction and RNG consumption against the traces, including duplicate
-features and split ties, before claiming tree parity.
+`condis_forest.py` implements numeric regression trees with bootstrap
+multiplicities, sampled predictors, native-style split/tie draws, terminal
+node means and equal-weight all-tree predictions. The CondiS wrapper adds
+status once, derives `mtry` from the original covariate count, computes fold
+RMSE for the single native setting and fits a fresh full-data forest.
+Standalone fit/predict functions accept an explicit predictor matrix.
+Trees are stored compactly; optional in-bag and per-tree prediction matrices
+are bounded. Default prediction uses one working vector.
 
-The Python implementation should grow trees sequentially, reuse per-tree
-work arrays and accumulate predictions without an observations-by-trees
-matrix unless explicitly requested. Stable centered split calculations and
-midpoints should avoid overflow while preserving the native criterion. Those
-are implementation requirements, not completed performance or parity claims.
+Using the original recorded uniforms, the first three ordinary trees have
+exactly matching node counts (25, 29, 29), split variables, thresholds and
+bootstrap multiplicities. Individual predictions differ by at most 8.9e-16.
+The next tree first differs at zero-based node 22, where two observations
+with responses 12.1 and 6.76666667 can be separated by several predictors
+with the same positive gain. A different tie path changes the selected
+feature and later random consumption. This is not a complete native RNG or
+tree-identity claim. Python also stops a node if a degenerate zero-gain
+candidate would create an empty child, rather than forcing the native
+ordering-dependent partition.
+
+Centered responses are rescaled when needed to protect split gains at tiny
+and large magnitudes. The `<=` left-branch threshold remains below the upper
+observation when adjacent floats have no interior midpoint. Fold RMSE and
+its mean/sample standard deviation use normalized arithmetic to avoid
+squared-error underflow and variance overflow.
+
+Three focused checks passed: direct native three-tree construction,
+tiny-response/adjacent-float and constant-response behavior, and the wrapper's
+status/mtry rules and RMSE scale invariance at 1e-200 and 1e200. Targeted Ruff
+and mypy passed. A bounded ordinary 48-row, ten-fold workflow using 500 trees
+per fit took 2.214 seconds and produced finite outputs, with roughly 610,000
+split-gap evaluations. Mean RMSE was about 2.48573 versus the saved native
+2.47777; the runs use different random streams and this is not a numerical
+parity tolerance. No large simulation or additional CI workflow was added.
+
+After public API integration, the three focused forest tests passed in
+1.20 seconds. Targeted lint, formatting and type checks passed, and the
+documented example reproduced full-fit predictions exactly through the
+public prediction function.

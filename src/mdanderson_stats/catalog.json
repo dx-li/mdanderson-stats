@@ -4320,16 +4320,18 @@
         "CondiS-X ridge, lasso and raw-distance kNN with repeated cross-validation, explicit folds, native tuning grids and tie rules, automatic Gaussian paths/interpolation, full-sample refits and event restoration",
         "CondiS-X single-hidden-layer neural refinement with all nine size/decay candidates, explicit starts/folds, full-sample refit, event restoration and optimizer diagnostics",
         "CondiS-X radial epsilon-SVR with sampled bandwidth, repeated cross-validation, native all-or-nothing scaling, bounded pairwise optimization, full-sample refit and primal/dual diagnostics",
-        "CondiS-X Gaussian gradient boosting with nine native tree-count/split settings, shared tree-prefix CV paths, fresh selected refit, bounded residual trees and event restoration"
+        "CondiS-X Gaussian gradient boosting with nine native tree-count/split settings, shared tree-prefix CV paths, fresh selected refit, bounded residual trees and event restoration",
+        "CondiS-X numeric random forests with native single mtry setting, bootstrap multiplicities, fold scores, full refit, event restoration and bounded optional per-tree/in-bag diagnostics"
       ],
       "validation": [
         "Hand conditional means, unmodified R CondiS 0.1.2 fixture, tied/unsorted data, degenerate samples and extreme time scales; tests/test_condis.py",
-        "Pending random forest learner and remaining input/report/prediction workflows; docs/condis.md and research/condis-workflow-audit.md",
+        "All eight learner families implemented; remaining input/report/prediction workflows stay partial; docs/condis.md and research/condis-workflow-audit.md",
         "Native caret Gaussian final-fit fixture, event restoration, bound diagnostics, explicit clipping and rank/scale invariance; tests/test_condis_linear.py",
         "Source-loaded caret 7.0-1 and glmnet 4.1-10 kernels: shared-fold tuning scores and selected refits, kNN insertion-order ties, tighter native lasso KKT reference, constant-design and extreme time-unit checks; tests/test_condis_regularized.py and research/condis-refinement-audit.md",
         "Native nnet 7.3-19 objective/gradient and early optimizer checkpoints, analytic one-unit network, tuning/refit diagnostics and explicit nonconvex trajectory limitations; tests/test_condis_neural.py and research/condis-refinement-audit.md",
         "Tight native kernlab 0.9-33 ordinary, wide and constant-predictor tuning/refit references, all-bound dual solution, coefficient reconstruction and kernel/bandwidth stability checks; tests/test_condis_svm.py and research/condis-svm-audit.md",
-        "Original gbm 2.3.1 ordinary/wide shared-draw tree construction and prefix predictions, sample-size guard, adjacent-float split routing and extreme response-scale checks; tests/test_condis_boosting.py and research/condis-gbm-audit.md"
+        "Original gbm 2.3.1 ordinary/wide shared-draw tree construction and prefix predictions, sample-size guard, adjacent-float split routing and extreme response-scale checks; tests/test_condis_boosting.py and research/condis-gbm-audit.md",
+        "First three original randomForest 4.7-1.2 trees reconstructed from saved uniforms; 500-tree CV/refit smoke, tiny/large RMSE stability and adjacent-float splits; explicit tied-path/degenerate-partition limits in research/condis-random-forest-audit.md and tests/test_condis_forest.py"
       ]
     },
     {

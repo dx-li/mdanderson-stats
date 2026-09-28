@@ -358,7 +358,7 @@ def fit_condis_forest(
     total_nodes = total_work = 0
     inbag = np.zeros((y.size, tree_count), dtype=np.int32) if keep_inbag else None
     for tree_index in range(tree_count):
-        bootstrap = np.fromiter(
+        bootstrap: NDArray[np.int64] = np.fromiter(
             (int(source.take() * y.size) for _ in range(y.size)), dtype=np.int64, count=y.size
         )
         if inbag is not None:
