@@ -71,6 +71,7 @@ from .asypow_smo_exponential import asypow_smo_exponential
 from .asypow_smo_ordinal_regression import asypow_smo_ordinal_regression
 from .asypow_smo_regression import asypow_smo_regression
 from .bacis import BaCISClassification, BaCISFit, bacis_classify, bacis_fit
+from .bacis_dic import BaCISClassificationDIC, bacis_classification_dic
 from .bacis_ess import BaCISEquivalentSampleSize, bacis_equivalent_sample_size
 from .bard import BARDMinimizationResult, BARDSelectionResult, bard_minimization, bard_select_obd
 from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
@@ -1366,9 +1367,11 @@ __all__ = [
     "bchm_cluster",
     "bchm_fit",
     "BaCISClassification",
+    "BaCISClassificationDIC",
     "BaCISEquivalentSampleSize",
     "BaCISFit",
     "bacis_classify",
+    "bacis_classification_dic",
     "bacis_equivalent_sample_size",
     "bacis_fit",
     "UBOINSimulation",

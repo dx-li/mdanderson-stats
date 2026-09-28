@@ -1183,6 +1183,8 @@ singleton handling. Both documented adaptive cutoff definitions are supported;
 posterior draws include convergence and Monte Carlo error diagnostics. The
 native variance-matched equivalent sample size calculation reports all
 admissible solutions and corrects the original zero-response root-selection defect.
+Its classification-model DIC uses deterministic posterior integration, with the
+native Plummer penalty and full uncertainty about subgroup classification.
 
 [BCHM subgroup borrowing](docs/bchm.md) adds patient-weighted clustering,
 co-clustering similarities and a separate similarity-weighted hierarchy for each

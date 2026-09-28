@@ -75,8 +75,20 @@ mean deviance, penalty and sum are saved in
 sum on a three-point probability distribution also agrees with the covariance
 identity to within `1e-13`.
 
-Reference generation completed successfully without JAGS. Agreement with a
-Python diagnostic remains pending implementation. These references target
-the population expectations of the inspected JAGS monitor, not its particular
-finite chain sequence; a separated mixture can also violate the asymptotic
-assumptions used to interpret DIC.
+Reference generation completed successfully without JAGS. The integrated
+`bacis_classification_dic` matches all 20 rows: maximum absolute error is
+`2.00e-12` for mean deviance, `2.51e-14` for the penalty and `1.98e-12` for
+their sum. Posterior response and logit means agree within `1.00e-15` and
+`7.55e-15`. These references target the population expectations of the
+inspected JAGS monitor, not its particular finite chain sequence; a separated
+mixture can also violate the asymptotic assumptions used to interpret DIC.
+
+The implementation reuses the classifier's low/high component probabilities,
+integrates centered logit/probability differences, and uses complementary
+failure probabilities to preserve upper-tail covariance. All integration runs
+are serial with bounded caches and explicit convergence/error checks.
+Two focused tests passed with warnings treated as errors, together with Ruff
+and module type checking. The public guide example gives total DIC
+`21.949475646360167` for the native five-subgroup data. The root reference and
+guide audit took .276 seconds after import, peaked at 114.8 MiB resident memory
+and reported zero swaps. No JAGS run or native random-stream match is claimed.

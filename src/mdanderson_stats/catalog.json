@@ -4281,13 +4281,15 @@
       "implemented_features": [
         "BaCIS latent-sign subgroup classification using stable deterministic logistic-normal quadrature, strict classification and both native-R and official-help adaptive cutoff definitions.",
         "Within-cluster logistic-normal hierarchical borrowing with separate low/high centers, native singleton Beta(1,1) fallback, response-tail decisions and bounded posterior sampling with diagnostics.",
-        "Native fixed-response-count beta-variance equivalent sample size with all admissible roots, observed-rate selection, variance residuals and explicit correction of the zero-response native clamping defect."
+        "Native fixed-response-count beta-variance equivalent sample size with all admissible roots, observed-rate selection, variance residuals and explicit correction of the zero-response native clamping defect.",
+        "Deterministic first-stage classification-model DIC with full binomial deviance, the native Plummer population penalty, both posterior mixture components and numerical integration diagnostics."
       ],
       "validation": [
         "Official application v1.0.1.0, help and author bacistool 1.0.0 source pinned in docs/bacis-sources.json; source conflicts and displayed-versus-CRAN prior defaults documented.",
         "Independent base-R classification integrals cover 19 subgroup cases and both adaptive weighting conventions; exact singleton Beta posteriors and concentrated-hyperprior borrowing references verify numerical inference.",
         "Eight independent base-R equivalent-sample-size references cover ordinary and large counts, two admissible roots, all-response and zero-response cases; source defect and mathematical domain documented in research/bacis-ess-audit.md.",
-        "Pending: DIC and density plots, report/data formats and operating-characteristic simulation; native random-stream parity is not claimed. See docs/bacis.md."
+        "Twenty independent base-R posterior-integral references validate DIC across native-example, unequal-size, diffuse-prior, extreme-outcome and separated-mixture cases; pinned JAGS definition and covariance reduction in research/bacis-dic-audit.md.",
+        "Pending: density plots, report/data formats and operating-characteristic simulation; native random-stream parity is not claimed. See docs/bacis.md."
       ]
     },
     {

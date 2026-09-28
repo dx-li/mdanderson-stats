@@ -146,6 +146,41 @@ samples in total, and at most 500,000 cells. Eight base-R reference cases cover
 ordinary and large equivalent counts, two admissible roots, all responses and
 the documented zero-response defect.
 
+## Classification-model comparison
+
+`bacis_classification_dic` evaluates the first-stage two-component
+classification model with the DIC definition used by the native software:
+
+```python
+from mdanderson_stats import bacis_classification_dic
+
+score = bacis_classification_dic(responses, patients)
+print(score.mean_deviance)
+print(score.penalty)
+print(score.total_dic)
+```
+
+It retains uncertainty about both mixture components and integrates their
+posterior expectations directly. The penalty for subgroup `i` is
+`patients[i] * Cov(p[i], logit(p[i]))`, including covariance between components.
+Mean deviance includes the full binomial likelihood constant; `dic` contains
+the per-subgroup sums and `total_dic` their total. The result also reports
+posterior response/logit means, component probabilities and integration-error
+estimates. The default component centers and precision match `bacis_classify`.
+
+The source's score concerns classification, so it depends on its component
+centers and precision. The adaptive cutoff and subsequent within-cluster
+borrowing priors do not enter this score. Its deterministic integrals target
+the population expectations of the native JAGS monitor, avoiding the sampling
+variation of that monitor's finite chains.
+
+DIC is an asymptotic model-comparison approximation. A separated or multimodal
+posterior can violate the assumptions behind its interpretation; a successfully
+computed score alone does not establish that it is suitable for selecting a
+model. Integration diagnostics describe numerical accuracy, not those modeling
+assumptions. The [source audit](../research/bacis-dic-audit.md) records the exact
+native definition and independent base-R reference calculations.
+
 ## Scope and numerical checks
 
 Inputs support 1–100 subgroups, each with 1–10,000 patients. Classification
@@ -163,7 +198,7 @@ probabilities are compared independently. Exact Beta references check singleton
 summaries; a concentrated-hyperprior limit checks that both borrowing clusters
 use their own correct centers against independent one-dimensional integration.
 
-DIC, latent-variable density plots,
+Latent-variable density plots,
 native file/report formats and operating-characteristic simulation remain open.
 The mathematical references validate the declared model, not native random
 streams, convergence for arbitrary priors or complete application parity.
