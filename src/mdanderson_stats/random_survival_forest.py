@@ -21,6 +21,9 @@ _MAX_LEAF_RECORDS = 10_000_000
 _MAX_NODES = 2_000_000
 _MAX_OUTPUT_CELLS = 2_000_000
 _MAX_PREDICTION_WORK = 100_000_000
+_MAX_OOB_CELLS = 2_000_000
+_MAX_OOB_WORK = 100_000_000
+_OOB_TIE_EPSILON = 1e-9
 _SPLIT_EPSILON = 1e-9
 
 
@@ -37,6 +40,23 @@ class _PackedTree:
     event_time: FloatArray
     log_survival: FloatArray
     cumulative_hazard: FloatArray
+
+
+@dataclass(frozen=True)
+class RandomSurvivalForestOOB:
+    """Out-of-bag forest curves and source-style concordance error.
+
+    Rows with zero tree contributors have NaN curves and mortality. The
+    concordance error is ``1-C`` using the native 1e-9 absolute tie rules.
+    """
+
+    time_grid: FloatArray
+    survival: FloatArray
+    cumulative_hazard: FloatArray
+    contributor_count: np.ndarray
+    mortality: FloatArray
+    concordance_error: float
+    comparable_pairs: int
 
 
 @dataclass(frozen=True)
@@ -65,6 +85,8 @@ class RandomSurvivalForestFit:
     node_count: int
     split_work: int
     max_depth: int
+    inbag_membership: np.ndarray | None = None
+    oob: RandomSurvivalForestOOB | None = None
 
 
 @dataclass(frozen=True)
@@ -408,6 +430,127 @@ def _grow_tree(
     )
 
 
+def _oob_concordance_error(
+    time: FloatArray, event: FloatArray, mortality: FloatArray, contributors: np.ndarray
+) -> tuple[float, int]:
+    """Native getConcordanceIndex pair rules, without an n-by-n matrix."""
+    eligible = contributors > 0
+    pairs = concordant = 0
+    n = time.size
+    for i in range(n - 1):
+        if not eligible[i]:
+            continue
+        j = np.arange(i + 1, n, dtype=np.int64)
+        use = eligible[j]
+        j = j[use]
+        if j.size == 0:
+            continue
+        delta_time = time[i] - time[j]
+        tied_time = np.abs(delta_time) <= _OOB_TIE_EPSILON
+        both_event = tied_time & (event[i] == 1) & (event[j] == 1)
+        event_i_first = ((delta_time < -_OOB_TIE_EPSILON) & (event[i] == 1)) | (
+            tied_time & (event[i] == 1) & (event[j] == 0)
+        )
+        event_j_first = ((delta_time > _OOB_TIE_EPSILON) & (event[j] == 1)) | (
+            tied_time & (event[j] == 1) & (event[i] == 0)
+        )
+        comparable = both_event | event_i_first | event_j_first
+        if not np.any(comparable):
+            continue
+        j = j[comparable]
+        both_event = both_event[comparable]
+        event_i_first = event_i_first[comparable]
+        delta_risk = np.where(
+            event_i_first, mortality[i] - mortality[j], mortality[j] - mortality[i]
+        )
+        absolute_delta = np.abs(delta_risk)
+        pair_concordance = np.where(
+            both_event,
+            np.where(absolute_delta < _OOB_TIE_EPSILON, 2, 1),
+            np.where(
+                delta_risk > _OOB_TIE_EPSILON,
+                2,
+                np.where(absolute_delta <= _OOB_TIE_EPSILON, 1, 0),
+            ),
+        )
+        pairs += int(j.size)
+        concordant += int(pair_concordance.sum())
+    if pairs == 0:
+        return float("nan"), 0
+    return 1.0 - concordant / (2.0 * pairs), pairs
+
+
+def _oob_curves(
+    time: FloatArray,
+    event: FloatArray,
+    covariates: FloatArray,
+    trees: tuple[_PackedTree, ...],
+    time_grid: FloatArray,
+    membership: np.ndarray,
+    *,
+    max_depth: int,
+    max_work: int,
+) -> RandomSurvivalForestOOB:
+    n = time.size
+    oob_rows = 0
+    for packed in membership:
+        inbag_count = int(np.unpackbits(packed, bitorder="little")[:n].sum())
+        oob_rows += n - inbag_count
+    work = oob_rows * (time_grid.size + max_depth) + n * n
+    if work > max_work:
+        raise ValueError("OOB curve and concordance work exceeds max_oob_work budget")
+    survival_sum = np.zeros((n, time_grid.size), dtype=np.float64)
+    hazard_sum = np.zeros_like(survival_sum)
+    contributors = np.zeros(n, dtype=np.int64)
+    for tree_index, tree in enumerate(trees):
+        inbag = np.unpackbits(membership[tree_index], bitorder="little")[:n].astype(bool)
+        for row in np.flatnonzero(~inbag):
+            node = 0
+            profile = covariates[row]
+            while tree.feature[node] >= 0:
+                column = int(tree.feature[node])
+                node = (
+                    int(tree.left[node])
+                    if profile[column] <= tree.threshold[node]
+                    else int(tree.right[node])
+                )
+            offset = int(tree.event_offset[node])
+            count = int(tree.event_count[node])
+            if count:
+                steps = slice(offset, offset + count)
+                index = np.searchsorted(tree.event_time[steps], time_grid, side="right") - 1
+                included = index >= 0
+                leaf_survival = np.ones(time_grid.size, dtype=np.float64)
+                leaf_hazard = np.zeros(time_grid.size, dtype=np.float64)
+                if np.any(included):
+                    leaf_survival[included] = np.exp(tree.log_survival[offset + index[included]])
+                    leaf_hazard[included] = tree.cumulative_hazard[offset + index[included]]
+                survival_sum[row] += leaf_survival
+                hazard_sum[row] += leaf_hazard
+            else:
+                survival_sum[row] += 1.0
+            contributors[row] += 1
+    survival = np.full_like(survival_sum, np.nan)
+    cumulative_hazard = np.full_like(hazard_sum, np.nan)
+    present = contributors > 0
+    survival[present] = survival_sum[present] / contributors[present, None]
+    cumulative_hazard[present] = hazard_sum[present] / contributors[present, None]
+    mortality = np.full(n, np.nan, dtype=np.float64)
+    mortality[present] = cumulative_hazard[present].sum(axis=1)
+    concordance_error, comparable_pairs = _oob_concordance_error(
+        time, event, mortality, contributors
+    )
+    return RandomSurvivalForestOOB(
+        _freeze(time_grid),
+        _freeze(survival),
+        _freeze(cumulative_hazard),
+        np.frombuffer(contributors.tobytes(), dtype=np.int64),
+        _freeze(mortality),
+        concordance_error,
+        comparable_pairs,
+    )
+
+
 def fit_random_survival_forest(
     time: ArrayLike,
     event: ArrayLike,
@@ -425,6 +568,9 @@ def fit_random_survival_forest(
     max_split_work: int = 100_000_000,
     max_leaf_event_records: int = 2_000_000,
     max_nodes: int = 1_000_000,
+    compute_oob: bool = False,
+    max_oob_cells: int = _MAX_OOB_CELLS,
+    max_oob_work: int = _MAX_OOB_WORK,
 ) -> RandomSurvivalForestFit:
     """Fit a forest of log-rank trees for numeric right-censored data.
 
@@ -433,9 +579,16 @@ def fit_random_survival_forest(
     survival curves. With replacement disabled, the default sample fraction is
     0.632; with replacement enabled it is 1.0. These defaults follow
     randomForestSRC 3.2.2, but NumPy's random stream does not match R's.
+    Set ``compute_oob=True`` to retain bit-packed in-bag membership and compute
+    OOB curves, mortality and concordance error; the default avoids this storage
+    and work. Rows without an OOB tree remain undefined (NaN), never in-bag-filled.
     """
     if not isinstance(replace, (bool, np.bool_)):
         raise ValueError("replace must be boolean")
+    if not isinstance(compute_oob, (bool, np.bool_)):
+        raise ValueError("compute_oob must be boolean")
+    oob_cell_limit = _budget_limit(max_oob_cells, "max_oob_cells", _MAX_OOB_CELLS, _MAX_OOB_CELLS)
+    oob_work_limit = _budget_limit(max_oob_work, "max_oob_work", _MAX_OOB_WORK, _MAX_OOB_WORK)
     tree_count = _integer(n_trees, "n_trees", 1, _MAX_TREES)
     leaf_size = _integer(nodesize, "nodesize", 1, _MAX_ROWS)
     random_splits = _integer(nsplit, "nsplit", 0, _MAX_ROWS)
@@ -485,11 +638,26 @@ def fit_random_survival_forest(
         raise ValueError("forest exceeds max_sampled_rows budget")
     event_times = np.unique(t[e == 1])
     output_grid = _time_grid(event_times, ntime)
+    membership: np.ndarray | None = None
+    if compute_oob:
+        packed_width = (t.size + 7) // 8
+        membership_cells = tree_count * packed_width
+        output_cells = t.size * output_grid.size
+        combined_cells = 2 * membership_cells + 8 * output_cells + 16 * t.size
+        if combined_cells > oob_cell_limit:
+            raise ValueError("OOB membership and curve outputs exceed max_oob_cells budget")
+        if t.size * t.size > oob_work_limit:
+            raise ValueError("OOB pairwise-concordance work exceeds max_oob_work budget")
+        membership = np.zeros((tree_count, packed_width), dtype=np.uint8)
     rng = np.random.default_rng(seed)
     budget = _Budget()
     trees: list[_PackedTree] = []
-    for _ in range(tree_count):
+    for tree_index in range(tree_count):
         bootstrap = rng.choice(t.size, size=sample_size, replace=bool(replace))
+        if membership is not None:
+            inbag = np.zeros(t.size, dtype=np.uint8)
+            inbag[bootstrap] = 1
+            membership[tree_index] = np.packbits(inbag, bitorder="little")
         trees.append(
             _grow_tree(
                 x,
@@ -506,6 +674,25 @@ def fit_random_survival_forest(
                 max_leaf_records=leaf_limit,
             )
         )
+    packed_membership = (
+        None
+        if membership is None
+        else np.frombuffer(membership.tobytes(), dtype=np.uint8).reshape(membership.shape)
+    )
+    oob = (
+        None
+        if membership is None
+        else _oob_curves(
+            t,
+            e,
+            x,
+            tuple(trees),
+            output_grid,
+            membership,
+            max_depth=budget.max_depth,
+            max_work=oob_work_limit,
+        )
+    )
     return RandomSurvivalForestFit(
         _freeze(output_grid),
         _freeze(_stable_column_mean(x)),
@@ -523,6 +710,8 @@ def fit_random_survival_forest(
         budget.nodes,
         budget.split_work,
         budget.max_depth,
+        packed_membership,
+        oob,
     )
 
 
