@@ -1,0 +1,39 @@
+{
+  "retrieved_at": "2026-09-28",
+  "repository": "https://github.com/jags/JAGS",
+  "tag": "release-4_3-2",
+  "commit": "75272ee4eaa3e24fe49b1c49382dfa665048b24e",
+  "purpose": "Reference-only source audit of bacistool classification-model DIC; no JAGS dependency or vendor code redistributed",
+  "files": [
+    {
+      "path": "src/modules/dic/PDMonitor.cc",
+      "url": "https://github.com/jags/JAGS/blob/75272ee4eaa3e24fe49b1c49382dfa665048b24e/src/modules/dic/PDMonitor.cc",
+      "sha256": "3af698576f009af206d57afaafa90cc0dab12ce1af9cd16e57aeed56762d46a5"
+    },
+    {
+      "path": "src/modules/dic/PDMonitor.h",
+      "url": "https://github.com/jags/JAGS/blob/75272ee4eaa3e24fe49b1c49382dfa665048b24e/src/modules/dic/PDMonitor.h",
+      "sha256": "d2bd6a2b12d378f5085419aade4b5c7131c492e3aa6d81d69a633c623d384b4f"
+    },
+    {
+      "path": "src/modules/dic/PDMonitorFactory.cc",
+      "url": "https://github.com/jags/JAGS/blob/75272ee4eaa3e24fe49b1c49382dfa665048b24e/src/modules/dic/PDMonitorFactory.cc",
+      "sha256": "8dfad1904be01ade36589f929ec91a1777da1bcbd67146d9f4e2313694e54f4f"
+    },
+    {
+      "path": "src/modules/dic/DevianceMean.cc",
+      "url": "https://github.com/jags/JAGS/blob/75272ee4eaa3e24fe49b1c49382dfa665048b24e/src/modules/dic/DevianceMean.cc",
+      "sha256": "3f31c74b6213d2b1568a726f581b553e723f61d5d75d338a1d29cafbc141f340"
+    },
+    {
+      "path": "src/modules/bugs/distributions/DBin.cc",
+      "url": "https://github.com/jags/JAGS/blob/75272ee4eaa3e24fe49b1c49382dfa665048b24e/src/modules/bugs/distributions/DBin.cc",
+      "sha256": "4a5f5046ff8f479a1d03aa6cbc2a6eb38a7179bca31cd1404a056decdaa31466"
+    },
+    {
+      "path": "src/lib/graph/ScalarStochasticNode.cc",
+      "url": "https://github.com/jags/JAGS/blob/75272ee4eaa3e24fe49b1c49382dfa665048b24e/src/lib/graph/ScalarStochasticNode.cc",
+      "sha256": "593a396995ca42059b430e465945fb0395500e45a30bf1304b212005a1e52b26"
+    }
+  ]
+}
