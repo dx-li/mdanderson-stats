@@ -64,3 +64,23 @@ candidate/validation arrays before consuming the RNG. The optimizer is serial;
 it retains only the current posterior path surface and candidate batch during
 selection, then holds compact per-candidate summaries and two validation
 summaries. `max_work` may lower the hard work ceiling but cannot raise it.
+
+## Independent verification
+
+`tools/check_bop2_dc_survival_calibration.py` reconstructs small input paths
+from reported calibration and validation seeds. The companion base-R oracle
+independently observes every patient at each look, computes Gamma probabilities,
+applies absorbing decisions, and selects both objectives from all 18 candidates.
+All 760 probability, enrollment and Monte Carlo error summaries agree; exact
+grid objectives and feasibility flags agree too. CGR selects candidate 0 and
+futile-ESS selects candidate 11. The former passes the 4% calibration FGR bound
+at `2/64` but fails held-out validation at `3/48`; the selected design is
+retained and `validation_feasible` is false. The latter passes its holdout.
+
+The check takes 0.6084 seconds after Python imports. Parent peak resident memory
+is 120.50 MiB and the R child peaks at 83.41 MiB; summing their separate peaks
+gives a conservative combined upper bound of 203.91 MiB. No Python swaps were
+reported. Numerical work is serial. Two focused worker tests also pass,
+including a nondegenerate analytic one-patient event/censoring partition and
+pre-RNG validation/work rejection. Ruff, formatting and mypy pass. There is no
+new CI job or full-suite run for this addition.

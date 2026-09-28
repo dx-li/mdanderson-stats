@@ -50,6 +50,8 @@ increasing or decreasing hazards. The function does not estimate an unknown
 Weibull shape or supply censored/rounded-data diagnostics. It therefore adds a
 specified-shape family without claiming complete coverage of the native
 Weibull fitter.
+The companion [unknown-shape workflow](weibull-unknown-shape-gof.md) jointly
+estimates shape and scale with an explicit Gaussian prior in log coordinates.
 
 ## Numerical representation and interpretation
 

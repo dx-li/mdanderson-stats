@@ -24,4 +24,7 @@ The monitor accepts sufficient statistics. The accompanying
 [calendar replay and simulator](bop2-dc-survival.md#trial-replay-and-operating-characteristics)
 apply it at enrollment-based interim looks with final administrative follow-up.
 Fixed and Poisson arrival schedules are explicit Python conventions; the paper
-does not specify a gap law. Operating-characteristic calibration remains open.
+does not specify a gap law. The
+[finite-grid calibration workflow](bop2-dc-survival-calibration.md) implements
+the §2.3 objectives using common paths, empirical constraints and a separate
+held-out simulation; it does not claim native optimizer equivalence.

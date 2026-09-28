@@ -285,6 +285,12 @@ from .bop2_dc_survival import (
     BOP2DCSurvivalState,
     bop2_dc_survival_design,
 )
+from .bop2_dc_survival_optimization import (
+    BOP2DCSurvivalCalibrationOC,
+    BOP2DCSurvivalInfeasibleError,
+    BOP2DCSurvivalOptimization,
+    optimize_bop2_dc_survival,
+)
 from .bop2_dc_survival_trial import (
     BOP2DCSurvivalSimulation,
     BOP2DCSurvivalTrial,
@@ -1307,6 +1313,10 @@ from .uboin import UBOINPosterior, uboin_allocation, uboin_posterior
 from .uboin_conduct import UBOINDecision, UBOINDesign, UBOINSelection
 from .uboin_simulation import UBOINSimulation, simulate_uboin, uboin_gumbel_probabilities
 from .weibull_bayesian_gof import WeibullBayesianGOF, weibull_fixed_shape_bayesian_gof
+from .weibull_unknown_shape_gof import (
+    WeibullUnknownShapeGOF,
+    weibull_unknown_shape_bayesian_gof,
+)
 from .wfmm_basis import WFMMBasis, WFMMTransformed, wfmm_basis, wfmm_inverse, wfmm_transform
 from .wfmm_covariance import WFMMCovarianceSummary, wfmm_covariance, wfmm_summarize_covariance
 from .wfmm_empirical_bayes import WFMMShrinkage, calibrate_wfmm_shrinkage
@@ -1650,6 +1660,10 @@ __all__ = [
     "BOP2DCSurvivalTrial",
     "run_bop2_dc_survival_trial",
     "simulate_bop2_dc_survival",
+    "BOP2DCSurvivalCalibrationOC",
+    "BOP2DCSurvivalInfeasibleError",
+    "BOP2DCSurvivalOptimization",
+    "optimize_bop2_dc_survival",
     "BOP2DCPairedOperatingCharacteristics",
     "BOP2DCPairedDesign",
     "BOP2DCPairedState",
@@ -2130,6 +2144,8 @@ __all__ = [
     "exponential_bayesian_gof",
     "WeibullBayesianGOF",
     "weibull_fixed_shape_bayesian_gof",
+    "WeibullUnknownShapeGOF",
+    "weibull_unknown_shape_bayesian_gof",
     "LognormalBayesianGOF",
     "lognormal_complete_data_bayesian_gof",
     "dct_binary_sample_size",

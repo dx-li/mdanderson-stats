@@ -2417,15 +2417,17 @@
         "Vectorized Johnson posterior chi-square statistics, bin counts, reference tails and posterior A/exceedance summaries for complete continuous observations",
         "Exact Gamma-prior exponential posterior diagnostic with explicit hyperparameters, log-rate samples and stable time-unit handling",
         "Dependent chi-square order-statistic bounds, minimum diagnostic and conservative rank-search correction",
-        "Fixed-shape Weibull complete-data Gamma-prior posterior diagnostic with explicit hyperparameters, centered log-rate/offset and posterior-rate scale/sum representations, stable relative-time powers and bounded CDF/diagnostic workspaces; unknown shape remains open",
-        "Lognormal complete-data joint log-location/log-variance posterior diagnostic under an explicit proper Normal-Inverse-Gamma prior, with centered location draws, log variance scales and preflight workspace bounds"
+        "Fixed-shape Weibull complete-data Gamma-prior posterior diagnostic with explicit hyperparameters, centered log-rate/offset and posterior-rate scale/sum representations, stable relative-time powers and bounded CDF/diagnostic workspaces; unknown shape has a separate joint workflow",
+        "Lognormal complete-data joint log-location/log-variance posterior diagnostic under an explicit proper Normal-Inverse-Gamma prior, with centered location draws, log variance scales and preflight workspace bounds",
+        "Unknown-shape Weibull complete-data joint posterior and Johnson diagnostic under an explicit correlated Gaussian prior on log shape/log scale, serial elliptical-slice sampling, chain diagnostics and bounded likelihood/work/storage"
       ],
       "validation": [
         "Three focused tests: direct Pearson statistics, exact posterior moments, extreme unit invariance, repeated-data/posterior calibration and misspecification detection; tests/test_bayesian_chi_square.py",
         "Three additional order-bound checks: published example, dependent marginals and extreme tails; tests/test_chi_square_order_bounds.py",
         "Pending censoring/discrete handling, other model-family fitting and priors, native Rychlik rank/trim conventions, BIC/DIC and reports; guide inconsistencies recorded in docs/bayesian-chi-square.md",
         "Seven independent base-R posterior/diagnostic cases: 76 summaries within 1.671 estimated Monte Carlo errors, including time units 1e-200/1e200 and shape 1e305; six focused Weibull checks cover exact conjugate/CDF identities, exponential reduction, adjacent-time resolution and pre-RNG resource rejection. docs/weibull-bayesian-gof.md, tools/reference_weibull_bayesian_gof.R and research/bayesian-chi-square-weibull-audit.md",
-        "Six independent base-R lognormal cases: 88 posterior, paired-draw, predictive-CDF and integrated joint-diagnostic summaries within 2.851 estimated Monte Carlo errors, including equal times and units 1e-200/1e200; focused conjugate, CDF, unit-invariance and weak-prior mean checks. Native prior defaults remain unverified. docs/lognormal-bayesian-gof.md and tools/reference_lognormal_bayesian_gof.R"
+        "Six independent base-R lognormal cases: 88 posterior, paired-draw, predictive-CDF and integrated joint-diagnostic summaries within 2.851 estimated Monte Carlo errors, including equal times and units 1e-200/1e200; focused conjugate, CDF, unit-invariance and weak-prior mean checks. Native prior defaults remain unverified. docs/lognormal-bayesian-gof.md and tools/reference_lognormal_bayesian_gof.R",
+        "Two independent bivariate R quadrature cases with correlated priors: 23 posterior moments/covariance/CDF summaries within 2.281 batch-means Monte Carlo errors, maximum split R-hat 1.00175; quadrature/domain sensitivity below 9.47e-10. Three focused likelihood/CDF, unit-invariance and budget checks. docs/weibull-unknown-shape-gof.md and research/weibull-unknown-shape-audit.md"
       ]
     },
     {
@@ -4412,7 +4414,8 @@
         "Paired Dirichlet-marginal monitoring for multiple efficacy and efficacy/toxicity, with endpoint-specific dual criteria and combined interim/final decisions",
         "Time-to-event dual-criterion monitoring with exponential/inverse-gamma posteriors, censoring contributions and median survival thresholds",
         "Exact paired operating characteristics over marginal counts with joint outcome dependence, absorbing early stopping and expected sample size",
-        "Survival calendar replay and bounded exponential-trial simulation with first-stop decisions, censoring, fixed/Poisson arrivals, aggregate replay seeds, compact per-trial summaries and Monte Carlo errors"
+        "Survival calendar replay and bounded exponential-trial simulation with first-stop decisions, censoring, fixed/Poisson arrivals, aggregate replay seeds, compact per-trial summaries and Monte Carlo errors",
+        "Survival finite-grid calibration for CGR or futile expected sample size, explicit priors and truth/grid/calendar settings, common simulation paths, full candidate evidence and independent holdout feasibility without reselection"
       ],
       "validation": [
         "Five independent base-R posterior and decision cases match Python",
@@ -4421,7 +4424,9 @@
         "Nine independent base-R paired posterior and decision cases cover OR/AND composition, toxicity direction and interim stopping",
         "Seven independent base-R survival posterior cases cover zero events, interim stopping and all final decisions",
         "Exhaustive base-R enumeration of 256 paired paths in ten scenarios verifies correlated endpoint probabilities, all final outcomes and early stopping",
-        "Eight independent base-R calendar cases match 18 looks; analytic one-patient OC matches 16000 simulations within 1.447 estimated Monte Carlo errors. Focused checks cover relative follow-up, stopping, seed replay and pre-RNG bounds; survival and paired calibration remain open. docs/bop2-dc-survival.md and research/bop2-dc-survival-oc-audit.md"
+        "Eight independent base-R calendar cases match 18 looks; analytic one-patient OC matches 16000 simulations within 1.447 estimated Monte Carlo errors. Focused checks cover relative follow-up, stopping, seed replay and pre-RNG bounds; paired calibration remains open. docs/bop2-dc-survival.md and research/bop2-dc-survival-oc-audit.md",
+        "Independent R replay verifies 18 survival candidates and 760 summaries for both objectives, including distinct winners and a holdout false-go violation without reselection. Nondegenerate analytic single-patient event/censoring partition and pre-RNG work/input checks pass; finite Monte Carlo estimates do not guarantee true error control. docs/bop2-dc-survival-calibration.md",
+        "Substantive remaining methods include paired calibration, the Normal-Inverse-Gamma continuous endpoint in source §2.1.2 and randomized arm comparisons in §2.4; these are distinct from app report parity. research/bop2-dc-remaining-methods.md"
       ]
     },
     {

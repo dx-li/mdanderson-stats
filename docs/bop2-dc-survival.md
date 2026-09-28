@@ -36,8 +36,10 @@ this prior can imply very high survival probabilities. Choose the prior
 explicitly and examine its implications for the intended time units.
 
 This implementation assumes an exponential event-time model. Calendar replay
-and operating-characteristic simulation are available below. Parameter
-calibration remains open. See [source notes](bop2-dc-survival-source.md) and
+and operating-characteristic simulation are available below. A separate
+[finite-grid calibration workflow](bop2-dc-survival-calibration.md) selects
+parameters and reports an independent holdout check.
+See [source notes](bop2-dc-survival-source.md) and
 [independent reference calculations](bop2-dc-reference.md).
 
 Batches are limited to 100,000 scenarios. Posterior ratios use normalized

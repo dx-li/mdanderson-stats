@@ -64,6 +64,14 @@ and an observed event is no-go. The companion Python check matches the
 calendar rows and compares 16,000 trials with the exact probabilities and
 expected observed follow-up, within 1.447 estimated Monte Carlo errors.
 
+`tools/check_bop2_dc_survival_calibration.py` exports small common-path tapes
+from the optimizer's recorded seeds and calls
+`tools/reference_bop2_dc_survival_calibration.R`. The R calculation separately
+reconstructs calendar observation, posterior probabilities, absorbing decisions,
+all 18 candidates and both objectives. All 760 checked summaries match,
+including different optimal candidates and a held-out false-go violation
+reported without reselection. Scratch path tapes remain under `research/raw`.
+
 ## Exact paired operating characteristics
 
 `tools/reference_bop2_dc_paired_oc.R` enumerates all 256 four-patient outcome

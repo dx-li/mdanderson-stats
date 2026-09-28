@@ -843,8 +843,9 @@ order-statistic bounds. The [fixed-shape Weibull workflow](docs/weibull-bayesian
 adds exact Gamma-prior inference with stable centered rate draws. The
 [lognormal workflow](docs/lognormal-bayesian-gof.md) jointly fits log-location
 and log-variance with an explicit conjugate prior and independent integrated
-diagnostic references. Censoring,
-unknown Weibull shape and other family fits, BIC/DIC, native rank/trim
+diagnostic references. A [joint Weibull fitter](docs/weibull-unknown-shape-gof.md)
+estimates both shape and scale with correlated log-parameter priors and bounded
+posterior sampling. Censoring, other family fits, BIC/DIC, native rank/trim
 conventions and reporting remain pending.
 
 [MERIT](docs/merit.md) adds isotonic dose selection, Bayesian interim decisions,
@@ -1179,7 +1180,10 @@ inverse-gamma model with separate median survival criteria. Paired modes include
 exact operating characteristics that preserve endpoint association and early
 stopping. Survival adds calendar replay, bounded exponential-trial simulation,
 replay seeds and Monte Carlo errors, with independent calendar and analytic
-operating-characteristic references. Paired and survival calibration remain open.
+operating-characteristic references. [Survival calibration](docs/bop2-dc-survival-calibration.md)
+selects from explicit parameter grids with independent holdout results and
+visible validation failures. Paired calibration, the paper's continuous Normal
+endpoint and randomized comparisons remain open.
 
 [BARPO](docs/barpo.md) adds binary posterior monitoring with or without a control
 and four adaptive allocation methods: BARCP, BARN2N, BARMTV and explicit-target
