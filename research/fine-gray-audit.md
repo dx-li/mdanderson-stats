@@ -110,3 +110,66 @@ coefficients `[-0.2023311730, 0.3371024821]` differ from the correctly translate
 `[-0.2039769254, 0.3359332899]`. Python must use exact left limits, including
 G(0-)=1. The six-case reference generator and discrepancy probe ran in 0.79
 seconds. The final fixtures contain 79 event rows and 125 scalar fit metrics.
+
+## Python implementation and root verification
+
+A Luna worker implemented the numerical core in a separate checkout. Root
+reviewed the event-streamed likelihood, exact censoring left limits, native
+censoring-group variance convention, separation check and prediction arithmetic,
+then integrated the core at `856246f`. The public API now exposes the fit,
+prediction and fixed-effect contour interfaces, with a usage guide at
+`docs/fine-gray.md`. The GPL notice and license text are included in the package.
+
+Fitting centers and scales covariates, evaluates risk sums on a log scale and
+solves the Newton system with backtracking. A bounded separation check rejects
+monotone likelihoods. Event designs are streamed; no observations-by-events-by-
+columns tensor is retained. The final event-by-observation risk matrix and the
+separation constraints are bounded by the work preflight. Prediction accumulates
+hazards in log space and uses `-expm1(-H)`. Unscaled baseline increments may be
+zero or infinity when original covariate units are unrepresentable; centered
+profile predictions remain usable. Non-real inputs and unrepresentable profile
+linear predictors are rejected explicitly.
+
+The independent root adapter checked all six fits, 125 scalar metrics, 79
+event rows and 1,220 incidence predictions, with warnings treated as errors.
+It also checked reversed row/group order and fixed/time-covariate units scaled
+by 1e-100 and 1e100. Maximum absolute differences from native references were:
+
+| Quantity | Maximum absolute error |
+| --- | ---: |
+| Coefficients | 5.56e-16 |
+| Sandwich covariance | 4.72e-16 |
+| Observed information | 4.80e-14 |
+| Baseline increments | 5.42e-16 |
+| Score residuals | 4.89e-15 |
+| Cumulative incidence | 6.67e-16 |
+
+This independent run took 0.192 seconds after imports and peaked at 118.5 MiB
+RSS, with zero reported process swaps. Four focused regression tests passed
+in 1.54 seconds after integration, covering the native fixtures, exact time-zero
+limits, a 1e8 covariate offset, monotone likelihood, work limits, complex-input
+rejection and contour rejection before an oversized fit. No full suite or new
+CI infrastructure was run. Ruff formatting/lint and targeted mypy passed.
+
+## Contour contract and rendering
+
+The native reference generator now executes the unchanged author `FGContour`
+and `FGContour3D` helpers. Their render calls are captured; `predictRisk` is a
+numeric adapter to the unchanged `predict.crr` with right-step selection.
+Both helpers agree on grid, times and incidence for four fixed-effect models,
+with mean and explicit adjustment profiles. The full formula/riskRegression
+stack remains source-inspected rather than executed.
+
+The Python contour audit matched 800 reference values across these four
+models and both native/custom time grids, with maximum error 5.56e-16.
+Both documented public API examples executed. The 2D and 3D plots were rendered
+and visually inspected; both label the output as cumulative incidence.
+This combined audit took 0.798 seconds after imports and peaked at 149.3 MiB,
+with zero reported process swaps. All scientific jobs ran serially with one
+BLAS/OpenMP thread; measurements describe these small reference workloads.
+
+The right-censored Fine–Gray model family is now covered. Entry 166 remains
+partial because interval-censored, parametric/spline, forest and neural families
+remain open. Catalog counts stay at 62 implemented, 66 partial and 10 pending;
+this distinction prevents a completed subfamily from overstating whole-entry
+coverage.

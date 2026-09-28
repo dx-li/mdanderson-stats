@@ -4479,7 +4479,8 @@
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/survivalContour/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/survivalContour/",
       "references": [
-        "https://github.com/YushuShi/survivalContour/tree/d4645f69f23fc1146c07432f576b4c40f85e1bba"
+        "https://github.com/YushuShi/survivalContour/tree/d4645f69f23fc1146c07432f576b4c40f85e1bba",
+        "https://github.com/cran/cmprsk/tree/f81411e1e3f57822796bae2a6870657e455362e9"
       ],
       "downloads": [],
       "retrieval_error": null,
@@ -4488,13 +4489,16 @@
         "Ordinary and stratified right-censored Cox survival surfaces with Efron or Breslow ties, shared stratum coefficients and separate baselines, caller-encoded numeric covariates, mean or explicit adjustment profiles and default or supplied grids.",
         "Pointwise log-survival confidence limits, cumulative hazards and standard errors, plus configurable covariate-quantile curves; stable log-risk accumulation and bounded preflight allocation.",
         "Optional two-dimensional contours and three-dimensional survival or confidence-limit surfaces through the existing plotting extra; docs/survival-contour.md.",
-        "Remaining: interval-censored Cox, parametric/spline, Fine-Gray, forests, neural models, categorical encoding and full native app workflows."
+        "Fine-Gray right-censored competing-risk regression with fixed/time-interaction effects, separate censoring distributions, native sandwich coefficient covariance and stable target-cause incidence prediction; fixed-effect incidence contours and optional 2D/3D plots, docs/fine-gray.md.",
+        "Remaining: interval-censored Cox and competing risks, parametric/spline, forests, neural models, categorical encoding and full native app workflows."
       ],
       "validation": [
         "Four original-author R Cox helper surface cases (Efron/Breslow by mean/explicit profiles), plus corresponding R quantile curves, coefficient covariance, likelihoods and standard errors; tools/reference_survival_contour.R.",
         "Nine focused Cox/contour tests, tied-event derivatives, joint stratified separation, stratum-offset stability, time-zero/no-event groups, label validation and aggregate preflight; research/survival-contour-audit.md and research/survival-stratified-audit.md.",
         "Root probability/confidence-limit differences below 8e-16; bounded numerical audit 115.4 MiB peak RSS, two plot renders 161.5 MiB, zero reported process swaps.",
-        "Direct R survival 3.6-4 stratified fits and 780 surface plus 780 quantile-reference rows; maximum probability/limit error 7.11e-11. Native group-selection and 3D dimension defects are documented and not reproduced. Root numerical audit 118.2 MiB, plots 157.3 MiB peak RSS, zero reported swaps."
+        "Direct R survival 3.6-4 stratified fits and 780 surface plus 780 quantile-reference rows; maximum probability/limit error 7.11e-11. Native group-selection and 3D dimension defects are documented and not reproduced. Root numerical audit 118.2 MiB, plots 157.3 MiB peak RSS, zero reported swaps.",
+        "Six unchanged cmprsk 2.2-12 R/Fortran reference fits: 125 scalar metrics, 79 baseline/residual rows and 1,220 CIF values; four focused tests. Exact time-zero censoring limits correct a native wrapper defect, with invariant time-translated native references. research/fine-gray-audit.md.",
+        "Fine-Gray fixed-effect contour wrapper matches 800 reference CIF values with maximum error below 6e-16; original author FGContour/FGContour3D grid and profile contracts executed through a native numerical prediction adapter. Numerical audit 118.5 MiB, contour/guide/plot audit 149.3 MiB peak RSS, zero reported process swaps."
       ]
     },
     {

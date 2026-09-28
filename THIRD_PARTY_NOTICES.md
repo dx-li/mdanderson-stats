@@ -926,6 +926,30 @@ stratum-specific predictions are checked directly against R `survival` 3.6-4;
 the original helper's repeated-group and mismatched-dimension defects are
 recorded in `research/survival-stratified-audit.md`.
 
+## Fine–Gray competing-risk regression
+
+The `fine_gray` implementation adapts the likelihood, baseline and sandwich
+variance algorithms in Robert Gray's `cmprsk` 2.2-12, especially `src/crr.f`
+and `R/cmprsk.R`, at
+https://github.com/cran/cmprsk/tree/f81411e1e3f57822796bae2a6870657e455362e9.
+Original source: Copyright (C) 2000 Robert Gray, distributed under GNU GPL
+version 2 or later. The Python adaptations are distributed on those terms;
+the GPL version 2 text is retained in `notices/cmprsk-GPL-2.txt`. Python changes
+include bounded array operations, scaled/log-domain calculations, exact
+censoring-survival left limits and a numeric-design interface. Original R and
+Fortran source files and compiled reference binaries are not redistributed.
+
+The model is described by Fine JP and Gray RJ (1999), *A Proportional Hazards
+Model for the Subdistribution of a Competing Risk*, JASA 94:496–509,
+https://doi.org/10.1080/01621459.1999.10474144. Source and executable-reference
+details are recorded in `research/fine-gray-audit.md`.
+
+The contour contract also uses `FGContour.R` and `FGContour3D.R` from the
+SurvivalContour revision cited above. The GPL >=2 `riskRegression` 2026.03.11
+source at `08a60f7e9a24735b17c77d8b99752baaee6b6bf6` was inspected to verify
+that its FGR fit/prediction wrappers delegate to cmprsk; its formula stack is
+not included in this Python interface.
+
 ## Bayesian success calibration
 
 `success_calibration.py` is an independent implementation of the mathematical

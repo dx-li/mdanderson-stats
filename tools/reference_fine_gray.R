@@ -11,6 +11,26 @@ stopifnot(unname(tools::md5sum(file.path(source_root,
 dyn.load(file.path(source_root, "cmprsk.so"))
 source(file.path(source_root, "R/cmprsk.R"))
 
+# Capture unchanged author's grid/profile/render inputs. Numerical predictions
+# delegate directly to crr's public predictor; the FGR formula stack is not
+# installed. Its inspected wrapper performs this same right-step selection.
+contour_root <- "research/raw/survivalContour/R"
+stopifnot(unname(tools::md5sum(file.path(contour_root,
+  c("FGContour.R", "FGContour3D.R")))) ==
+  c("42ddbc2b8320881e1403ff5cfec6b892", "26cd94271e4c092aed1671774f0add4b"))
+author <- new.env(parent=globalenv())
+sys.source(file.path(contour_root,"FGContour.R"), envir=author)
+sys.source(file.path(contour_root,"FGContour3D.R"), envir=author)
+author$predictRisk <- function(object,newdata,times) {
+  out <- sapply(seq_len(nrow(newdata)),function(i) {
+    p <- predict.crr(object$crrFit,as.numeric(newdata[i,c("x1","x2")]))
+    c(0,p[,2])[findInterval(times,p[,1])+1L]
+  })
+  t(out)
+}
+author$survContour <- function(x,y,z,...) list(time=x,grid=y,incidence=z)
+author$contour3D <- function(x,y,z,...) list(time=x,grid=y,incidence=z$surv)
+
 id <- 1:40
 data <- data.frame(time=c(0, rep(1:12, each=3), 13, 14, 15),
   status=c(1, rep(c(1,2,0, 2,1,1, 0,1,2, 1,0,1),3), 2,0,1),
@@ -58,6 +78,19 @@ for (case in cases) {
   for (profile in c("mean", "explicit")) {
     grid <- seq(quantile(data$x1,.025),quantile(data$x1,.975),length.out=5)
     x2 <- if (profile=="mean") mean(data$x2) else .25
+    if (case %in% c("fixed_one","fixed_groups","target_two","zero_censor")) {
+      response_time <- data$time
+      if(case=="zero_censor") response_time[2:4] <- 0
+      app_model <- list(crrFit=fit,response=cbind(response_time,data$status),
+        cause=if(case=="target_two") 2 else 1)
+      other <- if(profile=="mean") NULL else data.frame(x1=0,x2=x2)
+      native2d <- author$FGContour(data[,c("x1","x2")],app_model,"x1",
+        nCovEval=5,otherCov=other,drawHistogram=FALSE)
+      native3d <- author$FGContour3D(data[,c("x1","x2")],app_model,"x1",
+        nCovEval=5,otherCov=other)
+      stopifnot(isTRUE(all.equal(native2d,native3d,tolerance=1e-14)),
+        isTRUE(all.equal(native2d$grid,as.numeric(grid),tolerance=1e-14)))
+    }
     for (i in seq_along(grid)) {
       # Single-profile calls also exercise the native time-covariates-only path.
       pargs <- list(object=fit)
@@ -70,6 +103,11 @@ for (case in cases) {
           c(0,.5,1,2.5,7,12,16)
         index <- findInterval(times, native[,1])
         incidence <- c(0,native[,2])[index+1L]
+        if (time_kind=="native" &&
+            case %in% c("fixed_one","fixed_groups","target_two","zero_censor")) {
+          stopifnot(identical(times,as.numeric(native2d$time)),
+            isTRUE(all.equal(incidence,as.numeric(native2d$incidence[i,]),tolerance=1e-14)))
+        }
         prediction_rows[[length(prediction_rows)+1L]] <- data.frame(case=case,
           profile=profile, row=i, x1=grid[i], x2=x2, time_kind=time_kind,
           time=times, incidence=incidence)

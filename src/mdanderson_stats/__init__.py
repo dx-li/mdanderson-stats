@@ -499,6 +499,13 @@ from .expsurv_scatter import SurvivalScatterPlot, plot_survival_scatter
 from .expsurv_simulation import generate_exploratory_data, generate_exponential_samples
 from .extsig import ExtsigResult, extsig
 from .extsig_maximum import ExtsigMaximum
+from .fine_gray import FineGrayFit, FineGrayPrediction, fine_gray, fine_gray_predict
+from .fine_gray_contour import (
+    FineGrayContour,
+    fine_gray_contour,
+    plot_fine_gray_contour_2d,
+    plot_fine_gray_contour_3d,
+)
 from .fisher_design import fisher_power, fisher_sample_size
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .gray_test import GrayTest, gray_test
@@ -1535,6 +1542,14 @@ __all__ = [
     "survival_stratified_cox_contour",
     "plot_survival_contour_2d",
     "plot_survival_contour_3d",
+    "FineGrayFit",
+    "FineGrayPrediction",
+    "FineGrayContour",
+    "fine_gray",
+    "fine_gray_predict",
+    "fine_gray_contour",
+    "plot_fine_gray_contour_2d",
+    "plot_fine_gray_contour_3d",
     "SurvanLogistic",
     "survan_logistic",
     "SurvanKM",

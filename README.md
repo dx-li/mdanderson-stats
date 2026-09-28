@@ -1272,6 +1272,14 @@ profiles and optional two-/three-dimensional plots support exploration of a
 continuous predictor. Stratified models share coefficients and estimate separate
 baseline hazards for each group. Other SurvivalContour model families remain open.
 
+[Fine–Gray competing-risk regression](docs/fine-gray.md) provides target-cause
+incidence predictions, fixed and time-interaction effects, separate censoring
+distributions, and sandwich coefficient covariance. Its fixed-effect contour
+workflow includes optional two-/three-dimensional incidence plots. Exact
+censoring left limits and stable prediction arithmetic accompany bounded
+array allocations. Interval-censored competing risks and the remaining
+SurvivalContour model families are still open.
+
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
 outcomes. These include exact one-sample count tests, historical controls,

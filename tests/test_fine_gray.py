@@ -1,12 +1,14 @@
 """Regression tests against native cmprsk 2.2-12 numerical references."""
 
 import csv
+from importlib import import_module
 from pathlib import Path
 
 import numpy as np
 import pytest
 
 from mdanderson_stats.fine_gray import fine_gray, fine_gray_predict
+from mdanderson_stats.fine_gray_contour import fine_gray_contour
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -142,3 +144,20 @@ def test_monotone_likelihood_and_bounded_risk_work_fail_clearly():
     n = 2240
     with pytest.raises(ValueError, match="bounded row-event"):
         fine_gray(np.arange(n), np.ones(n), np.linspace(-1, 1, n))
+
+
+def test_prediction_rejects_complex_values_and_contour_preflights_large_outputs(monkeypatch):
+    fit, _ = _fit("fixed_one")
+    with pytest.raises(ValueError, match="must be real"):
+        fine_gray_predict(fit, np.array([[0.2 + 1j, 0.1]]))
+    with pytest.raises(ValueError, match="design entries"):
+        fine_gray_predict(fit, np.zeros((100_001, 2)), times=[])
+
+    def should_not_fit(*args, **kwargs):
+        raise AssertionError("oversized contour must fail before fitting")
+
+    module = import_module("mdanderson_stats.fine_gray_contour")
+    monkeypatch.setattr(module, "fine_gray", should_not_fit)
+    time, status, x, _ = _input()
+    with pytest.raises(ValueError, match="contour output"):
+        fine_gray_contour(time, status, x, 0, n_grid=2000, times=np.arange(1000))

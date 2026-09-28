@@ -58,10 +58,12 @@ variance ingredients, score residuals and baseline increments. The R wrapper
 forms a sandwich covariance from `crrvv`, rather than substituting inverse
 information. `predict.crr` transforms cumulative subdistribution hazard to
 incidence with `1-exp(-H)`; Python should use the stable equivalent `-expm1(-H)`.
-The existing local Fortran compiler is available, so compiling the unchanged
-small source as a reference may avoid installing the larger app stack. No
-compilation or numerical job was run during this source audit, and no Fine–Gray
-coverage is claimed yet.
+The unchanged Fortran source has since been compiled using the existing local
+compiler. Six native-reference models and incidence predictions, including an
+audit of the original wrapper's time-zero censoring defect, are now recorded in
+[the Fine–Gray audit](fine-gray-audit.md). The larger formula/UI dependency stack
+is not installed. Method coverage is recorded by the executable catalog when
+the Python implementation is integrated.
 
 ## BLESS model coefficients and baseline survival
 

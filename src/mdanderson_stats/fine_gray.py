@@ -17,7 +17,7 @@ from scipy.sparse import csr_matrix, vstack
 from scipy.special import logsumexp
 
 from ._cdflib import _freeze
-from ._validation import FloatArray, count, finite
+from ._validation import FloatArray, count, finite, scalar
 
 _MAX_ROWS = 100_000
 _MAX_COLUMNS = 100
@@ -53,7 +53,6 @@ class FineGrayFit:
     _time_scale: FloatArray
     _event_centers: FloatArray
     _centered_log_baseline: FloatArray
-    _baseline_log: FloatArray
 
 
 @dataclass(frozen=True)
@@ -103,10 +102,13 @@ def fine_gray(
         or failcode == cencode
     ):
         raise ValueError("failcode and cencode must be distinct nonnegative integers")
+    if isinstance(tolerance, (bool, np.bool_)) or np.iscomplexobj(tolerance):
+        raise ValueError("tolerance must be a positive real scalar")
+    tolerance = scalar(tolerance, "tolerance")
     if (
-        not np.isfinite(tolerance)
-        or tolerance <= 0
-        or not isinstance(max_iterations, int)
+        tolerance <= 0
+        or isinstance(max_iterations, (bool, np.bool_))
+        or not isinstance(max_iterations, (int, np.integer))
         or not 1 <= max_iterations <= 1000
     ):
         raise ValueError("tolerance must be positive and max_iterations must be in 1..1000")
@@ -175,6 +177,8 @@ def fine_gray(
     for j in range(events.size):
         z = _event_design(fixed_norm, time_norm, tf, j, p_fixed)
         event_centers[j] = z.mean(axis=0)
+    if initial is not None and np.iscomplexobj(initial):
+        raise ValueError("initial must be real")
     initial_beta = np.zeros(p) if initial is None else finite(initial, "initial")
     if initial_beta.shape != (p,):
         raise ValueError("initial must contain one value per coefficient")
@@ -323,7 +327,6 @@ def fine_gray(
         _freeze(scale[p_fixed:]),
         _freeze(event_centers),
         _freeze(logbase),
-        _freeze(baseline_log),
     )
 
 
@@ -335,6 +338,8 @@ def fine_gray_predict(
     time_covariates: ArrayLike | None = None,
 ) -> FineGrayPrediction:
     """Predict cumulative incidence at requested times using fitted event steps."""
+    if any(a is not None and np.iscomplexobj(a) for a in (x, time_covariates, times)):
+        raise ValueError("prediction covariates and times must be real")
     p_fixed = fit._fixed_columns
     p_time = fit.time_function_values.shape[1]
     if p_fixed:
@@ -370,6 +375,10 @@ def fine_gray_predict(
         if time_covariates is not None:
             raise ValueError("this model has no time-varying covariates")
         zraw = np.empty((xx.shape[0], 0))
+    if not 1 <= xx.shape[0] <= _MAX_ROWS or xx.size + zraw.size > _MAX_DESIGN:
+        raise ValueError(
+            "prediction requires 1..100000 profiles and at most 2,000,000 design entries"
+        )
     requested = fit.event_times if times is None else finite(times, "times")
     if requested.ndim != 1 or np.any(requested < 0) or requested.size > _MAX_ROWS:
         raise ValueError("times must be a nonnegative vector of at most 100,000 values")
@@ -379,12 +388,15 @@ def fine_gray_predict(
     beta = fit.scaled_coefficients
     for j, tf in enumerate(fit.time_function_values):
         design = np.empty((xx.shape[0], beta.size))
-        design[:, :p_fixed] = (
-            ((xx - fit._fixed_origin) / fit.column_scale[:p_fixed]) if p_fixed else xx
-        )
-        if p_time:
-            design[:, p_fixed:] = ((zraw - fit._time_origin) / fit._time_scale) * tf
-        eta = (design - fit._event_centers[j]) @ beta
+        with np.errstate(over="ignore", invalid="ignore"):
+            design[:, :p_fixed] = (
+                ((xx - fit._fixed_origin) / fit.column_scale[:p_fixed]) if p_fixed else xx
+            )
+            if p_time:
+                design[:, p_fixed:] = ((zraw - fit._time_origin) / fit._time_scale) * tf
+            eta = (design - fit._event_centers[j]) @ beta
+        if not np.isfinite(design).all() or not np.isfinite(eta).all():
+            raise ArithmeticError("Fine–Gray prediction linear predictor exceeds numerical range")
         with np.errstate(over="ignore", under="ignore"):
             loghazards_at_events[:, j] = fit._centered_log_baseline[j] + eta
     log_cumulative_at_events = np.logaddexp.accumulate(loghazards_at_events, axis=1)

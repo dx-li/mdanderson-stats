@@ -136,9 +136,11 @@ three-group plot peaked at 157.3 MiB, with zero reported process swaps.
 ## Coverage
 
 These interfaces cover ordinary and stratified, unweighted, right-censored Cox
-models with static numeric covariates. Interval-censored Cox models,
-parametric/spline models, Fine–Gray cumulative incidence, forests, neural
-models and the full native app workflow remain open. Entry 166 stays partial.
+models with static numeric covariates. [Fine–Gray regression and incidence
+contours](fine-gray.md) provide the right-censored competing-risk family.
+Interval-censored Cox and competing-risk models, parametric/spline models,
+forests, neural models and the full native app workflow remain open. Entry 166
+stays partial.
 
 The original author's two- and three-dimensional Cox helper outputs provide
 reference surfaces for both tie methods and both mean and explicit adjustment
