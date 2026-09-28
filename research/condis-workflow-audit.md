@@ -58,3 +58,12 @@ app input/report compatibility remains a separate unverified item. CondiS
 stays partial until its remaining scope is resolved; all eight learners
 alone are not evidence of complete app parity. Missing statistical methods
 elsewhere in the catalog take priority over presentation conveniences.
+
+## Eight-learner package checkpoint
+
+Wheel and source-distribution builds from committed revision `f0e9466`
+passed. All 482 Python module files, including both tree learners, matched
+the exported committed source byte for byte in both artifacts. Third-party
+notices were retained and original native source/compiled objects were
+excluded. This confirms packaging of the implemented learners, not completion
+of the remaining workflows above or the full MD Anderson catalog.
