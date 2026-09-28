@@ -56,3 +56,25 @@ pass in 1.57 seconds; module lint, formatting, typing and diff checks pass.
 No new CI or large simulation was introduced. These references do not validate
 arbitrary prior convergence, calendar timing or operating characteristics over
 large simulated populations.
+## Aggregate operating characteristics
+
+The serial aggregate interface reuses the validated single-trial implementation
+and discards histories between replicates. Returned per-trial seeds reproduce
+individual simulations. It reports selection/no-selection and stop probabilities
+with binomial Monte Carlo errors, mean enrollment/allocation with across-trial
+errors, and pooled observed toxicity/response/category rates with trial-clustered
+ratio errors. Unassigned-regimen rates are undefined rather than zero. One
+replicate cannot estimate sample-based ratio or mean uncertainty.
+
+Three focused aggregate tests pass in 1.64 seconds. Replay checks verify counts,
+selection, mean enrollment and the ratio-error calculation; budget lower bounds
+reject before consuming random state. Diagnostic review also fixed a
+single-trial summary bug that discarded infinite Rhat. Aggregation preserves
+infinity, reports diagnostic maxima and counts undefined-diagnostic steps.
+Targeted lint/format/type checks pass. The new interface implements explicitly
+configured complete-outcome OCs, without native timing or executable parity.
+
+Array bounds include sufficient statistics together with one trial's state.
+Likelihood/work limits apply to all replicates cumulatively, with truth
+validation included. No process pool, repeated CI job or large simulation was
+introduced.

@@ -42,7 +42,7 @@ missing trial workflows or named models.
 | Entry | Concrete missing work | Available source / qualification |
 | --- | --- | --- |
 | Dose Schedule Finder #75 | Aggregate OCs/calibration and delayed low-grade-to-DLT classification after the integrated calendar replay | [Calendar guide](../docs/dose-schedule-trials.md), `research/dose-schedule-audit.md`, [2007 primary paper](https://odin.mdacc.tmc.edu/~pfthall/main/ClinTrials%20dose-sched%202007.pdf). Within-patient adaptation policies and native files/reports remain open. |
-| PRT #69 | Calendar replay and operating characteristics | Cached primary paper, conduct and simulation guides under `research/raw/PRT`; reuse probit risk, state-space fit and isotonic conduct rules. |
+| PRT #69 | Native timing/operating-characteristic replication and projection safeguards after explicit-input calendar replay | Cached primary paper, conduct and simulation guides under `research/raw/PRT`; [replay guide](../docs/prt-calendar.md). The literal projection can produce invalid probabilities, and the Appendix-B timing generator remains unavailable. |
 | Multc Lean #12 | Generated timing and aggregate duration simulation after integrated explicit-timing replay | The logistics guide establishes look-ahead suspension; the replay implements it. The user guide does not give a distinct toxicity ascertainment-time law; do not invent native timing assumptions. |
 | STPLAN #41 | No missing native integer-allocation feature | Native 4.5 `SOURCE/abink.f` reads double-precision proportions/group sizes, and `SOURCE/qbink.f90` returns `grpsz(i)=n*prop(i)`. There is no native rounding/remainder rule. Existing fractional Python sizing matches that contract; integer allocation would be a separate extension. |
 | BOIN12 #148 | Joint-cell RDS table for nonadditive utility | Existing joint-count decision/simulation kernels can support enumeration, but cached `escalation/R/boin12_rds.R` supports marginal/additive tables only. Treat joint enumeration as a Python extension unless a native source establishes that feature. |
@@ -109,7 +109,9 @@ added. The existing BOIN and BOIN12 kernels remain available separately.
 
 CiBolus complete-outcome cohort simulation has since been implemented and
 checked against independent R outcome/decision references and sequential
-actual posterior fits; [guide](../docs/cibolus-trials.md). Calendar conduct and
-aggregate operating characteristics remain open. Numeric survival-forest
+actual posterior fits; [guide](../docs/cibolus-trials.md). Serial aggregate
+operating characteristics now add selection/stop rates, allocation and pooled
+outcome summaries, trial-clustered Monte Carlo errors and replayable seeds.
+Calendar conduct and prior calibration remain open. Numeric survival-forest
 out-of-bag predictions and source-defined variable importance are another
 substantial gap supported by cached native source; they remain unimplemented.

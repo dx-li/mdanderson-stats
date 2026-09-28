@@ -3,8 +3,10 @@
 Catalog entry **69 remains partial**. Python now implements the discrete probit
 hazard likelihood, conditional remaining toxicity probabilities, PRT predictive
 criteria, cohort decisions and final selection. The state-space posterior fit and published covariance-weighted isotonic
-transformation are now available below. Native projection safeguards, patient-file
-conversion and full calendar trial simulation remain outstanding. The predictive
+transformation are now available below. An [explicit-input calendar replay](prt-calendar.md)
+connects these components to cohort enrollment and follow-up. Native projection
+safeguards, patient-file conversion and native timing/operating-characteristic
+replication remain outstanding. The predictive
 function accepts aligned isotonic posterior draws; fitting and projection are
 separate steps.
 

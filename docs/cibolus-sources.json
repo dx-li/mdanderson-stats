@@ -26,5 +26,5 @@
     "Explicit independent normal priors on log parameters; fixed coordinates are a Python extension for reduced models. The published prior is study-specific.",
     "Serial posterior computation and lexicographic selection ties are Python implementation choices; native random streams and executable decisions have not been compared."
   ],
-  "limitations": "Prior elicitation/calibration, calendar/pending-outcome conduct, aggregate operating characteristics, native input/report workflows and executable parity remain to be covered. Complete-outcome cohort simulation is now available with explicit truth, prior and sampling settings."
+  "limitations": "Prior elicitation/calibration, calendar/pending-outcome conduct, native input/report workflows and executable parity remain to be covered. Complete-outcome cohort and serial aggregate simulation are available with explicit truth, prior and sampling settings."
 }

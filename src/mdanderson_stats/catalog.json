@@ -2497,13 +2497,15 @@
         "Moment-matched beta predictive negligible/excessive toxicity criteria from aligned isotonic posterior draws; dynamic count recursion preserves posterior-induced patient dependence without 2^m enumeration",
         "Published rules 3-6 for toxicity stopping, dose movement and accrual suspension, including pending-zero overrides and exact cutoff conventions; rule 7 final selection",
         "Gaussian dose-random-walk posterior fitting by batched elliptical slice sampling, raw risk draws and chain diagnostics; literal full-covariance isotonic min-max transformation with explicit singularity/range failures",
-        "Remaining: verify native safeguards for out-of-range isotonic projections, original patient-file conversion, calendar simulation and native/published operating-characteristic replication"
+        "Explicit-input calendar replay with cohort enrollment, interval follow-up, FIFO or declined suspended arrivals, resumed enrollment, posterior reuse, permanent stopping and final selection; compact immutable summaries and cumulative work bounds, docs/prt-calendar.md.",
+        "Remaining: verify native safeguards for out-of-range isotonic projections, original patient-file conversion, unavailable native timing generator and native/published operating-characteristic replication"
       ],
       "validation": [
         "Predictive recursion compared with all 4096 outcome vectors for 512 draws and 12 pending patients; exact beta moments/tails and shared-posterior dependence checks",
         "Focused tests cover every published decision branch, cutoff equalities, no-pending overrides, final selection, chunk invariance and stable probit likelihood/risk calculations",
         "Predictive criteria consume supplied draws; sampler diagnostics do not certify convergence, and native executable parity is not claimed",
-        "Two-dose posterior means checked against independent R 80/120-node tensor Gauss-Hermite integration; 180 isotonic values match R, prior covariance checked; archived-prior guide-history pilot explicitly reports a negative projected probability"
+        "Two-dose posterior means checked against independent R 80/120-node tensor Gauss-Hermite integration; 180 isotonic values match R, prior covariance checked; archived-prior guide-history pilot explicitly reports a negative projected probability",
+        "Independent base-R four-patient ledger checks 40 interval/dose/as-of rows including internal/final boundary events; real-posterior replay agrees on assignments, all analysis counts and final follow-up. Focused calendar/fit/predictive tests cover suspension, safety stopping, time offsets, mass normalization and cumulative work guards; research/prt-calendar-audit.md."
       ]
     },
     {
@@ -2955,7 +2957,8 @@
         "Explicit independent lognormal priors and the published study prior; bounded serial elliptical-slice posterior fitting, direct prior draws and chain diagnostics",
         "Strict posterior toxicity and efficacy screens, posterior expected-utility allocation, concentration no-skip restrictions, initial assignment and final selection",
         "Complete-outcome CiBolus cohort simulation from joint response-category/toxicity truth, explicit outcome uniforms, once-per-cohort posterior fitting, concentration-only no-skip and unrestricted final selection; compact diagnostics and cumulative work bounds, docs/cibolus-trials.md.",
-        "Prior elicitation/calibration, calendar/pending-outcome conduct, aggregate operating characteristics, native input/report workflows and executable equivalence remain pending"
+        "Serial aggregate complete-outcome simulation with selection/no-selection and stopping probabilities, mean allocation/enrollment, pooled toxicity/response/category rates, trial-clustered Monte Carlo errors, replayable per-trial seeds and cumulative work bounds.",
+        "Prior elicitation/calibration, calendar/pending-outcome conduct, native input/report workflows and executable equivalence remain pending"
       ],
       "validation": [
         "tests/test_cibolus.py",
@@ -2970,7 +2973,8 @@
         "docs/cibolus-sources.json",
         "research/cibolus-audit.md",
         "Three focused simulator tests plus independent base-R quadrature/ledgers: 36 joint-category rows (max error 5.27e-16), six patient records and 18 regimen/look rows (utility error 2.84e-14); final untried-regimen selection and first-cohort stop.",
-        "Two free-prior cohort fits reproduce sequential actual fitter calls exactly; root comparison 0.947 seconds after imports, 117.50 MiB peak RSS and zero reported swaps; tools/reference_cibolus_trial.R and research/cibolus-trial-audit.md."
+        "Two free-prior cohort fits reproduce sequential actual fitter calls exactly; root comparison 0.947 seconds after imports, 117.50 MiB peak RSS and zero reported swaps; tools/reference_cibolus_trial.R and research/cibolus-trial-audit.md.",
+        "Three focused aggregate checks verify seed replay, count conservation, pooled ratio Monte Carlo errors, shared-budget preflight and preservation of infinite Rhat; tests/test_cibolus_simulation.py. No native timing or executable parity claimed."
       ]
     },
     {

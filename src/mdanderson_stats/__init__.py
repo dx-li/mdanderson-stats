@@ -400,6 +400,10 @@ from .cibolus import (
 )
 from .cibolus_decision import CiBolusDecision, cibolus_decision
 from .cibolus_fit import CiBolusFit, fit_cibolus
+from .cibolus_simulation import (
+    CiBolusOperatingCharacteristics,
+    simulate_cibolus_operating_characteristics,
+)
 from .cibolus_trial import (
     CiBolusTrial,
     CiBolusTrialPatient,
@@ -876,6 +880,7 @@ from .prt import (
     prt_interval_loglikelihood,
     prt_predictive_risk,
 )
+from .prt_calendar import PRTCalendarAnalysis, PRTCalendarResult, run_prt_calendar
 from .prt_fit import (
     PRTIsotonicProjection,
     PRTModelFit,
@@ -1406,6 +1411,8 @@ __all__ = [
     "CiBolusTrialPatient",
     "CiBolusTrialStep",
     "simulate_cibolus_trial",
+    "CiBolusOperatingCharacteristics",
+    "simulate_cibolus_operating_characteristics",
     "PinnacleAnalysis",
     "PinnacleDenoiseResult",
     "PinnaclePeaks",
@@ -1646,6 +1653,9 @@ __all__ = [
     "rose_operating_characteristics",
     "rose_select",
     "simulate_rose",
+    "PRTCalendarAnalysis",
+    "PRTCalendarResult",
+    "run_prt_calendar",
     "PRTModelFit",
     "PRTIsotonicProjection",
     "fit_prt_model",

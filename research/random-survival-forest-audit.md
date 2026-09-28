@@ -151,9 +151,11 @@ excluding pairs with zero contributor counts. Earlier observed failures are
 comparable to later observations; tied event/censor pairs put the failure
 first. For two tied failures, tied mortality gets full concordance and unequal
 mortality gets half. Ordinary comparable pairs with tied mortality get half.
-The source uses `EPSILON` for time and mortality ties. Its defining value has
-not yet been located in the cached source, so native tie tolerance remains a
-contract to resolve before claiming parity.
+The source uses `EPSILON` for time and mortality ties. A read-only retrieval
+of [`src/randomForestSRC.h` at the pinned revision](https://github.com/cran/randomForestSRC/blob/b4d099e262423362a8872c13c468e6dbe2f9e9da/src/randomForestSRC.h)
+confirms `EPSILON = 1.0e-9`; the header is now cached alongside the C source.
+This absolute native tie tolerance must be documented because changing time
+units can change which near-tied observations count as tied.
 
 The manual (`man/rfsrc.Rd`, VIMP section around line 564) distinguishes
 `importance="permute"` from the default `"anti"`. For permutation importance,

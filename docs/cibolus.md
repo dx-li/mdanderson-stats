@@ -185,7 +185,8 @@ the checks actually completed.
 
 [Complete-outcome cohort simulation](cibolus-trials.md) now generates the
 joint response/toxicity cells, fits after each cohort and applies the allocation
-and final-selection rules. Full prior elicitation/calibration, calendar and
-pending-outcome conduct, aggregate operating characteristics, native input/report
-workflows and executable parity remain open. The article and original
+and final-selection rules. Aggregate simulation reports selection/stopping,
+allocation, pooled outcome rates, Monte Carlo errors and replayable seeds.
+Full prior elicitation/calibration, calendar and pending-outcome conduct,
+native input/report workflows and executable parity remain open. The article and original
 executable are not bundled.

@@ -87,4 +87,68 @@ Independent base-R quadrature and explicit outcome vectors provide two trial
 references, including final selection at an untried regimen and stopping after
 an unsafe first-cohort analysis. The [trial audit](../research/cibolus-trial-audit.md)
 records the comparison status. Native executable output, native random streams,
-large-population operating characteristics and prior calibration remain separate.
+large-population validation and prior calibration remain separate.
+
+## Aggregate operating characteristics
+
+`simulate_cibolus_operating_characteristics` repeats the same complete-outcome
+trial serially, discards patient and posterior histories between replicates,
+and returns selection, stopping, enrollment and observed-outcome summaries.
+For example, continuing with `truth` from above:
+
+```python
+from mdanderson_stats import simulate_cibolus_operating_characteristics
+
+oc = simulate_cibolus_operating_characteristics(
+    truth,
+    CiBolusPrior(truth, np.zeros(11)),
+    concentrations=[0.2, 0.4, 0.8],
+    bolus_fractions=[0.1, 0.6],
+    endpoints=[0.25, 0.5, 0.75, 1],
+    utility=[[100, 0]] * 5 + [[0, 0]],
+    n_patients=4,
+    cohort_size=2,
+    toxicity_limit=0.8,
+    toxicity_cutoff=0.9,
+    efficacy_limit=0.01,
+    efficacy_cutoff=0.9,
+    trials=3,
+    draws=8,
+    warmup=0,
+    chains=2,
+    rng=np.random.default_rng(8603),
+)
+assert oc.selection_count.sum() + oc.no_selection_count == 3
+assert oc.assigned_patients.sum() == 12
+assert oc.mean_enrollment == 4
+print(oc.selection_probability, oc.selection_mcse)
+```
+
+Three replicates demonstrate the interface, not precise design evaluation.
+Selection, no-selection and stopping probabilities have binomial Monte Carlo
+standard errors. `mean_allocation` reports mean patients per trial at each
+regimen, with a standard error across trials. Toxicity, response and response
+category probabilities pool observed outcomes over assigned patients at that
+regimen. Their ratio standard errors use trials as independent clusters, so
+varying enrollment and within-trial dependence are retained. Unassigned
+regimens have undefined rates and standard errors (`NaN`). With one replicate,
+sample-based enrollment, allocation and ratio errors are also undefined.
+
+For pooled counts `Y_b` and assigned patients `N_b`, the reported rate is
+`p = sum(Y_b)/sum(N_b)`. Its Monte Carlo variance estimate is
+`B/(B-1) * sum((Y_b - p*N_b)**2) / sum(N_b)**2`, for `B > 1`. These are
+realized rates under adaptive allocation, not substituted model-truth risks.
+Monte Carlo errors do not include bias from inaccurate posterior fitting.
+
+`trial_seeds[i]` recreates replicate `i` by passing
+`np.random.default_rng(int(oc.trial_seeds[i]))` to `simulate_cibolus_trial`
+with the same design inputs and no explicit outcome-uniform vector. Aggregate
+results retain the largest parameter/utility Rhat and utility MCSE, including
+infinite Rhat, plus the number of steps with an undefined diagnostic. Fixed
+coordinates naturally have undefined Rhat. These summaries are screening
+diagnostics, not proof of convergence; individual replicates remain replayable.
+
+Array limits cover aggregate statistics together with one trial's retained
+state. Likelihood and work budgets apply across the entire run, including
+initial truth validation. They do not reset per replicate. The aggregate
+interface adds no calendar assumptions or native random-stream equivalence.

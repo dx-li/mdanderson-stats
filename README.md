@@ -1106,8 +1106,10 @@ draws and applies the published cohort-suspension, dose-movement and final-selec
 rules. A bounded-memory count recursion replaces exponential enumeration of pending
 outcomes while preserving posterior dependence. Probit model components are also
 available, including the state-space posterior fit and full-covariance isotonic
-formula. The guide-history pilot exposes out-of-range projected risks, reported
-explicitly; native projection safeguards and calendar simulation remain pending.
+formula. [Calendar replay](docs/prt-calendar.md) adds explicit arrivals, interval
+follow-up, cohort enrollment, suspension and final selection. The guide-history
+pilot exposes out-of-range projected risks, reported explicitly; native projection
+safeguards and native timing/operating-characteristic replication remain pending.
 
 [ROSE](docs/rose.md) provides one- and two-stage dose-selection designs using
 normal approximation or exact binomial constraints, including unequal allocation
@@ -1361,8 +1363,9 @@ Independent R quadrature provides probability, likelihood and reduced-posterior
 references. [Complete-outcome trials](docs/cibolus-trials.md) generate joint
 response/toxicity categories, update after each cohort and apply concentration
 no-skip and unrestricted final selection, with replayable outcome inputs and
-cumulative work limits. Calendar conduct, aggregate calibration and native
-workflows remain open.
+cumulative work limits. Serial aggregate simulation reports selection and
+observed-outcome rates, Monte Carlo errors and per-trial replay seeds. Calendar
+conduct, prior calibration and native workflows remain open.
 
 [Pinnacle](docs/pinnacle.md) detects and quantifies protein spots in aligned
 two-dimensional gel images. It combines streaming image averaging, undecimated
