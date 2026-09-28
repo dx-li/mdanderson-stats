@@ -76,3 +76,30 @@ Direct PMC retrieval returned a browser challenge; indexed primary full text
 provided the mathematical evidence above. These retrieval limits do not
 establish native code behavior, reproduction of case studies or archive terms.
 The four 2007 parametric models still need their own exact source contracts.
+
+The [2007 primary abstract](https://pubmed.ncbi.nlm.nih.gov/17479394/) confirms
+four one-parameter Loewe-based surfaces and accompanying S-PLUS/R listings,
+but does not specify their equations or fitting/inference procedures. Publisher
+full text returned HTTP 403 during the bounded source review. A later review
+names Greco, Machado–Robinson, Plummer–Short and Carter models; those names and
+parameter signs alone cannot verify the exact SYNERGY parameterizations.
+Third-party implementations remain provenance leads, not native-contract proof.
+
+## Independent spline reference
+
+`tools/reference_synergy_surface.R` uses a raw-dose common-intercept marginal
+baseline and nine distinct dose pairs, with four replicated observations. For
+explicit smoothing parameters 0.02 and 0.2, it directly solves the constrained
+augmented thin-plate system rather than using a mixed-model eigendecomposition:
+
+```text
+[K + lambda*diag(1/count), T] [nu   ] = [mean residual]
+[T',                         0] [gamma]   [0            ]
+```
+
+The script verifies affine-nullspace constraints and the penalized normal
+equations, and retains predictions at observed and additional dose pairs.
+`synergy-surface-*.csv` fixtures retain inputs, baseline/affine coefficients,
+residual sums of squares, roughness and predictions. Base-R generation ran in
+0.085 seconds. This supplies an independent reference for the Python spline
+fit, without claiming native smoothing selection, bootstrap or case-study parity.
