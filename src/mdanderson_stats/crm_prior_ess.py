@@ -212,9 +212,10 @@ def _posterior_moments(
 
     left, right = -max(8.0 * beta_sd, 8.0), max(8.0 * beta_sd, 8.0)
     for _ in range(80):
-        if _posterior_score(left, log_a, successes, failures, beta_sd) > 0.0 and _posterior_score(
-            right, log_a, successes, failures, beta_sd
-        ) < 0.0:
+        if (
+            _posterior_score(left, log_a, successes, failures, beta_sd) > 0.0
+            and _posterior_score(right, log_a, successes, failures, beta_sd) < 0.0
+        ):
             break
         left *= 2.0
         right *= 2.0
@@ -420,7 +421,11 @@ def simulate_crm_prior_ess(
     raw_skeleton = np.asarray(skeleton)
     if raw_truth.ndim != 1 or raw_skeleton.ndim != 1 or raw_truth.size != raw_skeleton.size:
         raise ValueError("true_toxicity and skeleton must be matching one-dimensional vectors")
-    if not 1 <= raw_truth.size <= _MAX_DOSES or np.iscomplexobj(raw_truth) or np.iscomplexobj(raw_skeleton):
+    if (
+        not 1 <= raw_truth.size <= _MAX_DOSES
+        or np.iscomplexobj(raw_truth)
+        or np.iscomplexobj(raw_skeleton)
+    ):
         raise ValueError("CRM requires 1..20 real-valued dose probabilities")
     truth = np.asarray(raw_truth, dtype=float)
     prior = np.asarray(raw_skeleton, dtype=float)
@@ -452,12 +457,7 @@ def simulate_crm_prior_ess(
     posterior_fits = reps * patients
     integrals_per_fit = 16 if posterior_moments == "native_truncated_numerator" else 1
     # Every quadrature node evaluates the likelihood over at most K dose cells.
-    max_work_bound = (
-        posterior_fits
-        * int(prior.size)
-        * integrals_per_fit
-        * _MAX_EVALS_PER_INTEGRAL
-    )
+    max_work_bound = posterior_fits * int(prior.size) * integrals_per_fit * _MAX_EVALS_PER_INTEGRAL
     work_limit = _integer(max_work, "max_work", 1, _MAX_WORK)
     if max_work_bound > work_limit:
         raise ValueError("conservative posterior quadrature work bound exceeds max_work")

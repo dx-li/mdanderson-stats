@@ -1,4 +1,4 @@
-from math import exp, erf, pi, sqrt
+from math import erf, exp, pi, sqrt
 
 import numpy as np
 import pytest
@@ -67,8 +67,12 @@ def test_adaptive_crm_and_rao_blackwell_information_match_source_reference():
 
 
 def test_crm_likelihood_information_is_stable_near_skeleton_boundaries():
-    assert _information_for_patient(1e-300, 0) == pytest.approx(4.764800544151576e-295, rel=3e-14, abs=0.0)
-    assert _information_for_patient(1e-300, 1) == pytest.approx(690.7755278982137, rel=3e-14, abs=0.0)
+    assert _information_for_patient(1e-300, 0) == pytest.approx(
+        4.764800544151576e-295, rel=3e-14, abs=0.0
+    )
+    assert _information_for_patient(1e-300, 1) == pytest.approx(
+        690.7755278982137, rel=3e-14, abs=0.0
+    )
     assert _information_for_patient(np.nextafter(1.0, 0.0), 0) == pytest.approx(
         5.551115123125783e-17, rel=3e-14, abs=0.0
     )

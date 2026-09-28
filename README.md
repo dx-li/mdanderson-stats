@@ -867,7 +867,10 @@ options remain pending.
 
 [Bayesian prior ESS](docs/conjugate-ess.md) adds seven conjugate-model calculations,
 with vectorized inputs and an explicit choice between information-based and native
-gamma–exponential conventions. Nonconjugate app workflows remain pending.
+gamma–exponential conventions. [CRM prior ESS](docs/crm-prior-ess.md) adds adaptive
+empiric-model trial simulation and expected subset-information paths, with explicit
+full versus native posterior moments and continuous versus coarse-grid ESS.
+TITE-CRM and unknown-mean variance ESS remain pending.
 
 [Survival prior ESS](docs/survival-ess.md) evaluates the native censored-exponential
 information criterion analytically, avoiding Monte Carlo noise and patient loops.

@@ -4320,13 +4320,15 @@
         "Vectorized prior ESS for beta-binomial, gamma-exponential, gamma-Poisson, Dirichlet-multinomial, normal-normal and known-mean inverse-chi-squared/inverse-gamma-normal models",
         "Explicit information/native gamma-exponential conventions to distinguish equivalent count from native prior-exposure output",
         "Analytic expectation of native censored-exponential/inverse-gamma survival ESS, with log-stable continuous root and native interpolation grid",
-        "Normal/logistic regression ESS with direct expected information or original uniform-covariate cumulative simulation, arbitrary parameter subsets, stable log-curvature gains and explicit first-crossing/not-reached results."
+        "Normal/logistic regression ESS with direct expected information or original uniform-covariate cumulative simulation, arbitrary parameter subsets, stable log-curvature gains and explicit first-crossing/not-reached results.",
+        "Complete-outcome empiric CRM adaptive simulation with posterior-mean plug-in dose assignment, Rao–Blackwell expected-subset information, continuous and native-grid ESS, explicit full/native posterior moments, reproducible outcome tapes and bounded sequential integration."
       ],
       "validation": [
         "Seven native R conjugate results, posterior information increments, time rescaling, vectorization and extreme variance scales; tests/test_conjugate_ess.py",
-        "Pending unknown-mean variance, CRM/TITE-CRM workflows, plots and reports; docs/conjugate-ess.md",
+        "Pending unknown-mean variance, TITE-CRM workflows, plots and reports; docs/conjugate-ess.md",
         "Independent quadrature, censoring/time-scale limits and search boundaries; tests/test_survival_ess.py; docs/survival-ess.md",
-        "Original ESS_RegressionCalc shared-covariate references cover 396 paths and 12 ESS outcomes; docs/regression-ess.md and research/regression-ess-simulation-audit.md."
+        "Original ESS_RegressionCalc shared-covariate references cover 396 paths and 12 ESS outcomes; docs/regression-ess.md and research/regression-ess-simulation-audit.md.",
+        "Original R replay matches 108 patient doses/outcomes and 9 final selections; 39 expected-subset rows, six fixed-data posterior references and 26 high-precision curvature values validated. Focused tests and source differences: docs/crm-prior-ess.md and research/crm-prior-ess-audit.md."
       ]
     },
     {

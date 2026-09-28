@@ -78,8 +78,15 @@ Six fixed-data references separately record native moments and full-real
 moments at default and diffuse prior scales. Full-real reference integration
 uses relative tolerance 1e-10. Native reference calls retain the original
 default integration tolerances. The complete R run took about .4 seconds;
-no installation or large simulation was required. Python comparisons remain
-pending.
+no installation or large simulation was required.
+
+The Python complete adaptive replay matches all 108 patient doses/outcomes
+and all nine final dose selections exactly. The largest prepatient beta-mean
+difference is 7.90e-9, consistent with the original R quadrature tolerance.
+All 39 expected-subset information rows agree within 3e-14 relative tolerance.
+Across the six fixed-data cases, full-real means and variances differ by at
+most 4.45e-15 and 6.22e-15 respectively. The native convention differs by at
+most 2.04e-9 and 1.47e-8, respectively.
 
 `tools/reference_crm_curvature.py` independently differentiates the Bernoulli
 log likelihood and evaluates the result with 90-digit standard-library decimal
@@ -88,6 +95,20 @@ arithmetic. With t=-log(d), a DLT contributes t and a non-DLT contributes
 1e-300 through the largest float64 value below one. In particular, the native
 algebra can lose precision near one; numerical agreement with its cancellation
 artifacts is not a correctness target.
+
+Python agrees with all 26 decimal curvature references to relative error
+2.36e-14 or less, including the tiny non-DLT information near a skeleton
+probability of 1e-300. Native and full moments also agree for prior standard
+deviations 1e-4 and 1e-12, where truncation at ten is negligible. The adaptive
+replay and decimal comparisons ran serially in 1.12 seconds after imports,
+with peak process memory 116.4 MiB and zero swaps. These are small reference
+checks, not a benchmark of large design-calibration simulations.
+
+Three focused tests passed with warnings treated as errors; Ruff lint/format
+and mypy checks passed. Both public guide examples executed successfully.
+Additional public-API checks confirmed uniform-tape replay, an unreached
+continuous ESS despite a finite native grid estimate, and work-budget rejection
+before a caller's random generator is advanced.
 
 ## TITE branch remains separate
 

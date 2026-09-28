@@ -435,6 +435,7 @@ from .crm_calendar import (
     crm_calendar_decision,
     crm_calendar_snapshot,
 )
+from .crm_prior_ess import CRMPriorESSSimulation, simulate_crm_prior_ess
 from .crm_simulation import CRMSimulation, simulate_crm
 from .crm_trial import CRMTrial, CRMTrialStep, run_crm_trial
 from .cta import ContingencyChiSquare, contingency_chi_square
@@ -1274,6 +1275,8 @@ __all__ = [
     "run_crm_trial",
     "CRMSimulation",
     "simulate_crm",
+    "CRMPriorESSSimulation",
+    "simulate_crm_prior_ess",
     "CiBolusObservation",
     "CiBolusPrediction",
     "CiBolusPrior",
