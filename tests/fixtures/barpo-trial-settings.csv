@@ -1,0 +1,8 @@
+"case","method","policy","truth1","truth2","maximum","burn_in","block_size","cohort_size","min_n","tau","tau1","target1","target2","early_monitoring"
+"complete_barcp","barcp","arm",0.2,0.65,12,4,4,2,4,0.7,1.2,0.35,0.65,FALSE
+"complete_barn2n","barn2n","arm",0.2,0.65,12,4,4,2,4,0.7,1.2,0.35,0.65,FALSE
+"complete_barmtv","barmtv","arm",0.2,0.65,12,4,4,2,4,0.7,1.2,0.35,0.65,FALSE
+"complete_dbcd","dbcd","arm",0.2,0.65,12,4,4,2,4,0.7,1.2,0.35,0.65,FALSE
+"complete_signal","barcp","arm",0,1,12,4,4,2,4,0.7,1.2,0.35,0.65,FALSE
+"stop_arm","barcp","arm",0,1,12,4,4,2,4,0.7,1.2,0.35,0.65,TRUE
+"stop_trial","barcp","trial",0,1,12,4,4,2,4,0.7,1.2,0.35,0.65,TRUE
