@@ -96,6 +96,7 @@ Both four-chain posterior comparisons agree within two estimated Monte Carlo
 standard errors, with maximum split R-hat below 1.002. This validates the
 checked examples, not arbitrary prior/data configurations.
 
-BF-BLRM dose decisions, backfill scheduling, final MTD selection, and its
-integration with BARD stage two are separate remaining components. Existing
+[BF-BLRM decision helpers](bard-blrm-decisions.md) provide one-step dose
+movement, backfill eligibility and final MTD selection. Calendar scheduling
+and integration with BARD stage two remain separate components. Existing
 [BARD stage-two APIs](bard.md) and [BF-BOIN](bf-boin.md) remain available.

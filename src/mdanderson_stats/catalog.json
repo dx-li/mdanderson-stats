@@ -4587,14 +4587,16 @@
         "bard_select_obd: joint Dirichlet posterior mean utility and observed-rate noninferiority selection with inclusive safety/activity screening and explicit weighted isotonic safety probabilities.",
         "Explicit priors, safety weights and tie policies; guide-consistent negative noninferiority margin.",
         "BARD paper BF-BLRM raw-dose-ratio logistic model with explicit independent log-parameter normal/point-mass priors, bounded posterior fitting, target/overdose probabilities and chain/Monte Carlo diagnostics; not claimed as the current app's stage-one backend",
-        "Integrated calendar simulation, BF-BLRM decision/scheduling, titration/expansion/caps, calibration and native reports remain open; see docs/bard.md and docs/bard-blrm.md."
+        "BF-BLRM one-step dose decisions, response-based backfill eligibility with evaluable caps and final MTD selection; strict POD eligibility, separate equality/unsafe-step states and explicit lowest-dose PTT ties",
+        "Integrated calendar simulation, BF-BLRM scheduling, titration/expansion and calendar cap handling, calibration and native reports remain open; see docs/bard.md, docs/bard-blrm.md and docs/bard-blrm-decisions.md."
       ],
       "validation": [
         "Official BARD application 1.0.5.0, guides and examples pinned in docs/bard-sources.json; discrepancies between official help and paper equations documented.",
         "Independent base-R references for six posterior arm states and every one of the twelve prognostic profiles in the official enrollment example.",
         "Focused numerical checks cover noninferiority equality, safety/activity admissibility, explicit tie policies, stable utility/weight normalization and bounded inputs. Native hidden settings and RNG parity are not claimed.",
         "20 independent R raw-ratio probabilities and 22 directly integrated BF-BLRM posterior summaries agree within two MCSEs in fixed-slope and two-parameter examples; maximum split R-hat below 1.002",
-        "Exact fixed-prior strict target/inclusive overdose boundary and work-budget rejection before random draws; tools/reference_bard_blrm.R, tests/test_bard_blrm.py and research/bard-blrm-audit.md"
+        "Exact fixed-prior strict target/inclusive overdose boundary and work-budget rejection before random draws; tools/reference_bard_blrm.R, tests/test_bard_blrm.py and research/bard-blrm-audit.md",
+        "12 independent hand-calculated decision/backfill/MTD snapshots and four focused worker checks; cutoff equality, unsafe intermediate steps, response before DLT assessment, caps and final six-patient eligibility"
       ]
     },
     {

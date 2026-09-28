@@ -30,9 +30,9 @@ Pages 9–11 specify `PTT_j = Pr(gamma1 < p_j < gamma2 | data)` and
 maximum PTT and move one level toward it from the current dose, or stay if
 already there. If all POD values exceed eta, terminate with no MTD. Equality
 leaves a gap: all doses at eta satisfy neither strict safety eligibility nor
-the strict all-over-toxic rule. A future implementation must distinguish
-`no eligible safe dose` and cannot invent an MTD. Tie handling also needs an
-explicit convention unless additional evidence establishes it.
+the strict all-over-toxic rule. The implementation distinguishes
+`no eligible safe dose` and cannot invent an MTD. Its explicit tie convention
+chooses the lowest dose among exact PTT ties.
 
 Backfill eligibility uses a dose below the current dose and observed response
 at that dose or below. It closes when POD is at least eta or the evaluable
@@ -44,10 +44,8 @@ rule: the monotone fitted model incorporates all dose data directly.
 Final stage-one MTD selection uses all escalation and backfill observations,
 requires at least six treated patients, and maximizes PTT among doses with
 POD below eta. Existing BF-BOIN calendar components offer scheduling patterns,
-while `bard.py` supplies stage two; neither currently fits this model.
-The first proposed component is model evaluation and bounded posterior fitting
-with target/overdose summaries. No BF-BLRM implementation is claimed by this
-source-audit checkpoint.
+while `bard.py` supplies stage two. Implemented fitting and decision components
+are recorded below; calendar integration remains a separate task.
 
 ## Independent posterior references
 
@@ -65,7 +63,7 @@ The integration truncates each free standard-normal coordinate at plus/minus
 mass divided by the computed evidence bounds omitted posterior mass, up to
 integration error. This ratio is below `2.6e-19` in both examples. Base-R
 integration completed with warnings treated as errors; Python sampler
-comparison remains pending at this reference checkpoint. These mild illustrative
+comparison is recorded below. These mild illustrative
 priors are unrelated to undocumented native application settings.
 
 ## Model and posterior implementation checkpoint
@@ -95,5 +93,38 @@ Three focused worker checks passed in 1.77 seconds, including the exact
 fixed-parameter target/overdose boundary and a budget rejection before RNG
 consumption. Targeted Ruff/formatting and mypy passed. No full suite, large
 Monte Carlo simulation, new dependency or CI change was introduced.
-Dose/backfill decisions and the stage-one calendar are separate follow-ups;
-the fitted model alone does not complete BARD's full trial workflow.
+
+## Decision implementation checkpoint
+
+Luna's `30a19fb` and `c0660af` integrate as `a451274` and `7d32204`.
+The public helpers cover one-step dose movement, backfill eligibility and final
+MTD selection. They distinguish strict overdose stopping from the cutoff
+equality gap, expose unsafe intermediate downward steps, and preserve separate
+assigned, toxicity-evaluable and response-observed counts. The evaluable count
+controls the backfill cap; final eligibility uses cumulative treated counts.
+
+A separate read-only review found no mathematical mismatch with these printed
+rules. Twelve hand-calculated snapshots in
+`tests/fixtures/bard-blrm-decisions.json` match exactly, including response
+before toxicity assessment, lower-dose response eligibility, cap/cutoff closure,
+unsafe intermediate steps and final minimum-six eligibility. The focused suite
+now has five checks including this grouped reference comparison; all pass in
+1.72 seconds. Targeted lint and formatting pass. The worker also passed mypy
+for the decision module. No new CI workflow or broad test run was added.
+
+## Remaining calendar contract
+
+The paper states staggered escalation cohorts and completed DLT assessments,
+but does not completely specify cohort-wait handling, response timing or DLT
+onset distributions. A future deterministic replay can accept explicit
+arrival/outcome/assessment tapes and label a full-cohort assessment wait as a
+Python convention. It must cache the fitted posterior until the observed
+toxicity data change, while response events independently change backfill
+eligibility. Assigned patients must remain distinct from completed assessments.
+
+Monotone POD does not make every downward intermediate step safe: current
+dose 3 with POD `[.1, .35, .6]` and safe target dose 1 yields an unsafe one-step
+dose 2. No paper rule was found to resolve this case or the no-strict-safe-dose
+equality gap. Any automatic hold, skip or stop must be an explicit protocol
+policy, not an assertion of native parity. The evaluable cap likewise does not
+bound pending assignments. Full calendar and stage-two integration remain open.

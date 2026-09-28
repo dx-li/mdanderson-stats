@@ -1,0 +1,74 @@
+[
+  {
+    "case": "escalate_one_level_toward_target",
+    "function": "next_dose",
+    "inputs": {"ptt": [0.1, 0.3, 0.4, 0.2], "pod": [0.01, 0.05, 0.1, 0.35], "current_dose": 1, "eta": 0.3},
+    "expected": {"target_dose": 3, "next_dose": 2, "next_dose_safe": true, "action": "escalate"}
+  },
+  {
+    "case": "unsafe_intermediate_is_visible",
+    "function": "next_dose",
+    "inputs": {"ptt": [0.5, 0.3, 0.2], "pod": [0.1, 0.35, 0.6], "current_dose": 3, "eta": 0.3},
+    "expected": {"target_dose": 1, "next_dose": 2, "next_dose_safe": false, "action": "deescalate"}
+  },
+  {
+    "case": "lowest_target_tie",
+    "function": "next_dose",
+    "inputs": {"ptt": [0.3, 0.3, 0.25], "pod": [0.05, 0.1, 0.35], "current_dose": 2, "eta": 0.3},
+    "expected": {"target_dose": 1, "tied_target_doses": [1, 2], "next_dose": 1, "action": "deescalate"}
+  },
+  {
+    "case": "all_strictly_overdose",
+    "function": "next_dose",
+    "inputs": {"ptt": [0.5, 0.4, 0.2], "pod": [0.31, 0.4, 0.6], "current_dose": 2, "eta": 0.3},
+    "expected": {"target_dose": null, "next_dose": null, "next_dose_safe": null, "action": "stop_all_overdose"}
+  },
+  {
+    "case": "cutoff_equality_has_no_safe_dose",
+    "function": "next_dose",
+    "inputs": {"ptt": [0.4, 0.4, 0.2], "pod": [0.3, 0.3, 0.6], "current_dose": 2, "eta": 0.3},
+    "expected": {"target_dose": null, "next_dose": null, "action": "no_eligible_safe_dose"}
+  },
+  {
+    "case": "cap_and_cutoff_close_backfill",
+    "function": "backfill",
+    "inputs": {"pod": [0.05, 0.1, 0.3, 0.5], "responses": [1, 0, 0, 0], "evaluable": [3, 5, 2, 0], "current_dose": 4, "eta": 0.3, "cap": 5},
+    "expected": {"eligible": [true, false, false, false], "closed": [false, true, true, true], "selected_dose": 1}
+  },
+  {
+    "case": "no_response_no_backfill",
+    "function": "backfill",
+    "inputs": {"pod": [0.05, 0.1, 0.2, 0.5], "responses": [0, 0, 0, 0], "evaluable": [3, 3, 2, 0], "current_dose": 4, "eta": 0.3, "cap": 5},
+    "expected": {"eligible": [false, false, false, false], "selected_dose": null}
+  },
+  {
+    "case": "higher_response_does_not_open_lower_dose",
+    "function": "backfill",
+    "inputs": {"pod": [0.1, 0.2, 0.25, 0.4], "responses": [0, 1, 0, 0], "evaluable": [4, 4, 2, 0], "current_dose": 4, "eta": 0.3, "cap": 5},
+    "expected": {"eligible": [false, true, true, false], "selected_dose": 3}
+  },
+  {
+    "case": "response_known_before_dlt_evaluation",
+    "function": "backfill",
+    "inputs": {"pod": [0.1, 0.2, 0.4], "responses": [1, 0, 0], "evaluable": [0, 0, 0], "assigned": [2, 1, 0], "current_dose": 3, "eta": 0.3, "cap": 4},
+    "expected": {"eligible": [true, true, false], "selected_dose": 2}
+  },
+  {
+    "case": "final_requires_six_treated",
+    "function": "select_mtd",
+    "inputs": {"ptt": [0.5, 0.4, 0.4], "pod": [0.1, 0.2, 0.4], "treated": [5, 6, 12], "eta": 0.3},
+    "expected": {"eligible": [false, true, false], "selected_dose": 2, "status": "selected"}
+  },
+  {
+    "case": "final_lowest_tie",
+    "function": "select_mtd",
+    "inputs": {"ptt": [0.4, 0.4, 0.2], "pod": [0.1, 0.2, 0.5], "treated": [6, 6, 9], "eta": 0.3},
+    "expected": {"selected_dose": 1, "tied_doses": [1, 2], "status": "selected"}
+  },
+  {
+    "case": "final_no_sufficiently_treated_safe_dose",
+    "function": "select_mtd",
+    "inputs": {"ptt": [0.4, 0.4, 0.2], "pod": [0.1, 0.2, 0.5], "treated": [3, 3, 3], "eta": 0.3},
+    "expected": {"selected_dose": null, "status": "no_safe_dose_meets_minimum_treated"}
+  }
+]

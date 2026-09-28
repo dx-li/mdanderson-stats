@@ -88,7 +88,9 @@ Python defaults. No numerical parity with hidden app internals is claimed.
 
 The [BF-BLRM model component](bard-blrm.md) now supplies the paper's raw-ratio
 toxicity curve and explicit-prior posterior fitting with target/overdose
-summaries. BF-BLRM dose decisions and scheduling remain separate components.
+summaries. [BF-BLRM decision helpers](bard-blrm-decisions.md) supply dose
+movement, backfill eligibility and final MTD selection with explicit boundary
+statuses. BF-BLRM scheduling remains a separate component.
 The integrated stage-one/stage-two calendar simulator,
 accelerated-titration/expansion options, cap handling, calibration, and native
 reports remain open. Existing BF-BOIN components provide separate stage-one

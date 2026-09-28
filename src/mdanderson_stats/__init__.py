@@ -84,6 +84,14 @@ from .bard_blrm import (
     bard_blrm_probability,
     fit_bard_blrm,
 )
+from .bard_blrm_decision import (
+    BARDBLRMBackfill,
+    BARDBLRMDecision,
+    BARDBLRMSelection,
+    bard_blrm_backfill,
+    bard_blrm_next_dose,
+    bard_blrm_select_mtd,
+)
 from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
 from .barpo_simulation import BarpoSimulation, simulate_barpo
 from .barpo_trial import BarpoTrialLook, BarpoTrialResult, run_barpo_trial
@@ -1507,6 +1515,12 @@ __all__ = [
     "BARDLogisticPrior",
     "bard_blrm_probability",
     "fit_bard_blrm",
+    "BARDBLRMBackfill",
+    "BARDBLRMDecision",
+    "BARDBLRMSelection",
+    "bard_blrm_backfill",
+    "bard_blrm_next_dose",
+    "bard_blrm_select_mtd",
     "PoPBoundaries",
     "PoPDecision",
     "PoPDesign",

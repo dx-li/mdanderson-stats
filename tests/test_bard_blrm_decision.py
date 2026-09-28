@@ -1,3 +1,7 @@
+import json
+from pathlib import Path
+
+import numpy as np
 import pytest
 
 from mdanderson_stats.bard_blrm_decision import (
@@ -5,6 +9,26 @@ from mdanderson_stats.bard_blrm_decision import (
     bard_blrm_next_dose,
     bard_blrm_select_mtd,
 )
+
+
+def test_independent_hand_calculated_decision_snapshots() -> None:
+    cases = json.loads(
+        (Path(__file__).parent / "fixtures" / "bard-blrm-decisions.json").read_text()
+    )
+    functions = {
+        "next_dose": bard_blrm_next_dose,
+        "backfill": bard_blrm_backfill,
+        "select_mtd": bard_blrm_select_mtd,
+    }
+    for case in cases:
+        result = functions[case["function"]](**case["inputs"])
+        for name, expected in case["expected"].items():
+            actual = getattr(result, name)
+            if isinstance(actual, np.ndarray):
+                actual = actual.tolist()
+            elif isinstance(actual, tuple):
+                actual = list(actual)
+            assert actual == expected, (case["case"], name, actual, expected)
 
 
 def test_next_dose_uses_strict_safety_one_step_and_stable_ties() -> None:
