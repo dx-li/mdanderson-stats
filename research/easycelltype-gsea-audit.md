@@ -182,9 +182,17 @@ correction counts and ordering of shared pilot subsets. The native references
 support correcting these substantive statistical issues before publication;
 the full backend is not yet part of the validated public checkpoint.
 
-The source pilot draws one ordered K-subset per iteration and derives every
-smaller set-size null score from its prefixes. Null samples for different set
-sizes are therefore coupled. Inclusive `<=`/`>=` comparisons are intentional.
+With more than one retained gene set, the source pilot draws one ordered
+K-subset per iteration and derives every smaller set-size null score from its
+prefixes. Null samples for different set sizes are therefore coupled.
+Inclusive `<=`/`>=` comparisons are intentional.
+
+There is a separate source branch for exactly one retained set:
+`fgseaSimpleImpl` calls R `calcGseaStat` for each sampled subset instead of the
+C++ cumulative kernel. It keeps mixed zero weights at zero and falls back to
+equal weights only when all hits are zero. This branch depends on the number
+of tested sets, not the number of genes in a set. The full Python pilot must
+preserve it; C++ epsilon fixtures alone cannot validate the one-set branch.
 
 Additional pinned source dependencies retrieved for backend implementation:
 
