@@ -33,3 +33,32 @@ The [existing projection limitation](../docs/prt.md) is also material: full
 inverse-covariance weighting can produce probabilities outside [0,1] for the
 guide-history pilot. A replay must propagate that failure clearly. Resolving
 native safeguards is necessary for a complete end-to-end PRT claim.
+
+## Explicit-input replay contract
+
+Section 2 defines event intervals by `t[j-1] <= T < t[j]`. An event exactly
+at an internal boundary completes the previous interval without toxicity and
+belongs to the next interval; delay zero belongs to the first interval. Under
+this literal convention, an event exactly at the final endpoint is outside
+the modeled event window. Section 5.1 elsewhere describes the target using
+`T <= t*`; exact-boundary inputs must therefore state which convention they
+follow. The planned replay follows the explicit Section 2 discretization.
+
+Section 5.1 enrolls the first cohort on arrival and performs conduct analysis
+after the last enrollment of each cohort. Suspension is reevaluated on new
+arrivals or observed follow-up advances. All nonterminal conditional-risk rows
+must be projected from aligned draws; projected total risks cannot be mixed
+with raw remaining-risk draws. Unchanged likelihood counts permit posterior
+reuse even when predictive calculations change with the pending patients.
+
+FIFO waiting or declining arrivals during suspension is explicit Python
+configuration. Follow-up starts at actual enrollment, not arrival in a queue.
+Final known-outcome time is each patient's toxicity event before the window or
+completion of the window without toxicity. The literal source does not require
+waiting to the full window after an already observed DLT.
+
+`tools/reference_prt_calendar.R` independently enumerates interval survival,
+event and pending counts from a four-patient fixed ledger. It includes events
+at an internal boundary and at the final endpoint, an early event and a patient
+without toxicity. It validates observation arithmetic only; calendar and fitted
+posterior comparisons remain pending during implementation.
