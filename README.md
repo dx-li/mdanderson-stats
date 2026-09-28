@@ -9,6 +9,12 @@ The implementation uses NumPy broadcasting and compiled SciPy numerical kernels.
 Numba will be considered for measured simulation bottlenecks. This is an independent
 project and is not an MD Anderson release.
 
+[WFMM functional mixed models](docs/wfmm.md) now support orthogonal wavelet
+transforms, Bayesian fixed/random-effect fitting with coefficient-specific
+variances, and reconstructed posterior curves with contrasts and simultaneous
+bands. Priors and variance-proposal settings are explicit; automatic calibration
+and additional native workflows remain open.
+
 ## Development
 
 ```

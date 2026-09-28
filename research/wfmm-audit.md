@@ -1,6 +1,7 @@
 # WFMM implementation handoff
 
-Entry 70 remains pending. Primary mathematical source:
+Entry 70 is partial: the explicit-prior coefficient model, orthogonal transforms
+and reconstructed posterior summaries are available. Primary mathematical source:
 [Morris and Carroll (2006)](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/Morris%26Carroll2006.pdf),
 Sections 4–5 and Appendix A. An orthogonal wavelet transform yields mixed
 models with location/scale-specific random-effect and residual variances and
@@ -48,10 +49,10 @@ transform and cannot be substituted for an orthogonal decimated transform.
 Boundary rules, coefficient ordering and reconstruction need independent
 checks before any native compatibility claim.
 
-Next implementation should preserve the coefficient-level covariance and
-mixture shrinkage model, with bounded sampling and explicit assumptions.
-Neither a generic mixed-model wrapper nor wavelet denoising alone completes
-WFMM. No native example execution is claimed here.
+The implementation preserves the coefficient-level covariance and mixture
+shrinkage model, with bounded sampling and explicit assumptions. Empirical-Bayes
+calibration and automatic initialization remain separate gaps. No native example
+execution is claimed here.
 
 ## Independent reduced-posterior reference
 
@@ -64,8 +65,8 @@ gives its posterior mean and covariance. Mixing these results with normalized
 marginal likelihoods yields exact inclusion probabilities and posterior moments.
 
 The input and posterior CSV fixtures retain all numeric choices. Variance
-components are deliberately fixed in this reduced reference; the future WFMM
-sampler must still estimate them. This check targets shrinkage and Gaussian
+components are deliberately fixed in this reduced reference; the sampler also
+estimates them, checked separately below. This reference targets shrinkage and Gaussian
 integration, not the native variance-prior defaults or MCMC random-number
 parity. Base-R generation completed in 0.09 seconds.
 
@@ -84,8 +85,8 @@ computing curve summaries. Linear effect contrasts and time-region summaries
 must therefore propagate posterior draws, rather than inverse-transforming
 coefficient quantiles. Simultaneous bands require a maximum standardized
 deviation over the time grid for each draw, a distinct calculation from
-pointwise quantiles. This is follow-on coverage after the model and transform
-layers; native output-file parity remains separate.
+pointwise quantiles. The posterior layer implements these operations;
+native output-file parity remains separate.
 
 ## Python transform checkpoint
 
@@ -101,5 +102,44 @@ Three focused checks pass after integration with explicit absolute tolerances:
 hand-computed Haar coefficients, a scalar db4 reference, energy conservation,
 inverse reconstruction, custom/identity transforms and a 12-point curve.
 These verify the stated Python convention, not native boundary extension or
-coefficient ordering. The statistical model and posterior summaries are still
-under implementation, so entry 70 remains pending at this checkpoint.
+coefficient ordering.
+
+## Explicit-prior statistical workflow checkpoint
+
+`fit_wfmm_coefficients` supports coefficient-specific random-effect variances,
+multiple random-effect levels and residual strata, and mixture-normal fixed
+effects. Variance sampling uses explicit inverse-gamma shapes/scales and
+positive-truncated Gaussian proposals with the normalization correction.
+Optional random-effect draws use their Gaussian conditional. The covariance
+model fixes between-function correlations to identity, matching the available
+guide; native prior/proposal initialization is not inferred.
+
+The fixed-variance sampler matches the independent exact mixture moments and
+inclusion probabilities within declared Monte Carlo tolerances. A separate
+conjugate inverse-gamma case gives posterior precision mean 2.6845 versus
+2.7140 analytically; zero-information fixed effects retain proper prior draws.
+These checks cover different inference components rather than reproducing the
+implementation's update equations as expected values.
+
+`wfmm_summarize` reconstructs posterior draws, applies effect/time contrasts,
+and computes pointwise quantiles, effect-size probabilities, strict sign-tail
+scores, simultaneous bands and SiMBaS probabilities. Hand-calculated contrast
+and band values, transform inversion and constant-coordinate limits provide
+deterministic references. Input, retained-output and intermediate dimensions
+are bounded before allocation; transforms are reconstructed in chunks.
+
+All nine focused transform, model and posterior tests passed together in
+4.99 seconds. The public observed-curves-to-bands example in `docs/wfmm.md`
+ran in 0.873 seconds with 116.8 MiB process peak memory and no process swaps.
+It used two sequential chains, 64 warmup and 64 retained draws, eight
+coefficients and optional random-effect draws. Variance acceptance ranged
+from 0.426 to 0.648 over 8,192 likelihood evaluations; variances were positive
+and output bands/probabilities finite. Reconstructed posterior means agreed
+with an independent inverse transform of coefficient means within `5e-15`.
+This short example validates the public workflow, not convergence for
+scientific use or behavior on the inaccessible native pancreatic example.
+
+Remaining coverage includes empirical-Bayes shrinkage, automatic variance and
+proposal initialization, the native `delta_omega` mapping, additional transform
+families and boundary conventions, compression, covariance/prediction workflows
+and native files. The catalog remains partial until these gaps are resolved.

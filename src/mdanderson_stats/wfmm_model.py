@@ -369,7 +369,7 @@ def fit_wfmm_coefficients(
     coefficient_partition: ArrayLike | None = None,
     coefficient_scale: ArrayLike | None = None,
     estimate_variances: bool = True,
-    proposal_sd: tuple[ArrayLike, ArrayLike] | None = None,
+    proposal_sd: tuple[ArrayLike | None, ArrayLike] | None = None,
     draws: int = 1000,
     warmup: int = 500,
     chains: int = 2,

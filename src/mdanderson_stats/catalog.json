@@ -2525,9 +2525,20 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "Periodic orthogonal Daubechies db1–db10, identity and custom orthogonal transforms with inverse reconstruction and retained scale/partition labels.",
+        "Coefficient-specific spike-and-slab fixed effects, independent random-effect levels and residual strata, and explicit inverse-gamma variance priors with bounded marginal MCMC.",
+        "Positive-truncated normal variance updates with Hastings correction, optional Gaussian random-effect draws, explicit generators and posterior chain diagnostics.",
+        "Reconstruction of posterior draws, effect/time contrasts, pointwise quantiles, effect-size probabilities, sign-tail scores, simultaneous bands and SiMBaS probabilities with bounded intermediate storage."
+      ],
+      "validation": [
+        "Hand-computed Haar coefficients, scalar db4 calculations, energy/reconstruction checks and 12-point non-power-of-two input; tests/test_wfmm_basis.py.",
+        "Independent base-R exact mixture posterior references, conjugate inverse-gamma precision mean and zero-information proper-prior draws; tests/test_wfmm_model.py and research/wfmm-audit.md.",
+        "Hand-calculated contrast/pointwise/simultaneous summaries, transformed-draw reconstruction and allocation preflight; tests/test_wfmm_posterior.py.",
+        "Public observed-curves-to-fit-to-bands example executed with estimated variances and optional random effects; docs/wfmm.md.",
+        "Pending empirical-Bayes and automatic variance initialization, native inverse-gamma defaults, additional transforms/boundaries/compression, prediction/covariance workflows and native files/kernel parity."
+      ]
     },
     {
       "id": 72,
