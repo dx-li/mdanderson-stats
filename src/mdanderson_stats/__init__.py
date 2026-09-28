@@ -92,6 +92,13 @@ from .bard_blrm_decision import (
     bard_blrm_next_dose,
     bard_blrm_select_mtd,
 )
+from .bard_blrm_trial import (
+    BARDBLRMPatient,
+    BARDBLRMSnapshot,
+    BARDBLRMStep,
+    BARDBLRMTrial,
+    run_bard_blrm_trial,
+)
 from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
 from .barpo_simulation import BarpoSimulation, simulate_barpo
 from .barpo_trial import BarpoTrialLook, BarpoTrialResult, run_barpo_trial
@@ -1527,6 +1534,11 @@ __all__ = [
     "bard_blrm_backfill",
     "bard_blrm_next_dose",
     "bard_blrm_select_mtd",
+    "BARDBLRMPatient",
+    "BARDBLRMSnapshot",
+    "BARDBLRMStep",
+    "BARDBLRMTrial",
+    "run_bard_blrm_trial",
     "PoPBoundaries",
     "PoPDecision",
     "PoPDesign",

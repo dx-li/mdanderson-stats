@@ -97,6 +97,8 @@ standard errors, with maximum split R-hat below 1.002. This validates the
 checked examples, not arbitrary prior/data configurations.
 
 [BF-BLRM decision helpers](bard-blrm-decisions.md) provide one-step dose
-movement, backfill eligibility and final MTD selection. Calendar scheduling
-and integration with BARD stage two remain separate components. Existing
-[BARD stage-two APIs](bard.md) and [BF-BOIN](bf-boin.md) remain available.
+movement, backfill eligibility and final MTD selection. The
+[calendar replay](bard-blrm-trials.md) combines these with explicit arrivals,
+potential outcomes and separate toxicity/response assessment delays.
+Integration with [BARD stage two](bard.md) remains open; existing
+[BF-BOIN](bf-boin.md) methods are also available.

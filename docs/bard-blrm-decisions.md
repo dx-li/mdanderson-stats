@@ -85,5 +85,7 @@ Twelve independent hand-calculated snapshots cover movement, cutoff equality,
 ties, response timing, cap closure and final eligibility. Four focused worker
 checks and a separate mathematical review also pass; see the
 [source and validation audit](../research/bard-blrm-audit.md).
-These decision components do not provide the full calendar scheduler,
-stage-one/stage-two integration, accelerated titration or expansion options.
+The [calendar replay](bard-blrm-trials.md) combines these decisions with
+posterior fitting and explicitly supplied outcomes and delays. Integrated
+stage-one/stage-two conduct, accelerated titration and expansion options
+remain open.

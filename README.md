@@ -1223,6 +1223,9 @@ selection. [BF-BLRM model fitting](docs/bard-blrm.md) implements the paper's
 raw-dose-ratio model with explicit log-parameter priors, bounded sampling and
 target/overdose diagnostics. [BF-BLRM decisions](docs/bard-blrm-decisions.md)
 add one-step dose movement, backfill eligibility and final MTD selection.
+[BF-BLRM calendar replay](docs/bard-blrm-trials.md) combines those components
+with explicit arrival/outcome/delay tapes, pending backfill, compact posterior
+diagnostics and complete follow-up after enrollment stops.
 Priors, safety pooling weights and tie policies are explicit; the integrated
 trial simulator and native reports remain open.
 

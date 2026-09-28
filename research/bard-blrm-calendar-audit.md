@@ -38,5 +38,28 @@ responses still contribute to total follow-up duration.
 
 The R generator completed with warnings treated as errors, producing 16
 patient rows, 129 as-of count rows, three fixed posterior rows and three
-trial summaries. Python comparison remains pending while the replay is
-implemented in an isolated Luna checkout.
+trial summaries. The completed Python replay matches all three hand-ledger
+paths, all 16 assigned-patient records and the as-of evaluable, toxicity and
+response counts at every recorded event. Fixed-prior target and overdose
+indicators agree exactly. The paths require 12, 5 and 2 fits respectively,
+including their prior-only fits; response-only assessments reuse the fit.
+
+The bounded comparison also verifies separate rejection of a positive
+response delay lost at a large calendar origin, preservation of the declared
+three-unit duration at origin `1e16`, and a prior all-overdose stop using only
+its initial prediction budget. It took 0.024 seconds after imports, with
+113.94 MiB peak process RSS and zero reported swaps.
+
+Luna implementation checkpoint `f2e53d1` was integrated as `b05c730`.
+Four focused tests passed in 1.43 seconds; module lint, formatting, typing,
+compilation and whitespace checks passed. Earlier model integration
+references validate the nondegenerate posterior sampler separately; the
+calendar references deliberately fix the prior to isolate scheduling from
+Monte Carlo variability. These checks do not establish native simulator or
+random-stream equivalence.
+
+A separate three-patient replay with two free prior coordinates also matches
+four sequential calls to the actual fitter exactly under the same random
+stream: posterior probabilities, parameter means and cumulative work counters
+agree. Response-only events leave that stream untouched. This checks the
+calendar/fitter boundary without substituting a mock posterior.

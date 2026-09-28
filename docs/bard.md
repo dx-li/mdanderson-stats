@@ -90,9 +90,11 @@ The [BF-BLRM model component](bard-blrm.md) now supplies the paper's raw-ratio
 toxicity curve and explicit-prior posterior fitting with target/overdose
 summaries. [BF-BLRM decision helpers](bard-blrm-decisions.md) supply dose
 movement, backfill eligibility and final MTD selection with explicit boundary
-statuses. BF-BLRM scheduling remains a separate component.
+statuses. The [BF-BLRM calendar replay](bard-blrm-trials.md) supplies stage-one
+cohort and backfill scheduling with explicit arrivals, outcomes and assessment
+delays, evaluable-patient caps and complete follow-up after enrollment stops.
 The integrated stage-one/stage-two calendar simulator,
-accelerated-titration/expansion options, cap handling, calibration, and native
+accelerated-titration/expansion options, stage-two cap handling, calibration, and native
 reports remain open. Existing BF-BOIN components provide separate stage-one
 functionality; this addition does not claim the full BARD workflow is complete.
 
