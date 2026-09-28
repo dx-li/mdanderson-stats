@@ -143,9 +143,7 @@ def simulate_bacis_oc(
     if low >= high:
         raise ValueError("phi_low must be less than phi_high")
     if classification_precision is None:
-        separation = (
-            np.log(high) - np.log1p(-high) - np.log(low) + np.log1p(-low)
-        ) / 6
+        separation = (np.log(high) - np.log1p(-high) - np.log(low) + np.log1p(-low)) / 6
         with np.errstate(over="ignore", divide="ignore", invalid="ignore"):
             classifier_precision = 1.0 / separation**2
         if not np.isfinite(classifier_precision) or not 1e-6 <= classifier_precision <= 1e6:
@@ -161,9 +159,10 @@ def simulate_bacis_oc(
     mean_prior_precision = scalar(mean_precision, "mean_precision")
     shape_prior = scalar(precision_shape, "precision_shape")
     rate_prior = scalar(precision_rate, "precision_rate")
-    if min(mean_prior_precision, shape_prior, rate_prior) <= 0 or max(
-        mean_prior_precision, shape_prior, rate_prior
-    ) > 1e12:
+    if (
+        min(mean_prior_precision, shape_prior, rate_prior) <= 0
+        or max(mean_prior_precision, shape_prior, rate_prior) > 1e12
+    ):
         raise ValueError("hierarchical precision hyperparameters must lie in (0,1e12]")
     efficacy_threshold = _probability(efficacy_cutoff, "efficacy_cutoff")
     draw_count = _integer(draws, "draws", 8, 10_000)

@@ -73,6 +73,11 @@ holding other columns at their means or at a supplied complete `profile`.
 Its default 30-point grid spans the empirical 2.5th through 97.5th percentiles.
 Default prediction times are distinct event times plus zero; provide `grid`
 and `times` to choose other values.
+Set `interval_method="monte_carlo"` to use joint-normal simulated confidence
+limits, with `draws` and `rng` controlling generation. Main and percentile
+profiles share those draws; the attached `monte_carlo` result retains their
+diagnostics. The default remains `"delta"`; see the
+[simulated-interval guide](survival-uncertainty.md).
 
 ```python
 from mdanderson_stats import parametric_survival_contour, plot_survival_contour_2d
@@ -95,8 +100,8 @@ these choices. This concerns covariate percentiles, not event-time quantiles.
 The current fits are unweighted, unpenalized and right-censored, with one
 common residual scale and static numeric covariates. They require an identified
 finite maximum-likelihood fit. Interval/left censoring, delayed entry,
-covariates on ancillary parameters and integrated simulated contour limits
-remain open. [Simulated pointwise curve limits](survival-uncertainty.md) are
+covariates on ancillary parameters remain open.
+[Simulated pointwise curve limits](survival-uncertainty.md) are
 available through `predict_parametric_survival_mc`, which preserves full joint
 parameter uncertainty and allows draws to be reused across prediction grids. The separate
 [generalized-gamma fitter](generalized-gamma.md) supplies stable Prentice and

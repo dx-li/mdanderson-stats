@@ -137,6 +137,9 @@ small absolute error is not claimed for extremely large log-tail values.
 [Simulated pointwise curve limits](survival-uncertainty.md) are available through
 `predict_parametric_survival_mc` for both fitted parameterizations. It uses each
 fit's own full joint covariance and can reuse parameter draws across grids.
-Interval/left censoring, delayed entry, covariates on ancillary parameters and
-integrated simulated contour limits remain open. Spline models have a separate
+The contour wrapper supports these limits with
+`interval_method="monte_carlo"`, sharing draws across the main grid and
+selected covariate-percentile profiles. Its default remains `"delta"`.
+Interval/left censoring, delayed entry and covariates on ancillary parameters
+remain open. Spline models have a separate
 [fitter and prediction interface](survival-spline.md). Entry 166 stays partial.

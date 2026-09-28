@@ -60,6 +60,12 @@ both archived-software cutoff modes, but neither the table's exact
 classification results nor its calibrated efficacy rates are certified
 reference targets without resolving that discrepancy.
 
+Enumeration of the integrated fixed-.5 classifier over all 26 possible
+response counts confirmed a high-cluster decision at y>=5. Independent
+binomial sums then give classification probability .0979936212 for a
+true response rate .1 and .9095280814 for .3. These probabilities cannot
+change with other subgroups when this fixed classification rule is used.
+
 ## Independent singleton oracle
 
 For a subgroup in a singleton cluster, the native second stage uses
@@ -75,7 +81,15 @@ probability is `0.097993621195464703`; the alternative probability at .3 is
 `0.9095280814458635`. With a single null group, familywise and subgroup
 error coincide. The fixture also records both beta tails and the null and
 alternative binomial masses. Generation took .080 seconds, with no package
-installation or large simulation. Python comparisons remain pending.
+installation or large simulation. Python checks replayed the independent
+table decisions in 32 trials at each truth (.1 and .3), confirmed the
+fixed-cutoff classifications and checked the public guide. A three-replication
+mixed-group run verified subgroup/familywise/single-cluster aggregation from
+the retained indicators. The combined check took .224 seconds after imports,
+peaked at 114.7 MiB RSS and reported zero process swaps. Three focused tests
+also passed; lint, formatting and type checks passed. These deliberately short
+mixed-group chains had maximum probability-chain R-hat values 2.10–2.47 and
+verify plumbing only, not converged multigroup operating characteristics.
 
 The singleton oracle verifies decision semantics. Multigroup borrowing
 continues to rely on the separately validated two-stage model and its

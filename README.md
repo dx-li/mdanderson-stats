@@ -1193,6 +1193,10 @@ The latent classification posterior has analytical density, tails and moments,
 with independent sampling that needs no MCMC.
 `bacis_one_trial` combines the model and equivalent sample size in the native
 ten-row numerical summary, retaining full precision alongside rounded output.
+[Serial operating-characteristic simulation](docs/bacis-simulation.md) adds
+classification, efficacy, familywise false-positive and single-cluster rates
+with Monte Carlo errors and retained sampler diagnostics. Source conflicts
+prevent claiming reproduction of the paper's classification tables.
 
 [BCHM subgroup borrowing](docs/bchm.md) adds patient-weighted clustering,
 co-clustering similarities and a separate similarity-weighted hierarchy for each
@@ -1330,6 +1334,8 @@ parameter draws for all five parameterizations and the three spline links,
 reusable across profiles and time grids, with valid-draw counts and bounded
 memory use. Spline draws retain the native unrestricted Gaussian convention
 and report minimum slopes so rising simulated curves remain visible.
+Parametric and spline contours can use these simulated limits with one shared
+parameter-draw matrix for the main surface and selected quantile curves.
 [Royston–Parmar spline models](docs/survival-spline.md) add hazard, odds and
 normal links with configurable log-time knots, globally monotone survival
 curves, joint covariance, predictions and contours.
@@ -1348,7 +1354,7 @@ links. They return regression covariance, both incidence curves and
 continuous-covariate contours, with optional two-/three-dimensional plots.
 An explicit starting-boundary approximation and constrained-convergence
 diagnostics accompany probability checks on requested profiles. Neural models
-and integrated simulation-based contour intervals remain open.
+and interval-model bootstrap uncertainty remain open.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson

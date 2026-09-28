@@ -111,5 +111,21 @@ and the original joint parameter draws are returned as read-only arrays.
 The API preserves the existing deterministic delta-method prediction APIs.
 This checkpoint covered these five parameterizations. The subsequent
 [spline extension](survival-spline-uncertainty-audit.md) adds hazard, odds and
-normal links; integration into the contour/percentile workflow remains
-separate work.
+normal links.
+
+## Contour integration
+
+The contour wrapper now accepts `interval_method="monte_carlo"` for all five
+parametric choices and all three spline links. One combined prediction uses
+the same parameter draws for main-grid and percentile profiles, with readonly
+result views and retained diagnostics. Delta-method standard errors remain
+explicitly separate. Aggregate output, predictor and spline-work bounds are
+checked before fitting.
+
+Twelve focused parametric/Monte Carlo tests passed, including ordinary, both
+generalized-gamma and spline contour branches, supplied-draw replay and rejection
+before fitting. Lint, formatting and type checks passed. The public uncertainty
+guide and shared result slices passed in 1.385 seconds including imports,
+peaked at 114.9 MiB RSS and reported zero process swaps. This extends the
+independently referenced predictor; no full-suite or large simulation run was
+needed for the wrapper.

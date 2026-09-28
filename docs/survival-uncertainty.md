@@ -56,6 +56,38 @@ between fits or between the two generalized-gamma parameterizations. Converting
 Stacy parameters to Prentice is nonlinear and does not preserve a Gaussian
 sampling distribution.
 
+## Contours with simulated limits
+
+The shared contour interface supports the same Monte Carlo method for all
+five parametric choices and all three spline links:
+
+```python
+from mdanderson_stats import parametric_survival_contour
+
+contour = parametric_survival_contour(
+    time, event, x, 0, distribution="weibull", n_grid=8,
+    times=[0, 1, 2, 4, 7], interval_method="monte_carlo", draws=500, rng=2026,
+)
+assert contour.interval_method == "monte_carlo"
+assert contour.lower.shape == (8, 5)
+assert contour.monte_carlo.parameter_draws.shape[0] == 500
+```
+
+The main grid and selected covariate-percentile curves share one set of
+parameter draws. `lower`/`upper` and `quantile_lower`/`quantile_upper` use the
+chosen interval method. The attached `monte_carlo` result contains the main
+grid rows first, followed by the percentile-profile rows, with their simulated
+SDs, evaluable-draw counts and spline slope diagnostics. The contour's existing
+`se_log_cumulative_hazard` fields remain delta-method quantities; they are
+not the simulated survival SDs.
+
+`interval_method="delta"` remains the default. Supplied `parameter_draws`
+require Monte Carlo mode and must use this fit's normalized parameter
+coordinates. A shared seed or supplied draws makes repeated grids comparable;
+the wrapper checks aggregate output and computational limits before fitting.
+Both plot helpers accept the result, and the three-dimensional helper's
+`surface="lower"` or `surface="upper"` selects the simulated limit surface.
+
 ## Spline models and unrestricted coefficient draws
 
 Spline draws include every baseline coefficient and covariate slope, with

@@ -4287,7 +4287,8 @@
         "Native fixed-response-count beta-variance equivalent sample size with all admissible roots, observed-rate selection, variance residuals and explicit correction of the zero-response native clamping defect.",
         "Deterministic first-stage classification-model DIC with full binomial deviance, the native Plummer population penalty, both posterior mixture components and numerical integration diagnostics.",
         "Analytical latent-theta posterior density, both probability tails and moments, plus bounded independent posterior sampling from the exact half-normal mixture.",
-        "Complete one-trial numerical workflow composing classification, borrowing and variance-matched ESS, with native ten-row ordering, strict unrounded decisions, original data and separate three-decimal output."
+        "Complete one-trial numerical workflow composing classification, borrowing and variance-matched ESS, with native ten-row ordering, strict unrounded decisions, original data and separate three-decimal output.",
+        "Serial binomial-trial operating characteristics with subgroup classification/efficacy rates, null-specific errors and power, familywise false-positive and single-cluster probabilities, Monte Carlo standard errors, separate random streams and compact per-trial sampler diagnostics; docs/bacis-simulation.md."
       ],
       "validation": [
         "Official application v1.0.1.0, help and author bacistool 1.0.0 source pinned in docs/bacis-sources.json; source conflicts and displayed-versus-CRAN prior defaults documented.",
@@ -4296,7 +4297,8 @@
         "Twenty independent base-R posterior-integral references validate DIC across native-example, unequal-size, diffuse-prior, extreme-outcome and separated-mixture cases; pinned JAGS definition and covariance reduction in research/bacis-dic-audit.md.",
         "513 independent base-R latent posterior curve rows and 57 moment rows, infinite endpoints, small complementary probabilities and seeded component-mass checks; research/bacis-theta-audit.md.",
         "Native one-trial row-source audit, singleton posterior/binomial-tail references, strict cutoff equality, and a bounded five-subgroup borrowing workflow; tests/test_bacis_trial.py and research/bacis-trial-audit.md.",
-        "Pending: density plots, native file formats and paper operating-characteristic simulation; native random-stream parity is not claimed. See docs/bacis.md."
+        "Independent base-R singleton decision table and exact binomial rates, 32-trial replay at each null/alternative truth, mixed-group metric aggregation and public guide checks; three focused tests. Numerical integration peaked at 114.7 MiB RSS with zero process swaps. research/bacis-simulation-audit.md.",
+        "Pending: density plots, native file formats, simulation-average ESS and automatic cutoff calibration. A paper/software classification discrepancy prevents claiming published-table reproduction; native random-stream parity is not claimed. See docs/bacis.md."
       ]
     },
     {
@@ -4563,11 +4565,12 @@
         "Exact Weibull, log-normal and log-logistic AFT fitting with joint coefficient/log-scale covariance; continuous survival predictions, continuous-covariate contours and selected percentile curves with deterministic delta-method pointwise bounds. docs/parametric-survival.md.",
         "Exact Prentice and original Stacy generalized-gamma right-censored fits, full joint shape/regression covariance, stable survival predictions and both contour workflows with deterministic delta-method bounds; docs/generalized-gamma.md.",
         "Joint-normal simulated pointwise survival limits for Weibull, lognormal, log-logistic, both generalized-gamma parameterizations and hazard/odds/normal spline links, with full covariance, reusable scaled-coordinate draws, type-7 quantiles, cellwise evaluable-draw counts and bounded serial evaluation; unrestricted spline draws expose per-draw minimum slopes. docs/survival-uncertainty.md.",
+        "Optional simulated confidence limits in parametric/spline contours, using one shared joint parameter-draw matrix for the main grid and covariate-percentile curves, readonly surface views, attached prediction diagnostics and prefit aggregate work/allocation bounds; docs/survival-uncertainty.md.",
         "Royston-Parmar natural cubic spline models on hazard, odds and normal scales with configurable log-time knots, full joint covariance, globally monotone survival curves, bounded predictions and continuous-covariate contours; docs/survival-spline.md.",
         "Numeric log-rank random survival forests with sequential seeded fitting, native-style sampling and event grids, sparse Kaplan-Meier/Nelson-Aalen leaf curves, separately averaged predictions, and contours from fitted forests; explicit work/allocation limits. docs/random-survival-forest.md.",
         "Interval-censored proportional-hazards regression and baseline-only Turnbull estimation for mixed exact, interval, left and right censoring, with case weights, exact endpoint inclusion, survival identification bounds, fitted-model contours and optional 2D/3D plots; bounded normalized fitting and prediction. docs/interval-survival.md.",
         "Two-cause interval-censored generalized odds-rate regression with monotone cubic B-spline baselines, joint probability constraints, explicit finite starting-boundary incidence, residualized-score regression covariance, both CIF predictions and fitted-model contours; docs/interval-competing-risk.md.",
-        "Remaining: stratified interval-censored Cox, neural models, interval-model bootstrap uncertainty, simulated contour intervals, categorical encoding, forest missing-value/OOB/importance workflows and full native app workflows."
+        "Remaining: stratified interval-censored Cox, neural models, interval-model bootstrap uncertainty, categorical encoding, forest missing-value/OOB/importance workflows and full native app workflows."
       ],
       "validation": [
         "Four original-author R Cox helper surface cases (Efron/Breslow by mean/explicit profiles), plus corresponding R quantile curves, coefficient covariance, likelihoods and standard errors; tools/reference_survival_contour.R.",
@@ -4589,7 +4592,8 @@
         "Three focused interval regressions; independent finite-difference score/KKT residual below 9.80e-8; hand-solvable Turnbull masses and exact zero active masses. Covariate/time units 1e+/-100 and weight scales 1e+/-200, two guide examples, four contours and four rendered bound views checked. Serial integration peaked at 160.6 MiB RSS, zero reported swaps. Entry remains partial.",
         "Pinned intccr 3.0.4 native parameter references: three likelihoods, 48 covariance entries and 279 pairs of CIFs; differences below 1e-13, 6e-15 relative Frobenius and 1.5e-15 respectively. Corrected native constraint derivatives and finite-boundary sensitivity are documented; native optimizer results are diagnostics, not certified fit targets. research/interval-competing-risk-audit.md.",
         "Four focused interval competing-risk tests; two public guide blocks, independent finite-difference constrained score residual below 2.075e-7 per observation, eight contours and two inspected plots. Covariate units 1e+/-100, time units through 1e-309, ignored missing censored upper endpoints and baseline-only fitting checked. Serial integration peaked at 150.7 MiB RSS, zero swaps. Entry remains partial.",
-        "Spline simulated limits and SDs match 180 independent base-R rows from six shared-draw cases to 2.76e-14 absolute error, including deliberately nonmonotone curves. Affine coordinate changes preserve results within 1.96e-14; endpoint bases are skipped. Numerical audit 116.7 MiB RSS, zero process swaps. research/survival-spline-uncertainty-audit.md."
+        "Spline simulated limits and SDs match 180 independent base-R rows from six shared-draw cases to 2.76e-14 absolute error, including deliberately nonmonotone curves. Affine coordinate changes preserve results within 1.96e-14; endpoint bases are skipped. Numerical audit 116.7 MiB RSS, zero process swaps. research/survival-spline-uncertainty-audit.md.",
+        "Twelve focused parametric/Monte Carlo tests cover ordinary, both generalized-gamma and spline contour branches, shared-draw replay, readonly views and resource rejection before fitting; public uncertainty guide and combined result slices checked."
       ]
     },
     {

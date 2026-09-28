@@ -73,6 +73,7 @@ from .asypow_smo_regression import asypow_smo_regression
 from .bacis import BaCISClassification, BaCISFit, bacis_classify, bacis_fit
 from .bacis_dic import BaCISClassificationDIC, bacis_classification_dic
 from .bacis_ess import BaCISEquivalentSampleSize, bacis_equivalent_sample_size
+from .bacis_simulation import BaCISOperatingCharacteristics, simulate_bacis_oc
 from .bacis_theta import BaCISThetaPosterior, bacis_theta_posterior, sample_bacis_theta
 from .bacis_trial import BaCISOneTrialResult, bacis_one_trial
 from .bard import BARDMinimizationResult, BARDSelectionResult, bard_minimization, bard_select_obd
@@ -1380,6 +1381,8 @@ __all__ = [
     "BaCISFit",
     "BaCISThetaPosterior",
     "BaCISOneTrialResult",
+    "BaCISOperatingCharacteristics",
+    "simulate_bacis_oc",
     "bacis_classify",
     "bacis_classification_dic",
     "bacis_equivalent_sample_size",

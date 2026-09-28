@@ -277,7 +277,13 @@ probabilities are compared independently. Exact Beta references check singleton
 summaries; a concentrated-hyperprior limit checks that both borrowing clusters
 use their own correct centers against independent one-dimensional integration.
 
-Latent-variable density plots, native file formats and
-operating-characteristic simulation remain open.
+[Serial trial simulation](bacis-simulation.md) estimates subgroup classification,
+efficacy, familywise false-positive and single-cluster probabilities with
+Monte Carlo standard errors, separate outcome/sampler streams and compact
+per-trial diagnostics. The archived model and the paper's classification
+table disagree, so published-table reproduction is not claimed.
+
+Latent-variable density plots, native file formats, average subgroup ESS
+across simulated trials and automatic cutoff calibration remain open.
 The mathematical references validate the declared model, not native random
 streams, convergence for arbitrary priors or complete application parity.
