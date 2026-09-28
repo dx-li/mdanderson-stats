@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `7c68ec3` adds BOP2-DC survival trial replay
-and operating-characteristic simulation and the lognormal joint-posterior
-goodness-of-fit workflow. Local `master` contains this validated checkpoint. Fresh read-only
+Latest verified package checkpoint: `73847dd` adds BOP2-DC survival finite-grid
+calibration and the unknown-shape Weibull joint-posterior diagnostic.
+Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
 been confirmed published. See the final section for current package checks.
@@ -581,3 +581,47 @@ transport was retried or bypassed. Updated packages and a verified all-refs
 bundle preserve committed root and Luna checkpoints locally. Ignored raw
 files and the next in-progress survival calibration work are not included in
 the validated package or local `master`.
+
+## Survival calibration and unknown-shape Weibull checkpoint
+
+BOP2-DC survival calibration is integrated at `7b8a48c`. It selects a design
+on explicit four-parameter grids using shared paths and source CGR/futile-ESS
+objectives, then reports a separate holdout without reselection. An independent
+base-R replay verifies 18 candidates and 760 probability, sample-size and
+Monte Carlo error summaries across both objectives. The two objectives select
+different candidates. A passing 4% calibration false-go limit at `2/64` fails
+on held-out data at `3/48`, and this remains visible as validation failure.
+Two focused checks include a nondegenerate analytic event/censoring partition
+and pre-RNG budget/input rejection. The R comparison takes 0.6084 seconds
+after Python imports; summing separate Python/R peak resident memory gives a
+conservative 203.91 MiB combined upper bound. No Python swaps were reported.
+
+Unknown-shape Weibull fitting is integrated at `a1be193`. Both shape and scale
+are sampled jointly under an explicit correlated Gaussian prior on their logs,
+using serial elliptical slice updates. Centered likelihoods and explicit
+evaluation/work/storage bounds preserve stable unit transformations. Two
+independent bivariate quadrature cases verify 23 posterior mean, variance,
+covariance and CDF summaries within 2.281 batch-means Monte Carlo errors;
+maximum classical split R-hat is 1.00175. Reference sensitivity to quadrature
+order/domain is below `9.47e-10`. The Python comparison takes 1.032 seconds
+after imports, peaks at 120.91 MiB and reports zero swaps. Three focused checks,
+Ruff, formatting and mypy pass.
+
+Public interfaces, guides and reference tooling are committed at
+`73847dd35753c7972f73e837d12df96475514c8f`. Cached wheel and source builds pass.
+The isolated wheel verification checks all 1,493 public exports, exact
+committed bytes for 542 source/data files, licenses/notices, all 138 catalog
+entries and both new executable guide examples. It takes 13.011 seconds,
+peaks at 109.81 MiB and reports zero swaps. No dependency, broad numerical
+suite or additional CI workflow was introduced. Coverage remains
+63 implemented, 66 partial and 9 pending. A source audit records the substantive
+continuous Normal and randomized-comparison gaps for BOP2-DC #156 separately
+from native report differences and the distinct BOP2 #112 software.
+
+Local `master` is fast-forwarded to this verified code plus the audit. Fresh
+read-only GitHub checks show both `master` and `main` still at `45b6e307`;
+the verified code contains 108 newer local commits. Shell DNS failure and
+connector approval rejection remain publication barriers, with no retry or
+bypass of rejected write routes. Updated packages and the verified all-refs
+bundle preserve committed root/worker checkpoints locally; in-progress paired
+calibration and continuous Normal work remains outside this package and master.
