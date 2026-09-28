@@ -13,11 +13,11 @@ import numpy as np
 from mdanderson_stats import run_crm_trial
 
 trial = run_crm_trial(
-    [.1, .25, .5],
-    interarrival=[0, .1, .1, .1, .1, .1],
+    [0.1, 0.25, 0.5],
+    interarrival=[0, 0.1, 0.1, 0.1, 0.1, 0.1],
     dlt_delays=np.full((6, 3), np.inf),
     window=3,
-    target=.3,
+    target=0.3,
     cohort_size=3,
 )
 print(trial.assigned_doses)
@@ -64,15 +64,15 @@ the [older desktop safety-wait exception](dacrm.md) is a separate behavior.
 from mdanderson_stats import simulate_crm
 
 simulation = simulate_crm(
-    [[.1, .2, .35], [.08, .25, .5]],
-    true_toxicity=[.05, .3, .55],
+    [[0.1, 0.2, 0.35], [0.08, 0.25, 0.5]],
+    true_toxicity=[0.05, 0.3, 0.55],
     window=3,
     accrual_rate=2,
-    target=.3,
+    target=0.3,
     cohorts=2,
     cohort_size=3,
     trials=3,
-    late_probability=.7,
+    late_probability=0.7,
     rng=6401,
 )
 print(simulation.selection_probability)
@@ -96,11 +96,11 @@ uniform conditional timing supports both probability endpoints.
 from mdanderson_stats import dacrm_uniform_prior
 
 da_simulation = simulate_crm(
-    [.1, .25, .5],
-    [.05, .3, .55],
+    [0.1, 0.25, 0.5],
+    [0.05, 0.3, 0.55],
     window=3,
     accrual_rate=2,
-    target=.3,
+    target=0.3,
     method="dacrm",
     da_prior=dacrm_uniform_prior(3),
     minimum_observed=1,

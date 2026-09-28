@@ -11,7 +11,7 @@ from mdanderson_stats import fit_survival_spline, predict_survival_spline
 
 rng = np.random.default_rng(7)
 x = rng.normal(size=(100, 2))
-latent = np.exp(.8 + .35*x[:, 0] - .25*x[:, 1]) * rng.gamma(2.5, size=100)**.7
+latent = np.exp(0.8 + 0.35 * x[:, 0] - 0.25 * x[:, 1]) * rng.gamma(2.5, size=100) ** 0.7
 time = np.minimum(latent, 6.0)
 event = (latent <= 6.0).astype(int)
 
@@ -82,7 +82,11 @@ uncertainty method, with shared joint draws across profiles and times:
 from mdanderson_stats import predict_parametric_survival_mc
 
 intervals = predict_parametric_survival_mc(
-    fit, [0, 1, 3, 6, 10], [[0, 0], [1, 0]], draws=500, rng=166,
+    fit,
+    [0, 1, 3, 6, 10],
+    [[0, 0], [1, 0]],
+    draws=500,
+    rng=166,
 )
 assert intervals.survival.shape == (2, 5)
 assert np.allclose(intervals.survival, prediction.survival)
@@ -106,7 +110,12 @@ curves use the same draws.
 from mdanderson_stats import parametric_survival_contour, plot_survival_contour_2d
 
 contour = parametric_survival_contour(
-    time, event, x, 0, distribution="spline_hazard", spline_k=4,
+    time,
+    event,
+    x,
+    0,
+    distribution="spline_hazard",
+    spline_k=4,
 )
 ax = plot_survival_contour_2d(contour)  # optional plotting extra
 ```

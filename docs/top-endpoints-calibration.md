@@ -32,20 +32,29 @@ success probability is .0573, but the latter two nulls give .1827 and .2344.
 from mdanderson_stats import TOPMultiEndpointDesign, optimize_top_multiendpoint
 
 design = TOPMultiEndpointDesign(
-    12, [.05, .15, .25, .55], .8, .5,
-    mode="efficacy_toxicity", windows=[1, 2], looks=[12],
+    12,
+    [0.05, 0.15, 0.25, 0.55],
+    0.8,
+    0.5,
+    mode="efficacy_toxicity",
+    windows=[1, 2],
+    looks=[12],
 )
 calibrated = optimize_top_multiendpoint(
     design,
     null_joint_probabilities=[
-        [.05, .15, .25, .55],  # both endpoints at their null boundaries
-        [.02, .18, .08, .72],  # efficacy at null, toxicity safe
-        [.15, .35, .15, .35],  # efficacy effective, toxicity at null
+        [0.05, 0.15, 0.25, 0.55],  # both endpoints at their null boundaries
+        [0.02, 0.18, 0.08, 0.72],  # efficacy at null, toxicity safe
+        [0.15, 0.35, 0.15, 0.35],  # efficacy effective, toxicity at null
     ],
-    alternative_joint_probabilities=[.05, .45, .05, .45],
+    alternative_joint_probabilities=[0.05, 0.45, 0.05, 0.45],
     accrual_rate=2,
-    cutoff_scales=[.8, .95], gammas=[.5], type1_error=.1,
-    trials=200, validation_trials=200, rng=134,
+    cutoff_scales=[0.8, 0.95],
+    gammas=[0.5],
+    type1_error=0.1,
+    trials=200,
+    validation_trials=200,
+    rng=134,
 )
 print(calibrated.parameter_pairs[calibrated.selected_index])
 print(calibrated.validation_probability, calibrated.validation_mcse)

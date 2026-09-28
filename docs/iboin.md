@@ -128,13 +128,16 @@ assert step.action == "escalate" and step.next_dose == 2
 from mdanderson_stats import IBOINDesign
 
 safe = IBOINDesign(
-    [.1, .25, .5], [0, 0, 0], elimination_probability=.99, extra_safe=True,
+    [0.1, 0.25, 0.5],
+    [0, 0, 0],
+    elimination_probability=0.99,
+    extra_safe=True,
 )
 assert safe.next_dose([3, 0, 0], [2, 0, 0], 1).action == "stay"
 stop = safe.next_dose([4, 0, 0], [3, 0, 0], 1)
 assert stop.action == "stop_safety" and not stop.eliminated.any()
 
-precision = IBOINDesign([.1, .25, .5], [0, 0, 0], early_stop_patients=12)
+precision = IBOINDesign([0.1, 0.25, 0.5], [0, 0, 0], early_stop_patients=12)
 assert precision.next_dose([3, 12, 0], [0, 3, 0], 2).action == "stop_precision"
 ```
 
@@ -146,10 +149,13 @@ order and returns the next assignment when more outcomes are needed:
 ```python
 from mdanderson_stats import IBOINDesign, replay_iboin_trial
 
-design = IBOINDesign([.10, .19, .30, .42, .54], [3, 3, 3, 3, 3], target=.30)
+design = IBOINDesign([0.10, 0.19, 0.30, 0.42, 0.54], [3, 3, 3, 3, 3], target=0.30)
 trial = replay_iboin_trial(
-    design, dlt=[0, 0, 0, 0, 0], grade2=[1, 0, 1, 0, 0],
-    cohort_size=3, max_patients=24,
+    design,
+    dlt=[0, 0, 0, 0, 0],
+    grade2=[1, 0, 1, 0, 0],
+    cohort_size=3,
+    max_patients=24,
 )
 assert trial.assigned_dose.tolist() == [1, 2, 3, 3, 3]
 assert trial.titration_end_reason == "grade2"

@@ -11,9 +11,12 @@ power model `p_j(beta) = skeleton_j ** exp(beta)` and a normal prior
 from mdanderson_stats import simulate_crm_prior_ess
 
 result = simulate_crm_prior_ess(
-    true_toxicity=[.08, .18, .30, .45],
-    skeleton=[.05, .15, .30, .50],
-    target=.25, max_patients=12, replications=8, rng=154,
+    true_toxicity=[0.08, 0.18, 0.30, 0.45],
+    skeleton=[0.05, 0.15, 0.30, 0.50],
+    target=0.25,
+    max_patients=12,
+    replications=8,
+    rng=154,
 )
 assert result.dose_indices.shape == (8, 12)
 assert result.information_gap.shape == (13,)

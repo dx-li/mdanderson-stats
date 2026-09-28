@@ -76,16 +76,31 @@ demonstration, not the paper's calibrated study configuration.
 import numpy as np
 from mdanderson_stats import cibolus_predict
 
-log_parameters = np.log([
-    .5, .7, .8, .08, 1.4, 1.6,  # response parameters
-    .135, .9, .12, .25, .2,     # toxicity parameters
-])
-concentrations = [.2, .4]
-bolus_fractions = [.1, .2]
-endpoints = [.25, .5, .75, 1.0]
+log_parameters = np.log(
+    [
+        0.5,
+        0.7,
+        0.8,
+        0.08,
+        1.4,
+        1.6,  # response parameters
+        0.135,
+        0.9,
+        0.12,
+        0.25,
+        0.2,  # toxicity parameters
+    ]
+)
+concentrations = [0.2, 0.4]
+bolus_fractions = [0.1, 0.2]
+endpoints = [0.25, 0.5, 0.75, 1.0]
 utility = [[100, 10], [90, 8], [70, 6], [50, 4], [30, 2], [0, 0]]
 prediction = cibolus_predict(
-    log_parameters, concentrations, bolus_fractions, endpoints, utility=utility,
+    log_parameters,
+    concentrations,
+    bolus_fractions,
+    endpoints,
+    utility=utility,
 )
 print(prediction.expected_utility)
 print(prediction.joint.sum(axis=(-2, -1)))
@@ -104,21 +119,31 @@ from mdanderson_stats import (
 )
 
 observations = [
-    CiBolusObservation(.2, .1, "bolus", False),
-    CiBolusObservation(.4, .1, "exact", False, time=.4),
-    CiBolusObservation(.2, .2, "interval", True, lower=.25, upper=.5),
-    CiBolusObservation(.4, .2, "failure", True),
+    CiBolusObservation(0.2, 0.1, "bolus", False),
+    CiBolusObservation(0.4, 0.1, "exact", False, time=0.4),
+    CiBolusObservation(0.2, 0.2, "interval", True, lower=0.25, upper=0.5),
+    CiBolusObservation(0.4, 0.2, "failure", True),
 ]
-prior = CiBolusPrior(log_parameters, np.full(11, .4))
+prior = CiBolusPrior(log_parameters, np.full(11, 0.4))
 fit = fit_cibolus(
-    observations, prior, concentrations, bolus_fractions, endpoints,
-    utility=utility, draws=128, warmup=64, chains=2,
+    observations,
+    prior,
+    concentrations,
+    bolus_fractions,
+    endpoints,
+    utility=utility,
+    draws=128,
+    warmup=64,
+    chains=2,
     rng=np.random.default_rng(86),
 )
 decision = cibolus_decision(
-    fit, treated=[[1, 1], [1, 1]],
-    toxicity_limit=.4, toxicity_cutoff=.9,
-    efficacy_limit=.3, efficacy_cutoff=.9,
+    fit,
+    treated=[[1, 1], [1, 1]],
+    toxicity_limit=0.4,
+    toxicity_cutoff=0.9,
+    efficacy_limit=0.3,
+    efficacy_cutoff=0.9,
 )
 print(decision)
 ```

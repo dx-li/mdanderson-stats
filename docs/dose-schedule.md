@@ -41,7 +41,7 @@ their default values do not constitute calibration for a new study.
 from mdanderson_stats import dose_schedule_moment_prior
 
 prior = dose_schedule_moment_prior(
-    [.20, .25, .30],
+    [0.20, 0.25, 0.30],
     administrations=5,
     peak_times=[18, 14, 10],
     tail_times=[10, 14, 18],
@@ -90,9 +90,9 @@ print(fit.risk_summary.mean)
 decision = dose_schedule_decision(
     fit,
     treated=[[1, 0], [0, 1], [0, 0]],
-    toxicity_limit=.30,
-    upper_probability=.80,
-    target=.30,
+    toxicity_limit=0.30,
+    upper_probability=0.80,
+    target=0.30,
 )
 print(decision)
 ```

@@ -21,14 +21,14 @@ cluster = bchm_cluster(responses, patients, iterations=500, burn_in=200, seed=12
 print(cluster.result.representative)
 print(cluster.result.raw_similarity)
 
-fit = bchm_fit(responses, patients, iterations=500, burn_in=200,
-               draws=2000, warmup=500, seed=1234)
+fit = bchm_fit(responses, patients, iterations=500, burn_in=200, draws=2000, warmup=500, seed=1234)
 print(fit.posterior_mean, fit.raw_probability, fit.native_probability, fit.decision)
 print([s.split_rhat for s in fit.summaries])
 
 # Reuse a similarity estimate for one target (zero-based index).
-target_fit = bchm_borrow(responses, patients, cluster.result.similarity,
-                         target=2, draws=1000, warmup=500, seed=158)
+target_fit = bchm_borrow(
+    responses, patients, cluster.result.similarity, target=2, draws=1000, warmup=500, seed=158
+)
 print(target_fit.probability, target_fit.summary.batch_mean_mcse)
 ```
 

@@ -9,10 +9,12 @@ from mdanderson_stats import rbop2_binary_design
 
 # Small illustrative design, not a calibrated clinical recommendation.
 design = rbop2_binary_design(
-    [[1, 1], [2, 2]],                 # experimental/control sizes at each look
-    prior=[[1, 1], [1, 1]],          # beta shapes, experimental then control
-    endpoint="efficacy", margin=0,
-    lower_cutoffs=[0.25, 0.8], upper_cutoffs=[0.8, 0.8],
+    [[1, 1], [2, 2]],  # experimental/control sizes at each look
+    prior=[[1, 1], [1, 1]],  # beta shapes, experimental then control
+    endpoint="efficacy",
+    margin=0,
+    lower_cutoffs=[0.25, 0.8],
+    upper_cutoffs=[0.8, 0.8],
 )
 state = design.monitor(2, 1, sample_size=[2, 2])
 print(state.probability, state.superior)  # probability is exactly 4/5

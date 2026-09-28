@@ -17,21 +17,27 @@ from mdanderson_stats import (
 )
 
 binomial = stplan_exact_binomial_significance(
-    .2, .4, 40, target_power=.8,
+    0.2,
+    0.4,
+    40,
+    target_power=0.8,
 )
 assert binomial.critical_tail == "upper"
 assert binomial.critical_count == 13
 assert binomial.target_attained
-assert abs(binomial.significance - .04324162237632384) < 1e-12
-assert abs(binomial.achieved_power - .87149032192931575) < 1e-12
+assert abs(binomial.significance - 0.04324162237632384) < 1e-12
+assert abs(binomial.achieved_power - 0.87149032192931575) < 1e-12
 
 poisson = stplan_exact_poisson_significance(
-    2, 1, 12.5, target_power=.8,
+    2,
+    1,
+    12.5,
+    target_power=0.8,
 )
 assert poisson.critical_tail == "lower"
 assert poisson.critical_count == 15
-assert abs(poisson.significance - .022293021307365317) < 1e-12
-assert abs(poisson.achieved_power - .8060290010444158) < 1e-12
+assert abs(poisson.significance - 0.022293021307365317) < 1e-12
+assert abs(poisson.achieved_power - 0.8060290010444158) < 1e-12
 ```
 
 Poisson inputs are rates and a common exposure duration, so the two count means
@@ -58,11 +64,11 @@ the most powerful allowed region and sets `target_attained=False`. Its
 requested target or a native sentinel.
 
 ```python
-small = stplan_exact_binomial_significance(.2, .4, 2, target_power=.8)
+small = stplan_exact_binomial_significance(0.2, 0.4, 2, target_power=0.8)
 assert not small.target_attained
 assert small.critical_count == 1
-assert abs(small.achieved_power - .64) < 1e-12
-assert abs(small.significance - .36) < 1e-12
+assert abs(small.achieved_power - 0.64) < 1e-12
+assert abs(small.significance - 0.36) < 1e-12
 ```
 
 Here rejection on at least one event has power .64. Reaching .8 would require

@@ -8,13 +8,13 @@ Bayesian model selection (`"bms"`), and averaging within Occam's window
 from mdanderson_stats import fit_bmacrm, bmacrm_decision
 
 settings = dict(
-    skeletons=[[.05, .15, .30, .50], [.10, .25, .45, .65]],
+    skeletons=[[0.05, 0.15, 0.30, 0.50], [0.10, 0.25, 0.45, 0.65]],
     events=[0, 1, 1, 0],
     subjects=[3, 3, 3, 0],
-    target=.30,
+    target=0.30,
 )
 selected = fit_bmacrm(**settings, aggregation="bms")
-windowed = fit_bmacrm(**settings, aggregation="occam", occam_threshold=.6)
+windowed = fit_bmacrm(**settings, aggregation="occam", occam_threshold=0.6)
 print(selected.posterior_model_weights)
 print(selected.aggregation_model_weights)
 print(windowed.aggregation_model_weights)
@@ -56,11 +56,11 @@ decision can reenter; exclusion is never written back into its prior.
 from mdanderson_stats import simulate_crm
 
 simulation = simulate_crm(
-    [[.05, .15, .30], [.10, .25, .45]],
-    true_toxicity=[.05, .20, .40],
+    [[0.05, 0.15, 0.30], [0.10, 0.25, 0.45]],
+    true_toxicity=[0.05, 0.20, 0.40],
     window=1,
-    accrual_rate=.5,
-    target=.25,
+    accrual_rate=0.5,
+    target=0.25,
     aggregation="bms",
     cohorts=2,
     cohort_size=1,

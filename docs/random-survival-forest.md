@@ -11,7 +11,7 @@ from mdanderson_stats import fit_random_survival_forest, predict_random_survival
 
 rng = np.random.default_rng(7)
 x = rng.normal(size=(160, 2))
-latent = np.exp(1 + .6 * (x[:, 0] > 0) - .3 * x[:, 1]) * rng.weibull(1.5, 160)
+latent = np.exp(1 + 0.6 * (x[:, 0] > 0) - 0.3 * x[:, 1]) * rng.weibull(1.5, 160)
 time = np.minimum(latent, 5.0)
 event = (latent <= 5.0).astype(int)
 

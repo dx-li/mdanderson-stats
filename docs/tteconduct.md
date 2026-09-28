@@ -6,12 +6,21 @@ continuous time-on-test boundary table described in the
 
 ```python
 from mdanderson_stats import (
-    tteconduct_design, tteconduct_monitor, tteconduct_boundary_table,
+    tteconduct_design,
+    tteconduct_monitor,
+    tteconduct_boundary_table,
 )
 
 # Shape/scale priors on exponential MEAN survival. Time is in months here.
 design = tteconduct_design(
-    60, 295, 3, 10, 1, 0.03, 40, max_total_time=40 * 120,
+    60,
+    295,
+    3,
+    10,
+    1,
+    0.03,
+    40,
+    max_total_time=40 * 120,
 )
 state = tteconduct_monitor(design, patients=10, events=3, total_time=1)
 print(state.probability, state.stop_accrual)

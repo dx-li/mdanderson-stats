@@ -62,27 +62,42 @@ so summaries do not include uncertainty from omitted coefficients.
 ```python
 import numpy as np
 from mdanderson_stats import (
-    calibrate_wfmm_shrinkage, fit_wfmm_coefficients,
-    wfmm_basis, wfmm_transform, wfmm_select_coefficients,
-    wfmm_restore_coefficients, wfmm_summarize,
+    calibrate_wfmm_shrinkage,
+    fit_wfmm_coefficients,
+    wfmm_basis,
+    wfmm_transform,
+    wfmm_select_coefficients,
+    wfmm_restore_coefficients,
+    wfmm_summarize,
 )
 
 basis = wfmm_basis(8, levels=2, filter_length=2)
 curves = np.arange(48.0).reshape(6, 8) / 20
 x = np.ones((6, 1))
 selected = wfmm_select_coefficients(
-    wfmm_transform(curves, basis).coefficients, basis, partitions=[0, 2],
+    wfmm_transform(curves, basis).coefficients,
+    basis,
+    partitions=[0, 2],
 )
 calibration = calibrate_wfmm_shrinkage(
-    selected.coefficients, x, random_variance=None, residual_variance=.1,
+    selected.coefficients,
+    x,
+    random_variance=None,
+    residual_variance=0.1,
     coefficient_partition=selected.coefficient_partition,
 )
 fit = fit_wfmm_coefficients(
-    selected.coefficients, x, prior=calibration.prior,
-    residual_variance=.1, estimate_variances=False,
+    selected.coefficients,
+    x,
+    prior=calibration.prior,
+    residual_variance=0.1,
+    estimate_variances=False,
     coefficient_partition=selected.coefficient_partition,
     coefficient_scale=selected.coefficient_scale,
-    draws=32, warmup=16, chains=2, rng=np.random.default_rng(21),
+    draws=32,
+    warmup=16,
+    chains=2,
+    rng=np.random.default_rng(21),
 )
 restored = wfmm_restore_coefficients(fit.coefficients, selected)
 summary = wfmm_summarize(restored, basis)
@@ -105,7 +120,11 @@ Its short chains demonstrate the interface; they are not a convergence study.
 ```python
 import numpy as np
 from mdanderson_stats import (
-    WFMMPrior, fit_wfmm_coefficients, wfmm_basis, wfmm_transform, wfmm_summarize,
+    WFMMPrior,
+    fit_wfmm_coefficients,
+    wfmm_basis,
+    wfmm_transform,
+    wfmm_summarize,
 )
 
 grid = np.linspace(0, 1, 8, endpoint=False)
@@ -113,32 +132,45 @@ x = np.column_stack((np.ones(6), [-1, 1, -1, 1, -1, 1]))
 z = np.eye(3)[[0, 0, 1, 1, 2, 2]]
 curves = (
     np.sin(2 * np.pi * grid)[None, :]
-    + .3 * x[:, 1, None] * np.cos(2 * np.pi * grid)[None, :]
-    + (z @ np.array([-.1, .1, 0]))[:, None]
-    + .2 * np.random.default_rng(7).normal(size=(6, 8))
+    + 0.3 * x[:, 1, None] * np.cos(2 * np.pi * grid)[None, :]
+    + (z @ np.array([-0.1, 0.1, 0]))[:, None]
+    + 0.2 * np.random.default_rng(7).normal(size=(6, 8))
 )
 basis = wfmm_basis(8, levels=2)
 transformed = wfmm_transform(curves, basis)
 prior = WFMMPrior(
-    inclusion_probability=.5, slab_variance=1,
-    random_shape=3, random_scale=.2,
-    residual_shape=3, residual_scale=.2,
+    inclusion_probability=0.5,
+    slab_variance=1,
+    random_shape=3,
+    random_scale=0.2,
+    residual_shape=3,
+    residual_scale=0.2,
 )
 fit = fit_wfmm_coefficients(
-    transformed.coefficients, x, z, prior=prior,
-    random_variance=.1, residual_variance=.1,
-    proposal_sd=(.05, .05),
+    transformed.coefficients,
+    x,
+    z,
+    prior=prior,
+    random_variance=0.1,
+    residual_variance=0.1,
+    proposal_sd=(0.05, 0.05),
     coefficient_partition=transformed.coefficient_partition,
     coefficient_scale=transformed.coefficient_scale,
-    draws=64, warmup=64, chains=2, sample_random_effects=True,
+    draws=64,
+    warmup=64,
+    chains=2,
+    sample_random_effects=True,
     rng=np.random.default_rng(2026),
 )
 summary = wfmm_summarize(
-    fit.coefficients, basis,
-    effect_contrast=[[0, 1]], effect_sizes=[0, .2], confidence=.95,
+    fit.coefficients,
+    basis,
+    effect_contrast=[[0, 1]],
+    effect_sizes=[0, 0.2],
+    confidence=0.95,
 )
-print(summary.mean)                 # second fixed-effect curve
-print(summary.simultaneous_lower)   # band over all eight grid points
+print(summary.mean)  # second fixed-effect curve
+print(summary.simultaneous_lower)  # band over all eight grid points
 print(summary.simultaneous_upper)
 ```
 
@@ -195,16 +227,21 @@ from dataclasses import replace
 from mdanderson_stats import calibrate_wfmm_shrinkage
 
 calibration = calibrate_wfmm_shrinkage(
-    transformed.coefficients, x, z,
-    random_variance=.1, residual_variance=.1,
+    transformed.coefficients,
+    x,
+    z,
+    random_variance=0.1,
+    residual_variance=0.1,
     coefficient_partition=transformed.coefficient_partition,
 )
 print(calibration.group_converged)
 print(calibration.group_inclusion_probability)
 calibrated_prior = replace(
     calibration.prior,
-    random_shape=3, random_scale=.2,
-    residual_shape=3, residual_scale=.2,
+    random_shape=3,
+    random_scale=0.2,
+    residual_shape=3,
+    residual_scale=0.2,
 )
 ```
 
@@ -272,7 +309,9 @@ or `fit.residual_variances`, with shape `(chain,draw,component,K)`:
 from mdanderson_stats import wfmm_summarize_covariance
 
 residual_covariance = wfmm_summarize_covariance(
-    fit.residual_variances, basis, include_covariance=True,
+    fit.residual_variances,
+    basis,
+    include_covariance=True,
 )
 print(residual_covariance.variance_function_mean[0])
 print(residual_covariance.correlation_from_mean_variance[0])

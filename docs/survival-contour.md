@@ -15,8 +15,20 @@ from mdanderson_stats import survival_cox_contour, plot_survival_contour_2d
 result = survival_cox_contour(
     time=[1, 2, 2, 3, 3, 3, 4, 5, 6, 7, 8, 9],
     event=[1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1],
-    x=[[-1, 0], [.3, 1], [1.2, 0], [-.2, 1], [.8, 0], [-1.3, 1],
-       [.4, 1], [1.5, 0], [-.7, 1], [.1, 0], [1.1, 1], [-.4, 0]],
+    x=[
+        [-1, 0],
+        [0.3, 1],
+        [1.2, 0],
+        [-0.2, 1],
+        [0.8, 0],
+        [-1.3, 1],
+        [0.4, 1],
+        [1.5, 0],
+        [-0.7, 1],
+        [0.1, 0],
+        [1.1, 1],
+        [-0.4, 0],
+    ],
     continuous_column=0,
 )
 assert result.survival.shape == (30, 9)
@@ -91,8 +103,11 @@ from mdanderson_stats import survival_stratified_cox_contour, plot_survival_cont
 
 # Small illustration: opposite covariate patterns with different follow-up times.
 grouped = survival_stratified_cox_contour(
-    time=[1, 2, 2, 4], event=[1, 0, 1, 0], x=[0, 1, 1, 0],
-    continuous_column=0, strata=["early", "early", "late", "late"],
+    time=[1, 2, 2, 4],
+    event=[1, 0, 1, 0],
+    x=[0, 1, 1, 0],
+    continuous_column=0,
+    strata=["early", "early", "late", "late"],
 )
 assert grouped.stratum_labels == ("early", "late")
 early = grouped.for_stratum("early")

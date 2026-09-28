@@ -9,12 +9,14 @@ model and a uniform slope prior.
 from mdanderson_stats import fit_bmacrm
 
 fit = fit_bmacrm(
-    [[.10, .21, .24, .30, .45],
-     [.15, .26, .29, .35, .50],
-     [.20, .31, .34, .40, .55]],
+    [
+        [0.10, 0.21, 0.24, 0.30, 0.45],
+        [0.15, 0.26, 0.29, 0.35, 0.50],
+        [0.20, 0.31, 0.34, 0.40, 0.55],
+    ],
     events=[0, 1, 2, 0, 0],
     subjects=[3, 6, 6, 0, 0],
-    target=.30,
+    target=0.30,
 )
 print(fit.posterior_model_weights)
 print(fit.dose_mean)

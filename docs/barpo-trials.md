@@ -42,16 +42,28 @@ records the independent mathematical references and remaining source limits.
 from mdanderson_stats import run_barpo_trial
 
 settings = dict(
-    prior=[[1, 1], [1, 1]], max_n=12,
-    burn_in=4, er_block_size=4, cohort_size=2,
-    looks=[4, 8, 12], min_n=4,
+    prior=[[1, 1], [1, 1]],
+    max_n=12,
+    burn_in=4,
+    er_block_size=4,
+    cohort_size=2,
+    looks=[4, 8, 12],
+    min_n=4,
 )
 trial = run_barpo_trial(
-    [0, 1], **settings, method="barcp", tau=.7,
-    theta_fut=.4, pfut=.7, theta_eff=.6, peff=.9,
-    theta_final=.5, pfinal=.9, stopping_policy="arm",
-    assignment_uniforms=[.2, .9, .7, .3, .8, .1, .55, .95, .15, .7, .4, .85],
-    outcome_uniforms=[.05, .82, .25, .1, .45, .93, .3, .6, .12, .77, .9, .22],
+    [0, 1],
+    **settings,
+    method="barcp",
+    tau=0.7,
+    theta_fut=0.4,
+    pfut=0.7,
+    theta_eff=0.6,
+    peff=0.9,
+    theta_final=0.5,
+    pfinal=0.9,
+    stopping_policy="arm",
+    assignment_uniforms=[0.2, 0.9, 0.7, 0.3, 0.8, 0.1, 0.55, 0.95, 0.15, 0.7, 0.4, 0.85],
+    outcome_uniforms=[0.05, 0.82, 0.25, 0.1, 0.45, 0.93, 0.3, 0.6, 0.12, 0.77, 0.9, 0.22],
 )
 assert trial.enrolled == 8
 assert trial.assigned.tolist() == [2, 6]
@@ -85,8 +97,14 @@ from the supplied response rates.
 from mdanderson_stats import simulate_barpo
 
 simulation = simulate_barpo(
-    [.2, .65], **settings, trials=20, early_monitoring=False,
-    theta_final=.5, pfinal=.9, null_arms=[True, False], rng=338,
+    [0.2, 0.65],
+    **settings,
+    trials=20,
+    early_monitoring=False,
+    theta_final=0.5,
+    pfinal=0.9,
+    null_arms=[True, False],
+    rng=338,
 )
 assert simulation.mean_enrolled == 12
 print(simulation.mean_patients_by_arm)

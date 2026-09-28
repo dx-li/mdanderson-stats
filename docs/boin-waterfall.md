@@ -65,12 +65,8 @@ simulation = simulate_boin_waterfall(
     trials=24,
     rng=981,
 )
-np.testing.assert_array_equal(
-    simulation.total_patients, simulation.patients.sum(axis=(1, 2))
-)
-np.testing.assert_array_equal(
-    simulation.total_toxicities, simulation.toxicities.sum(axis=(1, 2))
-)
+np.testing.assert_array_equal(simulation.total_patients, simulation.patients.sum(axis=(1, 2)))
+np.testing.assert_array_equal(simulation.total_toxicities, simulation.toxicities.sum(axis=(1, 2)))
 assert np.all(simulation.total_toxicities <= simulation.total_patients)
 assert np.all(simulation.total_patients <= 30)
 print(simulation.selection_probability)

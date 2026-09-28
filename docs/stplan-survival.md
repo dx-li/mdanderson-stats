@@ -63,8 +63,15 @@ rejection direction; it does not sum both rejection tails.
 from mdanderson_stats import stplan_historical_survival_power
 
 power = stplan_historical_survival_power(
-    0.05, 0.1, 5, 12, 6, 40, 20,
-    control_allocation=0.2, continued_followup=True,
+    0.05,
+    0.1,
+    5,
+    12,
+    6,
+    40,
+    20,
+    control_allocation=0.2,
+    continued_followup=True,
 )
 # Approximately 0.8898854.
 ```
@@ -98,7 +105,14 @@ and the fraction assigned to new controls jointly under this same model.
 from mdanderson_stats import stplan_piecewise_survival_power
 
 power = stplan_piecewise_survival_power(
-    0.2, 0.05, 3, 1.5, 5, 10, 5, model_arm="lower_hazard",
+    0.2,
+    0.05,
+    3,
+    1.5,
+    5,
+    10,
+    5,
+    model_arm="lower_hazard",
 )
 # Approximately 0.3222513.
 ```

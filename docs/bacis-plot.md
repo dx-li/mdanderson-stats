@@ -21,7 +21,9 @@ For another latent prior precision or an automatic horizontal range:
 
 ```python
 ax = plot_bacis_classification_posterior(
-    classification, latent_precision=1, xlim="auto",
+    classification,
+    latent_precision=1,
+    xlim="auto",
 )
 ```
 

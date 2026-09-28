@@ -111,14 +111,18 @@ from mdanderson_stats import simulate_regression_ess
 
 priors = [Prior("normal", 0, 1)] * 4  # intercept plus three covariates
 simulation = simulate_regression_ess(
-    "normal", priors, precision_prior=Prior("gamma", 1, 1),
-    max_patients=10, replicates=256, rng=np.random.default_rng(80),
+    "normal",
+    priors,
+    precision_prior=Prior("gamma", 1, 1),
+    max_patients=10,
+    replicates=256,
+    rng=np.random.default_rng(80),
 )
 print(simulation.whole_model.estimate)
 print(simulation.crossing([0, 1, 2, 3]).estimate)  # all coefficients
 np.testing.assert_allclose(simulation.crossing([4]).estimate, 1.9998)
 
-population = normal_regression_ess(priors, [1, 1/3, 1/3, 1/3], Prior("gamma", 1, 1))
+population = normal_regression_ess(priors, [1, 1 / 3, 1 / 3, 1 / 3], Prior("gamma", 1, 1))
 np.testing.assert_allclose(population.ess, 1.9998)
 np.testing.assert_allclose(population.subvector_ess([0, 1, 2, 3]), 1.9998)
 ```

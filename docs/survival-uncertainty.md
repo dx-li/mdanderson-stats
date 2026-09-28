@@ -12,10 +12,14 @@ from mdanderson_stats import fit_parametric_survival, predict_parametric_surviva
 
 time = [1, 2, 2, 3, 4, 5, 6, 7]
 event = [1, 1, 0, 1, 1, 0, 1, 1]
-x = [.2, .7, -.4, .1, .9, -.8, .3, .6]
+x = [0.2, 0.7, -0.4, 0.1, 0.9, -0.8, 0.3, 0.6]
 fit = fit_parametric_survival(time, event, x, distribution="weibull")
 intervals = predict_parametric_survival_mc(
-    fit, [0, 1, 2, 4, 7], [[.2], [.8]], draws=500, rng=2026,
+    fit,
+    [0, 1, 2, 4, 7],
+    [[0.2], [0.8]],
+    draws=500,
+    rng=2026,
 )
 assert intervals.survival.shape == (2, 5)
 assert (intervals.lower[:, 0] == 1).all()
@@ -43,7 +47,9 @@ original-unit `fit.coefficients` coordinates. Reuse them with the same fit:
 
 ```python
 more_times = predict_parametric_survival_mc(
-    fit, [0, .5, 1, 3, 8], [[.2], [.8]],
+    fit,
+    [0, 0.5, 1, 3, 8],
+    [[0.2], [0.8]],
     parameter_draws=intervals.parameter_draws,
 )
 assert more_times.survival.shape == (2, 5)
@@ -65,8 +71,16 @@ five parametric choices and all three spline links:
 from mdanderson_stats import parametric_survival_contour
 
 contour = parametric_survival_contour(
-    time, event, x, 0, distribution="weibull", n_grid=8,
-    times=[0, 1, 2, 4, 7], interval_method="monte_carlo", draws=500, rng=2026,
+    time,
+    event,
+    x,
+    0,
+    distribution="weibull",
+    n_grid=8,
+    times=[0, 1, 2, 4, 7],
+    interval_method="monte_carlo",
+    draws=500,
+    rng=2026,
 )
 assert contour.interval_method == "monte_carlo"
 assert contour.lower.shape == (8, 5)

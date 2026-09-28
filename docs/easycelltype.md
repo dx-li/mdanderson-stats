@@ -15,9 +15,15 @@ result = easycelltype_fisher(
     clusters=["cluster1"] * 4,
     scores=[1, -3, 5, 2],
     reference_genes=[
-        "g1", "g2",                 # Type A
-        "g2", "g3", "g4",          # Type B
-        "g1", "g4", "g5", "g6",    # Type C
+        "g1",
+        "g2",  # Type A
+        "g2",
+        "g3",
+        "g4",  # Type B
+        "g1",
+        "g4",
+        "g5",
+        "g6",  # Type C
         *[f"g{i}" for i in range(8, 19)],  # Type D
     ],
     reference_cell_types=["A"] * 2 + ["B"] * 3 + ["C"] * 4 + ["D"] * 11,

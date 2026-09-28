@@ -11,16 +11,16 @@ from mdanderson_stats import DACRMPrior, fit_dacrm
 
 prior = DACRMPrior(
     breaks=[0, 1, 2, 3],
-    shape=[.5, .75, 1],
+    shape=[0.5, 0.75, 1],
     rate=[1, 1, 1],
 )
 fit = fit_dacrm(
-    [.1, .25, .5],
+    [0.1, 0.25, 0.5],
     doses=[0, 1, 1, 2, 2],
     outcomes=[0, 1, -1, -1, -1],
-    times=[3, .5, 0, .5, 1],
+    times=[3, 0.5, 0, 0.5, 1],
     prior=prior,
-    target=.3,
+    target=0.3,
     rng=np.random.default_rng(7302),
 )
 print(fit.dose_mean)
@@ -80,7 +80,7 @@ dispersion by that factor to preserve the same prior on physical event timing.
 from mdanderson_stats import dacrm_uniform_prior, dacrm_trimester_prior
 
 paper_prior = dacrm_uniform_prior(3)
-trimester_prior = dacrm_trimester_prior(3, [.05, .15, .80], dispersion=2)
+trimester_prior = dacrm_trimester_prior(3, [0.05, 0.15, 0.80], dispersion=2)
 ```
 
 These are different elicitation conventions. The second example uses the
@@ -99,9 +99,7 @@ paper's clinical example.
 from mdanderson_stats import dacrm_decision
 
 decision = dacrm_decision(fit, current_dose=2)
-desktop_rules = dacrm_decision(
-    fit, current_dose=2, policy="crm_suite", minimum_observed=2
-)
+desktop_rules = dacrm_decision(fit, current_dose=2, policy="crm_suite", minimum_observed=2)
 print(desktop_rules.action, desktop_rules.dose, desktop_rules.explanation)
 ```
 

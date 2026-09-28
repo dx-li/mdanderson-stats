@@ -16,10 +16,15 @@ counts = plbarpo_control_counts(
     as_of=5.75,
 )
 result = plbarpo_control_monitor(
-    successes=[3, 4], failures=[1, 2],
-    prior=[[1, 1], [1, 1]], control_prior=[1, 1],
-    control_counts=counts, control_mode="concurrent",
-    pfut=0.25, peff=0.8, pfinal=0.7,
+    successes=[3, 4],
+    failures=[1, 2],
+    prior=[[1, 1], [1, 1]],
+    control_prior=[1, 1],
+    control_counts=counts,
+    control_mode="concurrent",
+    pfut=0.25,
+    peff=0.8,
+    pfinal=0.7,
 )
 print(counts)  # [[2, 2], [0, 2]]: columns are successes, failures
 print(result.efficacy_probability)  # approximately [0.738095, 0.916667]

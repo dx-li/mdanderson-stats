@@ -48,9 +48,9 @@ from mdanderson_stats import calibrate_efftox_prior
 
 calibrated = calibrate_efftox_prior(
     [1, 2, 4, 6.6, 10],
-    [.2, .4, .6, .8, .9],
-    [.02, .04, .06, .08, .1],
-    target_ess=.9,
+    [0.2, 0.4, 0.6, 0.8, 0.9],
+    [0.02, 0.04, 0.06, 0.08, 0.1],
+    target_ess=0.9,
     monotone_toxicity=False,
 )
 print(calibrated.efficacy.mean, calibrated.toxicity.mean)
@@ -92,17 +92,23 @@ from mdanderson_stats import EffToxPrior, fit_efftox
 
 # Illustrative coefficient prior, supplied as means and STANDARD DEVIATIONS.
 prior = EffToxPrior(
-    mean=[-1, .8, .2, 1.1, -.3, 0],
-    sd=[.9, .5, 1.1, .7, .2, 1],
+    mean=[-1, 0.8, 0.2, 1.1, -0.3, 0],
+    sd=[0.9, 0.5, 1.1, 0.7, 0.2, 1],
 )
 counts = [
     [[4, 1], [2, 1]],
     [[2, 1], [4, 1]],
     [[1, 2], [4, 3]],
 ]
-fit = fit_efftox([1, 2, 4], counts, prior=prior,
-                 draws=1000, warmup=500, chains=2,
-                 rng=np.random.default_rng(2026))
+fit = fit_efftox(
+    [1, 2, 4],
+    counts,
+    prior=prior,
+    draws=1000,
+    warmup=500,
+    chains=2,
+    rng=np.random.default_rng(2026),
+)
 print(fit.efficacy_probabilities.mean(axis=(0, 1)))
 print(fit.toxicity_probabilities.mean(axis=(0, 1)))
 print(fit.summary.split_rhat, fit.summary.batch_mean_mcse)
@@ -160,11 +166,12 @@ This numeric score differs from the modern Lp score above.
 from mdanderson_stats import EffToxLegacyContour
 
 legacy = EffToxLegacyContour.from_points(
-    [.15, .25, 1], [0, .30, .60],  # published Pentostatin targets
+    [0.15, 0.25, 1],
+    [0, 0.30, 0.60],  # published Pentostatin targets
 )
 print(legacy.coefficients)  # a, b, c
-print(legacy.utility([.15, .25, 1], [0, .30, .60]))  # all approximately zero
-print(legacy.utility(.625, .15))  # one: twice as close along the middle ray
+print(legacy.utility([0.15, 0.25, 1], [0, 0.30, 0.60]))  # all approximately zero
+print(legacy.utility(0.625, 0.15))  # one: twice as close along the middle ray
 ```
 
 Pass `legacy` as the contour to `efftox_decision` or `simulate_efftox`.
@@ -181,13 +188,19 @@ unrepresentable finite nonideal scores raise an error.
 ```python
 from mdanderson_stats import EffToxContour, efftox_decision
 
-contour = EffToxContour.from_points(.5, .65, .7, .25)
+contour = EffToxContour.from_points(0.5, 0.65, 0.7, 0.25)
 decision = efftox_decision(
-    fit, contour,
-    efficacy_limit=.45, toxicity_limit=.30,
-    efficacy_probability=.10, toxicity_probability=.10,
-    starting_dose=1, last_dose=3,
-    phase="interim", allow_untried_exploration=True, skip_policy="both",
+    fit,
+    contour,
+    efficacy_limit=0.45,
+    toxicity_limit=0.30,
+    efficacy_probability=0.10,
+    toxicity_probability=0.10,
+    starting_dose=1,
+    last_dose=3,
+    phase="interim",
+    allow_untried_exploration=True,
+    skip_policy="both",
 )
 print(decision.action, decision.dose, decision.utility)
 ```
@@ -233,19 +246,27 @@ from mdanderson_stats import EffToxPrior, EffToxContour, simulate_efftox
 simulation = simulate_efftox(
     [1, 2, 4],
     [
-        [[.55, .05], [.35, .05]],
-        [[.35, .10], [.45, .10]],
-        [[.20, .15], [.40, .25]],
+        [[0.55, 0.05], [0.35, 0.05]],
+        [[0.35, 0.10], [0.45, 0.10]],
+        [[0.20, 0.15], [0.40, 0.25]],
     ],
     prior=EffToxPrior(
-        mean=[-1, .8, .2, 1.1, -.3, 0],
-        sd=[.9, .5, 1.1, .7, .2, 1],
+        mean=[-1, 0.8, 0.2, 1.1, -0.3, 0],
+        sd=[0.9, 0.5, 1.1, 0.7, 0.2, 1],
     ),
-    contour=EffToxContour.from_points(.5, .65, .7, .25),
-    efficacy_limit=.45, toxicity_limit=.30,
-    efficacy_probability=.10, toxicity_probability=.10,
-    starting_dose=1, cohorts=2, cohort_size=3,
-    trials=4, draws=16, warmup=8, chains=2, rng=2026,
+    contour=EffToxContour.from_points(0.5, 0.65, 0.7, 0.25),
+    efficacy_limit=0.45,
+    toxicity_limit=0.30,
+    efficacy_probability=0.10,
+    toxicity_probability=0.10,
+    starting_dose=1,
+    cohorts=2,
+    cohort_size=3,
+    trials=4,
+    draws=16,
+    warmup=8,
+    chains=2,
+    rng=2026,
 )
 print(simulation.selection_probability)  # no selection, dose 1, dose 2, dose 3
 print(simulation.mean_patients_per_dose)
@@ -287,11 +308,15 @@ import numpy as np
 from mdanderson_stats import EffToxTrinaryPrior, fit_efftox_trinary
 
 trinary = fit_efftox_trinary(
-    [1, 2, 4], [[2, 2, 1], [1, 3, 1], [1, 2, 2]],
+    [1, 2, 4],
+    [[2, 2, 1], [1, 3, 1], [1, 2, 2]],
     prior=EffToxTrinaryPrior(
-        mean=[-1, .6, .4, .9], sd=[.7, 0, .8, 0],
+        mean=[-1, 0.6, 0.4, 0.9],
+        sd=[0.7, 0, 0.8, 0],
     ),
-    draws=256, warmup=128, chains=2,
+    draws=256,
+    warmup=128,
+    chains=2,
     rng=np.random.default_rng(17),
 )
 print(trinary.efficacy_probabilities.mean(axis=(0, 1)))
@@ -318,13 +343,18 @@ Lp shape and an analytical toxicity-axis scale, which may exceed one.
 from mdanderson_stats import EffToxTrinaryContour, efftox_decision
 
 trinary_contour = EffToxTrinaryContour.from_points(
-    [.45, .55, .84], [0, .10, .16],
+    [0.45, 0.55, 0.84],
+    [0, 0.10, 0.16],
 )
 decision = efftox_decision(
-    trinary, trinary_contour,
-    efficacy_limit=.2, toxicity_limit=.4,
-    efficacy_probability=.5, toxicity_probability=.5,
-    starting_dose=1, phase="final",
+    trinary,
+    trinary_contour,
+    efficacy_limit=0.2,
+    toxicity_limit=0.4,
+    efficacy_probability=0.5,
+    toxicity_probability=0.5,
+    starting_dose=1,
+    phase="final",
 )
 print(decision.action, decision.dose)
 ```
@@ -345,15 +375,23 @@ from mdanderson_stats import EffToxTrinaryPrior, EffToxTrinaryContour, simulate_
 
 trinary_simulation = simulate_efftox(
     [1, 2, 4],
-    [[.55, .35, .10], [.40, .45, .15], [.30, .50, .20]],
+    [[0.55, 0.35, 0.10], [0.40, 0.45, 0.15], [0.30, 0.50, 0.20]],
     prior=EffToxTrinaryPrior(
-        mean=[-2, .5, .5, .7], sd=[.3, .1, .3, .1],
+        mean=[-2, 0.5, 0.5, 0.7],
+        sd=[0.3, 0.1, 0.3, 0.1],
     ),
-    contour=EffToxTrinaryContour.from_points([.2, .5, .8], [0, .1, .2]),
-    efficacy_limit=.2, toxicity_limit=.4,
-    efficacy_probability=.5, toxicity_probability=.5,
-    cohorts=2, cohort_size=3, trials=4,
-    draws=16, warmup=8, chains=2, rng=2026,
+    contour=EffToxTrinaryContour.from_points([0.2, 0.5, 0.8], [0, 0.1, 0.2]),
+    efficacy_limit=0.2,
+    toxicity_limit=0.4,
+    efficacy_probability=0.5,
+    toxicity_probability=0.5,
+    cohorts=2,
+    cohort_size=3,
+    trials=4,
+    draws=16,
+    warmup=8,
+    chains=2,
+    rng=2026,
 )
 print(trinary_simulation.outcome_model)  # "trinary"
 print(trinary_simulation.selection_probability)
