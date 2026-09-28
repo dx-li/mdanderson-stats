@@ -51,3 +51,31 @@ integration rule, optimizer status and achieved moments/ESS explicitly.
 The Windows kernel's exact integration settings, parameter bounds and
 stopping tolerances remain unverified. Rounded published hyperparameters
 are contextual reference values, not an exact numerical acceptance oracle.
+
+## Independent probability-moment references
+
+`tools/reference_efftox_calibration.R` uses base-R adaptive normal integration
+to generate `tests/fixtures/efftox-prior-moments.csv`. Its 34 outcome/dose
+rows cover the published four-decimal hyperparameters with and without
+toxicity-slope truncation, a negative untruncated slope mean conditioned
+positive, and a nearly fixed prior. Efficacy integrates the complete
+Gaussian linear predictor, including independent curvature uncertainty.
+Toxicity uses nested integration when the slope is truncated. Variance is
+integrated after centering, avoiding subtraction of nearly equal moments.
+
+At the published hyperparameters, average efficacy ESS is 0.90784698. Average
+toxicity ESS is 0.90535706 for the untruncated normal and 1.29129905 when
+conditioned positive. The former agrees closely with the published target
+0.9. This is numerical evidence for an untruncated calibration convention;
+it does not establish the Windows posterior or calibration implementation.
+The primary paper's retrieved prior-parameterization passage states normal
+priors without specifying truncation there. The earlier source review's
+unqualified truncation claim was therefore too strong. Python must retain
+the choice explicitly and evaluate the actual supplied prior consistently.
+
+The reference uses relative tolerance 1e-11 and absolute tolerance 1e-30;
+the latter matters for variances near 1e-12. At zero log dose, the nearly
+fixed symmetric efficacy variance agrees with its small-SD expansion within
+3.1e-12 relative. Generation completed in 0.64 seconds with 96.1 MiB peak
+child resident memory and zero swaps. These are independent mathematical
+references, not executed native EffTox calibration outputs.
