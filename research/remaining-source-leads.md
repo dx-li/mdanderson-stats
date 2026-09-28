@@ -110,8 +110,10 @@ The app cites randomForestSRC 3.2.2, pinned via its CRAN Git tag at
 `b4d099e262423362a8872c13c468e6dbe2f9e9da`. The exact source bundle, algorithm
 contract and executed small C/R references are recorded in the
 [forest audit](random-survival-forest-audit.md). Native leaf Kaplan–Meier
-survival and Nelson–Aalen hazard are averaged separately. Python implementation
-is underway in the single Luna worker, with bounded storage and sequential trees.
+survival and Nelson–Aalen hazard are averaged separately. Numeric Python fitting,
+prediction and fitted-model contours are implemented with bounded storage and
+sequential trees. Categorical splits, missing-value handling, out-of-bag
+diagnostics and importance remain separate work.
 
 ## Interval-censored Cox source mismatch to resolve
 

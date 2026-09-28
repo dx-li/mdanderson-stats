@@ -223,9 +223,9 @@ def _logrank_score(
         np.searchsorted(event_times, left_time[left_event == 1]),
         minlength=event_times.size,
     ).astype(np.float64)
-    left_at_risk = (left_time.size - np.searchsorted(
-        np.sort(left_time), event_times, side="left"
-    )).astype(np.float64)
+    left_at_risk = (
+        left_time.size - np.searchsorted(np.sort(left_time), event_times, side="left")
+    ).astype(np.float64)
     with np.errstate(divide="ignore", invalid="ignore"):
         expected = left_at_risk * parent_events / parent_at_risk
         numerator = float(np.sum(left_events - expected))
@@ -243,9 +243,7 @@ def _logrank_score(
     return numerator / denominator
 
 
-def _leaf_curve(
-    time: FloatArray, event: FloatArray
-) -> tuple[FloatArray, FloatArray, FloatArray]:
+def _leaf_curve(time: FloatArray, event: FloatArray) -> tuple[FloatArray, FloatArray, FloatArray]:
     event_times, failures, at_risk = _parent_counts(time, event)
     if event_times.size == 0:
         return event_times, event_times.copy(), event_times.copy()
@@ -276,9 +274,7 @@ def _pack_tree(
         _freeze_index(np.asarray(event_count), np.dtype(np.int32)),
         _freeze(np.concatenate(event_time) if event_time else np.empty(0)),
         _freeze(np.concatenate(log_survival) if log_survival else np.empty(0)),
-        _freeze(
-            np.concatenate(cumulative_hazard) if cumulative_hazard else np.empty(0)
-        ),
+        _freeze(np.concatenate(cumulative_hazard) if cumulative_hazard else np.empty(0)),
     )
 
 
@@ -470,9 +466,7 @@ def fit_random_survival_forest(
         seed = None
     else:
         seed = _integer(random_state, "random_state", 0, np.iinfo(np.int32).max)
-    sample_limit = _budget_limit(
-        max_sampled_rows, "max_sampled_rows", 2_000_000, _MAX_SAMPLE_WORK
-    )
+    sample_limit = _budget_limit(max_sampled_rows, "max_sampled_rows", 2_000_000, _MAX_SAMPLE_WORK)
     split_limit = _budget_limit(max_split_work, "max_split_work", 100_000_000, _MAX_SPLIT_WORK)
     leaf_limit = _budget_limit(
         max_leaf_event_records,
@@ -571,9 +565,7 @@ def predict_random_survival_forest(
     ):
         raise ValueError("profiles must have one column per fitted covariate")
     output_limit = _integer(max_output_cells, "max_output_cells", 1, _MAX_OUTPUT_CELLS)
-    work_limit = _integer(
-        max_prediction_work, "max_prediction_work", 1, _MAX_PREDICTION_WORK
-    )
+    work_limit = _integer(max_prediction_work, "max_prediction_work", 1, _MAX_PREDICTION_WORK)
     cells = int(profile_values.shape[0] * time_values.size)
     combined_cells = 8 * cells + profile_values.size + time_values.size
     if combined_cells > output_limit:
@@ -602,20 +594,14 @@ def predict_random_survival_forest(
                 leaf_log_survival = np.zeros(time_values.size)
                 leaf_hazard = np.zeros(time_values.size)
                 if np.any(has_step):
-                    leaf_log_survival[has_step] = tree.log_survival[
-                        offset + index[has_step]
-                    ]
-                    leaf_hazard[has_step] = tree.cumulative_hazard[
-                        offset + index[has_step]
-                    ]
+                    leaf_log_survival[has_step] = tree.log_survival[offset + index[has_step]]
+                    leaf_hazard[has_step] = tree.cumulative_hazard[offset + index[has_step]]
                 log_survival_sum[profile_index] = np.logaddexp(
                     log_survival_sum[profile_index], leaf_log_survival
                 )
                 hazard_sum[profile_index] += leaf_hazard
             else:
-                log_survival_sum[profile_index] = np.logaddexp(
-                    log_survival_sum[profile_index], 0.0
-                )
+                log_survival_sum[profile_index] = np.logaddexp(log_survival_sum[profile_index], 0.0)
     log_survival = np.minimum(log_survival_sum - log(fit.n_trees), 0.0)
     with np.errstate(under="ignore", over="ignore", invalid="ignore"):
         survival = np.exp(log_survival)

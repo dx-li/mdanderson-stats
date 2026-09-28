@@ -987,6 +987,19 @@ analytic observed information, normalized fitting, complete-support
 monotonicity checks, linear-tail extrapolation and bounded predictions.
 See `research/survival-spline-audit.md` for reference scope and limitations.
 
+`random_survival_forest.py` and its contour interface independently implement
+ordinary numeric log-rank survival forests. Algorithm definitions were checked
+against Hemant Ishwaran and Udaya Kogalur's GPL >=3 `randomForestSRC` 3.2.2,
+pinned at `b4d099e262423362a8872c13c468e6dbe2f9e9da`. Native C split/leaf
+kernels and an R event-grid helper supply numerical references; source code
+and compiled objects are not redistributed. An independent deterministic tree
+driver uses those kernels for additional fixtures, without executing the
+complete native forest engine. The contour contract also follows the original
+author `rfsrcContour.R` at the SurvivalContour revision credited above.
+Python uses a distinct seeded random stream and bounded sequential fitting and
+prediction. See `research/random-survival-forest-audit.md` for source hashes,
+kernel scope and remaining native features.
+
 ## Bayesian success calibration
 
 `success_calibration.py` is an independent implementation of the mathematical

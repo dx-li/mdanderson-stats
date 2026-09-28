@@ -753,6 +753,16 @@ from .pvalue_models import (
 )
 from .randlib import RandlibGenerator
 from .randlib_multivariate import RandlibMultivariateNormal
+from .random_survival_forest import (
+    RandomSurvivalForestFit,
+    RandomSurvivalForestPrediction,
+    fit_random_survival_forest,
+    predict_random_survival_forest,
+)
+from .random_survival_forest_contour import (
+    RandomSurvivalForestContour,
+    random_survival_forest_contour,
+)
 from .ranges import RangeComparisons, kwrange, range2
 from .ranlist_files import (
     load_ranlist_session,
@@ -1583,6 +1593,12 @@ __all__ = [
     "SurvivalSplinePrediction",
     "fit_survival_spline",
     "predict_survival_spline",
+    "RandomSurvivalForestFit",
+    "RandomSurvivalForestPrediction",
+    "RandomSurvivalForestContour",
+    "fit_random_survival_forest",
+    "predict_random_survival_forest",
+    "random_survival_forest_contour",
     "SurvanLogistic",
     "survan_logistic",
     "SurvanKM",

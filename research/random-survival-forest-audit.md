@@ -93,5 +93,40 @@ with 28.4 MiB parent and 83.3 MiB child peak RSS and zero reported swaps.
 These are executable split/leaf/time-grid references. They do not execute the
 full native tree-growing, bootstrap, out-of-bag or forest prediction engine.
 Original code and compiled objects remain ignored under `research/raw/` and
-are not redistributed. Python implementation and end-to-end verification are
-in progress; this reference checkpoint does not change catalog status.
+are not redistributed.
+
+## Python implementation and integration
+
+The public `fit_random_survival_forest` and `predict_random_survival_forest`
+interfaces implement the numeric log-rank path with sequential seeded sampling,
+packed binary trees, sparse leaf event steps, and explicit limits on sampled
+rows, split work, stored events, nodes, prediction work and combined output
+allocations. The output survival average is accumulated in the log domain;
+Nelson–Aalen hazards are averaged separately. Integer node indices and all
+returned arrays are read-only. Python's random stream differs from RF-SRC's.
+
+Four focused tests compare all recorded native split/leaf/grid values and the
+six independent deterministic tree references, and check seeded repeatability,
+replacement sample fractions and zero-time failures. The comparisons use
+relative and absolute tolerances of `2e-14`. The final forest plus existing
+shared-contour suite passed seven tests in 1.37 seconds. Ruff checks, formatting
+of the new modules/tests, and mypy on the forest, contour and plotting modules
+also passed. The full repository suite and CI were not run or expanded.
+
+The public guide's two examples ran with warnings treated as errors. Its
+32-tree, 160-observation fit stored 450 nodes and 2,544 leaf event records,
+with 216,680 split-work units. Predictions stayed unchanged within `1e-12`
+under covariate-unit changes of `1e-100` and `1e100`, and a time-unit change of
+`1e100`. Four contour cases checked mean/explicit profiles and default/custom
+times, including percentile curves and direct-prediction agreement. A
+zero-time failure preserved its actual survival jump. Both plot views were
+rendered and inspected; requesting unavailable confidence limits raises a
+clear error. The final integration run took 0.74 seconds, peaked at 153.9 MiB
+RSS and reported zero process swaps, using one BLAS/OpenMP thread.
+
+This adds the ordinary numeric forest family to SurvivalContour entry 166.
+The entry remains partial: interval-censored and neural families, native
+simulation-based intervals, categorical encoding and full application
+workflows remain open. The forest interface does not yet implement categorical
+splitting, missing-value imputation, competing-risk forests, out-of-bag
+diagnostics, variable importance or alternative split rules.
