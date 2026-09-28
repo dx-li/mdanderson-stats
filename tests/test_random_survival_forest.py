@@ -52,6 +52,8 @@ def test_native_randomforestsrc_time_grids() -> None:
         event_times = np.asarray(reference["event_times"], dtype=np.float64)
         actual = _time_grid(event_times, int(reference["ntime"]))
         np.testing.assert_array_equal(actual, reference["expected"])
+    np.testing.assert_array_equal(_time_grid(np.array([1.0, 2.0, 3.0]), [0.5, 2.5, 9]), [1, 2, 3])
+    np.testing.assert_array_equal(_time_grid(np.array([1.0, 2.0, 3.0]), np.array([2])), [1, 3])
 
 
 def test_native_exhaustive_full_sample_trees_and_survival_surfaces() -> None:
@@ -121,6 +123,14 @@ def test_seeded_forest_repeats_and_bounds_predictions() -> None:
     assert np.all(np.diff(prediction.survival, axis=1) <= 0)
     assert np.all(np.diff(prediction.cumulative_hazard, axis=1) >= 0)
     assert np.all(prediction.survival <= 1)
+    replacement = fit_random_survival_forest(
+        *arguments,
+        n_trees=1,
+        replace=True,
+        sample_fraction=0.5,
+        random_state=231,
+    )
+    assert replacement.sampled_rows == int(np.rint(0.5 * len(case["time"])))
 
     zero_time_case = next(item for item in cases if item["name"] == "zero_time")
     root_fit = fit_random_survival_forest(
