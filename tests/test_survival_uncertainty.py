@@ -290,3 +290,34 @@ def test_zero_knot_spline_links_reduce_to_existing_aft_models() -> None:
             assert np.allclose(
                 getattr(spline_mc, name), getattr(aft_mc, name), rtol=3e-12, atol=2e-14
             ), (scale, name)
+
+
+def test_spline_mc_skips_endpoint_basis_evaluation() -> None:
+    parameters = np.array([0.0, 1.0, 0.0, 0.0, 0.0, 0.0])
+    covariance = np.eye(parameters.size)
+    knots = np.arange(6, dtype=np.float64) * 1e-200
+    fit = SurvivalSplineFit(
+        scale="hazard",
+        k=4,
+        knots=knots,
+        coefficients=parameters,
+        parameter_names=tuple(f"p{i}" for i in range(parameters.size)),
+        covariance=covariance,
+        information=covariance,
+        log_likelihood=0.0,
+        score_error=0.0,
+        iterations=0,
+        scaled_parameters=parameters,
+        scaled_covariance=covariance,
+        covariate_mean=np.empty(0),
+        covariate_scale=np.empty(0),
+        log_time_center=0.0,
+        log_time_scale=1.0,
+        scaled_knots=knots,
+    )
+    with np.errstate(invalid="raise"):
+        prediction = predict_parametric_survival_mc(
+            fit, [0.0, 1.0, np.inf], parameter_draws=np.tile(parameters, (2, 1))
+        )
+    assert prediction.survival[0, 0] == 1.0
+    assert prediction.survival[0, 2] == 0.0
