@@ -1,0 +1,4 @@
+"scenario","enrolled","escalation","backfill","declined","stop_time","final_time","duration","selected_dose"
+"evaluable_cap_and_cohort_priority",11,8,3,6,8,10,10,2
+"early_dlt_late_response",4,4,0,0,1.5,4.5,4.5,NA
+"arrival_tape_exhausted",1,1,0,0,10,13,3,NA
