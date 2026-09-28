@@ -1,8 +1,9 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `5d6e4c1` adds PLBARPO persistent-control
-trials and EasyCellType GSEA labels to the preceding trial, simulation and
-inference APIs. Local `master` contains this validated checkpoint. Fresh
+Latest verified package checkpoint: `02efdac` adds PLBARPO control operating
+characteristics, Dose Schedule Finder and Multc calendar trials, and U2OET GAO
+probabilities/likelihoods to the preceding APIs. Local `master` contains this
+validated checkpoint. Fresh
 read-only checks still show GitHub `master` and `main` at `45b6e307`; their
 documentation/CI commits are already merged locally. The newer statistical
 additions have not been confirmed published. See the final section for the
@@ -225,3 +226,46 @@ previous DNS failure and unavailable connector approval remain the publication
 barriers; no rejected transport was retried. Control-trial aggregate simulation
 and Dose Schedule Finder calendar replay are still in separate Luna checkouts
 and are excluded from this validated checkpoint until integration.
+
+## Control OCs, calendar trials and GAO model checkpoint
+
+PLBARPO persistent-control aggregate simulation is public at `1306e9d`. It
+reports all-ledger and conditional-on-entry probabilities and Monte Carlo
+errors, sample-size/response summaries, error rates with explicit null labels,
+and replayable per-trial seeds. It prepares the design once and discards patient
+histories between trials. Focused checks and independent control-trial R
+references pass; its two public examples pass.
+
+Dose Schedule Finder calendar trials are public at `81ad9cf`, including
+as-of-arrival fits, event generation and full follow-up. Thirty-three R event
+references and an analytic tiny-probability quantile pass. Review corrected
+event inversion and large-calendar-origin timing precision; five focused
+calendar checks pass. Multc pending-outcome replay is public at `207c3cc`.
+Five independent R scenarios match 18 patient and 12 look records, including
+suspension/resumption and decisions made before final outcomes. Review corrected
+cap-bound metadata and rejected positive time increments that round away.
+The three final focused calendar checks pass.
+
+U2OET GAO probability and likelihood evaluation is public at `02efdac`.
+Independent R equations agree on 440 cells and 15 grouped likelihoods, with
+maximum absolute probability error `9.99e-16`; three focused checks pass.
+The model uses raw doses and a Gaussian copula, with explicit coefficients.
+GAO fitting/native prior interpretation remains pending. Targeted lint,
+formatting and type checks passed for each added component. No new CI workflow
+or broad numerical suite was added.
+
+Cached wheel and source builds at `02efdac` pass. The isolated wheel check
+verifies all 1,436 exports, all 525 packaged source/data files against committed
+Git bytes, licenses/notices, the 138-entry catalog and five examples in the
+three changed guides. It took 14.952 seconds, peaked at 111.20 MiB and reported
+no swaps. Source-catalog counts remain 63 implemented, 66 partial, 9 pending;
+these are workflow labels, not a percentage of remaining statistical work.
+
+Local `master` was fast-forwarded to this validated code. Fresh read-only GitHub
+checks still verify both `master` and `main` at `45b6e307`. The shell DNS failure
+and unavailable connector approval remain the publishing barriers; no rejected
+write route was retried. Newer local commits, packages and the verified Git
+bundle are prepared for publication, but have not been confirmed on GitHub.
+The next BARD/BOIN12 source investigations are separate from this validated
+checkpoint. Implementation remains limited to two Luna workers and at most one
+read-only reviewer, with one bounded numerical process at a time.

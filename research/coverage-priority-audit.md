@@ -72,3 +72,25 @@ This audit confirms that substantial statistical work remains alongside many
 presentation-only or parity gaps. No percentage or fixed completion date can
 be inferred from 63 implemented / 66 partial / 9 pending, and inaccessible
 primary sources remain a separate constraint on full coverage.
+
+## Run-in and parametric-source clarification
+
+The SYNERGY parametric models still lack their exact 2007 equations and fitting
+contract in the available cache; model names from a secondary review are not
+enough to implement them faithfully. No new generic replacement was added.
+
+BOIN12's `RunIn3+3.txt` says that its option imposes the 3+3 rule at sample
+sizes three and six, explicitly triggering de-escalation at at least 2/3 or
+2/6 DLTs. The ordinary phi-T=.25 BOIN boundary is approximately .2984, so it
+also de-escalates at 1/3. The option is therefore potentially substantive,
+but the help does not resolve whether 1/3 forces staying or only disables
+the toxicity-triggered de-escalation before ordinary utility selection. The
+third-party comparator has no BOIN12 run-in integration. The cached file
+`research/raw/BOIN12/BOIN12-paper.pdf` is an HTML download page, not a paper.
+No new option was added on the basis of an unverified interpretation.
+
+BARD's cached primary paper supplies an exact BF-BLRM model and independent
+normal priors on log-alpha/log-beta. Visual inspection confirms a raw dose
+ratio in its predictor, not the customary log-dose ratio. Its simulation
+example values are not native app defaults. This supports a new explicitly
+configured paper-method component; the app guide itself describes BF-BOIN.
