@@ -1,0 +1,64 @@
+{
+  "repository": "https://github.com/cran/randomForest",
+  "revision": "0ad64d71e886bff5b241cbc31a3240bf0e822914",
+  "version": "4.7-1.2",
+  "retrieved_date": "2026-09-28",
+  "directory": "future-learners/randomForest",
+  "scope": "Pinned regression-forest source and wrappers for the remaining CondiS-X learner. No Python implementation or native numerical parity is claimed.",
+  "files": [
+    {
+      "path": "DESCRIPTION",
+      "bytes": 1169,
+      "git_blob": "feb7ff0634cdb24e7c2f5b5cd6a5c1e244bd23d6",
+      "sha256": "f4ad154f9e6f1e073d669a899a1f589d34448a6012b46d52be90099100f69c17"
+    },
+    {
+      "path": "R/predict.randomForest.R",
+      "bytes": 11625,
+      "git_blob": "a887f64b1282066bff1a119ba712043f7a88b5c8",
+      "sha256": "18fa0830955d7c60d2a7cd095803c461fcf665d290c511100ef4cc1eb070ac3f"
+    },
+    {
+      "path": "R/randomForest.default.R",
+      "bytes": 21734,
+      "git_blob": "565b003a3054c078e1044a4416537135f18b9d47",
+      "sha256": "fcfe6125f17a29a32de5e5f7b6af15e5fee6a32a4d6f1928335d161acd132c46"
+    },
+    {
+      "path": "R/randomForest.formula.R",
+      "bytes": 1631,
+      "git_blob": "4b340934d41a41e2dc97a4e8e6e53eeb00237545",
+      "sha256": "beb96df3593b2c264811fcf8182b3b7a4aeefa85759f599deaa50afff6f959b1"
+    },
+    {
+      "path": "man/randomForest.Rd",
+      "bytes": 13106,
+      "git_blob": "5acc5723ad2d3eec4e05773b68daea38822d33cb",
+      "sha256": "344b1b94c9713b6591e4024e4e60400ad5944dc92d62130d39011e03c7653d64"
+    },
+    {
+      "path": "src/regTree.c",
+      "bytes": 13734,
+      "git_blob": "554691d2cbde22183e37efd58471563f812c42f7",
+      "sha256": "a437be03e0adb1c2d3f6089d7044c860704bd9e0ebeee04980ddf5ab3b6d6de8"
+    },
+    {
+      "path": "src/regrf.c",
+      "bytes": 14555,
+      "git_blob": "2d9c57ce4dfe3d80bbcf34cdfcfa8d2148dea6d9",
+      "sha256": "ca94bc61178e1899eec6f72fde9be6a1c9f3aac422f5e886561022b924784bc7"
+    },
+    {
+      "path": "src/rf.h",
+      "bytes": 5579,
+      "git_blob": "1fcc40234fdee50fbc88f1c1b56100618f1a0c92",
+      "sha256": "36d8f5b9158bd154425c97016e672ab24a3cb4bb01fec48b78465f3404c2718f"
+    },
+    {
+      "path": "src/rfutils.c",
+      "bytes": 13611,
+      "git_blob": "a59df12ed911f4b9a367f71a0deaa823ce305fa5",
+      "sha256": "75422357957163e5f13b569cc1e5bfae235c3cf6b3263459293ff7e82e564de2"
+    }
+  ]
+}
