@@ -66,7 +66,17 @@ mixture membership, so its positive precision does not affect these integrals.
 The adaptive classification cutoff and the second-stage priors likewise do not
 enter this first-stage model score.
 
-This reduction is a mathematical consequence of the inspected source. No
-Python implementation or numerical reference agreement is claimed yet.
-Independent base-R quadrature and a direct pairwise-KL check should verify the
-formula before exposing a public diagnostic.
+`tools/reference_bacis_dic.R` independently evaluates these integrals with
+base-R quadrature for 20 subgroup cases. These include the native example,
+unequal sample sizes, diffuse component priors, zero/all-response extremes,
+and a deliberately separated posterior mixture. The resulting per-subgroup
+mean deviance, penalty and sum are saved in
+`tests/fixtures/bacis-dic-reference.csv`. An explicit directed-binomial-KL
+sum on a three-point probability distribution also agrees with the covariance
+identity to within `1e-13`.
+
+Reference generation completed successfully without JAGS. Agreement with a
+Python diagnostic remains pending implementation. These references target
+the population expectations of the inspected JAGS monitor, not its particular
+finite chain sequence; a separated mixture can also violate the asymptotic
+assumptions used to interpret DIC.
