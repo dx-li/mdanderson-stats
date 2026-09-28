@@ -493,6 +493,7 @@ from .efftox_model import (
     efftox_standardize,
     fit_efftox,
 )
+from .efftox_simulation import EffToxSimulation, simulate_efftox
 from .eventchart import (
     ConvertedEvents,
     EventChart,
@@ -1285,12 +1286,14 @@ __all__ = [
     "EffToxFit",
     "EffToxContour",
     "EffToxDecision",
+    "EffToxSimulation",
     "efftox_standardize",
     "efftox_log_joint_probabilities",
     "efftox_log_likelihood",
     "efftox_predict",
     "fit_efftox",
     "efftox_decision",
+    "simulate_efftox",
     "BCHMBorrowResult",
     "BCHMCluster",
     "BCHMClusterResult",

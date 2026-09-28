@@ -1,8 +1,9 @@
 # EffTox bivariate dose finding
 
 Catalog entry 2 is **partial**. Python provides the bivariate binary response
-model, posterior fitting with explicit priors, Lp trade-off contours and dose
-selection. This is separate from BOP2's efficacy/toxicity monitoring functions.
+model, posterior fitting with explicit priors, Lp trade-off contours, dose
+selection and completed-outcome trial simulation. This is separate from BOP2's
+efficacy/toxicity monitoring functions.
 The official [EffTox entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2)
 lists version 5.2.3, modified June 24, 2026.
 [Source provenance](efftox-sources.json) records the inspected references.
@@ -138,6 +139,60 @@ rule. Final selection requires observed data. Exact utility ties go to the
 lowest dose, an explicit deterministic Python convention. An empty admissible
 set stops the trial; a nonempty set with no reachable dose is reported separately.
 
+## Trial simulation
+
+`simulate_efftox` generates completed binary cohorts from a full joint truth
+table at each physical dose. Table axes follow the count convention above:
+`truth[dose, efficacy, toxicity]`. This retains outcome association instead of
+assuming independent efficacy and toxicity. It uses the same starting-dose,
+exploration, admissibility and no-skipping rules as `efftox_decision`.
+
+```python
+from mdanderson_stats import EffToxPrior, EffToxContour, simulate_efftox
+
+simulation = simulate_efftox(
+    [1, 2, 4],
+    [
+        [[.55, .05], [.35, .05]],
+        [[.35, .10], [.45, .10]],
+        [[.20, .15], [.40, .25]],
+    ],
+    prior=EffToxPrior(
+        mean=[-1, .8, .2, 1.1, -.3, 0],
+        sd=[.9, .5, 1.1, .7, .2, 1],
+    ),
+    contour=EffToxContour.from_points(.5, .65, .7, .25),
+    efficacy_limit=.45, toxicity_limit=.30,
+    efficacy_probability=.10, toxicity_probability=.10,
+    starting_dose=1, cohorts=2, cohort_size=3,
+    trials=4, draws=16, warmup=8, chains=2, rng=2026,
+)
+print(simulation.selection_probability)  # no selection, dose 1, dose 2, dose 3
+print(simulation.mean_patients_per_dose)
+print(simulation.max_split_rhat, simulation.max_batch_mean_mcse)
+```
+
+This small example demonstrates the API; its replication and draw counts do
+not establish precise operating characteristics or adequate posterior sampling.
+Each completed cohort receives a fresh posterior fit. The last planned cohort
+uses the final-selection rule directly. Interim stops have selected dose zero;
+trials with no admissible final dose also have no selection, but reaching the
+enrollment cap does not count as an early stop.
+
+`selection_probability` and its binomial `selection_mcse` include no selection
+at index zero. `allocation_probability` is the fraction of all simulated patients
+treated at each dose, pooled across trials. `observed_joint_probability` pools
+outcomes within each dose and is `NaN` for doses never assigned. The result also
+retains trial-level counts, completed cohorts, stopping reasons and posterior
+fit/evaluation counts. Maximum defined R-hat and batch-means MCSE summarize the
+fits in each trial; undefined diagnostics for fixed coefficients remain `NaN`.
+
+With an integer `rng`, outcome generation and posterior sampling use separate
+streams. `sampler_rng` can set the latter explicitly. Supplied generators must
+have distinct underlying bit generators. NumPy seeds do not reproduce the
+Windows program's random draws. Trials, cohorts and chains run sequentially,
+and full posterior histories are discarded after each decision.
+
 ## Resource limits
 
 Inputs support 2–20 strictly increasing doses and at most 10,000 observed
@@ -154,6 +209,13 @@ parameter grids. Direct prediction batches are limited to 200,000 parameter/dose
 pairs and contour utility broadcasts to 200,000 cells, checked before numeric
 conversion and broadcast materialization. Evaluated dose codes lie within
 `[-1500,1500]`.
+
+Simulation additionally permits at most 2,000 trials, 100 cohorts and 500 patients
+per trial. Its conservative work estimate is
+`trials*(cohorts+1)*C*D*(S+W)*6`, checked against `max_total_fit_work` before
+sampling. The default and maximum budget is 20,000,000; callers may lower it.
+This bounds the requested fit dimensions, not elapsed time or the actual number
+of slice-likelihood evaluations, which the result reports separately.
 
 ## Validation and remaining scope
 
@@ -172,9 +234,18 @@ the validation machine. They include analytical extreme-logit limits and bounded
 allocation checks. This measures the focused workload, not every possible input.
 Existing CI configuration is unchanged; the full repository suite was not run.
 
+Three focused simulation checks cover fixed-prior final-dose matching, count
+and probability conservation, reproducible random streams and stopping after
+a completed cohort with a nonfixed-prior posterior update. They verify the
+simulation's accounting and decision flow, not large-simulation precision or
+native Windows random-number parity.
+These checks passed in 1.43 seconds; targeted lint, formatting and type checks
+also passed. The small public-API example above ran in 1.12 seconds with a peak
+process RSS of 114.0 MiB and no process swaps on the validation machine.
+
 This implementation takes coefficient priors as input. The elicited-probability
 and effective-sample-size calibration of
 [Thall et al. (2014)](https://pmc.ncbi.nlm.nih.gov/articles/PMC4229398/)
-remains open, as do trinary outcomes, legacy inverse-quadratic contours,
-operating-characteristic simulation and native file/report workflows. The
-Windows program's integration kernel has not been run for direct parity checks.
+remains open, as do trinary outcomes, legacy inverse-quadratic contours
+and native file/report workflows. The Windows program's integration kernel
+has not been run for direct parity checks.

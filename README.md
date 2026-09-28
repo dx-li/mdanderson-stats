@@ -1177,8 +1177,10 @@ with bounded sampling and independent R numerical references.
 
 [EffTox dose finding](docs/efftox.md) adds the bivariate efficacy/toxicity
 model, explicit Gaussian priors, bounded posterior fitting, Lp trade-off
-contours and interim/final dose selection. Published no-skipping and exploration
-rules are explicit; prior calibration and full trial simulation remain open.
+contours, interim/final dose selection and bounded completed-outcome trial
+simulation. Simulations preserve joint outcome association and report allocation,
+selection, stopping and sampler diagnostics. Published no-skipping and exploration
+rules are explicit; prior calibration and trinary outcomes remain open.
 
 [Multc Lean and Multc99 Phase IIa](docs/multc.md) add response/toxicity monitoring
 against fixed or beta-distributed historical rates, shifted comparisons, cohort

@@ -261,17 +261,17 @@ def simulate_efftox(
     outcome_rng, posterior_rng = _rng_pair(rng, sampler_rng)
 
     dose_count = int(dose_values.size)
-    dose_patients = np.zeros((repetition_count, dose_count), dtype=np.int64)
-    outcomes = np.zeros((repetition_count, dose_count, 2, 2), dtype=np.int64)
-    selected = np.zeros(repetition_count, dtype=np.int64)
-    completed = np.zeros(repetition_count, dtype=np.int64)
-    fit_count = np.zeros(repetition_count, dtype=np.int64)
-    likelihood_evaluations = np.zeros(repetition_count, dtype=np.int64)
+    dose_patients: NDArray[np.int64] = np.zeros((repetition_count, dose_count), dtype=np.int64)
+    outcomes: NDArray[np.int64] = np.zeros((repetition_count, dose_count, 2, 2), dtype=np.int64)
+    selected: NDArray[np.int64] = np.zeros(repetition_count, dtype=np.int64)
+    completed: NDArray[np.int64] = np.zeros(repetition_count, dtype=np.int64)
+    fit_count: NDArray[np.int64] = np.zeros(repetition_count, dtype=np.int64)
+    likelihood_evaluations: NDArray[np.int64] = np.zeros(repetition_count, dtype=np.int64)
     max_rhat = np.full(repetition_count, np.nan)
     max_mcse = np.full(repetition_count, np.nan)
     reasons: list[str] = []
     for trial in range(repetition_count):
-        counts = np.zeros((dose_count, 2, 2), dtype=np.int64)
+        counts: NDArray[np.int64] = np.zeros((dose_count, 2, 2), dtype=np.int64)
         decision, evaluations, rhat, mcse = _fit_decision(
             dose_values,
             counts,
