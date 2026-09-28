@@ -34,9 +34,9 @@ def _two_dose_arguments():
 
 def test_patient_randomization_uses_frozen_look_probabilities_and_replay_seeds():
     args = _two_dose_arguments()
-    assert len(
-        uaroet_parameter_names(2, 2, 2, monotone_efficacy=False, monotone_toxicity=False)
-    ) == 4
+    assert (
+        len(uaroet_parameter_names(2, 2, 2, monotone_efficacy=False, monotone_toxicity=False)) == 4
+    )
     allocation_tape = np.array([0.8, 0.8, 0.1, 0.9, 0.2, 0.8])
     result = run_uaroet_trial(
         **args,

@@ -412,9 +412,7 @@ def _run(
                 max_evaluations=min(config.max_fit_evaluations, remaining),
             )
         except (ValueError, ArithmeticError, RuntimeError) as exc:
-            raise RuntimeError(
-                f"UAROET posterior fit failed at look {i + 1} (n={look})"
-            ) from exc
+            raise RuntimeError(f"UAROET posterior fit failed at look {i + 1} (n={look})") from exc
         work = int(fit.work_evaluations)
         if work > remaining:
             raise RuntimeError("UAROET fit exceeded remaining cumulative work budget")
