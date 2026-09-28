@@ -574,8 +574,10 @@ def _run_prepared(
                     futile[idx[eligible]] = monitoring.futile[eligible]
                 if monitoring.efficacious is not None:
                     efficacious[idx[eligible]] = monitoring.efficacious[eligible]
-                if np.any(futile & efficacious):
-                    raise ValueError("an active arm cannot be futile and efficacious at one look")
+                if np.any(futile & (efficacious | final_flags)):
+                    raise ValueError(
+                        "an active arm cannot be declared futile and efficacious at one look"
+                    )
                 early_futility |= futile
                 early_efficacy |= efficacious
 

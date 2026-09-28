@@ -99,3 +99,27 @@ def test_cap_at_interim_look_is_reflected_in_look_and_terminal_ledger():
     assert first_look.final_efficacious[0] == result.final_efficacy[0]
     assert result.stop_kind[0] == "final_efficacy_at_arm_cap"
     assert not first_look.active_after[0]
+
+
+def test_cap_look_rejects_conflicting_futility_and_final_efficacy():
+    with np.testing.assert_raises_regex(ValueError, "futile and efficacious"):
+        run_plbarpo_trial(
+            true_response=[0.0],
+            prior=np.ones((1, 2)),
+            initial_active=[True],
+            candidate_order=[],
+            min_n_per_arm=[1],
+            max_n_per_arm=[1],
+            max_total_n=2,
+            look_sizes=[1, 2],
+            burn_in_per_arm=1,
+            method="barcp",
+            theta_fut=0.5,
+            pfut=0.5,
+            theta_eff=None,
+            peff=None,
+            theta_final=0.5,
+            pfinal=0.1,
+            assignment_uniforms=[0.0, 0.0],
+            outcome_uniforms=[0.9, 0.9],
+        )
