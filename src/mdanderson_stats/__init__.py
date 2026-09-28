@@ -896,6 +896,7 @@ from .randlib import RandlibGenerator
 from .randlib_multivariate import RandlibMultivariateNormal
 from .random_survival_forest import (
     RandomSurvivalForestFit,
+    RandomSurvivalForestOOB,
     RandomSurvivalForestPrediction,
     fit_random_survival_forest,
     predict_random_survival_forest,
@@ -1900,6 +1901,7 @@ __all__ = [
     "fit_survival_spline",
     "predict_survival_spline",
     "RandomSurvivalForestFit",
+    "RandomSurvivalForestOOB",
     "RandomSurvivalForestPrediction",
     "RandomSurvivalForestContour",
     "fit_random_survival_forest",

@@ -87,6 +87,11 @@ operations; they do not guarantee total application memory use.
 
 This interface covers ordinary right-censored survival with continuous numeric
 predictors. Competing risks, categorical splitting, missing-value imputation,
-out-of-bag diagnostics, variable importance and other split rules remain
+variable importance and other split rules remain
 separate work. It does not claim to reproduce the entire randomForestSRC
 package or native random stream. Catalog entry 166 remains partial.
+
+[Out-of-bag diagnostics](random-survival-oob.md) are available through
+`compute_oob=True`: per-observation held-out curves, contributor counts,
+mortality and native-convention concordance error, with explicit resource
+bounds and no in-bag fallback.

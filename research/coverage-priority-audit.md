@@ -113,5 +113,6 @@ actual posterior fits; [guide](../docs/cibolus-trials.md). Serial aggregate
 operating characteristics now add selection/stop rates, allocation and pooled
 outcome summaries, trial-clustered Monte Carlo errors and replayable seeds.
 Calendar conduct and prior calibration remain open. Numeric survival-forest
-out-of-bag predictions and source-defined variable importance are another
-substantial gap supported by cached native source; they remain unimplemented.
+out-of-bag curves and native-convention concordance error are now implemented
+and checked against unchanged native C kernels. Source-defined permutation
+importance remains a substantial gap supported by the cached native source.
