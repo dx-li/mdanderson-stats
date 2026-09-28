@@ -17,7 +17,7 @@ type IntArray = NDArray[np.int64]
 def _scalar(value: ArrayLike, name: str) -> float:
     if np.shape(value) != ():
         raise ValueError(f"{name} must be scalar")
-    return scalar(value, name)
+    return scalar(np.asarray(value).item(), name)
 
 
 def _int_owned(value: ArrayLike) -> IntArray:
