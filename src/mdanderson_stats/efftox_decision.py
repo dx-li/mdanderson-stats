@@ -12,6 +12,7 @@ from scipy.optimize import brentq
 from scipy.special import logsumexp
 
 from ._validation import FloatArray, finite
+from .efftox_legacy_contour import EffToxLegacyContour
 from .efftox_model import EffToxFit, _owned
 
 
@@ -144,7 +145,7 @@ def _tail_probability(draws: FloatArray, limit: float, *, upper: bool) -> FloatA
 
 def efftox_decision(
     fit: EffToxFit,
-    contour: EffToxContour,
+    contour: EffToxContour | EffToxLegacyContour,
     *,
     efficacy_limit: float,
     toxicity_limit: float,
@@ -163,8 +164,10 @@ def efftox_decision(
     flag applies to interim and final decisions. Final selection maximizes
     utility over the resulting admissible set without a transition constraint.
     """
-    if not isinstance(fit, EffToxFit) or not isinstance(contour, EffToxContour):
-        raise ValueError("fit and contour must be EffToxFit and EffToxContour instances")
+    if not isinstance(fit, EffToxFit) or not isinstance(
+        contour, (EffToxContour, EffToxLegacyContour)
+    ):
+        raise ValueError("fit must be EffToxFit and contour EffToxContour or EffToxLegacyContour")
     if phase not in ("interim", "final"):
         raise ValueError("phase must be interim or final")
     if skip_policy not in ("both", "escalation"):
