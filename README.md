@@ -14,6 +14,8 @@ transforms, Bayesian fixed/random-effect fitting with coefficient-specific
 variances, and reconstructed posterior curves with contrasts and simultaneous
 bands, variance functions and covariance reconstruction. Empirical-Bayes
 shrinkage calibration is available conditional on supplied variance estimates.
+Explicit coefficient or wavelet-band selection preserves original positions
+for reconstruction after fitting a reduced model.
 Variance priors and proposal settings remain explicit;
 automatic variance initialization and additional native workflows remain open.
 

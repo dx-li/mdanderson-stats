@@ -280,3 +280,23 @@ functions, and read its 138-entry catalog. Raw research downloads and local
 compiled binaries were absent. The build process peaked at 74.9 MiB with no
 reported swaps; this is distribution validation, not a whole-catalog numerical
 test or a publication claim.
+
+## Retained-coefficient selection checkpoint
+
+`wfmm_select_coefficients` selects original indices or complete partition bands,
+retaining the original order, scale and partition labels.
+`wfmm_restore_coefficients` reinserts the selected final-axis coordinates into
+the original basis, filling omitted coordinates with zero. It preserves leading
+posterior dimensions and checks the reconstructed cell product before allocation.
+This implements explicit retention metadata supported by `DIndex` and `Kstar`;
+it does not assign unverified meanings to native filter flags or energy cutoffs.
+
+The public example selected noncontiguous partitions `[0,2]`, calibrated the
+reduced coefficient model, fit posterior draws, restored the original axis and
+reconstructed finite curve summaries. It passed in 1.208 seconds with 115.4 MiB
+process peak memory and no process swaps. Omitted coefficients have no posterior
+uncertainty in this reduced model.
+
+Six focused selection/basis checks passed in 1.21 seconds. Ruff lint, format
+checks and mypy for the new module also passed. The checks include negative
+index rejection and oversized restoration; no new CI workflow was added.

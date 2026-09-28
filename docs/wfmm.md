@@ -45,6 +45,58 @@ before filtering or custom matrix operations; `max_work` can lower the default
 200,000,000-operation estimate. Wavelet transforms do not allocate a dense
 time-by-time basis matrix.
 
+## Fit selected coefficients and restore curves
+
+`wfmm_select_coefficients` retains explicit zero-based coefficient indices or
+complete `coefficient_partition` bands. Supply exactly one of `indices` and
+`partitions`. Requested indices are sorted into the original packed order;
+scale and partition labels keep their original values. For example, in a
+two-level transform, partitions `[0, 2]` keep the approximation and finest
+detail band, omitting the coarser detail band.
+
+The selection can feed both empirical-Bayes calibration and the coefficient
+model. Restore posterior draws to their original positions before summarizing
+curves. The omitted coordinates are exactly zero; this is a reduced model,
+so summaries do not include uncertainty from omitted coefficients.
+
+```python
+import numpy as np
+from mdanderson_stats import (
+    calibrate_wfmm_shrinkage, fit_wfmm_coefficients,
+    wfmm_basis, wfmm_transform, wfmm_select_coefficients,
+    wfmm_restore_coefficients, wfmm_summarize,
+)
+
+basis = wfmm_basis(8, levels=2, filter_length=2)
+curves = np.arange(48.0).reshape(6, 8) / 20
+x = np.ones((6, 1))
+selected = wfmm_select_coefficients(
+    wfmm_transform(curves, basis).coefficients, basis, partitions=[0, 2],
+)
+calibration = calibrate_wfmm_shrinkage(
+    selected.coefficients, x, random_variance=None, residual_variance=.1,
+    coefficient_partition=selected.coefficient_partition,
+)
+fit = fit_wfmm_coefficients(
+    selected.coefficients, x, prior=calibration.prior,
+    residual_variance=.1, estimate_variances=False,
+    coefficient_partition=selected.coefficient_partition,
+    coefficient_scale=selected.coefficient_scale,
+    draws=32, warmup=16, chains=2, rng=np.random.default_rng(21),
+)
+restored = wfmm_restore_coefficients(fit.coefficients, selected)
+summary = wfmm_summarize(restored, basis)
+assert restored.shape == (2, 32, 1, 8)
+assert np.all(restored[..., [2, 3]] == 0)
+```
+
+Selection and restoration preserve arbitrary leading dimensions and bound
+input/output arrays to 2,000,000 cells. Restoration also supports coefficient
+variance arrays; zero-filled variances describe the retained subspace only.
+The native guide records retained indices as `DIndex` and their count as
+`Kstar`. Its automatic energy filtering and native high/low-pass flag
+conventions remain unverified; this API uses explicit indices or bands.
+
 ## Fit functional fixed and random effects
 
 The following small example illustrates the complete explicit-prior workflow.
