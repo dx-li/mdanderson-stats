@@ -1,13 +1,11 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `bc3b2a5` adds stratified interval-censored
-PH fitting and predictions, plus BARD BF-BLRM calendar replay with separate
-toxicity/response follow-up. Local `master` contains this validated
-checkpoint. Fresh
-read-only checks still show GitHub `master` and `main` at `45b6e307`; their
-documentation/CI commits are already merged locally. The newer statistical
-additions have not been confirmed published. See the final section for the
-current package and connection checks.
+Latest verified package checkpoint: `9053738` adds CiBolus complete-outcome
+cohort and aggregate simulation plus PRT explicit-input calendar replay. Local
+`master` contains this validated checkpoint. Fresh read-only checks still show
+GitHub `master` and `main` at `45b6e307`; their documentation/CI commits are
+already merged locally. The newer statistical additions have not been
+confirmed published. See the final section for the current package checks.
 
 The user explicitly requested that all completed work be pushed to GitHub and
 that stable programs be available on `master`. The public repository is
@@ -343,3 +341,52 @@ connector approval rejection still prevent publication. No rejected write
 transport was retried. Refreshed packages and the verified all-refs bundle
 preserve this checkpoint locally. The next PRT calendar investigation remains
 in an isolated Luna checkout and is excluded until implemented and validated.
+
+
+## CiBolus simulation and PRT calendar checkpoint
+
+CiBolus now generates joint response-category/toxicity observations and runs
+complete-outcome cohort trials. Independent base-R quadrature agrees on 36
+joint-category rows to `5.27e-16`; six patient records and 18 regimen/look rows
+match, with expected utilities within `2.84e-14`. Final selection at an untried
+regimen and permanent first-cohort stopping are covered. A free-prior path
+reproduces two sequential actual fitter calls exactly. Three focused trial
+tests pass; the root reference run takes 0.947 seconds after imports, at
+117.50 MiB and zero reported swaps.
+
+CiBolus aggregate simulation adds selection/no-selection and stop rates,
+mean enrollment/allocation and pooled observed outcome rates with Monte Carlo
+errors. Per-trial seeds permit exact replay. Three focused checks pass in
+1.64 seconds, including count conservation, pooled ratio errors and shared
+budget rejection before RNG use. Diagnostics retain infinite Rhat rather than
+silently discarding it. Full posterior histories are discarded between fits;
+resource limits apply cumulatively across the aggregate run.
+
+PRT explicit-input replay integrates the actual posterior/projection with
+cohort enrollment, interval follow-up, suspension, queued/declined arrivals
+and final selection. All 40 independent R ledger rows agree, including
+internal and final endpoint cases. Eleven focused checks pass in 2.16 seconds;
+the integrated root ledger/timing check passes in 0.022 seconds after imports,
+with 119.23 MiB peak RSS and zero swaps. Review corrected tape-exhaustion
+metadata, elapsed-duration rounding and a pre-existing predictive mass-roundoff
+failure. Invalid covariance projections still raise. Per-analysis work is
+reserved before calculation, with shared likelihood and work caps.
+
+Wheel and source builds at `90537385c0bdb207e117ac79a56db9524bade589` pass.
+The wheel verification checks all 1,465 public exports and exact committed
+bytes for 532 source/data files, retained licenses/notices, all 138 catalog
+entries, and three examples in the new/expanded PRT and CiBolus guides.
+It takes 11.586 seconds, peaks at 122.81 MiB and reports zero swaps. Targeted
+lint, formatting and type checks pass. The full numerical suite was not rerun;
+no CI workflow or large simulation was added. Catalog counts remain
+63 implemented / 66 partial / 9 pending: native source and workflow gaps are
+still explicit, and no full-coverage claim is made.
+
+Local `master` is fast-forwarded to this verified code plus the present audit.
+Fresh read-only GitHub checks still show `master` and `main` at `45b6e307`;
+the verified code contains 78 newer commits. Publication remains blocked by
+the recorded shell DNS failure and connector approval rejection. The rejected
+write route was not retried or bypassed. Updated local packages and a verified
+all-refs bundle preserve the checkpoint; they do not make it available on
+GitHub. The next OOB survival-forest implementation is delegated to Luna in
+an isolated checkout and is excluded from this package until validated.
