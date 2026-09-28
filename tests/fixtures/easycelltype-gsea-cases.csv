@@ -1,0 +1,9 @@
+"case","score_type","exponent","min_size","max_size"
+"signed","std",1,1,500
+"positive","pos",1,1,500
+"negative","neg",1,1,500
+"unweighted","std",0,1,500
+"squared","std",2,1,500
+"size_filter","std",1,2,2
+"duplicates_ties","std",1,1,500
+"all_zero","std",1,1,500
