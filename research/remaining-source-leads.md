@@ -17,8 +17,9 @@ coverage must verify each distribution's parameterization and interval method.
 The first exact Weibull, log-normal and log-logistic AFT checkpoint is tracked
 in [the parametric-survival audit](parametric-survival-audit.md). The verified
 native source is `flexsurv` 2.3.2 at
-`2aae4c8ac56823d0eac30c1a9ad654ac599b5938`. Generalized-gamma and spline families
-remain separate work. Its small native generalized-gamma implementation and
+`2aae4c8ac56823d0eac30c1a9ad654ac599b5938`. The generalized-gamma public workflow
+is now integrated at `7abe64e`; spline implementation remains in progress.
+Its small native generalized-gamma implementation and
 headers are saved as exact source bytes under ignored `research/raw/flexsurv`:
 `src/gengamma.cpp` (`34c799553ec1f74aa587854148bcf95834f607df`) and
 `src/gengamma.h` (`e363f768ccf60786998b12972b5f80d44b036e69`), plus their
@@ -87,9 +88,10 @@ are additional native features that need distinct coverage tracking.
 The small C++ file supplies basis and first-derivative evaluations with no
 headers beyond Rcpp. R density and survival functions plus analytical
 first/second derivatives are available in the retrieved sources. A small
-native-kernel fitting harness is therefore feasible without installing the
-whole package; no spline compilation, native execution or Python implementation
-is claimed yet.
+native-kernel fitting harness has now executed without installing the
+whole package: six model fits, joint information/covariance and surface
+references are committed at `ee0b3b5` and described in the
+[spline audit](survival-spline-audit.md). Python implementation is in progress.
 
 Two numerical requirements need deliberate treatment: evaluate the linear
 tails of the natural spline without subtracting huge cubics, and verify that
@@ -169,3 +171,22 @@ The FLECS90 detail page remains unavailable to the reader. Search results point
 to a FLECS-to-Fortran-90 translator; that secondary description is insufficient
 to implement its grammar. Retrieve the catalog archive or another primary
 source before deciding its full parser/translation contract.
+
+## ComPAS platform design
+
+Entry 140 is Tang, Shen and Yuan's *ComPAS: A Bayesian drug combination platform
+trial design with adaptive shrinkage*, Statistics in Medicine 38(7):1120–1134,
+[DOI 10.1002/sim.8026](https://doi.org/10.1002/sim.8026),
+[PMID 30419609](https://pubmed.ncbi.nlm.nih.gov/30419609/). The
+[authors' software site](https://www.trialdesign.org/) links this same design.
+The primary abstract describes adaptive borrowing through Bayesian model
+selection and hierarchical models, with dropping, graduating and adding
+combinations. A generic independent beta-binomial platform would not implement
+that contract.
+
+On 2026-09-27, both forms of the institutional app URL and the publisher full-text
+URL were unavailable through the reader. The author-site launch link exposed
+only a JavaScript shell. A targeted GitHub source search for the DOI returned
+no matches. The exact likelihood, model-selection priors, posterior algorithm,
+operating rules and native references still need retrieval before implementation;
+entry 140 remains pending.
