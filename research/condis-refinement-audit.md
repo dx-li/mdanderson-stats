@@ -134,6 +134,29 @@ coordinate first, with coordinates `[sqrt(0.99999), 1, 1]` and those same
 responses, yields 10. A simple sort followed by an inclusive distance-tolerance
 mask would miss this insertion-order distinction.
 
+## Lasso convergence reference
+
+The wide-data lasso fixture exposes the effect of glmnet's default coordinate
+stopping threshold. `tools/reference_condis_lasso_convergence.R` repeats the
+unchanged native Gaussian kernel with `thresh=1e-15`, fixing the penalty path
+to exactly the original reported lambda values. It checks the full sample and
+each original held-out fold, and saves all candidate predictions and tuning
+scores in `tests/fixtures/condis-lasso-converged.json`.
+
+For the standardized objective defined above, the maximum KKT violation is
+`|Z_j' residual/n - t sign(b_j)|` on nonzero coefficients and
+`max(|Z_j' residual/n|-t, 0)` on zero coefficients. At the final full-sample
+path point, the native default violation is 2.8601e-4 and the tighter native
+violation is 2.8774e-8. The objective decreases from 0.017867233952541028 to
+0.017865457505021089. These certificates independently identify default-native
+stopping error under collinearity; matching that error is not a correctness
+requirement for the Python implementation.
+
+The tighter reference, including the original reference setup, completed in
+6.57 seconds with 300.3 MiB peak resident memory and zero swaps. It installs
+nothing and does not change a fitting formula, penalty path or random fold
+assignment. The original default-tolerance references are retained separately.
+
 ## Source leads for the remaining learners
 
 [`condis-remaining-sources.json`](condis-remaining-sources.json) records eight
