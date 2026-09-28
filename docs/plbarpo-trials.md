@@ -11,14 +11,25 @@ import numpy as np
 from mdanderson_stats import run_plbarpo_trial
 
 trial = run_plbarpo_trial(
-    [1.0, 0.5, 0.0], prior=np.ones((3, 2)),
-    initial_active=[True, True, False], candidate_order=[2],
-    min_n_per_arm=[1, 1, 1], max_n_per_arm=[2, 2, 2],
-    max_total_n=6, look_sizes=[2, 4, 6], burn_in_per_arm=1,
-    method="barn2n", theta_fut=0.5, pfut=0.99,
-    theta_eff=0.5, peff=0.99, theta_final=0.5, pfinal=0.8,
+    [1.0, 0.5, 0.0],
+    prior=np.ones((3, 2)),
+    initial_active=[True, True, False],
+    candidate_order=[2],
+    min_n_per_arm=[1, 1, 1],
+    max_n_per_arm=[2, 2, 2],
+    max_total_n=6,
+    look_sizes=[2, 4, 6],
+    burn_in_per_arm=1,
+    method="barn2n",
+    theta_fut=0.5,
+    pfut=0.99,
+    theta_eff=0.5,
+    peff=0.99,
+    theta_final=0.5,
+    pfinal=0.8,
     assignment_uniforms=[0.0, 0.9, 0.0, 0.9, 0.0, 0.9],
-    outcome_uniforms=[0.2, 0.8, 0.2, 0.2, 0.2, 0.2], rng=2026,
+    outcome_uniforms=[0.2, 0.8, 0.2, 0.2, 0.2, 0.2],
+    rng=2026,
 )
 np.testing.assert_array_equal(trial.assignments, [0, 1, 0, 2, 1, 2])
 np.testing.assert_array_equal(trial.assigned, [2, 2, 2])
