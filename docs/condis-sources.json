@@ -18,7 +18,7 @@
     "https://doi.org/10.1016/j.jbi.2022.104117",
     "https://pubmed.ncbi.nlm.nih.gov/35801895/"
   ],
-  "scope": "Independent base CondiS imputation with exact segment integration for native linear interpolation or explicit KM step interpolation. Native CondiS 0.1.2 function executed with survival for numerical comparisons. CondiS-X Gaussian linear, ridge, lasso and nearest-neighbor refinements implemented. The latter three include source-verified tuning and refit workflows, validated using caret 7.0-1 and glmnet 4.1-10 kernels with explicit shared folds; a tighter native lasso reference isolates default stopping error. Four other learners and interactive input/report workflows remain pending.",
+  "scope": "Independent base CondiS imputation with exact segment integration for native linear interpolation or explicit KM step interpolation. Native CondiS 0.1.2 function executed with survival for numerical comparisons. Six CondiS-X refinements are implemented: Gaussian linear, ridge, lasso, nearest-neighbor, neural and radial epsilon-SVR. Ridge/lasso/kNN tuning and refits use source-verified caret 7.0-1 and glmnet 4.1-10 references with shared folds and tighter native lasso stopping. Neural objective/gradient and early optimizer steps are validated against nnet 7.3-19; longer nonconvex trajectories can differ materially. Radial SVM tuning/refits agree with tightened kernlab 0.9-33 references, with KKT and primal/dual checks. Additional source records are in research/condis-nnet-sources.json and docs/condis-svm-sources.json. Random forest, gradient boosting and remaining app input/report/prediction workflows are still pending.",
   "learner_reference_sources": [
     {
       "repository": "https://github.com/cran/caret",
