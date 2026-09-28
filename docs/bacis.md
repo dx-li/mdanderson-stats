@@ -222,6 +222,44 @@ model. Integration diagnostics describe numerical accuracy, not those modeling
 assumptions. The [source audit](../research/bacis-dic-audit.md) records the exact
 native definition and independent base-R reference calculations.
 
+## Complete one-trial summary
+
+`bacis_one_trial` fits both stages once, computes the variance-matched ESS from
+the retained draws, and assembles the native one-trial table:
+
+```python
+from mdanderson_stats import bacis_one_trial
+
+trial = bacis_one_trial([2], [25], draws=256, warmup=0, chains=2, seed=153)
+for label, values in zip(trial.row_labels, trial.report_values, strict=True):
+    print(label, values)
+assert trial.values.shape == (10, 1)
+assert trial.values[5, 0] == 3 / 27  # exact singleton posterior mean
+```
+
+Rows contain the two response-tail probabilities, latent high-cluster
+probability, high-cluster and efficacy indicators, posterior and observed
+response rates, response and patient counts, and equivalent sample size.
+`values` retains full precision; `report_values` is rounded to three decimal
+places for display. Both decisions use strict comparisons before rounding.
+The readonly result also retains the original observations, `fit` and
+`equivalent_sample_size`, including their diagnostics.
+
+This wrapper defaults to `precision_rate=2`, matching the CRAN one-trial
+function; `bacis_fit` defaults to the app's displayed value of 10. The sampler
+defaults remain the package's bounded 2,000 retained draws, 1,000 warmup
+iterations and two sequential chains. Supply priors and sampling settings
+explicitly when comparing analyses. Singleton response summaries and latent
+classification probabilities use the package's exact calculations rather than
+the native finite-chain estimates. ESS uses the retained response draws.
+The one-trial table does not implicitly calculate DIC or sample latent theta.
+
+An undefined variance match raises the same error as
+`bacis_equivalent_sample_size`; the report does not fabricate an ESS to fill
+that row. This is a numerical result table, without native file-format or
+random-stream equivalence. The [workflow audit](../research/bacis-trial-audit.md)
+records the source row order and checks.
+
 ## Scope and numerical checks
 
 Inputs support 1–100 subgroups, each with 1–10,000 patients. Classification
@@ -239,7 +277,7 @@ probabilities are compared independently. Exact Beta references check singleton
 summaries; a concentrated-hyperprior limit checks that both borrowing clusters
 use their own correct centers against independent one-dimensional integration.
 
-Latent-variable density plots,
-native file/report formats and operating-characteristic simulation remain open.
+Latent-variable density plots, native file formats and
+operating-characteristic simulation remain open.
 The mathematical references validate the declared model, not native random
 streams, convergence for arbitrary priors or complete application parity.

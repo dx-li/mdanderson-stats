@@ -1189,6 +1189,8 @@ Its classification-model DIC uses deterministic posterior integration, with the
 native Plummer penalty and full uncertainty about subgroup classification.
 The latent classification posterior has analytical density, tails and moments,
 with independent sampling that needs no MCMC.
+`bacis_one_trial` combines the model and equivalent sample size in the native
+ten-row numerical summary, retaining full precision alongside rounded output.
 
 [BCHM subgroup borrowing](docs/bchm.md) adds patient-weighted clustering,
 co-clustering similarities and a separate similarity-weighted hierarchy for each

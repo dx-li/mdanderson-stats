@@ -4285,7 +4285,8 @@
         "Within-cluster logistic-normal hierarchical borrowing with separate low/high centers, native singleton Beta(1,1) fallback, response-tail decisions and bounded posterior sampling with diagnostics.",
         "Native fixed-response-count beta-variance equivalent sample size with all admissible roots, observed-rate selection, variance residuals and explicit correction of the zero-response native clamping defect.",
         "Deterministic first-stage classification-model DIC with full binomial deviance, the native Plummer population penalty, both posterior mixture components and numerical integration diagnostics.",
-        "Analytical latent-theta posterior density, both probability tails and moments, plus bounded independent posterior sampling from the exact half-normal mixture."
+        "Analytical latent-theta posterior density, both probability tails and moments, plus bounded independent posterior sampling from the exact half-normal mixture.",
+        "Complete one-trial numerical workflow composing classification, borrowing and variance-matched ESS, with native ten-row ordering, strict unrounded decisions, original data and separate three-decimal output."
       ],
       "validation": [
         "Official application v1.0.1.0, help and author bacistool 1.0.0 source pinned in docs/bacis-sources.json; source conflicts and displayed-versus-CRAN prior defaults documented.",
@@ -4293,7 +4294,8 @@
         "Eight independent base-R equivalent-sample-size references cover ordinary and large counts, two admissible roots, all-response and zero-response cases; source defect and mathematical domain documented in research/bacis-ess-audit.md.",
         "Twenty independent base-R posterior-integral references validate DIC across native-example, unequal-size, diffuse-prior, extreme-outcome and separated-mixture cases; pinned JAGS definition and covariance reduction in research/bacis-dic-audit.md.",
         "513 independent base-R latent posterior curve rows and 57 moment rows, infinite endpoints, small complementary probabilities and seeded component-mass checks; research/bacis-theta-audit.md.",
-        "Pending: density plots, report/data formats and operating-characteristic simulation; native random-stream parity is not claimed. See docs/bacis.md."
+        "Native one-trial row-source audit, singleton posterior/binomial-tail references, strict cutoff equality, and a bounded five-subgroup borrowing workflow; tests/test_bacis_trial.py and research/bacis-trial-audit.md.",
+        "Pending: density plots, native file formats and paper operating-characteristic simulation; native random-stream parity is not claimed. See docs/bacis.md."
       ]
     },
     {
