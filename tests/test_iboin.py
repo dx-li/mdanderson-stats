@@ -1,6 +1,7 @@
 from math import comb
 
 import numpy as np
+import pytest
 from scipy.special import logsumexp
 
 from mdanderson_stats import BOINDesign, IBOINDesign
@@ -120,3 +121,40 @@ def test_robust_prior_preserves_or_discards_history_as_native_guide_specifies():
     np.testing.assert_array_equal(
         native_table.deescalate_min[3:], [[1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4]] * 2
     )
+
+
+def test_extra_safety_uses_strict_lowest_dose_count_without_changing_elimination():
+    design = IBOINDesign(
+        [0.1, 0.25, 0.5],
+        [0, 0, 0],
+        target=0.25,
+        elimination_probability=0.99,
+        extra_safe=True,
+        safety_offset=0.05,
+    )
+    # At n=3 the lowered-cutoff posterior is exceeded but the strict n1 > 3
+    # condition is false, and ordinary .99 elimination is also false.
+    boundary = design.next_dose([3, 0, 0], [2, 0, 0], 1)
+    assert boundary.action != "stop_safety"
+    assert not boundary.eliminated.any()
+    # At n=4 the extra-safe rule stops, without pretending ordinary elimination
+    # occurred at the .99 cutoff.
+    extra = design.next_dose([4, 0, 0], [3, 0, 0], 1)
+    assert extra.action == "stop_safety" and extra.next_dose is None
+    assert not extra.eliminated.any()
+    ordinary = IBOINDesign([0.1, 0.25, 0.5], [0, 0, 0], target=0.25, elimination_probability=0.99)
+    eliminated = ordinary.next_dose([3, 0, 0], [3, 0, 0], 1)
+    assert eliminated.action == "stop_safety" and eliminated.eliminated.all()
+    with pytest.raises(ValueError, match="safety_offset"):
+        IBOINDesign([0.1, 0.25, 0.5], [0, 0, 0], target=0.25, safety_offset=0.9)
+
+
+def test_precision_stop_requires_threshold_and_a_stay_decision():
+    design = IBOINDesign([0.1, 0.3, 0.5], [0, 0, 0], target=0.3)
+    precision = IBOINDesign([0.1, 0.3, 0.5], [0, 0, 0], target=0.3, early_stop_patients=3)
+    assert design.next_dose([3, 0, 0], [1, 0, 0], 1).action == "stay"
+    stopped = precision.next_dose([3, 0, 0], [1, 0, 0], 1)
+    assert stopped.action == "stop_precision" and stopped.next_dose is None
+    # A move is not converted to a precision stop, even above the threshold.
+    moving = precision.next_dose([3, 0, 0], [0, 0, 0], 1)
+    assert moving.action == "escalate" and moving.next_dose == 2
