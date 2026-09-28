@@ -1,0 +1,43 @@
+# CiBolus complete-outcome trial contract
+
+The [core source audit](cibolus-audit.md) records the existing likelihood,
+posterior, joint response-category/toxicity predictions and allocation rules.
+The [author-hosted paper](https://odin.mdacc.tmc.edu/~pfthall/main/Biometrics_IAtPA_2011.pdf),
+Section 3.3, chooses the first cohort's regimen explicitly, updates after cohort
+data, and subsequently maximizes posterior mean utility among acceptable
+regimens subject to concentration-only no-skip. Final selection removes the
+concentration restriction. Equations 11–12 define the conditional-toxicity and
+response screens; the existing decision component implements them.
+
+The observed-data model supplies a joint distribution over bolus response,
+detected response intervals and failure, crossed with binary toxicity.
+Generating directly from these cells preserves endpoint dependence and uses
+the interval upper endpoint for the delivered treatment and toxicity model.
+A complete-outcome cohort simulation does not require inventing a continuous
+response-time approximation or independent toxicity generator.
+
+The intended scope assumes both outcomes are known at each cohort boundary.
+The motivating application observes toxicity later than infusion/response;
+calendar timing and pending-outcome conduct remain outside this component.
+Truth parameters, priors, utility, grids and sampling precision are explicit.
+No native executable or random-stream equivalence is claimed.
+
+## Independent references
+
+`tools/reference_cibolus_trial.R` uses base-R numerical integration of the
+continuous response hazard and interval densities. Fixed priors isolate
+allocation and observation conversion from posterior Monte Carlo variation.
+It produces 36 joint-category rows, six patient records, 18 regimen/look rows
+and two trial summaries. The generator completed in 0.18 seconds with warnings
+treated as errors.
+
+The first four-patient path uses uniforms `0, .2, .6, .95`, starts at regimen
+indices `(0,0)`, and moves to `(1,1)` for the second cohort. Outcomes include
+bolus response, two detected response intervals, and failure with toxicity.
+The unrestricted final recommendation is the untried regimen `(2,1)`. The
+second path keeps the same truth while fixing the prior baseline toxicity
+parameter at three; it stops after the first cohort without a recommendation.
+
+Python comparisons remain pending while the isolated Luna implementation is
+in progress. These references do not validate arbitrary prior convergence,
+calendar timing or operating characteristics over large simulated populations.

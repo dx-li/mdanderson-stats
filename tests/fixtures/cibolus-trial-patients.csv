@@ -1,0 +1,7 @@
+"scenario","patient","cohort","concentration_index","bolus_index","uniform","category","toxicity"
+"safe_final_unrestricted",0,1,0,0,0,0,0
+"safe_final_unrestricted",1,1,0,0,0.2,2,0
+"safe_final_unrestricted",2,2,1,1,0.6,3,0
+"safe_final_unrestricted",3,2,1,1,0.95,5,1
+"unsafe_after_first_cohort",0,1,0,0,0,0,0
+"unsafe_after_first_cohort",1,1,0,0,0.2,2,0
