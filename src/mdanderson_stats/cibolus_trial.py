@@ -130,10 +130,10 @@ class CiBolusTrial:
     early_stopped: bool
 
 
-def _finite_summary_max(summary: ChainSummary, name: str) -> float | None:
+def _summary_max_defined(summary: ChainSummary, name: str) -> float | None:
     values = np.asarray(getattr(summary, name))
-    finite = values[np.isfinite(values)]
-    return float(np.max(finite)) if finite.size else None
+    defined = values[~np.isnan(values)]
+    return float(np.max(defined)) if defined.size else None
 
 
 def _fit_boundary(
@@ -399,8 +399,8 @@ def simulate_cibolus_trial(
                 decision,
                 fit.likelihood_evaluations,
                 fit.work_units,
-                _finite_summary_max(fit.parameter_summary, "split_rhat"),
-                _finite_summary_max(fit.utility_summary, "split_rhat"),
+                _summary_max_defined(fit.parameter_summary, "split_rhat"),
+                _summary_max_defined(fit.utility_summary, "split_rhat"),
                 float(np.nanmax(fit.utility_summary.batch_mean_mcse)),
             )
         )
