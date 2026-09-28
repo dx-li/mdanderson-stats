@@ -1198,6 +1198,13 @@ from .uaroet import (
 )
 from .uaroet_decision import UAROETAllocation, uaroet_allocation
 from .uaroet_fit import UAROETFit, fit_uaroet
+from .uaroet_simulation import (
+    UAROETSimulation,
+    UAROETTrial,
+    UAROETTrialStep,
+    run_uaroet_trial,
+    simulate_uaroet,
+)
 from .uboin import UBOINPosterior, uboin_allocation, uboin_posterior
 from .uboin_conduct import UBOINDecision, UBOINDesign, UBOINSelection
 from .uboin_simulation import UBOINSimulation, simulate_uboin, uboin_gumbel_probabilities
@@ -1579,7 +1586,12 @@ __all__ = [
     "UAROETAllocation",
     "UAROETFit",
     "UAROETProbabilities",
+    "UAROETSimulation",
+    "UAROETTrial",
+    "UAROETTrialStep",
     "fit_uaroet",
+    "run_uaroet_trial",
+    "simulate_uaroet",
     "uaroet_allocation",
     "uaroet_logits",
     "uaroet_parameter_names",

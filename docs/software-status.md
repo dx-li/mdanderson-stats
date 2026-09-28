@@ -156,7 +156,7 @@ some legacy adaptations retain commercial-use restrictions.
 | TTEConduct | [desktop #63](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/63) | See catalog feature and validation notes |
 | Two-arm BOP2: Bayesian Optimal Phase II two-arm Design | [online #150](https://biostatistics.mdanderson.org/shinyapps/rBOP2) | See catalog feature and validation notes |
 | U2OET | [desktop #77](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/77) | See catalog feature and validation notes |
-| UAROET | [desktop #92](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/92) | See catalog feature and validation notes |
+| UAROET | [desktop #92](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/92) | [Guide](uaroet.md), [trial simulation](uaroet-trials.md) |
 | WFMM | [desktop #70](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/70) | [Guide](wfmm.md) |
 
 ## Pending

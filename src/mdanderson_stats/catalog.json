@@ -3085,12 +3085,14 @@
         "Saturated logistic continuation marginals, Gaussian copula, optional monotone dose increments and stable independent-outcome log probabilities.",
         "Explicit normal/truncated-normal priors, serial posterior fitting with fixed or inferred correlation, direct prior sampling, retained draws and chain diagnostics.",
         "Global near-optimality and probability-best criteria, strict toxicity monitoring, good-outcome adaptive randomization, no-skipping escalation and explicit final-selection policies.",
-        "Bounded retained memory and combined likelihood/rectangle work; docs/uaroet.md."
+        "Bounded retained memory and combined likelihood/rectangle work; docs/uaroet.md.",
+        "Complete-outcome trial replay and serial operating-characteristic simulation with explicit look/tolerance schedules, patient-level randomization, independent outcome/allocation/posterior streams, compact diagnostics and cumulative work limits; docs/uaroet-trials.md."
       ],
       "validation": [
         "Independent base-R integration of six copula scenarios, including published radiation-therapy probabilities, and reduced logistic-normal posterior moments; tests/test_uaroet_reference.py.",
         "Focused monotone logits, limiting copulas, prior-only fitting, all-tied-best events, good-outcome weights and final-policy checks; tests/test_uaroet.py. Small inferred-correlation fit completed with finite draws.",
-        "Native prior files, automatic pseudo-trial/ESS calibration, complete trial simulation and native executable/report parity remain open."
+        "Independent base-R trial paths and posterior utility integration at five analysis looks, plus paired-outcome/count conservation and early-stop versus final-no-selection checks; tools/reference_uaroet_trial.R and tests/test_uaroet_simulation.py.",
+        "Native prior files, automatic pseudo-trial/ESS calibration, delayed outcomes, adaptive posterior precision and native executable/report parity remain open."
       ]
     },
     {

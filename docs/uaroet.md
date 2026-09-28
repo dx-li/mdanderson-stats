@@ -4,8 +4,9 @@ UAROET chooses doses using ordinal efficacy and toxicity outcomes, elicited
 utilities, and Bayesian adaptive randomization. The [official desktop entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/92)
 identifies the [Thall and Nguyen (2012) method](https://odin.mdacc.tmc.edu/~pfthall/main/JBS_AR_Utility2012.pdf).
 This is an independent implementation of its logistic continuation model and
-Gaussian copula. Catalog entry 92 remains partial while prior calibration,
-complete trial simulation and native input/output workflows remain open.
+Gaussian copula, with [complete-outcome trial simulation](uaroet-trials.md).
+Catalog entry 92 remains partial while prior calibration and native input/output
+workflows remain open.
 
 ## Probability model
 
@@ -185,5 +186,5 @@ for posterior moments. See the [audit](../research/uaroet-audit.md) and
 
 The original executable has not been run for parity. Native prior files,
 automatic pseudo-trial/ESS calibration, adaptive posterior precision control,
-full trial simulation and native report formats remain separate work. Original
+delayed-outcome simulation and native report formats remain separate work. Original
 vendor code, executable files and papers are not bundled.

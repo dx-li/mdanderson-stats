@@ -1299,9 +1299,11 @@ native application settings and output equivalence remain open.
 models joined by a Gaussian copula, explicit-prior posterior fitting and
 utility-based adaptive randomization. Safety, near-optimality and probability
 of being best determine acceptable doses; good-outcome probabilities determine
-allocation weights. Independent R integration checks the probability model and
-a reduced posterior. Prior calibration, full trial simulation and native
-workflow equivalence remain open.
+allocation weights. [Complete-outcome trial replay and simulation](docs/uaroet-trials.md)
+add explicit analysis schedules, patient-level randomization and compact
+selection/allocation summaries with bounded serial posterior fits. Independent
+R integration checks the model, a reduced posterior and reference trial paths.
+Prior calibration, delayed outcomes and native workflow equivalence remain open.
 
 [Dose Schedule Finder](docs/dose-schedule.md) adds a time-to-toxicity model for
 choosing dose and administration schedule together. Triangular hazards account
