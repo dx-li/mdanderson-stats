@@ -1003,6 +1003,12 @@ from .stplan_discrete import (
     stplan_responder_normal_approximation_power,
     stplan_retention_probability,
 )
+from .stplan_discrete_significance import (
+    STPLAN_MAX_SIGNIFICANCE,
+    STPLANDiscreteSignificance,
+    stplan_exact_binomial_significance,
+    stplan_exact_poisson_significance,
+)
 from .stplan_historical_planning import (
     STPLANHistoricalAllocationPlan,
     stplan_historical_allocation_plan,
@@ -1265,6 +1271,10 @@ __all__ = [
     "stplan_fisher_exact_approx_power",
     "stplan_exact_binomial_power",
     "stplan_exact_poisson_power",
+    "STPLAN_MAX_SIGNIFICANCE",
+    "STPLANDiscreteSignificance",
+    "stplan_exact_binomial_significance",
+    "stplan_exact_poisson_significance",
     "stplan_normal_one_sample_power",
     "stplan_normal_two_sample_power",
     "stplan_welch_two_sample_power",

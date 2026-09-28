@@ -5,6 +5,18 @@ biostatistics software catalog](https://biostatistics.mdanderson.org/SoftwareDow
 The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
+The [software coverage index](docs/software-status.md) lists all 138 entries:
+63 implemented, 66 partial, and 9 pending. Each method's guide explains its
+supported scope, validation and remaining limitations.
+
+With Python 3.12 or newer, install a downloaded checkout using
+`python -m pip install .`; use `python -m pip install '.[plot]'` for optional
+figures. Development setup is described below.
+
+Original contributions use the [MIT License](LICENSE.md). Adapted material
+retains its [upstream terms](THIRD_PARTY_NOTICES.md), including commercial-use
+conditions for some legacy routines; the complete distribution is mixed-license.
+
 The implementation uses NumPy broadcasting and compiled SciPy numerical kernels.
 Numba will be considered for measured simulation bottlenecks. This is an independent
 project and is not an MD Anderson release.
@@ -1378,7 +1390,9 @@ Fortran references and independent R sums/integration check numerical behavior,
 including corrected matched/Poisson mixtures and piecewise-survival integrals.
 [Bounded inverse planning](docs/stplan-planning.md) solves for sample sizes,
 effects, significance, and timing, with integer attainment searches and K-group
-allocation. Native automatic planning workflows, some discrete inverse questions,
+allocation. [Exact count-test significance planning](docs/stplan-significance.md)
+selects binomial and Poisson critical regions with explicit power attainment.
+Native automatic planning workflows, other discrete inverse questions,
 and reporting remain open. [Survival input conversions](docs/stplan-survival-inputs.md)
 cover medians, survival percentages, historical person-time, and piecewise curves.
 The [historical-control planner](docs/stplan-historical-planning.md) also finds

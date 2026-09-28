@@ -139,6 +139,9 @@ integer attainment searches examine every candidate in the requested direction,
 preserving the nonmonotonic behavior of exact tests. Shared group sizes, indexed
 K-group parameters, and proportional total-size planning are supported.
 The result includes completed forward inputs and the achieved probability.
+[Exact count-test significance planning](stplan-significance.md) selects the
+smallest attainable binomial or Poisson rejection region meeting a target power,
+and reports actual power when the target cannot be attained.
 [Historical-control allocation planning](stplan-historical-planning.md) jointly
 searches accrual duration and new-control allocation, retaining the source's
 survival model and checking boundary allocations explicitly.
@@ -182,8 +185,7 @@ procedures, with explicit treatment of the two native empty-region sentinels.
 The second probe is `tools/reference_stplan_discrete.f90`. Original software and
 source files are not redistributed.
 
-Still open: native automatic inverse bounds and branch discovery, discrete
-significance planning by critical-region selection, integer allocation of
+Still open: native automatic inverse bounds and branch discovery, integer allocation of
 proportional K-group totals, and native session/report workflows.
 The old matched-pairs option is present in the archive
 but commented out of the current main menu; it will be tracked separately from

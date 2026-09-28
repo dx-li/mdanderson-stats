@@ -49,6 +49,11 @@ when a null probability, significance level, or event exposure changes its
 rejection boundary. Choose a different attainable target or use an appropriate
 integer attainment search when equality is not the design question.
 
+For exact one-sample binomial and Poisson significance planning, use the
+[critical-region planners](stplan-significance.md). They minimize attained
+significance subject to achieving at least the requested power and report
+unattainable targets explicitly.
+
 Positive brackets are searched on a logarithmic scale, preserving relative
 precision when time or measurement units change. The forward methods' input,
 tail-accuracy, and resource limits continue to apply.
@@ -171,8 +176,7 @@ normal effect/SD cases record the native approximation discussed above. The
 source's original tolerances explain small differences in numerical roots.
 Original source is not redistributed. See [provenance](stplan-sources.json).
 
-Native automatic bound/branch selection, discrete significance planning by
-critical-region selection, integer allocation of proportional K-group totals,
+Native automatic bound/branch selection, integer allocation of proportional K-group totals,
 the inactive matched-pairs procedure, and session/report workflows remain open.
 Alternative survival-curve inputs are available through the
 [survival input converters](stplan-survival-inputs.md).

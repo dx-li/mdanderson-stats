@@ -50,3 +50,24 @@ only the forward boundary at the failed search limit. Consumers must check
 These references verify the native statistical planning contract. They do not
 establish automatic branch discovery for other STPLAN inverses, K-group integer
 allocation or native session/report compatibility.
+
+## Python integration
+
+The public binomial and Poisson planners now select critical regions in integer
+space and return actual significance, power, the source significance limit and
+an explicit attainment flag. All eight native reference rows were checked;
+the failed binomial case returns the actual best allowed region (alpha .36,
+power .64), rather than the native stale power field.
+
+Review found two Poisson edge cases: a fixed support bracket truncated tiny
+requested powers, and positive rate/exposure products could underflow to zero.
+Adaptive CDF/SF bracketing and an explicit arithmetic failure address these.
+A subsequent review caught exclusion of the feasible one-event upper region;
+the bracket now starts at the always-infeasible zero-event cutoff. Its regression
+uses the independent identity `P(X>=1)=-expm1(-mean)`.
+
+Six focused significance tests pass, including all implemented regression cases.
+Both public guide examples execute, and additional targets 1e-30 and 1e-100
+attain the requested power while the next cutoff does not. Focused Ruff,
+formatting and mypy checks pass. Checks use one numerical thread and small
+scalar calculations; no large simulation or CI expansion was introduced.
