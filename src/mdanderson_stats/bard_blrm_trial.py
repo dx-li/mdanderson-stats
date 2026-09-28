@@ -669,6 +669,10 @@ def run_bard_blrm_trial(
                         snapshot(event_time),
                     )
                 )
+                if conduct and terminal_reason is None:
+                    decision_after_cohort(event_time)
+                    if terminal_reason is not None:
+                        return
 
     # Local helper avoids rebinding enrollment_stop_time in the nested closure.
     def nonlocal_enrollment_stop(time: float) -> None:

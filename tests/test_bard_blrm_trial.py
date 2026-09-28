@@ -224,3 +224,29 @@ def test_titration_keeps_blrm_safety_boundary_and_waits_for_grade2_with_single_p
     assert [p.dose for p in unsafe.patients] == [1]
     assert unsafe.stop_reason == "boundary_policy_stop"
     assert unsafe.boundary_event == "unsafe_current_dose"
+
+
+def test_single_patient_cohort_decision_follows_grade2_only_exit_without_refit():
+    grade2 = np.zeros((6, 3), dtype=bool)
+    grade2[0, 0] = True
+    grade2[2, 1] = True
+    result = _titration_run(
+        arrival_times=np.arange(6, dtype=float),
+        potential_toxicities=np.zeros((6, 3), dtype=bool),
+        potential_responses=np.zeros((6, 3), dtype=bool),
+        potential_grade2_toxicities=grade2,
+        dlt_assessment_delays=np.ones((6, 3)),
+        response_assessment_delays=np.zeros((6, 3)),
+        grade2_assessment_delays=np.full((6, 3), 2.0),
+        cohort_size=1,
+        max_escalation_patients=3,
+        rng=np.random.default_rng(165),
+    )
+    assert [(p.arrival_index, p.dose, p.role) for p in result.patients] == [
+        (0, 1, "titration"),
+        (2, 2, "titration"),
+        (4, 2, "escalation"),
+    ]
+    assert result.titration_exit_reason == "second_grade2"
+    assert result.fit_count == 4  # prior plus the three distinct DLT updates
+    assert any(step.kind == "cohort_decision" and step.time == 4.0 for step in result.steps)
