@@ -1,6 +1,7 @@
 """TOP delayed binary-response posterior decisions and effective-size boundaries."""
 
 from dataclasses import dataclass
+from math import prod
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -41,6 +42,7 @@ class TOPBinaryDesign:
     prior: ArrayLike | None = None
     looks: ArrayLike | None = None
     suspension: str = "table"
+    timing_probabilities: ArrayLike | None = None
 
     def __post_init__(self) -> None:
         p, c, g = (
@@ -67,6 +69,23 @@ class TOPBinaryDesign:
         object.__setattr__(self, "cutoff_scale", c)
         object.__setattr__(self, "gamma", g)
         object.__setattr__(self, "prior", prior)
+        if self.timing_probabilities is None:
+            timing = np.full(3, 1.0 / 3.0, dtype=float)
+        else:
+            if np.shape(self.timing_probabilities) != (3,):
+                raise ValueError(
+                    "timing_probabilities must be three nonnegative masses summing to one"
+                )
+            timing = finite(self.timing_probabilities, "timing_probabilities").copy()
+        if (
+            timing.shape != (3,)
+            or np.any(timing < 0)
+            or not np.isclose(timing.sum(), 1.0, rtol=0, atol=32 * np.finfo(float).eps)
+        ):
+            raise ValueError("timing_probabilities must be three nonnegative masses summing to one")
+        timing /= timing.sum()
+        timing.flags.writeable = False
+        object.__setattr__(self, "timing_probabilities", timing)
         object.__setattr__(self, "looks", looks)
 
     def _cutoff(self, n: ArrayLike) -> FloatArray:
@@ -91,8 +110,9 @@ class TOPBinaryDesign:
     ) -> TOPBinaryDecision:
         """Batched decisions at scheduled looks, with summed pending time weights.
 
-        Each pending weight is conditional time-to-response CDF in [0,1]. Uniform
-        timing uses follow-up/window. The beta posterior is TOP's approximation.
+        Each pending weight is the configured conditional time-to-response CDF
+        in [0,1]. Uniform timing reduces exactly to follow-up/window. The beta
+        posterior is TOP's approximation.
         Final decisions wait for all outcomes. Suspension precedes futility when
         observed responses do not already satisfy the complete-data go boundary.
         """
@@ -112,9 +132,12 @@ class TOPBinaryDesign:
             )
         a, b = np.asarray(self.prior)
         effective = n - m + w
-        alpha, beta = a + r, b + effective - r
+        alpha = a + r
+        # Keep integer failures separate from the prior and fractional weights:
+        # adding a tiny prior to n before subtracting r can cancel it away.
+        beta = b + (n - m - r) + w
         probability = betaincc(alpha, beta, self.null_rate)
-        complete_probability = betaincc(a + r, b + n - r, self.null_rate)
+        complete_probability = betaincc(a + r, b + (n - r), self.null_rate)
         cutoff = self._cutoff(n)
         if np.any(~np.isfinite(probability)) or np.any(~np.isfinite(complete_probability)):
             raise ArithmeticError("posterior beta probability evaluation failed")
@@ -138,11 +161,35 @@ class TOPBinaryDesign:
         pending_followup: ArrayLike,
         window: float,
     ) -> TOPBinaryDecision:
-        """Uniform conditional response timing; pending patients occupy the last axis."""
-        ess = tite_effective_sample_size(nonpending, pending_followup, window)
+        """Evaluate pending patients with the configured conditional timing mixture."""
+        mixture = np.asarray(self.timing_probabilities)
+        uniform = bool(np.all(mixture == mixture[0]))
+        ess = tite_effective_sample_size(
+            nonpending,
+            pending_followup,
+            window,
+            trimester_probabilities=None if uniform else mixture,
+        )
         observed = count(nonpending, "nonpending")
         pending = ess.pending_weights.shape[-1]
         return self.evaluate(observed + pending, responses, pending, ess.pending_weights.sum(-1))
+
+    def timing_weight(self, followup_fraction: ArrayLike) -> FloatArray:
+        """Conditional event-time CDF for follow-up fractions in [0,1]."""
+        shape = np.shape(followup_fraction)
+        cells = prod(shape) if shape else 1
+        if cells > 2_000_000:
+            raise ValueError("followup_fraction exceeds the two-million-cell limit")
+        fraction = finite(followup_fraction, "followup_fraction")
+        if np.any((fraction < 0) | (fraction > 1)):
+            raise ValueError("followup_fraction must lie in [0,1]")
+        mixture = np.asarray(self.timing_probabilities)
+        if np.all(mixture == mixture[0]):
+            return _owned(fraction)
+        weight = np.zeros_like(fraction, dtype=float)
+        for third in range(3):
+            weight += mixture[third] * np.clip(3 * fraction - third, 0.0, 1.0)
+        return _owned(np.clip(weight, 0.0, 1.0))
 
     def boundaries(self) -> TOPBinaryBoundaries:
         """Exact ESS crossing by response count; stop strictly above the crossing.
@@ -159,7 +206,7 @@ class TOPBinaryDesign:
         for i, n in enumerate(looks):
             cutoff = float(self._cutoff(n))
             responses = np.arange(n + 1)
-            complete = betaincc(a + responses, b + n - responses, self.null_rate)
+            complete = betaincc(a + responses, b + (n - responses), self.null_rate)
             accepted = np.flatnonzero(complete >= cutoff)
             go[i] = accepted[0] if accepted.size else n + 1
             for r in responses:
@@ -169,7 +216,7 @@ class TOPBinaryDesign:
                     roots[i, r] = -np.inf
                 else:
                     roots[i, r] = brentq(
-                        lambda size: betaincc(a + r, b + size - r, self.null_rate) - cutoff,
+                        lambda size: betaincc(a + r, b + (size - r), self.null_rate) - cutoff,
                         float(r),
                         float(n),
                         xtol=1e-11,
