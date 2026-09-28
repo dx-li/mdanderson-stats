@@ -2665,7 +2665,8 @@
         "Bounded serial elliptical-slice posterior fitting, direct prior draws without observations, dose-by-schedule risk predictions and chain diagnostics",
         "Strict posterior overdose screening and nearest-target selection with explicit no-skip conventions, initial allocation and final-selection rules",
         "Bounded calendar trial replay with inverse cumulative-hazard events, as-of-arrival posterior updates, actual administration histories, permanent interim termination, complete final follow-up and full replay tapes",
-        "Aggregate operating characteristics/calibration, delayed low-grade-to-DLT classification and native file/report equivalence remain pending"
+        "Serial aggregate operating characteristics with replayable event/sampler seed pairs, selection and stopping rates, mean allocation/enrollment/duration, pooled observed toxicity, trial-clustered Monte Carlo errors and cumulative work bounds",
+        "Automatic calibration, delayed low-grade-to-DLT classification, within-patient adaptation and native file/report equivalence remain pending"
       ],
       "validation": [
         "tests/test_dose_schedule.py",
@@ -2680,7 +2681,8 @@
         "docs/dose-schedule.md",
         "docs/dose-schedule-trials.md",
         "docs/dose-schedule-sources.json",
-        "research/dose-schedule-audit.md"
+        "research/dose-schedule-audit.md",
+        "Three focused aggregate checks verify recorded-seed replay, count and clustered-error reconstruction, shared-budget rejection before RNG use and duration scaling by 1e200; tests/test_dose_schedule_simulation.py, docs/dose-schedule-simulation.md and research/dose-schedule-aggregate-audit.md"
       ]
     },
     {
@@ -2712,7 +2714,8 @@
         "Native five-column patient snapshots, toxicity-only marginal likelihoods and posterior fitting, and fixed-size next-patient cohort continuation/early closure with enrollment caps",
         "Calendar-based single-trial simulation with exponential arrivals, uniform observation delays, pending snapshots, cached posterior summaries, no-enrollment stopping, complete final follow-up and explicit acceptable/tried final-ranking conventions",
         "Multi-trial selection, stopping, enrollment, duration and normalized Rselect/Rtreat summaries with Monte Carlo errors, retained diagnostics and compatible-design/independent-seed checks",
-        "Explicit-coefficient GAO raw-dose ordinal probabilities with endpoint-specific positive link shapes, shared positive interaction, Gaussian-copula joint cells, grouped/partial likelihoods and expected utility; GAO fitting and native prior-vector interpretation remain pending"
+        "Explicit-coefficient GAO raw-dose ordinal probabilities with endpoint-specific positive link shapes, shared positive interaction, Gaussian-copula joint cells, grouped/partial likelihoods and expected utility",
+        "Explicit-prior GAO posterior fitting in named normal coordinates, including raw intercepts/slopes, log link/interaction and Fisher-z association, complete and toxicity-only counts, retained chain/draw probabilities, diagnostics and bounded likelihood work; native prior mapping and GAO calibration/calendar integration remain pending"
       ],
       "validation": [
         "Independent R implementation of published equations: 549 joint cells across five cases, 2-4 categories, three models, two centerings and FGM association endpoints",
@@ -2726,7 +2729,8 @@
         "Toxicity-only posterior agrees with independent logistic-normal integration; pending assignments, open-cohort precedence and closure checked; all three native 60-patient example files read successfully",
         "End-to-end pending/cohort/follow-up and toxicity-only stop tests; nine-patient source-scenario pilot with independently reconstructed interim availability counts; native final-selection parity and multi-trial operating characteristics remain unverified",
         "Hand-calculated three-trial operating-characteristic summaries and MCSEs, streamed simulation aggregation and undefined constant-utility scores; full published operating-characteristic reproduction remains pending",
-        "440 independent R GAO joint cells and 15 grouped likelihoods across binary/ordinal categories, link shapes, negative/positive Gaussian correlation and limiting copulas; tools/reference_u2oet_gao.R, docs/u2oet-gao.md and research/u2oet-gao-audit.md"
+        "440 independent R GAO joint cells and 15 grouped likelihoods across binary/ordinal categories, link shapes, negative/positive Gaussian correlation and limiting copulas; tools/reference_u2oet_gao.R, docs/u2oet-gao.md and research/u2oet-gao-audit.md",
+        "Independent base-R GAO posterior quadrature for a free raw efficacy intercept and Fisher-z association: 38 summaries within 1.028 estimated Monte Carlo errors and maximum split Rhat 1.00347; four focused fitter checks pass. tools/reference_u2oet_gao_fit.R, tests/fixtures/u2oet-gao-posterior.csv, docs/u2oet-gao-fit.md and research/u2oet-gao-fit-audit.md"
       ]
     },
     {

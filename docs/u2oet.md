@@ -10,7 +10,8 @@ validation remain pending. Gaussian
 scenario construction and native scenario/dose/utility readers are available;
 Patient snapshots, toxicity-only likelihoods and next-patient cohort decisions
 are also available. [GAO probabilities and likelihoods](u2oet-gao.md) use explicit
-raw-dose coefficients and a Gaussian copula; GAO fitting remains pending.
+raw-dose coefficients and a Gaussian copula; [GAO fitting](u2oet-gao-fit.md)
+now supports explicit normal-prior coordinates and partial outcomes.
 
 The sources are the [official U2OET 1.8 archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/U2OET/U2OET_V1.8.zip),
 its user guide and the [author-hosted paper](https://odin.mdacc.tmc.edu/~pfthall/main/JRCCS_2017_ph12_2agent_utility.pdf)
@@ -113,8 +114,8 @@ a fixed reference table; R is not a runtime or CI dependency.
 
 Remaining coverage includes:
 
-- GAO fitting and native prior interpretation (explicit GAO probabilities and
-  likelihoods are supplied separately).
+- Native GAO prior interpretation and integration into calibration/calendar
+  drivers (explicit-prior GAO fitting is supplied separately).
 - Validation of complete trial operating characteristics.
   Explicit-prior fitting, pseudo-trial centers and prior ESS are supplied below.
 - Adaptive MCMC precision targets and native final-selection validation.
@@ -295,8 +296,9 @@ Three focused numerical checks validate the sampler:
 
 These checks validate the target and sampling implementation in the tested
 settings. They do not establish convergence for other priors/data or reproduce
-the published trial operating characteristics. GAO remains pending; toxicity-only
-outcomes and calendar simulation are supplied below. Prior calibration is now supplied below.
+the published trial operating characteristics. GAO has a separate
+[explicit-prior fitter](u2oet-gao-fit.md). Toxicity-only outcomes, calendar
+simulation and prior calibration for PDS/CMI/hybrid are supplied below.
 
 ## Prior draws, information and pseudo-trial calibration
 
@@ -699,7 +701,7 @@ All interim usable-outcome counts were independently reconstructed from the
 retained true outcomes and observation times. This is a workflow check, not a
 reproduction of the paper's 3000-trial operating characteristics.
 
-Still pending: GAO model fitting, adaptive posterior precision control,
+Still pending: GAO integration into this calendar driver, adaptive posterior precision control,
 first/new/old-dose cohort-size semantics, complete native configuration/report
 workflows and validation of
 native final selection.

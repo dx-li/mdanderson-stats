@@ -104,7 +104,9 @@ quantile at time `1e-50` checks an extreme small-probability case. These check
 the event generator; existing posterior references validate the reused model.
 They do not establish native executable or random-stream parity.
 
-Aggregate operating characteristics, the paper example's delayed classification
-of persistent low-grade toxicity, and native files/reports remain open. The
-replay assigns a fixed regimen to each patient; it does not invent a policy for
-within-patient dose or schedule adaptation.
+[Aggregate operating characteristics](dose-schedule-simulation.md) now run
+these trials serially with replayable seeds and Monte Carlo error summaries.
+Automatic calibration, the paper example's delayed classification of persistent
+low-grade toxicity, and native files/reports remain open. The replay assigns
+a fixed regimen to each patient; within-patient dose or schedule adaptation
+requires a separately specified policy.

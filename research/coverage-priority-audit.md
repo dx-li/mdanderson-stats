@@ -34,14 +34,15 @@ display features, but do not represent an absent ordination method.
 The subsequent triage distinguishes native workflow gaps from new mathematical
 extensions. Dose Schedule Finder calendar replay and PLBARPO control operating
 characteristics are integrated, along with Multc Lean pending-outcome calendar
-replay. U2OET GAO probabilities and likelihoods are also integrated; fitting
-and native prior interpretation remain separate gaps.
+replay. Dose Schedule Finder aggregate OCs and explicit-prior U2OET GAO
+fitting are also integrated. Native GAO prior interpretation and integration
+into its calibration/calendar drivers remain separate gaps.
 These additions build on implemented posterior calculations and supply
 missing trial workflows or named models.
 
 | Entry | Concrete missing work | Available source / qualification |
 | --- | --- | --- |
-| Dose Schedule Finder #75 | Aggregate OCs/calibration and delayed low-grade-to-DLT classification after the integrated calendar replay | [Calendar guide](../docs/dose-schedule-trials.md), `research/dose-schedule-audit.md`, [2007 primary paper](https://odin.mdacc.tmc.edu/~pfthall/main/ClinTrials%20dose-sched%202007.pdf). Within-patient adaptation policies and native files/reports remain open. |
+| Dose Schedule Finder #75 | Automatic calibration and delayed low-grade-to-DLT classification after integrated calendar replay and aggregate OCs | [Calendar guide](../docs/dose-schedule-trials.md), `research/dose-schedule-audit.md`, [2007 primary paper](https://odin.mdacc.tmc.edu/~pfthall/main/ClinTrials%20dose-sched%202007.pdf). Within-patient adaptation policies and native files/reports remain open. |
 | PRT #69 | Native timing/operating-characteristic replication and projection safeguards after explicit-input calendar replay | Cached primary paper, conduct and simulation guides under `research/raw/PRT`; [replay guide](../docs/prt-calendar.md). The literal projection can produce invalid probabilities, and the Appendix-B timing generator remains unavailable. |
 | Multc Lean #12 | Generated timing and aggregate duration simulation after integrated explicit-timing replay | The logistics guide establishes look-ahead suspension; the replay implements it. The user guide does not give a distinct toxicity ascertainment-time law; do not invent native timing assumptions. |
 | STPLAN #41 | No missing native integer-allocation feature | Native 4.5 `SOURCE/abink.f` reads double-precision proportions/group sizes, and `SOURCE/qbink.f90` returns `grpsz(i)=n*prop(i)`. There is no native rounding/remainder rule. Existing fractional Python sizing matches that contract; integer allocation would be a separate extension. |
@@ -62,7 +63,7 @@ a generic method with a similar name.
 | Entry | Remaining named method or workflow | Qualification / evidence |
 | --- | --- | --- |
 | SYNERGY #18 | Four 2007 parametric response surfaces and 2008 wild-bootstrap intervals | Current semiparametric surface fitting is present; [guide](../docs/synergy-surface.md). |
-| U2OET #77 | GAO fitting and native prior interpretation | Explicit-coefficient GAO probabilities and Gaussian likelihoods are now available in the [GAO guide](../docs/u2oet-gao.md). PDS/CMI/hybrid fitting, calendar replay and aggregate OCs already exist; [guide](../docs/u2oet.md). |
+| U2OET #77 | Native GAO prior interpretation and GAO calibration/calendar integration | Explicit-coefficient GAO probabilities, Gaussian likelihoods and [explicit-prior posterior fitting](../docs/u2oet-gao-fit.md) are available. PDS/CMI/hybrid fitting, calendar replay and aggregate OCs already exist; [guide](../docs/u2oet.md). |
 | BARD #165 | Expansion, stage-two calendar timing, native per-arm quota behavior and calibration | BF-BLRM model fitting, calendar replay with optional accelerated titration and stage-two continuation now connect eligible carryover, minimization and final OBD selection under a combined enrollment target. Hidden native settings need explicit caller configuration or further source evidence; [continuation guide](../docs/bard-two-stage.md), [titration guide](../docs/bard-titration.md). |
 | SurvivalContour #166 | Five neural prediction/learning workflows and interval-model bootstrap uncertainty | Ordinary/stratified right-censored Cox, AFT/splines, numeric forests, interval PH/competing-risk and shared-coefficient stratified interval-PH are available. The five named neural learners require distinct backend contracts; [contour guide](../docs/survival-contour.md), [stratified interval guide](../docs/interval-survival-stratified.md). |
 | Proportional Density #78 | Full-data disease-curve bootstrap, unequal-censoring calibration and bootstrap parameter uncertainty | Existing failure-only bootstrap is present. The downloaded archive has no bootstrap code; distinguish paper workflows/extensions from missing native routines; [guide](../docs/proportional-density.md). |

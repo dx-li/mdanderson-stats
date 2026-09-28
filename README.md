@@ -1065,7 +1065,9 @@ normalized utility performance with Monte Carlo errors. Native final-selection
 parity and published operating-characteristic validation remain pending.
 [GAO model probabilities](docs/u2oet-gao.md) additionally support explicit
 raw-dose coefficients, a shared interaction and Gaussian-copula likelihoods;
-GAO fitting and native prior interpretation remain open.
+[GAO posterior fitting](docs/u2oet-gao-fit.md) adds explicit normal-prior
+coordinates, complete/partial outcomes and retained chain diagnostics. Native
+prior interpretation and GAO calibration/calendar integration remain open.
 
 [CATBUB](docs/catbub.md) provides categorical-utility posterior comparisons,
 Dirichlet Monte Carlo, a success-only binary comparator, sequential multinomial
@@ -1356,8 +1358,10 @@ selection support study analysis. Independent R integration checks hazards,
 histories and a reduced posterior. [Calendar trial replay](docs/dose-schedule-trials.md)
 adds event generation, as-of-arrival posterior updates, actual administration
 histories and final follow-up, with separate replayable random streams and
-shared work bounds. Aggregate calibration, delayed toxicity classification and
-native workflows remain open.
+shared work bounds. [Aggregate simulations](docs/dose-schedule-simulation.md)
+report selection, stopping, allocation, observed toxicity and duration with
+Monte Carlo errors and replayable event/sampler seed pairs. Automatic
+calibration, delayed toxicity classification and native workflows remain open.
 
 [CiBolus](docs/cibolus.md) models immediate and subsequent response to a bolus
 plus continuous infusion, with response-dependent toxicity. Exact and interval

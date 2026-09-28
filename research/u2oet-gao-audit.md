@@ -17,8 +17,9 @@ The existing FGM probability kernel is not used for GAO's joint distribution.
 The U2OET 1.8 user guide identifies model type 2 as GAO and describes generic
 pseudo-trial prior calibration, but it does not establish the native GAO
 prior-vector coordinate ordering and transformations. The archive's vector
-lengths do not establish those meanings. Native priors, GAO posterior fitting,
-and native fitting/calibration parity remain pending.
+lengths do not establish those meanings. Native priors and native fitting/
+calibration parity remain pending. The subsequent [fitting audit](u2oet-gao-fit-audit.md)
+documents the separate explicit Python prior convention now implemented.
 
 ## Independent evidence and numerical scope
 
@@ -64,6 +65,6 @@ the current model as though they establish the native executable's contract.
 The archived four-category mean vector contains enough values to warrant
 investigating this distinction, but its length alone does not identify ordering,
 transformations or constraints. A faithful native GAO fitter still requires
-that mapping; an explicit-prior fitter for the 2017 model would be a separately
-declared implementation choice. This source finding narrows the next audit and
-does not change the existing probability API or its validation claim.
+that mapping. The separately declared [explicit-prior fitter](../docs/u2oet-gao-fit.md)
+now supports the 2017 model. This does not change the probability API or
+establish a native prior mapping.

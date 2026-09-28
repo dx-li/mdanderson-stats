@@ -522,6 +522,10 @@ from .dose_schedule import (
 from .dose_schedule_decision import DoseScheduleDecision, dose_schedule_decision
 from .dose_schedule_fit import DoseScheduleFit, fit_dose_schedule
 from .dose_schedule_prior import DoseSchedulePrior, dose_schedule_moment_prior
+from .dose_schedule_simulation import (
+    DoseScheduleOperatingCharacteristics,
+    simulate_dose_schedule_operating_characteristics,
+)
 from .dose_schedule_trial import (
     DoseScheduleTrial,
     DoseScheduleTrialPatient,
@@ -1249,6 +1253,7 @@ from .u2oet_decision import (
 )
 from .u2oet_fit import U2OETFit, fit_u2oet, u2oet_parameter_names
 from .u2oet_gao import U2OETGAOMarginal, u2oet_gao_probabilities
+from .u2oet_gao_fit import U2OETGAOFit, fit_u2oet_gao, u2oet_gao_parameter_names
 from .u2oet_patients import (
     U2OETPatientDecision,
     U2OETPatients,
@@ -1444,6 +1449,8 @@ __all__ = [
     "fit_dose_schedule",
     "dose_schedule_decision",
     "DoseScheduleTrial",
+    "DoseScheduleOperatingCharacteristics",
+    "simulate_dose_schedule_operating_characteristics",
     "DoseScheduleTrialPatient",
     "DoseScheduleTrialStep",
     "run_dose_schedule_trial",
@@ -1767,6 +1774,9 @@ __all__ = [
     "u2oet_probabilities",
     "U2OETGAOMarginal",
     "u2oet_gao_probabilities",
+    "U2OETGAOFit",
+    "fit_u2oet_gao",
+    "u2oet_gao_parameter_names",
     "u2oet_standardize",
     "AccflfData",
     "read_accflf_data",

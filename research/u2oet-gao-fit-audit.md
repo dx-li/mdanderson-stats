@@ -37,3 +37,25 @@ summaries (parameter means, centered second moments, association means and
 joint probability cells) within 1.028 Monte Carlo standard errors; maximum
 split-Rhat was 1.00347. The reference is validation of this explicit Python
 prior convention, not a native-prior comparison.
+
+## Reproducible reference and resource check
+
+`tools/reference_u2oet_gao_fit.R` generates the two posterior references in
+`tests/fixtures/u2oet-gao-posterior.csv`. It evaluates the published binary
+margins and conditional-normal rectangles directly, then compares 64- and
+128-node Gaussian quadrature; both refinements differ by less than `2e-9`.
+The R generator passed with warnings treated as errors in 0.792 seconds.
+
+The Python comparison uses two chains, 300 warmup and 1,500 retained draws
+per case with dispersed starts and fixed seeds 77031/77032. It compares
+parameter mean, centered second moment, mean correlation and all 16 mean
+joint cells in each case. Maximum discrepancy was 1.027181 estimated Monte
+Carlo standard errors. The check took 22.530 seconds after imports, peaked
+at 112.98 MiB and reported zero swaps, with numerical libraries limited to
+one thread. The portable comparison is `tools/check_u2oet_gao_fit.py`.
+
+Four focused worker tests pass in 2.68 seconds, including independent reduced
+quadrature, exact point-mass priors, storage/work preflight before RNG use,
+initial-state consistency and representable interior association. Targeted
+Ruff formatting/lint, mypy and diff checks pass. No broad numerical suite,
+new CI workflow or large simulation was added.
