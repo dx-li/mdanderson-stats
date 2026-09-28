@@ -93,9 +93,10 @@ movement, backfill eligibility and final MTD selection with explicit boundary
 statuses. The [BF-BLRM calendar replay](bard-blrm-trials.md) supplies stage-one
 cohort and backfill scheduling with explicit arrivals, outcomes and assessment
 delays, evaluable-patient caps and complete follow-up after enrollment stops.
-The integrated stage-one/stage-two calendar simulator,
-accelerated-titration/expansion options, stage-two cap handling, calibration, and native
-reports remain open. Existing BF-BOIN components provide separate stage-one
+[Stage-two continuation](bard-two-stage.md) carries eligible stage-one patients
+into allocation and final selection under the paper's inclusive total target.
+Accelerated-titration/expansion options, stage-two calendar timing, native per-arm
+quota interpretation, calibration and native reports remain open. Existing BF-BOIN components provide separate stage-one
 functionality; this addition does not claim the full BARD workflow is complete.
 
 ## Numerical validation and sources

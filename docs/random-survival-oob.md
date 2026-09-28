@@ -60,3 +60,50 @@ observation matrix. The [source audit](../research/random-survival-forest-audit.
 records exact agreement with 16 native concordance cases and 264 independently
 reconstructed native-kernel curve values. These checks do not establish
 native full-forest random-stream equivalence or confidence intervals.
+
+## Permutation importance
+
+`permutation_random_survival_forest_importance` measures the increase in OOB
+concordance error after shuffling one feature within each tree's OOB rows.
+It requires the original training times, event indicators and covariates in
+the original row order. A compact fingerprint verifies these inputs without
+retaining a second training-data matrix in the fit.
+
+Continuing the example above:
+
+```python
+from mdanderson_stats import permutation_random_survival_forest_importance
+
+importance = permutation_random_survival_forest_importance(
+    fit, time, event, x, block_size=5, random_state=1772,
+)
+assert importance.block_count == 2
+assert importance.ignored_tree_indices.tolist() == [10, 11]
+assert importance.importance.shape == (1,)
+print(importance.importance)
+```
+
+Within each complete tree block, predictions are averaged before computing
+baseline and perturbed errors. Importance averages their differences across
+blocks with defined errors. Positive values indicate worse predictions after
+permutation; negative values are retained. Blocks without comparable OOB pairs
+are excluded, and `valid_block_count` exposes how many remain. If none remain,
+importance is `NaN`. The incomplete final block is excluded explicitly and its
+zero-based tree indices are returned.
+
+The Python default `block_size=None` uses all trees as one block. The native
+randomForestSRC default for explicit permutation importance is a block size of
+10; supply that value to select the same block convention. Its default
+`importance=True` instead uses anti-split importance, which this API does not
+implement. Smaller blocks and a single whole-forest block are different
+estimators. `feature_indices` optionally selects distinct zero-based columns.
+
+Supply either `random_state` or a generator through `rng`. Random permutations
+are drawn in block, feature, then tree order, including for constant features.
+The result retains baseline errors, perturbed errors, block differences and
+valid-block counts. Work limits apply before permutation, and pair comparisons
+use row-sized temporary vectors. The independent native-kernel reference checks
+whole-forest, three-tree and single-tree blocks, including an ignored tail,
+an undefined block and zero importance for a constant feature. Native RNG
+equivalence, anti-split/random importance and importance confidence intervals
+remain outside this implementation.

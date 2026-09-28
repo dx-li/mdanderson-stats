@@ -1228,8 +1228,11 @@ add one-step dose movement, backfill eligibility and final MTD selection.
 [BF-BLRM calendar replay](docs/bard-blrm-trials.md) combines those components
 with explicit arrival/outcome/delay tapes, pending backfill, compact posterior
 diagnostics and complete follow-up after enrollment stops.
-Priors, safety pooling weights and tie policies are explicit; the integrated
-trial simulator and native reports remain open.
+[Stage-two continuation](docs/bard-two-stage.md) carries eligible stage-one
+patients into covariate balancing, counts them toward the total enrollment
+target, and connects new assignments to final OBD selection. Priors, safety
+pooling weights and tie policies are explicit; titration, expansion,
+stage-two calendar timing and native reports remain open.
 
 [TITE-BOIN12 AL methods](docs/tite-boin12.md) add patient-level handling of
 pending toxicity and efficacy, joint utility posteriors and interim dose
@@ -1424,6 +1427,8 @@ trees, separately averaged Kaplan–Meier survival and Nelson–Aalen hazards,
 and contours from fitted forests. Sequential tree growth, sparse leaf curves
 and explicit work limits bound computation. Optional [out-of-bag diagnostics](docs/random-survival-oob.md)
 report held-out survival/hazard curves, contributor counts and concordance error.
+Permutation importance adds per-tree OOB shuffling and blockwise error increases,
+with explicit counts for usable blocks and omitted tail trees.
 [Interval-censored proportional-hazards models](docs/interval-survival.md)
 fit mixed exact, interval, left- and right-censored observations with a
 nonparametric Turnbull baseline. Predictions and continuous-covariate contours

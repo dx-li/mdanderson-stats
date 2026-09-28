@@ -86,6 +86,6 @@ ties, response timing, cap closure and final eligibility. Four focused worker
 checks and a separate mathematical review also pass; see the
 [source and validation audit](../research/bard-blrm-audit.md).
 The [calendar replay](bard-blrm-trials.md) combines these decisions with
-posterior fitting and explicitly supplied outcomes and delays. Integrated
-stage-one/stage-two conduct, accelerated titration and expansion options
-remain open.
+posterior fitting and explicitly supplied outcomes and delays. [Stage-two
+continuation](bard-two-stage.md) integrates eligible carryover and complete
+outcomes. Accelerated titration, expansion and stage-two calendar timing remain open.

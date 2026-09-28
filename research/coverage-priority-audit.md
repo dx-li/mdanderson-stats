@@ -63,7 +63,7 @@ a generic method with a similar name.
 | --- | --- | --- |
 | SYNERGY #18 | Four 2007 parametric response surfaces and 2008 wild-bootstrap intervals | Current semiparametric surface fitting is present; [guide](../docs/synergy-surface.md). |
 | U2OET #77 | GAO fitting and native prior interpretation | Explicit-coefficient GAO probabilities and Gaussian likelihoods are now available in the [GAO guide](../docs/u2oet-gao.md). PDS/CMI/hybrid fitting, calendar replay and aggregate OCs already exist; [guide](../docs/u2oet.md). |
-| BARD #165 | Integrated stages with titration/expansion, stage-two caps and calibration | BF-BLRM model fitting, dose/backfill decisions and explicit-outcome stage-one calendar replay now join covariate minimization and OBD selection. Hidden native settings need explicit caller configuration or further source evidence; [stage-two guide](../docs/bard.md), [calendar guide](../docs/bard-blrm-trials.md). |
+| BARD #165 | Titration/expansion, stage-two calendar timing, native per-arm quota behavior and calibration | BF-BLRM model fitting, stage-one calendar replay and stage-two continuation now connect eligible carryover, minimization and final OBD selection under a combined enrollment target. Hidden native settings need explicit caller configuration or further source evidence; [continuation guide](../docs/bard-two-stage.md), [calendar guide](../docs/bard-blrm-trials.md). |
 | SurvivalContour #166 | Five neural prediction/learning workflows and interval-model bootstrap uncertainty | Ordinary/stratified right-censored Cox, AFT/splines, numeric forests, interval PH/competing-risk and shared-coefficient stratified interval-PH are available. The five named neural learners require distinct backend contracts; [contour guide](../docs/survival-contour.md), [stratified interval guide](../docs/interval-survival-stratified.md). |
 | Proportional Density #78 | Full-data disease-curve bootstrap, unequal-censoring calibration and bootstrap parameter uncertainty | Existing failure-only bootstrap is present. The downloaded archive has no bootstrap code; distinguish paper workflows/extensions from missing native routines; [guide](../docs/proportional-density.md). |
 | BOIN12 #148 | Two-stage mode and unresolved 3+3 run-in precedence | Tradeoff-to-utility mapping now supports the existing posterior/decision/OBD/simulation workflow. Multilevel endpoints are marked under development in the cached app. Nonadditive joint RDS native support remains unverified; [guide](../docs/boin12.md). |
@@ -114,5 +114,16 @@ operating characteristics now add selection/stop rates, allocation and pooled
 outcome summaries, trial-clustered Monte Carlo errors and replayable seeds.
 Calendar conduct and prior calibration remain open. Numeric survival-forest
 out-of-bag curves and native-convention concordance error are now implemented
-and checked against unchanged native C kernels. Source-defined permutation
-importance remains a substantial gap supported by the cached native source.
+and checked against unchanged native C kernels. Explicit permutation importance
+is also implemented, with independent native-kernel comparisons covering whole-
+forest and smaller blocks, omitted tail trees and undefined block errors.
+Categorical forest splits, missing-value handling, alternative splitting and
+native anti-split importance remain open.
+
+BARD stage-two continuation now includes eligible stage-one patients at the
+chosen dose pair in both allocation history and the total enrollment target,
+then applies final OBD selection. Independent base-R ledgers verify four
+continuations. Accelerated-titration sequencing is defined in the cached guide,
+but needs an explicit Python assessment-timing convention. Expansion has
+unresolved cap-counting and response-eligibility differences between the app
+help and paper; these are not silently substituted.

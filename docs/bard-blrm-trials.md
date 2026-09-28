@@ -3,8 +3,9 @@
 `run_bard_blrm_trial` combines the [paper's Bayesian logistic model](bard-blrm.md)
 and [dose/backfill decisions](bard-blrm-decisions.md) with explicit patient
 arrivals and assessment delays. It returns each assignment, posterior decision,
-completed outcome and final MTD. BARD remains partially implemented: integrated
-stage-one/stage-two conduct, titration, expansion and native reports remain open.
+completed outcome and final MTD. [Stage-two continuation](bard-two-stage.md)
+uses that result for eligible carryover, allocation and final OBD selection.
+BARD remains partial: titration, expansion, stage-two timing and native reports remain open.
 
 ## A reproducible timeline
 

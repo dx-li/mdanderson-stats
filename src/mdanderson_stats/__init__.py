@@ -99,6 +99,7 @@ from .bard_blrm_trial import (
     BARDBLRMTrial,
     run_bard_blrm_trial,
 )
+from .bard_integrated import BARDBLRMStage2Patient, BARDBLRMStage2Result, continue_bard_trial
 from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
 from .barpo_simulation import BarpoSimulation, simulate_barpo
 from .barpo_trial import BarpoTrialLook, BarpoTrialResult, run_barpo_trial
@@ -905,6 +906,10 @@ from .random_survival_forest_contour import (
     RandomSurvivalForestContour,
     random_survival_forest_contour,
 )
+from .random_survival_forest_vimp import (
+    RandomSurvivalForestPermutationImportance,
+    permutation_random_survival_forest_importance,
+)
 from .ranges import RangeComparisons, kwrange, range2
 from .ranlist_files import (
     load_ranlist_session,
@@ -1557,6 +1562,9 @@ __all__ = [
     "BARDBLRMStep",
     "BARDBLRMTrial",
     "run_bard_blrm_trial",
+    "BARDBLRMStage2Patient",
+    "BARDBLRMStage2Result",
+    "continue_bard_trial",
     "PoPBoundaries",
     "PoPDecision",
     "PoPDesign",
@@ -1907,6 +1915,8 @@ __all__ = [
     "fit_random_survival_forest",
     "predict_random_survival_forest",
     "random_survival_forest_contour",
+    "RandomSurvivalForestPermutationImportance",
+    "permutation_random_survival_forest_importance",
     "IntervalCompetingRiskFit",
     "IntervalCompetingRiskPrediction",
     "IntervalCompetingRiskContour",

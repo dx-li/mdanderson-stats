@@ -4596,7 +4596,8 @@
         "BARD paper BF-BLRM raw-dose-ratio logistic model with explicit independent log-parameter normal/point-mass priors, bounded posterior fitting, target/overdose probabilities and chain/Monte Carlo diagnostics; not claimed as the current app's stage-one backend",
         "BF-BLRM one-step dose decisions, response-based backfill eligibility with evaluable caps and final MTD selection; strict POD eligibility, separate equality/unsafe-step states and explicit lowest-dose PTT ties",
         "run_bard_blrm_trial: explicit-arrival/outcome/delay stage-one calendar with prior screening, cohort priority, evaluable-capped backfill, cached compact posterior diagnostics, explicit boundary policies and complete post-stop follow-up; docs/bard-blrm-trials.md.",
-        "Integrated stage-one/stage-two simulation, titration/expansion, stage-two caps, calibration and native reports remain open; see docs/bard.md."
+        "continue_bard_trial: completed BF-BLRM stage-one carryover filtered by eligibility and chosen dose pair, combined-history minimization, inclusive total-target enrollment and final OBD selection; retained exclusions, assignment seeds and shortfalls. docs/bard-two-stage.md.",
+        "Titration/expansion, stage-two calendar timing, native per-arm quota behavior, calibration and native reports remain open; see docs/bard.md."
       ],
       "validation": [
         "Official BARD application 1.0.5.0, guides and examples pinned in docs/bard-sources.json; discrepancies between official help and paper equations documented.",
@@ -4605,7 +4606,8 @@
         "20 independent R raw-ratio probabilities and 22 directly integrated BF-BLRM posterior summaries agree within two MCSEs in fixed-slope and two-parameter examples; maximum split R-hat below 1.002",
         "Exact fixed-prior strict target/inclusive overdose boundary and work-budget rejection before random draws; tools/reference_bard_blrm.R, tests/test_bard_blrm.py and research/bard-blrm-audit.md",
         "12 independent hand-calculated decision/backfill/MTD snapshots and four focused worker checks; cutoff equality, unsafe intermediate steps, response before DLT assessment, caps and final six-patient eligibility",
-        "Three independent fixed-prior R/hand-ledger calendars match all 16 patients, as-of assessment counts and 12/5/2 fits; early DLT/late response, evaluable-cap overshoot, cutoff policy, large-origin duration and bounded prior-stop checks. Root replay comparison: 113.94 MiB peak RSS, zero reported swaps; research/bard-blrm-calendar-audit.md."
+        "Three independent fixed-prior R/hand-ledger calendars match all 16 patients, as-of assessment counts and 12/5/2 fits; early DLT/late response, evaluable-cap overshoot, cutoff policy, large-origin duration and bounded prior-stop checks. Root replay comparison: 113.94 MiB peak RSS, zero reported swaps; research/bard-blrm-calendar-audit.md.",
+        "Four independent base-R two-stage ledgers match eight new patients, 32 count rows, six posterior rows and four target/selection summaries; maximum posterior/utility difference 4.27e-14. Four focused continuation tests and source review pass. Root comparison 119.63 MiB RSS, zero swaps; research/bard-integrated-audit.md."
       ]
     },
     {
@@ -4639,8 +4641,9 @@
         "Interval-censored proportional-hazards regression and baseline-only Turnbull estimation for mixed exact, interval, left and right censoring, with case weights, exact endpoint inclusion, survival identification bounds, fitted-model contours and optional 2D/3D plots; bounded normalized fitting and prediction. docs/interval-survival.md.",
         "Two-cause interval-censored generalized odds-rate regression with monotone cubic B-spline baselines, joint probability constraints, explicit finite starting-boundary incidence, residualized-score regression covariance, both CIF predictions and fitted-model contours; docs/interval-competing-risk.md.",
         "Stratified interval-censored PH with genuinely shared coefficients, separate Turnbull supports/baselines, within-stratum centering, group-specific identification-bound predictions and reuse of existing contours; docs/interval-survival-stratified.md. No native mets response-contract parity claimed.",
-        "Remaining: neural models, interval-model bootstrap uncertainty, categorical encoding, forest missing-value/OOB/importance workflows and full native app workflows.",
-        "Optional numeric survival-forest OOB KM/NA curves, packed sampling membership, contributor counts, summed-grid-hazard mortality and native-convention concordance error; undefined rows stay NaN, bounded storage and pair work. docs/random-survival-oob.md."
+        "Optional numeric survival-forest OOB KM/NA curves, packed sampling membership, contributor counts, summed-grid-hazard mortality and native-convention concordance error; undefined rows stay NaN, bounded storage and pair work. docs/random-survival-oob.md.",
+        "Explicit OOB permutation importance: within-tree shuffling, complete-block error differences, valid-block counts and omitted-tail indices; exact training-input fingerprint and bounded work. docs/random-survival-oob.md.",
+        "Remaining: neural models, interval-model bootstrap uncertainty, categorical encoding, forest missing-value/alternative-split/anti-split-importance workflows and full native app workflows."
       ],
       "validation": [
         "Four original-author R Cox helper surface cases (Efron/Breslow by mean/explicit profiles), plus corresponding R quantile curves, coefficient covariance, likelihoods and standard errors; tools/reference_survival_contour.R.",
@@ -4665,7 +4668,8 @@
         "Spline simulated limits and SDs match 180 independent base-R rows from six shared-draw cases to 2.76e-14 absolute error, including deliberately nonmonotone curves. Affine coordinate changes preserve results within 1.96e-14; endpoint bases are skipped. Numerical audit 116.7 MiB RSS, zero process swaps. research/survival-spline-uncertainty-audit.md.",
         "Twelve focused parametric/Monte Carlo tests cover ordinary, both generalized-gamma and spline contour branches, shared-draw replay, readonly views and resource rejection before fitting; public uncertainty guide and combined result slices checked.",
         "Four stratified interval-PH checks; exact base-R cloglog reduction agrees on shared coefficient, likelihood and ten survival predictions (max error 3.3e-8). Mixed-interval direct likelihood and finite-difference shared score below 2.9e-9 per row; time/covariate units 1e+/-100, weights 1e+/-200 and stratum offsets checked. research/interval-stratified-audit.md.",
-        "Six focused forest checks plus 16 exact native C concordance cases, 264 independently reconstructed native-kernel OOB curve values and bootstrap/nonreplacement membership replay; enabling OOB preserves fitted trees. Root comparison 0.965 seconds, 120.45 MiB, zero swaps; research/random-survival-forest-audit.md."
+        "Six focused forest checks plus 16 exact native C concordance cases, 264 independently reconstructed native-kernel OOB curve values and bootstrap/nonreplacement membership replay; enabling OOB preserves fitted trees. Root comparison 0.965 seconds, 120.45 MiB, zero swaps; research/random-survival-forest-audit.md.",
+        "Nine focused forest/OOB/importance tests; independent native-kernel permutation references match every baseline, perturbed, block and average error for block sizes 7/3/1, including a constant feature, undefined block and omitted tail. Root comparison 0.9344 seconds, 113.28 MiB RSS, zero swaps; tools/reference_random_survival_vimp.py."
       ]
     },
     {

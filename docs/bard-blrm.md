@@ -100,5 +100,6 @@ checked examples, not arbitrary prior/data configurations.
 movement, backfill eligibility and final MTD selection. The
 [calendar replay](bard-blrm-trials.md) combines these with explicit arrivals,
 potential outcomes and separate toxicity/response assessment delays.
-Integration with [BARD stage two](bard.md) remains open; existing
+[Stage-two continuation](bard-two-stage.md) adds eligible carryover, allocation
+and final OBD selection under a supplied total enrollment target; existing
 [BF-BOIN](bf-boin.md) methods are also available.
