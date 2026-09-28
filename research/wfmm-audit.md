@@ -141,7 +141,7 @@ scientific use or behavior on the inaccessible native pancreatic example.
 
 Remaining coverage includes automatic variance and
 proposal initialization, the native `delta_omega` mapping, additional transform
-families and boundary conventions, compression, covariance/prediction workflows
+families and boundary conventions, compression, prediction workflows
 and native files. The catalog remains partial until these gaps are resolved.
 
 The wheel and source distribution built successfully from revision `c7f3a97`.
@@ -244,3 +244,30 @@ eigenvalues, with singleton-bin merging, but this does not specify the PCA
 transform itself. The [v3.1 release notes](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/wfmm_v3_1_ReleaseNotes.pdf)
 confirm the added transform/filter names without resolving those calculations.
 Energy-threshold, PCA and hybrid-transform parity therefore remain open.
+
+## Covariance reconstruction checkpoint
+
+`wfmm_covariance` reconstructs full covariance arrays from supplied coefficient
+variances. `wfmm_summarize_covariance` defaults to diagonal variance-function
+summaries and optionally returns mean covariance, its plug-in correlation and
+retained full covariance draws. The implementation uses inverse-basis rows in
+the stated orientation, including nonsymmetric custom matrices. It computes
+sample SDs and linear-interpolated quantiles of the variance functions, not of
+their square roots. Zero diagonals raise a specific undefined-correlation error
+only when full covariance/correlation summaries are requested.
+
+Custom and wavelet variance-function transforms run in bounded coefficient-row
+chunks. Preflight estimates include summary workspaces, quantile copies and
+retained/frozen outputs; covariance symmetrization avoids doubling large
+representable entries before division. Identity transforms use linear work
+estimates for diagonal summaries. Six focused covariance/basis checks passed
+in 1.16 seconds, with Ruff and mypy also passing.
+
+The integrated guide's observed-curves-to-covariance workflow and independent
+hand-Haar checks passed together in 0.859 seconds with 116.2 MiB process peak
+memory and no process swaps. Hand calculations checked variance-function means,
+sample SDs and three quantiles, as well as equality of mean retained covariance
+and reconstruction from mean variances. Covariances from `1e308` coefficient
+variances remained finite and matched scaled identity to absolute tolerance
+`1e-14`. These checks support the explicit Python transform convention, not
+native binary output parity.

@@ -1168,6 +1168,7 @@ from .uboin import UBOINPosterior, uboin_allocation, uboin_posterior
 from .uboin_conduct import UBOINDecision, UBOINDesign, UBOINSelection
 from .uboin_simulation import UBOINSimulation, simulate_uboin, uboin_gumbel_probabilities
 from .wfmm_basis import WFMMBasis, WFMMTransformed, wfmm_basis, wfmm_inverse, wfmm_transform
+from .wfmm_covariance import WFMMCovarianceSummary, wfmm_covariance, wfmm_summarize_covariance
 from .wfmm_empirical_bayes import WFMMShrinkage, calibrate_wfmm_shrinkage
 from .wfmm_model import WFMMCoefficientFit, WFMMPrior, fit_wfmm_coefficients
 from .wfmm_posterior import WFMMPosteriorSummary, wfmm_summarize
@@ -1193,6 +1194,9 @@ __all__ = [
     "fit_wfmm_coefficients",
     "WFMMPosteriorSummary",
     "wfmm_summarize",
+    "WFMMCovarianceSummary",
+    "wfmm_covariance",
+    "wfmm_summarize_covariance",
     "SynergySurfaceFit",
     "SynergySurfacePrediction",
     "fit_synergy_surface",

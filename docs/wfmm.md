@@ -210,6 +210,50 @@ array. Reconstruction uses bounded chunks, checks intermediate contrast
 dimensions before allocating them and evaluates effect thresholds one at a
 time.
 
+## Covariance and variance functions
+
+`wfmm_summarize_covariance` reconstructs data-time variance functions from
+coefficient-variance posterior draws. It accepts either `fit.random_variances`
+or `fit.residual_variances`, with shape `(chain,draw,component,K)`:
+
+```python
+from mdanderson_stats import wfmm_summarize_covariance
+
+residual_covariance = wfmm_summarize_covariance(
+    fit.residual_variances, basis, include_covariance=True,
+)
+print(residual_covariance.variance_function_mean[0])
+print(residual_covariance.correlation_from_mean_variance[0])
+```
+
+Each component corresponds to one supplied random-effect level or residual
+stratum. With `D=Y*W`, its data-space covariance is `W*diag(omega)*W.T`.
+The diagonal-only default computes each draw's variance function without
+materializing a time-by-time matrix for every draw. Results include mean,
+sample SD and linearly interpolated quantiles in both coefficient space and
+data space. Mean/SD arrays have shape `(component,K)` or `(component,time)`;
+quantile arrays add a leading quantile-probability axis. These summarize
+**variances**, not standard-deviation functions.
+
+`include_covariance=True` adds `(component,time,time)` posterior mean covariance
+and its plug-in correlation. Mean covariance equals the reconstruction of
+mean coefficient variances by linearity. The plug-in correlation generally
+differs from the posterior mean of correlations, because normalization is
+nonlinear. A zero covariance diagonal makes correlation undefined and raises
+an error; diagonal-only summaries remain available for zero variances.
+
+`retain_covariance_draws=True` additionally returns
+`(chain,draw,component,time,time)` covariance draws and requires
+`include_covariance=True`. Full covariance products, working arrays and
+transform operations are checked before expansion. For a single supplied
+variance vector or a batch ending in `K`, `wfmm_covariance(variances,basis)`
+performs the same reconstruction directly and returns leading dimensions
+followed by `(time,time)`.
+
+The native guide calls the plug-in correlation `rho` and the variance function
+`sigma`; the latter is explicitly a variance despite its name. Python returns
+descriptive fields and does not reproduce native output-file formats.
+
 ## Numerical scope and remaining work
 
 Fitting supports up to 500 curves, 512 coefficients, 100 fixed effects and
@@ -227,6 +271,6 @@ contrast/band summaries. Native MCMC random-number parity is not claimed.
 
 Automatic variance initialization and
 proposal selection, native inverse-gamma defaults, additional transforms and
-boundary rules, compression, prediction/covariance workflows and native file
+boundary rules, compression, prediction workflows and native file
 formats remain open. The [source and implementation audit](../research/wfmm-audit.md)
 tracks these gaps and the independent references.

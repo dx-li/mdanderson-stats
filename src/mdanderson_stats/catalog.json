@@ -2538,7 +2538,8 @@
         "Coefficient-specific spike-and-slab fixed effects, independent random-effect levels and residual strata, and explicit inverse-gamma variance priors with bounded marginal MCMC.",
         "Positive-truncated normal variance updates with Hastings correction, optional Gaussian random-effect draws, explicit generators and posterior chain diagnostics.",
         "Reconstruction of posterior draws, effect/time contrasts, pointwise quantiles, effect-size probabilities, sign-tail scores, simultaneous bands and SiMBaS probabilities with bounded intermediate storage.",
-        "Empirical-Bayes fixed-effect shrinkage conditional on supplied covariance components, full GLS estimates with conditional sampling variances, partition-wise EM diagnostics and exact all-spike boundary support."
+        "Empirical-Bayes fixed-effect shrinkage conditional on supplied covariance components, full GLS estimates with conditional sampling variances, partition-wise EM diagnostics and exact all-spike boundary support.",
+        "Coefficient-variance and data-space variance-function posterior summaries, optional posterior mean covariance/plugin correlation and bounded retained covariance draws with the original inverse-transform orientation."
       ],
       "validation": [
         "Hand-computed Haar coefficients, scalar db4 calculations, energy/reconstruction checks and 12-point non-power-of-two input; tests/test_wfmm_basis.py.",
@@ -2546,7 +2547,8 @@
         "Hand-calculated contrast/pointwise/simultaneous summaries, transformed-draw reconstruction and allocation preflight; tests/test_wfmm_posterior.py.",
         "Public observed-curves-to-fit-to-bands example executed with estimated variances and optional random effects; docs/wfmm.md.",
         "Independent base-R GLS and four direct mixture-likelihood optimizations agree with shrinkage calibration; all-spike sampling, conditioning and convergence checks; tests/test_wfmm_empirical_bayes.py and research/wfmm-audit.md.",
-        "Pending automatic variance initialization, native inverse-gamma defaults, additional transforms/boundaries/compression, prediction/covariance workflows and native files/kernel parity."
+        "Haar covariance identity/PSD, nonsymmetric custom-basis orientation, posterior variance summaries and oversized retained-output rejection; tests/test_wfmm_covariance.py.",
+        "Pending automatic variance initialization, native inverse-gamma defaults, additional transforms/boundaries/compression, prediction workflows and native files/kernel parity."
       ]
     },
     {
