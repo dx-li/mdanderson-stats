@@ -1,0 +1,17 @@
+# Retain this path so GitHub can keep its historical workflow ID disabled.
+# Older branches still contain the unrestricted push workflow at this path.
+# Run .github/workflows/validation.yml for current validation instead.
+name: retired-validation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  retired:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - run: echo 'Use validation.yml; this historical workflow remains disabled.'
