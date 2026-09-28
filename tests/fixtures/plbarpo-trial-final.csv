@@ -1,0 +1,10 @@
+"scenario","arm","assigned","successes","failures","entered","cap_closed","early_futility","early_efficacy","final_assessed","final_efficacy","any_efficacy","arm_stop_enrollment"
+"cap_replace",0,2,2,0,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,TRUE,3
+"cap_replace",1,2,1,1,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,5
+"cap_replace",2,2,0,2,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,6
+"stop_replace",0,2,0,2,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,2
+"stop_replace",1,2,2,0,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,TRUE,4
+"stop_replace",2,2,1,1,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,6
+"all_futile",0,1,0,1,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,2
+"all_futile",1,1,0,1,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,2
+"all_futile",2,0,0,0,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,0

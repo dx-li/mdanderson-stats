@@ -80,3 +80,15 @@ replacement order, enrollment limits, global monitoring looks and entrant-only
 burn-in. These are declared Python scheduling choices where the source does not
 fully specify native transitions. Preserve compact operating-characteristic
 summaries, zero allocation to inactive arms, and serial bounded computation.
+
+## Trial reference preparation
+
+`tools/reference_plbarpo_trial.R` records three hand-specified replays of the
+declared Python platform protocol with independently calculated base-R beta
+tails and BARN2N probabilities. The fixtures cover cap closure between global
+looks, replacement, final efficacy at a cap, serial futility/efficacy replacement
+and simultaneous all-arm futility without another candidate. Their 14 patient
+rows, 12 monitoring comparisons and nine final-ledger rows are small and
+deterministic. They define a reference for the in-progress simulator, not
+evidence that the Python simulator has already passed or that the native
+application uses this exact scheduler.

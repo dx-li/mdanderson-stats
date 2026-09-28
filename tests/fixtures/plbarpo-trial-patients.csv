@@ -1,0 +1,15 @@
+"scenario","patient","arm","response","probability_arm0","probability_arm1","probability_arm2"
+"cap_replace",1,0,1,0.5,0.5,0
+"cap_replace",2,1,0,0,1,0
+"cap_replace",3,0,1,0.566660691179823,0.433339308820177,0
+"cap_replace",4,2,0,0,0,1
+"cap_replace",5,1,1,0,0.5,0.5
+"cap_replace",6,2,0,0,0,1
+"stop_replace",1,0,0,1,0,0
+"stop_replace",2,0,0,1,0,0
+"stop_replace",3,1,1,0,1,0
+"stop_replace",4,1,1,0,1,0
+"stop_replace",5,2,1,0,0,1
+"stop_replace",6,2,0,0,0,1
+"all_futile",1,0,0,0.5,0.5,0
+"all_futile",2,1,0,0,1,0
