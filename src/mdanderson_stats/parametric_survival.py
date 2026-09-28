@@ -7,7 +7,7 @@ from math import log, pi
 
 import numpy as np
 from numpy.typing import ArrayLike
-from scipy.optimize import minimize
+from scipy.optimize import linprog, minimize
 from scipy.special import log_ndtr, ndtri
 
 from ._cdflib import _freeze
@@ -58,7 +58,9 @@ def _data(
         raise ValueError("data must be real")
     t, e = finite(time, "time"), finite(event, "event")
     if t.ndim != 1 or not 1 <= t.size <= 20_000 or e.shape != t.shape or np.any(t < 0):
-        raise ValueError("time/event require aligned nonempty vectors, nonnegative times, <=20000 rows")
+        raise ValueError(
+            "time/event require aligned nonempty vectors, nonnegative times, <=20000 rows"
+        )
     if np.any((e != 0) & (e != 1)) or not np.any(e == 1):
         raise ValueError("event must be binary and include at least one exact failure")
     if np.any((e == 1) & (t == 0)):
@@ -127,6 +129,33 @@ def _likelihood(
     return loss, gradient, hessian
 
 
+def _check_location_separation(design: FloatArray, event: FloatArray) -> None:
+    """Reject a direction that leaves failures fixed and improves censored rows.
+
+    Increasing the AFT location raises survival for every censoring time. If a
+    direction leaves every exact-event location unchanged and raises some
+    censored locations without lowering any, the likelihood has no finite
+    maximum. A bounded LP detects this independently of optimizer tolerances.
+    """
+    failures = design[event == 1]
+    censored = design[event == 0]
+    if not censored.size or np.linalg.matrix_rank(failures) == design.shape[1]:
+        return
+    result = linprog(
+        -np.mean(censored, axis=0),
+        A_ub=-censored,
+        b_ub=np.zeros(censored.shape[0]),
+        A_eq=failures,
+        b_eq=np.zeros(failures.shape[0]),
+        bounds=[(-1.0, 1.0)] * design.shape[1],
+        method="highs",
+    )
+    if not result.success:
+        raise ArithmeticError(f"parametric survival separation check failed: {result.message}")
+    if result.fun < -1e-7:
+        raise ValueError("parametric survival monotone likelihood: no finite coefficient maximum")
+
+
 def fit_parametric_survival(
     time: ArrayLike,
     event: ArrayLike,
@@ -145,10 +174,14 @@ def fit_parametric_survival(
     """
     if distribution not in _DISTRIBUTIONS:
         raise ValueError(f"distribution must be one of {_DISTRIBUTIONS}")
+    if np.iscomplexobj(tolerance):
+        raise ValueError("tolerance must be real")
     tol = scalar(tolerance, "tolerance")
     if not 1e-10 <= tol <= 1e-2:
         raise ValueError("tolerance must be in [1e-10, 1e-2]")
-    if isinstance(max_iterations, (bool, np.bool_)) or not isinstance(max_iterations, (int, np.integer)):
+    if isinstance(max_iterations, (bool, np.bool_)) or not isinstance(
+        max_iterations, (int, np.integer)
+    ):
         raise ValueError("max_iterations must be an integer in [1, 10000]")
     if not 1 <= max_iterations <= 10_000:
         raise ValueError("max_iterations must be an integer in [1, 10000]")
@@ -174,6 +207,7 @@ def fit_parametric_survival(
     xn = np.column_stack((np.ones(y.size), (x - xm) / xs))
     if np.linalg.matrix_rank(xn) != xn.shape[1]:
         raise ValueError("informative observations require a full-rank design")
+    _check_location_separation(xn, e)
     ols = np.linalg.lstsq(xn, yn, rcond=None)[0]
     resid_sd = float(np.std(yn - xn @ ols))
     if distribution == "weibull":
@@ -195,7 +229,9 @@ def fit_parametric_survival(
         betas = supplied[:-1]
         scaled_beta = np.empty_like(betas)
         scaled_beta[1:] = betas[1:] * xs / time_scale if xs.size else np.empty(0)
-        scaled_beta[0] = (betas[0] + (np.dot(betas[1:], xm) if xs.size else 0) - center) / time_scale
+        scaled_beta[0] = (
+            betas[0] + (np.dot(betas[1:], xm) if xs.size else 0) - center
+        ) / time_scale
         start = np.r_[scaled_beta, supplied[-1] - np.log(time_scale)]
 
     def objective(value: FloatArray) -> tuple[float, FloatArray]:
@@ -219,7 +255,9 @@ def fit_parametric_survival(
             scaled, yn, e, xn, distribution
         )
     except (ArithmeticError, FloatingPointError) as exc:
-        raise ArithmeticError("parametric survival fit ended outside the finite likelihood region") from exc
+        raise ArithmeticError(
+            "parametric survival fit ended outside the finite likelihood region"
+        ) from exc
     score_error = float(np.max(np.abs(final_gradient)) / y.size)
     if not np.isfinite(score_error) or score_error > tol or not np.isfinite(final_loss):
         raise ArithmeticError(f"parametric survival fit did not converge: {result.message}")
@@ -248,11 +286,7 @@ def fit_parametric_survival(
     information = inverse_transform.T @ information_scaled @ inverse_transform
     if not np.isfinite(covariance).all() or not np.isfinite(information).all():
         raise ArithmeticError("fitted covariance or information is not representable")
-    log_likelihood = (
-        -final_loss
-        - float(np.sum(e * y))
-        - float(e.sum()) * np.log(time_scale)
-    )
+    log_likelihood = -final_loss - float(np.sum(e * y)) - float(e.sum()) * np.log(time_scale)
     # Include the omitted zero-time censoring rows (their contribution is exactly zero).
     return ParametricSurvivalFit(
         distribution,
@@ -280,6 +314,8 @@ def predict_parametric_survival(
     confidence: float = 0.95,
 ) -> ParametricSurvivalPrediction:
     """Predict profiles by times with delta-method bands on log cumulative hazard."""
+    if np.iscomplexobj(confidence):
+        raise ValueError("confidence must be real")
     conf = scalar(confidence, "confidence")
     if not 0 < conf < 1:
         raise ValueError("confidence must be in (0, 1)")
@@ -300,7 +336,7 @@ def predict_parametric_survival(
         if profile_values.ndim != 2 or profile_values.shape[1] != n_cov:
             raise ValueError("profiles must have one column per fitted covariate")
     if (
-        profile_values.shape[0] > 100_000
+        not 1 <= profile_values.shape[0] <= 100_000
         or profile_values.size > 2_000_000
         or 8 * profile_values.shape[0] * t.size + profile_values.shape[0] * fit.coefficients.size
         > 2_000_000
@@ -322,9 +358,7 @@ def predict_parametric_survival(
     yn[positive] = (np.log(t[positive]) - fit.log_time_center) / fit.log_time_scale
     sigma = float(np.exp(fit.scaled_parameters[-1]))
     z = np.zeros((x.shape[0], t.size))
-    z[:, positive] = (
-        yn[None, positive] - x @ fit.scaled_parameters[:-1, None]
-    ) / sigma
+    z[:, positive] = (yn[None, positive] - x @ fit.scaled_parameters[:-1, None]) / sigma
     if not np.isfinite(z[:, positive]).all():
         raise ArithmeticError("prediction linear predictor exceeds numerical range")
     if fit.distribution == "weibull":
