@@ -27,6 +27,8 @@ class IBOINDesign:
 
     Hypothesis columns are [target, safe, toxic]. The historical prior affects
     interval decisions only; safety uses the standard uniform Beta(1,1) prior.
+    Optional extra-safe stopping uses the guide's strict lowest-dose count rule;
+    precision stopping uses an integer threshold of at least three patients.
     """
 
     skeleton: ArrayLike
@@ -36,6 +38,9 @@ class IBOINDesign:
     toxic_probability: float | None = None
     elimination_probability: float = 0.95
     robust_prior: bool = False
+    extra_safe: bool = False
+    safety_offset: float = 0.05
+    early_stop_patients: int | None = None
     effective_prior_ess: NDArray[np.int64] = field(init=False)
     log_hypothesis_probability: FloatArray = field(init=False, repr=False)
     _boin: BOINDesign = field(init=False, repr=False)
@@ -46,7 +51,11 @@ class IBOINDesign:
             self.safe_probability,
             self.toxic_probability,
             elimination_probability=self.elimination_probability,
+            safety_offset=self.safety_offset,
+            early_stop_patients=self.early_stop_patients,
         )
+        if not 0 < base.safety_offset <= 0.1:
+            raise ValueError("iBOIN safety_offset must be in (0, 0.1]")
         q, ess = finite(self.skeleton, "skeleton"), count(self.prior_ess, "prior_ess")
         if (
             q.ndim != 1
@@ -61,6 +70,8 @@ class IBOINDesign:
             )
         if not isinstance(self.robust_prior, (bool, np.bool_)):
             raise ValueError("robust_prior must be boolean")
+        if not isinstance(self.extra_safe, (bool, np.bool_)):
+            raise ValueError("extra_safe must be boolean")
         effective = ess.astype(np.int64)
         if self.robust_prior:
             matches = np.flatnonzero(q == base.target)
@@ -90,8 +101,16 @@ class IBOINDesign:
         object.__setattr__(self, "prior_ess", _owned(ess.astype(np.int64)))
         object.__setattr__(self, "log_hypothesis_probability", _owned(log_prior))
         object.__setattr__(self, "_boin", base)
-        for name in ["target", "safe_probability", "toxic_probability", "elimination_probability"]:
+        for name in [
+            "target",
+            "safe_probability",
+            "toxic_probability",
+            "elimination_probability",
+            "safety_offset",
+        ]:
             object.__setattr__(self, name, getattr(base, name))
+        if self.early_stop_patients is not None:
+            object.__setattr__(self, "early_stop_patients", int(self.early_stop_patients))
 
     @property
     def hypothesis_probability(self) -> FloatArray:
@@ -147,10 +166,17 @@ class IBOINDesign:
         n, y, excluded, posterior = self._boin._state(patients, toxicities, eliminated)
         if n.size != self.log_hypothesis_probability.shape[0]:
             raise ValueError("counts must match the skeleton's dose count")
+        # The guide's extra-safe rule is stricter than ordinary elimination:
+        # dose 1 must have more than three patients and cross the lowered cutoff.
+        extra_safety_stop = bool(
+            self.extra_safe
+            and n[0] > 3
+            and posterior[0] > self.elimination_probability - self.safety_offset
+        )
         j = _integer(current_dose, "current_dose") - 1
         if not 0 <= j < n.size or not 1 <= n[j] <= 100000:
             raise ValueError("current_dose must identify a dose with 1..100000 evaluated patients")
-        if excluded[0]:
+        if excluded[0] or extra_safety_stop:
             action, next_dose = "stop_safety", None
         elif excluded[j]:
             action, next_dose = "deescalate", int(np.flatnonzero(~excluded)[-1]) + 1
@@ -169,4 +195,10 @@ class IBOINDesign:
                 proposed = j
             action = "escalate" if proposed > j else "deescalate" if proposed < j else "stay"
             next_dose = proposed + 1
+            if (
+                proposed == j
+                and self.early_stop_patients is not None
+                and n[j] >= self.early_stop_patients
+            ):
+                action, next_dose = "stop_precision", None
         return BOINDecision(action, next_dose, _owned(excluded), _owned(posterior))
