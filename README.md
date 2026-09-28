@@ -1182,7 +1182,8 @@ trial simulation. Simulations preserve joint outcome association and report allo
 selection, stopping and sampler diagnostics. Published no-skipping and exploration
 rules are explicit. A separate continuation-ratio core fits mutually exclusive
 efficacy, toxicity and neither outcomes, retaining both marginal and conditional
-efficacy. The trinary decision/simulation workflow remains open.
+efficacy. Trinary contour elicitation and dose decisions are supported;
+trinary simulation remains open.
 
 [Multc Lean and Multc99 Phase IIa](docs/multc.md) add response/toxicity monitoring
 against fixed or beta-distributed historical rates, shifted comparisons, cohort

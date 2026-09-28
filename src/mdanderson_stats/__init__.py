@@ -501,6 +501,7 @@ from .efftox_model import (
     fit_efftox,
 )
 from .efftox_simulation import EffToxSimulation, simulate_efftox
+from .efftox_trinary_contour import EffToxTrinaryContour
 from .efftox_trinary_model import (
     EffToxTrinaryFit,
     EffToxTrinaryPrior,
@@ -1309,6 +1310,7 @@ __all__ = [
     "EffToxSimulation",
     "EffToxTrinaryPrior",
     "EffToxTrinaryFit",
+    "EffToxTrinaryContour",
     "efftox_trinary_log_probabilities",
     "efftox_trinary_log_likelihood",
     "efftox_trinary_predict",

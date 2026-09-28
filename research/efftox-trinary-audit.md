@@ -69,5 +69,19 @@ utilities are zero, the ideal has utility one, and halving distance to the
 ideal along a target ray gives utility one half. The stroke targets yield
 `p=2.10360951613587` and `t*=0.165995389836415`. These are independently
 computed modern Lp values for those targets, not original Windows outputs.
-Fixture generation passed in 0.084 seconds. Python contour implementation
-and comparison remain pending.
+Fixture generation passed in 0.084 seconds. The Python contour now matches
+all 48 rows within `6.93e-14` absolute utility error, including rounded CSV
+inputs and the analytical intercept above one. Near-zero elicited efficacy
+values, readonly input arrays and inconsistent tiny hypotenuse coordinates
+were checked separately. The constructor uses local-scale endpoint tolerances
+and direct log-ratio increments to avoid losing small point differences.
+
+The shared dose-decision API now accepts trinary fits and count matrices.
+Admissibility uses marginal efficacy logits, and utility uses marginal
+posterior means. Twenty-one focused trinary, binary and legacy checks passed,
+along with targeted lint, formatting and type checks. Trinary simulation
+integration remains in progress.
+The public guide's fitting-plus-final-selection example selected dose one
+and ran in 0.10 seconds with 114.5 MiB peak process memory and no swaps.
+Four contour/decision checks also passed after making their numeric tolerances
+strictly absolute, rather than allowing pytest's default relative tolerance.

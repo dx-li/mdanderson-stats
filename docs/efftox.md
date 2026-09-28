@@ -304,11 +304,37 @@ chain diagnostics. `efftox_trinary_predict`, `efftox_trinary_log_probabilities`
 and `efftox_trinary_log_likelihood` accept standardized dose codes and batched
 four-coefficient arrays. The log likelihood omits multinomial constants.
 
-This checkpoint covers fitting and prediction; trinary contour elicitation,
-dose decisions and trial simulation remain in progress. The small example
-illustrates the API, not a convergence guarantee.
+The small example illustrates the API, not a convergence guarantee.
 Trinary retained cell probabilities are limited to 200,000 entries;
 `chains*(draws+warmup)*doses*4` is limited to two million work units.
+
+For mutually exclusive outcomes, elicit three equally desirable points
+`(e0,0)`, `(em,tm)` and `(eh,th)`, where `eh+th=1`. The high point lies on
+the probability triangle's edge. `EffToxTrinaryContour` solves the positive
+Lp shape and an analytical toxicity-axis scale, which may exceed one.
+
+```python
+from mdanderson_stats import EffToxTrinaryContour, efftox_decision
+
+trinary_contour = EffToxTrinaryContour.from_points(
+    [.45, .55, .84], [0, .10, .16],
+)
+decision = efftox_decision(
+    trinary, trinary_contour,
+    efficacy_limit=.2, toxicity_limit=.4,
+    efficacy_probability=.5, toxicity_probability=.5,
+    starting_dose=1, phase="final",
+)
+print(decision.action, decision.dose)
+```
+
+The score is zero at each target and one at the ideal `(1,0)`. The formula
+extends over the unit square, but only pairs with `efficacy+toxicity<=1`
+represent trinary probabilities. Dose decisions use marginal efficacy and
+toxicity from the fit, with the same exploration and skipping settings as
+the binary model. Trinary trial simulation remains in progress.
+The contour matches 48 independent R values within `7e-14`; the public
+fitting/selection example ran in 0.10 seconds with 114.5 MiB peak memory.
 
 ## Resource limits
 
@@ -386,6 +412,6 @@ The public calibration example achieved mean efficacy/toxicity ESS values
 their bounds. It ran in 16.97 seconds with 115.3 MiB peak process memory and
 no swaps; see the calibration audit for objectives and comparison details.
 
-Trinary contour/decision/simulation workflows, historical approximate contour
+Trinary simulation, historical approximate contour
 fitting and native file/report workflows remain open. The Windows program's
 integration kernel has not been run for direct parity checks.

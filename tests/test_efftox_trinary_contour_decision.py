@@ -9,13 +9,13 @@ from mdanderson_stats.efftox_trinary_model import EffToxTrinaryPrior, fit_efftox
 
 def test_report_contour_shape_intercept_target_utility_and_half_ray():
     contour = EffToxTrinaryContour.from_points([0.45, 0.55, 0.84], [0.0, 0.10, 0.16])
-    assert contour.shape == pytest.approx(2.10360951613587, abs=2e-13)
-    assert contour.toxicity_intercept == pytest.approx(0.165995389836415, abs=2e-13)
+    assert contour.shape == pytest.approx(2.10360951613587, rel=0, abs=2e-13)
+    assert contour.toxicity_intercept == pytest.approx(0.165995389836415, rel=0, abs=2e-13)
     np.testing.assert_allclose(
         contour.utility([0.45, 0.55, 0.84], [0.0, 0.10, 0.16]), 0.0, atol=2e-14
     )
     assert contour.utility(1.0, 0.0) == pytest.approx(1.0)
-    assert contour.utility(0.775, 0.05) == pytest.approx(0.5, abs=2e-14)
+    assert contour.utility(0.775, 0.05) == pytest.approx(0.5, rel=0, abs=2e-14)
     assert contour.utility(0.2, 0.8) < 0.0
 
 
@@ -33,8 +33,8 @@ def test_contour_supports_known_shapes_and_rejects_misplaced_hypotenuse_point():
             [e0, efficacy_middle, efficacy_high],
             [0.0, toxicity_middle, toxicity_high],
         )
-        assert contour.shape == pytest.approx(shape, abs=3e-12)
-        assert contour.toxicity_intercept == pytest.approx(toxicity_intercept, abs=3e-12)
+        assert contour.shape == pytest.approx(shape, rel=0, abs=3e-12)
+        assert contour.toxicity_intercept == pytest.approx(toxicity_intercept, rel=0, abs=3e-12)
 
     with pytest.raises(ValueError, match=r"eh\+th=1"):
         EffToxTrinaryContour.from_points([0.2, 0.4, np.nextafter(1.0, 0.0)], [0.0, 1e-301, 1e-300])

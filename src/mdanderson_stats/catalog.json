@@ -45,7 +45,8 @@
         "Bounded completed-outcome cohort simulation from joint efficacy/toxicity truth tables, sequential posterior refits, allocation/selection/stopping summaries and separate outcome/sampler random streams.",
         "Legacy inverse-quadratic contour with explicit exact interpolation, monotonicity validation and bounded vectorized radial desirability, integrated with dose decisions and simulation.",
         "Trinary continuation-ratio likelihood, prediction and bounded posterior fitting with positive slope priors, separate marginal and conditional efficacy draws/logits, and chain diagnostics.",
-        "Binary-model prior calibration from elicited probability means and separate efficacy/toxicity beta-moment ESS targets, full curvature uncertainty, explicit slope conditioning, adaptive integration and optimizer diagnostics."
+        "Binary-model prior calibration from elicited probability means and separate efficacy/toxicity beta-moment ESS targets, full curvature uncertainty, explicit slope conditioning, adaptive integration and optimizer diagnostics.",
+        "Trinary Lp contour elicitation on the probability triangle, analytical toxicity scales above one, and shared dose decisions using marginal efficacy rather than conditional efficacy."
       ],
       "validation": [
         "Independent base-R joint likelihood, concave/convex contour and posterior integration references; official tutorial utilities; tests/test_efftox_reference.py.",
@@ -54,7 +55,8 @@
         "Independent base-R legacy contour geometry, lower-degree cases, probability boundaries and original radial score; tests/test_efftox_legacy_contour.py and research/efftox-legacy-contour-audit.md.",
         "Independent base-R trinary likelihood and reduced-posterior integration references, constrained-slope checks and numerical resource bounds; tests/test_efftox_trinary_model.py.",
         "Independent base-R prior moments at 34 outcome/dose combinations, including conditioned toxicity slopes and near-fixed probabilities; tests/test_efftox_calibration.py and research/efftox-prior-calibration-audit.md.",
-        "Pending trinary contour/decision/simulation workflows, historical approximate contour fitting, native files/reports and direct Windows-kernel parity; docs/efftox.md."
+        "48 independent base-R trinary contour values, endpoint precision checks, marginal-efficacy admissibility and interim/final skipping rules; tests/test_efftox_trinary_contour_decision.py.",
+        "Pending trinary simulation, historical approximate contour fitting, native files/reports and direct Windows-kernel parity; docs/efftox.md."
       ]
     },
     {
