@@ -123,9 +123,7 @@ def stplan_exact_binomial_significance(
             else:
                 left = mid
         critical = (
-            right
-            if 0 <= right <= feasible and binom.cdf(right, n, pa) >= target
-            else feasible
+            right if 0 <= right <= feasible and binom.cdf(right, n, pa) >= target else feasible
         )
         alpha = 0.0 if critical < 0 else float(binom.cdf(critical, n, p0))
         power = 0.0 if critical < 0 else float(binom.cdf(critical, n, pa))
@@ -158,7 +156,6 @@ def stplan_exact_binomial_significance(
     return _result("binomial", "upper", critical, n, target, alpha, power)
 
 
-
 def _grow_count(count: int) -> int:
     if count >= _MAX_POISSON_COUNT:
         raise ArithmeticError("Poisson tail did not bracket below the requested probability")
@@ -187,7 +184,7 @@ def _poisson_lower_cutoff_limit(mean: float) -> int:
 
 def _poisson_upper_cutoff_limit(mean: float) -> int:
     # Smallest k with SF(k-1) <= cap; cutoff zero is always excluded.
-    lo, hi = 1, 2
+    lo, hi = 0, 1
     for _ in range(_MAX_POISSON_SEARCH_STEPS):
         if float(poisson.sf(hi - 1, mean)) <= STPLAN_MAX_SIGNIFICANCE:
             break

@@ -59,3 +59,13 @@ def test_poisson_brackets_tiny_target_by_survival_probability() -> None:
 def test_poisson_rejects_positive_rate_exposure_underflow() -> None:
     with pytest.raises(ArithmeticError, match="underflowed to zero"):
         stplan_exact_poisson_significance(1e-300, 2e-300, 1e-100, target_power=0.8)
+
+
+def test_poisson_one_event_region_can_be_the_only_attaining_region() -> None:
+    from math import expm1
+
+    result = stplan_exact_poisson_significance(0.1, 0.2, 1, target_power=0.1)
+    assert result.critical_count == 1
+    assert result.target_attained
+    assert result.significance == pytest.approx(-expm1(-0.1))
+    assert result.achieved_power == pytest.approx(-expm1(-0.2))
