@@ -12,7 +12,9 @@ from numpy.typing import ArrayLike, DTypeLike, NDArray
 from ._validation import FloatArray, finite, scalar
 from .efftox_decision import EffToxContour, EffToxDecision, efftox_decision
 from .efftox_legacy_contour import EffToxLegacyContour
-from .efftox_model import EffToxPrior, efftox_standardize, fit_efftox
+from .efftox_model import EffToxFit, EffToxPrior, efftox_standardize, fit_efftox
+from .efftox_trinary_contour import EffToxTrinaryContour
+from .efftox_trinary_model import EffToxTrinaryFit, EffToxTrinaryPrior, fit_efftox_trinary
 
 _MAX_TRIALS = 2_000
 _MAX_COHORTS = 100
@@ -78,7 +80,11 @@ class EffToxSimulation:
     """Compact trial outcomes, dose allocation and operating characteristics.
 
     Dose labels are one-based; zero in ``selected_dose`` means no selection.
-    Outcome cell axes are efficacy then toxicity, each ordered 0, 1.
+    ``outcome_counts`` has a final ``(efficacy,toxicity)`` pair of binary
+    axes for the legacy model, and a three-cell axis ordered neither,
+    efficacy, toxicity for the continuation-ratio model. The same cell order
+    is used by ``true_joint_probabilities`` and
+    ``observed_joint_probability``.
     ``max_split_rhat`` and ``max_batch_mean_mcse`` summarize per-fit diagnostics;
     they are descriptive and do not certify sampler convergence.
     """
@@ -121,13 +127,14 @@ class EffToxSimulation:
     work_estimate: int
     random_state: int | None
     sampler_random_state: int | None
+    outcome_model: Literal["binary", "trinary"] = "binary"
 
 
 def _fit_decision(
     doses: FloatArray,
     counts: NDArray[np.int64],
-    prior: EffToxPrior,
-    contour: EffToxContour | EffToxLegacyContour,
+    prior: EffToxPrior | EffToxTrinaryPrior,
+    contour: EffToxContour | EffToxLegacyContour | EffToxTrinaryContour,
     sampler: np.random.Generator,
     *,
     draws: int,
@@ -144,16 +151,29 @@ def _fit_decision(
     skip_policy: Literal["both", "escalation"],
     zero_dose_shift: bool,
 ) -> tuple[EffToxDecision, int, float, float]:
-    fit = fit_efftox(
-        doses,
-        counts,
-        prior=prior,
-        draws=draws,
-        warmup=warmup,
-        chains=chains,
-        zero_dose_shift=zero_dose_shift,
-        rng=sampler,
-    )
+    fit: EffToxFit | EffToxTrinaryFit
+    if isinstance(prior, EffToxTrinaryPrior):
+        fit = fit_efftox_trinary(
+            doses,
+            counts,
+            prior=prior,
+            draws=draws,
+            warmup=warmup,
+            chains=chains,
+            zero_dose_shift=zero_dose_shift,
+            rng=sampler,
+        )
+    else:
+        fit = fit_efftox(
+            doses,
+            counts,
+            prior=prior,
+            draws=draws,
+            warmup=warmup,
+            chains=chains,
+            zero_dose_shift=zero_dose_shift,
+            rng=sampler,
+        )
     decision = efftox_decision(
         fit,
         contour,
@@ -180,8 +200,8 @@ def simulate_efftox(
     doses: ArrayLike,
     true_joint_probabilities: ArrayLike,
     *,
-    prior: EffToxPrior,
-    contour: EffToxContour | EffToxLegacyContour,
+    prior: EffToxPrior | EffToxTrinaryPrior,
+    contour: EffToxContour | EffToxLegacyContour | EffToxTrinaryContour,
     efficacy_limit: float,
     toxicity_limit: float,
     efficacy_probability: float,
@@ -200,22 +220,24 @@ def simulate_efftox(
     sampler_rng: int | np.random.Generator | None = None,
     max_total_fit_work: int = _MAX_TOTAL_FIT_WORK,
 ) -> EffToxSimulation:
-    """Simulate completed-outcome cohorts under explicit joint truth tables.
+    """Simulate completed-outcome cohorts under explicit truth tables.
 
-    ``true_joint_probabilities[d,e,t]`` is the full efficacy/toxicity cell
-    probability at each dose; the bivariate association is preserved. Each
-    initial and interim assignment uses ``efftox_decision`` with a fresh
-    posterior fit. Trials reaching their cohort limit receive a final fit and
-    selection. Interim stops have no selected dose. Outcome and posterior
-    streams are independent when ``rng`` is a seed; separate NumPy streams do
-    not promise native Windows RNG parity.
+    For :class:`EffToxPrior`, ``true_joint_probabilities[d,e,t]`` contains the
+    binary efficacy/toxicity cells. For :class:`EffToxTrinaryPrior`, each row
+    is ``(neither, efficacy, toxicity)``. The matching contour/decision model
+    is selected from the prior type. Trials reaching their cohort limit
+    receive a final fit and selection; interim stops have no selected dose.
+    Outcome and posterior streams remain separate; NumPy streams do not
+    promise native Windows RNG parity.
     """
-    if not isinstance(prior, EffToxPrior) or not isinstance(
-        contour, (EffToxContour, EffToxLegacyContour)
-    ):
-        raise ValueError(
-            "prior must be EffToxPrior and contour EffToxContour or EffToxLegacyContour"
-        )
+    binary = isinstance(prior, EffToxPrior)
+    trinary = isinstance(prior, EffToxTrinaryPrior)
+    if not (binary or trinary):
+        raise ValueError("prior must be EffToxPrior or EffToxTrinaryPrior")
+    if binary and not isinstance(contour, (EffToxContour, EffToxLegacyContour)):
+        raise ValueError("binary EffTox requires an EffToxContour or EffToxLegacyContour")
+    if trinary and not isinstance(contour, EffToxTrinaryContour):
+        raise ValueError("trinary EffTox requires an EffToxTrinaryContour")
     if not isinstance(allow_untried_exploration, (bool, np.bool_)):
         raise ValueError("allow_untried_exploration must be boolean")
     if skip_policy not in ("both", "escalation"):
@@ -228,12 +250,15 @@ def simulate_efftox(
     dose_codes = efftox_standardize(dose_values, zero_dose_shift=zero_dose_shift)
     del dose_codes
     raw_truth = np.asarray(true_joint_probabilities)
-    if raw_truth.shape != (dose_values.size, 2, 2):
-        raise ValueError("true_joint_probabilities must have shape (doses,2,2)")
+    cell_count = 3 if trinary else 4
+    expected_shape = (dose_values.size, 3) if trinary else (dose_values.size, 2, 2)
+    if raw_truth.shape != expected_shape:
+        description = "(doses,3) in neither/efficacy/toxicity order" if trinary else "(doses,2,2)"
+        raise ValueError(f"true_joint_probabilities must have shape {description}")
     truth = finite(raw_truth, "true_joint_probabilities")
     if np.any((truth < 0.0) | (truth > 1.0)):
         raise ValueError("joint cell probabilities must lie in [0,1]")
-    if not np.allclose(truth.sum(axis=(1, 2)), 1.0, rtol=0.0, atol=1e-12):
+    if not np.allclose(truth.sum(axis=1 if trinary else (1, 2)), 1.0, rtol=0.0, atol=1e-12):
         raise ValueError("joint cell probabilities must sum to one at every dose")
     repetition_count = _setting(trials, "trials", 1, _MAX_TRIALS)
     cohort_count = _setting(cohorts, "cohorts", 1, _MAX_COHORTS)
@@ -244,16 +269,19 @@ def simulate_efftox(
     draw_count = _setting(draws, "draws", 8, 10_000)
     warm_count = _setting(warmup, "warmup", 0, 10_000)
     chain_count = _setting(chains, "chains", 2, 4)
-    if chain_count * dose_values.size * draw_count > 200_000:
+    cells_per_retained_draw = 3 if trinary else 1
+    if chain_count * dose_values.size * draw_count * cells_per_retained_draw > 200_000:
         raise ValueError("retained dose-probability draws exceed the EffTox fit limit")
-    per_fit_work = chain_count * dose_values.size * (draw_count + warm_count) * 6
+    coefficients = 4 if trinary else 6
+    per_fit_work = chain_count * dose_values.size * (draw_count + warm_count) * coefficients
     if per_fit_work > 2_000_000:
         raise ValueError("one posterior fit exceeds the EffTox work limit")
     total_work = repetition_count * (cohort_count + 1) * per_fit_work
     total_limit = _setting(max_total_fit_work, "max_total_fit_work", 1, _MAX_TOTAL_FIT_WORK)
     if total_work > total_limit:
         raise ValueError("worst-case trial/refit work exceeds max_total_fit_work")
-    if repetition_count * dose_values.size * 6 > _MAX_OUTPUT_CELLS:
+    summary_cells_per_dose = 4 if trinary else 6
+    if repetition_count * dose_values.size * summary_cells_per_dose > _MAX_OUTPUT_CELLS:
         raise ValueError("trial outcome summaries exceed the bounded output-cell limit")
     # Let efftox_decision apply the same scalar/range validation to the other
     # probability thresholds before any trial work begins.
@@ -267,7 +295,10 @@ def simulate_efftox(
 
     dose_count = int(dose_values.size)
     dose_patients = np.zeros((repetition_count, dose_count), dtype=np.int64)
-    outcomes = np.zeros((repetition_count, dose_count, 2, 2), dtype=np.int64)
+    outcome_shape = (
+        (repetition_count, dose_count, 3) if trinary else (repetition_count, dose_count, 2, 2)
+    )
+    outcomes = np.zeros(outcome_shape, dtype=np.int64)
     selected = np.zeros(repetition_count, dtype=np.int64)
     completed = np.zeros(repetition_count, dtype=np.int64)
     fit_count = np.zeros(repetition_count, dtype=np.int64)
@@ -276,7 +307,11 @@ def simulate_efftox(
     max_mcse = np.full(repetition_count, np.nan)
     reasons: list[str] = []
     for trial in range(repetition_count):
-        counts = np.zeros((dose_count, 2, 2), dtype=np.int64)
+        counts = (
+            np.zeros((dose_count, 3), dtype=np.int64)
+            if trinary
+            else np.zeros((dose_count, 2, 2), dtype=np.int64)
+        )
         decision, evaluations, rhat, mcse = _fit_decision(
             dose_values,
             counts,
@@ -306,8 +341,8 @@ def simulate_efftox(
         current_dose = int(decision.dose)
         reason = "max_cohorts"
         for cohort in range(cohort_count):
-            cells = outcome_rng.multinomial(size, truth[current_dose - 1].reshape(4))
-            cell_table = cells.reshape(2, 2)
+            cells = outcome_rng.multinomial(size, truth[current_dose - 1].reshape(cell_count))
+            cell_table = cells if trinary else cells.reshape(2, 2)
             counts[current_dose - 1] += cell_table
             outcomes[trial, current_dose - 1] += cell_table
             dose_patients[trial, current_dose - 1] += size
@@ -382,7 +417,8 @@ def simulate_efftox(
     total_patients = int(total_patients_by_dose.sum())
     allocation = total_patients_by_dose / total_patients if total_patients else np.zeros(dose_count)
     pooled_cells = outcomes.sum(axis=0)
-    observed_joint = np.full((dose_count, 2, 2), np.nan)
+    observed_shape = (dose_count, 3) if trinary else (dose_count, 2, 2)
+    observed_joint = np.full(observed_shape, np.nan)
     for dose in range(dose_count):
         if total_patients_by_dose[dose]:
             observed_joint[dose] = pooled_cells[dose] / total_patients_by_dose[dose]
@@ -432,4 +468,5 @@ def simulate_efftox(
         total_work,
         int(rng) if isinstance(rng, (int, np.integer)) else None,
         int(sampler_rng) if isinstance(sampler_rng, (int, np.integer)) else None,
+        "trinary" if trinary else "binary",
     )
