@@ -100,4 +100,23 @@ titration when starting at the highest dose or with cohort size one; those
 guards should not be silently treated as verified iBOIN guide rules. A start
 at the highest dose can follow the stated first-patient-then-top-up rule;
 cohort size one makes the top-up empty. Neither edge has a separately
-documented native application trace. Implementation remains pending.
+documented native application trace.
+
+## Implemented titration checkpoint
+
+`replay_iboin_trial` now implements this patient-level conduct, with readonly
+assignments, cumulative counts, persistent exclusions and snapshots at each
+completed-cohort decision. It requires an explicit patient budget and records
+unfinished cohorts when that budget is exhausted. A completed final cohort
+still receives its decision, giving safety/precision stops precedence over
+budget stopping. Grade-2 and DLT indicators are mutually exclusive maximum-
+severity categories in this interface. Final MTD selection is still pending.
+
+Eleven focused conduct/design tests passed with warnings treated as errors,
+together with Ruff and module type checking. All public guide examples also
+passed. Additional deterministic traces checked a first-DLT top-up ending in
+safety elimination exactly at the patient budget, a precision stop at that
+same boundary, a budget exhausted before top-up completion, and empty/partial
+ordinary-cohort input. No unobserved outcome was inferred and no final
+selection rule was substituted. These public-workflow checks took .006 seconds
+after import, peaked at 114.3 MiB and reported zero swaps.

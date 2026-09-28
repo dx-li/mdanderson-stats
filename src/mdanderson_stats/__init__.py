@@ -559,6 +559,7 @@ from .hierarchical_binomial import (
 )
 from .hierarchical_normal import HierarchicalNormalFit, hierarchical_normal
 from .iboin import IBOINBoundaries, IBOINDesign
+from .iboin_trial import IBOINTrialDecision, IBOINTrialReplay, replay_iboin_trial
 from .imom_prior import IMOMBinaryPrior
 from .inequality import InequalityProbability, inequality_probability
 from .interaction_index import InteractionIndex, interaction_index, interaction_index_ray
@@ -1815,6 +1816,9 @@ __all__ = [
     "conjugate_prior_ess",
     "IBOINBoundaries",
     "IBOINDesign",
+    "IBOINTrialDecision",
+    "IBOINTrialReplay",
+    "replay_iboin_trial",
     "RareDisease123Decision",
     "RareDisease123Design",
     "RareDisease123Simulation",

@@ -4114,12 +4114,14 @@
         "Log-stable historical-binomial averaging to elicit dose-specific hypothesis priors from a skeleton and integer prior ESS",
         "Sample-size-dependent iBOIN boundaries, live-app no-escalation cells and complete-outcome conduct with independent uniform-prior safety elimination",
         "Robust historical borrowing with explicit effective ESS and the dedicated-help midpoint rule",
-        "Optional stricter safety stopping with the documented lowest-dose count greater than three, separate ordinary elimination state, and count-based precision stopping when the next assignment stays."
+        "Optional stricter safety stopping with the documented lowest-dose count greater than three, separate ordinary elimination state, and count-based precision stopping when the next assignment stays.",
+        "Patient-level accelerated-titration replay with cumulative grade-2/DLT triggers, lower-cap handoff, cohort top-up, persistent exclusions, auditable decisions and explicit terminal enrollment budgets."
       ],
       "validation": [
         "100 published and 120 live default boundary cells, native safety thresholds, independent prior sums, extreme ESS, zero-information BOIN equivalence and safety; tests/test_iboin.py",
         "Strict lowest-dose count threshold, exact uniform-prior safety-tail references, preserved ordinary elimination and stay-only precision stopping; tests/test_iboin.py and public guide examples.",
-        "Pending titration, final MTD estimation, simulation and reports; docs/iboin.md"
+        "Official-guide titration/cap transitions, public patient traces, and safety/precision precedence at the enrollment budget; bounded pending-cohort state and immutable history; tests/test_iboin_trial.py.",
+        "Pending final MTD estimation, simulation and reports; docs/iboin.md"
       ]
     },
     {

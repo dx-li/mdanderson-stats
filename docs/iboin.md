@@ -138,6 +138,57 @@ precision = IBOINDesign([.1, .25, .5], [0, 0, 0], early_stop_patients=12)
 assert precision.next_dose([3, 12, 0], [0, 3, 0], 2).action == "stop_precision"
 ```
 
+## Patient-level titration and cohort replay
+
+`replay_iboin_trial` assigns doses to completed patient outcomes in enrollment
+order and returns the next assignment when more outcomes are needed:
+
+```python
+from mdanderson_stats import IBOINDesign, replay_iboin_trial
+
+design = IBOINDesign([.10, .19, .30, .42, .54], [3, 3, 3, 3, 3], target=.30)
+trial = replay_iboin_trial(
+    design, dlt=[0, 0, 0, 0, 0], grade2=[1, 0, 1, 0, 0],
+    cohort_size=3, max_patients=24,
+)
+assert trial.assigned_dose.tolist() == [1, 2, 3, 3, 3]
+assert trial.titration_end_reason == "grade2"
+assert trial.patients.tolist() == [1, 1, 3, 0, 0]
+print(trial.next_dose)
+```
+
+The opening phase treats one patient per dose. Its first DLT, second grade-2
+toxicity across all titration patients, or arrival at the highest dose ends
+titration. Another `cohort_size-1` patients complete the current cohort before
+the first iBOIN decision. With a lower `titration_cap`, reaching that cap
+without either toxicity trigger instead starts a full cohort one dose higher.
+A toxicity trigger at the cap takes precedence and requires the current-dose
+top-up. Subsequent cohorts use `design.next_dose` with all accumulated patients
+and persistent dose exclusions. Set `titration=False` to use full cohorts from
+the beginning.
+
+`dlt` and `grade2` are aligned binary vectors. The Python interface treats them
+as mutually exclusive maximum-severity categories for each patient. It assumes
+completed outcomes and does not model pending assessments or event times.
+Starting at the highest dose follows the first-patient/top-up rule; cohort
+size one makes the top-up empty. Those two edge conventions follow the stated
+conduct rules, without a separately verified native application trace.
+
+The required `max_patients` is the terminal enrollment budget. A shorter
+outcome vector returns a pending state, including `phase`, `next_dose` and
+`cohort_remaining`. Exhausting the budget suppresses further assignment even
+midcohort and preserves the incomplete-cohort count. A completed final cohort
+still receives its iBOIN decision; a safety or precision stop takes precedence
+over the budget stop. Outcomes after a design stop, or beyond the budget, raise
+an error. Partial-cohort state and budget bookkeeping are explicit Python
+interface conventions, not claims about the native application's file format.
+
+The result retains readonly assignments, outcomes, cumulative counts, exclusions and a
+decision history with the data at each completed cohort. This workflow does
+not yet select a final MTD. At most 100,000 observed patients and 500,000
+observed-patient-by-dose cells are accepted, bounding history storage as well
+as enrollment.
+
 ## Validation and remaining scope
 
 Focused tests check all 100 published Table 1 escalation/de-escalation
@@ -145,8 +196,7 @@ cells, all 120 live default escalation/de-escalation cells and safety thresholds
 an independent direct finite-sum prior calculation, extreme ESS/log probabilities,
 reduction to ordinary BOIN at ESS zero, and prior-independent safety stopping.
 
-**Catalog status remains partial.** Accelerated titration,
-final MTD estimation with optional prior
+**Catalog status remains partial.** Final MTD estimation with optional prior
 borrowing, operating-characteristic simulation and native report generation are
 not yet implemented. The guide contains additional conventions for these options;
 ordinary BOIN final selection is not presented as a reproduction of all iBOIN

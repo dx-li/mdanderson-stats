@@ -858,8 +858,10 @@ because the public protocol omits it; default decision tables are reproduced.
 
 [iBOIN](docs/iboin.md) adds historical-prior elicitation, dose-specific decision
 boundaries, optional robust historical borrowing and complete-outcome dose assignment,
-verified against published and
-live-app tables. Simulation and final MTD estimation options remain pending.
+verified against published and live-app tables. Patient-level replay supports
+accelerated titration, cohort top-up, dose exclusions and safety/precision stops
+within an explicit enrollment budget. Simulation and final MTD estimation
+options remain pending.
 
 [Bayesian prior ESS](docs/conjugate-ess.md) adds seven conjugate-model calculations,
 with vectorized inputs and an explicit choice between information-based and native
