@@ -195,7 +195,14 @@ from .bmacrm import BMACRMPosterior, fit_bmacrm
 from .bmacrm_decision import BMACRMDecision, bmacrm_decision
 from .bmacrm_lookahead import BMACRMLookAhead, bmacrm_lookahead
 from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection
-from .boin12 import BOIN12Decision, BOIN12Design, BOIN12Posterior, BOIN12RDSTable, BOIN12Selection
+from .boin12 import (
+    BOIN12Decision,
+    BOIN12Design,
+    BOIN12Posterior,
+    BOIN12RDSTable,
+    BOIN12Selection,
+    boin12_tradeoff_utilities,
+)
 from .boin12 import admissibility as boin12_admissibility
 from .boin12 import posterior as boin12_posterior
 from .boin12 import rank_desirability as boin12_rank_desirability
@@ -2168,6 +2175,7 @@ __all__ = [
     "boin12_admissibility",
     "boin12_posterior",
     "boin12_rank_desirability",
+    "boin12_tradeoff_utilities",
     "simulate_boin12",
     "BOINCombDecision",
     "BOINCombDesign",

@@ -107,3 +107,26 @@ at or below its MTD without a per-dose admissibility filter. Python retains
 the source's empirical-rate isotonic fit, highest-dose MTD tie, and benchmark
 exceedance desirability calculation. These scope differences preclude a claim
 of complete application-backend or simulator parity.
+
+## Exact tradeoff mapping checkpoint
+
+The official `BOIN12Utility.pdf` gives `U = pi_E - w*pi_T` and identifies it
+as an additive binary utility special case. Cached app `index.html` restricts
+the weight to `[0,1]`. The mapping `(100,100*w/(1+w),100/(1+w),0)` yields
+`E[utility]/100 = (w+U)/(1+w)` for any joint outcome probabilities, including
+dependent endpoints. `boin12_tradeoff_utilities` exposes this table;
+`BOIN12Design.from_tradeoff` passes it to the existing inference and trial
+workflow. It does not introduce a separate inferred native estimator.
+
+Luna committed the mapping as `66b2bf4`, integrated as `d74d6ac`. Seventeen
+focused BOIN12 and existing reference checks passed in 1.73 seconds. Added
+checks cover the affine identity with correlated cells, weight endpoints,
+invalid inputs and mapped versus explicit posterior/decision/OBD behavior.
+Targeted Ruff, formatting and mypy passed. No new CI or broad simulation was
+added for this algebraic mapping.
+
+The app's conditional panel for any three-level endpoint explicitly says that
+option is under development. Such an unfinished upstream feature is not
+evidence of an implemented multilevel method to reproduce. The 3+3 help's
+interaction with utility selection at 1/3 DLTs and the complete two-stage
+conduct contract remain separate unresolved source gaps.

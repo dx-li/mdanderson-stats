@@ -56,6 +56,36 @@ Inadmissible rows have NaN ranks. Enumeration is limited to 100,000 rows and
 currently supports additive utilities; posterior calculations and simulation
 also support nonadditive utilities with joint counts.
 
+## Efficacy–toxicity tradeoff
+
+The app's alternative score is `U = pi_E - w*pi_T`, with `w` in `[0,1]`.
+Its [utility help](https://biostatistics.mdanderson.org/shinyapps/BOIN12/BOIN12Utility.pdf)
+identifies this as a special case of the four-outcome utility model. The exact
+mapping is `(100, 100*w/(1+w), 100/(1+w), 0)` in the outcome order above. It
+gives `E[utility]/100 = (w + U)/(1+w)`, so it preserves the preference ordering
+for any joint outcome probabilities, without assuming endpoint independence.
+
+```python
+from mdanderson_stats import BOIN12Design, boin12_tradeoff_utilities
+
+tradeoff_design = BOIN12Design.from_tradeoff(0.35, 0.25, weight=0.5)
+assert tradeoff_design.utilities == boin12_tradeoff_utilities(0.5)
+tradeoff_decision = tradeoff_design.next_dose([3, 6, 3], [0, 1, 2], [0, 3, 1], current_dose=2)
+print(tradeoff_decision.next_dose)
+```
+
+The factory accepts the usual safety, efficacy, exploration, stay and early
+stopping options. Its result works with `posterior`, `next_dose`, `select_obd`
+and `simulate_boin12`. The mapping helper also supplies utility scores for
+desirability tables. At `w=0`, utility depends only on efficacy; admissibility
+still applies the safety screen. At `w=1`, the two intermediate outcome scores
+are both 50.
+
+Mapped designs retain the package's quasi-beta posterior-desirability ranking,
+candidate restrictions and tie rules. The mathematical mapping is exact;
+the private application's tradeoff estimator and random streams remain
+unverified.
+
 ## Decisions and final selection
 
 The design compares posterior desirability among nearby admissible doses.
@@ -112,7 +142,11 @@ in the reference audit.
 
 ## Remaining coverage
 
-Nonadditive joint-outcome desirability tables, the current application's
-two-stage option, 3+3 run-in, tradeoff utility mode, multilevel endpoints and
-generated reports/protocols remain outstanding.
+The current application's two-stage option, 3+3 run-in and generated
+reports/protocols remain outstanding. The cached run-in help leaves its
+interaction with utility selection after 1/3 DLTs unclear. Multilevel
+endpoints are labeled under development in the inspected app, rather than an
+established implemented native feature. Nonadditive joint-outcome desirability
+tables would extend the current additive enumerator; native support for that
+table is not established by the inspected comparator.
 Late-onset outcomes belong to the separately cataloged TITE-BOIN12 design.

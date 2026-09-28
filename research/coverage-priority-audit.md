@@ -66,7 +66,7 @@ a generic method with a similar name.
 | BARD #165 | BF-BLRM route and integrated stages with titration/expansion | Existing covariate minimization and OBD selection remain useful; hidden native settings need explicit caller configuration or further source evidence; [guide](../docs/bard.md). |
 | SurvivalContour #166 | Stratified interval-censored Cox, neural models and interval-model bootstrap uncertainty | Existing right-censored Cox/AFT and implemented interval families are separate completed components; [contour guide](../docs/survival-contour.md), [interval guide](../docs/interval-survival.md). Verify advertised native scope before extending model families. |
 | Proportional Density #78 | Full-data disease-curve bootstrap, unequal-censoring calibration and bootstrap parameter uncertainty | Existing failure-only bootstrap is present. The downloaded archive has no bootstrap code; distinguish paper workflows/extensions from missing native routines; [guide](../docs/proportional-density.md). |
-| BOIN12 #148 | Two-stage mode, 3+3 run-in, tradeoff utility and multilevel endpoints | Existing joint decisions/simulation are present. The proposed nonadditive joint RDS helper still lacks native-feature evidence and must remain an extension; [guide](../docs/boin12.md). |
+| BOIN12 #148 | Two-stage mode and unresolved 3+3 run-in precedence | Tradeoff-to-utility mapping now supports the existing posterior/decision/OBD/simulation workflow. Multilevel endpoints are marked under development in the cached app. Nonadditive joint RDS native support remains unverified; [guide](../docs/boin12.md). |
 
 This audit confirms that substantial statistical work remains alongside many
 presentation-only or parity gaps. No percentage or fixed completion date can

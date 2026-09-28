@@ -1144,8 +1144,10 @@ remain open.
 [BOIN12](docs/boin12.md) now includes toxicity/efficacy posterior calculations,
 utility desirability tables, single-stage dose decisions, final OBD selection
 and joint-outcome cohort simulation. Independent R calculations validate the
-posterior, ranks and selection examples. Two-stage conduct, 3+3 run-in,
-nonadditive RDS enumeration and generated reports remain open.
+posterior, ranks and selection examples. Exact risk-benefit tradeoff mapping
+also feeds the existing decision and simulation APIs. Two-stage conduct,
+unresolved 3+3 run-in precedence and generated reports remain open; native
+support for nonadditive RDS enumeration is unverified.
 
 [BF-BOIN](docs/bf-boin.md) adds backfill eligibility, pooled dose decisions,
 posterior safety exclusions and final MTD selection. Assigned and evaluated
