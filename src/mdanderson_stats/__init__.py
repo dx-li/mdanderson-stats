@@ -1109,6 +1109,11 @@ from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_k
 from .top_binary import TOPBinaryBoundaries, TOPBinaryDecision, TOPBinaryDesign
 from .top_calendar import TOPBinarySimulation, TOPBinaryTrial, TOPCalendarStep, run_top_binary_trial
 from .top_calibration import TOPBinaryOptimization, TOPInfeasibleError, optimize_top_binary
+from .top_endpoints import (
+    TOPMultiEndpointBoundaries,
+    TOPMultiEndpointDecision,
+    TOPMultiEndpointDesign,
+)
 from .top_simulation import simulate_top_binary
 from .toxfinder_decision import (
     ToxFinderContour,
@@ -1876,6 +1881,9 @@ __all__ = [
     "TOPBinaryDesign",
     "TOPBinaryDecision",
     "TOPBinaryBoundaries",
+    "TOPMultiEndpointDesign",
+    "TOPMultiEndpointDecision",
+    "TOPMultiEndpointBoundaries",
     "RegressionESS",
     "RegressionESSSimulation",
     "RegressionESSTrigger",

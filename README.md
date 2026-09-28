@@ -829,7 +829,10 @@ not-reached outcomes are checked against the original R calculator.
 [TOP](docs/top-binary.md) adds delayed binary-response posterior decisions,
 accrual suspension, effective-sample-size boundary tables, and batched calendar
 replay/simulation, and tuning-parameter grid calibration with independent validation.
-Multiple endpoints and native reports remain pending.
+[Two-endpoint TOP](docs/top-endpoints.md) supports co-primary efficacy and
+efficacy/toxicity monitoring, endpoint-specific pending outcomes and nonuniform
+timing weights. Multiple-endpoint calendar simulation/calibration and native
+reports remain pending.
 
 [Original TPI](docs/tpi.md) adds posterior-SD intervals, original-paper decision
 tables, two-patient safety gating, isotonic MTD selection and batched simulation,

@@ -3883,13 +3883,15 @@
         "Batched binary TOP posterior/decision calculation using effective follow-up weights, explicit suspension conventions and final-outcome waiting",
         "Effective-size crossing tables and complete-data BOP2 interoperability; uniform follow-up reuses the existing TITE effective-size kernel",
         "Calendar replay and batched simulation with observed-data interim decisions, accrual pauses, final outcome waiting, timing sensitivity and per-trial summaries",
-        "Finite-grid binary calibration with shared potential outcomes, power-based selection and independent validation with Monte Carlo standard errors"
+        "Finite-grid binary calibration with shared potential outcomes, power-based selection and independent validation with Monte Carlo standard errors",
+        "Co-primary efficacy and efficacy/toxicity monitoring with a four-cell Dirichlet prior, endpoint-specific marginal Beta approximations, published decision combinations, separate assessment windows, mixture-uniform timing weights, batched patient/summary APIs and unrounded boundary tables."
       ],
       "validation": [
         "Three focused tests: published Table 4, pending follow-up example, extreme time units, suspension/equality behavior and complete-data BOP2 equivalence; tests/test_top_binary.py",
         "Three additional tests: hand calendar paths, no look-ahead, time scaling, pending-state retention and final-only exact binomial power; tests/test_top_calendar.py",
         "Three calibration checks: exact final-only binomial power, delayed-outcome stage reproducibility and infeasible-grid failure; tests/test_top_calibration.py",
-        "Pending multiple endpoints, nonuniform analysis timing elicitation, native tuning grid, reports and app/calendar parity; docs/top-binary.md"
+        "Four focused multiple-endpoint checks cover 98 independent R posterior rows, 394 boundary rows, published combination rules, timing mixtures, batching and preservation of tiny prior shapes; tests/test_top_endpoints.py and research/top-endpoints-audit.md.",
+        "Pending multiple-endpoint calendar simulation/calibration, nonuniform binary calendar analysis weights, native tuning grids, reports and app parity; docs/top-endpoints.md and docs/top-binary.md."
       ]
     },
     {

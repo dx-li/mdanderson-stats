@@ -195,7 +195,9 @@ At n=20 of N=40, the table suspends with 10 pending while the prose's strict
 inequality requires 11. Both conventions are exposed. The earlier arXiv table
 has different thresholds; this implementation targets the published table.
 
-**Catalog status is partial.** Co-primary efficacy
-and efficacy/toxicity models,
-the app's nonuniform timing elicitation, native reports and app version parity
-remain pending. Original PDFs and application files are not redistributed.
+**Catalog status is partial.** [Co-primary efficacy and efficacy/toxicity
+monitoring](top-endpoints.md) now supports separate endpoint assessment windows
+and mixture-uniform timing weights. The binary calendar and simulation API above
+continues to use uniform analysis weights. Multiple-endpoint calendar simulation
+and calibration, native tuning grids, reports and app version parity remain
+pending. Original PDFs and application files are not redistributed.
