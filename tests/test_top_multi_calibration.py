@@ -3,6 +3,7 @@ import pytest
 
 from mdanderson_stats.top_endpoints import TOPMultiEndpointDesign
 from mdanderson_stats.top_multi_calibration import optimize_top_multiendpoint
+from mdanderson_stats.top_multi_simulation import simulate_top_multiendpoint
 
 
 def test_composite_null_finite_grid_matches_exact_final_look_reference():
@@ -58,6 +59,16 @@ def test_composite_null_finite_grid_matches_exact_final_look_reference():
     assert result.calibration_decision_probability.shape == (2, 4, 4)
     np.testing.assert_allclose(result.calibration_decision_probability.sum(axis=-1), 1)
     assert result.validation_seed != result.calibration_seed
+    holdout_replay = simulate_top_multiendpoint(
+        result.design,
+        alternative,
+        1,
+        trials=2000,
+        arrival="fixed",
+        rng=result.validation_seed,
+    )
+    assert holdout_replay.success_probability == result.validation_probability[-1]
+    np.testing.assert_allclose(holdout_replay.patients.mean(), result.validation_mean_patients[-1])
 
 
 def test_hypothesis_validation_reproducibility_and_timing_input_ownership():
@@ -127,4 +138,24 @@ def test_hypothesis_validation_reproducibility_and_timing_input_ownership():
             trials=100,
             validation_trials=100,
             max_work=1,
+        )
+
+
+def test_runtime_scan_budget_exhaustion_is_distinct_from_preflight():
+    design = TOPMultiEndpointDesign(4, [0.25] * 4, 0.5, 0, windows=[1, 2], looks=[4])
+    # The one-scan-per-look preflight is exactly 3,200 cells. Complete-data
+    # suspension rechecks require additional scans and exhaust this budget.
+    with pytest.raises(ValueError, match="scan work exceeds max_work"):
+        optimize_top_multiendpoint(
+            design,
+            [[0, 0, 0, 1]],
+            [0.35, 0.25, 0.2, 0.2],
+            1,
+            cutoff_scales=[0.5],
+            gammas=[0],
+            trials=100,
+            validation_trials=100,
+            arrival="fixed",
+            rng=9,
+            max_work=3200,
         )

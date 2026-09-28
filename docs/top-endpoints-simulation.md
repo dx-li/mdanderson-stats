@@ -79,8 +79,10 @@ print(simulation.duration.mean(), simulation.patients.mean())
 ```
 
 Two hundred trials make a quick example, with appreciable Monte Carlo
-uncertainty. The supplied C and gamma are design inputs; these functions do
-not calibrate frequentist error rates.
+uncertainty. The supplied C and gamma are design inputs; the simulator itself
+does not calibrate frequentist error rates. See the
+[finite-grid calibration guide](top-endpoints-calibration.md) for a search over
+explicit joint null scenarios and independent validation.
 
 Simulation is vectorized across trials and retains compact per-trial summaries
 instead of analysis histories. It supports at most 100,000 trials and two
