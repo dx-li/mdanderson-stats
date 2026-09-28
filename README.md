@@ -1293,8 +1293,13 @@ curves, joint covariance, predictions and contours.
 [Random survival forests](docs/random-survival-forest.md) add numeric log-rank
 trees, separately averaged Kaplan–Meier survival and Nelson–Aalen hazards,
 and contours from fitted forests. Sequential tree growth, sparse leaf curves
-and explicit work limits bound computation. Neural models, interval-censored
-models and native simulation-based intervals remain open.
+and explicit work limits bound computation.
+[Interval-censored proportional-hazards models](docs/interval-survival.md)
+fit mixed exact, interval, left- and right-censored observations with a
+nonparametric Turnbull baseline. Predictions and continuous-covariate contours
+return explicit survival identification bounds, preserving uncertainty within
+observation intervals and beyond the last finite observation. Neural models,
+interval-censored competing risks and native simulation-based intervals remain open.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson

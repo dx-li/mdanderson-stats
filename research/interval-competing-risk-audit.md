@@ -75,3 +75,13 @@ event interval. Neither behavior should silently become a Python convention.
 
 No `intccr` fit or Python numerical comparison has run at this checkpoint.
 No extra R or Python dependencies have been installed.
+
+For a source-only reference run, the pure-R optimizer dependencies have also
+been retrieved and blob-verified without installation: `alabama` 2025.1.0 at
+`3dd535fac47afe823162a4755c3a1faddef6c566` (`R/constrOptim.nl.R`, blob
+`05c93764ceb3eacafd1d2cc06ad8d6b4f7015cf1`), and `numDeriv` 2016.8-1.1 at
+`54dc4181ec0543a95a2cf7a5e3c483ab0a109750` (`R/numDeriv.R`, blob
+`394d5f1db1d644fd1b44a2e70f0294ce04fcf50d`; `R/num2Deriv.R`, blob
+`9adbafd4d39dc95d2d0b69283a5fc571bf1e497c`). A scratch harness redirects only
+the optimizer's package lookup to these source-loaded functions. It is not
+yet executed and is not numerical evidence.

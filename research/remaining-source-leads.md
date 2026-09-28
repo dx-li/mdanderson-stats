@@ -155,8 +155,10 @@ mixed censoring, weights, no covariates, current status and tied exact/right
 observations; see [the interval audit](interval-survival-audit.md). The native
 fixed endpoint perturbation must be replaced by exact inclusivity semantics,
 and within-support survival identification bounds must not be mislabeled as
-confidence intervals. Python implementation is underway in the single Luna
-worker; completed coverage is not yet claimed.
+confidence intervals. The Python PH fit, predictions and contour workflow now
+pass five native reference cases, independent score/constraint checks and unit
+rescaling checks; see the audit and `docs/interval-survival.md`. Stratified
+interval fits and bootstrap uncertainty remain open.
 
 ## Interval-censored competing-risk regression
 
@@ -180,6 +182,12 @@ Retrieved and blob-verified under ignored `research/raw/intccr`:
 `R/bssmle.R` (`d122c3ac22a446bfb8071b720c9df962de188ebe`), and
 `R/dataprep.R` (`371ac55900e8434a264c557e1933b749f3918576`). No native fit or
 Python implementation is claimed yet.
+
+The [implementation contract](interval-competing-risk-audit.md) records the
+additional response, spline, initialization and least-squares covariance
+sources, and source-level derivative discrepancies requiring numerical review.
+Pure-R optimizer dependencies are available for a source-only reference run;
+no package installation is required for that approach.
 
 ## Neural survival models already use a Python backend
 

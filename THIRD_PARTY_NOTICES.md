@@ -1000,6 +1000,18 @@ Python uses a distinct seeded random stream and bounded sequential fitting and
 prediction. See `research/random-survival-forest-audit.md` for source hashes,
 kernel scope and remaining native features.
 
+`interval_survival.py` independently implements the nonparametric
+interval-censored proportional-hazards likelihood on Turnbull support
+intervals. Algorithm definitions and numerical references were checked against
+Clifford Anderson-Bergman's `icenReg` 2.0.16, declared LGPL >=2.0 and <3, pinned
+at `26fadac37c6b54dd0e29c91c2bf07942ae120356`. The unchanged native support
+builder, PH optimizer and survival transformation supply five reference fits;
+original sources and compiled objects are not redistributed. Python uses exact
+endpoint inclusion, stable log-domain arithmetic and explicit survival
+identification bounds. Its contour API does not claim equivalence to the
+original application's unresolved `mets` interval2 route. See
+`research/interval-survival-audit.md` for source hashes and validation scope.
+
 ## Bayesian success calibration
 
 `success_calibration.py` is an independent implementation of the mathematical

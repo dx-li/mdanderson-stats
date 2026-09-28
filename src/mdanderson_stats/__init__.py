@@ -527,6 +527,18 @@ from .imom_prior import IMOMBinaryPrior
 from .inequality import InequalityProbability, inequality_probability
 from .interaction_index import InteractionIndex, interaction_index, interaction_index_ray
 from .interaction_monte_carlo import InteractionMonteCarlo, interaction_index_monte_carlo
+from .interval_survival import (
+    IntervalSurvivalFit,
+    IntervalSurvivalPrediction,
+    fit_interval_survival,
+    predict_interval_survival,
+)
+from .interval_survival_contour import (
+    IntervalSurvivalContour,
+    interval_survival_contour,
+    plot_interval_survival_contour_2d,
+    plot_interval_survival_contour_3d,
+)
 from .intervals import (
     binomial_interval,
     bp1ci_binomial_interval,
@@ -1599,6 +1611,14 @@ __all__ = [
     "fit_random_survival_forest",
     "predict_random_survival_forest",
     "random_survival_forest_contour",
+    "IntervalSurvivalFit",
+    "IntervalSurvivalPrediction",
+    "IntervalSurvivalContour",
+    "fit_interval_survival",
+    "predict_interval_survival",
+    "interval_survival_contour",
+    "plot_interval_survival_contour_2d",
+    "plot_interval_survival_contour_3d",
     "SurvanLogistic",
     "survan_logistic",
     "SurvanKM",

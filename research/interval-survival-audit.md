@@ -4,7 +4,7 @@ SurvivalContour entry 166 advertises an interval-censored Cox workflow. Its
 original `mets::phreg(Surv(..., type="interval2"))` route has an unresolved
 response-contract mismatch documented in [remaining source leads](remaining-source-leads.md).
 Counting-process partial likelihood is not an interval-censored likelihood.
-The Python method is being developed against the explicit interval-censoring
+The Python method is implemented against the explicit interval-censoring
 likelihood and the primary `icenReg` implementation described below.
 
 ## Reference source
@@ -77,5 +77,55 @@ The successful compile-and-reference run took 3.56 seconds, peaked at 308.5 MiB
 child RSS and reported zero process swaps. It ran sequentially with one
 BLAS/OpenMP thread, one compiler job and optimization disabled for the small
 reference build. No dependency installation was needed. This source/reference
-checkpoint does not yet claim a finished Python implementation or change
-catalog status.
+checkpoint established the references used for the Python implementation below.
+
+## Python implementation and validation
+
+`interval_survival.py` independently implements the interval likelihood using
+log cumulative hazards, conditional Newton regression updates, weighted
+isotonic baseline updates and likelihood backtracking. Equal adjacent baseline
+values represent exact zero-mass support intervals. Common weight rescaling
+and scale-first covariate standardization avoid dependence on absolute input
+units. The fit exposes convergence diagnostics and raises on failed convergence.
+
+The endpoint sweep processes exact starts, closed ends and then open starts at
+each time. A right tail is retained only when the final pending start requires
+it. This reproduces all 480 native observation/support indices while preserving
+the original endpoint values without the native fixed perturbation.
+
+Five native cases agree within the following absolute differences:
+
+| Quantity | Maximum difference |
+| --- | ---: |
+| Regression coefficients | `1.48e-7` |
+| Log likelihood | `2.01e-11` |
+| Support probability masses | `9.71e-8` |
+| Survival at finite support boundaries | `2.60e-7` |
+
+Four current-status masses are exactly zero. An independent finite-difference
+likelihood audit checks regression scores and ordered-baseline KKT conditions;
+the largest normalized residual is `9.80e-8`. The hand-solvable intervals
+`(0,1], (1,2], (0,2], (2,infinity)` reproduce masses `3/8,3/8,1/4` and both
+within-interval survival bounds.
+
+The root integration audit checks covariate units `1e-100` and `1e100`, time
+units `1e-100` and `1e100`, and global weight factors `1e-200` and `1e200`.
+Both public guide examples ran successfully. Four mean/explicit-profile and
+default/custom-time contours, including their percentile curves, match direct
+predictions; four 2D/3D bound views were rendered and visually inspected.
+The warnings-as-errors audit took 1.35 seconds and peaked at 160.6 MiB RSS with
+zero reported process swaps, using one numerical thread.
+
+Three focused regressions cover native fits, endpoint assignments, masses and
+curves, the hand-solvable case and time units, and weight/input behavior. No
+full-suite or simulation campaign was run for this addition. The API provides
+identification bounds, not bootstrap or analytic confidence limits. Stratified
+interval fits, interval competing risks and other outstanding SurvivalContour
+families remain pending; catalog entry 166 remains partial.
+
+The integrated three-test run passed in 2.06 seconds with warnings treated as
+errors; Ruff formatting/lint and targeted mypy checks passed. Wheel and source
+archives were built from cached build dependencies without installing packages.
+All 475 Python modules were byte-compared against both archives, and all eight
+new public exports and both guide examples passed against the wheel in an
+isolated interpreter (144.2 MiB peak RSS, zero reported swaps).
