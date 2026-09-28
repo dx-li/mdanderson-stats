@@ -101,3 +101,10 @@ The guide example took 16.97 seconds; the combined reference/example process
 peaked at 115.3 MiB RSS with zero swaps. It uses sequential deterministic
 integration with bounded optimizer evaluations. No large simulation or
 whole-repository test run was required for this integration checkpoint.
+
+Wheel and source-distribution builds from committed revision `b2092b7`
+passed. All 486 Python modules matched the committed source byte for byte in
+both archives, including calibration, trinary fitting, simulation and legacy
+contours. The wheel includes third-party notices; neither archive included
+raw native research files or compiled local binaries. This validates package
+contents, not all methods in the catalog. GitHub publication remains pending.
