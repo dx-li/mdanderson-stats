@@ -190,3 +190,8 @@ allowing its measured log/exp roundoff. Peak child resident memory was
 139.3 MiB). Targeted Ruff, formatting and mypy checks passed. All five Python
 examples in the CondiS guide executed successfully, including the public SVM
 tuning interface. No broad repository suite or new CI workflow was added.
+
+Wheel and source-distribution builds from committed revision `4358742` passed.
+All 480 Python module files matched the committed source byte for byte in both
+artifacts. Ignored original native sources and compiled objects were excluded;
+the wheel retained the updated third-party notices.
