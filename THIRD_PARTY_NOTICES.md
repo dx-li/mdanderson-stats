@@ -1143,3 +1143,19 @@ The original Gaussian and nearest-neighbor kernels are compiled only for local
 reference calculations, without installing their packages. Original R/C/C++
 source and compiled objects are not redistributed. See
 `research/condis-refinement-audit.md` for the reference scope and source pins.
+
+The radial SVM reference uses Alexandros Karatzoglou, Alex Smola, Kurt Hornik
+and contributors' kernlab 0.9-33 (GPL-2). Its unchanged C/C++ numerical sources
+and R fit/predict methods are used only for local reference calculations.
+`docs/condis-svm-sources.json` records the pinned files and
+`research/condis-svm-audit.md` describes the verified epsilon-SVR objective,
+bandwidth estimation, scaling and numerical convergence checks. Original
+kernlab sources and compiled objects are not distributed.
+
+The neural-learner reference uses W. N. Venables and B. D. Ripley's nnet
+7.3-19 (GPL-2 or GPL-3), already installed in the local R environment.
+`research/condis-nnet-sources.json` pins the network source and an R `vmmin`
+optimizer source lead; `research/condis-refinement-audit.md` records the
+executed reference scope. The reference script calls the original network,
+optimizer and derivative routines with explicit starting weights. Original
+nnet and R sources and compiled objects are not distributed.

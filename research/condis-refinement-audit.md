@@ -243,8 +243,9 @@ three learners in the current checkpoint do not substitute for these four.
 [`condis-nnet-sources.json`](condis-nnet-sources.json) additionally pins nnet
 7.3-19 at `4600c58673b3e4ba829286bf61b2b6f5ecf5da56`, matching the nnet
 version already available in the local R installation. Its original R wrapper,
-DESCRIPTION and C implementation are saved and hash-verified. No installation,
-training run or Python neural-learner coverage is claimed by that retrieval.
+DESCRIPTION and C implementation are saved and hash-verified. Source retrieval
+does not itself establish fit parity. The executed reference below uses the
+already-installed native package; Python neural-learner coverage remains pending.
 
 The executed caret metadata uses hidden sizes 1, 3 and 5 crossed with decays
 0, 0.1 and 0.0001. It sorts by increasing size and decreasing decay before
@@ -270,3 +271,53 @@ start, Armijo acceptance coefficient 1e-4, step reduction by 0.2, curvature
 updates and restarts, and its specific absolute/relative objective stopping
 rules. These details are available for the next implementation; equivalence
 must still be checked against the installed native optimizer.
+
+### Executed neural references
+
+`tools/reference_condis_nnet.R` executes the original caret fit wrapper with
+the installed nnet 7.3-19 and R 4.4.1. It verifies the three pinned nnet source
+files and the caret model snapshot first. It does not install packages or run
+the complete caret training pipeline: it uses the verified grid, explicit
+shared fold assignments and unweighted mean fold RMSE aggregation.
+
+`tests/fixtures/condis-nnet-native.json` retains 117 fold fits, 18 full-sample
+fits and 12 optimizer trajectory fits across the ordinary and wide inputs.
+Each fit has explicit deterministic starting weights, final weights, objective
+value, predictions and native convergence status. These starts isolate
+optimizer behavior from differing R and NumPy random streams; they are not a
+claim to reproduce a native default seed. The trajectory uses the same start
+at iteration limits 0, 1, 2, 5, 10 and 100. Initial gradients come directly from
+nnet's registered native derivative routine after setting up the native
+network and retaining its training buffers.
+
+An additional four-row example has two binary predictors, one hidden unit,
+initial weights `(0, log(2), -log(2), 1, 2)` and response `(1, 2, 3, 4)`.
+Its exact hidden outputs are `(1/2, 2/3, 1/3, 1/2)` and predictions are
+`(2, 7/3, 5/3, 2)`. The squared-error sum is `62/9`; decay 0.1 adds
+`0.1 * (5 + 2 * log(2)**2)`. Its analytical gradient, including bias decay,
+matches the original kernel within 1e-13 absolute. This checks the weight
+ordering and objective independently of optimizer behavior.
+
+The native reference generation passed in 0.79 seconds with 86.9 MiB peak
+child resident memory and zero swaps, using one process and one BLAS/OpenMP
+thread. Independent NumPy reconstruction of all retained fits found maximum
+absolute differences of 1.43e-14 in predictions, 4.55e-13 in objectives,
+1.14e-13 in initial gradients and 3.34e-15 in fold RMSEs. Centered finite
+differences of the initial objectives agreed with the analytic gradients
+within 5.26e-8 after dividing each gradient difference by
+`max(1, abs(gradient))`. The analytical four-row case also passed.
+
+Both reference cases select size 5 and decay 0.1, with mean fold RMSEs
+1.7287934888481147 (ordinary) and 2.9362319980942626 (wide). At the native
+default iteration limit of 100, **55 of 90 ordinary and 17 of 27 wide fold
+fits have convergence code 1**, as do both selected full-sample fits. These
+are valid native compatibility observations, not evidence that their neural
+optimization converged. A Python implementation must expose this status and
+allow a larger iteration limit. With `maxit = 0`, native code returns status
+0 even though optimization was not attempted; that case is retained solely
+as an initial-objective reference and must not be described as convergence.
+
+These checks validate the saved native reference data and the neural
+objective/gradient contract. No Python optimizer, tuning interface or
+neural-learner completion is claimed at this checkpoint. Native generation
+is a research tool and is not added to ordinary CI.
