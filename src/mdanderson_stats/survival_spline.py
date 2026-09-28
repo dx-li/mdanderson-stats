@@ -458,12 +458,16 @@ def fit_survival_spline(
         raise ArithmeticError(f"spline fit has no finite monotone identified optimum: {reason}")
     final_loss, result, theta, info_scaled = min(accepted, key=lambda item: item[0])
     covariance_scaled = np.linalg.solve(info_scaled, np.eye(dimension))
+    covariance_scaled = (covariance_scaled + covariance_scaled.T) / 2
+    np.linalg.cholesky(covariance_scaled)
     transform = _scaled_to_original_matrix(
         time_center, time_scale, covariate_mean, covariate_scale, m
     )
     inverse_transform = np.linalg.solve(transform, np.eye(dimension))
     coefficients = inverse_transform @ theta
     covariance = inverse_transform @ covariance_scaled @ inverse_transform.T
+    covariance = (covariance + covariance.T) / 2
+    np.linalg.cholesky(covariance)
     information = transform.T @ info_scaled @ transform
     if not all(
         np.isfinite(value).all()

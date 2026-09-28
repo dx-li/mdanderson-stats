@@ -14,6 +14,7 @@ from mdanderson_stats.parametric_survival import (
 )
 from mdanderson_stats.survival_spline import (
     SurvivalSplineFit,
+    fit_survival_spline,
     predict_survival_spline,
 )
 from mdanderson_stats.survival_uncertainty import predict_parametric_survival_mc
@@ -321,3 +322,19 @@ def test_spline_mc_skips_endpoint_basis_evaluation() -> None:
         )
     assert prediction.survival[0, 0] == 1.0
     assert prediction.survival[0, 2] == 0.0
+
+
+def test_fitted_spline_covariance_supports_joint_normal_draws() -> None:
+    rng = np.random.default_rng(7)
+    x = rng.normal(size=(100, 2))
+    latent = np.exp(0.8 + 0.35 * x[:, 0] - 0.25 * x[:, 1]) * rng.gamma(2.5, size=100) ** 0.7
+    time = np.minimum(latent, 6.0)
+    event = (latent <= 6.0).astype(int)
+    fit = fit_survival_spline(time, event, x, scale="hazard", k=4)
+
+    prediction = predict_parametric_survival_mc(
+        fit, [0, 1, 3, 6, 10], [[0, 0], [1, 0]], draws=8, rng=19
+    )
+    assert prediction.survival.shape == (2, 5)
+    assert prediction.parameter_draws.shape == (8, fit.scaled_parameters.size)
+    assert prediction.spline_minimum_slope is not None
