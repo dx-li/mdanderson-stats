@@ -1,9 +1,9 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `02efdac` adds PLBARPO control operating
-characteristics, Dose Schedule Finder and Multc calendar trials, and U2OET GAO
-probabilities/likelihoods to the preceding APIs. Local `master` contains this
-validated checkpoint. Fresh
+Latest verified package checkpoint: `e3e907f` adds BOIN12 tradeoff utilities
+and BARD BF-BLRM posterior fitting, dose/backfill decisions and final MTD
+selection to the preceding APIs. Local `master` contains this validated
+checkpoint. Fresh
 read-only checks still show GitHub `master` and `main` at `45b6e307`; their
 documentation/CI commits are already merged locally. The newer statistical
 additions have not been confirmed published. See the final section for the
@@ -269,3 +269,40 @@ bundle are prepared for publication, but have not been confirmed on GitHub.
 The next BARD/BOIN12 source investigations are separate from this validated
 checkpoint. Implementation remains limited to two Luna workers and at most one
 read-only reviewer, with one bounded numerical process at a time.
+
+## BOIN12 tradeoff and BARD BF-BLRM checkpoint
+
+BOIN12's tradeoff utility mapping is public at `f592a4b`. It preserves the
+exact affine relationship to `pi_E - w*pi_T` for arbitrary joint endpoint
+probabilities and feeds the existing posterior, decision, final-selection and
+simulation APIs. Seventeen focused BOIN12/reference checks pass; a four-trial
+comparison of mapped and explicitly supplied utilities replays identically.
+The cached app marks multilevel endpoints under development; that is now
+distinguished from established native features awaiting a port. Two-stage and
+3+3 run-in precedence still need a verified contract.
+
+BARD BF-BLRM fitting is public at `9cddc04`, and its decision helpers at
+`e3e907f`. The raw-dose-ratio model matches all 20 independent R probabilities;
+22 integrated posterior references agree within two estimated Monte Carlo
+standard errors. Maximum split R-hat is below 1.002. Twelve hand-calculated
+decision snapshots match exactly, including cutoff equality, unsafe downward
+intermediate steps, response before DLT assessment and final minimum-treated
+eligibility. Three focused fitter checks and five decision checks pass.
+Targeted lint, formatting and module type checks passed. No full numerical
+suite, new CI workflow or large simulation was introduced.
+
+Cached wheel and source builds at `e3e907f` pass. The isolated wheel check
+verifies all 1,447 public exports, all 527 packaged source/data files against
+committed Git bytes, retained licenses/notices, the 138-entry catalog and four
+new examples across three changed guides. It took 10.934 seconds, peaked at
+113.94 MiB and reported no swaps. Previously checked BOIN12 simulation examples
+were not repeated. Catalog counts remain 63 implemented, 66 partial, 9 pending.
+These additions close numerical components within partial workflows; they do
+not establish complete BOIN12 or BARD native feature coverage.
+
+Local `master` is fast-forwarded to the validated code plus this audit. Fresh
+read-only GitHub checks still show both `master` and `main` at `45b6e307`.
+The validated code has 61 newer commits than that published point. No rejected
+write route was retried: shell GitHub DNS and unavailable connector approval
+remain the recorded barriers. Packages and an updated verified all-refs bundle
+preserve the local checkpoint, but they do not publish it to the community.
