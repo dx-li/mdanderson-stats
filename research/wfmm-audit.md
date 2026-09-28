@@ -52,3 +52,19 @@ Next implementation should preserve the coefficient-level covariance and
 mixture shrinkage model, with bounded sampling and explicit assumptions.
 Neither a generic mixed-model wrapper nor wavelet denoising alone completes
 WFMM. No implementation or native example execution is claimed here.
+
+## Independent reduced-posterior reference
+
+`tools/reference_wfmm_coefficients.R` enumerates the four inclusion patterns
+of a two-fixed-effect Gaussian mixture. There are five curves, three shared
+random intercepts and two transform coefficients with different variance
+components. Given an inclusion pattern, integrating the Gaussian fixed effects
+gives covariance `Sigma + X*diag(tau*gamma)*X'`; ordinary Gaussian conditioning
+gives its posterior mean and covariance. Mixing these results with normalized
+marginal likelihoods yields exact inclusion probabilities and posterior moments.
+
+The input and posterior CSV fixtures retain all numeric choices. Variance
+components are deliberately fixed in this reduced reference; the future WFMM
+sampler must still estimate them. This check targets shrinkage and Gaussian
+integration, not the native variance-prior defaults or MCMC random-number
+parity. Base-R generation completed in 0.09 seconds.
