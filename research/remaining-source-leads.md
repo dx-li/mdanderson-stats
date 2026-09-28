@@ -148,9 +148,15 @@ dated 2024-01-13, LGPL >=2.0 and <3. Its `R/ic_sp.R` (blob
 `0a51f8e92a04249ded93bd6c7476bc6b24d28275`) explicitly supports interval2
 proportional-hazards/proportional-odds likelihoods, Newton regression updates
 and iterative-convex-minorant baseline updates. DESCRIPTION and that wrapper
-are saved and blob-verified under ignored `research/raw/icenReg`. Its fitting
-kernels and baseline/covariance contract still need auditing. No interval
-model implementation or completed coverage is claimed by this source lead.
+are saved and blob-verified under ignored `research/raw/icenReg`. The full
+native PH core and maximal-intersection builder now run through a small
+Rcpp/Eigen harness without installing the package. Five reference fits cover
+mixed censoring, weights, no covariates, current status and tied exact/right
+observations; see [the interval audit](interval-survival-audit.md). The native
+fixed endpoint perturbation must be replaced by exact inclusivity semantics,
+and within-support survival identification bounds must not be mislabeled as
+confidence intervals. Python implementation is underway in the single Luna
+worker; completed coverage is not yet claimed.
 
 ## Fine–Gray executable reference lead
 
