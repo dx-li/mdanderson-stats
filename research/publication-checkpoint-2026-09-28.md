@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `9053738` adds CiBolus complete-outcome
-cohort and aggregate simulation plus PRT explicit-input calendar replay. Local
+Latest verified package checkpoint: `9bfefbc` adds survival-forest OOB curves,
+concordance diagnostics and permutation importance, plus BARD stage-two continuation. Local
 `master` contains this validated checkpoint. Fresh read-only checks still show
 GitHub `master` and `main` at `45b6e307`; their documentation/CI commits are
 already merged locally. The newer statistical additions have not been
@@ -390,3 +390,48 @@ write route was not retried or bypassed. Updated local packages and a verified
 all-refs bundle preserve the checkpoint; they do not make it available on
 GitHub. The next OOB survival-forest implementation is delegated to Luna in
 an isolated checkout and is excluded from this package until validated.
+
+## Forest diagnostics and BARD continuation checkpoint
+
+Numeric survival forests now retain optional OOB membership and report held-out
+KM/NA curves, contributor counts, mortality and native-convention concordance
+error. Sixteen unchanged native concordance cases and 264 independently
+reconstructed native-kernel curve values agree exactly. Enabled OOB computation
+preserves the fitted trees and random stream. Undefined rows remain explicit.
+Memory and work are bounded without materializing pairwise comparison matrices.
+
+Permutation importance shuffles each feature within each tree's OOB rows and
+scores complete tree blocks. Independent native-kernel comparisons match every
+baseline, perturbed, block and mean error across block sizes 7, 3 and 1, including
+an omitted tail, an undefined block and a constant feature. The default
+whole-forest block is explicitly distinguished from native block size 10;
+anti-split importance and native RNG equivalence are not claimed. The portable
+reference script rerun takes 1.139 seconds after imports at 117.61 MiB peak RSS
+with zero swaps. Nine focused forest/OOB/importance tests and targeted lint,
+format and type checks pass.
+
+BARD continuation connects the completed BF-BLRM stage-one ledger to eligible
+carryover, combined-history minimization and final OBD selection. The target
+includes carryover, and only patients at the supplied dose pair enter the
+combined history. Four independent base-R ledgers match eight assignments,
+32 count rows, six posterior rows and four target/selection summaries, with
+maximum posterior/utility difference `4.27e-14`. Four focused worker tests and
+a separate source review pass. Titration, expansion and native per-arm quotas
+remain documented gaps; no timing law or hidden native settings are invented.
+
+Wheel and source builds at `9bfefbc78a8dd5f9cc5f406ee376a2e4bfe4d0ce` pass.
+The isolated wheel check verifies all 1,471 public exports, exact committed
+bytes for 534 source/data files, retained licensing/notices, all 138 catalog
+entries, and three executable examples across the OOB/importance and BARD
+continuation guides. It takes 13.957 seconds, peaks at 123.67 MiB and reports
+zero swaps. No broad numerical suite, new CI workflow or large simulation was
+run. Catalog status remains 63 implemented / 66 partial / 9 pending.
+
+Local `master` is fast-forwarded to this verified code plus the present audit.
+Fresh read-only GitHub checks still show `master` and `main` at `45b6e307`;
+the verified code contains 86 newer commits. Publication remains blocked by
+the recorded shell DNS failure and connector approval rejection. The rejected
+write route was not retried or bypassed. Refreshed packages and a verified
+all-refs bundle preserve this checkpoint locally. Accelerated BARD titration
+is being developed in Luna's separate checkout and remains excluded from
+`master` and the package until reviewed and validated.
