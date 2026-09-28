@@ -366,6 +366,7 @@ from .cibolus_decision import CiBolusDecision, cibolus_decision
 from .cibolus_fit import CiBolusFit, fit_cibolus
 from .cid2bp import BinomialDifferenceInterval, cid2bp_interval
 from .condis import CondiSImputation, condis_impute
+from .condis_boosting import CondiSBoostingRefinement, condis_boosting_refine
 from .condis_linear import CondiSLinearRefinement, condis_linear_refine
 from .condis_neural import (
     CondiSNeuralFit,
@@ -1733,6 +1734,8 @@ __all__ = [
     "RareDisease123Design",
     "RareDisease123Simulation",
     "simulate_rare_disease_123",
+    "CondiSBoostingRefinement",
+    "condis_boosting_refine",
     "CondiSLinearRefinement",
     "condis_linear_refine",
     "CondiSNeuralFit",

@@ -96,8 +96,8 @@ def _best_split(
             continue
         values = x[ordered_rows, feature]
         z = residual[ordered_rows] / residual_scale if residual_scale else residual[ordered_rows]
-        cumulative = np.cumsum(z, dtype=np.float64)
-        split_positions = np.flatnonzero(values[:-1] < values[1:]) + 1
+        cumulative: FloatArray = np.cumsum(z, dtype=np.float64)
+        split_positions: NDArray[np.int64] = np.flatnonzero(values[:-1] < values[1:]) + 1
         valid = split_positions[
             (split_positions >= min_node) & (ordered_rows.size - split_positions >= min_node)
         ]
@@ -305,7 +305,7 @@ def condis_boosting_refine(
         raise ValueError("boosting work exceeds the 250 million row-feature-split budget")
     rng = np.random.default_rng(random_state)
     score_grid = [(int(ntree), int(depth)) for ntree in trees for depth in depths]
-    scores = np.empty((repeats, int(fold_count), len(score_grid)), dtype=np.float64)
+    scores: FloatArray = np.empty((repeats, int(fold_count), len(score_grid)), dtype=np.float64)
     max_trees = int(np.max(trees))
     for rep in range(repeats):
         for fold in range(int(fold_count)):

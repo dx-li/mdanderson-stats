@@ -1,6 +1,6 @@
 # CondiS-X Gaussian gradient-boosting source contract
 
-The gradient-boosting CondiS-X refinement remains unimplemented in Python.
+The gradient-boosting CondiS-X refinement is implemented in Python.
 [`condis-gbm-sources.json`](condis-gbm-sources.json) records 60 hash-verified
 original gbm 2.3.1 files at commit
 `638b95f74de63e5d9c0212aeb11c38c08608c14b`, including the complete native
@@ -111,17 +111,35 @@ matched exactly. The checks also verified the inherited fallback metadata of
 11 empty missing branches rather than incorrectly interpreting those weights
 as sample counts.
 
-## Python work still required
+## Python construction and refinement
 
-These results establish the native reference data and algorithm contract;
-they do not implement or validate Python tree construction. Equal R and
-NumPy seeds are not interchangeable. The retained draw streams support direct
-construction comparisons independently of the random-number generator.
+`condis_boosting.py` implements the mean initializer, sequential half-sample
+draws, residual trees, best-first splits, shared-path candidate scoring and
+fresh selected full-data refit. It reuses sorted predictor orders and
+accumulates predictions without a rows-by-trees matrix. Split improvements
+use a common in-bag residual scale to avoid squared-response overflow or
+underflow. Midpoints respect strict left routing even for adjacent floats.
+The default 43-training-row guard is preserved.
 
-The Python implementation should reuse sorted predictor orders, grow trees
-sequentially and accumulate predictions at the requested tree counts. It must
-not allocate an observations-by-trees tensor for ordinary refinement. Stable
-residual sums, split gains and midpoints need numerical checks against the
-original objective. Tree-prefix reuse, sample-size rejection and exact event
-restoration are meaningful validation targets; native reference generation
-does not belong in ordinary CI.
+With the saved uniform draws, the ordinary and wide three-tree predictions
+agree with the unchanged native kernel within 1.78e-15 and 3.55e-15 absolute,
+respectively. Training mean squared errors differ by at most 3.56e-15.
+These are direct tree-construction checks, rather than traversal of native
+trees alone. Equal R and NumPy seeds remain noninterchangeable; native full
+CV scores are not claimed for a NumPy-generated stream.
+
+Three focused checks cover constant-response stopping, adjacent-float split
+routing, event restoration and rejection of 42-row training folds. Targeted
+Ruff and mypy checks passed. Additional bounded comparisons at response
+scales 1e-200, 1 and 1e200 produced finite outputs with unchanged relative
+RMSE. These checks do not constitute broad simulation or missing-data
+support; inputs remain finite numeric arrays.
+
+After public API integration, the three focused tests passed in 1.15 seconds;
+targeted lint, formatting and type checks passed. Both saved native trace
+prefixes were independently rerun, followed by an ordinary four-fold workflow
+using all nine default settings. The selected 150-tree, three-split refit
+reconstructed exactly from its stored trees, and observed event times were
+preserved. This bounded numerical run took 0.35 seconds with 114.3 MiB peak
+process resident memory and zero swaps. The documented boosting example also
+executed successfully. No full repository suite or additional CI was added.

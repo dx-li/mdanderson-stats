@@ -330,6 +330,63 @@ and bounded vectors; CV has separate kernel-work and pair-update limits.
 Featurewise kernel differences preserve nearby points with large common
 offsets without allocating an observations-by-observations-by-features array.
 
+## Gaussian gradient-boosting refinement
+
+`condis_boosting_refine` adds the Gaussian `gbm` learner. Its default tuning
+grid crosses 50, 100 and 150 trees with interaction settings 1, 2 and 3.
+Each setting limits the number of best-first splits per tree. Shrinkage is
+0.1 and each child needs at least ten sampled observations. Every iteration
+samples half the training rows without replacement and fits the current
+residuals, starting from the training-response mean.
+
+The native sample-size rule requires **at least 43 training rows in every
+fold**. The function rejects smaller training sets instead of silently
+changing the sampling fraction or minimum node size. As with the other
+refiners, the predictor matrix includes status and the supplied covariates.
+
+```python
+from mdanderson_stats import condis_boosting_refine
+
+boosting_rows = np.arange(80)
+boosting_time = 2 + (boosting_rows * 7 % 47) / 3
+boosting_status = (boosting_rows % 4 != 0).astype(int)
+boosting_x = np.column_stack((np.sin(boosting_rows / 3), boosting_rows % 5))
+boosting_base = condis_impute(boosting_time, boosting_status)
+boosted = condis_boosting_refine(
+    boosting_base, boosting_x, folds=4, random_state=7,
+)
+assert boosted.fold_rmse.shape == (1, 4, 9)
+np.testing.assert_array_equal(
+    boosted.refined_time[boosting_status == 1],
+    boosting_time[boosting_status == 1],
+)
+```
+
+Within each fold and interaction setting, one path grows to the largest
+requested tree count; shorter candidates use prefixes of that same path.
+Selection minimizes mean fold RMSE, resolving equal scores by fewer trees
+and then fewer splits. The selected setting is fitted afresh on the full
+sample. `tree_grid` and `depth_grid` permit smaller, increasing unique grids
+within 1–150 trees and 1–3 splits. `folds`, `repeats`, `fold_ids` and
+`random_state` expose resampling choices. NumPy and R seeds do not produce
+the same random streams.
+
+`CondiSBoostingRefinement` retains the two grids, fold scores, their means
+and sample standard deviations, selected settings, compact fitted trees,
+initial mean, shrinkage, predictions and censoring diagnostics. Score columns
+iterate tree count first, then interaction setting. Observed events are
+restored exactly; `enforce_censoring=True` optionally clips censored results
+at their observed times. Scores still assess already-imputed targets, not
+held-out performance of the complete survival-analysis pipeline.
+
+The implementation reuses sorted predictor orders and stores compact trees
+with a single working prediction vector. It bounds total fitting work and
+avoids a rows-by-trees prediction array during ordinary refinement.
+The [boosting audit](../research/condis-gbm-audit.md) records shared-draw
+construction checks against the original native kernel, including its
+strict split routing and missing-branch fallback metadata. Finite numeric
+covariates are required; missing-data prediction is not exposed.
+
 ## Validation and remaining coverage
 
 Three focused tests cover hand-computed linear/step integrals and a partial
@@ -358,7 +415,9 @@ The Python fit preserves the objective without reproducing that stopping error.
 Extreme time-unit checks from 1e-200 to 1e200 preserve fitted values after
 rescaling; penalty grids must scale with the response units.
 
-**Catalog status is partial.** Base CondiS and six CondiS-X learners (linear,
-ridge, lasso, kNN, neural and SVM) are implemented. Gradient boosting and random
-forest learners, their tuning/resampling behavior, interactive
-input handling and native graphical reports remain pending.
+**Catalog status is partial.** Base CondiS and seven CondiS-X learners (linear,
+ridge, lasso, kNN, neural, SVM and gradient boosting) are implemented. Random
+forest refinement, remaining input/report workflows and the separately
+illustrated regression prediction workflow remain pending. The
+[workflow audit](../research/condis-workflow-audit.md) distinguishes the
+vignette's examples from unverified interactive app behavior.
