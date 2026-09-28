@@ -51,8 +51,8 @@ checks before any native compatibility claim.
 
 The implementation preserves the coefficient-level covariance and mixture
 shrinkage model, with bounded sampling and explicit assumptions. Empirical-Bayes
-calibration and automatic initialization remain separate gaps. No native example
-execution is claimed here.
+shrinkage calibration conditions on supplied variance components; automatic
+variance initialization remains open. No native example execution is claimed here.
 
 ## Independent reduced-posterior reference
 
@@ -139,7 +139,7 @@ with an independent inverse transform of coefficient means within `5e-15`.
 This short example validates the public workflow, not convergence for
 scientific use or behavior on the inaccessible native pancreatic example.
 
-Remaining coverage includes empirical-Bayes shrinkage, automatic variance and
+Remaining coverage includes automatic variance and
 proposal initialization, the native `delta_omega` mapping, additional transform
 families and boundary conventions, compression, covariance/prediction workflows
 and native files. The catalog remains partial until these gaps are resolved.
@@ -167,8 +167,30 @@ positive definite objective Hessians and improve on both all-spike and all-slab
 boundary likelihoods. The `wfmm-shrinkage-*.csv` fixtures retain inputs,
 conditional statistics, optimized parameters and full log densities; Python's
 relative log likelihood must subtract the standard-normal baseline before
-comparison. Base-R generation completed in 0.15 seconds. Comparison with the
-Python calibration is a separate validation step.
+comparison. Base-R generation completed in 0.15 seconds.
+
+The integrated Python calibration agrees with these references: maximum
+absolute errors are `4.22e-15` for GLS coefficients, `5.00e-16` for conditional
+variances, `2.93e-8` for inclusion probabilities, `5.72e-7` for slab-to-sampling
+variance ratios and `5.68e-14` for relative log likelihood. All four groups
+converged in 33–104 iterations with tolerance `1e-11`; the comparison itself
+used 0.0062 seconds and the process peaked at 113.2 MiB.
+
+Six focused calibration/model checks passed in 4.79 seconds in the implementation
+checkout; Ruff and mypy passed. The calibration rejects rank-deficient designs
+and diagonal-normalized GLS information condition numbers above `1e12`. It
+returns per-group convergence/objective diagnostics and a ready fixed-effect
+prior, canonicalizing the unidentified zero-variance mixture to all-spike.
+Prior arrays are bounded before joint zero-variance/probability checks.
+
+All public guide examples then ran in the integrated checkout, followed by a
+new fit using the calibrated prior and explicit inverse-gamma variance priors.
+All six calibration groups converged; twelve all-spike coefficients stayed
+exactly zero during sampling, variances stayed positive and curve summaries
+were finite. The combined manual-prior and calibrated-prior workflow took
+1.677 seconds, with 116.5 MiB peak process memory and no process swaps.
+This verifies composition of calibration and fitting, not native initialization
+or convergence adequacy for an applied scientific analysis.
 
 ## Verified covariance and prediction scope
 

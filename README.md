@@ -12,8 +12,9 @@ project and is not an MD Anderson release.
 [WFMM functional mixed models](docs/wfmm.md) now support orthogonal wavelet
 transforms, Bayesian fixed/random-effect fitting with coefficient-specific
 variances, and reconstructed posterior curves with contrasts and simultaneous
-bands. Priors and variance-proposal settings are explicit; automatic calibration
-and additional native workflows remain open.
+bands. Empirical-Bayes shrinkage calibration is available conditional on supplied
+variance estimates. Variance priors and proposal settings remain explicit;
+automatic variance initialization and additional native workflows remain open.
 
 ## Development
 

@@ -104,6 +104,8 @@ normal distribution. `slab_variance` is a variance, not an SD. Its prior and
 `inclusion_probability` may be scalars or `(P,K)` arrays; probabilities zero
 and one are supported exactly. Basis scale/partition labels are retained as
 metadata; they do not silently select or pool prior parameters.
+Zero slab variance is accepted only with zero inclusion probability, an
+all-spike prior that fixes the coefficient at zero.
 
 Variance priors have density proportional to
 `v**(-shape-1) * exp(-scale/v)`. Supply positive shape and scale values for
@@ -128,6 +130,55 @@ the marginal Gaussian log likelihood conditional on each fixed-effect draw.
 and batch-means Monte Carlo errors. Use `summarize_chains` separately on
 variance draws when assessing their mixing. These diagnostics are estimates,
 not convergence guarantees.
+
+## Calibrate shrinkage from the observed coefficients
+
+`calibrate_wfmm_shrinkage` estimates mixture inclusion probabilities and slab
+variances, conditional on supplied random-effect and residual variance
+estimates. It pools coefficients within each fixed-effect/partition group.
+For the example above:
+
+```python
+from dataclasses import replace
+from mdanderson_stats import calibrate_wfmm_shrinkage
+
+calibration = calibrate_wfmm_shrinkage(
+    transformed.coefficients, x, z,
+    random_variance=.1, residual_variance=.1,
+    coefficient_partition=transformed.coefficient_partition,
+)
+print(calibration.group_converged)
+print(calibration.group_inclusion_probability)
+calibrated_prior = replace(
+    calibration.prior,
+    random_shape=3, random_scale=.2,
+    residual_shape=3, residual_scale=.2,
+)
+```
+
+Pass `calibrated_prior` as the `prior` argument to `fit_wfmm_coefficients`.
+The returned prior contains only the calibrated fixed-effect mixture; the
+example adds explicit variance priors for subsequent variance sampling.
+For fixed variance components, `calibration.prior` is directly usable with
+`estimate_variances=False`.
+
+Calibration uses joint generalized least-squares coefficient estimates and
+the source's conditional sampling variances `1/(X_i' Sigma^-1 X_i)`. The
+latter differ from the diagonal of the joint GLS covariance matrix.
+The EM update returns a local solution; inspect `group_converged`, iteration
+counts and `group_log_marginal_likelihood`, and compare initial values when
+needed. The reported objective is the log likelihood relative to the
+standard-normal sampling model. If slab-to-sampling variance reaches zero,
+the mixing proportion is unidentified; the API returns the equivalent
+all-spike prior with zero inclusion probability and zero slab variance.
+Rank-deficient designs and diagonal-normalized GLS information with condition
+number greater than `1e12` are rejected to avoid unreliable coefficient estimates.
+
+This step does not estimate random/residual variances, native inverse-gamma
+hyperparameters or proposal SDs, and it does not propagate uncertainty in
+the supplied variance estimates or estimated shrinkage hyperparameters.
+Partition labels must be nonnegative integers; no native coarse-scale
+exception, `minT` floor or `bigT` constant is silently applied.
 
 ## Reconstructed posterior inference
 
@@ -174,7 +225,7 @@ reconstruction/energy identities, independent exact Gaussian-mixture posterior
 references, a conjugate inverse-gamma variance posterior and hand-calculated
 contrast/band summaries. Native MCMC random-number parity is not claimed.
 
-Empirical-Bayes shrinkage calibration, automatic variance initialization and
+Automatic variance initialization and
 proposal selection, native inverse-gamma defaults, additional transforms and
 boundary rules, compression, prediction/covariance workflows and native file
 formats remain open. The [source and implementation audit](../research/wfmm-audit.md)
