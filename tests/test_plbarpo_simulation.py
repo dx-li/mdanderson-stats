@@ -42,18 +42,72 @@ def test_simulation_aggregates_replayable_trials_and_explicit_null_errors():
     assert not result.trial_seeds.flags.writeable
     assert not result.metric_counts.flags.writeable
 
-    replay = run_plbarpo_trial(**_design(), rng=int(result.trial_seeds[0]))
     np.testing.assert_array_equal(
         result.metric_counts[result.metric_index("entry")], [4, 4, 0]
     )
-    assert replay.enrolled <= 4
-    assert replay.rng_seeds == tuple(int(value) for value in result.stream_seeds[0])
-    one_trial = simulate_plbarpo(**_design(), trials=1, rng=int(result.trial_seeds[0]))
-    np.testing.assert_array_equal(one_trial.assigned_mean, replay.assigned)
-    np.testing.assert_array_equal(one_trial.responses_mean, replay.successes)
-    assert one_trial.metric_counts[one_trial.metric_index("any_efficacy")].tolist() == (
-        replay.early_efficacy | replay.final_efficacy
-    ).tolist()
+
+    null = np.asarray([True, False, True])
+    replayed = [
+        run_plbarpo_trial(**_design(), rng=int(seed)) for seed in result.trial_seeds
+    ]
+    replay_metrics = np.zeros_like(result.metric_counts)
+    replay_assigned = []
+    replay_responses = []
+    replay_enrollment = []
+    replay_total_responses = []
+    replay_false = np.zeros(3, dtype=np.int64)
+    replay_familywise = 0
+    for trial in replayed:
+        any_efficacy = trial.early_efficacy | trial.final_efficacy
+        masks = (
+            trial.entered,
+            trial.early_futility,
+            trial.early_efficacy,
+            trial.final_assessed,
+            trial.final_efficacy,
+            any_efficacy,
+            trial.cap_closed,
+        )
+        replay_metrics += np.asarray(masks, dtype=np.int64)
+        replay_assigned.append(trial.assigned)
+        replay_responses.append(trial.successes)
+        replay_enrollment.append(trial.enrolled)
+        replay_total_responses.append(int(trial.successes.sum()))
+        false = any_efficacy & null
+        replay_false += false
+        replay_familywise += int(np.any(false))
+    np.testing.assert_array_equal(result.metric_counts, replay_metrics)
+    replay_probability = replay_metrics / result.trials
+    np.testing.assert_allclose(result.metric_probability, replay_probability, rtol=0, atol=0)
+    np.testing.assert_allclose(
+        result.metric_mcse,
+        np.sqrt(replay_probability * (1.0 - replay_probability) / result.trials),
+        rtol=0,
+        atol=0,
+    )
+    assert result.false_efficacy_counts is not None
+    np.testing.assert_array_equal(result.false_efficacy_counts, replay_false)
+    assert result.familywise_false_efficacy_count == replay_familywise
+    assert result.familywise_false_efficacy_probability == replay_familywise / result.trials
+    assigned = np.asarray(replay_assigned, dtype=float)
+    responses = np.asarray(replay_responses, dtype=float)
+    np.testing.assert_allclose(result.assigned_mean, assigned.mean(axis=0), rtol=0, atol=0)
+    np.testing.assert_allclose(result.responses_mean, responses.mean(axis=0), rtol=0, atol=0)
+    np.testing.assert_allclose(
+        result.assigned_mcse, assigned.std(axis=0, ddof=1) / np.sqrt(result.trials)
+    )
+    np.testing.assert_allclose(
+        result.responses_mcse, responses.std(axis=0, ddof=1) / np.sqrt(result.trials)
+    )
+    total_n = np.asarray(replay_enrollment, dtype=float)
+    total_y = np.asarray(replay_total_responses, dtype=float)
+    assert result.total_enrollment_mean == total_n.mean()
+    assert result.total_responses_mean == total_y.mean()
+    assert result.total_enrollment_mcse == total_n.std(ddof=1) / np.sqrt(result.trials)
+    assert result.total_responses_mcse == total_y.std(ddof=1) / np.sqrt(result.trials)
+
+    for i, (seed, trial) in enumerate(zip(result.trial_seeds, replayed, strict=True)):
+        assert trial.rng_seeds == tuple(int(value) for value in result.stream_seeds[i])
 
     repeated = simulate_plbarpo(
         **_design(), trials=4, rng=302, null_arms=[True, False, True]
