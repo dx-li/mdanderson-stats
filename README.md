@@ -1419,6 +1419,9 @@ fit mixed exact, interval, left- and right-censored observations with a
 nonparametric Turnbull baseline. Predictions and continuous-covariate contours
 return explicit survival identification bounds, preserving uncertainty within
 observation intervals and beyond the last finite observation.
+[Stratified interval models](docs/interval-survival-stratified.md) fit shared
+covariate effects and separate group baselines jointly, with matching
+group-specific predictions and contours.
 [Interval-censored competing-risk models](docs/interval-competing-risk.md) fit
 two causes jointly with monotone spline baselines and generalized odds-rate
 links. They return regression covariance, both incidence curves and

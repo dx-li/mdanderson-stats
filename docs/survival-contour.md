@@ -162,9 +162,10 @@ Royston–Parmar hazard, odds and normal links with joint covariance and contour
 models](interval-competing-risk.md), [numeric survival forests](random-survival-forest.md)
 and [simulated parametric intervals](survival-uncertainty.md) provide further
 implemented families with their documented numerical and native-parity limits.
-Stratified interval-PH, interval bootstrap uncertainty, five neural model
-workflows, remaining forest features and the full native app workflow remain
-open. Entry 166 stays partial.
+[Stratified interval-PH](interval-survival-stratified.md) adds shared regression
+effects with group-specific interval baselines. Interval bootstrap uncertainty,
+five neural model workflows, remaining forest features and the full native app
+workflow remain open. Entry 166 stays partial.
 
 The original author's two- and three-dimensional Cox helper outputs provide
 reference surfaces for both tie methods and both mean and explicit adjustment

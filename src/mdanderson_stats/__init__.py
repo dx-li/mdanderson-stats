@@ -634,6 +634,12 @@ from .interval_survival_contour import (
     plot_interval_survival_contour_2d,
     plot_interval_survival_contour_3d,
 )
+from .interval_survival_stratified import (
+    StratifiedIntervalBaseline,
+    StratifiedIntervalSurvivalFit,
+    fit_stratified_interval_survival,
+    predict_stratified_interval_survival,
+)
 from .intervals import (
     binomial_interval,
     bp1ci_binomial_interval,
@@ -1883,6 +1889,10 @@ __all__ = [
     "interval_survival_contour",
     "plot_interval_survival_contour_2d",
     "plot_interval_survival_contour_3d",
+    "StratifiedIntervalBaseline",
+    "StratifiedIntervalSurvivalFit",
+    "fit_stratified_interval_survival",
+    "predict_stratified_interval_survival",
     "SurvanLogistic",
     "survan_logistic",
     "SurvanKM",

@@ -91,6 +91,7 @@ with that route or reuse its counting-process interpretation.
 
 The broader SurvivalContour entry remains partial. The separate
 [interval-censored competing-risk model](interval-competing-risk.md) supplies
-two-cause generalized odds-rate regression and incidence contours. Stratified
-interval-PH models, bootstrap uncertainty, neural model workflows and other
+two-cause generalized odds-rate regression and incidence contours.
+[Stratified interval-PH](interval-survival-stratified.md) adds shared coefficients
+and group-specific baselines. Bootstrap uncertainty, neural model workflows and other
 outstanding application features are tracked separately in the catalog.
