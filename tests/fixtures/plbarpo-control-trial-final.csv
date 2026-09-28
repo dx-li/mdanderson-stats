@@ -1,0 +1,15 @@
+"scenario","arm","assigned","successes","failures","entry_index","stop_index","cap_closed","early_futility","final_assessed","final_probability","final_control_successes","final_control_failures","final_efficacy"
+"entire_replace",0,2,1,1,0,6,FALSE,FALSE,FALSE,NA,NA,NA,FALSE
+"entire_replace",1,2,0,2,0,3,TRUE,FALSE,TRUE,0.1,1,0,FALSE
+"entire_replace",2,2,2,0,3,6,TRUE,FALSE,TRUE,0.8,1,1,FALSE
+"concurrent_replace",0,2,1,1,0,6,FALSE,FALSE,FALSE,NA,NA,NA,FALSE
+"concurrent_replace",1,2,0,2,0,3,TRUE,FALSE,TRUE,0.1,1,0,FALSE
+"concurrent_replace",2,2,2,0,3,6,TRUE,FALSE,TRUE,0.9,0,1,TRUE
+"unrelated_cap",0,2,0,2,0,6,FALSE,FALSE,FALSE,NA,NA,NA,FALSE
+"unrelated_cap",1,1,1,0,0,3,TRUE,FALSE,TRUE,0.833333333333333,0,1,TRUE
+"unrelated_cap",2,3,3,0,0,6,TRUE,FALSE,TRUE,0.971428571428571,0,2,TRUE
+"concurrent_double_replace",0,2,2,0,0,8,FALSE,FALSE,FALSE,NA,NA,NA,FALSE
+"concurrent_double_replace",1,1,0,1,0,3,FALSE,TRUE,FALSE,NA,NA,NA,FALSE
+"concurrent_double_replace",2,1,0,1,0,3,FALSE,TRUE,FALSE,NA,NA,NA,FALSE
+"concurrent_double_replace",3,2,2,0,3,8,FALSE,FALSE,TRUE,0.6,1,0,FALSE
+"concurrent_double_replace",4,2,2,0,3,8,FALSE,FALSE,TRUE,0.6,1,0,FALSE

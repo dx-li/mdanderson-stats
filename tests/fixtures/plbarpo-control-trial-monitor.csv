@@ -1,0 +1,13 @@
+"scenario","enrolled","arm","stage","control_successes","control_failures","treatment_greater","control_greater"
+"entire_replace",3,1,"final",1,0,0.1,0.9
+"entire_replace",6,2,"final",1,1,0.8,0.2
+"concurrent_replace",3,1,"final",1,0,0.1,0.9
+"concurrent_replace",6,2,"final",0,1,0.9,0.1
+"unrelated_cap",3,1,"final",0,1,0.833333333333333,0.166666666666667
+"unrelated_cap",6,2,"final",0,2,0.971428571428571,0.0285714285714286
+"concurrent_double_replace",3,1,"early",1,0,0.166666666666667,0.833333333333333
+"concurrent_double_replace",3,2,"early",1,0,0.166666666666667,0.833333333333333
+"concurrent_double_replace",5,3,"early",0,0,0.666666666666667,0.333333333333333
+"concurrent_double_replace",5,4,"early",0,0,0.666666666666667,0.333333333333333
+"concurrent_double_replace",8,3,"final",1,0,0.6,0.4
+"concurrent_double_replace",8,4,"final",1,0,0.6,0.4
