@@ -218,3 +218,29 @@ output. Existing-subject latent means, future replicates conditional on existing
 random effects, and new random-effect levels are distinct prediction targets.
 An explicit Python API separating them would be a model-consistent extension;
 the available sources do not establish native prediction-interface parity.
+
+## Remaining transform and retention contracts
+
+The guide, PDF pages 2–4, names `none`, `wavelet`, `PC`, `custom`, `PCw` and
+`wPC`. `PCw` concatenates PC coefficients with a wavelet transform of the
+remaining residual; `wPC` applies wavelets before PC. It specifies custom
+forward and reverse matrices as `D=Y*phi_inv` and `Y=D*phi`, but this Python
+basis currently supports only square orthogonal custom matrices.
+
+Native outputs retain `Kstar` and `DIndex`, the selected coefficient count
+and original indices. That supports explicit coefficient/partition selection
+and reinsertion into original positions, with zeros in omitted coordinates,
+before inverse reconstruction. Source highpass removes the most detailed
+wavelet levels and lowpass removes the least detailed ones. The source does
+not say whether lowpass counts the coarse approximation block; Python must
+make approximation/detail selection explicit rather than claim native flag
+parity from an assumed convention.
+
+The guide calls `alphaPC` and `alphawav` retained-energy fractions in `[0,1]`,
+but does not establish PCA centering/scaling, the exact energy calculation or
+the compression threshold `P` used with its function-count parameter `t`.
+It describes descending-eigenvalue partitions using half-unit bins of log-base
+eigenvalues, with singleton-bin merging, but this does not specify the PCA
+transform itself. The [v3.1 release notes](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/wfmm_v3_1_ReleaseNotes.pdf)
+confirm the added transform/filter names without resolving those calculations.
+Energy-threshold, PCA and hybrid-transform parity therefore remain open.
