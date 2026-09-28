@@ -7,6 +7,7 @@ name = "mdanderson-stats"
 version = "0.1.0"
 description = "Python implementations of methods in the MD Anderson biostatistics software catalog"
 readme = "README.md"
+license = { file = "LICENSE.md" }
 requires-python = ">=3.12"
 dependencies = ["numpy>=2.1,<3", "scipy>=1.14,<2"]
 
@@ -22,6 +23,7 @@ dev = ["pytest>=8", "ruff>=0.12", "mypy>=1.15"]
 packages = ["src/mdanderson_stats"]
 
 [tool.hatch.build.targets.wheel.force-include]
+"LICENSE.md" = "mdanderson_stats/LICENSE.md"
 "THIRD_PARTY_NOTICES.md" = "mdanderson_stats/THIRD_PARTY_NOTICES.md"
 "notices" = "mdanderson_stats/notices"
 
