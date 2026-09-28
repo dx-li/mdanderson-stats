@@ -22,9 +22,11 @@ remain separate work. Its small native generalized-gamma implementation and
 headers are saved as exact source bytes under ignored `research/raw/flexsurv`:
 `src/gengamma.cpp` (`34c799553ec1f74aa587854148bcf95834f607df`) and
 `src/gengamma.h` (`e363f768ccf60786998b12972b5f80d44b036e69`), plus their
-distribution, recycling and map headers. Rcpp 1.1.1 is already installed,
-so a future small serial reference compilation may avoid installing the
-full flexsurv dependency stack. No compilation is claimed at this checkpoint.
+distribution, recycling and map headers. The unchanged kernel has since been
+compiled with installed Rcpp 1.1.1. Four native-kernel fits, two original-coordinate
+transformations and distribution/prediction fixtures are recorded in the
+[generalized-gamma audit](generalized-gamma-audit.md); the full flexsurv fitting
+stack is not installed.
 
 The Prentice model allows positive or negative Q and has the exact log-normal
 case at Q=0. For nonzero Q, its CDF uses a gamma variable with shape Q^-2 and
@@ -50,6 +52,53 @@ the helper's flattened-result reconstruction has the intended matrix ordering.
 for the fitted cause at sorted distinct cause-event times, with zero prepended
 if absent. It plots cumulative incidence, not survival. The existing CUMINC
 nonparametric estimators do not substitute for this Fine–Gray regression model.
+
+## SurvivalContour spline source lead
+
+The same flexsurv pin supplies Royston–Parmar natural-cubic survival splines.
+Five exact files were retrieved, inspected and Git-blob verified under ignored
+`research/raw/flexsurv` while Luna implemented generalized gamma:
+
+| File | Git blob |
+| --- | --- |
+| R/spline.R | `b46b2060dbc40da6d1390e725cbc3c753a9120c9` |
+| R/survsplinek.R | `845141cb4b845d3b3db7fb76bda52f2ef3e3b23d` |
+| src/splines.cpp | `8e0b8dd1dfebeb6f780e555a0befcc964aa81e87` |
+| R/deriv.R | `b5475ad42cd2793c02d10ec6c2f80831a465fea7` |
+| R/deriv2.R | `0fdcc37c0213f8f4c66969b4de5a683694d4c8ad` |
+
+`flexsurvspline` models the log cumulative hazard, log cumulative odds or
+negative normal survival quantile as a natural cubic spline in log time plus
+covariate effects. With zero internal knots, these reduce to Weibull,
+log-logistic and log-normal models respectively. The default basis is `rp`;
+`splines2ns` is an optional alternative with a separate dependency. The author
+SurvivalContour wrapper dispatches fitted spline objects through the existing
+parametric contour helpers. No new contour formula is needed.
+
+For unweighted right-censored data, default internal knots are equally spaced
+empirical quantiles of log event times, and boundary knots are the minimum and
+maximum log event times. The number `k` counts internal knots, so k=4 has six
+baseline coefficients. Explicit `knots` excludes the two boundary values in
+the fitting API but the density/basis APIs include them. Covariate effects
+enter gamma0 by default; coefficients are effects on the selected survival
+link, not log-time AFT slopes. Ancillary covariate effects and interval censoring
+are additional native features that need distinct coverage tracking.
+
+The small C++ file supplies basis and first-derivative evaluations with no
+headers beyond Rcpp. R density and survival functions plus analytical
+first/second derivatives are available in the retrieved sources. A small
+native-kernel fitting harness is therefore feasible without installing the
+whole package; no spline compilation, native execution or Python implementation
+is claimed yet.
+
+Two numerical requirements need deliberate treatment: evaluate the linear
+tails of the natural spline without subtracting huge cubics, and verify that
+its transformed cumulative hazard has positive derivative over the required
+domain. Native density truncates nonpositive derivative values to zero only
+at evaluated times; positivity at observed failures alone does not prove a
+valid monotone survival curve between them. Several native density/log-probability
+paths also exponentiate and then take logs, requiring direct log-domain
+evaluation in the Python port.
 
 ## Fine–Gray executable reference lead
 
