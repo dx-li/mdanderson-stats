@@ -70,3 +70,42 @@ duplicate-row behavior and negative-edge indexing. DOSE's zero-weight core
 calculation fails even though fgsea defines an ES; fixtures label that core
 undefined. Full normalization and adaptive tail probabilities still need their
 own implementation checkpoint.
+
+## Full backend follow-up
+
+The selected call defaults to `sampleSize=101`, `nPermSimple=1000` and
+`eps=1e-10` (clusterProfiler overrides fgsea's smaller epsilon). The simple
+pilot supplies signed null means for NES and tail counts. Relevant sign-mode
+count below ten makes p, adjusted p, NES and log2-error unavailable; preserve
+that state rather than substituting a numeric probability.
+
+The wrapper compares the pilot's beta-interval log2 error with its estimated
+multilevel error. Keep the simple estimate when `multError >= simpleError`;
+use adaptive splitting when `multError < simpleError`. Splitting is grouped by
+set size and uses odd-sized samples, median survival, duplication of survivors
+and constrained perturbations of uniform fixed-cardinality gene subsets. NES
+still comes from the pilot. Multilevel p divides the C++ tail estimate by
+`(modeFraction+1)/(nPermSimple+1)` and caps at one. Its conditional-probability
+flag can make the log2-error unavailable without deleting the p-value.
+
+For the mixed/multilevel path, values below epsilon are clamped and their
+log2-error set unavailable before BH adjustment. The all-simple early return
+bypasses that later clamping/adjustment block; DOSE subsequently recomputes BH
+in either case. Preserve the exact zero/sign inequalities: standard-mode NES
+and extreme-count selection use `ES > 0`, while mode-fraction selection uses
+`ES >= 0`. This is a source convention, not interchangeable algebra at ES zero.
+
+Four pinned C++ files are also saved under the ignored fgsea `src/` directory:
+
+| File | SHA-256 |
+| --- | --- |
+| `fgseaMultilevel.cpp` | `d5485a129144b9d8c81f439dc7f6f8420ef7147a44ca6b08f37c9c48524a8196` |
+| `fgseaMultilevelSupplement.cpp` | `30bebe1044dbab9f41c1aa0093928ae72b97c9e27373cf8ea879e7e577180394` |
+| `fastGSEA.cpp` | `c9bd0fdf2373477d41f0972e459db4a0b7ae0f4ef40257b84aaa7c1730e38557` |
+| `esCalculation.cpp` | `94d7db77c6440d40a4c5be5e9ecd530f52a4febb4180d66588faa2e50a601a64` |
+
+Next implementation should cover the pilot/NES, adaptive splitter, uncertainty,
+BH and cutoff together, using explicit serial work limits. R/C++ random-stream
+parity remains distinct from statistical algorithm parity. The pinned fgsea
+license is MIT with copyright 2016–2019 Alexey Sergushichev; DOSE and
+clusterProfiler use Artistic-2.0. Retain applicable notices for adaptations.
