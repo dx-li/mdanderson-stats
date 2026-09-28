@@ -86,5 +86,7 @@ region at a floating-point boundary.
 [Native reference evidence](../research/stplan-discrete-significance-audit.md)
 records the source contract and independently executed Fortran inverse routines.
 See [general inverse planning](stplan-planning.md) for continuous parameters and
-sample-size searches. Automatic branch discovery for other STPLAN inverses,
-proportional K-group integer allocation and native sessions/reports remain open.
+sample-size searches. Automatic branch discovery for other STPLAN inverses and
+native sessions/reports remain open. Native proportional K-group planning
+returns fractional group sizes; integer enrollment allocation would be a
+separate Python extension, not missing native functionality.

@@ -33,15 +33,15 @@ display features, but do not represent an absent ordination method.
 
 The subsequent triage distinguishes native workflow gaps from new mathematical
 extensions. The current Luna assignment is Dose Schedule Finder calendar
-replay, while PLBARPO control replay continues separately. Both build on
+replay, while PLBARPO control operating characteristics continue separately. Both build on
 implemented posterior calculations and supply missing trial workflows.
 
 | Entry | Concrete missing work | Available source / qualification |
 | --- | --- | --- |
-| Dose Schedule Finder #75 | Calendar event generation, accrual-time posterior updates and final analysis after follow-up | `research/dose-schedule-audit.md`, `docs/dose-schedule-sources.json`, cached 2007 primary paper; reuse triangular hazard and posterior/decision APIs. Ambiguous schedule/timing conventions must be explicit. |
+| Dose Schedule Finder #75 | Calendar event generation, accrual-time posterior updates and final analysis after follow-up | `research/dose-schedule-audit.md`, `docs/dose-schedule-sources.json`, [2007 primary paper](https://odin.mdacc.tmc.edu/~pfthall/main/ClinTrials%20dose-sched%202007.pdf) read online; reuse triangular hazard and posterior/decision APIs. Ambiguous schedule/timing conventions must be explicit. |
 | PRT #69 | Calendar replay and operating characteristics | Cached primary paper, conduct and simulation guides under `research/raw/PRT`; reuse probit risk, state-space fit and isotonic conduct rules. |
 | Multc Lean #12 | Duration/accrual simulation with pending outcomes | Official cached logistics guide; accrual can continue when pending outcomes cannot alter the next decision. Existing exact complete-outcome OCs do not implement this workflow. |
-| STPLAN #41 | Integer allocation for proportional K-group totals | Complete 4.5 source archive under `research/raw/STPLAN/source/stplan-4.5/SOURCE`; exact remainder/tie convention still needs source audit. Continuous planning already exists. |
+| STPLAN #41 | No missing native integer-allocation feature | Native 4.5 `SOURCE/abink.f` reads double-precision proportions/group sizes, and `SOURCE/qbink.f90` returns `grpsz(i)=n*prop(i)`. There is no native rounding/remainder rule. Existing fractional Python sizing matches that contract; integer allocation would be a separate extension. |
 | BOIN12 #148 | Joint-cell RDS table for nonadditive utility | Existing joint-count decision/simulation kernels can support enumeration, but cached `escalation/R/boin12_rds.R` supports marginal/additive tables only. Treat joint enumeration as a Python extension unless a native source establishes that feature. |
 
 The BOIN12 extension is feasible, but should not displace a missing advertised
