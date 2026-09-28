@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `44804a1` adds BARD accelerated titration,
-explicit-prior U2OET GAO fitting and Dose Schedule Finder aggregate trial
-simulations. Local `master` contains this validated checkpoint. Fresh read-only
+Latest verified package checkpoint: `71db42e` adds the fixed-shape Weibull
+Bayesian goodness-of-fit workflow and Proportional Density's full-data
+bootstrap. Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
 been confirmed published. See the final section for current package checks.
@@ -491,3 +491,50 @@ rejected transport was retried or bypassed. Updated packages and a verified
 all-refs Git bundle preserve the committed root and worker checkpoints locally;
 ignored raw files are excluded. The next BayesChiSquare source triage is
 read-only and introduces no unreviewed code into this checkpoint.
+
+
+## Weibull posterior diagnostics and full-data bootstrap checkpoint
+
+The fixed-shape Weibull posterior diagnostic is integrated at `f6c6f49`.
+It adds exact Gamma-prior inference for the transformed rate and Johnson's
+complete-data posterior CDF statistic. Centered rate and relative-time power
+calculations preserve posterior variation even at extreme common offsets and
+neighboring representable times. Independent base-R integration supplies seven
+posterior cases and 76 scalar/CDF/diagnostic summaries, all within 1.671
+estimated Monte Carlo standard errors. The reference comparison takes 0.047
+seconds after imports, peaks at 126.47 MiB and reports no swaps. Six focused
+checks pass in 1.42 seconds. Unknown Weibull shape, other family fitting and
+censored/rounded-data diagnostic contracts remain explicit gaps.
+
+Proportional Density's full-data Delta_n bootstrap is integrated at `448c9f0`.
+It separately resamples observed failures and censor records with fixed
+within-arm status counts, refits both curves and computes the exact unit-weight
+step integral at the original endpoint. Reproducible index tapes, separate
+work/storage bounds and unresolved-fit calibration bounds are supported.
+Independent R GLM/KM fits match nine statistics and 104 curve rows across
+separate/pooled censoring, changed censor records and failed resamples. Maximum
+area and curve discrepancies are `4.30e-14` and `7.46e-14`. The comparison
+takes 0.015 seconds after imports, peaks at 118.22 MiB and reports zero swaps.
+Six existing/new focused PropDen checks pass in 1.53 seconds. Unequal-censoring
+treatment-effect null calibration and parameter uncertainty remain separate
+workflows, not consequences of this goodness-of-fit bootstrap.
+
+Public exports, guides and independent reference tooling are committed at
+`71db42e3b64b839df3056c5e3066b1d720fd4712`. Cached wheel and source builds pass.
+The isolated wheel verification checks all 1,481 public exports, exact
+committed bytes for 538 source/data files, licenses/notices, all 138 catalog
+entries and the two new executable guide examples. It takes 10.233 seconds,
+peaks at 122.83 MiB and reports no swaps. Targeted Ruff, formatting and worker
+type checks pass. No broad numerical suite, new CI workflow or dependency was
+introduced. Catalog labels remain 63 implemented, 66 partial and 9 pending.
+A separate source audit corrects BOP2 scope: its six advertised endpoint
+families are covered; two-arm/joint survival is an extension, while native
+optimizer/report equivalence remains open.
+
+Local `master` is fast-forwarded to the validated code plus this audit. Fresh
+read-only GitHub checks still show `master` and `main` at `45b6e307`, with 100
+newer commits at the verified code checkpoint. The recorded shell DNS failure
+and connector approval rejection remain publication barriers. No rejected
+transport was retried or bypassed. Packages and a refreshed, verified all-refs
+bundle preserve committed root and Luna work locally; ignored raw files are
+excluded. BOP2-DC survival workflow triage remains read-only at this checkpoint.
