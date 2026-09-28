@@ -321,3 +321,19 @@ These checks validate the saved native reference data and the neural
 objective/gradient contract. No Python optimizer, tuning interface or
 neural-learner completion is claimed at this checkpoint. Native generation
 is a research tool and is not added to ordinary CI.
+
+The fixture also retains 18 checkpoints of an actual size-5, decay-0.1 CV
+fit: the first fold of each case, at iteration limits 0, 1, 2, 5, 10, 20,
+40, 60 and 100. `cv_trajectory` records the training/test row indices,
+explicit start, fitted weights, held-out predictions, objective, status and
+native gradient at each checkpoint. These let a port distinguish incorrect
+fold/start selection or optimizer branches from differences that emerge late
+in a nonconvex fitting trajectory. They do not assert identical solutions
+across different floating-point implementations.
+
+Regeneration with these checkpoints took 0.77 seconds and 86.1 MiB peak child
+resident memory, with zero swaps. All previously saved reference results
+were unchanged. Independent reconstruction of the new checkpoint objectives,
+gradients and held-out predictions agreed within 2.28e-13, 1.21e-13 and
+7.11e-15 absolute, respectively. Each final checkpoint exactly reproduces
+the corresponding saved native CV fit.
