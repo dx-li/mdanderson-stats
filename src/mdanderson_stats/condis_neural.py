@@ -19,8 +19,8 @@ from .boin import _owned
 from .condis import CondiSImputation
 from .condis_regularized import _design, _make_folds
 
-_GRID_SIZE = np.asarray([1, 3, 5], dtype=np.int64)
-_GRID_DECAY = np.asarray([0.1, 0.0001, 0.0], dtype=np.float64)
+_GRID_SIZE: NDArray[np.int64] = np.asarray([1, 3, 5], dtype=np.int64)
+_GRID_DECAY: FloatArray = np.asarray([0.1, 0.0001, 0.0], dtype=np.float64)
 _MAX_WEIGHTS = 1000
 _MAX_FIT_ROWS = 2000
 _MAX_CV_FITS = 5000
@@ -436,7 +436,7 @@ def condis_neural_refine(
     refined = np.where(censored, fitted_values, imputation.observed_time)
     if enforce_censoring:
         refined[censored] = np.maximum(refined[censored], imputation.observed_time[censored])
-    grid = np.asarray(candidates, dtype=np.float64)
+    grid: FloatArray = np.asarray(candidates, dtype=np.float64)
     return CondiSNeuralRefinement(
         _owned(grid),
         _readonly_int(assignments),

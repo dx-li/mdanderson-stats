@@ -1152,13 +1152,18 @@ and R fit/predict methods are used only for local reference calculations.
 bandwidth estimation, scaling and numerical convergence checks. Original
 kernlab sources and compiled objects are not distributed.
 
-The neural-learner reference uses W. N. Venables and B. D. Ripley's nnet
+The neural learner follows W. N. Venables and B. D. Ripley's nnet
 7.3-19 (GPL-2 or GPL-3), already installed in the local R environment.
 `research/condis-nnet-sources.json` pins the network source and an R `vmmin`
 optimizer source lead; `research/condis-refinement-audit.md` records the
 executed reference scope. The reference script calls the original network,
 optimizer and derivative routines with explicit starting weights. Original
 nnet and R sources and compiled objects are not distributed.
+`condis_neural.py` expresses the network, gradient and inverse-Hessian BFGS
+algorithm in NumPy. Its optimizer follows R's `vmmin`, based on J. C. Nash's
+*Compact Numerical Methods for Computers*, with the R conversion and revisions
+by B. D. Ripley. Floating-point arithmetic can lead to different nonconvex
+fitting paths; exact final-weight parity is not claimed.
 
 The regression-forest reference uses randomForest 4.7-1.2 (GPL >=2), by Leo
 Breiman, Adele Cutler, Andy Liaw and Matthew Wiener. The C tree code credits

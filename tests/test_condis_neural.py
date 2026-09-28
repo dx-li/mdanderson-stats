@@ -80,5 +80,5 @@ def test_optimizer_matches_native_short_trajectory_checkpoint():
         max_iterations=10,
     )
     assert fit.convergence_code == checkpoint["convergence"] == 1
-    assert fit.objective == pytest.approx(checkpoint["objective"], abs=2e-10)
+    assert fit.objective == pytest.approx(checkpoint["objective"], rel=0, abs=2e-10)
     np.testing.assert_allclose(fit.weights, checkpoint["fitted_weights"], rtol=0, atol=2e-10)

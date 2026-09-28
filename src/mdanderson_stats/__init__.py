@@ -367,6 +367,12 @@ from .cibolus_fit import CiBolusFit, fit_cibolus
 from .cid2bp import BinomialDifferenceInterval, cid2bp_interval
 from .condis import CondiSImputation, condis_impute
 from .condis_linear import CondiSLinearRefinement, condis_linear_refine
+from .condis_neural import (
+    CondiSNeuralFit,
+    CondiSNeuralRefinement,
+    condis_neural_refine,
+    fit_condis_neural,
+)
 from .condis_regularized import CondiSRegularizedRefinement, condis_regularized_refine
 from .confint_binomial import (
     confint_binomial_event_limit,
@@ -1728,6 +1734,10 @@ __all__ = [
     "simulate_rare_disease_123",
     "CondiSLinearRefinement",
     "condis_linear_refine",
+    "CondiSNeuralFit",
+    "CondiSNeuralRefinement",
+    "condis_neural_refine",
+    "fit_condis_neural",
     "CondiSRegularizedRefinement",
     "condis_regularized_refine",
     "CondiSImputation",

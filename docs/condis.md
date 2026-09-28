@@ -198,6 +198,59 @@ the native retained-neighbor buffer. Constant responses or designs with no
 varying predictors produce finite intercept-only mean predictions for ridge
 and lasso; this well-defined extension is not a native degenerate-fit parity claim.
 
+## Neural refinement
+
+`condis_neural_refine(imputation, covariates)` fits the CondiS-X neural learner:
+one logistic hidden layer and a linear output. Cross-validation compares all
+nine combinations of hidden sizes 1, 3 and 5 with weight decays 0.1, 0.0001
+and 0, then refits the selected combination on the complete sample. Predictors
+include status and the original covariates. The objective is the **sum** of
+squared errors plus decay times the sum of squared weights, including biases.
+Covariate and response units therefore affect the optimization and penalty.
+
+```python
+from mdanderson_stats import condis_neural_refine
+
+neural = condis_neural_refine(base, covariates, folds=3, random_state=7)
+np.testing.assert_array_equal(neural.refined_time[status == 1], time[status == 1])
+selected_network = neural.selected_hidden_size, neural.selected_decay
+iteration_limit_reached = neural.selected_fit.convergence_code == 1
+```
+
+The result retains the grid, fold assignments, fold/mean/SD RMSEs, selected
+network, fitted weights and predictions, fold objective values, iteration
+counts and convergence codes. Observed events are restored after prediction.
+`enforce_censoring=True` clips censored predictions at their observed lower
+bounds; raw predictions and bound flags remain available. As with the other
+learners, CV scores use already-imputed targets and do not measure held-out
+performance of the complete survival-imputation pipeline.
+
+The optimizer follows R's inverse-Hessian BFGS procedure. Its default
+`max_iterations=100` often reaches the iteration limit in both the native
+reference and Python: code 1 records that outcome. Code 0 is the native
+stopping status, not a certificate of a global optimum. With zero iterations,
+the native code is also 0, but `selected_fit.status` is `"not_run"`.
+Other readable statuses are `"stopped"` and `"iteration_limit"`.
+
+This is a nonconvex fit. Native objectives and gradients at fixed weights,
+and early optimizer steps, agree closely with Python; small arithmetic
+differences can later lead to substantially different fitted networks and
+tuning scores, even with identical starts. The [numerical audit](../research/condis-refinement-audit.md)
+records a case that agrees through roughly 40 iterations and then diverges.
+Neither exact final-fit parity with R nor a globally optimal fit is claimed.
+
+`random_state` gives reproducible Python starts and folds, without reproducing
+R's random stream. `fold_ids`, `initial_weights` and `fold_initial_weights`
+allow explicit control. Full starts are a nine-element sequence of vectors;
+fold starts are nested fold-by-candidate sequences. Candidate order is size
+ascending, then decay descending. Each vector has `(p + 1) * size + size + 1`
+weights, where `p` includes the status predictor. `fit_condis_neural` exposes
+a single fit with explicit size, decay, starts and stopping tolerances.
+
+Fits run serially, with at most 2,000 rows and the native 1,000-weight limit.
+Cross-validation also enforces a bounded work budget. These bounds avoid
+unbounded allocations; oversized requests raise a clear error.
+
 ## Validation and remaining coverage
 
 Three focused tests cover hand-computed linear/step integrals and a partial
@@ -226,7 +279,7 @@ The Python fit preserves the objective without reproducing that stopping error.
 Extreme time-unit checks from 1e-200 to 1e200 preserve fitted values after
 rescaling; penalty grids must scale with the response units.
 
-**Catalog status is partial.** Base CondiS and four CondiS-X learners (linear,
-ridge, lasso and kNN) are implemented. Gradient boosting, random forest, SVM
-and neural-network learners, their tuning/resampling behavior, interactive
+**Catalog status is partial.** Base CondiS and five CondiS-X learners (linear,
+ridge, lasso, kNN and neural) are implemented. Gradient boosting, random forest
+and SVM learners, their tuning/resampling behavior, interactive
 input handling and native graphical reports remain pending.

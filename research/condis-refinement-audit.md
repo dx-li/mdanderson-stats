@@ -345,3 +345,50 @@ native final fits exactly. Independent objective, gradient and prediction
 reconstruction agrees within 9.10e-13, 2.28e-13 and 3.56e-15 absolute. All
 earlier fixture results remain unchanged. Comparison of a Python optimizer's
 path with these checkpoints is a separate validation step.
+
+### Python neural fitting and numerical limits
+
+`condis_neural.py` implements the logistic-hidden/linear-output network,
+summed-error objective, bias-inclusive decay and inverse-Hessian BFGS updates
+in NumPy. It follows the native line-search, restart and stopping logic,
+including the grouped Hessian update expression. The nine-candidate tuning
+interface accepts explicit fold assignments and per-fit starting weights,
+then refits the selected candidate. Results retain fold objectives, iteration
+counts and stopping codes. A readable single-fit status distinguishes
+`not_run`, `iteration_limit` and `stopped`; the latter is not a certificate
+of first-order or global optimality. The returned objective is recomputed at
+the returned weights, and nonrepresentable objectives, gradients or search
+directions raise an error.
+
+Comparisons use exactly the saved targets and starts. At the difficult
+ordinary fold-1 size-5/decay-0.1 trajectory, objectives and gradients evaluated
+at native checkpoint weights agree within floating-point error, and fitted
+weights agree to approximately 5e-7 through iteration 40. Later iterations
+separate substantially: the native objective is about 71.36 and the Python
+objective about 95.83 at iteration 100, with both reporting the iteration
+limit. The wide fold-1 trajectory remains close through iteration 100, with
+an objective difference around 1e-8. These observations support the model and
+early optimizer arithmetic, while demonstrating that final nonconvex fitting
+paths are sensitive to floating-point evaluation order.
+
+Both full tuning comparisons select native candidate index 6 (size 5,
+decay 0.1), and both selected refits report the native iteration-limit status.
+The ordinary selected full-data objective is about 123.3763 in Python versus
+122.9493 natively; the wide selected objective agrees within 9e-12. Across
+all CV candidates, maximum fold-RMSE differences are approximately 1.663
+(ordinary) and 0.544 (wide), and maximum mean-score differences are 0.160 and
+0.276. Matching selected candidates on these two fixtures does not establish
+general selection parity. The package implements the native statistical
+model and tuning choices; it does not promise identical local optima or
+final CV scores across R and NumPy. Increasing the iteration limit allows
+more optimization but does not guarantee a global optimum.
+
+After integration, the 21 focused base, linear, regularized and neural CondiS
+tests passed in 3.58 seconds (138.6 MiB peak child resident memory, zero swaps).
+The neural checks cover a closed-form objective/gradient, actual optimization,
+native iteration-10 weights and objective, the nine-candidate workflow and
+event restoration. The iteration-10 objective comparison uses an explicit
+absolute tolerance with zero relative tolerance. Targeted Ruff, formatting
+and mypy checks passed. Four implemented-learner guide examples, including
+neural tuning/refitting, executed successfully. No broad repository test suite
+or additional CI workflow was added for this learner.
