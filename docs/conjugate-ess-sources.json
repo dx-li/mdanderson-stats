@@ -27,6 +27,14 @@
       "retrieved_date": "2026-09-10",
       "sha256": "bfbe92f0e5366e0157ff250e3743a24048f1f24244825524aa67c957bd5bcf14",
       "bytes": 25620
+    },
+    {
+      "url": "https://github.com/cran/dfcrm/blob/18891ccb969e3e4f87e4489a04b48df227bb9273/R/dfcrm.R",
+      "artifact": "../dfcrm/dfcrm.R",
+      "retrieved_date": "2026-09-28",
+      "sha256": "cef859c8d5ba5a247679e2664d38f94c6c1314e0a67facfa155f0037b3a90341",
+      "bytes": 68519,
+      "scope": "Empiric CRM inference/allocation and TITE accrual/follow-up source; small native adaptive replay references, research/crm-prior-ess-audit.md."
     }
   ],
   "native_reference": "R 0.1.19 functions sourced without compiled dependencies; seven conjugate cases executed. App V0.0.5.0 confirms gamma-exponential output equals beta."
