@@ -1,5 +1,11 @@
 # Community publication checkpoint — 2026-09-28
 
+Latest addition: validated PLBARPO active-arm allocation is integrated at
+`47bb9c4` and included in the `a80f901` package check described at the end of
+this record. In this continuation, GitHub `master` and `main` were rechecked
+before integration and still pointed to `e20e582`. New local work has not yet
+been confirmed published.
+
 The user explicitly requested that all completed work be pushed to GitHub and
 that stable programs be available on `master`. The public repository is
 `dx-li/mdanderson-stats`; its existing default branch is `main`. Preserve that
@@ -129,3 +135,27 @@ and the development branch failed with `Could not resolve host: github.com`.
 The new additions therefore remain locally prepared, while the earlier
 `e20e582` remote checkpoint is verified. The unavailable connector-approval
 route was not retried or used to bypass the failed connection.
+
+## PLBARPO allocation checkpoint
+
+The active-arm allocation API, immutable summaries, public example and catalog
+coverage are integrated at `47bb9c4`. Eight independent base-R scenarios verify
+all four randomization methods, posterior competition after closure, floors,
+single active arms and BARN2N's use of all historical enrollment. A separate
+read-only review found no material issue. Two focused tests, targeted mypy,
+Ruff lint and formatting, and the public example pass.
+
+At `a80f901`, cached wheel and source builds passed. The isolated wheel check
+verified all 1,411 public exports, byte equality of all 516 packaged source/data
+files against committed Git contents, licenses/notices and the new allocation
+example. It took 12.389 seconds, peaked at 104.81 MiB and reported no swaps.
+Earlier method examples were not redundantly rerun. Source-catalog counts
+remain 63 implemented, 66 partial and 9 pending.
+
+The full no-control PLBARPO platform simulator and full EasyCellType multilevel
+inference remain in separate Luna implementation checkouts. Native cumulative
+and adaptive-splitting references were added for the latter; review identified
+substantive draft corrections before integration. These draft backends are not
+included in the validated local `master` checkpoint. Development remains
+limited to two implementation workers, one read-only reviewer and single-thread
+numerical work, without a new broad CI workflow.
