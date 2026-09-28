@@ -374,6 +374,7 @@ from .condis_neural import (
     fit_condis_neural,
 )
 from .condis_regularized import CondiSRegularizedRefinement, condis_regularized_refine
+from .condis_svm import CondiSSVMRefinement, condis_svm_refine
 from .confint_binomial import (
     confint_binomial_event_limit,
     confint_binomial_length,
@@ -1740,6 +1741,8 @@ __all__ = [
     "fit_condis_neural",
     "CondiSRegularizedRefinement",
     "condis_regularized_refine",
+    "CondiSSVMRefinement",
+    "condis_svm_refine",
     "CondiSImputation",
     "condis_impute",
     "plot_adjusted_pcoa",

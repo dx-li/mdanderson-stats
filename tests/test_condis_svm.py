@@ -77,12 +77,14 @@ def test_rbf_and_sigma_retain_extreme_raw_distance_information():
     pairs = np.tile(np.array([[0, 1]], dtype=np.int64), (12, 1))
     pairs[-1] = [2, 3]
     estimated = _estimate_sigma(x, pairs)
-    assert estimated == pytest.approx(1e-300, rel=2e-14)
+    # Log/exp roundoff at log(1e-300) is amplified into relative error;
+    # zero absolute tolerance keeps the tiny-value comparison meaningful.
+    assert estimated == pytest.approx(1e-300, rel=2e-13, abs=0)
     assert np.isfinite(_rbf_kernel(x[[0]], x[[1]], estimated)).all()
 
     tiny_x = np.column_stack((np.ones(4), [0.0, 1e-154, 0.0, 1e-154]))
     tiny_pairs = np.array([[0, 1], [2, 3]])
-    assert _estimate_sigma(tiny_x, tiny_pairs) == pytest.approx(1e308, rel=2e-14)
+    assert _estimate_sigma(tiny_x, tiny_pairs) == pytest.approx(1e308, rel=2e-14, abs=0)
 
 
 def test_svm_rejects_single_row_training_folds():

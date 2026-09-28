@@ -79,8 +79,10 @@ def _readonly_int(values: NDArray[np.int64]) -> NDArray[np.int64]:
 def _design(imputation: CondiSImputation, covariates: ArrayLike) -> tuple[FloatArray, FloatArray]:
     if not isinstance(imputation, CondiSImputation):
         raise TypeError("imputation must be CondiSImputation")
-    x = finite(covariates, "covariates")
     n = imputation.imputed_time.size
+    if n * n > 1_000_000:
+        raise ValueError("SVR data exceed the one-million-cell per-fit kernel budget")
+    x = finite(covariates, "covariates")
     if x.ndim != 2 or x.shape[0] != n or not 1 <= x.shape[1] <= 500 or x.size > 2_000_000:
         raise ValueError("covariates must have n rows, 1..500 columns and <=2 million cells")
     # The original formula is pred_time ~ ., so status is an input feature.
@@ -428,7 +430,7 @@ def _fit_scaled(
         raise ArithmeticError(f"epsilon-SVR KKT residual is too large ({kkt:g})")
     test_kernel = _rbf_kernel(x_test, x_train, sigma)
     prediction = test_kernel @ beta + bias
-    support = np.flatnonzero(beta != 0.0).astype(np.int64)
+    support: NDArray[np.int64] = np.flatnonzero(beta != 0.0).astype(np.int64)
     if support.size == 0:
         raise ArithmeticError("epsilon-SVR has no support vectors for this fit")
     if not np.isfinite(prediction).all():

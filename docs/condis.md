@@ -251,6 +251,85 @@ Fits run serially, with at most 2,000 rows and the native 1,000-weight limit.
 Cross-validation also enforces a bounded work budget. These bounds avoid
 unbounded allocations; oversized requests raise a clear error.
 
+## Radial support-vector refinement
+
+`condis_svm_refine(imputation, covariates)` tunes and refits CondiS-X's
+radial-kernel epsilon-SVR learner. Its default cost grid is 0.25, 0.5 and 1,
+with epsilon=0.1. It estimates a single kernel bandwidth before resampling,
+then uses the same bandwidth across folds and the final fit. Equal mean fold
+RMSEs select the smaller cost. The result restores observed events and exposes
+the same optional censoring-bound clipping as the other refinements.
+
+```python
+from mdanderson_stats import condis_svm_refine
+
+svm = condis_svm_refine(base, covariates, folds=5, random_state=7)
+np.testing.assert_array_equal(
+    svm.refined_time[status == 1], time[status == 1],
+)
+selected_cost, estimated_sigma = svm.best_cost, svm.sigma
+```
+
+The automatic bandwidth follows kernlab's sampled-distance rule: draw two
+vectors of `floor(n/2)` row indices with replacement, discard zero pair
+distances, and average the reciprocals of the 0.1 and 0.9 squared-distance
+quantiles. Supply `sigma_pair_indices` with shape `(n//2, 2)` to reproduce
+particular pairs, or a positive `sigma` to bypass estimation. These controls
+are mutually exclusive. If every sampled distance is zero, provide an
+explicit bandwidth or different pairs. Seeds are reproducible within Python;
+they do not reproduce R's random stream.
+
+Training normally standardizes predictors and response using sample standard
+deviations. **If any predictor is constant, native kernlab disables all
+predictor and response scaling for that fit.** This includes the status
+predictor. Bandwidth estimation independently follows the same predictor
+rule. Consequently, scaling can differ between folds. In the unscaled branch,
+raw covariate units affect distances and raw time units affect the meaning of
+cost and epsilon. A global change of time units is not an invariance claim
+when some folds scale their response and others do not.
+
+`cost_grid`, `epsilon`, `fold_ids`, `folds`, `repeats` and `random_state` expose
+the tuning choices. The result retains per-fold scores and solver diagnostics,
+the chosen cost, full-sample predictions and censoring-bound flags. These
+scores compare predictions with already-imputed targets; they do not measure
+held-out performance of the complete survival-imputation pipeline.
+
+The Python solver uses double-precision kernel values and checks convergence
+explicitly. Original kernlab caches kernel columns in single precision and
+defaults to a looser stopping tolerance, so exact coefficient equality is not
+expected. The [SVM audit](../research/condis-svm-audit.md) records original
+source pins, shared-fold numerical references, kernel bandwidths and
+independently recomputed optimality checks. No native source or compiled
+kernel is distributed with the Python package.
+
+The solver updates two coefficients at a time, preserving the zero-sum
+constraint and cost bounds. `solver_tolerance` defaults to 1e-8 and
+`max_iterations` to 2,000 pair updates per fit; failure to satisfy the
+stopping checks raises an error. Increasing the iteration limit is supported
+within the work budget. The result includes per-fold KKT residuals and
+duality gaps, plus final primal/dual objectives. These use the fit's response
+units, which are standardized only when the native scaling rule applies.
+The reported gap is the nonnegative difference between the primal objective
+and the maximized dual objective, rather than a relative error.
+
+`dual_coefficients` and `intercept` are also in the solver's response units.
+For a design matrix `x` consisting of status followed by the covariates, its
+stored transformation is
+`z = (x / predictor_magnitude - predictor_center) / predictor_scale`.
+After computing the radial kernel against the transformed training rows,
+predictions are
+`response_center + response_scale * (K @ dual_coefficients + intercept)`.
+An unscaled fit stores identity transformations. `standardized` and
+`fold_standardized` expose the full-fit and per-fold choices, and
+`support_indices` identifies nonzero coefficients.
+
+At least three observations and two training rows in every fold are required.
+Zero-support-vector fits raise an error, matching native rejection of that
+degenerate case. Fitting retains a kernel matrix of at most one million cells
+and bounded vectors; CV has separate kernel-work and pair-update limits.
+Featurewise kernel differences preserve nearby points with large common
+offsets without allocating an observations-by-observations-by-features array.
+
 ## Validation and remaining coverage
 
 Three focused tests cover hand-computed linear/step integrals and a partial
@@ -279,7 +358,7 @@ The Python fit preserves the objective without reproducing that stopping error.
 Extreme time-unit checks from 1e-200 to 1e200 preserve fitted values after
 rescaling; penalty grids must scale with the response units.
 
-**Catalog status is partial.** Base CondiS and five CondiS-X learners (linear,
-ridge, lasso, kNN and neural) are implemented. Gradient boosting, random forest
-and SVM learners, their tuning/resampling behavior, interactive
+**Catalog status is partial.** Base CondiS and six CondiS-X learners (linear,
+ridge, lasso, kNN, neural and SVM) are implemented. Gradient boosting and random
+forest learners, their tuning/resampling behavior, interactive
 input handling and native graphical reports remain pending.

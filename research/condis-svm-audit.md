@@ -120,3 +120,73 @@ calculations within 5.69e-14. Kernel matrices were positive semidefinite to
 rounding accuracy; coefficient sums and cost bounds were checked directly.
 These verify the saved reference interpretation. Python solver agreement is
 checked separately before coverage is claimed.
+
+## Python solver and tuning validation
+
+The NumPy solver keeps an n-by-n double-precision kernel, signed positive and
+negative multiplier vectors, and a cached `K beta` vector. Each pair update
+preserves the equality constraint and respects the cost boxes. Periodic and
+final matrix-vector recomputation checks accumulated roundoff. Working-set
+selection uses the largest and smallest eligible signed gradients; it is
+mathematically equivalent to the native convex objective without promising
+identical native working-set order or float32 cache behavior. The final fit
+checks KKT residuals and reports the primal and maximized dual objectives,
+their nonnegative gap and iteration count. A zero-support-vector solution
+raises an error, as native `ksvm` does.
+
+Bias is the mean of the free-multiplier constraints or, for an all-bound
+solution, the midpoint of the feasible intercept interval. Returned dual
+coefficients and the additive intercept remain in solver units. The result
+retains predictor magnitude/normalized center/normalized scale and response
+center/scale, allowing predictions to be reconstructed without confusing
+original-response coefficients with dual multipliers. Scaling flags describe
+each training fold and the final fit.
+
+All three source-reference cases passed CV and final-fit comparisons against
+the tightened native solver, using the saved bandwidth pairs and folds.
+Bandwidths matched exactly and every case selected C=1. Maximum absolute
+fold-RMSE differences were 9.86e-8 (ordinary), 1.07e-8 (wide) and 2.24e-8
+(constant predictor). Maximum elementwise relative differences were 4.90e-8,
+3.83e-9 and 1.01e-8 respectively. Across C=0.25, 0.5 and 1, maximum
+full-fit prediction differences were:
+
+| Case | C=0.25 | C=0.5 | C=1 |
+| --- | ---: | ---: | ---: |
+| Ordinary | 5.04e-8 | 1.57e-7 | 3.33e-7 |
+| Wide | 7.16e-8 | 1.20e-7 | 2.07e-7 |
+| Constant predictor | 1.37e-8 | 3.63e-8 | 8.58e-8 |
+
+The maximum fold KKT residual was 6.93e-9. Selected full-fit primal/dual gaps
+were 9.30e-9, 1.12e-8 and 3.43e-9, respectively. The constant-predictor case
+correctly disabled both predictor and response scaling. The all-bound
+four-row fit reproduced beta=(-0.01,-0.01,0.01,0.01), additive intercept 3
+(native rho=-3) and the native predictions exactly, with zero measured KKT
+residual and gap. These comparisons validate the
+Python solver separately from the earlier native-reference reconstruction.
+
+## Stability and integrated checks
+
+Kernel distances accumulate featurewise differences, preserving nearby
+representable values even with a common offset of 1e150. Bandwidth estimation
+uses per-pair log squared distances and log-domain type-7 quantile interpolation
+when raw squared distances would overflow. A mixed sample with eleven
+distances of 1e150 and one of 1e308 correctly retains a bandwidth near 1e-300;
+the irrelevant large tail must not force the quantiles to underflow. Averaging
+reciprocal quantiles as `0.5 / upper + 0.5 / lower` also preserves a finite
+bandwidth of 1e308 for squared distances near 1e-308.
+
+The tiny-bandwidth test uses zero absolute tolerance, so zero or an unrelated
+tiny value cannot pass. Observed relative error was 2.37e-14; its 2e-13
+relative tolerance allows float64 log/exp rounding at this scale. All-bound
+fits now certify correctly after exactly two allowed pair updates; a cap of
+one fails. Actual fold sizes are checked before fitting to reject training
+sets smaller than two rows. The observation/kernel budget is checked before
+converting the supplied predictor matrix.
+
+All 21 existing CondiS tests passed after integration. The four focused SVM
+tests passed in 1.15 seconds after tightening the tiny-value comparison and
+allowing its measured log/exp roundoff. Peak child resident memory was
+137.3 MiB for that run, with zero swaps (the initial combined run used
+139.3 MiB). Targeted Ruff, formatting and mypy checks passed. All five Python
+examples in the CondiS guide executed successfully, including the public SVM
+tuning interface. No broad repository suite or new CI workflow was added.

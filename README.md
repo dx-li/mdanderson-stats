@@ -827,11 +827,13 @@ R implementation and independent regression calculations.
 
 [CondiS](docs/condis.md) adds censored-lifetime imputation using conditional
 restricted survival means, with native linear and KM-step interpolation.
-CondiS-X linear, ridge, lasso, nearest-neighbor and neural refinements are available,
-including learner tuning, full-sample refits and explicit censoring diagnostics.
+CondiS-X linear, ridge, lasso, nearest-neighbor, neural and radial SVM refinements
+are available, including learner tuning, full-sample refits and explicit
+censoring diagnostics.
 Neural fits expose iteration-limit diagnostics; their nonconvex fitting paths
 can differ from R even with identical starting weights.
-Gradient boosting, random forest and SVM refinements remain pending.
+SVM fits expose scaling transformations and numerical optimality diagnostics.
+Gradient boosting and random forest refinements remain pending.
 
 [1+2+3 rare-disease design](docs/rare-disease-123.md) adds cohort-based
 efficacy/toxicity dose assignment, OBD selection and batched trial simulation with

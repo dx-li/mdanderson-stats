@@ -1151,6 +1151,11 @@ and R fit/predict methods are used only for local reference calculations.
 `research/condis-svm-audit.md` describes the verified epsilon-SVR objective,
 bandwidth estimation, scaling and numerical convergence checks. Original
 kernlab sources and compiled objects are not distributed.
+`condis_svm.py` implements the convex epsilon-SVR dual in NumPy using pairwise
+coefficient updates, double-precision kernel values and explicit optimality
+checks. It follows the verified kernlab model, bandwidth and scaling rules;
+the Python working-set order and random-number stream are not asserted to
+match the native implementation.
 
 The neural learner follows W. N. Venables and B. D. Ripley's nnet
 7.3-19 (GPL-2 or GPL-3), already installed in the local R environment.

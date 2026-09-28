@@ -4318,14 +4318,16 @@
         "Vectorized exact segment integration with horizon restriction, event preservation, retained KM curve and stable time scaling",
         "Default CondiS-X Gaussian linear refinement including native status predictor, event restoration, rank-revealing fit and raw censoring diagnostics with optional lower-bound clipping",
         "CondiS-X ridge, lasso and raw-distance kNN with repeated cross-validation, explicit folds, native tuning grids and tie rules, automatic Gaussian paths/interpolation, full-sample refits and event restoration",
-        "CondiS-X single-hidden-layer neural refinement with all nine size/decay candidates, explicit starts/folds, full-sample refit, event restoration and optimizer diagnostics"
+        "CondiS-X single-hidden-layer neural refinement with all nine size/decay candidates, explicit starts/folds, full-sample refit, event restoration and optimizer diagnostics",
+        "CondiS-X radial epsilon-SVR with sampled bandwidth, repeated cross-validation, native all-or-nothing scaling, bounded pairwise optimization, full-sample refit and primal/dual diagnostics"
       ],
       "validation": [
         "Hand conditional means, unmodified R CondiS 0.1.2 fixture, tied/unsorted data, degenerate samples and extreme time scales; tests/test_condis.py",
-        "Pending gradient boosting, random forest and SVM learners with their tuning/resampling, plus interactive input/report workflows; docs/condis.md",
+        "Pending gradient boosting and random forest learners with their tuning/resampling, plus interactive input/report workflows; docs/condis.md",
         "Native caret Gaussian final-fit fixture, event restoration, bound diagnostics, explicit clipping and rank/scale invariance; tests/test_condis_linear.py",
         "Source-loaded caret 7.0-1 and glmnet 4.1-10 kernels: shared-fold tuning scores and selected refits, kNN insertion-order ties, tighter native lasso KKT reference, constant-design and extreme time-unit checks; tests/test_condis_regularized.py and research/condis-refinement-audit.md",
-        "Native nnet 7.3-19 objective/gradient and early optimizer checkpoints, analytic one-unit network, tuning/refit diagnostics and explicit nonconvex trajectory limitations; tests/test_condis_neural.py and research/condis-refinement-audit.md"
+        "Native nnet 7.3-19 objective/gradient and early optimizer checkpoints, analytic one-unit network, tuning/refit diagnostics and explicit nonconvex trajectory limitations; tests/test_condis_neural.py and research/condis-refinement-audit.md",
+        "Tight native kernlab 0.9-33 ordinary, wide and constant-predictor tuning/refit references, all-bound dual solution, coefficient reconstruction and kernel/bandwidth stability checks; tests/test_condis_svm.py and research/condis-svm-audit.md"
       ]
     },
     {
