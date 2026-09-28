@@ -1,0 +1,142 @@
+{
+  "repository": "https://github.com/cran/kernlab",
+  "revision": "d8f05c9b1b8d220deb98fdf28cd33471f17d5eae",
+  "version": "0.9-33",
+  "retrieved_date": "2026-09-28",
+  "directory": "future-learners/kernlab",
+  "scope": "Original Gaussian-kernel epsilon-SVR numerical sources, S4 fit/predict wrappers and sigma estimation for CondiS-X. Source-only references compile unchanged native files without package installation. Native files and compiled objects are not distributed.",
+  "files": [
+    {
+      "path": "DESCRIPTION",
+      "git_blob": "d8fa315c05192d8686890d6ffbbe2bd865f49f49",
+      "bytes": 1494,
+      "sha256": "19ee0cecceb96e93f9d5fbc87de7ef153977d2cbd550009482b0df92bf26b921"
+    },
+    {
+      "path": "NAMESPACE",
+      "git_blob": "243877ad5863359682f7a770261efcebaec34adc",
+      "bytes": 2771,
+      "sha256": "19ae5ff80304f43cec81922de9381b9c787fdc291481ed633d4a6991bdbf3828"
+    },
+    {
+      "path": "R/aobjects.R",
+      "git_blob": "679031495e239cdac45a50e40f771e5259bf83b9",
+      "bytes": 36513,
+      "sha256": "a9d8c2f8673a2bae7ba1a5576a616eb00681ad7a6c79492edf822f18356ab9fe"
+    },
+    {
+      "path": "R/kernelmatrix.R",
+      "git_blob": "08614dec07df3f3fb22e3269d9b9fdecd87793be",
+      "bytes": 323,
+      "sha256": "5d0308e7398b06e11f648c61b73d3ba10a8a696e9e67e4b4067b5d18688fa34f"
+    },
+    {
+      "path": "R/kernels.R",
+      "git_blob": "33e0859c37777f783378227c6db93725e6144dd7",
+      "bytes": 93047,
+      "sha256": "a18482981d4fb331506fcb6c3f0d5ad940db96e15c0826429aeaca942752125e"
+    },
+    {
+      "path": "R/ksvm.R",
+      "git_blob": "bafb164893e140982c28d325fc13eeb2d27ec80f",
+      "bytes": 118044,
+      "sha256": "26a480ffd00c56b085fcfd7c38668bac97f96e6d5bcac0176b50ff5b6baa26ad"
+    },
+    {
+      "path": "R/sigest.R",
+      "git_blob": "496ce71b96639c14fb256ca8d5ceeeba07b3fc67",
+      "bytes": 2478,
+      "sha256": "0c2caa7dbf856ddba81217d1b5f3924dd83425f394b56aa44fe3debdc0c34685"
+    },
+    {
+      "path": "src/Makevars",
+      "git_blob": "22ebc632e6b08c77b44cdfb360103441e37deb5f",
+      "bytes": 48,
+      "sha256": "9e8913b75a4e4b5ae441c1bb2679f9c5326da77b37fe76d47dbdac9633922e94"
+    },
+    {
+      "path": "src/dbreakpt.c",
+      "git_blob": "d4d2d21f3cdfc2c4a0091c20d456cf549831b9d3",
+      "bytes": 2169,
+      "sha256": "77e40febcbe0ffc6040cecfb36a8ca1e7f55c865a5eb39da2e0e062caba87dc6"
+    },
+    {
+      "path": "src/dcauchy.c",
+      "git_blob": "14b83605e1b4e787bfdf39a49fc2ec023fc46093",
+      "bytes": 5074,
+      "sha256": "33afac0aae318e53b74035acaa8011e2dc467b5c5395a2cc36822fb2fe9ac1a5"
+    },
+    {
+      "path": "src/dgpnrm.c",
+      "git_blob": "3a2671034f9cb940551b37306fe7211c78595960",
+      "bytes": 1146,
+      "sha256": "3c190d3ccfaece05975b7a9fb6358f2829de64016526e0e48dffb9a9a8fdc2d1"
+    },
+    {
+      "path": "src/dgpstep.c",
+      "git_blob": "5a91e80321296192b94eb5fc30086c8cf04da3a2",
+      "bytes": 1513,
+      "sha256": "bc2c6ec24d2ee43ae8243d826e92875c22cab0f8bf0e1bd25ca58bd990495c69"
+    },
+    {
+      "path": "src/dprecond.c",
+      "git_blob": "ec37b9537c01437392a8499e31f3cdcea8f82f79",
+      "bytes": 1086,
+      "sha256": "6c8e8c365f09f408c0fc58cf037206d6039142027fcbba6d95dc22f58b27297c"
+    },
+    {
+      "path": "src/dprsrch.c",
+      "git_blob": "d88715bd7d74b3725b2c070992ba4012fc281e9f",
+      "bytes": 4422,
+      "sha256": "93acfda274d86901fde9cd37bacd57aaa26201df34ee783e949f0547e4622d82"
+    },
+    {
+      "path": "src/dspcg.c",
+      "git_blob": "e4d87aff54e9d6e7a3991737cb56124842b257d5",
+      "bytes": 7370,
+      "sha256": "adbd2bcd4f710bace7f78791cabea1e82e42febf9fcfc8d72ac169ce1a5e1c8c"
+    },
+    {
+      "path": "src/dtron.c",
+      "git_blob": "2d3d3bf7331b7a3007931707687fcd98f3750d85",
+      "bytes": 7783,
+      "sha256": "114141ada21260432fd01bc92a1bf496bc6b1b7630d361935ab7a28a93af9854"
+    },
+    {
+      "path": "src/dtrpcg.c",
+      "git_blob": "b587f3bc3243c15255938dd9747f5fa9a0ea78a0",
+      "bytes": 6871,
+      "sha256": "d8ca8ffdb7190c7412098512178c7f441a59334fa3cc5ed2aabade0b09239e3e"
+    },
+    {
+      "path": "src/dtrqsol.c",
+      "git_blob": "7c21a118c0dbfeeaf7ddebffb1944c344d668346",
+      "bytes": 1758,
+      "sha256": "9b37b8a29ebe386564772a496383750880baed2cedef0a10b1630a9ee6ad68f5"
+    },
+    {
+      "path": "src/misc.c",
+      "git_blob": "537bf11d01ad429ea6b772d4759e0a1354dbd4ee",
+      "bytes": 363,
+      "sha256": "47651699d84da1a7e4e3ac020893595a7d2ca233b78925cf450fd786443ab825"
+    },
+    {
+      "path": "src/solvebqp.c",
+      "git_blob": "e4c6d6a9ba3c655f4b5d10a81d8d021c6181f69f",
+      "bytes": 1710,
+      "sha256": "e414480816d044cfb975664ce44595f02fc5610f4b5748d4cb0929358dba5fa8"
+    },
+    {
+      "path": "src/svm.cpp",
+      "git_blob": "5ee2af2576625fa5d4714d4c5d8571c92a709a79",
+      "bytes": 87674,
+      "sha256": "636c3d3f2385602dae2e5d213a72114dc59cb4e9082b0ea5985c145b691cb35e"
+    },
+    {
+      "path": "src/svm.h",
+      "git_blob": "ef1a76df2d0afbed8dcbc755c93ffb4745c918da",
+      "bytes": 1262,
+      "sha256": "1fc2e4accb12e1bd88685561b834fe12585522c2191eaf5950e234e11ccc0dcd"
+    }
+  ]
+}
