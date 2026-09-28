@@ -123,3 +123,9 @@ These validated additions are ready for a fast-forward publication. A push still
 needs its own success result and fresh remote-SHA verification; the observed
 publication of the earlier checkpoint alone does not establish that the new
 additions have reached GitHub.
+
+The subsequent normal atomic push of local `master` to remote `master`/`main`
+and the development branch failed with `Could not resolve host: github.com`.
+The new additions therefore remain locally prepared, while the earlier
+`e20e582` remote checkpoint is verified. The unavailable connector-approval
+route was not retried or used to bypass the failed connection.
