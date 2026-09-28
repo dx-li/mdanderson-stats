@@ -30,7 +30,7 @@ def test_continuation_ratio_probabilities_and_likelihood_match_independent_value
     np.testing.assert_allclose(probabilities, expected, rtol=2e-14, atol=2e-15)
     np.testing.assert_allclose(probabilities.sum(axis=-1), 1.0, atol=2e-15)
     assert float(efftox_trinary_log_likelihood(codes, counts, parameters)) == pytest.approx(
-        -15.6468300616634, abs=5e-14
+        -15.6468300616634, rel=0, abs=5e-14
     )
     logs = efftox_trinary_log_probabilities(codes, parameters)
     np.testing.assert_allclose(np.exp(logs), probabilities, rtol=0, atol=0)

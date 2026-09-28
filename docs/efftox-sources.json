@@ -13,12 +13,12 @@
     {
       "url": "https://www.johndcook.com/efftox.pdf",
       "doi": "10.1111/j.0006-341X.2004.00218.x",
-      "role": "Thall and Cook (2004): centered log doses, bivariate binary likelihood, Gaussian priors and original assignment rule."
+      "role": "Thall and Cook (2004): centered log doses, binary and trinary likelihoods, coefficient priors, legacy desirability and original assignment rule."
     },
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EffTox/NewTradeOffFunctions.pdf",
       "report": "UTMDABTR-003-06, April 18, 2006",
-      "role": "Cook: bivariate Lp trade-off contour replacing inverse-quadratic contours from versions up to 2.8."
+      "role": "Cook: binary and trinary Lp trade-off contours replacing inverse-quadratic contours from versions up to 2.8."
     },
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EffTox/EfftoxTutorial.html",

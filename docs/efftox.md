@@ -1,8 +1,10 @@
-# EffTox bivariate dose finding
+# EffTox dose finding
 
 Catalog entry 2 is **partial**. Python provides the bivariate binary response
 model, posterior fitting with explicit priors, modern and legacy trade-off
-contours, dose selection and completed-outcome trial simulation. This is separate
+contours, dose selection and completed-outcome trial simulation. A separate
+continuation-ratio model fits mutually exclusive efficacy, toxicity and neither
+outcomes. This is separate
 from BOP2's efficacy/toxicity monitoring functions.
 The official [EffTox entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2)
 lists version 5.2.3, modified June 24, 2026.
@@ -222,6 +224,44 @@ have distinct underlying bit generators. NumPy seeds do not reproduce the
 Windows program's random draws. Trials, cohorts and chains run sequentially,
 and full posterior histories are discarded after each decision.
 
+## Three mutually exclusive outcomes
+
+`EffToxTrinaryPrior` and `fit_efftox_trinary` implement the original
+continuation-ratio model. Counts have columns `(neither, efficacy, toxicity)`.
+With centered log dose `x`, define `t=logistic(mu_T+beta_T*x)` and
+`q=logistic(mu_Q+beta_Q*x)`. The outcome probabilities are
+`((1-t)*(1-q), (1-t)*q, t)`. Both slope priors are conditioned positive;
+zero prior SD fixes a coefficient, and fixed slopes must be positive.
+
+```python
+import numpy as np
+from mdanderson_stats import EffToxTrinaryPrior, fit_efftox_trinary
+
+trinary = fit_efftox_trinary(
+    [1, 2, 4], [[2, 2, 1], [1, 3, 1], [1, 2, 2]],
+    prior=EffToxTrinaryPrior(
+        mean=[-1, .6, .4, .9], sd=[.7, 0, .8, 0],
+    ),
+    draws=256, warmup=128, chains=2,
+    rng=np.random.default_rng(17),
+)
+print(trinary.efficacy_probabilities.mean(axis=(0, 1)))
+print(trinary.toxicity_probabilities.mean(axis=(0, 1)))
+```
+
+The fit retains marginal efficacy `(1-t)*q` and its logit separately from
+conditional efficacy `q`. Dose admissibility must use the marginal quantity.
+It also returns cell log probabilities, coefficient draws, likelihoods and
+chain diagnostics. `efftox_trinary_predict`, `efftox_trinary_log_probabilities`
+and `efftox_trinary_log_likelihood` accept standardized dose codes and batched
+four-coefficient arrays. The log likelihood omits multinomial constants.
+
+This checkpoint covers fitting and prediction; trinary contour elicitation,
+dose decisions and trial simulation remain in progress. The small example
+illustrates the API, not a convergence guarantee.
+Trinary retained cell probabilities are limited to 200,000 entries;
+`chains*(draws+warmup)*doses*4` is limited to two million work units.
+
 ## Resource limits
 
 Inputs support 2–20 strictly increasing doses and at most 10,000 observed
@@ -247,6 +287,16 @@ This bounds the requested fit dimensions, not elapsed time or the actual number
 of slice-likelihood evaluations, which the result reports separately.
 
 ## Validation and remaining scope
+
+The trinary likelihood matches independent base-R values within `5e-14`,
+and its outcome probabilities within `2e-15`. In a four-chain run with 4,000
+retained draws per chain, posterior means were within 0.0011 of independent
+one-dimensional integration. Five focused checks include nonfixed positive
+slope priors, extreme logits, zero counts and output bounds. The
+[trinary audit](../research/efftox-trinary-audit.md) describes the reference
+construction; no native Windows posterior comparison is claimed.
+The public example ran in 0.10 seconds with 114.7 MiB peak process memory
+and no swaps; it was checked through the package's public imports.
 
 `tools/reference_efftox.R` generates independent base-R references for joint
 probabilities and likelihoods, contour values and posterior integration.
@@ -281,6 +331,6 @@ see the [contour audit](../research/efftox-legacy-contour-audit.md).
 This implementation takes coefficient priors as input. The elicited-probability
 and effective-sample-size calibration of
 [Thall et al. (2014)](https://pmc.ncbi.nlm.nih.gov/articles/PMC4229398/)
-remains open, as do trinary outcomes, historical approximate contour fitting
+remains open, as do trinary contour/decision/simulation workflows, historical approximate contour fitting
 and native file/report workflows. The Windows program's integration kernel
 has not been run for direct parity checks.

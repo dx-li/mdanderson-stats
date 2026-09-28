@@ -24,8 +24,17 @@ posterior fixtures. The reduced posterior has fixed positive slopes and
 independent Gaussian intercept priors. Its likelihood factorizes into toxicity
 versus no toxicity, and efficacy versus neither among non-toxic patients.
 Each intercept posterior is integrated independently. The reference includes
-the induced negative posterior efficacy/toxicity covariance. These references
-prepare an implementation still in progress; native Windows parity is unverified.
+the induced negative posterior efficacy/toxicity covariance. The Python core
+now fits this model with bounded elliptical-slice sampling. Joint probability
+values match within `2e-15`; posterior mean probabilities in the four-chain
+reference run match within 0.0011. Five focused checks also cover positive
+random slope priors under nonempty data, fixed slopes, extreme logits and
+pre-allocation bounds. Native Windows parity is unverified.
+The public imports also passed the base-R log-cell and likelihood comparisons
+(maximum absolute errors `4.67e-15` and `3.38e-14`, respectively). The guide's
+256-draw, two-chain example took 0.10 seconds and the validation process used
+114.7 MiB peak resident memory with no swaps. Its short chains demonstrate
+the interface, not posterior convergence.
 
 The [2006 report, pp. 6–8](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/EffTox/NewTradeOffFunctions.pdf)
 elicits a trinary contour through `(e0,0)`, `(em,tm)` and `(eh,th)` with

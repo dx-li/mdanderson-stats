@@ -495,6 +495,14 @@ from .efftox_model import (
     fit_efftox,
 )
 from .efftox_simulation import EffToxSimulation, simulate_efftox
+from .efftox_trinary_model import (
+    EffToxTrinaryFit,
+    EffToxTrinaryPrior,
+    efftox_trinary_log_likelihood,
+    efftox_trinary_log_probabilities,
+    efftox_trinary_predict,
+    fit_efftox_trinary,
+)
 from .eventchart import (
     ConvertedEvents,
     EventChart,
@@ -1289,6 +1297,12 @@ __all__ = [
     "EffToxLegacyContour",
     "EffToxDecision",
     "EffToxSimulation",
+    "EffToxTrinaryPrior",
+    "EffToxTrinaryFit",
+    "efftox_trinary_log_probabilities",
+    "efftox_trinary_log_likelihood",
+    "efftox_trinary_predict",
+    "fit_efftox_trinary",
     "efftox_standardize",
     "efftox_log_joint_probabilities",
     "efftox_log_likelihood",

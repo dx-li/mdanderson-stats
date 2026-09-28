@@ -1180,7 +1180,9 @@ model, explicit Gaussian priors, bounded posterior fitting, modern Lp and
 legacy inverse-quadratic contours, interim/final dose selection and completed-outcome
 trial simulation. Simulations preserve joint outcome association and report allocation,
 selection, stopping and sampler diagnostics. Published no-skipping and exploration
-rules are explicit; prior calibration and trinary outcomes remain open.
+rules are explicit. A separate continuation-ratio core fits mutually exclusive
+efficacy, toxicity and neither outcomes, retaining both marginal and conditional
+efficacy. Prior calibration and the trinary decision/simulation workflow remain open.
 
 [Multc Lean and Multc99 Phase IIa](docs/multc.md) add response/toxicity monitoring
 against fixed or beta-distributed historical rates, shifted comparisons, cohort
