@@ -19,6 +19,7 @@ not the containing project's current Git revision.
 | R/utilities.survival.R | `9ed62c12c118edd11d78fb85f2ec230448646406` |
 | src/splitCustom.c | `337a084d630f4871a61efd37caaa67ae1cfb2e6b` |
 | src/randomForestSRC.c | `e9c6e896c4f93c6eb1b85bdf37992964d74376ea` |
+| src/randomForestSRC.h | `6355ed999d06447747f78b01ee2a370e6bc43d1e` |
 
 The original author contour helper is `R/rfsrcContour.R`, blob
 `03b81a98d11b0d2f4daef1f70fdf5e3431f805bc`, at SurvivalContour revision
@@ -167,6 +168,41 @@ trees compares the whole OOB forest; smaller blocks are not equivalent to a
 single whole-forest perturbation. Do not label permutation VIMP as native
 default importance.
 
-The first coherent implementation slice is OOB curves, contributor counts,
-mortality and concordance error. Explicit permutation importance can follow
-with documented block semantics. Neither slice is implemented by this audit.
+## OOB implementation and independent native comparison
+
+The optional `compute_oob=True` fit now retains bit-packed sampling membership
+and returns OOB survival/hazard curves, contributor counts, mortality and
+concordance error. Disabled OOB computation retains the previous fitting and
+prediction path. Rows without OOB contributors remain undefined; there is no
+in-bag fallback. Pair comparisons use row-sized vectors rather than an n-by-n
+matrix. Separate combined-array and work bounds cover OOB computation.
+
+`tools/reference_random_survival_oob.py` extracts the unchanged native
+`getConcordanceIndex` into the existing small C harness, checks pinned source
+blob hashes and produces 16 reference cases. Cases include censor/event and
+event/event ties, exact versus just-above `1e-9` boundaries, absent OOB
+contributors and no comparable pairs. All 16 Python results match exactly.
+The fixture is `tests/fixtures/random-survival-oob-concordance.json`; native
+source and compiled libraries remain ignored and are not distributed.
+
+A separate independent root comparison reconstructs each sampled one-feature
+tree with native C split scores and leaf KM/NA kernels, then averages only its
+OOB rows. All 264 survival/hazard values agree exactly over 12-tree forests
+on seven- and four-point grids. Native and Python concordance errors agree at
+0.31818181818181823 and 0.2954545454545454, respectively, with 44 comparable
+pairs. Replaying single-node tree sampling independently verifies membership
+both with and without replacement. Enabling OOB computation preserves all
+packed tree arrays exactly. The comparison takes 0.965 seconds after imports,
+including the tiny native harness build, at 120.45 MiB peak RSS and zero swaps.
+
+This change in error with the chosen grid is native behavior. `rfsrc.R`
+passes the already thinned `get.grow.event.info(..., ntime=ntime)` grid to C
+(around lines 301 and 534–535), and `getMortality` sums over that grid. It
+does not secretly use every unthinned failure time. Grid choice and time-unit
+dependence of absolute tie tolerances therefore remain explicit.
+
+Existing tree checks plus focused new OOB checks pass: six tests in 1.57
+seconds. Targeted lint, formatting and type checks pass. These are kernel and
+independent-tree comparisons, not a claim of native full-forest RNG parity.
+Explicit permutation importance, categorical splitting, alternative split
+rules and missing-value handling remain separate remaining scope.

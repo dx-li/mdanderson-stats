@@ -23,6 +23,7 @@ HASHES = {
     "src/randomForestSRC.c": "e9c6e896c4f93c6eb1b85bdf37992964d74376ea",
     "src/splitCustom.c": "337a084d630f4871a61efd37caaa67ae1cfb2e6b",
     "R/utilities.survival.R": "9ed62c12c118edd11d78fb85f2ec230448646406",
+    "src/randomForestSRC.h": "6355ed999d06447747f78b01ee2a370e6bc43d1e",
 }
 
 
@@ -55,6 +56,8 @@ typedef unsigned int uint;
 #define TRUE 1
 #define FALSE 0
 #define OPT_COMP_RISK 1
+#define EPSILON 1.0e-9
+#define RF_nativeNaN NAN
 typedef struct {
   uint membrCount, eTimeSize, nodeID;
   uint *eventTimeIndex, *atRiskCount, **eventCount;
@@ -83,6 +86,7 @@ static void stackLocalNelsonAalen(Terminal *p, uint n) {
         "getLocalSurvival",
         "getLocalNelsonAalen",
         "mapLocalToTimeInterest",
+        "getConcordanceIndex",
     ):
         extracted += native_function(sources["src/randomForestSRC.c"], name)
     wrapper = r"""
@@ -143,6 +147,15 @@ void reference_curve(uint n, double *t, double *e, uint q, double *grid,
         pointer,
     ]
     lib.reference_curve.restype = None
+    lib.getConcordanceIndex.argtypes = [
+        ctypes.c_int,
+        ctypes.c_uint,
+        pointer,
+        pointer,
+        pointer,
+        pointer,
+    ]
+    lib.getConcordanceIndex.restype = ctypes.c_double
     return lib
 
 

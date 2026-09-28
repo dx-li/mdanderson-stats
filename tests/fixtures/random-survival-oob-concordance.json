@@ -1,0 +1,353 @@
+{
+  "native_revision": "b4d099e262423362a8872c13c468e6dbe2f9e9da",
+  "cases": [
+    {
+      "case": "ordered",
+      "time": [
+        1,
+        2,
+        3
+      ],
+      "event": [
+        1,
+        1,
+        1
+      ],
+      "mortality": [
+        3,
+        2,
+        1
+      ],
+      "contributors": [
+        1,
+        1,
+        1
+      ],
+      "concordance_error": 0.0
+    },
+    {
+      "case": "reversed",
+      "time": [
+        1,
+        2,
+        3
+      ],
+      "event": [
+        1,
+        1,
+        1
+      ],
+      "mortality": [
+        1,
+        2,
+        3
+      ],
+      "contributors": [
+        1,
+        1,
+        1
+      ],
+      "concordance_error": 1.0
+    },
+    {
+      "case": "mortality_ties",
+      "time": [
+        1,
+        2,
+        3
+      ],
+      "event": [
+        1,
+        1,
+        1
+      ],
+      "mortality": [
+        1,
+        1,
+        1
+      ],
+      "contributors": [
+        1,
+        1,
+        1
+      ],
+      "concordance_error": 0.5
+    },
+    {
+      "case": "event_censor_tie",
+      "time": [
+        1,
+        1,
+        2
+      ],
+      "event": [
+        1,
+        0,
+        0
+      ],
+      "mortality": [
+        2,
+        1,
+        0
+      ],
+      "contributors": [
+        1,
+        1,
+        1
+      ],
+      "concordance_error": 0.0
+    },
+    {
+      "case": "event_tie_equal",
+      "time": [
+        1,
+        1
+      ],
+      "event": [
+        1,
+        1
+      ],
+      "mortality": [
+        1,
+        1
+      ],
+      "contributors": [
+        1,
+        1
+      ],
+      "concordance_error": 0.0
+    },
+    {
+      "case": "event_tie_unequal",
+      "time": [
+        1,
+        1
+      ],
+      "event": [
+        1,
+        1
+      ],
+      "mortality": [
+        1,
+        2
+      ],
+      "contributors": [
+        1,
+        1
+      ],
+      "concordance_error": 0.5
+    },
+    {
+      "case": "event_tie_risk_exact_epsilon",
+      "time": [
+        1,
+        1
+      ],
+      "event": [
+        1,
+        1
+      ],
+      "mortality": [
+        0,
+        1e-09
+      ],
+      "contributors": [
+        1,
+        1
+      ],
+      "concordance_error": 0.5
+    },
+    {
+      "case": "event_tie_risk_below_epsilon",
+      "time": [
+        1,
+        1
+      ],
+      "event": [
+        1,
+        1
+      ],
+      "mortality": [
+        0,
+        9.99e-10
+      ],
+      "contributors": [
+        1,
+        1
+      ],
+      "concordance_error": 0.0
+    },
+    {
+      "case": "ordinary_risk_exact_epsilon",
+      "time": [
+        1,
+        2
+      ],
+      "event": [
+        1,
+        1
+      ],
+      "mortality": [
+        1e-09,
+        0
+      ],
+      "contributors": [
+        1,
+        1
+      ],
+      "concordance_error": 0.5
+    },
+    {
+      "case": "ordinary_risk_above_epsilon",
+      "time": [
+        1,
+        2
+      ],
+      "event": [
+        1,
+        1
+      ],
+      "mortality": [
+        1.001e-09,
+        0
+      ],
+      "contributors": [
+        1,
+        1
+      ],
+      "concordance_error": 0.0
+    },
+    {
+      "case": "time_exact_epsilon",
+      "time": [
+        0,
+        1e-09
+      ],
+      "event": [
+        1,
+        1
+      ],
+      "mortality": [
+        2,
+        1
+      ],
+      "contributors": [
+        1,
+        1
+      ],
+      "concordance_error": 0.5
+    },
+    {
+      "case": "time_above_epsilon",
+      "time": [
+        0,
+        1.001e-09
+      ],
+      "event": [
+        1,
+        1
+      ],
+      "mortality": [
+        2,
+        1
+      ],
+      "contributors": [
+        1,
+        1
+      ],
+      "concordance_error": 0.0
+    },
+    {
+      "case": "zero_contributor",
+      "time": [
+        1,
+        2,
+        3
+      ],
+      "event": [
+        1,
+        1,
+        1
+      ],
+      "mortality": [
+        3,
+        99,
+        1
+      ],
+      "contributors": [
+        1,
+        0,
+        1
+      ],
+      "concordance_error": 0.0
+    },
+    {
+      "case": "all_censored",
+      "time": [
+        1,
+        2,
+        3
+      ],
+      "event": [
+        0,
+        0,
+        0
+      ],
+      "mortality": [
+        3,
+        2,
+        1
+      ],
+      "contributors": [
+        1,
+        1,
+        1
+      ],
+      "concordance_error": null
+    },
+    {
+      "case": "no_contributors",
+      "time": [
+        1,
+        2,
+        3
+      ],
+      "event": [
+        1,
+        1,
+        1
+      ],
+      "mortality": [
+        3,
+        2,
+        1
+      ],
+      "contributors": [
+        0,
+        0,
+        0
+      ],
+      "concordance_error": null
+    },
+    {
+      "case": "later_failure_only",
+      "time": [
+        1,
+        2
+      ],
+      "event": [
+        0,
+        1
+      ],
+      "mortality": [
+        3,
+        1
+      ],
+      "contributors": [
+        1,
+        1
+      ],
+      "concordance_error": null
+    }
+  ]
+}
