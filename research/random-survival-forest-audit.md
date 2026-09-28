@@ -1,0 +1,97 @@
+# Random survival forest source and reference audit
+
+SurvivalContour entry 166 names randomForestSRC 3.2.2 for its forest models.
+The CRAN Git mirror's `3.2.2` tag resolves to
+[`b4d099e262423362a8872c13c468e6dbe2f9e9da`](https://github.com/cran/randomForestSRC/tree/b4d099e262423362a8872c13c468e6dbe2f9e9da).
+DESCRIPTION identifies version 3.2.2, dated 2023-05-23, by Hemant Ishwaran and
+Udaya Kogalur, with GPL >=3 licensing. The tag and file blobs were retrieved
+through the read-only GitHub API; the ignored source directory is not itself
+a Git checkout. Provenance uses the verified tag and each file's Git blob hash,
+not the containing project's current Git revision.
+
+## Exact source bundle
+
+| File | Git blob |
+| --- | --- |
+| DESCRIPTION | `d00a1128d6e2336006dd91fb201a5e231da14985` |
+| man/rfsrc.Rd | `6f441a8d027d20764ce75d26a3aefcc54188ee82` |
+| R/rfsrc.R | `5be0607d365a5422e4b1d58e03c3e0dfe92c8045` |
+| R/utilities.survival.R | `9ed62c12c118edd11d78fb85f2ec230448646406` |
+| src/splitCustom.c | `337a084d630f4871a61efd37caaa67ae1cfb2e6b` |
+| src/randomForestSRC.c | `e9c6e896c4f93c6eb1b85bdf37992964d74376ea` |
+
+The original author contour helper is `R/rfsrcContour.R`, blob
+`03b81a98d11b0d2f4daef1f70fdf5e3431f805bc`, at SurvivalContour revision
+`d4645f69f23fc1146c07432f576b4c40f85e1bba`. It accepts an already fitted model,
+uses 30 continuous-covariate points between the empirical 2.5th and 97.5th
+percentiles, adjusts numeric covariates at means unless supplied, and prepends
+time zero with survival one only when the forest event grid starts after zero.
+
+## Native algorithm contract
+
+- Default 500 trees; survival `mtry=ceil(sqrt(p))`, `nodesize=15`, `nsplit=10`.
+- Default root samples are without replacement, with size `round(.632*n)`.
+  The default with-replacement size is `n`. R uses nearest-even rounding.
+- A parent must have at least `2*nodesize` sampled rows to split. The inspected
+  log-rank path requires only nonempty children, so `nodesize` is not a strict
+  minimum child size. All-censored nodes stop. All-event nodes with identical
+  times stop; mixed tied event/censor nodes can still split.
+- Continuous cutpoints are distinct observed values except the maximum,
+  routed by `x <= cut`. They are not midpoints. `nsplit=0` considers all;
+  otherwise up to `nsplit` are sampled without replacement and sorted.
+- The split score is absolute log-rank numerator divided by its hypergeometric
+  standard deviation. For event times j, numerator is
+  `sum(d_left - Y_left*d/Y)` and variance is
+  `sum((Y_left/Y)*(1-Y_left/Y)*(Y-d)/(Y-1)*d)` over `Y>=2`.
+  A statistic improvement must exceed `1e-9`; ties retain the earlier candidate.
+  A finite zero score is eligible, rather than necessarily stopping the tree.
+- Leaf risk sets include observations censored at an event time. Leaf survival
+  is the Kaplan–Meier product of `1-d/Y`; leaf cumulative hazard is the
+  Nelson–Aalen sum of `d/Y`. Forest outputs average those two curves separately.
+  In general `mean(KM)` differs from `exp(-mean(Nelson–Aalen))`.
+- Curves are right-continuous. The native default common grid selects up to
+  150 event times with rounded evenly spaced **one-based** indices; zero means
+  all event times. The grid controls output, not the time resolution used to
+  calculate within-leaf event/risk counts.
+
+Relevant main-C functions include `logRankNCR`,
+`getPreSplitResultGeneric`, `selectRandomCovariatesGeneric`,
+`stackAndConstructSplitVectorGenericPhase1/Phase2`,
+`updateMaximumSplitGeneric`, `getAtRiskAndEventCount`, `getLocalRatio`,
+`getLocalSurvival`, `getLocalNelsonAalen`, `mapLocalToTimeInterest`, and
+`updateEnsembleSurvival`. Final ensemble normalization divides the accumulated
+survival and cumulative-hazard sums by the contributing tree count.
+
+## Executed native references
+
+`tools/reference_random_survival_forest.py` verifies source hashes and extracts
+unchanged bodies for the custom log-rank example and four main-C leaf/step
+kernels. A small standalone C wrapper supplies one-based arrays, allocation
+helpers and event/risk counts. It compiles only those functions with the
+existing compiler. The custom example and main log-rank implementation use the
+same numerator and variance equations. Native R `get.grow.event.info` is sourced
+unchanged to check common-grid selection with `ntime=0,1,5,150`.
+
+The fixture contains 43 native split scores and 91 survival/cumulative-hazard
+pairs over seven datasets: ties, all events, all censoring, one event, identical
+times, zero-time events, and repeated bootstrap-style rows. Four additional
+grid references use 401 event times. An independent one-feature, full-sample,
+exhaustive-split tree driver uses those unchanged C scores and leaf kernels
+to produce six deterministic whole-tree reference cases: tied or duplicate
+rows with `nodesize=1,2,15`. It records splits and predictions at seven profiles
+and 13 times. This driver does not call the Python package under test and is
+not the full native tree engine. Hand calculations independently checked a
+tied Kaplan–Meier step, a no-event leaf and a one-event log-rank score.
+
+The initial C-only run took 0.57 seconds,
+with a 41.1 MiB child RSS peak. The complete C/R run took 1.22 seconds, with
+29.3 MiB parent and 82.6 MiB child peak RSS; zero swaps were reported. Jobs ran
+sequentially with one BLAS/OpenMP thread and no dependency installation.
+The expanded reference run, including all six tree cases, took 0.95 seconds,
+with 28.4 MiB parent and 83.3 MiB child peak RSS and zero reported swaps.
+
+These are executable split/leaf/time-grid references. They do not execute the
+full native tree-growing, bootstrap, out-of-bag or forest prediction engine.
+Original code and compiled objects remain ignored under `research/raw/` and
+are not redistributed. Python implementation and end-to-end verification are
+in progress; this reference checkpoint does not change catalog status.

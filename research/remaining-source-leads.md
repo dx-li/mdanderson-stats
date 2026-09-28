@@ -104,6 +104,52 @@ valid monotone survival curve between them. Several native density/log-probabili
 paths also exponentiate and then take logs, requiring direct log-domain
 evaluation in the Python port.
 
+## SurvivalContour random survival forest
+
+The app cites randomForestSRC 3.2.2, pinned via its CRAN Git tag at
+`b4d099e262423362a8872c13c468e6dbe2f9e9da`. The exact source bundle, algorithm
+contract and executed small C/R references are recorded in the
+[forest audit](random-survival-forest-audit.md). Native leaf Kaplan–Meier
+survival and Nelson–Aalen hazard are averaged separately. Python implementation
+is underway in the single Luna worker, with bounded storage and sequential trees.
+
+## Interval-censored Cox source mismatch to resolve
+
+The original SurvivalContour dispatcher advertises interval-censored Cox via
+`mets::phreg(Surv(lower,upper,type="interval2") ~ ...)`. Its
+`coxIntContour.R` helper (blob `26d1143fd364bc3679fcafddb260952377ef8e12` at
+the author pin above) delegates prediction to `predictPhreg`.
+
+Inspection found a material contract concern. Both
+[`mets` 1.3.3](https://github.com/cran/mets/tree/841d9a66ed6dcf7ad35c1df9948a2567f1702fd2)
+(`R/phreg.R` blob `bb95b6f5bbd606ac3c008bc0113cb803cb04a7ff`) and
+[`mets` 1.3.12](https://github.com/cran/mets/tree/4177a01298fce3e0019d94ff073c1f5b4a558c21)
+(blob `93553619a9f76ab963a4c292f8422a1a0c0f3883`) dispatch any three-column
+Surv response as `entry=Y[,1]`, `exit=Y[,2]`, `status=Y[,3]` into a counting-
+process Cox partial-likelihood backend, without an interval-type branch.
+The 1.3.3 source is dated 2023-12-04 and GPL >=2; 1.3.12 is dated July 2026 and
+declares Apache 2.0. Exact source bytes are saved separately under ignored
+`research/raw/mets-1.3.3` and `research/raw/mets`.
+
+Installed R survival 3.6-4 confirmed that interval2 data for `(1,2]`, right
+censoring at 2 and an exact event at 3 produces rows `(1,2,3)`, `(2,1,0)` and
+`(3,1,1)` with `type="interval"`. Those are interval status codes and placeholder
+second-column values, not valid start/stop/event observations. Merely accepting
+this matrix in `phreg` is not evidence of a correct interval-censored model.
+The complete native fit and the app's deployed backend have not been executed;
+verify the source mismatch before claiming native interval-Cox parity. Do not
+port that interpretation as a valid interval likelihood.
+
+A method/reference lead is
+[`icenReg` 2.0.16](https://github.com/cran/icenReg/tree/26fadac37c6b54dd0e29c91c2bf07942ae120356),
+dated 2024-01-13, LGPL >=2.0 and <3. Its `R/ic_sp.R` (blob
+`0a51f8e92a04249ded93bd6c7476bc6b24d28275`) explicitly supports interval2
+proportional-hazards/proportional-odds likelihoods, Newton regression updates
+and iterative-convex-minorant baseline updates. DESCRIPTION and that wrapper
+are saved and blob-verified under ignored `research/raw/icenReg`. Its fitting
+kernels and baseline/covariance contract still need auditing. No interval
+model implementation or completed coverage is claimed by this source lead.
+
 ## Fine–Gray executable reference lead
 
 For the next competing-risk model, the CRAN mirror
