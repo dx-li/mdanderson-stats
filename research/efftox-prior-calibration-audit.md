@@ -1,6 +1,7 @@
 # EffTox prior-calibration source contract
 
-Implementation is in progress; this record is not a completion claim.
+The probability-moment and calibration APIs are implemented; native Windows
+optimizer and integration parity remain unverified.
 The primary method is [Thall et al. (2014)](https://pmc.ncbi.nlm.nih.gov/articles/PMC4229398/),
 [doi:10.1177/1740774514547397](https://doi.org/10.1177/1740774514547397).
 On 2026-09-28 the direct PMC page returned a CAPTCHA, while indexed primary
@@ -79,3 +80,24 @@ fixed symmetric efficacy variance agrees with its small-SD expansion within
 3.1e-12 relative. Generation completed in 0.64 seconds with 96.1 MiB peak
 child resident memory and zero swaps. These are independent mathematical
 references, not executed native EffTox calibration outputs.
+
+## Python integration validation
+
+The public API matches all 34 R rows: maximum absolute mean error
+`5.00e-16`, variance error `2.50e-16`, and relative ESS error `1.57e-12`.
+Four focused tests, targeted lint/format and type checks passed. Checks include
+a fixed intercept with random positive slope and truly fixed probabilities.
+
+The public five-dose calibration example with untruncated toxicity and target
+ESS 0.9 converged in 364 efficacy and 399 toxicity evaluations. Achieved mean
+ESS values were `0.90946338` and `0.90538019`, with objectives `0.00580248`
+and `0.00291032`. Both objective values were recomputed independently from
+the returned moments and SDs. Neither optimum hit the reported bounds.
+Adaptive integration's largest reported absolute error estimate was
+`1.87e-12`. This estimate concerns probability integrals, not ESS error or
+the discrepancy from elicited targets.
+
+The guide example took 16.97 seconds; the combined reference/example process
+peaked at 115.3 MiB RSS with zero swaps. It uses sequential deterministic
+integration with bounded optimizer evaluations. No large simulation or
+whole-repository test run was required for this integration checkpoint.

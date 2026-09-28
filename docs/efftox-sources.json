@@ -27,7 +27,7 @@
     {
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4229398/",
       "doi": "10.1177/1740774514547397",
-      "role": "Thall et al. (2014): revised prior calibration by effective sample size; audited as remaining scope."
+      "role": "Thall et al. (2014): prior calibration objective and beta-moment effective sample size; deterministic Python integration independently checked in R."
     },
     {
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5520236/",

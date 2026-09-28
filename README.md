@@ -1176,13 +1176,13 @@ subgroup. It preserves the native similarity floors and rounded efficacy rule,
 with bounded sampling and independent R numerical references.
 
 [EffTox dose finding](docs/efftox.md) adds the bivariate efficacy/toxicity
-model, explicit Gaussian priors, bounded posterior fitting, modern Lp and
+model, elicited-probability/ESS calibration, bounded posterior fitting, modern Lp and
 legacy inverse-quadratic contours, interim/final dose selection and completed-outcome
 trial simulation. Simulations preserve joint outcome association and report allocation,
 selection, stopping and sampler diagnostics. Published no-skipping and exploration
 rules are explicit. A separate continuation-ratio core fits mutually exclusive
 efficacy, toxicity and neither outcomes, retaining both marginal and conditional
-efficacy. Prior calibration and the trinary decision/simulation workflow remain open.
+efficacy. The trinary decision/simulation workflow remains open.
 
 [Multc Lean and Multc99 Phase IIa](docs/multc.md) add response/toxicity monitoring
 against fixed or beta-distributed historical rates, shifted comparisons, cohort

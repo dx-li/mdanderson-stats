@@ -1,11 +1,10 @@
 # EffTox dose finding
 
 Catalog entry 2 is **partial**. Python provides the bivariate binary response
-model, posterior fitting with explicit priors, modern and legacy trade-off
+model, elicited-prior calibration, posterior fitting, modern and legacy trade-off
 contours, dose selection and completed-outcome trial simulation. A separate
 continuation-ratio model fits mutually exclusive efficacy, toxicity and neither
-outcomes. This is separate
-from BOP2's efficacy/toxicity monitoring functions.
+outcomes. This is separate from BOP2's efficacy/toxicity monitoring functions.
 The official [EffTox entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2)
 lists version 5.2.3, modified June 24, 2026.
 [Source provenance](efftox-sources.json) records the inspected references.
@@ -15,7 +14,7 @@ lists version 5.2.3, modified June 24, 2026.
 For physical dose `d`, the predictor is `x = log(d) - mean(log(doses))`.
 When the first dose is zero, the original convention adds the second dose to
 every dose before taking logs; `zero_dose_shift=False` rejects zero doses.
-Coefficient order is always `(mu_T, beta_T, mu_E, beta_E1, beta_E2, psi)`:
+Binary coefficient order is `(mu_T, beta_T, mu_E, beta_E1, beta_E2, psi)`:
 
 ```text
 logit(T) = mu_T + beta_T*x
@@ -34,6 +33,55 @@ The toxicity slope enters linearly, without an exponential transformation.
 example, `[[4,1],[2,1]]` means four patients with neither outcome, one with
 toxicity only, two with efficacy only and one with both. Missing or pending
 outcomes are not represented by this table.
+
+## Calibrating a binary-model prior
+
+`calibrate_efftox_prior` converts elicited efficacy/toxicity probability means
+and a target effective sample size (ESS) into an `EffToxPrior`. For each outcome
+it matches the means and the average beta-moment ESS, `m*(1-m)/v-1`, with the
+SD-difference penalty from
+[Thall et al. (2014)](https://pmc.ncbi.nlm.nih.gov/articles/PMC4229398/).
+
+```python
+from mdanderson_stats import calibrate_efftox_prior
+
+calibrated = calibrate_efftox_prior(
+    [1, 2, 4, 6.6, 10],
+    [.2, .4, .6, .8, .9],
+    [.02, .04, .06, .08, .1],
+    target_ess=.9,
+    monotone_toxicity=False,
+)
+print(calibrated.efficacy.mean, calibrated.toxicity.mean)
+print(calibrated.efficacy.effective_sample_size.mean())
+print(calibrated.toxicity.effective_sample_size.mean())
+# Supply calibrated.prior to fit_efftox or simulate_efftox.
+```
+
+The example uses an untruncated toxicity slope, whose induced ESS agrees with
+the rounded published example. The default `monotone_toxicity=True` calibrates
+the positive-conditioned slope used by the default posterior model. This is a
+substantive prior choice: the returned prior and calculated moments use the
+same choice. `efficacy_target_ess` and `toxicity_target_ess` can override the
+common target independently. The quadratic efficacy coefficient is integrated
+with its full supplied uncertainty (default mean zero, SD `.2`); the association
+prior is supplied separately (default mean zero, SD one).
+
+Inspect achieved moments, objectives, optimizer messages and boundary hits
+before using the prior. Optimizer convergence does not mean every target is
+matched exactly. Hypermeans are bounded to `[-10000,10000]` and optimized SDs
+to `[1e-4,100]`; these Python limits are reported in the result. The adaptive
+integrator checks convergence and probability mass, reports estimated absolute
+integration error, and raises on unresolved variance. Its `quadrature_order`
+setting controls `max(200,4*quadrature_order)` subintervals, not Gaussian nodes.
+Optimizer evaluation and overall work limits are checked before fitting.
+
+`efftox_prior_moments(doses, prior, outcome="efficacy")` evaluates an existing
+prior without optimization; use `outcome="toxicity"` for the other margin.
+A fixed probability has zero variance and limiting ESS infinity. Numerically
+unresolved nonfixed priors raise an error. The source comparison and known
+native-kernel gaps are recorded in the
+[calibration audit](../research/efftox-prior-calibration-audit.md).
 
 ## Posterior API
 
@@ -328,9 +376,16 @@ in 1.35 seconds, including continuity at very small positive toxicity. Its
 public guide example and a 10,000-pair monotonicity/performance check passed;
 see the [contour audit](../research/efftox-legacy-contour-audit.md).
 
-This implementation takes coefficient priors as input. The elicited-probability
-and effective-sample-size calibration of
-[Thall et al. (2014)](https://pmc.ncbi.nlm.nih.gov/articles/PMC4229398/)
-remains open, as do trinary contour/decision/simulation workflows, historical approximate contour fitting
-and native file/report workflows. The Windows program's integration kernel
-has not been run for direct parity checks.
+Four focused calibration checks passed, including distinct ESS targets and
+the difference between conditioned and untruncated slope priors. Its 34-row
+independent R reference covers full quadratic uncertainty and nearly fixed
+priors, with mean/variance errors below `5.1e-16`/`2.6e-16` and relative ESS
+error around `1e-12`.
+The public calibration example achieved mean efficacy/toxicity ESS values
+`0.90946`/`0.90538` for target `0.9`. Both optimizers converged without hitting
+their bounds. It ran in 16.97 seconds with 115.3 MiB peak process memory and
+no swaps; see the calibration audit for objectives and comparison details.
+
+Trinary contour/decision/simulation workflows, historical approximate contour
+fitting and native file/report workflows remain open. The Windows program's
+integration kernel has not been run for direct parity checks.

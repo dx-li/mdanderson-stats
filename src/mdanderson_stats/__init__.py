@@ -483,6 +483,12 @@ from .easycelltype import (
     easycelltype_fisher,
     easycelltype_labels,
 )
+from .efftox_calibration import (
+    EffToxCalibration,
+    EffToxPriorMoments,
+    calibrate_efftox_prior,
+    efftox_prior_moments,
+)
 from .efftox_decision import EffToxContour, EffToxDecision, efftox_decision
 from .efftox_legacy_contour import EffToxLegacyContour
 from .efftox_model import (
@@ -1292,6 +1298,10 @@ __all__ = [
     "MultcState",
     "multc_lean_design",
     "EffToxPrior",
+    "EffToxPriorMoments",
+    "EffToxCalibration",
+    "efftox_prior_moments",
+    "calibrate_efftox_prior",
     "EffToxFit",
     "EffToxContour",
     "EffToxLegacyContour",
