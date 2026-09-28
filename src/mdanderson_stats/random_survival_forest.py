@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from hashlib import blake2b
 from math import log
 
 import numpy as np
@@ -87,6 +88,7 @@ class RandomSurvivalForestFit:
     max_depth: int
     inbag_membership: np.ndarray | None = None
     oob: RandomSurvivalForestOOB | None = None
+    training_fingerprint: bytes | None = None
 
 
 @dataclass(frozen=True)
@@ -430,6 +432,17 @@ def _grow_tree(
     )
 
 
+def _forest_fingerprint(time: FloatArray, event: FloatArray, x: FloatArray) -> bytes:
+    """Hash normalized training values and row order without a joined copy."""
+    digest = blake2b(digest_size=20)
+    for values in (time, event, x):
+        contiguous = np.ascontiguousarray(values, dtype=np.float64)
+        digest.update(np.asarray(contiguous.shape, dtype=np.int64).tobytes())
+        if contiguous.nbytes:
+            digest.update(memoryview(contiguous).cast("B"))
+    return digest.digest()
+
+
 def _oob_concordance_error(
     time: FloatArray, event: FloatArray, mortality: FloatArray, contributors: np.ndarray
 ) -> tuple[float, int]:
@@ -712,6 +725,7 @@ def fit_random_survival_forest(
         budget.max_depth,
         packed_membership,
         oob,
+        _forest_fingerprint(t, e, x) if compute_oob else None,
     )
 
 
