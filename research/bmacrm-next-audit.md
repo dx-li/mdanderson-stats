@@ -1,9 +1,21 @@
-# BMA-CRM coverage and next steps (2026-09-26)
+# BMA-CRM source leads and coverage
 
-After the STPLAN survival batch, prioritize this pending scientific method over
-inactive STPLAN interface features. Catalog entries 81 (BMA CRM), 132 (CRM Suite),
-and 133 (online BMACRM) need separate version/capability checks; do not mark all
-three covered from one posterior calculation.
+## Current status (2026-09-28)
+
+Posterior fitting, complete-data decisions, DA-CRM inference, bounded look-ahead,
+calendar replay, full trial simulation, and BMS/Occam-window model aggregation
+are implemented. The authoritative implementation evidence is in
+[CRM conduct](crm-conduct-audit.md), [trial simulation](crm-simulation-audit.md)
+and [model selection](crm-model-selection-audit.md). Do not assign those workflows
+again from the historical planning notes below.
+
+Remaining gaps include automatic skeleton calibration, the older desktop's
+distinct DA safety-wait policy, native input/report workflows and unverified
+native defaults. Entries 81, 132 and 133 remain partial, with distinct version
+scope. The source leads below retain the earlier findings and unresolved
+calibration questions.
+
+## Initial source investigation (2026-09-26)
 
 The first implementation batch now provides `fit_bmacrm`: power-model posterior
 integration, marginal evidence, model averaging, and overdose probabilities.
@@ -56,8 +68,8 @@ with three; if none exists, retain the candidate with an uncertainty flag.
 
 ## Further scientific coverage
 
-Implement bounded complete-outcome trial simulation, then pending-outcome
-look-ahead and DA-CRM after verifying their separate contracts. Look-ahead must
+The initial plan called for complete-outcome trial simulation, pending-outcome
+look-ahead and DA-CRM; those workflows are now integrated. Look-ahead must
 not assume that just the all-toxic and no-toxic completions bound every BMA
 decision without proving it; model weights also change with outcomes. Exact
 bounded completion enumeration is one possible route.
@@ -78,10 +90,9 @@ across skeletons for fixed data, but not across different completed outcomes.
 
 ## Follow-up after the CRM conduct batch
 
-The DA posterior, prior calibration, decisions and bounded look-ahead now exist;
-see `dacrm-audit.md` and `crm-conduct-audit.md`. Remaining implementation should
-prioritize trial/cohort simulation and uncovered scientific choices rather than
-more small validation cases for existing functions.
+The DA posterior, prior calibration, decisions, bounded look-ahead and subsequent
+trial/cohort simulation are integrated; see `dacrm-audit.md`,
+`crm-conduct-audit.md` and `crm-simulation-audit.md`.
 
 The online page was reachable on 2026-09-26 with its trailing slash:
 https://biostatistics.mdanderson.org/shinyapps/BMACRM/
@@ -93,7 +104,7 @@ Model Averaging Continual Reassessment Method for Phase I Clinical Trials*.
 Its visible surface has simulation and trial-conduct tabs with complete counts.
 This confirms that the online entry has additional choices; it does not verify
 hidden priors, safety rules, skeleton generation or executable parity. Entry
-133 remains pending until these choices have a source-backed Python contract.
+133 subsequently moved to partial with source-backed model-selection coverage.
 
 Version distinction to preserve: the older BMA-CRM Simulator guide explicitly
 describes waiting when a DA safety calculation recommends stopping, then stopping
@@ -108,8 +119,8 @@ https://saasresearch.hku.hk/~gyin/materials/2009YinYuanJASA.pdf
 It explicitly defines BMS as choosing the skeleton with highest posterior
 model probability at each allocation. It also defines an Occam-window variant
 that retains models whose posterior weight divided by the largest weight
-exceeds a threshold. These are source-backed scientific additions for a later
-batch; the short MD Anderson method PDF describes averaging only.
+exceeds a threshold. These additions are now implemented and validated in the
+model-selection audit; the short MD Anderson method PDF describes averaging only.
 For reproducing the JASA simulation tables, its stated alpha standard
 deviation is 2, whereas the short method guide uses variance 2. Pass the
 appropriate explicit `prior_sd`; do not compare the tables using the package's
