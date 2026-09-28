@@ -4652,12 +4652,17 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/",
-      "references": [],
+      "references": [
+        "https://doi.org/10.1038/s41375-026-02895-5",
+        "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41375-026-02895-5/MediaObjects/41375_2026_2895_MOESM1_ESM.docx"
+      ],
       "downloads": [],
       "retrieval_error": null,
       "status": "pending",
       "implemented_features": [],
-      "validation": []
+      "validation": [
+        "Primary 2026 publication explicitly links the deployed six-group Cox risk tool. Supplemental Equation S1 was not retrieved; exact coefficients, cutpoints and input/plot conventions remain unverified. No implementation or clinical prediction parity; research/mds-hope-source-status.md."
+      ]
     },
     {
       "id": 172,
