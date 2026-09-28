@@ -210,6 +210,25 @@ backend, so inspect reuse before writing another training stack. PyTorch,
 pycox and torchtuples are absent from the project environment. No dependencies
 were installed and no neural training or prediction has been validated.
 
+Further inspection of the pinned `helpers_pycox.R` identifies contracts for
+the eventual adapter. Cox-Time fits its time transform on training outcomes;
+DeepHitSingle, LogisticHazard and PCHazard fit different discretization label
+transforms. Any validation outcomes are transformed with that fitted object,
+never used to refit cutpoints. PCHazard retains an additional within-interval
+exposure target. The wrapper casts durations to integer before discretization;
+a Python interface must decide and document whether to reproduce that loss of
+fractional time precision rather than doing it accidentally.
+
+Prediction uses batched `predict_surv_df`; Cox-Time and DeepSurv first compute
+baseline hazards. PCHazard uses its own subdivision setting, while the two
+other discrete models can use constant-hazard or constant-density interpolation.
+The wrapper rounds survival to four decimal places and then calls `fill_na`.
+Those presentation/recovery steps are not validated numerical behavior for a
+Python backend and should not silently discard precision or conceal invalid
+curves. The contour helper receives the model's prediction-time index, instead
+of constructing the 50-point time grid used by the interval competing-risk
+helper. This remains source inspection only, with no new method coverage claim.
+
 ## Fine–Gray executable reference lead
 
 For the next competing-risk model, the CRAN mirror
@@ -298,3 +317,19 @@ only a JavaScript shell. A targeted GitHub source search for the DOI returned
 no matches. The exact likelihood, model-selection priors, posterior algorithm,
 operating rules and native references still need retrieval before implementation;
 entry 140 remains pending.
+
+## CNSRISK primary-publication lead
+
+The publisher's [ASCO 2023 CNS proceedings, abstract 2012](https://s3.amazonaws.com/files.oncologymeetings.org/prod/s3fs-public/2023-05/AM23-Central-Nervous-System-Tumors.pdf?OGy51zBP9jxHDPllGcBfS_rgINC3.W.D=)
+contain Hasanov, Milton, Lo et al., *External validation and nomogram for risk
+factors of CNS metastasis in patients with clinically localized melanoma*,
+doi:10.1200/JCO.2023.41.16_suppl.2012. This is a candidate source for entry 161;
+the deployed app's exact model version has not been confirmed.
+
+The abstract describes competing-risk prediction with death as a competing
+event, validated at two, five and ten years. It reports that the initial model
+overpredicted risk and was reduced to primary tumor site, melanoma subtype,
+Breslow thickness and mitotic rate. Consequently the older initial model must
+not be substituted for the reduced calculator. The abstract supplies neither
+exact coefficients nor baseline cumulative incidence, so it does not yet support
+implementing absolute-risk predictions. No clinical model values were inferred.
