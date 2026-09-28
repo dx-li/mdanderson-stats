@@ -47,3 +47,19 @@ or CI change was needed for this checkpoint.
 Multiple-endpoint calendar simulation, calibration and app parity require their
 own implementation evidence; these references do not establish them. The binary
 calendar API retains its existing uniform analysis-weight convention.
+
+## Exact references for the calendar extension
+
+`tools/reference_top_multiendpoint_power.R` enumerates four-cell multinomial
+counts for eight small, fully observed final-look scenarios. The fixture
+`tests/fixtures/top-multiendpoint-power.csv` includes three joint-association
+settings per mode with unchanged endpoint margins, plus two null scenarios.
+The existing Python decision kernel independently reproduced all four terminal
+action probabilities over 1,076 count states; maximum absolute disagreement
+with base R was below 1e-13.
+
+These are complete-outcome reference probabilities. A delayed calendar can
+terminate while another endpoint remains unresolved under the source's final
+combination rule, so its individual stopping-reason frequencies need not match
+the fully observed joint classification. The final-only success probability
+is suitable for comparison; intermediate calendar paths need separate checks.
