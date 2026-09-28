@@ -498,6 +498,7 @@ from .easycelltype_gsea import (
     EasyCellTypeGSEASet,
     easycelltype_gsea_es,
 )
+from .easycelltype_gsea_labels import EasyCellTypeGSEALabel, easycelltype_gsea_labels
 from .easycelltype_gsea_multilevel import (
     EasyCellTypeGSEAInference,
     EasyCellTypeGSEAInferenceCluster,
@@ -1274,6 +1275,8 @@ __all__ = [
     "EasyCellTypeGSEAInferenceCluster",
     "EasyCellTypeGSEAInferenceSet",
     "easycelltype_gsea",
+    "EasyCellTypeGSEALabel",
+    "easycelltype_gsea_labels",
     "easycelltype_labels",
     "STPLANHistoricalAllocationPlan",
     "stplan_historical_allocation_plan",

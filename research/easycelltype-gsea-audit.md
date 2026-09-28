@@ -273,3 +273,18 @@ so there can be multiple hard labels and more than five total labels. Ties
 retain incoming order. Dplyr is not installed locally: this contract is
 verified by source inspection, without claiming execution of the original
 label-processing function.
+
+Luna checkpoint `6fbdcb4`, integrated as `4d02b0c`, implements
+`easycelltype_gsea_labels` and immutable label records. It restores DOSE's
+within-cluster ordering before raw-p ranking, keeps all minimum/fifth-position
+ties, puts every hard block before the soft blocks and removes duplicate cell
+types within each cluster with hard precedence. Cluster blocks keep the
+Python inference order, rather than claiming R's lexical grouping order.
+Undefined DOSE cores remain explicit; empty eligible output returns an empty
+tuple. The helper performs no new sampling.
+
+Three focused tests cover cutoff ties, ordering, unavailable evidence and
+malformed reported rows. Worker lint/format and mypy pass. Root reviewed the
+source mapping and ran all three public GSEA examples, including inference to
+hard/soft labels. Bundled databases, metadata filtering, gene-ID conversion and
+native plots remain outside this implementation; entry 159 stays partial.

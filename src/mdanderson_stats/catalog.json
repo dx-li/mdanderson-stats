@@ -4463,14 +4463,16 @@
         "Bounded input/output memory, scalar identifier validation and indexed per-cluster overlap summaries; docs/easycelltype.md.",
         "Observed weighted GSEA scores, signed modes, first-match set membership, separate fgsea leading-edge and DOSE core-enrichment conventions, explicit undefined zero-weight cores and bounded per-cluster work; docs/easycelltype-gsea.md.",
         "Ranked GSEA signed normalization, source-specific single/multiple-set pilots, adaptive multilevel tail inference, uncertainty diagnostics, BH adjustment and the dual p-value cutoff with bounded serial work and memory.",
-        "Remaining: GSEA hard/soft label selection, bundled CellMarker/Clustermole/PanglaoDB references, species/tissue metadata, gene-ID conversion, native plots and app workflow parity."
+        "GSEA hard/soft cell-type labels using raw-p minimum/fifth-position cutoffs with all ties, source DOSE ordering, hard precedence and separate cluster identities.",
+        "Remaining: bundled CellMarker/Clustermole/PanglaoDB references, species/tissue metadata, gene-ID conversion, native plots and app workflow parity."
       ],
       "validation": [
         "Nine original-R author-source cases, including duplicates, ties, top-five ranking, strict enrichment gate, empty overlap and a 1.84e-31 tail; tools/reference_easycelltype.R.",
         "Nineteen independent exact-rational conditional-tail sums agree; root checks include multicluster ID order, finite 1e308 score means, missing/nested input rejection and resource bounds.",
         "Three focused behavior checks and isolated wheel example; tests/test_easycelltype.py and research/easycelltype-next-audit.md.",
         "Thirty unchanged-R fgsea/DOSE observed-score/core references across eight scenarios, including duplicate IDs, zero weights, signed modes and size filters; tools/reference_easycelltype_gsea.R and tests/test_easycelltype_gsea.py. Extreme non-hit scores do not erase small relative hit weights.",
-        "66 native C++ cumulative scores, 66 unchanged R single-set scores and 22 native splitter score pairs; bounded twelve-seed adaptive tail comparison, deterministic replay and explicit resource/undefined-weight checks; research/easycelltype-gsea-audit.md."
+        "66 native C++ cumulative scores, 66 unchanged R single-set scores and 22 native splitter score pairs; bounded twelve-seed adaptive tail comparison, deterministic replay and explicit resource/undefined-weight checks; research/easycelltype-gsea-audit.md.",
+        "Source-backed GSEA label tests cover minimum/fifth-position ties, cross-cluster hard ordering, unavailable rows and malformed evidence; public inference-to-label example passes."
       ]
     },
     {

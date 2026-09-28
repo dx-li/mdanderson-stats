@@ -7,8 +7,8 @@ sets. It complements the [Fisher annotation branch](easycelltype.md).
 Use `easycelltype_gsea_es` for observed scores and contributing genes, or
 `easycelltype_gsea` for normalized scores, tail probabilities, BH adjustment
 and the source cutoff rule. The inference API includes the historical
-fgsea adaptive multilevel calculation. Final cell-type label selection remains
-a separate workflow.
+fgsea adaptive multilevel calculation. `easycelltype_gsea_labels` converts the
+inference result into hard and soft cell-type annotations.
 
 ```python
 from mdanderson_stats import easycelltype_gsea_es
@@ -121,6 +121,36 @@ zero is rejected for full inference at positive exponent. Observed scores
 remain available through `easycelltype_gsea_es`; exponent zero uses unit
 weights. Extreme weight ranges that cannot preserve the source pilot floor
 are rejected explicitly.
+
+## Cell-type labels
+
+```python
+from mdanderson_stats import easycelltype_gsea_labels
+
+labels = easycelltype_gsea_labels(inference)
+for label in labels:
+    print(label.cluster, label.cell_type, label.method, label.core_enrichment)
+assert [(label.cell_type, label.method) for label in labels] == [
+    ("A", "hard_enrich"),
+    ("C", "soft_enrich"),
+]
+```
+
+Only rows marked `reported` enter label selection. The helper reconstructs
+DOSE's order by increasing adjusted p-value and decreasing absolute NES, then
+ranks labels by raw p-value, as the EasyCellType source does. Every tie at the
+smallest raw p-value is a hard label. Soft selection takes the first five rows
+by raw p-value and includes every tie at the fifth position. Consequently a
+cluster can have multiple hard labels or more than five labels overall.
+
+All hard rows precede all soft rows. A cell type appears only once within a
+cluster, with hard taking precedence; cluster blocks follow the inference
+result's first-occurrence order, a Python convention. Exact ties in both DOSE
+ordering keys keep reference order. Core genes use DOSE's `core_enrichment`,
+including `None` for an undefined core. Empty eligible results produce an empty
+tuple. This helper applies no additional cutoff and runs no new sampling.
+
+## Bounds and validation
 
 Inputs and work are bounded, results are immutable, and simulation is serial.
 The interface permits up to 200,000 ranked rows, 20,000 tested sets per cluster,
