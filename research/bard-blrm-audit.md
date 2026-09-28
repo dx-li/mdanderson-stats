@@ -48,3 +48,22 @@ while `bard.py` supplies stage two; neither currently fits this model.
 The first proposed component is model evaluation and bounded posterior fitting
 with target/overdose summaries. No BF-BLRM implementation is claimed by this
 source-audit checkpoint.
+
+## Independent posterior references
+
+`tools/reference_bard_blrm.R` evaluates 20 raw-ratio model probabilities and
+integrates two explicit normal-prior examples. The fixed-slope case integrates
+only log-alpha; the full two-parameter case integrates both independent normal
+coordinates. Target/overdose probabilities use analytic log-alpha integration
+limits at each log-beta, rather than a discontinuous indicator on a grid.
+The likelihood omits binomial coefficients consistently with the proposed
+sampler. It generates 22 coefficient, toxicity-probability, target-probability
+and overdose-probability summaries in `tests/fixtures/bard-blrm-posterior.csv`.
+
+The integration truncates each free standard-normal coordinate at plus/minus
+10. Since the unnormalized Bernoulli likelihood is at most one, omitted prior
+mass divided by the computed evidence bounds omitted posterior mass, up to
+integration error. This ratio is below `2.6e-19` in both examples. Base-R
+integration completed with warnings treated as errors; Python sampler
+comparison remains pending at this reference checkpoint. These mild illustrative
+priors are unrelated to undocumented native application settings.
