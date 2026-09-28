@@ -2,21 +2,31 @@
 
 Entry 70 remains pending. Primary mathematical source:
 [Morris and Carroll (2006)](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/Morris%26Carroll2006.pdf),
-Sections 4–5 and Appendix A. The orthogonal wavelet transform converts
-functional observations into coefficient-specific mixed models. Each location
-and scale has its own random-effect and residual variances; replacing these
-with one variance per scale would change the model. Fixed-effect coefficients
-have zero/normal mixture priors. Shrinkage hyperparameters can be elicited or
-estimated by the empirical Bayes procedure in Section 4.4.
+Sections 4–5 and Appendix A. An orthogonal wavelet transform yields mixed
+models with location/scale-specific random-effect and residual variances and
+zero/normal mixture priors for fixed coefficients. Sampling marginalizes random
+effects, uses conditional mixture-normal fixed-effect updates and positive
+truncated-normal Metropolis variance proposals. Optional random effects have
+Gaussian conditionals; inverse transforms recover functional estimates.
 
-The sampler marginalizes random effects while updating fixed effects and
-variance components. Fixed effects use conditional mixture-normal updates;
-the scalar conditional estimate must use the residual after subtracting other
-current fixed effects. Variance components use positive truncated-normal
-Metropolis proposals. Optional random effects are then drawn from their
-Gaussian conditional. Inverse transforms recover functional estimates.
-The PDF's Bayes-factor equation and exact empirical Bayes iteration require
-further transcription review before implementation.
+For fixed effect `i`, use conditional precision `X_i' Sigma^-1 X_i`, variance
+`V` equal to its inverse, and the residual subtracting other fixed effects.
+This differs from the diagonal of the joint inverse information matrix.
+Equations 9–13 give, with `z=beta_hat/sqrt(V)` and `U=tau/V`,
+
+```text
+O = pi/(1-pi) * (1+U)^(-1/2) * exp(0.5*z^2*U/(1+U))
+G = O/(1+O)
+U_new = max(0, sum(G*z^2)/sum(G) - 1)
+pi_new = mean(G)
+tau = V*U
+```
+
+EB updates pool locations within each fixed-effect/scale group. Conditional
+normal posterior mean and variance are `beta_hat*U/(1+U)` and `V*U/(1+U)`.
+The inverse factor in equation 11 is lost in extracted text; Appendix A,
+equation 20, confirms the expression above. Implement boundary limits and
+log-domain odds explicitly.
 
 ## Native scope and gaps
 
@@ -26,8 +36,11 @@ compression, wavelet and other transforms, and posterior summaries. It also
 specifies an inverse-gamma variance prior controlled by `delta_omega`, but the
 exact native shape/rate mapping is not established by the current audit.
 Explicit user-supplied priors would be an honest initial API; guessed native
-defaults would not. The guide's independent random effects and residual strata
-need to be distinguished from the paper's more general covariance structures.
+defaults would not. Output fields `prior_omega_a` and `prior_omega_b` may allow
+later native comparison. The guide fixes between-function correlations to
+identity matrices; `C` groups functions sharing residual covariance, permitting
+different wavelet residual variances across strata without cross-function
+residual correlation. The paper's covariance model is more general.
 
 The catalog provides executable archives and examples; no source archive has
 been verified. The existing `pinnacle_wavelet.py` uses a redundant image
