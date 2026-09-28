@@ -3,7 +3,8 @@
 `predict_parametric_survival_mc` uses joint asymptotic-normal parameter draws
 to calculate pointwise survival confidence limits. It accepts the existing
 Weibull, lognormal and log-logistic `ParametricSurvivalFit` results and both
-Prentice and Stacy `GeneralizedGammaFit` results. This supplies the simulated
+Prentice and Stacy `GeneralizedGammaFit` results, plus hazard-, odds- and
+normal-link `SurvivalSplineFit` results. This supplies the simulated
 parameter-uncertainty method used by flexsurv for these model families.
 
 ```python
@@ -55,6 +56,38 @@ between fits or between the two generalized-gamma parameterizations. Converting
 Stacy parameters to Prentice is nonlinear and does not preserve a Gaussian
 sampling distribution.
 
+## Spline models and unrestricted coefficient draws
+
+Spline draws include every baseline coefficient and covariate slope, with
+their full joint covariance. Knots and the selected link remain fixed. Draws
+use the same normalized coordinates as the fitter. Omitting `profiles`
+predicts at raw covariates of zero; supply the training mean explicitly when
+comparing with flexsurv's default mean profile.
+
+The native method draws spline coefficients from an unrestricted Gaussian
+approximation. Some draws can therefore produce a rising curve on part of the
+time axis, even though the fitted curve is monotone. Such a draw does not
+define a proper survival distribution. The native Monte Carlo summary keeps
+its finite numerical predictions; filtering or redrawing would change those
+limits. This implementation follows that convention and exposes
+`spline_minimum_slope`, one minimum baseline derivative per draw over the
+entire normalized log-time axis. Negative values identify rising sampled
+curves. A nonfinite diagnostic means the derivative calculation exceeded its
+numerical range. The field is `None` for the other model families.
+
+`valid_draws` counts nonmissing numerical evaluations, including nonmonotone
+spline draws; it is not a count of proper survival distributions. The native
+endpoint overrides remain `S(0)=1` and `S(infinity)=0` even for such draws.
+Inspect the slope diagnostics when interpreting intervals from a diffuse
+spline covariance. The [spline uncertainty audit](../research/survival-spline-uncertainty-audit.md)
+records the source behavior and independent reference curves.
+
+For zero internal knots the fitted spline models reduce to the three AFT
+families, but the mapping from spline to AFT coefficients is nonlinear.
+Separate Gaussian approximations in those coordinates need not give identical
+simulated limits. Supplied draws mapped through the exact parameter conversion
+do give the same curves.
+
 ## Missing draws and computational limits
 
 The result includes `simulated_sd` and `valid_draws` for every profile/time
@@ -73,7 +106,8 @@ All returned arrays, including retained parameter draws, are read-only.
 The implementation bounds the combined result/parameter allocation, permits
 2–100,000 draws and at most 20 million draw-by-profile-by-time evaluations,
 and processes times in blocks containing at most 200,000 simulated survival
-values. Oversized requests fail before allocating the simulation workspace.
+values. Spline work also accounts for basis width and the per-draw slope
+diagnostic. Oversized requests fail before allocating the simulation workspace.
 No parallel worker processes are created.
 
 ## Source and validation
@@ -85,7 +119,8 @@ both signs of Prentice Q, full parameter cross-covariances and tail probabilitie
 Matching supplied draws separates numerical agreement from random-stream
 differences; matching native seeds is not claimed.
 
-The existing `predict_parametric_survival` and `predict_generalized_gamma`
+The existing `predict_parametric_survival`, `predict_generalized_gamma` and
+`predict_survival_spline`
 functions retain their deterministic delta-method limits. The simulated
 limits are a separate choice; neither interval method guarantees finite-sample
 coverage for an arbitrary fitted data set.

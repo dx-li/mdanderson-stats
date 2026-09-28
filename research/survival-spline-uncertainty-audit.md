@@ -27,7 +27,7 @@ checks global positivity for the fitted model.
 Retaining finite nonmonotone simulated curves reproduces the source's
 unrestricted Monte Carlo summary. This is not a claim that each draw defines
 a proper survival distribution. Filtering or conditioning draws on monotonicity
-would change those interval estimates. The Python extension will expose the
+would change those interval estimates. The Python extension exposes the
 minimum spline slope for each draw in normalized log-time coordinates, while
 keeping `valid_draws` as a count of nonmissing numerical evaluations. Endpoint
 overrides and the scope of these diagnostics must be stated explicitly.
@@ -47,4 +47,29 @@ profiles at ten times, including both endpoints. R logistic/normal probability
 functions and type-7 quantiles supply pointwise limits and sample standard
 deviations. The fixture contains 2,304 parameter cells and 180 summary rows.
 Generation completed successfully in .50 seconds without a package installation
-or compilation. Comparison with the Python extension remains pending.
+or compilation.
+
+The integrated Python predictor matches all 180 rows, with maximum absolute
+lower-limit, upper-limit or sample-SD error `2.759e-14`. All 64 draws remain
+evaluable at each reference point, including the deliberately rising curve;
+its reported minimum slope is negative. An independent affine transformation
+of time and covariates, the complete joint covariance and the same supplied
+draws preserved fitted curves, limits and SDs within `1.953e-14`. Minimum
+slopes changed by the expected log-time scale factor. This audit took .091
+seconds after import, peaked at 116.7 MiB RSS and reported zero process swaps.
+
+The basis is cached for positive finite-time cells and reused across profiles
+and draws. Exact zero/infinite endpoint overrides never evaluate a spline
+basis, avoiding unnecessary invalid arithmetic for tiny knot spacings. Work
+bounds include both prediction basis width and per-draw global slope checks.
+The shared contour wrapper still uses deterministic intervals at this
+checkpoint; its Monte Carlo integration remains separate work.
+
+The public 100-row, four-knot example exposed small asymmetric roundoff in
+the fitter's inverse Hessian, which caused generated-draw covariance validation
+to reject an otherwise positive-definite fit. The fitter now symmetrizes its
+scaled and original-coordinate covariances and checks positive definiteness.
+The spline/uncertainty tests pass (nine), as do focused lint and type checks.
+The guide's fit and 500-draw prediction now pass together in 1.178 seconds,
+using 116.1 MiB peak RSS and zero process swaps. Three draws in that seeded
+example have negative minimum slope; the diagnostic reports them explicitly.

@@ -75,10 +75,31 @@ joint covariance in a deterministic delta method. These limits are not the
 native flexsurv simulated-parameter bounds. At time zero, survival and both
 limits are exactly one.
 
+Use `predict_parametric_survival_mc` for the native simulated-parameter
+uncertainty method, with shared joint draws across profiles and times:
+
+```python
+from mdanderson_stats import predict_parametric_survival_mc
+
+intervals = predict_parametric_survival_mc(
+    fit, [0, 1, 3, 6, 10], [[0, 0], [1, 0]], draws=500, rng=166,
+)
+assert intervals.survival.shape == (2, 5)
+assert np.allclose(intervals.survival, prediction.survival)
+print(np.count_nonzero(intervals.spline_minimum_slope < 0))
+```
+
+Unrestricted Gaussian draws can have negative spline slopes; the native
+Monte Carlo summary includes those numerical curves without treating them as
+proper fitted survival distributions. `spline_minimum_slope` exposes this
+condition for every draw. See [simulation conventions and diagnostics](survival-uncertainty.md).
+
 The common contour workflow accepts `spline_hazard`, `spline_odds` and
 `spline_normal`. Other covariates stay at their training means unless a complete
 profile is supplied. It retains the common time/grid conventions, percentile
-curves, allocation checks and plotting functions.
+curves, allocation checks and plotting functions. This higher-level contour
+workflow still uses delta-method limits; using the separate Monte Carlo
+predictor does not change its interval method.
 
 ```python
 from mdanderson_stats import parametric_survival_contour, plot_survival_contour_2d
@@ -94,7 +115,7 @@ ax = plot_survival_contour_2d(contour)  # optional plotting extra
 This implementation targets unweighted exact/right-censored observations,
 time-constant covariate effects on the intercept of the selected link, and the
 native `rp` basis. Interval/left censoring, delayed entry, time-varying effects,
-covariates on other spline coefficients, alternate spline bases and native
-simulation-based confidence limits remain separate work. Native sources,
+covariates on other spline coefficients, alternate spline bases and integrating
+simulated limits into the contour workflow remain separate work. Native sources,
 reference fixtures and validation status are recorded in the
 [spline audit](../research/survival-spline-audit.md). Entry 166 remains partial.

@@ -109,5 +109,7 @@ Missing draws are omitted for pointwise type-7 quantiles, retained as missing
 for ordinary sample SD, and never redrawn or truncated. Per-cell valid counts
 and the original joint parameter draws are returned as read-only arrays.
 The API preserves the existing deterministic delta-method prediction APIs.
-It currently covers these five parameterizations; simulated spline limits and
-integration into the contour/percentile workflow remain separate work.
+This checkpoint covered these five parameterizations. The subsequent
+[spline extension](survival-spline-uncertainty-audit.md) adds hazard, odds and
+normal links; integration into the contour/percentile workflow remains
+separate work.

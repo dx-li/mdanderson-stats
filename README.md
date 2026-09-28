@@ -1324,8 +1324,10 @@ curves include deterministic delta-method pointwise bounds.
 workflow with stable Prentice and original Stacy fits, full joint covariance,
 predictions and the same contour plots.
 [Simulated pointwise survival limits](docs/survival-uncertainty.md) add joint
-parameter draws for all five parameterizations, reusable across profiles and
-time grids, with valid-draw counts and bounded memory use.
+parameter draws for all five parameterizations and the three spline links,
+reusable across profiles and time grids, with valid-draw counts and bounded
+memory use. Spline draws retain the native unrestricted Gaussian convention
+and report minimum slopes so rising simulated curves remain visible.
 [Royston–Parmar spline models](docs/survival-spline.md) add hazard, odds and
 normal links with configurable log-time knots, globally monotone survival
 curves, joint covariance, predictions and contours.
