@@ -160,6 +160,28 @@ unweighted scores, mixed and all-zero hits, exact ties and a tiny later hit
 that controls the shared prefix epsilon. These are native cumulative-kernel
 references only; they do not establish full multilevel or RNG parity.
 
+The same generator additionally compiles unchanged `esCalculation.cpp`
+function bodies and records 22 signed/positive splitter score pairs, including
+its tie and zero-weight conventions. These are separate functions from the
+observed R score and cumulative pilot score.
+
+`tools/reference_easycelltype_gsea_splitter.R` then assembles the pinned native
+`EsRuler`, uniform-subset RNG, perturbation, duplication, sign correction and
+probability assembly in one Rcpp translation unit. Source MD5 checks cover all
+seven inputs. To avoid a dependency installation, its harness substitutes
+Rmath digamma/trigamma for the corresponding Boost calls and removes resolved
+local includes; the algorithm bodies and RNG are otherwise unchanged.
+Ninety-six tail estimates use twelve seeds, twelve ranking positions, set size
+three, sample size 101, both sign modes and four positive/negative thresholds.
+They are bounded stochastic references, not a demand that NumPy reproduce
+the native random streams or bitwise Boost results.
+
+Review of the Python backend draft identified integration-blocking differences
+in the beta log-mean denominator, perturbation acceptance direction, signed
+correction counts and ordering of shared pilot subsets. The native references
+support correcting these substantive statistical issues before publication;
+the full backend is not yet part of the validated public checkpoint.
+
 The source pilot draws one ordered K-subset per iteration and derives every
 smaller set-size null score from its prefixes. Null samples for different set
 sizes are therefore coupled. Inclusive `<=`/`>=` comparisons are intentional.
