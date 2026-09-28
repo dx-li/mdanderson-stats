@@ -47,3 +47,28 @@ posterior precision criterion. The guide, Remarks 3 on PDF page 3, adds an
 optional final-selection constraint that the isotonic rate not exceed the
 de-escalation boundary. A native fallback when no dose satisfies the constraint
 has not been established.
+
+## Implemented stopping checkpoint
+
+`IBOINDesign` now exposes `extra_safe`, `safety_offset` and
+`early_stop_patients` after its existing constructor fields. Extra safety
+is separate from ordinary elimination and uses the strict lowest-dose count
+condition. Safety takes precedence over count-based stopping. The Python API
+accepts offsets in `(0,.1]` and integer precision thresholds at least three.
+The latter minimum follows the existing package convention; it is not claimed
+as a native-app minimum.
+
+Independent exact binomial sums at target .25 give posterior overdose tails
+`243/256` for two DLTs in three patients and `63/64` for three DLTs in four
+patients. With ordinary cutoff .99 and offset .05, both exceed .94 and
+neither exceeds .99. The first case continues because the extra-safety count
+condition is false; the second stops without marking ordinary elimination.
+The implementation's tails matched these exact fractions to `1e-15`.
+All public guide examples passed together with this check in .004 seconds
+after import, with 114.1 MiB peak process memory and no reported swaps.
+
+The six focused iBOIN tests passed in .99 seconds; Ruff lint/format checks and
+mypy also passed. Final selection remains pending: the native form could not
+be inspected because the in-app browser was unavailable, and the publisher's
+Appendix S1 link returned a cache miss. No weighting or tie convention was
+inferred from these failed retrievals.

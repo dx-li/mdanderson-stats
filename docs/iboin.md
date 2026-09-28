@@ -92,6 +92,24 @@ next decision to retain exclusions. An unavailable outward move becomes stay;
 if the current dose is excluded, move to the highest remaining admissible dose.
 The result uses the existing `BOINDecision` container. Returned arrays are read-only.
 
+Two optional stopping rules apply after complete outcomes:
+
+- `extra_safe=True` stops if the lowest dose has **more than three** patients
+  and its uniform-prior overdose probability exceeds
+  `elimination_probability - safety_offset`. The offset defaults to .05 and
+  must be in `(0,.1]`. This rule can stop without marking a dose eliminated
+  under the ordinary criterion; `action="stop_safety"` and `next_dose=None`
+  are terminal even when all elimination flags are false.
+- `early_stop_patients=m` stops when the current dose has at least `m` patients
+  and the next assignment would stay there, including an unavailable outward
+  move. The result is `action="stop_precision"`, with no next dose. This is
+  a patient-count rule, not a posterior precision calculation. The Python API
+  accepts integer thresholds of at least three; that minimum is an API bound.
+
+Safety stopping takes precedence over the count-based rule. Both options are
+off by default. The boundary table's `eliminate_min` still describes ordinary
+dose elimination; the extra rule is evaluated separately by `next_dose`.
+
 ```python
 from mdanderson_stats import IBOINDesign
 
@@ -106,6 +124,20 @@ step = design.next_dose([3, 0, 0, 0, 0], [1, 0, 0, 0, 0], current_dose=1)
 assert step.action == "escalate" and step.next_dose == 2
 ```
 
+```python
+from mdanderson_stats import IBOINDesign
+
+safe = IBOINDesign(
+    [.1, .25, .5], [0, 0, 0], elimination_probability=.99, extra_safe=True,
+)
+assert safe.next_dose([3, 0, 0], [2, 0, 0], 1).action == "stay"
+stop = safe.next_dose([4, 0, 0], [3, 0, 0], 1)
+assert stop.action == "stop_safety" and not stop.eliminated.any()
+
+precision = IBOINDesign([.1, .25, .5], [0, 0, 0], early_stop_patients=12)
+assert precision.next_dose([3, 12, 0], [0, 3, 0], 2).action == "stop_precision"
+```
+
 ## Validation and remaining scope
 
 Focused tests check all 100 published Table 1 escalation/de-escalation
@@ -114,8 +146,16 @@ an independent direct finite-sum prior calculation, extreme ESS/log probabilitie
 reduction to ordinary BOIN at ESS zero, and prior-independent safety stopping.
 
 **Catalog status remains partial.** Accelerated titration,
-optional extra safety/precision stopping, final MTD estimation with optional prior
+final MTD estimation with optional prior
 borrowing, operating-characteristic simulation and native report generation are
 not yet implemented. The guide contains additional conventions for these options;
 ordinary BOIN final selection is not presented as a reproduction of all iBOIN
 selection options.
+
+The official [final-selection help](https://biostatistics.mdanderson.org/shinyapps/iBOIN/iBOINprior_for_MTD.pdf)
+specifies isotonic regression of `y/n` without prior borrowing, or
+`(y + prior_ess*skeleton)/(n + prior_ess)` with borrowing. It does not specify
+the isotonic weights or tie handling. These differ from ordinary BOIN's
+posterior-mean estimates, so the BOIN selector is not silently substituted.
+The [selection source audit](../research/iboin-selection-audit.md) records
+the verified equations and unresolved conventions.
