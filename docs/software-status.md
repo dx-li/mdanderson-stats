@@ -132,7 +132,7 @@ some legacy adaptations retain commercial-use restrictions.
 | Keyboard: a novel Bayesian toxicity probability interval design for phase I clinical trial | [online #127](https://biostatistics.mdanderson.org/shinyapps/Keyboard) | [Guide](keyboard.md) |
 | KeyboardComb: the Keyboard Design for Drug Combination Trials | [online #121](https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/) | See catalog feature and validation notes |
 | MERIT: Multiple-dose Randomized Phase II Trial Design for Dose Optimization and Sample Size Determination | [online #160](https://biostatistics.mdanderson.org/shinyapps/MERIT/) | [Guide](merit.md) |
-| Multc Lean | [desktop #12](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12) | See catalog feature and validation notes |
+| Multc Lean | [desktop #12](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12) | [Monitoring and calendar replay](multc.md) |
 | Multc99 | [desktop #3](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/3) | See catalog feature and validation notes |
 | One Arm Time to Event Simulator | [desktop #98](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/98) | See catalog feature and validation notes |
 | Parallel phase I and II design | [desktop #85](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85) | See catalog feature and validation notes |

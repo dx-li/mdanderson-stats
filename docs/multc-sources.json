@@ -34,9 +34,9 @@
     },
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcLogistics.pdf",
-      "role": "Minimum/cohort enrollment rules and suspension of accrual only when pending outcomes could change the decision; duration behavior remains outside this implementation."
+      "role": "Minimum/cohort enrollment rules and suspension only when pending outcomes could change the decision. The calendar replay implements this logic with explicit endpoint delays and a documented accrual-open-clock convention; native generated timing and aggregate duration parity remain outside its scope."
     }
   ],
   "method_reference": "Thall, Simon and Estey (1995), Bayesian sequential monitoring designs for single-arm clinical trials with multiple outcomes, Statistics in Medicine 14:357-379.",
-  "validation_reference": "tools/reference_multc.R generates independent direct beta integrals, fixed-reference boundaries and full paired-outcome path enumeration. The script contains no native program source."
+  "validation_reference": "tools/reference_multc.R generates independent direct beta integrals, fixed-reference boundaries and full paired-outcome path enumeration. tools/reference_multc_calendar.R adds five explicit-timing replay examples using direct beta tails and enumeration of hypothetical pending completions. Neither script contains native program source."
 }

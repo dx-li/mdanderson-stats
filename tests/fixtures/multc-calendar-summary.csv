@@ -1,0 +1,6 @@
+"scenario","enrolled","decision","decision_time","duration","paused_duration","responses","toxicities","observed_responses","observed_toxicities"
+"cap_with_pending",6,"cap_complete",102,202,97,0,0,0,0
+"resume",6,"cap_complete",14,14,9,0,0,0,0
+"toxicity_stop",2,"stop_toxicity",10,21,9,2,1,0,1
+"response_certain",2,"stop_response",1,101,0,0,2,0,0
+"tied_both",2,"stop_both",0,0,0,0,2,0,2

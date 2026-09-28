@@ -1268,7 +1268,9 @@ simulation are supported with the same bounded workflow.
 against fixed or beta-distributed historical rates, shifted comparisons, cohort
 rules, full and reachable boundaries, and exact joint stopping probabilities.
 The calculation retains outcome association and separates sample-cap completion
-from early stopping. Duration simulation and general Multc99 designs remain open.
+from early stopping. A calendar replay handles separate endpoint availability,
+look-ahead suspension and complete follow-up with explicit timing inputs.
+Aggregate duration simulation and general Multc99 designs remain open.
 
 [ToxFinder two-agent dose finding](docs/toxfinder.md) adds its six-parameter
 toxicity surface, explicit gamma priors and Bayesian posterior fitting with

@@ -118,6 +118,78 @@ one endpoint, set the other cutoff to one. Python computes CDF and survival
 tails directly and does not reproduce native text placeholder conventions or
 claim bit-for-bit parity at floating-point cutoff ties.
 
+## Pending outcomes and calendar replay
+
+`run_multc_calendar_trial` takes a design, a maximum-enrollment array of paired
+binary outcomes, `max_subjects - 1` arrival intervals and separate response and
+toxicity observation delays for each potential patient. It preserves the
+specified association between outcomes and observation timing.
+
+```python
+import numpy as np
+from mdanderson_stats import multc_lean_design, run_multc_calendar_trial
+
+calendar_design = multc_lean_design(
+    6,
+    response_prior=(1, 1),
+    toxicity_prior=(1.8, 0.2),
+    historical_response=0.5,
+    historical_toxicity=0.5,
+    response_cutoff=1,  # disable response stopping
+    toxicity_cutoff=0.8,
+    min_subjects=2,
+    cohort_size=2,
+    pretrial_check=False,
+)
+trial = run_multc_calendar_trial(
+    calendar_design,
+    outcomes=np.zeros((6, 2), dtype=int),
+    interarrival_intervals=np.ones(5),
+    response_delays=np.zeros(6),
+    toxicity_delays=[10, 9, 0, 0, 0, 0],
+)
+assert trial.arrival_times.tolist() == [0, 1, 11, 12, 13, 14]
+assert trial.paused_duration == 9
+assert trial.decision == "cap_complete"
+assert trial.duration == 14
+```
+
+At a scheduled look, the replay considers every possible pending endpoint
+count against the precomputed stopping boundaries. It continues immediately
+if none can stop, stops if a stopping cause is certain, and otherwise pauses
+until another endpoint becomes observable. Decision calculations never inspect
+unavailable outcome values. Partial cohorts are not monitored. Events at the
+current clock time are available, including zero-delay observations.
+
+The first arrival is zero. Arrival intervals measure time while accrual is
+open: a pause freezes this clock, and the next interval starts at resumption.
+No arrivals are discarded or queued. This is an explicit Python convention;
+the native guides do not fully specify suspension queue behavior. Positive
+intervals/delays that cannot advance the floating-point clock are rejected.
+
+`stop_response` and `stop_toxicity` identify a guaranteed cause, not an exclusive
+eventual reason: the other endpoint may also cross its boundary once pending
+outcomes resolve. Look records expose observed event counts, pending counts,
+actual thresholds and actions. `stop_both` means both causes are already
+certain. `cap_complete` ends accrual without waiting for pending outcomes and
+does not imply acceptable treatment performance.
+
+The result distinguishes counts known at the decision from eventual totals.
+`decision_time` and `accrual_end_time` mark enrollment termination;
+`last_followup_time` is the last enrolled patient's endpoint availability;
+`duration` includes all follow-up and cannot precede the decision. Returned
+patient arrays cover only enrolled patients and are read-only. Work is bounded
+at 12 million units; stopping boundaries are reused rather than reintegrated
+at each calendar event.
+
+The [user guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcUsersGuide.pdf)
+specifies exponential arrival times and a truncated-exponential response-time
+model, but it does not specify a distinct toxicity ascertainment-time law.
+This API therefore requires explicit timing inputs. It does not claim native
+duration simulation or random-stream parity. Five independent R examples
+verify calendar paths using direct beta tails and enumeration of hypothetical
+pending completions; see the [audit](../research/multc-calendar-audit.md).
+
 ## Numerical scope and remaining work
 
 Fixed-reference probabilities use direct beta CDF/survival functions. Random
@@ -141,10 +213,11 @@ type check also passed. The full repository test suite was not run for this
 isolated addition; validation concentrated on the statistical calculations and
 bounded allocations.
 
-Duration simulation remains pending: native
+Aggregate duration simulation remains pending: native
 [accrual logistics](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcLogistics.pdf)
 allow accrual to continue while outcomes are pending when they cannot change the
-next decision. Native configuration/report formats, protocol documents, and
+next decision; the replay above implements that decision logic. Native
+configuration/report formats, protocol documents, and
 the general Multc99 multiple-event workflow are also pending. Parameter
 elicitation and distribution inequalities already have separate package APIs:
 `solve_distribution_moments`, `solve_distribution_quantiles`, and

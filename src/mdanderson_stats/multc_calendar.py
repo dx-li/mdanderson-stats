@@ -250,13 +250,14 @@ def run_multc_calendar_trial(
             is_look = n in design.looks
             action = "continue"
             r_bound = t_bound = -1
+            if is_look:
+                j = int(np.searchsorted(design.looks, n))
+                r_bound = int(design._bounds.response_stop_max[j])
+                t_bound = int(design._bounds.toxicity_stop_min[j])
             if n == maximum:
                 action = "cap_complete"
             elif is_look:
                 action = _decision_with_pending(design, n, r_known, t_known, r_pending, t_pending)
-                j = int(np.searchsorted(design.looks, n))
-                r_bound = int(design._bounds.response_stop_max[j])
-                t_bound = int(design._bounds.toxicity_stop_min[j])
             if is_look or n == maximum:
                 history.append(
                     MultcCalendarLook(

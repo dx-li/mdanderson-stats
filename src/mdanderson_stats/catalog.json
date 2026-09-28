@@ -267,12 +267,15 @@
         "Continuous/cohort monitoring, minimum enrollment, explicit prior-only screen and sequential first-stop outcomes",
         "Full marginal stopping bounds and compact reachable first-crossing count intervals",
         "Bounded exact joint response/toxicity operating characteristics: separate stop reasons, sample-size distribution, mean/SD and expected event counts; explicit independence helper",
-        "Duration simulation, native configuration/report formats and protocol memo remain pending; see docs/multc.md"
+        "Bounded single-trial calendar replay with separately supplied endpoint availability, look-ahead suspension, frozen accrual-open clock and complete follow-up",
+        "Aggregate duration simulation, native configuration/report formats and protocol memo remain pending; see docs/multc.md"
       ],
       "validation": [
         "Official N=30 statistical tutorial full/potential boundaries before the sample cap",
         "Independent base-R direct shifted-beta integrations and complete 4^6 paired-outcome path enumeration for cohort sizes 1 and 2 with different associations",
-        "Focused checks for support endpoints, tail underflow, strict symmetry ties, pretrial rejection and allocation caps; no native binary execution"
+        "Focused checks for support endpoints, tail underflow, strict symmetry ties, pretrial rejection and allocation caps; no native binary execution",
+        "Five independent R direct-beta/pending-completion calendar scenarios: 18 patient rows and 12 look rows; tools/reference_multc_calendar.R and tests/fixtures/multc-calendar-*.csv",
+        "Calendar checks for no future-outcome use, suspension/resumption, cap-bound metadata and unrepresentable positive time increments; research/multc-calendar-audit.md"
       ]
     },
     {

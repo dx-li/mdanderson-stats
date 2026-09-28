@@ -691,6 +691,7 @@ from .muhaz_mse import MuhazMSE, muhaz_mse
 from .muhaz_neighbors import NeighborBandwidths, muhaz_neighbor_bandwidths
 from .muhaz_plot import plot_kphaz, plot_muhaz, plot_pehaz
 from .muhaz_summary import MuhazSummary, summarize_muhaz
+from .multc_calendar import MultcCalendarLook, MultcCalendarTrial, run_multc_calendar_trial
 from .multc_core import (
     MultcBoundaries,
     MultcLeanDesign,
@@ -1421,6 +1422,9 @@ __all__ = [
     "MultcPotentialBoundaries",
     "MultcState",
     "multc_lean_design",
+    "MultcCalendarLook",
+    "MultcCalendarTrial",
+    "run_multc_calendar_trial",
     "EffToxPrior",
     "EffToxPriorMoments",
     "EffToxCalibration",

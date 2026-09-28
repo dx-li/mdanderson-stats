@@ -37,6 +37,9 @@ def test_pending_outcomes_do_not_pause_when_stopping_is_impossible_at_look():
     assert result.looks[2].action == "continue"
     assert result.arrival_times[4] == 101.0
     assert result.decision == "cap_complete"
+    bounds = _design().stopping_bounds()
+    assert result.looks[-1].response_stop_max == bounds.response_stop_max[-1]
+    assert result.looks[-1].toxicity_stop_min == bounds.toxicity_stop_min[-1]
     assert result.duration == result.last_followup_time
     assert result.paused_duration == 97.0
     assert result.looks[0].toxicity_pending == 2
