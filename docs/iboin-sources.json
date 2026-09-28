@@ -41,6 +41,12 @@
       "retrieved_date": "2026-09-10",
       "bytes": 34212,
       "sha256": "7886aaa064a70cda7a559159ee7aaa1f691cf54bf4ea4cc333bb1c26e7b2d466"
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/shinyapps/iBOIN/iBOINprior_for_MTD.pdf",
+      "retrieved_date": "2026-09-28",
+      "inspection": "Official one-page PDF inspected using web text extraction; no local PDF artifact or checksum recorded.",
+      "verified_contract": "Final estimates before isotonic regression: y/n without historical borrowing; (y + prior_ESS*skeleton)/(n + prior_ESS) with borrowing. PAVA weights and tie rules are not specified."
     }
   ],
   "native_settings": "V1.6.3.0, target .25, skeleton [.06,.14,.25,.38,.50], ESS 2 at each dose, robust prior unchecked; captured default table for n=1..12."
