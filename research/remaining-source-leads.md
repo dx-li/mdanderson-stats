@@ -158,6 +158,47 @@ and within-support survival identification bounds must not be mislabeled as
 confidence intervals. Python implementation is underway in the single Luna
 worker; completed coverage is not yet claimed.
 
+## Interval-censored competing-risk regression
+
+The author `FGIntContour.R` at the SurvivalContour pin has blob
+`5dea1bd0dcc52f31162616e08a70183120851cc0`. It calls `predict.ciregic` for cause 1
+on 50 times from zero to `trainModel$tms[2]`. This is a different model from
+the ordinary right-censored Fine–Gray regression already implemented.
+
+[`intccr` 3.0.4](https://github.com/cran/intccr/tree/252644c0d347a663ea5d7bef88fa2ab04f114b1e),
+dated 2022-05-09, by Giorgos Bakoyannis and Jun Park, is GPL >=2. It fits
+two-cause generalized odds-rate transformation models by a constrained B-spline
+sieve likelihood. Each cause has its own link parameter; zero gives Fine–Gray
+and one proportional odds. Event status 0 denotes right censoring and ignores
+the supplied upper endpoint; statuses 1 and 2 select the observed cause.
+Both monotonicity and joint probability constraints require verification.
+Native default uncertainty with `nboot=0` uses a least-squares method, rather
+than a generic inverse Hessian.
+
+Retrieved and blob-verified under ignored `research/raw/intccr`:
+`R/ciregic.R` (`e1f2f6e29d84e6f520e0482adfdcc0a48c8f9b90`),
+`R/bssmle.R` (`d122c3ac22a446bfb8071b720c9df962de188ebe`), and
+`R/dataprep.R` (`371ac55900e8434a264c557e1933b749f3918576`). No native fit or
+Python implementation is claimed yet.
+
+## Neural survival models already use a Python backend
+
+The author `pycoxContour.R` (blob `f924c363e959e7e3b9192bb801dbc37c767a2159`)
+accepts a fitted model and calls `survivalmodels::predict(...,type="survival")`.
+The inspected [`survivalmodels` 0.1.191](https://github.com/cran/survivalmodels/tree/d8a6a4a36368fb57253e0ebf3f0f32e05f05c561)
+wrapper `R/helpers_pycox.R` (blob `50601edd5d1aad9bb9e928f0780ff481b48de670`)
+delegates to Python `pycox` for Cox-Time, DeepSurv, DeepHitSingle,
+LogisticHazard and PCHazard. Its prediction path uses `predict_surv_df`, with
+model-specific label transforms and optional interpolation. Training and
+preprocessing contracts must be preserved when choosing an integration.
+
+The [`pycox` source](https://github.com/havakv/pycox/tree/3eccdd7fd9844a060f50fdcc315659f33a2d2dc1)
+is pinned at `3eccdd7fd9844a060f50fdcc315659f33a2d2dc1`; setup.py declares
+version 0.3.0 and BSD licensing. These models already have an open Python
+backend, so inspect reuse before writing another training stack. PyTorch,
+pycox and torchtuples are absent from the project environment. No dependencies
+were installed and no neural training or prediction has been validated.
+
 ## Fine–Gray executable reference lead
 
 For the next competing-risk model, the CRAN mirror
