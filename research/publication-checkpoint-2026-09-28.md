@@ -1,11 +1,12 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `9228bc9` includes PLBARPO no-control
-trials and aggregate simulation, plus EasyCellType multilevel GSEA inference.
-Both GitHub `master` and `main` now point to `45b6e307`; their four intervening
-documentation/CI commits were merged locally without conflicts. The new
-statistical additions have not yet been confirmed published. See the final
-section for the current package and connection checks.
+Latest verified package checkpoint: `5d6e4c1` adds PLBARPO persistent-control
+trials and EasyCellType GSEA labels to the preceding trial, simulation and
+inference APIs. Local `master` contains this validated checkpoint. Fresh
+read-only checks still show GitHub `master` and `main` at `45b6e307`; their
+documentation/CI commits are already merged locally. The newer statistical
+additions have not been confirmed published. See the final section for the
+current package and connection checks.
 
 The user explicitly requested that all completed work be pushed to GitHub and
 that stable programs be available on `master`. The public repository is
@@ -199,3 +200,28 @@ with `Could not resolve host: github.com`. The connector write route still
 requires approval unavailable in this session and was not retried. Local
 `master`, refreshed packages and the Git bundle are prepared for publication;
 none is evidence that this newer checkpoint has reached GitHub.
+
+## Persistent-control trials and GSEA labels checkpoint
+
+GSEA hard/soft label processing is public at `3e7fd65`. Source-backed checks
+cover minimum/fifth-position ties, hard-before-soft ordering, missing inference
+and malformed reported evidence. The three public GSEA examples pass. The
+complete persistent-control replay is public at `772c163`, with actual
+comparison windows and independent R evidence for four paths. Seven focused
+controller checks and targeted lint/type checks pass; the cap-look conflict
+fix also protects the no-control controller. No broad numerical suite or new
+CI workflow was added.
+
+Cached builds at `5d6e4c1` pass. The isolated wheel check verifies all 1,425
+public exports, byte equality of all 521 packaged source/data files against
+Git, licenses/notices, the 138-entry catalog and four examples in the two
+changed guides. It takes 10.873 seconds, peaks at 107.41 MiB and reports no
+swaps. Catalog counts remain 63 implemented, 66 partial and 9 pending.
+
+Local `master` was fast-forwarded to this verified code. Fresh read-only GitHub
+checks still show both branches at `45b6e307`; that commit is an ancestor of
+local `master`, with 39 newer local commits at the package checkpoint. The
+previous DNS failure and unavailable connector approval remain the publication
+barriers; no rejected transport was retried. Control-trial aggregate simulation
+and Dose Schedule Finder calendar replay are still in separate Luna checkouts
+and are excluded from this validated checkpoint until integration.
