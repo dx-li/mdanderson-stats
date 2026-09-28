@@ -214,6 +214,36 @@ def run_plbarpo_control_trial(
     outcome_tape = _uniform_tape(outcome_uniforms, maximum, "outcome_uniforms")
     assignment_rng, outcome_rng, seeds = _streams(rng)
 
+    return _run_control_prepared(
+        config,
+        mode,
+        bool(early_monitoring),
+        pfut,
+        peff,
+        pfinal,
+        assignment_tape,
+        outcome_tape,
+        assignment_rng,
+        outcome_rng,
+        seeds,
+    )
+
+
+def _run_control_prepared(
+    config: _Config,
+    mode: str,
+    early_monitoring: bool,
+    pfut: float | None,
+    peff: float | None,
+    pfinal: float | None,
+    assignment_tape: NDArray[np.float64] | None,
+    outcome_tape: NDArray[np.float64] | None,
+    assignment_rng: np.random.Generator,
+    outcome_rng: np.random.Generator,
+    seeds: tuple[int, int],
+) -> PLBarpoControlTrialResult:
+    arms = len(config.truth)
+    maximum = config.max_total_n
     active = np.array(config.initial_active, copy=True)
     entered = active.copy()
     entry_index = np.full(arms, -1, dtype=np.int64)
