@@ -229,6 +229,26 @@ curves. The contour helper receives the model's prediction-time index, instead
 of constructing the 50-point time grid used by the interval competing-risk
 helper. This remains source inspection only, with no new method coverage claim.
 
+The following Python backend files at that same pin are now saved under ignored
+`research/raw/pycox` and verified against their Git blob hashes:
+
+| File | Git blob |
+| --- | --- |
+| pycox/models/cox_time.py | `e663d678377ad74e1991e1f6408c86cff7cd1675` |
+| pycox/models/logistic_hazard.py | `045364dce4a81d1d98a7c8c895304b7957e31cd9` |
+| pycox/models/pc_hazard.py | `362685980282d415872dbf5a48fa41380aaad318` |
+
+Cox-Time incorporates time as a network input and computes separate event-time
+risk-set denominators; ordinary proportional Cox prediction is not equivalent.
+Its cumulative-hazard predictor allocates a time-by-profile matrix, so a bounded
+adapter must preflight the complete output as well as batch neural evaluation.
+PCHazard has one fewer network output than cutpoints and predicts via positive
+softplus hazards. LogisticHazard's default survival path adds `1e-7` to each
+conditional survival factor before taking logs; zero hazards can therefore
+produce factors above one. A future reuse adapter needs an explicitly verified
+probability-preserving prediction path, not blind acceptance of every backend
+default. No backend execution has been performed.
+
 ## Fine–Gray executable reference lead
 
 For the next competing-risk model, the CRAN mirror
