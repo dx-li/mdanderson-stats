@@ -79,6 +79,8 @@ from .bacis_theta import BaCISThetaPosterior, bacis_theta_posterior, sample_baci
 from .bacis_trial import BaCISOneTrialResult, bacis_one_trial
 from .bard import BARDMinimizationResult, BARDSelectionResult, bard_minimization, bard_select_obd
 from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
+from .barpo_simulation import BarpoSimulation, simulate_barpo
+from .barpo_trial import BarpoTrialLook, BarpoTrialResult, run_barpo_trial
 from .bayes_factor_binary import (
     BayesFactorBinaryDesign,
     BayesFactorBinaryOC,
@@ -1455,6 +1457,11 @@ __all__ = [
     "barpo_allocation",
     "barpo_monitor",
     "barpo_posterior",
+    "BarpoTrialLook",
+    "BarpoTrialResult",
+    "BarpoSimulation",
+    "run_barpo_trial",
+    "simulate_barpo",
     "BOP2DCInfeasibleError",
     "BOP2DCOptimization",
     "optimize_bop2_dc",

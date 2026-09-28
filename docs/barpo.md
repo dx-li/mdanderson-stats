@@ -55,7 +55,9 @@ decisions: its probability-array entries are zero placeholders and its flags
 are false. Monitoring returns separate criteria; it does not resolve conflicting
 criteria into a trial-level stopping policy.
 
-Trial scheduling, equal-randomization burn-in, stopping-state management,
-simulation and generated reports remain pending. DBCD target construction and
-simultaneous-floor parity with the original app are unverified. See
+[Trial conduct and simulation](barpo-trials.md) connect these kernels to balanced
+equal-randomization burn-in, fixed-probability adaptive cohorts, explicit arm/trial
+stopping and operating-characteristic summaries. Those workflows use completed
+outcomes. Native DBCD target construction, generated reports and
+simultaneous-floor parity with the original app remain unverified. See
 [source notes](barpo-source.md) and [independent numerical references](barpo-reference.md).

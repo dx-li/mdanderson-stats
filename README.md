@@ -1134,8 +1134,11 @@ calibration remain open.
 
 [BARPO](docs/barpo.md) adds binary posterior monitoring with or without a control
 and four adaptive allocation methods: BARCP, BARN2N, BARMTV and explicit-target
-DBCD. It accounts for pending assignment counts and allocation floors; trial
-simulation and scheduling remain open.
+DBCD. It accounts for pending assignment counts and allocation floors.
+[Trial conduct and simulation](docs/barpo-trials.md) add balanced burn-in,
+cohort allocation, scheduled arm/trial stopping, replayable assignments and
+operating characteristics with cumulative efficacy and false-declaration rates.
+Native DBCD target construction and reports remain open.
 
 [PLBARPO control monitoring](docs/plbarpo-control.md) adds entire-trial and
 concurrent control comparisons. Explicit enrollment windows and observation
