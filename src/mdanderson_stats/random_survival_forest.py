@@ -173,6 +173,8 @@ def _time_grid(event_times: FloatArray, ntime: int | ArrayLike | None) -> FloatA
     requested = finite(ntime, "ntime")
     if requested.ndim != 1 or requested.size == 0 or np.any(requested < 0):
         raise ValueError("ntime must be a nonempty vector of nonnegative times")
+    if requested.size > 100_000:
+        raise ValueError("ntime contains too many requested times (limit 100000)")
     locations = np.searchsorted(event_times, requested, side="right") - 1
     indices = np.maximum(locations, 0)
     return np.unique(event_times[indices])
