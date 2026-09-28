@@ -14,6 +14,8 @@ from scipy.special import logsumexp
 from ._validation import FloatArray, finite
 from .efftox_legacy_contour import EffToxLegacyContour
 from .efftox_model import EffToxFit, _owned
+from .efftox_trinary_contour import EffToxTrinaryContour
+from .efftox_trinary_model import EffToxTrinaryFit
 
 
 def _mask(value: ArrayLike) -> NDArray[np.bool_]:
@@ -144,8 +146,8 @@ def _tail_probability(draws: FloatArray, limit: float, *, upper: bool) -> FloatA
 
 
 def efftox_decision(
-    fit: EffToxFit,
-    contour: EffToxContour | EffToxLegacyContour,
+    fit: EffToxFit | EffToxTrinaryFit,
+    contour: EffToxContour | EffToxLegacyContour | EffToxTrinaryContour,
     *,
     efficacy_limit: float,
     toxicity_limit: float,
@@ -164,10 +166,10 @@ def efftox_decision(
     flag applies to interim and final decisions. Final selection maximizes
     utility over the resulting admissible set without a transition constraint.
     """
-    if not isinstance(fit, EffToxFit) or not isinstance(
-        contour, (EffToxContour, EffToxLegacyContour)
+    if not isinstance(fit, (EffToxFit, EffToxTrinaryFit)) or not isinstance(
+        contour, (EffToxContour, EffToxLegacyContour, EffToxTrinaryContour)
     ):
-        raise ValueError("fit must be EffToxFit and contour EffToxContour or EffToxLegacyContour")
+        raise ValueError("fit or contour is not a supported EffTox type")
     if phase not in ("interim", "final"):
         raise ValueError("phase must be interim or final")
     if skip_policy not in ("both", "escalation"):
@@ -192,9 +194,16 @@ def efftox_decision(
         or not 1 <= int(last_dose) <= dose_count
     ):
         raise ValueError("last_dose must be None or a one-based dose index")
-    if not isinstance(fit.counts, np.ndarray) or fit.counts.shape != (dose_count, 2, 2):
-        raise ValueError("fit must retain dose-by-efficacy-by-toxicity counts")
-    tried = fit.counts.sum(axis=(1, 2)) > 0
+    if not isinstance(fit.counts, np.ndarray):
+        raise ValueError("fit must retain dose-specific outcome counts")
+    if isinstance(fit, EffToxTrinaryFit):
+        if fit.counts.shape != (dose_count, 3):
+            raise ValueError("trinary fit must retain dose-by-outcome counts")
+        tried = fit.counts.sum(axis=1) > 0
+    else:
+        if fit.counts.shape != (dose_count, 2, 2):
+            raise ValueError("binary fit must retain dose-by-efficacy-by-toxicity counts")
+        tried = fit.counts.sum(axis=(1, 2)) > 0
     if phase == "final" and not np.any(tried):
         raise ValueError("final selection requires at least one observed patient")
     if phase == "interim" and np.any(tried):
