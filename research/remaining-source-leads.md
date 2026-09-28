@@ -112,8 +112,11 @@ contract and executed small C/R references are recorded in the
 [forest audit](random-survival-forest-audit.md). Native leaf Kaplan–Meier
 survival and Nelson–Aalen hazard are averaged separately. Numeric Python fitting,
 prediction and fitted-model contours are implemented with bounded storage and
-sequential trees. Categorical splits, missing-value handling, out-of-bag
-diagnostics and importance remain separate work.
+sequential trees. Optional out-of-bag curves and native-convention concordance
+error are now implemented, along with explicit permutation importance and
+independent native-kernel references. Categorical splits, missing-value
+handling, alternative split rules and anti-split importance remain separate
+work; see the [OOB/importance guide](../docs/random-survival-oob.md).
 
 ## Interval-censored Cox source mismatch to resolve
 
@@ -157,8 +160,10 @@ fixed endpoint perturbation must be replaced by exact inclusivity semantics,
 and within-support survival identification bounds must not be mislabeled as
 confidence intervals. The Python PH fit, predictions and contour workflow now
 pass five native reference cases, independent score/constraint checks and unit
-rescaling checks; see the audit and `docs/interval-survival.md`. Stratified
-interval fits and bootstrap uncertainty remain open.
+rescaling checks; see the audit and `docs/interval-survival.md`. Shared-coefficient
+stratified interval fits are now implemented with independent baseline supports
+and joint likelihood fitting; see `docs/interval-survival-stratified.md` and
+`research/interval-stratified-audit.md`. Bootstrap uncertainty remains open.
 
 ## Interval-censored competing-risk regression
 
@@ -184,7 +189,11 @@ Retrieved and blob-verified under ignored `research/raw/intccr`:
 now supply parameter, covariance and prediction references. Corrected
 constraint-Jacobian runs demonstrate sensitivity to the finite starting-boundary
 approximation; neither set is treated as a certified maximum-likelihood target.
-Python implementation is underway in the single Luna worker.
+The Python likelihood, constrained fitting, least-squares covariance,
+cause-specific prediction and contour workflow are now implemented. Native
+parameter/prediction references, direct probability and derivative checks,
+unit-rescaling checks and the four focused tests are recorded in
+`research/interval-competing-risk-audit.md`; bootstrap uncertainty remains open.
 
 The [implementation contract](interval-competing-risk-audit.md) records the
 additional response, spline, initialization and least-squares covariance
