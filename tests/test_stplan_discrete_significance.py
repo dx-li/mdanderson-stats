@@ -43,3 +43,19 @@ def test_unattainable_target_returns_best_allowed_region_and_validates_direction
 
     with pytest.raises(ValueError, match="must differ"):
         stplan_exact_poisson_significance(1, 1, 10, target_power=0.8)
+
+
+def test_poisson_brackets_tiny_target_by_survival_probability() -> None:
+    target = 1e-100
+    result = stplan_exact_poisson_significance(1.0, 2.0, 10.0, target_power=target)
+    assert result.critical_tail == "upper"
+    assert result.target_attained
+    assert result.achieved_power >= target
+    from scipy.stats import poisson
+
+    assert poisson.sf(result.critical_count, 20.0) < target
+
+
+def test_poisson_rejects_positive_rate_exposure_underflow() -> None:
+    with pytest.raises(ArithmeticError, match="underflowed to zero"):
+        stplan_exact_poisson_significance(1e-300, 2e-300, 1e-100, target_power=0.8)

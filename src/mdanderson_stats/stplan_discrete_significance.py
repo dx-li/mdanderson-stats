@@ -20,6 +20,8 @@ from ._validation import scalar
 STPLAN_MAX_SIGNIFICANCE = 0.99999999
 _MAX_BINOMIAL_SIZE = 10_000_000
 _MAX_POISSON_MEAN = float(2**48)
+_MAX_POISSON_COUNT = 2**53 - 1
+_MAX_POISSON_SEARCH_STEPS = 60
 
 
 @dataclass(frozen=True, slots=True)
@@ -156,14 +158,83 @@ def stplan_exact_binomial_significance(
     return _result("binomial", "upper", critical, n, target, alpha, power)
 
 
-def _poisson_bound(mean0: float, meana: float) -> int:
-    scale = max(mean0, meana)
-    # Covers tails much smaller than the source's minimum target power (1e-8)
-    # without materializing a Poisson support array.
-    bound = int(np.ceil(scale + 8 * np.sqrt(scale) + 16.0))
-    if bound >= 2**53:
-        raise ValueError("Poisson means are too large for exact integer cutoffs")
-    return bound
+
+def _grow_count(count: int) -> int:
+    if count >= _MAX_POISSON_COUNT:
+        raise ArithmeticError("Poisson tail did not bracket below the requested probability")
+    return min(2 * count + 1, _MAX_POISSON_COUNT)
+
+
+def _poisson_lower_cutoff_limit(mean: float) -> int:
+    # Largest k with CDF(k) <= cap, or -1 for the empty lower region.
+    if float(poisson.cdf(0, mean)) > STPLAN_MAX_SIGNIFICANCE:
+        return -1
+    lo, hi = 0, 1
+    for _ in range(_MAX_POISSON_SEARCH_STEPS):
+        if float(poisson.cdf(hi, mean)) > STPLAN_MAX_SIGNIFICANCE:
+            break
+        lo, hi = hi, _grow_count(hi)
+    else:
+        raise ArithmeticError("could not bracket the lower-tail significance limit")
+    while hi - lo > 1:
+        mid = (lo + hi) // 2
+        if float(poisson.cdf(mid, mean)) <= STPLAN_MAX_SIGNIFICANCE:
+            lo = mid
+        else:
+            hi = mid
+    return lo
+
+
+def _poisson_upper_cutoff_limit(mean: float) -> int:
+    # Smallest k with SF(k-1) <= cap; cutoff zero is always excluded.
+    lo, hi = 1, 2
+    for _ in range(_MAX_POISSON_SEARCH_STEPS):
+        if float(poisson.sf(hi - 1, mean)) <= STPLAN_MAX_SIGNIFICANCE:
+            break
+        lo, hi = hi, _grow_count(hi)
+    else:
+        raise ArithmeticError("could not bracket the upper-tail significance limit")
+    while hi - lo > 1:
+        mid = (lo + hi) // 2
+        if float(poisson.sf(mid - 1, mean)) <= STPLAN_MAX_SIGNIFICANCE:
+            hi = mid
+        else:
+            lo = mid
+    return hi
+
+
+def _poisson_upper_power_cutoff(feasible: int, mean: float, target: float) -> int | None:
+    # Largest upper-tail cutoff reaching target, or None if none does.
+    if float(poisson.sf(feasible - 1, mean)) < target:
+        return None
+    lo, hi = feasible, feasible + 1
+    for _ in range(_MAX_POISSON_SEARCH_STEPS):
+        if float(poisson.sf(hi - 1, mean)) < target:
+            break
+        lo, hi = hi, _grow_count(hi)
+    else:
+        raise ArithmeticError("could not bracket the requested Poisson power")
+    while hi - lo > 1:
+        mid = (lo + hi) // 2
+        if float(poisson.sf(mid - 1, mean)) >= target:
+            lo = mid
+        else:
+            hi = mid
+    return lo
+
+
+def _poisson_lower_power_cutoff(feasible: int, mean: float, target: float) -> int | None:
+    # Smallest lower-tail cutoff reaching target, or None if none does.
+    if feasible < 0 or float(poisson.cdf(feasible, mean)) < target:
+        return None
+    lo, hi = -1, feasible
+    while hi - lo > 1:
+        mid = (lo + hi) // 2
+        if float(poisson.cdf(mid, mean)) >= target:
+            hi = mid
+        else:
+            lo = mid
+    return hi
 
 
 def stplan_exact_poisson_significance(
@@ -184,53 +255,22 @@ def stplan_exact_poisson_significance(
     meana = ratea * time
     if not np.isfinite(mean0) or not np.isfinite(meana) or max(mean0, meana) >= _MAX_POISSON_MEAN:
         raise ValueError("Poisson means must be finite and below 2**48")
+    if mean0 == 0.0 or meana == 0.0:
+        raise ArithmeticError("positive rate-times-exposure mean underflowed to zero")
     if rate0 == ratea:
         raise ValueError("null_rate and alternative_rate must differ")
-    bound = _poisson_bound(mean0, meana)
 
     if ratea < rate0:
-        lo, hi = -1, bound
-        while hi - lo > 1:
-            mid = (lo + hi) // 2
-            if poisson.cdf(mid, mean0) <= STPLAN_MAX_SIGNIFICANCE:
-                lo = mid
-            else:
-                hi = mid
-        feasible = lo
-        left, right = -1, feasible
-        while right - left > 1:
-            mid = (left + right) // 2
-            if mid >= 0 and poisson.cdf(mid, meana) >= target:
-                right = mid
-            else:
-                left = mid
-        critical = (
-            right
-            if 0 <= right <= feasible and poisson.cdf(right, meana) >= target
-            else feasible
-        )
+        feasible = _poisson_lower_cutoff_limit(mean0)
+        target_cutoff = _poisson_lower_power_cutoff(feasible, meana, target)
+        critical = feasible if target_cutoff is None else target_cutoff
         alpha = 0.0 if critical < 0 else float(poisson.cdf(critical, mean0))
         power = 0.0 if critical < 0 else float(poisson.cdf(critical, meana))
         return _result("poisson", "lower", critical, None, target, alpha, power)
 
-    lo, hi = -1, bound + 1
-    while hi - lo > 1:
-        mid = (lo + hi) // 2
-        alpha_mid = 1.0 if mid <= 0 else float(poisson.sf(mid - 1, mean0))
-        if alpha_mid <= STPLAN_MAX_SIGNIFICANCE:
-            hi = mid
-        else:
-            lo = mid
-    feasible = hi
-    left, right = feasible - 1, bound + 1
-    while right - left > 1:
-        mid = (left + right) // 2
-        power_mid = 0.0 if mid > bound else float(poisson.sf(mid - 1, meana))
-        if power_mid >= target:
-            left = mid
-        else:
-            right = mid
-    critical = left if feasible <= left <= bound else feasible
+    feasible = _poisson_upper_cutoff_limit(mean0)
+    target_cutoff = _poisson_upper_power_cutoff(feasible, meana, target)
+    critical = feasible if target_cutoff is None else target_cutoff
     alpha = float(poisson.sf(critical - 1, mean0))
     power = float(poisson.sf(critical - 1, meana))
     return _result("poisson", "upper", critical, None, target, alpha, power)
