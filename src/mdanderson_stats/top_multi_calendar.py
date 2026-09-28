@@ -64,6 +64,7 @@ def _run_top_multiendpoint_batch(
     delays: FloatArray,
     *,
     record_single: bool = False,
+    scan_budget: list[int] | None = None,
 ) -> _TopMultiBatchResult:
     """Vectorized calendar kernel shared by the aggregate simulator."""
     n_trials, maximum = interarrival.shape
@@ -104,6 +105,11 @@ def _run_top_multiendpoint_batch(
 
         waiting = rows
         while waiting.size:
+            if scan_budget is not None:
+                charge = 2 * n_enrolled * waiting.size
+                if charge > scan_budget[0]:
+                    raise ValueError("TOP calendar scan work exceeds max_work")
+                scan_budget[0] -= charge
             current_clock = clock[waiting]
             in_trial = np.isfinite(enrolled[waiting, :n_enrolled])
             event_time = event_at[waiting, :n_enrolled]
