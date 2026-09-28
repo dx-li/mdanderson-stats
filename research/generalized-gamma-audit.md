@@ -72,7 +72,43 @@ All four fits converged and had positive-definite observed information;
 independent five-point scores were below 1.50e-5. Fitted Q values were
 0.52646833, 0.42692546, -1.3658638 and -0.80313001. The final reference run took
 0.57 seconds, peaked at 94.6 MiB child RSS and reported zero child process swaps.
-Python implementation and comparison against these fixtures are still pending.
+The fit and prediction comparisons against Python remain pending.
+
+## Distribution-kernel checkpoint
+
+The sole Luna worker is implementing in `feat/generalized-gamma-luna`, based
+on native-reference commit `dbe54e4`. Root's source review identified missing
+second-order shape terms in the draft near-zero tail expansion, loss of tiny
+complementary log tails, cancellation in the original Stacy density for large
+k, and a slow/canceling lower-tail recovery. The worker corrected these before
+the independent numerical audit.
+
+The revised kernel uses exact normal paths at Q=0, Q and Q-squared terms in a
+restricted near-zero region, stable Stirling/exponential remainders, direct
+gamma tails, log-complement reconstruction and scaled tail-ratio recovery.
+The original density maps to the positive-Q Prentice density to avoid subtracting
+large log-gamma terms. These are exact model calculations evaluated with
+float64 numerical approximations, not finite-df replacements.
+
+Root independently checked the worker kernel against all 130 native distribution
+rows with warnings as errors (relative tolerance 2e-8, absolute tolerance 1e-8).
+Additional checks passed for sign-reflection identities, the exact first and
+second Q derivatives at Q=0, retention of small complementary log probabilities,
+and Stacy/Prentice equivalence at k=1, 4, 10,000 and 100,000,000.
+The audit peaked at 114.6 MiB RSS and reported zero process swaps. Large tail-log
+values can differ by 192 in absolute terms at magnitudes around 1e16 while
+passing the relative criterion; the audit does not claim uniformly tiny
+absolute errors in those tails.
+
+This is a kernel checkpoint in the worker checkout. Fitting, full covariance,
+prediction, public integration and package checks remain in progress; no new
+catalog entry or complete generalized-gamma workflow is claimed. After this
+audit the completed root process released the numerical lane back to Luna.
+
+The next spline-model source has also been pinned and inspected; its verified
+files and implementation requirements are in
+[remaining source leads](remaining-source-leads.md). No spline implementation
+or numerical execution is claimed.
 
 Automatic approval review previously rejected GitHub publication because it
 requires unavailable approval. This does not prevent local implementation;
