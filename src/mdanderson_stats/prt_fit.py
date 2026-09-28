@@ -8,7 +8,7 @@ from scipy.linalg import cho_factor, cho_solve
 from scipy.special import log_ndtr
 
 from ._cdflib import _freeze
-from ._validation import FloatArray, count, finite
+from ._validation import FloatArray, count, finite, scalar
 from .hierarchical_binomial import ChainSummary, summarize_chains
 from .prt import prt_conditional_toxicity
 
@@ -35,6 +35,7 @@ def fit_prt_model(
     warmup: int = 1000,
     chains: int = 4,
     rng: np.random.Generator,
+    max_likelihood_evaluations: int | None = None,
 ) -> PRTModelFit:
     """Fit equation (2.1) under independent interval-specific Gaussian dose random walks.
 
@@ -58,6 +59,18 @@ def fit_prt_model(
     if not (8 <= settings[0] <= 100000 and settings[1] <= 100000 and 2 <= settings[2] <= 16):
         raise ValueError("require draws 8..100000, warmup 0..100000, chains 2..16")
     draws, warmup, chains = (int(v) for v in settings)
+    if max_likelihood_evaluations is not None:
+        if isinstance(max_likelihood_evaluations, (bool, np.bool_)):
+            raise ValueError("max_likelihood_evaluations must be an integer in [1, 20000000]")
+        try:
+            evaluation_cap = scalar(max_likelihood_evaluations, "max_likelihood_evaluations")
+        except (TypeError, ValueError, OverflowError) as exc:
+            raise ValueError(
+                "max_likelihood_evaluations must be an integer in [1, 20000000]"
+            ) from exc
+        if evaluation_cap != np.floor(evaluation_cap) or not 1 <= evaluation_cap <= 20_000_000:
+            raise ValueError("max_likelihood_evaluations must be an integer in [1, 20000000]")
+        max_likelihood_evaluations = int(evaluation_cap)
     if not isinstance(rng, np.random.Generator):
         raise TypeError("rng must be a numpy Generator")
     mean = np.tile(mu, chains)[:, None]
@@ -71,6 +84,13 @@ def fit_prt_model(
 
     def loglik(values: FloatArray, index: np.ndarray) -> FloatArray:
         nonlocal evaluations
+        if (
+            max_likelihood_evaluations is not None
+            and evaluations + len(index) > max_likelihood_evaluations
+        ):
+            raise ArithmeticError(
+                "PRT likelihood-evaluation budget exceeded during elliptical slice sampling"
+            )
         evaluations += len(index)
         result = (successes[index] * log_ndtr(values) + failures[index] * log_ndtr(-values)).sum(
             axis=1

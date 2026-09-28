@@ -131,8 +131,10 @@ def prt_predictive_risk(
             mass[:, 1 : j + 2] = mass[:, 1 : j + 2] * (1 - p) + mass[:, : j + 1] * p
             mass[:, 0] *= 1 - p[:, 0]
         count_probability += mass.sum(axis=0) / len(total)
-    if abs(count_probability.sum() - 1) > 1e-10:
+    mass_total = float(count_probability.sum())
+    if not np.isfinite(mass_total) or abs(mass_total - 1) > 1e-10:
         raise ArithmeticError("predictive count probabilities failed the mass check")
+    count_probability /= mass_total
     successes = np.arange(m + 1)
     exceedance = betaincc(alpha + successes, beta + m - successes, target)
     if np.any(~np.isfinite(exceedance)):
@@ -141,6 +143,10 @@ def prt_predictive_risk(
     pn = float(count_probability[negligible].sum())
     pe = float(count_probability[excessive].sum())
     pa = float(count_probability[~(negligible | excessive)].sum())
+    category_total = pn + pa + pe
+    if not np.isfinite(category_total) or category_total <= 0:
+        raise ArithmeticError("predictive decision probabilities failed the mass check")
+    pn, pa, pe = pn / category_total, pa / category_total, pe / category_total
     return PRTPredictiveRisk(
         mean,
         variance,
