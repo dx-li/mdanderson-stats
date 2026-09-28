@@ -483,6 +483,12 @@ from .dose_schedule import (
 from .dose_schedule_decision import DoseScheduleDecision, dose_schedule_decision
 from .dose_schedule_fit import DoseScheduleFit, fit_dose_schedule
 from .dose_schedule_prior import DoseSchedulePrior, dose_schedule_moment_prior
+from .dose_schedule_trial import (
+    DoseScheduleTrial,
+    DoseScheduleTrialPatient,
+    DoseScheduleTrialStep,
+    run_dose_schedule_trial,
+)
 from .drdist import drdist
 from .easycelltype import (
     EasyCellTypeCluster,
@@ -1378,6 +1384,10 @@ __all__ = [
     "dose_schedule_moment_prior",
     "fit_dose_schedule",
     "dose_schedule_decision",
+    "DoseScheduleTrial",
+    "DoseScheduleTrialPatient",
+    "DoseScheduleTrialStep",
+    "run_dose_schedule_trial",
     "DACRMPosterior",
     "DACRMPrior",
     "fit_dacrm",

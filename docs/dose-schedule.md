@@ -162,6 +162,9 @@ variable-dose histories, reproduce the published prior parameters and integrate
 a reduced one-dimensional posterior. See the [audit](../research/dose-schedule-audit.md)
 and [source record](dose-schedule-sources.json) for the validated scope.
 
-The original Windows executable has not been run for equivalence. Full calendar
-simulation, operating-characteristic calibration and native file/report
-workflows remain open. The original executable and article are not bundled.
+[Calendar trial replay](dose-schedule-trials.md) now combines event generation,
+as-of-arrival fitting, allocation and complete final follow-up with bounded
+memory/work and recorded random tapes. Aggregate operating characteristics and
+calibration, delayed classification of persistent low-grade toxicity, and
+native files/reports remain open. The original Windows executable has not been
+run for equivalence; the executable and article are not bundled.

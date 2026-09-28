@@ -119,3 +119,35 @@ solutions also agree with analytic values. The generator ran with warnings
 treated as errors. These fixtures specify the inverse-CDF event contract and
 do not establish native scheduler or random-stream parity. Python replay
 integration and comparison remain a subsequent checkpoint.
+
+## Integrated calendar trial checkpoint — September 28, 2026
+
+The Luna calendar implementation (`7788103`, integrated as `a6f0172`) combines
+inverse cumulative-hazard events, observed histories at each arrival,
+posterior allocation, permanent safety termination and complete final
+follow-up. The public guide is [calendar trials](../docs/dose-schedule-trials.md).
+Separate full event and sampler tapes support direct replay after early stops.
+Intermediate posterior draws are discarded; compact decisions and diagnostics
+are retained under shared numerical work limits.
+
+Review corrected event inversion near zero, final relative follow-up at large
+calendar origins, and recommendation behavior after permanent termination.
+A final regression reproduced duration rounding from `0.1` to
+`0.0999755859375` at origin `1e12`; computing duration from relative elapsed
+times fixes this without changing the calendar timestamp contract.
+
+The 33 independent R inversion rows match, including event indicators and
+administration counts. An analytic quantile with event uniform `4e-102` gives
+time `1e-50` and passes with zero absolute tolerance. That check took 0.070
+seconds after import, peaked at 117.81 MiB, and reported no swaps. The public
+three-patient example completed in 1.328 seconds including import, peaked at
+117.47 MiB with no swaps, and used 337 likelihood calls and 1,979 work units.
+After the duration correction, all five focused calendar tests passed in
+1.71 seconds. Targeted Ruff and mypy checks passed; formatting was applied to
+the duration expression. Numerical processes used one BLAS/OpenMP thread.
+
+This validates the implemented event and replay contracts, not general Monte
+Carlo precision or native executable equivalence. Aggregate OCs/calibration,
+delayed low-grade-to-DLT classification, within-patient adaptation policies
+and native files/reports remain outside the current replay. No broad test
+suite, large simulation, dependency installation or CI change was added.

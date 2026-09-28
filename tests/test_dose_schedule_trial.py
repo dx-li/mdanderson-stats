@@ -102,6 +102,7 @@ def test_final_history_uses_exact_relative_horizon_at_large_calendar_origin() ->
         chains=2,
     )
     assert result.patients[0].observed.time == 0.1
+    assert result.duration == 0.1
     assert result.final_time > result.patients[0].arrival_time
 
 

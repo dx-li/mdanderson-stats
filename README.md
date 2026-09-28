@@ -1333,8 +1333,11 @@ choosing dose and administration schedule together. Triangular hazards account
 for each patient's actual administration times and dose changes. Approximate
 prior elicitation, bounded posterior fitting and safety-constrained nearest-target
 selection support study analysis. Independent R integration checks hazards,
-histories and a reduced posterior. Calendar simulation and native workflows
-remain open.
+histories and a reduced posterior. [Calendar trial replay](docs/dose-schedule-trials.md)
+adds event generation, as-of-arrival posterior updates, actual administration
+histories and final follow-up, with separate replayable random streams and
+shared work bounds. Aggregate calibration, delayed toxicity classification and
+native workflows remain open.
 
 [CiBolus](docs/cibolus.md) models immediate and subsequent response to a bolus
 plus continuous infusion, with response-dependent toxicity. Exact and interval

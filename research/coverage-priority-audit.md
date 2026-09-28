@@ -32,14 +32,15 @@ display features, but do not represent an absent ordination method.
 ## Next source-backed workflow candidates
 
 The subsequent triage distinguishes native workflow gaps from new mathematical
-extensions. Dose Schedule Finder calendar replay and Multc Lean pending-outcome
-accrual are now the Luna assignments. PLBARPO control operating characteristics
-are integrated. These additions build on implemented posterior calculations
-and supply missing trial workflows.
+extensions. Dose Schedule Finder calendar replay and PLBARPO control operating
+characteristics are integrated. Multc Lean pending-outcome accrual is under
+review, and U2OET GAO probabilities/likelihood are the next Luna assignment.
+These additions build on implemented posterior calculations and supply
+missing trial workflows or named models.
 
 | Entry | Concrete missing work | Available source / qualification |
 | --- | --- | --- |
-| Dose Schedule Finder #75 | Calendar event generation, accrual-time posterior updates and final analysis after follow-up | `research/dose-schedule-audit.md`, `docs/dose-schedule-sources.json`, [2007 primary paper](https://odin.mdacc.tmc.edu/~pfthall/main/ClinTrials%20dose-sched%202007.pdf) read online; reuse triangular hazard and posterior/decision APIs. Ambiguous schedule/timing conventions must be explicit. |
+| Dose Schedule Finder #75 | Aggregate OCs/calibration and delayed low-grade-to-DLT classification after the integrated calendar replay | [Calendar guide](../docs/dose-schedule-trials.md), `research/dose-schedule-audit.md`, [2007 primary paper](https://odin.mdacc.tmc.edu/~pfthall/main/ClinTrials%20dose-sched%202007.pdf). Within-patient adaptation policies and native files/reports remain open. |
 | PRT #69 | Calendar replay and operating characteristics | Cached primary paper, conduct and simulation guides under `research/raw/PRT`; reuse probit risk, state-space fit and isotonic conduct rules. |
 | Multc Lean #12 | Duration/accrual simulation with pending outcomes | Official cached logistics guide; accrual can continue when pending outcomes cannot alter the next decision. Existing exact complete-outcome OCs do not implement this workflow. |
 | STPLAN #41 | No missing native integer-allocation feature | Native 4.5 `SOURCE/abink.f` reads double-precision proportions/group sizes, and `SOURCE/qbink.f90` returns `grpsz(i)=n*prop(i)`. There is no native rounding/remainder rule. Existing fractional Python sizing matches that contract; integer allocation would be a separate extension. |

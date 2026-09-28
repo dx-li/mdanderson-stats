@@ -2658,7 +2658,9 @@
         "Triangular per-administration toxicity hazards, cumulative hazards and event/censoring likelihoods for actual variable-dose histories",
         "Explicit independent lognormal priors on positive area increments and hazard timing, plus published approximate moment elicitation and optional unstructured areas",
         "Bounded serial elliptical-slice posterior fitting, direct prior draws without observations, dose-by-schedule risk predictions and chain diagnostics",
-        "Strict posterior overdose screening and nearest-target selection with explicit no-skip conventions, initial allocation and final-selection rules; full calendar simulation, operating-characteristic calibration and native file/report equivalence remain pending"
+        "Strict posterior overdose screening and nearest-target selection with explicit no-skip conventions, initial allocation and final-selection rules",
+        "Bounded calendar trial replay with inverse cumulative-hazard events, as-of-arrival posterior updates, actual administration histories, permanent interim termination, complete final follow-up and full replay tapes",
+        "Aggregate operating characteristics/calibration, delayed low-grade-to-DLT classification and native file/report equivalence remain pending"
       ],
       "validation": [
         "tests/test_dose_schedule.py",
@@ -2668,7 +2670,10 @@
         "tests/fixtures/dose-schedule-histories.csv",
         "tests/fixtures/dose-schedule-prior.csv",
         "tests/fixtures/dose-schedule-posterior.csv",
+        "33 independent R event-inversion references at three time scales plus an analytic tiny-probability quantile; tools/reference_dose_schedule_events.R and tests/fixtures/dose-schedule-events.csv",
+        "Five focused calendar checks cover event/administration ties, full-tape replay after early stopping, exact final follow-up at a large calendar origin, permanent stopping and preflight resource checks",
         "docs/dose-schedule.md",
+        "docs/dose-schedule-trials.md",
         "docs/dose-schedule-sources.json",
         "research/dose-schedule-audit.md"
       ]

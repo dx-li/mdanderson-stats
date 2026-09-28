@@ -594,13 +594,18 @@ def run_dose_schedule_trial(
         [stop_time]
         + [patient.arrival_time + patient.observed.time for patient in complete_patients]
     )
+    origin = float(arrivals[0])
+    duration = max(
+        [stop_time - origin]
+        + [(patient.arrival_time - origin) + patient.observed.time for patient in complete_patients]
+    )
     return DoseScheduleTrial(
         complete_patients,
         tuple(steps),
         stop_reason,
         stop_time,
         final_time,
-        final_time - float(arrivals[0]),
+        duration,
         _freeze(uniform_tape),
         tuple(seed_tape),
         final_fit,
