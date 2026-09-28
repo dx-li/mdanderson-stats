@@ -1,0 +1,9 @@
+"case","responses","patients","variance_equivalent_n","posterior_variance","native_ess","admissible_ess"
+"zero_responses",0,25,25,0.00127376053301979,1e-04,25
+"two_responses",2,25,25,0.00352733686067019,25,25
+"ten_responses",10,25,25,0.00862237899274936,25,25
+"two_roots",10,25,12,0.0112244897959184,19.2445647036097,19.2445647036096
+"more_information",10,25,60,0.00231653535503692,60,60
+"all_responses",25,25,25,0.00127376053301979,25,25
+"borrowed_information",6,25,40,0.00322997416020672,40,40
+"large_sample",100,5000,10000,9.99301329169377e-07,10000,10000
