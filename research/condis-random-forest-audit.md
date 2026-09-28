@@ -3,7 +3,7 @@
 This is preparation for the remaining random-forest learner, not implemented
 coverage. The Python package does not yet expose this CondiS-X learner.
 [`condis-random-forest-sources.json`](condis-random-forest-sources.json) pins
-nine files from randomForest 4.7-1.2 at commit
+ten files from randomForest 4.7-1.2 at commit
 `0ad64d71e886bff5b241cbc31a3240bf0e822914`. The downloaded files were verified
 against their Git blob hashes and have recorded SHA-256 digests. This is a
 current source reference, not proof of the dependency version used in 2022.
@@ -61,16 +61,54 @@ Native categorical splits order levels by their response means and store a
 packed level mask. The existing Python CondiS interface accepts numeric
 covariates; a later categorical extension must make its encoding explicit.
 
-## Validation work still required
+## Native reference calculations
 
 The retrieved regression compilation closure is `regrf.c`, `regTree.c`,
-`rfutils.c` and `rf.h`, together with R's runtime. It has not yet been compiled
-or executed for this learner. A source-only reference harness should exercise
-the original wrapper and native kernels, with shared bootstrap/candidate/tie
-draws when checking exact trees. R and NumPy seeds alone do not provide the
-same random stream. Compact cases should distinguish all-tree predictions
-from out-of-bag predictions and exercise rounded `mtry`, small terminal nodes,
-duplicate features and split ties.
+`rfutils.c` and `rf.h`, together with R's runtime. The executed
+`tools/reference_condis_rf.R` compiles these unchanged files locally, sources
+the original R fit/predict wrappers and calls the original caret fit wrapper
+with the CondiS setting. Only namespace dispatch is redirected to the
+source-loaded function. There is no package installation and no complete
+caret training-pipeline execution. The shared folds and manual fold-RMSE
+aggregation follow the previously verified CondiS contract.
+
+`tests/fixtures/condis-rf-native.json` records the ordinary and wide cases
+using 500 trees per fold and full-data fit. Requested `mtry` values are
+`sqrt(3)` and `sqrt(20)`, which become 2 and 4, respectively. Mean fold RMSEs
+are 2.4777680157042048 and 3.4566954745997167. Native seeds are recorded for
+reproducibility; equal R and NumPy seeds alone do not supply the same stream.
+
+To support direct construction checks, an additional five-tree forest per
+case retains its structure, split thresholds, node means, bootstrap counts,
+terminal-node assignments and individual predictions. A small C recorder
+intercepts the kernels' uniform-RNG calls at compilation and returns each
+original R draw unchanged. These traces contain 752 and 434 draws, including
+bootstrap, predictor sampling and tie decisions. The script checks that
+turning recording off with the same seed preserves bootstrap counts and
+predictions exactly. The recorder's R-owned buffer is retained throughout
+the fit and cleared before release.
+
+Compilation and reference generation passed in 1.96 seconds using one build
+job and one R process, with 146.9 MiB peak child resident memory and zero
+swaps. Independent NumPy traversal of all ten retained trees reproduced
+terminal-node assignments and individual/forest predictions exactly.
+Recomputed node means, weighted by bootstrap multiplicities, differed by at
+most 3.56e-15 absolute. Fold RMSE reconstruction differed by at most 8.89e-16.
+The first tree's bootstrap counts also matched the recorded uniform draws.
+
+Terminal samples in these forests range from one to six rows. This confirms
+that `nodesize = 5` is not a minimum child size; a larger node may also remain
+terminal when the sampled predictors do not provide a split. All-tree and
+out-of-bag predictions differ by as much as 3.9113 and 4.0200 on these inputs,
+so the fixture distinguishes those outputs clearly.
+
+## Python work still required
+
+The references validate native calculations and prepare direct numerical
+checks. They do not constitute a Python forest learner, random-stream replay
+or a completed CondiS-X refinement. A future implementation must verify
+construction and RNG consumption against the traces, including duplicate
+features and split ties, before claiming tree parity.
 
 The Python implementation should grow trees sequentially, reuse per-tree
 work arrays and accumulate predictions without an observations-by-trees

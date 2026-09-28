@@ -4,7 +4,7 @@
   "version": "4.7-1.2",
   "retrieved_date": "2026-09-28",
   "directory": "future-learners/randomForest",
-  "scope": "Pinned regression-forest source and wrappers for the remaining CondiS-X learner. No Python implementation or native numerical parity is claimed.",
+  "scope": "Pinned regression-forest source and wrappers used for local native CondiS-X references. Python learner and tree-construction parity remain pending; see condis-random-forest-audit.md.",
   "files": [
     {
       "path": "DESCRIPTION",
@@ -17,6 +17,12 @@
       "bytes": 11625,
       "git_blob": "a887f64b1282066bff1a119ba712043f7a88b5c8",
       "sha256": "18fa0830955d7c60d2a7cd095803c461fcf665d290c511100ef4cc1eb070ac3f"
+    },
+    {
+      "path": "R/randomForest.R",
+      "bytes": 63,
+      "git_blob": "18395d53a841177c9872d16cec1f09a23104051a",
+      "sha256": "d170f4baaf20fdaaae2af01e242c07543dc4f729a8bfb61d6aaf634e229eeec8"
     },
     {
       "path": "R/randomForest.default.R",

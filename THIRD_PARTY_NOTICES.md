@@ -1159,3 +1159,12 @@ optimizer source lead; `research/condis-refinement-audit.md` records the
 executed reference scope. The reference script calls the original network,
 optimizer and derivative routines with explicit starting weights. Original
 nnet and R sources and compiled objects are not distributed.
+
+The regression-forest reference uses randomForest 4.7-1.2 (GPL >=2), by Leo
+Breiman, Adele Cutler, Andy Liaw and Matthew Wiener. The C tree code credits
+Leo Breiman, Adele Cutler and Merck & Co., Inc.
+`research/condis-random-forest-sources.json` pins the original sources, and
+`research/condis-random-forest-audit.md` records the native compilation and
+reference scope. A local recorder preserves the original R uniform draws
+for later tree-construction checks. Original randomForest source and compiled
+objects are not distributed.
