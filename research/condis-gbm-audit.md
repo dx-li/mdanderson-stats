@@ -60,6 +60,9 @@ the regression-forest branch. `src/node_nonterminal.cpp` fills a missing
 branch with too few samples from the weighted mean of its nonmissing
 children. Stored R tree predictions already include the shrinkage factor;
 an independent predictor must avoid applying it twice.
+When no missing rows were observed, an exported missing branch can inherit
+its parent's stored weight and prediction. That weight is a fallback value,
+not an observed missing-row count.
 
 The native wrapper rejects a training sample when
 `n_train * bag_fraction <= 2 * n.minobsinnode + 1`. With the CondiS defaults,
@@ -68,15 +71,52 @@ native fitting. It must not be silently bypassed by changing bag fractions or
 node sizes. Small fixtures suitable for ridge or neural fits may be unsuitable
 for this learner.
 
-## Next implementation and validation steps
+## Executed native references
 
-The complete C/C++ compilation sources have been retrieved, but this
-checkpoint has not compiled or executed the boosting kernel. The next native
-reference should use sufficiently large explicit shared folds, preserve
-caret's shared 150-tree prefix path, and retain small tree sequences with
-their subsampling draws for direct construction checks. Record the original
-seed and distinguish that from a shared draw stream; equal R and NumPy seeds
-are not interchangeable.
+`tools/reference_condis_gbm.R` compiles the complete unchanged native source
+directory with one build job, sources the original R fit/predict helpers and
+calls the original caret fit wrapper with its namespace dispatch redirected
+to the source-loaded `gbm.fit`. There is no package installation. It manually
+applies the verified grid and shared-fold aggregation, not the entire caret
+training pipeline.
+
+`tests/fixtures/condis-gbm-inputs.json` retains two deterministic synthetic
+cases: 80 rows with three covariates and 72 rows with 60 covariates. Status is
+an additional predictor. Their imputed targets come from the previously
+verified Python base CondiS; the native comparisons exercise refinement
+conditional on those fixed targets. Both use four explicit folds large
+enough to satisfy the native default sample-size rule.
+
+`tests/fixtures/condis-gbm-native.json` saves all nine fold-score surfaces,
+150-tree full-data paths for each depth, and a separate selected-model refit.
+Smaller candidate tree counts use prefixes of the same path. The ordinary
+case selects 100 trees and depth 2, with mean fold RMSE 4.3196391411639343.
+The wide case selects 50 trees and depth 3, with mean fold RMSE
+4.2965521343784872. These values describe the recorded native seeds; they do
+not claim equal-seed R/NumPy RNG parity.
+
+An additional three-tree, depth-three fit for each case retains every tree
+component and its uniform subsampling draws. The script verifies that the
+actual native fit leaves exactly the same RNG state as drawing one uniform
+per row per tree. It also executes the native sample-size guard: 42 rows
+are rejected with defaults, while 43 rows produce finite predictions.
+
+Serial compilation and reference generation passed in 12.11 seconds, with
+105.6 MiB peak child resident memory and zero swaps. Independent NumPy
+reconstruction of the subsamples, tree traversal and cumulative predictions
+matched all saved three-tree prefixes exactly. Recomputed nonmissing node
+predictions differed by at most 2.23e-16 absolute, trace training errors by
+3.56e-15, and full-path training errors by 5.33e-15. Fold RMSE reconstruction
+matched exactly. The checks also verified the inherited fallback metadata of
+11 empty missing branches rather than incorrectly interpreting those weights
+as sample counts.
+
+## Python work still required
+
+These results establish the native reference data and algorithm contract;
+they do not implement or validate Python tree construction. Equal R and
+NumPy seeds are not interchangeable. The retained draw streams support direct
+construction comparisons independently of the random-number generator.
 
 The Python implementation should reuse sorted predictor orders, grow trees
 sequentially and accumulate predictions at the requested tree counts. It must

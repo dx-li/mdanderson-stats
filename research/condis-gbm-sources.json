@@ -4,7 +4,7 @@
   "version": "2.3.1",
   "retrieved_date": "2026-09-28",
   "directory": "future-learners/gbm",
-  "scope": "Pinned original gradient-boosting sources for the remaining CondiS-X learner. Source retrieval alone establishes neither numerical parity nor Python implementation.",
+  "scope": "Pinned original gradient-boosting sources used for local native CondiS-X references. Python learner and tree-construction parity remain pending; see condis-gbm-audit.md.",
   "files": [
     {
       "path": "DESCRIPTION",

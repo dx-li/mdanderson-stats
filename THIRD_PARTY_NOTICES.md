@@ -1168,3 +1168,10 @@ Leo Breiman, Adele Cutler and Merck & Co., Inc.
 reference scope. A local recorder preserves the original R uniform draws
 for later tree-construction checks. Original randomForest source and compiled
 objects are not distributed.
+
+The gradient-boosting reference uses Greg Ridgeway and contributors' gbm
+2.3.1 (GPL version 2 or later). The complete native source directory is
+compiled locally for Gaussian fitting and prediction, together with its
+original R helpers. `research/condis-gbm-sources.json` records source pins,
+and `research/condis-gbm-audit.md` describes the reference scope and checks.
+Original gbm source and compiled objects are not distributed.
