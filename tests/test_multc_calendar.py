@@ -72,11 +72,36 @@ def test_pending_outcomes_pause_only_when_they_can_change_the_next_decision():
     assert result.observed_toxicities_at_decision == 0
     assert result.toxicities == 0
     assert result.duration == 14.0
-    assert all(not row.flags.writeable for row in (
-        result.outcomes,
-        result.arrival_times,
-        result.response_available_times,
-        result.toxicity_available_times,
-        result.response_known_at_decision,
-        result.toxicity_known_at_decision,
-    ))
+    assert all(
+        not row.flags.writeable
+        for row in (
+            result.outcomes,
+            result.arrival_times,
+            result.response_available_times,
+            result.toxicity_available_times,
+            result.response_known_at_decision,
+            result.toxicity_known_at_decision,
+        )
+    )
+
+
+def test_positive_time_increments_that_round_away_are_rejected():
+    design = _design(max_subjects=4, toxicity_cutoff=1.0)
+    outcomes = np.zeros((4, 2), dtype=np.int8)
+    with np.testing.assert_raises_regex(ArithmeticError, "inter-arrival"):
+        run_multc_calendar_trial(
+            design,
+            outcomes,
+            interarrival_intervals=[1e20, 1.0, 1.0],
+            response_delays=np.zeros(4),
+            toxicity_delays=np.zeros(4),
+        )
+
+    with np.testing.assert_raises_regex(ArithmeticError, "endpoint delay"):
+        run_multc_calendar_trial(
+            design,
+            outcomes,
+            interarrival_intervals=[1e20, 1e20, 1e20],
+            response_delays=[0.0, 1.0, 0.0, 0.0],
+            toxicity_delays=np.zeros(4),
+        )

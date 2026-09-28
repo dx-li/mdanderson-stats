@@ -21,7 +21,12 @@ def _readonly(value: ArrayLike, dtype: type = np.float64) -> NDArray:
 
 @dataclass(frozen=True)
 class MultcCalendarLook:
-    """One evaluation of a scheduled look, including any pending-data waits."""
+    """One scheduled-look evaluation, including any pending-data waits.
+
+    A ``stop_response`` or ``stop_toxicity`` action names a cause guaranteed
+    under all pending completions; the other endpoint may also cross its stop
+    boundary for some completions. ``stop_both`` means both causes are certain.
+    """
 
     sample_size: int
     time: float
@@ -90,8 +95,7 @@ def _decision_with_pending(
         or toxicity_observed + toxicity_pending >= toxicity_bound
     )
     can_continue = (
-        response_observed + response_pending > response_bound
-        and toxicity_observed < toxicity_bound
+        response_observed + response_pending > response_bound and toxicity_observed < toxicity_bound
     )
     if not can_stop:
         return "continue"
@@ -184,9 +188,19 @@ def run_multc_calendar_trial(
                 _readonly(toxicity_available[:0]),
                 _readonly(outcomes_known_r[:0], bool),
                 _readonly(outcomes_known_t[:0], bool),
-                (), 0, 0, 0, 0, 0,
-                f"pretrial_{pretrial}", decision_time, decision_time, last_followup,
-                max(decision_time, last_followup), paused, 1,
+                (),
+                0,
+                0,
+                0,
+                0,
+                0,
+                f"pretrial_{pretrial}",
+                decision_time,
+                decision_time,
+                last_followup,
+                max(decision_time, last_followup),
+                paused,
+                1,
             )
 
     decision: str | None = None
@@ -194,17 +208,28 @@ def run_multc_calendar_trial(
     work = 1
     for patient in range(maximum):
         if patient > 0:
-            now += float(intervals[patient - 1])
-            if not np.isfinite(now):
+            increment = float(intervals[patient - 1])
+            next_arrival = now + increment
+            if not np.isfinite(next_arrival):
                 raise ArithmeticError("calendar arrival time overflowed")
+            if increment > 0 and next_arrival <= now:
+                raise ArithmeticError(
+                    "positive inter-arrival interval does not advance calendar time"
+                )
+            now = next_arrival
         arrivals[patient] = now
-        response_available[patient] = now + float(response_wait[patient])
-        toxicity_available[patient] = now + float(toxicity_wait[patient])
-        if (
-            not np.isfinite(response_available[patient])
-            or not np.isfinite(toxicity_available[patient])
+        response_increment = float(response_wait[patient])
+        toxicity_increment = float(toxicity_wait[patient])
+        response_available[patient] = now + response_increment
+        toxicity_available[patient] = now + toxicity_increment
+        if not np.isfinite(response_available[patient]) or not np.isfinite(
+            toxicity_available[patient]
         ):
             raise ArithmeticError("endpoint availability time overflowed")
+        if (response_increment > 0 and response_available[patient] <= now) or (
+            toxicity_increment > 0 and toxicity_available[patient] <= now
+        ):
+            raise ArithmeticError("positive endpoint delay does not advance calendar time")
         n += 1
 
         while True:
@@ -228,17 +253,22 @@ def run_multc_calendar_trial(
             if n == maximum:
                 action = "cap_complete"
             elif is_look:
-                action = _decision_with_pending(
-                    design, n, r_known, t_known, r_pending, t_pending
-                )
+                action = _decision_with_pending(design, n, r_known, t_known, r_pending, t_pending)
                 j = int(np.searchsorted(design.looks, n))
                 r_bound = int(design._bounds.response_stop_max[j])
                 t_bound = int(design._bounds.toxicity_stop_min[j])
             if is_look or n == maximum:
                 history.append(
                     MultcCalendarLook(
-                        n, now, r_known, t_known, r_pending, t_pending,
-                        r_bound, t_bound, action,
+                        n,
+                        now,
+                        r_known,
+                        t_known,
+                        r_pending,
+                        t_pending,
+                        r_bound,
+                        t_bound,
+                        action,
                     )
                 )
             if action == "wait":
