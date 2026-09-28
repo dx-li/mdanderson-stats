@@ -1277,8 +1277,8 @@ incidence predictions, fixed and time-interaction effects, separate censoring
 distributions, and sandwich coefficient covariance. Its fixed-effect contour
 workflow includes optional two-/three-dimensional incidence plots. Exact
 censoring left limits and stable prediction arithmetic accompany bounded
-array allocations. Interval-censored competing risks and the remaining
-SurvivalContour model families are still open.
+array allocations. The interval-censored model below uses a separate joint
+likelihood for both causes.
 
 [Parametric AFT survival models](docs/parametric-survival.md) add exact Weibull,
 log-normal and log-logistic fits, joint coefficient/scale covariance and
@@ -1298,8 +1298,14 @@ and explicit work limits bound computation.
 fit mixed exact, interval, left- and right-censored observations with a
 nonparametric Turnbull baseline. Predictions and continuous-covariate contours
 return explicit survival identification bounds, preserving uncertainty within
-observation intervals and beyond the last finite observation. Neural models,
-interval-censored competing risks and native simulation-based intervals remain open.
+observation intervals and beyond the last finite observation.
+[Interval-censored competing-risk models](docs/interval-competing-risk.md) fit
+two causes jointly with monotone spline baselines and generalized odds-rate
+links. They return regression covariance, both incidence curves and
+continuous-covariate contours, with optional two-/three-dimensional plots.
+An explicit starting-boundary approximation and constrained-convergence
+diagnostics accompany probability checks on requested profiles. Neural models
+and native simulation-based intervals remain open.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson

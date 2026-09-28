@@ -1,10 +1,11 @@
-# Interval-censored competing-risk implementation contract
+# Interval-censored competing-risk source and numerical audit
 
 SurvivalContour's `FGIntContour.R` calls `intccr::predict.ciregic` for the
 first of two competing causes. This is a distinct interval likelihood, not a
-wrapper around a right-censored Fine–Gray fit. Implementation remains pending;
-the notes below record inspected primary source and executed R references,
-not a validated Python model.
+wrapper around a right-censored Fine–Gray fit. The Python package now supplies
+joint fitting, regression covariance, predictions for both causes and numeric
+covariate contours. The notes below distinguish native compatibility references
+from validation of the Python constrained optimizer.
 
 ## Pinned source
 
@@ -63,9 +64,8 @@ The native inequality Jacobian multiplies both cause blocks by the sum of the
 two link derivatives. Differentiating the stated constraint gives one cause's
 own derivative in its respective block. The equality Jacobian also places zeros
 in the baseline coefficient columns despite differentiating a baseline-boundary
-constraint. These are source-level discrepancies; finite-difference checks and
-an executed optimizer reference are still needed before assessing their effect
-on fitted results.
+constraint. The executed finite-difference checks and optimizer comparisons below
+quantify these discrepancies and their effect on fitted results.
 
 `Surv2` checks `v >= u` before applying the documented rule that a censored
 observation may have an arbitrary or missing upper endpoint. The Python input
@@ -118,12 +118,66 @@ fully finite-difference optimizer comparison was explicitly terminated at its
 45-second experiment limit; it produced no corrected fit and is not evidence
 of a successful fit.
 
-The planned Python interface exposes `boundary_cif_tolerance`, defaulting to
+The Python interface exposes `boundary_cif_tolerance`, defaulting to
 `1e-7`. Inverting the link makes each lower-boundary constraint linear in the
 spline and regression coefficients; this avoids optimizing near-zero raw
 equality residuals and makes the finite approximation explicit. Monotone CIFs
 need joint probability constraints only at the maximum supported time. Source
 corner constraints do not by themselves certify every interior covariate
 profile for arbitrary link parameters; prediction must check the requested
-profile's joint probability and report violations. No Python fit or numerical
-equivalence claim has yet been made.
+profile's joint probability at the fitted maximum time and report violations,
+including when only earlier predictions are requested.
+
+## Python core and independent integration checks
+
+At all three preserved native parameter vectors, Python likelihood differences
+are below `1e-13`, maximum CIF differences below `1.5e-15`, and residualized-score
+covariance relative Frobenius differences below `6e-15`. These comparisons
+validate the likelihood, prediction and covariance calculations; the native
+optimizer outputs are not treated as certified optima of the finite-tolerance
+Python model. The source's covariance covers regression slopes only. Python
+uses a rank-revealing least-squares projection on the baseline score design,
+avoiding normal equations, and returns covariance in original covariate units.
+
+Four focused regression tests cover these native comparisons, an independent
+central-difference likelihood gradient, constrained fitting/prediction, finite
+link tails, and an interior covariate profile whose early-time probabilities
+are valid but whose terminal joint incidence exceeds one. The latter verifies
+that corner constraints alone are insufficient for arbitrary link parameters.
+All four tests pass with warnings treated as errors. No broad CI suite was run.
+
+Both public guide blocks execute successfully. The guide's 120-row
+proportional-subdistribution-hazards fit, with `tolerance=1e-9`, converges in
+39 iterations with log likelihood `-276.2140193937704`. An independent direct
+B-spline likelihood in original covariate units differs by `5.69e-14` or less.
+Fourth-order finite differences of that likelihood and the constraints, followed
+by a nonnegative-multiplier stationarity check, give a maximum residual per
+observation of `2.075e-7`; the minimum constraint margin is `-2.223e-13`.
+The ordinary unprojected score is about `7.10`, illustrating why it cannot be
+used as a convergence criterion for this constrained fit.
+
+Eight small contour cases cover both causes, mean/explicit adjustment profiles
+and default/custom time grids. They agree with direct model predictions and
+preserve increasing incidence over time. Two-/three-dimensional plots were
+rendered and visually inspected. The serial guide/likelihood/contour audit took
+0.19 seconds after imports, peaked at 150.7 MiB process RSS and reported zero
+process swaps.
+
+Separate bounded checks rescaled one covariate by `1e-100` and `1e100`, and time
+by `1e-100`, `1e100` and `1e-309`. Maximum probability differences were below
+`8.16e-14`; original-unit slope/covariance transformations also agreed. Missing
+upper endpoints on censored rows leave fitting unchanged, and a baseline-only
+fit predicts successfully with empty regression coefficient/covariance arrays.
+That check peaked at 114.2 MiB RSS with zero swaps. All numerical jobs ran
+sequentially with one numerical thread.
+
+Ruff formatting/lint and targeted mypy checks pass. The built wheel exposes all
+eight new public names and executes both guide blocks in an isolated interpreter,
+peaking at 143.8 MiB RSS with zero swaps. All 477 Python modules were compared
+byte-for-byte with both wheel and source archive; the catalog, notices and guide
+were also checked. Ignored original sources and scratch files are excluded.
+
+Public scope is two causes, caller-encoded numeric covariates and link parameters
+in `[0,20]`, with bounded rows, columns and allocation. Exact events, bootstrap
+uncertainty, visit-data conversion and categorical encoding are not silently
+inferred by this API. Broader SurvivalContour coverage remains partial.

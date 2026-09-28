@@ -1012,6 +1012,20 @@ identification bounds. Its contour API does not claim equivalence to the
 original application's unresolved `mets` interval2 route. See
 `research/interval-survival-audit.md` for source hashes and validation scope.
 
+`interval_competing_risk.py` and its contour interface independently implement
+the two-cause generalized odds-rate interval likelihood and residualized-score
+regression covariance described by Giorgos Bakoyannis and Jun Park's `intccr`
+3.0.4 (GPL >=2), pinned at `252644c0d347a663ea5d7bef88fa2ab04f114b1e`.
+Source-loaded R routines supply likelihood, coefficient-covariance and prediction
+references at three native parameter vectors. The reference harness uses
+source-loaded `alabama` 2025.1.0 (GPL >=2) and `numDeriv` 2016.8-1.1 (GPL-2);
+none is a Python runtime dependency. Original sources and app assets are not
+redistributed. The contour contract follows `FGIntContour.R` at the author
+SurvivalContour revision credited above. Python uses its own constrained fit,
+corrected constraint derivatives and an explicit finite lower-boundary incidence
+tolerance. Native optimizer results are compatibility diagnostics, not certified
+maximum-likelihood targets. See `research/interval-competing-risk-audit.md`.
+
 ## Bayesian success calibration
 
 `success_calibration.py` is an independent implementation of the mathematical

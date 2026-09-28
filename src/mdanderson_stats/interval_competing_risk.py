@@ -2,7 +2,8 @@
 
 This implements the two-cause interval likelihood from ``intccr::bssmle``.
 The fitted CIFs are constrained to be nondecreasing and to sum to at most one
-on the observed covariate range. The lower-boundary CIF is a finite-tolerance
+at observed profiles and covariate-range corners. Prediction checks each new
+profile at the terminal time. The lower-boundary CIF is a finite-tolerance
 approximation because the source model reaches zero only as its linear
 predictor tends to minus infinity.
 """
@@ -588,7 +589,8 @@ def fit_interval_competing_risk(
     kkt_error = _kkt_error(theta, -score, constraints) / lo.size
     if not np.isfinite(theta).all() or not np.isfinite(loglik) or not np.isfinite(score_error):
         raise ArithmeticError("interval competing-risk optimization did not reach a finite fit")
-    if np.min(margins) < -max(1e-7, tol * 10):
+    # A loose objective tolerance must not relax probability validity.
+    if np.min(margins) < -1e-8:
         raise ArithmeticError("interval competing-risk optimizer returned an infeasible fit")
     if not result.success and kkt_error > max(2e-5, tol * 100):
         raise ArithmeticError(
@@ -611,8 +613,9 @@ def fit_interval_competing_risk(
     for cause in range(2):
         eta = lower_basis[0] * phi[cause, 0] + cs @ beta_scaled[cause]
         lower_cif[cause] = np.max(_gor_cif(eta, float(a[cause]))[0])
-    eta1 = upper_basis @ phi[0] + cs @ beta_scaled[0]
-    eta2 = upper_basis @ phi[1] + cs @ beta_scaled[1]
+    checked_profiles = np.vstack((cs, xs))
+    eta1 = upper_basis @ phi[0] + checked_profiles @ beta_scaled[0]
+    eta2 = upper_basis @ phi[1] + checked_profiles @ beta_scaled[1]
     f1, _, _ = _gor_cif(eta1, float(a[0]))
     f2, _, _ = _gor_cif(eta2, float(a[1]))
     max_joint = float(np.max(f1 + f2))
@@ -647,6 +650,8 @@ def predict_interval_competing_risk(
     profiles: ArrayLike | None = None,
 ) -> IntervalCompetingRiskPrediction:
     """Predict both CIFs within the fitted endpoint range."""
+    if np.iscomplexobj(times) or (profiles is not None and np.iscomplexobj(profiles)):
+        raise ValueError("prediction times and profiles must be real")
     t = finite(times, "times")
     if t.ndim != 1 or not 1 <= t.size <= 100_000:
         raise ValueError("times must be a nonempty vector with at most 100000 values")

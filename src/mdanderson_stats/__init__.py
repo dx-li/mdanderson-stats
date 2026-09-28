@@ -527,6 +527,18 @@ from .imom_prior import IMOMBinaryPrior
 from .inequality import InequalityProbability, inequality_probability
 from .interaction_index import InteractionIndex, interaction_index, interaction_index_ray
 from .interaction_monte_carlo import InteractionMonteCarlo, interaction_index_monte_carlo
+from .interval_competing_risk import (
+    IntervalCompetingRiskFit,
+    IntervalCompetingRiskPrediction,
+    fit_interval_competing_risk,
+    predict_interval_competing_risk,
+)
+from .interval_competing_risk_contour import (
+    IntervalCompetingRiskContour,
+    interval_competing_risk_contour,
+    plot_interval_competing_risk_contour_2d,
+    plot_interval_competing_risk_contour_3d,
+)
 from .interval_survival import (
     IntervalSurvivalFit,
     IntervalSurvivalPrediction,
@@ -1611,6 +1623,14 @@ __all__ = [
     "fit_random_survival_forest",
     "predict_random_survival_forest",
     "random_survival_forest_contour",
+    "IntervalCompetingRiskFit",
+    "IntervalCompetingRiskPrediction",
+    "IntervalCompetingRiskContour",
+    "fit_interval_competing_risk",
+    "predict_interval_competing_risk",
+    "interval_competing_risk_contour",
+    "plot_interval_competing_risk_contour_2d",
+    "plot_interval_competing_risk_contour_3d",
     "IntervalSurvivalFit",
     "IntervalSurvivalPrediction",
     "IntervalSurvivalContour",
