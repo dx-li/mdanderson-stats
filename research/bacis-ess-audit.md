@@ -24,7 +24,7 @@ The [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC6546564/) describes matchin
 posterior mean and variance to a beta distribution. The software instead uses
 the observed response count and observed rate, not the posterior mean, in this
 calculation. These are not generally interchangeable ESS definitions. The Python
-implementation should explicitly identify the software's variance-matching rule.
+implementation explicitly identifies the software's variance-matching rule.
 
 ## Verified native defect and ambiguous roots
 
@@ -35,7 +35,7 @@ solve the variance equation. With zero responses and variance
 equivalent count is 25. All candidate response-rate differences are zero, so
 the source's root ordering and clamping determine its incorrect result.
 Complex roots are not given a valid ordering by the source's negative comparison.
-Python should report absent admissible solutions rather than fabricate roots.
+Python reports absent admissible solutions rather than fabricating roots.
 
 Multiple admissible roots can be real statistical ambiguities. For `y=10` and
 `v=11/980`, the polynomial factors as `(N-12)*(N^2+19*N-736)`.
@@ -57,4 +57,14 @@ zero. The native ambiguity arises from including clamped inadmissible roots,
 not from two admissible zero-response solutions.
 
 Reference generation completed successfully for all eight cases using base R.
-Comparison with the new Python helper remains pending implementation.
+The integrated public `bacis_equivalent_sample_size` helper agrees with all
+eight admissible references: maximum absolute equivalent-count error
+`2.93e-10` (the 10,000-patient case), and maximum relative variance residual
+`4.71e-14`. Both roots of the ambiguous example are retained; the zero-response
+defect returns the admissible count 25. Results and candidate arrays are immutable.
+
+Three focused tests passed, together with Ruff and module type checking. A
+bounded public `bacis_fit` to ESS workflow also passed. The root reference and
+workflow audit took .003 seconds after imports, peaked at 114.4 MiB resident
+memory and reported zero process swaps. Full trial simulation and native random
+stream reproduction were not run or claimed.

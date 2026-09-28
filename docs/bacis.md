@@ -103,6 +103,49 @@ fits in low/high order, with `None` for empty or singleton clusters. Arrays are
 read-only. MCMC diagnostics do not guarantee convergence; the Python sampler's
 draws and iteration conventions differ from the native JAGS runs.
 
+## Equivalent sample size
+
+`bacis_equivalent_sample_size` summarizes the information in retained response
+probabilities using the native software's variance-matching rule:
+
+```python
+from mdanderson_stats import bacis_equivalent_sample_size
+
+ess = bacis_equivalent_sample_size(fit.probability_samples, responses, patients)
+print(ess.equivalent_sample_size)
+print(ess.candidate_roots)
+print(ess.relative_variance_residual)
+```
+
+For each subgroup, it pools the chain and draw axes and calculates the unbiased
+sample variance `v`. It then solves
+
+```text
+Var[Beta(y + 1, N - y + 1)] = v,  with N >= y,
+```
+
+where `y` is the observed number of responses. When two admissible roots exist,
+the selected root minimizes `abs(y/N - y/n_observed)`; exact ties select the
+smaller root. All candidate roots and their rate discrepancies are retained so
+the choice can be inspected. `N=0` is allowed for zero responses, with the
+corresponding rate defined by its zero limit.
+
+This is a total equivalent patient count. It is different from an MCMC
+effective sample size or a number of additional prior patients. The paper's
+description of matching both beta moments is less specific than the software;
+this helper implements the software's fixed-response-count variance match.
+
+The original code can select a fabricated `.0001` root for a zero-response
+subgroup. The Python helper retains only admissible solutions: for the variance
+of `Beta(1, 26)`, it correctly returns 25. A zero sample variance or a variance
+with no admissible solution raises an error. Computation uses monotone branches
+of the variance function and a logarithmic tail coordinate to avoid unstable
+unscaled cubic roots. See the [source audit](../research/bacis-ess-audit.md).
+The supplied array must have `(chains, draws, subgroups)` axes, at least two
+samples in total, and at most 500,000 cells. Eight base-R reference cases cover
+ordinary and large equivalent counts, two admissible roots, all responses and
+the documented zero-response defect.
+
 ## Scope and numerical checks
 
 Inputs support 1–100 subgroups, each with 1–10,000 patients. Classification
@@ -120,7 +163,7 @@ probabilities are compared independently. Exact Beta references check singleton
 summaries; a concentrated-hyperprior limit checks that both borrowing clusters
 use their own correct centers against independent one-dimensional integration.
 
-DIC, native effective-sample-size calculations, latent-variable density plots,
+DIC, latent-variable density plots,
 native file/report formats and operating-characteristic simulation remain open.
 The mathematical references validate the declared model, not native random
 streams, convergence for arbitrary priors or complete application parity.
