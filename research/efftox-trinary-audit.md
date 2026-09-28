@@ -99,3 +99,10 @@ nonfixed-prior posterior update. The public four-trial, two-cohort example
 completed 12 fits in 0.045 seconds and conserved all 24 patient outcomes.
 Peak process memory was 114.5 MiB, with no swaps. Large operating-characteristic
 simulations and native RNG comparisons were not run.
+
+The wheel and source distribution built successfully from `8968528`, including
+the completed shared simulator and public trinary contour. All 487 Python
+modules matched the committed source in both archives, and the wheel's catalog
+and third-party notice matched as well. Neither archive contained raw research
+sources or local compiled binaries. This packaging check used 41.7 MiB peak
+process memory; it does not establish validity of every catalog method.

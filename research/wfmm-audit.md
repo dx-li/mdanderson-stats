@@ -68,3 +68,21 @@ components are deliberately fixed in this reduced reference; the future WFMM
 sampler must still estimate them. This check targets shrinkage and Gaussian
 integration, not the native variance-prior defaults or MCMC random-number
 parity. Base-R generation completed in 0.09 seconds.
+
+## Native example availability
+
+Catalog download 431 (version 169) advertises `wfmm_v3_1_Example.zip` with a
+partial pancreatic MALDI-TOF example. The visible description names
+`Pancreatic_MYO25_wfmm_example.fig`, `wfmmdemo.bat`, and
+`PlotPancreatic_MYO25.m`, but exposes no archive size, full member listing or
+fitted variance-prior parameters. The download endpoint was inaccessible to
+the read-only source review. No example archive or native program was run;
+the native inverse-gamma defaults remain unverified.
+
+The guide's posterior workflow reconstructs each coefficient draw before
+computing curve summaries. Linear effect contrasts and time-region summaries
+must therefore propagate posterior draws, rather than inverse-transforming
+coefficient quantiles. Simultaneous bands require a maximum standardized
+deviation over the time grid for each draw, a distinct calculation from
+pointwise quantiles. This is follow-on coverage after the model and transform
+layers; native output-file parity remains separate.
