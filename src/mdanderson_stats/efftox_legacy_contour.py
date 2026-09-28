@@ -22,8 +22,10 @@ _MAX_CONTOUR_CELLS = 200_000
 
 
 def _frozen(value: ArrayLike) -> FloatArray:
-    array = np.ascontiguousarray(value, dtype=np.float64)
-    return np.frombuffer(array.tobytes(), dtype=np.float64).reshape(array.shape)
+    array = np.asarray(value, dtype=np.float64)
+    shape = array.shape
+    contiguous = np.ascontiguousarray(array)
+    return np.frombuffer(contiguous.tobytes(), dtype=np.float64).reshape(shape)
 
 
 @dataclass(frozen=True)
@@ -157,7 +159,10 @@ class EffToxLegacyContour:
         if np.any(solve):
             eff = flat_e[solve]
             tox = flat_t[solve]
-            upper = np.minimum((1.0 - e0) / (1.0 - eff), t1 / tox)
+            efficacy_limit = (1.0 - e0) / (1.0 - eff)
+            toxicity_limit = t1 / tox
+            efficacy_active = efficacy_limit <= toxicity_limit
+            upper = np.minimum(efficacy_limit, toxicity_limit)
             if not np.isfinite(upper).all() or np.any(upper <= 0.0):
                 raise ArithmeticError("radial intersection is outside floating-point range")
             a, _, c = self._scaled_coefficients
@@ -168,16 +173,35 @@ class EffToxLegacyContour:
                 target = (1.0 - ratio) * (a - c * ratio)
                 return radial * tox - target
 
-            upper_value = equation(upper)
-            if np.any(upper_value < 0.0):
+            # Evaluate the geometric endpoint from its active boundary. This
+            # avoids recomputing p_e=e0 after rounding it slightly upward,
+            # which can make a tiny positive-toxicity bracket appear negative.
+            endpoint_value = np.empty_like(upper)
+            endpoint_value[efficacy_active] = upper[efficacy_active] * tox[efficacy_active]
+            toxicity_indices = ~efficacy_active
+            if np.any(toxicity_indices):
+                p_e = 1.0 - upper[toxicity_indices] * (1.0 - eff[toxicity_indices])
+                ratio = np.clip(e0 / p_e, e0, 1.0)
+                # f(e0)-f(r) factors exactly for f(r)=(1-r)(a-c*r).
+                endpoint_value[toxicity_indices] = (ratio - e0) * (a + c * (1.0 - ratio - e0))
+            if np.any(endpoint_value < 0.0):
                 raise ArithmeticError("could not bracket the legacy contour intersection")
-            lower = np.zeros_like(upper)
+            lower_fraction = np.zeros_like(upper)
+            upper_fraction = np.ones_like(upper)
             for _ in range(80):
-                midpoint = lower + 0.5 * (upper - lower)
-                below = equation(midpoint) < 0.0
-                lower = np.where(below, midpoint, lower)
-                upper = np.where(below, upper, midpoint)
-            radial = lower + 0.5 * (upper - lower)
+                midpoint = lower_fraction + 0.5 * (upper_fraction - lower_fraction)
+                radial_midpoint = upper * midpoint
+                midpoint_value = equation(radial_midpoint)
+                # The endpoints are defined geometrically: at fraction zero
+                # the point is ideal, and at one an efficacy/toxicity limit
+                # is active. Use their exact endpoint equations when floating
+                # point rounding stalls the normalized interval.
+                midpoint_value = np.where(midpoint == 0.0, -t1, midpoint_value)
+                midpoint_value = np.where(midpoint == 1.0, endpoint_value, midpoint_value)
+                below = midpoint_value < 0.0
+                lower_fraction = np.where(below, midpoint, lower_fraction)
+                upper_fraction = np.where(below, upper_fraction, midpoint)
+            radial = upper * (lower_fraction + 0.5 * (upper_fraction - lower_fraction))
             if not np.isfinite(radial).all():
                 raise ArithmeticError("finite nonideal desirability exceeds floating-point range")
             flat_result[solve] = radial - 1.0

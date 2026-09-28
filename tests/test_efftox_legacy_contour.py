@@ -94,5 +94,16 @@ def test_legacy_contour_rejects_inadmissible_points_and_broadcasts_are_bounded()
     with pytest.raises(ValueError, match="points must satisfy"):
         EffToxLegacyContour.from_points([0.15, 0.25, 0.99], [0.0, 0.3, 0.6])
     contour = _pentostatin_contour()
+    assert contour.utility(0.5, 0.2).shape == ()
     with pytest.raises(ValueError, match="broadcast exceeds"):
         contour.utility(np.zeros((500, 1)), np.zeros((1, 500)))
+
+
+def test_small_positive_toxicity_approaches_zero_toxicity_score():
+    contour = _pentostatin_contour()
+    zero_toxicity_score = contour.utility(0.5, 0.0)
+
+    scores = [contour.utility(0.5, toxicity) for toxicity in (1e-12, 1e-20, 1e-100)]
+    assert all(np.isfinite(score) for score in scores)
+    assert abs(scores[-1] - zero_toxicity_score) < 2e-14
+    assert abs(scores[-1] - zero_toxicity_score) < abs(scores[0] - zero_toxicity_score)
