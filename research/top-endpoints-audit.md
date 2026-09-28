@@ -44,9 +44,9 @@ The guide and integration check used 116 MiB peak process memory with zero
 swaps. Focused Ruff formatting/lint and mypy checks passed. No broad test suite
 or CI change was needed for this checkpoint.
 
-Multiple-endpoint calendar simulation, calibration and app parity require their
-own implementation evidence; these references do not establish them. The binary
-calendar API retains its existing uniform analysis-weight convention.
+The checks above establish the monitoring kernel. Calendar replay, simulation
+and binary timing have separate evidence below. Multiple-endpoint calibration
+and native app parity remain unfinished.
 
 ## Exact references for the calendar extension
 
@@ -63,3 +63,43 @@ terminate while another endpoint remains unresolved under the source's final
 combination rule, so its individual stopping-reason frequencies need not match
 the fully observed joint classification. The final-only success probability
 is suitable for comparison; intermediate calendar paths need separate checks.
+
+## Calendar replay and simulation
+
+`run_top_multiendpoint_trial` and `simulate_top_multiendpoint` now share a
+calendar engine vectorized across trials. Each scheduled look uses only outcomes
+and follow-up observed at that time. Suspension advances to the next event or
+window completion; accrual restarts its next planned gap upon resumption. The
+simulator draws joint binary outcomes from the supplied four-cell probabilities,
+then independently draws endpoint event times conditional on that joint outcome.
+This timing-independence assumption and the calendar conventions are explicit
+Python choices, not evidence of native scheduling or random-seed parity.
+
+The implementation's three focused tests passed. Hand-calculated paths cover
+co-primary futility, co-primary final success with the other endpoint still
+pending, and efficacy/toxicity termination with an unresolved endpoint. Checks
+also cover 1e100 time rescaling and preservation of caller-owned timing arrays.
+A 20,000-trial final-only simulation agreed with the independent multinomial
+success reference within five Monte Carlo standard errors.
+
+Root integration executed both public guide examples, checked read-only truth
+timing inputs, repeated-seed results and the partition of terminal actions. The
+public examples and checks took 0.020 seconds after package import, with 116.9 MiB
+peak process memory and zero process swaps. The aggregate simulator retains
+compact trial summaries, not complete histories, and checks its two-million
+endpoint-patient-cell limit before allocation.
+
+## Nonuniform binary analysis timing
+
+Binary TOP now accepts the same published three-part conditional timing mixture.
+It applies those CDF weights in follow-up evaluation, calendar replay and every
+calibration candidate. The generated timing truth remains independently
+configured. Equal mixture masses preserve the original uniform-weight path.
+Posterior and boundary arithmetic now subtract integer failures before adding
+tiny positive prior shapes, avoiding cancellation of the prior.
+
+The worker's 13 focused binary TOP, calendar, calibration and timing checks passed.
+The public nonuniform-timing example independently reproduced ESS 9.75 from
+seven observed patients and pending weights .75, 1, 1. Root Ruff lint/format and
+mypy checks passed for the changed TOP code. A broad suite was not rerun for
+these additions; the checks target the changed numerical and calendar behavior.
