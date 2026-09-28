@@ -498,6 +498,12 @@ from .easycelltype_gsea import (
     EasyCellTypeGSEASet,
     easycelltype_gsea_es,
 )
+from .easycelltype_gsea_multilevel import (
+    EasyCellTypeGSEAInference,
+    EasyCellTypeGSEAInferenceCluster,
+    EasyCellTypeGSEAInferenceSet,
+    easycelltype_gsea,
+)
 from .efftox_calibration import (
     EffToxCalibration,
     EffToxPriorMoments,
@@ -1264,6 +1270,10 @@ __all__ = [
     "EasyCellTypeTest",
     "easycelltype_fisher",
     "easycelltype_gsea_es",
+    "EasyCellTypeGSEAInference",
+    "EasyCellTypeGSEAInferenceCluster",
+    "EasyCellTypeGSEAInferenceSet",
+    "easycelltype_gsea",
     "easycelltype_labels",
     "STPLANHistoricalAllocationPlan",
     "stplan_historical_allocation_plan",

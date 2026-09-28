@@ -208,3 +208,68 @@ Additional pinned source dependencies retrieved for backend implementation:
 | `util.cpp` | `35cd0525038f82c336eb33d3d117c7660947cd8ba62761975d75ff43d68e7fd5` |
 | `esCalculation.h` | `03a0baa7d4c085a3a186c790fa9e6e870dfefa8ef7237394f1d1db038d73a284` |
 | `fgseaMultilevelSupplement.h` | `1db51e0c11d7574bec802b51a332f5dc75e0fc31b06950ed78a4a793d7e51d07` |
+
+## Integrated multilevel inference
+
+Luna checkpoint `b830dd9`, integrated as `db32a4a`, supplies
+`easycelltype_gsea` with immutable results. It combines the observed statistic,
+single-set R or multiple-set C++ pilot conventions, signed NES, source error
+comparison, adaptive splitting, diagnostic uncertainty, BH adjustment and
+DOSE's dual cutoff. Q-values and final hard/soft label selection are outside
+this checkpoint. Results retain all tested sets in reference order with an
+explicit `reported` flag; this differs from returning only DOSE's sorted,
+filtered frame.
+
+Review repaired substantive source differences before integration: the beta
+log-mean denominator, strict perturbation threshold, signed correction counts,
+randomly ordered shared prefixes, last-level boundary lookup, the single-set
+pilot branch and completion of each full perturbation sweep. The source's
+sorted rank map controls tree geometry; its insertion loop still processes
+the original randomized order. R execution also confirms BH omits unavailable
+values from its default denominator: `p.adjust(c(.01,NA,.04), "BH")` is
+`(.02,NA,.04)`. Neither a full-subset sort before prefixing nor counting missing
+terms in that denominator is source-correct.
+
+Serial work limits apply to pilot and splitting work. Current and duplicated
+splitting samples together cannot exceed two million retained positions;
+this is checked before allocation. All-zero prepared rankings at positive
+exponent and unrepresentable mixed-zero pilot floors fail explicitly.
+Observed-only scoring remains available for the all-zero case.
+
+Root independently matched all 66 native cumulative scores, 66 R single-set
+scores and 22 native signed/positive splitter pairs after integration. A
+bounded default-parameter inference example exercised both simple and
+multilevel paths. The combined check took 0.214 seconds after import, peaked
+at 112.92 MiB and reported no swaps. Five focused worker tests, targeted mypy,
+lint and formatting pass; no new dependencies or CI workflow were added.
+
+After the final full-sweep correction, twelve Python seeds were compared with
+the twelve native splitter seeds. The table gives raw tail estimates before
+pilot directional normalization; SE is the sample standard error across the
+twelve runs. Each difference is below three combined SEs, but the most extreme
+positive tail is close to that bound and these small samples do not establish
+high-precision tail accuracy or random-stream equality.
+
+| Mode | ES | Python mean (SE) | Native mean (SE) | Difference / combined SE |
+| --- | ---: | ---: | ---: | ---: |
+| Two-sided | -1.0 | 0.0050194 (0.0005390) | 0.0042317 (0.0006222) | 0.96 |
+| Two-sided | -0.8 | 0.0942458 (0.0035498) | 0.0901561 (0.0055955) | 0.62 |
+| Two-sided | 0.8 | 0.0965716 (0.0047761) | 0.0906075 (0.0060238) | 0.78 |
+| Two-sided | 1.0 | 0.0056515 (0.0005717) | 0.0035996 (0.0004332) | 2.86 |
+| One-sided | -1.0 | 0.0051188 (0.0005497) | 0.0043155 (0.0006345) | 0.96 |
+| One-sided | -0.8 | 0.0954592 (0.0035498) | 0.0913188 (0.0056309) | 0.62 |
+| One-sided | 0.8 | 0.0978871 (0.0048286) | 0.0920251 (0.0061322) | 0.75 |
+| One-sided | 1.0 | 0.0057634 (0.0005830) | 0.0036709 (0.0004418) | 2.86 |
+
+## Final-label source follow-up
+
+The author's `R/process_results.R` ranks GSEA labels by raw p, after DOSE's
+filtering and ordering by adjusted p then descending absolute NES. Hard labels
+use `slice_min(n=1)` and soft labels use `slice_min(n=5)`, then hard rows precede
+soft rows in a within-cluster `distinct(ID)` operation. The pinned
+[dplyr 1.1.4 source](https://github.com/tidyverse/dplyr/blob/v1.1.4/R/slice.R)
+sets `with_ties=TRUE` and uses minimum ranks. All ties at each cutoff survive,
+so there can be multiple hard labels and more than five total labels. Ties
+retain incoming order. Dplyr is not installed locally: this contract is
+verified by source inspection, without claiming execution of the original
+label-processing function.

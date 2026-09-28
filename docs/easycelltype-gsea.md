@@ -1,13 +1,14 @@
-# EasyCellType observed ranked-enrichment scores
+# EasyCellType ranked enrichment
 
 `easycelltype_gsea_es` calculates the weighted running-sum enrichment statistic
 for marker genes ranked within each cluster and caller-supplied cell-type gene
 sets. It complements the [Fisher annotation branch](easycelltype.md).
 
-This API returns observed scores and contributing genes. It does not yet
-calculate normalized enrichment scores, p-values, adjusted p-values or final
-cell-type labels. The historical default adaptive multilevel probability
-calculation remains a separate part of the GSEA port.
+Use `easycelltype_gsea_es` for observed scores and contributing genes, or
+`easycelltype_gsea` for normalized scores, tail probabilities, BH adjustment
+and the source cutoff rule. The inference API includes the historical
+fgsea adaptive multilevel calculation. Final cell-type label selection remains
+a separate workflow.
 
 ```python
 from mdanderson_stats import easycelltype_gsea_es
@@ -65,7 +66,76 @@ exponent. The Python result keeps the valid fgsea score while returning `None`
 for the undefined core fields and an explanatory `core_enrichment_reason`.
 This is explicit partial output; it is not a fabricated native core result.
 
-Inputs and work are bounded, and results are immutable. Native base-R fixtures
-exercise eight small scenarios and thirty set scores, including separate DOSE
-core results. No marker databases, gene-ID conversion, full GSEA probability
-backend or native plots are bundled by this extension. Entry 159 remains partial.
+## Normalization and tail probabilities
+
+```python
+from mdanderson_stats import easycelltype_gsea
+
+genes = [f"g{i}" for i in range(12)]
+inference = easycelltype_gsea(
+    query_genes=genes,
+    clusters=["cluster1"] * 12,
+    scores=[6.3, 5.9, 4.2, 2.8, 1.1, 0.7, -0.25, -0.8, -1.6, -2.4, -4.3, -7.7],
+    reference_genes=["g0", "g1", "g2", "g5", "g6", "g7", "g9", "g10"],
+    reference_cell_types=["A"] * 3 + ["B"] * 3 + ["C"] * 2,
+    rng=2026,
+)
+for row in inference.clusters[0].sets:
+    print(row.observed.cell_type, row.normalized_enrichment_score, row.p_value)
+assert all(row.p_value is not None for row in inference.clusters[0].sets)
+```
+
+The default pilot uses 1,000 randomly selected gene sets to estimate the
+directional null mean for normalized enrichment (NES). The source's estimated
+error comparison selects either the simple tail estimate or adaptive splitting,
+which uses 101 samples at each level. NES always comes from the pilot. The
+result records each set's `inference_method`, directional pilot count and
+extreme count. The default `p_cut=0.5` follows EasyCellType: `reported` requires
+both raw and BH-adjusted probabilities to meet that cutoff. All tested sets
+remain available in reference order for inspection.
+
+The pilot preserves two source paths. Exactly one retained set uses R's
+statistic convention, including its treatment of zero weights. Multiple sets
+share an ordered random subset across their sizes and use the C++ cumulative
+kernel's small positive weight floor. Inclusive tail comparisons and the
+source's distinct zero-score sign rules are retained.
+
+Fewer than ten pilot draws in the relevant direction leaves NES, probabilities
+and uncertainty unavailable (`None`), with status
+`insufficient_directional_pilot`. A zero directional null mean is likewise
+unavailable. Increasing `n_perm_simple` can improve pilot precision. BH uses
+the available probabilities, matching R's missing-value behavior.
+
+`log2_error` is the source uncertainty estimate on the log2 probability scale.
+A conditional probability estimate below one half leaves this uncertainty
+unavailable and records `conditional_probability_below_half`. In the
+mixed/multilevel path, probabilities below `eps` (default `1e-10`) are clamped
+to that value, with status `below_eps` and no uncertainty estimate. Multiple
+diagnostics can be separated by semicolons. The source all-simple early return
+does not apply this later epsilon clamp. `qvalue` is not returned because the
+EasyCellType label workflow does not consume it.
+
+Randomness is reproducible with `rng` under the Python implementation; matching
+R/C++ random streams is not claimed. A ranking whose prepared weights are all
+zero is rejected for full inference at positive exponent. Observed scores
+remain available through `easycelltype_gsea_es`; exponent zero uses unit
+weights. Extreme weight ranges that cannot preserve the source pilot floor
+are rejected explicitly.
+
+Inputs and work are bounded, results are immutable, and simulation is serial.
+The interface permits up to 200,000 ranked rows, 20,000 tested sets per cluster,
+100,000 pilot permutations and 501 splitting samples, subject to a shared work
+budget and retained-gene limits. Work-budget exhaustion raises an error rather
+than returning incomplete tail estimates. Larger inputs can reach that budget
+before these individual limits. Current and duplicated splitting samples
+together are capped at two million stored positions before allocation.
+No marker databases, gene-ID conversion or
+native plots are bundled by this extension. Entry 159 remains partial.
+
+Native base-R fixtures cover thirty observed set/core scores. Separate native
+fixtures cover 66 cumulative C++ pilot scores, 66 R single-set pilot scores
+and 22 pairs of splitter statistics. A bounded twelve-seed comparison also
+checks adaptive tail estimates against the pinned native splitter; statistical
+agreement is assessed with Monte Carlo uncertainty, not exact RNG equality.
+The [source audit](../research/easycelltype-gsea-audit.md) records the harness
+scope and remaining workflow differences.
