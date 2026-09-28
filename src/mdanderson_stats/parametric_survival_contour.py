@@ -16,6 +16,17 @@ from .parametric_survival import (
     fit_parametric_survival,
     predict_parametric_survival,
 )
+from .survival_uncertainty import (
+    _MAX_PARAMETER_DRAWS,
+    ParametricSurvivalMCPrediction,
+    predict_parametric_survival_mc,
+)
+from .survival_uncertainty import (
+    _MAX_SURFACE_CELLS as _MC_MAX_CELLS,
+)
+from .survival_uncertainty import (
+    _MAX_WORK_CELLS as _MC_MAX_WORK,
+)
 
 if TYPE_CHECKING:
     from .generalized_gamma import GeneralizedGammaFit, GeneralizedGammaPrediction
@@ -27,7 +38,12 @@ _MAX_CELLS = 2_000_000
 
 @dataclass(frozen=True)
 class ParametricSurvivalContour:
-    """Parametric fit with primary and continuous-covariate quantile surfaces."""
+    """Parametric fit with primary and continuous-covariate quantile surfaces.
+
+    ``lower`` and ``upper`` follow ``interval_method``. Both standard-error
+    surfaces remain delta-method quantities; ``monte_carlo`` retains the
+    joint draws and pointwise Monte Carlo diagnostics when requested.
+    """
 
     fit: ParametricSurvivalFit | GeneralizedGammaFit | SurvivalSplineFit
     continuous_column: int
@@ -48,6 +64,8 @@ class ParametricSurvivalContour:
     quantile_upper: FloatArray
     quantile_cumulative_hazard: FloatArray
     quantile_se_log_cumulative_hazard: FloatArray
+    interval_method: Literal["delta", "monte_carlo"] = "delta"
+    monte_carlo: ParametricSurvivalMCPrediction | None = None
 
 
 def parametric_survival_contour(
@@ -65,14 +83,25 @@ def parametric_survival_contour(
     quantile_probabilities: ArrayLike = _DEFAULT_QUANTILES,
     spline_k: int | None = None,
     spline_internal_knots: ArrayLike | None = None,
+    interval_method: Literal["delta", "monte_carlo"] = "delta",
+    draws: int = 1000,
+    rng: np.random.Generator | int | None = None,
+    parameter_draws: ArrayLike | None = None,
 ) -> ParametricSurvivalContour:
     """Fit a survival model and predict its continuous-covariate contour.
 
     Other covariates default to their training means, or to ``profile`` when
     supplied. Default prediction times are zero followed by distinct failures.
     Main surfaces have shape ``(n_grid, n_times)``; quantile summaries use
-    the requested probabilities of the continuous covariate. Confidence
-    limits use a deterministic delta method on log cumulative hazard.
+    the requested probabilities of the continuous covariate. By default,
+    confidence limits use a deterministic delta method on log
+    cumulative hazard. Set ``interval_method="monte_carlo"`` for joint-normal
+    parameter draws and pointwise type-7 limits. In that mode ``draws`` and
+    ``rng`` control generated draws; they are unused in delta mode. Optional
+    ``parameter_draws`` reuses draws in the fitted model's scaled parameter
+    coordinates and is accepted only for Monte Carlo intervals. The attached
+    ``monte_carlo`` result exposes the draws and valid-count diagnostics.
+    ``se_log_cumulative_hazard`` remains delta-derived in either mode.
     ``distribution="gengamma"`` selects Prentice generalized gamma;
     ``"gengamma.orig"`` selects the original Stacy parameterization.
     ``"spline_hazard"``, ``"spline_odds"`` and ``"spline_normal"`` select
@@ -100,6 +129,10 @@ def parametric_survival_contour(
     conf = scalar(confidence, "confidence")
     if not 0 < conf < 1:
         raise ValueError("confidence must be in (0, 1)")
+    if interval_method not in ("delta", "monte_carlo"):
+        raise ValueError("interval_method must be 'delta' or 'monte_carlo'")
+    if parameter_draws is not None and interval_method != "monte_carlo":
+        raise ValueError("parameter_draws require interval_method='monte_carlo'")
 
     if any(np.iscomplexobj(value) for value in (time, event, x)):
         raise ValueError("time, event and x must be real")
@@ -193,6 +226,107 @@ def parametric_survival_contour(
     if cells > _MAX_CELLS:
         raise ValueError("combined parametric contour output exceeds the 2,000,000-cell limit")
 
+    mc_draw_count = 0
+    parameter_count = 0
+    spline_basis_count = 0
+    combined_profile_count = int(grid_values.size + probabilities.size)
+    if interval_method == "monte_carlo":
+        if distribution in ("weibull", "lognormal", "loglogistic"):
+            parameter_count = int(design.shape[1] + 2)
+        elif distribution in ("gengamma", "gengamma.orig"):
+            parameter_count = int(design.shape[1] + 3)
+        elif is_spline:
+            from .survival_spline import _MAX_INTERNAL_KNOTS
+
+            if spline_internal_knots is None:
+                knot_count = 4 if spline_k is None else spline_k
+                if (
+                    isinstance(knot_count, (bool, np.bool_))
+                    or not isinstance(knot_count, (int, np.integer))
+                    or not 0 <= knot_count <= _MAX_INTERNAL_KNOTS
+                ):
+                    raise ValueError(f"spline_k must be an integer in [0, {_MAX_INTERNAL_KNOTS}]")
+            else:
+                if np.iscomplexobj(spline_internal_knots):
+                    raise ValueError("spline_internal_knots must be real")
+                inner = finite(spline_internal_knots, "spline_internal_knots")
+                if inner.ndim != 1 or inner.size > _MAX_INTERNAL_KNOTS:
+                    raise ValueError(
+                        f"spline_internal_knots must contain at most {_MAX_INTERNAL_KNOTS} values"
+                    )
+                if spline_k is not None:
+                    if (
+                        isinstance(spline_k, (bool, np.bool_))
+                        or not isinstance(spline_k, (int, np.integer))
+                        or not 0 <= spline_k <= _MAX_INTERNAL_KNOTS
+                    ):
+                        raise ValueError(
+                            f"spline_k must be an integer in [0, {_MAX_INTERNAL_KNOTS}]"
+                        )
+                    if spline_k != inner.size:
+                        raise ValueError(
+                            "spline_k must equal the number of explicit spline_internal_knots"
+                        )
+                if inner.size > 1 and np.any(np.diff(inner) <= 0):
+                    raise ValueError("spline_internal_knots must be strictly increasing")
+                knot_count = int(inner.size)
+            spline_basis_count = int(knot_count + 2)
+            parameter_count = spline_basis_count + int(design.shape[1])
+        else:
+            raise ValueError(f"unsupported survival distribution: {distribution}")
+
+        if parameter_draws is None:
+            if isinstance(draws, (bool, np.bool_)) or not isinstance(draws, (int, np.integer)):
+                raise ValueError("draws must be an integer")
+            if not 2 <= draws <= _MAX_PARAMETER_DRAWS:
+                raise ValueError(f"draws must be in [2, {_MAX_PARAMETER_DRAWS}]")
+            mc_draw_count = int(draws)
+            if rng is not None and not isinstance(rng, (int, np.integer, np.random.Generator)):
+                raise ValueError("rng must be an integer, Generator or None")
+            if isinstance(rng, (int, np.integer)) and rng < 0:
+                raise ValueError("rng integer seed must be nonnegative")
+        else:
+            if np.iscomplexobj(parameter_draws):
+                raise ValueError("parameter_draws must be real")
+            raw_parameter_draws = np.asarray(parameter_draws)
+            if (
+                raw_parameter_draws.ndim != 2
+                or raw_parameter_draws.shape[1] != parameter_count
+                or not 2 <= raw_parameter_draws.shape[0] <= _MAX_PARAMETER_DRAWS
+                or raw_parameter_draws.dtype.kind not in "iuf"
+                or raw_parameter_draws.size > _MC_MAX_CELLS
+            ):
+                raise ValueError("parameter_draws must have shape (B, parameter_count)")
+            finite(raw_parameter_draws, "parameter_draws")
+            mc_draw_count = int(raw_parameter_draws.shape[0])
+
+        combined_surface = combined_profile_count * int(prediction_times.size)
+        parameter_cells = mc_draw_count * parameter_count
+        predictor_cells = (
+            8 * combined_surface
+            + combined_profile_count * parameter_count
+            + parameter_cells
+            + (mc_draw_count if is_spline else 0)
+        )
+        mc_extra_cells = (
+            5 * combined_surface
+            + parameter_cells
+            + (mc_draw_count if is_spline else 0)
+            + combined_profile_count * int(design.shape[1])
+            + int(prediction_times.size)
+            + int(design.shape[1])
+        )
+        spline_work = (
+            mc_draw_count * spline_basis_count * spline_basis_count
+            + mc_draw_count * combined_surface * spline_basis_count
+        )
+        if (
+            predictor_cells > _MC_MAX_CELLS
+            or cells + mc_extra_cells > _MC_MAX_CELLS
+            or (mc_draw_count * combined_surface + spline_work > _MC_MAX_WORK)
+        ):
+            raise ValueError("combined Monte Carlo contour exceeds the bounded work or cell limit")
+
     main_profiles = np.repeat(base_profile[None, :], grid_values.size, axis=0)
     main_profiles[:, continuous_column] = grid_values
 
@@ -250,6 +384,44 @@ def parametric_survival_contour(
             ordinary_fit, prediction_times, quantile_profiles, confidence=conf
         )
         fit = ordinary_fit
+    monte_carlo: ParametricSurvivalMCPrediction | None = None
+    if interval_method == "monte_carlo":
+        main_cumulative_hazard = main.cumulative_hazard
+        main_delta_se = main.se_log_cumulative_hazard
+        quantile_cumulative_hazard = quantile.cumulative_hazard
+        quantile_delta_se = quantile.se_log_cumulative_hazard
+        del main, quantile
+        combined_profiles = np.concatenate((main_profiles, quantile_profiles), axis=0)
+        monte_carlo = predict_parametric_survival_mc(
+            fit,
+            prediction_times,
+            combined_profiles,
+            confidence=conf,
+            draws=int(draws) if parameter_draws is None else draws,
+            rng=rng,
+            parameter_draws=parameter_draws,
+        )
+        del combined_profiles
+        main_slice = slice(0, int(grid_values.size))
+        quantile_slice = slice(int(grid_values.size), combined_profile_count)
+        main_survival = monte_carlo.survival[main_slice]
+        main_lower = monte_carlo.lower[main_slice]
+        main_upper = monte_carlo.upper[main_slice]
+        quantile_survival = monte_carlo.survival[quantile_slice]
+        quantile_lower = monte_carlo.lower[quantile_slice]
+        quantile_upper = monte_carlo.upper[quantile_slice]
+    else:
+        main_survival = main.survival
+        main_lower = main.lower
+        main_upper = main.upper
+        main_cumulative_hazard = main.cumulative_hazard
+        main_delta_se = main.se_log_cumulative_hazard
+        quantile_survival = quantile.survival
+        quantile_lower = quantile.lower
+        quantile_upper = quantile.upper
+        quantile_cumulative_hazard = quantile.cumulative_hazard
+        quantile_delta_se = quantile.se_log_cumulative_hazard
+
     return ParametricSurvivalContour(
         fit,
         int(continuous_column),
@@ -257,17 +429,19 @@ def parametric_survival_contour(
         _freeze(base_profile),
         _freeze(grid_values),
         _freeze(prediction_times),
-        main.survival,
-        main.lower,
-        main.upper,
-        main.cumulative_hazard,
-        main.se_log_cumulative_hazard,
+        main_survival,
+        main_lower,
+        main_upper,
+        main_cumulative_hazard,
+        main_delta_se,
         _freeze(probabilities),
         _freeze(covariate_quantiles),
         _freeze(quantile_profiles),
-        quantile.survival,
-        quantile.lower,
-        quantile.upper,
-        quantile.cumulative_hazard,
-        quantile.se_log_cumulative_hazard,
+        quantile_survival,
+        quantile_lower,
+        quantile_upper,
+        quantile_cumulative_hazard,
+        quantile_delta_se,
+        interval_method,
+        monte_carlo,
     )
