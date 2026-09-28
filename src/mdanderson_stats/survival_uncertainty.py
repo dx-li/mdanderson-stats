@@ -7,6 +7,7 @@ from math import prod
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
+from scipy.special import log_ndtr
 
 from ._cdflib import _freeze
 from ._validation import FloatArray, finite, scalar
@@ -18,6 +19,11 @@ from .generalized_gamma import (
 from .parametric_survival import (
     ParametricSurvivalFit,
     _terms,
+)
+from .survival_spline import (
+    SurvivalSplineFit,
+    _basis,
+    _minimum_slope,
 )
 
 _MAX_SURFACE_CELLS = 2_000_000
@@ -32,9 +38,11 @@ class ParametricSurvivalMCPrediction:
 
     ``parameter_draws`` are in the fit's retained scaled coordinates. The
     per-cell ``valid_draws`` count excludes only NaN survival values, matching
-    flexsurv's pointwise quantile ``na.rm=TRUE`` behavior. ``simulated_sd``
-    follows the source's ordinary sample-SD convention and becomes NaN if any
-    draw for that cell is NaN.
+    flexsurv's pointwise quantile ``na.rm=TRUE`` behavior. For spline fits,
+    evaluable nonmonotone coefficient draws are retained and their minimum
+    slopes are reported separately. ``simulated_sd`` follows the source's
+    ordinary sample-SD convention and becomes NaN if any draw for that cell
+    is NaN.
     """
 
     profile: FloatArray
@@ -47,6 +55,7 @@ class ParametricSurvivalMCPrediction:
     valid_draws: NDArray[np.int64]
     parameter_draws: FloatArray
     confidence: float
+    spline_minimum_slope: FloatArray | None = None
 
     @property
     def draws(self) -> int:
@@ -63,7 +72,7 @@ def _integer(value: int, name: str, low: int, high: int) -> int:
 
 
 def _fit_parameters(
-    fit: ParametricSurvivalFit | GeneralizedGammaFit,
+    fit: ParametricSurvivalFit | GeneralizedGammaFit | SurvivalSplineFit,
 ) -> tuple[FloatArray, FloatArray, FloatArray, FloatArray, str | None]:
     mean = np.asarray(fit.scaled_parameters, dtype=np.float64)
     covariance = np.asarray(fit.scaled_covariance, dtype=np.float64)
@@ -81,6 +90,7 @@ def _fit_parameters(
         or np.any(cov_scale <= 0)
     ):
         raise ValueError("fit covariate normalization is inconsistent")
+    parameterization: str | None
     if isinstance(fit, ParametricSurvivalFit):
         if fit.distribution not in ("weibull", "lognormal", "loglogistic"):
             raise ValueError("fit has an unsupported parametric distribution")
@@ -91,8 +101,22 @@ def _fit_parameters(
             raise ValueError("fit has an unsupported generalized-gamma parameterization")
         expected = cov_mean.size + 3
         parameterization = fit.parameterization
+    elif isinstance(fit, SurvivalSplineFit):
+        if fit.scale not in ("hazard", "odds", "normal"):
+            raise ValueError("fit has an unsupported spline scale")
+        knots = np.asarray(fit.scaled_knots, dtype=np.float64)
+        if (
+            knots.ndim != 1
+            or knots.size != fit.k + 2
+            or knots.size < 2
+            or not np.isfinite(knots).all()
+            or np.any(np.diff(knots) <= 0)
+        ):
+            raise ValueError("fit spline knots are inconsistent")
+        expected = knots.size + cov_mean.size
+        parameterization = fit.scale
     else:
-        raise ValueError("fit must be a parametric or generalized-gamma survival fit")
+        raise ValueError("fit must be a parametric, generalized-gamma or spline survival fit")
     if mean.size != expected:
         raise ValueError("fit parameters do not match the covariate count")
     if (
@@ -106,12 +130,15 @@ def _fit_parameters(
 
 def _draw_is_representable(
     parameters: FloatArray,
-    fit: ParametricSurvivalFit | GeneralizedGammaFit,
+    fit: ParametricSurvivalFit | GeneralizedGammaFit | SurvivalSplineFit,
     parameterization: str | None,
 ) -> bool:
-    """Whether this parameter draw defines the fitted distribution."""
+    """Whether the coefficient draw can be evaluated in the fitted model."""
     if not np.isfinite(parameters).all():
         return False
+    if isinstance(fit, SurvivalSplineFit):
+        # flexsurv samples these coordinates without a monotonicity restriction.
+        return True
     with np.errstate(over="ignore", under="ignore", invalid="ignore"):
         if isinstance(fit, ParametricSurvivalFit):
             sigma = np.exp(parameters[-1])
@@ -162,17 +189,32 @@ def _freeze_int(value: ArrayLike) -> NDArray[np.int64]:
 
 
 def _survival_draw(
-    fit: ParametricSurvivalFit | GeneralizedGammaFit,
+    fit: ParametricSurvivalFit | GeneralizedGammaFit | SurvivalSplineFit,
     parameters: FloatArray,
     design: FloatArray,
     log_time: FloatArray,
     parameterization: str | None,
+    spline_basis: FloatArray | None = None,
 ) -> tuple[FloatArray, FloatArray]:
     """Evaluate one parameter draw at one profile and a time block."""
     if not np.isfinite(parameters).all():
         nan = np.full(log_time.shape, np.nan)
         return nan, nan.copy()
     with np.errstate(over="ignore", under="ignore", invalid="ignore", divide="ignore"):
+        if isinstance(fit, SurvivalSplineFit):
+            basis = _basis(fit.scaled_knots, log_time) if spline_basis is None else spline_basis
+            covariates = np.broadcast_to(design[1:], (log_time.size, design.size - 1))
+            spline_design = np.column_stack((basis, covariates))
+            eta = spline_design @ parameters
+            if fit.scale == "hazard":
+                log_survival = -np.exp(eta)
+            elif fit.scale == "odds":
+                log_survival = -np.logaddexp(0.0, eta)
+            else:
+                log_survival = log_ndtr(-eta)
+            survival = np.exp(log_survival)
+            return log_survival, survival
+
         residual = log_time - float(design @ parameters[: design.size])
         if isinstance(fit, ParametricSurvivalFit):
             sigma = float(np.exp(parameters[-1]))
@@ -259,7 +301,7 @@ def _type7_quantiles(samples: FloatArray, probabilities: tuple[float, float]) ->
 
 
 def predict_parametric_survival_mc(
-    fit: ParametricSurvivalFit | GeneralizedGammaFit,
+    fit: ParametricSurvivalFit | GeneralizedGammaFit | SurvivalSplineFit,
     times: ArrayLike,
     profiles: ArrayLike | None = None,
     *,
@@ -277,9 +319,12 @@ def predict_parametric_survival_mc(
     and ``rng`` are unused. Pointwise limits use type-7 quantiles and omit only
     NaN predictions per cell. No draws are truncated or redrawn.
 
-    Positive-infinite times are supported and have survival zero for proper
-    draws; zero times have survival one. Other time/profile conventions match
-    the deterministic parametric prediction APIs.
+    Positive-infinite times are supported and have survival zero; zero times
+    have survival one for valid draws. For spline fits, the native unrestricted
+    normal draws are not filtered for monotonicity. ``spline_minimum_slope``
+    reports each draw's exact minimum baseline derivative over the full spline
+    support, making any rising sampled curves visible. Other time/profile
+    conventions match the deterministic prediction APIs.
     """
     if np.iscomplexobj(confidence):
         raise ValueError("confidence must be real")
@@ -347,14 +392,21 @@ def predict_parametric_survival_mc(
         n_draws = int(raw_draws.shape[0])
         parameter_sample = raw_draws
     parameter_cells = prod((int(n_draws), int(mean.size)))
+    basis_count = fit.scaled_knots.size if isinstance(fit, SurvivalSplineFit) else 0
+    spline_work = n_draws * basis_count * basis_count + n_draws * surface_cells * basis_count
     if (
-        8 * surface_cells + n_profiles * mean.size + parameter_cells > _MAX_SURFACE_CELLS
-        or surface_cells * n_draws > _MAX_WORK_CELLS
+        8 * surface_cells
+        + n_profiles * mean.size
+        + parameter_cells
+        + (n_draws if isinstance(fit, SurvivalSplineFit) else 0)
+        > _MAX_SURFACE_CELLS
+        or surface_cells * n_draws + spline_work > _MAX_WORK_CELLS
         or parameter_cells > _MAX_SURFACE_CELLS
     ):
         raise ValueError("Monte Carlo prediction exceeds the bounded work or cell limit")
-    draw_chunk = min(n_times, max(1, _MAX_DRAW_CELL_BUFFER // n_draws))
-    if n_draws * draw_chunk > _MAX_DRAW_CELL_BUFFER:
+    per_time_cells = n_draws + 4 * basis_count + mean.size
+    draw_chunk = min(n_times, max(1, _MAX_DRAW_CELL_BUFFER // per_time_cells))
+    if draw_chunk * per_time_cells > _MAX_DRAW_CELL_BUFFER:
         raise ValueError("Monte Carlo draw workspace exceeds the bounded cell limit")
 
     if parameter_draws is None:
@@ -369,6 +421,14 @@ def predict_parametric_survival_mc(
     if not np.isfinite(normalized_profiles).all():
         raise ArithmeticError("normalized prediction profiles exceed numerical range")
     design = np.column_stack((np.ones(n_profiles), normalized_profiles))
+    spline_minimum_slope = None
+    if isinstance(fit, SurvivalSplineFit):
+        spline_minimum_slope = np.empty(n_draws)
+        for draw_index, parameters in enumerate(parameter_sample):
+            with np.errstate(over="ignore", invalid="ignore"):
+                spline_minimum_slope[draw_index] = _minimum_slope(
+                    parameters[:basis_count], fit.scaled_knots
+                )
     log_time = np.full(times_copy.shape, np.inf)
     finite_positive = np.isfinite(times_copy) & (times_copy > 0)
     log_time[finite_positive] = (
@@ -386,12 +446,15 @@ def predict_parametric_survival_mc(
     valid_draws = np.empty((n_profiles, n_times), dtype=np.int64)
     probabilities = ((1 - conf) / 2, 1 - (1 - conf) / 2)
 
-    for profile_index in range(n_profiles):
-        row_design = design[profile_index]
-        for start in range(0, n_times, draw_chunk):
-            stop = min(n_times, start + draw_chunk)
-            block_times = times_copy[start:stop]
-            block_log_time = log_time[start:stop]
+    for start in range(0, n_times, draw_chunk):
+        stop = min(n_times, start + draw_chunk)
+        block_times = times_copy[start:stop]
+        block_log_time = log_time[start:stop]
+        spline_basis = (
+            _basis(fit.scaled_knots, block_log_time) if isinstance(fit, SurvivalSplineFit) else None
+        )
+        for profile_index in range(n_profiles):
+            row_design = design[profile_index]
             point_log = np.full(block_times.shape, np.nan)
             point_s = np.full(block_times.shape, np.nan)
             point_valid = _draw_is_representable(mean, fit, parameterization)
@@ -410,6 +473,7 @@ def predict_parametric_survival_mc(
                     row_design,
                     block_log_time[point_evaluable],
                     parameterization,
+                    None if spline_basis is None else spline_basis[point_evaluable],
                 )
                 point_log[point_evaluable] = point_values_log
                 point_s[point_evaluable] = point_values
@@ -429,6 +493,7 @@ def predict_parametric_survival_mc(
                         row_design,
                         block_log_time[evaluable],
                         parameterization,
+                        None if spline_basis is None else spline_basis[evaluable],
                     )
                     draws_surface[draw_index, evaluable] = values
             quantiles = _type7_quantiles(draws_surface, probabilities)
@@ -457,4 +522,5 @@ def predict_parametric_survival_mc(
         _freeze_int(valid_draws),
         _freeze(parameter_sample),
         conf,
+        None if spline_minimum_slope is None else _freeze(spline_minimum_slope),
     )
