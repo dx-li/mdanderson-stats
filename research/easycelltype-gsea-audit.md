@@ -109,3 +109,23 @@ BH and cutoff together, using explicit serial work limits. R/C++ random-stream
 parity remains distinct from statistical algorithm parity. The pinned fgsea
 license is MIT with copyright 2016–2019 Alexey Sergushichev; DOSE and
 clusterProfiler use Artistic-2.0. Retain applicable notices for adaptations.
+
+## Observed-score implementation checkpoint
+
+Luna's `31673a0` was integrated as `9f9be3d`. The public
+`easycelltype_gsea_es` API returns immutable per-cluster/per-set ES, fgsea edge,
+DOSE core score/genes/rank and explicit reasons for unavailable core results.
+The separate fields preserve the two source conventions. The default maximum
+set size is 500; a caller's explicit override is a Python extension, still
+subject to the `N-1` cap.
+
+Review corrected scaling against an unrelated non-hit score, the unique-set
+miss denominator with duplicate query IDs, and cumulative miss arithmetic.
+Cluster grouping is indexed once, and retained-ID bounds count actual returned
+core rows, including duplicates. Original-R references match all thirty rows;
+root independently checked ES, both gene lists, ranks and undefined fields,
+plus a `1e308` non-hit next to `1e-100` hits. That check took 0.0036 seconds after
+import, peaked at 110.77 MiB and reported zero swaps. Seven focused existing/new
+worker tests, Ruff formatting/lint and targeted mypy passed. No dependency
+installation, large simulation or new CI workflow was used. Full multilevel
+probabilities remain the next implementation tranche described above.

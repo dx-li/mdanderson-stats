@@ -94,7 +94,9 @@ Python preserves first-seen cluster order rather than R's sorted split names.
 The port is limited to supplied associations, modified Fisher tests, adjustment,
 score summaries, contributing genes and hard/soft label selection. Bundled
 CellMarker/Clustermole/PanglaoDB snapshots, species/tissue metadata, symbol/Entrez
-conversion, GSEA and native plots remain open; the catalog entry stays partial.
+conversion, full GSEA probabilities and native plots remain open; the catalog
+entry stays partial. A separate [ranked-enrichment score API](easycelltype-gsea.md)
+now provides observed GSEA statistics and contributing-gene conventions.
 
 Nine independent original-R cases check row multiplicity, overlap ordering,
 adjusted probabilities, exact ties, score ranking, top-five selection, empty

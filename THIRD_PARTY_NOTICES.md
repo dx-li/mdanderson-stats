@@ -1,5 +1,29 @@
 # Third-party notices
 
+## EasyCellType ranked enrichment
+
+`easycelltype_gsea.py` provides a separately named Python implementation of
+observed ranked-enrichment statistics and contributing-gene conventions checked
+against EasyCellType 1.5.4 and a chosen Bioconductor 3.18 dependency profile.
+It preserves source-specific behavior from fgsea 1.28.0 and DOSE 3.28.2,
+including their distinct leading-edge calculations; it is not the original
+package or an endorsed replacement. Full normalized scores and multilevel
+probabilities are not included in this initial observed-statistic extension.
+
+fgsea is copyright 2016–2019 Alexey Sergushichev and distributed under MIT terms,
+preserved in [notices/fgsea-MIT.txt](notices/fgsea-MIT.txt). DOSE and
+clusterProfiler, by Guangchuang Yu and contributors, and EasyCellType, by its
+listed authors, identify Artistic-2.0 in their pinned DESCRIPTION files. The
+Artistic-2.0 license is preserved in
+[notices/Artistic-2.0.txt](notices/Artistic-2.0.txt); its text is copied verbatim
+from the local R distribution's license collection. Applicable upstream terms
+are retained for adapted portions. This modified Python work is distributed
+under the distinct name mdanderson-stats with its source available.
+
+The [source audit](research/easycelltype-gsea-audit.md) records exact revisions,
+file hashes, behavioral differences and original-R reference execution.
+Upstream package source, executables and marker databases are not bundled.
+
 ## Pinnacle wavelet processing
 
 `pinnacle_wavelet.py` adapts the periodic redundant wavelet transform,

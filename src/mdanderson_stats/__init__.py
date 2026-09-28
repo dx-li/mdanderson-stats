@@ -492,6 +492,12 @@ from .easycelltype import (
     easycelltype_fisher,
     easycelltype_labels,
 )
+from .easycelltype_gsea import (
+    EasyCellTypeGSEACluster,
+    EasyCellTypeGSEAResult,
+    EasyCellTypeGSEASet,
+    easycelltype_gsea_es,
+)
 from .efftox_calibration import (
     EffToxCalibration,
     EffToxPriorMoments,
@@ -1248,9 +1254,13 @@ __all__ = [
     "predict_synergy_surface",
     "EasyCellTypeCluster",
     "EasyCellTypeFisherResult",
+    "EasyCellTypeGSEACluster",
+    "EasyCellTypeGSEAResult",
+    "EasyCellTypeGSEASet",
     "EasyCellTypeLabel",
     "EasyCellTypeTest",
     "easycelltype_fisher",
+    "easycelltype_gsea_es",
     "easycelltype_labels",
     "STPLANHistoricalAllocationPlan",
     "stplan_historical_allocation_plan",

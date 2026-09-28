@@ -4455,12 +4455,14 @@
         "Source-compatible modified greater-tail Fisher annotation from explicit marker lists and caller-supplied cell-type associations; preserves reference/query row multiplicity and unique gene overlap.",
         "Per-cluster BH adjustment over tested types, stable matched-score means, ordered contributing genes, explicit untested records and up to five labels including one hard label.",
         "Bounded input/output memory, scalar identifier validation and indexed per-cluster overlap summaries; docs/easycelltype.md.",
-        "Remaining: GSEA, bundled CellMarker/Clustermole/PanglaoDB references, species/tissue metadata, gene-ID conversion, native plots and app workflow parity."
+        "Observed weighted GSEA scores, signed modes, first-match set membership, separate fgsea leading-edge and DOSE core-enrichment conventions, explicit undefined zero-weight cores and bounded per-cluster work; docs/easycelltype-gsea.md.",
+        "Remaining: GSEA normalization and adaptive multilevel probabilities, bundled CellMarker/Clustermole/PanglaoDB references, species/tissue metadata, gene-ID conversion, native plots and app workflow parity."
       ],
       "validation": [
         "Nine original-R author-source cases, including duplicates, ties, top-five ranking, strict enrichment gate, empty overlap and a 1.84e-31 tail; tools/reference_easycelltype.R.",
         "Nineteen independent exact-rational conditional-tail sums agree; root checks include multicluster ID order, finite 1e308 score means, missing/nested input rejection and resource bounds.",
-        "Three focused behavior checks and isolated wheel example; tests/test_easycelltype.py and research/easycelltype-next-audit.md."
+        "Three focused behavior checks and isolated wheel example; tests/test_easycelltype.py and research/easycelltype-next-audit.md.",
+        "Thirty unchanged-R fgsea/DOSE observed-score/core references across eight scenarios, including duplicate IDs, zero weights, signed modes and size filters; tools/reference_easycelltype_gsea.R and tests/test_easycelltype_gsea.py. Extreme non-hit scores do not erase small relative hit weights."
       ]
     },
     {

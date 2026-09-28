@@ -1333,8 +1333,11 @@ Houston, Texas and its contributors; see the [preserved license](notices/rice-wa
 [EasyCellType Fisher annotation](docs/easycelltype.md) accepts marker lists and
 caller-supplied cell-type associations. It preserves the author's modified
 Fisher table and duplicate-row conventions, reports adjusted p-values and
-contributing genes, and ranks hard/soft labels. GSEA, bundled marker databases
-and gene-ID conversion remain open.
+contributing genes, and ranks hard/soft labels. The
+[ranked-enrichment score core](docs/easycelltype-gsea.md) adds weighted GSEA
+statistics and the separate fgsea/DOSE contributing-gene conventions. Full
+GSEA normalization/probabilities, bundled databases and gene-ID conversion
+remain open.
 
 [SurvivalContour Cox surfaces](docs/survival-contour.md) fits ordinary or
 stratified Efron/Breslow models for right-censored data and returns survival
