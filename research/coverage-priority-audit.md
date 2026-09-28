@@ -94,3 +94,21 @@ normal priors on log-alpha/log-beta. Visual inspection confirms a raw dose
 ratio in its predictor, not the customary log-dose ratio. Its simulation
 example values are not native app defaults. This supports a new explicitly
 configured paper-method component; the app guide itself describes BF-BOIN.
+
+## Two-stage BOIN12 source boundary
+
+A second audit and fresh primary-source search confirmed the stage switch and
+stage-specific safety/efficacy criteria in the
+[official two-stage help](https://biostatistics.mdanderson.org/shinyapps/BOIN12/BOIN12Stop.pdf).
+However, that help does not specify the stage-one next-dose equation. The
+[original BOIN12 article](https://pmc.ncbi.nlm.nih.gov/articles/PMC7713525/)
+describes the single-stage utility method, not the app's later two-stage option.
+Substituting ordinary BOIN movement would be an explicit Python protocol
+choice, not a verified port of the native option. No such substitution was
+added. The existing BOIN and BOIN12 kernels remain available separately.
+
+The next source review instead targets CiBolus complete-outcome trial conduct,
+building on its existing likelihood, posterior fit, safety and allocation
+components. Numeric survival-forest out-of-bag predictions and source-defined
+variable importance are another substantial gap supported by cached native
+source. Neither is yet counted as implemented.
