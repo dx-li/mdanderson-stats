@@ -2416,12 +2416,14 @@
       "implemented_features": [
         "Vectorized Johnson posterior chi-square statistics, bin counts, reference tails and posterior A/exceedance summaries for complete continuous observations",
         "Exact Gamma-prior exponential posterior diagnostic with explicit hyperparameters, log-rate samples and stable time-unit handling",
-        "Dependent chi-square order-statistic bounds, minimum diagnostic and conservative rank-search correction"
+        "Dependent chi-square order-statistic bounds, minimum diagnostic and conservative rank-search correction",
+        "Fixed-shape Weibull complete-data Gamma-prior posterior diagnostic with explicit hyperparameters, centered log-rate/offset and posterior-rate scale/sum representations, stable relative-time powers and bounded CDF/diagnostic workspaces; unknown shape remains open"
       ],
       "validation": [
         "Three focused tests: direct Pearson statistics, exact posterior moments, extreme unit invariance, repeated-data/posterior calibration and misspecification detection; tests/test_bayesian_chi_square.py",
         "Three additional order-bound checks: published example, dependent marginals and extreme tails; tests/test_chi_square_order_bounds.py",
-        "Pending censoring/discrete handling, other model-family fitting and priors, native Rychlik rank/trim conventions, BIC/DIC and reports; guide inconsistencies recorded in docs/bayesian-chi-square.md"
+        "Pending censoring/discrete handling, other model-family fitting and priors, native Rychlik rank/trim conventions, BIC/DIC and reports; guide inconsistencies recorded in docs/bayesian-chi-square.md",
+        "Seven independent base-R posterior/diagnostic cases: 76 summaries within 1.671 estimated Monte Carlo errors, including time units 1e-200/1e200 and shape 1e305; six focused Weibull checks cover exact conjugate/CDF identities, exponential reduction, adjacent-time resolution and pre-RNG resource rejection. docs/weibull-bayesian-gof.md, tools/reference_weibull_bayesian_gof.R and research/bayesian-chi-square-weibull-audit.md"
       ]
     },
     {
@@ -2755,12 +2757,14 @@
         "proportional_density_pepe: archived unit-weight right-endpoint squared-curve area statistic; no bootstrap p-value.",
         "Explicit equal-censoring model with pooled reverse KM and asymptotic LR calibration; default unequal-censoring fit leaves LR p-value uncalibrated. Archive incidence Wald statistic retained.",
         "proportional_density_bootstrap: section 3.1 failure-only observed-density goodness-of-fit test, fixed censoring offsets, exact step integral to common follow-up, seeded resampling, Monte Carlo p-value and explicit bounds for failed replicate fits.",
-        "Remaining: full-data disease-curve bootstrap, unequal-censoring treatment-effect calibration and bootstrap parameter uncertainty."
+        "proportional_density_full_bootstrap: full-data disease-curve Delta_n goodness-of-fit calibration, fixed within-arm event/censor counts, refitted censoring and disease curves, exact right-continuous integration to original tau, explicit resample tapes and unresolved-fit p-value bounds.",
+        "Remaining: unequal-censoring treatment-effect null calibration and bootstrap parameter uncertainty."
       ],
       "validation": [
         "Three datasets compared with archived R routines after documented missing-helper/current-R compatibility repairs, and independent R GLM offset fits: coefficients within 3e-6 and 5e-9 respectively; docs/proportional-density.md.",
         "Three focused tests: native curves/masses/Greenwood errors, score residual and normalization, time scaling 1e-150/1e150, arm exchange, tied analytic null, immutable results, separation and unsupported censoring tails.",
-        "Five fixed bootstrap resamples agree with independent R GLM/ecdf integration within 2e-13; hand-calculated integral, time-unit invariance and failed-resample calibration bounds checked."
+        "Five fixed bootstrap resamples agree with independent R GLM/ecdf integration within 2e-13; hand-calculated integral, time-unit invariance and failed-resample calibration bounds checked.",
+        "Independent R survival::survfit and stats::glm calculations match 9 original/replicate statistics and 104 curve rows across separate/pooled censoring; maximum area error 4.30e-14 and curve error 7.46e-14. Six focused PropDen checks pass. docs/proportional-density-full-bootstrap.md and tools/reference_proportional_density_full_bootstrap.R"
       ]
     },
     {

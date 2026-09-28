@@ -35,7 +35,23 @@ and pre-RNG workspace/representability failures.
 
 An independent R calculation checked seven posterior cases and 76 summaries,
 including centered log-rate moments, CDF means, and Johnson diagnostic
-quantities; all discrepancies were within 1.7 Monte Carlo standard errors. The
+quantities; all discrepancies were within 1.671 Monte Carlo standard errors. The
 checks included time-unit scales of 1e-200 and 1e200 and shape 1e305 with
 identical event times. The latter uses centered relative powers so the finite
 Gamma/n hazard variation remains visible.
+
+The independent generator is `tools/reference_weibull_bayesian_gof.R`;
+`tools/check_weibull_bayesian_gof.py` compares the two stored reference tables
+with 16,000 independent posterior draws per case. Diagnostic expectations are
+integrated over the finite intervals where all bin memberships are constant,
+rather than estimated from a second Monte Carlo run. Reference tables retain
+17 significant figures; the first comparison detected and corrected the R
+CSV writer's default lower-precision serialization. The final comparison
+takes 0.047 seconds after imports, peaks at 126.47 MiB and reports zero swaps.
+
+Six focused checks pass in 1.42 seconds. Review corrected both common-offset
+loss of Gamma variation and cancellation for adjacent representable times at
+shape `1e305`. Storage preflight includes working vectors and chunk buffers
+in addition to retained arrays, before large conversions or random draws.
+Targeted Ruff, formatting, mypy and diff checks pass. No new numerical
+dependency, CI workflow or broad numerical suite was added.

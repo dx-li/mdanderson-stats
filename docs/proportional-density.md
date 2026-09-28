@@ -78,8 +78,9 @@ It is not a calibrated goodness-of-fit p-value.
 
 **Entry 78 remains partial.** Both supplied R routines have Python counterparts,
 and the paper’s alternative failure-only goodness-of-fit bootstrap is available
-as described below. Full-data disease-curve bootstrap calibration, unequal-
-censoring treatment-effect calibration and bootstrap parameter uncertainty
+as described below. The [full-data disease-curve bootstrap](proportional-density-full-bootstrap.md)
+now refits after separately resampling event and censoring records. Unequal-
+censoring treatment-effect null calibration and bootstrap parameter uncertainty
 remain unimplemented. No bootstrap code is present in the downloaded archive;
 a comment instructs the user to bootstrap. Missing inference workflows remain
 tracked rather than represented as completed.
@@ -193,5 +194,5 @@ times, labels and offsets, rather than claiming native bootstrap outputs from
 an archive that has no bootstrap implementation. Two additional focused tests
 cover that reference, time-unit invariance, a hand-calculated step integral,
 immutable output and honest calibration bounds when resamples are unidentified.
-The treatment-effect LR test and full-data disease-curve bootstrap are separate
-procedures and are not calibrated by this function.
+The treatment-effect LR test and [full-data disease-curve bootstrap](proportional-density-full-bootstrap.md)
+are separate procedures and are not calibrated by this failure-only function.

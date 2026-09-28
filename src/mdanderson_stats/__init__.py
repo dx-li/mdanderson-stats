@@ -876,6 +876,11 @@ from .proportional_density_bootstrap import (
     ProportionalDensityBootstrap,
     proportional_density_bootstrap,
 )
+from .proportional_density_full_bootstrap import (
+    ProportionalDensityFullBootstrap,
+    ProportionalDensityFullBootstrapTape,
+    proportional_density_full_bootstrap,
+)
 from .prt import (
     PRTDecision,
     PRTPredictiveRisk,
@@ -1294,6 +1299,7 @@ from .uaroet_simulation import (
 from .uboin import UBOINPosterior, uboin_allocation, uboin_posterior
 from .uboin_conduct import UBOINDecision, UBOINDesign, UBOINSelection
 from .uboin_simulation import UBOINSimulation, simulate_uboin, uboin_gumbel_probabilities
+from .weibull_bayesian_gof import WeibullBayesianGOF, weibull_fixed_shape_bayesian_gof
 from .wfmm_basis import WFMMBasis, WFMMTransformed, wfmm_basis, wfmm_inverse, wfmm_transform
 from .wfmm_covariance import WFMMCovarianceSummary, wfmm_covariance, wfmm_summarize_covariance
 from .wfmm_empirical_bayes import WFMMShrinkage, calibrate_wfmm_shrinkage
@@ -1829,6 +1835,9 @@ __all__ = [
     "simulate_response_survival",
     "ProportionalDensityBootstrap",
     "proportional_density_bootstrap",
+    "ProportionalDensityFullBootstrap",
+    "ProportionalDensityFullBootstrapTape",
+    "proportional_density_full_bootstrap",
     "ProportionalDensityFit",
     "proportional_density",
     "proportional_density_pepe",
@@ -2108,6 +2117,8 @@ __all__ = [
     "ExponentialBayesianGOF",
     "bayesian_chi_square_cdf",
     "exponential_bayesian_gof",
+    "WeibullBayesianGOF",
+    "weibull_fixed_shape_bayesian_gof",
     "dct_binary_sample_size",
     "DCTNormalSampleSize",
     "dct_normal_sample_size",

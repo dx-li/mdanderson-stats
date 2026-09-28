@@ -45,3 +45,24 @@ section 3.1, equation (3.1), and section 3.2. In the cached extraction
 `research/raw/PropDen/paper.txt`, the relevant paragraphs are lines 1189–1199
 (full-data bootstrap), 1200–1208 (failure-only alternative), and 1215
 (unequal-censoring likelihood-ratio calibration statement).
+
+## Independent numerical evidence
+
+`tools/reference_proportional_density_full_bootstrap.R` independently uses
+R `survival::survfit` and `stats::glm` to reconstruct the two disease curves,
+then integrates their squared difference. Fixed resample tapes include the
+original sample, changed censor records, altered event support, separation
+and unsupported censoring tails, with separate and pooled censoring fits.
+The R generator passed in 0.758 seconds with warnings treated as errors.
+
+`tools/check_proportional_density_full_bootstrap.py` matches nine resolved
+original/replicate statistics and 104 curve rows, with maximum absolute errors
+`4.2938e-14` and `7.4552e-14` respectively. It also matches failed-replicate
+counts and calibration bounds. The comparison takes 0.015 seconds after
+imports, peaks at 118.22 MiB and reports zero swaps. The six focused existing
+and new PropDen checks pass in 1.53 seconds with numerical libraries limited
+to one thread. Targeted Ruff, formatting, mypy and diff checks pass.
+
+The implementation bounds total resampled records at 50 million, explicit
+retained tapes at two million cells, and validates shapes before conversion.
+No new CI workflow, broad numerical suite or dependency was introduced.

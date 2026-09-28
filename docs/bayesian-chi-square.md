@@ -2,7 +2,9 @@
 
 This implementation provides Johnson's posterior chi-square calculation for
 complete continuous observations and an exponential workflow with an exact
-Gamma posterior. The sources are the [BCS TTE guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BCSTTE/BCSTTE_UsersGuide.pdf)
+Gamma posterior. A [fixed-shape Weibull workflow](weibull-bayesian-gof.md)
+extends that exact posterior diagnostic using stable centered rate draws.
+The sources are the [BCS TTE guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BCSTTE/BCSTTE_UsersGuide.pdf)
 (August 15, 2006) and Johnson's
 [A Bayesian chi-square test for goodness-of-fit](https://arxiv.org/abs/math/0508593),
 *Annals of Statistics* 32:2361–2384 (2004), equations (2)–(3).
@@ -93,8 +95,9 @@ chi-square marginals, search correction, and extreme-tail underflow.
 
 ## Remaining coverage and source issues
 
-**Catalog status is partial.** Right-censoring, rounded observations, the six
-other distribution-family workflows, native fitting/priors and fallback priors,
+**Catalog status is partial.** Right-censoring, rounded observations, unknown-
+shape Weibull fitting and five other distribution-family workflows, native
+fitting/priors and fallback priors,
 native Rychlik rank/trim conventions, BIC/DIC, sorting and native HTML reports
 remain pending.
 The generic interface can consume verified posterior CDF draws from other models,

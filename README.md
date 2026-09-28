@@ -839,7 +839,9 @@ and reports remain pending.
 
 [Bayesian Chi Square TTE Fit](docs/bayesian-chi-square.md) adds the complete-data
 posterior diagnostic, exact exponential-posterior workflow and dependent
-order-statistic bounds. Censoring, other family fits, BIC/DIC, native rank/trim
+order-statistic bounds. The [fixed-shape Weibull workflow](docs/weibull-bayesian-gof.md)
+adds exact Gamma-prior inference with stable centered rate draws. Censoring,
+unknown Weibull shape and other family fits, BIC/DIC, native rank/trim
 conventions and reporting remain pending.
 
 [MERIT](docs/merit.md) adds isotonic dose selection, Bayesian interim decisions,
@@ -1025,8 +1027,10 @@ read/create/append/overwrite actions and confirmation before changing a file.
 estimation for censored survival using a density-ratio model, incidence estimates,
 and disease-conditional survival curves. It includes the supplied goodness-of-fit
 statistic, the paper’s failure-only goodness-of-fit bootstrap, and explicit
-equal-censoring LR inference. Full-data disease-curve bootstrap and unequal-
-censoring treatment-effect calibration remain pending.
+equal-censoring LR inference. The [full-data disease-curve bootstrap](docs/proportional-density-full-bootstrap.md)
+resamples both events and censoring records, refits both curves and retains
+failed-replicate calibration bounds. Unequal-censoring treatment-effect null
+calibration and parameter uncertainty remain pending.
 
 [Response and Survival](docs/response-survival.md) combines early response
 categories with censored survival for Bayesian adaptive randomization. It includes
