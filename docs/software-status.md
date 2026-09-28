@@ -75,7 +75,7 @@ some legacy adaptations retain commercial-use restrictions.
 | Sample Size Calculation - Continuous Endpoint | [online #119](https://biostatistics.mdanderson.org/shinyapps/Nnormal/) | [Guide](continuous-sample-size.md) |
 | Sample Size Calculation - Time-to-event Endpoint | [online #138](https://biostatistics.mdanderson.org/shinyapps/Nsurvival) | [Guide](survival-sample-size.md) |
 | SEQBIN | [desktop #54](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/54) | [Guide](seqbin-coverage.md) |
-| Simon's Two-Stage Design | [online #113]( https://biostatistics.mdanderson.org/shinyapps/Simon2S/) | [Guide](simon-two-stage.md) |
+| Simon's Two-Stage Design | [online #113](https://biostatistics.mdanderson.org/shinyapps/Simon2S/) | [Guide](simon-two-stage.md) |
 | SINGLE | [desktop #55](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/55) | [Guide](single-coverage.md) |
 | SOGS | [desktop #56](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/56) | [Guide](sogs.md) |
 | SORTF90 | [desktop #57](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/57) | See catalog feature and validation notes |
@@ -93,7 +93,7 @@ some legacy adaptations retain commercial-use restrictions.
 | Program | Source entry | Python documentation |
 | --- | --- | --- |
 | 1+2+3: to find the optimal biological dose for rare diseases | [online #172](https://biostatistics.mdanderson.org/shinyapps/1plus2plus3) | [Guide](rare-disease-123.md) |
-| A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents | [online #114]( https://biostatistics.mdanderson.org/shinyapps/MTADF/) | See catalog feature and validation notes |
+| A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents | [online #114](https://biostatistics.mdanderson.org/shinyapps/MTADF/) | See catalog feature and validation notes |
 | Adaptive Randomization | [desktop #62](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62) | See catalog feature and validation notes |
 | aPCoA: Covariate Adjusted Principal Coordinates Analysis | [online #147](https://biostatistics.mdanderson.org/shinyapps/aPCoA) | [Guide](apcoa.md) |
 | ASYPOW | [desktop #33](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/33) | [Guide](asypow.md) |
@@ -148,7 +148,7 @@ some legacy adaptations retain commercial-use restrictions.
 | SurvivalContour: Show Survival Prediction in Contour Plot | [online #166](https://biostatistics.mdanderson.org/shinyapps/survivalContour/) | See catalog feature and validation notes |
 | SYNERGY | [desktop #18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18) | [Guide](interaction-index.md) |
 | Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials | [online #129](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/) | [Guide](tite-boin.md) |
-| Time-to-Event Keyboard Design for Phase I Clinical Trials | [online #135]( https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD) | [Guide](tite-keyboard.md) |
+| Time-to-Event Keyboard Design for Phase I Clinical Trials | [online #135](https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD) | [Guide](tite-keyboard.md) |
 | TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | [online #152](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12) | See catalog feature and validation notes |
 | TOP: Time-to-Event Bayesian Optimal Phase II Trial Design | [online #134](https://biostatistics.mdanderson.org/shinyapps/TOP2) | [Guide](top-endpoints.md) |
 | ToxFinder | [desktop #14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14) | See catalog feature and validation notes |
