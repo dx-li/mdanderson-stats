@@ -7,8 +7,10 @@ observed ranked-enrichment statistics and contributing-gene conventions checked
 against EasyCellType 1.5.4 and a chosen Bioconductor 3.18 dependency profile.
 It preserves source-specific behavior from fgsea 1.28.0 and DOSE 3.28.2,
 including their distinct leading-edge calculations; it is not the original
-package or an endorsed replacement. Full normalized scores and multilevel
-probabilities are not included in this initial observed-statistic extension.
+package or an endorsed replacement. `easycelltype_gsea_multilevel.py` extends
+this with normalized scores and adaptive multilevel probabilities, while
+`easycelltype_gsea_labels.py` supplies hard/soft label processing. Applicable
+upstream terms below are retained for these adapted components too.
 
 fgsea is copyright 2016–2019 Alexey Sergushichev and distributed under MIT terms,
 preserved in [notices/fgsea-MIT.txt](notices/fgsea-MIT.txt). DOSE and

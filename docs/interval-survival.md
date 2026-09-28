@@ -89,6 +89,8 @@ SurvivalContour application's advertised `mets` interval2 route has an
 unresolved response-contract mismatch; this interface does not claim parity
 with that route or reuse its counting-process interpretation.
 
-The broader SurvivalContour entry remains partial. Stratified interval models,
-bootstrap uncertainty, interval-censored competing risks, neural model workflows
-and other outstanding application features are tracked separately in the catalog.
+The broader SurvivalContour entry remains partial. The separate
+[interval-censored competing-risk model](interval-competing-risk.md) supplies
+two-cause generalized odds-rate regression and incidence contours. Stratified
+interval-PH models, bootstrap uncertainty, neural model workflows and other
+outstanding application features are tracked separately in the catalog.

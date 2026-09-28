@@ -158,8 +158,13 @@ log-logistic fitting, prediction and contours.
 [Generalized-gamma models](generalized-gamma.md) add the Prentice and Stacy
 parameterizations to that workflow. [Spline models](survival-spline.md) add
 Royston–Parmar hazard, odds and normal links with joint covariance and contours.
-Interval-censored Cox and competing-risk models, forests, neural models, native simulated parametric
-intervals and the full native app workflow remain open. Entry 166 stays partial.
+[Interval-censored PH](interval-survival.md), [interval-censored competing-risk
+models](interval-competing-risk.md), [numeric survival forests](random-survival-forest.md)
+and [simulated parametric intervals](survival-uncertainty.md) provide further
+implemented families with their documented numerical and native-parity limits.
+Stratified interval-PH, interval bootstrap uncertainty, five neural model
+workflows, remaining forest features and the full native app workflow remain
+open. Entry 166 stays partial.
 
 The original author's two- and three-dimensional Cox helper outputs provide
 reference surfaces for both tie methods and both mean and explicit adjustment
