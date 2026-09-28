@@ -1,10 +1,11 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest addition: validated PLBARPO active-arm allocation is integrated at
-`47bb9c4` and included in the `a80f901` package check described at the end of
-this record. In this continuation, GitHub `master` and `main` were rechecked
-before integration and still pointed to `e20e582`. New local work has not yet
-been confirmed published.
+Latest verified package checkpoint: `9228bc9` includes PLBARPO no-control
+trials and aggregate simulation, plus EasyCellType multilevel GSEA inference.
+Both GitHub `master` and `main` now point to `45b6e307`; their four intervening
+documentation/CI commits were merged locally without conflicts. The new
+statistical additions have not yet been confirmed published. See the final
+section for the current package and connection checks.
 
 The user explicitly requested that all completed work be pushed to GitHub and
 that stable programs be available on `master`. The public repository is
@@ -159,3 +160,42 @@ substantive draft corrections before integration. These draft backends are not
 included in the validated local `master` checkpoint. Development remains
 limited to two implementation workers, one read-only reviewer and single-thread
 numerical work, without a new broad CI workflow.
+
+## PLBARPO trial/simulation and full GSEA checkpoint
+
+The no-control PLBARPO trial runner is public at `18eeb27`; serial aggregate
+simulation follows at `255c974`. Independent base-R trial references match 14
+patient rows, 12 monitoring comparisons and nine terminal arm rows. Recorded
+seed replays reconstruct aggregate counts, false declarations, means and
+Monte Carlo standard errors. Trial and simulation checks, their public
+examples and targeted type/lint checks pass. Control/concurrent-control trial
+scheduling is still a separate Luna implementation and is excluded here.
+
+EasyCellType multilevel inference is public at `33f559f`, including signed
+normalization, adaptive tail probabilities, uncertainty diagnostics, BH and
+the source cutoff. All 66 native cumulative scores, 66 single-set R scores
+and 22 splitter statistic pairs match. A small twelve-seed comparison stays
+within three combined standard errors of the native splitter; its extreme
+tail estimates remain noisy. Five focused worker checks, targeted mypy and
+both public GSEA examples pass. The method audit records numerical corrections,
+source versions and explicit memory/work bounds. GSEA label processing remains
+in its own Luna checkout.
+
+At `9228bc9`, repository-wide Ruff lint passes and all 1,619 files pass format
+checking. No full numerical test suite or new large simulation was run.
+Cached wheel and source builds pass. An isolated wheel check verifies all
+1,420 public exports, all 519 packaged source/data files against committed
+Git bytes, licenses/notices, all 138 catalog entries and four examples across
+the two changed guides. It took 10.347 seconds, peaked at 103.08 MiB and
+reported no swaps. Catalog counts remain 63 implemented, 66 partial, 9 pending.
+
+Fresh read-only GitHub checks verify both `master` and `main` at
+`45b6e307a63a4d1c3ea2b083ba9a805e8a76297b`. Those published changes limit CI
+execution and format documentation; they do not publish the later statistical
+additions. The commits were already present in the shared local Git object
+store, so they were merged with the statistical branch, preserving remote
+history. A fresh ordinary fetch after discovering the remote update failed
+with `Could not resolve host: github.com`. The connector write route still
+requires approval unavailable in this session and was not retried. Local
+`master`, refreshed packages and the Git bundle are prepared for publication;
+none is evidence that this newer checkpoint has reached GitHub.
