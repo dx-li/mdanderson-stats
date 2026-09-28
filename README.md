@@ -1177,7 +1177,9 @@ recomputes posterior competition after arms close, preserving total enrollment
 for BARN2N and supporting all four randomization methods. [No-control platform
 trials](docs/plbarpo-trials.md) add queued replacement, entrant burn-in, replayable
 patient assignments, global monitoring and final assessment at arm caps.
-Control scheduling and aggregate platform simulation remain open.
+Compact simulation summaries add per-arm operating characteristics, enrollment,
+Monte Carlo errors and error rates against explicitly supplied null arms.
+Control platform scheduling remains open.
 
 [TTEConduct](docs/tteconduct.md) adds single-arm exponential survival monitoring
 against an uncertain historical standard, with an additive improvement margin

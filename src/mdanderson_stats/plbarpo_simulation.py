@@ -194,9 +194,7 @@ def simulate_plbarpo(
     elif rng is None:
         entropy = None
     elif (
-        isinstance(rng, (bool, np.bool_))
-        or not isinstance(rng, (int, np.integer))
-        or int(rng) < 0
+        isinstance(rng, (bool, np.bool_)) or not isinstance(rng, (int, np.integer)) or int(rng) < 0
     ):
         raise ValueError("rng must be a nonnegative integer, Generator or None")
     else:
@@ -220,9 +218,7 @@ def simulate_plbarpo(
         trial_seeds[i] = trial_seed
         assignment_rng, outcome_rng, stream_pair = _streams(trial_seed)
         stream_seeds[i] = stream_pair
-        trial = _run_prepared(
-            config, None, None, assignment_rng, outcome_rng, stream_pair
-        )
+        trial = _run_prepared(config, None, None, assignment_rng, outcome_rng, stream_pair)
         total_work += trial.work_units
         if total_work > total_limit:
             raise RuntimeError("observed PLBARPO work exceeded max_total_work")

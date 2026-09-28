@@ -3957,14 +3957,16 @@
         "Entire-trial and treatment-specific concurrent control beta posterior comparisons with independent futility and efficacy criteria",
         "Control observation selection using explicit enrollment windows and observation-time cutoffs, including pending outcomes",
         "Active-only posterior competition and BARCP, BARN2N, BARMTV and explicit-target DBCD allocation aligned to a full arm ledger, preserving closed-arm enrollment in global N",
-        "Complete-outcome no-control platform trial with explicit replacement queue, entrant burn-in, global monitoring, cap-triggered final assessment and replayable patient tapes"
+        "Complete-outcome no-control platform trial with explicit replacement queue, entrant burn-in, global monitoring, cap-triggered final assessment and replayable patient tapes",
+        "Bounded serial no-control operating characteristics with entry-conditional rates, enrollment/response means, Monte Carlo errors, explicit-null false efficacy and replayable trial seeds"
       ],
       "validation": [
         "Eight independent base-R control comparisons at two observation dates verify posterior tails and decision criteria",
         "Staggered enrollment windows verify exclusion of future observations and preservation of closed-window counts; docs/plbarpo-control-reference.md",
         "Eight independent base-R integral/allocation snapshots verify all four active-arm methods, floors, active-set changes and global enrollment; docs/plbarpo-allocation.md",
         "Three independent base-R replay references verify 14 patient allocations/outcomes, 12 posterior comparisons and nine terminal arm rows; docs/plbarpo-trials.md",
-        "Control/concurrent-control platform scheduling, aggregate simulation, delayed responses and native reports remain pending"
+        "Recorded-seed replay independently reconstructs aggregate arm metrics, explicit-null error counts, means and Monte Carlo errors; two focused simulation checks and both public examples pass",
+        "Control/concurrent-control platform scheduling, delayed responses and native reports remain pending"
       ]
     },
     {

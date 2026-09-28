@@ -26,9 +26,7 @@ def _design():
 
 
 def test_simulation_aggregates_replayable_trials_and_explicit_null_errors():
-    result = simulate_plbarpo(
-        **_design(), trials=4, rng=302, null_arms=[True, False, True]
-    )
+    result = simulate_plbarpo(**_design(), trials=4, rng=302, null_arms=[True, False, True])
     assert result.trials == 4
     assert result.total_work_units > 0
     assert result.metric_counts.shape == (len(result.metric_names), 3)
@@ -42,14 +40,10 @@ def test_simulation_aggregates_replayable_trials_and_explicit_null_errors():
     assert not result.trial_seeds.flags.writeable
     assert not result.metric_counts.flags.writeable
 
-    np.testing.assert_array_equal(
-        result.metric_counts[result.metric_index("entry")], [4, 4, 0]
-    )
+    np.testing.assert_array_equal(result.metric_counts[result.metric_index("entry")], [4, 4, 0])
 
     null = np.asarray([True, False, True])
-    replayed = [
-        run_plbarpo_trial(**_design(), rng=int(seed)) for seed in result.trial_seeds
-    ]
+    replayed = [run_plbarpo_trial(**_design(), rng=int(seed)) for seed in result.trial_seeds]
     replay_metrics = np.zeros_like(result.metric_counts)
     replay_assigned = []
     replay_responses = []
@@ -109,9 +103,7 @@ def test_simulation_aggregates_replayable_trials_and_explicit_null_errors():
     for i, (seed, trial) in enumerate(zip(result.trial_seeds, replayed, strict=True)):
         assert trial.rng_seeds == tuple(int(value) for value in result.stream_seeds[i])
 
-    repeated = simulate_plbarpo(
-        **_design(), trials=4, rng=302, null_arms=[True, False, True]
-    )
+    repeated = simulate_plbarpo(**_design(), trials=4, rng=302, null_arms=[True, False, True])
     np.testing.assert_array_equal(result.trial_seeds, repeated.trial_seeds)
     np.testing.assert_array_equal(result.metric_counts, repeated.metric_counts)
 

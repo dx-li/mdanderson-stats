@@ -78,6 +78,67 @@ no swaps. Three focused regressions, targeted lint/type checks and the public
 example also pass.
 These establish the declared Python protocol, not native random-stream parity.
 
+## Operating characteristics
+
+`simulate_plbarpo` repeats the same controller with independent, recorded trial
+seeds. It accepts the trial's design inputs and retains aggregate results and
+seeds, discarding patient histories as each replicate finishes.
+
+```python
+from mdanderson_stats import simulate_plbarpo
+
+simulation = simulate_plbarpo(
+    [0.2, 0.7, 0.4],
+    prior=np.ones((3, 2)),
+    initial_active=[True, True, False],
+    candidate_order=[2],
+    min_n_per_arm=[1, 1, 1],
+    max_n_per_arm=[2, 2, 2],
+    max_total_n=6,
+    look_sizes=[2, 4, 6],
+    burn_in_per_arm=1,
+    early_monitoring=False,
+    theta_final=0.5,
+    pfinal=0.8,
+    null_arms=[True, False, True],
+    trials=16,
+    rng=2026,
+)
+efficacy = simulation.metric_index("any_efficacy")
+print(simulation.metric_probability[efficacy])
+print(simulation.familywise_false_efficacy_probability)
+assert simulation.trials == 16
+assert simulation.total_enrollment_mean == 6.0
+```
+
+Rows identified by `metric_names` report entry, futility, early efficacy, final
+assessment, final efficacy, any efficacy and closure at the arm cap. Counts,
+probabilities and binomial Monte Carlo standard errors use all simulated trials.
+`any_efficacy` includes earlier declarations even when an arm has already closed.
+`metric_given_entry` conditions on entry: its denominator is the corresponding
+entry count, and an arm that never enters has `NaN` conditional results.
+
+Mean arm assignments and responses, total enrollment and responses, no-efficacy
+and early-stop rates are also returned. Mean standard errors use sample
+variance; they are unavailable (`NaN`) for a single replicate. Probability
+standard errors are the usual plug-in binomial estimates, including zero for an
+observed rate of zero or one; they are not confidence bounds.
+
+Error rates require `null_arms`, a full-ledger Boolean vector declaring which
+hypotheses are null. Truth probabilities alone do not define the null. Without
+that vector, false-efficacy and familywise-error fields are `None`. Familywise
+error is the fraction of trials declaring at least one supplied null arm
+efficacious, at either an early or final assessment.
+
+To replay replicate `i`, call `run_plbarpo_trial` with the same design inputs
+and `rng=int(simulation.trial_seeds[i])`. The result also records both underlying
+stream seeds. Passing that seed to another `simulate_plbarpo` call starts a new
+seed hierarchy, rather than replaying the original replicate.
+
+Simulation is serial, capped at 5,000 trials and bounded by both per-trial and
+aggregate work limits. These are numerical work proxies, not wall-clock
+guarantees. The example's 16 trials demonstrate usage, not a precision study.
+
 Control/concurrent-control platform scheduling, delayed responses, native
 files and reports remain separate work. The existing
 [control monitoring API](plbarpo-control.md) is available independently.

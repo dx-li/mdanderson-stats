@@ -7,8 +7,8 @@ snapshot is under ignored `research/raw/PLBARPO/`; the page identifies version
 [control selection and monitoring](../docs/plbarpo-control.md) and
 [active-arm allocation](../docs/plbarpo-allocation.md), plus
 [no-control platform trials](../docs/plbarpo-trials.md). Catalog entry 137
-remains partial: control scheduling and aggregate operating characteristics
-are separate missing workflows.
+remains partial: control scheduling and delayed outcomes are separate missing
+workflows. Compact no-control operating characteristics are also available.
 
 ## What the support document establishes
 
@@ -109,3 +109,22 @@ focused regressions, lint/format and targeted type checks pass. Aggregate
 operating characteristics remain the next tranche, followed by control/
 concurrent-control scheduling; delayed responses and native reports are still
 outside this no-control implementation. Catalog entry 137 remains partial.
+
+## Integrated no-control operating characteristics
+
+Luna checkpoint `0851603`, integrated as `31a63ea`, adds `simulate_plbarpo`.
+It reuses the validated controller, prepares the design once and discards each
+replicate's patient history after aggregation. All-trial and entry-conditional
+arm rates, assignment/response means, trial enrollment and stopping summaries,
+Monte Carlo standard errors and explicitly labeled null-arm error rates are
+available. Trial seeds reproduce individual controller runs; starting a new
+simulation from one of those seeds creates a new hierarchy instead.
+
+The strengthened regression (`6086ce7`, integrated as `76c3861`) independently
+replays every recorded seed and reconstructs all seven arm metrics, false
+efficacy and familywise counts, means and sample standard errors. Two focused
+simulation checks pass against the root integration, as do lint and targeted
+mypy. Both public trial/simulation examples pass in 1.55 seconds including
+import, at 106.86 MiB peak resident memory with no swaps. The small public
+simulation is a usage example, not a precision benchmark. No new CI workflow,
+dependency or large simulation was added for this feature.
