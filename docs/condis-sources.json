@@ -10,12 +10,369 @@
       "url": "https://raw.githubusercontent.com/topepo/caret/main/inst/models/models.RData",
       "retrieved_date": "2026-09-10",
       "bytes": 103091,
-      "sha256": "1debd07591774e6b4ca52f2c79ddd11d23910aee2fbb6ba51c33c4342c2f92ae"
+      "sha256": "1debd07591774e6b4ca52f2c79ddd11d23910aee2fbb6ba51c33c4342c2f92ae",
+      "git_blob": "61ff1c862001ba6ab9b461a4de5d546af20223e9"
     }
   ],
   "references": [
     "https://doi.org/10.1016/j.jbi.2022.104117",
     "https://pubmed.ncbi.nlm.nih.gov/35801895/"
   ],
-  "scope": "Independent base CondiS imputation with exact segment integration for native linear interpolation or explicit KM step interpolation. Native CondiS 0.1.2 function executed with survival for numerical comparisons. Default CondiS-X Gaussian identity-link refinement added; caret model fit executed independently. Seven other learners and native resampling remain pending."
+  "scope": "Independent base CondiS imputation with exact segment integration for native linear interpolation or explicit KM step interpolation. Native CondiS 0.1.2 function executed with survival for numerical comparisons. Default CondiS-X Gaussian identity-link refinement added; caret model fit executed independently. Seven other learners and native resampling remain pending.",
+  "learner_reference_sources": [
+    {
+      "repository": "https://github.com/cran/caret",
+      "version": "7.0-1",
+      "revision": "31a3ab0a746ca84c564f9f5cc0214d52570c5a04",
+      "directory": "caret-7.0-1",
+      "retrieved_date": "2026-09-28",
+      "files": [
+        {
+          "path": "DESCRIPTION",
+          "bytes": 3117,
+          "git_blob": "8d423125d4a5080311e0238173b1b5e2df082a15",
+          "sha256": "14076d503515362d80a2cc8c2a6b6adc5043a9bae4b858292cd8e80012ffe66d"
+        },
+        {
+          "path": "R/createDataPartition.R",
+          "bytes": 14300,
+          "git_blob": "4eb78cf4ac32d27b76c22d24396459be6b006dd3",
+          "sha256": "0da464f6932673c90be432cc470a0a4938bc97e23efb64a58bec8ebda91a99d7"
+        },
+        {
+          "path": "R/knnreg.R",
+          "bytes": 7246,
+          "git_blob": "6e34f93b8d42efc5c4323b9abf0613e6232cb4d6",
+          "sha256": "d2aa0c64b86b60c1564a006521aa502be7a2893fe0553ee804dd68603e34780e"
+        },
+        {
+          "path": "R/selection.R",
+          "bytes": 6191,
+          "git_blob": "b67a0d4ce872c3ed50d5df9f3584f4f99d8734c7",
+          "sha256": "b6d8ffaf13e7978b551aba0d8d938e6aa0e1b1ae9d193584e6701a6c69d9b955"
+        },
+        {
+          "path": "R/train.default.R",
+          "bytes": 64257,
+          "git_blob": "9263d224ef7f0b5545c62a9f7adf97272bbc8094",
+          "sha256": "a1407b54793fe55fb81dae4e2a54ff9f8d60fa9cde90f671e040f8cb11309679"
+        },
+        {
+          "path": "R/trainControl.R",
+          "bytes": 14067,
+          "git_blob": "bb99430eed37a9760b88c73eef0acb5874def086",
+          "sha256": "25094c677f3c3075360de5701e4d591679f816d83cf8c5c1bf3915ecb2fb4bb5"
+        },
+        {
+          "path": "R/workflows.R",
+          "bytes": 29681,
+          "git_blob": "80bc36653e1c7b1953141f002fe5dc9ec8d924d4",
+          "sha256": "98e4be87bc56c4c5933441e2b65281b23149099722e42bdc74ef2cefba1ffc8d"
+        },
+        {
+          "path": "src/caret.c",
+          "bytes": 6185,
+          "git_blob": "3ff13a387966710b8ad707bfb7065e319def9d86",
+          "sha256": "aa29b64ee0bd8df051cf7b9209e88a7c14c0a93ff12a522ec0f8e0e45a24cbe0"
+        }
+      ]
+    },
+    {
+      "repository": "https://github.com/cran/glmnet",
+      "version": "4.1-10",
+      "revision": "2b85f4d60b7629929ebd8f9c87b2179b721e50b5",
+      "directory": "glmnet-4.1-10",
+      "retrieved_date": "2026-09-28",
+      "files": [
+        {
+          "path": "DESCRIPTION",
+          "bytes": 2077,
+          "git_blob": "f04949106ced97404772ef550afd40192600ff7d",
+          "sha256": "750879fa903ca2b9f6fa5117492402ffa818976afca9ddfeb0525f3acbdc3c03"
+        },
+        {
+          "path": "R/elnet.R",
+          "bytes": 1793,
+          "git_blob": "8fba519685bf23133c105ef80ffa259e120d7edc",
+          "sha256": "c42a23f792e2ed0ac117d48abf8d19d169383b0c4ac2df4f13c6d3e0fe06634a"
+        },
+        {
+          "path": "R/fix.lam.R",
+          "bytes": 108,
+          "git_blob": "21d4169769de04853109ac5f0aee75531137a001",
+          "sha256": "580ced7cd9f5e11decdcd83be8ab614724c5970f5f13420ff0c4fa810cd11244"
+        },
+        {
+          "path": "R/getcoef.R",
+          "bytes": 1365,
+          "git_blob": "a7536df8460e9e56a6c1fbfc050155faaab36340",
+          "sha256": "861bfdb26e9737990b1957b5cb43282d2392d390df0f798cf9fcf4a4d603e985"
+        },
+        {
+          "path": "R/glmnet.R",
+          "bytes": 27824,
+          "git_blob": "f73991cdfb913f223ef16cdfbda751541a48e90d",
+          "sha256": "db2b93145c6f7c541f1ec5a75d131b2056e720751943f2d4b2bb4e6b01142ea9"
+        },
+        {
+          "path": "R/glmnet.control.R",
+          "bytes": 3891,
+          "git_blob": "668edb0fbf56ac95bed35eee90b59ab0c355642d",
+          "sha256": "607965f74fa23bc82bd4f68108283f9974631a159d4af2b1d17a9c509edadcd3"
+        },
+        {
+          "path": "R/jerr.R",
+          "bytes": 618,
+          "git_blob": "3f3058dc323c7c8a46775de5582c2de785174342",
+          "sha256": "ffc255f0191d05ebb38ecb427a9ebe39ead86027c34d2c809e79f67be883383a"
+        },
+        {
+          "path": "R/jerr.elnet.R",
+          "bytes": 732,
+          "git_blob": "ff7ecf5d10b8258363d1ac68f43e22f6a172804a",
+          "sha256": "1d5db682f13c5c1d178553f532b088e202ec771c118a7e821e09d946b8cb7a10"
+        },
+        {
+          "path": "R/lambda.interp.R",
+          "bytes": 1160,
+          "git_blob": "7f942c57800cb298f3fbad2e02f083861d1dd11d",
+          "sha256": "e8d32ce7943e849ad14145222378a1f1cc25b03a99fe635c37faa7d262771f40"
+        },
+        {
+          "path": "R/predict.elnet.R",
+          "bytes": 182,
+          "git_blob": "f87ca1f269e63c225e2a5aa88cc1910a77adb16f",
+          "sha256": "03e9abbc4095a900b99ee437533180095367105f656aaf211afd1ed229db5aad"
+        },
+        {
+          "path": "R/predict.glmnet.R",
+          "bytes": 6918,
+          "git_blob": "6f2d304072480214ba6cba80a221ec52be10ffb7",
+          "sha256": "80f44a0c83b97415fdd714ba6eb9d19e484ae9d01c3fa6902d56fdfb73669e40"
+        },
+        {
+          "path": "R/zeromat.R",
+          "bytes": 263,
+          "git_blob": "2709a2919b49138c90597b45e3a578000826384a",
+          "sha256": "0e79c3852c2c8cb25414f75ba26bd34d6b39b86258567d5651b73f620929293c"
+        },
+        {
+          "path": "src/driver.h",
+          "bytes": 355,
+          "git_blob": "780f34e122047fa99c62f98eee00b3ef1b630b93",
+          "sha256": "35070ee975048fe00aaf8b37f726b32852b02c1ff9142ff74f56f8af86da2119"
+        },
+        {
+          "path": "src/elnet_exp.cpp",
+          "bytes": 12733,
+          "git_blob": "362f62d1dc15749da0821062e8a28ca837e70f3e",
+          "sha256": "75c51294bbba7625d122a29d743269c2f878647bf7597ef36218ff76b6c25009"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_driver/base.hpp",
+          "bytes": 818,
+          "git_blob": "d9c4dd0b703d3fd21c65a3d75afaba768eab36bf",
+          "sha256": "65bc893005dca4c578186dec698cb7ac34ff9afe3256e014a30843b455c1d656"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_driver/chkvars.hpp",
+          "bytes": 1483,
+          "git_blob": "88576eb6abca9da316cf5fce6007b52d1a755153",
+          "sha256": "0f6dec42b1a7b0f7c3c4f8c6b99d9a8954123a43efb4aa30579168a5665b2afc"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_driver/decl.hpp",
+          "bytes": 151,
+          "git_blob": "0cc63018672d98bafb9d8dc4b6d318d3af92b526",
+          "sha256": "19d1b6e12891c9fcee8087f1948ab2535b5e8712022344095e882eec5e31e5c8"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_driver/gaussian.hpp",
+          "bytes": 17371,
+          "git_blob": "03edc9397f99e71e2c5b4327ce600ff62b815c36",
+          "sha256": "2d908a8ed59cdf1d7856937538fa86243f86c9a765d58ee2601997fe1c17dc02"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_driver/standardize.hpp",
+          "bytes": 17070,
+          "git_blob": "d7ec5f3d92d4ef798f861cb4607477c68c7144f3",
+          "sha256": "3ca58c760ba03fff717506d7c6f26c3746cc004dda714aabfe0bb2d633549e6c"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_path/base.hpp",
+          "bytes": 10114,
+          "git_blob": "e38d438f1da5260df3718ee8bee0b457f2f81569",
+          "sha256": "0938875f725f8b1b019d4d93a709806e1adcb82b28223c52ffead9c0d7a1b03b"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_path/decl.hpp",
+          "bytes": 578,
+          "git_blob": "4c2c6c9f9fead13869ece094ed1e3515a097b113",
+          "sha256": "3fee1562fd478b437f697ce516e0fc546040f2d86b7d69631dbe15240f837bae"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_path/gaussian_base.hpp",
+          "bytes": 9824,
+          "git_blob": "d3bef393a45e6eb2c435a143ec4945c4d6e49069",
+          "sha256": "ec6fd37b7c4685b4c258ddf2a97c598ac799cab4215d3e8623f6cb1e21651070"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_path/gaussian_cov.hpp",
+          "bytes": 5435,
+          "git_blob": "14911460a6916286a80c39940a52a472dcd7d699",
+          "sha256": "c460d4a7b521e2057b4c87ecdbf71735b9c646a9d5b495185cdd20f6ffd41ebe"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_path/gaussian_multi.hpp",
+          "bytes": 3365,
+          "git_blob": "f2af818543973bc386d929fac3668e128f2f1a76",
+          "sha256": "6bf6d600ff7ec196fee2307669d808cd9acb8f65ea5a968bd8bba8871e4f9662"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_path/gaussian_naive.hpp",
+          "bytes": 5325,
+          "git_blob": "1c441a08984357f843ba89092734df832ecbca31",
+          "sha256": "10bd2ab7f3d2443c1ef20dc1cf37585001b36b1e4b1f96127a770b6916e9f901"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_path/sp_gaussian_cov.hpp",
+          "bytes": 5731,
+          "git_blob": "7fd0d586025f86c98a139efebbf18bd7f44a92e5",
+          "sha256": "fd6257841fcb11d7399d1b4c01da07c0d2a488331f6374a30d79b78faac2c557"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_path/sp_gaussian_multi.hpp",
+          "bytes": 5948,
+          "git_blob": "9cdc876084c91dd31e39d8a4e68a97ec4bfa22d9",
+          "sha256": "eef025de4327b56395e31699710dd60e5f1b9592cd28278139ff85ca1b639361"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_path/sp_gaussian_naive.hpp",
+          "bytes": 5760,
+          "git_blob": "ac26d3aae4127d83bdd977522c568f32182c35b0",
+          "sha256": "88fd5503231331d981a655c7a9a5d2c99d18d65a74c967bfdec105a54dcf0522"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_point/base.hpp",
+          "bytes": 6020,
+          "git_blob": "eb55194fde0614c82ac9d844b5af31f42e8324ee",
+          "sha256": "10be4695b3c88a8aef72f97eb876dbc2f84e1f5228ec2527d285f41ad044f561"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_point/decl.hpp",
+          "bytes": 781,
+          "git_blob": "9798ee19afbfc31d157c5b2043291c1ab43a02ec",
+          "sha256": "8ea2b1d16254be0c087f08db2a995d9fe557d65722f184097cc9dc998e47fe76"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_point/gaussian_base.hpp",
+          "bytes": 1833,
+          "git_blob": "c01c8fec376d1f849f22cae91147d2fd56ee9d7f",
+          "sha256": "db4d65f7630d66e78de2261a7fc9f1b8224f7c0cd88540b30a63e860e02f83f0"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_point/gaussian_cov.hpp",
+          "bytes": 2496,
+          "git_blob": "61931dd2626cdbbf548bee56d3f49be8d5265c05",
+          "sha256": "b9b7ff394324469a4b9fc0b685e5049478f25a5a18f7e9ec47831780502ac8f4"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_point/gaussian_naive.hpp",
+          "bytes": 1336,
+          "git_blob": "60592f86e9788ba07e45eaad1d1c1334310044c4",
+          "sha256": "d5a17246696c8c66513793c66ebf00c71f43999703cd16cbe9aac8db439fa52e"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_point/internal/base.hpp",
+          "bytes": 14528,
+          "git_blob": "24301f7059d12173f1bfa81a1e3f5f01d05f23f5",
+          "sha256": "cd7ba63b156519b5ab948e5b8c74a67169db3e60fc3eab21418b67f750eb4e11"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_point/internal/decl.hpp",
+          "bytes": 1319,
+          "git_blob": "4e2811c0c993e1d784dd653e268893e5a6b99ce4",
+          "sha256": "327e12fb07c4158d27c36b718f2eba635b73693103707d8ed772d48e7ad7be9c"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_point/internal/gaussian_base.hpp",
+          "bytes": 31363,
+          "git_blob": "4b7e998050e6c9bbaf349426a60e47c76978e90e",
+          "sha256": "31a49b1b4bef06eb6e368359036530478985f98483f7a537be05e7ec4b6583be"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_point/internal/gaussian_cov.hpp",
+          "bytes": 1761,
+          "git_blob": "a70abda1054a6c1cbc5890ea138b4f140877d522",
+          "sha256": "4a30fdc38f8e629c74becc77c0788e187198d899eb0d44509fbf230ccc5cca89"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_point/internal/gaussian_naive.hpp",
+          "bytes": 2728,
+          "git_blob": "1e7d8f699778edeb9f8d6baedaaecba87c0aea4d",
+          "sha256": "4d19d699bcaa44868f25194eec4b6b8153798408236c1522d0ee6cb6d2426b0f"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/elnet_point/traits.hpp",
+          "bytes": 878,
+          "git_blob": "23d59c39163c12dca632f234c35555d5c254ac07",
+          "sha256": "728ffb3e72d9de8399c09c96dc425b28b4aa7e90e069bf32ed519e2ada2f3c4b"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/util/exceptions.hpp",
+          "bytes": 1658,
+          "git_blob": "cffcabc50f461e888d7d14398856000828b3345a",
+          "sha256": "3c044175eec94e6d502ba32e15080ee16a10f06a19a2dc8bf50412da70af7b87"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/util/functional.hpp",
+          "bytes": 725,
+          "git_blob": "8ade19a9ecaf61dd5995affe254ec8f786cee926",
+          "sha256": "22e892807408a4df2e18e40d90a90fc08cbeefd58424d2477d356da1f440f2ac"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/util/iterator/counting_iterator.hpp",
+          "bytes": 1635,
+          "git_blob": "c6cbe2cba5e13a028a71c977ac94c34617292048",
+          "sha256": "a1a37399a61bce0d960f4538b37ef2f54817a4b07b93e562731c612b23a16657"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/util/iterator/one_to_zero_iterator.hpp",
+          "bytes": 1643,
+          "git_blob": "a223f243cf923208d1a22142aebd84989758e1bb",
+          "sha256": "3c8d23429873542720c64c235243ea316a6979d2ef7cbf6fb602b3d52679f1ea"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/util/macros.hpp",
+          "bytes": 1407,
+          "git_blob": "08d22499f829b40bcff228bce76e209c15c68a65",
+          "sha256": "286e05e2d52c5a43c04d2a1e3527d3bdd8bf6470ef07c69fc64e478be876520c"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/util/type_traits.hpp",
+          "bytes": 1980,
+          "git_blob": "f1bfacf43175f97d0ddc43423d2482bde3fd713a",
+          "sha256": "a3e4cfecf6c892a90ffb45c0ca5d470a9ee35b4f6d610dc97bc431b4b196c073"
+        },
+        {
+          "path": "src/glmnetpp/include/glmnetpp_bits/util/types.hpp",
+          "bytes": 1050,
+          "git_blob": "252c0c51bcac24ae72fcde79ee87efc307ada38d",
+          "sha256": "06d566e6ca94e5f2515f7a40c05d22897c0cf61a87e673e4520693740dfb33d0"
+        },
+        {
+          "path": "src/internal.cpp",
+          "bytes": 3748,
+          "git_blob": "5ddd2057ffb9dfb4b2f6adff019b5582677f2c89",
+          "sha256": "d6eb801c214731abe52828918c9912ddb4c1fc5185b2a53f9cd4095e1512154e"
+        },
+        {
+          "path": "src/internal.h",
+          "bytes": 333,
+          "git_blob": "ab73ff578aea58a5f8201cbbdca2a3a7bd8896ec",
+          "sha256": "3b00f39dab6c8ccce009764bcea2aecd1ab8e41669310481502bbea2ac8a3eec"
+        }
+      ]
+    }
+  ]
 }
