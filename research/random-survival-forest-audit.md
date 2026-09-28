@@ -130,3 +130,41 @@ simulation-based intervals, categorical encoding and full application
 workflows remain open. The forest interface does not yet implement categorical
 splitting, missing-value imputation, competing-risk forests, out-of-bag
 diagnostics, variable importance or alternative split rules.
+
+## Source-backed next scope: OOB diagnostics and permutation importance
+
+The pinned native source supplies a concrete next statistical workflow. In
+`research/raw/randomForestSRC/src/randomForestSRC.c`, `updateEnsembleSurvival`
+(around line 32285) includes a training row only for trees where it is out of
+bag, keeps a per-row contributor count, and averages leaf Kaplan–Meier and
+Nelson–Aalen curves separately. The R wrapper exposes both OOB matrices on
+`time.interest` (`R/rfsrc.R`, around lines 1185–1201). Python currently discards
+sampling membership, so it must retain that membership to implement these
+outputs. A row without contributors has no OOB estimate; an in-bag fallback
+would change the method. NaN with an explicit zero count is a suitable Python
+representation.
+
+`getMortality` (around line 32117) sums cumulative hazard over the native
+interest-time grid. It is not a time integral or the last cumulative-hazard
+value. `getConcordanceIndex` (around line 32495) returns one minus concordance,
+excluding pairs with zero contributor counts. Earlier observed failures are
+comparable to later observations; tied event/censor pairs put the failure
+first. For two tied failures, tied mortality gets full concordance and unequal
+mortality gets half. Ordinary comparable pairs with tied mortality get half.
+The source uses `EPSILON` for time and mortality ties. Its defining value has
+not yet been located in the cached source, so native tie tolerance remains a
+contract to resolve before claiming parity.
+
+The manual (`man/rfsrc.Rd`, VIMP section around line 564) distinguishes
+`importance="permute"` from the default `"anti"`. For permutation importance,
+`getPermuteMembership` (around line 4290) permutes among each tree's OOB rows,
+reroutes those cases, and averages the perturbed OOB mortality across each
+tree block. `finalizeVimpPerformance` (around line 3805) averages the blockwise
+increase in concordance error over the unperturbed OOB error. A block of all
+trees compares the whole OOB forest; smaller blocks are not equivalent to a
+single whole-forest perturbation. Do not label permutation VIMP as native
+default importance.
+
+The first coherent implementation slice is OOB curves, contributor counts,
+mortality and concordance error. Explicit permutation importance can follow
+with documented block semantics. Neither slice is implemented by this audit.
