@@ -1,0 +1,5 @@
+"case","carryover","required","enrolled","shortfall","completed","selected_arm"
+"eligible_total_cap",7,3,3,0,TRUE,1
+"selected_doses_only",6,3,3,0,TRUE,1
+"shortage",7,4,2,2,FALSE,NA
+"already_full",7,0,0,0,TRUE,2

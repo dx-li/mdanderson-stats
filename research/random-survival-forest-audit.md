@@ -129,19 +129,20 @@ This adds the ordinary numeric forest family to SurvivalContour entry 166.
 The entry remains partial: interval-censored and neural families, native
 simulation-based intervals, categorical encoding and full application
 workflows remain open. The forest interface does not yet implement categorical
-splitting, missing-value imputation, competing-risk forests, out-of-bag
-diagnostics, variable importance or alternative split rules.
+splitting, missing-value imputation, competing-risk forests or alternative
+split rules. Subsequent OOB and permutation-importance additions are documented
+below.
 
-## Source-backed next scope: OOB diagnostics and permutation importance
+## Source contract: OOB diagnostics and permutation importance
 
 The pinned native source supplies a concrete next statistical workflow. In
 `research/raw/randomForestSRC/src/randomForestSRC.c`, `updateEnsembleSurvival`
 (around line 32285) includes a training row only for trees where it is out of
 bag, keeps a per-row contributor count, and averages leaf Kaplan–Meier and
 Nelson–Aalen curves separately. The R wrapper exposes both OOB matrices on
-`time.interest` (`R/rfsrc.R`, around lines 1185–1201). Python currently discards
-sampling membership, so it must retain that membership to implement these
-outputs. A row without contributors has no OOB estimate; an in-bag fallback
+`time.interest` (`R/rfsrc.R`, around lines 1185–1201). These outputs require
+retaining sampling membership. A row without contributors has no OOB estimate;
+an in-bag fallback
 would change the method. NaN with an explicit zero count is a suitable Python
 representation.
 
@@ -204,5 +205,42 @@ dependence of absolute tie tolerances therefore remain explicit.
 Existing tree checks plus focused new OOB checks pass: six tests in 1.57
 seconds. Targeted lint, formatting and type checks pass. These are kernel and
 independent-tree comparisons, not a claim of native full-forest RNG parity.
-Explicit permutation importance, categorical splitting, alternative split
-rules and missing-value handling remain separate remaining scope.
+Categorical splitting, alternative split rules and missing-value handling
+remain separate remaining scope.
+
+## Permutation importance and independent native comparison
+
+`permutation_random_survival_forest_importance` now implements explicit OOB
+permutation importance. Each feature is shuffled separately within each tree's
+OOB rows; perturbed mortality is averaged over each complete tree block before
+computing concordance error. The native `RF_perfBlockCount=floor(ntree/perfBlock)`
+rule excludes incomplete tail trees. `finalizeVimpPerformance` excludes blocks
+with undefined baseline or perturbed errors before averaging differences.
+Negative differences are retained. Results expose each component and the
+number of valid blocks rather than hiding undefined blocks.
+
+The Python default `block_size=None` uses the entire forest. Native explicit
+permutation importance defaults to `block.size=10`; this different Python
+default is documented, and the native block size can be supplied explicitly.
+Native `importance=TRUE` defaults to anti-split importance, which is not
+implemented. Random-stream equivalence is not claimed.
+
+`tools/reference_random_survival_vimp.py` independently reconstructs sampled
+one-feature trees using native C split/leaf kernels, replays OOB permutations,
+and evaluates errors with the unchanged native concordance kernel. A constant
+second feature must have zero importance. Seven trees and seed 1772 check:
+
+| Block size | Complete blocks | Valid blocks per feature | Ignored tree indices | Importance |
+| --- | --- | --- | --- | --- |
+| 7 | 1 | 1 | none | `[0, 0]` |
+| 3 | 2 | 2 | `[6]` | `[-0.09702380952380951, 0]` |
+| 1 | 7 | 6 | none | `[-0.08333333333333333, 0]` |
+
+All baseline errors, perturbed errors, block differences and mean importance
+values agree exactly. The root comparison took 0.9344 seconds after imports,
+including the tiny native harness build, at 113.28 MiB peak RSS with zero swaps.
+The nine focused forest/OOB/importance tests passed in 1.72 seconds; targeted
+lint, formatting and type checks passed. A training fingerprint checks exact
+canonical training values and row order, without storing another feature matrix.
+Prospective work bounds cover routing and pair comparisons, with row-sized
+temporary vectors and bounded feature-by-block output arrays.

@@ -1,0 +1,9 @@
+"case","candidate","arm","dose","toxicity","response","score1","score2","probability1"
+"eligible_total_cap",0,1,1,0,1,2,2,1
+"eligible_total_cap",1,1,1,1,1,0,4,1
+"eligible_total_cap",2,2,2,1,1,3,1,0
+"selected_doses_only",0,2,3,1,0,7,3,0
+"selected_doses_only",1,2,3,0,1,9,5,0
+"selected_doses_only",2,2,3,1,1,7,3,0
+"shortage",0,1,1,0,1,2,2,1
+"shortage",1,1,1,1,1,0,4,1
