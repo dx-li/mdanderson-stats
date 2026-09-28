@@ -78,6 +78,12 @@ from .bacis_simulation import BaCISOperatingCharacteristics, simulate_bacis_oc
 from .bacis_theta import BaCISThetaPosterior, bacis_theta_posterior, sample_bacis_theta
 from .bacis_trial import BaCISOneTrialResult, bacis_one_trial
 from .bard import BARDMinimizationResult, BARDSelectionResult, bard_minimization, bard_select_obd
+from .bard_blrm import (
+    BARDLogisticFit,
+    BARDLogisticPrior,
+    bard_blrm_probability,
+    fit_bard_blrm,
+)
 from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
 from .barpo_simulation import BarpoSimulation, simulate_barpo
 from .barpo_trial import BarpoTrialLook, BarpoTrialResult, run_barpo_trial
@@ -1497,6 +1503,10 @@ __all__ = [
     "BARDSelectionResult",
     "bard_minimization",
     "bard_select_obd",
+    "BARDLogisticFit",
+    "BARDLogisticPrior",
+    "bard_blrm_probability",
+    "fit_bard_blrm",
     "PoPBoundaries",
     "PoPDecision",
     "PoPDesign",

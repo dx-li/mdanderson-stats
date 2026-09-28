@@ -86,7 +86,10 @@ explicit coherent model choice, not a verified native implementation detail.
 Equal-probability allocation ties and lower-arm utility ties are documented
 Python defaults. No numerical parity with hidden app internals is claimed.
 
-The integrated stage-one/stage-two calendar simulator, BF-BLRM route,
+The [BF-BLRM model component](bard-blrm.md) now supplies the paper's raw-ratio
+toxicity curve and explicit-prior posterior fitting with target/overdose
+summaries. BF-BLRM dose decisions and scheduling remain separate components.
+The integrated stage-one/stage-two calendar simulator,
 accelerated-titration/expansion options, cap handling, calibration, and native
 reports remain open. Existing BF-BOIN components provide separate stage-one
 functionality; this addition does not claim the full BARD workflow is complete.

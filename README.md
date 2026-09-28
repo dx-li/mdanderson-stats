@@ -1219,8 +1219,10 @@ results and exact small-trial enumeration validate the numerical core.
 
 [BARD stage-two methods](docs/bard.md) add covariate-adaptive allocation using
 combined stage-one/stage-two history, plus utility and noninferiority OBD
-selection. Priors, safety pooling weights and tie policies are explicit;
-the integrated trial simulator and native reports remain open.
+selection. [BF-BLRM model fitting](docs/bard-blrm.md) implements the paper's
+raw-dose-ratio model with explicit log-parameter priors, bounded sampling and
+target/overdose diagnostics. Priors, safety pooling weights and tie policies
+are explicit; the integrated trial simulator and native reports remain open.
 
 [TITE-BOIN12 AL methods](docs/tite-boin12.md) add patient-level handling of
 pending toxicity and efficacy, joint utility posteriors and interim dose

@@ -123,7 +123,7 @@ some legacy adaptations retain commercial-use restrictions.
 | CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis | [online #157](https://biostatistics.mdanderson.org/shinyapps/CondiS/) | [Guide](condis.md) |
 | CONFINT | [desktop #64](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/64) | [Guide](confint.md) |
 | CRM Suite | [desktop #132](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132) | See catalog feature and validation notes |
-| Dose Optimization with Backfill and Adaptive Randomization (BARD) | [online #165](https://biostatistics.mdanderson.org/shinyapps/BARD) | See catalog feature and validation notes |
+| Dose Optimization with Backfill and Adaptive Randomization (BARD) | [online #165](https://biostatistics.mdanderson.org/shinyapps/BARD) | [Stage two](bard.md), [BF-BLRM model](bard-blrm.md) |
 | Dose Schedule Finder | [desktop #75](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75) | [Model](dose-schedule.md), [calendar trials](dose-schedule-trials.md) |
 | EasyCellType: Automatic annotation tool designed for Sing-cell RNA sequencing data | [online #159](https://biostatistics.mdanderson.org/shinyapps/EasyCellType/) | [Fisher guide](easycelltype.md), [ranked scores](easycelltype-gsea.md) |
 | EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Guide](efftox.md) |

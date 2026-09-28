@@ -67,3 +67,33 @@ integration error. This ratio is below `2.6e-19` in both examples. Base-R
 integration completed with warnings treated as errors; Python sampler
 comparison remains pending at this reference checkpoint. These mild illustrative
 priors are unrelated to undocumented native application settings.
+
+## Model and posterior implementation checkpoint
+
+Luna committed the fitted component as `a92e81b`, integrated as `539841b`.
+It uses independent Gaussian-prior elliptical slice sampling with dispersed
+prior starts, explicit zero-SD coordinates, grouped DLT data and log-odds
+target/overdose comparisons. Overflowed predictors fail explicitly; they are
+not treated as zero-likelihood proposals, which could truncate a valid
+posterior. Work accounting includes all likelihood attempts and retained-dose
+predictions, with static limits before random draws.
+
+Read-only review found no substantive error in the reference integration or
+the fitted model after numerical review corrections. The reference's
+normalization constant excludes binomial coefficients and is unsuitable as
+a full binomial marginal likelihood for model comparison.
+
+The Python comparison matches all 20 curve probabilities. Four chains with
+1,500 retained draws after 500 warmup draws agree with all 22 posterior
+references: the largest discrepancy is 0.9694 MCSE in the fixed-slope case
+and 1.9552 MCSE with two free parameters. Maximum split R-hat is 1.00032 and
+1.00104, respectively; the fixed coordinate is excluded from this convergence
+check. Fits use 11,726 and 15,724 likelihood evaluations. The comparison took
+0.923 seconds after import, peaked at 116.88 MiB and reported no swaps.
+
+Three focused worker checks passed in 1.77 seconds, including the exact
+fixed-parameter target/overdose boundary and a budget rejection before RNG
+consumption. Targeted Ruff/formatting and mypy passed. No full suite, large
+Monte Carlo simulation, new dependency or CI change was introduced.
+Dose/backfill decisions and the stage-one calendar are separate follow-ups;
+the fitted model alone does not complete BARD's full trial workflow.
