@@ -96,9 +96,7 @@ def test_control_simulation_aggregates_replayable_trials_and_null_errors():
         where=entry[None, :] > 0,
     )
     np.testing.assert_allclose(result.metric_given_entry, conditional, equal_nan=True)
-    np.testing.assert_allclose(
-        result.metric_given_entry_mcse, conditional_mcse, equal_nan=True
-    )
+    np.testing.assert_allclose(result.metric_given_entry_mcse, conditional_mcse, equal_nan=True)
     np.testing.assert_array_equal(result.false_efficacy_counts, replay_false)
     assert result.familywise_false_efficacy_count == replay_familywise
     assert result.no_efficacy_count == replay_no_efficacy
@@ -131,7 +129,5 @@ def test_control_simulation_rejects_control_null_and_oversized_work_before_rng()
         simulate_plbarpo_control(**_design(), trials=2, null_arms=[True, False, False], rng=random)
     assert random.bit_generator.state == state
     with np.testing.assert_raises_regex(ValueError, "max_total_work"):
-        simulate_plbarpo_control(
-            **_design(), trials=4, max_total_work=1, rng=random
-        )
+        simulate_plbarpo_control(**_design(), trials=4, max_total_work=1, rng=random)
     assert random.bit_generator.state == state

@@ -1181,7 +1181,9 @@ Compact simulation summaries add per-arm operating characteristics, enrollment,
 Monte Carlo errors and error rates against explicitly supplied null arms.
 [Persistent-control trials](docs/plbarpo-control-trials.md) add entire-trial or
 concurrent-control assessment, simultaneous replacement and recorded comparison
-windows. Control-trial aggregate simulation and delayed outcomes remain open.
+windows. Their aggregate simulations include conditional-rate errors and
+explicit-null error rates, with the control excluded from efficacy hypotheses.
+Delayed outcomes remain open.
 
 [TTEConduct](docs/tteconduct.md) adds single-arm exponential survival monitoring
 against an uncertain historical standard, with an additive improvement margin

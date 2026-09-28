@@ -212,9 +212,7 @@ def simulate_plbarpo_control(
     elif rng is None:
         entropy = None
     elif (
-        isinstance(rng, (bool, np.bool_))
-        or not isinstance(rng, (int, np.integer))
-        or int(rng) < 0
+        isinstance(rng, (bool, np.bool_)) or not isinstance(rng, (int, np.integer)) or int(rng) < 0
     ):
         raise ValueError("rng must be a nonnegative integer, Generator or None")
     else:

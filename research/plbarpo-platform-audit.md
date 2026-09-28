@@ -8,9 +8,8 @@ snapshot is under ignored `research/raw/PLBARPO/`; the page identifies version
 [active-arm allocation](../docs/plbarpo-allocation.md), plus
 [no-control platform trials](../docs/plbarpo-trials.md) and
 [persistent-control trials](../docs/plbarpo-control-trials.md). Catalog entry 137
-remains partial: control-trial aggregate simulation and delayed outcomes are
-separate missing workflows. Compact no-control operating characteristics are
-also available.
+remains partial: delayed outcomes and native files/reports remain open. Compact
+operating characteristics are available for both control and no-control trials.
 
 ## What the support document establishes
 
@@ -159,3 +158,25 @@ Seven focused controller checks, targeted lint/type checks and the public
 control-trial example pass after integration. The example takes 1.54 seconds
 including import, at 105.38 MiB peak resident memory with no swaps. No new CI
 workflow or large Monte Carlo run was added.
+
+## Integrated control-trial operating characteristics
+
+Luna checkpoint `7ee1b43`, integrated as `9174ab6`, adds
+`simulate_plbarpo_control` and compact immutable summaries. It prepares a design
+once, reuses the same control controller and discards individual histories.
+Seven arm metrics, all-trial and entry-conditional probabilities/MCSE, enrollment
+and response means/MCSE, early stopping and no-efficacy summaries are available.
+An arm with no entries has NaN conditional results. The persistent control stays
+in enrollment summaries but cannot be marked as an efficacy null. False
+efficacy and familywise error require an explicit experimental null mask.
+
+One seeded regression independently reconstructs every aggregate from all four
+recorded controller runs. A second verifies rejection of a control null and
+excessive work before consuming caller randomness. Both pass after integration
+in 1.56 seconds. The prepared-runner extraction also preserves all four
+independent base-R controller references: 94 allocation cells, 12 comparisons
+and 14 final rows still match, at 118.16 MiB peak RSS with zero swaps. Worker
+validation additionally passed ten focused checks, Ruff and targeted mypy.
+Root lint/type checks and both public control examples also pass. The examples
+take 1.88 seconds including import, at 107.80 MiB peak RSS with no swaps; the
+eight-trial simulation is a usage demonstration, not a precision benchmark.

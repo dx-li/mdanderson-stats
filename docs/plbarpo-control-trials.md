@@ -111,6 +111,60 @@ patients, 12 posterior comparisons and 14 terminal arm rows. These establish
 the documented Python protocol and beta comparisons, without asserting native
 scheduler or random-stream parity.
 
-Delayed outcomes, control-trial aggregate operating characteristics and native
-files/reports remain open. [No-control simulation](plbarpo-trials.md) is
-available separately.
+## Operating characteristics
+
+`simulate_plbarpo_control` repeats this controller with independent recorded
+trial seeds, retaining aggregate summaries and discarding patient histories.
+It accepts the same design parameters, plus a trial count and optional explicit
+null-arm mask; assignment/outcome tapes are reserved for individual replays.
+
+```python
+from mdanderson_stats import simulate_plbarpo_control
+
+simulation = simulate_plbarpo_control(
+    [0.5, 0.3, 0.7],
+    prior=np.ones((3, 2)),
+    initial_active=[True, True, False],
+    candidate_order=[2],
+    min_n_per_arm=[1, 1, 1],
+    max_n_per_arm=[8, 2, 2],
+    max_total_n=8,
+    look_sizes=[2, 4, 6, 8],
+    burn_in_per_arm=1,
+    control_mode="concurrent",
+    early_monitoring=False,
+    pfinal=0.85,
+    null_arms=[False, True, False],
+    trials=8,
+    rng=2026,
+)
+efficacy = simulation.metric_index("any_efficacy")
+print(simulation.metric_probability[efficacy])
+print(simulation.familywise_false_efficacy_probability)
+assert simulation.metric_counts[simulation.metric_index("entry"), 0] == 8
+assert simulation.metric_counts[efficacy, 0] == 0
+```
+
+The control stays in enrollment and entry summaries but is never an efficacy
+hypothesis. `null_arms[0]` must be false; marking the control as a null is an
+error. Experimental null hypotheses must be declared explicitly. Without this
+mask, false-efficacy and familywise-error fields are `None`. Familywise error
+counts any early or final efficacy declaration among the supplied null arms.
+
+The seven metric rows report entry, futility, early efficacy, final assessment,
+final efficacy, any efficacy and cap closure. All-trial rates and their Monte
+Carlo standard errors use the requested trial count. `metric_given_entry` and
+`metric_given_entry_mcse` use each arm's entry count; both are `NaN` for an arm
+that never enters. Enrollment, response, early-stop and no-efficacy summaries
+are also returned. Mean standard errors use sample variance and are `NaN` for
+a single replicate. Binomial plug-in errors can be zero for observed rates
+of zero or one and are not confidence bounds.
+
+To replay replicate `i`, call `run_plbarpo_control_trial` with the same design
+and `rng=int(simulation.trial_seeds[i])`. Calling the simulation again with that
+seed instead creates a new seed hierarchy. Runs are serial, capped at 5,000
+replicates and bounded by per-trial and aggregate numerical work limits. The
+eight-trial example demonstrates usage; it is not a precision study.
+
+Delayed outcomes and native files/reports remain open.
+[No-control simulation](plbarpo-trials.md) is available separately.

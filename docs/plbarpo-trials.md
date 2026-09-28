@@ -152,5 +152,5 @@ aggregate work limits. These are numerical work proxies, not wall-clock
 guarantees. The example's 16 trials demonstrate usage, not a precision study.
 
 [Persistent-control trials](plbarpo-control-trials.md) support entire-trial and
-concurrent-control comparisons separately. Delayed responses, control-trial
-aggregate simulation and native files/reports remain open.
+concurrent-control comparisons and aggregate simulations separately. Delayed
+responses and native files/reports remain open.
