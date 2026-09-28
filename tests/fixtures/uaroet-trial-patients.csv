@@ -1,0 +1,15 @@
+"scenario","patient","outcome_uniform","assigned_dose","efficacy","toxicity"
+"select",1,0.05,0,0,0
+"select",2,0.55,0,0,1
+"select",3,0.65,0,1,0
+"select",4,0.95,0,1,1
+"select",5,0.45,0,0,0
+"select",6,0.85,0,1,1
+"early_stop",1,0.05,0,0,0
+"early_stop",2,0.55,0,0,1
+"final_no_selection",1,0.05,0,0,0
+"final_no_selection",2,0.55,0,0,1
+"final_no_selection",3,0.65,0,1,0
+"final_no_selection",4,0.95,0,1,1
+"final_no_selection",5,0.45,0,0,0
+"final_no_selection",6,0.85,0,1,1
