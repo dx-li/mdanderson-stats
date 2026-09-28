@@ -848,6 +848,11 @@ from .rbop2_binary import (
     rbop2_binary_design,
 )
 from .regression_ess import RegressionESS, logistic_regression_ess, normal_regression_ess
+from .regression_ess_simulation import (
+    RegressionESSSimulation,
+    RegressionESSTrigger,
+    simulate_regression_ess,
+)
 from .response_survival import ResponseSurvivalPosterior, response_survival_posterior
 from .response_survival_simulation import ResponseSurvivalSimulation, simulate_response_survival
 from .rolling_six import RollingSixDecision, RollingSixDesign, RollingSixSelection
@@ -1864,6 +1869,9 @@ __all__ = [
     "TOPBinaryDecision",
     "TOPBinaryBoundaries",
     "RegressionESS",
+    "RegressionESSSimulation",
+    "RegressionESSTrigger",
+    "simulate_regression_ess",
     "logistic_regression_ess",
     "normal_regression_ess",
     "MERITInterims",

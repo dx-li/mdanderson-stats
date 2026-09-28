@@ -75,10 +75,9 @@ value. Tests compare all seven native-convention results against the unmodified
 R functions, verify conjugate information updates and time-unit behavior, and
 check broadcasting, fractional concentrations and extreme variance scales.
 
-**Catalog status is partial.** Unknown-mean variance models, the app's regression
-and epsilon-information simulation workflows, CRM, TITE-CRM, plots and native
+**Catalog status is partial.** Unknown-mean variance models, CRM, TITE-CRM, plots and native
 reports remain pending. The native survival ESS
 criterion now has a [deterministic expectation implementation](survival-ess.md).
-The package already has separate
-[regression ESS functions](regression-ess.md); parity with this app's regression
-simulation choices has not been established.
+The [regression ESS functions](regression-ess.md) now include the app's original
+normal/logistic uniform-covariate simulation, cumulative information paths and
+subvector crossings, verified against the author source with shared covariates.

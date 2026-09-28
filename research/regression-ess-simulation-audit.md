@@ -52,7 +52,13 @@ four prior/model cases: normal, logistic, zero-mean logistic and a logistic
 prior whose information target cannot be reached within 32 patients. It
 records 12 whole/subvector ESS results and 396 posterior-information path rows.
 The three not-reached results are NA. Generation completed in .23 seconds.
-The Python implementation and comparison are pending.
+The integrated Python implementation agrees with all 396 path rows to
+`1.066e-13` absolute error and all nine finite ESS values to `2.310e-14`.
+The three unreached cases return an explicit `not_reached` status. Seven
+focused regression tests pass, along with lint, formatting and type checks.
+The root audit also executes both public guide examples and independently
+checks log information for intercepts 40 and 1,000. It took .013 seconds
+after import, peaked at 115.0 MiB RSS and reported zero process swaps.
 
 An additional source limitation was observed while preparing the reference:
 an intercept mean of 40 makes the original logistic calculation round `p` to
@@ -62,3 +68,37 @@ calculation can return NA normally. Python must calculate logistic information
 from log tails and keep this numerical failure separate from a valid
 not-reached conclusion. Native RNG equivalence is not a requirement of these
 supplied-input comparisons.
+
+## Original user workflow
+
+The institutional `ReadMe_FIRST.pdf` describes editing and sourcing an R
+script, not importing a statistical data-file format. Its six inputs are
+model, number of covariates, coefficient/precision priors, maximum patient
+count, number of replicates and subvector indicators. These map to the Python
+simulation arguments, the length of the coefficient-prior sequence and
+`crossing(indices)`. A Python example replaces the editable R input script;
+executing arbitrary R scripts is not needed to expose the calculator's
+statistical functionality.
+
+The guide's example has three covariates, four independent N(0,1)
+coefficient priors and Gamma(shape=1, rate=1) precision. With independent
+Uniform(-1,1) covariates, the exact expectation gives 1.9998 for the whole
+vector, coefficients and precision separately. The guide rounds these to
+two and explicitly allows finite-simulation differences. A port should
+preserve that distinction instead of requiring the guide's particular
+random draws or its R-console formatting.
+
+The seeded 256-replicate Python example returned whole-vector ESS
+1.9898821161, coefficient ESS 1.9873894990 and precision ESS 1.9998; the
+direct population expectation gives 1.9998 for each. Together with the
+shared-input native fixtures, this completes the documented statistical
+scope of catalog entry 80. The separate BayesESS app entry 154 remains
+partial because its unknown-mean variance, CRM and TITE-CRM workflows are
+not covered by this regression implementation.
+
+Log cumulative paths and log prior gains are authoritative. Ordinary-scale
+properties are computed on access and can raise on overflow without
+preventing valid log-scale crossings. Prior gains are calculated directly,
+not by subtracting potentially large negative gamma curvature values.
+Resource and prior validation precedes random covariate generation; only
+one replicate's cumulative path is held while aggregating the mean.

@@ -2760,14 +2760,15 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Normal and logistic regression prior ESS for independent normal/gamma coefficients, gamma residual precision, and parameter subvectors",
-        "Exact finite-support logistic expected information and normal second-moment calculations replace Monte Carlo outcome simulation; log-domain ratios preserve extreme-tail information"
+        "Exact finite-support logistic expected information and normal second-moment calculations avoid covariate Monte Carlo error; log-domain ratios preserve extreme-tail information",
+        "Original normal/logistic Uniform(-1,1) covariate simulation with an intercept, cumulative information paths, replicate averages, whole-vector/arbitrary-subvector interpolation and explicit not-reached outcomes; supplied-covariate replay and bounded sequential evaluation."
       ],
       "validation": [
         "Four focused tests: published logistic table and normal examples, independent curvature derivatives, gamma shape below one and extreme predictors/weights; tests/test_regression_ess.py",
-        "Pending native R input/covariate defaults and example fixtures; docs/regression-ess.md"
+        "Original author R calculator: 396 information-path rows agree within 1.07e-13 and nine finite ESS values within 2.32e-14; three unreached results, original three-covariate example, exact crossings and extreme log-information checks. Seven focused tests pass; docs/regression-ess.md and research/regression-ess-simulation-audit.md. R scripts/console formatting are replaced by Python inputs/results; native RNG parity is not claimed."
       ]
     },
     {
@@ -4314,12 +4315,14 @@
       "implemented_features": [
         "Vectorized prior ESS for beta-binomial, gamma-exponential, gamma-Poisson, Dirichlet-multinomial, normal-normal and known-mean inverse-chi-squared/inverse-gamma-normal models",
         "Explicit information/native gamma-exponential conventions to distinguish equivalent count from native prior-exposure output",
-        "Analytic expectation of native censored-exponential/inverse-gamma survival ESS, with log-stable continuous root and native interpolation grid"
+        "Analytic expectation of native censored-exponential/inverse-gamma survival ESS, with log-stable continuous root and native interpolation grid",
+        "Normal/logistic regression ESS with direct expected information or original uniform-covariate cumulative simulation, arbitrary parameter subsets, stable log-curvature gains and explicit first-crossing/not-reached results."
       ],
       "validation": [
         "Seven native R conjugate results, posterior information increments, time rescaling, vectorization and extreme variance scales; tests/test_conjugate_ess.py",
-        "Pending unknown-mean variance, regression/CRM/TITE-CRM/nonconjugate workflows, plots and reports; docs/conjugate-ess.md",
-        "Independent quadrature, censoring/time-scale limits and search boundaries; tests/test_survival_ess.py; docs/survival-ess.md"
+        "Pending unknown-mean variance, CRM/TITE-CRM workflows, plots and reports; docs/conjugate-ess.md",
+        "Independent quadrature, censoring/time-scale limits and search boundaries; tests/test_survival_ess.py; docs/survival-ess.md",
+        "Original ESS_RegressionCalc shared-covariate references cover 396 paths and 12 ESS outcomes; docs/regression-ess.md and research/regression-ess-simulation-audit.md."
       ]
     },
     {

@@ -22,7 +22,15 @@
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3081791/",
       "retrieved_date": "2026-09-10",
       "used": "Absolute-value distance definition, logistic Table 3."
+    },
+    {
+      "url": "https://github.com/github-js/BayesESS/blob/4bbf4df3789912b967774e8ff5c3a2d6d5646cdd/R/internal.R",
+      "artifact": "research/raw/BayesESS/source/R/internal.R",
+      "retrieved_date": "2026-09-10",
+      "sha256": "bfbe92f0e5366e0157ff250e3743a24048f1f24244825524aa67c957bd5bcf14",
+      "bytes": 25620,
+      "used": "Original 11-Aug-2009 ESS_RegressionCalc recovered in BayesESS 0.1.19; fixed-covariate native reference paths and crossings."
     }
   ],
-  "scope": "Normal and logistic regression with independent normal/gamma priors; explicit covariate distributions and direct expected-curvature ratios. Native R workflows remain pending."
+  "scope": "Complete normal/logistic regression calculator: independent normal/gamma priors, direct expected information, original uniform-covariate simulation and whole/arbitrary-subvector crossings. Python inputs/results replace R scripts and console output; random-number streams are not matched."
 }

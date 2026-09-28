@@ -10,12 +10,14 @@ Sources are the [public author manuscript](https://web.ma.utexas.edu/users/pmuel
 
 ## Supported models and parameter conventions
 
-Both regression interfaces support independent normal and gamma coefficient
+The direct regression interfaces support independent normal and gamma coefficient
 priors, with up to 11 coefficients (an intercept and at most 10 covariates).
 They reuse `ParameterDistribution`: normal parameters are **mean and variance**;
 gamma parameters are **shape and scale**. A gamma rate in the paper must therefore
 be inverted before passing it as the second parameter. No intercept, centering,
 standardization or covariate distribution is inserted automatically.
+The simulation interface below supplies the original program's intercept and
+independent uniform covariates explicitly.
 
 `logistic_regression_ess(coefficient_priors, covariate_support, probabilities=None)`
 accepts a finite covariate distribution: rows are support points and columns
@@ -89,17 +91,70 @@ one, and exercise extreme logits, huge weights, and uninformative design columns
 The normal example's variance-inflation correction explains the slight difference
 from the paper's rounded .001 and .002 results.
 
-## Remaining coverage
+## Original covariate simulation workflow
 
-**Catalog entry 80 is partial.** BayesESS's author source now supplies the original
-2009 regression calculator, including its intercept, independent Uniform(-1,1)
-covariate defaults and cumulative simulation/interpolation workflow. Small
-original-R reference runs are recorded in the
-[simulation audit](../research/regression-ess-simulation-audit.md). The Python
-simulation interface and comparisons are in progress; these existing interfaces
-still use explicit covariate distributions and direct information matching.
+`simulate_regression_ess(model, coefficient_priors, ...)` implements the
+original 2009 calculator recovered in the author-maintained BayesESS source.
+It inserts an intercept and generates independent Uniform(-1,1) covariates,
+accumulates information by patient, averages the paths over replicates and
+interpolates the first crossing of the prior-information target. Model is
+`"normal"` or `"logistic"`; a gamma `precision_prior` is required for normal
+regression. Coefficient priors include the intercept; precision is a separate
+argument and the final result component.
 
-Native input parsing and console workflows remain unimplemented. The historical
-guide's rounded ESS-2 result is not claimed as an exact finite-simulation
-reproduction. Native RNG and input-format parity are not claimed, and original
+The following Python input replaces the original editable R example script.
+All three population-expectation ESS values are 1.9998, rounded to two in the
+guide. Finite simulated covariate paths vary around that expectation.
+
+```python
+from mdanderson_stats import simulate_regression_ess
+
+priors = [Prior("normal", 0, 1)] * 4  # intercept plus three covariates
+simulation = simulate_regression_ess(
+    "normal", priors, precision_prior=Prior("gamma", 1, 1),
+    max_patients=10, replicates=256, rng=np.random.default_rng(80),
+)
+print(simulation.whole_model.estimate)
+print(simulation.crossing([0, 1, 2, 3]).estimate)  # all coefficients
+np.testing.assert_allclose(simulation.crossing([4]).estimate, 1.9998)
+
+population = normal_regression_ess(priors, [1, 1/3, 1/3, 1/3], Prior("gamma", 1, 1))
+np.testing.assert_allclose(population.ess, 1.9998)
+np.testing.assert_allclose(population.subvector_ess([0, 1, 2, 3]), 1.9998)
+```
+
+`crossing(indices=None)` selects the whole parameter vector or any nonempty
+set of distinct zero-based indices. It returns status `"exact"`,
+`"interpolated"` or `"not_reached"`, an estimate (or `None`), bracketing
+patient counts and their log information. The first exact point on a plateau
+is used. If the target is beyond `max_patients`, increase that bound; the
+function does not extrapolate or return the native source's tie-related crash.
+
+For reproducible cross-language comparisons, pass `covariate_draws` with shape
+`(replicates, max_patients, number_of_nonintercept_covariates)`. Values must be
+finite and within [-1,1]; explicit dimensions must match. Supplied covariates
+replace random generation and are retained read-only. The native program draws
+unused covariates as well, so equal R and Python seeds do not imply identical
+paths. The original algorithm does not need simulated outcomes.
+
+Results retain log mean-cumulative information for patient counts zero through
+the cap, log prior-information gains and signed log prior/epsilon curvatures.
+Crossing calculations use these quantities directly. Ordinary
+`mean_cumulative_information`, `prior_information` and
+`epsilon_prior_information` are read-only convenience properties: overflow
+raises on access, while sufficiently small values can underflow to zero.
+The retained log values preserve such information. This avoids subtracting
+nearly equal negative gamma curvatures and avoids saturated logistic tails.
+
+Patient and replicate counts are each limited to 10,000. Preflight limits
+also cap covariate draws at two million cells, a cumulative path at 200,000
+cells and replicate × patient × parameter work at twenty million. Replicates
+are processed sequentially without retaining per-replicate information paths.
+
+The [source and numerical audit](../research/regression-ess-simulation-audit.md)
+records agreement with 396 original-R information rows and 12 ESS outcomes,
+including three not-reached results. **Catalog entry 80 is implemented:** the
+normal/logistic calculations and all six documented input choices are exposed
+through the Python interfaces. Native console formatting and arbitrary R
+script execution are replaced by Python arguments and results; original
 source files are not redistributed with the package.

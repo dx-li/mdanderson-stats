@@ -822,7 +822,9 @@ schedules and permanent arm stops. Native pooling conventions and reports remain
 
 [ESS Regression](docs/regression-ess.md) adds normal and logistic regression prior
 effective sample sizes, including parameter subvectors, using direct expected
-curvature calculations. Native R inputs and covariate defaults remain pending.
+curvature calculations or the original uniform-covariate simulation workflow.
+Replicate-averaged information paths, interpolated crossings and explicit
+not-reached outcomes are checked against the original R calculator.
 
 [TOP](docs/top-binary.md) adds delayed binary-response posterior decisions,
 accrual suspension, effective-sample-size boundary tables, and batched calendar
