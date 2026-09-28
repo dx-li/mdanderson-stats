@@ -30,9 +30,42 @@ smoothing parameter and fitted values from twice it. Intervals are pointwise.
 For a decreasing response, negative departure denotes synergy.
 
 An initial source summary incorrectly described `Omega` as raw distances;
-the primary equation uses the kernel above. Before implementation, recover
-the exact baseline transformations, potency equation and bootstrap refitting
-sequence; do not replace REML with GCV or ignore marginal-fit uncertainty.
+the primary equation uses the kernel above.
+
+## Baselines and bootstrap details
+
+The response scale is `Y=g(E)`, with a caller-selected monotone transformation.
+For raw doses, fit a common-intercept linear model to marginal records only
+(`d1==0 or d2==0`); its additive prediction is `beta0+beta1*d1+beta2*d2`.
+
+For log-dose marginal curves `beta0+beta1*log(d1)` and
+`alpha0+alpha1*log(d2)`, define
+
+```text
+gamma1 = (alpha0-beta0)/beta1
+gamma2 = alpha1/beta1-1
+u - gamma1 - gamma2*log(d1*exp(-u)+d2) = 0
+rho = exp(u)
+F_p = beta0 + beta1*log(d1+rho*d2)
+```
+
+With positive combination doses and same-direction slopes, this root is
+unique: its derivative is `1+gamma2*d1/(d1+exp(u)*d2)>0`. Use stable log sums.
+The source gives no offset for a both-zero dose in this model.
+
+Bootstrap all observations on the transformed scale:
+
+```text
+residual_i = Y_i - F_p_hat(d_i) - f_half_lambda(d_i)
+Y_i_star = F_p_hat(d_i) + f_twice_lambda(d_i) + residual_i*weight_i
+weight values = (1-sqrt(5))/2, (1+sqrt(5))/2
+probabilities = (sqrt(5)+1)/(2*sqrt(5)), (sqrt(5)-1)/(2*sqrt(5))
+```
+
+Each replicate refits the marginal baseline and REML spline. The pointwise
+normal interval centers on the original fitted departure. The exact bootstrap
+SD denominator/centering remains unresolved in primary rendered equations;
+do not silently adopt a secondary transcription's fitted-center RMS formula.
 
 ## Source availability
 
