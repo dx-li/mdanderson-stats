@@ -1,0 +1,35 @@
+# Complete-data log-normal Bayesian diagnostic
+
+The cached BCSTTE user guide §4.5 parameterizes a log-normal variable by
+location `mu` and standard deviation `sigma` of `log(X)`, with
+`log(X) ~ Normal(mu, sigma²)`. The guide describes the distribution and a
+family-level goodness-of-fit workflow, but does not specify the executable's
+log-normal prior or fitting algorithm. This implementation therefore uses an
+explicit, proper Normal-Inverse-Gamma prior and makes no claim of native prior
+or fitter parity.
+
+For `Y=log(T)`, use `sigma² ~ InvGamma(a0,b0)` (shape/scale) and
+`mu|sigma² ~ Normal(m0,sigma²/kappa0)`. With `n` complete observations,
+`ybar=mean(Y)` and `SSE=sum((Y-ybar)²)`, the conjugate posterior parameters are
+`kappa_n=kappa0+n`, `m_n=(kappa0*m0+n*ybar)/kappa_n`,
+`a_n=a0+n/2`, and
+`b_n=b0+SSE/2 + kappa0*n*(ybar-m0)²/(2*kappa_n)`. The posterior draws are
+joint: `sigma²` is inverse-gamma and `mu` is conditionally normal. Each observed
+time is evaluated with that same paired parameter draw before the existing
+Johnson CDF diagnostic is applied. The result retains `centered_location_samples`
+with a common `location_offset`, as well as `log_variance_samples`; this avoids
+losing draw variation when all times share an extreme unit shift. The
+`posterior_centered_location` and `posterior_location` fields expose the
+posterior location mean in centered and absolute coordinates.
+
+Only complete continuous positive event times are supported. Censoring,
+rounded-time transforms, inferred prior defaults and native report parity remain
+outside this scope. Workspace limits are checked before observation conversion
+and random-number consumption. The posterior scale is retained logarithmically
+to avoid exponentiating an extreme scale.
+
+The implementation centers log times around a reference observation and uses
+`log1p` for nearby relative times. All posterior arrays and the Johnson
+diagnostic are included in the preflight storage bound. Numerical references
+will be compared with independent conjugate posterior integration before
+integration.
