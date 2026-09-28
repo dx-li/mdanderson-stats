@@ -136,23 +136,10 @@ def _joint_probability(value: ArrayLike, name: str) -> FloatArray:
     return result
 
 
-def _marginals(endpoint: str, joint: FloatArray) -> FloatArray:
+def _marginals(joint: FloatArray) -> FloatArray:
     # Both modes use the same cell layout for the two observed binary margins:
     # (both, first only, second only, neither).
-    del endpoint
     return np.array([joint[0] + joint[1], joint[0] + joint[2]], dtype=np.float64)
-
-
-def _candidate_oc(design: BOP2DCPairedDesign, probabilities: FloatArray) -> BOP2DCPairedGridOC:
-    oc = design.operating_characteristics(probabilities)
-    return BOP2DCPairedGridOC(
-        _readonly(oc.stop_no_go),
-        _readonly(oc.final_go),
-        _readonly(oc.final_consider),
-        _readonly(oc.final_no_go),
-        _readonly(oc.sample_size_probability),
-        _readonly(oc.expected_sample_size),
-    )
 
 
 def optimize_bop2_dc_paired(
@@ -232,8 +219,8 @@ def optimize_bop2_dc_paired(
 
     futile_joint = _joint_probability(futile_probabilities, "futile_probabilities")
     effective_joint = _joint_probability(effective_probabilities, "effective_probabilities")
-    futile_marginal = _marginals(endpoint, futile_joint)
-    effective_marginal = _marginals(endpoint, effective_joint)
+    futile_marginal = _marginals(futile_joint)
+    effective_marginal = _marginals(effective_joint)
 
     base = bop2_dc_paired_design(
         max_subjects,
@@ -267,7 +254,10 @@ def optimize_bop2_dc_paired(
         raise ValueError("candidate grid exceeds max_work for exact paired recursion")
 
     look_count = int(base.looks.size)
-    retained_cells = candidate_count * (22 + 4 * look_count)
+    grid_cells = sum(values.size for values in grids.values())
+    # Raw candidate summaries coexist with returned read-only copies. Include
+    # one transient exact OC object while a candidate is being evaluated.
+    retained_cells = candidate_count * (34 + 8 * look_count) + grid_cells + 48 + 8 * look_count
     if retained_cells > _MAX_RETAINED_CELLS:
         raise ValueError("candidate OC summaries exceed the retained-cell budget")
 
