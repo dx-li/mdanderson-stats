@@ -72,7 +72,7 @@ All four fits converged and had positive-definite observed information;
 independent five-point scores were below 1.50e-5. Fitted Q values were
 0.52646833, 0.42692546, -1.3658638 and -0.80313001. The final reference run took
 0.57 seconds, peaked at 94.6 MiB child RSS and reported zero child process swaps.
-The fit and prediction comparisons against Python remain pending.
+Python fit and prediction comparisons are recorded below.
 
 ## Distribution-kernel checkpoint
 
@@ -100,15 +100,81 @@ values can differ by 192 in absolute terms at magnitudes around 1e16 while
 passing the relative criterion; the audit does not claim uniformly tiny
 absolute errors in those tails.
 
-This is a kernel checkpoint in the worker checkout. Fitting, full covariance,
-prediction, public integration and package checks remain in progress; no new
-catalog entry or complete generalized-gamma workflow is claimed. After this
-audit the completed root process released the numerical lane back to Luna.
+After this kernel checkpoint, the completed root process released the
+numerical lane back to Luna for fitting and prediction implementation.
 
-The next spline-model source has also been pinned and inspected; its verified
-files and implementation requirements are in
-[remaining source leads](remaining-source-leads.md). No spline implementation
-or numerical execution is claimed.
+## Fitting, prediction and public integration
+
+Luna's core and four focused tests were integrated at `a8d7633`. Both models
+estimate all location and shape parameters jointly and return the complete
+observed information and covariance. Fitting centers/scales time and covariates,
+uses bounded multistart optimization, checks the final score and positive-definite
+information, and transforms the full covariance back to reported coordinates.
+Prediction uses direct log tails and propagates uncertainty on log cumulative
+hazard, one profile at a time rather than allocating a profile/time/parameter
+tensor. Zero-time survival and its bounds are exactly one.
+
+Root independently compared all six reference fits, all 234 scalar reference
+metrics and all 120 prediction rows, with warnings treated as errors. Maximum
+parameter difference was 3.30e-7, information difference 4.07e-5 and log-likelihood
+difference 9.95e-13. Relative Frobenius errors of full covariance matrices were
+below 1.52e-6 for Prentice and 2.84e-5 for Stacy. The largest absolute Stacy
+covariance difference was 8.92e-4; the tests account for the finite-difference
+Hessian and transformed native-reference coordinates. Maximum survival-probability
+error was 4.46e-8. Extremely small probabilities can have log-survival differences
+of order one at log-tail magnitudes of millions; the relative tolerance is 2e-6,
+not a uniformly tiny absolute log-tail tolerance.
+
+Equivalent positive-Q Prentice and Stacy fits also agreed on survival and
+delta-method limits (largest bound difference 3.37e-6). The largest standard-error
+difference was 6.27e-5. Covariate-unit factors of 1e-100 and 1e100, offsets of
+1e8, time-unit changes of 1e100 including the likelihood Jacobian, and
+uninformative zero-time censored observations passed. This audit took 3.41
+seconds, peaked at 116.5 MiB RSS and reported zero process swaps.
+
+An additional bounded probe tried the original Stacy fit on each of the two
+native negative-Q datasets. Both exhausted their allowed iterations and raised
+an explicit no-finite-identified-optimum error rather than reporting the
+approaching log-normal boundary as a fitted finite model. This probe peaked at
+112.4 MiB and took approximately 16.2 seconds total. It is evidence for these
+cases, not a general proof that every nonfinite maximum is detected.
+
+The public package exports both fit/prediction result classes and functions.
+`parametric_survival_contour` accepts `gengamma` and `gengamma.orig`; it retains
+aggregate allocation checks before fitting, mean/explicit profiles, default
+event-time grids, selected percentile curves, and existing two-/three-dimensional
+plots. Eight combinations of parameterization, profile and time-grid choice
+matched core prediction exactly. Both guide examples and three rendered plot
+views passed; root visually inspected the render. That audit peaked at 152.8
+MiB RSS with zero process swaps.
+
+Ten focused generalized-gamma, ordinary parametric and shared-contour tests
+passed in 3.37 seconds. Scoped type checking passed for both implementation
+modules, and scoped Ruff checks/formatting passed. No full suite or CI expansion
+was run.
+
+## Package checkpoint
+
+The wheel and source distribution built successfully using the already cached
+Hatchling backend, without installing anything. All 470 Python source modules
+matched both artifacts byte for byte. The packaged catalog, redistribution
+notices, generalized-gamma guide, audit, native-reference generator, focused
+tests and four reference fixtures were also checked. Ignored native downloads
+and compiled objects were absent from the source archive.
+
+An isolated interpreter loaded the built wheel, confirmed all four new public
+exports plus the shared contour function, and executed both guide examples,
+including a plot, with warnings as errors. It peaked at 144.3 MiB RSS and
+reported zero process swaps. Counts remain 62 implemented, 66 partial and 10
+pending; entry 166 still has other model families and workflows outstanding.
+
+The final audit text is included by rebuilding and rechecking the artifacts
+after this record is saved. Those are static packaging operations; root released
+the numerical lane to Luna for the spline implementation.
+
+The next spline-model source and six executed native-kernel references are
+recorded in [the spline audit](survival-spline-audit.md); its Python implementation
+is in progress in the sole Luna worker's isolated checkout.
 
 Automatic approval review previously rejected GitHub publication because it
 requires unavailable approval. This does not prevent local implementation;

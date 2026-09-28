@@ -98,12 +98,7 @@ def _prentice_log_density(w: FloatArray, q: float) -> FloatArray:
     result = np.empty(w.shape)
     if np.any(near):
         wn = w[near]
-        result[near] = (
-            -0.5 * wn * wn
-            - _LOG_SQRT_2PI
-            - q * wn**3 / 6
-            - q**2 * (wn**4 / 24 + 1 / 12)
-        )
+        result[near] = -0.5 * wn * wn - _LOG_SQRT_2PI - q * wn**3 / 6 - q**2 * (wn**4 / 24 + 1 / 12)
     regular = ~near
     if np.any(regular):
         wr = w[regular]
@@ -130,9 +125,7 @@ def _near_zero_log_tails(w: FloatArray, q: float) -> tuple[FloatArray, FloatArra
         rel1_cdf = np.exp(logphi + np.log(poly1) - log(6) - logcdf0)
         rel1_sf = np.exp(logphi + np.log(poly1) - log(6) - logsf0)
         sign2 = np.sign(poly2)
-        log_abs_poly2 = np.log(
-            np.abs(poly2), where=poly2 != 0, out=np.full(w.shape, -np.inf)
-        )
+        log_abs_poly2 = np.log(np.abs(poly2), where=poly2 != 0, out=np.full(w.shape, -np.inf))
         log_rel2 = logphi + log_abs_poly2 - log(72)
         rel2 = sign2 * np.exp(log_rel2 - logcdf0)
         rel2_sf = sign2 * np.exp(log_rel2 - logsf0)
@@ -330,11 +323,9 @@ def _prentice_gradient(
                 - log(72)
                 - log_sf
             )
-        d_log_density_q = -w**3 / 6 - q * (w**4 / 12 + 1 / 6)
+        d_log_density_q = -(w**3) / 6 - q * (w**4 / 12 + 1 / 6)
         d_log_survival_q = -a + 2 * q * b
-        gradient[p + 1] = -float(
-            np.sum(np.where(event == 1, d_log_density_q, d_log_survival_q))
-        )
+        gradient[p + 1] = -float(np.sum(np.where(event == 1, d_log_density_q, d_log_survival_q)))
     else:
         step = min(1e-4, max(1e-6, abs(q) * 1e-3))
         values = []
@@ -342,17 +333,13 @@ def _prentice_gradient(
             shifted = theta.copy()
             shifted[p + 1] += offset * step
             values.append(_prentice_loss(shifted, y, event, design))
-        gradient[p + 1] = (values[0] - 8 * values[1] + 8 * values[2] - values[3]) / (
-            12 * step
-        )
+        gradient[p + 1] = (values[0] - 8 * values[1] + 8 * values[2] - values[3]) / (12 * step)
     if not np.isfinite(gradient).all():
         raise ArithmeticError("Prentice score exceeds numerical range")
     return gradient
 
 
-def _stacy_loss(
-    theta: FloatArray, y: FloatArray, event: FloatArray, design: FloatArray
-) -> float:
+def _stacy_loss(theta: FloatArray, y: FloatArray, event: FloatArray, design: FloatArray) -> float:
     p = design.shape[1]
     beta = theta[:p]
     log_shape, log_k = float(theta[p]), float(theta[p + 1])
@@ -392,9 +379,7 @@ def _five_point_gradient(
     return result
 
 
-def _observed_information(
-    gradient: object, parameters: FloatArray, count: int
-) -> FloatArray:
+def _observed_information(gradient: object, parameters: FloatArray, count: int) -> FloatArray:
     dimension = parameters.size
     information = np.empty((dimension, dimension))
     for j in range(dimension):
@@ -431,9 +416,11 @@ def fit_generalized_gamma(
     tol = scalar(tolerance, "tolerance")
     if not 1e-10 <= tol <= 1e-2:
         raise ValueError("tolerance must be in [1e-10, 1e-2]")
-    if isinstance(max_iterations, (bool, np.bool_)) or not isinstance(
-        max_iterations, (int, np.integer)
-    ) or not 1 <= max_iterations <= 10_000:
+    if (
+        isinstance(max_iterations, (bool, np.bool_))
+        or not isinstance(max_iterations, (int, np.integer))
+        or not 1 <= max_iterations <= 10_000
+    ):
         raise ValueError("max_iterations must be an integer in [1, 10000]")
     observed_t, e, y, design, xm, xs, center, time_scale = _prepare(time, event, covariates)
     p, n = design.shape[1], y.size
@@ -714,9 +701,7 @@ def predict_generalized_gamma(
                         shifted, fit.parameterization, normalized_time[positive], row_design
                     )[0]
                 )
-            gradient[:, j] = (values[0] - 8 * values[1] + 8 * values[2] - values[3]) / (
-                12 * step
-            )
+            gradient[:, j] = (values[0] - 8 * values[1] + 8 * values[2] - values[3]) / (12 * step)
         variance[row, positive] = np.einsum(
             "ti,ij,tj->t", gradient, fit.scaled_covariance, gradient
         )

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -11,9 +12,13 @@ from ._cdflib import _freeze
 from ._validation import FloatArray, finite, scalar
 from .parametric_survival import (
     ParametricSurvivalFit,
+    ParametricSurvivalPrediction,
     fit_parametric_survival,
     predict_parametric_survival,
 )
+
+if TYPE_CHECKING:
+    from .generalized_gamma import GeneralizedGammaFit, GeneralizedGammaPrediction
 
 _DEFAULT_QUANTILES = (0.10, 0.25, 0.50, 0.75, 0.90)
 _MAX_CELLS = 2_000_000
@@ -23,7 +28,7 @@ _MAX_CELLS = 2_000_000
 class ParametricSurvivalContour:
     """Parametric fit with primary and continuous-covariate quantile surfaces."""
 
-    fit: ParametricSurvivalFit
+    fit: ParametricSurvivalFit | GeneralizedGammaFit
     continuous_column: int
     confidence: float
     profile: FloatArray
@@ -65,6 +70,8 @@ def parametric_survival_contour(
     Main surfaces have shape ``(n_grid, n_times)``; quantile summaries use
     the requested probabilities of the continuous covariate. Confidence
     limits use a deterministic delta method on log cumulative hazard.
+    ``distribution="gengamma"`` selects Prentice generalized gamma;
+    ``"gengamma.orig"`` selects the original Stacy parameterization.
     """
     if isinstance(continuous_column, (bool, np.bool_)) or not isinstance(
         continuous_column, (int, np.integer)
@@ -172,11 +179,8 @@ def parametric_survival_contour(
     if cells > _MAX_CELLS:
         raise ValueError("combined parametric contour output exceeds the 2,000,000-cell limit")
 
-    # Fit only after all retained-output dimensions and caller grids are bounded.
-    fit = fit_parametric_survival(t, e, design, distribution=distribution)
     main_profiles = np.repeat(base_profile[None, :], grid_values.size, axis=0)
     main_profiles[:, continuous_column] = grid_values
-    main = predict_parametric_survival(fit, prediction_times, main_profiles, confidence=conf)
 
     quantile_scale = float(np.max(np.abs(design[:, continuous_column])))
     if quantile_scale == 0:
@@ -187,9 +191,35 @@ def parametric_survival_contour(
         raise ArithmeticError("continuous-covariate quantiles are not representable")
     quantile_profiles = np.repeat(base_profile[None, :], probabilities.size, axis=0)
     quantile_profiles[:, continuous_column] = covariate_quantiles
-    quantile = predict_parametric_survival(
-        fit, prediction_times, quantile_profiles, confidence=conf
-    )
+    # Fit only after both profile grids and their aggregate allocation are valid.
+    fit: ParametricSurvivalFit | GeneralizedGammaFit
+    main: ParametricSurvivalPrediction | GeneralizedGammaPrediction
+    quantile: ParametricSurvivalPrediction | GeneralizedGammaPrediction
+    if distribution in ("gengamma", "gengamma.orig"):
+        from .generalized_gamma import fit_generalized_gamma, predict_generalized_gamma
+
+        generalized_fit = fit_generalized_gamma(
+            t,
+            e,
+            design,
+            parameterization="prentice" if distribution == "gengamma" else "stacy",
+        )
+        main = predict_generalized_gamma(
+            generalized_fit, prediction_times, main_profiles, confidence=conf
+        )
+        quantile = predict_generalized_gamma(
+            generalized_fit, prediction_times, quantile_profiles, confidence=conf
+        )
+        fit = generalized_fit
+    else:
+        ordinary_fit = fit_parametric_survival(t, e, design, distribution=distribution)
+        main = predict_parametric_survival(
+            ordinary_fit, prediction_times, main_profiles, confidence=conf
+        )
+        quantile = predict_parametric_survival(
+            ordinary_fit, prediction_times, quantile_profiles, confidence=conf
+        )
+        fit = ordinary_fit
     return ParametricSurvivalContour(
         fit,
         int(continuous_column),

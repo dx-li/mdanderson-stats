@@ -35,9 +35,7 @@ def _metric_matrix(rows: list[dict[str, str]], case: str, metric: str) -> np.nda
     return result
 
 
-def _fit_fixture_case(
-    rows: list[dict[str, str]], case: str, parameterization: str
-):
+def _fit_fixture_case(rows: list[dict[str, str]], case: str, parameterization: str):
     times = np.array([float(row["time"]) for row in rows])
     events = np.array([float(row["event"]) for row in rows])
     covariates = (
@@ -100,9 +98,7 @@ def test_prentice_fits_and_predictions_match_native_references() -> None:
     ("case", "source_case"),
     (("original_covariates", "positive_covariates"), ("original_intercept", "positive_intercept")),
 )
-def test_stacy_coordinates_match_native_positive_q_transform(
-    case: str, source_case: str
-) -> None:
+def test_stacy_coordinates_match_native_positive_q_transform(case: str, source_case: str) -> None:
     input_rows = _read_fixture("generalized-gamma-input.csv")
     metric_rows = _read_fixture("generalized-gamma-metric.csv")
     fit = _fit_fixture_case(_case_rows(input_rows, source_case), source_case, "stacy")

@@ -966,6 +966,16 @@ The implementation exposes deterministic delta-method bounds rather than
 claiming equivalence to flexsurv's simulated parameter-draw intervals.
 The source and reference details are in `research/parametric-survival-audit.md`.
 
+`generalized_gamma.py` implements the Prentice and Stacy generalized-gamma
+likelihoods. Distribution definitions and parameter mappings were checked
+against `src/gengamma.cpp` and `R/GenGamma.R` from that same GPL >=2 `flexsurv`
+revision. Its unchanged C++ kernels supply executable density and tail
+references; an independent base-R harness supplies fitted-model references.
+Original source and compiled objects are not redistributed. Python adds
+stable near-zero shape expansions, log-tail recovery, normalized fitting and
+bounded prediction surfaces. See `research/generalized-gamma-audit.md` for
+provenance, native-wrapper limitations and verification scope.
+
 ## Bayesian success calibration
 
 `success_calibration.py` is an independent implementation of the mathematical

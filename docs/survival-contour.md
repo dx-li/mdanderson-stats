@@ -139,9 +139,11 @@ These interfaces cover ordinary and stratified, unweighted, right-censored Cox
 models with static numeric covariates. [Fine–Gray regression and incidence
 contours](fine-gray.md) provide the right-censored competing-risk family.
 [Parametric AFT models](parametric-survival.md) add Weibull, log-normal and
-log-logistic fitting, prediction and contours. Interval-censored Cox and
-competing-risk models, generalized-gamma/spline models, forests, neural models
-and the full native app workflow remain open. Entry 166 stays partial.
+log-logistic fitting, prediction and contours.
+[Generalized-gamma models](generalized-gamma.md) add the Prentice and Stacy
+parameterizations to that workflow. Interval-censored Cox and competing-risk
+models, spline models, forests, neural models, native simulated parametric
+intervals and the full native app workflow remain open. Entry 166 stays partial.
 
 The original author's two- and three-dimensional Cox helper outputs provide
 reference surfaces for both tie methods and both mean and explicit adjustment

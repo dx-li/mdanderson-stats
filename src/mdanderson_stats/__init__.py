@@ -507,6 +507,12 @@ from .fine_gray_contour import (
     plot_fine_gray_contour_3d,
 )
 from .fisher_design import fisher_power, fisher_sample_size
+from .generalized_gamma import (
+    GeneralizedGammaFit,
+    GeneralizedGammaPrediction,
+    fit_generalized_gamma,
+    predict_generalized_gamma,
+)
 from .goodness_of_fit import GoodnessOfFit, chi_square_gof
 from .gray_test import GrayTest, gray_test
 from .hierarchical_binomial import (
@@ -1557,6 +1563,10 @@ __all__ = [
     "fine_gray_contour",
     "plot_fine_gray_contour_2d",
     "plot_fine_gray_contour_3d",
+    "GeneralizedGammaFit",
+    "GeneralizedGammaPrediction",
+    "fit_generalized_gamma",
+    "predict_generalized_gamma",
     "ParametricSurvivalFit",
     "ParametricSurvivalPrediction",
     "ParametricSurvivalContour",
