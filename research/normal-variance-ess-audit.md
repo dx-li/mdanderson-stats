@@ -43,11 +43,19 @@ specific adjustment with the corrected density derivatives above gives
 the candidate variance root nu/(1+2/phi), while leaving the mean root
 phi*(1-1/c) unchanged.
 
-The candidate can be below four even when nu>4 (for example nu=5, phi=1),
-so the stated minimum-ESS rationale and the meaning of the paper's
-adjustment notation still require reconciliation. It is not appropriate
-to present this candidate as an unqualified reproduction of the complete
-method.
+The candidate can be below four even when nu>4 (for example nu=5, phi=1).
+Reinspection of Algorithm 2 on September 28, 2026 confirms that its minimum
+is an ESS requirement, not merely a requirement on the elicited prior's
+degrees of freedom. It defines the minimum from existence of second moments
+under the epsilon prior; inverse-chi-square variance needs degrees of freedom
+greater than four. The candidate therefore does not satisfy the stated
+complete algorithm. The paper's Example 4 concerns variance with a known
+mean and cannot validate this unknown-mean subvector calculation.
+
+An offset such as `4+(nu-4)/(1+2/phi)` would enforce that floor, but no inspected
+source establishes this as the intended conditional-model correction. It
+must not be introduced as a source-derived answer just because it meets
+the desired limiting behavior.
 
 Additional observed discrepancies are independent of that issue:
 
