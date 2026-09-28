@@ -58,4 +58,33 @@ write.csv(do.call(rbind, predictions),
           "tests/fixtures/synergy-surface-predictions.csv", row.names = FALSE)
 write.csv(do.call(rbind, coefficients),
           "tests/fixtures/synergy-surface-coefficients.csv", row.names = FALSE)
-cat("Wrote two augmented-system TPS fits with replicated doses and new-point predictions.\n")
+
+# Direct full-covariance REML, independent of the Python error-contrast spectrum.
+null <- qr.Q(qr(t_design), complete = TRUE)[, 4:nrow(knots)]
+penalty <- crossprod(null, k %*% null)
+random_design <- k[index, ] %*% null
+random_covariance <- random_design %*% solve(penalty, t(random_design))
+solve_chol <- function(factor, rhs) {
+  backsolve(factor, forwardsolve(t(factor), rhs))
+}
+reml <- function(log_lambda) {
+  covariance <- diag(length(y)) + random_covariance / exp(log_lambda)
+  factor <- chol(covariance)
+  solved_design <- solve_chol(factor, design)
+  info_factor <- chol(crossprod(design, solved_design))
+  affine <- solve_chol(info_factor, crossprod(design, solve_chol(factor, residual)))
+  error <- residual - as.numeric(design %*% affine)
+  df <- length(y) - ncol(design)
+  variance <- sum(error * solve_chol(factor, error)) / df
+  logdet <- 2 * sum(log(diag(factor))) + 2 * sum(log(diag(info_factor))) -
+    as.numeric(determinant(crossprod(design), logarithm = TRUE)$modulus)
+  objective <- .5 * (df * (log(2 * pi) + 1 + log(variance)) + logdet)
+  c(objective = objective, variance = variance)
+}
+optimum <- optimize(function(value) reml(value)[1], c(-20, 10), tol = 1e-10)
+stopifnot(optimum$minimum > -19, optimum$minimum < 9)
+write.csv(data.frame(lambda = exp(optimum$minimum),
+                     objective = optimum$objective,
+                     residual_variance = reml(optimum$minimum)[2]),
+          "tests/fixtures/synergy-surface-reml.csv", row.names = FALSE)
+cat("Wrote augmented-system TPS fits and independently profiled REML reference.\n")

@@ -103,3 +103,20 @@ equations, and retains predictions at observed and additional dose pairs.
 residual sums of squares, roughness and predictions. Base-R generation ran in
 0.085 seconds. This supplies an independent reference for the Python spline
 fit, without claiming native smoothing selection, bootstrap or case-study parity.
+
+The same R script also profiles REML through a direct full covariance matrix,
+with explicit determinants and GLS projection rather than the Python
+error-contrast eigendecomposition. Its interior optimum is
+`lambda=6.60856248525525e-5`, with unscaled objective `-24.5152377989773` and
+residual variance `1.38755525407976e-5`. The development core agrees within
+`4.68e-9` relative error for lambda, `1.32e-13` absolute objective error and
+`2.80e-9` relative variance error after accounting for response scaling.
+All 72 fixed-lambda baseline/surface/total predictions match within `3.78e-15`.
+These calculations check spline and REML mathematics through different algebra;
+they do not establish native software random streams or bootstrap inference.
+
+The additional bounded source check through Europe PMC full-text XML, NCBI
+BioC XML and PMC XML view was inaccessible. Indexed searches exposed neither
+the bootstrap SD equation nor an original author-code supplement. The exact
+SD centering and denominator remain unresolved; that inference gap is separate
+from the now independently checked surface-fitting calculations.
