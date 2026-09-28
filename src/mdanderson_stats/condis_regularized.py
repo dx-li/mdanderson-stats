@@ -156,9 +156,7 @@ def _glmnet_path_predict(
     correlations = z.T @ target
     lambda_max = float(np.max(np.abs(correlations[active]))) / max(alpha, 1e-3)
     if lambda_max == 0.0:
-        return np.full(
-            (x_test.shape[0], lambdas.size), yscale * ymean_scaled, dtype=np.float64
-        )
+        return np.full((x_test.shape[0], lambdas.size), yscale * ymean_scaled, dtype=np.float64)
     # glmnet's default nlambda=100 and lambda.min.ratio=(n<p ? 1e-2 : 1e-4).
     # The first internal point is the large-number null fit; fix.lam replaces
     # only its reported lambda by geometric extrapolation from the next points.
@@ -201,11 +199,7 @@ def _glmnet_path_predict(
             raise ArithmeticError("glmnet-style coordinate descent did not converge")
         path[:, index] = coef
         deviance = 1.0 - float(residual @ residual)
-        deviance_change = (
-            np.inf
-            if deviance == 0.0
-            else (deviance - previous_deviance) / deviance
-        )
+        deviance_change = np.inf if deviance == 0.0 else (deviance - previous_deviance) / deviance
         previous_deviance = deviance
         if index + 1 >= 5 and (deviance_change < 1e-5 or deviance > 0.999):
             path_size = index + 1
@@ -313,10 +307,10 @@ def condis_regularized_refine(
     n = y.size
     if isinstance(folds, (bool, np.bool_)) or not isinstance(folds, (int, np.integer)):
         raise ValueError("folds must be an integer")
+    if not 2 <= folds <= 100:
+        raise ValueError("folds must be 2..100")
     fold_count = min(int(folds), n)
-    assignments = _make_folds(
-        n, y, fold_count, repeats, random_state, fold_ids
-    )
+    assignments = _make_folds(n, y, fold_count, repeats, random_state, fold_ids)
     if method == "knn":
         if lambda_grid is not None:
             raise ValueError("lambda_grid applies only to ridge and lasso")
@@ -374,8 +368,7 @@ def condis_regularized_refine(
             1,
             min(
                 1_000,
-                250_000_000
-                // (n * x.shape[1] * 100 * (fold_count * repeats + 1)),
+                250_000_000 // (n * x.shape[1] * 100 * (fold_count * repeats + 1)),
             ),
         )
 
@@ -389,6 +382,10 @@ def condis_regularized_refine(
             if method == "knn":
                 for j, value in enumerate(tuning):
                     prediction = _knn_predict(x_train, y_train, x_test, int(value))
+                    if not np.isfinite(prediction).all():
+                        raise ArithmeticError(
+                            "kNN produced non-finite cross-validation predictions"
+                        )
                     scale = max(float(np.max(np.abs(y_test))), float(np.max(np.abs(prediction))))
                     scale = scale if scale > 0.0 else 1.0
                     residual = y_test / scale - prediction / scale
@@ -398,10 +395,16 @@ def condis_regularized_refine(
                 predicted = _glmnet_path_predict(
                     x_train, y_train, x_test, tuning, alpha, max_sweeps
                 )
+                if not np.isfinite(predicted).all():
+                    raise ArithmeticError(
+                        "regularized regression produced non-finite cross-validation predictions"
+                    )
                 scale = max(float(np.max(np.abs(y_test))), float(np.max(np.abs(predicted))))
                 scale = scale if scale > 0.0 else 1.0
                 residual = y_test[:, None] / scale - predicted / scale
                 scores[rep, fold] = scale * np.sqrt(np.mean(residual * residual, axis=0))
+    if not np.isfinite(scores).all():
+        raise ArithmeticError("cross-validation produced non-finite RMSE scores")
     # Caret's MeanSD gives every resample equal weight, rather than pooling
     # held-out rows before computing RMSE.
     flat_scores = scores.reshape((-1, tuning.size))
@@ -423,9 +426,7 @@ def condis_regularized_refine(
         fitted = _knn_predict(x, y, x, int(tuning[best]))
     else:
         alpha = 0.0 if method == "ridge" else 1.0
-        fitted = _glmnet_path_predict(
-            x, y, x, tuning[best : best + 1], alpha, max_sweeps
-        )[:, 0]
+        fitted = _glmnet_path_predict(x, y, x, tuning[best : best + 1], alpha, max_sweeps)[:, 0]
     if not np.isfinite(fitted).all():
         raise ArithmeticError("selected learner produced non-finite predictions")
     censored = imputation.status == 0
