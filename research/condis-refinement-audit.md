@@ -392,3 +392,8 @@ absolute tolerance with zero relative tolerance. Targeted Ruff, formatting
 and mypy checks passed. Four implemented-learner guide examples, including
 neural tuning/refitting, executed successfully. No broad repository test suite
 or additional CI workflow was added for this learner.
+
+Wheel and source-distribution builds from committed revision `5d15caf` also
+passed. All 479 Python module files matched the committed source byte for
+byte in both artifacts; original native source/objects were excluded. The
+uncommitted SVM guide draft was excluded by building from an exported commit.
