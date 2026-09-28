@@ -173,3 +173,21 @@ partial because interval-censored, parametric/spline, forest and neural families
 remain open. Catalog counts stay at 62 implemented, 66 partial and 10 pending;
 this distinction prevents a completed subfamily from overstating whole-entry
 coverage.
+
+## Package checkpoint
+
+Public integration and the contour workflow are committed in `6b5b63e`.
+The cached Hatch backend built both wheel and source archives without an
+installation. All 467 Python modules in both artifacts matched the source;
+the wheel catalog, notices and license texts matched as well. The source
+archive retains the guide, audit, four reference CSVs, focused tests and R
+reference harness, and excludes ignored raw downloads and compiled binaries.
+
+An isolated interpreter loaded the wheel and executed both documented public
+examples plus a 3D render. It peaked at 147.4 MiB with zero reported process
+swaps. The final artifacts are rebuilt after this audit checkpoint is saved;
+only static artifact checks are needed for that documentation-only rebuild.
+
+The overall goal remains active. GitHub publication remains blocked by the
+prior automatic approval review rejection, which requires unavailable approval.
+No write retry or alternate publication transport was attempted.
