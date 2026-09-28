@@ -71,6 +71,8 @@ class BARDBLRMPatient:
     response: bool
     dlt_assessment_time: float
     response_assessment_time: float
+    grade2_toxicity: bool = False
+    grade2_assessment_time: float | None = None
 
 
 @dataclass(frozen=True)
@@ -142,6 +144,10 @@ class BARDBLRMTrial:
     work_units: int
     all_overdose_detected: bool
     all_overdose_time: float | None
+    accelerated_titration: bool = False
+    titration_patients: int = 0
+    titration_grade2_observed: int = 0
+    titration_exit_reason: str | None = None
 
 
 @dataclass
@@ -154,8 +160,11 @@ class _Patient:
     response: bool
     dlt_time: float
     response_time: float
+    grade2: bool = False
+    grade2_time: float | None = None
     dlt_seen: bool = False
     response_seen: bool = False
+    grade2_seen: bool = False
 
 
 def run_bard_blrm_trial(
@@ -181,6 +190,10 @@ def run_bard_blrm_trial(
     boundary_policy: str,
     max_total_evaluations: int = _MAX_TOTAL_EVALUATIONS,
     max_total_work: int = _MAX_TOTAL_WORK,
+    accelerated_titration: bool = False,
+    titration_cap: int | None = None,
+    potential_grade2_toxicities: ArrayLike | None = None,
+    grade2_assessment_delays: ArrayLike | None = None,
 ) -> BARDBLRMTrial:
     """Replay BF-BLRM from explicit potential outcomes and assessment times.
 
@@ -190,6 +203,11 @@ def run_bard_blrm_trial(
     cannot occur before that window. Responses, including negative responses,
     become known at their supplied assessment times. Events tied in calendar
     time are processed together before the next allocation.
+
+    If ``accelerated_titration`` is enabled, the separate supplied grade-2
+    outcome and assessment-delay matrices are required. Titration enrolls one
+    patient at a time and waits for that patient's DLT and grade-2 assessments;
+    this explicit scheduling convention does not claim native calendar parity.
 
     Escalation patients are assigned in complete cohorts. Once a cohort is
     full, the next dose decision waits for all its DLT assessments; lower-dose
@@ -234,6 +252,25 @@ def run_bard_blrm_trial(
     raw_response_delay_shape = np.shape(response_assessment_delays)
     if raw_dlt_delay_shape != matrix_shape or raw_response_delay_shape != matrix_shape:
         raise ValueError(f"assessment delay matrices must have shape {matrix_shape}")
+    if not isinstance(accelerated_titration, (bool, np.bool_)):
+        raise ValueError("accelerated_titration must be boolean")
+    if accelerated_titration:
+        if potential_grade2_toxicities is None or grade2_assessment_delays is None:
+            raise ValueError("titration requires grade-2 outcomes and assessment delays")
+        if np.shape(potential_grade2_toxicities) != matrix_shape:
+            raise ValueError(f"potential_grade2_toxicities must have shape {matrix_shape}")
+        if np.shape(grade2_assessment_delays) != matrix_shape:
+            raise ValueError(f"grade2_assessment_delays must have shape {matrix_shape}")
+        if np.iscomplexobj(potential_grade2_toxicities) or np.iscomplexobj(
+            grade2_assessment_delays
+        ):
+            raise ValueError("grade-2 outcomes and delays must be real-valued")
+    elif (
+        titration_cap is not None
+        or potential_grade2_toxicities is not None
+        or grade2_assessment_delays is not None
+    ):
+        raise ValueError("titration inputs require accelerated_titration=True")
     arrival = finite(arrival_times, "arrival_times")
     if np.any(arrival[1:] <= arrival[:-1]):
         raise ValueError("arrival_times must be strictly increasing")
@@ -250,6 +287,22 @@ def run_bard_blrm_trial(
     response_delay = _real_matrix(
         response_assessment_delays, matrix_shape, "response_assessment_delays"
     )
+    if accelerated_titration:
+        if potential_grade2_toxicities is None or grade2_assessment_delays is None:
+            raise RuntimeError("validated titration inputs unexpectedly became unavailable")
+        grade2_raw = _real_matrix(
+            potential_grade2_toxicities, matrix_shape, "potential_grade2_toxicities"
+        )
+        grade2_delay = _real_matrix(
+            grade2_assessment_delays, matrix_shape, "grade2_assessment_delays"
+        )
+        if np.any((grade2_raw != 0) & (grade2_raw != 1)):
+            raise ValueError("potential_grade2_toxicities must be binary")
+        if np.any(grade2_delay < 0):
+            raise ValueError("grade-2 assessment delays must be nonnegative")
+    else:
+        grade2_raw = np.zeros(matrix_shape, dtype=np.float64)
+        grade2_delay = np.zeros(matrix_shape, dtype=np.float64)
     if np.iscomplexobj(dlt_window):
         raise ValueError("dlt_window must be real-valued")
     window = scalar(dlt_window, "dlt_window")
@@ -265,10 +318,20 @@ def run_bard_blrm_trial(
         )
     dlt_absolute = arrival[:, None] + dlt_delay
     response_absolute = arrival[:, None] + response_delay
-    if not np.all(np.isfinite(dlt_absolute)) or not np.all(np.isfinite(response_absolute)):
+    grade2_absolute = arrival[:, None] + grade2_delay
+    if (
+        not np.all(np.isfinite(dlt_absolute))
+        or not np.all(np.isfinite(response_absolute))
+        or (accelerated_titration and not np.all(np.isfinite(grade2_absolute)))
+    ):
         raise ValueError("arrival plus assessment delay exceeds finite calendar range")
-    if np.any((dlt_delay > 0) & (dlt_absolute == arrival[:, None])) or np.any(
-        (response_delay > 0) & (response_absolute == arrival[:, None])
+    if (
+        np.any((dlt_delay > 0) & (dlt_absolute == arrival[:, None]))
+        or np.any((response_delay > 0) & (response_absolute == arrival[:, None]))
+        or (
+            accelerated_titration
+            and np.any((grade2_delay > 0) & (grade2_absolute == arrival[:, None]))
+        )
     ):
         raise ValueError("a positive assessment delay is below calendar-time resolution")
 
@@ -293,6 +356,19 @@ def run_bard_blrm_trial(
     eval_limit, work_limit = settings["max_total_evaluations"], settings["max_total_work"]
     if cohort < 1 or cap < 1 or backfill_cap < 1:
         raise ValueError("cohort_size, escalation cap, and backfill cap must be positive")
+    if accelerated_titration:
+        if titration_cap is None:
+            titration_cap_value = n_doses
+        else:
+            if isinstance(titration_cap, (bool, np.bool_)) or not isinstance(
+                titration_cap, (int, np.integer)
+            ):
+                raise ValueError("titration_cap must be an integer dose index")
+            titration_cap_value = int(titration_cap)
+        if not 1 <= titration_cap_value <= n_doses:
+            raise ValueError("titration_cap must be between 1 and the number of doses")
+    else:
+        titration_cap_value = n_doses
     if cap > 1_000 or backfill_cap > 1_000_000:
         raise ValueError("escalation and backfill caps exceed supported bounds")
     if (
@@ -307,7 +383,7 @@ def run_bard_blrm_trial(
         raise ValueError("max_total_work must be in 1..50000000")
     if chain_count * draw_count * (2 + 3 * n_doses) > 2_000_000:
         raise ValueError("each retained BF-BLRM fit exceeds two million cells")
-    retained_cells = (4 * n_arrivals + 2) * (14 * n_doses + 2)
+    retained_cells = ((5 if accelerated_titration else 4) * n_arrivals + 2) * (14 * n_doses + 2)
     if retained_cells > _MAX_RETAINED_CELLS:
         raise ValueError("replay snapshots exceed two million retained cells")
 
@@ -350,6 +426,12 @@ def run_bard_blrm_trial(
     coefficient_mean = ptt_mcse = pod_mcse = ptt_rhat = pod_rhat = np.empty(0)
     current_dose = 1
     cohort_records: list[int] = []
+    titration_active = bool(accelerated_titration)
+    titration_pending: int | None = None
+    titration_count = 0
+    titration_grade2_count = 0
+    titration_exit_reason: str | None = None
+    topup_remaining = 0
     terminal_reason: str | None = None
     terminal_boundary: str | None = None
     all_overdose_detected = False
@@ -424,6 +506,8 @@ def run_bard_blrm_trial(
 
     def decision_after_cohort(time: float) -> None:
         nonlocal current_dose, cohort_records, terminal_reason, enrollment_stop_time
+        if titration_active:
+            return
         if len(cohort_records) != cohort or not all(patients[i].dlt_seen for i in cohort_records):
             return
         decision = bard_blrm_next_dose(ptt, pod, current_dose, eta=cutoff)
@@ -460,12 +544,15 @@ def run_bard_blrm_trial(
     def process_until(until: float, *, conduct: bool = True) -> None:
         nonlocal response_patient_count, dlt_patient_count, terminal_reason
         nonlocal all_overdose_detected, all_overdose_time
+        nonlocal titration_pending, titration_active, titration_grade2_count
+        nonlocal titration_exit_reason, topup_remaining, current_dose, cohort_records
         while event_queue and event_queue[0][0] <= until:
             event_time = event_queue[0][0]
             group: list[tuple[float, int, str, int]] = []
             while event_queue and event_queue[0][0] == event_time:
                 group.append(heapq.heappop(event_queue))
             changed = False
+            grade2_observed = False
             for _, _, kind, index in group:
                 patient = patients[index]
                 j = patient.dose - 1
@@ -475,12 +562,58 @@ def run_bard_blrm_trial(
                         response_observed[j] += 1
                         response_patient_count += 1
                         responses[j] += int(patient.response)
+                elif kind == "grade2":
+                    if not patient.grade2_seen:
+                        patient.grade2_seen = True
+                        grade2_observed = True
+                        if patient.role == "titration":
+                            titration_grade2_count += int(patient.grade2)
                 elif not patient.dlt_seen:
                     patient.dlt_seen = True
                     evaluated[j] += 1
                     toxicities[j] += int(patient.dlt)
                     dlt_patient_count += 1
                     changed = True
+            # Accelerated titration is sequential: a DLT or the second
+            # observed grade-2 event exits immediately. The triggering patient
+            # remains the first member of the regular escalation cohort.
+            if conduct and terminal_reason is None and titration_active:
+                titration_patient = (
+                    patients[titration_pending] if titration_pending is not None else None
+                )
+                dlt_trigger = bool(
+                    titration_patient is not None
+                    and titration_patient.dlt_seen
+                    and titration_patient.dlt
+                )
+                grade2_trigger = titration_grade2_count >= 2
+                if dlt_trigger or grade2_trigger:
+                    titration_active = False
+                    titration_exit_reason = (
+                        "first_dlt_and_second_grade2"
+                        if dlt_trigger and grade2_trigger
+                        else "first_dlt"
+                        if dlt_trigger
+                        else "second_grade2"
+                    )
+                    cohort_records = [titration_pending] if titration_pending is not None else []
+                    topup_remaining = max(cohort - len(cohort_records), 0)
+                    titration_pending = None
+                elif (
+                    titration_patient is not None
+                    and titration_patient.dlt_seen
+                    and titration_patient.grade2_seen
+                ):
+                    completed_dose = titration_patient.dose
+                    titration_pending = None
+                    if completed_dose >= titration_cap_value:
+                        titration_active = False
+                        titration_exit_reason = "dose_cap"
+                        current_dose = completed_dose + 1
+                        cohort_records = []
+                    else:
+                        current_dose = completed_dose + 1
+                        cohort_records = []
             if changed:
                 fit_current()
                 snap = snapshot(event_time)
@@ -524,6 +657,7 @@ def run_bard_blrm_trial(
                     if terminal_reason is not None:
                         return
             elif group:
+                event_reason = "grade2_assessment" if grade2_observed else "response_assessment"
                 steps.append(
                     BARDBLRMStep(
                         event_time,
@@ -531,7 +665,7 @@ def run_bard_blrm_trial(
                         None,
                         None,
                         None,
-                        "response_assessment",
+                        event_reason,
                         snapshot(event_time),
                     )
                 )
@@ -572,6 +706,8 @@ def run_bard_blrm_trial(
             break
         if escalation_count >= cap:
             terminal_reason = "escalation_patient_cap"
+            if titration_active:
+                titration_exit_reason = "escalation_patient_cap"
             enrollment_stop_time = float(when)
             steps.append(
                 BARDBLRMStep(
@@ -588,7 +724,25 @@ def run_bard_blrm_trial(
 
         role: str | None = None
         selected_dose: int | None = None
-        if len(cohort_records) < cohort:
+        if titration_active and titration_pending is not None:
+            declined.append(arrival_index)
+            steps.append(
+                BARDBLRMStep(
+                    float(when),
+                    "declined",
+                    arrival_index,
+                    None,
+                    None,
+                    "titration_assessment_pending",
+                    snapshot(when),
+                )
+            )
+            continue
+        if titration_active:
+            role, selected_dose = "titration", current_dose
+        elif topup_remaining > 0:
+            role, selected_dose = "titration_topup", current_dose
+        elif len(cohort_records) < cohort:
             role, selected_dose = "escalation", current_dose
         else:
             fill = bard_blrm_backfill(
@@ -620,14 +774,22 @@ def run_bard_blrm_trial(
         if role is None:
             raise RuntimeError("internal BF-BLRM assignment omitted its patient role")
 
-        if role == "escalation" and pod[selected_dose - 1] >= cutoff:
+        if (
+            role in ("escalation", "titration", "titration_topup")
+            and pod[selected_dose - 1] >= cutoff
+        ):
             boundary("unsafe_current_dose", float(when))
             break
 
         j = selected_dose - 1
         dlt_at = float(when + dlt_delay[arrival_index, j])
         response_at = float(when + response_delay[arrival_index, j])
-        if not np.isfinite(dlt_at) or not np.isfinite(response_at):
+        grade2_at = float(when + grade2_delay[arrival_index, j])
+        if (
+            not np.isfinite(dlt_at)
+            or not np.isfinite(response_at)
+            or (role == "titration" and not np.isfinite(grade2_at))
+        ):
             raise ValueError("arrival plus assigned assessment delay exceeds finite calendar range")
         patient = _Patient(
             arrival_index,
@@ -638,6 +800,8 @@ def run_bard_blrm_trial(
             bool(response_raw[arrival_index, j]),
             dlt_at,
             response_at,
+            bool(grade2_raw[arrival_index, j]) if role == "titration" else False,
+            grade2_at if role == "titration" else None,
         )
         patients.append(patient)
         patient_index = len(patients) - 1
@@ -651,19 +815,29 @@ def run_bard_blrm_trial(
                 patient.response,
                 dlt_at,
                 response_at,
+                patient.grade2,
+                grade2_at if role == "titration" else None,
             )
         )
         assigned[j] += 1
         accepted.append(arrival_index)
-        if role == "escalation":
+        if role in ("escalation", "titration", "titration_topup"):
             escalation_count += 1
             cohort_records.append(patient_index)
+            if role == "titration":
+                titration_count += 1
+                titration_pending = patient_index
+            elif role == "titration_topup":
+                topup_remaining -= 1
         else:
             backfill_count += 1
         serial += 1
         heapq.heappush(event_queue, (dlt_at, serial, "dlt", patient_index))
         serial += 1
         heapq.heappush(event_queue, (response_at, serial, "response", patient_index))
+        if role == "titration":
+            serial += 1
+            heapq.heappush(event_queue, (grade2_at, serial, "grade2", patient_index))
         steps.append(
             BARDBLRMStep(
                 float(when),
@@ -677,11 +851,21 @@ def run_bard_blrm_trial(
         )
         if escalation_count >= cap:
             terminal_reason = "escalation_patient_cap"
+            if titration_active:
+                titration_exit_reason = "escalation_patient_cap"
             enrollment_stop_time = float(when)
             break
+        if role == "titration" and selected_dose == n_doses:
+            # Highest-dose reach immediately begins the guide's k-1 top-up.
+            titration_active = False
+            titration_pending = None
+            titration_exit_reason = "highest_dose"
+            topup_remaining = max(cohort - 1, 0)
 
     if terminal_reason is None:
         terminal_reason = "arrival_schedule_exhausted"
+        if titration_active:
+            titration_exit_reason = "arrival_schedule_exhausted"
         enrollment_stop_time = float(arrival[-1])
         steps.append(
             BARDBLRMStep(
@@ -701,6 +885,10 @@ def run_bard_blrm_trial(
         enrollment_stop_time,
         max((p.dlt_time for p in patients), default=enrollment_stop_time),
         max((p.response_time for p in patients), default=enrollment_stop_time),
+        max(
+            (p.grade2_time for p in patients if p.grade2_time is not None),
+            default=enrollment_stop_time,
+        ),
     )
     if fit_count == 0:
         raise RuntimeError("replay ended without a posterior fit")
@@ -725,6 +913,7 @@ def run_bard_blrm_trial(
             + max(
                 float(dlt_delay[p.arrival_index, p.dose - 1]),
                 float(response_delay[p.arrival_index, p.dose - 1]),
+                float(grade2_delay[p.arrival_index, p.dose - 1]) if p.role == "titration" else 0.0,
             )
             for p in patients
         ]
@@ -761,4 +950,8 @@ def run_bard_blrm_trial(
         total_work,
         all_overdose_detected,
         all_overdose_time,
+        bool(accelerated_titration),
+        titration_count,
+        titration_grade2_count,
+        titration_exit_reason,
     )
