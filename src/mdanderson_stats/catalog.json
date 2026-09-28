@@ -3970,12 +3970,17 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/ComPAS",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/ComPAS",
-      "references": [],
+      "references": [
+        "https://doi.org/10.1002/sim.8026",
+        "https://pubmed.ncbi.nlm.nih.gov/30419609/"
+      ],
       "downloads": [],
       "retrieval_error": null,
       "status": "pending",
       "implemented_features": [],
-      "validation": []
+      "validation": [
+        "Primary abstract verified; exact model, priors and platform operating rules remain unavailable. No implementation or native output validation; research/compas-source-status.md."
+      ]
     },
     {
       "id": 141,
