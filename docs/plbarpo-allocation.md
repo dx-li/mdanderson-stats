@@ -10,9 +10,13 @@ import numpy as np
 from mdanderson_stats import plbarpo_active_allocation
 
 result = plbarpo_active_allocation(
-    successes=[1, 0, 8], failures=[0, 1, 0], assigned=[1, 1, 8],
-    active=[True, True, False], prior=[[1, 1], [1, 1], [2, 1]],
-    method="barn2n", max_n=20,
+    successes=[1, 0, 8],
+    failures=[0, 1, 0],
+    assigned=[1, 1, 8],
+    active=[True, True, False],
+    prior=[[1, 1], [1, 1], [2, 1]],
+    method="barn2n",
+    max_n=20,
 )
 np.testing.assert_allclose(result.best_probability, [5 / 6, 1 / 6, 0])
 assert result.global_enrolled == 10
