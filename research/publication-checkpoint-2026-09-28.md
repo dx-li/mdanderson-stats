@@ -1,11 +1,11 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `9bfefbc` adds survival-forest OOB curves,
-concordance diagnostics and permutation importance, plus BARD stage-two continuation. Local
-`master` contains this validated checkpoint. Fresh read-only checks still show
-GitHub `master` and `main` at `45b6e307`; their documentation/CI commits are
-already merged locally. The newer statistical additions have not been
-confirmed published. See the final section for the current package checks.
+Latest verified package checkpoint: `44804a1` adds BARD accelerated titration,
+explicit-prior U2OET GAO fitting and Dose Schedule Finder aggregate trial
+simulations. Local `master` contains this validated checkpoint. Fresh read-only
+checks still show GitHub `master` and `main` at `45b6e307`; their earlier
+changes are already merged locally. The newer statistical additions have not
+been confirmed published. See the final section for current package checks.
 
 The user explicitly requested that all completed work be pushed to GitHub and
 that stable programs be available on `master`. The public repository is
@@ -435,3 +435,59 @@ write route was not retried or bypassed. Refreshed packages and a verified
 all-refs bundle preserve this checkpoint locally. Accelerated BARD titration
 is being developed in Luna's separate checkout and remains excluded from
 `master` and the package until reviewed and validated.
+
+
+## Titration, GAO fitting and dose-schedule simulation checkpoint
+
+BARD accelerated titration is integrated and documented at `38f904e`.
+It supports single-patient escalation, grade-two/DLT triggers, same-dose
+cohort top-up and configurable dose caps before the existing BF-BLRM replay.
+Source review and hand-ledger checks corrected grade-two-only singleton
+transitions and extended the explicit POD boundary policy to titration roles.
+Nine focused tests pass; the titration, ordinary calendar and stage-two public
+examples pass in 1.492 seconds including imports, with 114.73 MiB peak RSS
+and zero swaps. Combining the source titration convention with BF-BLRM is
+explicitly described as a Python extension. Expansion and native timing/quota
+and calibration gaps remain documented.
+
+U2OET GAO posterior fitting is integrated at `5f14ce8`, with public exports,
+examples and reference tooling at `44804a1`. It uses explicitly supplied
+independent normal priors on raw coefficients, log link/interaction parameters
+and Fisher-z association, preserving chain/draw probabilities and diagnostics.
+It does not guess native prior-file meanings. Independent base-R integration
+checks two reduced posteriors, including partial toxicity observations: all
+38 summaries agree within 1.028 estimated Monte Carlo errors, with maximum
+split R-hat 1.00347. The comparison takes 22.530 seconds after imports, peaks
+at 112.98 MiB and reports no swaps. Four focused fitter checks pass in 2.68
+seconds. Native prior mapping and GAO calibration/calendar integration remain
+open.
+
+Dose Schedule Finder aggregate simulations are integrated at `d12d6c6` and
+publicly exposed at `44804a1`. The serial driver reports selection/stopping,
+allocation, enrollment, observed toxicity and duration with suitable Monte
+Carlo errors, separate replayable event/sampler seeds and shared work budgets.
+Three focused checks pass in 1.57 seconds, including exact single-trial replay,
+clustered pooled-rate errors, RNG-preserving budget rejection and duration
+invariance under time-unit scaling by `1e200`. Read-only review confirms the
+aggregation and stable duration moments. Automatic calibration, delayed
+low-grade toxicity classification and within-patient adaptation remain open.
+
+Cached wheel and source builds at
+`44804a1a21164385991acc039a5081c1947b5a7a` pass. The isolated wheel check verifies
+all 1,476 public exports, exact committed bytes for 536 source/data files,
+retained licenses/notices, the 138-entry catalog and three executable examples
+in the new titration, GAO fitting and dose-schedule simulation guides. It takes
+13.459 seconds, peaks at 108.06 MiB and reports zero swaps. Targeted Ruff lint,
+formatting and worker type checks pass. No broad numerical suite, new CI
+workflow or large simulation was added. Catalog labels remain 63 implemented,
+66 partial and 9 pending; validated additions within partial programs do not
+establish full native feature coverage.
+
+Local `master` is fast-forwarded to the verified code plus this audit. Fresh
+read-only GitHub checks still show both `master` and `main` at `45b6e307`;
+the verified code contains 95 newer local commits. The recorded shell DNS
+failure and connector approval rejection still prevent publication. No
+rejected transport was retried or bypassed. Updated packages and a verified
+all-refs Git bundle preserve the committed root and worker checkpoints locally;
+ignored raw files are excluded. The next BayesChiSquare source triage is
+read-only and introduces no unreviewed code into this checkpoint.
