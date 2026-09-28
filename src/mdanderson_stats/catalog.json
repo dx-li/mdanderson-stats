@@ -46,7 +46,8 @@
         "Legacy inverse-quadratic contour with explicit exact interpolation, monotonicity validation and bounded vectorized radial desirability, integrated with dose decisions and simulation.",
         "Trinary continuation-ratio likelihood, prediction and bounded posterior fitting with positive slope priors, separate marginal and conditional efficacy draws/logits, and chain diagnostics.",
         "Binary-model prior calibration from elicited probability means and separate efficacy/toxicity beta-moment ESS targets, full curvature uncertainty, explicit slope conditioning, adaptive integration and optimizer diagnostics.",
-        "Trinary Lp contour elicitation on the probability triangle, analytical toxicity scales above one, and shared dose decisions using marginal efficacy rather than conditional efficacy."
+        "Trinary Lp contour elicitation on the probability triangle, analytical toxicity scales above one, and shared dose decisions using marginal efficacy rather than conditional efficacy.",
+        "Shared binary/trinary completed-outcome simulation with explicit cell ordering, model-specific posterior fits and work bounds, compact outcome summaries and retained model identity."
       ],
       "validation": [
         "Independent base-R joint likelihood, concave/convex contour and posterior integration references; official tutorial utilities; tests/test_efftox_reference.py.",
@@ -56,7 +57,8 @@
         "Independent base-R trinary likelihood and reduced-posterior integration references, constrained-slope checks and numerical resource bounds; tests/test_efftox_trinary_model.py.",
         "Independent base-R prior moments at 34 outcome/dose combinations, including conditioned toxicity slopes and near-fixed probabilities; tests/test_efftox_calibration.py and research/efftox-prior-calibration-audit.md.",
         "48 independent base-R trinary contour values, endpoint precision checks, marginal-efficacy admissibility and interim/final skipping rules; tests/test_efftox_trinary_contour_decision.py.",
-        "Pending trinary simulation, historical approximate contour fitting, native files/reports and direct Windows-kernel parity; docs/efftox.md."
+        "Independent seeded multinomial trinary cells, patient conservation, nonfixed posterior refits and preserved binary simulation behavior; tests/test_efftox_trinary_simulation.py.",
+        "Pending historical approximate contour fitting, legacy trinary contours, trinary prior calibration, native files/reports and direct Windows-kernel parity; docs/efftox.md."
       ]
     },
     {

@@ -4,7 +4,8 @@ Catalog entry 2 is **partial**. Python provides the bivariate binary response
 model, elicited-prior calibration, posterior fitting, modern and legacy trade-off
 contours, dose selection and completed-outcome trial simulation. A separate
 continuation-ratio model fits mutually exclusive efficacy, toxicity and neither
-outcomes. This is separate from BOP2's efficacy/toxicity monitoring functions.
+outcomes, with contour elicitation, dose decisions and trial simulation.
+This is separate from BOP2's efficacy/toxicity monitoring functions.
 The official [EffTox entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2)
 lists version 5.2.3, modified June 24, 2026.
 [Source provenance](efftox-sources.json) records the inspected references.
@@ -220,8 +221,8 @@ set stops the trial; a nonempty set with no reachable dose is reported separatel
 
 ## Trial simulation
 
-`simulate_efftox` generates completed binary cohorts from a full joint truth
-table at each physical dose. Table axes follow the count convention above:
+`simulate_efftox` generates completed cohorts. For the binary model, use a
+full joint truth table at each physical dose. Table axes follow the convention above:
 `truth[dose, efficacy, toxicity]`. This retains outcome association instead of
 assuming independent efficacy and toxicity. It uses the same starting-dose,
 exploration, admissibility and no-skipping rules as `efftox_decision`.
@@ -332,9 +333,37 @@ The score is zero at each target and one at the ideal `(1,0)`. The formula
 extends over the unit square, but only pairs with `efficacy+toxicity<=1`
 represent trinary probabilities. Dose decisions use marginal efficacy and
 toxicity from the fit, with the same exploration and skipping settings as
-the binary model. Trinary trial simulation remains in progress.
+the binary model.
 The contour matches 48 independent R values within `7e-14`; the public
 fitting/selection example ran in 0.10 seconds with 114.5 MiB peak memory.
+
+The same simulator accepts `EffToxTrinaryPrior` with `EffToxTrinaryContour`
+and a `(dose,3)` truth table in `(neither, efficacy, toxicity)` order:
+
+```python
+from mdanderson_stats import EffToxTrinaryPrior, EffToxTrinaryContour, simulate_efftox
+
+trinary_simulation = simulate_efftox(
+    [1, 2, 4],
+    [[.55, .35, .10], [.40, .45, .15], [.30, .50, .20]],
+    prior=EffToxTrinaryPrior(
+        mean=[-2, .5, .5, .7], sd=[.3, .1, .3, .1],
+    ),
+    contour=EffToxTrinaryContour.from_points([.2, .5, .8], [0, .1, .2]),
+    efficacy_limit=.2, toxicity_limit=.4,
+    efficacy_probability=.5, toxicity_probability=.5,
+    cohorts=2, cohort_size=3, trials=4,
+    draws=16, warmup=8, chains=2, rng=2026,
+)
+print(trinary_simulation.outcome_model)  # "trinary"
+print(trinary_simulation.selection_probability)
+```
+
+Trinary `outcome_counts` have shape `(trial,dose,3)`, and pooled observed
+probabilities have shape `(dose,3)`. Binary outputs retain their existing
+two outcome axes. The result records `outcome_model`; mismatched prior/contour
+types raise before simulation. Both modes share the same allocation, stopping,
+random-stream and diagnostic conventions.
 
 ## Resource limits
 
@@ -355,7 +384,8 @@ conversion and broadcast materialization. Evaluated dose codes lie within
 
 Simulation additionally permits at most 2,000 trials, 100 cohorts and 500 patients
 per trial. Its conservative work estimate is
-`trials*(cohorts+1)*C*D*(S+W)*6`, checked against `max_total_fit_work` before
+`trials*(cohorts+1)*C*D*(S+W)*P`, where `P=6` for binary and `P=4` for trinary,
+checked against `max_total_fit_work` before
 sampling. The default and maximum budget is 20,000,000; callers may lower it.
 This bounds the requested fit dimensions, not elapsed time or the actual number
 of slice-likelihood evaluations, which the result reports separately.
@@ -412,6 +442,13 @@ The public calibration example achieved mean efficacy/toxicity ESS values
 their bounds. It ran in 16.97 seconds with 115.3 MiB peak process memory and
 no swaps; see the calibration audit for objectives and comparison details.
 
-Trinary simulation, historical approximate contour
-fitting and native file/report workflows remain open. The Windows program's
-integration kernel has not been run for direct parity checks.
+Two trinary simulation checks cover independently generated multinomial cells,
+patient accounting and a nonfixed posterior update. All five binary/trinary
+simulation checks passed after integration. The public four-trial trinary
+example completed its 12 posterior fits in 0.045 seconds, using 114.5 MiB peak
+process memory with no swaps. These small workloads verify accounting and
+integration, not operating-characteristic precision.
+
+Remaining scope includes historical approximate contour fitting, legacy
+trinary contours, trinary prior calibration and native file/report workflows.
+The Windows integration kernel has not been run for direct parity checks.

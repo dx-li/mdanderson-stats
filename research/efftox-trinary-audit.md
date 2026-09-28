@@ -79,9 +79,23 @@ and direct log-ratio increments to avoid losing small point differences.
 The shared dose-decision API now accepts trinary fits and count matrices.
 Admissibility uses marginal efficacy logits, and utility uses marginal
 posterior means. Twenty-one focused trinary, binary and legacy checks passed,
-along with targeted lint, formatting and type checks. Trinary simulation
-integration remains in progress.
+along with targeted lint, formatting and type checks.
 The public guide's fitting-plus-final-selection example selected dose one
 and ran in 0.10 seconds with 114.5 MiB peak process memory and no swaps.
 Four contour/decision checks also passed after making their numeric tolerances
 strictly absolute, rather than allowing pytest's default relative tolerance.
+
+## Shared trial simulation
+
+`simulate_efftox` dispatches from the prior type, retaining `(trial,dose,3)`
+counts in neither/efficacy/toxicity order for the trinary model. It uses the
+shared decision rules, preserves separate random streams, and checks trinary
+retained-cell and four-coefficient work bounds before allocation. Results
+record the outcome model while binary array shapes remain unchanged.
+
+Five binary/trinary simulation checks passed after integration in 1.09 seconds.
+The added checks independently generate multinomial cells and exercise a
+nonfixed-prior posterior update. The public four-trial, two-cohort example
+completed 12 fits in 0.045 seconds and conserved all 24 patient outcomes.
+Peak process memory was 114.5 MiB, with no swaps. Large operating-characteristic
+simulations and native RNG comparisons were not run.
