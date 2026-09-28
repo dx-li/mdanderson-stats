@@ -1231,8 +1231,9 @@ diagnostics and complete follow-up after enrollment stops.
 [Stage-two continuation](docs/bard-two-stage.md) carries eligible stage-one
 patients into covariate balancing, counts them toward the total enrollment
 target, and connects new assignments to final OBD selection. Priors, safety
-pooling weights and tie policies are explicit; titration, expansion,
-stage-two calendar timing and native reports remain open.
+pooling weights and tie policies are explicit. [Accelerated titration](docs/bard-titration.md)
+adds one-patient dose progression, grade-2 triggers and the distinct dose-cap
+transitions. Expansion, stage-two calendar timing and native reports remain open.
 
 [TITE-BOIN12 AL methods](docs/tite-boin12.md) add patient-level handling of
 pending toxicity and efficacy, joint utility posteriors and interim dose

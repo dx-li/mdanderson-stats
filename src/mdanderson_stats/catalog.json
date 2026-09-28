@@ -4597,7 +4597,8 @@
         "BF-BLRM one-step dose decisions, response-based backfill eligibility with evaluable caps and final MTD selection; strict POD eligibility, separate equality/unsafe-step states and explicit lowest-dose PTT ties",
         "run_bard_blrm_trial: explicit-arrival/outcome/delay stage-one calendar with prior screening, cohort priority, evaluable-capped backfill, cached compact posterior diagnostics, explicit boundary policies and complete post-stop follow-up; docs/bard-blrm-trials.md.",
         "continue_bard_trial: completed BF-BLRM stage-one carryover filtered by eligibility and chosen dose pair, combined-history minimization, inclusive total-target enrollment and final OBD selection; retained exclusions, assignment seeds and shortfalls. docs/bard-two-stage.md.",
-        "Titration/expansion, stage-two calendar timing, native per-arm quota behavior, calibration and native reports remain open; see docs/bard.md."
+        "Optional accelerated titration with explicit grade-2 outcomes/assessment times, first-DLT/second-grade-2 exits, distinct highest/lower-cap transitions and retained patient roles; sequential-assessment scheduling and BF-BLRM safety policies are explicit Python conventions. docs/bard-titration.md.",
+        "Expansion, stage-two calendar timing, native per-arm quota behavior, calibration and native reports remain open; see docs/bard.md."
       ],
       "validation": [
         "Official BARD application 1.0.5.0, guides and examples pinned in docs/bard-sources.json; discrepancies between official help and paper equations documented.",
@@ -4607,7 +4608,8 @@
         "Exact fixed-prior strict target/inclusive overdose boundary and work-budget rejection before random draws; tools/reference_bard_blrm.R, tests/test_bard_blrm.py and research/bard-blrm-audit.md",
         "12 independent hand-calculated decision/backfill/MTD snapshots and four focused worker checks; cutoff equality, unsafe intermediate steps, response before DLT assessment, caps and final six-patient eligibility",
         "Three independent fixed-prior R/hand-ledger calendars match all 16 patients, as-of assessment counts and 12/5/2 fits; early DLT/late response, evaluable-cap overshoot, cutoff policy, large-origin duration and bounded prior-stop checks. Root replay comparison: 113.94 MiB peak RSS, zero reported swaps; research/bard-blrm-calendar-audit.md.",
-        "Four independent base-R two-stage ledgers match eight new patients, 32 count rows, six posterior rows and four target/selection summaries; maximum posterior/utility difference 4.27e-14. Four focused continuation tests and source review pass. Root comparison 119.63 MiB RSS, zero swaps; research/bard-integrated-audit.md."
+        "Four independent base-R two-stage ledgers match eight new patients, 32 count rows, six posterior rows and four target/selection summaries; maximum posterior/utility difference 4.27e-14. Four focused continuation tests and source review pass. Root comparison 119.63 MiB RSS, zero swaps; research/bard-integrated-audit.md.",
+        "Nine focused calendar/titration checks pass, including highest-dose immediate top-up, lower-cap full next cohort, singleton delayed-grade-2 transitions and overdose-boundary precedence. Three integrated guide examples pass in 1.492 seconds, 114.73 MiB peak RSS, zero swaps; research/bard-accelerated-titration-audit.md."
       ]
     },
     {

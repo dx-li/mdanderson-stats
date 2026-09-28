@@ -4,8 +4,9 @@
 carries eligible patients at the two selected doses into the minimization
 history, allocates new patients and applies the [final OBD rule](bard.md).
 The paper's total target includes stage-one carryover. This completes a
-configured two-stage path; accelerated titration, expansion, stage-two calendar
-delays and hidden native settings remain separate scope.
+configured two-stage path; optional [accelerated titration](bard-titration.md)
+also feeds its stage-one ledger. Expansion, stage-two calendar delays and hidden
+native settings remain separate scope.
 
 ```python
 import numpy as np

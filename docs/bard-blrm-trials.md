@@ -5,7 +5,9 @@ and [dose/backfill decisions](bard-blrm-decisions.md) with explicit patient
 arrivals and assessment delays. It returns each assignment, posterior decision,
 completed outcome and final MTD. [Stage-two continuation](bard-two-stage.md)
 uses that result for eligible carryover, allocation and final OBD selection.
-BARD remains partial: titration, expansion, stage-two timing and native reports remain open.
+[Accelerated titration](bard-titration.md) adds one-patient dose progression and
+grade-2 event handling. BARD remains partial: expansion, stage-two timing and
+native reports remain open.
 
 ## A reproducible timeline
 

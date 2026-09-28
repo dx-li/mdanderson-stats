@@ -95,8 +95,10 @@ cohort and backfill scheduling with explicit arrivals, outcomes and assessment
 delays, evaluable-patient caps and complete follow-up after enrollment stops.
 [Stage-two continuation](bard-two-stage.md) carries eligible stage-one patients
 into allocation and final selection under the paper's inclusive total target.
-Accelerated-titration/expansion options, stage-two calendar timing, native per-arm
-quota interpretation, calibration and native reports remain open. Existing BF-BOIN components provide separate stage-one
+[Accelerated titration](bard-titration.md) adds grade-2 observations and the
+guide's dose transitions with explicit assessment timing and BF-BLRM safety
+policies. Expansion, stage-two calendar timing, native per-arm quota
+interpretation, calibration and native reports remain open. Existing BF-BOIN components provide separate stage-one
 functionality; this addition does not claim the full BARD workflow is complete.
 
 ## Numerical validation and sources

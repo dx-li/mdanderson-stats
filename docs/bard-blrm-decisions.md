@@ -88,4 +88,6 @@ checks and a separate mathematical review also pass; see the
 The [calendar replay](bard-blrm-trials.md) combines these decisions with
 posterior fitting and explicitly supplied outcomes and delays. [Stage-two
 continuation](bard-two-stage.md) integrates eligible carryover and complete
-outcomes. Accelerated titration, expansion and stage-two calendar timing remain open.
+outcomes. [Accelerated titration](bard-titration.md) supplies the guide's prefix
+under explicit scheduling and BF-BLRM safety conventions. Expansion and
+stage-two calendar timing remain open.
