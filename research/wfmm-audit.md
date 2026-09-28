@@ -271,3 +271,12 @@ and reconstruction from mean variances. Covariances from `1e308` coefficient
 variances remained finite and matched scaled identity to absolute tolerance
 `1e-14`. These checks support the explicit Python transform convention, not
 native binary output parity.
+
+The combined WFMM/SYNERGY package checkpoint built from `24649d4` successfully.
+All 493 Python modules, the catalog and source notices matched the committed
+wheel/source-distribution contents byte for byte. An isolated process imported
+the extracted wheel's package and all five new calibration/covariance/surface
+functions, and read its 138-entry catalog. Raw research downloads and local
+compiled binaries were absent. The build process peaked at 74.9 MiB with no
+reported swaps; this is distribution validation, not a whole-catalog numerical
+test or a publication claim.
