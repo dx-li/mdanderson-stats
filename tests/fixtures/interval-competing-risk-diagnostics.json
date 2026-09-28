@@ -1,0 +1,75 @@
+{
+  "reference": {
+    "intccr": "252644c0d347a663ea5d7bef88fa2ab04f114b1e",
+    "alabama": "3dd535fac47afe823162a4755c3a1faddef6c566",
+    "numDeriv": "54dc4181ec0543a95a2cf7a5e3c483ab0a109750"
+  },
+  "native": [
+    {
+      "case": "fine_gray",
+      "alpha": [
+        0,
+        0
+      ],
+      "log_likelihood": -277.683200096177,
+      "gradient_error": 1.884122156070589e-07,
+      "inequality_jacobian_error": 0.2413085322395216,
+      "equality_jacobian_error": 0.011683757927833343,
+      "minimum_inequality": 2.1401804798207403e-05,
+      "maximum_equality": 4.7138528058709994e-07,
+      "maximum_objective_score": 7.533127586176192
+    },
+    {
+      "case": "odds",
+      "alpha": [
+        1,
+        1
+      ],
+      "log_likelihood": -277.0203199692201,
+      "gradient_error": 5.272824115110097e-07,
+      "inequality_jacobian_error": 0.2068704781802056,
+      "equality_jacobian_error": 0.011647432558583633,
+      "minimum_inequality": 0.00021671660289141202,
+      "maximum_equality": 3.888829827047857e-07,
+      "maximum_objective_score": 6.510551539293892
+    },
+    {
+      "case": "mixed",
+      "alpha": [
+        0,
+        1
+      ],
+      "log_likelihood": -278.03084011105767,
+      "gradient_error": 5.541826206822975e-07,
+      "inequality_jacobian_error": 0.2413085321551915,
+      "equality_jacobian_error": 0.011683001475538593,
+      "minimum_inequality": 0.00012434779305864628,
+      "maximum_equality": 3.779806303505495e-07,
+      "maximum_objective_score": 6.544290126100054
+    }
+  ],
+  "corrected_constraint_jacobians": [
+    {
+      "case": "fine_gray",
+      "log_likelihood": -294.90545106562894,
+      "minimum_inequality": 2.9698338520632203e-10,
+      "maximum_equality": 3.602096398935828e-11,
+      "maximum_objective_score": 7.161116047890062
+    },
+    {
+      "case": "odds",
+      "log_likelihood": -278.20886548029046,
+      "minimum_inequality": 5.2609086631609876e-11,
+      "maximum_equality": 3.5507146334268214e-08,
+      "maximum_objective_score": 6.138599631221104
+    },
+    {
+      "case": "mixed",
+      "log_likelihood": -282.560590217423,
+      "minimum_inequality": 4.733819179989948e-11,
+      "maximum_equality": 7.93747023664082e-09,
+      "maximum_objective_score": 6.375642242664961
+    }
+  ],
+  "notes": "All six runs report native convergence, which is not a certificate of an optimum. Unconstrained objective scores alone are not KKT residuals. Corrected constraint Jacobians pass independent finite differences at the specified interior point; stricter lower-boundary enforcement materially changes fits."
+}

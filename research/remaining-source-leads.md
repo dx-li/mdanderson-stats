@@ -180,8 +180,11 @@ than a generic inverse Hessian.
 Retrieved and blob-verified under ignored `research/raw/intccr`:
 `R/ciregic.R` (`e1f2f6e29d84e6f520e0482adfdcc0a48c8f9b90`),
 `R/bssmle.R` (`d122c3ac22a446bfb8071b720c9df962de188ebe`), and
-`R/dataprep.R` (`371ac55900e8434a264c557e1933b749f3918576`). No native fit or
-Python implementation is claimed yet.
+`R/dataprep.R` (`371ac55900e8434a264c557e1933b749f3918576`). Three native fits
+now supply parameter, covariance and prediction references. Corrected
+constraint-Jacobian runs demonstrate sensitivity to the finite starting-boundary
+approximation; neither set is treated as a certified maximum-likelihood target.
+Python implementation is underway in the single Luna worker.
 
 The [implementation contract](interval-competing-risk-audit.md) records the
 additional response, spline, initialization and least-squares covariance

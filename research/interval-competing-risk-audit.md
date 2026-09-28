@@ -3,7 +3,8 @@
 SurvivalContour's `FGIntContour.R` calls `intccr::predict.ciregic` for the
 first of two competing causes. This is a distinct interval likelihood, not a
 wrapper around a right-censored Fine–Gray fit. Implementation remains pending;
-the notes below record inspected primary source, not a validated Python model.
+the notes below record inspected primary source and executed R references,
+not a validated Python model.
 
 ## Pinned source
 
@@ -73,15 +74,56 @@ The long-format helper also sorts by `ID & time`, not lexicographically by ID
 and time; any future converter must establish visit order before selecting an
 event interval. Neither behavior should silently become a Python convention.
 
-No `intccr` fit or Python numerical comparison has run at this checkpoint.
-No extra R or Python dependencies have been installed.
-
 For a source-only reference run, the pure-R optimizer dependencies have also
 been retrieved and blob-verified without installation: `alabama` 2025.1.0 at
 `3dd535fac47afe823162a4755c3a1faddef6c566` (`R/constrOptim.nl.R`, blob
 `05c93764ceb3eacafd1d2cc06ad8d6b4f7015cf1`), and `numDeriv` 2016.8-1.1 at
 `54dc4181ec0543a95a2cf7a5e3c483ab0a109750` (`R/numDeriv.R`, blob
 `394d5f1db1d644fd1b44a2e70f0294ce04fcf50d`; `R/num2Deriv.R`, blob
-`9adbafd4d39dc95d2d0b69283a5fc571bf1e497c`). A scratch harness redirects only
-the optimizer's package lookup to these source-loaded functions. It is not
-yet executed and is not numerical evidence.
+`9adbafd4d39dc95d2d0b69283a5fc571bf1e497c`). The reference harness redirects only
+the optimizer's package lookup to these source-loaded functions. No extra R
+or Python dependencies have been installed.
+
+## Executed native fits and derivative checks
+
+`tools/reference_interval_competing_risk.R` sources the pinned routines,
+without editing the likelihood or fitting-body mathematics. Three deterministic
+120-row datasets share inputs and vary `alpha` over `(0,0)`, `(1,1)` and `(0,1)`.
+All three runs report native convergence. Their likelihoods are respectively
+`-277.68320009617702`, `-277.02031996922011` and `-278.03084011105767`.
+The preserved fixtures contain 120 input rows, 48 parameters, 48 covariance
+entries and 279 pairs of predicted cause-specific CIFs.
+
+Independent numerical differentiation at an interior parameter point confirms
+the constraint derivative discrepancies: maximum inequality-Jacobian errors
+are `0.207`–`0.241` and equality-Jacobian errors `0.01165`–`0.01168`. The
+likelihood gradient agrees within `5.55e-7`. The native fitted lower-boundary
+equality residual is `3.78e-7`–`4.72e-7`; its first baseline controls are around
+`-15` and `-22`. Thus native fitting uses a finite approximation to the
+mathematical zero-incidence boundary, which requires an infinite log parameter.
+
+A second run keeps the same model and native optimizer but supplies independent
+analytic constraint Jacobians, verified against finite differences within
+`1e-7` at the evaluation point. The likelihoods become `-294.90545106562894`,
+`-278.20886548029046` and `-282.560590217423`, with lower-boundary residuals
+`3.60e-11`, `3.55e-8` and `7.94e-9`. These materially different results are
+diagnostics, not certified optima or Python acceptance targets. Ordinary
+objective scores alone are not KKT residuals in a constrained problem.
+Diagnostics for both runs are preserved separately in the JSON fixture.
+
+The original reference run took 3.59 seconds and peaked at 99.4 MiB child RSS.
+The combined original/corrected run took 28.82 seconds and peaked at 112.0 MiB.
+Both reported zero process swaps and used one numerical thread. A preliminary
+fully finite-difference optimizer comparison was explicitly terminated at its
+45-second experiment limit; it produced no corrected fit and is not evidence
+of a successful fit.
+
+The planned Python interface exposes `boundary_cif_tolerance`, defaulting to
+`1e-7`. Inverting the link makes each lower-boundary constraint linear in the
+spline and regression coefficients; this avoids optimizing near-zero raw
+equality residuals and makes the finite approximation explicit. Monotone CIFs
+need joint probability constraints only at the maximum supported time. Source
+corner constraints do not by themselves certify every interior covariate
+profile for arbitrary link parameters; prediction must check the requested
+profile's joint probability and report violations. No Python fit or numerical
+equivalence claim has yet been made.
