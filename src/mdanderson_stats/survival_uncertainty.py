@@ -450,37 +450,39 @@ def predict_parametric_survival_mc(
         stop = min(n_times, start + draw_chunk)
         block_times = times_copy[start:stop]
         block_log_time = log_time[start:stop]
+        zero = block_times == 0
+        infinite = np.isposinf(block_times)
+        evaluable = np.isfinite(block_times) & (block_times > 0)
+        evaluable_log_time = block_log_time[evaluable]
         spline_basis = (
-            _basis(fit.scaled_knots, block_log_time) if isinstance(fit, SurvivalSplineFit) else None
+            _basis(fit.scaled_knots, evaluable_log_time)
+            if isinstance(fit, SurvivalSplineFit)
+            else None
         )
         for profile_index in range(n_profiles):
             row_design = design[profile_index]
             point_log = np.full(block_times.shape, np.nan)
             point_s = np.full(block_times.shape, np.nan)
             point_valid = _draw_is_representable(mean, fit, parameterization)
-            zero = block_times == 0
-            infinite = np.isposinf(block_times)
             if point_valid:
                 point_log[zero] = 0.0
                 point_s[zero] = 1.0
                 point_log[infinite] = -np.inf
                 point_s[infinite] = 0.0
-            point_evaluable = ~(zero | infinite)
-            if np.any(point_evaluable):
+            if np.any(evaluable):
                 point_values_log, point_values = _survival_draw(
                     fit,
                     mean,
                     row_design,
-                    block_log_time[point_evaluable],
+                    evaluable_log_time,
                     parameterization,
-                    None if spline_basis is None else spline_basis[point_evaluable],
+                    spline_basis,
                 )
-                point_log[point_evaluable] = point_values_log
-                point_s[point_evaluable] = point_values
+                point_log[evaluable] = point_values_log
+                point_s[evaluable] = point_values
             point_log_survival[profile_index, start:stop] = point_log
             point_survival[profile_index, start:stop] = point_s
             draws_surface = np.full((n_draws, stop - start), np.nan)
-            evaluable = ~(zero | infinite)
             for draw_index, parameters in enumerate(parameter_sample):
                 if not _draw_is_representable(parameters, fit, parameterization):
                     continue
@@ -491,9 +493,9 @@ def predict_parametric_survival_mc(
                         fit,
                         parameters,
                         row_design,
-                        block_log_time[evaluable],
+                        evaluable_log_time,
                         parameterization,
-                        None if spline_basis is None else spline_basis[evaluable],
+                        spline_basis,
                     )
                     draws_surface[draw_index, evaluable] = values
             quantiles = _type7_quantiles(draws_surface, probabilities)
