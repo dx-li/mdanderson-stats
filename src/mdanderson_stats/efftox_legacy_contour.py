@@ -67,7 +67,7 @@ class EffToxLegacyContour:
         derivative_numerator = np.asarray(
             [scaled[1] + 2.0 * scaled[2] * e[0], scaled[1] + 2.0 * scaled[2]]
         )
-        derivative_scale = max(float(np.max(np.abs(scaled[1:]))), np.finfo(float).tiny)
+        derivative_scale = max(float(np.max(np.abs(scaled[1:]))), float(np.finfo(float).tiny))
         if float(np.max(derivative_numerator)) > 128 * np.finfo(float).eps * derivative_scale:
             raise ValueError("inverse-quadratic target must be nondecreasing on [e0,1]")
         coefficients = np.asarray(

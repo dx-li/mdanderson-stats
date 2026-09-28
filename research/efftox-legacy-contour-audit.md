@@ -21,4 +21,17 @@ from the explicit radial construction in the original paper.
 and the ray intersection with base R. It covers the published Pentostatin
 targets, lower-degree cases, a zero derivative at the lower endpoint, probability
 boundaries and radial transformations with known utility. This is a mathematical
-reference for implementation in progress, not a completion claim.
+reference for the Python implementation, not a native-kernel comparison.
+
+## Integration validation
+
+The public `EffToxLegacyContour` matches all 60 base-R rows with maximum
+absolute utility error `4.27e-14`. Five contour checks and three simulation
+checks passed together in 1.35 seconds, including the reproduced tiny-toxicity
+endpoint failure and scalar-shape preservation. Targeted lint, formatting and
+type checks passed. The public guide example also ran successfully.
+
+A 100-by-100 probability grid had finite scores increasing with efficacy and
+decreasing with toxicity. Vectorized scoring took 0.0071 seconds; the combined
+reference/example/grid process peaked at 112.5 MiB RSS with no process swaps.
+These timings describe the measured small workload, not all possible inputs.

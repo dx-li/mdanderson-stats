@@ -484,6 +484,7 @@ from .easycelltype import (
     easycelltype_labels,
 )
 from .efftox_decision import EffToxContour, EffToxDecision, efftox_decision
+from .efftox_legacy_contour import EffToxLegacyContour
 from .efftox_model import (
     EffToxFit,
     EffToxPrior,
@@ -1285,6 +1286,7 @@ __all__ = [
     "EffToxPrior",
     "EffToxFit",
     "EffToxContour",
+    "EffToxLegacyContour",
     "EffToxDecision",
     "EffToxSimulation",
     "efftox_standardize",

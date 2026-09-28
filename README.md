@@ -1176,9 +1176,9 @@ subgroup. It preserves the native similarity floors and rounded efficacy rule,
 with bounded sampling and independent R numerical references.
 
 [EffTox dose finding](docs/efftox.md) adds the bivariate efficacy/toxicity
-model, explicit Gaussian priors, bounded posterior fitting, Lp trade-off
-contours, interim/final dose selection and bounded completed-outcome trial
-simulation. Simulations preserve joint outcome association and report allocation,
+model, explicit Gaussian priors, bounded posterior fitting, modern Lp and
+legacy inverse-quadratic contours, interim/final dose selection and completed-outcome
+trial simulation. Simulations preserve joint outcome association and report allocation,
 selection, stopping and sampler diagnostics. Published no-skipping and exploration
 rules are explicit; prior calibration and trinary outcomes remain open.
 

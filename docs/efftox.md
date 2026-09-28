@@ -1,9 +1,9 @@
 # EffTox bivariate dose finding
 
 Catalog entry 2 is **partial**. Python provides the bivariate binary response
-model, posterior fitting with explicit priors, Lp trade-off contours, dose
-selection and completed-outcome trial simulation. This is separate from BOP2's
-efficacy/toxicity monitoring functions.
+model, posterior fitting with explicit priors, modern and legacy trade-off
+contours, dose selection and completed-outcome trial simulation. This is separate
+from BOP2's efficacy/toxicity monitoring functions.
 The official [EffTox entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2)
 lists version 5.2.3, modified June 24, 2026.
 [Source provenance](efftox-sources.json) records the inspected references.
@@ -95,6 +95,35 @@ The ideal point `(1,0)` has desirability one. Concave contours with `p<1` are
 supported as well as linear and convex contours. Dose selection evaluates
 desirability at the posterior mean efficacy and toxicity probabilities; averaging
 the desirabilities of individual posterior draws is a different criterion.
+
+### Original inverse-quadratic contour
+
+`EffToxLegacyContour` implements the original curve `T=a+b/E+c/E**2` and
+radial desirability from the 2004 paper. Its score is
+`distance(target intersection, ideal)/distance(evaluated point, ideal)-1`,
+where the ideal is `(1,0)`. Points on the target have score zero; points closer
+to the ideal have positive scores. The ideal itself has limiting score `+inf`.
+This numeric score differs from the modern Lp score above.
+
+```python
+from mdanderson_stats import EffToxLegacyContour
+
+legacy = EffToxLegacyContour.from_points(
+    [.15, .25, 1], [0, .30, .60],  # published Pentostatin targets
+)
+print(legacy.coefficients)  # a, b, c
+print(legacy.utility([.15, .25, 1], [0, .30, .60]))  # all approximately zero
+print(legacy.utility(.625, .15))  # one: twice as close along the middle ray
+```
+
+Pass `legacy` as the contour to `efftox_decision` or `simulate_efftox`.
+Python interpolates the three supplied points exactly and checks monotonicity
+over their efficacy interval. Incompatible or ill-conditioned points raise an
+error. This is an explicit convention: the historical Windows fitting routine
+could approximate its inputs, and its exact loss and constraints are unavailable.
+The [source audit](../research/efftox-legacy-contour-audit.md) records that gap.
+Scoring is vectorized with bounded root iteration and a 200,000-cell limit;
+unrepresentable finite nonideal scores raise an error.
 
 ## Dose selection
 
@@ -243,9 +272,15 @@ These checks passed in 1.43 seconds; targeted lint, formatting and type checks
 also passed. The small public-API example above ran in 1.12 seconds with a peak
 process RSS of 114.0 MiB and no process swaps on the validation machine.
 
+The legacy contour matches 60 independent base-R scores within `4.27e-14`
+absolute error. Five contour checks and three simulation checks passed together
+in 1.35 seconds, including continuity at very small positive toxicity. Its
+public guide example and a 10,000-pair monotonicity/performance check passed;
+see the [contour audit](../research/efftox-legacy-contour-audit.md).
+
 This implementation takes coefficient priors as input. The elicited-probability
 and effective-sample-size calibration of
 [Thall et al. (2014)](https://pmc.ncbi.nlm.nih.gov/articles/PMC4229398/)
-remains open, as do trinary outcomes, legacy inverse-quadratic contours
+remains open, as do trinary outcomes, historical approximate contour fitting
 and native file/report workflows. The Windows program's integration kernel
 has not been run for direct parity checks.
