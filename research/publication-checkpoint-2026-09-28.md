@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `e3e907f` adds BOIN12 tradeoff utilities
-and BARD BF-BLRM posterior fitting, dose/backfill decisions and final MTD
-selection to the preceding APIs. Local `master` contains this validated
+Latest verified package checkpoint: `bc3b2a5` adds stratified interval-censored
+PH fitting and predictions, plus BARD BF-BLRM calendar replay with separate
+toxicity/response follow-up. Local `master` contains this validated
 checkpoint. Fresh
 read-only checks still show GitHub `master` and `main` at `45b6e307`; their
 documentation/CI commits are already merged locally. The newer statistical
@@ -306,3 +306,40 @@ The validated code has 61 newer commits than that published point. No rejected
 write route was retried: shell GitHub DNS and unavailable connector approval
 remain the recorded barriers. Packages and an updated verified all-refs bundle
 preserve the local checkpoint, but they do not publish it to the community.
+
+## Stratified interval survival and BARD calendar checkpoint
+
+Shared-coefficient stratified interval-PH fitting is public at `2e39d63`.
+It uses independent Turnbull supports and baselines, within-stratum centering
+and joint likelihood optimization. Independent R current-status regression
+agrees on coefficients and likelihood; ten survival predictions differ by at
+most `3.30e-8`. Mixed exact/interval/right-censored data pass direct likelihood,
+finite-difference shared-score and KKT checks. Large covariate offsets,
+time/covariate scaling and weight scaling preserve the checked results.
+Four focused worker tests pass; the independent audit peaks at 116.53 MiB
+with zero reported swaps. Native `mets` response-contract parity is not claimed.
+
+BARD BF-BLRM stage-one calendar replay is public at `bc3b2a5`. Independent
+fixed-prior R/hand-ledger examples match 16 patient records and all as-of counts,
+including early DLTs, late responses, pending backfill beyond the evaluable
+cap and partial final cohorts. Fit reuse requires exactly 12, 5 and 2 fits
+for the three paths. Four focused worker checks pass. A separate free-prior
+replay agrees exactly with four sequential actual fitter calls. Explicit
+boundary policies, sticky all-overdose findings and complete follow-up are
+documented. Root calendar checks peak at 113.94 MiB with zero reported swaps.
+
+Cached wheel and source builds at `bc3b2a5` pass. The isolated wheel check
+verifies all 1,456 public exports, all 529 packaged source/data files against
+committed Git bytes, retained licenses/notices, the 138-entry catalog and
+three examples across the two new guides. It takes 10.812 seconds, peaks at
+116.16 MiB and reports no swaps. Targeted lint/format checks pass; no broad
+numerical suite or new CI workflow was added. Catalog counts remain
+63 implemented, 66 partial and 9 pending, reflecting broader native workflows.
+
+Local `master` is fast-forwarded to the verified code plus this audit. Fresh
+read-only GitHub checks still show `master` and `main` at `45b6e307`; the
+verified code has 68 newer local commits. The earlier shell DNS failure and
+connector approval rejection still prevent publication. No rejected write
+transport was retried. Refreshed packages and the verified all-refs bundle
+preserve this checkpoint locally. The next PRT calendar investigation remains
+in an isolated Luna checkout and is excluded until implemented and validated.
