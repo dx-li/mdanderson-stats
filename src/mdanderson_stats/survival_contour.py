@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from math import isfinite
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -22,6 +22,9 @@ from ._cdflib import _freeze
 from ._validation import FloatArray, count, finite
 from .survan_cox import SurvanCox, _encode_strata, survan_cox
 from .survan_cox_likelihood import _combine_moments, _CoxLikelihood, _weighted_moments
+
+if TYPE_CHECKING:
+    from .parametric_survival_contour import ParametricSurvivalContour
 
 _MAX_SURFACE_CELLS = 2_000_000
 _DEFAULT_QUANTILES = (0.10, 0.25, 0.50, 0.75, 0.90)
@@ -490,7 +493,10 @@ def survival_stratified_cox_contour(
 
 
 def plot_survival_contour_2d(
-    result: SurvivalCoxContour, *, ax: Any | None = None, levels: int = 12
+    result: SurvivalCoxContour | ParametricSurvivalContour,
+    *,
+    ax: Any | None = None,
+    levels: int = 12,
 ) -> Any:
     """Lazily draw survival contours; requires the optional Matplotlib extra."""
     import matplotlib.pyplot as plt
@@ -505,7 +511,10 @@ def plot_survival_contour_2d(
 
 
 def plot_survival_contour_3d(
-    result: SurvivalCoxContour, *, ax: Any | None = None, surface: str = "survival"
+    result: SurvivalCoxContour | ParametricSurvivalContour,
+    *,
+    ax: Any | None = None,
+    surface: str = "survival",
 ) -> Any:
     """Lazily draw the returned survival or confidence-limit surface."""
     import matplotlib.pyplot as plt

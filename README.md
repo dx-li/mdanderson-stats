@@ -1280,6 +1280,12 @@ censoring left limits and stable prediction arithmetic accompany bounded
 array allocations. Interval-censored competing risks and the remaining
 SurvivalContour model families are still open.
 
+[Parametric AFT survival models](docs/parametric-survival.md) add exact Weibull,
+log-normal and log-logistic fits, joint coefficient/scale covariance and
+survival predictions. Continuous-covariate contours and selected percentile
+curves include deterministic delta-method pointwise bounds. Generalized-gamma,
+spline and native simulation-based interval workflows remain open.
+
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
 outcomes. These include exact one-sample count tests, historical controls,

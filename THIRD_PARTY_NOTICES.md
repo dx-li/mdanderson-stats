@@ -950,6 +950,22 @@ source at `08a60f7e9a24735b17c77d8b99752baaee6b6bf6` was inspected to verify
 that its FGR fit/prediction wrappers delegate to cmprsk; its formula stack is
 not included in this Python interface.
 
+## SurvivalContour parametric workflow
+
+The parametric contour workflow follows the numeric grid and adjustment-profile
+contract in `paraContour.R` and `paraContour3D.R` from the SurvivalContour
+revision credited above. The fitted models are independent implementations of
+the standard Weibull, log-normal and log-logistic accelerated failure-time
+likelihoods. Numerical references execute Terry Therneau's `survival` 3.6-4
+`survreg` implementation in R; that implementation is not redistributed.
+
+Parameter mappings and the native prediction workflow were checked against
+Christopher Jackson and contributors' GPL >=2 `flexsurv` 2.3.2 source, pinned at
+https://github.com/cran/flexsurv/tree/2aae4c8ac56823d0eac30c1a9ad654ac599b5938.
+The implementation exposes deterministic delta-method bounds rather than
+claiming equivalence to flexsurv's simulated parameter-draw intervals.
+The source and reference details are in `research/parametric-survival-audit.md`.
+
 ## Bayesian success calibration
 
 `success_calibration.py` is an independent implementation of the mathematical

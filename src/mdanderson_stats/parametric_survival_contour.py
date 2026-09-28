@@ -182,9 +182,7 @@ def parametric_survival_contour(
     if quantile_scale == 0:
         quantile_scale = 1.0
     column = design[:, continuous_column] / quantile_scale
-    covariate_quantiles = (
-        np.quantile(column, probabilities, method="linear") * quantile_scale
-    )
+    covariate_quantiles = np.quantile(column, probabilities, method="linear") * quantile_scale
     if not np.isfinite(covariate_quantiles).all():
         raise ArithmeticError("continuous-covariate quantiles are not representable")
     quantile_profiles = np.repeat(base_profile[None, :], probabilities.size, axis=0)

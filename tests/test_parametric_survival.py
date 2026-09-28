@@ -10,6 +10,7 @@ from mdanderson_stats.parametric_survival import (
     fit_parametric_survival,
     predict_parametric_survival,
 )
+from mdanderson_stats.parametric_survival_contour import parametric_survival_contour
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -75,3 +76,17 @@ def test_censored_group_with_no_events_has_no_finite_location_estimate():
                 [0, 0, 0, 1, 1, 1],
                 distribution=distribution,
             )
+
+
+def test_contour_memory_budget_is_checked_before_fitting():
+    # This design has no finite fit, but its oversized output must be rejected
+    # before fitting or allocating profile-by-time surfaces.
+    with pytest.raises(ValueError, match="combined parametric contour output"):
+        parametric_survival_contour(
+            [1, 2, 3, 4, 5, 6],
+            [1, 1, 1, 0, 0, 0],
+            [0, 0, 0, 1, 1, 1],
+            0,
+            n_grid=2000,
+            times=np.linspace(0, 6, 500),
+        )

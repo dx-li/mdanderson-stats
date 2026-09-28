@@ -661,6 +661,13 @@ from .parallel_phase12_progression import (
 )
 from .parameter_distribution import ParameterDistribution
 from .parameter_solver import solve_distribution_moments, solve_distribution_quantiles
+from .parametric_survival import (
+    ParametricSurvivalFit,
+    ParametricSurvivalPrediction,
+    fit_parametric_survival,
+    predict_parametric_survival,
+)
+from .parametric_survival_contour import ParametricSurvivalContour, parametric_survival_contour
 from .pdnn import PDNNExpression, pdnn_binding_energy, pdnn_expression, pdnn_signal
 from .pdnn_fit import PDNNConvergenceError, PDNNFit, PDNNParameters, fit_pdnn
 from .pehaz import PiecewiseHazard, pehaz
@@ -1550,6 +1557,12 @@ __all__ = [
     "fine_gray_contour",
     "plot_fine_gray_contour_2d",
     "plot_fine_gray_contour_3d",
+    "ParametricSurvivalFit",
+    "ParametricSurvivalPrediction",
+    "ParametricSurvivalContour",
+    "fit_parametric_survival",
+    "predict_parametric_survival",
+    "parametric_survival_contour",
     "SurvanLogistic",
     "survan_logistic",
     "SurvanKM",

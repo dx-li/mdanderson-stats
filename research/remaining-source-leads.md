@@ -14,6 +14,27 @@ generalized-gamma model and joint uncertainty used by `flexsurv`. The original
 SurvivalContour `paraContour.R` is saved and pinned in the source audit. Future
 coverage must verify each distribution's parameterization and interval method.
 
+The first exact Weibull, log-normal and log-logistic AFT checkpoint is tracked
+in [the parametric-survival audit](parametric-survival-audit.md). The verified
+native source is `flexsurv` 2.3.2 at
+`2aae4c8ac56823d0eac30c1a9ad654ac599b5938`. Generalized-gamma and spline families
+remain separate work. Its small native generalized-gamma implementation and
+headers are saved as exact source bytes under ignored `research/raw/flexsurv`:
+`src/gengamma.cpp` (`34c799553ec1f74aa587854148bcf95834f607df`) and
+`src/gengamma.h` (`e363f768ccf60786998b12972b5f80d44b036e69`), plus their
+distribution, recycling and map headers. Rcpp 1.1.1 is already installed,
+so a future small serial reference compilation may avoid installing the
+full flexsurv dependency stack. No compilation is claimed at this checkpoint.
+
+The Prentice model allows positive or negative Q and has the exact log-normal
+case at Q=0. For nonzero Q, its CDF uses a gamma variable with shape Q^-2 and
+argument exp(Q*w)/Q^2, reversing the tail for negative Q. The native density
+explicitly notes cancellation near Q=0. A Python port needs a stable limiting
+calculation and joint shape covariance, not a fixed-shape or finite-df
+approximation. The original Stacy parameterization is the positive-Q subset;
+its source transformation is mu=log(scale)+log(k)/shape,
+sigma=1/(shape*sqrt(k)), Q=1/sqrt(k).
+
 The same pinned author revision contains
 [`coxStrataContour.R`](https://github.com/YushuShi/survivalContour/blob/d4645f69f23fc1146c07432f576b4c40f85e1bba/R/coxStrataContour.R)
 (blob `46cbd57ff949c18a934c3a94461727b191533ff7`). It predicts separately for
