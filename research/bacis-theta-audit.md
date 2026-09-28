@@ -40,5 +40,18 @@ references, three latent precisions, and a grid covering both infinities,
 normal tail arguments and points within `1e-12` of zero. It calculates
 near-zero normal mass by direct quadrature, avoiding cancellation between
 nearly equal CDFs. Generation succeeded for 513 density/CDF/survival rows and
-57 moment rows without JAGS. Agreement with the Python implementation remains
-pending. Source provenance is shared with [bacis-sources.json](../docs/bacis-sources.json).
+57 moment rows without JAGS. Source provenance is shared with
+[bacis-sources.json](../docs/bacis-sources.json).
+
+The integrated `bacis_theta_posterior` agrees with all reference rows. Maximum
+absolute differences are `3.42e-14` for density, `7.78e-15` for CDF and survival,
+`3.88e-13` for the mean and `1.60e-12` for variance. Two focused tests passed
+with warnings treated as errors, together with Ruff and module type checking.
+The sampler check verifies fixed-seed reproducibility and component masses.
+
+The public workflow, a synthetic posterior weight of `1e-100` near zero,
+and representable precision extremes `1e-300` and `1e300` were also checked.
+Direct tails preserve tiny probabilities where subtracting a rounded CDF from
+one would return zero. Infinite or overflowed standardized arguments resolve
+to their distribution limits. The combined reference/public-workflow audit
+took .083 seconds after import, peaked at 114.4 MiB and reported zero swaps.

@@ -63,6 +63,42 @@ cluster. A sentence in the paper/help reverses those labels. The latent-sign
 model, the native code and the stated purpose of the clusters support the rule
 implemented here. The Shiny backend was not available for direct comparison.
 
+## Latent classification posterior
+
+`bacis_theta_posterior` evaluates the posterior density, CDF and upper-tail
+probability of the first-stage latent variable on an explicit grid.
+`sample_bacis_theta` draws independent samples from that same distribution:
+
+```python
+import numpy as np
+from mdanderson_stats import bacis_theta_posterior, sample_bacis_theta
+
+theta = bacis_theta_posterior(classification, [-np.inf, -30, 0, 30, np.inf])
+assert np.allclose(theta.survival[2], classification.high_probability)
+samples = sample_bacis_theta(classification, draws=1000, rng=np.random.default_rng(153))
+assert samples.shape == (1000, len(responses))
+```
+
+The native classification model depends only on theta's sign. Its magnitude
+therefore retains the prior half-normal distribution on each side of zero,
+with the classifier's low/high probabilities as the two posterior weights.
+`latent_precision=.001` is the native default inverse variance. Changing it
+rescales theta but leaves the classification probabilities unchanged. This
+precision must be positive and yield a representable normal scale and variance.
+
+Density/CDF/survival arrays have `(grid points, subgroups)` axes; `mean` and
+`variance` are analytical posterior moments. Infinite grid endpoints have the
+usual distribution limits. At zero the density uses its right-hand value,
+consistent with the native step function; the CDF is continuous and there is
+no point mass. Both tails are evaluated directly to preserve small probabilities.
+
+The returned arrays are readonly. Grid evaluation permits at most 200,000
+group-grid cells, and sampling at most 100,000 draws and 500,000 total cells.
+These independent draws have the native latent posterior as their target;
+they do not reproduce a JAGS random stream or its finite-sample smoothed plot.
+The [posterior audit](../research/bacis-theta-audit.md) gives the reduction and
+independent R references.
+
 ## Within-cluster borrowing
 
 Classification is fixed before the second stage, as in the native two-step

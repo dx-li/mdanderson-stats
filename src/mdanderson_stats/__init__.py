@@ -73,6 +73,7 @@ from .asypow_smo_regression import asypow_smo_regression
 from .bacis import BaCISClassification, BaCISFit, bacis_classify, bacis_fit
 from .bacis_dic import BaCISClassificationDIC, bacis_classification_dic
 from .bacis_ess import BaCISEquivalentSampleSize, bacis_equivalent_sample_size
+from .bacis_theta import BaCISThetaPosterior, bacis_theta_posterior, sample_bacis_theta
 from .bard import BARDMinimizationResult, BARDSelectionResult, bard_minimization, bard_select_obd
 from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
 from .bayes_factor_binary import (
@@ -1370,10 +1371,13 @@ __all__ = [
     "BaCISClassificationDIC",
     "BaCISEquivalentSampleSize",
     "BaCISFit",
+    "BaCISThetaPosterior",
     "bacis_classify",
     "bacis_classification_dic",
     "bacis_equivalent_sample_size",
     "bacis_fit",
+    "bacis_theta_posterior",
+    "sample_bacis_theta",
     "UBOINSimulation",
     "simulate_uboin",
     "uboin_gumbel_probabilities",
