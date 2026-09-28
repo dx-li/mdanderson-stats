@@ -92,7 +92,8 @@ def simulate_uboin(
     if len(shape) != 3:
         raise ValueError("joint_probabilities must have shape (D,E,T)")
     d, e, t = shape
-    if not 1 <= d <= 100 or (e, t) != design.prior.shape[-2:]:
+    prior = np.asarray(design.prior)
+    if not 1 <= d <= 100 or (e, t) != prior.shape[-2:]:
         raise ValueError("joint_probabilities dimensions must match design")
     probabilities = finite(joint_probabilities, "joint_probabilities")
     if np.any((probabilities < 0) | (probabilities > 1)):

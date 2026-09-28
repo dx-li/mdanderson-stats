@@ -182,10 +182,9 @@ def bop2_dc_design(
             raise ValueError("invalid interim schedule")
         schedule = np.unique(np.r_[np.arange(first, n, step), n]).astype(np.int64)
     else:
-        schedule = count(looks, "looks")
+        schedule = count(looks, "looks").astype(np.int64)
         if np.any(schedule > n):
             raise ValueError("looks cannot exceed max_subjects")
-        schedule = schedule.astype(np.int64)
         if (
             schedule.ndim != 1
             or not schedule.size

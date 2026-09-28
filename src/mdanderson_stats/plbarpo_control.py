@@ -175,9 +175,9 @@ def plbarpo_control_monitor(
     fut = comparison.control_greater if pfut is not None else None
     eff = comparison.treatment_greater if peff is not None else None
     final = comparison.treatment_greater if pfinal is not None else None
-    futile = None if fut is None else fut > pfut
-    efficacious = None if eff is None else eff >= peff
-    final_efficacious = None if final is None else final >= pfinal
+    futile = None if fut is None or pfut is None else fut > pfut
+    efficacious = None if eff is None or peff is None else eff >= peff
+    final_efficacious = None if final is None or pfinal is None else final >= pfinal
     return PLBarpoControlMonitoring(
         _freeze(treatment.alpha),
         _freeze(treatment.beta),

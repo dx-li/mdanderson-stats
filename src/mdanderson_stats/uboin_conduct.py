@@ -150,11 +150,12 @@ class UBOINDesign:
         object.__setattr__(self, "_boin", BOINDesign(target=tox - delta))
 
     def _validate_counts(self, counts: ArrayLike) -> tuple[NDArray[np.float64], int, int, int]:
+        prior = np.asarray(self.prior)
         shape = np.shape(counts)
         if len(shape) != 3:
             raise ValueError("counts must have shape (D,E,T)")
         d, e, t = shape
-        if not 1 <= d <= 100 or self.prior.shape[-2:] != (e, t):
+        if not 1 <= d <= 100 or prior.shape[-2:] != (e, t):
             raise ValueError("counts dose/category dimensions do not match design")
         observed = count(counts, "counts")
         if observed.shape != shape or np.any(observed > 1_000_000):
@@ -162,7 +163,7 @@ class UBOINDesign:
         total = observed.sum()
         if total > 1000:
             raise ValueError("total count must be at most 1,000")
-        if self.prior.ndim == 3 and self.prior.shape[0] != d:
+        if prior.ndim == 3 and prior.shape[0] != d:
             raise ValueError("prior dose dimension must match counts")
         _int_scalar(self.starting_dose, "starting_dose", 1, d)
         return observed, d, e, t
