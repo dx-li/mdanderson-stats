@@ -129,3 +129,46 @@ import, peaked at 110.77 MiB and reported zero swaps. Seven focused existing/new
 worker tests, Ruff formatting/lint and targeted mypy passed. No dependency
 installation, large simulation or new CI workflow was used. Full multilevel
 probabilities remain the next implementation tranche described above.
+
+## Independent null-distribution and native pilot references
+
+`tools/reference_easycelltype_gsea_null.R` enumerates all fixed-size subsets
+of a twelve-gene ranking and executes unchanged pinned R `calcGseaStat`.
+Eighteen cases record the exact signed null means, normalization, inclusive
+tail counts and exhaustive-count probability transformations. The two
+`easycelltype-gsea-null*.csv` fixtures describe mathematical R-score population
+targets, not equality of a sampled C++ pilot or adaptive random stream.
+
+The native pilot has a distinct zero-weight convention. Its C++ `gseaStats1`
+uses `min(1e-5, minimum_positive_selected_weight) / 1024` as a positive floor.
+The floor is computed from the entire ordered subset of maximum requested
+size K, then reused for its smaller prefixes. The R preparation has already
+converted the ranking to `abs(score) ** exponent`, and the pilot receives
+`gseaParam=1`. Applying the epsilon to raw scores before the user exponent, or
+recomputing it separately for each prefix, would change the source algorithm.
+The observed-score R function keeps mixed zero weights at zero instead.
+
+`tools/reference_easycelltype_gsea_cpp.R` compiles the unchanged scalar and
+cumulative definitions preceding `calcRandomGseaStatCumulative` in pinned
+`fastGSEA.cpp`, after checking its source MD5. The only removed line is the
+unused `util.h` include; a small exported Rcpp wrapper passes explicit ordered
+subsets. This needs the locally available Rcpp, but no Boost/BH installation,
+native RNG implementation or full fgsea dependency tree. A single-threaded
+compile succeeded. Sixty-six native scores in the two
+`easycelltype-gsea-cpp-*.csv` fixtures cover ordinary and powered scores,
+unweighted scores, mixed and all-zero hits, exact ties and a tiny later hit
+that controls the shared prefix epsilon. These are native cumulative-kernel
+references only; they do not establish full multilevel or RNG parity.
+
+The source pilot draws one ordered K-subset per iteration and derives every
+smaller set-size null score from its prefixes. Null samples for different set
+sizes are therefore coupled. Inclusive `<=`/`>=` comparisons are intentional.
+
+Additional pinned source dependencies retrieved for backend implementation:
+
+| File | SHA-256 |
+| --- | --- |
+| `util.h` | `c73d1b46e65f70a79ffbb43585e4d0136a2b8b0b882b06738b3fd6096ac70fd9` |
+| `util.cpp` | `35cd0525038f82c336eb33d3d117c7660947cd8ba62761975d75ff43d68e7fd5` |
+| `esCalculation.h` | `03a0baa7d4c085a3a186c790fa9e6e870dfefa8ef7237394f1d1db038d73a284` |
+| `fgseaMultilevelSupplement.h` | `1db51e0c11d7574bec802b51a332f5dc75e0fc31b06950ed78a4a793d7e51d07` |
