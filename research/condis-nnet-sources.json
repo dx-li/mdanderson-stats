@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/cran/nnet",
+  "revision": "4600c58673b3e4ba829286bf61b2b6f5ecf5da56",
+  "version": "7.3-19",
+  "retrieved_date": "2026-09-28",
+  "directory": "future-learners/nnet-7.3-19",
+  "scope": "Verified nnet source lead matching the installed R nnet 7.3-19 for the remaining CondiS-X neural learner; no Python implementation or fit-parity claim.",
+  "files": [
+    {
+      "path": "src/nnet.c",
+      "git_blob": "ccfe9293730d0a95d3b943835ae532c2b18add02",
+      "bytes": 17252,
+      "sha256": "e8e12cd5742e8e003fb16bf0410e08b7cf509ea855116bba449dfa732c6e274b"
+    },
+    {
+      "path": "R/nnet.R",
+      "git_blob": "1dcc10b9b2e6864d08ffecef14b97f1cdd7fa386",
+      "bytes": 12932,
+      "sha256": "fa552d6d031a586682eff2022804b0011fd57ace44c5b461eabb933378db43d7"
+    },
+    {
+      "path": "DESCRIPTION",
+      "git_blob": "9f1509239e84b3b3c9886d21638bee82f703b4a1",
+      "bytes": 813,
+      "sha256": "88a21f5bfbc2f43c96a6e17284a73a1f377ee520f9cc12b38c820d2c72053a64"
+    }
+  ]
+}

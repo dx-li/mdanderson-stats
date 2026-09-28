@@ -237,3 +237,28 @@ Their backend scaling and objective definitions, caret-generated tuning grids,
 training randomness and final refit behavior require separate native checks.
 Existing survival forests are not a substitute for regression forests, and the
 three learners in the current checkpoint do not substitute for these four.
+
+### Neural-learner source continuation
+
+[`condis-nnet-sources.json`](condis-nnet-sources.json) additionally pins nnet
+7.3-19 at `4600c58673b3e4ba829286bf61b2b6f5ecf5da56`, matching the nnet
+version already available in the local R installation. Its original R wrapper,
+DESCRIPTION and C implementation are saved and hash-verified. No installation,
+training run or Python neural-learner coverage is claimed by that retrieval.
+
+The executed caret metadata uses hidden sizes 1, 3 and 5 crossed with decays
+0, 0.1 and 0.0001. It sorts by increasing size and decreasing decay before
+selection. `CondiS-X.R` passes `linout=1`; its range preprocessing remains
+unused. The C source confirms **logistic hidden units**, not tanh, and a linear
+output. The native sigmoid is set exactly to zero below -15 and one above 15.
+For this regression, the objective is the sum of squared errors plus decay
+times the sum of squared weights, including bias weights; neither term is
+divided by the number of rows. Native initial weights are uniform on
+[-0.7,0.7], with default maximum 1,000 weights and 100 BFGS iterations.
+
+The C optimizer delegates to R's `vmmin`, with absolute tolerance 1e-4 and
+relative tolerance 1e-8. A faithful next implementation needs explicit initial
+weights for cross-language numerical comparisons and must report its optimizer
+status; different random streams or an alternative optimizer can lead to
+different local solutions. Merely fitting a generic neural network would not
+reproduce this contract.
