@@ -1,0 +1,5 @@
+"case","maximum","null","scale","gamma","direction"
+"coprimary_orr",45,0.45,0.94,0.5,"efficacy"
+"coprimary_pfs",45,0.3,0.94,0.5,"efficacy"
+"efftox_orr",40,0.15,0.5,0.6,"efficacy"
+"efftox_dlt",40,0.3,0.5,0.6,"toxicity"

@@ -17,6 +17,13 @@
       "retrieved_date": "2026-09-10",
       "bytes": 111759,
       "sha256": "72f6c92453295f62058fe71f28fbbcefa0645ee7cf5ee6279afa2be1b7c5e104"
+    },
+    {
+      "url": "https://academic.oup.com/jnci/article/112/1/38/5423189",
+      "linked_artifact": "jnci_112_1_38_s3.pdf",
+      "retrieved_date": "2026-09-28",
+      "access": "Publisher-linked PDF text through web reader; 26 pages. No local PDF bytes or screenshot verification.",
+      "scope": "Supplementary Methods equations 2/6, timing elicitation on pages 6\u20137, Tables 1\u20136; research/top-endpoints-audit.md."
     }
   ],
   "scope": "Published binary TOP Tables 2-4; numeric Table 4 verified with C=.86, gamma=.95 despite caption ordering. Explicit table/prose suspension conventions. App workflows remain partial. Binary calendar replay/simulation uses explicit immediate-look and restarted-gap conventions; native calendar parity remains unverified. Binary finite-grid calibration with common random numbers and independent validation is an explicit Python workflow, not native tuning-grid parity."
