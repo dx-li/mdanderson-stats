@@ -1063,6 +1063,9 @@ calendar simulation includes pending outcomes and explicit final-selection
 conventions. Multi-trial summaries report selection, enrollment, duration and
 normalized utility performance with Monte Carlo errors. Native final-selection
 parity and published operating-characteristic validation remain pending.
+[GAO model probabilities](docs/u2oet-gao.md) additionally support explicit
+raw-dose coefficients, a shared interaction and Gaussian-copula likelihoods;
+GAO fitting and native prior interpretation remain open.
 
 [CATBUB](docs/catbub.md) provides categorical-utility posterior comparisons,
 Dirichlet Monte Carlo, a success-only binary comparator, sequential multinomial

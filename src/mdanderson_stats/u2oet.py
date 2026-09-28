@@ -188,7 +188,8 @@ def u2oet_probabilities(
     """PDS, CMI or hybrid GCR marginals coupled with the paper's FGM copula.
 
     CMI requires unit powers and logarithmic centering. PDS requires zero
-    interaction. The GAO/Gaussian-copula model is a separate, unsupported model.
+    interaction. Use ``u2oet_gao_probabilities`` for the separate GAO model
+    with a Gaussian copula and explicit raw-dose coefficients.
     """
     rho = _real(association, "association")
     if rho.ndim or abs(rho) > 1:

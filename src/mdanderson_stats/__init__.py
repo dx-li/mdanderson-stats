@@ -1197,6 +1197,7 @@ from .u2oet_decision import (
     u2oet_posterior,
 )
 from .u2oet_fit import U2OETFit, fit_u2oet, u2oet_parameter_names
+from .u2oet_gao import U2OETGAOMarginal, u2oet_gao_probabilities
 from .u2oet_patients import (
     U2OETPatientDecision,
     U2OETPatients,
@@ -1686,6 +1687,8 @@ __all__ = [
     "U2OETMarginal",
     "U2OETProbabilities",
     "u2oet_probabilities",
+    "U2OETGAOMarginal",
+    "u2oet_gao_probabilities",
     "u2oet_standardize",
     "AccflfData",
     "read_accflf_data",

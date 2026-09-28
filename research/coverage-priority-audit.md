@@ -34,7 +34,8 @@ display features, but do not represent an absent ordination method.
 The subsequent triage distinguishes native workflow gaps from new mathematical
 extensions. Dose Schedule Finder calendar replay and PLBARPO control operating
 characteristics are integrated, along with Multc Lean pending-outcome calendar
-replay. U2OET GAO probabilities/likelihood are the next Luna assignment.
+replay. U2OET GAO probabilities and likelihoods are also integrated; fitting
+and native prior interpretation remain separate gaps.
 These additions build on implemented posterior calculations and supply
 missing trial workflows or named models.
 
@@ -61,7 +62,7 @@ a generic method with a similar name.
 | Entry | Remaining named method or workflow | Qualification / evidence |
 | --- | --- | --- |
 | SYNERGY #18 | Four 2007 parametric response surfaces and 2008 wild-bootstrap intervals | Current semiparametric surface fitting is present; [guide](../docs/synergy-surface.md). |
-| U2OET #77 | GAO continuation-ratio probabilities and model fitting | PDS/CMI/hybrid fitting, calendar replay and aggregate OCs already exist; [guide](../docs/u2oet.md). Gaussian-copula scenario generation is also present and is a different feature. |
+| U2OET #77 | GAO fitting and native prior interpretation | Explicit-coefficient GAO probabilities and Gaussian likelihoods are now available in the [GAO guide](../docs/u2oet-gao.md). PDS/CMI/hybrid fitting, calendar replay and aggregate OCs already exist; [guide](../docs/u2oet.md). |
 | BARD #165 | BF-BLRM route and integrated stages with titration/expansion | Existing covariate minimization and OBD selection remain useful; hidden native settings need explicit caller configuration or further source evidence; [guide](../docs/bard.md). |
 | SurvivalContour #166 | Stratified interval-censored Cox, neural models and interval-model bootstrap uncertainty | Existing right-censored Cox/AFT and implemented interval families are separate completed components; [contour guide](../docs/survival-contour.md), [interval guide](../docs/interval-survival.md). Verify advertised native scope before extending model families. |
 | Proportional Density #78 | Full-data disease-curve bootstrap, unequal-censoring calibration and bootstrap parameter uncertainty | Existing failure-only bootstrap is present. The downloaded archive has no bootstrap code; distinguish paper workflows/extensions from missing native routines; [guide](../docs/proportional-density.md). |

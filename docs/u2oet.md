@@ -9,7 +9,8 @@ simulation and multi-trial operating-characteristic summaries. Complete native i
 validation remain pending. Gaussian
 scenario construction and native scenario/dose/utility readers are available;
 Patient snapshots, toxicity-only likelihoods and next-patient cohort decisions
-are also available. GAO model fitting is still pending.
+are also available. [GAO probabilities and likelihoods](u2oet-gao.md) use explicit
+raw-dose coefficients and a Gaussian copula; GAO fitting remains pending.
 
 The sources are the [official U2OET 1.8 archive](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/U2OET/U2OET_V1.8.zip),
 its user guide and the [author-hosted paper](https://odin.mdacc.tmc.edu/~pfthall/main/JRCCS_2017_ph12_2agent_utility.pdf)
@@ -112,7 +113,8 @@ a fixed reference table; R is not a runtime or CI dependency.
 
 Remaining coverage includes:
 
-- GAO continuation probabilities and fitting (Gaussian scenario copulas are supplied).
+- GAO fitting and native prior interpretation (explicit GAO probabilities and
+  likelihoods are supplied separately).
 - Validation of complete trial operating characteristics.
   Explicit-prior fitting, pseudo-trial centers and prior ESS are supplied below.
 - Adaptive MCMC precision targets and native final-selection validation.
