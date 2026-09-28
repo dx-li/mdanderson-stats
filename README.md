@@ -1159,8 +1159,10 @@ Native DBCD target construction and reports remain open.
 
 [PLBARPO control monitoring](docs/plbarpo-control.md) adds entire-trial and
 concurrent control comparisons. Explicit enrollment windows and observation
-cutoffs exclude pending and future outcomes. Platform arm replacement and
-simulation remain open.
+cutoffs exclude pending and future outcomes. [Active-arm allocation](docs/plbarpo-allocation.md)
+recomputes posterior competition after arms close, preserving total enrollment
+for BARN2N and supporting all four randomization methods. Platform arm replacement
+and simulation remain open.
 
 [TTEConduct](docs/tteconduct.md) adds single-arm exponential survival monitoring
 against an uncertain historical standard, with an additive improvement margin

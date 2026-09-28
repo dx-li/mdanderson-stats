@@ -774,6 +774,7 @@ from .pinnacle_wavelet import (
     pinnacle_irdwt,
     pinnacle_rdwt,
 )
+from .plbarpo_allocation import PLBarpoActiveAllocation, plbarpo_active_allocation
 from .plbarpo_control import (
     PLBarpoControlMonitoring,
     plbarpo_control_counts,
@@ -1483,6 +1484,8 @@ __all__ = [
     "tteconduct_boundary_table",
     "tteconduct_design",
     "tteconduct_monitor",
+    "PLBarpoActiveAllocation",
+    "plbarpo_active_allocation",
     "PLBarpoControlMonitoring",
     "plbarpo_control_counts",
     "plbarpo_control_monitor",

@@ -186,8 +186,8 @@ def plbarpo_active_allocation(
         shape_total = posterior_alpha + posterior_beta
     if np.any(~np.isfinite(shape_total)):
         raise ArithmeticError("posterior beta shape sums overflow")
-    posterior_variance = posterior_alpha / shape_total * posterior_beta / shape_total / (
-        shape_total + 1.0
+    posterior_variance = (
+        posterior_alpha / shape_total * posterior_beta / shape_total / (shape_total + 1.0)
     )
     best = np.zeros(arms, dtype=float)
     best_error = np.zeros(arms, dtype=float)

@@ -4,9 +4,9 @@ The official [PLBARPO application](https://biostatistics.mdanderson.org/shinyapp
 and its support document were inspected on September 28, 2026. The saved local
 snapshot is under ignored `research/raw/PLBARPO/`; the page identifies version
 2.0.3.0, updated January 6, 2026. The current Python implementation provides
-[control selection and monitoring](../docs/plbarpo-control.md). Catalog entry
-137 remains partial: dynamic allocation and platform trial progression are
-separate missing workflows.
+[control selection and monitoring](../docs/plbarpo-control.md) and
+[active-arm allocation](../docs/plbarpo-allocation.md). Catalog entry 137
+remains partial: platform trial progression is a separate missing workflow.
 
 ## What the support document establishes
 
@@ -64,7 +64,19 @@ These choices need explicit caller inputs and documented Python behavior before
 a trial simulator can be called reproducible. Do not infer a single native
 scheduler from the formulas alone.
 
-A useful next tranche is a current-active-arm allocation API with a validated
-arm ledger and global enrollment count, followed by a simulator with an explicit
-entry/replacement schedule. Preserve compact operating-characteristic summaries,
-including zero allocation to inactive arms, and serial bounded computation.
+## Active allocation checkpoint
+
+Luna checkpoint `d1dfb3e` supplies the current-active-arm allocation API, a
+validated full arm ledger and the global enrollment count. Root's independent
+base-R checks matched all eight scenarios, including a closed dominant arm:
+recomputing the two remaining competitors gives `(5/6, 1/6)`, while masking the
+original three-arm probabilities would incorrectly give `(15/16, 1/16)`.
+The fixture generator and the public [allocation guide](../docs/plbarpo-allocation.md)
+record formulas, scope and validation. A second read-only review found no
+material issue in the count, active competition or global-N contracts.
+
+Next is a no-control, complete-outcome platform trial with explicit entry and
+replacement order, enrollment limits, global monitoring looks and entrant-only
+burn-in. These are declared Python scheduling choices where the source does not
+fully specify native transitions. Preserve compact operating-characteristic
+summaries, zero allocation to inactive arms, and serial bounded computation.
