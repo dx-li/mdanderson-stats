@@ -74,7 +74,9 @@ class WFMMPrior:
     """Explicit spike-and-slab and inverse-gamma prior parameters.
 
     ``inclusion_probability`` and ``slab_variance`` are scalar or
-    coefficient-specific arrays. Variance priors use inverse-gamma
+    coefficient-specific arrays. A zero slab variance is permitted only for
+    a zero inclusion probability, representing the canonical all-spike limit.
+    Variance priors use inverse-gamma
     shape/scale density proportional to ``v**(-a-1)*exp(-b/v)``. Random
     variance prior arrays may be omitted only when the model has no random
     effects; variance priors are required only when estimating those
@@ -89,12 +91,26 @@ class WFMMPrior:
     residual_scale: ArrayLike | None = None
 
     def __post_init__(self) -> None:
+        raw_pi = np.asarray(self.inclusion_probability)
+        raw_tau = np.asarray(self.slab_variance)
+        max_prior_cells = _MAX_FIXED_EFFECTS * _MAX_COEFFICIENTS
+        if (
+            raw_pi.ndim > 2
+            or raw_tau.ndim > 2
+            or raw_pi.size > max_prior_cells
+            or raw_tau.size > max_prior_cells
+        ):
+            raise ValueError("coefficient prior arrays exceed supported shape bounds")
+        if raw_pi.ndim > 0 and raw_tau.ndim > 0 and raw_pi.shape != raw_tau.shape:
+            raise ValueError("inclusion_probability and slab_variance array shapes must match")
         pi = _finite_real(self.inclusion_probability, "inclusion_probability")
         tau = _finite_real(self.slab_variance, "slab_variance")
         if np.any((pi < 0.0) | (pi > 1.0)):
             raise ValueError("inclusion_probability must lie in [0,1]")
-        if np.any(tau <= 0.0):
-            raise ValueError("slab_variance must be strictly positive")
+        if np.any(tau < 0.0) or np.any((tau == 0.0) & (pi != 0.0)):
+            raise ValueError(
+                "zero slab_variance is allowed only when inclusion_probability is zero"
+            )
         object.__setattr__(self, "inclusion_probability", _owned(pi))
         object.__setattr__(self, "slab_variance", _owned(tau))
         for name in ("random_shape", "random_scale", "residual_shape", "residual_scale"):
@@ -135,6 +151,7 @@ def _coefficient_prior(
     name: str,
     *,
     probability: bool = False,
+    allow_zero: bool = False,
 ) -> FloatArray:
     array = _finite_real(value, name)
     if array.ndim == 0:
@@ -146,8 +163,9 @@ def _coefficient_prior(
     if probability:
         if np.any((result < 0.0) | (result > 1.0)):
             raise ValueError(f"{name} must lie in [0,1]")
-    elif np.any(result <= 0.0):
-        raise ValueError(f"{name} must be strictly positive")
+    elif np.any(result < 0.0) or (not allow_zero and np.any(result == 0.0)):
+        qualifier = "nonnegative" if allow_zero else "strictly positive"
+        raise ValueError(f"{name} must be {qualifier}")
     return result
 
 
@@ -369,7 +387,7 @@ def fit_wfmm_coefficients(
     coefficient_partition: ArrayLike | None = None,
     coefficient_scale: ArrayLike | None = None,
     estimate_variances: bool = True,
-    proposal_sd: tuple[ArrayLike, ArrayLike] | None = None,
+    proposal_sd: tuple[ArrayLike | None, ArrayLike] | None = None,
     draws: int = 1000,
     warmup: int = 500,
     chains: int = 2,
@@ -439,7 +457,14 @@ def fit_wfmm_coefficients(
         "inclusion_probability",
         probability=True,
     )
-    tau = _coefficient_prior(prior.slab_variance, (fixed_count, coefficient_count), "slab_variance")
+    tau = _coefficient_prior(
+        prior.slab_variance,
+        (fixed_count, coefficient_count),
+        "slab_variance",
+        allow_zero=True,
+    )
+    if np.any((tau == 0.0) & (pi != 0.0)):
+        raise ValueError("zero slab_variance is allowed only when inclusion_probability is zero")
     q = _component_array(
         random_variance,
         (random_group_count, coefficient_count),
