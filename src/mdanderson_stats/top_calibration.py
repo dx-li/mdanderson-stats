@@ -52,6 +52,7 @@ def optimize_top_binary(
     looks: ArrayLike | None = None,
     prior: ArrayLike | None = None,
     suspension: str = "table",
+    timing_probabilities: ArrayLike | None = None,
     trials: int = 10000,
     validation_trials: int = 10000,
     arrival: str = "exponential",
@@ -65,6 +66,8 @@ def optimize_top_binary(
     null and alternative. Ties prefer smaller null enrollment, then input order.
     Independent validation reports performance but never reselects the design.
     Neither the search nor its holdout is a guarantee of frequentist error control.
+    ``timing_probabilities`` configures analysis weights only; the generated
+    response-time distribution is controlled separately by its timing options.
     """
     p0, p1, alpha = (
         scalar(v, name)
@@ -99,7 +102,14 @@ def optimize_top_binary(
     pairs = np.array([(c, g) for c in scales for g in powers])
     designs = [
         TOPBinaryDesign(
-            max_subjects, p0, float(c), float(g), prior=prior, looks=looks, suspension=suspension
+            max_subjects,
+            p0,
+            float(c),
+            float(g),
+            prior=prior,
+            looks=looks,
+            suspension=suspension,
+            timing_probabilities=timing_probabilities,
         )
         for c, g in pairs
     ]

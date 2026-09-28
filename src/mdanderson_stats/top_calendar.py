@@ -90,8 +90,9 @@ def _run_top(
             event = responses_at[waiting, :n] <= clock[waiting, None]
             missing = known_at[waiting, :n] > clock[waiting, None]
             followup = np.clip((clock[waiting, None] - enrolled[waiting, :n]) / window, 0, 1)
+            timing_weight = design.timing_weight(followup)
             r, m = event.sum(1), missing.sum(1)
-            weight = np.where(missing, followup, 0).sum(1)
+            weight = np.where(missing, timing_weight, 0).sum(1)
             decision = design.evaluate(n, r, m, weight)
             responses[waiting], pending[waiting] = r, m
             if record:

@@ -21,12 +21,13 @@ def simulate_top_binary(
     late_probability: float | None = None,
     rng: int | np.random.Generator | None = None,
 ) -> TOPBinarySimulation:
-    """Batched complete-calendar trials, using uniform TOP analysis weights.
+    """Batched complete-calendar trials using the design's analysis timing.
 
     Arrival gaps are fixed or exponential with mean 1/accrual_rate, including
-    the first gap. Timing alternatives use the shared Weibull/log-logistic
-    quantile model with conditional late-half probability. Calibrating decisions
-    to control type I error is a separate operation, not performed here.
+    the first gap. The response-time truth model uses the shared uniform,
+    Weibull, or log-logistic quantile model independently of the design's
+    conditional analysis-timing probabilities. Calibrating decisions to control
+    type I error is a separate operation, not performed here.
     """
     gaps, delays, duration = _top_potential(
         design,
