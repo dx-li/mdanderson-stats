@@ -96,3 +96,26 @@ native input/report workflows and executable parity remain open. CiBolus is
 the next pending method, with a primary-paper lead recorded separately. The
 earlier GitHub write restriction remains unresolved; this checkpoint is local
 and no alternative publication transport was attempted.
+
+## Calendar replay preparation — September 28, 2026
+
+The [2007 primary paper](https://odin.mdacc.tmc.edu/~pfthall/main/ClinTrials%20dose-sched%202007.pdf)
+was re-read online; it is not a cached local PDF. Journal page 118 specifies
+allocation at each new arrival, starting at the lowest pair, with no-safe-regimen
+termination and final analysis after follow-up. Actual past administrations and
+the event/censoring history available at the decision time determine the fit.
+The source permits within-patient deviations but does not give an automatic
+adaptation rule to reproduce. Its example also includes delayed classification
+of persistent low-grade toxicity, which a simple immediate-event replay will
+not cover. Existing no-skip conventions and direct finite-horizon safety
+evaluation remain explicit Python choices.
+
+`tools/reference_dose_schedule_events.R` numerically integrates the triangular
+hazards and inverts the sum with base R. Eleven cases cover rising/peak/falling
+events, no event by the horizon, overlapping administrations, a hazard-free
+gap, and high/low hazard areas. Each is expressed at three time scales,
+producing 33 rows in `tests/fixtures/dose-schedule-events.csv`. Three single-dose
+solutions also agree with analytic values. The generator ran with warnings
+treated as errors. These fixtures specify the inverse-CDF event contract and
+do not establish native scheduler or random-stream parity. Python replay
+integration and comparison remain a subsequent checkpoint.
