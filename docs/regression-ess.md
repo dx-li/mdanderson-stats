@@ -91,10 +91,15 @@ from the paper's rounded .001 and .002 results.
 
 ## Remaining coverage
 
-**Catalog entry 80 is partial.** Native R input parsing, covariate-generation defaults,
-example input fixtures and console workflows remain unverified because the source
-archive has not been retrieved. The guide's example reporting ESS 2 does not include
-its inputs, so it is not claimed as a reproduced fixture. These interfaces replace
-the documented simulation search with explicit covariate-distribution calculations;
-they do not claim native RNG or input-format parity. Original files are not
-redistributed with the package.
+**Catalog entry 80 is partial.** BayesESS's author source now supplies the original
+2009 regression calculator, including its intercept, independent Uniform(-1,1)
+covariate defaults and cumulative simulation/interpolation workflow. Small
+original-R reference runs are recorded in the
+[simulation audit](../research/regression-ess-simulation-audit.md). The Python
+simulation interface and comparisons are in progress; these existing interfaces
+still use explicit covariate distributions and direct information matching.
+
+Native input parsing and console workflows remain unimplemented. The historical
+guide's rounded ESS-2 result is not claimed as an exact finite-simulation
+reproduction. Native RNG and input-format parity are not claimed, and original
+source files are not redistributed with the package.
