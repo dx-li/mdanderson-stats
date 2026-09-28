@@ -1,0 +1,16 @@
+"scenario","association","loglikelihood"
+"binary",-1,-Inf
+"binary",-0.65,-25.8548442146939
+"binary",0,-21.803728367424
+"binary",0.55,-21.6051534982331
+"binary",1,-Inf
+"ordinal",-1,-Inf
+"ordinal",-0.65,-136.152474722444
+"ordinal",0,-127.985954282819
+"ordinal",0.55,-133.633302115293
+"ordinal",1,-Inf
+"small_link",-1,-Inf
+"small_link",-0.65,-67.4076746259877
+"small_link",0,-52.4284324671805
+"small_link",0.55,-51.4772745511146
+"small_link",1,-Inf
