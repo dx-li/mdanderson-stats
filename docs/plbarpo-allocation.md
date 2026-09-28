@@ -51,7 +51,9 @@ allocation, global enrollment and exponent matched all eight scenarios. The
 check took 0.039 seconds after import, peaked at 97.36 MiB and reported no swaps.
 Two focused tests, lint, formatting and targeted type checks also passed.
 
-This component does not choose when arms open or close. Platform scheduling,
-replacement, trial simulation and reports remain separate work. See the
+This component does not choose when arms open or close. The separate
+[no-control platform trial](plbarpo-trials.md) supplies explicit scheduling,
+replacement, burn-in and complete-outcome replay. Control scheduling, aggregate
+simulation and native reports remain open. See the
 [platform source contract](../research/plbarpo-platform-audit.md) and existing
 [control monitoring API](plbarpo-control.md).

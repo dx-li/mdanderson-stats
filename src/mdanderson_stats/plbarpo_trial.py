@@ -83,8 +83,10 @@ def _streams(
             raise ValueError("rng must be a nonnegative integer, Generator or None")
         root = np.random.SeedSequence(None if rng is None else int(rng))
     child = root.spawn(2)
-    seeds = (int(child[0].generate_state(1, dtype=np.uint64)[0]),
-             int(child[1].generate_state(1, dtype=np.uint64)[0]))
+    seeds = (
+        int(child[0].generate_state(1, dtype=np.uint64)[0]),
+        int(child[1].generate_state(1, dtype=np.uint64)[0]),
+    )
     return np.random.default_rng(seeds[0]), np.random.default_rng(seeds[1]), seeds
 
 
@@ -264,8 +266,10 @@ def _prepare(
         if np.any(target <= 0) or not np.isclose(target.sum(), 1.0, rtol=0, atol=2e-12):
             raise ValueError("DBCD targets must be positive and sum to one across the ledger")
     else:
-        target = None if target_probability is None else _ledger_real(
-            target_probability, "target_probability", arms
+        target = (
+            None
+            if target_probability is None
+            else _ledger_real(target_probability, "target_probability", arms)
         )
     if minimum_probability is None:
         floors = None
@@ -385,9 +389,8 @@ def _run_prepared(
     def fill_slots() -> bool:
         nonlocal candidate_position
         changed = False
-        while (
-            active.sum() < config.active_capacity
-            and candidate_position < len(config.candidate_order)
+        while active.sum() < config.active_capacity and candidate_position < len(
+            config.candidate_order
         ):
             idx = int(config.candidate_order[candidate_position])
             candidate_position += 1

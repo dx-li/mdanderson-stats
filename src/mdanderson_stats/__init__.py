@@ -780,6 +780,7 @@ from .plbarpo_control import (
     plbarpo_control_counts,
     plbarpo_control_monitor,
 )
+from .plbarpo_trial import PLBarpoTrialLook, PLBarpoTrialResult, run_plbarpo_trial
 from .pop_design import (
     PoPBoundaries,
     PoPDecision,
@@ -1489,6 +1490,9 @@ __all__ = [
     "PLBarpoControlMonitoring",
     "plbarpo_control_counts",
     "plbarpo_control_monitor",
+    "PLBarpoTrialLook",
+    "PLBarpoTrialResult",
+    "run_plbarpo_trial",
     "BarpoMonitoring",
     "BarpoPosterior",
     "barpo_allocation",

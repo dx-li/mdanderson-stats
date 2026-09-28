@@ -5,8 +5,10 @@ and its support document were inspected on September 28, 2026. The saved local
 snapshot is under ignored `research/raw/PLBARPO/`; the page identifies version
 2.0.3.0, updated January 6, 2026. The current Python implementation provides
 [control selection and monitoring](../docs/plbarpo-control.md) and
-[active-arm allocation](../docs/plbarpo-allocation.md). Catalog entry 137
-remains partial: platform trial progression is a separate missing workflow.
+[active-arm allocation](../docs/plbarpo-allocation.md), plus
+[no-control platform trials](../docs/plbarpo-trials.md). Catalog entry 137
+remains partial: control scheduling and aggregate operating characteristics
+are separate missing workflows.
 
 ## What the support document establishes
 
@@ -75,7 +77,7 @@ The fixture generator and the public [allocation guide](../docs/plbarpo-allocati
 record formulas, scope and validation. A second read-only review found no
 material issue in the count, active competition or global-N contracts.
 
-Next is a no-control, complete-outcome platform trial with explicit entry and
+The trial tranche adds no-control, complete-outcome trials with explicit entry and
 replacement order, enrollment limits, global monitoring looks and entrant-only
 burn-in. These are declared Python scheduling choices where the source does not
 fully specify native transitions. Preserve compact operating-characteristic
@@ -89,6 +91,21 @@ tails and BARN2N probabilities. The fixtures cover cap closure between global
 looks, replacement, final efficacy at a cap, serial futility/efficacy replacement
 and simultaneous all-arm futility without another candidate. Their 14 patient
 rows, 12 monitoring comparisons and nine final-ledger rows are small and
-deterministic. They define a reference for the in-progress simulator, not
-evidence that the Python simulator has already passed or that the native
-application uses this exact scheduler.
+deterministic. They describe the declared Python scheduler, without asserting
+that the native application uses the same scheduler.
+
+## Integrated no-control trial
+
+Luna checkpoint `c2a2902`, integrated as `eba837a`, adds the complete-outcome
+trial controller and immutable patient, look and arm summaries. Root reran the
+three independent R replay comparisons against the integrated module: all 14
+allocations/outcomes, 12 posterior comparisons and nine final-ledger rows match.
+The check took 0.011 seconds after import, peaked at 117.69 MiB and reported no
+swaps. The public [trial guide](../docs/plbarpo-trials.md) example also passes.
+
+Review corrected the burn-in/adaptive transition, terminal stop reasons,
+independent optional monitoring criteria and cap-at-look decision flags. Three
+focused regressions, lint/format and targeted type checks pass. Aggregate
+operating characteristics remain the next tranche, followed by control/
+concurrent-control scheduling; delayed responses and native reports are still
+outside this no-control implementation. Catalog entry 137 remains partial.

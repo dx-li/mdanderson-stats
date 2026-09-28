@@ -51,8 +51,9 @@ one window at a time. Posterior monitoring supports up to 100 treatments.
 No record-by-window matrix is allocated.
 
 The separate [active-arm allocation API](plbarpo-allocation.md) recomputes
-competition after the active set changes. Automatic arm replacement, burn-in,
-trial scheduling, simulation and reports remain pending. The guide's exact
-concurrency-boundary convention is unverified; the explicit window contract defines Python
-behavior. See [source notes](plbarpo-control-source.md) and
+competition after the active set changes. [No-control platform trials](plbarpo-trials.md)
+add arm replacement, burn-in and explicit complete-outcome scheduling. Scheduling
+with a control, aggregate simulation and native reports remain pending. The
+guide's exact concurrency-boundary convention is unverified; this window contract
+defines Python behavior. See [source notes](plbarpo-control-source.md) and
 [independent references](plbarpo-control-reference.md).
