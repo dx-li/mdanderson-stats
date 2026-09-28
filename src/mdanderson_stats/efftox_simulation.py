@@ -11,6 +11,7 @@ from numpy.typing import ArrayLike, DTypeLike, NDArray
 
 from ._validation import FloatArray, finite, scalar
 from .efftox_decision import EffToxContour, EffToxDecision, efftox_decision
+from .efftox_legacy_contour import EffToxLegacyContour
 from .efftox_model import EffToxPrior, efftox_standardize, fit_efftox
 
 _MAX_TRIALS = 2_000
@@ -126,7 +127,7 @@ def _fit_decision(
     doses: FloatArray,
     counts: NDArray[np.int64],
     prior: EffToxPrior,
-    contour: EffToxContour,
+    contour: EffToxContour | EffToxLegacyContour,
     sampler: np.random.Generator,
     *,
     draws: int,
@@ -180,7 +181,7 @@ def simulate_efftox(
     true_joint_probabilities: ArrayLike,
     *,
     prior: EffToxPrior,
-    contour: EffToxContour,
+    contour: EffToxContour | EffToxLegacyContour,
     efficacy_limit: float,
     toxicity_limit: float,
     efficacy_probability: float,
@@ -209,8 +210,12 @@ def simulate_efftox(
     streams are independent when ``rng`` is a seed; separate NumPy streams do
     not promise native Windows RNG parity.
     """
-    if not isinstance(prior, EffToxPrior) or not isinstance(contour, EffToxContour):
-        raise ValueError("prior and contour must be EffToxPrior and EffToxContour")
+    if not isinstance(prior, EffToxPrior) or not isinstance(
+        contour, (EffToxContour, EffToxLegacyContour)
+    ):
+        raise ValueError(
+            "prior must be EffToxPrior and contour EffToxContour or EffToxLegacyContour"
+        )
     if not isinstance(allow_untried_exploration, (bool, np.bool_)):
         raise ValueError("allow_untried_exploration must be boolean")
     if skip_policy not in ("both", "escalation"):
