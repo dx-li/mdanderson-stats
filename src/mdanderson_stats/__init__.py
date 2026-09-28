@@ -1114,6 +1114,12 @@ from .top_endpoints import (
     TOPMultiEndpointDecision,
     TOPMultiEndpointDesign,
 )
+from .top_multi_calendar import (
+    TOPMultiEndpointStep,
+    TOPMultiEndpointTrial,
+    run_top_multiendpoint_trial,
+)
+from .top_multi_simulation import TOPMultiEndpointSimulation, simulate_top_multiendpoint
 from .top_simulation import simulate_top_binary
 from .toxfinder_decision import (
     ToxFinderContour,
@@ -1884,6 +1890,11 @@ __all__ = [
     "TOPMultiEndpointDesign",
     "TOPMultiEndpointDecision",
     "TOPMultiEndpointBoundaries",
+    "TOPMultiEndpointStep",
+    "TOPMultiEndpointTrial",
+    "TOPMultiEndpointSimulation",
+    "run_top_multiendpoint_trial",
+    "simulate_top_multiendpoint",
     "RegressionESS",
     "RegressionESSSimulation",
     "RegressionESSTrigger",

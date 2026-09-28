@@ -42,10 +42,28 @@ response plus pending counts cannot exceed enrollment. Custom conditional timing
 weights can be supplied explicitly; their appropriateness is a modeling choice.
 
 `evaluate_followup(nonpending, responses, pending_followup, window)` calculates
-uniform weights using the package's existing time-to-event ESS kernel. The last
+the configured timing weights using the package's time-to-event ESS kernel. The last
 axis contains pending patients. Follow-up and the window must share units;
 normalization occurs before summation. Known outcomes include early responses
 as well as completed nonresponses.
+
+The optional `timing_probabilities` design argument gives three nonnegative
+masses summing to one for response times in successive thirds of the window,
+conditional on responding by its end. The resulting CDF weights are
+`sum(p[j] * clip(3*t/window-j, 0, 1))` for j=0,1,2. Equal thirds are the default
+and preserve the original uniform weights. `timing_weight` takes follow-up
+fractions in [0,1]; follow-up evaluation and calendar replay use the same mixture.
+
+```python
+from mdanderson_stats import TOPBinaryDesign
+
+early_timing = TOPBinaryDesign(
+    10, .2, .8, 0, prior=[1, 1], looks=[10],
+    timing_probabilities=[1, 0, 0],
+)
+weighted = early_timing.evaluate_followup(7, 2, [.25, .5, .75], 1)
+assert weighted.effective_sample_size == 9.75  # 7 + .75 + 1 + 1
+```
 
 `boundaries()` returns scheduled enrollment, complete-data response minima,
 suspension pending-count minima, and effective-size futility crossings. Rows
@@ -107,8 +125,9 @@ arrival gaps, uniform conditional response timing, and the package's calibrated
 Weibull/log-logistic alternatives through `response_distribution` and
 `late_probability`. The latter is the probability a response falls in the second
 half of the window, conditional on responding by the window. Uniform generation
-does not accept that argument. Analysis always uses uniform TOP weights, allowing
-sensitivity checks under other true timing distributions. These simulations do
+does not accept that argument. Analysis uses `design.timing_probabilities`,
+independently of these truth-timing options, allowing sensitivity checks under
+different analysis and true timing distributions. These simulations do
 not optimize C/gamma or certify type I error control.
 
 The result retains per-trial enrollment, observed responses and pending counts,
@@ -155,6 +174,8 @@ never changes the selection. Both stages report null/alternative probabilities,
 Monte Carlo standard errors, mean enrollment and mean duration. Grid rows follow
 C then gamma input order, with null and alternative in the two columns. Returned
 seeds reproduce each stage with `simulate_top_binary`.
+An optional `timing_probabilities` argument configures analysis timing for every
+candidate and the selected design; it does not alter the generated timing truth.
 
 ```python
 from mdanderson_stats import optimize_top_binary
@@ -197,7 +218,7 @@ has different thresholds; this implementation targets the published table.
 
 **Catalog status is partial.** [Co-primary efficacy and efficacy/toxicity
 monitoring](top-endpoints.md) now supports separate endpoint assessment windows
-and mixture-uniform timing weights. The binary calendar and simulation API above
-continues to use uniform analysis weights. Multiple-endpoint calendar simulation
-and calibration, native tuning grids, reports and app version parity remain
-pending. Original PDFs and application files are not redistributed.
+and mixture-uniform timing weights, with [calendar replay and joint-outcome
+simulation](top-endpoints-simulation.md). Multiple-endpoint calibration, native
+tuning grids, reports and app version parity remain pending. Original PDFs and
+application files are not redistributed.

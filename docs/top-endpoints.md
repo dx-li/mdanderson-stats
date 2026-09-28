@@ -93,5 +93,9 @@ means no feasible count meets that endpoint's boundary.
 Designs support up to 200 patients; summary and patient-level evaluations have
 a two-million-cell limit checked before allocating broadcast results.
 
-Entry 134 remains partial. Multiple-endpoint calendar simulation and calibration,
-native reports, and app version parity require further work.
+[Calendar replay and simulation](top-endpoints-simulation.md) apply these rules
+to patient arrivals and delayed, jointly generated endpoint outcomes. They report
+success probabilities, Monte Carlo uncertainty, enrollment and duration.
+
+Entry 134 remains partial. Multiple-endpoint calibration, native reports and
+app version parity require further work.
