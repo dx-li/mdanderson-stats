@@ -95,8 +95,10 @@ these choices. This concerns covariate percentiles, not event-time quantiles.
 The current fits are unweighted, unpenalized and right-censored, with one
 common residual scale and static numeric covariates. They require an identified
 finite maximum-likelihood fit. Interval/left censoring, delayed entry,
-covariates on ancillary parameters and the original Monte-Carlo
-confidence-bound workflow remain open. The separate
+covariates on ancillary parameters and integrated simulated contour limits
+remain open. [Simulated pointwise curve limits](survival-uncertainty.md) are
+available through `predict_parametric_survival_mc`, which preserves full joint
+parameter uncertainty and allows draws to be reused across prediction grids. The separate
 [generalized-gamma fitter](generalized-gamma.md) supplies stable Prentice and
 original Stacy distributions through the same contour interface. The separate
 [spline fitter](survival-spline.md) supplies Royston–Parmar hazard, odds and

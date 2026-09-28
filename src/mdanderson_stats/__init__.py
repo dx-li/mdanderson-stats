@@ -1056,6 +1056,7 @@ from .survival_spline import (
     fit_survival_spline,
     predict_survival_spline,
 )
+from .survival_uncertainty import ParametricSurvivalMCPrediction, predict_parametric_survival_mc
 from .synergy_surface import (
     SynergySurfaceFit,
     SynergySurfacePrediction,
@@ -1693,9 +1694,11 @@ __all__ = [
     "predict_generalized_gamma",
     "ParametricSurvivalFit",
     "ParametricSurvivalPrediction",
+    "ParametricSurvivalMCPrediction",
     "ParametricSurvivalContour",
     "fit_parametric_survival",
     "predict_parametric_survival",
+    "predict_parametric_survival_mc",
     "parametric_survival_contour",
     "SurvivalSplineFit",
     "SurvivalSplinePrediction",

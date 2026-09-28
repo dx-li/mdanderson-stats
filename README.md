@@ -1315,6 +1315,9 @@ curves include deterministic delta-method pointwise bounds.
 [Generalized-gamma survival models](docs/generalized-gamma.md) extend this
 workflow with stable Prentice and original Stacy fits, full joint covariance,
 predictions and the same contour plots.
+[Simulated pointwise survival limits](docs/survival-uncertainty.md) add joint
+parameter draws for all five parameterizations, reusable across profiles and
+time grids, with valid-draw counts and bounded memory use.
 [Royston–Parmar spline models](docs/survival-spline.md) add hazard, odds and
 normal links with configurable log-time knots, globally monotone survival
 curves, joint covariance, predictions and contours.
@@ -1333,7 +1336,7 @@ links. They return regression covariance, both incidence curves and
 continuous-covariate contours, with optional two-/three-dimensional plots.
 An explicit starting-boundary approximation and constrained-convergence
 diagnostics accompany probability checks on requested profiles. Neural models
-and native simulation-based intervals remain open.
+and integrated simulation-based contour intervals remain open.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson

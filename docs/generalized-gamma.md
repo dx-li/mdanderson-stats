@@ -134,6 +134,9 @@ equivalence, large changes in units, zero-time censoring and both contour
 parameterizations. The audit records tolerances and resource measurements;
 small absolute error is not claimed for extremely large log-tail values.
 
-Interval/left censoring, delayed entry, covariates on ancillary parameters,
-the original simulated confidence-bound workflow, spline models and other
-remaining SurvivalContour families are separate work. Entry 166 stays partial.
+[Simulated pointwise curve limits](survival-uncertainty.md) are available through
+`predict_parametric_survival_mc` for both fitted parameterizations. It uses each
+fit's own full joint covariance and can reuse parameter draws across grids.
+Interval/left censoring, delayed entry, covariates on ancillary parameters and
+integrated simulated contour limits remain open. Spline models have a separate
+[fitter and prediction interface](survival-spline.md). Entry 166 stays partial.

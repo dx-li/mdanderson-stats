@@ -76,5 +76,38 @@ Rscript tools/reference_survival_uncertainty.R \
   tests/fixtures/survival-uncertainty-summary.csv
 ```
 
-Reference generation succeeded. Agreement with the new Python uncertainty
-interface remains to be checked after its implementation is integrated.
+The integrated `predict_parametric_survival_mc` agrees with all 180 rows:
+maximum absolute lower-limit, upper-limit or sample-SD error `2.665e-15`,
+with all 64 draws valid at every reference point. The root comparison also
+affinely transformed the parameters, covariance and supplied draws into
+nontrivial normalized coordinates (time center 2, time scale 3, covariate
+centers `.5,-.2` and scales `4,7`). Fitted curves, limits and sample SDs stayed
+within `2e-13` of the original-coordinate results. No model refitting or
+large simulation was required. The combined reference/normalization audit
+took .245 seconds after import, peaked at 115.2 MiB and reported zero swaps.
+
+Three focused tests passed, along with Ruff lint/format and module type
+checking. Both public guide code blocks passed with 500 generated draws.
+The point estimates agree with the existing deterministic predictor;
+repeating the seed reproduces draws, and reusing draws preserves shared-grid
+limits. This guide audit took .069 seconds after import, peaked at 114.8 MiB
+and reported zero swaps.
+
+## Numerical range and retained scope
+
+The scaled-coordinate evaluator requires representable positive scales and
+restricts the Prentice shape magnitude to `1e150`, including the equivalent
+`Q=1/sqrt(k)` used to evaluate Stacy draws. For nonzero `abs(Q)<1e-154`, only
+cells inside the existing kernel's verified near-zero expansion domain are
+evaluated; the remaining cells are missing rather than dividing by an
+underflowed `Q^2`. Unrepresentable draw parameters produce missing values at
+endpoints too. Valid infinite tail arguments produce exact zero/one survival
+cell by cell. These numerical-domain rules are explicit limits of this Python
+evaluator, not a claim to reproduce every native overflow/underflow artifact.
+
+Missing draws are omitted for pointwise type-7 quantiles, retained as missing
+for ordinary sample SD, and never redrawn or truncated. Per-cell valid counts
+and the original joint parameter draws are returned as read-only arrays.
+The API preserves the existing deterministic delta-method prediction APIs.
+It currently covers these five parameterizations; simulated spline limits and
+integration into the contour/percentile workflow remain separate work.
