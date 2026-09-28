@@ -81,3 +81,5 @@ criterion now has a [deterministic expectation implementation](survival-ess.md).
 The [regression ESS functions](regression-ess.md) now include the app's original
 normal/logistic uniform-covariate simulation, cumulative information paths and
 subvector crossings, verified against the author source with shared covariates.
+The unknown-mean variance calculation has unresolved source conventions
+documented in the [variance ESS audit](../research/normal-variance-ess-audit.md).
