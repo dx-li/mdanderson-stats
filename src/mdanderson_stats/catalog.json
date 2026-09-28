@@ -4288,7 +4288,8 @@
         "Deterministic first-stage classification-model DIC with full binomial deviance, the native Plummer population penalty, both posterior mixture components and numerical integration diagnostics.",
         "Analytical latent-theta posterior density, both probability tails and moments, plus bounded independent posterior sampling from the exact half-normal mixture.",
         "Complete one-trial numerical workflow composing classification, borrowing and variance-matched ESS, with native ten-row ordering, strict unrounded decisions, original data and separate three-decimal output.",
-        "Serial binomial-trial operating characteristics with subgroup classification/efficacy rates, null-specific errors and power, familywise false-positive and single-cluster probabilities, Monte Carlo standard errors, separate random streams and compact per-trial sampler diagnostics; docs/bacis-simulation.md."
+        "Serial binomial-trial operating characteristics with subgroup classification/efficacy rates, null-specific errors and power, familywise false-positive and single-cluster probabilities, Monte Carlo standard errors, separate random streams and compact per-trial sampler diagnostics; docs/bacis-simulation.md.",
+        "Optional analytical latent-classification density overlays with exact disconnected one-sided limits at zero, native/custom/automatic windows, bounded grids and preserved caller axes; docs/bacis-plot.md."
       ],
       "validation": [
         "Official application v1.0.1.0, help and author bacistool 1.0.0 source pinned in docs/bacis-sources.json; source conflicts and displayed-versus-CRAN prior defaults documented.",
@@ -4298,7 +4299,8 @@
         "513 independent base-R latent posterior curve rows and 57 moment rows, infinite endpoints, small complementary probabilities and seeded component-mass checks; research/bacis-theta-audit.md.",
         "Native one-trial row-source audit, singleton posterior/binomial-tail references, strict cutoff equality, and a bounded five-subgroup borrowing workflow; tests/test_bacis_trial.py and research/bacis-trial-audit.md.",
         "Independent base-R singleton decision table and exact binomial rates, 32-trial replay at each null/alternative truth, mixed-group metric aggregation and public guide checks; three focused tests. Numerical integration peaked at 114.7 MiB RSS with zero process swaps. research/bacis-simulation-audit.md.",
-        "Pending: density plots, native file formats, simulation-average ESS and automatic cutoff calibration. A paper/software classification discrepancy prevents claiming published-table reproduction; native random-stream parity is not claimed. See docs/bacis.md."
+        "Three focused classification-plot tests plus two rendered and visually inspected public examples, unclipped peaks and preserved blank/inverted axes. Integration peaked at 160.2 MiB RSS, zero process swaps; research/bacis-file-audit.md.",
+        "Pending: additional response/prior plots, native file formats, simulation-average ESS and automatic cutoff calibration. A paper/software classification discrepancy prevents claiming published-table reproduction; native random-stream parity is not claimed. See docs/bacis.md."
       ]
     },
     {

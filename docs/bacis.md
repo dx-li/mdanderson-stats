@@ -283,7 +283,10 @@ Monte Carlo standard errors, separate outcome/sampler streams and compact
 per-trial diagnostics. The archived model and the paper's classification
 table disagree, so published-table reproduction is not claimed.
 
-Latent-variable density plots, native file formats, average subgroup ESS
+[Analytical classification density plots](bacis-plot.md) display the latent
+posterior without MCMC or smoothing, with separate limits on each side of zero.
+
+Additional response/prior plots, native file formats, average subgroup ESS
 across simulated trials and automatic cutoff calibration remain open.
 The mathematical references validate the declared model, not native random
 streams, convergence for arbitrary priors or complete application parity.

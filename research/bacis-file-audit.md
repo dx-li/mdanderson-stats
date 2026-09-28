@@ -45,3 +45,12 @@ segments. A fixed y=.04 can clip a valid high-precision density; autoscaling
 the density axis is an intentional presentation correction. This is the
 native classification-plot purpose with exact curves, not reproduction of an
 individual random KDE or the app's other response/prior plots.
+
+`plot_bacis_classification_posterior` now implements that analytical display
+with lazy optional plotting imports, bounded grids, one-sided zero limits,
+native/custom/automatic windows and preserved caller axes. Three focused tests,
+lint, formatting and type checks passed. Both public guide examples were
+rendered and visually inspected; analytical branch separation, unclipped peaks,
+blank supplied axes and inverted views were also checked. The integration run
+took .225 seconds after imports, peaked at 160.2 MiB RSS and reported zero
+process swaps. Native response/prior plots and file workflows remain open.
