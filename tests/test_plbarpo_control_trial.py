@@ -28,9 +28,7 @@ def _common(**updates):
 
 def test_control_modes_use_real_control_windows_and_persistent_control():
     entire = run_plbarpo_control_trial(**_common())
-    concurrent = run_plbarpo_control_trial(
-        **_common(control_mode="concurrent")
-    )
+    concurrent = run_plbarpo_control_trial(**_common(control_mode="concurrent"))
     expected_assignments = [0, 1, 1, 2, 0, 2]
     np.testing.assert_array_equal(entire.assignments, expected_assignments)
     np.testing.assert_array_equal(concurrent.assignments, expected_assignments)

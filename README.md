@@ -1179,7 +1179,9 @@ trials](docs/plbarpo-trials.md) add queued replacement, entrant burn-in, replaya
 patient assignments, global monitoring and final assessment at arm caps.
 Compact simulation summaries add per-arm operating characteristics, enrollment,
 Monte Carlo errors and error rates against explicitly supplied null arms.
-Control platform scheduling remains open.
+[Persistent-control trials](docs/plbarpo-control-trials.md) add entire-trial or
+concurrent-control assessment, simultaneous replacement and recorded comparison
+windows. Control-trial aggregate simulation and delayed outcomes remain open.
 
 [TTEConduct](docs/tteconduct.md) adds single-arm exponential survival monitoring
 against an uncertain historical standard, with an additive improvement margin

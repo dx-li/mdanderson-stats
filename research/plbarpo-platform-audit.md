@@ -6,9 +6,11 @@ snapshot is under ignored `research/raw/PLBARPO/`; the page identifies version
 2.0.3.0, updated January 6, 2026. The current Python implementation provides
 [control selection and monitoring](../docs/plbarpo-control.md) and
 [active-arm allocation](../docs/plbarpo-allocation.md), plus
-[no-control platform trials](../docs/plbarpo-trials.md). Catalog entry 137
-remains partial: control scheduling and delayed outcomes are separate missing
-workflows. Compact no-control operating characteristics are also available.
+[no-control platform trials](../docs/plbarpo-trials.md) and
+[persistent-control trials](../docs/plbarpo-control-trials.md). Catalog entry 137
+remains partial: control-trial aggregate simulation and delayed outcomes are
+separate missing workflows. Compact no-control operating characteristics are
+also available.
 
 ## What the support document establishes
 
@@ -128,3 +130,32 @@ mypy. Both public trial/simulation examples pass in 1.55 seconds including
 import, at 106.86 MiB peak resident memory with no swaps. The small public
 simulation is a usage example, not a precision benchmark. No new CI workflow,
 dependency or large simulation was added for this feature.
+
+## Integrated persistent-control trial
+
+Luna checkpoint `a9af713`, integrated as `e3e81f0`, adds a persistent control,
+entire-trial or treatment-specific concurrent comparisons, and complete-outcome
+replacement scheduling. Control index zero participates in allocation but is
+never an efficacy hypothesis or a replacement candidate. Final assessments at
+an arm cap apply only to that arm. Simultaneous closures fill every vacant slot.
+Actual comparison windows, control counts and numerical error estimates remain
+in immutable look/final summaries; unassessed final values are explicitly NaN.
+
+`tools/reference_plbarpo_control_trial.R` independently establishes four small
+replays: staggered entry under both control modes, an unrelated active arm at
+another arm's cap, and simultaneous futility with two replacements. All 94
+allocation cells over 26 patients, 12 posterior comparisons and 14 final-ledger
+rows match the root integration. The comparison took 0.042 seconds after import,
+peaked at 117.98 MiB and reported no swaps. Recorded windows were also checked
+against the actual underlying control observations.
+
+Review found a same-look conflict when futility and cap-final efficacy both
+declared an arm. Both controllers now reject that contradictory state, with
+focused regressions (`2b60138`, integrated as `7f8e990`). The source's posterior
+criteria are preserved; queue, burn-in and transition details remain explicit
+Python conventions, without a claim of native scheduler parity.
+
+Seven focused controller checks, targeted lint/type checks and the public
+control-trial example pass after integration. The example takes 1.54 seconds
+including import, at 105.38 MiB peak resident memory with no swaps. No new CI
+workflow or large Monte Carlo run was added.

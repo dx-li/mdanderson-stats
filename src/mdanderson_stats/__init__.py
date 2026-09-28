@@ -787,6 +787,11 @@ from .plbarpo_control import (
     plbarpo_control_counts,
     plbarpo_control_monitor,
 )
+from .plbarpo_control_trial import (
+    PLBarpoControlLook,
+    PLBarpoControlTrialResult,
+    run_plbarpo_control_trial,
+)
 from .plbarpo_simulation import PLBarpoSimulation, simulate_plbarpo
 from .plbarpo_trial import PLBarpoTrialLook, PLBarpoTrialResult, run_plbarpo_trial
 from .pop_design import (
@@ -1504,6 +1509,9 @@ __all__ = [
     "PLBarpoControlMonitoring",
     "plbarpo_control_counts",
     "plbarpo_control_monitor",
+    "PLBarpoControlLook",
+    "PLBarpoControlTrialResult",
+    "run_plbarpo_control_trial",
     "PLBarpoTrialLook",
     "PLBarpoTrialResult",
     "run_plbarpo_trial",

@@ -262,11 +262,13 @@ def run_plbarpo_control_trial(
             tau1=config.tau1,
             max_n=maximum if config.method == "barn2n" else None,
             target_probability=(
-                None if config.target_probability is None
+                None
+                if config.target_probability is None
                 else np.where(active, config.target_probability, 0.0)
             ),
             minimum_probability=(
-                None if config.minimum_probability is None
+                None
+                if config.minimum_probability is None
                 else np.where(active, config.minimum_probability, 0.0)
             ),
             absolute_tolerance=config.absolute_tolerance,
@@ -275,9 +277,8 @@ def run_plbarpo_control_trial(
 
     def fill_slots() -> None:
         nonlocal candidate_position, allocation_valid
-        while (
-            active.sum() < config.active_capacity
-            and candidate_position < len(config.candidate_order)
+        while active.sum() < config.active_capacity and candidate_position < len(
+            config.candidate_order
         ):
             arm = int(config.candidate_order[candidate_position])
             candidate_position += 1
@@ -314,9 +315,7 @@ def run_plbarpo_control_trial(
         assignment[n] = arm_index
         allocation_history[n] = allocation
         outcome_u = (
-            float(outcome_tape[n])
-            if outcome_tape is not None
-            else float(outcome_rng.random())
+            float(outcome_tape[n]) if outcome_tape is not None else float(outcome_rng.random())
         )
         response[n] = int(outcome_u < config.truth[arm_index])
         assigned[arm_index] += 1
@@ -342,8 +341,14 @@ def run_plbarpo_control_trial(
         assess_final = is_final or (cap_hit and pfinal is not None)
         if exp_idx.size:
             ctrl = _control_counts(
-                mode, entry_index, n, assignment, response, exp_idx,
-                int(successes[0]), int(failures[0]),
+                mode,
+                entry_index,
+                n,
+                assignment,
+                response,
+                exp_idx,
+                int(successes[0]),
+                int(failures[0]),
             )
             used_control[exp_idx] = ctrl
             work += exp_idx.size**2
@@ -390,8 +395,7 @@ def run_plbarpo_control_trial(
                     efficacious[exp_idx[eligible]] = monitored.efficacious[eligible]
                 if np.any(futile & (efficacious | final_flags)):
                     raise ValueError(
-                        "an experimental arm cannot be declared futile and efficacious "
-                        "at one look"
+                        "an experimental arm cannot be declared futile and efficacious at one look"
                     )
                 early_futility |= futile
                 early_efficacy |= efficacious

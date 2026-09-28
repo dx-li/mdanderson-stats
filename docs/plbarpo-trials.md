@@ -57,7 +57,8 @@ masked to zero for inactive arms before calling the
 `look_sizes` must increase strictly and end at `max_total_n`. At an interim
 look, an arm must meet its own minimum enrollment before a futility or early
 efficacy declaration. All decisions use the active set before any same-look
-replacement. Contradictory simultaneous futility and efficacy are an error.
+replacement. Contradictory simultaneous futility and efficacy, including final
+efficacy at an arm cap, are an error.
 The [BARPO guide](barpo.md) describes the independent beta-tail criteria.
 
 An arm closes as soon as its enrollment cap is reached, including between
@@ -150,6 +151,6 @@ Simulation is serial, capped at 5,000 trials and bounded by both per-trial and
 aggregate work limits. These are numerical work proxies, not wall-clock
 guarantees. The example's 16 trials demonstrate usage, not a precision study.
 
-Control/concurrent-control platform scheduling, delayed responses, native
-files and reports remain separate work. The existing
-[control monitoring API](plbarpo-control.md) is available independently.
+[Persistent-control trials](plbarpo-control-trials.md) support entire-trial and
+concurrent-control comparisons separately. Delayed responses, control-trial
+aggregate simulation and native files/reports remain open.
