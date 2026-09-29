@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `b3058d9` adds BOP2-DC Normal endpoint
-finite-grid calibration and randomized binary monitoring/replay/exact OCs.
+Latest verified package checkpoint: `c0ce18d` adds BOP2-DC randomized Normal
+and exponential-survival monitoring, replay and operating-characteristic simulation.
 Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
@@ -737,3 +737,56 @@ write route was retried or bypassed. The updated packages and verified all-refs
 bundle preserve committed root/Luna work. Randomized Normal and survival worker
 work remains outside this verified package and local `master` pending independent
 reference checks and public integration.
+
+
+## Randomized Normal and survival checkpoint
+
+Randomized Normal monitoring/replay is integrated at `bcb58e4`, with aggregate
+simulation and corrected conservative quadrature work accounting at `f0a915c`.
+Independent arm NIG priors give Student-t mean posteriors; their difference is
+computed by bounded quadrature rather than a Gaussian approximation. Shared
+centering preserves signed differences under common measurement offsets.
+Independent base-R density integration and analytic Cauchy tails verify 12
+cases/21 looks. A further 48 fixed latent paths with 78 reached looks verify
+simulated decision/stopping probabilities, enrollment and MCSEs, including
+16 early graduations. All 263 numeric summaries agree; the maximum posterior
+discrepancy is `6.273e-10`, within reported errors. The check takes 9.472 seconds
+after imports, with a conservative combined Python/R peak bound of 196.66 MiB
+and zero Python swaps. A base-R decimal parsing defect at `1e15` was isolated
+and removed from the oracle by storing the common shift separately; Python
+still receives actual shifted inputs. Numeric tolerances were not relaxed.
+
+Randomized survival monitoring/replay is integrated at `3d46df9`, with total
+replay work/zero-duration-event corrections at `d43eedc` and simulation at
+`2add4a4`. Independent IG priors on arm mean survival yield median-time
+difference probabilities. Calendar replay uses as-of censoring and absorbs
+no-go or graduation; simulation supports fixed/Poisson accrual. An independent
+R Gamma-density integral and calendar implementation verify 10 cases/17 looks
+and 48 simulation paths/71 looks. All 763 numeric summaries agree, including
+24 early graduations, per-arm events/exposure, duration and MCSEs. The maximum
+posterior discrepancy is `4.922e-11`, within reported errors. The check takes
+.5517 seconds after imports, with a conservative combined Python/R peak bound
+of 192.80 MiB and zero Python swaps. Review repaired an omitted graduation
+category and made retained-storage accounting include owned copies, Unicode
+decision arrays and replay scratch.
+
+Public APIs, guides and reference tooling are committed at
+`c0ce18d9cfa1311229dedf88b5778171f6e77f76`. All 14 focused tests pass in the
+integrated checkout (5.93 seconds), as do targeted Ruff/format/mypy checks and
+both new guide examples. Cached wheel/source builds pass. Isolated wheel
+verification checks 1,527 exports, exact committed bytes for 551 source/data
+files, licenses/notices, all 138 catalog entries and both examples. Verification
+takes 12.267 seconds, peaks at 125.20 MiB and reports zero swaps. No extra CI
+workflow, dependency or broad numerical suite was introduced. Numerical work
+remained serial. Coverage stays 63 implemented, 66 partial and 9 pending;
+randomized calibration keeps BOP2-DC partial.
+
+Local `master` is fast-forwarded to this verified code plus the present audit.
+Fresh read-only GitHub checks still show `master` and `main` at `45b6e307`,
+with 130 newer commits at the verified code checkpoint. Publication remains
+blocked by the earlier shell DNS failure and connector approval rejection;
+no rejected write route was retried or bypassed. Updated packages and a
+verified all-refs bundle preserve committed work, including worker-only
+randomized-binary calibration `43a6570`. That calibration and ongoing randomized
+Normal/survival calibration work remain outside this verified package/master
+until their independent reference checks and public integration are complete.
