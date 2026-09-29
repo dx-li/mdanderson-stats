@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `157be6d` adds the optional TITE-BOIN12
-3+3 de-escalation rule. The final
+Latest verified package checkpoint: `319916a` adds MTADF global/local logistic
+methods and TITE-BOIN12 complete-outcome final selection. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1454,3 +1454,43 @@ was still running at the last inspection. Hosted results for this new checkpoint
 are tracked separately. This audit-only commit follows the verified code;
 ordinary atomic fast-forward publication and independent remote verification
 keep master, main and development aligned. MTADF logistic work remains isolated.
+
+## MTADF logistic and TITE-BOIN12 final-selection community checkpoint
+
+Verified package code is `319916ab24cc4ceb832d7a9bf170b70de32f02c9`.
+Luna implemented the paper's global quadratic and local linear logistic efficacy
+models with explicit Cauchy priors, dose coding and bounded serial MCMC.
+Independent transformed-Cauchy quadrature checks both models; global 128/192
+rules agree within 3.32e-14 and the seeded fit agrees within 1.82 batch MCSEs.
+Root and a separate Luna reviewer checked safety-first decisions, observed
+current-dose requirements, retained bounce-window diagnostics and aggregate
+resource bounds. Identical lower-boundary windows reuse the current fit.
+Native sampling, unspecified conduct details and logistic trial simulation
+remain distinct from these documented Python methods.
+
+TITE-BOIN12 now accepts fully resolved patient histories for final selection,
+preserves joint binary counts and delegates to the existing complete-data
+BOIN12 two-step rule. Pending endpoints are rejected. Cumulative follow-up may
+continue past an observed event's window without changing the complete-data
+selection. The unrecovered BDA joint-prior and supplementary details remain
+explicit gaps; no native defaults were guessed.
+
+Final focused MTADF checks pass 18 tests in 2.20 seconds at 134.92 MiB peak RSS;
+TITE conduct/reference/final checks pass 22 tests in 1.70 seconds at 132.58 MiB.
+Both runs treat warnings as errors and report zero swaps. Targeted lint,
+formatting and type checks pass. No broad local suite or new CI was added.
+
+Cached wheel/source builds and isolated wheel verification pass: 1,615 exports,
+all 573 package source/data files byte-identical to committed Git contents in
+both artifacts, five guide blocks across two guides, 138 catalog entries and
+preserved license notices. Verification takes 10.600 seconds at 128.47 MiB peak
+RSS with zero swaps. Coverage remains 63 implemented, 67 partial and eight
+pending. Existing mixed-license terms remain unchanged.
+
+The previously published `fc81de5` checkpoint has successful hosted quality,
+Python 3.12 and Python 3.13 checks; Python 3.14 was still running at the last
+inspection. Those results do not imply this new checkpoint's full matrix has
+passed. This audit-only commit follows verified package code. Ordinary atomic
+fast-forward publication and independent remote-SHA verification align master,
+main and development; the ignored manifest records publication and hosted
+validation separately.
