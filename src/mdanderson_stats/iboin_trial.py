@@ -55,6 +55,168 @@ class IBOINTrialReplay:
     decision_history: tuple[IBOINTrialDecision, ...]
 
 
+def _conduct_settings(
+    design: IBOINDesign,
+    cohort_size: int,
+    starting_dose: int,
+    titration: bool,
+    titration_cap: int | None,
+    max_patients: int,
+) -> tuple[int, int, int, bool, int, int]:
+    if not isinstance(design, IBOINDesign):
+        raise ValueError("design must be an IBOINDesign")
+    cohort_count = count(cohort_size, "cohort_size")
+    start_count = count(starting_dose, "starting_dose")
+    n_doses = int(design.log_hypothesis_probability.shape[0])
+    if cohort_count.ndim != 0 or cohort_count < 1:
+        raise ValueError("cohort_size must be a positive integer")
+    if start_count.ndim != 0 or not 1 <= start_count <= n_doses:
+        raise ValueError("starting_dose must identify a design dose")
+    max_count = _integer(max_patients, "max_patients")
+    if not 1 <= max_count <= _MAX_PATIENTS:
+        raise ValueError("max_patients must be in [1, 100000]")
+    if not isinstance(titration, (bool, np.bool_)):
+        raise ValueError("titration must be boolean")
+    if titration_cap is None:
+        cap = n_doses
+    else:
+        cap_count = count(titration_cap, "titration_cap")
+        if cap_count.ndim != 0 or not int(start_count) <= cap_count <= n_doses:
+            raise ValueError("titration_cap must be between starting and highest dose")
+        cap = int(cap_count)
+    if not titration and titration_cap is not None:
+        raise ValueError("titration_cap requires titration=True")
+    return n_doses, int(cohort_count), int(start_count), bool(titration), cap, max_count
+
+
+class _IBOINConductState:
+    """Shared incremental conduct transition used by replay and simulation."""
+
+    def __init__(
+        self,
+        design: IBOINDesign,
+        n_doses: int,
+        cohort_size: int,
+        starting_dose: int,
+        titration: bool,
+        titration_cap: int,
+        max_patients: int,
+        *,
+        record_history: bool = True,
+    ) -> None:
+        self.design = design
+        self.n_doses = n_doses
+        self.cohort_size = cohort_size
+        self.max_patients = max_patients
+        self.record_history = record_history
+        self.assigned: list[int] = []
+        self.dlt: list[int] = []
+        self.grade2: list[int] = []
+        self.patients = np.zeros(n_doses, dtype=np.int64)
+        self.toxicities = np.zeros(n_doses, dtype=np.int64)
+        self.moderate = np.zeros(n_doses, dtype=np.int64)
+        self.excluded = np.zeros(n_doses, dtype=bool)
+        self.decisions: list[IBOINTrialDecision] = []
+        self.phase: Literal["titration", "cohort", "stopped"] = (
+            "titration" if titration else "cohort"
+        )
+        self.current_dose = starting_dose
+        self.next_dose: int | None = starting_dose
+        self.cohort_remaining = 1 if titration else cohort_size
+        self.stop_reason: str | None = None
+        self.titration_end_reason: str | None = None
+        self.titration_cap = titration_cap
+
+    def observe(self, dlt: int, grade2: int) -> int:
+        if self.next_dose is None:
+            raise ValueError("outcomes were supplied after the design stopped")
+        current_dose = self.next_dose
+        j = current_dose - 1
+        self.assigned.append(current_dose)
+        self.dlt.append(dlt)
+        self.grade2.append(grade2)
+        self.patients[j] += 1
+        self.toxicities[j] += dlt
+        self.moderate[j] += grade2
+
+        if self.phase == "titration":
+            if dlt:
+                self.titration_end_reason = "DLT"
+                self.phase = "cohort"
+                self.cohort_remaining = self.cohort_size - 1
+            elif int(np.sum(self.moderate)) >= 2:
+                self.titration_end_reason = "grade2"
+                self.phase = "cohort"
+                self.cohort_remaining = self.cohort_size - 1
+            elif current_dose == self.n_doses:
+                self.titration_end_reason = "highest_dose"
+                self.phase = "cohort"
+                self.cohort_remaining = self.cohort_size - 1
+            elif current_dose == self.titration_cap:
+                self.titration_end_reason = "dose_cap"
+                self.current_dose = current_dose + 1
+                self.phase = "cohort"
+                self.cohort_remaining = self.cohort_size
+            else:
+                self.current_dose = current_dose + 1
+                self.cohort_remaining = 1
+        else:
+            self.cohort_remaining -= 1
+
+        if self.phase == "cohort" and self.cohort_remaining == 0:
+            decision = self.design.next_dose(
+                self.patients,
+                self.toxicities,
+                self.current_dose,
+                eliminated=self.excluded,
+            )
+            if self.record_history:
+                self.decisions.append(
+                    IBOINTrialDecision(
+                        _owned(self.patients),
+                        _owned(self.toxicities),
+                        _owned(self.moderate),
+                        self.current_dose,
+                        decision,
+                    )
+                )
+            self.excluded = np.asarray(decision.eliminated, dtype=bool).copy()
+            if decision.next_dose is None:
+                self.stop_reason = decision.action
+                self.phase = "stopped"
+                self.next_dose = None
+                self.cohort_remaining = 0
+            else:
+                self.current_dose = decision.next_dose
+                self.next_dose = self.current_dose
+                self.cohort_remaining = self.cohort_size
+
+        if self.stop_reason is None and len(self.assigned) == self.max_patients:
+            self.stop_reason = "stop_max_patients"
+            self.phase = "stopped"
+            self.next_dose = None
+        elif self.stop_reason is None:
+            self.next_dose = self.current_dose
+        return current_dose
+
+    def result(self) -> IBOINTrialReplay:
+        return IBOINTrialReplay(
+            _owned(np.asarray(self.assigned, dtype=np.int64)),
+            _owned(np.asarray(self.dlt, dtype=np.int64)),
+            _owned(np.asarray(self.grade2, dtype=np.int64)),
+            _owned(self.patients),
+            _owned(self.toxicities),
+            _owned(self.moderate),
+            _owned(self.excluded),
+            self.next_dose,
+            self.phase,
+            self.cohort_remaining,
+            self.stop_reason,
+            self.titration_end_reason,
+            tuple(self.decisions),
+        )
+
+
 def replay_iboin_trial(
     design: IBOINDesign,
     dlt: ArrayLike,
@@ -87,29 +249,9 @@ def replay_iboin_trial(
     Grade-2 values encode mutually exclusive maximum severity: a patient cannot
     be both DLT and grade-2 in the same row.
     """
-    if not isinstance(design, IBOINDesign):
-        raise ValueError("design must be an IBOINDesign")
-    cohort_count = count(cohort_size, "cohort_size")
-    start_count = count(starting_dose, "starting_dose")
-    n_doses = int(design.log_hypothesis_probability.shape[0])
-    if cohort_count.ndim != 0 or cohort_count < 1:
-        raise ValueError("cohort_size must be a positive integer")
-    if start_count.ndim != 0 or not 1 <= start_count <= n_doses:
-        raise ValueError("starting_dose must identify a design dose")
-    max_count = _integer(max_patients, "max_patients")
-    if not 1 <= max_count <= _MAX_PATIENTS:
-        raise ValueError("max_patients must be in [1, 100000]")
-    if not isinstance(titration, (bool, np.bool_)):
-        raise ValueError("titration must be boolean")
-    if titration_cap is None:
-        cap = n_doses
-    else:
-        cap_count = count(titration_cap, "titration_cap")
-        if cap_count.ndim != 0 or not int(start_count) <= cap_count <= n_doses:
-            raise ValueError("titration_cap must be between starting and highest dose")
-        cap = int(cap_count)
-    if not titration and titration_cap is not None:
-        raise ValueError("titration_cap requires titration=True")
+    n_doses, cohort_count, start_count, use_titration, cap, max_count = _conduct_settings(
+        design, cohort_size, starting_dose, titration, titration_cap, max_patients
+    )
 
     if np.iscomplexobj(dlt) or np.iscomplexobj(grade2):
         raise ValueError("patient outcomes must be real")
@@ -137,110 +279,13 @@ def replay_iboin_trial(
     dlt_values = dlt_values.astype(np.int64)
     grade2_values = grade2_values.astype(np.int64)
 
-    assignments = np.empty(n_observed, dtype=np.int64)
-    patients = np.zeros(n_doses, dtype=np.int64)
-    toxicities = np.zeros(n_doses, dtype=np.int64)
-    moderate = np.zeros(n_doses, dtype=np.int64)
-    excluded = np.zeros(n_doses, dtype=bool)
-    decisions: list[IBOINTrialDecision] = []
-
-    use_titration = bool(titration)
-    phase: Literal["titration", "cohort", "stopped"] = "titration" if use_titration else "cohort"
-    current_dose = int(start_count)
-    next_dose: int | None = current_dose
-    cohort_remaining = 1 if use_titration else int(cohort_count)
-    stop_reason: str | None = None
-    titration_end_reason: str | None = None
-
-    for index in range(n_observed):
-        if next_dose is None:
-            raise ValueError("outcomes were supplied after the design stopped")
-        current_dose = next_dose
-        j = current_dose - 1
-        assignments[index] = current_dose
-        patients[j] += 1
-        toxicities[j] += dlt_values[index]
-        moderate[j] += grade2_values[index]
-
-        if phase == "titration":
-            if dlt_values[index]:
-                titration_end_reason = "DLT"
-                phase = "cohort"
-                cohort_remaining = int(cohort_count) - 1
-            elif int(np.sum(moderate)) >= 2:
-                titration_end_reason = "grade2"
-                phase = "cohort"
-                cohort_remaining = int(cohort_count) - 1
-            elif current_dose == n_doses:
-                titration_end_reason = "highest_dose"
-                phase = "cohort"
-                cohort_remaining = int(cohort_count) - 1
-            elif current_dose == cap:
-                titration_end_reason = "dose_cap"
-                current_dose += 1
-                phase = "cohort"
-                cohort_remaining = int(cohort_count)
-            else:
-                current_dose += 1
-                cohort_remaining = 1
-        else:
-            cohort_remaining -= 1
-
-        if phase == "cohort" and cohort_remaining == 0:
-            decision = design.next_dose(
-                patients,
-                toxicities,
-                current_dose,
-                eliminated=excluded,
-            )
-            decisions.append(
-                IBOINTrialDecision(
-                    _owned(patients),
-                    _owned(toxicities),
-                    _owned(moderate),
-                    current_dose,
-                    decision,
-                )
-            )
-            excluded = np.asarray(decision.eliminated, dtype=bool).copy()
-            if decision.next_dose is None:
-                stop_reason = decision.action
-                phase = "stopped"
-                next_dose = None
-                cohort_remaining = 0
-            else:
-                current_dose = decision.next_dose
-                next_dose = current_dose
-                cohort_remaining = int(cohort_count)
-
-        if stop_reason is not None:
-            if index + 1 < n_observed:
-                raise ValueError("outcomes were supplied after the design stopped")
-            break
-        if index + 1 == int(max_count):
-            stop_reason = "stop_max_patients"
-            phase = "stopped"
-            next_dose = None
-            break
-        next_dose = current_dose
-
-    if stop_reason is None and n_observed == int(max_count):
-        stop_reason = "stop_max_patients"
-        phase = "stopped"
-        next_dose = None
-
-    return IBOINTrialReplay(
-        _owned(assignments),
-        _owned(dlt_values),
-        _owned(grade2_values),
-        _owned(patients),
-        _owned(toxicities),
-        _owned(moderate),
-        _owned(excluded),
-        next_dose,
-        phase,
-        int(cohort_remaining),
-        stop_reason,
-        titration_end_reason,
-        tuple(decisions),
+    state = _IBOINConductState(
+        design, n_doses, cohort_count, start_count, use_titration, cap, max_count
     )
+    for index, (dlt_value, grade2_value) in enumerate(zip(dlt_values, grade2_values, strict=True)):
+        if state.stop_reason is not None:
+            raise ValueError("outcomes were supplied after the design stopped")
+        state.observe(int(dlt_value), int(grade2_value))
+        if state.stop_reason is not None and index + 1 < n_observed:
+            raise ValueError("outcomes were supplied after the design stopped")
+    return state.result()
