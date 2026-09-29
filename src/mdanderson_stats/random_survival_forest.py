@@ -213,6 +213,15 @@ def _stop_before_split(time: FloatArray, event: FloatArray) -> bool:
     return False
 
 
+def _tree_goes_left(tree: _PackedTree, node: int, value: float) -> bool:
+    """Return the packed-tree branch for one feature value at one node.
+
+    Kept as a single routing primitive so prediction, OOB evaluation, and
+    feature-importance perturbations apply identical split semantics.
+    """
+    return bool(value <= tree.threshold[node])
+
+
 def _parent_counts(
     time: FloatArray, event: FloatArray
 ) -> tuple[FloatArray, FloatArray, FloatArray]:
@@ -524,7 +533,7 @@ def _oob_curves(
                 column = int(tree.feature[node])
                 node = (
                     int(tree.left[node])
-                    if profile[column] <= tree.threshold[node]
+                    if _tree_goes_left(tree, node, float(profile[column]))
                     else int(tree.right[node])
                 )
             offset = int(tree.event_offset[node])
@@ -785,7 +794,7 @@ def predict_random_survival_forest(
                 column = int(tree.feature[node])
                 node = (
                     int(tree.left[node])
-                    if profile[column] <= tree.threshold[node]
+                    if _tree_goes_left(tree, node, float(profile[column]))
                     else int(tree.right[node])
                 )
             offset = int(tree.event_offset[node])

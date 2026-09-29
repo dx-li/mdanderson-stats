@@ -11,12 +11,31 @@ import numpy as np
 from mdanderson_stats.random_survival_forest import (
     _leaf_curve,
     _logrank_score,
+    _PackedTree,
     _time_grid,
+    _tree_goes_left,
     fit_random_survival_forest,
     predict_random_survival_forest,
 )
 
 FIXTURE = Path(__file__).parent / "fixtures" / "random-survival-forest-native.json"
+
+
+def test_shared_tree_router_preserves_numeric_less_equal_split() -> None:
+    tree = _PackedTree(
+        feature=np.asarray([0, -1, -1]),
+        threshold=np.asarray([1.5, np.nan, np.nan]),
+        left=np.asarray([1, -1, -1]),
+        right=np.asarray([2, -1, -1]),
+        event_offset=np.zeros(3, dtype=np.int64),
+        event_count=np.zeros(3, dtype=np.int64),
+        event_time=np.empty(0),
+        log_survival=np.empty(0),
+        cumulative_hazard=np.empty(0),
+    )
+    assert _tree_goes_left(tree, 0, 1.5)
+    assert _tree_goes_left(tree, 0, np.nextafter(1.5, -np.inf))
+    assert not _tree_goes_left(tree, 0, np.nextafter(1.5, np.inf))
 
 
 def _fixture() -> dict[str, Any]:
