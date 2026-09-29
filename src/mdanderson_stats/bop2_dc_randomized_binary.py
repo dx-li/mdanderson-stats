@@ -4,8 +4,12 @@ from dataclasses import dataclass
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
-from scipy.special import erf, erfinv
 
+from ._bop2_dc_randomized_rules import (
+    _randomized_dual_decisions_from_tails,
+    randomized_dual_decisions,
+    randomized_obf_cutoffs,
+)
 from ._validation import FloatArray, count, finite, scalar
 from .beta_binomial import BetaBinomialPosterior
 from .beta_comparison import compare_beta_difference
@@ -206,39 +210,28 @@ class BOP2DCRandomizedBinaryDesign:
         return tuple(table)
 
     def _gradient_cutoffs(self, look: int) -> tuple[float, float]:
-        fraction = look / self.max_subjects
-        return (
-            float(erf(erfinv(self.lambda_lrv) / np.sqrt(fraction))),
-            float(erf(erfinv(self.lambda_cmv) / np.sqrt(fraction))),
+        return randomized_obf_cutoffs(
+            look=look,
+            max_subjects=self.max_subjects,
+            lambda_lrv=self.lambda_lrv,
+            lambda_cmv=self.lambda_cmv,
         )
 
     def _decision_from_tails(
         self, total_n: np.ndarray, posterior_lrv: np.ndarray, posterior_cmv: np.ndarray
     ) -> NDArray[np.str_]:
-        decision = np.full(total_n.shape, "continue", dtype="U16")
-        for raw_look in self.looks[:-1]:
-            look = int(raw_look)
-            at_look = total_n == look
-            no_go = (
-                at_look
-                & (posterior_lrv < self.lambda_lrv * (look / self.max_subjects) ** self.gamma_lrv)
-                & (posterior_cmv < self.lambda_cmv * (look / self.max_subjects) ** self.gamma_cmv)
-            )
-            decision[no_go] = "stop_no_go"
-            if self.graduate_at_interim:
-                grad_lrv, grad_cmv = self._gradient_cutoffs(look)
-                graduate = at_look & (posterior_lrv > grad_lrv) & (posterior_cmv > grad_cmv)
-                if np.any(no_go & graduate):
-                    raise ArithmeticError("interim graduation and no-go rules overlap")
-                decision[graduate] = "graduate"
-        final = total_n == self.max_subjects
-        go = final & (posterior_lrv > self.lambda_lrv) & (posterior_cmv > self.lambda_cmv)
-        no_go = final & (posterior_lrv < self.lambda_lrv) & (posterior_cmv < self.lambda_cmv)
-        decision[go] = "final_go"
-        decision[no_go] = "final_no_go"
-        decision[final & ~(go | no_go)] = "final_consider"
-        decision.flags.writeable = False
-        return decision
+        return _randomized_dual_decisions_from_tails(
+            total_n,
+            posterior_lrv,
+            posterior_cmv,
+            max_subjects=self.max_subjects,
+            looks=self.looks,
+            lambda_lrv=self.lambda_lrv,
+            lambda_cmv=self.lambda_cmv,
+            gamma_lrv=self.gamma_lrv,
+            gamma_cmv=self.gamma_cmv,
+            graduate_at_interim=self.graduate_at_interim,
+        )
 
     def _decision_from_error_intervals(
         self,
@@ -249,22 +242,20 @@ class BOP2DCRandomizedBinaryDesign:
         error_cmv: FloatArray,
     ) -> NDArray[np.str_]:
         """Classify only when reported quadrature errors cannot change the action."""
-        low_lrv = np.maximum(0.0, posterior_lrv - error_lrv)
-        high_lrv = np.minimum(1.0, posterior_lrv + error_lrv)
-        low_cmv = np.maximum(0.0, posterior_cmv - error_cmv)
-        high_cmv = np.minimum(1.0, posterior_cmv + error_cmv)
-        choices = (
-            self._decision_from_tails(total_n, low_lrv, low_cmv),
-            self._decision_from_tails(total_n, low_lrv, high_cmv),
-            self._decision_from_tails(total_n, high_lrv, low_cmv),
-            self._decision_from_tails(total_n, high_lrv, high_cmv),
+        return randomized_dual_decisions(
+            total_n,
+            posterior_lrv,
+            posterior_cmv,
+            error_lrv,
+            error_cmv,
+            max_subjects=self.max_subjects,
+            looks=self.looks,
+            lambda_lrv=self.lambda_lrv,
+            lambda_cmv=self.lambda_cmv,
+            gamma_lrv=self.gamma_lrv,
+            gamma_cmv=self.gamma_cmv,
+            graduate_at_interim=self.graduate_at_interim,
         )
-        reference = choices[0]
-        if any(np.any(choice != reference) for choice in choices[1:]):
-            raise ArithmeticError(
-                "reported beta-comparison quadrature error could change a strict trial decision"
-            )
-        return reference
 
     def monitor(
         self,
