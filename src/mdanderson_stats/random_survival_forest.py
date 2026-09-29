@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterator
 from dataclasses import dataclass
 from hashlib import blake2b
-from math import log
+from itertools import combinations
+from math import lgamma, log
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -26,6 +28,7 @@ _MAX_OOB_CELLS = 2_000_000
 _MAX_OOB_WORK = 100_000_000
 _OOB_TIE_EPSILON = 1e-9
 _SPLIT_EPSILON = 1e-9
+_MAX_FACTOR_SPLIT_LEVELS = 2_000_000
 
 
 @dataclass(frozen=True)
@@ -34,6 +37,10 @@ class _PackedTree:
 
     feature: np.ndarray
     threshold: FloatArray
+    categorical_node: np.ndarray
+    split_level_offset: np.ndarray
+    split_level_count: np.ndarray
+    split_levels: np.ndarray
     left: np.ndarray
     right: np.ndarray
     event_offset: np.ndarray
@@ -62,7 +69,7 @@ class RandomSurvivalForestOOB:
 
 @dataclass(frozen=True)
 class RandomSurvivalForestFit:
-    """Fitted numeric random survival forest.
+    """Fitted random survival forest with numeric and optional nominal features.
 
     Leaf survival and Nelson--Aalen curves are stored as sparse event-time
     steps. ``covariate_mean`` is the prediction profile used when callers omit
@@ -89,6 +96,7 @@ class RandomSurvivalForestFit:
     inbag_membership: np.ndarray | None = None
     oob: RandomSurvivalForestOOB | None = None
     training_fingerprint: bytes | None = None
+    categorical_levels: tuple[FloatArray | None, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -108,6 +116,7 @@ class _Budget:
     split_work: int = 0
     leaf_records: int = 0
     max_depth: int = 0
+    factor_split_levels: int = 0
 
 
 def _integer(value: object, name: str, lower: int, upper: int) -> int:
@@ -150,6 +159,83 @@ def _forest_data(
             "and at most 2,000,000 design cells"
         )
     return t, e, x
+
+
+def _categorical_columns(
+    x: FloatArray, columns: ArrayLike | None
+) -> tuple[FloatArray, tuple[FloatArray | None, ...], tuple[int, ...]]:
+    if columns is None:
+        return x, tuple(None for _ in range(x.shape[1])), ()
+    if np.iscomplexobj(columns):
+        raise ValueError("categorical_features must be real integer column indices")
+    if getattr(columns, "shape", None) is None and isinstance(columns, (list, tuple)):
+        if len(columns) > x.shape[1]:
+            raise ValueError("categorical_features contains too many indices")
+        if any(not np.isscalar(value) for value in columns):
+            raise ValueError("categorical_features must be a one-dimensional index vector")
+        if any(isinstance(value, (bool, np.bool_)) for value in columns):
+            raise ValueError("categorical feature indices must be integers, not booleans")
+    indices = np.asarray(columns)
+    if indices.ndim != 1 or indices.size > x.shape[1]:
+        raise ValueError("categorical_features must be a one-dimensional index vector")
+    if indices.size and (
+        indices.dtype.kind not in "iu"
+        or indices.dtype.kind == "b"
+        or np.any(indices < 0)
+        or np.any(indices >= x.shape[1])
+    ):
+        raise ValueError("categorical feature indices must be in-range integers")
+    selected = tuple(int(value) for value in indices)
+    if len(set(selected)) != len(selected):
+        raise ValueError("categorical_features must not contain duplicate indices")
+    levels_by_column: list[FloatArray | None] = [None] * x.shape[1]
+    encoded = x.copy()
+    for column in selected:
+        levels = np.unique(x[:, column])
+        levels_by_column[column] = _freeze(levels)
+        encoded[:, column] = np.searchsorted(levels, x[:, column])
+    return encoded, tuple(levels_by_column), selected
+
+
+def _modal_profile(
+    covariates: FloatArray, categorical_levels: tuple[FloatArray | None, ...]
+) -> FloatArray:
+    profile = _stable_column_mean(covariates)
+    for column, levels in enumerate(categorical_levels):
+        if levels is not None:
+            observed, counts = np.unique(covariates[:, column], return_counts=True)
+            # Levels are sorted, so argmax resolves ties to the smallest label.
+            profile[column] = observed[int(np.argmax(counts))]
+    return profile
+
+
+def _encode_profiles(
+    profiles: FloatArray, categorical_levels: tuple[FloatArray | None, ...]
+) -> FloatArray:
+    _validate_profile_categories(profiles, categorical_levels)
+    if not any(levels is not None for levels in categorical_levels):
+        return profiles
+    encoded = profiles.copy()
+    for column, levels in enumerate(categorical_levels):
+        if levels is None:
+            continue
+        indexes = np.searchsorted(levels, profiles[:, column])
+        encoded[:, column] = indexes
+    return encoded
+
+
+def _validate_profile_categories(
+    profiles: FloatArray, categorical_levels: tuple[FloatArray | None, ...]
+) -> None:
+    for column, levels in enumerate(categorical_levels):
+        if levels is None:
+            continue
+        indexes = np.searchsorted(levels, profiles[:, column])
+        valid = indexes < levels.size
+        valid_indexes = np.flatnonzero(valid)
+        valid[valid_indexes] = levels[indexes[valid_indexes]] == profiles[valid_indexes, column]
+        if not np.all(valid):
+            raise ValueError(f"profiles contain unseen level(s) for categorical feature {column}")
 
 
 def _freeze_index(values: np.ndarray, dtype: np.dtype[np.signedinteger]) -> np.ndarray:
@@ -219,7 +305,68 @@ def _tree_goes_left(tree: _PackedTree, node: int, value: float) -> bool:
     Kept as a single routing primitive so prediction, OOB evaluation, and
     feature-importance perturbations apply identical split semantics.
     """
-    return bool(value <= tree.threshold[node])
+    if not tree.categorical_node[node]:
+        return bool(value <= tree.threshold[node])
+    start = int(tree.split_level_offset[node])
+    stop = start + int(tree.split_level_count[node])
+    values = tree.split_levels[start:stop]
+    index = int(np.searchsorted(values, int(value)))
+    return bool(index < values.size and values[index] == int(value))
+
+
+def _factor_split_plan(
+    levels: FloatArray, node_size: int, nsplit: int
+) -> tuple[int, bool, tuple[float, ...]]:
+    """Choose exact versus bounded random unordered partitions for one node."""
+    count = int(levels.size)
+    if count < 2:
+        return 0, True, ()
+    partition_count = (1 << (count - 1)) - 1
+    exact = count <= 32 and (
+        partition_count < node_size
+        if nsplit == 0
+        else partition_count <= min(node_size, nsplit)
+    )
+    sizes = tuple(range(1, count // 2 + 1))
+    if exact:
+        return partition_count, True, ()
+    candidate_count = min(partition_count, node_size, nsplit if nsplit > 0 else node_size)
+    log_weights = np.asarray(
+        [
+            lgamma(count + 1)
+            - lgamma(size + 1)
+            - lgamma(count - size + 1)
+            - (log(2.0) if 2 * size == count else 0.0)
+            for size in sizes
+        ],
+        dtype=np.float64,
+    )
+    weights = np.exp(log_weights - np.max(log_weights))
+    probabilities = weights / weights.sum()
+    return candidate_count, False, tuple(float(value) for value in probabilities)
+
+
+def _factor_split_candidates(
+    levels: FloatArray,
+    candidate_count: int,
+    exact: bool,
+    group_probabilities: tuple[float, ...],
+    rng: np.random.Generator,
+) -> Iterator[tuple[np.ndarray | None, float]]:
+    """Yield left-level subsets without materializing a powerset."""
+    count = int(levels.size)
+    if exact:
+        for size in range(1, count // 2 + 1):
+            for subset in combinations(range(count), size):
+                if 2 * size == count and 0 not in subset:
+                    continue
+                yield levels[np.asarray(subset, dtype=np.int64)], float("nan")
+        return
+    sizes = np.arange(1, count // 2 + 1, dtype=np.int64)
+    for _ in range(candidate_count):
+        size = int(rng.choice(sizes, p=np.asarray(group_probabilities)))
+        candidate_levels = np.sort(rng.choice(levels, size=size, replace=False))
+        yield candidate_levels, float("nan")
 
 
 def _parent_counts(
@@ -290,6 +437,10 @@ def _leaf_curve(time: FloatArray, event: FloatArray) -> tuple[FloatArray, FloatA
 def _pack_tree(
     feature: list[int],
     threshold: list[float],
+    categorical_node: list[bool],
+    split_level_offset: list[int],
+    split_level_count: list[int],
+    split_levels: list[int],
     left: list[int],
     right: list[int],
     event_offset: list[int],
@@ -301,6 +452,10 @@ def _pack_tree(
     return _PackedTree(
         _freeze_index(np.asarray(feature), np.dtype(np.int32)),
         _freeze(np.asarray(threshold, dtype=np.float64)),
+        np.frombuffer(np.asarray(categorical_node, dtype=np.bool_).tobytes(), dtype=np.bool_),
+        _freeze_index(np.asarray(split_level_offset), np.dtype(np.int32)),
+        _freeze_index(np.asarray(split_level_count), np.dtype(np.int32)),
+        _freeze_index(np.asarray(split_levels), np.dtype(np.int32)),
         _freeze_index(np.asarray(left), np.dtype(np.int32)),
         _freeze_index(np.asarray(right), np.dtype(np.int32)),
         _freeze_index(np.asarray(event_offset), np.dtype(np.int64)),
@@ -325,9 +480,14 @@ def _grow_tree(
     max_nodes: int,
     max_split_work: int,
     max_leaf_records: int,
+    categorical_columns: frozenset[int],
 ) -> _PackedTree:
     feature = [-1]
     threshold = [np.nan]
+    categorical_node = [False]
+    split_level_offset = [0]
+    split_level_count = [0]
+    split_levels: list[int] = []
     left_child = [-1]
     right_child = [-1]
     event_offset = [0]
@@ -352,12 +512,17 @@ def _grow_tree(
         node_event = event[rows]
         best_feature = -1
         best_threshold = np.nan
+        best_levels: np.ndarray | None = None
         best_score = -np.inf
         next_permissible = permissible.copy()
         if rows.size >= 2 * nodesize and not _stop_before_split(node_time, node_event):
-            candidates = np.flatnonzero(permissible)
-            if candidates.size:
-                selected = rng.choice(candidates, size=min(mtry, candidates.size), replace=False)
+            candidate_features = np.flatnonzero(permissible)
+            if candidate_features.size:
+                selected = rng.choice(
+                    candidate_features,
+                    size=min(mtry, candidate_features.size),
+                    replace=False,
+                )
                 parent_event_times, parent_events, parent_at_risk = _parent_counts(
                     node_time, node_event
                 )
@@ -366,14 +531,36 @@ def _grow_tree(
                     if unique_values.size < 2:
                         next_permissible[column] = False
                         continue
-                    cuts = unique_values[:-1]
-                    if nsplit > 0 and cuts.size > nsplit:
-                        cuts = np.sort(rng.choice(cuts, size=nsplit, replace=False))
-                    budget.split_work += int(rows.size * cuts.size)
+                    candidate_iterator: Iterator[tuple[np.ndarray | None, float]]
+                    if int(column) in categorical_columns:
+                        candidate_count, exact, group_probabilities = _factor_split_plan(
+                            unique_values, int(rows.size), nsplit
+                        )
+                        budget.split_work += int(
+                            candidate_count * (rows.size + unique_values.size)
+                        )
+                        candidate_iterator = _factor_split_candidates(
+                            unique_values,
+                            candidate_count,
+                            exact,
+                            group_probabilities,
+                            rng,
+                        )
+                    else:
+                        cuts = unique_values[:-1]
+                        if nsplit > 0 and cuts.size > nsplit:
+                            cuts = np.sort(rng.choice(cuts, size=nsplit, replace=False))
+                        candidate_count = int(cuts.size)
+                        budget.split_work += int(rows.size * cuts.size)
+                        candidate_iterator = ((None, float(cut)) for cut in cuts)
                     if budget.split_work > max_split_work:
                         raise ValueError("forest exceeds max_split_work budget")
-                    for cut in cuts:
-                        left_mask = x[rows, column] <= cut
+                    for left_levels, cut in candidate_iterator:
+                        left_mask = (
+                            np.isin(x[rows, column], left_levels)
+                            if left_levels is not None
+                            else x[rows, column] <= cut
+                        )
                         left_count = int(np.count_nonzero(left_mask))
                         if left_count == 0 or left_count == rows.size:
                             continue
@@ -389,6 +576,7 @@ def _grow_tree(
                             best_score = score
                             best_feature = int(column)
                             best_threshold = float(cut)
+                            best_levels = left_levels
 
         if best_feature < 0:
             times, log_curve, hazard_curve = _leaf_curve(node_time, node_event)
@@ -404,7 +592,17 @@ def _grow_tree(
                 event_cursor += int(times.size)
             continue
 
-        left_mask = x[rows, best_feature] <= best_threshold
+        if best_levels is not None:
+            budget.factor_split_levels += int(best_levels.size)
+            if budget.factor_split_levels > _MAX_FACTOR_SPLIT_LEVELS:
+                raise ValueError("forest exceeds packed categorical split-level budget")
+            categorical_node[node] = True
+            split_level_offset[node] = len(split_levels)
+            split_level_count[node] = int(best_levels.size)
+            split_levels.extend(int(level) for level in best_levels)
+            left_mask = np.isin(x[rows, best_feature], best_levels)
+        else:
+            left_mask = x[rows, best_feature] <= best_threshold
         left_rows = rows[left_mask]
         right_rows = rows[~left_mask]
         left_index = len(feature)
@@ -419,6 +617,9 @@ def _grow_tree(
                 raise ValueError("forest exceeds max_nodes budget")
             feature.append(-1)
             threshold.append(np.nan)
+            categorical_node.append(False)
+            split_level_offset.append(0)
+            split_level_count.append(0)
             left_child.append(-1)
             right_child.append(-1)
             event_offset.append(0)
@@ -431,6 +632,10 @@ def _grow_tree(
     return _pack_tree(
         feature,
         threshold,
+        categorical_node,
+        split_level_offset,
+        split_level_count,
+        split_levels,
         left_child,
         right_child,
         event_offset,
@@ -441,13 +646,26 @@ def _grow_tree(
     )
 
 
-def _forest_fingerprint(time: FloatArray, event: FloatArray, x: FloatArray) -> bytes:
+def _forest_fingerprint(
+    time: FloatArray,
+    event: FloatArray,
+    x: FloatArray,
+    categorical_levels: tuple[FloatArray | None, ...] = (),
+) -> bytes:
     """Hash normalized training values and row order without a joined copy."""
     digest = blake2b(digest_size=20)
     for values in (time, event, x):
         contiguous = np.ascontiguousarray(values, dtype=np.float64)
         digest.update(np.asarray(contiguous.shape, dtype=np.int64).tobytes())
         if contiguous.nbytes:
+            digest.update(memoryview(contiguous).cast("B"))
+    for levels in categorical_levels:
+        if levels is None:
+            digest.update(b"N")
+        else:
+            contiguous = np.ascontiguousarray(levels, dtype=np.float64)
+            digest.update(b"C")
+            digest.update(np.asarray(contiguous.shape, dtype=np.int64).tobytes())
             digest.update(memoryview(contiguous).cast("B"))
     return digest.digest()
 
@@ -578,6 +796,7 @@ def fit_random_survival_forest(
     event: ArrayLike,
     covariates: ArrayLike | None = None,
     *,
+    categorical_features: ArrayLike | None = None,
     n_trees: int = 500,
     mtry: int | None = None,
     nodesize: int = 15,
@@ -594,10 +813,15 @@ def fit_random_survival_forest(
     max_oob_cells: int = _MAX_OOB_CELLS,
     max_oob_work: int = _MAX_OOB_WORK,
 ) -> RandomSurvivalForestFit:
-    """Fit a forest of log-rank trees for numeric right-censored data.
+    """Fit log-rank trees for right-censored data with numeric/nominal features.
 
     Events use status 1 and right censoring uses status 0. Trees use axis-aligned
-    numeric splits, a standard log-rank score, and Kaplan--Meier terminal
+    Numeric features use ordered cuts; ``categorical_features`` names nominal
+    columns, whose values are finite numeric labels and whose nodes split by
+    unordered subsets. Training levels are mapped once and retained; unknown
+    prediction levels are rejected. Exact subset enumeration is used only for
+    small source-compatible candidate sets, otherwise subsets are sampled
+    without materializing a powerset. Kaplan--Meier terminal
     survival curves. With replacement disabled, the default sample fraction is
     0.632; with replacement enabled it is 1.0. These defaults follow
     randomForestSRC 3.2.2, but NumPy's random stream does not match R's.
@@ -614,7 +838,9 @@ def fit_random_survival_forest(
     tree_count = _integer(n_trees, "n_trees", 1, _MAX_TREES)
     leaf_size = _integer(nodesize, "nodesize", 1, _MAX_ROWS)
     random_splits = _integer(nsplit, "nsplit", 0, _MAX_ROWS)
-    t, e, x = _forest_data(time, event, covariates)
+    t, e, raw_x = _forest_data(time, event, covariates)
+    x, categorical_levels, categorical = _categorical_columns(raw_x, categorical_features)
+    categorical_set = frozenset(categorical)
     if x.shape[1] > _MAX_FEATURES:
         raise ValueError(f"covariates may have at most {_MAX_FEATURES} columns")
     if x.shape[1] == 0:
@@ -694,6 +920,7 @@ def fit_random_survival_forest(
                 max_nodes=node_limit,
                 max_split_work=split_limit,
                 max_leaf_records=leaf_limit,
+                categorical_columns=categorical_set,
             )
         )
     packed_membership = (
@@ -717,7 +944,7 @@ def fit_random_survival_forest(
     )
     return RandomSurvivalForestFit(
         _freeze(output_grid),
-        _freeze(_stable_column_mean(x)),
+        _freeze(_modal_profile(raw_x, categorical_levels)),
         x.shape[1],
         tuple(trees),
         tree_count,
@@ -734,7 +961,12 @@ def fit_random_survival_forest(
         budget.max_depth,
         packed_membership,
         oob,
-        _forest_fingerprint(t, e, x) if compute_oob else None,
+        _forest_fingerprint(
+            t, e, raw_x, categorical_levels if categorical else ()
+        )
+        if compute_oob
+        else None,
+        categorical_levels,
     )
 
 
@@ -776,19 +1008,26 @@ def predict_random_survival_forest(
         or profile_values.size > _MAX_DESIGN_CELLS
     ):
         raise ValueError("profiles must have one column per fitted covariate")
+    categorical_levels = fit.categorical_levels or tuple(None for _ in range(fit.covariate_count))
     output_limit = _integer(max_output_cells, "max_output_cells", 1, _MAX_OUTPUT_CELLS)
     work_limit = _integer(max_prediction_work, "max_prediction_work", 1, _MAX_PREDICTION_WORK)
     cells = int(profile_values.shape[0] * time_values.size)
-    combined_cells = 8 * cells + profile_values.size + time_values.size
+    categorical_copy = (
+        profile_values.size
+        if any(levels is not None for levels in categorical_levels)
+        else 0
+    )
+    combined_cells = 8 * cells + profile_values.size + time_values.size + categorical_copy
     if combined_cells > output_limit:
         raise ValueError("prediction exceeds max_output_cells budget")
     work = cells * fit.n_trees + profile_values.shape[0] * fit.n_trees * fit.max_depth
     if work > work_limit:
         raise ValueError("prediction exceeds max_prediction_work budget")
+    routed_profiles = _encode_profiles(profile_values, categorical_levels)
     log_survival_sum = np.full((profile_values.shape[0], time_values.size), -np.inf)
     hazard_sum = np.zeros_like(log_survival_sum)
     for tree in fit.trees:
-        for profile_index, profile in enumerate(profile_values):
+        for profile_index, profile in enumerate(routed_profiles):
             node = 0
             while tree.feature[node] >= 0:
                 column = int(tree.feature[node])

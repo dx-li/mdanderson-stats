@@ -9,7 +9,12 @@ from numpy.typing import ArrayLike
 
 from ._cdflib import _freeze
 from ._validation import FloatArray, finite
-from .random_survival_forest import RandomSurvivalForestFit, predict_random_survival_forest
+from .random_survival_forest import (
+    RandomSurvivalForestFit,
+    _modal_profile,
+    _validate_profile_categories,
+    predict_random_survival_forest,
+)
 
 
 @dataclass(frozen=True)
@@ -41,7 +46,7 @@ def random_survival_forest_contour(
     n_grid: int = 30,
     quantile_probabilities: ArrayLike = (0.10, 0.25, 0.50, 0.75, 0.90),
 ) -> RandomSurvivalForestContour:
-    """Vary one covariate in a fitted forest without growing another forest.
+    """Vary one numeric covariate while retaining valid nominal adjustments.
 
     ``x`` provides the numeric reference population for adjustment means and
     empirical covariate quantiles. Its columns must match the fitted model.
@@ -70,16 +75,21 @@ def random_survival_forest_contour(
         or not 0 <= continuous_column < design.shape[1]
     ):
         raise ValueError("x must match fitted columns and contain at most 2,000,000 values")
+    categorical_levels = fit.categorical_levels or tuple(None for _ in range(design.shape[1]))
+    if categorical_levels[continuous_column] is not None:
+        raise ValueError("continuous_column cannot be a categorical feature")
+    _validate_profile_categories(design, categorical_levels)
     scales = np.max(np.abs(design), axis=0)
     scales[scales == 0] = 1.0
     if profile is None:
-        base = np.mean(design / scales, axis=0) * scales
+        base = _modal_profile(design, categorical_levels)
     else:
         if np.iscomplexobj(profile):
             raise ValueError("profile must be real")
         base = finite(profile, "profile")
         if base.ndim != 1 or base.size != design.shape[1]:
             raise ValueError("profile must contain one value per fitted covariate")
+    _validate_profile_categories(base[None, :], categorical_levels)
     normalized_column = design[:, continuous_column] / scales[continuous_column]
     if grid is None:
         endpoints = np.quantile(normalized_column, [0.025, 0.975], method="linear")
