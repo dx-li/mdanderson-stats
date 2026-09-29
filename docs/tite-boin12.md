@@ -2,8 +2,9 @@
 
 Catalog 152 is **partial**. This port provides binary-endpoint posterior
 calculations and interim dose decisions under the approximate-likelihood (AL)
-method. The Bayesian data-augmentation route, categorical endpoints, optional
-3+3 run-in, integrated calendar simulation, native file/report adapters and
+method, including the optional 3+3 de-escalation override. The Bayesian
+data-augmentation route, categorical endpoints, integrated calendar simulation,
+native file/report adapters and
 final OBD procedure remain outstanding.
 
 ## Patient-level data
@@ -93,6 +94,46 @@ result = tite_boin12_decision(
 
 One of two patients is pending for each endpoint, so the default suspension
 threshold permits a decision. Retain `result.eliminated` for the next look.
+
+## Optional 3+3 run-in rule
+
+Set `run_in_3plus3=True` when the design's toxicity limit is exactly `0.25`.
+The recovered application note defines one override: if the current dose has
+exactly three or six enrolled patients and at least two observed DLTs, move
+to the immediately lower dose. Pending toxicities do not count as observed
+DLTs. At other sample sizes or event counts, the ordinary conduct rules apply.
+
+```python
+from mdanderson_stats import BOIN12Design, tite_boin12_decision
+
+run_in = tite_boin12_decision(
+    BOIN12Design(0.25, 0.25, toxicity_cutoff=0.95),
+    doses=[1] * 3 + [2] * 6,
+    toxicity=[0] * 3 + [1, 1, 0, 0, 0, 0],
+    efficacy=[1] * 9,
+    toxicity_followup=[1.0] * 9,
+    efficacy_followup=[2.0] * 9,
+    toxicity_window=1,
+    efficacy_window=2,
+    n_doses=2,
+    current_dose=2,
+    run_in_3plus3=True,
+)
+assert run_in.action == "deescalate"
+assert run_in.next_dose == 1
+```
+
+Python applies the existing pending-information suspension gate and overall
+admissibility check first. The run-in override then takes precedence over
+precision stopping and ordinary dose decisions. If already at the lowest dose,
+it returns `stop_safety`; if the immediate lower dose is inadmissible or was
+eliminated, it returns `stop_no_admissible_neighbor`. These ordering and stop
+conventions are explicit Python choices because the source note does not define
+them. A lowest-dose run-in safety stop does not automatically eliminate a dose
+that remains posterior-admissible; the returned elimination mask keeps those
+criteria separate. The option does not add a separate escalation, cohort-expansion or run-in
+exit algorithm. Its default is `False`, preserving ordinary conduct. See the
+[source and validation audit](../research/tite-boin12-runin-audit.md).
 
 ## Source verification and remaining uncertainty
 
