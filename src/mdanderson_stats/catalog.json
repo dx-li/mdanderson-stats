@@ -2937,7 +2937,8 @@
         "Six-dose source posterior allocation, reversible suspension, permanent toxicity closure, enrollment-gated futility/early selection and final selection; source eligibility and final-cutoff quirks are explicit",
         "Six-dose phase-I asymmetric dose opening, 3/6-patient toxicity resolution and analytically marginalized fair-coin assignment; phase-I toxicity/phase-II response cohort-boundary accrual readiness",
         "Integrated six-dose calendar simulation with rounded arrivals/event delays, blocked attempts, phase-I/II orchestration, separate data/posterior streams and source final selection with optional complete follow-up",
-        "Remaining: native input/report workflows, multi-trial reporting, native integration parity and published operating-characteristic replication"
+        "Bounded serial four-arm operating-characteristic reporting with per-trial replay seeds, selection/no-selection and stopping rates, allocation/enrollment summaries, trial-clustered pooled outcome-rate errors and explicitly supplied optimal-arm sets; docs/parallel-phase12-oc.md",
+        "Remaining: native input/report workflows, six-dose native integration parity and full published operating-characteristic replication"
       ],
       "validation": [
         "Python replay matches final selection and all outcome/enrollment counts for 24 trials run through original C control flow; numerical and RNG callbacks replace missing/platform-specific dependencies and are explicitly disclosed",
@@ -2946,7 +2947,9 @@
         "Six-dose posterior checked against independent R mixture importance integration (200000 draws, ESS about 145977): all four coefficient and six response means within six combined Monte Carlo errors; source-prior recovery, analytic dose contrast, extreme log likelihood and calendar availability checks",
         "100 posterior/state cases match extracted original C++ EvaluateStoppingRules, CalculateToxRate and PickWinner methods; focused strict-threshold, suspension, closure, eligibility-quirk and final-tie checks",
         "100 complete original C++ phase-I histories: 948 states with all four fair-coin branches match masks, completion, closure and assignment probabilities; separate boundary-time checks for phase-specific accrual readiness",
-        "Calendar integration checks reconstruct observed endpoint counts and blocked arrivals, cover toxicity stops and optional final follow-up; archived Case 1 pilot reaches 80 patients with coefficient split-Rhat below 1.02 (not an operating-characteristic replication)"
+        "Calendar integration checks reconstruct observed endpoint counts and blocked arrivals, cover toxicity stops and optional final follow-up; archived Case 1 pilot reaches 80 patients with coefficient split-Rhat below 1.02 (not an operating-characteristic replication)",
+        "tests/test_parallel_phase12.py: deterministic safety-stop summaries, all-trial denominators, seed replay, trial-clustered ratio errors and undefined zero-allocation/one-trial uncertainty",
+        "research/parallel-phase12-oc-audit.md"
       ]
     },
     {

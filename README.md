@@ -1096,6 +1096,9 @@ characteristics; source analysis/reporting corrections are documented.
 [Parallel phase I/II](docs/parallel-phase12.md) now supports the archived four-arm
 C workflow: phase-I escalation, beta-binomial adaptive randomization, toxicity
 closure, efficacy/futility stopping, final selection and replayable simulation.
+[Serial operating-characteristic summaries](docs/parallel-phase12-oc.md) add
+selection, stopping, enrollment and pooled outcome rates with trial-level
+Monte Carlo errors and reproducible per-trial seeds.
 Python replay matches 24 native C decision histories, with independent R checks
 of 179 posterior comparisons. The later six-dose C++ variant now has an integrated
 calendar simulator combining the shared logistic response posterior, beta toxicity

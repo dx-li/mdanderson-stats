@@ -135,7 +135,11 @@ Reproduce the audits after retrieving the archive with
 Original source is used only from the ignored research directory; audit tooling
 and generated numerical fixtures are bundled, not original code or trial data.
 
-Remaining: native configurable input/report workflows, multi-trial reporting,
+[Serial four-arm operating-characteristic summaries](parallel-phase12-oc.md)
+now provide multi-trial selection, stopping, enrollment and outcome summaries
+with Monte Carlo errors and replay seeds.
+
+Remaining: native configurable input/report workflows,
 native adaptive-importance-sampler
 parity and full published operating-characteristic replication. The C++ source explicitly prohibits redistribution
 of the original program. No original archive files are shipped; this is an

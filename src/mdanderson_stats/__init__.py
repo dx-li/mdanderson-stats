@@ -918,6 +918,7 @@ from .parallel_phase12_model import (
     phase12_response_probabilities,
     phase12_snapshot,
 )
+from .parallel_phase12_oc import ParallelPhase12OC, simulate_parallel_phase12_oc
 from .parallel_phase12_progression import (
     Phase12PhaseOne,
     phase12_accrual_ready,
@@ -1942,6 +1943,8 @@ __all__ = [
     "phase12_snapshot",
     "phase12_response_probabilities",
     "phase12_response_loglikelihood",
+    "ParallelPhase12OC",
+    "simulate_parallel_phase12_oc",
     "ParallelPhase12Result",
     "parallel_phase12_replay",
     "simulate_parallel_phase12",
