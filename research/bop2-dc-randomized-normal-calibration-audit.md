@@ -27,3 +27,25 @@ remain unchanged under that translation.
 Preflight bounds cover path storage, candidate evidence, Student-t quadrature
 work, and four-corner decision-stability checks over the look schedule. These
 limits intentionally reject oversized jobs before random numbers are drawn.
+
+## Independent numerical evidence
+
+The standalone R reference integrates the control Student-t density against
+the treatment tail, using directly updated NIG parameters. A deterministic
+checker exports truth-centered Normal paths and independently replays all
+candidates and the selected holdout. Three configurations (both objectives
+and disabled graduation), each with 12 candidates, use 24 calibration and
+18 validation trials per truth. All 1,092 probability/enrollment/MCSE summaries
+and selections agree. CGR selects index 0; futile ESS selects index 6. The
+ESS candidate meets the 13% no-go calibration limit at 3/24 but exceeds it
+on independent validation at 3/18; the selected candidate is not replaced.
+Control means and arm SDs differ between scenarios.
+
+The checker completes in 33.881 seconds after imports, with Python peak RSS
+118.80 MiB and R peak 86.66 MiB, zero swaps. These process peaks have a
+conservative combined upper bound of 205.46 MiB. Nine focused optimizer/core
+tests pass. Review also corrected combined-event arithmetic to sum integer
+counts before division, ignored already-absorbed paths during decision-error
+checks, and included holdout work and four-corner string workspace in preflight.
+The independent checker is `tools/check_bop2_dc_randomized_normal_calibration.py`;
+its generated inputs/results stay in ignored `research/raw/`.
