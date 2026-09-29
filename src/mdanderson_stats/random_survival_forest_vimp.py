@@ -11,6 +11,7 @@ from ._cdflib import _freeze
 from ._validation import FloatArray
 from .random_survival_forest import (
     RandomSurvivalForestFit,
+    _encode_profiles,
     _forest_data,
     _forest_fingerprint,
     _integer,
@@ -130,6 +131,26 @@ def _threshold(value: float) -> float:
     return result
 
 
+def _routed_training_profiles(
+    fit: RandomSurvivalForestFit,
+    time: FloatArray,
+    event: FloatArray,
+    raw_profiles: FloatArray,
+) -> FloatArray:
+    levels = fit.categorical_levels
+    if levels and len(levels) != raw_profiles.shape[1]:
+        raise ValueError("fit contains inconsistent categorical level metadata")
+    has_categories = any(column_levels is not None for column_levels in levels)
+    fingerprint = (
+        _forest_fingerprint(time, event, raw_profiles, levels)
+        if has_categories
+        else _forest_fingerprint(time, event, raw_profiles)
+    )
+    if fingerprint != fit.training_fingerprint:
+        raise ValueError("training data values or row order do not match the OOB fit")
+    return _encode_profiles(raw_profiles, levels)
+
+
 def _feature_selection(value: ArrayLike | None, count: int) -> np.ndarray:
     if value is None:
         return np.arange(count, dtype=np.int64)
@@ -203,11 +224,9 @@ def permutation_random_survival_forest_importance(
         assert rng is not None
         generator = rng
     work_limit = _integer(max_work, "max_work", 1, _MAX_IMPORTANCE_WORK)
-    t, e, x = _forest_data(time, event, covariates)
-    if x.shape[1] != fit.covariate_count:
+    t, e, raw_x = _forest_data(time, event, covariates)
+    if raw_x.shape[1] != fit.covariate_count:
         raise ValueError("training covariate count does not match the OOB fit")
-    if _forest_fingerprint(t, e, x) != fit.training_fingerprint:
-        raise ValueError("training data values or row order do not match the OOB fit")
     selected = _feature_selection(feature_indices, fit.covariate_count)
     if selected.size == 0:
         raise ValueError("permutation importance requires at least one fitted covariate")
@@ -219,7 +238,14 @@ def permutation_random_survival_forest_importance(
     used_trees = block_count * size
     ignored = np.arange(used_trees, fit.n_trees, dtype=np.int64)
     output_cells = selected.size * block_count
-    if 2 * output_cells + block_count + selected.size + ignored.size > _MAX_IMPORTANCE_CELLS:
+    levels = fit.categorical_levels
+    if levels and len(levels) != raw_x.shape[1]:
+        raise ValueError("fit contains inconsistent categorical level metadata")
+    categorical_copy = raw_x.size if any(value is not None for value in levels) else 0
+    if (
+        2 * output_cells + block_count + selected.size + ignored.size + categorical_copy
+        > _MAX_IMPORTANCE_CELLS
+    ):
         raise ValueError("permutation importance outputs exceed the combined cell budget")
     rows = t.size
     oob_by_tree = np.empty(used_trees, dtype=np.int64)
@@ -231,6 +257,7 @@ def permutation_random_survival_forest_importance(
     pair_work = (selected.size + 1) * block_count * rows * rows
     if route_work + pair_work > work_limit:
         raise ValueError("permutation routing/concordance work exceeds max_work")
+    x = _routed_training_profiles(fit, t, e, raw_x)
 
     baseline_error = np.full(block_count, np.nan, dtype=np.float64)
     perturbed_error = np.full((selected.size, block_count), np.nan, dtype=np.float64)
@@ -341,11 +368,9 @@ def anti_split_random_survival_forest_importance(
         raise TypeError("rng must be a numpy Generator")
     threshold = _threshold(vimp_threshold)
     work_limit = _integer(max_work, "max_work", 1, _MAX_IMPORTANCE_WORK)
-    t, e, x = _forest_data(time, event, covariates)
-    if x.shape[1] != fit.covariate_count:
+    t, e, raw_x = _forest_data(time, event, covariates)
+    if raw_x.shape[1] != fit.covariate_count:
         raise ValueError("training covariate count does not match the OOB fit")
-    if _forest_fingerprint(t, e, x) != fit.training_fingerprint:
-        raise ValueError("training data values or row order do not match the OOB fit")
     selected = _feature_selection(feature_indices, fit.covariate_count)
     if selected.size == 0:
         raise ValueError("anti-split importance requires at least one fitted covariate")
@@ -358,7 +383,14 @@ def anti_split_random_survival_forest_importance(
     ignored = np.arange(used_trees, fit.n_trees, dtype=np.int64)
     rows = t.size
     output_cells = selected.size * block_count
-    if 2 * output_cells + block_count + selected.size + ignored.size > _MAX_IMPORTANCE_CELLS:
+    levels = fit.categorical_levels
+    if levels and len(levels) != raw_x.shape[1]:
+        raise ValueError("fit contains inconsistent categorical level metadata")
+    categorical_copy = raw_x.size if any(value is not None for value in levels) else 0
+    if (
+        2 * output_cells + block_count + selected.size + ignored.size + categorical_copy
+        > _MAX_IMPORTANCE_CELLS
+    ):
         raise ValueError("anti-split importance outputs exceed the combined cell budget")
     oob_by_tree = np.empty(used_trees, dtype=np.int64)
     for tree_index in range(used_trees):
@@ -369,6 +401,7 @@ def anti_split_random_survival_forest_importance(
     pair_work = (selected.size + 1) * block_count * rows * rows
     if route_work + pair_work > work_limit:
         raise ValueError("anti-split routing/concordance work exceeds max_work")
+    x = _routed_training_profiles(fit, t, e, raw_x)
 
     if random_state is not None:
         random_state = _integer(random_state, "random_state", 0, np.iinfo(np.int32).max)

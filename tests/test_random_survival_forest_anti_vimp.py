@@ -9,6 +9,7 @@ from mdanderson_stats.random_survival_forest_vimp import (
     _route_anti_hazard,
     _route_hazard,
     anti_split_random_survival_forest_importance,
+    permutation_random_survival_forest_importance,
 )
 
 
@@ -16,6 +17,10 @@ def _two_leaf_tree() -> _PackedTree:
     return _PackedTree(
         feature=np.array([0, -1, -1], dtype=np.int32),
         threshold=np.array([0.5, 0.0, 0.0]),
+        categorical_node=np.array([False, False, False]),
+        split_level_offset=np.array([0, 0, 0], dtype=np.int64),
+        split_level_count=np.array([0, 0, 0], dtype=np.int64),
+        split_levels=np.array([], dtype=np.int64),
         left=np.array([1, -1, -1], dtype=np.int32),
         right=np.array([2, -1, -1], dtype=np.int32),
         event_offset=np.array([0, 0, 1], dtype=np.int64),
@@ -90,3 +95,34 @@ def test_anti_vimp_zero_threshold_and_seeded_block_replay() -> None:
     assert first.vimp_threshold == 1.0
     assert first.block_count == 2
     np.testing.assert_array_equal(first.ignored_tree_indices, [6, 7])
+
+
+def test_categorical_label_recode_preserves_both_oob_importance_routes() -> None:
+    n = 36
+    time = np.arange(1.0, n + 1.0)
+    event = (np.arange(n) % 4 != 0).astype(float)
+    raw = np.resize(np.array([10.0, 20.0, 40.0]), n)[:, None]
+    recoded = raw * 7.0 + 3.0
+    kwargs = dict(
+        categorical_features=[0],
+        n_trees=10,
+        mtry=1,
+        nodesize=2,
+        nsplit=0,
+        sample_fraction=0.5,
+        ntime=0,
+        random_state=821,
+        compute_oob=True,
+    )
+    original_fit = fit_random_survival_forest(time, event, raw, **kwargs)
+    recoded_fit = fit_random_survival_forest(time, event, recoded, **kwargs)
+    for vimp in (
+        anti_split_random_survival_forest_importance,
+        permutation_random_survival_forest_importance,
+    ):
+        first = vimp(original_fit, time, event, raw, feature_indices=[0], random_state=912)
+        second = vimp(recoded_fit, time, event, recoded, feature_indices=[0], random_state=912)
+        np.testing.assert_array_equal(first.baseline_error, second.baseline_error)
+        np.testing.assert_array_equal(first.perturbed_error, second.perturbed_error)
+        with np.testing.assert_raises_regex(ValueError, "training data values"):
+            vimp(original_fit, time, event, recoded, feature_indices=[0], random_state=912)

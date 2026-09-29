@@ -129,10 +129,12 @@ RSS and reported zero process swaps, using one BLAS/OpenMP thread.
 
 This adds the ordinary numeric forest family to SurvivalContour entry 166.
 The entry remains partial: interval-censored and neural families, native
-simulation-based intervals, categorical encoding and full application
-workflows remain open. The forest interface does not yet implement categorical
-splitting, missing-value imputation, competing-risk forests or alternative
-split rules. Subsequent OOB and permutation-importance additions are documented
+simulation-based intervals and full application workflows remain open. The
+forest interface does not implement missing-value imputation, competing-risk
+forests or alternative split rules. Categorical splitting was subsequently
+added with explicit caller-declared columns and retained level maps; categorical
+VIMP validates the raw training fingerprint and encodes profiles before tree
+routing. Subsequent OOB and permutation-importance additions are documented
 below.
 
 ## Source contract: OOB diagnostics and permutation importance
