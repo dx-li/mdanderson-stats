@@ -11,9 +11,22 @@ supported scope, validation and remaining limitations. These labels cover
 complete software workflows: a partial entry can already include every
 advertised statistical endpoint while report or native-compatibility gaps remain.
 
-With Python 3.12 or newer, install a downloaded checkout using
-`python -m pip install .`; use `python -m pip install '.[plot]'` for optional
-figures. Development setup is described below.
+Validated community checkpoints are published on
+[`master`](https://github.com/dx-li/mdanderson-stats/tree/master); `main`
+mirrors those checkpoints. The guides and coverage index describe which
+parts of each program are ready to use.
+
+With Python 3.12 or newer, obtain and install the stable source:
+
+```sh
+git clone --branch master https://github.com/dx-li/mdanderson-stats.git
+cd mdanderson-stats
+python -m pip install .
+```
+
+Use `python -m pip install '.[plot]'` for optional figures. For reproducible
+analyses, record the source revision with `git rev-parse HEAD` and retain
+the method settings and random seeds. Development setup is described below.
 
 Original contributions use the [MIT License](LICENSE.md). Adapted material
 retains its [upstream terms](THIRD_PARTY_NOTICES.md), including commercial-use
