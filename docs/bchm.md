@@ -158,6 +158,35 @@ and grouped sums use NumPy, with no patient-level replication, parallel workers
 or large three-dimensional co-clustering tensor. Invalid configuration is
 rejected before sampling; non-finite sampler states raise errors.
 
+## Plots
+
+The optional Matplotlib helpers cover the three plots exposed by the BCHM R
+package and app: representative cluster assignments, subgroup posterior means
+with optional observed means and HPD intervals, and subgroup posterior
+density curves. They return axes for customization and saving; they do not
+display figures or alter global plotting state.
+
+```python
+from mdanderson_stats import plot_bchm_cluster, plot_bchm_posterior, plot_bchm_density
+
+plot_bchm_cluster(fit)
+plot_bchm_posterior(fit, hpd=0.8, observed_mean=True)
+plot_bchm_density(fit, xlim=(0, 0.95), ylim=(0, 9))
+```
+
+The HPD endpoints reproduce the cached `boa.hpd` order-statistic rule,
+including its first-minimum-width tie behavior. They use all retained Python
+chains pooled together; native R plotting uses the first JAGS chain. Posterior
+means use native three-decimal rounding. Observed rates follow the native
+`round(rate + 1e-9, 3)` convention.
+Density bandwidth uses R's `bw.nrd0`, including its constant-sample fallbacks,
+and the default Gaussian-kernel support extends three bandwidths past the
+sample extremes. Python evaluates the Gaussian kernel directly on the 512-point
+grid; native R uses FFT interpolation, so plotted densities can differ slightly
+at grid points. Density work and temporary chunk storage are bounded before a
+figure is created. Matplotlib is optional and imported only when a plot is
+requested.
+
 ## Validation and remaining scope
 
 `tools/reference_bchm.R` uses base R to evaluate native Gaussian allocation
@@ -173,7 +202,7 @@ example, allowing Monte Carlo error in both reported results. Small regressions
 cover silhouette singletons, resource preflight, boundary empirical means and
 probability rounding. These checks leave the existing CI configuration unchanged.
 
-Native plot/report formats, interactive file workflows and direct end-to-end
+Native report formats, interactive file workflows and direct end-to-end
 Shiny/JAGS output parity remain open. The
 mathematical checks validate the declared model and allocation algorithm, not
 convergence for arbitrary inputs or complete application parity.
