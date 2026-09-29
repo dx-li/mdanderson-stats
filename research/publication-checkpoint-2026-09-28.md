@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `84a3ed9` adds stratified interval-PH
-coefficient bootstrapping and BF-BOIN post-escalation expansion, with independent
+Latest verified package checkpoint: `0055027` adds BOIN12 two-stage dose
+decisions/simulation and BF-BOIN accelerated titration, with independent
 references, preserved existing outputs and bounded serial work. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
@@ -1577,6 +1577,49 @@ still running. These are not results for the new checkpoint. This audit-only
 commit follows the verified code. The local manifest records the subsequent
 atomic fast-forward publication, independently checked remote SHAs and the new
 hosted run separately.
+
+## BOIN12 two-stage and BF-BOIN accelerated titration checkpoint
+
+At `0055027`, BOIN12 supports toxicity-only escalation followed by the
+existing joint toxicity/efficacy optimization. The required S threshold is
+evaluated at a completed cohort boundary; accumulated outcomes and per-dose
+exclusions are retained. Public decision and simulation APIs expose stage
+and transition diagnostics. Strict posterior safety, adjacent-dose movement,
+stopping precedence and final selection are checked explicitly. The cached
+help specifies the stage criteria; detailed cohort timing and stop precedence
+remain documented Python policies.
+
+BF-BOIN adds optional singleton titration with first-DLT and second-grade-2
+triggers, immediate highest-dose top-up and lower-cap full-next-cohort
+transitions. The terminal singleton and top-up count as the first ordinary
+cohort. Grade-2 probabilities conditional on no DLT and assessment delay are
+explicit caller inputs. Patient histories report exit time, outcomes observed
+at exit and complete follow-up through later grade-2 assessments. Ordinary
+backfill resumes after titration and optional expansion remains available.
+
+Twenty-two BOIN12 and eleven BF-BOIN focused checks pass with warnings as
+errors. Targeted Ruff, formatting and mypy pass. Independent 70-digit
+finite-binomial references match 320 toxicity-posterior safety decisions;
+efficacy invariance, adjacent safe destinations, deterministic stage ledgers
+and pre-RNG work rejection pass. All existing fields reproduce 80 published
+BF-BOIN trials exactly. Sixty enabled-titration ledgers cover all four exit
+reasons, chronology, cohort budgets, exit counts and complete follow-up.
+The root integration check peaks at 125.12 MiB; worker checks peak below
+130 MiB. All report zero swaps, with numerical processes run serially.
+
+Cached wheel/source builds pass. The isolated wheel check verifies all 1,655
+public exports, exact committed bytes for 585 package source/data files in
+both artifacts, preserved licenses/notices and both new guide examples.
+It takes 17.267 seconds, peaks at 107.23 MiB and reports zero swaps. Catalog
+totals remain 63 implemented, 67 partial and eight pending; these additions
+complete documented components without claiming full native-app coverage.
+No new dependencies or CI workflows were added.
+
+The preceding published checkpoint `d770fde` passed the full hosted quality
+and Python 3.12/3.13/3.14 matrix in workflow run `36636425154`. The current
+publication's remote hashes and hosted status are recorded separately in the
+local artifact manifest; prior hosted success does not imply that a newer
+revision's full matrix has finished.
 
 
 ## September 29 — survival and TITE calendar workflows
