@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `ca0f1f7` adds trinary EffTox prior
-moments and explicit sequential elicitation. The final
+Latest verified package checkpoint: `f901429` adds serial Multc trial-duration
+simulation and documented timing assumptions. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1350,3 +1350,36 @@ implemented, 67 partial and eight pending; existing mixed-license terms apply.
 Only this audit follows the verified code. Publication advances master, main
 and development together by ordinary atomic fast-forward push. The local
 ignored manifest records independently verified remote SHAs and artifact hashes.
+
+
+## Multc duration simulation community checkpoint
+
+Verified package code is `f901429bdf7853ea7f699f9e531af589b6a10711`.
+Luna implemented serial paired-outcome generation, calendar replay and duration
+summaries for Multc Lean and the supported Multc99 Phase IIa mapping. Root and
+an independent Luna reviewer checked timing, aggregation and memory bounds.
+The API requires a conditional-truncation or clipping policy for response
+observation and an explicit toxicity delay; durations start at first enrollment.
+These choices do not claim native timing or random-stream parity.
+
+Eight focused simulator/calendar checks pass, including analytic fixed-enrollment
+duration mean and Monte Carlo error, reproducible child seeds, joint outcomes,
+resource preflight and extreme response-window representation. Worker validation
+takes 2.13 seconds, with 131.89 MiB peak RSS and zero swaps. Targeted lint,
+formatting and mypy pass. All four guide blocks execute after integration,
+including the public 32-trial example, in 1.922 seconds at 123.22 MiB peak RSS.
+
+Cached builds and isolated wheel verification pass: 1,604 public exports, all
+571 package source/data files byte-identical to committed Git contents in wheel
+and source distribution, four guide blocks, the complete 138-entry catalog and
+preserved license notices. Verification takes 10.399 seconds at 128.39 MiB peak
+RSS with zero swaps. Coverage remains 63 implemented, 67 partial and eight
+pending. No broad local numerical suite or new CI checks were added.
+
+The preceding published checkpoint `98551c1` passed GitHub's quality checks and
+full Python 3.12 and 3.13 suites. Its Python 3.14 run was still active at the last
+inspection; hosted results for this new checkpoint require separate verification.
+Only this publication audit follows the verified package code. Publication uses
+an ordinary atomic fast-forward of master, main and development, followed by
+independent remote-SHA verification in the ignored artifact manifest. WFMM
+variance initialization remains isolated work in progress.
