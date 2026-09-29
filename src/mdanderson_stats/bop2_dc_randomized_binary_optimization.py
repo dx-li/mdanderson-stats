@@ -220,9 +220,17 @@ def optimize_bop2_dc_randomized_binary(
         (int(control_prefix[int(n)]) + 1) * (int(treatment_prefix[int(n)]) + 1) for n in base.looks
     )
     comparison_work = 2 * decision_work
-    exact_work = comparison_work + 2 * candidate_count * (transition_work + decision_work)
+    # Four error-interval corners are classified at each candidate look.
+    exact_work = comparison_work + 2 * candidate_count * (transition_work + 4 * decision_work)
     if comparison_work > _MAX_COMPARISON_CELLS:
         raise ValueError("posterior count-state comparison table exceeds its work bound")
+    first_fraction = int(base.looks[0]) / base.max_subjects
+    with np.errstate(under="ignore"):
+        if (
+            float(np.min(grids[0])) * first_fraction ** float(np.max(grids[2])) == 0
+            or float(np.min(grids[1])) * first_fraction ** float(np.max(grids[3])) == 0
+        ):
+            raise ArithmeticError("an interim cutoff underflows for a candidate in the grid")
     if 2 * transition_work + comparison_work > _MAX_RECURSION_WORK:
         raise ValueError("one exact randomized-arm OC exceeds the core recursion work bound")
     if exact_work > work_limit:
@@ -241,7 +249,7 @@ def optimize_bop2_dc_randomized_binary(
     )
     table_cells = 4 * decision_work
     largest_state = max(state_cells)
-    peak_cells = result_cells + table_cells + 16 * largest_state + 2 * (4 * look_count + 8)
+    peak_cells = result_cells + table_cells + 64 * largest_state + 2 * (4 * look_count + 8)
     if result_cells > _MAX_RETAINED_CELLS or peak_cells > _MAX_RETAINED_CELLS:
         raise ValueError(
             "candidate evidence and posterior workspace exceed the two-million-cell bound"
