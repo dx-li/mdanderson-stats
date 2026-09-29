@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `319916a` adds MTADF global/local logistic
-methods and TITE-BOIN12 complete-outcome final selection. The final
+Latest verified package checkpoint: `f4158b4` adds MTADF global/local logistic
+trial simulation and TITE-BOIN12 Bayesian data augmentation. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1494,3 +1494,46 @@ passed. This audit-only commit follows verified package code. Ordinary atomic
 fast-forward publication and independent remote-SHA verification align master,
 main and development; the ignored manifest records publication and hosted
 validation separately.
+
+## Logistic simulation and Bayesian augmentation community checkpoint
+
+Verified package code is `f4158b47e1d368865f030c66bdbc5560e14d07fe`.
+Luna implemented complete-cohort simulation for both MTADF logistic methods,
+with separate outcome/sampler seeds for replay, compact operating-characteristic
+summaries and bounded serial fits. The independent-marginal truth assumption
+is explicit. Review verified safety-first actions, final selection, distinct
+local-window accounting and release of posterior draws between looks. Root
+increased the fixed storage allowance for seed/result copies and verified a
+tight budget rejects before RNG allocation, without running the large request.
+
+The TITE primary article's main text supplied all three BDA missing-outcome
+formulas, superseding an earlier incomplete retrieval. A positive four-cell
+Dirichlet prior remains caller-specified because the published concentration
+and marginal means do not identify prior association. The sampler repeatedly
+imputes from fixed observed-data masks, updates the joint probabilities, and
+separately averages BOIN12 complete-data quasi-Beta and marginal-tail summaries.
+Log-domain conditionals, explicit numerical failures and bounded diagnostic
+temporaries preserve numerical and memory constraints.
+
+Twenty-five MTADF and twenty-five TITE focused checks pass with warnings
+treated as errors. Peak RSS is 128.06 MiB and 134.97 MiB respectively, with
+zero swaps. The independent BDA reference analytically integrates all 16
+compatible assignments in a small synthetic-prior example: all 13 checked
+posterior summaries agree within 1.372 estimated batch MCSEs. That comparison
+takes 3.321 seconds at 126.39 MiB, with zero swaps. Targeted lint, formatting
+and type checks pass; no broad local suite or new CI is added.
+
+Cached builds and isolated wheel checks pass: 1,623 exports, all 575 package
+source/data files byte-identical to committed Git in wheel and source archive,
+three executable blocks across two guides, all 138 catalog entries and retained
+license notices. Package checks treat warnings as errors, take 11.340 seconds,
+peak at 129.48 MiB and report zero swaps. Coverage remains 63 implemented,
+67 partial and eight pending. BDA conduct/calendar integration and other
+documented native/model gaps remain open; mixed-license terms are unchanged.
+
+The previous guide-formatting issue was corrected in published `203d85c`,
+with unchanged example syntax trees. Hosted quality, Python 3.12 and Python
+3.13 checks for that revision pass; Python 3.14 was still running when last
+inspected. The new hosted run is recorded separately. Only this audit follows
+verified package code before ordinary atomic fast-forward publication and
+independent remote-SHA verification of master, main and development.
