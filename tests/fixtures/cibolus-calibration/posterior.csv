@@ -1,0 +1,3 @@
+"replicate","prior_mean_log_beta0","prior_sd_log_beta0","posterior_sd_log_beta0","posterior_mode_log_beta0","log_marginal_likelihood","n_observations","log_alpha0","log_alpha1","log_alpha2","log_alpha3","log_alpha4","log_alpha5","log_beta0","log_beta1","log_beta2","log_beta3","log_beta4"
+1,-2.5,0.7,0.580387273508999,-2.91795154684127,-6.14038928863142,20,0,0,0,0,0,0,-2.97008558445171,0.5,0,0,-1
+2,-2.5,0.7,0.584693178454789,-2.86345204604745,-7.01923297778565,20,0,0,0,0,0,0,-2.91900522337038,0.5,0,0,-1

@@ -1,0 +1,12 @@
+metric,concentration,bolus,time,prior_mean_log_beta0,prior_sd_log_beta0
+p0,0.2,0.1,0,-2.5,0.7
+response_at_one,0.2,0.1,1,-2.5,0.7
+toxicity_at_zero_response,0.2,0.1,0,-2.5,0.7
+toxicity_at_one_response,0.2,0.1,1,-2.5,0.7
+p0,0.4,0.1,0,-2.5,0.7
+response_at_one,0.4,0.1,1,-2.5,0.7
+toxicity_at_zero_response,0.4,0.1,0,-2.5,0.7
+toxicity_at_one_response,0.4,0.1,1,-2.5,0.7
+toxicity_after_failure,0.4,0.1,1,-2.5,0.7
+fixed_interior,0.3,0.15,0.5,-2.5,0
+fixed_endpoint,0.3,0,0,-1000,0

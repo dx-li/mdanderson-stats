@@ -57,3 +57,33 @@ response CDF for each retained log-parameter draw. They are not reconstructed
 by summing joint response/toxicity cells, which can introduce artificial
 response variance when only toxicity coordinates vary. The extra CDF evaluations
 are included in work and live-cell preflights.
+
+## Independent numerical reference
+
+`tools/reference_cibolus_calibration.py` regenerates two balanced pseudo samples
+with 20 observations each, using seed 884821. Only log(beta0) varies, with prior
+mean -2.5 and SD 0.7; the other coordinates are fixed. Fits use two chains,
+600 retained draws and 200 warmup iterations. The actual generated counts,
+settings and Python summaries are preserved in
+`tests/fixtures/cibolus-calibration/`.
+
+`tools/reference_cibolus_calibration.R`, given that directory as its argument,
+integrates the reduced posterior independently using those exact counts. The
+response likelihood is constant in this coordinate and cancels. The two fitted
+log(beta0) means differ from quadrature by 0.342 and 0.552 reported sampler
+Monte Carlo standard errors. This checks a numerical slice of the workflow,
+not the paper's full eleven-coordinate calibration.
+
+The same reference integrates prior response and toxicity moments. At 5,000
+direct prior draws (seed 884822), the four varying toxicity means differ by at
+most 0.035 Monte Carlo standard errors. Sampled toxicity variances differ from
+the quadrature population variances by at most 1.987%; beta ESS follows the
+reported sampled moments. Fixed response means agree within 4.45e-16 and now
+have exactly zero variance and infinite ESS. That last comparison exposed and
+motivated the direct-response-CDF correction above.
+
+The corrected root generator run took 18.560 seconds, peaked at 119.91 MiB
+RSS and reported zero swaps. Its generated counts and posterior summaries
+are unchanged from the earlier independent comparison. Five focused calibration
+checks pass after the correction; targeted Ruff and mypy checks pass. No broad
+CI or full package numerical run was added.
