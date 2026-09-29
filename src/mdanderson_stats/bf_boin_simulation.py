@@ -33,6 +33,12 @@ class BFBOINSimulation:
     expansion_stop_reason: tuple[str, ...]
     expansion_patients: NDArray[np.int64]
     expansion_end: FloatArray
+    grade2_history: tuple[NDArray[np.bool_], ...] | None = None
+    grade2_assessment_history: tuple[FloatArray, ...] | None = None
+    titration_stop_reason: tuple[str, ...] | None = None
+    titration_patients: NDArray[np.int64] | None = None
+    titration_grade2: NDArray[np.int64] | None = None
+    titration_end: FloatArray | None = None
 
     @property
     def final_assessments(self) -> tuple[FloatArray, ...]:
@@ -48,8 +54,12 @@ class _PatientRecord:
     response_assessment: float
     dlt: bool
     response: bool
+    grade2: bool = False
+    grade2_assessment: float = np.inf
+    titration: bool = False
     dlt_seen: bool = False
     response_seen: bool = False
+    grade2_seen: bool = False
     backfill: bool = False
 
 
@@ -88,6 +98,10 @@ def simulate_bf_boin(
     dlt_window: float = 1.0,
     arrival_distribution: str = "uniform",
     expand_after_escalation: bool = False,
+    accelerated_titration: bool = False,
+    titration_cap: int | None = None,
+    true_grade2: ArrayLike | None = None,
+    grade2_assessment_delay: float | None = None,
     rng: int | np.random.Generator | None = None,
 ) -> BFBOINSimulation:
     """Run primary-mode BF-BOIN with separate DLT and response observation.
@@ -104,6 +118,18 @@ def simulate_bf_boin(
     assigned-patient cap or when it closes for toxicity. This asynchronous
     calendar continuation is an explicit Python policy; the source specifies
     the target dose and stopping conditions, but not calendar timing.
+
+    ``accelerated_titration=True`` implements Guide Remarks 2 before the
+    ordinary cohort sequence. It enrolls one patient per dose and prohibits
+    backfill during this prelude. ``true_grade2`` gives the per-dose grade-2
+    probability conditional on no DLT; the generated severity categories are
+    mutually exclusive. Grade-2 outcomes are observed at enrollment plus
+    ``grade2_assessment_delay``, a fixed Python timing policy because the guide
+    does not specify grade-2 assessment timing. ``titration_cap=None`` means
+    the highest dose. ``cohorts`` counts ordinary full cohorts, including a
+    top-up cohort after a trigger or highest-dose cap; earlier singleton visits
+    are additional. Reaching a lower cap without a trigger starts ordinary
+    cohorts at the next dose.
     """
     if not isinstance(design, BFBOINDesign):
         raise ValueError("design must be a BFBOINDesign")
@@ -133,10 +159,48 @@ def simulate_bf_boin(
         raise ValueError("arrival_distribution must be 'uniform' or 'exponential'")
     if not isinstance(expand_after_escalation, (bool, np.bool_)):
         raise ValueError("expand_after_escalation must be Boolean")
-    bound = repetitions * (int(np.max(cohort_counts)) * size + toxicity.size * design.n_cap)
+    if not isinstance(accelerated_titration, (bool, np.bool_)):
+        raise ValueError("accelerated_titration must be Boolean")
+    if accelerated_titration:
+        if titration_cap is not None and np.iscomplexobj(np.asarray(titration_cap)):
+            raise ValueError("titration_cap must be a real integer dose level")
+        cap_values = count(
+            toxicity.size if titration_cap is None else titration_cap,
+            "titration_cap",
+        )
+        if cap_values.shape != () or not start <= int(cap_values) <= toxicity.size:
+            raise ValueError("titration_cap must be between start_dose and the highest dose")
+        cap = int(cap_values)
+        if true_grade2 is None or grade2_assessment_delay is None:
+            raise ValueError(
+                "accelerated titration requires true_grade2 and grade2_assessment_delay"
+            )
+        if np.iscomplexobj(np.asarray(true_grade2)):
+            raise ValueError("true_grade2 must be real-valued")
+        if np.iscomplexobj(np.asarray(grade2_assessment_delay)):
+            raise ValueError("grade2_assessment_delay must be real-valued")
+        grade2 = finite(true_grade2, "true_grade2")
+        delay = _positive(grade2_assessment_delay, "grade2_assessment_delay")
+        if grade2.shape != toxicity.shape or np.any((grade2 < 0) | (grade2 > 1)):
+            raise ValueError("true_grade2 must match doses and contain probabilities in [0,1]")
+    else:
+        if (
+            titration_cap is not None
+            or true_grade2 is not None
+            or grade2_assessment_delay is not None
+        ):
+            raise ValueError("titration settings require accelerated_titration=True")
+        cap, grade2, delay = toxicity.size, np.zeros_like(toxicity), np.inf
+    # The singletons before a trigger/cap can be additional to the ordinary
+    # cohort budget. Reserve the entire possible staircase plus one cohort.
+    titration_allowance = cap - start + 1 + size if accelerated_titration else 0
+    bound = repetitions * (
+        int(np.max(cohort_counts)) * size + toxicity.size * design.n_cap + titration_allowance
+    )
     if bound > 100_000:
         raise ValueError("requested trials and retained patient records exceed 100000")
-    if int(np.max(cohort_counts)) * size + toxicity.size * design.n_cap > 1_000:
+    max_records = int(np.max(cohort_counts)) * size + toxicity.size * design.n_cap
+    if max_records + titration_allowance > 1_000:
         raise ValueError("a trial may retain at most 1000 patient records")
     generator = np.random.default_rng(rng)
     endpoints = tuple(_weibull_endpoint(float(p), window) for p in toxicity)
@@ -150,6 +214,12 @@ def simulate_bf_boin(
     expansion_counts = np.zeros(repetitions, dtype=np.int64)
     expansion_ends = np.full(repetitions, np.nan)
     escalation_ends, durations = np.zeros(repetitions), np.zeros(repetitions)
+    grade2_histories: list[NDArray[np.bool_]] = []
+    grade2_assessment_histories: list[FloatArray] = []
+    titration_reasons: list[str] = []
+    titration_counts = np.zeros(repetitions, dtype=np.int64)
+    titration_grade2_counts = np.zeros(repetitions, dtype=np.int64)
+    titration_ends = np.full(repetitions, np.nan)
 
     for trial in range(repetitions):
         evaluated = np.zeros(toxicity.size, dtype=np.int64)
@@ -158,6 +228,7 @@ def simulate_bf_boin(
         # dose, arrival, dlt assessment, response assessment, dlt, response,
         # dlt_seen, response_seen, backfill
         records: list[_PatientRecord] = []
+        titration_grade2_seen = 0
         next_arrival, clock, dose = 0.0, 0.0, start
         last_escalation_dose: int | None = None
         reason = "max_cohorts"
@@ -181,6 +252,7 @@ def simulate_bf_boin(
             return arrival
 
         def observe(until: float) -> None:
+            nonlocal titration_grade2_seen
             for r in records:
                 if not r.dlt_seen and r.dlt_assessment <= until:
                     evaluated[r.dose] += 1
@@ -189,8 +261,18 @@ def simulate_bf_boin(
                 if not r.response_seen and r.response_assessment <= until:
                     activity[r.dose] |= r.response
                     r.response_seen = True
+                if not r.grade2_seen and r.grade2_assessment <= until:
+                    r.grade2_seen = True
+                    if r.titration:
+                        titration_grade2_seen += int(r.grade2)
 
-        def enroll(j: int, when: float, backfill: bool) -> int:
+        def enroll(
+            j: int,
+            when: float,
+            backfill: bool,
+            *,
+            titration: bool = False,
+        ) -> int:
             if not np.isfinite(when + window):
                 raise RuntimeError("BF-BOIN assessment time exceeds floating-point range")
             shape, scale = endpoints[j]
@@ -199,6 +281,13 @@ def simulate_bf_boin(
                 if np.isinf(scale)
                 else (window / 2 if scale == 0 else scale * generator.weibull(shape))
             )
+            response_value = bool(generator.random() < response[j])
+            grade2_value = bool(
+                accelerated_titration and dlt_time > window and generator.random() < grade2[j]
+            )
+            grade2_time = when + delay if accelerated_titration else np.inf
+            if accelerated_titration and not np.isfinite(grade2_time):
+                raise RuntimeError("BF-BOIN grade-2 assessment time exceeds floating-point range")
             records.append(
                 _PatientRecord(
                     j,
@@ -206,15 +295,67 @@ def simulate_bf_boin(
                     when + min(dlt_time, window),
                     when + window,
                     dlt_time <= window,
-                    bool(generator.random() < response[j]),
+                    response_value,
+                    grade2_value,
+                    grade2_time,
+                    titration,
                     backfill=backfill,
                 )
             )
             assigned[trial, j] += 1
             return len(records) - 1
 
-        for _ in range(int(cohort_counts[trial])):
-            current: list[int] = []
+        initial_cohort: list[int] = []
+        titration_reason = "not_requested"
+        if accelerated_titration:
+            while True:
+                clock = advance_arrival()
+                observe(clock)
+                current_patient = enroll(dose - 1, clock, False, titration=True)
+                titration_counts[trial] += 1
+                last_escalation_dose = dose
+
+                # The default highest-dose cap ends the singleton prelude on
+                # enrollment; the first full cohort is topped up immediately.
+                if dose == cap == toxicity.size:
+                    titration_reason = "highest_cap"
+                    initial_cohort = [current_patient]
+                    break
+
+                record = records[current_patient]
+                while not (record.dlt_seen and record.grade2_seen):
+                    next_assessment = min(
+                        record.dlt_assessment if not record.dlt_seen else np.inf,
+                        record.grade2_assessment if not record.grade2_seen else np.inf,
+                    )
+                    if next_arrival < next_assessment:
+                        # Consume but do not enroll arrivals while the
+                        # singleton is under assessment: titration has no
+                        # backfill or parallel patients.
+                        advance_arrival()
+                        continue
+                    clock = next_assessment
+                    observe(clock)
+                    if record.dlt_seen and record.dlt:
+                        titration_reason = "first_dlt"
+                        initial_cohort = [current_patient]
+                        break
+                    if titration_grade2_seen >= 2:
+                        titration_reason = "second_grade2"
+                        initial_cohort = [current_patient]
+                        break
+                if initial_cohort:
+                    break
+                if dose == cap:
+                    titration_reason = "lower_cap_no_trigger"
+                    dose = cap + 1
+                    break
+                dose += 1
+            titration_grade2_counts[trial] = titration_grade2_seen
+            titration_ends[trial] = clock
+
+        for cohort_index in range(int(cohort_counts[trial])):
+            current: list[int] = initial_cohort.copy() if cohort_index == 0 else []
             while len(current) < size:
                 clock = advance_arrival()
                 observe(clock)
@@ -343,7 +484,15 @@ def simulate_bf_boin(
 
         observe(np.inf)
         patients[trial], toxicities[trial] = evaluated, observed_dlt
-        durations[trial] = max((r.response_assessment for r in records), default=clock)
+        durations[trial] = max(
+            (
+                max(r.response_assessment, r.grade2_assessment)
+                if accelerated_titration
+                else r.response_assessment
+                for r in records
+            ),
+            default=clock,
+        )
         selection = design.select_mtd(evaluated, observed_dlt, eliminated=excluded)
         selected[trial] = 0 if selection.dose is None else selection.dose
         reasons.append(reason)
@@ -353,6 +502,12 @@ def simulate_bf_boin(
         dlt_histories.append(_owned(np.asarray([r.dlt for r in records])))
         response_histories.append(_owned(np.asarray([r.response for r in records])))
         backfill_histories.append(_owned(np.asarray([r.backfill for r in records])))
+        if accelerated_titration:
+            grade2_histories.append(_owned(np.asarray([r.grade2 for r in records])))
+            grade2_assessment_histories.append(
+                _owned(np.asarray([r.grade2_assessment for r in records]))
+            )
+        titration_reasons.append(titration_reason)
     frequency = np.bincount(selected, minlength=toxicity.size + 1) / repetitions
     return BFBOINSimulation(
         _owned(patients),
@@ -376,4 +531,10 @@ def simulate_bf_boin(
         tuple(expansion_reasons),
         _owned(expansion_counts),
         _owned(expansion_ends),
+        tuple(grade2_histories) if accelerated_titration else None,
+        tuple(grade2_assessment_histories) if accelerated_titration else None,
+        tuple(titration_reasons) if accelerated_titration else None,
+        _owned(titration_counts) if accelerated_titration else None,
+        _owned(titration_grade2_counts) if accelerated_titration else None,
+        _owned(titration_ends) if accelerated_titration else None,
     )
