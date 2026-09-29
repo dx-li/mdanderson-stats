@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `365871a` adds BOP2-DC Normal endpoint
-monitoring/replay/simulation and exact paired-endpoint finite-grid calibration.
+Latest verified package checkpoint: `b3058d9` adds BOP2-DC Normal endpoint
+finite-grid calibration and randomized binary monitoring/replay/exact OCs.
 Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
@@ -689,3 +689,51 @@ advances to this checkpoint plus the present audit. The verified code is
 restrictions are unchanged. In-progress Normal calibration and randomized
 comparison implementations remain on worker branches pending independent
 reference checks.
+
+
+## Normal calibration and randomized binary checkpoint
+
+Normal endpoint calibration is integrated at `ec854a8`. It requires explicit
+truths, proper NIG priors and finite grids, shares centered simulated paths
+across candidates, and reports full candidate evidence plus independent
+holdout feasibility without reselection. Independent base-R replay verifies
+18 candidates and 836 probability/enrollment/MCSE summaries for both objectives.
+A selected candidate passes a 4% calibration false-go limit at `2/64`, fails
+holdout at `3/48`, and retains that failure visibly. A common `1e15` location
+shift leaves the candidate/holdout results exactly unchanged. The check takes
+.6839 seconds after imports, with a conservative Python-plus-R peak-memory
+upper bound of 198.78 MiB. A dense 81-candidate default-count smoke with
+5,000 trials per stage also passes in .2041 seconds after imports; the combined
+smoke/guide process peaks at 110.48 MiB. No Python swaps were reported.
+
+Randomized binary comparisons are integrated at `bc8c622`, with numerical
+decision guards at `45adea4` and shared randomized policy at `1d0e38d`. Explicit
+independent Beta priors and a fixed allocation tape support signed risk
+margins, unequal allocation, optional O'Brien-Fleming graduation, absorbing
+replay and exact conditional operating characteristics. Reported quadrature
+error must not change the combined strict action; ambiguous decisions fail
+explicitly. Independent base-R Beta-polynomial integration and exhaustive
+paths verify 100 reached analyses and 336 numeric summaries across four
+designs and 12 truth scenarios. Maximum posterior discrepancy is 1.094e-10,
+within reported numerical error. The latest post-extraction comparison takes
+.3416 seconds after imports, peaks at 115.70 MiB and reports zero swaps.
+
+Public APIs, guides and reference tooling are committed at
+`b3058d9d26a48e04365e64120e25305bb7a26ff1`. Seven focused tests pass, along with
+targeted Ruff/format/mypy checks and both executable guides. Cached wheel and
+source builds pass. Isolated wheel verification checks all 1,514 public exports,
+exact committed bytes for 547 source/data files, licenses/notices, all 138
+catalog entries and both new examples. Verification takes 16.434 seconds,
+peaks at 102.08 MiB and reports zero swaps. No broad numerical suite, additional
+CI workflow or dependency was introduced. Coverage remains 63 implemented,
+66 partial and 9 pending; randomized Normal/survival workflows and randomized
+design calibration keep BOP2-DC partial.
+
+Local `master` is fast-forwarded to this verified code plus the present audit.
+Fresh read-only GitHub checks still show both `master` and `main` at `45b6e307`;
+the verified code has 123 newer local commits. The existing shell DNS failure
+and connector approval rejection continue to prevent publication. No rejected
+write route was retried or bypassed. The updated packages and verified all-refs
+bundle preserve committed root/Luna work. Randomized Normal and survival worker
+work remains outside this verified package and local `master` pending independent
+reference checks and public integration.
