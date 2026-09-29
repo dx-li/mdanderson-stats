@@ -15,6 +15,15 @@ patient-level TITE records, forms the exact joint binary counts, and delegates
 to this existing implementation. Thus fully observed TITE histories reduce
 exactly to ordinary BOIN12 selection. It does not select from pending data.
 
+Follow-up fields retain the interim API's cumulative-time meaning; an observed
+event's follow-up may exceed its assessment window. Outcome one asserts the
+event was observed within the relevant window. Additional follow-up after
+all outcomes resolve leaves the complete-data selection unchanged.
+
+The focused conduct, reference and final-selection files passed 22 tests with
+warnings treated as errors in 1.70 seconds, using 132.58 MiB peak resident
+memory and reporting zero swaps. Ruff check/format and targeted mypy passed.
+
 ## Bayesian data augmentation findings
 
 The article models the four joint binary outcomes in order

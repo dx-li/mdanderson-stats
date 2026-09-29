@@ -877,6 +877,16 @@ from .mtadf import (
     mtadf_decision,
     mtadf_toxicity_prior,
 )
+from .mtadf_logistic import (
+    MTADFLocalLogisticDecision,
+    MTADFLocalLogisticPosterior,
+    MTADFLogisticDecision,
+    MTADFLogisticPosterior,
+    mtadf_local_logistic_decision,
+    mtadf_local_logistic_posterior,
+    mtadf_logistic_decision,
+    mtadf_logistic_posterior,
+)
 from .mtadf_simulation import MTADFSimulation, simulate_mtadf
 from .mtpi import MTPIDesign, MTPIPosterior, MTPISelection, MTPITable
 from .mtpi_simulation import MTPISimulation, simulate_mtpi
@@ -1359,6 +1369,7 @@ from .tite_boin12 import (
     TITEBOIN12Posterior,
     tite_boin12_decision,
     tite_boin12_posterior,
+    tite_boin12_select_obd,
 )
 from .tite_boin_simulation import TITEBOINSimulation, simulate_tite_boin
 from .tite_boin_trial import TITEBOINStep, TITEBOINTrial, run_tite_boin_trial
@@ -1755,6 +1766,7 @@ __all__ = [
     "TITEBOIN12Posterior",
     "tite_boin12_decision",
     "tite_boin12_posterior",
+    "tite_boin12_select_obd",
     "BARDMinimizationResult",
     "BARDSelectionResult",
     "bard_minimization",
@@ -2439,11 +2451,19 @@ __all__ = [
     "simulate_mtpi",
     "MTADFDecision",
     "MTADFIsotonicFit",
+    "MTADFLocalLogisticDecision",
+    "MTADFLocalLogisticPosterior",
+    "MTADFLogisticDecision",
+    "MTADFLogisticPosterior",
     "MTADFPrior",
     "MTADFSimulation",
     "double_sided_isotonic",
     "mtadf_decision",
     "mtadf_toxicity_prior",
+    "mtadf_local_logistic_decision",
+    "mtadf_local_logistic_posterior",
+    "mtadf_logistic_decision",
+    "mtadf_logistic_posterior",
     "simulate_mtadf",
     "PDNNExpression",
     "PDNNConvergenceError",

@@ -1297,10 +1297,11 @@ adds one-patient dose progression, grade-2 triggers and the distinct dose-cap
 transitions. Expansion, stage-two calendar timing and native reports remain open.
 
 [TITE-BOIN12 AL methods](docs/tite-boin12.md) add patient-level handling of
-pending toxicity and efficacy, joint utility posteriors and interim dose
-conduct. The declared approximate-likelihood model is checked against base R;
-native pending-data safety details, final OBD selection and the full simulator
-remain open.
+pending toxicity and efficacy, joint utility posteriors, interim dose conduct
+and complete-outcome final OBD selection. The declared approximate-likelihood
+model is checked against base R; final selection reduces to ordinary BOIN12.
+Native pending-data safety details, Bayesian data augmentation and the full
+simulator remain open.
 
 [U-BOIN joint utilities](docs/uboin.md) add exact categorical Dirichlet
 posterior moments, toxicity/efficacy admissibility and winner, proportional or
@@ -1399,8 +1400,10 @@ priors preserved so excluded models can reenter as observations accumulate.
 isotonic efficacy fitting, elicited beta priors and pooled posterior toxicity
 monitoring. Adaptive decisions include exploration, lowest-dose efficacy ties
 and safety stopping. A serial simulator reports dose allocation, selection and
-Monte Carlo uncertainty. Independent R calculations check the numerical core;
-native application settings and output equivalence remain open.
+Monte Carlo uncertainty. [Global quadratic and local linear logistic methods](docs/mtadf-logistic.md)
+add the paper's Cauchy-prior efficacy models, slope-based local decisions and
+posterior diagnostics. Independent R calculations and numerical integration
+check the models; native application settings and output equivalence remain open.
 
 [UAROET ordinal dose finding](docs/uaroet.md) adds continuation-logit outcome
 models joined by a Gaussian copula, explicit-prior posterior fitting and

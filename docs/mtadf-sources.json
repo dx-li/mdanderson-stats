@@ -1,8 +1,13 @@
 {
   "catalog_ids": [114],
   "retrieved_at": "2026-09-26",
-  "scope": "MTADF double-sided isotonic efficacy estimation, beta-binomial toxicity monitoring, adaptive dose decisions and serial simulation",
+  "scope": "MTADF double-sided isotonic and global/local logistic efficacy models, beta-binomial toxicity monitoring, adaptive dose decisions and isotonic serial simulation",
   "sources": [
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4239216/",
+      "retrieved_at": "2026-09-29",
+      "role": "Primary author manuscript: Sections 2.2 and 2.4 define global quadratic and local linear logistic models, independent Cauchy priors, local slope thresholds, bounce guard and isotonic final selection."
+    },
     {
       "url": "https://biostatistics.mdanderson.org/shinyapps/MTADF/",
       "version": "1.0.5.0, updated 2026-01-06",
@@ -27,8 +32,11 @@
     "Calibrate a common Beta prior from the requested toxicity limit, cutoff, margin and concentration instead of a fixed hidden prior.",
     "Fit efficacy only at observed doses using patient-count PAVA weights; rank candidate splits by unweighted squared error as printed in the paper.",
     "Interpret the apparent y_k/n_k index typo inside the paper's sum over j as the observed rate y_j/n_j.",
-    "Safety takes priority over one-level movement; final recommendations require observed outcomes, and unobserved efficacy remains undefined.",
-    "Simulation uses independent binary toxicity and efficacy margins, complete cohort ascertainment, serial trials and bounded work."
+    "Safety takes priority over one-level movement. Isotonic final recommendations require observed outcomes at candidate doses; unobserved efficacy remains undefined in that design.",
+    "Simulation uses independent binary toxicity and efficacy margins, complete cohort ascertainment, serial trials and bounded work; simulate_mtadf remains isotonic only.",
+    "Global/local logistic models use explicit supplied dose coding and bounded serial random-walk Metropolis with warmup-only adaptation, acceptance rates, split R-hat and batch-means MCSE.",
+    "Global decisions rank posterior mean efficacy, including model-predicted untried doses at final selection. Local decisions use initial ramp, slope thresholds and the next-window bounce guard, with isotonic final selection.",
+    "Logistic safety-only actions precede efficacy fitting; boundary clamping, lowest-dose ties and low-boundary local windows are explicit Python conduct choices."
   ],
-  "limitations": "Native application prior, boundary conventions, full raw R behavior, output files and random-sequence parity remain unverified. The paper's global and local logistic variants are separate methods, not claimed as part of this isotonic implementation."
+  "limitations": "Native application prior, boundary conventions, full raw R behavior, output files and random-sequence parity remain unverified. Logistic models and decisions are independent implementations of the paper; their sampling settings and unspecified conduct choices are explicit Python policies. Logistic trial simulation is not yet provided."
 }

@@ -126,5 +126,6 @@ strict one. The rendered program also uses fixed prior calibration and retains
 at least the lowest dose. This implementation follows the documented paper
 policy and allows a complete safety stop. Hidden app settings, native output,
 full raw-source comparison and random-sequence equivalence remain unverified.
-The paper's global and local logistic designs are separate methods and are
-outside this isotonic implementation.
+The paper's [global and local logistic designs](mtadf-logistic.md) are also
+available through separate posterior and decision functions. The serial
+simulator described here continues to use the isotonic design.

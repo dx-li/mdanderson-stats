@@ -2,10 +2,10 @@
 
 Catalog 152 is **partial**. This port provides binary-endpoint posterior
 calculations and interim dose decisions under the approximate-likelihood (AL)
-method, including the optional 3+3 de-escalation override. The Bayesian
-data-augmentation route, categorical endpoints, integrated calendar simulation,
-native file/report adapters and
-final OBD procedure remain outstanding.
+method, including the optional 3+3 de-escalation override, plus final OBD
+selection after both endpoints resolve. The Bayesian data-augmentation route,
+categorical endpoints, integrated calendar simulation and native file/report
+adapters remain outstanding.
 
 ## Patient-level data
 
@@ -135,6 +135,40 @@ criteria separate. The option does not add a separate escalation, cohort-expansi
 exit algorithm. Its default is `False`, preserving ordinary conduct. See the
 [source and validation audit](../research/tite-boin12-runin-audit.md).
 
+## Final OBD selection
+
+After every endpoint resolves, `tite_boin12_select_obd` converts the patient
+records into complete BOIN12 counts, preserving the observed joint outcomes.
+It applies the existing `BOIN12Design.select_obd` rule: estimate the MTD from
+isotonic toxicity rates, then maximize utility desirability among admissible
+doses at or below that MTD. Returned `obd` and `mtd` labels are one-based;
+`obd=None` means no dose was selected.
+
+```python
+from mdanderson_stats import BOIN12Design, tite_boin12_select_obd
+
+selected = tite_boin12_select_obd(
+    BOIN12Design(0.35, 0.25),
+    doses=[1, 1, 1, 2, 2, 2],
+    toxicity=[0, 0, 0, 0, 1, 0],
+    efficacy=[1, 0, 1, 1, 1, 0],
+    toxicity_followup=[2.0] * 6,
+    efficacy_followup=[2.0] * 6,
+    toxicity_window=1.0,
+    efficacy_window=2.0,
+    n_doses=3,
+)
+print(selected.obd, selected.mtd)
+```
+
+Pending endpoints are rejected at final selection. A `1` denotes an event
+observed within its assessment window; follow-up is cumulative time at
+analysis and may extend beyond that window. A completed non-event must have
+reached its window. Pass the latest `eliminated` mask if earlier interim
+analyses permanently eliminated doses. Exact complete-data reduction and
+invariance to additional follow-up are checked in the
+[final-selection audit](../research/tite-boin12-final-and-bda-audit.md).
+
 ## Source verification and remaining uncertainty
 
 The [primary paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC9199061/),
@@ -142,7 +176,9 @@ Zhou et al., *Statistics in Medicine* 41, 1918–1931 (2022), DOI
 10.1002/sim.9337, gives the conditional imputation and quasi-binomial utility
 formulas. It refers the marginal estimator derivation to supplement S7 and
 the final selection details to S2. The supplement download returned an HTML
-challenge; those sections have **not** been inspected.
+challenge; those sections have **not** been inspected. The final wrapper uses
+the main article's stated two-step rule and the existing complete-data BOIN12
+implementation; hidden native tie conventions remain unverified.
 
 The effective likelihood is corroborated by the cited Lin–Yuan method's
 [author code](https://github.com/ruitaolin/TITE-MAD), which uses completed

@@ -94,7 +94,7 @@ some legacy adaptations retain commercial-use restrictions.
 | Program | Source entry | Python documentation |
 | --- | --- | --- |
 | 1+2+3: to find the optimal biological dose for rare diseases | [online #172](https://biostatistics.mdanderson.org/shinyapps/1plus2plus3) | [Guide](rare-disease-123.md) |
-| A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents | [online #114](https://biostatistics.mdanderson.org/shinyapps/MTADF/) | See catalog feature and validation notes |
+| A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents | [online #114](https://biostatistics.mdanderson.org/shinyapps/MTADF/) | [Isotonic](mtadf.md) and [logistic](mtadf-logistic.md) methods |
 | Adaptive Randomization | [desktop #62](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62) | [Posterior](arand.md), [calendar](arand-calendar.md), [simulation](arand-simulation.md) |
 | aPCoA: Covariate Adjusted Principal Coordinates Analysis | [online #147](https://biostatistics.mdanderson.org/shinyapps/aPCoA) | [Guide](apcoa.md) |
 | ASYPOW | [desktop #33](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/33) | [Guide](asypow.md) |
@@ -151,7 +151,7 @@ some legacy adaptations retain commercial-use restrictions.
 | SYNERGY | [desktop #18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18) | [Guide](interaction-index.md) |
 | Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials | [online #129](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/) | [Guide](tite-boin.md) |
 | Time-to-Event Keyboard Design for Phase I Clinical Trials | [online #135](https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD) | [Guide](tite-keyboard.md) |
-| TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | [online #152](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12) | See catalog feature and validation notes |
+| TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | [online #152](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12) | [AL decisions and final selection](tite-boin12.md) |
 | TOP: Time-to-Event Bayesian Optimal Phase II Trial Design | [online #134](https://biostatistics.mdanderson.org/shinyapps/TOP2) | [Guide](top-endpoints.md) |
 | ToxFinder | [desktop #14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14) | See catalog feature and validation notes |
 | Toxicity Probability Intervals | [desktop #72](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/72) | [Guide](mtpi.md) |
