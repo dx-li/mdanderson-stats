@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 
 import numpy as np
+from numpy.typing import NDArray
 from scipy.special import ndtri
 
 from ._validation import FloatArray, finite
@@ -11,8 +12,8 @@ from .merit import MERITDesign, _integer, _isotonic
 from .merit_simulation import _correlation, _draw
 
 
-def _union_table(t: FloatArray, e: FloatArray, n: int) -> FloatArray:
-    """P(any dose passes) for every integer (toxicity_max, efficacy_min)."""
+def _union_count_table(t: FloatArray, e: FloatArray, n: int) -> NDArray[np.int64]:
+    """Count trials in which any dose passes each integer boundary pair."""
     counts = np.zeros((n + 1, n + 1), dtype=np.int64)
     for mask in range(1, 1 << t.shape[1]):
         indices = [j for j in range(t.shape[1]) if mask & (1 << j)]
@@ -22,7 +23,50 @@ def _union_table(t: FloatArray, e: FloatArray, n: int) -> FloatArray:
         counts += (1 if len(indices) % 2 else -1) * histogram.reshape(n + 1, n + 1)
     # Each dose defines a rectangle: mT>=ceil(t) and mE<=floor(e).
     totals = counts.cumsum(0)[:, ::-1].cumsum(1)[:, ::-1]
-    return totals / t.shape[0]
+    return totals
+
+
+def _union_table(t: FloatArray, e: FloatArray, n: int) -> FloatArray:
+    """P(any dose passes) for every integer (toxicity_max, efficacy_min)."""
+    return _union_count_table(t, e, n) / t.shape[0]
+
+
+def _corner_scenarios(
+    toxicity_null: float,
+    toxicity_alternative: float,
+    efficacy_null: float,
+    efficacy_alternative: float,
+    doses: int,
+) -> tuple[FloatArray, FloatArray, NDArray[np.bool_]]:
+    """Construct the ordered paper null/alternative corner configurations."""
+    null: list[NDArray[np.float64]] = []
+    alternative: list[NDArray[np.float64]] = []
+    truths: list[NDArray[np.bool_]] = []
+    dose_index = np.arange(doses)
+    for s in range(doses + 1):
+        for k in range(s, doses + 1):
+            null.append(
+                np.stack(
+                    [
+                        np.where(dose_index < s, toxicity_alternative, toxicity_null),
+                        np.where(dose_index < k, efficacy_null, efficacy_alternative),
+                    ],
+                    -1,
+                )
+            )
+    for u in range(doses):
+        for v in range(u + 1, doses + 1):
+            alternative.append(
+                np.stack(
+                    [
+                        np.where(dose_index < v, toxicity_alternative, toxicity_null),
+                        np.where(dose_index < u, efficacy_null, efficacy_alternative),
+                    ],
+                    -1,
+                )
+            )
+            truths.append((dose_index >= u) & (dose_index < v))
+    return np.asarray(null), np.asarray(alternative), np.asarray(truths, dtype=bool)
 
 
 @dataclass(frozen=True)
@@ -88,32 +132,13 @@ def merit_sample_size(
             "and efficacy_null < alternative"
         )
     rho = _correlation(correlation)
-    null, alternative, truths = [], [], []
-    dose_index = np.arange(doses)
-    for s in range(doses + 1):
-        for k in range(s, doses + 1):
-            null.append(
-                np.stack(
-                    [
-                        np.where(dose_index < s, toxicity_alternative, toxicity_null),
-                        np.where(dose_index < k, efficacy_null, efficacy_alternative),
-                    ],
-                    -1,
-                )
-            )
-    for u in range(doses):
-        for v in range(u + 1, doses + 1):
-            alternative.append(
-                np.stack(
-                    [
-                        np.where(dose_index < v, toxicity_alternative, toxicity_null),
-                        np.where(dose_index < u, efficacy_null, efficacy_alternative),
-                    ],
-                    -1,
-                )
-            )
-            truths.append((dose_index >= u) & (dose_index < v))
-    null_rates, alt_rates = np.array(null), np.array(alternative)
+    null_rates, alt_rates, truths = _corner_scenarios(
+        toxicity_null,
+        toxicity_alternative,
+        efficacy_null,
+        efficacy_alternative,
+        doses,
+    )
     quantiles = ndtri(np.concatenate([null_rates, alt_rates]))
     t = np.zeros((len(quantiles), trials, doses), dtype=np.int64)
     e = np.zeros_like(t)
@@ -128,12 +153,13 @@ def merit_sample_size(
         null_tables, one_tables, two_tables = [], [], []
         for scenario in range(len(quantiles)):
             all_selected = _union_table(tx[scenario], ex[scenario], n)
-            if scenario < len(null):
+            if scenario < len(null_rates):
                 null_tables.append(all_selected)
             else:
-                truth = truths[scenario - len(null)]
-                bad = _union_table(tx[scenario][:, ~truth], ex[scenario][:, ~truth], n)
-                one_tables.append(np.clip(all_selected - bad, 0, 1))
+                truth = truths[scenario - len(null_rates)]
+                all_counts = _union_count_table(tx[scenario], ex[scenario], n)
+                bad_counts = _union_count_table(tx[scenario][:, ~truth], ex[scenario][:, ~truth], n)
+                one_tables.append(np.clip(all_counts - bad_counts, 0, trials) / trials)
                 two_tables.append(_union_table(tx[scenario][:, truth], ex[scenario][:, truth], n))
         errors, powers_one, powers_two = (
             np.array(null_tables),
