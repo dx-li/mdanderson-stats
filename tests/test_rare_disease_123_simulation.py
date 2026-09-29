@@ -79,3 +79,16 @@ def test_generalized_cohort_simulation_obeys_configured_per_dose_maximum():
     np.testing.assert_array_equal(result.selected_dose, np.full(10, 2))
     np.testing.assert_array_equal(result.patients, np.tile([0, 3], (10, 1)))
     assert result.patients.max() == design.maximum_patients_per_dose
+
+
+def test_largest_generalized_cohort_draws_all_endpoint_outcomes():
+    design = RareDisease123Design(
+        (1, 1), second_cohort_size=3, third_cohort_size=5, admissibility_min_patients=9
+    )
+    result = simulate_rare_disease_123(
+        design, [0.0, 0.0], [1.0, 1.0], start_dose=2, trials=4, correlation=0, rng=29
+    )
+    np.testing.assert_array_equal(result.selected_dose, np.full(4, 2))
+    np.testing.assert_array_equal(result.patients, np.tile([0, 9], (4, 1)))
+    np.testing.assert_array_equal(result.responses, result.patients)
+    np.testing.assert_array_equal(result.toxicities, np.zeros_like(result.patients))

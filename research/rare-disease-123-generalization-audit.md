@@ -28,7 +28,8 @@ normal endpoint correlation model.
 The focused checks cover all 15 UI-supported `(a,b)` choices for cumulative
 counts and cohort increments, required explicit thresholds away from the
 default, default decision-table compatibility, generalized full-dose
-selection, simulation path conservation and deterministic endpoint extremes.
-Both RareDisease123 test files passed: 8 tests in 1.62 seconds with warnings
-treated as errors. Peak RSS was 161,202,176 bytes (153.73 MiB), with zero
-process swaps. Ruff check/format and targeted mypy passed.
+selection, simulation path conservation and deterministic endpoint extremes,
+including outcome accounting for the maximum 1+3+5 cohort configuration. Both
+RareDisease123 test files passed: 9 tests in 2.17 seconds with warnings treated
+as errors. Peak RSS was 157,728,768 bytes (150.42 MiB), with zero process
+swaps. Ruff check/format and targeted mypy passed.

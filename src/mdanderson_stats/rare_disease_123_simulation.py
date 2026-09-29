@@ -68,13 +68,14 @@ def simulate_rare_disease_123(
     cohort[0] = 1
     cohort[1] = design.second_cohort_size
     cohort[1 + design.second_cohort_size] = design.third_cohort_size
+    cohort_width = max(1, design.second_cohort_size, design.third_cohort_size)
     for _ in range(3 * doses):
         if active.size == 0:
             break
         j = current[active]
         size = cohort[n[active, j]]
-        zt, ze = _draw(generator, active.size, 3, rho)
-        treated = np.arange(3) < size[:, None]
+        zt, ze = _draw(generator, active.size, cohort_width, rho)
+        treated = np.arange(cohort_width) < size[:, None]
         n[active, j] += size
         t[active, j] += ((zt <= qt[j, None]) & treated).sum(1)
         r[active, j] += ((ze <= qe[j, None]) & treated).sum(1)
@@ -90,7 +91,7 @@ def simulate_rare_disease_123(
         active = active[continuing]
         current[active] = proposed[continuing]
     if active.size:
-        raise ArithmeticError("1+2+3 simulation exceeded its finite cohort bound")
+        raise ArithmeticError("1+a+b simulation exceeded its finite cohort bound")
     probability = np.bincount(selected, minlength=doses + 1) / trials
     return RareDisease123Simulation(
         _owned(n),
