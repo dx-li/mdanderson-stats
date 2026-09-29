@@ -17,6 +17,8 @@ not the containing project's current Git revision.
 | man/rfsrc.Rd | `6f441a8d027d20764ce75d26a3aefcc54188ee82` |
 | R/rfsrc.R | `5be0607d365a5422e4b1d58e03c3e0dfe92c8045` |
 | R/utilities.survival.R | `9ed62c12c118edd11d78fb85f2ec230448646406` |
+| R/utilities.R | `25b40cd53edc9489f53e7799383d5db74494f6ba` |
+| R/utilities.factor.R | `1c6d8d398d5a0ee240134392d61dbe6dd19738d2` |
 | src/splitCustom.c | `337a084d630f4871a61efd37caaa67ae1cfb2e6b` |
 | src/randomForestSRC.c | `e9c6e896c4f93c6eb1b85bdf37992964d74376ea` |
 | src/randomForestSRC.h | `6355ed999d06447747f78b01ee2a370e6bc43d1e` |
@@ -255,8 +257,10 @@ opposite daughter at a target-variable split. In `src/randomForestSRC.c`,
 variable with the requested feature and flips its ordinary daughter when a
 uniform draw is at most `RF_vimpThreshold`; non-target splits retain their
 ordinary branch. The pinned `utilities.R` helper `is.hidden.vimp.threshold` (lines 1165–1180)
-confirms the default is 1.0 and accepts values in [0,1], with zero disabling
-flips. The Python API exposes `vimp_threshold` with that same default, but its
+confirms the default is 1.0 and documents a probability in [0,1], with zero
+disabling flips. That helper forwards an explicit option without checking its
+range; the Python API validates the range. It exposes `vimp_threshold` with
+the same default, but its
 NumPy stream is not native tree-specific RNG parity. It reuses the existing
 OOB block concordance estimator, complete-block tail exclusion, undefined-block
 handling, training fingerprint, and bounded workspace contract.
