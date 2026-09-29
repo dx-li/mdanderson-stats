@@ -22,15 +22,18 @@ subjects = [10, 10, 10]
 responses = [2, 7, 4]
 toxicities = [0, 1, 2]
 doses = [-1.0, 0.0, 1.0]
-fit = mtadf_logistic_posterior(
-    subjects, responses, doses, rng=np.random.default_rng(20260929)
-)
+fit = mtadf_logistic_posterior(subjects, responses, doses, rng=np.random.default_rng(20260929))
 decision = mtadf_logistic_decision(
     subjects, toxicities, responses, doses, current_dose=1, posterior=fit
 )
 final = mtadf_logistic_decision(
-    subjects, toxicities, responses, doses,
-    current_dose=None, posterior=fit, final=True,
+    subjects,
+    toxicities,
+    responses,
+    doses,
+    current_dose=None,
+    posterior=fit,
+    final=True,
 )
 print(fit.posterior_mean_efficacy, decision.dose, final.dose)
 ```
@@ -58,16 +61,27 @@ from mdanderson_stats import (
 )
 
 local_fit = mtadf_local_logistic_posterior(
-    subjects, responses, doses, current_dose=2,
+    subjects,
+    responses,
+    doses,
+    current_dose=2,
     rng=np.random.default_rng(20260930),
 )
 local = mtadf_local_logistic_decision(
-    subjects, toxicities, responses, doses,
-    current_dose=2, posterior=local_fit,
+    subjects,
+    toxicities,
+    responses,
+    doses,
+    current_dose=2,
+    posterior=local_fit,
 )
 local_final = mtadf_local_logistic_decision(
-    subjects, toxicities, responses, doses,
-    current_dose=None, final=True,
+    subjects,
+    toxicities,
+    responses,
+    doses,
+    current_dose=None,
+    final=True,
 )
 print(local_fit.probability_positive_slope, local.dose, local_final.dose)
 ```
