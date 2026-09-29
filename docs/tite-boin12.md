@@ -3,9 +3,9 @@
 Catalog 152 is **partial**. This port provides binary-endpoint posterior
 calculations and interim dose decisions under the approximate-likelihood (AL)
 method, including the optional 3+3 de-escalation override, plus final OBD
-selection after both endpoints resolve. A separate [Bayesian data-augmentation
-posterior](tite-boin12-bda.md) supports pending binary outcomes with an explicit
-joint prior. BDA trial conduct, categorical endpoints, integrated calendar
+selection after both endpoints resolve. Separate [Bayesian data-augmentation
+posterior and dose decisions](tite-boin12-bda.md) support pending binary outcomes
+with an explicit joint prior. Categorical endpoints, integrated calendar
 simulation and native file/report adapters remain outstanding.
 
 ## Patient-level data

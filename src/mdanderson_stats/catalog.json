@@ -4358,14 +4358,14 @@
         "tite_boin12_posterior: patient-level binary approximate likelihood, effective endpoint sizes and MLEs, conditional pending outcomes, nonadditive joint utility, quasi-Beta desirability and declared effective-binomial safety/activity posteriors.",
         "tite_boin12_decision: separate pending-endpoint suspension, no-information suspension, persistent elimination and BOIN12 neighboring-dose conduct with configurable exploration and precision stopping.",
         "Optional 3+3 de-escalation override for toxicity limit 0.25 at exactly 3 or 6 patients and at least 2 observed DLTs; explicit pending/admissibility precedence and safe lower-neighbor handling.",
-        "tite_boin12_select_obd: complete patient-level histories reduce to BOIN12 final selection, retaining exact joint counts and prior elimination. Source-backed AL core with explicit native-parity limits. Supplement S7/S2 verification, native pending-data safety and final tie details, BDA trial conduct, categorical outcomes, calendar simulation and native reports remain open; see docs/tite-boin12.md. Binary BDA posterior sampling uses an explicit joint Dirichlet prior, all three missing-outcome patterns, serial Gibbs updates, completed-data BOIN12 posterior averaging and separate chain diagnostics; docs/tite-boin12-bda.md."
+        "tite_boin12_select_obd: complete patient-level histories reduce to BOIN12 final selection, retaining exact joint counts and prior elimination. Source-backed AL core with explicit native-parity limits. Supplement S7/S2 verification, native pending-data safety and final tie details, categorical outcomes, calendar simulation and native reports remain open; see docs/tite-boin12.md. Binary BDA posterior sampling uses an explicit joint Dirichlet prior, all three missing-outcome patterns, serial Gibbs updates, completed-data BOIN12 posterior averaging and separate chain diagnostics; docs/tite-boin12-bda.md. tite_boin12_bda_decision adds current-dose pending suspension before sampling, persistent elimination and neighboring-dose movement using mean imputed toxicity counts with explicit Python conduct settings."
       ],
       "validation": [
         "Official application 1.4.3.0 and source hashes in docs/tite-boin12-sources.json; author comparator and Lin-Yuan source inspected without executing vendor simulations.",
         "Independent base-R references for all four ascertainment patterns, endpoint ESS/MLE, conditional probabilities, nonadditive joint utilities and Beta tails.",
         "Focused checks cover exact complete-outcome BOIN12 posterior and final-selection reduction, final pending-data rejection and invariance to additional follow-up, prior-only untried doses, unit rescaling, suspension boundaries, persistent elimination and numerical edge conditions. Hidden native-backend parity is not claimed.",
         "Twenty focused conduct/reference checks plus guide and precision-precedence checks cover source-defined run-in thresholds, unchanged non-trigger counts, pending/precision ordering, toxicity-limit restriction and lowest/eliminated lower-dose stops; research/tite-boin12-runin-audit.md.",
-        "BDA validation includes complete-data reduction, repeated pending-outcome imputation, seed replay and an independent exact Dirichlet integral over 16 missing-state assignments; 13 sampled summaries agree within 1.372 estimated batch MCSEs; research/tite-boin12-bda-audit.md."
+        "BDA validation includes complete-data reduction, repeated pending-outcome imputation, seed replay and an independent exact Dirichlet integral over 16 missing-state assignments; 13 sampled summaries agree within 1.372 estimated batch MCSEs; research/tite-boin12-bda-audit.md. Integrated BDA conduct passes 29 focused TITE checks; its toxicity-rate estimate agrees with exact missing-state integration within 0.201 conservative MCSE; AL transition extraction independently reviewed."
       ]
     },
     {
@@ -4852,12 +4852,12 @@
       "implemented_features": [
         "Complete-outcome 1+2+3 dose assignment, cohort sizes, efficacy/toxicity admissibility, permanent exclusions and OBD selection at the next assigned full dose",
         "BOIN toxicity boundaries and explicit beta efficacy prior; native prior is not documented",
-        "Batched complete-cohort simulation with Gaussian-latent toxicity/efficacy correlation, selection probabilities, Monte Carlo errors and patient allocation"
+        "Batched complete-cohort simulation with Gaussian-latent toxicity/efficacy correlation, selection probabilities, Monte Carlo errors and patient allocation; generalized 1+a+b cohorts support the captured a=1..3 and b=1..5 ranges with a caller-specified admissibility count threshold outside default 1+2+3."
       ],
       "validation": [
         "All 69 default native table cells, cohort progression, selection, exemptions, exclusions, exploration restriction and stopping; tests/test_rare_disease_123.py",
         "Exhaustive small-trial selection/allocation probabilities, deterministic extremes and perfect endpoint correlation; tests/test_rare_disease_123_simulation.py",
-        "Pending generalized 1+a+b, staggering, reports and native prior/source audit; docs/rare-disease-123.md"
+        "Generalized cohort increments and selection cover all 15 supported size pairs, with deterministic outcome conservation through five-patient cohorts and preserved default references. Within-cohort staggering, native generalized thresholds, reports and native prior/source audit remain pending; docs/rare-disease-123.md and research/rare-disease-123-generalization-audit.md."
       ]
     },
     {

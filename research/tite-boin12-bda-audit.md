@@ -91,3 +91,14 @@ R-hat is 1.000205 for joint probabilities and 1.000271 for BOIN12 metrics.
 The reference/comparison process took 3.321 seconds, peaked at 126.39 MiB RSS
 and reported zero swaps. These checks validate the explicit model and Python
 sampler; they do not establish native application equivalence.
+
+The integrated conduct checkpoint passes 29 focused posterior, conduct, final
+selection and independent-reference tests with warnings treated as errors;
+targeted Ruff and mypy checks pass. Worker peak RSS was 133.62 MiB, with no
+swaps. An independent root comparison reuses the exact missing-state integral:
+the completed-data toxicity-rate expectation is 0.3597856411, versus a seeded
+four-chain estimate of 0.358859375. The difference is 0.201 times a conservative
+MCSE bound for the sum of the two toxicity-cell counts. The resulting decision
+is to stay at dose 1. This check took 3.517 seconds, peaked at 124.19 MiB RSS,
+and reported zero swaps. A read-only review also verified that the extracted
+movement helper preserves the existing AL ordering and tie behavior.

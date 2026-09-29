@@ -1379,8 +1379,10 @@ from .tite_boin12 import (
     tite_boin12_select_obd,
 )
 from .tite_boin12_bda import (
+    TITEBOIN12BDADecision,
     TITEBOIN12BDADiagnostics,
     TITEBOIN12BDAPosterior,
+    tite_boin12_bda_decision,
     tite_boin12_bda_posterior,
 )
 from .tite_boin_simulation import TITEBOINSimulation, simulate_tite_boin
@@ -1779,8 +1781,10 @@ __all__ = [
     "tite_boin12_decision",
     "tite_boin12_posterior",
     "tite_boin12_select_obd",
+    "TITEBOIN12BDADecision",
     "TITEBOIN12BDADiagnostics",
     "TITEBOIN12BDAPosterior",
+    "tite_boin12_bda_decision",
     "tite_boin12_bda_posterior",
     "BARDMinimizationResult",
     "BARDSelectionResult",

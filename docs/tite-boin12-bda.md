@@ -88,7 +88,53 @@ each under the Dirichlet prior exactly. A seeded four-chain check matched all
 13 joint, count and BOIN12 summaries within 1.38 estimated batch MCSEs. See the
 [validation audit](../research/tite-boin12-bda-audit.md).
 
-This entry point provides posterior calculations. The existing
-`tite_boin12_decision` still uses approximate likelihood; an integrated BDA
-conduct/calendar simulator is not yet supplied. Complete-outcome final
-selection remains available through `tite_boin12_select_obd`.
+## Interim dose decisions
+
+`tite_boin12_bda_decision` combines this posterior with neighboring-dose
+conduct. It suspends before sampling when either endpoint is pending for
+more than half the patients at the current dose; exactly half permits a look.
+Suspension leaves the supplied random generator unchanged. Carry its returned
+`eliminated` mask into subsequent looks to preserve exclusions.
+
+```python
+from mdanderson_stats import tite_boin12_bda_decision
+
+decision = tite_boin12_bda_decision(
+    BOIN12Design(0.35, 0.25, utilities=(100, 30, 65, 0)),
+    doses=[1, 1, 1, 1],
+    toxicity=[0, -1, 1, -1],
+    efficacy=[1, 1, -1, -1],
+    toxicity_followup=[1.0, 0.6, 0.1, 0.2],
+    efficacy_followup=[1.0, 0.1, 0.25, 0.4],
+    toxicity_window=1.0,
+    efficacy_window=1.0,
+    n_doses=1,
+    current_dose=1,
+    prior_concentrations=[1.2, 0.8, 0.3, 0.7],
+    rng=np.random.default_rng(152),
+)
+assert decision.posterior is not None
+print(decision.action, decision.next_dose)
+print(decision.imputed_toxicity_rate)
+```
+
+Movement compares the mean completed toxicity count divided by enrolled
+patients with the BOIN boundaries. This explicitly chosen Python estimator
+reduces to the observed rate with complete outcomes; it differs from both
+the AL effective-sample-size rate and the Dirichlet probability mean.
+Admissibility and dose ranking use the averaged BOIN12 tail probabilities.
+The result retains the BDA posterior and diagnostics; untried-dose rates are
+NaN because there are no enrolled patients at those doses.
+
+The optional `run_in_3plus3` override and `BOIN12Design` exploration,
+stay-sample-size and precision settings follow the existing Python conduct
+policy. In particular, an enabled precision stop precedes ordinary movement
+once the current-dose patient threshold is reached, regardless of whether
+the next decision would stay. These are explicit computational/conduct
+choices, not recovered native BDA defaults. The AL-only zero-effective-size
+guard is unnecessary for this model with a specified Dirichlet prior.
+
+The existing `tite_boin12_decision` continues to use approximate likelihood.
+Complete-outcome final selection remains available through
+`tite_boin12_select_obd`. Calendar accrual, follow-up updates and categorical
+outcomes remain outside this BDA entry point.

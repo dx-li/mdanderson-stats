@@ -43,5 +43,5 @@
       "sha256": "8bb08758eb855cc5f1414e9283bc5ac0feff1c2284352d82658ded30b1fc07e1"
     }
   ],
-  "scope": "Default app protocol/table verification, target toxicity .28, efficacy .6, cutoffs .90/.50, 1+2+3 cohorts. Efficacy prior absent from protocol: required explicitly; Beta(1,1) matches all 69 native table cells. Generalized cohorts and native prior audit pending."
+  "scope": "Default app protocol/table verification, target toxicity .28, efficacy .6, cutoffs .90/.50, 1+2+3 cohorts. Efficacy prior absent from protocol: required explicitly; Beta(1,1) matches all 69 native table cells. Dose-input help defines generalized cohorts 1,a,b; captured app offers a=1..3,b=1..5. Nondefault Python designs require an explicit admissibility count threshold because generalized native exclusion settings are not specified; native prior and calendar-staggering audit remain pending."
 }
