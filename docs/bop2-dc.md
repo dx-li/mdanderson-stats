@@ -54,7 +54,11 @@ operating characteristics from joint outcome probabilities and
 includes calendar replay and operating-characteristic simulation;
 [survival calibration](bop2-dc-survival-calibration.md) adds finite-grid selection
 and independent holdout checks. The [continuous Normal endpoint](bop2-dc-normal.md)
-supports posterior monitoring, trial replay and simulation. Its calibration,
-randomized arm comparisons and generated app reports remain open. See
+supports posterior monitoring, trial replay, simulation and
+[finite-grid calibration](bop2-dc-normal-calibration.md).
+[Randomized binary comparisons](bop2-dc-randomized-binary.md) support independent
+arm posteriors, early graduation, replay and exact OCs for an explicit allocation.
+Randomized continuous/survival workflows, randomized calibration and generated
+app reports remain open. See
 [source notes](bop2-dc-source.md) and the
 [independent numerical references](bop2-dc-reference.md).

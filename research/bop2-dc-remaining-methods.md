@@ -5,7 +5,9 @@ Binary efficacy has exact operating characteristics and finite-grid calibration;
 paired endpoints have exact correlated-outcome operating characteristics and
 finite-grid calibration; survival has calendar simulation and Monte Carlo
 finite-grid calibration. The Normal endpoint now has posterior monitoring,
-replay and simulation; its calibration is being implemented separately.
+replay, simulation and independently checked finite-grid calibration.
+Randomized binary comparisons now include fixed-allocation monitoring, replay
+and exact operating characteristics, with optional early graduation.
 
 The cached primary preprint, `research/raw/BOP2-DC/paper.txt`, also establishes
 these source-backed targets:
@@ -18,13 +20,17 @@ these source-backed targets:
   `b2+SSE/2+n0*n*(ybar-theta0)²/(2*(n0+n))`. The marginal Student-t tail
   supplies the two posterior threshold probabilities. Monitoring, replay and
   simulation now have independent R evidence in `bop2-dc-normal-audit.md`.
-  Finite-grid calibration remains open.
+  Finite-grid calibration and independent holdout checks are documented in
+  `bop2-dc-normal-calibration-audit.md`.
 - Section 2.4 (printed pages 12–13, text lines 466–495) specifies randomized
   comparisons. Fit arm models independently and compare
   `theta_experimental-theta_control` with both clinical thresholds. The source
   also defines optional interim superiority stopping. This requires posterior
   difference probabilities, arm allocation and trial conduct; independent
-  single-arm decisions do not substitute. Section 3.2 gives simulation
+  single-arm decisions do not substitute. The binary-arm implementation is
+  independently checked in `bop2-dc-randomized-binary-audit.md`; continuous and
+  survival randomized workflows remain open, as does randomized calibration.
+  Section 3.2 gives simulation
   examples and an example 2:1 allocation, which is not a universal default.
 
 These are source-backed methods, not report-format or UI differences. The

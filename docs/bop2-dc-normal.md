@@ -27,7 +27,8 @@ print(oc.decision_mcse, oc.mean_enrollment, oc.enrollment_mcse)
 
 These inputs demonstrate the API; supplied cutoffs are not automatically
 calibrated. The small simulation count gives a quick example, not a precise
-error-rate assessment. Normal parameter-grid calibration remains separate.
+error-rate assessment. [Normal parameter-grid calibration](bop2-dc-normal-calibration.md)
+is a separate workflow with independent validation.
 
 ## Model and posterior
 

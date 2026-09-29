@@ -1186,8 +1186,12 @@ visible validation failures. [Paired calibration](docs/bop2-dc-paired-calibratio
 uses exact correlated-outcome probabilities over an explicit control grid.
 The [continuous Normal endpoint](docs/bop2-dc-normal.md) adds conjugate posterior
 monitoring, trial replay and simulation, with centered calculations preserving
-precision under large measurement offsets. Normal calibration and randomized
-comparisons remain open.
+precision under large measurement offsets. [Normal calibration](docs/bop2-dc-normal-calibration.md)
+adds common-path grid selection and independent holdout evidence.
+[Randomized binary comparisons](docs/bop2-dc-randomized-binary.md) add independent
+arm posteriors, optional early graduation, fixed-allocation replay and exact
+operating characteristics. Randomized continuous/survival workflows and
+randomized-design calibration remain open.
 
 [BARPO](docs/barpo.md) adds binary posterior monitoring with or without a control
 and four adaptive allocation methods: BARCP, BARN2N, BARMTV and explicit-target

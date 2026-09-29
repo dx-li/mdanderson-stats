@@ -1,0 +1,4 @@
+truth_id,control_probability,treatment_probability
+null_low,0.2,0.2
+benefit,0.2,0.7
+high_equal,0.7,0.7

@@ -81,7 +81,7 @@ def randomized_dual_decisions(
 ) -> NDArray[np.str_]:
     """Classify when reported quadrature errors cannot change the action.
 
-    Error values are estimates from beta-comparison integration, not rigorous
+    Error values are estimates from posterior-tail integration, not rigorous
     bounds. The four corners suffice because all monitoring regions are
     intersections of coordinate-wise strict cutoff half-spaces.
     """
@@ -142,6 +142,6 @@ def randomized_dual_decisions(
     reference = choices[0]
     if any(np.any(choice != reference) for choice in choices[1:]):
         raise ArithmeticError(
-            "reported beta-comparison quadrature error could change a strict trial decision"
+            "reported posterior-tail quadrature error could change a strict trial decision"
         )
     return reference

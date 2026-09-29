@@ -4417,7 +4417,9 @@
         "Survival calendar replay and bounded exponential-trial simulation with first-stop decisions, censoring, fixed/Poisson arrivals, aggregate replay seeds, compact per-trial summaries and Monte Carlo errors",
         "Survival finite-grid calibration for CGR or futile expected sample size, explicit priors and truth/grid/calendar settings, common simulation paths, full candidate evidence and independent holdout feasibility without reselection",
         "Exact paired finite-grid calibration with asymmetric endpoint controls, explicit joint truths, association-preserving candidate OCs, false-decision constraints and CGR/futile-ESS objectives",
-        "Continuous Normal endpoint with explicit Normal-Inverse-Gamma prior, centered Student-t posterior tails, strict dual-criterion monitoring, absorbing replay and bounded serial operating-characteristic simulation with seed/MCSE summaries"
+        "Continuous Normal endpoint with explicit Normal-Inverse-Gamma prior, centered Student-t posterior tails, strict dual-criterion monitoring, absorbing replay and bounded serial operating-characteristic simulation with seed/MCSE summaries",
+        "Normal endpoint finite-grid calibration with explicit grids, truth-centered common paths, full candidate OC/MCSE evidence, CGR/futile-ESS selection and independent holdout feasibility without reselection",
+        "Randomized binary-arm posterior risk differences with explicit Beta priors/allocation tape, signed margins, optional OBrien-Fleming graduation, absorbing replay and exact conditional operating characteristics; numerical decision ambiguity raises explicitly"
       ],
       "validation": [
         "Five independent base-R posterior and decision cases match Python",
@@ -4430,7 +4432,9 @@
         "Independent R replay verifies 18 survival candidates and 760 summaries for both objectives, including distinct winners and a holdout false-go violation without reselection. Nondegenerate analytic single-patient event/censoring partition and pre-RNG work/input checks pass; finite Monte Carlo estimates do not guarantee true error control. docs/bop2-dc-survival-calibration.md",
         "Exhaustive base-R enumeration of 256 paths per truth verifies 48 paired calibration candidates across both modes and three same-margin associations; 1920 summaries, constraint flags and both objective selections agree. docs/bop2-dc-paired-calibration.md",
         "Independent base-R Normal reference verifies 8 cases, 16 posterior analyses and 64 fixed simulation paths with 154 reached analyses: 898 summaries agree, covering all decisions, strict equality, 1e15 measurement offsets and 1e-100/1e100 changes of units. docs/bop2-dc-normal.md",
-        "Substantive remaining methods include Normal endpoint calibration and randomized arm comparisons in source §2.4; these are distinct from app report parity. research/bop2-dc-remaining-methods.md"
+        "Independent base-R Normal calibration replay verifies 18 candidates and 836 probability/enrollment/MCSE summaries across both objectives and holdouts. A 4% calibration false-go constraint passes at 2/64 and fails on independent validation at 3/48 without reselection; large-offset candidate results are unchanged. docs/bop2-dc-normal-calibration.md",
+        "Independent base-R Beta polynomial integration and 64 response paths across four randomized-binary designs verify 100 analyses and 336 summaries, including 12 exact OC scenarios, unequal allocation, signed margins, early graduation and strict equality; largest posterior discrepancy 1.094e-10 is within reported numerical error. docs/bop2-dc-randomized-binary.md",
+        "Substantive remaining methods include randomized continuous/survival workflows and randomized-design calibration in source §2.4; these are distinct from app report parity. research/bop2-dc-remaining-methods.md"
       ]
     },
     {

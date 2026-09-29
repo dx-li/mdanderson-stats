@@ -44,3 +44,29 @@ Hard limits cap planned enrollment, monitor batches, posterior comparison
 states, recursion work, truth scenarios, and retained OC results before the
 corresponding large allocations. Numerical checks are recorded in the focused
 test file; no native randomized trial output was used as a reference.
+
+## Independent numerical reference
+
+`tools/reference_bop2_dc_randomized_binary.R` calculates integer-shape Beta
+CDFs from their finite binomial-polynomial formula and integrates the
+independent arm difference directly. It includes the known
+`Beta(2,1) - Beta(1,2)` zero-margin probability `5/6` and signed margins.
+It then enumerates all 16 possible four-patient response tapes under four
+designs: graduation off/on, a strict-equality configuration, and unequal
+allocation with asymmetric priors and signed clinical margins. Three truth
+pairs give twelve exact OC scenarios.
+
+`tools/check_bop2_dc_randomized_binary.py` verifies 64 response paths, 100
+reached analyses and 336 posterior/OC summaries. All reached and terminal
+decisions, early graduation and stopping masses, final decisions, sample-size
+distributions and expected sample sizes agree. The largest posterior-tail
+discrepancy, `1.09375e-10`, is within the returned numerical error estimate.
+The Python check takes .4811 seconds after imports, peaks at 119.64 MiB and
+reports no swaps. Reference generation and comparison run serially.
+
+Four focused tests additionally cover a cutoff-straddling error that can
+change the action, an uncertain individual comparison whose combined action
+is still stable, exact symmetry, tiny positive graduation cutoffs and exhaustive
+small-state agreement. Shared decision rules are extracted for the remaining
+randomized endpoint families; posterior and data models remain separate.
+Randomized continuous/survival models and randomized calibration remain open.

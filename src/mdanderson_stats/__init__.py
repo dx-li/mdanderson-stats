@@ -278,6 +278,13 @@ from .bop2_dc_normal import (
     run_bop2_dc_normal_trial,
     simulate_bop2_dc_normal,
 )
+from .bop2_dc_normal_optimization import (
+    BOP2DCNormalCandidateEvaluation,
+    BOP2DCNormalInfeasibleError,
+    BOP2DCNormalOperatingCharacteristics,
+    BOP2DCNormalOptimization,
+    optimize_bop2_dc_normal,
+)
 from .bop2_dc_optimization import (
     BOP2DCInfeasibleError,
     BOP2DCOptimization,
@@ -294,6 +301,13 @@ from .bop2_dc_paired_optimization import (
     BOP2DCPairedInfeasibleError,
     BOP2DCPairedOptimization,
     optimize_bop2_dc_paired,
+)
+from .bop2_dc_randomized_binary import (
+    BOP2DCRandomizedBinaryDesign,
+    BOP2DCRandomizedBinaryOperatingCharacteristics,
+    BOP2DCRandomizedBinaryReplay,
+    BOP2DCRandomizedBinaryState,
+    bop2_dc_randomized_binary_design,
 )
 from .bop2_dc_survival import (
     BOP2DCSurvivalDesign,
@@ -1675,6 +1689,16 @@ __all__ = [
     "bop2_dc_normal_design",
     "run_bop2_dc_normal_trial",
     "simulate_bop2_dc_normal",
+    "BOP2DCNormalCandidateEvaluation",
+    "BOP2DCNormalInfeasibleError",
+    "BOP2DCNormalOperatingCharacteristics",
+    "BOP2DCNormalOptimization",
+    "optimize_bop2_dc_normal",
+    "BOP2DCRandomizedBinaryDesign",
+    "BOP2DCRandomizedBinaryOperatingCharacteristics",
+    "BOP2DCRandomizedBinaryReplay",
+    "BOP2DCRandomizedBinaryState",
+    "bop2_dc_randomized_binary_design",
     "BOP2DCPairedGridOC",
     "BOP2DCPairedInfeasibleError",
     "BOP2DCPairedOptimization",
