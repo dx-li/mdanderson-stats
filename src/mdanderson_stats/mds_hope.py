@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Literal
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -27,15 +28,27 @@ _COEFFICIENTS = np.asarray(
     [0.025, 0.067, -0.160, -0.0021, 0.051, 0.284, -0.294, 0.347, 0.345, 0.681, 1.094],
     dtype=float,
 )
-_RISK_GROUP_LABELS = (
-    "very low",
-    "low",
-    "intermediate low",
-    "intermediate high",
-    "high",
-    "very high",
-)
-_RISK_CUTOFFS = np.asarray([-1.5, -0.5, 0.0, 0.5, 1.5])
+_RISK_GROUP_LABELS: dict[int, tuple[str, ...]] = {
+    5: (
+        "very low",
+        "low",
+        "intermediate low",
+        "intermediate",
+        "very high",
+    ),
+    6: (
+        "very low",
+        "low",
+        "intermediate low",
+        "intermediate high",
+        "high",
+        "very high",
+    ),
+}
+_RISK_CUTOFFS: dict[int, NDArray[np.float64]] = {
+    5: np.asarray([-1.5, -0.5, 0.0, 1.5]),
+    6: np.asarray([-1.5, -0.5, 0.0, 0.5, 1.5]),
+}
 _MAX_BATCH_PATIENTS = 250_000
 
 
@@ -74,11 +87,16 @@ class MDSHopeScore:
 
 @dataclass(frozen=True)
 class MDSHopeRiskClassification:
-    """Six-group classification using explicit standardization supplied by caller."""
+    """Published five- or six-group classification with explicit standardization."""
 
     standardized_score: FloatArray
     group_code: NDArray[np.int8]
     group_labels: tuple[str, ...]
+
+    @property
+    def group_count(self) -> int:
+        """Number of ordinal groups used for this classification."""
+        return len(self.group_labels)
 
 
 def _numeric_vector(value: ArrayLike, name: str, *, allow_bool: bool = False) -> FloatArray:
@@ -225,16 +243,31 @@ def _standardized_vector(value: ArrayLike, name: str) -> FloatArray:
     return _numeric_vector(value, name)
 
 
-def mds_hope_risk_groups(standardized_score: ArrayLike) -> NDArray[np.int8]:
-    """Assign published six-group cutoffs to caller-standardized scores.
+def _risk_group_count(groups: object) -> Literal[5, 6]:
+    if isinstance(groups, bool) or not isinstance(groups, (int, np.integer)):
+        raise ValueError("groups must be 5 or 6")
+    if groups == 5:
+        return 5
+    if groups == 6:
+        return 6
+    raise ValueError("groups must be 5 or 6")
 
-    Codes map to ``(very low, low, intermediate low, intermediate high, high,
-    very high)``. Cutoffs are inclusive at -1.5, -0.5, 0, 0.5, and 1.5 on the
-    lower group, matching the supplement's intervals. The input must already
-    be standardized with externally supplied calibration parameters.
+
+def mds_hope_risk_groups(
+    standardized_score: ArrayLike, *, groups: Literal[5, 6] = 6
+) -> NDArray[np.int8]:
+    """Assign published five- or six-group cutoffs to caller-standardized scores.
+
+    The default six-group version maps codes to ``(very low, low, intermediate
+    low, intermediate high, high, very high)``. With ``groups=5``, codes map to
+    ``(very low, low, intermediate low, intermediate, very high)``; the latter
+    combines the six-group intermediate-high and high categories. Each cutoff
+    belongs to the lower group. Input must already be standardized using
+    externally supplied calibration parameters.
     """
+    group_count = _risk_group_count(groups)
     score = _standardized_vector(standardized_score, "standardized_score")
-    codes = np.searchsorted(_RISK_CUTOFFS, score, side="left").astype(np.int8)
+    codes = np.searchsorted(_RISK_CUTOFFS[group_count], score, side="left").astype(np.int8)
     return np.frombuffer(codes.tobytes(), dtype=np.int8).reshape(codes.shape)
 
 
@@ -243,13 +276,16 @@ def mds_hope_standardized_risk_groups(
     *,
     reference_center: float,
     reference_sd: float,
+    groups: Literal[5, 6] = 6,
 ) -> MDSHopeRiskClassification:
-    """Standardize raw eta with explicit external center/SD, then apply Eq. S1 groups.
+    """Standardize raw eta, then apply the selected published Eq. S1 groups.
 
     The supplement gives cutoffs but not its training-score mean or SD. These
     values must come from an explicit reference supplied by the caller; the
-    prediction cohort is never used to infer them.
+    prediction cohort is never used to infer them. ``groups=5`` collapses the
+    intermediate-high and high categories of the default six-group model.
     """
+    group_count = _risk_group_count(groups)
     score = _standardized_vector(raw_score, "raw_score")
     center = _numeric_vector(reference_center, "reference_center")
     scale = _numeric_vector(reference_sd, "reference_sd")
@@ -261,6 +297,6 @@ def mds_hope_standardized_risk_groups(
         raise ArithmeticError("standardized MDS-HOPE score is not representable")
     return MDSHopeRiskClassification(
         _freeze(standardized),
-        mds_hope_risk_groups(standardized),
-        _RISK_GROUP_LABELS,
+        mds_hope_risk_groups(standardized, groups=group_count),
+        _RISK_GROUP_LABELS[group_count],
     )

@@ -103,6 +103,29 @@ def test_published_six_group_cutoffs_and_explicit_standardization_paths():
         mds_hope_standardized_risk_groups([1], reference_center=0, reference_sd=0)
 
 
+def test_published_five_group_cutoffs_collapse_intermediate_high_and_high():
+    standardized = np.asarray([-1.6, -1.5, -1.0, -0.5, -0.1, 0, 0.1, 0.5, 1, 1.5, 1.6])
+    expected = np.asarray([0, 0, 1, 1, 2, 2, 3, 3, 3, 3, 4], dtype=np.int8)
+    direct = mds_hope_risk_groups(standardized, groups=5)
+    np.testing.assert_array_equal(direct, expected)
+    assert not direct.flags.writeable
+
+    classified = mds_hope_standardized_risk_groups(
+        standardized * 3 + 10, reference_center=10, reference_sd=3, groups=5
+    )
+    np.testing.assert_array_equal(classified.group_code, expected)
+    assert classified.group_count == 5
+    assert classified.group_labels == (
+        "very low",
+        "low",
+        "intermediate low",
+        "intermediate",
+        "very high",
+    )
+    with pytest.raises(ValueError, match="groups must be 5 or 6"):
+        mds_hope_risk_groups(standardized, groups=4)
+
+
 def test_invalid_missing_or_misencoded_inputs_fail_without_imputation():
     with pytest.raises(ValueError, match="sf3b1_mutation"):
         mds_hope_score(_patient(sf3b1_mutation=None))

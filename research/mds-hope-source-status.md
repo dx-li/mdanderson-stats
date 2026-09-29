@@ -21,3 +21,11 @@ only for already-standardized scores or with explicit caller-supplied center
 and SD. No cytogenetic parser, missing-mutation default, cohort re-standardizing,
 baseline survival, absolute survival probability, or deployed-app equivalence
 is inferred. These remain outside the recovered source contract.
+
+The supplement's Methods section also specifies a five-group classification:
+it keeps the same lower cutoffs as the six-group model and combines the
+intermediate-high and high categories into `intermediate` for scores above
+0 through 1.5; very high remains above 1.5. The score APIs accept an explicit
+`groups=5` or `groups=6` selection (default six), preserve lower-group
+cutoff equality, and return the matching labels. This does not recover the
+training-score center/SD or the native app's calibration.
