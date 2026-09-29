@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `c38cca5` adds optional individual-gel
-Pinnacle denoising, rectangular backgrounds and scheduled Phase2Delay trial
-simulation. The final section records validation. Network publication was
+Latest verified package checkpoint: `28fc12f` adds the published MDS-HOPE
+relative-risk score and serial four-arm Parallel Phase I/II summaries. The final
+section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
 full branch SHAs after each independently verified publication.
@@ -1182,3 +1182,54 @@ ordinary atomic fast-forward push of the same checkpoint to GitHub master,
 main and the development branch, followed by independent remote-SHA verification.
 The local artifact manifest records the resulting remote state and hashes;
 a locally advanced branch alone is not evidence of publication.
+
+
+## MDS-HOPE and Parallel Phase I/II community checkpoint
+
+Verified package code is `28fc12faf492c6f4673c9fc2dc3131b271401788`.
+Luna implemented both additions. An independent Luna review checked the MDS-HOPE
+publisher equation and input semantics; root integrated the exports, guides,
+source catalog and independent numerical references. No dependencies or CI
+workflows were added. ARAND calendar work remains isolated and is not part of
+this checkpoint.
+
+MDS-HOPE implements Supplemental Equation S1 in original clinical units,
+per-predictor contributions and relative hazards against an explicit reference
+profile. Raw differences are formed before coefficient weighting. Six risk
+groups require an already-standardized score or explicit caller reference
+center and SD. Numeric cytogenetic-category encoding, native calibration and
+baseline survival are still unavailable; no app equivalence or absolute
+survival prediction is claimed. Entry 171 moves from pending to partial, so
+coverage is now 63 implemented, 67 partial and eight pending.
+
+Parallel Phase I/II adds bounded serial operating-characteristic summaries for
+the validated four-arm C design, retaining reproducible per-trial seeds and
+aggregates. Selection, stopping, allocation, enrollment, toxicity and response
+summaries include Monte Carlo uncertainty; pooled outcome-rate errors treat
+trials as independent clusters. It does not infer optimal-arm criteria or
+reproduce a stale native output column. Entry 85 remains partial.
+
+The 11 affected tests, all 43 independent base-R reference cases and three
+examples across both guides pass together in 1.276 seconds at 146.98 MiB peak
+process RSS with zero swaps. Reference arithmetic differs by at most
+7.11e-15. Fixtures include every MDS-HOPE coefficient, TP53 profiles, explicit
+reference comparisons, exact and neighboring risk cutoffs, and nonfinite
+rejections. The R generator uses 17-digit CSV output to preserve distinct
+floating-point neighbors. Synthetic cytogenetic values and standardization
+constants are explicitly labelled. Focused Ruff, formatting and type checks
+pass. The full repository numerical suite was not rerun; validation was confined
+to the affected methods and package integration.
+
+Cached wheel and source builds pass. An isolated wheel import verifies all
+1,588 public exports, byte equality of 567 committed package source/data files
+in both artifacts, all 138 catalog entries, preserved license notices and all
+three new guide examples. It takes 10.304 seconds at 125.62 MiB peak RSS with
+zero swaps. Numerical/build processes ran one at a time with thread limits;
+there were no dependency installations. The distribution retains its existing
+mixed-license qualification.
+
+This audit is the only change after the verified package revision. Publication
+advances master and main together by an ordinary atomic fast-forward push, also
+updating the development branch. Independent remote-SHA verification and local
+artifact hashes are recorded in the ignored `dist/community-checkpoint.json`;
+a local commit alone does not establish GitHub publication.
