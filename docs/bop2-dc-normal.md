@@ -66,8 +66,10 @@ the first reached no-go analysis. It returns only reached analysis states;
 future observations do not affect earlier decisions. Calling `monitor` alone
 does not remember a previous stop.
 
-`simulate_bop2_dc_normal` generates independent complete Normal outcomes and
-replays each trial serially. Its four decision labels are early no-go, final
+`simulate_bop2_dc_normal` generates independent complete Normal outcomes in
+coordinates centered on the truth mean, shifting the prior and clinical
+thresholds by the same amount. This preserves simulated variation at large
+absolute means. It replays each trial serially. Its four decision labels are early no-go, final
 go, final consider and final no-go. Total no-go probability is the sum of early
 and final no-go. Returned probabilities have binomial Monte Carlo standard
 errors; expected enrollment has an ordinary sample standard error. Compact

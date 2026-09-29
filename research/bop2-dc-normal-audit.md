@@ -31,6 +31,15 @@ centered posterior location and origin separately; the absolute-location
 property is only their rounded sum. The shifted and original probabilities
 now agree. An affine regression accompanies the correction.
 
+The simulator also works in truth-centered coordinates: it generates residuals
+and shifts the prior and thresholds, avoiding rounded absolute observations.
+This matters even after the monitor fix, because variation erased during
+generation cannot be recovered by subsequent centering. In a 32-trial,
+20-patient comparison at seed 0, the previous implementation changed decisions
+or enrollment for trials 21 and 24 solely from a `1e15` offset. The corrected
+implementation agrees exactly, and this discriminating case is the regression.
+The independent 64-path R comparison also still passes after the correction.
+
 ## Independent evidence
 
 `tools/reference_bop2_dc_normal.R` computes the NIG sufficient statistics and
@@ -55,6 +64,8 @@ NumPy random generators to agree.
 
 `tools/check_bop2_dc_normal.py` verifies 898 numeric summaries in 0.1083 seconds
 after imports, using 119.19 MiB peak resident memory and no reported swaps.
-The four focused tests, including the affine correction, passed in the worker.
+The five focused tests, including both affine corrections, passed in the worker;
+the parent independently verified old-code failure and corrected-code success
+for the simulation regression.
 No native executable, app-prior, RNG or optimizer parity is claimed, and no
 new CI workflow is added.

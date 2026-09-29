@@ -142,8 +142,10 @@ def test_normal_simulation_is_affine_invariant_for_large_truth_offset() -> None:
         prior_mean=shift,
         looks=[10, 20],
     )
-    base = simulate_bop2_dc_normal(base_design, 0.0, 1.1, n_trials=32, rng=611)
-    shifted = simulate_bop2_dc_normal(shifted_design, shift, 1.1, n_trials=32, rng=611)
+    # Before truth-centering, seed 0 changed the decision/enrollment of trials
+    # 21 and 24 merely by shifting these exactly representable model inputs.
+    base = simulate_bop2_dc_normal(base_design, 0.0, 1.1, n_trials=32, rng=0)
+    shifted = simulate_bop2_dc_normal(shifted_design, shift, 1.1, n_trials=32, rng=0)
     np.testing.assert_array_equal(shifted.sample_size, base.sample_size)
     np.testing.assert_array_equal(shifted.decision, base.decision)
     np.testing.assert_array_equal(shifted.decision_count, base.decision_count)
