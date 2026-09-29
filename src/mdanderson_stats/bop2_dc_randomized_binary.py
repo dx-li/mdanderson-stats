@@ -400,7 +400,33 @@ class BOP2DCRandomizedBinaryDesign:
             raise ValueError("randomized-arm OC result exceeds its retained-cell bound")
 
         posterior_tables = self._posterior_tables()
+        return self._operating_characteristics_with_tables(
+            control_rate, treatment_rate, posterior_tables
+        )
+
+    def _operating_characteristics_with_tables(
+        self,
+        control_rate: FloatArray,
+        treatment_rate: FloatArray,
+        posterior_tables: tuple[tuple[FloatArray, FloatArray, FloatArray, FloatArray], ...],
+    ) -> BOP2DCRandomizedBinaryOperatingCharacteristics:
+        """Run exact OC recursion using posterior tables shared across candidates."""
+        control_rate, treatment_rate = np.broadcast_arrays(control_rate, treatment_rate)
         shape = control_rate.shape
+        scenario_count = int(control_rate.size)
+        if scenario_count > _MAX_OC_SCENARIOS:
+            raise ValueError("too many randomized-arm truth scenarios")
+        control_prefix = np.r_[0, np.cumsum(self.arm_assignments == 0)]
+        treatment_prefix = np.r_[0, np.cumsum(self.arm_assignments == 1)]
+        transition_work = sum(
+            (int(control_prefix[n]) + 1) * (int(treatment_prefix[n]) + 1)
+            for n in range(1, self.max_subjects + 1)
+        )
+        if scenario_count * transition_work > _MAX_RECURSION_WORK:
+            raise ValueError("exact randomized-arm recursion exceeds its work bound")
+        result_cells = scenario_count * (8 * len(self.looks) + 8)
+        if result_cells > _MAX_OC_RESULT_CELLS:
+            raise ValueError("randomized-arm OC result exceeds its retained-cell bound")
         scenarios = list(zip(control_rate.ravel(), treatment_rate.ravel(), strict=True))
         stop = np.zeros((scenario_count, self.looks.size), dtype=np.float64)
         graduate = np.zeros_like(stop)
