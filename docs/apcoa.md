@@ -94,6 +94,38 @@ axes = plot_adjusted_pcoa(result, np.repeat(["Site A", "Site B", "Site C"], 8))
 The plotting function returns original and adjusted axes, colored consistently by
 nonempty text group labels. It requires at least two retained positive axes in
 both ordinations. It does not show/save a figure or change the global backend.
+Native-style overlays are opt-in:
+
+```python
+from mdanderson_stats import plot_adjusted_pcoa
+
+axes = plot_adjusted_pcoa(
+    result,
+    np.repeat(["Site A", "Site B", "Site C"], 8),
+    show_ellipses=True,
+    show_medoid_connectors=True,
+)
+```
+
+`adjusted_pcoa_plot_geometry(result, groups, ...)` returns the same immutable
+group geometry without importing Matplotlib: 52 ellipse vertices, rank, and
+zero-based original/adjusted medoid sample indices. Data ellipses follow the
+contemporaneous `car::dataEllipse` convention used by aPCoA 1.3: ordinary group
+means, sample covariance, and radius `sqrt(2 * F(0.95; 2, n_group-1))`. A
+rank-one covariance yields a collapsed line; a zero-rank covariance is
+undefined and raises rather than adding jitter. The aPCoA package does not pin
+its `car` dependency, so this records the recovered `car` 3.0-12 implementation,
+not a guarantee about every native app runtime.
+
+The source's `cluster::pam(profile, 1)` treats rows of each within-group matrix
+as objects and its columns as features. Original centers use rows of the
+within-group distance matrix; adjusted centers use rows of the adjusted Gram
+submatrix. The one-medoid BUILD objective is based on Euclidean distances
+between those row profiles, not on a medoid of the displayed two-dimensional
+coordinates. The returned center indices identify the sample whose point is
+connected to each group member. Group-size-cubed work is checked before
+calculation (50 million operation bound); the largest row-profile matrix is
+limited to 4,000,000 cells. The Python display defaults keep both overlays off.
 
 ## Validation and remaining coverage
 
@@ -103,10 +135,15 @@ extreme units, redundant covariates, complete projection and invalid distances.
 For the native comparison, the function was sourced directly alongside ape's
 `pcoa` function and `cluster::pam`; native ellipses and medoid connectors were
 disabled. Synthetic Bray–Curtis distances were supplied. The adjusted positive
-coordinate inner-product matrices agree within 6e-16. No R dependency is required
-by Python or its tests.
+coordinate inner-product matrices agree within 6e-16. New overlay references
+reconstruct the aPCoA matrix/projection equations in base R and use `car` 3.0-12
+ellipse geometry, `stats::cov.wt` and `cluster` 2.1.6 `pam`; four group/panel
+geometries, 208 ellipse vertices, and ten medoid tie cases are checked. No R
+dependency is required by Python or its tests. See the
+[overlay source audit](../research/apcoa-plot-geometry-audit.md).
 
-**Catalog status is partial.** Core ordinations and basic comparison plots are
-implemented. Native confidence ellipses, medoid connectors, interactive file/formula
-handling and a full app workflow audit remain pending. Matching this native
-numerical fixture does not establish parity for every input or display option.
+**Catalog status is partial.** Core ordinations and opt-in native-style
+data ellipses/medoid connectors are implemented. Interactive file/formula
+handling, exact visual styling, and a full app workflow audit remain pending.
+Matching these numerical fixtures does not establish parity for every input or
+display option.
