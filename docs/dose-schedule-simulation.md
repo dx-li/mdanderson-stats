@@ -19,11 +19,21 @@ prior = DoseSchedulePrior(
     dose_count=2,
 )
 oc = simulate_dose_schedule_operating_characteristics(
-    truth_area=[0.08, 0.16], truth_peak=[2, 2], truth_tail=[3, 3],
-    prior=prior, schedules=[[0], [0, 1]], horizon=6,
-    arrival_times=[0, 2, 4], max_patients=3,
-    toxicity_limit=0.5, upper_probability=0.8, target=0.2,
-    trials=6, draws=8, warmup=0, chains=2,
+    truth_area=[0.08, 0.16],
+    truth_peak=[2, 2],
+    truth_tail=[3, 3],
+    prior=prior,
+    schedules=[[0], [0, 1]],
+    horizon=6,
+    arrival_times=[0, 2, 4],
+    max_patients=3,
+    toxicity_limit=0.5,
+    upper_probability=0.8,
+    target=0.2,
+    trials=6,
+    draws=8,
+    warmup=0,
+    chains=2,
     rng=np.random.default_rng(7501),
 )
 assert oc.selected_count.sum() + oc.no_selection_count == oc.trials

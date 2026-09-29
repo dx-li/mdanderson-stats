@@ -59,11 +59,19 @@ the package and reuse that encoding for prediction.
 ```python
 category_x = np.column_stack((x[:, 0], np.tile([10, 20, 30, 40], 40)))
 category_fit = fit_random_survival_forest(
-    time, event, category_x, categorical_features=[1],
-    n_trees=16, nodesize=5, random_state=29, compute_oob=True,
+    time,
+    event,
+    category_x,
+    categorical_features=[1],
+    n_trees=16,
+    nodesize=5,
+    random_state=29,
+    compute_oob=True,
 )
 category_prediction = predict_random_survival_forest(
-    category_fit, [1, 3, 5], [[0, 10], [0, 20], [0, 30], [0, 40]],
+    category_fit,
+    [1, 3, 5],
+    [[0, 10], [0, 20], [0, 30], [0, 40]],
 )
 assert category_prediction.survival.shape == (4, 3)
 ```

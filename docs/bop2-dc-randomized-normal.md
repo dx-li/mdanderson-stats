@@ -13,16 +13,27 @@ from mdanderson_stats import (
 )
 
 design = bop2_dc_randomized_normal_design(
-    4, theta_lrv=0, theta_cmv=.5,
-    control_prior=[.25, 4, 2, 3], treatment_prior=[.25, 4, 2, 3],
-    arm_assignments=[0, 1, 0, 1], looks=[2, 4],
-    lambda_lrv=.5, lambda_cmv=.5, graduate_at_interim=True,
+    4,
+    theta_lrv=0,
+    theta_cmv=0.5,
+    control_prior=[0.25, 4, 2, 3],
+    treatment_prior=[0.25, 4, 2, 3],
+    arm_assignments=[0, 1, 0, 1],
+    looks=[2, 4],
+    lambda_lrv=0.5,
+    lambda_cmv=0.5,
+    graduate_at_interim=True,
 )
-trial = design.replay([0, .5, .25, 1])
+trial = design.replay([0, 0.5, 0.25, 1])
 print(trial.terminal_decision, len(trial.outcomes_observed))
 oc = simulate_bop2_dc_randomized_normal(
-    design, control_mean=.25, control_sd=1, treatment_mean=.5, treatment_sd=1,
-    n_trials=12, rng=815,
+    design,
+    control_mean=0.25,
+    control_sd=1,
+    treatment_mean=0.5,
+    treatment_sd=1,
+    n_trials=12,
+    rng=815,
 )
 print(dict(zip(oc.decision_labels, oc.decision_probability)))
 print(oc.expected_sample_size, oc.enrollment_mcse)

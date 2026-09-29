@@ -16,11 +16,13 @@ truth = dict(
 )
 summary = simulate_parallel_phase12_oc(**truth, n_trials=4, seed=8503, optimal_arms=(3,))
 np.testing.assert_allclose(
-    summary.selection_probability.sum() + summary.no_selection_probability, 1,
+    summary.selection_probability.sum() + summary.no_selection_probability,
+    1,
 )
 assert summary.total_enrollment == summary.treated_total.sum()
 first = simulate_parallel_phase12(
-    **truth, rng=np.random.default_rng(summary.per_trial_seeds[0]),
+    **truth,
+    rng=np.random.default_rng(summary.per_trial_seeds[0]),
 )
 assert first.phase == "complete"
 ```

@@ -19,11 +19,18 @@ patients across both arms.
 from mdanderson_stats import bop2_dc_randomized_paired_design
 
 design = bop2_dc_randomized_paired_design(
-    4, "efficacy_toxicity", lrv=(0, 0), cmv=(.3, -.1),
-    control_prior=(2, 1, 1, 2), treatment_prior=(1, 3, 2, 1),
-    arm_assignments=(0, 1, 0, 1), looks=(2, 4),
-    lambda_lrv=(.35, .45), lambda_cmv=(.4, .6),
-    gamma_lrv=(.5, .5), gamma_cmv=(.5, .5),
+    4,
+    "efficacy_toxicity",
+    lrv=(0, 0),
+    cmv=(0.3, -0.1),
+    control_prior=(2, 1, 1, 2),
+    treatment_prior=(1, 3, 2, 1),
+    arm_assignments=(0, 1, 0, 1),
+    looks=(2, 4),
+    lambda_lrv=(0.35, 0.45),
+    lambda_cmv=(0.4, 0.6),
+    gamma_lrv=(0.5, 0.5),
+    gamma_cmv=(0.5, 0.5),
     graduate_at_interim=True,
 )
 state = design.monitor((0, 0, 1, 0), (0, 1, 0, 0))
@@ -92,24 +99,33 @@ from mdanderson_stats import (
 )
 
 # Rows are control and treatment; columns retain the four-category order.
-futile = ((.10, .20, .15, .55), (.12, .18, .18, .52))
-effective = ((.10, .20, .15, .55), (.05, .60, .05, .30))
+futile = ((0.10, 0.20, 0.15, 0.55), (0.12, 0.18, 0.18, 0.52))
+effective = ((0.10, 0.20, 0.15, 0.55), (0.05, 0.60, 0.05, 0.30))
 oc = bop2_dc_randomized_paired_operating_characteristics(
-    design, (futile, effective),
+    design,
+    (futile, effective),
 )
 print(oc.decision_labels, oc.expected_sample_size)
 
 fit = optimize_bop2_dc_randomized_paired(
-    4, "efficacy_toxicity", lrv=(0, 0), cmv=(.3, -.1),
+    4,
+    "efficacy_toxicity",
+    lrv=(0, 0),
+    cmv=(0.3, -0.1),
     futile_joint_probabilities=futile,
     effective_joint_probabilities=effective,
-    control_prior=(2, 1, 1, 2), treatment_prior=(1, 3, 2, 1),
-    arm_assignments=(0, 1, 0, 1), looks=(2, 4),
-    lambda_lrv_grid=((.35, .45), (.55, .65)),
-    lambda_cmv_grid=((.4, .6), (.5, .7)),
-    gamma_lrv_grid=(0, .5), gamma_cmv_grid=(0, .5),
-    false_go_limit=.1, false_no_go_limit=.85,
-    objective="cgr", graduate_at_interim=True,
+    control_prior=(2, 1, 1, 2),
+    treatment_prior=(1, 3, 2, 1),
+    arm_assignments=(0, 1, 0, 1),
+    looks=(2, 4),
+    lambda_lrv_grid=((0.35, 0.45), (0.55, 0.65)),
+    lambda_cmv_grid=((0.4, 0.6), (0.5, 0.7)),
+    gamma_lrv_grid=(0, 0.5),
+    gamma_cmv_grid=(0, 0.5),
+    false_go_limit=0.1,
+    false_no_go_limit=0.85,
+    objective="cgr",
+    graduate_at_interim=True,
 )
 print(fit.selected_index, fit.candidates.correct_go_rate)
 ```
@@ -158,15 +174,24 @@ the same design is inexpensive.
 from mdanderson_stats import simulate_bop2_dc_randomized_paired
 
 larger = bop2_dc_randomized_paired_design(
-    40, "multiple_efficacy", lrv=(.1, .15), cmv=(.3, .25),
-    control_prior=(1, 2, 3, 1), treatment_prior=(2, 1, 1, 3),
-    arm_assignments=(0, 1) * 20, looks=(10, 20, 40),
-    lambda_lrv=(.35, .45), lambda_cmv=(.4, .6),
+    40,
+    "multiple_efficacy",
+    lrv=(0.1, 0.15),
+    cmv=(0.3, 0.25),
+    control_prior=(1, 2, 3, 1),
+    treatment_prior=(2, 1, 1, 3),
+    arm_assignments=(0, 1) * 20,
+    looks=(10, 20, 40),
+    lambda_lrv=(0.35, 0.45),
+    lambda_cmv=(0.4, 0.6),
     graduate_at_interim=True,
 )
 simulation = simulate_bop2_dc_randomized_paired(
-    larger, (.1, .2, .15, .55), (.4, .2, .15, .25),
-    n_trials=100, rng=2026,
+    larger,
+    (0.1, 0.2, 0.15, 0.55),
+    (0.4, 0.2, 0.15, 0.25),
+    n_trials=100,
+    rng=2026,
 )
 print(simulation.terminal_names, simulation.terminal_probabilities)
 print(simulation.terminal_mcse, simulation.expected_sample_size)

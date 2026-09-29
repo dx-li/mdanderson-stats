@@ -23,16 +23,25 @@ import numpy as np
 from mdanderson_stats import replay_phase2_delay_calendar
 
 model = dict(
-    endpoint="response", threshold=0.3, cutoff=0.95,
-    prior_alpha=0.1, prior_beta=0.2,
-    intervals=2, hazard_c=0.01, lambda0=0.1,
-    burn_in=100, hazard_draws=400,
+    endpoint="response",
+    threshold=0.3,
+    cutoff=0.95,
+    prior_alpha=0.1,
+    prior_beta=0.2,
+    intervals=2,
+    hazard_c=0.01,
+    lambda0=0.1,
+    burn_in=100,
+    hazard_draws=400,
 )
 trial = replay_phase2_delay_calendar(
     arrival_times=[0, 1, 2, 3, 4, 5],
     latent_event_times=[0.5, np.inf, 2, np.inf, 0.25, np.inf],
-    analysis_times=[1, 3, 5, 7], final_analysis="complete_window",
-    window=3, minimum_completed=5, random_state=141,
+    analysis_times=[1, 3, 5, 7],
+    final_analysis="complete_window",
+    window=3,
+    minimum_completed=5,
+    random_state=141,
     **model,
 )
 assert trial.looks[0].status == "gate_not_reached"
@@ -70,10 +79,15 @@ from mdanderson_stats import (
 )
 
 scenario = dict(
-    event_probability=0.3, late_fraction=0.7,
-    accrual_rate=2, max_subjects=8,
-    analysis_times=[3, 5, 7, 9], final_analysis="complete_window",
-    window=3, minimum_completed=5, **model,
+    event_probability=0.3,
+    late_fraction=0.7,
+    accrual_rate=2,
+    max_subjects=8,
+    analysis_times=[3, 5, 7, 9],
+    final_analysis="complete_window",
+    window=3,
+    minimum_completed=5,
+    **model,
 )
 one = simulate_phase2_delay_calendar(**scenario, random_state=2026)
 repeated = simulate_phase2_delay_calendar(**scenario, random_state=one.seed)

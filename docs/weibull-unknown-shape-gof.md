@@ -11,10 +11,14 @@ from mdanderson_stats import weibull_unknown_shape_bayesian_gof
 
 prior_mean = np.log([1.5, 2.0])  # log shape, log scale
 fit = weibull_unknown_shape_bayesian_gof(
-    [.5, 1, 1.5, 2.2, 3],
-    prior_mean=prior_mean, prior_covariance=[[.16, .056], [.056, .49]],
-    initial=prior_mean + [[-.2, -.35], [-.2, .35], [.2, -.35], [.2, .35]],
-    draws=800, warmup=300, chains=4, bins=3,
+    [0.5, 1, 1.5, 2.2, 3],
+    prior_mean=prior_mean,
+    prior_covariance=[[0.16, 0.056], [0.056, 0.49]],
+    initial=prior_mean + [[-0.2, -0.35], [-0.2, 0.35], [0.2, -0.35], [0.2, 0.35]],
+    draws=800,
+    warmup=300,
+    chains=4,
+    bins=3,
     rng=np.random.default_rng(660940),
 )
 assert fit.parameters.shape == (4, 800, 2)

@@ -41,19 +41,24 @@ from mdanderson_stats import (
     cibolus_prior_predictive_moments,
 )
 
-mean = np.log([.5, .7, .8, .08, 1.4, 1.6, .03, .9, .12, .25, .2])
+mean = np.log([0.5, 0.7, 0.8, 0.08, 1.4, 1.6, 0.03, 0.9, 0.12, 0.25, 0.2])
 mean[6] = -2.0
 sd = np.zeros(11)
 sd[6] = 0.6  # Only log(beta0) varies in this small demonstration.
-concentrations, boluses, endpoints = [.2, .4], [.1, .2], [.5, 1.0]
-joint = cibolus_predict(
-    mean, concentrations, boluses, endpoints, utility=np.zeros((4, 2))
-).joint
+concentrations, boluses, endpoints = [0.2, 0.4], [0.1, 0.2], [0.5, 1.0]
+joint = cibolus_predict(mean, concentrations, boluses, endpoints, utility=np.zeros((4, 2))).joint
 calibration = calibrate_cibolus_prior(
-    concentrations, boluses, endpoints, joint,
-    repetitions=2, patients_per_regimen=2,
-    pseudo_prior=CiBolusPrior(mean, sd), resulting_sd=np.full(11, .25),
-    pseudo_draws=32, pseudo_warmup=16, pseudo_chains=2,
+    concentrations,
+    boluses,
+    endpoints,
+    joint,
+    repetitions=2,
+    patients_per_regimen=2,
+    pseudo_prior=CiBolusPrior(mean, sd),
+    resulting_sd=np.full(11, 0.25),
+    pseudo_draws=32,
+    pseudo_warmup=16,
+    pseudo_chains=2,
     rng=np.random.default_rng(8611),
 )
 assert calibration.joint_counts.sum() == 16
@@ -67,8 +72,13 @@ establish precision. The returned standard deviations are exactly the supplied
 
 ```python
 moments = cibolus_prior_predictive_moments(
-    calibration.prior, concentrations, boluses, endpoints,
-    draws=32, chains=2, rng=np.random.default_rng(8612),
+    calibration.prior,
+    concentrations,
+    boluses,
+    endpoints,
+    draws=32,
+    chains=2,
+    rng=np.random.default_rng(8612),
 )
 assert moments.source_probability_ess.shape == (2, 2, 4)
 print(moments.source_probability_names, moments.source_probability_ess)

@@ -12,24 +12,35 @@ from mdanderson_stats import BARDLogisticPrior, run_bard_blrm_trial
 arrivals = np.arange(0, 5.01, 0.5)
 shape = (len(arrivals), 3)
 trial = run_bard_blrm_trial(
-    doses=[1, 2, 3], reference_dose=1,
+    doses=[1, 2, 3],
+    reference_dose=1,
     prior=BARDLogisticPrior([-3, 0], [0, 0]),
-    target_interval=[0.16, 0.6], eta=0.3,
+    target_interval=[0.16, 0.6],
+    eta=0.3,
     arrival_times=arrivals,
     potential_toxicities=np.zeros(shape, dtype=bool),
     potential_responses=np.zeros(shape, dtype=bool),
     dlt_assessment_delays=np.full(shape, 2.0),
     response_assessment_delays=np.zeros(shape),
-    dlt_window=2, cohort_size=2, max_escalation_patients=4,
-    backfill_evaluable_cap=3, draws=8, warmup=0, chains=2,
-    rng=np.random.default_rng(165), boundary_policy="stop",
-    accelerated_titration=True, titration_cap=3,
+    dlt_window=2,
+    cohort_size=2,
+    max_escalation_patients=4,
+    backfill_evaluable_cap=3,
+    draws=8,
+    warmup=0,
+    chains=2,
+    rng=np.random.default_rng(165),
+    boundary_policy="stop",
+    accelerated_titration=True,
+    titration_cap=3,
     potential_grade2_toxicities=np.zeros(shape, dtype=bool),
     grade2_assessment_delays=np.full(shape, 2.0),
 )
 assert [(p.arrival_time, p.dose, p.role) for p in trial.patients] == [
-    (0.0, 1, "titration"), (2.0, 2, "titration"),
-    (4.0, 3, "titration"), (4.5, 3, "titration_topup"),
+    (0.0, 1, "titration"),
+    (2.0, 2, "titration"),
+    (4.0, 3, "titration"),
+    (4.5, 3, "titration_topup"),
 ]
 assert trial.titration_exit_reason == "highest_dose"
 assert trial.titration_patients == 3

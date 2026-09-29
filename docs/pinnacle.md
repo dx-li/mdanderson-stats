@@ -86,12 +86,19 @@ and noise conventions. Continuing the example above:
 from mdanderson_stats import PinnacleDenoiseSettings
 
 settings = PinnacleDenoiseSettings(
-    filter_length=6, threshold_multiplier=3.6, convention="rwt", levels=3,
+    filter_length=6,
+    threshold_multiplier=3.6,
+    convention="rwt",
+    levels=3,
     max_work_bytes=64 * 1024 * 1024,
 )
 individual = run_pinnacle(
-    gels, region=(4, 28, 4, 28), levels=3, peak_radius=1,
-    background_radius=(2, 5), normalization="image_volume",
+    gels,
+    region=(4, 28, 4, 28),
+    levels=3,
+    peak_radius=1,
+    background_radius=(2, 5),
+    normalization="image_volume",
     quantification_denoising=settings,
 )
 np.testing.assert_array_equal(individual.peaks.coordinates, result.peaks.coordinates)

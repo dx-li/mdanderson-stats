@@ -17,11 +17,25 @@ time = np.array([0, 1, 1, 2, 2, 3, 4, 4, 5, 6, 7, 8.0])
 event = np.array([1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0])
 x = np.array([0.2, -1, 0.5, 2, -0.8, 1.5, 0, 1, 3, -0.5, 2.5, 4])
 fit = fit_random_survival_forest(
-    time, event, x, n_trees=12, nodesize=1, mtry=1, nsplit=0,
-    replace=True, ntime=0, random_state=411, compute_oob=True,
+    time,
+    event,
+    x,
+    n_trees=12,
+    nodesize=1,
+    mtry=1,
+    nsplit=0,
+    replace=True,
+    ntime=0,
+    random_state=411,
+    compute_oob=True,
 )
 importance = random_split_random_survival_forest_importance(
-    fit, time, event, x, block_size=5, random_state=1772,
+    fit,
+    time,
+    event,
+    x,
+    block_size=5,
+    random_state=1772,
 )
 assert importance.block_count == 2
 assert importance.ignored_tree_indices.tolist() == [10, 11]

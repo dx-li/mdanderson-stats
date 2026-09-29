@@ -9,16 +9,23 @@ probability with two signed clinical margins. Each arm has its own Beta prior.
 from mdanderson_stats import bop2_dc_randomized_binary_design
 
 design = bop2_dc_randomized_binary_design(
-    4, theta_lrv=0, theta_cmv=.2,
-    control_prior=[1, 1], treatment_prior=[1, 1],
-    arm_assignments=[0, 1, 0, 1], looks=[2, 4],
-    lambda_lrv=.6, lambda_cmv=.5, gamma_lrv=.5, gamma_cmv=.5,
+    4,
+    theta_lrv=0,
+    theta_cmv=0.2,
+    control_prior=[1, 1],
+    treatment_prior=[1, 1],
+    arm_assignments=[0, 1, 0, 1],
+    looks=[2, 4],
+    lambda_lrv=0.6,
+    lambda_cmv=0.5,
+    gamma_lrv=0.5,
+    gamma_cmv=0.5,
     graduate_at_interim=True,
 )
 trial = design.replay([0, 1, 0, 1])
 print(trial.terminal_decision, len(trial.responses_observed))
 
-oc = design.operating_characteristics([.2, .2], [.2, .7])
+oc = design.operating_characteristics([0.2, 0.2], [0.2, 0.7])
 print(oc.graduate.sum(axis=-1) + oc.final_go)
 print(oc.no_go_probability, oc.expected_sample_size)
 ```
@@ -98,14 +105,24 @@ and the effective effect must meet CMV.
 from mdanderson_stats import optimize_bop2_dc_randomized_binary
 
 calibrated = optimize_bop2_dc_randomized_binary(
-    4, theta_lrv=0, theta_cmv=.2,
-    futile_truth=(.2, .2), effective_truth=(.1, .7),
-    control_prior=(1, 2), treatment_prior=(2, 1),
-    arm_assignments=(0, 1, 0, 1), looks=(2, 4),
-    lambda_lrv_grid=(.6, .8), lambda_cmv_grid=(.2, .4),
-    gamma_lrv_grid=(0, .5), gamma_cmv_grid=(0, .5),
-    false_go_limit=.87, false_no_go_limit=.05, false_consider_limit=.2,
-    graduate_at_interim=True, objective="cgr",
+    4,
+    theta_lrv=0,
+    theta_cmv=0.2,
+    futile_truth=(0.2, 0.2),
+    effective_truth=(0.1, 0.7),
+    control_prior=(1, 2),
+    treatment_prior=(2, 1),
+    arm_assignments=(0, 1, 0, 1),
+    looks=(2, 4),
+    lambda_lrv_grid=(0.6, 0.8),
+    lambda_cmv_grid=(0.2, 0.4),
+    gamma_lrv_grid=(0, 0.5),
+    gamma_cmv_grid=(0, 0.5),
+    false_go_limit=0.87,
+    false_no_go_limit=0.05,
+    false_consider_limit=0.2,
+    graduate_at_interim=True,
+    objective="cgr",
 )
 print(calibrated.selected_index)
 print(calibrated.candidates.expected_sample_size[:, calibrated.selected_index])

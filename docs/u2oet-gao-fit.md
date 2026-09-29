@@ -16,11 +16,22 @@ from mdanderson_stats import (
 )
 
 names = u2oet_gao_parameter_names(2, 2)
-mean = np.array([
-    -1, 0.3, 0.2, -0.1, 0,          # efficacy coefficients and log-lambda
-    -0.4, -1.2, -0.05, 0.15, 0,    # toxicity coefficients and log-lambda
-    np.log(0.4), np.arctanh(0.55),   # shared log-kappa and Fisher-z
-])
+mean = np.array(
+    [
+        -1,
+        0.3,
+        0.2,
+        -0.1,
+        0,  # efficacy coefficients and log-lambda
+        -0.4,
+        -1.2,
+        -0.05,
+        0.15,
+        0,  # toxicity coefficients and log-lambda
+        np.log(0.4),
+        np.arctanh(0.55),  # shared log-kappa and Fisher-z
+    ]
+)
 sd = np.zeros(len(names))
 sd[0] = 0.5  # One free coordinate keeps this illustrative example short.
 initial = np.tile(mean, (2, 1))
@@ -30,9 +41,17 @@ counts[0, 0, 1, 0] = 3
 partial = np.zeros((2, 2, 2), dtype=int)
 partial[1, 0, 1] = 1  # A separate patient with toxicity but no efficacy outcome.
 fit = fit_u2oet_gao(
-    [1, 3], [2, 5], counts, toxicity_only=partial,
-    prior_mean=mean, prior_sd=sd, initial=initial,
-    draws=64, warmup=32, chains=2, rng=np.random.default_rng(7707),
+    [1, 3],
+    [2, 5],
+    counts,
+    toxicity_only=partial,
+    prior_mean=mean,
+    prior_sd=sd,
+    initial=initial,
+    draws=64,
+    warmup=32,
+    chains=2,
+    rng=np.random.default_rng(7707),
 )
 assert fit.parameters.shape == (2, 64, 12)
 assert fit.joint.shape == (2, 64, 2, 2, 2, 2)

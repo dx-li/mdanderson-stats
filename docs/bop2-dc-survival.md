@@ -67,17 +67,31 @@ from mdanderson_stats import (
 )
 
 design = bop2_dc_survival_design(
-    6, lrv=3, cmv=5, looks=[2, 4, 6],
-    prior_shape=1, prior_scale=2, lambda_lrv=.8, lambda_cmv=.5,
+    6,
+    lrv=3,
+    cmv=5,
+    looks=[2, 4, 6],
+    prior_shape=1,
+    prior_scale=2,
+    lambda_lrv=0.8,
+    lambda_cmv=0.5,
 )
 trial = run_bop2_dc_survival_trial(
-    design, [.5, 1, 2, 4, 5, 6], [np.inf]*6, final_followup=12,
+    design,
+    [0.5, 1, 2, 4, 5, 6],
+    [np.inf] * 6,
+    final_followup=12,
 )
 assert trial.decision == "final_go"
 assert trial.events == 0
 oc = simulate_bop2_dc_survival(
-    design, true_median=6, accrual_rate=1, final_followup=12,
-    n_trials=1000, arrival="poisson", rng=156,
+    design,
+    true_median=6,
+    accrual_rate=1,
+    final_followup=12,
+    n_trials=1000,
+    arrival="poisson",
+    rng=156,
 )
 assert oc.decision_count.sum() == 1000
 print(dict(zip(oc.decision_labels, oc.decision_probability)))

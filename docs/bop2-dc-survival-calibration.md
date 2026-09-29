@@ -15,13 +15,28 @@ futile truth must be positive and smaller than the effective truth.
 from mdanderson_stats import optimize_bop2_dc_survival
 
 result = optimize_bop2_dc_survival(
-    6, lrv=3, cmv=5, theta_futile=1.5, theta_effective=8,
-    lambda_lrv_grid=[.4, .7, .9], lambda_cmv_grid=[.1, .3, .5],
-    gamma_lrv_grid=[0, .5], gamma_cmv_grid=[.5],
-    prior_shape=1, prior_scale=2, looks=[2, 4, 6],
-    accrual_rate=1, final_followup=4, arrival="poisson",
-    false_go_limit=.04, false_no_go_limit=.6, false_consider_limit=.8,
-    objective="cgr", n_trials=64, n_validation=48, rng=1560930,
+    6,
+    lrv=3,
+    cmv=5,
+    theta_futile=1.5,
+    theta_effective=8,
+    lambda_lrv_grid=[0.4, 0.7, 0.9],
+    lambda_cmv_grid=[0.1, 0.3, 0.5],
+    gamma_lrv_grid=[0, 0.5],
+    gamma_cmv_grid=[0.5],
+    prior_shape=1,
+    prior_scale=2,
+    looks=[2, 4, 6],
+    accrual_rate=1,
+    final_followup=4,
+    arrival="poisson",
+    false_go_limit=0.04,
+    false_no_go_limit=0.6,
+    false_consider_limit=0.8,
+    objective="cgr",
+    n_trials=64,
+    n_validation=48,
+    rng=1560930,
 )
 i = result.selected_index
 assert result.feasible[i]

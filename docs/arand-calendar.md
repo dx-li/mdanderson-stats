@@ -33,17 +33,26 @@ policy = ArandControllerPolicy(
 trial = arand_calendar_replay(
     arrival_times=np.arange(6, dtype=float),
     assignment_uniforms=[0.05, 0.95, 0.05, 0.95, 0.05, 0.95],
-    prior=[[1, 1], [1, 1]], family="binary",
-    binary_outcomes=np.tile([1, 0], (6, 1)), binary_window=1,
-    analysis_times=[0.5, 2.5], max_enrollment=6, max_duration=None,
-    final_followup=2, minimum_enrollment=2,
-    initial_equal_randomization=2, minimum_allocation=0.1,
-    final_winner_cutoff=0.95, policy=policy,
+    prior=[[1, 1], [1, 1]],
+    family="binary",
+    binary_outcomes=np.tile([1, 0], (6, 1)),
+    binary_window=1,
+    analysis_times=[0.5, 2.5],
+    max_enrollment=6,
+    max_duration=None,
+    final_followup=2,
+    minimum_enrollment=2,
+    initial_equal_randomization=2,
+    minimum_allocation=0.1,
+    final_winner_cutoff=0.95,
+    policy=policy,
 )
 np.testing.assert_array_equal(trial.assignments, [0, 1, 0, 1, 0, 1])
 # The final independent posteriors are Beta(4,1) and Beta(1,4).
 np.testing.assert_allclose(
-    trial.looks[-1].posterior_probability, [69/70, 1/70], atol=1e-10,
+    trial.looks[-1].posterior_probability,
+    [69 / 70, 1 / 70],
+    atol=1e-10,
 )
 assert trial.final_winner == 0
 assert trial.decision_duration == 5
@@ -73,18 +82,28 @@ time; `parameter="median"` requires priors and thresholds in median-time units.
 from mdanderson_stats import arand_survival_posterior
 
 survival = arand_calendar_replay(
-    arrival_times=[0, 1, 2, 3], assignment_uniforms=[0.05, 0.95, 0.05, 0.95],
-    prior=[[1, 1], [1, 1]], family="exponential",
+    arrival_times=[0, 1, 2, 3],
+    assignment_uniforms=[0.05, 0.95, 0.05, 0.95],
+    prior=[[1, 1], [1, 1]],
+    family="exponential",
     event_times=[[2, np.inf], [np.inf, 3], [4, np.inf], [np.inf, 2]],
-    analysis_times=[2.5, 4.5], max_enrollment=4, max_duration=None,
-    final_followup=4, minimum_enrollment=2, tuning=0,
+    analysis_times=[2.5, 4.5],
+    max_enrollment=4,
+    max_duration=None,
+    final_followup=4,
+    minimum_enrollment=2,
+    tuning=0,
     policy=policy,
 )
 expected = arand_survival_posterior(
-    events=[2, 2], exposure=[6, 5], prior=[[1, 1], [1, 1]], tuning=0,
+    events=[2, 2],
+    exposure=[6, 5],
+    prior=[[1, 1], [1, 1]],
+    tuning=0,
 )
 np.testing.assert_allclose(
-    survival.looks[-1].posterior_probability, expected.best.probability,
+    survival.looks[-1].posterior_probability,
+    expected.best.probability,
 )
 assert survival.looks[-1].observed == 4
 assert survival.decision_duration == 3

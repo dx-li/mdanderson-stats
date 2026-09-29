@@ -7,20 +7,29 @@ thresholds and go/consider/no-go decisions.
 
 ```python
 from mdanderson_stats import (
-    bop2_dc_normal_design, run_bop2_dc_normal_trial, simulate_bop2_dc_normal,
+    bop2_dc_normal_design,
+    run_bop2_dc_normal_trial,
+    simulate_bop2_dc_normal,
 )
 
 design = bop2_dc_normal_design(
-    20, theta_lrv=0, theta_cmv=.5,
-    prior_mean=0, prior_precision=.5, prior_shape=1.5, prior_scale=.75,
-    looks=[10, 20], lambda_lrv=.8, lambda_cmv=.5,
-    gamma_lrv=.5, gamma_cmv=.5,
+    20,
+    theta_lrv=0,
+    theta_cmv=0.5,
+    prior_mean=0,
+    prior_precision=0.5,
+    prior_shape=1.5,
+    prior_scale=0.75,
+    looks=[10, 20],
+    lambda_lrv=0.8,
+    lambda_cmv=0.5,
+    gamma_lrv=0.5,
+    gamma_cmv=0.5,
 )
-trial = run_bop2_dc_normal_trial(design, [-1, .5, 2, 3] * 5)
+trial = run_bop2_dc_normal_trial(design, [-1, 0.5, 2, 3] * 5)
 print(trial.decision, trial.enrolled)
 
-oc = simulate_bop2_dc_normal(design, true_mean=.3, true_sd=1.1,
-                            n_trials=256, rng=913)
+oc = simulate_bop2_dc_normal(design, true_mean=0.3, true_sd=1.1, n_trials=256, rng=913)
 print(dict(zip(oc.decision_labels, oc.decision_probability)))
 print(oc.decision_mcse, oc.mean_enrollment, oc.enrollment_mcse)
 ```

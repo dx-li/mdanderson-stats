@@ -24,17 +24,30 @@ from mdanderson_stats import (
 )
 
 normal = bop2_dc_randomized_normal_design(
-    4, theta_lrv=0, theta_cmv=.5,
-    control_prior=(0, 1, 2, 1), treatment_prior=(.25, .75, 2.5, 1.5),
-    arm_assignments=(0, 1, 0, 1), looks=(2, 4), graduate_at_interim=True,
+    4,
+    theta_lrv=0,
+    theta_cmv=0.5,
+    control_prior=(0, 1, 2, 1),
+    treatment_prior=(0.25, 0.75, 2.5, 1.5),
+    arm_assignments=(0, 1, 0, 1),
+    looks=(2, 4),
+    graduate_at_interim=True,
 )
 fit = optimize_bop2_dc_randomized_normal(
-    normal, futile_truth=(.25, .25), effective_truth=(-.25, 1),
-    futile_truth_sd=(.75, 1.25), effective_truth_sd=(.5, 1),
-    lambda_lrv_grid=(.4, .65), lambda_cmv_grid=(.2, .45),
-    gamma_lrv_grid=(0,), gamma_cmv_grid=(.5,),
-    false_go_limit=1, false_no_go_limit=1,
-    n_trials=6, n_validation=4, rng=1560929,
+    normal,
+    futile_truth=(0.25, 0.25),
+    effective_truth=(-0.25, 1),
+    futile_truth_sd=(0.75, 1.25),
+    effective_truth_sd=(0.5, 1),
+    lambda_lrv_grid=(0.4, 0.65),
+    lambda_cmv_grid=(0.2, 0.45),
+    gamma_lrv_grid=(0,),
+    gamma_cmv_grid=(0.5,),
+    false_go_limit=1,
+    false_no_go_limit=1,
+    n_trials=6,
+    n_validation=4,
+    rng=1560929,
 )
 print(fit.selected_index, fit.validation_feasible)
 print(fit.validation_oc.decision_probability)
@@ -57,17 +70,31 @@ from mdanderson_stats import (
 )
 
 survival = bop2_dc_randomized_survival_design(
-    4, median_lrv=0, median_cmv=.5,
-    control_prior=(2, 1.5), treatment_prior=(1.5, 1),
-    arm_assignments=(0, 1, 0, 1), looks=(2, 4), graduate_at_interim=True,
+    4,
+    median_lrv=0,
+    median_cmv=0.5,
+    control_prior=(2, 1.5),
+    treatment_prior=(1.5, 1),
+    arm_assignments=(0, 1, 0, 1),
+    looks=(2, 4),
+    graduate_at_interim=True,
 )
 fit = optimize_bop2_dc_randomized_survival(
-    survival, futile_truth=(1, 1), effective_truth=(1.5, 3.5),
-    lambda_lrv_grid=(.35, .65), lambda_cmv_grid=(.2, .45),
-    gamma_lrv_grid=(0,), gamma_cmv_grid=(.5,),
-    accrual_rate=2, final_followup=1.5, arrival="poisson",
-    false_go_limit=1, false_no_go_limit=1,
-    n_trials=6, n_validation=4, rng=1560930,
+    survival,
+    futile_truth=(1, 1),
+    effective_truth=(1.5, 3.5),
+    lambda_lrv_grid=(0.35, 0.65),
+    lambda_cmv_grid=(0.2, 0.45),
+    gamma_lrv_grid=(0,),
+    gamma_cmv_grid=(0.5,),
+    accrual_rate=2,
+    final_followup=1.5,
+    arrival="poisson",
+    false_go_limit=1,
+    false_no_go_limit=1,
+    n_trials=6,
+    n_validation=4,
+    rng=1560930,
 )
 print(fit.selected_index, fit.validation_feasible)
 print(fit.validation_effective.mean_enrollment)

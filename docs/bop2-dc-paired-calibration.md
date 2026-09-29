@@ -13,14 +13,21 @@ toxicity. Marginal rates alone do not determine the joint distribution.
 from mdanderson_stats import optimize_bop2_dc_paired
 
 result = optimize_bop2_dc_paired(
-    4, "multiple_efficacy", lrv=[.2, .15], cmv=[.5, .45],
-    futile_probabilities=[.04, .16, .16, .64],
-    effective_probabilities=[.3, .3, .2, .2],
-    prior=[.3, .2, .4, .1], looks=[2, 4],
-    lambda_lrv_grid=[[.4, .6], [.8, .9]],
-    lambda_cmv_grid=[[.15, .25], [.45, .55]],
-    gamma_lrv_grid=[[0, .5], [.5, 0]], gamma_cmv_grid=[[.5, .5]],
-    false_go_limit=.3, false_no_go_limit=.7, false_consider_limit=.9,
+    4,
+    "multiple_efficacy",
+    lrv=[0.2, 0.15],
+    cmv=[0.5, 0.45],
+    futile_probabilities=[0.04, 0.16, 0.16, 0.64],
+    effective_probabilities=[0.3, 0.3, 0.2, 0.2],
+    prior=[0.3, 0.2, 0.4, 0.1],
+    looks=[2, 4],
+    lambda_lrv_grid=[[0.4, 0.6], [0.8, 0.9]],
+    lambda_cmv_grid=[[0.15, 0.25], [0.45, 0.55]],
+    gamma_lrv_grid=[[0, 0.5], [0.5, 0]],
+    gamma_cmv_grid=[[0.5, 0.5]],
+    false_go_limit=0.3,
+    false_no_go_limit=0.7,
+    false_consider_limit=0.9,
     objective="cgr",
 )
 i = result.selected_index

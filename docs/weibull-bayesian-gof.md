@@ -13,13 +13,18 @@ from mdanderson_stats import weibull_fixed_shape_bayesian_gof
 beta = 1.7
 observed = np.array([0.5, 1.25, 2.0, 3.5])
 fit = weibull_fixed_shape_bayesian_gof(
-    observed, weibull_shape=beta,
-    prior_shape=2.25, prior_rate=0.8,
-    samples=2000, bins=3, rng=6607,
+    observed,
+    weibull_shape=beta,
+    prior_shape=2.25,
+    prior_rate=0.8,
+    samples=2000,
+    bins=3,
+    rng=6607,
 )
 assert fit.posterior_shape == 6.25
 np.testing.assert_allclose(
-    fit.log_posterior_rate, np.log(0.8 + np.sum(observed**beta)),
+    fit.log_posterior_rate,
+    np.log(0.8 + np.sum(observed**beta)),
 )
 assert fit.diagnostic.statistic.shape == (2000,)
 # Ordinary-scale posterior log rates; see the extreme-scale representation below.

@@ -9,13 +9,28 @@ observations across candidates and independent observations for validation.
 from mdanderson_stats import optimize_bop2_dc_normal
 
 result = optimize_bop2_dc_normal(
-    8, theta_lrv=0, theta_cmv=.5, theta_futile=-.5, theta_effective=1.5,
-    truth_sd=1.3, prior_mean=0, prior_precision=.5,
-    prior_shape=1.5, prior_scale=.75, looks=[2, 4, 8],
-    lambda_lrv_grid=[.6, .8, .95], lambda_cmv_grid=[.2, .5, .8],
-    gamma_lrv_grid=[0, .5], gamma_cmv_grid=[.5],
-    false_go_limit=.04, false_no_go_limit=.2, false_consider_limit=.8,
-    objective="cgr", n_trials=64, n_validation=48, rng=1560932,
+    8,
+    theta_lrv=0,
+    theta_cmv=0.5,
+    theta_futile=-0.5,
+    theta_effective=1.5,
+    truth_sd=1.3,
+    prior_mean=0,
+    prior_precision=0.5,
+    prior_shape=1.5,
+    prior_scale=0.75,
+    looks=[2, 4, 8],
+    lambda_lrv_grid=[0.6, 0.8, 0.95],
+    lambda_cmv_grid=[0.2, 0.5, 0.8],
+    gamma_lrv_grid=[0, 0.5],
+    gamma_cmv_grid=[0.5],
+    false_go_limit=0.04,
+    false_no_go_limit=0.2,
+    false_consider_limit=0.8,
+    objective="cgr",
+    n_trials=64,
+    n_validation=48,
+    rng=1560932,
 )
 i = result.selected_index
 assert result.candidates.feasible[i]

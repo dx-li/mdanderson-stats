@@ -28,7 +28,9 @@ inputs = dict(
     event_time_uniforms=[[0.0, 0.2, 0.0, 0.0, 0.7, 0.0, 0.0, 0.9]],
 )
 result = simulate_tite_crm_prior_ess(
-    **inputs, criterion="followup", assessment_delay=3,
+    **inputs,
+    criterion="followup",
+    assessment_delay=3,
 )
 assert result.latent_outcomes[0, -1] == 1
 assert result.observed_outcomes[0, -1] == 0

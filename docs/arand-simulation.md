@@ -54,9 +54,7 @@ result = simulate_arand(
     seed=2026,
 )
 np.testing.assert_allclose(result.mean_patients_per_arm.sum(), 6)
-np.testing.assert_allclose(
-    result.selected_probability.sum() + result.no_winner_probability, 1
-)
+np.testing.assert_allclose(result.selected_probability.sum() + result.no_winner_probability, 1)
 first = simulate_arand_trial(
     config,
     [0.8, 0.2],

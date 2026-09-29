@@ -68,9 +68,7 @@ backfill = bard_blrm_backfill(
 )
 assert backfill.selected_dose == 2
 
-selection = bard_blrm_select_mtd(
-    ptt=[0.5, 0.4, 0.4], pod=[0.1, 0.2, 0.4], treated=[5, 6, 12]
-)
+selection = bard_blrm_select_mtd(ptt=[0.5, 0.4, 0.4], pod=[0.1, 0.2, 0.4], treated=[5, 6, 12])
 assert selection.selected_dose == 2
 ```
 

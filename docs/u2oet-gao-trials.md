@@ -36,25 +36,42 @@ from mdanderson_stats import (
 )
 
 scenario = u2oet_scenario(
-    np.broadcast_to([.3, .7], (2, 2, 2)),
-    np.broadcast_to([.8, .2], (2, 2, 2)),
+    np.broadcast_to([0.3, 0.7], (2, 2, 2)),
+    np.broadcast_to([0.8, 0.2], (2, 2, 2)),
     association=0.0,
 )
-mean = np.array([-1, .3, .2, -.1, 0, -.4, -1.2, -.05, .15, 0, np.log(.4), 0])
+mean = np.array([-1, 0.3, 0.2, -0.1, 0, -0.4, -1.2, -0.05, 0.15, 0, np.log(0.4), 0])
 sd = np.zeros(12)
-sd[0] = .3
+sd[0] = 0.3
 criteria = U2OETCriteria(
-    efficacy_level=1, toxicity_level=1, min_efficacy=0, max_toxicity=1,
+    efficacy_level=1,
+    toxicity_level=1,
+    min_efficacy=0,
+    max_toxicity=1,
 )
+
+
 def run(seed):
     return simulate_u2oet_gao_trial(
-        [1, 3], [2, 5], scenario, [[20, 0], [100, 50]],
-        prior_mean=mean, prior_sd=sd, initial=(0, 0), criteria=criteria,
-        max_patients=4, cohort_size=2,
-        efficacy_window=(2, 2), toxicity_window=(.5, .5),
-        mean_interarrival=1, draws=16, warmup=8, chains=2,
+        [1, 3],
+        [2, 5],
+        scenario,
+        [[20, 0], [100, 50]],
+        prior_mean=mean,
+        prior_sd=sd,
+        initial=(0, 0),
+        criteria=criteria,
+        max_patients=4,
+        cohort_size=2,
+        efficacy_window=(2, 2),
+        toxicity_window=(0.5, 0.5),
+        mean_interarrival=1,
+        draws=16,
+        warmup=8,
+        chains=2,
         rng=np.random.default_rng(seed),
     )
+
 
 trial = run(7711)
 assert len(trial.patients.records) == 4

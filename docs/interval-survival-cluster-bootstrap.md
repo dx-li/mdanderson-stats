@@ -24,8 +24,13 @@ upper[latent >= 6] = np.inf
 # Synthetic unequal groups illustrate the resampling interface.
 cluster_ids = np.repeat(np.arange(16), [2, 4, 6, 8, 10] * 3 + [6])
 result = bootstrap_interval_survival_cluster_coefficients(
-    lower, upper, cluster_ids, x,
-    replicates=8, rng=29, on_fit_failure="record",
+    lower,
+    upper,
+    cluster_ids,
+    x,
+    replicates=8,
+    rng=29,
+    on_fit_failure="record",
 )
 assert result.cluster_draw_indices.shape == (8, 16)
 assert result.coefficient_samples.shape == (8, 2)

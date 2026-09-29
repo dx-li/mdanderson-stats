@@ -14,19 +14,32 @@ from mdanderson_stats import (
 )
 
 design = bop2_dc_randomized_survival_design(
-    4, median_lrv=0, median_cmv=.5,
-    control_prior=[2, 1], treatment_prior=[2, 1],
-    arm_assignments=[0, 1, 0, 1], looks=[2, 4],
-    lambda_lrv=.5, lambda_cmv=.5, graduate_at_interim=True,
+    4,
+    median_lrv=0,
+    median_cmv=0.5,
+    control_prior=[2, 1],
+    treatment_prior=[2, 1],
+    arm_assignments=[0, 1, 0, 1],
+    looks=[2, 4],
+    lambda_lrv=0.5,
+    lambda_cmv=0.5,
+    graduate_at_interim=True,
 )
 trial = run_bop2_dc_randomized_survival_trial(
-    design, enrollment_times=[0, .25, .5, .75],
-    event_times=[.5, np.inf, .25, np.inf], final_followup=.5,
+    design,
+    enrollment_times=[0, 0.25, 0.5, 0.75],
+    event_times=[0.5, np.inf, 0.25, np.inf],
+    final_followup=0.5,
 )
 print(trial.decision, trial.enrolled)
 oc = simulate_bop2_dc_randomized_survival(
-    design, control_true_median=2, treatment_true_median=3,
-    accrual_rate=4, final_followup=.5, n_trials=6, rng=419,
+    design,
+    control_true_median=2,
+    treatment_true_median=3,
+    accrual_rate=4,
+    final_followup=0.5,
+    n_trials=6,
+    rng=419,
 )
 print(dict(zip(oc.decision_labels, oc.decision_probability)))
 print(oc.mean_enrollment, oc.mean_events)

@@ -28,11 +28,17 @@ from mdanderson_stats import MDSHopeCovariates, mds_hope_score
 # Synthetic arithmetic example. The numeric cytogenetic input is deliberately
 # unlabelled: this does not establish the original application's category map.
 reference = MDSHopeCovariates(
-    age_years=70, anc_10e9_l=1.13, hemoglobin_g_dl=9.1,
-    platelets_10e9_l=79, marrow_blast_percent=7,
+    age_years=70,
+    anc_10e9_l=1.13,
+    hemoglobin_g_dl=9.1,
+    platelets_10e9_l=79,
+    marrow_blast_percent=7,
     cytogenetic_risk_score=3,
-    sf3b1_mutation=0, ezh2_mutation=0, tp53_hit_count=0,
-    kras_mutation=0, ptpn11_mutation=0,
+    sf3b1_mutation=0,
+    ezh2_mutation=0,
+    tp53_hit_count=0,
+    kras_mutation=0,
+    ptpn11_mutation=0,
 )
 profiles = replace(reference, tp53_hit_count=[0, 1, 2])
 result = mds_hope_score(profiles, reference=reference)
@@ -88,18 +94,24 @@ these cutoffs. The prediction cohort is never used to infer the constants.
 
 ```python
 from mdanderson_stats import (
-    mds_hope_risk_groups, mds_hope_standardized_risk_groups,
+    mds_hope_risk_groups,
+    mds_hope_standardized_risk_groups,
 )
 
 z = np.array([-2, -1.5, -0.5, 0, 0.5, 1.5, 2])
 np.testing.assert_array_equal(mds_hope_risk_groups(z), [0, 0, 1, 2, 3, 4, 5])
 # Arbitrary constants for this arithmetic demonstration, not study calibration.
 classified = mds_hope_standardized_risk_groups(
-    0.25 + 2*z, reference_center=0.25, reference_sd=2,
+    0.25 + 2 * z,
+    reference_center=0.25,
+    reference_sd=2,
 )
 np.testing.assert_array_equal(classified.group_code, mds_hope_risk_groups(z))
 five = mds_hope_standardized_risk_groups(
-    0.25 + 2*z, reference_center=0.25, reference_sd=2, groups=5,
+    0.25 + 2 * z,
+    reference_center=0.25,
+    reference_sd=2,
+    groups=5,
 )
 assert five.group_count == 5
 np.testing.assert_array_equal(five.group_code, [0, 0, 1, 2, 3, 3, 4])

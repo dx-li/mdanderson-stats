@@ -27,7 +27,14 @@ upper[right] = np.inf
 event[right] = 0
 
 result = bootstrap_interval_competing_risk_coefficients(
-    lower, upper, event, x, alpha=(0, 1), k=0.5, replicates=8, rng=166,
+    lower,
+    upper,
+    event,
+    x,
+    alpha=(0, 1),
+    k=0.5,
+    replicates=8,
+    rng=166,
 )
 assert result.coefficient_samples.shape == (8, 4)
 assert result.successful_replicates >= 2

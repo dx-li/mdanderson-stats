@@ -12,17 +12,22 @@ are not established by that guide.
 import numpy as np
 from mdanderson_stats import lognormal_complete_data_bayesian_gof
 
-observed = np.array([.5, 1, 2, 4, 8])
+observed = np.array([0.5, 1, 2, 4, 8])
 fit = lognormal_complete_data_bayesian_gof(
     observed,
-    prior_location=.2, prior_location_precision=1.5,
-    prior_variance_shape=2, prior_variance_scale=.8,
-    samples=2000, bins=3, rng=6609,
+    prior_location=0.2,
+    prior_location_precision=1.5,
+    prior_variance_shape=2,
+    prior_variance_scale=0.8,
+    samples=2000,
+    bins=3,
+    rng=6609,
 )
 assert fit.posterior_location_precision == 6.5
 assert fit.posterior_variance_shape == 4.5
 np.testing.assert_allclose(
-    fit.posterior_location, (1.5*.2+np.log(observed).sum())/6.5,
+    fit.posterior_location,
+    (1.5 * 0.2 + np.log(observed).sum()) / 6.5,
 )
 assert fit.diagnostic.statistic.shape == (2000,)
 log_locations = fit.centered_location_samples + fit.location_offset

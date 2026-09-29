@@ -22,9 +22,7 @@ fit = fit_stratified_interval_survival(
 )
 assert abs(fit.coefficients[0] - 0.9624693261) < 1e-6
 prediction = predict_stratified_interval_survival(fit, "A", [1], [[0], [1]])
-np.testing.assert_allclose(
-    prediction.survival_lower[:, 0], [0.7779801570, 0.5182494399], atol=1e-7
-)
+np.testing.assert_allclose(prediction.survival_lower[:, 0], [0.7779801570, 0.5182494399], atol=1e-7)
 ```
 
 Intervals have the [ordinary interval model's](interval-survival.md) meanings:
