@@ -168,6 +168,12 @@ def run_pinnacle(
         detected.suppression_radius,
     )
 
+    effective_quantification_denoising = quantification_denoising
+    if quantification_denoising is not None:
+        effective_quantification_denoising = replace(
+            quantification_denoising,
+            max_work_bytes=min(quantification_denoising.max_work_bytes, max_work_bytes),
+        )
     second_images, second_hash, second_count, second_shape = _image_pass(
         images_factory, expected_shape=source_shape, max_images=int(max_images)
     )
@@ -182,7 +188,7 @@ def run_pinnacle(
         region=crop_bounds,
         max_images=int(max_images),
         max_output_cells=max_output_cells,
-        denoising=quantification_denoising,
+        denoising=effective_quantification_denoising,
         _reserved_work_bytes=2 * average.size * 8,
     )
     if (

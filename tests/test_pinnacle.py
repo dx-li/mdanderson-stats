@@ -6,7 +6,7 @@ from mdanderson_stats.pinnacle import (
     pinnacle_mean_image,
     pinnacle_quantify,
 )
-from mdanderson_stats.pinnacle_wavelet import PinnacleDenoiseSettings
+from mdanderson_stats.pinnacle_wavelet import PinnacleDenoiseSettings, pinnacle_denoise
 
 
 def test_mean_image_streams_aligned_images_and_applies_crop():
@@ -142,3 +142,72 @@ def test_individual_gel_denoising_preserves_raw_volume_and_rejects_negative_raw(
     assert result.denoising_thresholds.shape == (1,)
     with pytest.raises(ValueError, match="nonnegative"):
         pinnacle_quantify([-np.ones((8, 8))], [[3, 4]], denoising=settings, normalization="none")
+
+
+def test_cropped_individual_denoising_matches_direct_peak_and_rectangular_background():
+    rows, cols = np.indices((16, 18))
+    image = (
+        4
+        + ((13 * rows + 7 * cols) % 17) / 20
+        + 6 * np.exp(-((rows - 6) ** 2 + (cols - 9) ** 2) / 3)
+    )
+    region = (2, 14, 2, 16)
+    settings = PinnacleDenoiseSettings(
+        filter_length=2,
+        threshold_multiplier=1.3,
+        convention="rwt",
+        levels=1,
+    )
+    denoised = pinnacle_denoise(
+        image,
+        filter_length=settings.filter_length,
+        threshold_multiplier=settings.threshold_multiplier,
+        convention=settings.convention,
+        levels=settings.levels,
+        region=region,
+    )
+    local_row, local_col = 6 - region[0], 9 - region[2]
+    peak = np.max(
+        denoised.image[local_row - 1 : local_row + 2, local_col - 1 : local_col + 2]
+    )
+    background = np.quantile(
+        denoised.image[local_row - 2 : local_row + 3, local_col - 3 : local_col + 4],
+        0.25,
+    )
+    measured = pinnacle_quantify(
+        [image],
+        [[6, 9]],
+        region=region,
+        peak_radius=1,
+        background="local_quantile",
+        background_radius=(2, 3),
+        background_quantile=0.25,
+        normalization="none",
+        denoising=settings,
+    )
+    np.testing.assert_allclose(measured.raw[0, 0], peak)
+    np.testing.assert_allclose(measured.background[0, 0], background)
+    assert measured.denoising_noise_estimates[0] > 0
+    assert measured.denoising_thresholds[0] > 0
+
+
+def test_pipeline_caps_per_gel_budget_at_shared_work_limit():
+    from mdanderson_stats.pinnacle_pipeline import run_pinnacle
+
+    image = np.ones((8, 8))
+    image[3, 3] = 10
+    settings = PinnacleDenoiseSettings(
+        filter_length=2,
+        threshold_multiplier=0,
+        convention="paper",
+        levels=1,
+    )
+    with pytest.raises(ValueError, match="combined max_work_bytes"):
+        run_pinnacle(
+            lambda: iter((image, image)),
+            filter_length=2,
+            levels=1,
+            threshold_multiplier=0,
+            max_work_bytes=12_000,
+            quantification_denoising=settings,
+        )

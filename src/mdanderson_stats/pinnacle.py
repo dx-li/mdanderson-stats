@@ -445,6 +445,7 @@ def pinnacle_quantify(
             if work > _MAX_WORK_PIXELS:
                 raise ValueError("peak quantification exceeds the bounded pixel-work limit")
             local_values[peak_index] = float(np.max(spot))
+            del spot
             if background == "local_minimum":
                 assert minimum_map is not None
                 backgrounds[peak_index] = float(minimum_map[row - bounds[0], col - bounds[2]])
@@ -466,6 +467,7 @@ def pinnacle_quantify(
                         "background quantification exceeds the bounded pixel-work limit"
                     )
                 backgrounds[peak_index] = float(np.quantile(bg_window, quantile))
+                del bg_window
         if background == "global_quantile":
             global_bg = float(np.quantile(cropped, quantile))
             backgrounds.fill(global_bg)
