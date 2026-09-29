@@ -487,6 +487,12 @@ example completed its 12 posterior fits in 0.045 seconds, using 114.5 MiB peak
 process memory with no swaps. These small workloads verify accounting and
 integration, not operating-characteristic precision.
 
+[Trinary prior elicitation](efftox-trinary-calibration.md) now evaluates induced
+marginal efficacy/toxicity moments and calibrates separate information targets.
+Its toxicity-first objective is an explicit Python policy; it preserves
+uncertainty in both independent prior blocks and reports achieved residuals
+and optimizer convergence.
+
 Remaining scope includes historical approximate contour fitting, legacy
-trinary contours, trinary prior calibration and native file/report workflows.
+trinary contours, native trinary calibration and native file/report workflows.
 The Windows integration kernel has not been run for direct parity checks.

@@ -1341,6 +1341,9 @@ rules are explicit. A separate continuation-ratio core fits mutually exclusive
 efficacy, toxicity and neither outcomes, retaining both marginal and conditional
 efficacy. Trinary contour elicitation, dose decisions and completed-outcome
 simulation are supported with the same bounded workflow.
+[Trinary prior calibration](docs/efftox-trinary-calibration.md) adds explicit
+sequential elicitation from marginal efficacy/toxicity means and separate
+beta-moment ESS targets, with stable induced moments and fit diagnostics.
 
 [Multc Lean and Multc99 Phase IIa](docs/multc.md) add response/toxicity monitoring
 against fixed or beta-distributed historical rates, shifted comparisons, cohort

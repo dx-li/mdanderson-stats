@@ -689,6 +689,12 @@ from .efftox_model import (
     fit_efftox,
 )
 from .efftox_simulation import EffToxSimulation, simulate_efftox
+from .efftox_trinary_calibration import (
+    EffToxTrinaryCalibration,
+    EffToxTrinaryPriorMoments,
+    calibrate_efftox_trinary_prior,
+    efftox_trinary_prior_moments,
+)
 from .efftox_trinary_contour import EffToxTrinaryContour
 from .efftox_trinary_model import (
     EffToxTrinaryFit,
@@ -1682,6 +1688,10 @@ __all__ = [
     "EffToxLegacyContour",
     "EffToxDecision",
     "EffToxSimulation",
+    "EffToxTrinaryCalibration",
+    "EffToxTrinaryPriorMoments",
+    "calibrate_efftox_trinary_prior",
+    "efftox_trinary_prior_moments",
     "EffToxTrinaryPrior",
     "EffToxTrinaryFit",
     "EffToxTrinaryContour",
