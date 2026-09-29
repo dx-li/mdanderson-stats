@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `0055027` adds BOIN12 two-stage dose
-decisions/simulation and BF-BOIN accelerated titration, with independent
-references, preserved existing outputs and bounded serial work. The final
+Latest verified package checkpoint: `a41ade7` adds finite-candidate binary rBOP2
+calibration and local EasyCellType reference loading, with independent
+numerical/source references and bounded serial work. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1577,6 +1577,44 @@ still running. These are not results for the new checkpoint. This audit-only
 commit follows the verified code. The local manifest records the subsequent
 atomic fast-forward publication, independently checked remote SHAs and the new
 hosted run separately.
+
+## rBOP2 calibration and EasyCellType reference checkpoint
+
+At `a41ade7`, binary rBOP2 calibration ranks caller-supplied cutoff curves by
+power subject to a declared null error cap. Calibration and analysis priors
+have separate diagnostics, and the selected design uses the analysis prior.
+The API preserves strict futility and inclusive superiority, exact rational
+cutoff ties, no-feasible-design reporting and deterministic work limits.
+Its scope is a finite candidate set and one declared null pair; native grid
+generation and composite-null guarantees are not implied.
+
+EasyCellType now reads bounded local CSV/gzip reference tables, applies native
+species/tissue filtering, preserves duplicate/order/blank-organ conventions,
+and records file SHA-256 and caller-supplied provenance. The optional base-R
+exporter converts the pinned author snapshot locally. Full marker datasets
+are not bundled; upstream data terms and gene-ID mapping remain distinct
+from this Python loading/annotation workflow.
+
+Nineteen focused worker tests pass, with targeted Ruff, formatting and mypy.
+Independent root checks verify 64 exact-rational candidate/selected-design
+outputs, 24 fractional-prior/signed-margin/unequal-arm comparisons, duplicate
+ties and infeasible designs. All 236,219 source association rows have the
+expected species counts, and six independent R tissue-filter outputs match
+exactly. A compressed oversized line is rejected before unbounded allocation.
+The root numerical/source check takes 2.485 seconds, peaks at 132.53 MiB and
+reports zero swaps; worker checks peak at 133.23 MiB.
+
+Cached wheel/source builds pass without installations. The isolated wheel
+check verifies 1,659 public exports, exact committed bytes for all 587 package
+source/data files in both artifacts, preserved notices and both standalone
+guide examples. It takes 11.969 seconds, peaks at 111.41 MiB and reports zero
+swaps. Counts remain 63 implemented, 67 partial and eight pending. No broad
+local test suite, new dependencies or CI workflow changes were added.
+
+Before this publication, the preceding `266194a` hosted run had successful
+quality and Python 3.12/3.13 jobs, while Python 3.14 was still running. The
+earlier `d770fde` run passed all four jobs. The local manifest records new
+remote branch verification and hosted state separately.
 
 ## BOIN12 two-stage and BF-BOIN accelerated titration checkpoint
 
