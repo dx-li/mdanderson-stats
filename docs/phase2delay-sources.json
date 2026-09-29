@@ -42,5 +42,10 @@
       "sha256": "379b6ab4a8bd6a07a52a5c9956b2b1d9897f39c307f0ade097906840fd16f0b1"
     }
   ],
-  "parameterization_note": "The paper labels Gamma(c_j,c_j/lambda_previous) as shape/scale but states mean lambda_previous. This port interprets its second parameter as a rate to satisfy the stated martingale mean. Exact Shiny server priors and sampler settings are not exposed."
+  "parameterization_note": "The paper labels Gamma(c_j,c_j/lambda_previous) as shape/scale but states mean lambda_previous. This port interprets its second parameter as a rate to satisfy the stated martingale mean. Exact Shiny server priors and sampler settings are not exposed.",
+  "calendar_workflow": {
+    "paper_basis": "Simulation section: Poisson accrual at two patients per month, maximum 50 patients, three-month window; begin monitoring after five full assessment periods; Weibull times with 70% or 90% of window events in the second half.",
+    "python_choices": "Explicit discrete analysis_times, final_analysis policy, priors and sampler settings. First simulated arrival is at zero. Same-time arrivals and due events precede analysis. Native continuous-monitoring controller and lambda0 prior-predictive calibration are not recovered.",
+    "independent_reference": "tools/reference_phase2delay_calendar.R: base-R Weibull CDF/inverse-CDF and sevenfold time-unit conversion; mathematical reference, not native app output."
+  }
 }

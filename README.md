@@ -1253,7 +1253,10 @@ allocation; native calibration and paired-endpoint rules remain open.
 toxicity and progression using correlated piecewise-exponential hazards and
 multiple imputation. Explicit priors, posterior traces and Monte Carlo error
 estimates make the Python sampling choices inspectable. Complete data reduce
-to exact Beta posterior monitoring; native calibration and reports remain open.
+to exact Beta posterior monitoring. [Calendar simulation](docs/phase2delay-calendar.md)
+adds scheduled trial replay, Poisson accrual, calibrated Weibull event times and
+serial operating-characteristic summaries with replay seeds. Native calibration
+and reports remain open.
 
 [PoPdesign](docs/pop-design.md) adds predictive Bayes-factor boundaries,
 sticky dose exclusions, weighted isotonic MTD selection, and memory-bounded
@@ -1420,7 +1423,10 @@ calendar conduct and native workflows remain open.
 [Pinnacle](docs/pinnacle.md) detects and quantifies protein spots in aligned
 two-dimensional gel images. It combines streaming image averaging, undecimated
 Daubechies wavelet denoising, peak detection, background correction and
-normalization. Explicit resource limits bound image processing. Independent R
+normalization. Optional per-gel denoising and rectangular local backgrounds
+keep detection on the denoised average of raw gels and preserve raw image-volume
+normalization.
+Explicit resource limits bound image processing. Independent R
 calculations and original Rice Wavelet Toolbox C outputs provide numerical
 references. Native image/project formats and application workflow equivalence
 remain open. This product includes software developed by Rice University,

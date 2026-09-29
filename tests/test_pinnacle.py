@@ -167,9 +167,7 @@ def test_cropped_individual_denoising_matches_direct_peak_and_rectangular_backgr
         region=region,
     )
     local_row, local_col = 6 - region[0], 9 - region[2]
-    peak = np.max(
-        denoised.image[local_row - 1 : local_row + 2, local_col - 1 : local_col + 2]
-    )
+    peak = np.max(denoised.image[local_row - 1 : local_row + 2, local_col - 1 : local_col + 2])
     background = np.quantile(
         denoised.image[local_row - 2 : local_row + 3, local_col - 3 : local_col + 4],
         0.25,

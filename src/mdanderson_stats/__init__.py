@@ -943,6 +943,15 @@ from .phase2_predictive import (
     phase2_predictive_design,
 )
 from .phase2delay import Phase2DelayResult, phase2_delay_monitor
+from .phase2delay_calendar import (
+    Phase2DelayCalendarResult,
+    Phase2DelayCalendarSimulation,
+    Phase2DelayLook,
+    Phase2DelayOperatingCharacteristics,
+    replay_phase2_delay_calendar,
+    simulate_phase2_delay_calendar,
+    simulate_phase2_delay_calendar_oc,
+)
 from .pinnacle import (
     PinnaclePeaks,
     PinnacleQuantification,
@@ -953,6 +962,7 @@ from .pinnacle import (
 from .pinnacle_pipeline import PinnacleAnalysis, run_pinnacle
 from .pinnacle_wavelet import (
     PinnacleDenoiseResult,
+    PinnacleDenoiseSettings,
     PinnacleWaveletTransform,
     pinnacle_daubechies_filter,
     pinnacle_denoise,
@@ -1570,6 +1580,7 @@ __all__ = [
     "cibolus_prior_predictive_moments",
     "PinnacleAnalysis",
     "PinnacleDenoiseResult",
+    "PinnacleDenoiseSettings",
     "PinnaclePeaks",
     "PinnacleQuantification",
     "PinnacleWaveletTransform",
@@ -1723,6 +1734,13 @@ __all__ = [
     "PoPSimulation",
     "predictive_bayes_factor",
     "simulate_pop",
+    "Phase2DelayCalendarResult",
+    "Phase2DelayCalendarSimulation",
+    "Phase2DelayLook",
+    "Phase2DelayOperatingCharacteristics",
+    "replay_phase2_delay_calendar",
+    "simulate_phase2_delay_calendar",
+    "simulate_phase2_delay_calendar_oc",
     "Phase2DelayResult",
     "phase2_delay_monitor",
     "Rbop2BinaryBoundaryTable",

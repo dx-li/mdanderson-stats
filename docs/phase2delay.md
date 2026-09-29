@@ -124,5 +124,7 @@ Native server priors, burn-in, draw counts and RNG behavior are unpublished.
 Python numerical settings must not be interpreted as recovered app defaults.
 The app's upload schema is only publicly illustrated for toxicity; the Python
 API accepts numerical arrays without claiming native file-format parity.
-Calendar trial simulation, operating-characteristic calibration and the
-native report workflow remain unimplemented. Catalog entry 141 remains partial.
+[Scheduled calendar replay and serial operating-characteristic simulation](phase2delay-calendar.md)
+are available with explicit analysis times, priors and follow-up policy. Native
+calibration, continuous-monitoring equivalence and the report workflow remain
+open. Catalog entry 141 remains partial.

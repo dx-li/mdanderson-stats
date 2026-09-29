@@ -65,7 +65,7 @@ a generic method with a similar name.
 | SYNERGY #18 | Four 2007 parametric response surfaces and 2008 wild-bootstrap intervals | Current semiparametric surface fitting is present; [guide](../docs/synergy-surface.md). |
 | U2OET #77 | Native GAO prior interpretation and GAO prior calibration | Explicit-coefficient GAO probabilities, Gaussian likelihoods and [explicit-prior posterior fitting](../docs/u2oet-gao-fit.md) are available. PDS/CMI/hybrid fitting, calendar replay and aggregate OCs already exist; [guide](../docs/u2oet.md). |
 | BARD #165 | Expansion, stage-two calendar timing, native per-arm quota behavior and calibration | BF-BLRM model fitting, calendar replay with optional accelerated titration and stage-two continuation now connect eligible carryover, minimization and final OBD selection under a combined enrollment target. Hidden native settings need explicit caller configuration or further source evidence; [continuation guide](../docs/bard-two-stage.md), [titration guide](../docs/bard-titration.md). |
-| SurvivalContour #166 | Five neural prediction/learning workflows; stratified/cluster interval-PH and competing-risk bootstraps | Ordinary/stratified right-censored Cox, AFT/splines, numeric/categorical forests, interval PH/competing-risk and shared-coefficient stratified interval-PH are available. Ordinary-PH coefficient bootstrapping and repeated-visit conversion are now included. The pinned icenReg source explicitly does not provide nonparametric baseline confidence bands. The five neural learners require distinct backend contracts; [contour guide](../docs/survival-contour.md), [bootstrap guide](../docs/interval-survival-bootstrap.md). |
+| SurvivalContour #166 | Five neural prediction/learning workflows; stratified interval-PH bootstrap | Ordinary/stratified right-censored Cox, AFT/splines, numeric/categorical forests, interval PH/competing-risk and shared-coefficient stratified interval-PH are available. Ordinary and cluster PH coefficient bootstrap, competing-risk coefficient bootstrap and repeated-visit conversion are now included. The pinned icenReg source explicitly does not provide nonparametric baseline confidence bands. The five neural learners require distinct backend contracts; [contour guide](../docs/survival-contour.md), [cluster bootstrap guide](../docs/interval-survival-cluster-bootstrap.md). |
 | Proportional Density #78 | Unequal-censoring treatment-effect null calibration and bootstrap parameter uncertainty | Failure-only and full-data disease-curve goodness-of-fit bootstraps are present. The downloaded archive has no bootstrap code; distinguish paper workflows/extensions from missing native routines; [guide](../docs/proportional-density.md). |
 | BOIN12 #148 | Two-stage mode and unresolved 3+3 run-in precedence | Tradeoff-to-utility mapping now supports the existing posterior/decision/OBD/simulation workflow. Multilevel endpoints are marked under development in the cached app. Nonadditive joint RDS native support remains unverified; [guide](../docs/boin12.md). |
 
@@ -121,8 +121,9 @@ out-of-bag curves and native-convention concordance error are now implemented
 and checked against unchanged native C kernels. Explicit permutation importance
 is also implemented, with independent native-kernel comparisons covering whole-
 forest and smaller blocks, omitted tail trees and undefined block errors.
-Categorical forest splits, missing-value handling, alternative splitting and
-native anti-split importance remain open.
+Categorical forest splits and source-defined anti-split and random-routing
+importance are now included. Missing-value handling and alternative splitting
+remain open.
 
 BARD stage-two continuation now includes eligible stage-one patients at the
 chosen dose pair in both allocation history and the total enrollment target,

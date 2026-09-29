@@ -1,5 +1,7 @@
 {
-  "catalog_ids": [95],
+  "catalog_ids": [
+    95
+  ],
   "retrieved_at": "2026-09-26",
   "sources": [
     {
@@ -9,7 +11,7 @@
     {
       "url": "https://academic.oup.com/bioinformatics/article/24/4/529/206532",
       "role": "Published average-gel, undecimated wavelet, peak detection and quantification algorithm.",
-      "citation": "Morris JS, Clark BN, Gutstein HB (2008). Pinnacle: a fast, automatic and accurate method for detecting and quantifying protein spots in 2-dimensional gel electrophoresis data. Bioinformatics 24:529–536. doi:10.1093/bioinformatics/btm590."
+      "citation": "Morris JS, Clark BN, Gutstein HB (2008). Pinnacle: a fast, automatic and accurate method for detecting and quantifying protein spots in 2-dimensional gel electrophoresis data. Bioinformatics 24:529\u2013536. doi:10.1093/bioinformatics/btm590."
     },
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/Pinnacle/Pinnacle%20detailed%20demo%20and%20specifications.pdf",
@@ -25,7 +27,9 @@
     "Separate published-paper and native-RWT noise/threshold settings; the paper MAD wording is interpreted as median-centered absolute deviation.",
     "Periodic wavelet boundaries, explicit dyadic divisibility and no implicit padding.",
     "Zero-based row/column coordinates, half-open regions, clipped windows, strict intensity threshold and descending-intensity greedy square suppression with lexicographic ties.",
-    "Streaming image passes, explicit bounds, immutable results and no silent clipping of negative background-corrected values."
+    "Streaming image passes, explicit bounds, immutable results and no silent clipping of negative background-corrected values.",
+    "Optional independent per-gel denoising during quantification requires explicit filter, threshold and paper/RWT convention; detection still uses the denoised raw average.",
+    "Background radius can be a (row, column) pair. Peak/background measurements use the optionally denoised crop; image-volume normalization uses the raw crop. This processing order is a Python convention pending executable confirmation."
   ],
-  "limitations": "Optional per-gel denoising during quantification, rectangular background windows, native TIFF/project-file ingestion, interactive peak editing, reports and Pinnacle executable equivalence remain open."
+  "limitations": "Native TIFF/project-file ingestion, interactive peak editing, reports and Pinnacle executable equivalence remain open."
 }

@@ -71,6 +71,52 @@ the selected region. Background correction and normalization can also be
 disabled explicitly. Negative corrected values are retained; an unusable
 normalization denominator raises an error.
 
+## Individual-gel denoising and rectangular backgrounds
+
+`background_radius=(row_radius, column_radius)` selects separate background
+window sizes. For example, `(2, 5)` uses up to five rows and eleven columns,
+clipped to the selected region. This applies to local minimum and local
+quantile backgrounds. A scalar keeps the original square-window behavior.
+
+Individual-gel denoising is optional and off by default, as in the later manual.
+Use an explicit `PinnacleDenoiseSettings` object to select filter, threshold
+and noise conventions. Continuing the example above:
+
+```python
+from mdanderson_stats import PinnacleDenoiseSettings
+
+settings = PinnacleDenoiseSettings(
+    filter_length=6, threshold_multiplier=3.6, convention="rwt", levels=3,
+    max_work_bytes=64 * 1024 * 1024,
+)
+individual = run_pinnacle(
+    gels, region=(4, 28, 4, 28), levels=3, peak_radius=1,
+    background_radius=(2, 5), normalization="image_volume",
+    quantification_denoising=settings,
+)
+np.testing.assert_array_equal(individual.peaks.coordinates, result.peaks.coordinates)
+np.testing.assert_allclose(
+    individual.quantification.normalization_factors,
+    [gel[4:28, 4:28].sum() for gel in gels()],
+)
+assert individual.quantification.denoising_thresholds.shape == (3,)
+```
+
+Detection still uses the denoised average of raw gels. Each individual gel's
+noise is estimated separately, then its reconstruction supplies peak and
+background measurements. Signed reconstructed values are retained. Image-volume
+normalization uses the original raw image region; peak-based normalization uses
+the corrected measured peaks. Raw images also remain the basis of the replay
+identity check. This processing order is an explicit Python convention;
+the manual does not establish executable-level ordering for every option.
+
+The example selects the manual's filter length and threshold multiplier with
+the separately documented Rice noise convention. This is a specified analysis,
+not a claim that the hidden executable uses that exact noise convention.
+Direct `pinnacle_quantify` calls accept the same object as `denoising=settings`.
+Results retain settings and per-gel noise/threshold summaries without retaining
+the reconstructed images.
+
 ## Reproducible conventions
 
 The 2008 paper uses a Daubechies filter with four vanishing moments (length
@@ -117,6 +163,9 @@ default estimate. This bounds the algorithm's working arrays, not the Python
 runtime or images already held by the caller. Images are limited to 4,194,304
 pixels and each input pass to 200 gels. Quantification separately bounds pixel
 work and the combined size of its four image-by-peak result matrices.
+Individual-gel denoising also accounts for retained pipeline images and result
+matrices. Its effective budget is the smaller of the pipeline limit and the
+settings limit; results report those effective settings.
 
 Independent base-R calculations check filter coefficients, mean images,
 cropped peak detection, backgrounds and normalization. The original Rice
@@ -128,9 +177,6 @@ This product includes software developed by Rice University, Houston, Texas
 and its contributors. The complete conditions are in the
 [preserved license](../notices/rice-wavelet-LICENSE.txt).
 
-The workflow quantifies raw individual gels. The GUI's optional per-gel
-denoising during quantification and independently sized row/column background
-windows remain open; current windows use a single square radius. Native
-TIFF/project-file ingestion, interactive peak editing and native report
+Native TIFF/project-file ingestion, interactive peak editing and native report
 equivalence also remain open. No original Pinnacle executable, source archive
 or article PDF is bundled.
