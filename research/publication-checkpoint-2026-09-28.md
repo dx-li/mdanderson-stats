@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `52b12a5` adds BCHM analysis plots and
-source-convention aPCoA data ellipses and medoid connectors, with independent
-R references and bounded serial work. The final
+Latest verified package checkpoint: `11a91c5` adds optional BaCIS subgroup ESS
+summaries across simulated trials and Dose Schedule Finder observations with
+explicit delayed-toxicity adjudications, with bounded serial verification. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1949,3 +1949,55 @@ retained, and the distribution's mixed-license limitations remain explicit.
 The local artifact manifest records the independently verified master/main/
 development SHAs after publication; package contents correspond to the code
 revision above and this final audit-only commit changes no numerical code.
+
+
+## Subgroup ESS and delayed-toxicity observation checkpoint
+
+Verified package revision `11a91c574f5aa30ba5013fcb8df2a3664efada4c` adds
+optional BaCIS per-replication/subgroup ESS, stable arithmetic means and
+Monte Carlo errors. The existing simulation defaults and random streams are
+preserved. The underlying ESS matches the archived software's fixed-success-
+count beta variance equation, with its previously documented admissibility
+correction; it is not a claim to reproduce the paper's different mean/variance
+description or published simulation tables. Undefined matches fail with
+replication/subgroup context. A one-replication MCSE is explicitly unavailable.
+
+Dose Schedule Finder gains explicit onset/adjudication records and an as-of
+observation helper. Qualifying events are backdated to onset once known, while
+future adjudications remain masked. Actual delivered treatment is retained
+separately from the administrations entering the event likelihood. Pending
+earlier onsets prevent final readiness, and unresolved episodes beginning
+within the risk horizon may require later ascertainment. The caller supplies
+clinical adjudication; no low-grade episode generator, exact day-14 clinical
+rule, or within-patient treatment policy is inferred.
+
+Luna implemented both components. Twenty-three focused checks pass with
+warnings treated as errors. Independent R polynomial calculations reproduce
+20 ESS values and five subgroup mean/MCSE summaries; maximum ESS discrepancy
+is `9.31e-13`. Fourteen hand-calculated observation looks pass at time scales
+`1e-150`, `1` and `1e150`, covering future-information masking, resolved and
+qualifying episodes, earlier-event revision, horizon crossings and treatment
+history. A two-administration event likelihood matches `log(.03)-.125` to
+`1e-14`. Targeted Ruff, formatting and mypy pass.
+
+The integrated reference check took .148 seconds, peaked at 121.50 MiB RSS
+and reported zero swaps. Focused measured worker runs remained below 130 MiB.
+Numerical processes ran serially with numerical-library thread counts fixed
+at one. The first package example check correctly rejected an inadmissible
+ESS from a very short posterior sample. The guide now uses an independently
+validated small example and explains the admissibility limitation; no failed
+replications were discarded and no numerical safeguard was weakened.
+
+Cached wheel/source builds pass. The final isolated wheel check executes all
+three examples across the two guides, verifies all 1,669 public exports and
+exact committed bytes for all 589 packaged source/data files in both
+artifacts, and checks preserved license notices and excluded native binaries.
+It took 11.468 seconds, peaked at 127.39 MiB RSS and reported zero swaps.
+No broad local suite, dependency installation or CI workflow was added.
+
+Coverage remains 63 implemented, 67 partial and eight pending entries. Native
+workflow limitations and mixed-license terms remain explicit. At inspection,
+the preceding `03804d5` hosted quality and Python 3.12 jobs passed; Python 3.13
+and 3.14 were still running. The local manifest records fresh independent
+master/main/development branch verification and the subsequent hosted run.
+This final audit-only commit changes no verified numerical code.
