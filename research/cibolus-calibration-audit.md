@@ -51,3 +51,9 @@ probability/count/output buffers. Probability moment calculations clip only
 64-epsilon excursions outside [0,1] and reject larger violations; materially
 negative beta-moment ESS is also an arithmetic error rather than a reported
 invalid value.
+
+Bolus and cumulative response probabilities are evaluated directly from the
+response CDF for each retained log-parameter draw. They are not reconstructed
+by summing joint response/toxicity cells, which can introduce artificial
+response variance when only toxicity coordinates vary. The extra CDF evaluations
+are included in work and live-cell preflights.

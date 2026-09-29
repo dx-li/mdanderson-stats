@@ -3,7 +3,11 @@
 import numpy as np
 import pytest
 
-from mdanderson_stats.cibolus import CiBolusObservation, CiBolusPrior, cibolus_predict
+from mdanderson_stats.cibolus import (
+    CiBolusObservation,
+    CiBolusPrior,
+    cibolus_predict,
+)
 from mdanderson_stats.cibolus_calibration import (
     calibrate_cibolus_prior,
     cibolus_prior_predictive_moments,
@@ -40,6 +44,7 @@ def test_prior_predictive_reports_source_moments_and_constant_probability_ess() 
         utility=np.zeros((len(endpoints) + 2, 2)),
     )
     np.testing.assert_allclose(result.joint_probability_mean[0, 0], expected.joint[0, 0])
+    np.testing.assert_allclose(result.source_probability_mean[0, 0, 1], expected.response_at_one)
     np.testing.assert_array_equal(result.joint_probability_variance, 0)
     assert result.source_probability_names == (
         "p0",
@@ -49,6 +54,26 @@ def test_prior_predictive_reports_source_moments_and_constant_probability_ess() 
     )
     assert np.all(np.isposinf(result.source_probability_ess))
     assert not result.joint_probability_mean.flags.writeable
+
+
+def test_response_moments_do_not_inherit_toxicity_cell_roundoff() -> None:
+    concentrations, bolus, endpoints = _grid()
+    mean = _LOG_THETA.copy()
+    sd = np.zeros(11)
+    sd[6] = 0.7  # Vary toxicity while keeping every response parameter fixed.
+    result = cibolus_prior_predictive_moments(
+        CiBolusPrior(mean, sd),
+        concentrations,
+        bolus,
+        endpoints,
+        draws=8,
+        chains=2,
+        rng=np.random.default_rng(812),
+    )
+    np.testing.assert_array_equal(result.bolus_response_variance, 0.0)
+    np.testing.assert_array_equal(result.cumulative_response_variance, 0.0)
+    assert np.all(np.isposinf(result.bolus_response_ess))
+    assert np.all(np.isposinf(result.cumulative_response_ess))
 
 
 def test_balanced_pseudodata_calibration_retains_counts_and_replay_seed() -> None:

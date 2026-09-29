@@ -17,6 +17,7 @@ from .cibolus import (
     CiBolusObservation,
     CiBolusPrior,
     _prediction_inputs,
+    cibolus_response,
     cibolus_toxicity,
 )
 from .cibolus_fit import fit_cibolus
@@ -178,14 +179,18 @@ def cibolus_prior_predictive_moments(
     c, q, e = _grid(concentrations, bolus_fractions, endpoints)
     regimens = c.size * q.size
     categories = e.size + 2
+    response_times = np.unique(np.concatenate((e, np.array([1.0]))))
+    response_indices = np.searchsorted(response_times, e)
+    response_one_index = int(np.searchsorted(response_times, 1.0))
     sample_count = draw_count * chain_count
     grid_work = sample_count * regimens * categories
     extra_work = sample_count * regimens * 3
-    if grid_work + extra_work > work_limit:
+    response_work = sample_count * regimens * response_times.size
+    if grid_work + extra_work + response_work > work_limit:
         raise ValueError("prior predictive work exceeds max_work")
     fit_retained_per_draw = 12 + regimens * (categories * 2 + 5)
     fit_retained = sample_count * fit_retained_per_draw
-    temporary_cells = sample_count * regimens * (categories + e.size + 1)
+    temporary_cells = sample_count * regimens * (categories + 2 * e.size + 2)
     output_cells = regimens * (categories * 4 + e.size * 3 + 30)
     fit_summary_scratch = 14 * sample_count * (11 + regimens)
     if 2 * fit_retained + fit_summary_scratch + temporary_cells + 2 * output_cells > retained_limit:
@@ -206,13 +211,19 @@ def cibolus_prior_predictive_moments(
         max_work=work_limit,
     )
     joint = np.asarray(fit.joint).reshape((sample_count, c.size, q.size, categories, 2))
-    bolus_response = joint[..., 0, :].sum(axis=-1)
-    response_category = joint.sum(axis=-1)
-    cumulative = np.cumsum(response_category[..., :-1], axis=-1)[..., 1:]
+    bolus_response = np.empty((sample_count, c.size, q.size))
+    cumulative = np.empty((sample_count, c.size, q.size, e.size))
+    response_at_one = np.empty((sample_count, c.size, q.size))
     tox_bolus = np.empty((sample_count, c.size, q.size))
     for draw_index, theta in enumerate(fit.log_parameters.reshape((sample_count, 11))):
         for ci, concentration in enumerate(c):
             for qi, bolus in enumerate(q):
+                response = cibolus_response(
+                    response_times, float(concentration), float(bolus), theta
+                )
+                bolus_response[draw_index, ci, qi] = response.bolus_probability
+                cumulative[draw_index, ci, qi] = response.cdf[response_indices]
+                response_at_one[draw_index, ci, qi] = response.cdf[response_one_index]
                 tox_bolus[draw_index, ci, qi] = cibolus_toxicity(
                     0.0, float(concentration), float(bolus), theta
                 )
@@ -224,9 +235,10 @@ def cibolus_prior_predictive_moments(
     t0 = _moment_triplet(tox_bolus)
     t1 = _moment_triplet(fit.toxicity_at_one_response.reshape((sample_count, c.size, q.size)))
     tf = _moment_triplet(fit.toxicity_at_one_failure.reshape((sample_count, c.size, q.size)))
-    source_mean = np.stack((p0[0], f_e[0][..., -1], t0[0], t1[0]), axis=-1)
-    source_var = np.stack((p0[1], f_e[1][..., -1], t0[1], t1[1]), axis=-1)
-    source_ess = np.stack((p0[2], f_e[2][..., -1], t0[2], t1[2]), axis=-1)
+    f_one = _moment_triplet(response_at_one)
+    source_mean = np.stack((p0[0], f_one[0], t0[0], t1[0]), axis=-1)
+    source_var = np.stack((p0[1], f_one[1], t0[1], t1[1]), axis=-1)
+    source_ess = np.stack((p0[2], f_one[2], t0[2], t1[2]), axis=-1)
     return CiBolusPriorPredictiveMoments(
         prior,
         _freeze_dtype(c, np.dtype(float)),
