@@ -1,6 +1,7 @@
 from itertools import product
 
 import numpy as np
+import pytest
 from scipy.special import ndtr, ndtri
 
 from mdanderson_stats.bop2_dc_randomized_binary import bop2_dc_randomized_binary_design
@@ -66,11 +67,10 @@ def test_exact_operating_characteristics_match_all_binary_tapes():
 
 
 def test_strict_final_cutoffs_and_optional_obf_graduation():
-    base = _design(looks=[4], theta_cmv=0.4)
-    state = base.monitor(0, 2, 2, 2)
-    cutoff = float(state.posterior_lrv)
-    strict = _design(looks=[4], theta_cmv=0.4, lambda_lrv=cutoff)
-    assert strict.monitor(0, 2, 2, 2).decision.item() == "final_consider"
+    symmetric = _design(looks=[4], theta_cmv=0.4, lambda_lrv=0.5)
+    equality = symmetric.monitor(1, 2, 1, 2)
+    assert equality.absolute_error_lrv.item() == 0
+    assert equality.decision.item() == "final_consider"
 
     graduated = _design(
         lambda_lrv=0.1,
@@ -78,4 +78,42 @@ def test_strict_final_cutoffs_and_optional_obf_graduation():
         graduate_at_interim=True,
     )
     expected = 2 * ndtr(ndtri((1 + graduated.lambda_lrv) / 2) / np.sqrt(0.5)) - 1
-    assert graduated._gradient_cutoffs(2)[0] == expected
+    np.testing.assert_allclose(graduated._gradient_cutoffs(2)[0], expected, rtol=2e-15)
+    tiny_gradient = _design(lambda_lrv=1e-20, lambda_cmv=0.2, graduate_at_interim=True)
+    assert tiny_gradient._gradient_cutoffs(2)[0] > 0
+
+
+def test_reported_quadrature_error_guards_only_decision_ambiguous_cutoffs():
+    base = _design(
+        max_subjects=2,
+        looks=[2],
+        arm_assignments=[0, 1],
+        theta_cmv=0.5,
+        lambda_lrv=0.1,
+        lambda_cmv=0.1,
+    )
+    estimate = base.monitor(0, 1, 1, 1)
+    exact_cutoff = float(estimate.posterior_lrv)
+    ambiguous = _design(
+        max_subjects=2,
+        looks=[2],
+        arm_assignments=[0, 1],
+        theta_cmv=0.5,
+        lambda_lrv=exact_cutoff,
+        lambda_cmv=0.1,
+    )
+    with pytest.raises(ArithmeticError, match="quadrature error could change"):
+        ambiguous.monitor(0, 1, 1, 1)
+    with pytest.raises(ArithmeticError, match="quadrature error could change"):
+        ambiguous.operating_characteristics(0.5, 0.8)
+
+    interim = _design(
+        max_subjects=4,
+        looks=[2, 4],
+        theta_cmv=0.5,
+        lambda_lrv=exact_cutoff,
+        lambda_cmv=0.1,
+        gamma_lrv=0,
+    )
+    stable = interim.monitor(0, 1, 1, 1)
+    assert stable.decision.item() == "continue"

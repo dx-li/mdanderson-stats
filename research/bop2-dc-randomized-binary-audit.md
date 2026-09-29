@@ -28,6 +28,17 @@ precomputes bounded posterior tail tables and propagates probability mass over
 the arm-specific success-count grid. It reports interim no-go and optional
 graduation probabilities, final go/consider/no-go probabilities, stopping-look
 probabilities, expected sample size, and maximum comparison error by look.
+The optional O'Brien–Fleming boundary is evaluated through the equivalent
+`erf(erfinv(lambda) / sqrt(n/N))` form to retain small positive lambda values.
+
+Before classifying, monitoring checks the four corners of each posterior-tail
+interval formed from the reported quadrature error estimates. It raises an
+`ArithmeticError` if any corner changes the combined action; the other margin
+can still establish a stable action when one cutoff alone is straddled. The
+comparison module explicitly describes these quadrature errors as estimates,
+not rigorous bounds, so this guard is a fail-loud numerical diagnostic rather
+than a proof of decision certainty. Exact symmetric comparisons report zero
+error and preserve strict-cutoff equality as continue/consider.
 
 Hard limits cap planned enrollment, monitor batches, posterior comparison
 states, recursion work, truth scenarios, and retained OC results before the

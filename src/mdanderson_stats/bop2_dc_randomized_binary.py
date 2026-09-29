@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
-from scipy.special import ndtr, ndtri
+from scipy.special import erf, erfinv
 
 from ._validation import FloatArray, count, finite, scalar
 from .beta_binomial import BetaBinomialPosterior
@@ -157,7 +157,9 @@ class BOP2DCRandomizedBinaryDesign:
     graduate_at_interim: bool
     comparison_tolerance: float
 
-    def _posterior_tables(self) -> tuple[tuple[FloatArray, FloatArray, FloatArray], ...]:
+    def _posterior_tables(
+        self,
+    ) -> tuple[tuple[FloatArray, FloatArray, FloatArray, FloatArray], ...]:
         control_counts = np.r_[0, np.cumsum(self.arm_assignments == 0)].astype(np.int64)
         treatment_counts = np.r_[0, np.cumsum(self.arm_assignments == 1)].astype(np.int64)
         comparison_cells = sum(
@@ -197,18 +199,17 @@ class BOP2DCRandomizedBinaryDesign:
                 (
                     lrv.above_margin,
                     cmv.above_margin,
-                    np.maximum(lrv.absolute_error, cmv.absolute_error),
+                    lrv.absolute_error,
+                    cmv.absolute_error,
                 )
             )
         return tuple(table)
 
     def _gradient_cutoffs(self, look: int) -> tuple[float, float]:
         fraction = look / self.max_subjects
-        z_lrv = ndtri((1 + self.lambda_lrv) / 2)
-        z_cmv = ndtri((1 + self.lambda_cmv) / 2)
         return (
-            float(2 * ndtr(z_lrv / np.sqrt(fraction)) - 1),
-            float(2 * ndtr(z_cmv / np.sqrt(fraction)) - 1),
+            float(erf(erfinv(self.lambda_lrv) / np.sqrt(fraction))),
+            float(erf(erfinv(self.lambda_cmv) / np.sqrt(fraction))),
         )
 
     def _decision_from_tails(
@@ -238,6 +239,32 @@ class BOP2DCRandomizedBinaryDesign:
         decision[final & ~(go | no_go)] = "final_consider"
         decision.flags.writeable = False
         return decision
+
+    def _decision_from_error_intervals(
+        self,
+        total_n: np.ndarray,
+        posterior_lrv: FloatArray,
+        posterior_cmv: FloatArray,
+        error_lrv: FloatArray,
+        error_cmv: FloatArray,
+    ) -> NDArray[np.str_]:
+        """Classify only when reported quadrature errors cannot change the action."""
+        low_lrv = np.maximum(0.0, posterior_lrv - error_lrv)
+        high_lrv = np.minimum(1.0, posterior_lrv + error_lrv)
+        low_cmv = np.maximum(0.0, posterior_cmv - error_cmv)
+        high_cmv = np.minimum(1.0, posterior_cmv + error_cmv)
+        choices = (
+            self._decision_from_tails(total_n, low_lrv, low_cmv),
+            self._decision_from_tails(total_n, low_lrv, high_cmv),
+            self._decision_from_tails(total_n, high_lrv, low_cmv),
+            self._decision_from_tails(total_n, high_lrv, high_cmv),
+        )
+        reference = choices[0]
+        if any(np.any(choice != reference) for choice in choices[1:]):
+            raise ArithmeticError(
+                "reported beta-comparison quadrature error could change a strict trial decision"
+            )
+        return reference
 
     def monitor(
         self,
@@ -302,7 +329,13 @@ class BOP2DCRandomizedBinaryDesign:
             self.theta_cmv,
             absolute_tolerance=self.comparison_tolerance,
         )
-        decision = self._decision_from_tails(total_n, lrv.above_margin, cmv.above_margin)
+        decision = self._decision_from_error_intervals(
+            total_n,
+            lrv.above_margin,
+            cmv.above_margin,
+            lrv.absolute_error,
+            cmv.absolute_error,
+        )
         return BOP2DCRandomizedBinaryState(
             _owned(total_n, dtype=np.int64),
             _owned(cn, dtype=np.int64),
@@ -388,8 +421,8 @@ class BOP2DCRandomizedBinaryDesign:
         comparison_error = np.zeros(self.looks.size)
 
         look_to_index = {int(n): i for i, n in enumerate(self.looks)}
-        for look_index, (_pl, _pcmv, error) in enumerate(posterior_tables):
-            comparison_error[look_index] = float(np.max(error))
+        for look_index, (_pl, _pcmv, error_lrv, error_cmv) in enumerate(posterior_tables):
+            comparison_error[look_index] = float(np.max(np.maximum(error_lrv, error_cmv)))
 
         for scenario_index, (pc, pt) in enumerate(scenarios):
             state = np.ones((1, 1), dtype=np.float64)
@@ -407,27 +440,27 @@ class BOP2DCRandomizedBinaryDesign:
                 if patient_index not in look_to_index:
                     continue
                 look_index = look_to_index[patient_index]
-                pl, pcmv, _ = posterior_tables[look_index]
+                pl, pcmv, error_lrv, error_cmv = posterior_tables[look_index]
+                total_n = np.full(pl.shape, patient_index, dtype=np.int64)
+                decision = self._decision_from_error_intervals(
+                    total_n, pl, pcmv, error_lrv, error_cmv
+                )
                 if patient_index == self.max_subjects:
-                    go_mask = (pl > self.lambda_lrv) & (pcmv > self.lambda_cmv)
-                    no_mask = (pl < self.lambda_lrv) & (pcmv < self.lambda_cmv)
+                    go_mask = decision == "final_go"
+                    no_mask = decision == "final_no_go"
                     final_go[scenario_index] = float(np.sum(state[go_mask]))
                     final_no_go[scenario_index] = float(np.sum(state[no_mask]))
                     final_consider[scenario_index] = float(np.sum(state[~(go_mask | no_mask)]))
                     sample_size[scenario_index, look_index] = float(np.sum(state))
                     break
 
-                frac = patient_index / self.max_subjects
-                no_mask = (pl < self.lambda_lrv * frac**self.gamma_lrv) & (
-                    pcmv < self.lambda_cmv * frac**self.gamma_cmv
-                )
+                no_mask = decision == "stop_no_go"
                 no_mass = float(np.sum(state[no_mask]))
                 stop[scenario_index, look_index] = no_mass
                 state[no_mask] = 0.0
                 grad_mass = 0.0
                 if self.graduate_at_interim:
-                    grad_lrv, grad_cmv = self._gradient_cutoffs(patient_index)
-                    grad_mask = (pl > grad_lrv) & (pcmv > grad_cmv)
+                    grad_mask = decision == "graduate"
                     grad_mass = float(np.sum(state[grad_mask]))
                     graduate[scenario_index, look_index] = grad_mass
                     state[grad_mask] = 0.0
