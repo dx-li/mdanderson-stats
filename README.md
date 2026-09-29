@@ -1300,8 +1300,10 @@ transitions. Expansion, stage-two calendar timing and native reports remain open
 pending toxicity and efficacy, joint utility posteriors, interim dose conduct
 and complete-outcome final OBD selection. The declared approximate-likelihood
 model is checked against base R; final selection reduces to ordinary BOIN12.
-Native pending-data safety details, Bayesian data augmentation and the full
-simulator remain open.
+[Bayesian data augmentation](docs/tite-boin12-bda.md) adds joint Dirichlet
+imputation with explicit priors and completed-data BOIN12 posterior averaging.
+Native pending-data safety details, integrated BDA conduct and the full
+calendar simulator remain open.
 
 [U-BOIN joint utilities](docs/uboin.md) add exact categorical Dirichlet
 posterior moments, toxicity/efficacy admissibility and winner, proportional or
@@ -1402,7 +1404,9 @@ monitoring. Adaptive decisions include exploration, lowest-dose efficacy ties
 and safety stopping. A serial simulator reports dose allocation, selection and
 Monte Carlo uncertainty. [Global quadratic and local linear logistic methods](docs/mtadf-logistic.md)
 add the paper's Cauchy-prior efficacy models, slope-based local decisions and
-posterior diagnostics. Independent R calculations and numerical integration
+posterior diagnostics. [Logistic trial simulation](docs/mtadf-logistic-simulation.md)
+adds complete-cohort trials, replayable outcome/sampler seeds and compact
+operating-characteristic summaries for both designs. Independent R calculations and numerical integration
 check the models; native application settings and output equivalence remain open.
 
 [UAROET ordinal dose finding](docs/uaroet.md) adds continuation-logit outcome

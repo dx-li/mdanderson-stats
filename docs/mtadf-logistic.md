@@ -137,5 +137,7 @@ See the [method audit](../research/mtadf-logistic-audit.md) and
 
 These are independent implementations of the published models with documented
 Python conduct and sampling choices. Native application reports, hidden
-settings and random-stream parity remain unverified. `simulate_mtadf` still
-simulates the isotonic design; it does not run these logistic designs.
+settings and random-stream parity remain unverified. The separate
+[logistic trial simulator](mtadf-logistic-simulation.md) runs both logistic
+designs with complete cohorts, replayable seed pairs and compact summaries.
+`simulate_mtadf` continues to use the isotonic design.

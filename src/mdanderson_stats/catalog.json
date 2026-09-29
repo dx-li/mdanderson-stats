@@ -3658,13 +3658,13 @@
         "Calibrated common Beta toxicity prior, pooled posterior overdose probabilities, strict admissibility and complete-outcome interim/final OBD decisions.",
         "Observed-dose mapping, lowest-dose efficacy ties, safe exploration, safety overrides and stopping when no dose is admissible.",
         "Bounded serial isotonic cohort simulation with compact per-trial counts, dose selection, early stopping, no-selection probabilities and Monte Carlo errors; docs/mtadf.md.",
-        "Global quadratic and local linear logistic efficacy models with Cauchy priors, bounded serial posterior fitting, safety-first dose decisions, slope thresholds, retained next-window fits and chain diagnostics; docs/mtadf-logistic.md."
+        "Global quadratic and local linear logistic efficacy models with Cauchy priors, bounded serial posterior fitting, safety-first dose decisions, slope thresholds, retained next-window fits and chain diagnostics; docs/mtadf-logistic.md. Bounded complete-cohort simulation for both logistic methods includes replayable per-trial outcome/sampler seeds, compact selection/allocation summaries and explicit independent-marginal outcome generation; docs/mtadf-logistic-simulation.md."
       ],
       "validation": [
         "Independent base-R min-max isotonic reference for seven curves, plus five calibrated priors and 20 posterior-tail cases; tests/test_mtadf_reference.py.",
         "Focused weighted fitting, noncontiguous observed-dose mapping, untried final exclusion, all-unsafe stopping and serial simulation checks; tests/test_mtadf.py.",
-        "Independent global and local transformed-Cauchy quadrature references; seeded logistic posterior and safety-first conduct checks with warnings as errors; research/mtadf-logistic-audit.md.",
-        "Paper-based policies; native hidden prior/settings, inclusive cutoff convention, complete raw-source comparison, reports, logistic simulation and random-sequence equivalence remain unverified; docs/mtadf-sources.json."
+        "Independent global and local transformed-Cauchy quadrature references; seeded logistic posterior and safety-first conduct checks with warnings as errors; research/mtadf-logistic-audit.md. Global/local simulation checks cover seed-pair replay, cohort conservation, safety stops and work/storage preflight; research/mtadf-logistic-simulation-audit.md.",
+        "Paper-based policies; native hidden prior/settings, inclusive cutoff convention, complete raw-source comparison, reports, calendar timing and random-sequence equivalence remain unverified; docs/mtadf-sources.json."
       ]
     },
     {
@@ -4358,13 +4358,14 @@
         "tite_boin12_posterior: patient-level binary approximate likelihood, effective endpoint sizes and MLEs, conditional pending outcomes, nonadditive joint utility, quasi-Beta desirability and declared effective-binomial safety/activity posteriors.",
         "tite_boin12_decision: separate pending-endpoint suspension, no-information suspension, persistent elimination and BOIN12 neighboring-dose conduct with configurable exploration and precision stopping.",
         "Optional 3+3 de-escalation override for toxicity limit 0.25 at exactly 3 or 6 patients and at least 2 observed DLTs; explicit pending/admissibility precedence and safe lower-neighbor handling.",
-        "tite_boin12_select_obd: complete patient-level histories reduce to BOIN12 final selection, retaining exact joint counts and prior elimination. Source-backed AL core with explicit native-parity limits. Supplement S7/S2 verification, native pending-data safety and final tie details, BDA, categorical outcomes, calendar simulation and native reports remain open; see docs/tite-boin12.md."
+        "tite_boin12_select_obd: complete patient-level histories reduce to BOIN12 final selection, retaining exact joint counts and prior elimination. Source-backed AL core with explicit native-parity limits. Supplement S7/S2 verification, native pending-data safety and final tie details, BDA trial conduct, categorical outcomes, calendar simulation and native reports remain open; see docs/tite-boin12.md. Binary BDA posterior sampling uses an explicit joint Dirichlet prior, all three missing-outcome patterns, serial Gibbs updates, completed-data BOIN12 posterior averaging and separate chain diagnostics; docs/tite-boin12-bda.md."
       ],
       "validation": [
         "Official application 1.4.3.0 and source hashes in docs/tite-boin12-sources.json; author comparator and Lin-Yuan source inspected without executing vendor simulations.",
         "Independent base-R references for all four ascertainment patterns, endpoint ESS/MLE, conditional probabilities, nonadditive joint utilities and Beta tails.",
         "Focused checks cover exact complete-outcome BOIN12 posterior and final-selection reduction, final pending-data rejection and invariance to additional follow-up, prior-only untried doses, unit rescaling, suspension boundaries, persistent elimination and numerical edge conditions. Hidden native-backend parity is not claimed.",
-        "Twenty focused conduct/reference checks plus guide and precision-precedence checks cover source-defined run-in thresholds, unchanged non-trigger counts, pending/precision ordering, toxicity-limit restriction and lowest/eliminated lower-dose stops; research/tite-boin12-runin-audit.md."
+        "Twenty focused conduct/reference checks plus guide and precision-precedence checks cover source-defined run-in thresholds, unchanged non-trigger counts, pending/precision ordering, toxicity-limit restriction and lowest/eliminated lower-dose stops; research/tite-boin12-runin-audit.md.",
+        "BDA validation includes complete-data reduction, repeated pending-outcome imputation, seed replay and an independent exact Dirichlet integral over 16 missing-state assignments; 13 sampled summaries agree within 1.372 estimated batch MCSEs; research/tite-boin12-bda-audit.md."
       ]
     },
     {

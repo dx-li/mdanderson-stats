@@ -151,7 +151,7 @@ some legacy adaptations retain commercial-use restrictions.
 | SYNERGY | [desktop #18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18) | [Guide](interaction-index.md) |
 | Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials | [online #129](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/) | [Guide](tite-boin.md) |
 | Time-to-Event Keyboard Design for Phase I Clinical Trials | [online #135](https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD) | [Guide](tite-keyboard.md) |
-| TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | [online #152](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12) | [AL decisions and final selection](tite-boin12.md) |
+| TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | [online #152](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12) | [AL and final selection](tite-boin12.md); [BDA](tite-boin12-bda.md) |
 | TOP: Time-to-Event Bayesian Optimal Phase II Trial Design | [online #134](https://biostatistics.mdanderson.org/shinyapps/TOP2) | [Guide](top-endpoints.md) |
 | ToxFinder | [desktop #14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14) | See catalog feature and validation notes |
 | Toxicity Probability Intervals | [desktop #72](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/72) | [Guide](mtpi.md) |

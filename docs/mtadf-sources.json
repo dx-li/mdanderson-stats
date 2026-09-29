@@ -38,5 +38,5 @@
     "Global decisions rank posterior mean efficacy, including model-predicted untried doses at final selection. Local decisions use initial ramp, slope thresholds and the next-window bounce guard, with isotonic final selection.",
     "Logistic safety-only actions precede efficacy fitting; boundary clamping, lowest-dose ties and low-boundary local windows are explicit Python conduct choices."
   ],
-  "limitations": "Native application prior, boundary conventions, full raw R behavior, output files and random-sequence parity remain unverified. Logistic models and decisions are independent implementations of the paper; their sampling settings and unspecified conduct choices are explicit Python policies. Logistic trial simulation is not yet provided."
+  "limitations": "Native application prior, boundary conventions, full raw R behavior, output files and random-sequence parity remain unverified. Logistic models and decisions are independent implementations of the paper; their sampling settings and unspecified conduct choices are explicit Python policies. Separate global/local logistic trial simulation uses complete cohorts, independent marginal outcome generation and replayable outcome/sampler seed pairs; calendar timing and native simulation parity remain unverified."
 }
