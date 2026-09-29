@@ -4610,7 +4610,9 @@
       "retrieval_error": null,
       "status": "pending",
       "implemented_features": [],
-      "validation": []
+      "validation": [
+        "Independent primary source: Hasanov et al., ASCO 2023 abstract 2012, DOI 10.1200/JCO.2023.41.16_suppl.2012. Fitted coefficients, exact predictor coding and baseline competing-risk function remain unavailable; no calculator implementation claimed; research/cnsrisk-source-status.md."
+      ]
     },
     {
       "id": 162,
