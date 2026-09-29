@@ -142,8 +142,10 @@ in the reference audit.
 
 ## Remaining coverage
 
-The current application's two-stage option, 3+3 run-in and generated
-reports/protocols remain outstanding. The cached run-in help leaves its
+The optional two-stage toxicity-only-to-utility workflow is implemented with
+explicit Python conduct policies in [boin12-two-stage.md](boin12-two-stage.md).
+The current application's 3+3 run-in and generated reports/protocols remain
+outstanding. The cached run-in help leaves its
 interaction with utility selection after 1/3 DLTs unclear. Multilevel
 endpoints are labeled under development in the inspected app, rather than an
 established implemented native feature. Nonadditive joint-outcome desirability
