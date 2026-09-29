@@ -28,9 +28,10 @@ must fit the requested storage budget, capped at 128 MiB; no trial histories
 are retained across replications. Work and memory bounds are checked before
 random tapes are generated.
 
-Before the final-time representability guard, focused calendar tests and the
-existing BayesFactorTTE numerical tests passed: 9 tests in 2.10 seconds with
-warnings treated as errors. Peak RSS was 140,279,808 bytes (133.78 MiB), with
-zero process swaps. Ruff check/format, targeted mypy and diff checks passed.
-A regression for positive follow-up that is lost at a very large calendar
-horizon was added with the guard and awaits the next focused run.
+After integration, focused calendar tests and the existing BayesFactorTTE
+numerical tests passed: 10 tests in 2.37 seconds with warnings treated as
+errors. Peak RSS was 144.73 MiB, with zero process swaps. This includes the
+regression for positive follow-up that is lost at a very large calendar
+horizon. An independent three-patient ledger also verifies exact event counts
+and time-on-test at three interims and the final look, including an event/censor
+tie. Ruff check/format, targeted mypy and diff checks passed.

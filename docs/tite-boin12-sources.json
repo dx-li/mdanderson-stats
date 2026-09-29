@@ -10,7 +10,7 @@
   "comparator_scope": "Author code for a later PK extension corroborates endpoint ESS/MLE and conditional imputation only; not the native TITE-BOIN12 backend or its final selection.",
   "final_selection_reviewed_at": "2026-09-29",
   "final_selection_scope": "The main article states selection by utility desirability among admissible doses no higher than estimated MTD. The complete-outcome Python wrapper delegates to existing BOIN12Design.select_obd, retaining the exact joint counts and optional elimination mask. Native supplemental tie conventions remain unverified.",
-  "bda_scope": "The main article equations 8–10 specify all three missing-outcome patterns under conditional working independence of event times and uniform assessment-window weights. A subsequent full-text review recovered the previously missed both-pending formula. BDA uses an explicit caller-supplied positive four-cell Dirichlet prior; the source marginal means and total concentration do not identify joint prior association. No native prior or chain defaults are inferred.",
+  "bda_scope": "The main article equations 8\u201310 specify all three missing-outcome patterns under conditional working independence of event times and uniform assessment-window weights. A subsequent full-text review recovered the previously missed both-pending formula. BDA uses an explicit caller-supplied positive four-cell Dirichlet prior; the source marginal means and total concentration do not identify joint prior association. No native prior or chain defaults are inferred.",
   "files": [
     {
       "filename": "app.html",
@@ -62,5 +62,7 @@
       "url": "https://raw.githubusercontent.com/ruitaolin/TITE-MAD/630ea457df81e1b95e29634e2315f6e3c57fac9c/get.oc.tite.R",
       "sha256": "df6bcface180564af978d2a085a6c128d29975484f9f0ede3fe5079257932b81"
     }
-  ]
+  ],
+  "calendar_reviewed_at": "2026-09-29",
+  "calendar_scope": "Explicit patient-level interarrival and potential endpoint-delay tapes wrap AL/BDA conduct, pending suspension, decision lag and final ascertainment. Table 2 supplies realized patient chronology; native scheduling defaults and adaptive assignment parity are not established."
 }

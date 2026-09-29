@@ -136,5 +136,6 @@ guard is unnecessary for this model with a specified Dirichlet prior.
 
 The existing `tite_boin12_decision` continues to use approximate likelihood.
 Complete-outcome final selection remains available through
-`tite_boin12_select_obd`. Calendar accrual, follow-up updates and categorical
-outcomes remain outside this BDA entry point.
+`tite_boin12_select_obd`. The [calendar replay driver](tite-boin12-calendar.md)
+adds staggered arrivals, follow-up updates, suspension and final ascertainment
+around either conduct method. Categorical outcomes remain outside these APIs.

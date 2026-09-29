@@ -42,3 +42,12 @@ staggered arrivals, event visibility, pending counts, and final follow-up
 independently of an adaptive decision sequence.
 
 Primary reference: [Zhou et al., TITE-BOIN12](https://pmc.ncbi.nlm.nih.gov/articles/PMC9199061/).
+
+Validation after the final implementation edit passed 32 affected tests with
+warnings treated as errors, including AL/BDA conduct and the new calendar
+checks. Peak RSS was 130.80 MiB with zero swaps. Ruff format/check and targeted
+mypy passed. Root integration independently compared all six analysis rows in
+the [published patient ledger](tite-boin12-paper-calendar-audit.md) with the
+calendar observation helper, including individual endpoint states and follow-up.
+The audit records the unresolved day-315 adaptive dose-assignment discrepancy;
+no full Figure 1 parity is claimed.

@@ -3073,11 +3073,12 @@
       "status": "partial",
       "implemented_features": [
         "Exponential survival with normalized one-sided iMOM prior: broadcast posterior monitoring from event counts and total time on test",
-        "Continuous total-time-on-test stopping boundaries with strict cutoffs, explicit median-to-mean conversion and dimensionless log-space integration"
+        "Continuous total-time-on-test stopping boundaries with strict cutoffs, explicit median-to-mean conversion and dimensionless log-space integration",
+        "Explicit arrival/event/censor calendar replay with inclusive event/look ties, fixed final follow-up after early stopping and bounded serial exponential simulation with separate accrual/outcome seeds, replayable trials, early/final stopping probabilities, Monte Carlo errors and patient-count quantiles."
       ],
       "validation": [
         "Independent original-mean-coordinate integration, all displayed guide boundary rows within 1.5 days, root residuals, extreme evidence and unit invariance; tests/test_bayes_factor_survival.py",
-        "Pending calendar simulation, accrual/check schedule audit, native day discretization and input/report workflow; docs/bayes-factor-survival.md"
+        "Focused event/censor/timing and seed-replay checks, representability guards and work/memory preflight; tests/test_bayes_factor_survival_calendar.py. Native arrival/check/final-time conventions, day discretization and input/report parity remain open; docs/bayes-factor-survival-calendar.md."
       ]
     },
     {
@@ -4358,14 +4359,16 @@
         "tite_boin12_posterior: patient-level binary approximate likelihood, effective endpoint sizes and MLEs, conditional pending outcomes, nonadditive joint utility, quasi-Beta desirability and declared effective-binomial safety/activity posteriors.",
         "tite_boin12_decision: separate pending-endpoint suspension, no-information suspension, persistent elimination and BOIN12 neighboring-dose conduct with configurable exploration and precision stopping.",
         "Optional 3+3 de-escalation override for toxicity limit 0.25 at exactly 3 or 6 patients and at least 2 observed DLTs; explicit pending/admissibility precedence and safe lower-neighbor handling.",
-        "tite_boin12_select_obd: complete patient-level histories reduce to BOIN12 final selection, retaining exact joint counts and prior elimination. Source-backed AL core with explicit native-parity limits. Supplement S7/S2 verification, native pending-data safety and final tie details, categorical outcomes, calendar simulation and native reports remain open; see docs/tite-boin12.md. Binary BDA posterior sampling uses an explicit joint Dirichlet prior, all three missing-outcome patterns, serial Gibbs updates, completed-data BOIN12 posterior averaging and separate chain diagnostics; docs/tite-boin12-bda.md. tite_boin12_bda_decision adds current-dose pending suspension before sampling, persistent elimination and neighboring-dose movement using mean imputed toxicity counts with explicit Python conduct settings."
+        "tite_boin12_select_obd: complete patient-level histories reduce to BOIN12 final selection, retaining exact joint counts and prior elimination. Source-backed AL core with explicit native-parity limits. Supplement S7/S2 verification, native pending-data safety and final tie details, categorical outcomes, repeated scenario simulation and native reports remain open; see docs/tite-boin12.md. Binary BDA posterior sampling uses an explicit joint Dirichlet prior, all three missing-outcome patterns, serial Gibbs updates, completed-data BOIN12 posterior averaging and separate chain diagnostics; docs/tite-boin12-bda.md. tite_boin12_bda_decision adds current-dose pending suspension before sampling, persistent elimination and neighboring-dose movement using mean imputed toxicity counts with explicit Python conduct settings.",
+        "run_tite_boin12_calendar_trial: explicit potential-outcome tapes, staggered patient arrivals within fixed-dose cohorts, AL/BDA conduct, pending-endpoint suspension, persistent elimination, compact decision histories, final complete-outcome ascertainment and bounded calendar/BDA work; docs/tite-boin12-calendar.md."
       ],
       "validation": [
         "Official application 1.4.3.0 and source hashes in docs/tite-boin12-sources.json; author comparator and Lin-Yuan source inspected without executing vendor simulations.",
         "Independent base-R references for all four ascertainment patterns, endpoint ESS/MLE, conditional probabilities, nonadditive joint utilities and Beta tails.",
         "Focused checks cover exact complete-outcome BOIN12 posterior and final-selection reduction, final pending-data rejection and invariance to additional follow-up, prior-only untried doses, unit rescaling, suspension boundaries, persistent elimination and numerical edge conditions. Hidden native-backend parity is not claimed.",
         "Twenty focused conduct/reference checks plus guide and precision-precedence checks cover source-defined run-in thresholds, unchanged non-trigger counts, pending/precision ordering, toxicity-limit restriction and lowest/eliminated lower-dose stops; research/tite-boin12-runin-audit.md.",
-        "BDA validation includes complete-data reduction, repeated pending-outcome imputation, seed replay and an independent exact Dirichlet integral over 16 missing-state assignments; 13 sampled summaries agree within 1.372 estimated batch MCSEs; research/tite-boin12-bda-audit.md. Integrated BDA conduct passes 29 focused TITE checks; its toxicity-rate estimate agrees with exact missing-state integration within 0.201 conservative MCSE; AL transition extraction independently reviewed."
+        "BDA validation includes complete-data reduction, repeated pending-outcome imputation, seed replay and an independent exact Dirichlet integral over 16 missing-state assignments; 13 sampled summaries agree within 1.372 estimated batch MCSEs; research/tite-boin12-bda-audit.md. Integrated BDA conduct passes 29 focused TITE checks; its toxicity-rate estimate agrees with exact missing-state integration within 0.201 conservative MCSE; AL transition extraction independently reviewed.",
+        "Calendar integration passes 32 affected checks and an independent six-look patient observation ledger. Published enrollment dates are reproduced, but the day-315 AL dose assignment differs from the paper illustration; research/tite-boin12-paper-calendar-audit.md records the discrepancy. No full adaptive-trial or native-calendar parity is claimed."
       ]
     },
     {

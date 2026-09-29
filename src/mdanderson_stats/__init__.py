@@ -133,6 +133,12 @@ from .bayes_factor_survival import (
     bayes_factor_survival,
     bayes_factor_survival_boundaries,
 )
+from .bayes_factor_survival_calendar import (
+    BayesFactorSurvivalSimulation,
+    BayesFactorSurvivalTrial,
+    bayes_factor_survival_trial,
+    simulate_bayes_factor_survival,
+)
 from .bayesian_chi_square import (
     BayesianChiSquare,
     ExponentialBayesianGOF,
@@ -1385,6 +1391,11 @@ from .tite_boin12_bda import (
     tite_boin12_bda_decision,
     tite_boin12_bda_posterior,
 )
+from .tite_boin12_calendar import (
+    TITEBOIN12CalendarStep,
+    TITEBOIN12CalendarTrial,
+    run_tite_boin12_calendar_trial,
+)
 from .tite_boin_simulation import TITEBOINSimulation, simulate_tite_boin
 from .tite_boin_trial import TITEBOINStep, TITEBOINTrial, run_tite_boin_trial
 from .tite_crm_prior_ess import TITECRMPriorESSSimulation, simulate_tite_crm_prior_ess
@@ -1786,6 +1797,9 @@ __all__ = [
     "TITEBOIN12BDAPosterior",
     "tite_boin12_bda_decision",
     "tite_boin12_bda_posterior",
+    "TITEBOIN12CalendarStep",
+    "TITEBOIN12CalendarTrial",
+    "run_tite_boin12_calendar_trial",
     "BARDMinimizationResult",
     "BARDSelectionResult",
     "bard_minimization",
@@ -2501,6 +2515,10 @@ __all__ = [
     "BayesFactorSurvivalBoundaries",
     "bayes_factor_survival",
     "bayes_factor_survival_boundaries",
+    "BayesFactorSurvivalSimulation",
+    "BayesFactorSurvivalTrial",
+    "bayes_factor_survival_trial",
+    "simulate_bayes_factor_survival",
     "IMOMBinaryPrior",
     "BayesFactorBinaryJob",
     "BayesFactorBinaryReport",

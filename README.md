@@ -836,8 +836,11 @@ inclusive cutoffs. Its default online boundaries are reproduced; ESS calibration
 and native protocol/export coverage remain pending.
 
 [Bayes Factor TTE](docs/bayes-factor-survival.md) adds exponential/iMOM posterior
-monitoring and continuous time-on-test boundaries. Calendar simulation and native
-input/report workflows remain pending.
+monitoring and continuous time-on-test boundaries. Its
+[calendar extension](docs/bayes-factor-survival-calendar.md) adds explicit event
+and censoring tapes plus bounded serial simulation with replayable seeds and
+early/final operating characteristics. Native timing parity and input/report
+workflows remain pending.
 
 [PerfectMatch](docs/perfectmatch.md) adds quantile normalization and PDNN energy,
 signal and conditional gene-expression calculations, plus joint fitting of stacking
@@ -1314,9 +1317,11 @@ pending toxicity and efficacy, joint utility posteriors, interim dose conduct
 and complete-outcome final OBD selection. The declared approximate-likelihood
 model is checked against base R; final selection reduces to ordinary BOIN12.
 [Bayesian data augmentation](docs/tite-boin12-bda.md) adds joint Dirichlet
-imputation with explicit priors and completed-data BOIN12 posterior averaging.
-Native pending-data safety details, integrated BDA conduct and the full
-calendar simulator remain open.
+imputation with explicit priors, completed-data BOIN12 posterior averaging and
+interim dose conduct. [Calendar replay](docs/tite-boin12-calendar.md) connects
+either conduct method to staggered arrivals, delayed endpoint observation,
+suspension and final ascertainment. Native pending-data safety details, full
+scenario simulation and categorical outcomes remain open.
 
 [U-BOIN joint utilities](docs/uboin.md) add exact categorical Dirichlet
 posterior moments, toxicity/efficacy admissibility and winner, proportional or

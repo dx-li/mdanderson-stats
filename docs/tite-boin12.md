@@ -172,6 +172,12 @@ invariance to additional follow-up are checked in the
 
 ## Source verification and remaining uncertainty
 
+The [calendar replay driver](tite-boin12-calendar.md) wraps these decisions
+with staggered arrivals, endpoint observation, suspension and final selection.
+It accepts explicit patient/dose delay tapes and supports AL or BDA conduct.
+Its timing rules are documented Python choices; native scheduling parity
+remains unverified.
+
 The [primary paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC9199061/),
 Zhou et al., *Statistics in Medicine* 41, 1918–1931 (2022), DOI
 10.1002/sim.9337, gives the conditional imputation and quasi-binomial utility

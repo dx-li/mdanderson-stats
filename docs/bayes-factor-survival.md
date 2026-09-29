@@ -94,12 +94,14 @@ exact integer-day parity is not claimed.
 
 ## Remaining catalog coverage
 
-**Catalog status is partial.** Posterior monitoring and continuous exposure
-boundaries are implemented. The native calendar simulation, accrual mechanism,
-observation-check schedule, stopping at maximum enrollment, text input and HTML
-simulation report still require source audit and implementation. The guide lists
-an accrual rate but does not fully specify these mechanics. The available model
-functions do not silently assume a calendar simulation convention or reproduce
-the native Monte Carlo report.
+**Catalog status is partial.** Posterior monitoring, continuous exposure
+boundaries, [explicit calendar replay and bounded serial simulation](bayes-factor-survival-calendar.md)
+are implemented. Replay accepts supplied arrivals, events, independent censoring,
+check times and a final time. Simulation returns early/final stopping proportions,
+Monte Carlo standard errors and patient-count summaries under documented Python
+timing rules. The guide lists an accrual rate but does not fully specify native
+arrival generation, observation checks or final follow-up. Native calendar parity,
+integer-day boundaries, text input and the HTML report remain unverified or
+unimplemented; the Python simulation does not claim to reproduce that report.
 
 Archive retrieval was checked on September 10, 2026: the [version 1.1 download](https://biostatistics.mdanderson.org/SoftwareDownload/FileDownloader/Index/401) requires email, organization and occupation registration.

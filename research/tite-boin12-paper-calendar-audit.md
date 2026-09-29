@@ -33,3 +33,30 @@ native supplemental posterior conventions, or the general arrival/monitoring
 policy. The illustrated one-day gap between a decision and subsequent
 enrollment is a feature of the published example, not an inferred universal
 software default.
+
+## Adaptive-decision comparison
+
+The published example is explicitly the AL version with toxicity/efficacy
+limits 0.35/0.25 and utilities `(100, 40, 60, 0)`. The calendar driver reproduces
+its enrollment dates using gaps `[1, 10, ..., 10]`, three-patient cohorts and
+a one-day decision lag. Replaying potential-outcome tapes whose assigned-dose
+entries match Table 2 reproduces dose assignments through day 305. At day 315,
+however, the implemented AL rule recommends dose 2 while the illustration
+assigns the next cohort to dose 3.
+
+At that look, dose 3 has two observed toxicity events, four ascertained toxicity
+outcomes and two pending outcomes with follow-up 20 and 10 days. The effective
+sample size is `4 + 20/45 + 10/45 = 14/3`, and the declared AL toxicity estimate
+is `2/(14/3) = 3/7`. This exceeds the standard BOIN de-escalation boundary for
+target 0.35. All four doses remain admissible; dose-2 and dose-3 utility tail
+probabilities are approximately 0.1558 and 0.1172 respectively. Both the toxicity
+comparison and these utility rankings explain the Python decision. No different
+settings or BDA variant were identified in the example text that resolve it.
+
+This is an unresolved discrepancy with the published illustration. The
+implementation is not adjusted to force that dose sequence. Table 2 remains
+useful as an independent observation-ledger reference, but it is not asserted
+as a successful full adaptive-trial reference. The finite outcomes at unrealized
+doses are unknown; filling those tape cells with infinity is an explicit
+synthetic extension, not recovered source data. After the dose sequence
+diverges, those cells cannot establish published trial outcomes or final OBD.
