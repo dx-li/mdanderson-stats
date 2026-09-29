@@ -116,3 +116,48 @@ def test_randomized_binary_calibration_rejects_invalid_truth_and_work_before_tab
         _calibration(futile_truth=(0.1, 0.9))
     with pytest.raises(ValueError, match="max_work"):
         _calibration(max_work=1)
+
+
+def test_binary_grid_ties_retain_input_order_with_roundoff_differences() -> None:
+    result = _calibration(
+        max_subjects=4,
+        theta_lrv=0.0,
+        theta_cmv=0.2,
+        futile_truth=(0.2, 0.2),
+        effective_truth=(0.1, 0.7),
+        control_prior=(1.0, 2.0),
+        treatment_prior=(2.0, 1.0),
+        arm_assignments=(0, 1, 0, 1),
+        looks=(2, 4),
+        lambda_lrv_grid=(0.6, 0.8),
+        lambda_cmv_grid=(0.2, 0.4),
+        gamma_lrv_grid=(0.0, 0.5),
+        gamma_cmv_grid=(0.0, 0.5),
+        false_go_limit=0.87,
+        false_no_go_limit=0.05,
+        false_consider_limit=0.2,
+        graduate_at_interim=True,
+        objective="cgr",
+    )
+    assert result.selected_index == 0
+    ess = _calibration(
+        max_subjects=4,
+        theta_lrv=0.0,
+        theta_cmv=0.2,
+        futile_truth=(0.2, 0.2),
+        effective_truth=(0.1, 0.7),
+        control_prior=(1.0, 2.0),
+        treatment_prior=(2.0, 1.0),
+        arm_assignments=(0, 1, 0, 1),
+        looks=(2, 4),
+        lambda_lrv_grid=(0.6, 0.8),
+        lambda_cmv_grid=(0.2, 0.4),
+        gamma_lrv_grid=(0.0, 0.5),
+        gamma_cmv_grid=(0.0, 0.5),
+        false_go_limit=0.87,
+        false_no_go_limit=0.05,
+        false_consider_limit=0.2,
+        graduate_at_interim=True,
+        objective="ess_futile",
+    )
+    assert ess.selected_index == 4

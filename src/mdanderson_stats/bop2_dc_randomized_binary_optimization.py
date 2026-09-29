@@ -21,6 +21,7 @@ _MAX_TOTAL_WORK = 50_000_000
 _MAX_RETAINED_CELLS = 2_000_000
 _MAX_WORK_CONTROL = 50_000_000
 _SCENARIOS = ("futile", "effective")
+_FLOAT_TIE_FACTOR = 64.0
 _DECISIONS = ("stop_no_go", "graduate", "final_go", "final_consider", "final_no_go")
 
 
@@ -101,6 +102,31 @@ def _truth_pair(value: ArrayLike, name: str) -> FloatArray:
         raise ValueError(f"{name} probabilities must lie in [0,1]")
     result.flags.writeable = False
     return result
+
+
+def _roundoff_tied(left: float, right: float, max_subjects: int) -> bool:
+    """Treat only relative binary64 accumulation noise as a score tie.
+
+    The tolerance scales with path length and has no absolute floor, so tiny
+    but genuinely different operating probabilities remain distinguishable.
+    """
+    tolerance = _FLOAT_TIE_FACTOR * np.finfo(np.float64).eps * max_subjects
+    scale = max(abs(left), abs(right))
+    return bool(left == right or (scale > 0 and abs(left - right) <= tolerance * scale))
+
+
+def _score_precedes(
+    candidate: tuple[float, float], best: tuple[float, float], max_subjects: int
+) -> bool:
+    for left, right in zip(candidate, best, strict=True):
+        if _roundoff_tied(left, right, max_subjects):
+            continue
+        return left < right
+    return False
+
+
+def _within_limit(value: float, limit: float, max_subjects: int) -> bool:
+    return bool(value <= limit or _roundoff_tied(value, limit, max_subjects))
 
 
 def _positive_work(value: int, name: str) -> int:
@@ -308,9 +334,15 @@ def optimize_bop2_dc_randomized_binary(
     false_consider = np.maximum(
         decision_probability[0, :, -1, 3], decision_probability[1, :, -1, 3]
     )
-    feasible = (false_go <= fg_limit) & (false_no_go <= fn_limit)
-    if fc_limit is not None:
-        feasible &= false_consider <= fc_limit
+    feasible = np.array(
+        [
+            _within_limit(float(fg), fg_limit, base.max_subjects)
+            and _within_limit(float(fn), fn_limit, base.max_subjects)
+            and (fc_limit is None or _within_limit(float(fc), fc_limit, base.max_subjects))
+            for fg, fn, fc in zip(false_go, false_no_go, false_consider, strict=True)
+        ],
+        dtype=bool,
+    )
 
     selected_index: int | None = None
     selected_key: tuple[float, float] | None = None
@@ -322,7 +354,7 @@ def optimize_bop2_dc_randomized_binary(
             if objective == "cgr"
             else (expected_sample_size[0, index], -correct_go[index])
         )
-        if selected_key is None or key < selected_key:
+        if selected_key is None or _score_precedes(key, selected_key, base.max_subjects):
             selected_key, selected_index = key, index
     if selected_index is None:
         raise BOP2DCRandomizedBinaryInfeasibleError(
