@@ -1,9 +1,9 @@
 """Approximated-likelihood TITE-BOIN12 calculations.
 
-This module accepts patient-level endpoint histories.  Pending endpoints are
+This module accepts patient-level endpoint histories. Pending endpoints are
 represented by ``-1`` and are converted to effective binomial observations
-using their follow-up fractions.  The implementation deliberately stops at
-interim conduct; final OBD selection and BDA are separate methods.
+using their follow-up fractions. It provides interim conduct and complete-data
+final selection; the Bayesian data-augmentation route remains separate.
 """
 
 from __future__ import annotations
@@ -15,7 +15,7 @@ from numpy.typing import ArrayLike, NDArray
 from scipy.special import betainc, betaincc
 
 from ._validation import scalar
-from .boin12 import BOIN12Design, BOIN12Posterior
+from .boin12 import BOIN12Design, BOIN12Posterior, BOIN12Selection
 
 type FloatArray = NDArray[np.float64]
 type IntArray = NDArray[np.int64]
@@ -363,4 +363,56 @@ def tite_boin12_decision(
     action = "stay" if best == current else "escalate" if best > current else "deescalate"
     return TITEBOIN12Decision(
         action, best + 1, _readonly(~allowed, np.bool_), result.pending_counts, result
+    )
+
+
+def tite_boin12_select_obd(
+    design: BOIN12Design,
+    doses: ArrayLike,
+    toxicity: ArrayLike,
+    efficacy: ArrayLike,
+    toxicity_followup: ArrayLike,
+    efficacy_followup: ArrayLike,
+    *,
+    toxicity_window: float,
+    efficacy_window: float,
+    n_doses: int,
+    eliminated: ArrayLike | None = None,
+) -> BOIN12Selection:
+    """Select a final OBD after every patient's binary endpoints are resolved.
+
+    TITE-BOIN12's final analysis reduces to BOIN12 once all toxicity and
+    efficacy outcomes have been observed. Pending endpoints are rejected; the
+    existing BOIN12 two-step selection applies admissibility, estimates the
+    MTD from isotonic toxicity rates, and maximizes utility desirability among
+    admissible doses not exceeding that MTD.
+    """
+    if not isinstance(design, BOIN12Design):
+        raise ValueError("design must be a BOIN12Design")
+    d, t, e, tf, ef, tw, ew, k = _inputs(
+        doses,
+        toxicity,
+        efficacy,
+        toxicity_followup,
+        efficacy_followup,
+        toxicity_window,
+        efficacy_window,
+        n_doses,
+    )
+    if d.size == 0:
+        raise ValueError("final OBD selection requires at least one patient")
+    if np.any(t == -1) or np.any(e == -1):
+        raise ValueError("final OBD selection requires fully observed endpoints")
+    n = np.bincount(d, minlength=k + 1)[1:].astype(np.int64)
+    toxicities = np.bincount(d[t == 1], minlength=k + 1)[1:].astype(np.int64)
+    efficacies = np.bincount(d[e == 1], minlength=k + 1)[1:].astype(np.int64)
+    efficacy_without_toxicity = np.bincount(d[(t == 0) & (e == 1)], minlength=k + 1)[1:].astype(
+        np.int64
+    )
+    return design.select_obd(
+        n,
+        toxicities,
+        efficacies,
+        efficacy_without_toxicity=efficacy_without_toxicity,
+        eliminated=eliminated,
     )
