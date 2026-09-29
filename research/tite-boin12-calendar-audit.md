@@ -29,13 +29,13 @@ must supply the four-cell Dirichlet prior and NumPy generator/sampler settings;
 the replay stores dose-level summaries and discards each fit's draw arrays.
 
 These timing and terminal-accounting conventions are explicit Python choices,
-not native calendar defaults. In particular, the cached author simulation
-orders toxicity and efficacy confirmation times separately and schedules the
-next look at their configured order statistics together with the accrual
-candidate time. This replay instead retries at each earliest unresolved
-endpoint ascertainment, making intermediate updates visible. The source
-supports the underlying AL/BDA decisions, suspension rule, and complete-data
-selection; the replay does not claim exact reproduction of the paper's
+not native calendar defaults. In particular, the cached later PK-BOIN12
+author comparator orders toxicity and efficacy confirmation times separately
+and schedules its next cohort using those order statistics together with a
+candidate next-cohort time. This replay instead retries at each earliest
+unresolved endpoint ascertainment, making intermediate updates visible. That
+comparator is not treated as a complete native TITE-BOIN12 calendar
+specification. The replay does not claim exact reproduction of the paper's
 adaptive Figure 1. The cached
 Table 2 patient tape and observation ledger are suitable for checking the
 staggered arrivals, event visibility, pending counts, and final follow-up
