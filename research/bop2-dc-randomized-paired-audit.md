@@ -33,3 +33,22 @@ or native randomization generation. Input, prefix-work, comparison-work, and
 quadrature work are bounded before replay or posterior calculations. This is a
 source-based Python implementation, not a claim of executable parity with the
 native application.
+
+## Monte Carlo operating characteristics
+
+`simulate_bop2_dc_randomized_paired` accepts one explicit joint four-cell truth
+vector per arm. It samples one categorical outcome for each patient according
+to the fixed allocation tape, then replays the configured looks. The helper
+reports per-look decision counts and unconditional probabilities/Monte Carlo
+standard errors, terminal decision probabilities, terminal sample sizes, and
+expected enrollment with its Monte Carlo standard error. A single seed or RNG
+creates separate per-trial seeds; each returned seed can be passed to
+`default_rng` to reconstruct that trial's category tape in allocation order.
+
+Posterior tails are cached by look and endpoint-specific arm success counts,
+so a repeated marginal comparison is integrated once even when paired
+outcome histories differ. Preflight limits cover patient paths, distinct cache
+entries and their conservative quadrature work, and aggregate result/workspace
+cells. The simulation retains no per-patient or posterior-fit history. Its
+truth, RNG, and Monte Carlo workflow are Python additions; they do not claim
+native app simulation parity.
