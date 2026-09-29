@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `e0d319d` adds randomized paired BOP2-DC
-monitoring, absorbing replay, exact operating characteristics/calibration and
-bounded joint-outcome simulation.
+Latest verified package checkpoint: `514bf2a` adds explicit-prior U2OET GAO
+calendar trials and CiBolus pseudo-data prior calibration with prior-predictive
+probability moments and beta ESS.
 Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
@@ -886,3 +886,46 @@ including this audit. Publication remains blocked by the earlier shell DNS
 failure and connector approval rejection; neither write route was retried or
 bypassed. Updated wheel/source artifacts and the verified all-refs bundle
 preserve the committed root and Luna work for publication when access permits.
+
+
+## GAO calendar and CiBolus prior checkpoint
+
+The verified code checkpoint is `514bf2a`. Two Luna implementers added the
+explicit-prior GAO calendar driver and balanced CiBolus pseudo-data calibration;
+a third Luna agent authored independent references. Root reviewed the equations,
+resource bounds and integration. The new APIs have usable guides and remain
+within the existing partial catalog entries: counts stay 63 implemented,
+66 partial and 9 pending. Native GAO prior calibration, automatic CiBolus
+variance selection and the documented native workflow gaps remain open.
+
+Four independent R GAO ledgers match nine patient rows, six interim snapshots,
+four final snapshots and sixteen utility values within 6.66e-16. CiBolus reduced
+pseudo-posterior means agree with independent quadrature within 0.552 reported
+sampler MCSE; direct prior toxicity means agree within 0.035 MCSE. Review fixed
+artificial response variance caused by summing toxicity joint cells, preserving
+zero variance and infinite ESS when response parameters are fixed. Numerical
+and source details are in the two method audits.
+
+Fourteen affected checks passed together before the direct-CDF correction;
+all five calibration checks passed after that correction. The independent
+reference generator was rerun on the corrected code (18.560 seconds,
+119.91 MiB RSS, zero swaps). A separate 400-patient SD20 smoke completed at
+118.80 MiB with no swaps, but its eight-draw chains had maximum Rhat4.11;
+this demonstrates workload support, not convergence or native calibration.
+Targeted Ruff, formatting and source type checks pass. No new CI workflow,
+dependency or broad numerical-suite run was introduced.
+
+Cached wheel and source builds pass. An isolated wheel check verifies all
+1,558 public exports, byte equality of all 559 source/data files against the
+committed code, all 138 catalog entries, preserved licenses/notices, and three
+examples across the two new guides. It took 10.602 seconds, peaked at
+124.78 MiB and reported zero swaps. Heavy numerical work remained serial with
+single-thread BLAS settings throughout this batch.
+
+Local `master` is advanced only after these checks. The refreshed wheel,
+source distribution and all-refs Git bundle under ignored `dist/` preserve
+the completed work. Read-only GitHub checks still show both remote branches
+at `45b6e307`; 159 local-master commits including this audit remain unpublished.
+The connector approval restriction and earlier shell DNS failure have no
+confirmed resolution. No write retry, permission bypass or alternate transport
+was attempted. Local artifacts do not establish GitHub publication.
