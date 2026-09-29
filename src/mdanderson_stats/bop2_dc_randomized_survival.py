@@ -19,7 +19,7 @@ _MAX_SUBJECTS = 1_000
 _MAX_MONITOR_CELLS = 64
 _MAX_QUADRATURE_EVALUATIONS = 1_700_000
 _QUAD_EVALUATIONS_PER_INTEGRAL = 21 * (2 * 300 - 1)
-_MAX_CALENDAR_WORK = 30_000_000
+_MAX_REPLAY_QUADRATURE_EVALUATIONS = 20_000_000
 
 
 @dataclass(frozen=True)
@@ -137,8 +137,6 @@ class BOP2DCRandomizedSurvivalDesign:
             | (total_n > self.max_subjects)
             | (e_c < 0)
             | (e_e < 0)
-            | ((d_c > 0) & (e_c <= 0))
-            | ((d_e > 0) & (e_e <= 0))
             | ((n_c == 0) & (e_c != 0))
             | ((n_e == 0) & (e_e != 0))
         ):
@@ -439,6 +437,9 @@ def run_bop2_dc_randomized_survival_trial(
     """Replay event durations under administrative censoring at scheduled looks.
 
     Event times are durations from enrollment and `+inf` denotes no observed event.
+    A duration of zero is accepted: it contributes one event and zero exposure to
+    the exponential likelihood. It is a probability-zero boundary under a
+    continuous event-time generator, but is useful for deterministic replay.
     Interim analyses occur at the last enrollment of each look; the final analysis
     follows the last enrollment by `final_followup`. Tied enrollment times use input
     order. This is a fixed-calendar Python replay, not a native RNG/timing simulation.
@@ -461,8 +462,12 @@ def run_bop2_dc_randomized_survival_trial(
         raise ArithmeticError("final analysis calendar time overflows")
     if followup > 0 and final_clock <= enrolled[-1]:
         raise ArithmeticError("positive final_followup is lost at this calendar-time scale")
-    if int(np.sum(design.looks)) > _MAX_CALENDAR_WORK:
-        raise ValueError("calendar replay exceeds its repeated-look work bound")
+    quadrature_margins = int(design.median_lrv != 0) + int(design.median_cmv != 0)
+    replay_quadrature_evaluations = (
+        len(design.looks) * quadrature_margins * _QUAD_EVALUATIONS_PER_INTEGRAL
+    )
+    if replay_quadrature_evaluations > _MAX_REPLAY_QUADRATURE_EVALUATIONS:
+        raise ValueError("calendar replay exceeds its total inverse-gamma quadrature work bound")
 
     states: list[BOP2DCRandomizedSurvivalState] = []
     clocks: list[float] = []

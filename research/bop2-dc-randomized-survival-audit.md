@@ -34,3 +34,11 @@ tape, and stops at the first no-go or optional graduation. Final follow-up is
 added after the last enrollment. Input order breaks tied arrival times. Native
 randomization, accrual timing, and RNG parity are not claimed. Aggregate
 operating characteristics and calibration remain unimplemented.
+
+Replay preflights total numerical work before its first posterior calculation.
+The conservative bound charges `21 * (2 * 300 - 1)` quadrature evaluations
+for each nonzero margin at every scheduled look, with a 20-million-evaluation
+replay limit; the monitor separately caps each batch. Explicit event duration
+zero is supported as one observed event with zero exposure, the valid
+exponential likelihood boundary (although it has probability zero under a
+continuous event-time generator).
