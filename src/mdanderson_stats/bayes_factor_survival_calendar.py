@@ -358,7 +358,7 @@ def simulate_bayes_factor_survival(
             raise ArithmeticError("simulated time tape is not representable")
         horizon = max(float(arrivals[-1]), float(checks[-1]) if check_count else 0.0)
         final_time = horizon + followup
-        if not np.isfinite(final_time):
+        if not np.isfinite(final_time) or (followup > 0 and final_time <= horizon):
             raise ArithmeticError("simulated final time is not representable")
         # A check at the final time belongs to final monitoring only.
         trial_checks = checks[checks < final_time]

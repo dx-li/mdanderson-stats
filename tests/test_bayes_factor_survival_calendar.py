@@ -132,3 +132,18 @@ def test_seeded_simulation_is_replayable_and_preflighted():
         simulate_bayes_factor_survival(
             **args, trial_seed_pairs=np.full((12, 2), -1, dtype=np.int64)
         )
+
+
+def test_positive_final_followup_must_advance_large_calendar_horizon():
+    with pytest.raises(ArithmeticError, match="final time is not representable"):
+        simulate_bayes_factor_survival(
+            null_median=4.0,
+            alternative_median_mode=5.5,
+            true_median=5.0,
+            accrual_rate=1.0,
+            max_patients=1,
+            repetitions=1,
+            check_times=[1e300],
+            final_followup=1.0,
+            seed=3,
+        )
