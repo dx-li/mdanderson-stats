@@ -40,9 +40,17 @@ The page distinguishes a recommended clinical model and an optional TP53 model.
 It reports more than 50% missing TP53 values, no external validation and clamping
 outside the observed data range. The interactive model-details section was not
 available in the static page. Exact coefficients, predictor transformations,
-baseline survival and clamping limits were not retrieved; no primary paper was
-identified by the targeted search. Do not assume a corrected-calcium formula or
-reuse coefficients from a different renal-cancer model.
+baseline survival and clamping limits were not retrieved. A subsequent bounded
+publisher search identified Esagian et al., *Journal of Clinical Oncology*
+44(16_suppl), e16535 (2026),
+[DOI 10.1200/JCO.2026.44.16_suppl.e16535](https://doi.org/10.1200/JCO.2026.44.16_suppl.e16535),
+“Development and internal validation of a clinical prognostic model for
+SMARCB1-deficient renal medullary carcinoma (RMC).” The indexed publisher
+abstract establishes the matching author group and model-development study,
+but does not supply an exact fitted parameter set. Direct article and PDF
+retrieval returned HTTP 403 on September 29. This is a primary-source lead,
+not enough evidence to implement predictions. Do not assume a corrected-calcium
+formula or reuse coefficients from a different renal-cancer model.
 
 ## Separate MDS-HOPE recovery and access limits
 
