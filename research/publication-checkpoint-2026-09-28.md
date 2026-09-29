@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `71538dd` adds ARAND serial simulation
-and operating-characteristic summaries. The final
+Latest verified package checkpoint: `ca0f1f7` adds trinary EffTox prior
+moments and explicit sequential elicitation. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1310,3 +1310,43 @@ This audit-only addition follows the verified code. Publication uses an ordinary
 atomic fast-forward push to master, main and the development branch, with
 independent remote verification and artifact hashes in the local ignored
 manifest. Trinary EffTox calibration remains isolated development work.
+
+
+## Trinary EffTox prior elicitation community checkpoint
+
+Verified package code is `ca0f1f7c665933d3dda266567a5cc12aa286f09c`.
+Luna implemented induced trinary probability moments and toxicity-first prior
+elicitation; root and a separate Luna reviewer checked the model contract,
+source limitations and numerical stability. The objective targets marginal
+efficacy means and beta-moment ESS while integrating uncertainty from both
+independent prior blocks. Stable complements and nonnegative variance terms
+preserve rare probabilities and concentrated-prior variances. The sequential
+objective is explicitly a Python policy because the recovered sources do not
+specify native trinary calibration. Native parity is not claimed.
+
+All seven focused checks and two public examples pass together in 29.749
+seconds at 145.17 MiB peak RSS, zero swaps. Independent base-R fixtures cover
+twelve dose/prior combinations, including near-fixed cases; the reported
+objective is recomputed from returned moments and parameters. The ordinary
+three-dose example converges with default settings at 431 toxicity and 494
+efficacy evaluations. Achieved mean ESS values are 1.1000007421 and
+0.8000035097, against 1.1 and 0.8, with maximum efficacy mean residual
+0.00122147. Targeted lint, formatting and type checks pass.
+
+The prior hosted run progressed past lint and then reported formatting in 33
+existing guides. Mechanical formatting preserves the syntax trees of all 49
+affected Python blocks and leaves their prose unchanged. This checkpoint
+contains that correction without changing CI or adding new checks. Hosted
+validation of this new checkpoint is tracked separately from local success.
+
+Cached wheel/source builds and isolated wheel verification pass: 1,600 public
+exports, all 570 committed package source/data files byte-identical in both
+artifacts, all 138 catalog entries, preserved license notices and three examples
+from the ARAND simulation and trinary calibration guides. Verification takes
+22.797 seconds at 128.12 MiB peak RSS, zero swaps. Numerical/build processes
+ran serially with thread limits and no installations. Coverage remains 63
+implemented, 67 partial and eight pending; existing mixed-license terms apply.
+
+Only this audit follows the verified code. Publication advances master, main
+and development together by ordinary atomic fast-forward push. The local
+ignored manifest records independently verified remote SHAs and artifact hashes.
