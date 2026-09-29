@@ -87,7 +87,7 @@ write.csv(data.frame(
   replicate = rep(seq_len(replicates), each = ncol(cluster_draws)),
   draw = rep(seq_len(ncol(cluster_draws)), times = replicates),
   cluster_index = as.vector(t(cluster_draws)),
-  cluster_id = as.vector(t(cluster_draws)) + 1L
+  cluster_id = sorted_labels[as.vector(t(cluster_draws)) + 1L]
 ), "tests/fixtures/interval-survival-cluster-tapes.csv", row.names = FALSE)
 write.csv(data.frame(
   replicate = rep(seq_len(replicates), each = ncol(native_slopes)),
