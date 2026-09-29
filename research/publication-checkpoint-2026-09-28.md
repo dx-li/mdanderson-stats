@@ -1,8 +1,10 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `326d718` adds unordered categorical
-survival forests and OOB anti-split importance, with consistent categorical
-prediction, contour adjustment and permutation-importance routing.
+Latest verified package checkpoint: `4873075` adds ordinary interval-PH
+coefficient bootstrap covariance/standard errors and repeated-visit preparation
+for interval competing risks, with explicit failures/exclusions and source-row
+provenance. The earlier categorical forest and anti-split workflows remain
+included.
 Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
@@ -966,3 +968,48 @@ The earlier shell DNS failure and connector approval rejection have no confirmed
 resolution; neither write route was retried or bypassed. The refreshed wheel,
 source distribution and verified all-refs Git bundle preserve this checkpoint
 and committed Luna work. They do not establish remote publication.
+
+## Interval-PH coefficient bootstrap and competing-risk visit preparation
+
+The verified code checkpoint is `4873075`. Two Luna implementers added these
+workflows in separate checkouts; a Luna reviewer checked the pinned R source
+contracts and prepared independent fixtures. Root reviewed the resource and
+numerical edge cases, integrated the public APIs and added community examples.
+Entry 166 remains partial, and the catalog remains 63 implemented, 66 partial
+and nine pending. Baseline survival identification bounds are not presented as
+sampling confidence bands.
+
+Twelve focused checks pass together in 2.437 seconds at 140.95 MiB peak RSS,
+with zero swaps. The interval-PH references cover ordinary and weighted
+resampling, singular replicates and sample covariance. Review corrected an
+omitted native endpoint-preprocessing step in the reference harness before
+accepting numerical agreement. All eight parent/bootstrap reference CSVs
+regenerate byte-identically (4.724 seconds, 309.00 MiB peak child RSS including
+the serial native builder, zero swaps). The visit generator reproduces the
+pinned native outputs and records deliberate fixes for its sorting and
+first-visit-event defects.
+
+Integration checks reconstruct weighted RNG draws from an explicit tape with
+fractional case weights, preserve coefficient/covariance results under
+covariate units of `1e100` and `1e-100`, and recover a 120-subject two-cause
+study exactly from 203 reverse-ordered visit rows before fitting it. They take
+1.365 seconds at 120.12 MiB RSS, zero swaps. Review also corrected potential ID
+coercion, nested-input allocation and covariance underflow problems. Targeted
+Ruff, formatting and type checks pass. No new CI workflow or broad numerical
+suite run was added; numerical execution remained serial and single-threaded.
+
+Cached wheel and source builds pass without installing dependencies. An
+isolated wheel check verifies all 1,564 public exports, byte equality of all
+561 packaged source/data files against committed bytes, all 138 catalog
+entries, retained licenses/notices and four examples across the two affected
+guides. It takes 31.559 seconds including the plotting font-cache build, peaks
+at 160.55 MiB and reports zero swaps.
+
+Local `master` is advanced only after these checks, with this publication
+record as the sole additional change beyond the verified code. The wheel,
+source distribution and all-refs Git bundle preserve the completed work.
+A read-only check at 2026-09-29 03:37:55 UTC still shows GitHub `master` and
+`main` at `45b6e307`; 171 local-master commits including this audit are
+unpublished. The earlier DNS failure and connector approval restriction have
+no confirmed resolution. Neither write route was retried or bypassed, and
+local artifacts do not establish remote publication.
