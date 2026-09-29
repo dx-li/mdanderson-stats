@@ -18,3 +18,10 @@ formed. Patient-count intervals use NumPy's linear empirical quantile method
 (type 7); the guide does not specify the quantile convention. These outputs
 therefore provide source-informed operating characteristics, not exact native
 RNG or report parity.
+
+Focused validation comprises the simulator test for replaying the sole
+single-arm binary replicate from its returned seed and for undefined one-trial
+MCSEs, plus candidate-budget exhaustion under both duration-precedence policies.
+Together with the existing ARAND calendar replay tests, the bounded check ran 13
+tests. It does not establish broad Monte Carlo calibration or native numeric
+parity.
