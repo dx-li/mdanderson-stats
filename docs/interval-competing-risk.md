@@ -118,8 +118,11 @@ form a valid joint distribution. It does not silently clip their sum.
 
 Regression covariance follows the source's residualized-score least-squares
 method, separating regression scores from the baseline score span. This is
-distinct from inverting the full likelihood Hessian. Neither bootstrap
-confidence bands nor uncertainty surfaces are implied by the returned curves.
+distinct from inverting the full likelihood Hessian.
+[Coefficient bootstrapping](interval-competing-risk-bootstrap.md) provides
+an alternative covariance estimate by resampling rows and rebuilding each
+sample's spline model. Neither approach supplies bootstrap confidence bands
+or uncertainty surfaces for the returned curves.
 
 `score_error` reports the ordinary likelihood score in the fitter's scaled
 parameter coordinates; it can remain nonzero at an active probability or
@@ -156,5 +159,5 @@ See the [source and numerical audit](../research/interval-competing-risk-audit.m
 for pinned `intccr` sources, the native derivative discrepancies and reference
 scope. The original author's contour starts at zero even when that time lies
 outside the fitted range; this interface starts at the fitted lower boundary.
-Categorical encoding, bootstrap uncertainty and the broader SurvivalContour
+Categorical encoding and the broader SurvivalContour
 application remain separate coverage items.

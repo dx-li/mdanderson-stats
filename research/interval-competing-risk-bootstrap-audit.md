@@ -61,9 +61,12 @@ not certified optimization targets. The focused test checks the tape and knot
 contract, then independently refits each Python tape row and verifies
 convergence/KKT and the returned sample-covariance identity.
 
-Validation: an earlier focused run of the new bootstrap tests plus the
-existing interval competing-risk fit tests passed (8 tests), before the final
-fit-covariance skip, invalid-resample context, and single-success regression
-updates. A focused rerun of those two files remains pending in integration.
+Integration validation reran the new bootstrap tests and existing competing-risk
+fit tests after the final covariance-skip and failure-policy changes: 8 passed
+in 2.52 seconds (139.78 MiB peak process RSS, zero swaps). The public guide's
+eight resamples all converged. A separate integration check reproduced seeded
+draws exactly with an explicit tape and preserved coefficients and standard
+errors after covariate-unit changes by 1e-100 and 1e100 (0.591 seconds,
+121.83 MiB peak process RSS, zero swaps).
 Ruff, mypy, Python compilation, and `git diff --check` pass on the final source.
 No full suite or large simulation was run.

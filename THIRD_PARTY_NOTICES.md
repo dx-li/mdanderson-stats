@@ -1067,6 +1067,14 @@ The repeated-visit preparation interface follows the same pinned package's
 event handling. `research/interval-competing-risk-data-audit.md` records these
 differences and native source references.
 
+`interval_competing_risk_bootstrap.py` follows the ordinary row-resampling and
+coefficient-covariance conventions of the same pinned `intccr::bssmle_se`.
+Each resample rebuilds its endpoint support and spline knots. Python records
+failed optimizer fits and offers an explicit extension for invalid resamples;
+it does not reproduce native optimizer defects or R random streams. The source
+audit and portable reference generator are documented in
+`research/interval-competing-risk-bootstrap-audit.md`.
+
 ## Bayesian success calibration
 
 `success_calibration.py` is an independent implementation of the mathematical

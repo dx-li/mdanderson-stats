@@ -743,6 +743,10 @@ from .interval_competing_risk import (
     fit_interval_competing_risk,
     predict_interval_competing_risk,
 )
+from .interval_competing_risk_bootstrap import (
+    IntervalCompetingRiskBootstrap,
+    bootstrap_interval_competing_risk_coefficients,
+)
 from .interval_competing_risk_contour import (
     IntervalCompetingRiskContour,
     interval_competing_risk_contour,
@@ -2134,6 +2138,8 @@ __all__ = [
     "anti_split_random_survival_forest_importance",
     "IntervalCompetingRiskFit",
     "IntervalCompetingRiskPrediction",
+    "IntervalCompetingRiskBootstrap",
+    "bootstrap_interval_competing_risk_coefficients",
     "IntervalCompetingRiskContour",
     "IntervalCompetingRiskVisitData",
     "prepare_interval_competing_risk_visits",

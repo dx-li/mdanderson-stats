@@ -4692,7 +4692,8 @@
         "OOB anti-split importance with the pinned native default threshold of one, optional stochastic branch reversal, complete-block error differences, valid-block counts and omitted-tail reporting; docs/random-survival-oob.md.",
         "Ordinary interval-PH coefficient bootstrap with source-aligned weighted row resampling, multiplicity refits, fixed-index replay, explicit failed-replicate status, survivor-conditional sample covariance/SE and bounded serial work; docs/interval-survival-bootstrap.md. No baseline confidence bands are implied.",
         "Repeated-visit conversion for interval competing risks: chronological first-event intervals, baseline covariates, immutable subject-level arrays and original-row provenance for endpoints, missing times and ignored post-event rows; corrected native sorting/first-event defects. docs/interval-competing-risk.md.",
-        "Remaining: neural models, stratified/cluster interval-PH and competing-risk bootstrap workflows, broader categorical encoding, forest missing-value/alternative-split/random-routing-importance workflows and full native app workflows."
+        "Ordinary interval competing-risk coefficient bootstrap with full row resamples, replicate-specific spline knots, replay tapes, conditional sample covariance/SE and explicit invalid/failed-fit policies; docs/interval-competing-risk-bootstrap.md. No baseline or CIF confidence bands are implied.",
+        "Remaining: neural models, stratified/cluster interval-PH bootstrap workflows, broader categorical encoding, forest missing-value/alternative-split/random-routing-importance workflows and full native app workflows."
       ],
       "validation": [
         "Four original-author R Cox helper surface cases (Efron/Breslow by mean/explicit profiles), plus corresponding R quantile curves, coefficient covariance, likelihoods and standard errors; tools/reference_survival_contour.R.",

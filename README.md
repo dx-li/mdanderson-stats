@@ -1495,8 +1495,10 @@ continuous-covariate contours, with optional two-/three-dimensional plots.
 An explicit starting-boundary approximation and constrained-convergence
 diagnostics accompany probability checks on requested profiles. Repeated-visit
 data can be converted into subject-level intervals with baseline covariates
-and source-row provenance. Neural models, stratified/cluster interval-PH and
-competing-risk bootstrap workflows remain open.
+and source-row provenance. [Competing-risk coefficient bootstrapping](docs/interval-competing-risk-bootstrap.md)
+adds covariance and standard errors from complete resampled refits, with explicit
+failure records. Neural models and stratified/cluster interval-PH bootstrap
+workflows remain open.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson
