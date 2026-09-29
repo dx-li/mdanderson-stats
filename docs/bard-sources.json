@@ -40,6 +40,11 @@
       "filename": "paper.pdf",
       "url": "https://arxiv.org/pdf/2409.15663",
       "sha256": "65cc6704504b9dcddaa48038cdf400a345b88d2516bc8b22f718bb141fd3724b"
+    },
+    {
+      "filename": "Expansion.pdf",
+      "url": "https://biostatistics.mdanderson.org/shinyapps/BARD/Expansion.pdf",
+      "sha256": "00bcf52267a653b36e6a7ef6b51103442667cbfd23f2c5c30dde409e2cbeb8f2"
     }
   ]
 }

@@ -63,8 +63,9 @@ covariates when calculating adjustment means and covariate percentiles. The
 existing optional 2D/3D plotting functions accept this contour directly.
 
 Bounds describe unidentified event locations within support intervals. They
-are **not confidence intervals**. Shared-coefficient bootstrap uncertainty and
-confidence surfaces remain separate work. This implementation supplies the
+are **not confidence intervals**. [Shared-coefficient bootstrap uncertainty](interval-survival-stratified-bootstrap.md)
+is available with an explicit within-stratum or pooled resampling policy.
+Sampling confidence surfaces remain separate work. This implementation supplies the
 advertised statistical family without claiming parity with the original
 app's unresolved `mets` interval-response interpretation.
 

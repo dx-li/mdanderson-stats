@@ -1214,7 +1214,9 @@ support for nonadditive RDS enumeration is unverified.
 posterior safety exclusions and final MTD selection. Assigned and evaluated
 patient counts are kept separate. Calendar simulation includes delayed DLT and
 response observation, auditable patient histories and Monte Carlo errors.
-Expansion, titration and generated reports remain open.
+[Optional post-escalation expansion](docs/bard-expansion.md) holds enrollment
+one dose below the last escalation cohort, with assigned-count caps and
+toxicity closure. Titration and generated reports remain open.
 
 [BOP2-DC](docs/bop2-dc.md) adds binary efficacy monitoring with distinct
 go/consider/no-go outcomes and exact operating characteristics. Independent
@@ -1562,6 +1564,9 @@ without materializing duplicate rows.
 [Stratified interval models](docs/interval-survival-stratified.md) fit shared
 covariate effects and separate group baselines jointly, with matching
 group-specific predictions and contours.
+[Stratified coefficient bootstrapping](docs/interval-survival-stratified-bootstrap.md)
+provides shared-coefficient covariance with explicit within-stratum or pooled
+resampling, retained row tapes and visible failed-refit records.
 [Interval-censored competing-risk models](docs/interval-competing-risk.md) fit
 two causes jointly with monotone spline baselines and generalized odds-rate
 links. They return regression covariance, both incidence curves and
@@ -1571,8 +1576,8 @@ diagnostics accompany probability checks on requested profiles. Repeated-visit
 data can be converted into subject-level intervals with baseline covariates
 and source-row provenance. [Competing-risk coefficient bootstrapping](docs/interval-competing-risk-bootstrap.md)
 adds covariance and standard errors from complete resampled refits, with explicit
-failure records. Neural models and stratified interval-PH bootstrap
-workflows remain open.
+failure records. Broader categorical encoding, remaining forest workflows and
+full native application workflows remain open.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson

@@ -172,8 +172,9 @@ provides coefficient uncertainty for the two-cause model.
 [Neural survival models](survival-neural.md) provide DeepSurv, CoxTime,
 DeepHitSingle, LogisticHazard and PCHazard fitting, prediction and contours
 through a bounded NumPy network with explicit training choices.
-Stratified interval-PH bootstrapping,
-remaining forest features and the full native app
+[Stratified interval-PH bootstrapping](interval-survival-stratified-bootstrap.md)
+adds shared-coefficient covariance with explicit resampling policies and failed-fit records.
+Remaining forest features and the full native app
 workflow remain open. Entry 166 stays partial.
 
 The original author's two- and three-dimensional Cox helper outputs provide

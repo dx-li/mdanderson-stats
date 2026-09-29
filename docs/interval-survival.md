@@ -97,6 +97,7 @@ two-cause generalized odds-rate regression and incidence contours.
 and group-specific baselines. Ordinary-PH coefficient bootstrap uncertainty is
 available separately, as are [cluster PH bootstrapping](interval-survival-cluster-bootstrap.md)
 and [competing-risk bootstrapping](interval-competing-risk-bootstrap.md).
-Stratified PH bootstrap workflows and other application features remain
-tracked in the catalog. [Neural models](survival-neural.md) are available
+[Stratified PH bootstrapping](interval-survival-stratified-bootstrap.md) adds
+shared-coefficient uncertainty with explicitly chosen resampling policies.
+Other application features remain tracked in the catalog. [Neural models](survival-neural.md) are available
 separately for right-censored data.

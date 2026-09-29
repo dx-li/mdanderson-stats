@@ -814,6 +814,10 @@ from .interval_survival_stratified import (
     fit_stratified_interval_survival,
     predict_stratified_interval_survival,
 )
+from .interval_survival_stratified_bootstrap import (
+    StratifiedIntervalSurvivalBootstrap,
+    bootstrap_stratified_interval_survival_coefficients,
+)
 from .intervals import (
     binomial_interval,
     bp1ci_binomial_interval,
@@ -2326,6 +2330,8 @@ __all__ = [
     "StratifiedIntervalSurvivalFit",
     "fit_stratified_interval_survival",
     "predict_stratified_interval_survival",
+    "StratifiedIntervalSurvivalBootstrap",
+    "bootstrap_stratified_interval_survival_coefficients",
     "SurvanLogistic",
     "survan_logistic",
     "SurvanKM",

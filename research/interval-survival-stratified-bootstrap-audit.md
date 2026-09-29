@@ -70,3 +70,16 @@ fits is `4.98e-7`. The original-fit slope/log-likelihood differences are
 differences are `2.41e-7` and `2.23e-7`. The separate reference comparison
 took 0.057 seconds after imports, peaked at 111,656,960 bytes and used no
 swaps. Targeted Ruff check/format and mypy pass for the new module and tests.
+
+
+## Root integration checks
+
+The six fixed tapes reproduce five successful coefficient draws with maximum
+absolute error 4.979271983618361e-7 and covariance error
+2.413982205795584e-7. The all-censored-stratum draw remains a failed row;
+all tapes retain 20 sampled observations per group. Covariate unit factors
+1e-100 and 1e100 preserve rescaled coefficients and covariance, and an
+oversized work request leaves a supplied generator unchanged. The combined
+bootstrap/BF-BOIN integration audit takes 0.428 seconds after imports, peaks
+at 108.52 MiB RSS and reports zero swaps. Public package exports include the
+result type and coefficient-bootstrap function.

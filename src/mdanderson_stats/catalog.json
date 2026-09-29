@@ -4642,13 +4642,15 @@
         "BF-BOIN backfill eligibility with observed activity at or below dose, assigned-count caps and reversible empirical toxicity closure",
         "Conflict-aware pooled escalation decisions with posterior safety exclusions and conditional assigned-count stopping",
         "Final MTD selection using the shared BOIN isotonic estimator",
-        "Calendar simulation with uniform or exponential renewal arrivals, delayed DLT and response observation, patient histories and Monte Carlo errors"
+        "Calendar simulation with uniform or exponential renewal arrivals, delayed DLT and response observation, patient histories and Monte Carlo errors",
+        "Optional post-escalation expansion at one dose below the last actually treated escalation cohort, assigned-count cap and first toxicity closure, separate expansion counts/end reasons/times and complete follow-up; source-defined target/stops with explicit calendar choices. docs/bard-expansion.md."
       ],
       "validation": [
         "35 independent CRAN BOIN boundary rows agree with Python",
         "Focused hand-computed conduct cases cover activity, caps, reopening, pooled movement and eliminated destinations",
         "Six independent base-R Weibull calibrations match Python to relative tolerance 1e-12",
-        "20 seeded trials audited for activity timing, allocation caps, count conservation and complete final follow-up"
+        "20 seeded trials audited for activity timing, allocation caps, count conservation and complete final follow-up",
+        "Twelve focused BF-BOIN checks pass. All existing fields match 80 published no-expansion trials exactly; 60 expansion trials verify fixed-dose targeting, cap accounting, chronology and termination, including two independently reconstructed first toxicity closures. research/bard-expansion-audit.md."
       ]
     },
     {
@@ -4689,7 +4691,8 @@
         "run_bard_blrm_trial: explicit-arrival/outcome/delay stage-one calendar with prior screening, cohort priority, evaluable-capped backfill, cached compact posterior diagnostics, explicit boundary policies and complete post-stop follow-up; docs/bard-blrm-trials.md.",
         "continue_bard_trial: completed BF-BLRM stage-one carryover filtered by eligibility and chosen dose pair, combined-history minimization, inclusive total-target enrollment and final OBD selection; retained exclusions, assignment seeds and shortfalls. docs/bard-two-stage.md.",
         "Optional accelerated titration with explicit grade-2 outcomes/assessment times, first-DLT/second-grade-2 exits, distinct highest/lower-cap transitions and retained patient roles; sequential-assessment scheduling and BF-BLRM safety policies are explicit Python conventions. docs/bard-titration.md.",
-        "Expansion, stage-two calendar timing, native per-arm quota behavior, calibration and native reports remain open; see docs/bard.md."
+        "Optional BF-BOIN post-escalation expansion follows the cached app guide: fixed c-1 target from the last actual escalation cohort, assigned-count cap/toxicity closure, response eligibility and retained calendar diagnostics. Explicit Python timing choices; not applied to BF-BLRM. docs/bard-expansion.md.",
+        "Stage-two calendar timing, native per-arm quota behavior, calibration and native reports remain open; see docs/bard.md."
       ],
       "validation": [
         "Official BARD application 1.0.5.0, guides and examples pinned in docs/bard-sources.json; discrepancies between official help and paper equations documented.",
@@ -4700,7 +4703,8 @@
         "12 independent hand-calculated decision/backfill/MTD snapshots and four focused worker checks; cutoff equality, unsafe intermediate steps, response before DLT assessment, caps and final six-patient eligibility",
         "Three independent fixed-prior R/hand-ledger calendars match all 16 patients, as-of assessment counts and 12/5/2 fits; early DLT/late response, evaluable-cap overshoot, cutoff policy, large-origin duration and bounded prior-stop checks. Root replay comparison: 113.94 MiB peak RSS, zero reported swaps; research/bard-blrm-calendar-audit.md.",
         "Four independent base-R two-stage ledgers match eight new patients, 32 count rows, six posterior rows and four target/selection summaries; maximum posterior/utility difference 4.27e-14. Four focused continuation tests and source review pass. Root comparison 119.63 MiB RSS, zero swaps; research/bard-integrated-audit.md.",
-        "Nine focused calendar/titration checks pass, including highest-dose immediate top-up, lower-cap full next cohort, singleton delayed-grade-2 transitions and overdose-boundary precedence. Three integrated guide examples pass in 1.492 seconds, 114.73 MiB peak RSS, zero swaps; research/bard-accelerated-titration-audit.md."
+        "Nine focused calendar/titration checks pass, including highest-dose immediate top-up, lower-cap full next cohort, singleton delayed-grade-2 transitions and overdose-boundary precedence. Three integrated guide examples pass in 1.492 seconds, 114.73 MiB peak RSS, zero swaps; research/bard-accelerated-titration-audit.md.",
+        "BF-BOIN expansion guide SHA-256 pinned in docs/bard-sources.json. Twelve affected design/simulation checks pass; 80 no-expansion trials reproduce published outputs exactly and 60 expansion trials satisfy source-rule ledgers. Root combined audit 108.52 MiB RSS, zero swaps; research/bard-expansion-audit.md."
       ]
     },
     {
@@ -4746,7 +4750,8 @@
         "Interval-PH cluster coefficient bootstrap: whole-group draws with replacement, variable expanded sample sizes, compressed frequency-weight refits, replay tapes, explicit failed-fit records and conditional sample covariance/SE; docs/interval-survival-cluster-bootstrap.md.",
         "OOB random-routing importance with bootstrap-multiplicity daughter counts and the pinned coupled-uniform threshold rule; complete-block errors, categorical routing, undefined-block/tail reporting and bounded sequential work; docs/random-survival-forest-random-importance.md.",
         "DeepSurv, CoxTime, DeepHitSingle, LogisticHazard and PCHazard neural survival models: bounded full-batch Adam fitting, training-only transforms, immutable fitted state, visible training diagnostics, stable survival prediction and contours through existing 2D/3D plotting. Explicit mathematical objectives and implementation differences; docs/survival-neural.md.",
-        "Remaining: stratified interval-PH bootstrap workflows, broader categorical encoding, forest missing-value/alternative-split workflows and full native app workflows."
+        "Stratified interval-PH shared-coefficient bootstrap with explicit within-stratum or pooled weighted-row resampling, immutable replay tapes, sampled stratum counts, failed-refit records, conditional covariance/SE and bounded serial work; a documented statistical extension, not native stratified-bootstrap parity. docs/interval-survival-stratified-bootstrap.md.",
+        "Remaining: broader categorical encoding, forest missing-value/alternative-split workflows and full native app workflows."
       ],
       "validation": [
         "Four original-author R Cox helper surface cases (Efron/Breslow by mean/explicit profiles), plus corresponding R quantile curves, coefficient covariance, likelihoods and standard errors; tools/reference_survival_contour.R.",
@@ -4778,7 +4783,8 @@
         "Pinned intccr sorted/unsorted visit and Surv2 outputs reproduce exactly; corrected chronology, first-event retention and source-row provenance have explicit ledgers. Numeric ID precision and nested-shape allocation guards pass. Reversed 203-visit input recovers the documented 120-subject two-cause study exactly and fits successfully; research/interval-competing-risk-data-audit.md.",
         "Cluster bootstrap: unchanged icenReg helper and native PH optimizer for two unequal-size group tapes (84/100 expanded rows); coefficient and covariance discrepancies below 2.80e-7 and 2.91e-8. All eight public-example refits succeed; research/interval-survival-cluster-bootstrap-audit.md.",
         "Random forest routing: all 15 unchanged native C route/draw-count fixtures regenerate exactly; 31 affected cluster-bootstrap/forest checks pass, including bootstrap multiplicities, categorical routing, zero-threshold identity and OOB blocks. Focused run 145.64 MiB RSS, zero swaps; research/random-survival-forest-audit.md.",
-        "Five independent 85-digit Decimal likelihood references, 56 loss derivatives, six log-baseline increments and 48 Cox/CoxTime predictions agree within 2.23e-16; ten focused neural checks pass. Extreme Cox score shifts, streamed 20-million-cell baseline scenario and explicit Adam overflow rejection checked. Focused run 145.84 MiB RSS, zero swaps; research/survival-neural-audit.md."
+        "Five independent 85-digit Decimal likelihood references, 56 loss derivatives, six log-baseline increments and 48 Cox/CoxTime predictions agree within 2.23e-16; ten focused neural checks pass. Extreme Cox score shifts, streamed 20-million-cell baseline scenario and explicit Adam overflow rejection checked. Focused run 145.84 MiB RSS, zero swaps; research/survival-neural-audit.md.",
+        "Six independent base-R cloglog resample references: five valid shared-coefficient fits plus one unsupported all-censored group. Coefficient/covariance discrepancies below 4.98e-7/2.42e-7; eight focused checks pass. Covariate units 1e+/-100 and pre-RNG work rejection verified; research/interval-survival-stratified-bootstrap-audit.md."
       ]
     },
     {
