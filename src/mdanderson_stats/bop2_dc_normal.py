@@ -6,7 +6,7 @@ no application defaults or native continuous-endpoint executable parity are
 inferred here.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -291,15 +291,29 @@ def simulate_bop2_dc_normal(
     look_work = trials * int(np.sum(design.looks, dtype=np.int64))
     if look_work > _MAX_LOOK_WORK:
         raise ValueError("simulation exceeds the repeated-look work budget")
+    with np.errstate(over="ignore", invalid="ignore"):
+        centered_prior_mean = design.prior_mean - mean
+        centered_lrv = design.theta_lrv - mean
+        centered_cmv = design.theta_cmv - mean
+    if not all(np.isfinite(value) for value in (centered_prior_mean, centered_lrv, centered_cmv)):
+        raise ArithmeticError("truth-centered Normal design parameters are not representable")
+    centered_design = replace(
+        design,
+        prior_mean=centered_prior_mean,
+        theta_lrv=centered_lrv,
+        theta_cmv=centered_cmv,
+    )
     seed = _replay_seed(rng)
     generator = np.random.default_rng(seed)
     sizes = np.empty(trials, dtype=np.int64)
     decisions = np.empty(trials, dtype="U16")
     for i in range(trials):
-        outcomes = generator.normal(mean, sd, size=n)
+        # Simulate residuals in a zero-centered coordinate system so adding a
+        # large truth offset cannot erase variation before the posterior update.
+        outcomes = generator.normal(0.0, sd, size=n)
         if np.any(~np.isfinite(outcomes)):
             raise ArithmeticError("simulated Normal outcomes are not finite")
-        trial = run_bop2_dc_normal_trial(design, outcomes)
+        trial = run_bop2_dc_normal_trial(centered_design, outcomes)
         sizes[i], decisions[i] = trial.enrolled, trial.decision
     counts = np.asarray([np.count_nonzero(decisions == label) for label in _DECISIONS])
     probability = counts.astype(np.float64) / trials

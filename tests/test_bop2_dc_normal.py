@@ -130,3 +130,20 @@ def test_monitor_is_invariant_to_large_affine_unit_offset() -> None:
     assert shifted.posterior_lrv == pytest.approx(base.posterior_lrv, abs=2e-15)
     assert shifted.posterior_cmv == pytest.approx(base.posterior_cmv, abs=2e-15)
     assert shifted.decision == base.decision
+
+
+def test_normal_simulation_is_affine_invariant_for_large_truth_offset() -> None:
+    base_design = _design(max_subjects=20, looks=[10, 20])
+    shift = 1e15
+    shifted_design = _design(
+        max_subjects=20,
+        theta_lrv=shift,
+        theta_cmv=shift + 0.5,
+        prior_mean=shift,
+        looks=[10, 20],
+    )
+    base = simulate_bop2_dc_normal(base_design, 0.0, 1.1, n_trials=32, rng=611)
+    shifted = simulate_bop2_dc_normal(shifted_design, shift, 1.1, n_trials=32, rng=611)
+    np.testing.assert_array_equal(shifted.sample_size, base.sample_size)
+    np.testing.assert_array_equal(shifted.decision, base.decision)
+    np.testing.assert_array_equal(shifted.decision_count, base.decision_count)
