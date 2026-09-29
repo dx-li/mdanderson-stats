@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `73847dd` adds BOP2-DC survival finite-grid
-calibration and the unknown-shape Weibull joint-posterior diagnostic.
+Latest verified package checkpoint: `55eb2dc` adds BOP2-DC Normal endpoint
+monitoring/replay/simulation and exact paired-endpoint finite-grid calibration.
 Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
@@ -625,3 +625,45 @@ connector approval rejection remain publication barriers, with no retry or
 bypass of rejected write routes. Updated packages and the verified all-refs
 bundle preserve committed root/worker checkpoints locally; in-progress paired
 calibration and continuous Normal work remains outside this package and master.
+
+## Normal endpoint and exact paired calibration checkpoint
+
+The Normal endpoint is integrated at `3de513f`. It uses the source NIG prior
+and Student-t mean posterior, with complete-outcome replay and serial Normal
+trial simulation. Review found and repaired a material large-offset error:
+centering observations, prior mean and thresholds together preserves posterior
+tails when adding `1e15` to exactly representable inputs. The centered mean
+and offset are retained separately. Independent base-R calculations verify
+eight cases and 16 posterior analyses, then replay 64 fixed simulation paths
+with 154 reached looks. All 898 numeric summaries agree, including all four
+terminal decisions, equality, unit changes and Monte Carlo errors. The check
+takes .1083 seconds after imports, peaks at 119.19 MiB and reports no swaps.
+
+Exact paired calibration is integrated at `4ba6669`, with the result-copy
+memory bound corrected at `c142e2c`. Explicit endpoint-specific grids retain
+joint truth distributions and their association. A base-R oracle enumerates
+256 paths per truth for 48 candidate/scenario combinations. Both objectives,
+meaningful false-decision constraints, all decision/stopping/sample-size
+probabilities and expected enrollment agree across 1,920 numeric summaries.
+The Python comparison takes .0971 seconds after imports, peaks at 120.63 MiB
+and reports no swaps. R and Python numerical work were run sequentially.
+
+Public interfaces, guides and reference tooling are committed at
+`55eb2dc8c62cdcaf01fdf62ef1eb7af61fec42f0`. Seven focused tests pass in the
+integrated checkout, as do both guide examples, targeted Ruff/format/mypy
+checks and cached wheel/source builds. Isolated wheel verification checks
+1,504 exports, exact committed bytes for 544 source/data files, notices and
+licenses, all 138 catalog entries and both affected examples. It takes
+11.855 seconds, peaks at 110.19 MiB and reports zero swaps. No additional CI
+workflow, dependency or broad numerical test run was introduced. Coverage
+labels remain 63 implemented, 66 partial and 9 pending: these are substantive
+additions to one partial program, not a claim of full BOP2-DC app parity.
+
+Local `master` is fast-forwarded to this verified code plus the audit. Fresh
+read-only GitHub checks still show `master` and `main` at `45b6e307`, with
+114 newer commits at the verified code checkpoint. Shell DNS failure and the
+connector's approval rejection continue to prevent publication. No rejected
+write route was retried or bypassed. Updated packages and the verified
+all-refs bundle preserve committed root/Luna checkpoints locally. Uncommitted
+Normal calibration and randomized-comparison work is outside the validated
+package and local `master`.
