@@ -1505,6 +1505,13 @@ profiles and optional two-/three-dimensional plots support exploration of a
 continuous predictor. Stratified models share coefficients and estimate separate
 baseline hazards for each group. Further implemented model families are described below.
 
+[Neural survival models](docs/survival-neural.md) add DeepSurv, CoxTime,
+DeepHitSingle, LogisticHazard and PCHazard through a bounded NumPy network.
+The APIs fit models, predict survival and form covariate contours with retained
+training transforms, loss/epoch diagnostics and explicit Python training choices.
+Independent high-precision likelihood and gradient references validate all five
+families. These point predictions do not include uncertainty intervals.
+
 [Fine–Gray competing-risk regression](docs/fine-gray.md) provides target-cause
 incidence predictions, fixed and time-interaction effects, separate censoring
 distributions, and sandwich coefficient covariance. Its fixed-effect contour

@@ -95,5 +95,8 @@ The broader SurvivalContour entry remains partial. The separate
 two-cause generalized odds-rate regression and incidence contours.
 [Stratified interval-PH](interval-survival-stratified.md) adds shared coefficients
 and group-specific baselines. Ordinary-PH coefficient bootstrap uncertainty is
-available separately; stratified/cluster and competing-risk bootstrap workflows,
-neural models and other application features remain tracked in the catalog.
+available separately, as are [cluster PH bootstrapping](interval-survival-cluster-bootstrap.md)
+and [competing-risk bootstrapping](interval-competing-risk-bootstrap.md).
+Stratified PH bootstrap workflows and other application features remain
+tracked in the catalog. [Neural models](survival-neural.md) are available
+separately for right-censored data.

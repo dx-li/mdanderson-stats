@@ -387,11 +387,15 @@ def fit_survival_neural(
         next_first: list[FloatArray] = []
         next_second: list[FloatArray] = []
         for w, g, m, v in zip(weights, gradients, first, second):
-            m_new = 0.9 * m + 0.1 * g
-            v_new = 0.999 * v + 0.001 * g * g
-            mhat = m_new / (1.0 - 0.9**epoch)
-            vhat = v_new / (1.0 - 0.999**epoch)
-            next_weights.append(w - learning_rate * mhat / (np.sqrt(vhat) + 1e-8))
+            with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+                m_new = 0.9 * m + 0.1 * g
+                v_new = 0.999 * v + 0.001 * g * g
+                mhat = m_new / (1.0 - 0.9**epoch)
+                vhat = v_new / (1.0 - 0.999**epoch)
+                candidate = w - learning_rate * mhat / (np.sqrt(vhat) + 1e-8)
+            if not all(np.isfinite(value).all() for value in (m_new, v_new, candidate)):
+                raise ArithmeticError("Adam moment or weight update exceeds floating-point range")
+            next_weights.append(candidate)
             next_first.append(m_new)
             next_second.append(v_new)
         weights, first, second = tuple(next_weights), tuple(next_first), tuple(next_second)

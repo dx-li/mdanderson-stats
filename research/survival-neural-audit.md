@@ -84,3 +84,28 @@ ranking and PCHazard fractional exposure. Focused package tests compare loss,
 logit/weight gradients, baseline increments, predictions, all-family seeded
 fitting and contour shape. These validate the stated mathematical objectives,
 not native app parity.
+
+## Integration validation — September 29, 2026
+
+Root independently compared all five Decimal loss references (exact after
+conversion to double precision), 56 derivatives (maximum absolute error
+1.12e-16), six log-baseline increments (2.23e-16), and 48 predictions
+(1.12e-16). Common Cox score shifts of +1000 and -1000 preserve predictions.
+A DeepSurv query with 2,000 profiles and 10,000 event times evaluates one
+requested time per profile without allocating the 20-million-cell dense
+profile-by-baseline matrix. Extreme PCHazard logits of -1000 retain finite
+likelihoods and the expected gradients. This independent process took
+1.532 seconds, peaked at 123.22 MiB RSS and reported zero swaps.
+
+The integrated ten focused tests pass with warnings treated as errors and
+one BLAS thread: 1.94 seconds total process time, 145.84 MiB peak RSS and zero
+swaps. Targeted Ruff format/check and mypy checks pass. An additional extreme
+DeepHit ranking example produces finite loss and gradients but overflows the
+Adam squared-gradient accumulator; fitting now rejects that update explicitly
+instead of retaining infinite optimizer state. The dedicated probe confirms
+this rejection. Public exports include both result types and all three API
+functions. A separate read-only review found no material integration blocker.
+
+These checks validate the documented likelihoods, derivatives and bounded
+implementation. They do not establish equality to stochastic native training
+runs, clinical performance, or statistical convergence of every fitted network.

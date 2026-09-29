@@ -166,7 +166,13 @@ implemented families with their documented numerical and native-parity limits.
 effects with group-specific interval baselines.
 [Ordinary interval-PH coefficient bootstrapping](interval-survival-bootstrap.md)
 adds covariance and standard errors with visible failed replicates.
-Stratified/cluster and competing-risk bootstraps, five neural model workflows,
+[Cluster interval-PH bootstrapping](interval-survival-cluster-bootstrap.md)
+resamples whole subject groups, and [interval competing-risk bootstrapping](interval-competing-risk-bootstrap.md)
+provides coefficient uncertainty for the two-cause model.
+[Neural survival models](survival-neural.md) provide DeepSurv, CoxTime,
+DeepHitSingle, LogisticHazard and PCHazard fitting, prediction and contours
+through a bounded NumPy network with explicit training choices.
+Stratified interval-PH bootstrapping,
 remaining forest features and the full native app
 workflow remain open. Entry 166 stays partial.
 

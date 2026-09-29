@@ -4715,7 +4715,9 @@
         "https://github.com/cran/flexsurv/tree/2aae4c8ac56823d0eac30c1a9ad654ac599b5938",
         "https://github.com/cran/randomForestSRC/tree/b4d099e262423362a8872c13c468e6dbe2f9e9da",
         "https://github.com/cran/icenReg/tree/26fadac37c6b54dd0e29c91c2bf07942ae120356",
-        "https://github.com/cran/intccr/tree/252644c0d347a663ea5d7bef88fa2ab04f114b1e"
+        "https://github.com/cran/intccr/tree/252644c0d347a663ea5d7bef88fa2ab04f114b1e",
+        "https://github.com/cran/survivalmodels/tree/d8a6a4a36368fb57253e0ebf3f0f32e05f05c561",
+        "https://github.com/havakv/pycox/tree/3eccdd7fd9844a060f50fdcc315659f33a2d2dc1"
       ],
       "downloads": [],
       "retrieval_error": null,
@@ -4743,7 +4745,8 @@
         "Ordinary interval competing-risk coefficient bootstrap with full row resamples, replicate-specific spline knots, replay tapes, conditional sample covariance/SE and explicit invalid/failed-fit policies; docs/interval-competing-risk-bootstrap.md. No baseline or CIF confidence bands are implied.",
         "Interval-PH cluster coefficient bootstrap: whole-group draws with replacement, variable expanded sample sizes, compressed frequency-weight refits, replay tapes, explicit failed-fit records and conditional sample covariance/SE; docs/interval-survival-cluster-bootstrap.md.",
         "OOB random-routing importance with bootstrap-multiplicity daughter counts and the pinned coupled-uniform threshold rule; complete-block errors, categorical routing, undefined-block/tail reporting and bounded sequential work; docs/random-survival-forest-random-importance.md.",
-        "Remaining: neural models, stratified interval-PH bootstrap workflows, broader categorical encoding, forest missing-value/alternative-split workflows and full native app workflows."
+        "DeepSurv, CoxTime, DeepHitSingle, LogisticHazard and PCHazard neural survival models: bounded full-batch Adam fitting, training-only transforms, immutable fitted state, visible training diagnostics, stable survival prediction and contours through existing 2D/3D plotting. Explicit mathematical objectives and implementation differences; docs/survival-neural.md.",
+        "Remaining: stratified interval-PH bootstrap workflows, broader categorical encoding, forest missing-value/alternative-split workflows and full native app workflows."
       ],
       "validation": [
         "Four original-author R Cox helper surface cases (Efron/Breslow by mean/explicit profiles), plus corresponding R quantile curves, coefficient covariance, likelihoods and standard errors; tools/reference_survival_contour.R.",
@@ -4774,7 +4777,8 @@
         "Twelve focused coefficient-bootstrap and visit-conversion checks pass together at 140.95 MiB RSS, zero swaps. Pinned icenReg fixed-resample references cover unit/non-unit weights, singular replicates and sample covariance; all eight parent/bootstrap fixtures regenerate byte-identically. Fractional-weight RNG replay and covariate units 1e+/-100 pass; research/interval-survival-bootstrap-audit.md.",
         "Pinned intccr sorted/unsorted visit and Surv2 outputs reproduce exactly; corrected chronology, first-event retention and source-row provenance have explicit ledgers. Numeric ID precision and nested-shape allocation guards pass. Reversed 203-visit input recovers the documented 120-subject two-cause study exactly and fits successfully; research/interval-competing-risk-data-audit.md.",
         "Cluster bootstrap: unchanged icenReg helper and native PH optimizer for two unequal-size group tapes (84/100 expanded rows); coefficient and covariance discrepancies below 2.80e-7 and 2.91e-8. All eight public-example refits succeed; research/interval-survival-cluster-bootstrap-audit.md.",
-        "Random forest routing: all 15 unchanged native C route/draw-count fixtures regenerate exactly; 31 affected cluster-bootstrap/forest checks pass, including bootstrap multiplicities, categorical routing, zero-threshold identity and OOB blocks. Focused run 145.64 MiB RSS, zero swaps; research/random-survival-forest-audit.md."
+        "Random forest routing: all 15 unchanged native C route/draw-count fixtures regenerate exactly; 31 affected cluster-bootstrap/forest checks pass, including bootstrap multiplicities, categorical routing, zero-threshold identity and OOB blocks. Focused run 145.64 MiB RSS, zero swaps; research/random-survival-forest-audit.md.",
+        "Five independent 85-digit Decimal likelihood references, 56 loss derivatives, six log-baseline increments and 48 Cox/CoxTime predictions agree within 2.23e-16; ten focused neural checks pass. Extreme Cox score shifts, streamed 20-million-cell baseline scenario and explicit Adam overflow rejection checked. Focused run 145.84 MiB RSS, zero swaps; research/survival-neural-audit.md."
       ]
     },
     {

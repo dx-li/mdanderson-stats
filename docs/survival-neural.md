@@ -8,7 +8,7 @@ returns point survival probabilities and `survival_neural_contour` returns the
 existing contour data shape without confidence intervals.
 
 ```python
-from mdanderson_stats.survival_neural import (
+from mdanderson_stats import (
     fit_survival_neural,
     predict_survival_neural,
     survival_neural_contour,
@@ -18,15 +18,35 @@ time = [1, 2, 2, 3, 4, 5, 6, 7]
 event = [1, 1, 0, 1, 1, 0, 1, 0]
 x = [[-1.0], [-0.4], [0.2], [0.5], [0.8], [1.0], [1.3], [1.5]]
 fit = fit_survival_neural(
-    time, event, x, family="deepsurv", hidden_layers=(8,), max_epochs=80,
-    patience=12, random_state=17,
+    time,
+    event,
+    x,
+    family="deepsurv",
+    hidden_layers=(8,),
+    max_epochs=80,
+    patience=12,
+    random_state=17,
 )
 survival = predict_survival_neural(fit, [[0.0], [1.0]], [1, 3, 5])
 contour = survival_neural_contour(
-    time, event, x, 0, family="deepsurv", n_grid=8, times=[1, 3, 5],
-    hidden_layers=(8,), max_epochs=80, patience=12, random_state=17,
+    time,
+    event,
+    x,
+    0,
+    family="deepsurv",
+    n_grid=8,
+    times=[1, 3, 5],
+    hidden_layers=(8,),
+    max_epochs=80,
+    patience=12,
+    random_state=17,
 )
 ```
+
+The existing `plot_survival_contour_2d(contour)` and
+`plot_survival_contour_3d(contour)` functions accept this result through the
+optional plotting extra. Neural models provide the survival surface only;
+requesting a confidence-limit surface raises an error.
 
 The result retains copied, read-only weights, feature scaling, fitted time
 cuts, baseline log-hazard increments where applicable, loss history, best

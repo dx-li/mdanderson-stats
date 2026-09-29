@@ -1353,6 +1353,13 @@ from .survival_contour import (
     survival_stratified_cox_contour,
 )
 from .survival_ess import SurvivalPriorESS, survival_prior_ess
+from .survival_neural import (
+    SurvivalNeuralContour,
+    SurvivalNeuralFit,
+    fit_survival_neural,
+    predict_survival_neural,
+    survival_neural_contour,
+)
 from .survival_sample_size import (
     SurvivalSampleSize,
     exponential_event_probability,
@@ -2249,6 +2256,11 @@ __all__ = [
     "survival_stratified_cox_contour",
     "plot_survival_contour_2d",
     "plot_survival_contour_3d",
+    "SurvivalNeuralFit",
+    "SurvivalNeuralContour",
+    "fit_survival_neural",
+    "predict_survival_neural",
+    "survival_neural_contour",
     "FineGrayFit",
     "FineGrayPrediction",
     "FineGrayContour",
