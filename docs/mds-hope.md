@@ -61,10 +61,10 @@ are negative hemoglobin and negative platelets divided by ten. The published
 coefficients have three decimal places; unavailable full-precision fitted
 coefficients are not reconstructed.
 
-## Explicit standardization and six groups
+## Explicit standardization and risk groups
 
 `mds_hope_risk_groups` accepts **already standardized** scores and returns codes
-0 through 5. Their labels and intervals are:
+0 through 5 by default. Their labels and intervals are:
 
 | Code | Group | Standardized score |
 | ---: | --- | --- |
@@ -74,6 +74,13 @@ coefficients are not reconstructed.
 | 3 | intermediate high | 0 < z ≤ 0.5 |
 | 4 | high | 0.5 < z ≤ 1.5 |
 | 5 | very high | z > 1.5 |
+
+Both grouping functions also accept `groups=5` for the supplement's alternative
+classification. It merges the six-group intermediate-high and high categories
+into `intermediate`, with interval `0 < z ≤ 1.5`. The first three groups keep
+their intervals and codes; very high becomes code 4. The six-group default
+is unchanged. A classification result includes `group_count` and the labels
+corresponding to its codes.
 
 `mds_hope_standardized_risk_groups` computes `(raw_score - reference_center) /
 reference_sd` using the caller's explicit reference constants, then applies
@@ -91,6 +98,12 @@ classified = mds_hope_standardized_risk_groups(
     0.25 + 2*z, reference_center=0.25, reference_sd=2,
 )
 np.testing.assert_array_equal(classified.group_code, mds_hope_risk_groups(z))
+five = mds_hope_standardized_risk_groups(
+    0.25 + 2*z, reference_center=0.25, reference_sd=2, groups=5,
+)
+assert five.group_count == 5
+np.testing.assert_array_equal(five.group_code, [0, 0, 1, 2, 3, 3, 4])
+assert five.group_labels[3] == "intermediate"
 ```
 
 ## Numerical scope
@@ -99,7 +112,8 @@ Inputs must be finite. Hazard-ratio overflow raises an explicit error;
 underflow may return zero while retaining the finite log hazard ratio.
 Reference comparisons use predictor differences before coefficient weighting.
 Independent base-R fixtures cover every coefficient, TP53 coding, reference
-comparisons, and exact/neighboring group boundaries. The reference generator and
+comparisons, and exact/neighboring boundaries for both grouping schemes. The
+reference generator and
 synthetic fixtures are in `tools/reference_mds_hope.R` and
 `tests/fixtures/mds-hope/`.
 

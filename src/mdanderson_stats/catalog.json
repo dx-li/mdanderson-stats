@@ -4806,13 +4806,13 @@
       "status": "partial",
       "implemented_features": [
         "Published Supplemental Equation S1 Cox linear predictor, eleven raw-unit contributions and explicit reference-profile log hazard ratios/relative hazards; scalar or bounded batched inputs with no missing-value imputation",
-        "Published six-group cutoffs for already-standardized scores or explicit caller-supplied center/SD; immutable outputs and documented units, gene coding and inclusive boundaries; docs/mds-hope.md",
+        "Published five- and six-group cutoffs for already-standardized scores or explicit caller-supplied center/SD; six groups remain the default, with matching labels and group counts; immutable outputs and documented units, gene coding and inclusive boundaries; docs/mds-hope.md",
         "Remaining: source numeric cytogenetic-category encoding, training-score center/SD, baseline survival and native calculator/plot/report equivalence; none is inferred from prediction inputs"
       ],
       "validation": [
         "Publisher supplement retrieved September 29, 2026; Equation S1 signs and transforms checked against Word OMML and independently reviewed; SHA-256 ff9c43b8fa47aece229e999c415b118d514175576a6215abd391a20757a5cdfd",
-        "Independent base-R references cover all eleven one-predictor contrasts, eight gene profiles, four explicit reference-profile comparisons, seventeen exact/neighboring group boundary cases and three nonfinite rejections; maximum absolute arithmetic difference 7.11e-15",
-        "Seven focused checks pass for raw-unit signs, batches, reference differences, overflow/underflow, cutoff inclusivity, invalid inputs and pre-matrix batch limits; tests/test_mds_hope.py",
+        "Independent base-R references cover all eleven one-predictor contrasts, eight gene profiles, four explicit reference-profile comparisons, seventeen exact/neighboring boundary cases for each of the five- and six-group schemes and three nonfinite rejections; maximum absolute arithmetic difference 7.11e-15",
+        "Eight focused checks pass for raw-unit signs, batches, reference differences, overflow/underflow, five/six-group cutoff inclusivity, invalid inputs and pre-matrix batch limits; tests/test_mds_hope.py",
         "tools/reference_mds_hope.R; tests/fixtures/mds-hope/source.json; research/mds-hope-source-status.md. Synthetic cytogenetic codes and standardization constants do not establish native app calibration."
       ]
     },

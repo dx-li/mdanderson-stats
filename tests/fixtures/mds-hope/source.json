@@ -6,7 +6,7 @@
   "supplement_sha256": "ff9c43b8fa47aece229e999c415b118d514175576a6215abd391a20757a5cdfd",
   "generator": "tools/reference_mds_hope.R",
   "reference_implementation": "Independent base-R linear algebra and nested cutoff comparisons; no Python outputs used.",
-  "fixture_scope": "Synthetic one-predictor and genotype profiles, reference-profile hazard ratios, six-group boundary cases, nonfinite rejection cases.",
+  "fixture_scope": "Synthetic one-predictor and genotype profiles, reference-profile hazard ratios, six-group and five-group boundary cases, nonfinite rejection cases.",
   "cytogenetic_score": "Explicit synthetic numeric inputs only; five-category source mapping unavailable.",
   "standardization": "Center 0.25 and SD 2 are arbitrary fixture constants, not recovered study calibration.",
   "precision": "Numeric CSV fields use 17 significant digits to preserve adjacent cutoff cases.",

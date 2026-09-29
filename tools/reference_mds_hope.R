@@ -159,6 +159,21 @@ boundary <- data.frame(
   stringsAsFactors = FALSE
 )
 write_exact_csv(boundary, file.path(out_dir, "mds_hope_six_group_boundaries.csv"), row.names = FALSE)
+
+# The published five-group alternative collapses intermediate-high and high
+# into intermediate. Retain the six-group fixture's .5 neighbors to check that
+# .5 does not create a boundary in this alternative.
+classify_five <- function(z) {
+  ifelse(z <= -1.5, "very_low",
+  ifelse(z <= -0.5, "low",
+  ifelse(z <= 0, "intermediate_low",
+  ifelse(z <= 1.5, "intermediate", "very_high"))))
+}
+five_boundary <- boundary
+five_boundary$expected_six_group <- NULL
+five_boundary$expected_five_group <- classify_five(z_values)
+write_exact_csv(five_boundary, file.path(out_dir, "mds_hope_five_group_boundaries.csv"), row.names = FALSE)
+
 # Non-finite standardized values are input-validation cases, not risk groups.
 nonfinite <- data.frame(
   case = c("negative_infinity", "positive_infinity", "not_a_number"),

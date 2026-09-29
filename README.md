@@ -24,7 +24,8 @@ Numba will be considered for measured simulation bottlenecks. This is an indepen
 project and is not an MD Anderson release.
 
 [MDS-HOPE](docs/mds-hope.md) implements the recovered published Cox score,
-predictor contributions, reference-profile hazard ratios and six-group cutoffs.
+predictor contributions, reference-profile hazard ratios and the published
+five- and six-group cutoffs.
 The cytogenetic score must be explicitly encoded; risk grouping requires an
 already-standardized score or caller-supplied reference constants. The source
 does not supply the original calibration or baseline survival, so native app
