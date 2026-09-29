@@ -113,6 +113,53 @@ def _endpoint(
     return n, observed, events, pending, ess, failure, mle
 
 
+def _boin12_transition(
+    design: BOIN12Design,
+    current: int,
+    patients: IntArray,
+    toxicity_rate: FloatArray,
+    utility_probability: FloatArray,
+    allowed: NDArray[np.bool_],
+    observed_dlt_count: int,
+    *,
+    run_in_3plus3: bool,
+) -> tuple[str, int | None]:
+    """Apply the shared BOIN12 movement policy to method-specific summaries."""
+    if run_in_3plus3 and patients[current] in (3, 6) and observed_dlt_count >= 2:
+        if current == 0:
+            return "stop_safety", None
+        lower_dose = current - 1
+        if allowed[lower_dose]:
+            return "deescalate", lower_dose + 1
+        return "stop_no_admissible_neighbor", None
+
+    rate = float(toxicity_rate[current])
+    if design.early_stop_patients is not None and patients[current] >= design.early_stop_patients:
+        return "stop_precision", None
+    if rate >= design._boin.deescalation_boundary:
+        target = max(current - 1, 0)
+        if allowed[target]:
+            return "deescalate", target + 1
+        return "stop_no_admissible_neighbor", None
+    if (
+        patients[current] >= design.exploration_patients
+        and current + 1 < patients.size
+        and patients[current + 1] == 0
+        and allowed[current + 1]
+        and rate < design._boin.deescalation_boundary
+    ):
+        return "explore_escalate", current + 2
+    candidates = np.arange(max(0, current - 1), min(patients.size, current + 2))
+    candidates = candidates[allowed[candidates]]
+    if rate > design._boin.escalation_boundary and patients[current] >= design.stay_patients:
+        candidates = candidates[candidates <= current]
+    if candidates.size == 0:
+        return "stop_no_admissible_neighbor", None
+    best = int(candidates[np.argmax(utility_probability[candidates])])
+    action = "stay" if best == current else "escalate" if best > current else "deescalate"
+    return action, best + 1
+
+
 def tite_boin12_posterior(
     design: BOIN12Design,
     doses: ArrayLike,
@@ -289,80 +336,18 @@ def tite_boin12_decision(
         return TITEBOIN12Decision(
             "stop_safety", None, _readonly(~allowed, np.bool_), result.pending_counts, result
         )
-    if run_in_3plus3 and result.N[current] in (3, 6) and result.observed_events[current, 0] >= 2:
-        if current == 0:
-            return TITEBOIN12Decision(
-                "stop_safety", None, _readonly(~allowed, np.bool_), result.pending_counts, result
-            )
-        lower_dose = current - 1
-        if allowed[lower_dose]:
-            return TITEBOIN12Decision(
-                "deescalate",
-                lower_dose + 1,
-                _readonly(~allowed, np.bool_),
-                result.pending_counts,
-                result,
-            )
-        return TITEBOIN12Decision(
-            "stop_no_admissible_neighbor",
-            None,
-            _readonly(~allowed, np.bool_),
-            result.pending_counts,
-            result,
-        )
-    rate = float(result.MLE[current, 0])
-    boin = design._boin
-    if design.early_stop_patients is not None and result.N[current] >= design.early_stop_patients:
-        return TITEBOIN12Decision(
-            "stop_precision", None, _readonly(~allowed, np.bool_), result.pending_counts, result
-        )
-    if rate >= boin.deescalation_boundary:
-        target = max(current - 1, 0)
-        if allowed[target]:
-            return TITEBOIN12Decision(
-                "deescalate",
-                target + 1,
-                _readonly(~allowed, np.bool_),
-                result.pending_counts,
-                result,
-            )
-        return TITEBOIN12Decision(
-            "stop_no_admissible_neighbor",
-            None,
-            _readonly(~allowed, np.bool_),
-            result.pending_counts,
-            result,
-        )
-    if (
-        result.N[current] >= design.exploration_patients
-        and current + 1 < k
-        and result.N[current + 1] == 0
-        and allowed[current + 1]
-        and rate < boin.deescalation_boundary
-    ):
-        return TITEBOIN12Decision(
-            "explore_escalate",
-            current + 2,
-            _readonly(~allowed, np.bool_),
-            result.pending_counts,
-            result,
-        )
-    candidates = np.arange(max(0, current - 1), min(k, current + 2))
-    candidates = candidates[allowed[candidates]]
-    if rate > boin.escalation_boundary and result.N[current] >= design.stay_patients:
-        candidates = candidates[candidates <= current]
-    if candidates.size == 0:
-        return TITEBOIN12Decision(
-            "stop_no_admissible_neighbor",
-            None,
-            _readonly(~allowed, np.bool_),
-            result.pending_counts,
-            result,
-        )
-    best = int(candidates[np.argmax(result.posterior.utility_probability[candidates])])
-    action = "stay" if best == current else "escalate" if best > current else "deescalate"
+    action, next_dose = _boin12_transition(
+        design,
+        current,
+        result.N,
+        result.MLE[:, 0],
+        result.posterior.utility_probability,
+        allowed,
+        int(result.observed_events[current, 0]),
+        run_in_3plus3=run_in_3plus3,
+    )
     return TITEBOIN12Decision(
-        action, best + 1, _readonly(~allowed, np.bool_), result.pending_counts, result
+        action, next_dose, _readonly(~allowed, np.bool_), result.pending_counts, result
     )
 
 

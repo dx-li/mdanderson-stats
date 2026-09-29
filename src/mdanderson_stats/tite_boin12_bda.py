@@ -13,10 +13,11 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
+from ._validation import scalar
 from .boin12 import BOIN12Design, BOIN12Posterior
 from .boin12 import posterior as boin12_posterior
 from .hierarchical_binomial import ChainSummary, summarize_chains
-from .tite_boin12 import _inputs, _readonly
+from .tite_boin12 import _boin12_transition, _endpoint, _inputs, _readonly
 
 type FloatArray = NDArray[np.float64]
 type IntArray = NDArray[np.int64]
@@ -57,6 +58,18 @@ class TITEBOIN12BDAPosterior:
     prior_concentrations: FloatArray
     chains: int
     draws_per_chain: int
+
+
+@dataclass(frozen=True)
+class TITEBOIN12BDADecision:
+    """One BDA-based TITE-BOIN12 next-dose decision."""
+
+    action: str
+    next_dose: int | None
+    eliminated: NDArray[np.bool_]
+    pending_counts: IntArray
+    imputed_toxicity_rate: FloatArray | None
+    posterior: TITEBOIN12BDAPosterior | None
 
 
 def _readonly_bda(value: ArrayLike) -> FloatArray:
@@ -334,6 +347,148 @@ def tite_boin12_bda_posterior(
         _readonly_bda(prior),
         int(chains),
         int(draws),
+    )
+
+
+def tite_boin12_bda_decision(
+    design: BOIN12Design,
+    doses: ArrayLike,
+    toxicity: ArrayLike,
+    efficacy: ArrayLike,
+    toxicity_followup: ArrayLike,
+    efficacy_followup: ArrayLike,
+    *,
+    toxicity_window: float,
+    efficacy_window: float,
+    n_doses: int,
+    current_dose: int,
+    prior_concentrations: ArrayLike,
+    rng: np.random.Generator,
+    draws: int = 1000,
+    warmup: int = 1000,
+    chains: int = 4,
+    max_work: int = _MAX_WORK,
+    eliminated: ArrayLike | None = None,
+    max_pending_toxicity: float = 0.5,
+    max_pending_efficacy: float = 0.5,
+    run_in_3plus3: bool = False,
+) -> TITEBOIN12BDADecision:
+    """Make a next-dose decision from BDA-averaged completed-data summaries.
+
+    The source's >50% pending gate is applied at the current dose before any
+    sampler work. BDA uses the posterior-averaged imputed toxicity rate and
+    BOIN12 utility-probability summaries for movement. The optional run-in and
+    precision-stop ordering mirror the Python AL conduct policy; the paper does
+    not prescribe those BDA-specific computational/conduct conventions.
+    """
+    _inputs_valid(design, rng, draws, warmup, chains, max_work)
+    ct = scalar(design.toxicity_cutoff, "toxicity_cutoff")
+    ce = scalar(design.efficacy_cutoff, "efficacy_cutoff")
+    if not 0 < ct < 1 or not 0 < ce < 1:
+        raise ValueError("toxicity_cutoff and efficacy_cutoff must lie in (0,1)")
+    if not isinstance(run_in_3plus3, (bool, np.bool_)):
+        raise ValueError("run_in_3plus3 must be a boolean")
+    if run_in_3plus3 and design.toxicity_limit != 0.25:
+        raise ValueError("the 3+3 run-in is available only when toxicity_limit is 0.25")
+    current_value = scalar(current_dose, "current_dose")
+    if current_value != int(current_value):
+        raise ValueError("current_dose must be an integer dose index in [1,n_doses]")
+    d, t, e, tf, ef, tw, ew, k = _inputs(
+        doses,
+        toxicity,
+        efficacy,
+        toxicity_followup,
+        efficacy_followup,
+        toxicity_window,
+        efficacy_window,
+        n_doses,
+    )
+    if not 1 <= int(current_value) <= k:
+        raise ValueError("current_dose must be an integer dose index in [1,n_doses]")
+    prior = _prior(prior_concentrations, k)
+    excluded = np.zeros(k, dtype=bool) if eliminated is None else np.asarray(eliminated)
+    if excluded.shape != (k,) or not np.all(np.isin(excluded, (False, True, 0, 1))):
+        raise ValueError("eliminated must match n_doses")
+    excluded = excluded.astype(bool)
+    n_t, _, _, pending_t, _, _, _ = _endpoint(t, tf, d, tw, k)
+    n_e, _, _, pending_e, _, _, _ = _endpoint(e, ef, d, ew, k)
+    pending_counts = np.column_stack((pending_t, pending_e)).astype(np.int64)
+    current = int(current_value) - 1
+    if np.all(excluded):
+        return TITEBOIN12BDADecision(
+            "stop_safety",
+            None,
+            _readonly(excluded, np.bool_),
+            _readonly(pending_counts, np.int64),
+            None,
+            None,
+        )
+    if n_t[current] == 0 or n_e[current] == 0:
+        raise ValueError("current_dose must identify a treated dose")
+    max_pending_toxicity = scalar(max_pending_toxicity, "max_pending_toxicity")
+    max_pending_efficacy = scalar(max_pending_efficacy, "max_pending_efficacy")
+    if not 0 <= max_pending_toxicity <= 1 or not 0 <= max_pending_efficacy <= 1:
+        raise ValueError("pending thresholds must lie in [0,1]")
+    frac_t = pending_t[current] / n_t[current]
+    frac_e = pending_e[current] / n_e[current]
+    if frac_t > max_pending_toxicity or frac_e > max_pending_efficacy:
+        return TITEBOIN12BDADecision(
+            "suspend_pending",
+            None,
+            _readonly(excluded, np.bool_),
+            _readonly(pending_counts, np.int64),
+            None,
+            None,
+        )
+    result = tite_boin12_bda_posterior(
+        design,
+        d,
+        t,
+        e,
+        tf,
+        ef,
+        toxicity_window=tw,
+        efficacy_window=ew,
+        n_doses=k,
+        prior_concentrations=prior,
+        rng=rng,
+        draws=draws,
+        warmup=warmup,
+        chains=chains,
+        max_work=max_work,
+    )
+    allowed = result.admissible & ~excluded
+    patients = n_t
+    completed_toxicities = np.sum(result.mean_completed_joint_counts[:, 2:], axis=1)
+    toxicity_rate = np.full(k, np.nan)
+    np.divide(completed_toxicities, patients, out=toxicity_rate, where=patients > 0)
+    if not np.any(allowed):
+        return TITEBOIN12BDADecision(
+            "stop_safety",
+            None,
+            _readonly(~allowed, np.bool_),
+            _readonly(pending_counts, np.int64),
+            _readonly_bda(toxicity_rate),
+            result,
+        )
+    observed_dlt_count = int(np.count_nonzero((d == current + 1) & (t == 1)))
+    action, next_dose = _boin12_transition(
+        design,
+        current,
+        patients,
+        toxicity_rate,
+        result.posterior.utility_probability,
+        allowed,
+        observed_dlt_count,
+        run_in_3plus3=run_in_3plus3,
+    )
+    return TITEBOIN12BDADecision(
+        action,
+        next_dose,
+        _readonly(~allowed, np.bool_),
+        _readonly(pending_counts, np.int64),
+        _readonly_bda(toxicity_rate),
+        result,
     )
 
 

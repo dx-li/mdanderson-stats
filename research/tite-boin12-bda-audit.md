@@ -48,6 +48,27 @@ diagnostics, not automatic convergence guarantees. Supplementary sections
 were not needed to recover the three conditional formulas; any further
 application defaults remain unverified.
 
+## BDA dose-conduct policy
+
+Section 2.2.3 says BDA and approximate-likelihood conduct use the BOIN12 dose
+algorithm with updated admissibility, marginal DLT probability, and dose
+desirability. It also suspends accrual when **more than** half of patients at
+the current dose have pending DLT or efficacy outcomes. The implementation
+uses strict `>` thresholds, so exactly one half is allowed. It does not apply
+the approximate-likelihood method's zero-effective-information guard: an
+explicit Dirichlet prior still defines the BDA conditionals at zero pending
+follow-up.
+
+The article does not give an explicit BDA movement-rate formula in the main
+text. The Python conduct function uses the posterior-averaged imputed
+completed toxicity count divided by the fixed treated count. This preserves
+the ordinary observed toxicity rate when outcomes are complete and is kept
+separate from the P-step Dirichlet posterior mean. Utility desirability and
+admissibility tail probabilities are the averages of ordinary BOIN12
+quasi-Beta summaries over retained completed-data imputations. The optional
+3+3 run-in and precision-stop ordering reuse the existing Python AL conduct
+policy; they are not claimed as source-defined BDA behavior.
+
 ## Numerical validation
 
 Twenty-five focused BDA, TITE conduct and reference tests passed with warnings
