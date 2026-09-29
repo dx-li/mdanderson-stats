@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `a41ade7` adds finite-candidate binary rBOP2
-calibration and local EasyCellType reference loading, with independent
-numerical/source references and bounded serial work. The final
+Latest verified package checkpoint: `52b12a5` adds BCHM analysis plots and
+source-convention aPCoA data ellipses and medoid connectors, with independent
+R references and bounded serial work. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1909,3 +1909,43 @@ progress through 12% without an assertion failure before cancellation. The
 other two matrix jobs were cancelled. This is incomplete hosted validation,
 not a full pass. The local manifest records the new publication and subsequent
 hosted run separately.
+
+
+## BCHM and aPCoA analysis-plot checkpoint
+
+Code revision `52b12a517137f80d4db85fcb2841889fb7ceb946` adds BCHM subgroup
+clusters, posterior means/HPD intervals and posterior density plots. It also
+adds opt-in aPCoA group data ellipses and medoid/member connectors, plus a
+reusable geometry result. Existing aPCoA plot defaults remain unchanged.
+Luna implemented both components; root reviewed source contracts, integrated
+public exports and fixtures, and checked the resulting package.
+
+Twenty-four focused tests pass across the two components. Independent R
+references cover 18 native HPD intervals, six density bandwidth cases, 3,072
+direct Gaussian ordinates, 208 ellipse vertices and ten medoid tie cases.
+The integrated check's maximum absolute differences were `5.56e-15` for direct
+Gaussian densities and `9.11e-15` for ellipse vertices; all medoids matched.
+Native FFT density interpolation differs by up to `0.000800597` and is an
+explicitly documented evaluation difference. Source rounding, collapsed
+ellipses, tiny/large units, tight translated groups and materially invalid
+Gram distances are checked. An unrepresentable density peak raises clearly.
+Both rendered previews were visually inspected. Targeted Ruff, formatting and
+mypy checks pass. No new CI workflow, broad local numerical run or dependency
+installation was added.
+
+The final integrated numerical/plot check took 0.538 seconds, peaked at
+155.83 MiB resident memory and reported zero swaps. Numerical processes were
+serial and numerical-library thread counts were fixed at one. The cached
+wheel/source builds pass. An isolated wheel check verifies all 1,665 public
+exports, four examples across two guides, preserved license notices, and byte
+identity for all 588 committed package source/data files in both archives.
+It took 13.231 seconds, peaked at 146.16 MiB and reported zero swaps.
+
+Coverage remains 63 implemented, 67 partial and 8 pending entries. BCHM's
+cached scientific workflow is now covered by the fit, summaries and three
+plots; its app CSV/PDF/MCMC exports have unavailable server/output contracts.
+aPCoA file/formula and complete app parity remain open. Partial status is
+retained, and the distribution's mixed-license limitations remain explicit.
+The local artifact manifest records the independently verified master/main/
+development SHAs after publication; package contents correspond to the code
+revision above and this final audit-only commit changes no numerical code.
