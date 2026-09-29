@@ -1,0 +1,17 @@
+"case","patient","arrival","dose","eventual_tox","event_study_time","analysis_time","observed_tox","followup","valid_linear_weight","bayesess_arrival_weight"
+"fixed",1,5,1,0,Inf,43,0,10,1,0.5
+"fixed",2,10,2,1,12,43,1,2,1,1
+"fixed",3,15,1,0,Inf,43,0,10,1,1
+"fixed",4,20,1,0,Inf,43,0,10,1,1
+"fixed",5,25,1,1,32,43,1,7,1,1
+"fixed",6,30,1,0,Inf,43,0,10,1,1
+"fixed",7,35,1,0,Inf,43,0,8,0.8,1
+"fixed",8,40,1,1,49,43,0,3,0.3,1
+"poisson",1,5,1,0,Inf,39,0,10,1,0.5
+"poisson",2,7,2,1,9,39,1,2,1,0.7
+"poisson",3,10,1,0,Inf,39,0,10,1,1
+"poisson",4,16,1,0,Inf,39,0,10,1,1
+"poisson",5,18,1,1,25,39,1,7,1,1
+"poisson",6,25,1,0,Inf,39,0,10,1,1
+"poisson",7,27,1,0,Inf,39,0,10,1,1
+"poisson",8,36,1,1,45,39,0,3,0.3,1

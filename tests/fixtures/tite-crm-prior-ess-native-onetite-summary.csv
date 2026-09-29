@@ -1,0 +1,3 @@
+"case","toxicity_uniforms","event_time_uniforms","arrival_intervals","final_mtd","final_beta_mean","tox_count","source_curvature_sum","observed_followup_curvature_sum"
+"fixed",8,3,0,1,-0.983991693211495,3,-9.81135830513328,-7.01424553663204
+"poisson",8,3,8,1,-0.983991693211495,3,-9.81135830513328,-7.08908052429197
