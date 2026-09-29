@@ -35,9 +35,7 @@ def test_trial_preserves_paired_truth_and_explicit_endpoint_timing():
 
     np.testing.assert_array_equal(result.outcomes, [[1, 0]] * 4)
     assert result.arrival_times[0] == 0.0
-    assert np.all(
-        result.response_available_times - result.arrival_times <= config.response_window
-    )
+    assert np.all(result.response_available_times - result.arrival_times <= config.response_window)
     np.testing.assert_array_equal(
         result.toxicity_available_times, result.arrival_times + config.toxicity_delay
     )
@@ -126,12 +124,16 @@ def test_response_delay_sampling_scales_dimensionless_draws_safely():
 
     smallest_window = np.nextafter(0.0, 1.0)
     zero_draw = _draw_response_delays(
-        FixedRng(0.0), np.ones(1, dtype=np.int8), smallest_window,
+        FixedRng(0.0),
+        np.ones(1, dtype=np.int8),
+        smallest_window,
         "conditional_truncated_exponential",
     )
     assert zero_draw[0] == 0.0
     with pytest.raises(ArithmeticError, match="below floating-point resolution"):
         _draw_response_delays(
-            FixedRng(0.5), np.ones(1, dtype=np.int8), smallest_window,
+            FixedRng(0.5),
+            np.ones(1, dtype=np.int8),
+            smallest_window,
             "conditional_truncated_exponential",
         )

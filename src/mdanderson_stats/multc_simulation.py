@@ -56,9 +56,7 @@ def _scaled_mean_mcse(values: NDArray[np.float64]) -> tuple[float, float]:
 def _bounded_mean_mcse(values: NDArray[np.float64]) -> tuple[float, float]:
     mean = float(np.mean(values))
     error = (
-        float("nan")
-        if values.size == 1
-        else float(np.std(values, ddof=1) / np.sqrt(values.size))
+        float("nan") if values.size == 1 else float(np.std(values, ddof=1) / np.sqrt(values.size))
     )
     return mean, error
 
