@@ -10,6 +10,7 @@ from mdanderson_stats import (
     parallel_phase12_replay,
     simulate_parallel_phase12,
 )
+from mdanderson_stats.parallel_phase12_oc import simulate_parallel_phase12_oc
 
 
 def test_source_phase_one_rules_and_partial_cohorts():
@@ -60,3 +61,74 @@ def test_beta_reference_and_simulated_histories_replay_exactly():
         assert len(simulated.records) <= 100
     toxic = simulate_parallel_phase12([1, 1, 1, 1], [0, 0, 0, 0], rng=rng)
     assert len(toxic.records) == 3 and toxic.reason == "no admissible arms"
+
+
+def test_serial_oc_report_matches_seeded_trial_replays_and_cluster_rates():
+    toxicity = [0.04, 0.09, 0.16, 0.25]
+    efficacy = [0.1, 0.2, 0.35, 0.5]
+    report = simulate_parallel_phase12_oc(
+        toxicity,
+        efficacy,
+        n_trials=4,
+        seed=8512,
+        optimal_arms=(2, 3),
+    )
+    trials = [
+        simulate_parallel_phase12(toxicity, efficacy, rng=np.random.default_rng(int(trial_seed)))
+        for trial_seed in report.per_trial_seeds
+    ]
+    expected_selected_counts = np.asarray(
+        [sum(trial.selected == arm for trial in trials) for arm in range(4)]
+    )
+    np.testing.assert_array_equal(report.selected_counts, expected_selected_counts)
+    assert report.no_selection_count == sum(trial.selected is None for trial in trials)
+    np.testing.assert_array_equal(
+        report.treated_total, np.sum([trial.treated for trial in trials], axis=0)
+    )
+    np.testing.assert_array_equal(
+        report.toxicity_total, np.sum([trial.toxicities for trial in trials], axis=0)
+    )
+    np.testing.assert_array_equal(
+        report.response_total, np.sum([trial.responses for trial in trials], axis=0)
+    )
+    assert report.total_enrollment == sum(len(trial.records) for trial in trials)
+    assert report.stopping_probability.sum() == pytest.approx(1)
+    assert report.selection_probability.sum() + report.no_selection_probability == pytest.approx(1)
+    assert report.optimal_arms == (2, 3)
+    assert report.optimal_selection_probability == pytest.approx(
+        sum(trial.selected in (2, 3) for trial in trials) / len(trials)
+    )
+    assert report.toxicity_rate[0] == pytest.approx(
+        report.toxicity_total[0] / report.treated_total[0]
+    )
+    arm_zero_rate = report.toxicity_rate[0]
+    arm_zero_influence = np.asarray(
+        [trial.toxicities[0] - arm_zero_rate * trial.treated[0] for trial in trials]
+    )
+    expected_rate_mcse = (
+        np.std(arm_zero_influence, ddof=1)
+        / np.sqrt(len(trials))
+        / np.mean([trial.treated[0] for trial in trials])
+    )
+    assert report.toxicity_rate_mcse[0] == pytest.approx(expected_rate_mcse)
+    assert not report.per_trial_seeds.flags.writeable
+    assert not hasattr(report, "records")
+
+
+def test_oc_undefined_rates_and_one_trial_mcse_are_explicit():
+    report = simulate_parallel_phase12_oc([1, 1, 1, 1], [0, 0, 0, 0], n_trials=1, seed=4)
+    assert report.no_selection_probability == 1
+    assert report.stopping_reasons[report.stopping_counts.argmax()] == "no admissible arms"
+    assert report.mean_phase_one_enrollment == 3
+    assert report.treated_total[0] == 3
+    assert np.isnan(report.toxicity_rate[1:]).all()
+    assert np.isnan(report.mcse_treated).all()
+    assert np.isnan(report.toxicity_rate_mcse).all()
+    assert np.isnan(report.selection_mcse).all()
+    assert np.isnan(report.stopping_mcse).all()
+    assert np.isnan(report.admissibility_mcse).all()
+    assert np.isnan(report.no_selection_mcse)
+    with pytest.raises(ValueError, match="optimal_arms"):
+        simulate_parallel_phase12_oc([0.1] * 4, [0.2] * 4, n_trials=1, seed=1, optimal_arms=[4])
+    with pytest.raises(ValueError, match="n_trials"):
+        simulate_parallel_phase12_oc([0.1] * 4, [0.2] * 4, n_trials=10_001, seed=1)
