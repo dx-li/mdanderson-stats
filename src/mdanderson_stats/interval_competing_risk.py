@@ -456,7 +456,7 @@ def _kkt_error(
     return float(np.max(np.abs(residual)))
 
 
-def fit_interval_competing_risk(
+def _fit_interval_competing_risk(
     lower: ArrayLike,
     upper: ArrayLike,
     event: ArrayLike,
@@ -467,6 +467,7 @@ def fit_interval_competing_risk(
     boundary_cif_tolerance: float = 1e-7,
     tolerance: float = 1e-7,
     max_iterations: int = 1_000,
+    compute_covariance: bool = True,
 ) -> IntervalCompetingRiskFit:
     """Fit two interval-censored generalized-odds-rate CIF regressions.
 
@@ -577,7 +578,15 @@ def fit_interval_competing_risk(
     )
     theta = np.asarray(result.x, dtype=np.float64)
     loglik, score, row_scores = _score_rows(
-        theta, basis_lower, basis_upper, xs, lo, upper_used, code, a, need_rows=True
+        theta,
+        basis_lower,
+        basis_upper,
+        xs,
+        lo,
+        upper_used,
+        code,
+        a,
+        need_rows=compute_covariance,
     )
     constraint_functions = [
         cast(Callable[[FloatArray], FloatArray], constraint["fun"]) for constraint in constraints
@@ -601,14 +610,21 @@ def fit_interval_competing_risk(
         raise ArithmeticError(
             f"interval competing-risk fit failed the constrained score check ({kkt_error:.3g})"
         )
-    if row_scores is None:
-        raise ArithmeticError("could not form individual likelihood scores")
-    covariance = _score_covariance(row_scores, n_basis, p)
+    if compute_covariance:
+        if row_scores is None:
+            raise ArithmeticError("could not form individual likelihood scores")
+        covariance = _score_covariance(row_scores, n_basis, p)
+    else:
+        # The intccr bootstrap estimates slope covariance from refits and does
+        # not require this separate residualized-score covariance.
+        covariance = np.full((2 * p, 2 * p), np.nan, dtype=np.float64)
     phi = theta[: 2 * n_basis].reshape(2, n_basis)
     beta_scaled = theta[2 * n_basis :].reshape(2, p)
     beta = beta_scaled / scale[None, :] if p else beta_scaled
-    if p:
+    if p and compute_covariance:
         covariance = covariance / np.outer(np.tile(scale, 2), np.tile(scale, 2))
+    if not np.isfinite(beta).all():
+        raise ArithmeticError("interval competing-risk slopes exceed float64 range")
     lower_cif = np.empty(2, dtype=np.float64)
     for cause in range(2):
         eta = lower_basis[0] * phi[cause, 0] + cs @ beta_scaled[cause]
@@ -641,6 +657,39 @@ def fit_interval_competing_risk(
         max_joint_cif=max_joint,
         boundary_cif_tolerance=float(boundary_tol),
         converged=bool(kkt_error <= max(2e-5, tol * 100)),
+    )
+
+
+def fit_interval_competing_risk(
+    lower: ArrayLike,
+    upper: ArrayLike,
+    event: ArrayLike,
+    covariates: ArrayLike | None = None,
+    *,
+    alpha: ArrayLike = (0.0, 0.0),
+    k: float = 1.0,
+    boundary_cif_tolerance: float = 1e-7,
+    tolerance: float = 1e-7,
+    max_iterations: int = 1_000,
+) -> IntervalCompetingRiskFit:
+    """Fit two interval-censored generalized-odds-rate CIF regressions.
+
+    The two ``alpha`` values fix each cause's link: zero is Fine--Gray and one
+    is proportional odds. Each cause has a cubic B-spline baseline and its own
+    numeric covariate slopes. The lower-boundary constraint is the finite
+    approximation ``CIF_j(t_min) <= boundary_cif_tolerance``.
+    """
+    return _fit_interval_competing_risk(
+        lower,
+        upper,
+        event,
+        covariates,
+        alpha=alpha,
+        k=k,
+        boundary_cif_tolerance=boundary_cif_tolerance,
+        tolerance=tolerance,
+        max_iterations=max_iterations,
+        compute_covariance=True,
     )
 
 

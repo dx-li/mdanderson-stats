@@ -1,0 +1,3 @@
+"case","alpha1","alpha2","k","n","cause1","cause2","censored","convergence","loglikelihood","q","n_basis"
+1,0,1,0.5,120,56,28,36,"Converged",-275.441053645545,2,6
+2,0,1,0.5,120,47,28,45,"Converged",-257.673163692049,2,6
