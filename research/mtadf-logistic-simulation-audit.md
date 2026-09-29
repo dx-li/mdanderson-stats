@@ -56,3 +56,10 @@ seven new simulation tests passed. Across the four affected MTADF test files,
 25 tests passed in 5.21 seconds with warnings treated as errors. Peak RSS was
 134,283,264 bytes (131,136 KiB), with zero process swaps. Ruff check/format
 and targeted mypy passed.
+
+Root integration increased the fixed per-trial storage allowance to include
+all seed arrays, scalar result copies and reason references. A 10,000-trial,
+one-dose request with a two-million-byte budget is rejected before any child
+seeds are created; no trials were run for that check. Targeted typing and
+format checks passed after the accounting change. The probability model and
+random streams are unchanged.

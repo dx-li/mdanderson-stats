@@ -558,7 +558,9 @@ def simulate_mtadf_logistic(
     # Three count matrices are retained in mutable and frozen form at once;
     # seeds, decisions, reasons, diagnostics and per-trial working counts are
     # included conservatively.
-    bytes_per_trial = 2 * 3 * dose_count * np.dtype(np.int64).itemsize + 96 + 4 * dose_count * 8
+    # The fixed allowance also covers original/combined/frozen seed arrays,
+    # six scalar result arrays and their copies, plus reason references.
+    bytes_per_trial = 2 * 3 * dose_count * np.dtype(np.int64).itemsize + 256 + 4 * dose_count * 8
     draw_cells = (
         prepared.chains
         * prepared.draws
