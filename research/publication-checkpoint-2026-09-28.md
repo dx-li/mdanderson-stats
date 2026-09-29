@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `8ba8e87` adds bounded WFMM variance
-initialization with explicit Python REML policies. The final
+Latest verified package checkpoint: `157be6d` adds the optional TITE-BOIN12
+3+3 de-escalation rule. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1421,3 +1421,36 @@ are advanced together using an ordinary atomic fast-forward push and independent
 remote verification. The ignored manifest records exact remote SHAs, artifact
 hashes and hosted validation separately. MTADF logistic inference and the optional
 TITE-BOIN12 run-in remain isolated development work.
+
+
+## TITE-BOIN12 optional run-in community checkpoint
+
+Verified package code is `157be6d65ab21a1019d271c927e4ee39b751204f`.
+The optional run-in now applies the recovered source note's exact rule: only
+at toxicity limit 0.25, with exactly three or six patients at the current dose,
+at least two observed DLTs trigger de-escalation. Pending-information and global
+admissibility checks precede it; it precedes precision stopping and other dose
+decisions. These ordering and unavailable-neighbor policies are explicitly Python
+choices. Defaults preserve existing conduct. A lowest-dose safety stop retains
+posterior admissibility separately rather than inventing a new elimination rule.
+
+Luna's twenty focused conduct/reference checks pass with 130.38 MiB peak RSS
+and zero swaps; targeted lint, format and mypy pass. Root and a separate reviewer
+checked the small behavior change. Both guide examples pass, as do direct checks
+of precision-stop precedence and lowest-dose stopping versus admissibility.
+The root guide process peaks at 122.73 MiB with zero swaps. No broad local suite
+or new CI checks were introduced.
+
+Cached builds and isolated wheel verification pass: 1,606 public exports,
+572 package source/data files byte-identical to committed Git contents in both
+artifacts, two guide blocks, all 138 catalog entries and preserved license
+notices. Verification takes 10.323 seconds at 128.16 MiB peak RSS, zero swaps.
+Coverage remains 63 implemented, 67 partial and eight pending; TITE-BOIN12's
+other documented method/native gaps remain open.
+
+GitHub quality validation passed for the preceding `ba0226a` checkpoint,
+confirming the Multc formatting correction. Its full Python-version test matrix
+was still running at the last inspection. Hosted results for this new checkpoint
+are tracked separately. This audit-only commit follows the verified code;
+ordinary atomic fast-forward publication and independent remote verification
+keep master, main and development aligned. MTADF logistic work remains isolated.
