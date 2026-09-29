@@ -68,5 +68,19 @@ eight resamples all converged. A separate integration check reproduced seeded
 draws exactly with an explicit tape and preserved coefficients and standard
 errors after covariate-unit changes by 1e-100 and 1e100 (0.591 seconds,
 121.83 MiB peak process RSS, zero swaps).
+
+The portable generator is `tools/reference_interval_competing_risk_bootstrap.R`.
+From the repository root, run:
+
+```sh
+Rscript tools/reference_interval_competing_risk_bootstrap.R [INPUT.csv] [OUTPUT_DIR]
+```
+It uses the same pinned source hashes and optimizer dispatch as
+`tools/reference_interval_competing_risk.R`, but loads only the model sources
+needed for these refits. This avoids running that broader reference script or
+rewriting unrelated fixtures. The default input and output locations are the
+committed fixture paths; the ignored `research/raw/intccr` source cache and
+the required source-only R prerequisites must be available.
+
 Ruff, mypy, Python compilation, and `git diff --check` pass on the final source.
 No full suite or large simulation was run.
