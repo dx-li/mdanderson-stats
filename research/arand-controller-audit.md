@@ -29,7 +29,23 @@ a hard duration cap arriving before minimum enrollment. Reversible loser
 reactivation suggests continued comparison with suspended arms, but that is an
 inference rather than a separately verified native algorithm.
 
-No controller implementation was added at this checkpoint. A future port must
-resolve these details from additional primary evidence or expose the choices
-as documented Python policies. It must not label such choices as verified
-native behavior. Repeating the guide inspection alone will not close these gaps.
+The calendar controller is implemented in
+[`arand_calendar.py`](../src/mdanderson_stats/arand_calendar.py) as deterministic
+replay over supplied arrival, assignment, and potential-outcome tapes. Native
+rules are applied with strict cutoffs and a minimum-enrollment gate. Binary
+outcomes become visible at their supplied assessment delays; exponential event
+delays are relative to assignment and contribute event/censoring exposure only
+as of each look. Completed-trial duration includes the configured final
+follow-up, while early-stopped duration ends at the stop time.
+
+Unspecified behavior remains an explicit `ArandControllerPolicy`: allocation
+floor transform, comparison scope after permanent removal, trigger order,
+duration-versus-minimum precedence, multiple-winner tie handling, empty-active
+behavior, and same-time arrival/look order. Temporary suspensions remain
+comparable so they can reverse. For final selection, suspended arms remain
+eligible, while permanently futile arms are excluded; this follows the guide's
+final-winner rule and is kept separate from active allocation eligibility.
+Tied arrivals follow tape order, and an arrival at the duration boundary is
+blocked under `duration_wins`. These are documented Python conventions, not
+claims about native defaults. The simulator and operating-characteristic
+workflow are not part of this replay implementation.
