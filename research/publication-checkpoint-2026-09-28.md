@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `514bf2a` adds explicit-prior U2OET GAO
-calendar trials and CiBolus pseudo-data prior calibration with prior-predictive
-probability moments and beta ESS.
+Latest verified package checkpoint: `326d718` adds unordered categorical
+survival forests and OOB anti-split importance, with consistent categorical
+prediction, contour adjustment and permutation-importance routing.
 Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
@@ -929,3 +929,40 @@ at `45b6e307`; 159 local-master commits including this audit remain unpublished.
 The connector approval restriction and earlier shell DNS failure have no
 confirmed resolution. No write retry, permission bypass or alternate transport
 was attempted. Local artifacts do not establish GitHub publication.
+
+## Categorical survival forests and anti-split importance
+
+The verified code checkpoint is `326d718`. Two Luna implementers added
+unordered categorical splitting and anti-split OOB importance, with a third
+Luna reviewer checking the pinned native contracts and extracting reference
+kernels. Root integrated the shared routing, corrected source-boundary and
+category-map details during review, exposed the API and updated community
+examples. Catalog counts remain 63 implemented, 66 partial and nine pending;
+entry 166 still has documented native application and model-family gaps.
+
+Twenty focused forest/OOB/importance/shared-contour checks pass. Ten categorical
+partition masks, four known-level routing cases and three anti-routing cases
+match unchanged pinned C kernels. Existing independent numeric permutation
+references continue to agree exactly for three block sizes. Mixed-category
+bootstrap fits preserve predictions/OOB/both importance estimates under
+order-preserving label changes, including `1e100` labels and stochastic anti
+threshold 0.4. A 40-category case remains bounded; four input/work failures
+preserve caller RNG state. Numerical scope and native-wrapper differences are
+recorded in `research/survival-forest-categorical-audit.md`.
+
+Targeted type, lint and formatting checks pass. Cached wheel and source builds
+pass without new dependencies. An isolated wheel check verifies all 1,560
+public exports, all 559 packaged source/data files against committed bytes,
+all 138 catalog entries, licenses/notices and all six examples across both
+forest guides. It took 31.559 seconds (including a temporary plotting font-cache
+build), peaked at 153.16 MiB and reported zero swaps. Numerical processes stayed
+serial with one BLAS/OpenMP thread. The broad numerical suite was not rerun and
+no new CI workflow was added.
+
+Local `master` is advanced to the verified code plus this audit. A fresh read-only
+check at 2026-09-29 03:09 UTC still shows GitHub `master` and `main` at
+`45b6e307`; 166 local-master commits including this audit remain unpublished.
+The earlier shell DNS failure and connector approval rejection have no confirmed
+resolution; neither write route was retried or bypassed. The refreshed wheel,
+source distribution and verified all-refs Git bundle preserve this checkpoint
+and committed Luna work. They do not establish remote publication.
