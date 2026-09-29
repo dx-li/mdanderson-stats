@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `32061b4` adds TITE-BOIN12 Bayesian
-data-augmentation dose conduct and explicit-policy 1+a+b rare-disease cohorts. The final
+Latest verified package checkpoint: `2ccfc5a` adds BayesFactorTTE calendar
+replay and bounded serial simulation, plus staggered AL/BDA TITE-BOIN12 calendar replay. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1576,3 +1576,42 @@ still running. These are not results for the new checkpoint. This audit-only
 commit follows the verified code. The local manifest records the subsequent
 atomic fast-forward publication, independently checked remote SHAs and the new
 hosted run separately.
+
+
+## September 29 — survival and TITE calendar workflows
+
+Validated code checkpoint `2ccfc5a77ec7868c6e8ac72c0daac1d99761522c`
+adds BayesFactorTTE event/arrival/censor replay and serial exponential simulation
+with separate accrual/outcome seeds, early/final monitoring, patient-count
+summaries and explicit work/storage bounds. A second workflow wraps TITE-BOIN12
+AL or BDA conduct with staggered patient arrivals within fixed-dose cohorts,
+pending-endpoint suspension, decision lag, persistent elimination and complete
+final ascertainment. BDA requires explicit prior and sampler settings and stores
+only compact interim summaries. Luna implemented both modules; root reviewed,
+integrated, documented and verified them.
+
+Validation passed 32 affected TITE checks and 10 BayesFactorTTE checks with
+warnings treated as errors. The latter include a guard against a positive final
+follow-up increment disappearing at a large calendar time. Independent ledger
+calculations checked event/censor tie accounting and all six observation rows
+from the published TITE patient table. The table's day-315 AL dose recommendation
+remains inconsistent with the recovered estimator and movement rule; the guide
+and source audit document the discrepancy without claiming adaptive-trial
+parity. Both entries retain partial status for remaining documented scope.
+
+The built wheel and sdist contain all 577 committed package source/data files
+byte-for-byte. All 1,632 public exports resolve. Five executable examples from
+three affected guides passed directly against the wheel with warnings treated
+as errors. Package verification took 10.706 seconds, peaked at 114.55 MiB and
+reported zero process swaps. The focused test processes peaked at 144.73 MiB
+(BayesFactorTTE) and 130.80 MiB (TITE), with zero swaps. Numerical, type-checking
+and build processes ran serially under the existing thread limits. Targeted
+Ruff, mypy and diff checks passed; no new CI job or dependency was added.
+
+Catalog totals remain 138 entries: 63 implemented, 67 partial and 8 pending.
+The publication manifest records the independently verified remote branch
+SHAs and refreshed wheel, sdist and all-refs bundle. At the last check of the
+previous published checkpoint `aef4a91`, GitHub quality and Python 3.12/3.13
+jobs had passed and Python 3.14 was still running; no full matrix success is
+inferred from the focused local checks. Existing mixed-license terms remain
+included in both distributions.
