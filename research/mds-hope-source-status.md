@@ -1,36 +1,23 @@
-# MDS-HOPE source status
+# MDS-HOPE score source audit
 
-Catalog entry 171 remains pending. Inspected September 28, 2026.
+Catalog entry 171 is now **partial**: publisher Supplemental Equation S1 is
+recovered and its raw Cox linear predictor is implemented. Primary material is
+the publisher supplement `mds-hope-supplement.docx` (SHA-256
+`ff9c43b8fa47aece229e999c415b118d514175576a6215abd391a20757a5cdfd`), read with
+its extracted text and checked against the independent equation audit.
 
-The indexed [official app](https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/)
-describes six-group risk stratification for patients with MDS treated with
-hypomethylating agents. Its visible inputs include age, marrow blasts,
-hemoglobin, platelets, absolute neutrophil count, TP53 allelic status,
-PTPN11/KRAS/SF3B1/EZH2 mutations and karyotype text. Mutation menus include
-an unspecified status; its interpretation is not established by the form.
-Visible outputs are a patient summary, stratification result and plot.
+Eq. S1 uses coefficients .025 age, -.067 neutropenia, +.160 anemia, +.021
+thrombocytopenia, +.051 marrow blasts, +.284 cytogenetic score, -.294 SF3B1,
++.347 EZH2, +.345 TP53, +.681 KRAS and +1.094 PTPN11. Source transforms are
+neutropenia=-ANC, anemia=-hemoglobin and thrombocytopenia=-platelets/10. Thus
+raw-unit contributions are +.067 ANC, -.160 hemoglobin and -.0021 platelets.
+TP53 is 0/1/2 for wild type/single-hit/multi-hit; the other four retained genes
+are binary indicators.
 
-The primary publication is Chien et al.,
-[Performance of molecular scoring systems in hypomethylating agent-treated
-myelodysplastic neoplasms](https://www.nature.com/articles/s41375-026-02895-5),
-Leukemia 40, 841–844 (2026), published March 6, 2026. Figure 1 names MDS-HOPE
-and reference 12 links the same six-group calculator, establishing its relation
-to the deployed tool. Accessible methods describe Cox proportional-hazards
-modeling and derived scores and refer to Supplemental Equation S1 for the
-model equation. The main article preview does not supply deployable parameters.
-
-The publisher's exact **Supplemental Material (download DOCX)** link is
-[41375_2026_2895_MOESM1_ESM.docx](https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41375-026-02895-5/MediaObjects/41375_2026_2895_MOESM1_ESM.docx).
-The reader returned a cache miss for that document; no local supplement was
-retrieved. An alternate text extractor was unavailable because its account
-quota was exhausted. The failed retrieval does not establish that the
-supplement lacks the model.
-
-Implementation still needs the exact score equation and coefficients,
-transformations/input coding, cytogenetic parsing rules, unspecified-mutation
-handling, six-group cutpoints and the plotted estimand/time scale. Absolute
-survival predictions would additionally require the model's baseline survival.
-No coefficients, cutpoints or clinical risks have been estimated from the
-input form, and no deployed prediction was reproduced. The exact supplement
-is the next source to inspect when accessible; a generic Cox fitter would
-not implement this clinical calculator.
+The supplement does not specify the numeric mapping for the five cytogenetic
+categories or the training linear-predictor mean and SD. Callers must supply an
+already-encoded numeric cytogenetic score. Six-group cutoffs are implemented
+only for already-standardized scores or with explicit caller-supplied center
+and SD. No cytogenetic parser, missing-mutation default, cohort re-standardizing,
+baseline survival, absolute survival probability, or deployed-app equivalence
+is inferred. These remain outside the recovered source contract.
