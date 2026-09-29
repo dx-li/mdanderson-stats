@@ -227,8 +227,9 @@ def simulate_u2oet_gao_trial(
             raise ValueError("initial_parameters must be finite")
         if np.any(initial_values[:, sd == 0] != mean[sd == 0]):
             raise ValueError("fixed initial coordinates must equal their prior means")
-    ew, tw = _window(efficacy_window, "efficacy_window"), _window(
-        toxicity_window, "toxicity_window"
+    ew, tw = (
+        _window(efficacy_window, "efficacy_window"),
+        _window(toxicity_window, "toxicity_window"),
     )
     gap = _real(mean_interarrival, "mean_interarrival")
     if gap.ndim or not np.isfinite(gap) or gap <= 0:

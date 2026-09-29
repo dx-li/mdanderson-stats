@@ -31,3 +31,31 @@ sampler's convergence diagnostics are estimates and do not establish chain
 convergence. Native calibration's pseudo-prior construction and association
 prior do not specify equivalent GAO-coordinate priors, so GAO prior
 calibration remains open.
+
+## Independent calendar check
+
+`tools/reference_u2oet_gao_calendar.R` supplies Appendix-A probability and
+utility calculations plus four explicit calendar ledgers. Inputs and outputs
+are preserved under `tests/fixtures/u2oet-gao-calendar/`;
+`tools/check_u2oet_gao_calendar.py` compares actual trial-driver results.
+Run the R script with that fixture directory as its argument, then run the
+Python checker with this checkout's `src` on `PYTHONPATH`.
+
+All four cases pass: acceptable versus tried final selection, an absorbing
+no-acceptable-pair stop, and cohort/surplus adaptive randomization. Nine patient
+rows, six decision snapshots, four final snapshots and sixteen posterior
+utility values agree, including toxicity-only and ignored pending outcomes.
+Maximum absolute calendar/utility error is 6.66e-16. The root comparison took
+1.596 seconds, peaked at 119.42 MiB RSS and reported zero swaps.
+
+These fixtures fix model coordinates to isolate calendar and allocation
+behavior. They complement the existing independent free-coordinate posterior
+quadrature; they do not establish native prior mapping or trial operating
+characteristics. The R ledger includes the initial arrival snapshot, while
+the Python decision history starts before the second assignment; the checker
+aligns those distinct records explicitly.
+
+Four focused driver tests pass. Root additionally ran the existing U2OET
+summary and affected CiBolus checks together: fourteen checks passed in
+3.58 seconds, with 142.48 MiB peak RSS and zero swaps. No new CI workflow was
+added and the full package numerical suite was not rerun.

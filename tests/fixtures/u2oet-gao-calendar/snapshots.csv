@@ -1,0 +1,11 @@
+"case","time","assigned","complete","toxicity_only","ignored"
+"scope_acceptable",0,0,0,0,0
+"scope_acceptable",2,1,0,1,0
+"scope_tried",0,0,0,0,0
+"scope_tried",2,1,0,1,0
+"stop_no_pair",0,0,0,0,0
+"stop_no_pair",2,1,0,1,0
+"ar2",0,0,0,0,0
+"ar2",2,1,0,1,0
+"ar2",6,2,1,0,1
+"ar2",8,3,2,0,1

@@ -1,0 +1,13 @@
+case,patient,arrival,u_alloc,u_cell,u_eff_delay,u_tox_delay
+scope_acceptable,1,0,0.0,0.10,0.9,0.1
+scope_acceptable,2,2,0.0,0.75,0.2,0.9
+scope_tried,1,0,0.0,0.10,0.9,0.1
+scope_tried,2,2,0.0,0.75,0.2,0.9
+stop_no_pair,1,0,0.0,0.10,0.9,0.1
+stop_no_pair,2,2,0.0,0.75,0.2,0.9
+stop_no_pair,3,6,0.1,0.60,0.1,0.8
+stop_no_pair,4,8,0.8,0.35,0.4,0.3
+ar2,1,0,0.0,0.10,0.9,0.1
+ar2,2,2,0.0,0.75,0.2,0.9
+ar2,3,6,0.1,0.60,0.1,0.8
+ar2,4,8,0.8,0.35,0.4,0.3
