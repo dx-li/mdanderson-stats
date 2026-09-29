@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `c0ce18d` adds BOP2-DC randomized Normal
-and exponential-survival monitoring, replay and operating-characteristic simulation.
+Latest verified package checkpoint: `c44eddd` adds BOP2-DC finite-grid
+calibration for randomized binary, Normal and exponential-survival outcomes.
 Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
@@ -790,3 +790,50 @@ verified all-refs bundle preserve committed work, including worker-only
 randomized-binary calibration `43a6570`. That calibration and ongoing randomized
 Normal/survival calibration work remain outside this verified package/master
 until their independent reference checks and public integration are complete.
+
+
+## Randomized single-endpoint calibration checkpoint
+
+The three randomized calibration workflows are integrated and publicly exported
+at `c44eddd3fb03593762fd429f7afc7d1f762837a1`. Luna implemented the numerical
+modules; root reviewed, integrated and ran independent reference comparisons.
+Binary calibration caches Beta count-state comparisons and uses exact
+conditional recursion. Normal and survival calibration cache posterior tails
+on shared paths and retain independent holdout feasibility without reselection.
+All candidates remain inspectable when a feasible design is selected.
+
+Independent R Beta integration/path enumeration verifies 66 binary candidate
+configurations and 1,980 numeric summaries. Direct Student-t integration verifies
+36 Normal candidate configurations and 1,092 summaries; distinct CGR/ESS winners
+and a 3/24 calibration no-go rate versus 3/18 validation rate exercise the
+calibration-pass/holdout-fail contract. Direct Gamma-density integration and
+calendar replay verify 36 survival candidate configurations and 1,791 summaries,
+including distinct objective winners, fixed/Poisson accrual, signed margins and
+held-out arm event/exposure summaries. Combined: 4,863 numerical summaries.
+
+Review repaired binary floating-accumulation tie selection, Normal combined-event
+count arithmetic and absorbed-path decision checks, and conservative workspace
+accounting across the three optimizers. Twenty-nine focused randomized tests
+pass in 9.44 seconds. Targeted Ruff/format checks and mypy across six affected
+source modules pass. No dependency or CI workflow was added, and the full
+repository numerical suite was not rerun. Numerical workloads ran serially
+with BLAS/OpenMP thread limits of one. The largest conservative combined
+Python/R peak bound among these reference checks was 211.57 MiB, with no swaps.
+
+Cached wheel/source builds pass. An isolated interpreter imports the wheel and
+checks 1,540 public exports, exact committed bytes for 554 source/data files,
+licenses/notices, all 138 catalog entries and four examples across two guides.
+Verification takes 14.197 seconds, peaks at 120.41 MiB and records zero swaps.
+Coverage remains 63 implemented, 66 partial and 9 pending. A fresh source audit
+identifies randomized multiple/co-primary endpoints as the remaining substantive
+BOP2-DC family; the catalog stays partial and the scope is documented in
+`research/bop2-dc-remaining-methods.md`.
+
+Local `master` is fast-forwarded to this verified code plus this audit. A fresh
+read-only GitHub check still shows both `master` and `main` at `45b6e307`; the
+verified code has 144 newer local commits, or 145 with this audit checkpoint.
+The earlier shell DNS failure and connector rejection (`MCP tool call requires
+approval, but approval policy is never`) still block publication. No rejected
+write route was retried or bypassed. Refreshed wheel/source packages and a
+verified all-refs bundle preserve the root and committed Luna checkpoints,
+including all three now-integrated randomized single-endpoint calibrators.
