@@ -66,8 +66,10 @@ dose levels form the window there. Final isotonic selection requires no
 current dose and runs without a logistic posterior fit. When an escalation
 would invoke the source bounce guard using a previously treated next dose, the
 next-window posterior can be supplied explicitly and its diagnostics remain in
-the result. Combined current/bounce draw storage and transition work receive a
-decision-level preflight.
+the result. If boundary clamping makes the current and next windows identical,
+the current posterior is reused for the bounce guard, avoiding an unnecessary
+fit and Monte Carlo-noise disagreement. Combined distinct current/bounce draw
+storage and transition work receive a decision-level preflight.
 
 ## Validation
 
@@ -75,8 +77,9 @@ Focused tests check seeded replay, posterior array dimensions and bounds,
 local slope symmetry and an independent transformed-Cauchy quadrature
 reference, fit/count matching, toxicity-first stop/drop actions,
 treated-current validation, local bounce-guard diagnostics and final isotonic
-selection. The three affected MTADF test files passed: 17 tests in 2.27 seconds
-with warnings treated as errors. Peak RSS was 140,656,640 bytes (137,360 KiB)
+selection, including same-window bounce reuse at the lowest-dose boundary. The
+three affected MTADF test files passed: 18 tests in 2.20 seconds with warnings
+treated as errors. Peak RSS was 141,475,840 bytes (138,160 KiB)
 with zero process swaps. Ruff check/format and targeted mypy passed. These
 checks support the independent Python model and policies; no native
 random-stream or app-output parity is claimed.

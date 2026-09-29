@@ -613,6 +613,10 @@ def mtadf_local_logistic_decision(
     if posterior is not None and not _local_fit_matches(posterior, n, y, d, current, length):
         raise ValueError("posterior fit does not match the current local window")
     guard_possible = current + 1 < n.size and n[current + 1] > 0
+    guard_same_window = guard_possible and np.array_equal(
+        _local_window_indices(current, length, n.size),
+        _local_window_indices(current + 1, length, n.size),
+    )
     fit_shapes: list[tuple[int, int]] = []
     if posterior is None:
         draws, warmup, chains = _mcmc_options(draws, warmup, chains)
@@ -620,20 +624,21 @@ def mtadf_local_logistic_decision(
     else:
         fit_shapes.append(posterior.parameter_draws.shape[:2])
     if guard_possible:
-        if bounce_guard_posterior is None:
+        if bounce_guard_posterior is not None:
+            if not isinstance(bounce_guard_posterior, MTADFLocalLogisticPosterior):
+                raise ValueError("bounce_guard_posterior must be a local logistic posterior fit")
+            if not _local_fit_matches(bounce_guard_posterior, n, y, d, current + 1, length):
+                raise ValueError("bounce_guard_posterior does not match the next local window")
+            if not guard_same_window and bounce_guard_posterior is not posterior:
+                fit_shapes.append(bounce_guard_posterior.parameter_draws.shape[:2])
+        elif not guard_same_window:
             if posterior is not None:
                 draws, warmup, chains = _mcmc_options(draws, warmup, chains)
             fit_shapes.append((chains, draws))
-        elif not isinstance(bounce_guard_posterior, MTADFLocalLogisticPosterior):
-            raise ValueError("bounce_guard_posterior must be a local logistic posterior fit")
-        else:
-            if not _local_fit_matches(bounce_guard_posterior, n, y, d, current + 1, length):
-                raise ValueError("bounce_guard_posterior does not match the next local window")
-            fit_shapes.append(bounce_guard_posterior.parameter_draws.shape[:2])
     elif bounce_guard_posterior is not None:
         raise ValueError("bounce_guard_posterior requires observed next-dose data")
     generated_count = int(posterior is None) + int(
-        guard_possible and bounce_guard_posterior is None
+        guard_possible and not guard_same_window and bounce_guard_posterior is None
     )
     _preflight_local_decision(length, fit_shapes, generated_count, draws, warmup, chains)
     if posterior is None:
@@ -654,7 +659,9 @@ def mtadf_local_logistic_decision(
     desired = current + 1 if p_positive > ce1 else current - 1 if p_positive < ce2 else current
     used_bounce_guard_posterior = None
     if desired > current and current + 1 < n.size and n[current + 1] > 0:
-        if bounce_guard_posterior is None:
+        if guard_same_window:
+            next_posterior = posterior
+        elif bounce_guard_posterior is None:
             if rng is None:
                 raise ValueError("rng is required to evaluate the local bounce guard")
             next_posterior = mtadf_local_logistic_posterior(

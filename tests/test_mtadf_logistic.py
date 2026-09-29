@@ -166,6 +166,32 @@ def test_local_bounce_guard_fit_is_matched_and_retained():
     assert decision.posterior is current_fit
 
 
+def test_local_boundary_bounce_reuses_same_window_without_rng():
+    n, y, tox, doses = [10, 10, 0], [1, 8, 0], [0, 0, 0], [1.0, 2.0, 3.0]
+    fit = mtadf_local_logistic_posterior(
+        n,
+        y,
+        doses,
+        current_dose=0,
+        draws=32,
+        warmup=32,
+        chains=2,
+        rng=np.random.default_rng(43),
+    )
+    decision = mtadf_local_logistic_decision(
+        n,
+        tox,
+        y,
+        doses,
+        current_dose=0,
+        posterior=fit,
+        efficacy_escalation_cutoff=0.01,
+        efficacy_deescalation_cutoff=0.001,
+    )
+    assert decision.dose == 1
+    assert decision.bounce_guard_posterior is fit
+
+
 def test_local_final_decision_uses_existing_isotonic_safety_and_selection():
     fit = mtadf_local_logistic_posterior(
         [10, 10, 10],
