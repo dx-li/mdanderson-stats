@@ -65,3 +65,24 @@ native refits use those expanded rows. The resulting row counts are 84 and
 under `tests/fixtures/`. These fixtures check source fitting and covariance
 construction with a replayable tape; they do not claim R/Python RNG stream
 parity.
+
+## Integrated numerical evidence
+
+The unchanged native resampling helper expands the two fixed unequal-group
+tapes to 84 and 100 rows. Its native PH refits and sample covariance agree
+with Python's compressed frequency-weight refits: maximum coefficient
+difference 2.795e-7 and covariance-entry difference 2.905e-8. The comparison
+is retained in the focused expanded-row test. The helper supplies row
+selection; the shared native optimizer adapter supplies refits and R `cov`
+supplies covariance. This does not execute the full R object/formula wrapper.
+
+The extracted shared loader also regenerates all five original PH cases;
+all eight existing PH/ordinary-bootstrap CSVs remain byte-identical. Native
+generation took 6.977 seconds with peak child RSS 309.80 MiB and zero swaps,
+including the single-process C++ builder. No dependency was installed.
+
+All 31 affected cluster-bootstrap and forest checks pass together in 3.50
+seconds at 145.64 MiB peak RSS and zero swaps. The public cluster example
+completes all eight refits, retaining expanded counts from 74 through 106.
+Both new guide examples and the native coefficient comparison take 0.937
+seconds at 121.78 MiB RSS, zero swaps. Numerical threads are capped at one.

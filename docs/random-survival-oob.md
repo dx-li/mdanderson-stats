@@ -51,6 +51,8 @@ concordance implementation in another package.
 `fit.inbag_membership` stores one packed byte row per tree, using little-endian
 bit order; bit one means the training observation was sampled at least once.
 Bootstrap multiplicities affect fitting, but membership records presence only.
+OOB fits also retain per-node sample counts, including duplicate bootstrap
+draws, for [random-routing importance](random-survival-forest-random-importance.md).
 The arrays are read-only. No extra random draws are consumed by OOB processing,
 so enabling it preserves the fitted trees for an identical seed.
 
@@ -105,8 +107,7 @@ valid-block counts. Work limits apply before permutation, and pair comparisons
 use row-sized temporary vectors. The independent native-kernel reference checks
 whole-forest, three-tree and single-tree blocks, including an ignored tail,
 an undefined block and zero importance for a constant feature. Native RNG
-equivalence, random-routing importance and importance confidence intervals
-remain outside this implementation.
+equivalence and importance confidence intervals remain outside this implementation.
 
 ## Anti-split importance
 
@@ -141,5 +142,9 @@ estimator, omitted-tail reporting, handling of undefined errors and work bounds
 follow the permutation interface. `block_size=None` again means one block of
 all trees; pass `block_size=10` for the native block convention when the forest
 has at least ten trees. Retain negative importance values and inspect
-`valid_block_count` before interpreting an estimate. Neither estimator supplies
+`valid_block_count` before interpreting an estimate. These estimators do not supply
 an importance confidence interval.
+
+[Random-routing importance](random-survival-forest-random-importance.md) uses
+sample-count-weighted daughter selection at matching splits and the same
+complete-block error estimator.

@@ -226,8 +226,8 @@ number of valid blocks rather than hiding undefined blocks.
 The Python default `block_size=None` uses the entire forest. Native explicit
 permutation importance defaults to `block.size=10`; this different Python
 default is documented, and the native block size can be supplied explicitly.
-Native `importance=TRUE` defaults to anti-split importance, which is not
-implemented. Random-stream equivalence is not claimed.
+Native `importance=TRUE` defaults to the separate anti-split importance
+interface below. Random-stream equivalence is not claimed.
 
 `tools/reference_random_survival_vimp.py` independently reconstructs sampled
 one-feature trees using native C split/leaf kernels, replays OOB permutations,
@@ -300,10 +300,16 @@ threshold equality, target/non-target nodes and terminal nodes. The independent
 C run matched all 15 expected terminal/draw-count rows. Focused Python route,
 OOB count-retention and block-importance checks passed: 9 tests in 1.46 seconds,
 135,348,224 bytes peak RSS and zero swaps, with numerical threads capped at 1.
-The q=0, alpha=0 Python endpoint has a separate regression added after that
-run; it still requires integrated execution. Count-retention and seeded block
-replay are covered by the focused test run. These checks cover the routing
+Root's integrated run passed all 31 cluster-bootstrap and affected forest
+checks in 3.50 seconds, including the q=0/alpha=0 endpoint, categorical
+relabeling, retained multiplicities, core OOB behavior and native routing.
+Peak process RSS was 145.64 MiB with zero swaps and one numerical thread.
+Count-retention and seeded block replay are covered. These checks cover the routing
 kernel and small OOB fits, not full native forest or RNG parity.
+The portable C reference generator reproduces the committed CSV byte-for-byte
+in 0.480 seconds at 36.66 MiB peak child RSS with zero swaps. A generator-only
+argument collision and output newline inconsistency were fixed during review;
+neither changed the routing results.
 
 The integrated categorical/anti checkpoint matches the unchanged native
 branch/mask kernels and passes 20 focused checks. Detailed source scope,

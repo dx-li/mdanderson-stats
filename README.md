@@ -1475,7 +1475,8 @@ averaged Kaplan–Meier survival and Nelson–Aalen hazards,
 and contours from fitted forests. Sequential tree growth, sparse leaf curves
 and explicit work limits bound computation. Optional [out-of-bag diagnostics](docs/random-survival-oob.md)
 report held-out survival/hazard curves, contributor counts and concordance error.
-Permutation and anti-split importance add per-tree OOB perturbations and
+Permutation, anti-split and [random-routing importance](docs/random-survival-forest-random-importance.md)
+add per-tree OOB perturbations and
 blockwise error increases, with explicit counts for usable blocks and omitted
 tail trees. Category maps are retained for consistent prediction and importance;
 continuous contour axes support categorical adjustment profiles.
@@ -1487,6 +1488,9 @@ observation intervals and beyond the last finite observation.
 [Coefficient bootstrapping](docs/interval-survival-bootstrap.md) adds ordinary
 interval-PH regression covariance and standard errors, with weighted resampling,
 explicit failed-fit records and replayable row selections.
+[Cluster coefficient bootstrapping](docs/interval-survival-cluster-bootstrap.md)
+resamples whole groups, retaining repeated selections and variable sample sizes
+without materializing duplicate rows.
 [Stratified interval models](docs/interval-survival-stratified.md) fit shared
 covariate effects and separate group baselines jointly, with matching
 group-specific predictions and contours.
@@ -1499,7 +1503,7 @@ diagnostics accompany probability checks on requested profiles. Repeated-visit
 data can be converted into subject-level intervals with baseline covariates
 and source-row provenance. [Competing-risk coefficient bootstrapping](docs/interval-competing-risk-bootstrap.md)
 adds covariance and standard errors from complete resampled refits, with explicit
-failure records. Neural models and stratified/cluster interval-PH bootstrap
+failure records. Neural models and stratified interval-PH bootstrap
 workflows remain open.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention

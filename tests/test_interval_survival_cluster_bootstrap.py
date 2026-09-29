@@ -45,6 +45,16 @@ def test_frequency_collapsing_matches_expanded_unequal_cluster_rows() -> None:
     assert result.covariance_conditional_on_success
     assert not result.cluster_draw_indices.flags.writeable
 
+    # Independent unchanged icenReg optimizer on the same expanded row tapes.
+    with (_FIXTURES / "interval-survival-cluster-coefficients.csv").open() as stream:
+        native = np.array([float(row["value"]) for row in csv.DictReader(stream)]).reshape(2, 2)
+    with (_FIXTURES / "interval-survival-cluster-covariance.csv").open() as stream:
+        native_covariance = np.array(
+            [float(row["value"]) for row in csv.DictReader(stream)]
+        ).reshape(2, 2, order="F")
+    np.testing.assert_allclose(result.coefficient_samples, native, rtol=2e-6, atol=5e-7)
+    np.testing.assert_allclose(result.covariance, native_covariance, rtol=2e-5, atol=5e-8)
+
     group_rows = [
         np.arange(start, stop)
         for start, stop in zip(np.cumsum((0,) + sizes[:-1]), np.cumsum(sizes))

@@ -158,9 +158,7 @@ def bootstrap_interval_survival_cluster_coefficients(
         raise ValueError("max_iterations must be an integer")
     if not 1 <= int(max_iterations) <= _MAX_ITERATIONS:
         raise ValueError(f"max_iterations must be in [1, {_MAX_ITERATIONS}]")
-    if isinstance(max_support, (bool, np.bool_)) or not isinstance(
-        max_support, (int, np.integer)
-    ):
+    if isinstance(max_support, (bool, np.bool_)) or not isinstance(max_support, (int, np.integer)):
         raise ValueError("max_support must be an integer")
     if not 2 <= int(max_support) <= _MAX_SUPPORT:
         raise ValueError(f"max_support must be in [2, {_MAX_SUPPORT}]")
@@ -197,9 +195,7 @@ def bootstrap_interval_survival_cluster_coefficients(
     original_fit_work = n_rows * original_support
     if max(replicate_fit_work, original_fit_work) > int(max_work):
         raise ValueError("cluster bootstrap interval likelihood work exceeds max_work")
-    estimated_fit_work = int(max_iterations) * (
-        original_fit_work + b * replicate_fit_work
-    )
+    estimated_fit_work = int(max_iterations) * (original_fit_work + b * replicate_fit_work)
     if estimated_fit_work > _MAX_CLUSTER_BOOTSTRAP_FIT_WORK:
         raise ValueError("worst-case cluster bootstrap fit work exceeds the 2000000000-unit limit")
 

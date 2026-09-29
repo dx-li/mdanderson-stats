@@ -79,7 +79,7 @@ A trained level absent from a particular node goes right there. A label absent
 from the entire training population raises an error at prediction or contour
 construction. This explicit rejection differs from the native wrapper's
 synthetic extra-level mapping. Missing-value imputation is not implemented.
-Categorical predictors also work in OOB diagnostics and both available
+Categorical predictors also work in OOB diagnostics and the available
 [importance estimators](random-survival-oob.md).
 
 ## Prediction meanings

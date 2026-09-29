@@ -1045,7 +1045,8 @@ kernels and an R event-grid helper supply numerical references; source code
 and compiled objects are not redistributed. An independent deterministic tree
 driver uses those kernels for additional fixtures, without executing the
 complete native forest engine. Categorical subset splitting, OOB diagnostics,
-permutation importance and anti-split routing were checked against the same
+permutation importance, anti-split routing and represented-count-weighted
+random routing were checked against the same
 pinned source. The contour contract also follows the original
 author `rfsrcContour.R` at the SurvivalContour revision credited above.
 Python uses a distinct seeded random stream and bounded sequential fitting and
@@ -1067,6 +1068,11 @@ The separate coefficient-bootstrap interface follows the pinned package's
 weighted row-resampling, frequency-weight refitting and sample-covariance
 conventions. Fixed-resample native references and differences in failure
 reporting are documented in `research/interval-survival-bootstrap-audit.md`.
+The cluster coefficient-bootstrap interface follows `clusterBootstrap.R` from
+that same pin: whole-group resampling, complete refits and sample covariance.
+Python compresses repeated groups to integer row frequencies and provides an
+explicit optional failure ledger; source scope and fixed-resample evidence are
+documented in `research/interval-survival-cluster-bootstrap-audit.md`.
 
 `interval_competing_risk.py` and its contour interface independently implement
 the two-cause generalized odds-rate interval likelihood and residualized-score

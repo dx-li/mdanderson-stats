@@ -767,6 +767,10 @@ from .interval_survival_bootstrap import (
     IntervalSurvivalBootstrap,
     bootstrap_interval_survival_coefficients,
 )
+from .interval_survival_cluster_bootstrap import (
+    IntervalSurvivalClusterBootstrap,
+    bootstrap_interval_survival_cluster_coefficients,
+)
 from .interval_survival_contour import (
     IntervalSurvivalContour,
     interval_survival_contour,
@@ -1036,8 +1040,10 @@ from .random_survival_forest_contour import (
 from .random_survival_forest_vimp import (
     RandomSurvivalForestAntiSplitImportance,
     RandomSurvivalForestPermutationImportance,
+    RandomSurvivalForestRandomSplitImportance,
     anti_split_random_survival_forest_importance,
     permutation_random_survival_forest_importance,
+    random_split_random_survival_forest_importance,
 )
 from .ranges import RangeComparisons, kwrange, range2
 from .ranlist_files import (
@@ -2139,6 +2145,8 @@ __all__ = [
     "permutation_random_survival_forest_importance",
     "RandomSurvivalForestAntiSplitImportance",
     "anti_split_random_survival_forest_importance",
+    "RandomSurvivalForestRandomSplitImportance",
+    "random_split_random_survival_forest_importance",
     "IntervalCompetingRiskFit",
     "IntervalCompetingRiskPrediction",
     "IntervalCompetingRiskBootstrap",
@@ -2156,6 +2164,8 @@ __all__ = [
     "IntervalSurvivalContour",
     "IntervalSurvivalBootstrap",
     "bootstrap_interval_survival_coefficients",
+    "IntervalSurvivalClusterBootstrap",
+    "bootstrap_interval_survival_cluster_coefficients",
     "fit_interval_survival",
     "predict_interval_survival",
     "interval_survival_contour",
