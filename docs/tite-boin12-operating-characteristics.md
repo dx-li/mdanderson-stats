@@ -7,10 +7,7 @@ joint binary truth row per dose in the cell order
 toxicity/no efficacy)`:
 
 ```python
-import numpy as np
-
-from mdanderson_stats.boin12 import BOIN12Design
-from mdanderson_stats.tite_boin12_simulation import simulate_tite_boin12
+from mdanderson_stats import BOIN12Design, simulate_tite_boin12
 
 result = simulate_tite_boin12(
     BOIN12Design(0.35, 0.25),

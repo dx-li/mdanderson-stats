@@ -57,7 +57,7 @@ def _validate_selection_options(
         raise ValueError("tie_policy must be lowest or highest")
     if not isinstance(enforce_deescalation_boundary, (bool, np.bool_)):
         raise ValueError("enforce_deescalation_boundary must be boolean")
-    n_doses = design.skeleton.size
+    n_doses = np.asarray(design.skeleton).size
     if eligible_doses is None:
         requested = np.ones(n_doses, dtype=bool)
     else:
@@ -108,7 +108,7 @@ def _select(
     if not isinstance(design, IBOINDesign):
         raise TypeError("design must be an IBOINDesign")
     n_float, y_float, _, posterior = design._boin._state(patients, toxicities, eliminated)
-    n_doses = design.skeleton.size
+    n_doses = np.asarray(design.skeleton).size
     if n_float.shape != (n_doses,):
         raise ValueError("patient/toxicity counts must match the design skeleton")
     n, y = n_float.astype(np.int64), y_float.astype(np.int64)
@@ -127,9 +127,9 @@ def _select(
         used_ess = np.asarray(design.effective_prior_ess, dtype=np.int64)
     fit_mask = n > 0
     raw_rate = np.full(n_doses, np.nan)
-    raw_rate[fit_mask] = (y[fit_mask] + used_ess[fit_mask] * design.skeleton[fit_mask]) / (
-        n[fit_mask] + used_ess[fit_mask]
-    )
+    raw_rate[fit_mask] = (
+        y[fit_mask] + used_ess[fit_mask] * np.asarray(design.skeleton)[fit_mask]
+    ) / (n[fit_mask] + used_ess[fit_mask])
 
     if caller_weights is not None:
         weights = caller_weights

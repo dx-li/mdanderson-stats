@@ -71,7 +71,7 @@ def _probabilities(
         raise ValueError("severity probabilities must be real")
     grade2 = finite(grade2_probability, "grade2_probability")
     dlt = finite(dlt_probability, "dlt_probability")
-    expected = (design.skeleton.size,)
+    expected = (np.asarray(design.skeleton).size,)
     if (
         grade2.shape != expected
         or dlt.shape != expected

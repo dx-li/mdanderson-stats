@@ -22,13 +22,15 @@ uses each dose's design boundary at its observed final sample size. If no dose
 survives, the returned selection is empty rather than falling back.
 
 ```python
-from mdanderson_stats.iboin import IBOINDesign
-from mdanderson_stats.iboin_final import select_iboin_mtd
+from mdanderson_stats import IBOINDesign, select_iboin_mtd
 
 design = IBOINDesign([0.10, 0.25, 0.40], [0, 0, 0], target=0.25)
 selection = select_iboin_mtd(
-    design, [6, 6, 6], [0, 1, 3],
-    prior_mode="none", isotonic_weights="patients",
+    design,
+    [6, 6, 6],
+    [0, 1, 3],
+    prior_mode="none",
+    isotonic_weights="patients",
 )
 ```
 
@@ -45,13 +47,18 @@ replay seeds. With one repetition, Monte Carlo standard errors are undefined
 and reported as NaN.
 
 ```python
-from mdanderson_stats.iboin_simulation import simulate_iboin
+from mdanderson_stats import simulate_iboin
 
 oc = simulate_iboin(
-    design, grade2_probability=[0.05, 0.10, 0.10],
-    dlt_probability=[0.02, 0.12, 0.30], cohort_size=3,
-    max_patients=30, repetitions=100, prior_mode="none",
-    isotonic_weights="patients", seed=20260929,
+    design,
+    grade2_probability=[0.05, 0.10, 0.10],
+    dlt_probability=[0.02, 0.12, 0.30],
+    cohort_size=3,
+    max_patients=30,
+    repetitions=100,
+    prior_mode="none",
+    isotonic_weights="patients",
+    seed=20260929,
 )
 ```
 

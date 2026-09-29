@@ -176,7 +176,10 @@ The [calendar replay driver](tite-boin12-calendar.md) wraps these decisions
 with staggered arrivals, endpoint observation, suspension and final selection.
 It accepts explicit patient/dose delay tapes and supports AL or BDA conduct.
 Its timing rules are documented Python choices; native scheduling parity
-remains unverified.
+remains unverified. The [operating-characteristic simulator](tite-boin12-operating-characteristics.md)
+runs repeated serial calendar trials with explicit joint outcome truths,
+arrival and event-time policies, reproducible streams and trial-level
+Monte Carlo uncertainty.
 
 The [primary paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC9199061/),
 Zhou et al., *Statistics in Medicine* 41, 1918–1931 (2022), DOI

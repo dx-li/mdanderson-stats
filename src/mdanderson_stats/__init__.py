@@ -756,6 +756,13 @@ from .hierarchical_binomial import (
 )
 from .hierarchical_normal import HierarchicalNormalFit, hierarchical_normal
 from .iboin import IBOINBoundaries, IBOINDesign
+from .iboin_final import IBOINSelection, select_iboin_mtd, select_iboin_trial_mtd
+from .iboin_simulation import (
+    IBOINOperatingCharacteristics,
+    IBOINSimulatedTrial,
+    simulate_iboin,
+    simulate_iboin_trial,
+)
 from .iboin_trial import IBOINTrialDecision, IBOINTrialReplay, replay_iboin_trial
 from .imom_prior import IMOMBinaryPrior
 from .inequality import InequalityProbability, inequality_probability
@@ -1396,6 +1403,11 @@ from .tite_boin12_calendar import (
     TITEBOIN12CalendarTrial,
     run_tite_boin12_calendar_trial,
 )
+from .tite_boin12_simulation import (
+    TITEBOIN12Simulation,
+    simulate_tite_boin12,
+    tite_boin12_gumbel_probabilities,
+)
 from .tite_boin_simulation import TITEBOINSimulation, simulate_tite_boin
 from .tite_boin_trial import TITEBOINStep, TITEBOINTrial, run_tite_boin_trial
 from .tite_crm_prior_ess import TITECRMPriorESSSimulation, simulate_tite_crm_prior_ess
@@ -1800,6 +1812,9 @@ __all__ = [
     "TITEBOIN12CalendarStep",
     "TITEBOIN12CalendarTrial",
     "run_tite_boin12_calendar_trial",
+    "TITEBOIN12Simulation",
+    "simulate_tite_boin12",
+    "tite_boin12_gumbel_probabilities",
     "BARDMinimizationResult",
     "BARDSelectionResult",
     "bard_minimization",
@@ -2383,6 +2398,13 @@ __all__ = [
     "IBOINTrialDecision",
     "IBOINTrialReplay",
     "replay_iboin_trial",
+    "IBOINSelection",
+    "select_iboin_mtd",
+    "select_iboin_trial_mtd",
+    "IBOINOperatingCharacteristics",
+    "IBOINSimulatedTrial",
+    "simulate_iboin",
+    "simulate_iboin_trial",
     "RareDisease123Decision",
     "RareDisease123Design",
     "RareDisease123Simulation",

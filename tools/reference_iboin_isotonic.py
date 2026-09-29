@@ -103,7 +103,7 @@ if __name__ == "__main__":
     rows = build_rows()
     destination = Path(__file__).resolve().parents[1] / "tests/fixtures/iboin-isotonic-exact.csv"
     with destination.open("w", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     print(f"Wrote {len(rows)} exact reference rows across {len({r['case'] for r in rows})} cases.")

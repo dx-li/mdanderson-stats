@@ -36,3 +36,12 @@ enrolled patients, bounded below by accrual-stop time. Thus an observed event
 can complete follow-up before its endpoint window ends. A safety termination
 returns no selected OBD, while the calendar replay may retain its separate
 complete-data selection diagnostics.
+
+## Integrated validation
+
+The final seven focused simulation checks pass with warnings treated as errors,
+including early safety-stop aggregation and undefined single-trial MCSEs.
+This final run took 1.91 seconds, peaked at 148.27 MiB and reported zero swaps.
+The worker's earlier simulation/calendar run also passed 13 focused checks.
+Validation is serial under single-thread numerical-library settings; no broad
+local suite or new CI job is introduced for this workflow.

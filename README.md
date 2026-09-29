@@ -930,8 +930,10 @@ because the public protocol omits it; default decision tables are reproduced.
 boundaries, optional robust historical borrowing and complete-outcome dose assignment,
 verified against published and live-app tables. Patient-level replay supports
 accelerated titration, cohort top-up, dose exclusions and safety/precision stops
-within an explicit enrollment budget. Simulation and final MTD estimation
-options remain pending.
+within an explicit enrollment budget. [Final selection and serial simulation](docs/iboin-final-simulation.md)
+add optional historical borrowing, explicit isotonic weights and candidate policies,
+replayable trial seeds, and selection/allocation summaries with Monte Carlo uncertainty.
+Native final-selection defaults and report workflows remain open.
 
 [Bayesian prior ESS](docs/conjugate-ess.md) adds seven conjugate-model calculations,
 with vectorized inputs and an explicit choice between information-based and native
@@ -1320,8 +1322,10 @@ model is checked against base R; final selection reduces to ordinary BOIN12.
 imputation with explicit priors, completed-data BOIN12 posterior averaging and
 interim dose conduct. [Calendar replay](docs/tite-boin12-calendar.md) connects
 either conduct method to staggered arrivals, delayed endpoint observation,
-suspension and final ascertainment. Native pending-data safety details, full
-scenario simulation and categorical outcomes remain open.
+suspension and final ascertainment. [Operating-characteristic simulation](docs/tite-boin12-operating-characteristics.md)
+adds repeated binary trials, explicit event-time policies, replayable random streams,
+and selection, allocation and duration summaries with Monte Carlo uncertainty.
+Native pending-data safety details and categorical outcomes remain open.
 
 [U-BOIN joint utilities](docs/uboin.md) add exact categorical Dirichlet
 posterior moments, toxicity/efficacy admissibility and winner, proportional or

@@ -190,10 +190,11 @@ an error. Partial-cohort state and budget bookkeeping are explicit Python
 interface conventions, not claims about the native application's file format.
 
 The result retains readonly assignments, outcomes, cumulative counts, exclusions and a
-decision history with the data at each completed cohort. This workflow does
-not yet select a final MTD. At most 100,000 observed patients and 500,000
-observed-patient-by-dose cells are accepted, bounding history storage as well
-as enrollment.
+decision history with the data at each completed cohort. The separate
+[final-selection and simulation workflow](iboin-final-simulation.md) selects
+a terminal replay's MTD with explicit borrowing and isotonic-weight policies.
+At most 100,000 observed patients and 500,000 observed-patient-by-dose cells
+are accepted, bounding history storage as well as enrollment.
 
 ## Validation and remaining scope
 
@@ -202,11 +203,12 @@ cells, all 120 live default escalation/de-escalation cells and safety thresholds
 an independent direct finite-sum prior calculation, extreme ESS/log probabilities,
 reduction to ordinary BOIN at ESS zero, and prior-independent safety stopping.
 
-**Catalog status remains partial.** Final MTD estimation with optional prior
-borrowing, operating-characteristic simulation and native report generation are
-not yet implemented. The guide contains additional conventions for these options;
-ordinary BOIN final selection is not presented as a reproduction of all iBOIN
-selection options.
+**Catalog status remains partial.** Final MTD estimation now supports unborrowed,
+original-ESS and robust-effective-ESS rates, explicit isotonic weights,
+candidate eligibility, ties and optional final bounds. Bounded serial simulation
+reuses the conduct engine and reports selection, allocation and event summaries
+with Monte Carlo uncertainty. Native isotonic defaults, some final-selection
+conventions and report generation remain unverified or unimplemented.
 
 The official [final-selection help](https://biostatistics.mdanderson.org/shinyapps/iBOIN/iBOINprior_for_MTD.pdf)
 specifies isotonic regression of `y/n` without prior borrowing, or
