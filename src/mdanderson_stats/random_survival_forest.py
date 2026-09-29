@@ -48,6 +48,7 @@ class _PackedTree:
     event_time: FloatArray
     log_survival: FloatArray
     cumulative_hazard: FloatArray
+    represented_count: np.ndarray | None = None
 
 
 @dataclass(frozen=True)
@@ -446,6 +447,7 @@ def _pack_tree(
     event_time: list[FloatArray],
     log_survival: list[FloatArray],
     cumulative_hazard: list[FloatArray],
+    represented_count: list[int] | None = None,
 ) -> _PackedTree:
     return _PackedTree(
         _freeze_index(np.asarray(feature), np.dtype(np.int32)),
@@ -461,6 +463,9 @@ def _pack_tree(
         _freeze(np.concatenate(event_time) if event_time else np.empty(0)),
         _freeze(np.concatenate(log_survival) if log_survival else np.empty(0)),
         _freeze(np.concatenate(cumulative_hazard) if cumulative_hazard else np.empty(0)),
+        None
+        if represented_count is None
+        else _freeze_index(np.asarray(represented_count), np.dtype(np.int32)),
     )
 
 
@@ -479,6 +484,7 @@ def _grow_tree(
     max_split_work: int,
     max_leaf_records: int,
     categorical_columns: frozenset[int],
+    retain_represented_count: bool = False,
 ) -> _PackedTree:
     feature = [-1]
     threshold = [np.nan]
@@ -494,6 +500,7 @@ def _grow_tree(
     step_log_survival: list[FloatArray] = []
     step_hazard: list[FloatArray] = []
     event_cursor = 0
+    represented_count = [int(bootstrap_rows.size)] if retain_represented_count else None
     budget.nodes += 1
     if budget.nodes > max_nodes:
         raise ValueError("forest exceeds max_nodes budget")
@@ -620,6 +627,8 @@ def _grow_tree(
             right_child.append(-1)
             event_offset.append(0)
             event_count.append(0)
+            if represented_count is not None:
+                represented_count.append(int(left_rows.size) if _ == 0 else int(right_rows.size))
         # Native trees process the left branch first; preserve that random
         # draw order by pushing right before left on this LIFO work list.
         stack.append((right_index, right_rows, next_permissible, depth + 1))
@@ -639,6 +648,7 @@ def _grow_tree(
         step_times,
         step_log_survival,
         step_hazard,
+        represented_count,
     )
 
 
@@ -821,9 +831,10 @@ def fit_random_survival_forest(
     survival curves. With replacement disabled, the default sample fraction is
     0.632; with replacement enabled it is 1.0. These defaults follow
     randomForestSRC 3.2.2, but NumPy's random stream does not match R's.
-    Set ``compute_oob=True`` to retain bit-packed in-bag membership and compute
-    OOB curves, mortality and concordance error; the default avoids this storage
-    and work. Rows without an OOB tree remain undefined (NaN), never in-bag-filled.
+    Set ``compute_oob=True`` to retain bit-packed in-bag membership, per-node
+    bootstrap represented counts, and OOB curves, mortality and concordance
+    error; the default avoids this storage and work. Rows without an OOB tree
+    remain undefined (NaN), never in-bag-filled.
     """
     if not isinstance(replace, (bool, np.bool_)):
         raise ValueError("replace must be boolean")
@@ -888,8 +899,10 @@ def fit_random_survival_forest(
         membership_cells = tree_count * packed_width
         output_cells = t.size * output_grid.size
         combined_cells = 2 * membership_cells + 8 * output_cells + 16 * t.size
-        if combined_cells > oob_cell_limit:
-            raise ValueError("OOB membership and curve outputs exceed max_oob_cells budget")
+        node_budget = min(node_limit, oob_cell_limit - combined_cells)
+        if node_budget < tree_count:
+            raise ValueError("OOB membership, curves, and node counts exceed max_oob_cells budget")
+        node_limit = node_budget
         if t.size * t.size > oob_work_limit:
             raise ValueError("OOB pairwise-concordance work exceeds max_oob_work budget")
         membership = np.zeros((tree_count, packed_width), dtype=np.uint8)
@@ -917,6 +930,7 @@ def fit_random_survival_forest(
                 max_split_work=split_limit,
                 max_leaf_records=leaf_limit,
                 categorical_columns=categorical_set,
+                retain_represented_count=bool(compute_oob),
             )
         )
     packed_membership = (

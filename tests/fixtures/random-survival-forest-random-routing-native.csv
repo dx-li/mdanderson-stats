@@ -1,0 +1,16 @@
+case_id,threshold,node_count,left_count,split_feature,target_feature,ordinary_branch,group_flag,alpha,expected_terminal,expected_draws,scope,actual_terminal,actual_draws,match
+default_equal_left,1,10,5,1,1,2,0,0.49,101,1,represented_count_includes_multiplicity,101,1,true
+default_equal_tie_left,1,10,5,1,1,2,0,0.5,101,1,represented_count_includes_multiplicity,101,1,true
+default_equal_right,1,10,5,1,1,1,0,0.51,102,1,represented_count_includes_multiplicity,102,1,true
+default_unequal_left,1,10,3,1,1,2,0,0.299,101,1,bootstrap_node_counts,101,1,true
+default_unequal_tie_left,1,10,3,1,1,2,0,0.3,101,1,bootstrap_node_counts,101,1,true
+default_unequal_right,1,10,3,1,1,1,0,0.301,102,1,bootstrap_node_counts,102,1,true
+q04_unequal_random_left,0.4,10,3,1,1,2,0,0.4,101,1,coupled_alpha,101,1,true
+q04_unequal_random_right,0.4,10,3,1,1,2,0,0.401,102,1,coupled_alpha,102,1,true
+q04_large_left,0.4,10,7,1,1,2,0,0.4,101,1,coupled_alpha,101,1,true
+q04_large_original,0.4,10,7,1,1,2,0,0.401,102,1,coupled_alpha,102,1,true
+q0_ordinary,0,10,3,1,1,2,0,0.25,102,1,threshold_endpoint,102,1,true
+non_target_no_draw,1,10,3,1,2,2,1,0.2,102,0,target_feature_only,102,0,true
+group_flag_enabled,1,10,3,1,0,2,1,0.2,101,1,importance_flag_group,101,1,true
+group_flag_disabled,1,10,3,1,0,2,0,0.2,102,0,importance_flag_group,102,0,true
+terminal_no_draw,1,10,3,1,1,2,0,0.2,103,0,terminal_node,103,0,true

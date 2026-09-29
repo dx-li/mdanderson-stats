@@ -10,6 +10,7 @@ from mdanderson_stats.random_survival_forest_vimp import (
     _route_hazard,
     anti_split_random_survival_forest_importance,
     permutation_random_survival_forest_importance,
+    random_split_random_survival_forest_importance,
 )
 
 
@@ -119,6 +120,7 @@ def test_categorical_label_recode_preserves_both_oob_importance_routes() -> None
     for vimp in (
         anti_split_random_survival_forest_importance,
         permutation_random_survival_forest_importance,
+        random_split_random_survival_forest_importance,
     ):
         first = vimp(original_fit, time, event, raw, feature_indices=[0], random_state=912)
         second = vimp(recoded_fit, time, event, recoded, feature_indices=[0], random_state=912)

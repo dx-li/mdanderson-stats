@@ -268,13 +268,42 @@ OOB block concordance estimator, complete-block tail exclusion, undefined-block
 handling, training fingerprint, and bounded workspace contract.
 
 The same C file's `randomMembershipGeneric` (approximately lines 4542–4595)
-defines the separate `importance="random"` route: at target splits, a single
-uniform selects either the original daughter or a left/right draw weighted by
-the node's represented sample counts. This Python tranche does not implement
-that mode because fitted trees retain neither per-node represented counts nor
-bootstrap multiplicities; reconstructing them from the packed boolean in-bag
-mask would be wrong for replacement sampling. Preserving those counts in the
-fit representation is required before an exact random-routing implementation.
+defines the separate `importance="random"` route. At target-feature nodes it
+consumes one uniform alpha; if alpha <= q, it chooses left iff alpha <= L/(Nq),
+otherwise it keeps the ordinary daughter. Here N and L are represented parent
+and left-child sample counts including bootstrap duplicates. The same alpha
+controls both comparisons; two independent random steps would change the law.
+`randomMembershipJIT` repeats this routing rule. The pinned R helper sets q=1
+by default and documents q in [0,1]. The Python per-feature API defaults to 1,
+requires an explicit RNG or seed, and documents that its stream is not native
+R tree-specific RNG parity. At q=0 it consumes the target-node draw but keeps
+the ordinary branch, including the exact alpha=0 endpoint where native's
+`ran1D` generator does not ordinarily land.
+
+With `compute_oob=True`, each packed tree now retains immutable per-node
+represented counts, while the existing bit-packed in-bag mask continues to
+represent distinct in-bag rows. The count root equals the bootstrap sample
+size and each internal node equals the sum of its two child counts. OOB fit
+preflight charges the count vector against the node/cell budget before random
+sampling; fits without OOB diagnostics do not retain it. The random-routing
+importance reuses the existing blockwise OOB mortality/concordance estimator,
+training fingerprint, categorical feature encoding, complete-block tail
+exclusion, and undefined-block handling. Python `block_size=None` means the
+whole forest; native VIMP requests default to blocks of 10. No feature-group
+routing or native random-stream parity is claimed.
+
+`tools/reference_random_survival_forest_random_vimp.py` extracts the unchanged
+pinned C generic routing kernel after verifying its Git blob hash, and wraps
+only a deterministic uniform and ordinary daughter predicate. Fifteen route
+cases cover q=0, .4, and 1, including unequal represented daughter counts,
+threshold equality, target/non-target nodes and terminal nodes. The independent
+C run matched all 15 expected terminal/draw-count rows. Focused Python route,
+OOB count-retention and block-importance checks passed: 9 tests in 1.46 seconds,
+135,348,224 bytes peak RSS and zero swaps, with numerical threads capped at 1.
+The q=0, alpha=0 Python endpoint has a separate regression added after that
+run; it still requires integrated execution. Count-retention and seeded block
+replay are covered by the focused test run. These checks cover the routing
+kernel and small OOB fits, not full native forest or RNG parity.
 
 The integrated categorical/anti checkpoint matches the unchanged native
 branch/mask kernels and passes 20 focused checks. Detailed source scope,
