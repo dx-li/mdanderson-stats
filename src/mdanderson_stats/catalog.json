@@ -3796,13 +3796,15 @@
         "Waterfall next-subtrial planning from accumulated data with weighted one-dimensional isotonic selection and subtrial safety",
         "Complete-outcome ordinary combination cohort simulation with trial-level counts, selection probabilities and Monte Carlo errors",
         "Complete no-titration waterfall replay and serial simulation, including special same-row/fallback transitions, actual observations, contour diagnostics and Monte Carlo errors; docs/boin-waterfall.md",
-        "Remaining: accelerated titration, 3+3 run-in, enumerated desirability-rank tables and generated protocols/reports"
+        "CRAN accelerated titration for ordinary combination simulation: single-patient staircase, first-DLT/upper-right stop, first-cohort top-up, immutable prelude counts/endpoint and preallocation bounds; docs/boin-combination-titration.md",
+        "Remaining: app titration cap/moderate-toxicity stopping, waterfall titration, 3+3 run-in, enumerated desirability-rank tables and generated protocols/reports"
       ],
       "validation": [
         "BOIN 2.7.2 native boundary, movement, selection and waterfall references; independent unrounded Iso::biviso fits",
         "Full native contour pairs, source rounding and cross-closure checks; safety and accumulated-subtrial replay",
         "Seeded simulation and numerical stability checks; source/backend differences documented in docs/boin-combination-source.md",
-        "Six original-R subtrial and six full-workflow references, independent exhaustive isotonic oracle, source count-loss regression and bounded simulation aggregation; research/boin-waterfall-workflow-audit.md"
+        "Six original-R subtrial and six full-workflow references, independent exhaustive isotonic oracle, source count-loss regression and bounded simulation aggregation; research/boin-waterfall-workflow-audit.md",
+        "Nine original-R titration/first-cohort transition cases match exactly; 100 no-titration trials reproduce all published result fields. Seven focused simulation checks, pre-RNG memory rejection; research/boin-combination-titration-audit.md."
       ]
     },
     {

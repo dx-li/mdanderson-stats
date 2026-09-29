@@ -112,6 +112,10 @@ standard errors use one-based matrix bins, with `(0,0)` reserved for no MTD.
 R and NumPy use different random streams; equal seed values do not imply equal
 trial histories.
 
+[Accelerated titration](boin-combination-titration.md) is available with
+`titration=True`. It follows the CRAN single-patient staircase and fills its
+endpoint to the ordinary cohort size before continuing BOIN decisions.
+
 The simulator follows `get.oc.comb()`'s unrounded final selection, omits the
 interactive helper's empirical escalation blockers, and stops at the enrollment
 threshold only when its convergence condition is met. `next_dose` exposes this
@@ -129,8 +133,8 @@ enrollment threshold when convergence has not yet occurred.
 
 ## Scope
 
-Accelerated titration, moderate-toxicity stopping during titration, the app's
-3+3 run-in, enumerated desirability-rank tables and
+App-specific titration caps, moderate-toxicity stopping during titration,
+the app's 3+3 run-in, waterfall titration, enumerated desirability-rank tables and
 generated trial protocols/reports remain outside this API.
 These are tracked as outstanding coverage rather than inferred from the
 ordinary combination movement rule.

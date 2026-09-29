@@ -124,7 +124,10 @@ within the same package.
 
 The app guide describes accelerated titration and a 3+3 run-in that are app
 wrappers around the standard method. They should not be inferred from
-`next.comb()` itself. The published method and package code also use different
+`next.comb()` itself. The CRAN simulator's own accelerated-titration branch is
+now implemented separately; see the [titration guide](boin-combination-titration.md).
+Its first-DLT/upper-right stop does not specify the app's additional cap,
+moderate-toxicity criterion or 3+3 rules. The published method and package code also use different
 labels in places (`n.earlystop` precision stop versus app wording); fixtures
 record the returned native values rather than UI text.
 

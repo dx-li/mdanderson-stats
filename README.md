@@ -1198,8 +1198,9 @@ cover staircase, row and special same-row searches, with auditable observations
 and contour diagnostics. Seeded simulations report operating characteristics
 and Monte Carlo errors. Native R references distinguish the interactive
 selector from the simulator's unrounded selection rule and expose native
-dropped-observation defects. Titration, the 3+3 run-in and generated protocols
-remain open.
+dropped-observation defects. [Accelerated combination titration](docs/boin-combination-titration.md)
+adds the CRAN single-patient staircase and first-cohort transition. App-specific
+titration options, waterfall titration, the 3+3 run-in and generated protocols remain open.
 
 [BOIN12](docs/boin12.md) now includes toxicity/efficacy posterior calculations,
 utility desirability tables, single-stage dose decisions, final OBD selection
@@ -1502,7 +1503,7 @@ surfaces, pointwise
 confidence limits and curves at selected covariate quantiles. Numeric adjustment
 profiles and optional two-/three-dimensional plots support exploration of a
 continuous predictor. Stratified models share coefficients and estimate separate
-baseline hazards for each group. Other SurvivalContour model families remain open.
+baseline hazards for each group. Further implemented model families are described below.
 
 [Fine–Gray competing-risk regression](docs/fine-gray.md) provides target-cause
 incidence predictions, fixed and time-interaction effects, separate censoring

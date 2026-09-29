@@ -45,3 +45,21 @@ complete-binomial cohort simulation, source-simulation movement and
 convergence-stop behavior. R's internal random-number ordering is not a
 compatibility promise. With `titration=False`, the existing simulation path
 and its seeded results are unchanged.
+
+## Independent integration checks
+
+`tools/reference_boin_combination_titration.R` extracts and executes the
+original cached R titration and first-cohort expressions with deterministic
+outcome/direction tapes. Nine cases cover both free directions, forced edges,
+initial/interior/upper-right DLTs, an upper-right start, and cohort-size-one
+disabling. The fixture `tests/fixtures/boin-combination-titration.csv` agrees
+exactly with the Python prelude counts, endpoint and first-cohort counts.
+
+A separate comparison against the published `39a67b3` simulator reproduces
+all existing result fields across 100 no-titration trials, including safety,
+precision stopping, an upper-right start and single-patient cohorts. The
+128 MiB working-state guard rejects oversized requests before changing an
+explicit generator's state. This integration check took 1.612 seconds,
+peaked at 121.55 MiB RSS and reported zero swaps. The seven focused simulation
+checks also pass, with a 131.72 MiB peak and zero swaps; targeted Ruff and
+mypy checks passed. No broad numerical suite was run locally.
