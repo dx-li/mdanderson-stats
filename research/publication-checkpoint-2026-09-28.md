@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `f901429` adds serial Multc trial-duration
-simulation and documented timing assumptions. The final
+Latest verified package checkpoint: `8ba8e87` adds bounded WFMM variance
+initialization with explicit Python REML policies. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1383,3 +1383,41 @@ Only this publication audit follows the verified package code. Publication uses
 an ordinary atomic fast-forward of master, main and development, followed by
 independent remote-SHA verification in the ignored artifact manifest. WFMM
 variance initialization remains isolated work in progress.
+
+
+## WFMM variance initialization community checkpoint
+
+Verified package code is `8ba8e874d117ba617b2fd85d6627b68740eb17f0`.
+Luna implemented per-coefficient REML initialization for the existing Gaussian
+mixed model; root and a separate Luna reviewer checked the objective, scale
+corrections, covariance identifiability and boundary handling. A single residual
+component uses its analytical estimate. Mixed/stratified fits are serial and
+bounded, retain raw estimates and convergence diagnostics, and distinguish
+positive sampler starts from inference or native prior calibration.
+
+Five focused tests match independent base-R residual-only and balanced
+random-intercept references and cover degenerate/confounded designs and actual
+likelihood-evaluation caps. Six public guide blocks pass. Additional root checks
+confirm two-coefficient analytical variance estimates, fixed-design unit changes
+in both coefficients and restricted likelihood, and use of the estimated starts
+in the existing sampler. Combined checks take 2.755 seconds at 148.72 MiB peak
+RSS and zero swaps. Targeted lint, formatting and type checks pass after the
+final edits. Native initialization and inverse-gamma defaults remain open.
+
+The preceding Multc hosted run stopped at formatting in its two new Python
+files. Mechanical correction leaves both syntax trees unchanged. This checkpoint
+includes that correction without adding CI checks or repeating the unchanged
+Multc numerical suite. No full local numerical suite was run.
+
+Cached wheel/source builds and isolated wheel verification pass: 1,606 exports,
+all 572 package source/data files byte-identical to committed Git in both
+artifacts, six guide blocks, the 138-entry catalog and preserved license notices.
+Verification takes 11.236 seconds at 126.25 MiB peak RSS with zero swaps. Source
+coverage remains 63 implemented, 67 partial and eight pending. The distribution
+retains its existing mixed-license terms.
+
+Only this audit follows the verified package code. Master, main and development
+are advanced together using an ordinary atomic fast-forward push and independent
+remote verification. The ignored manifest records exact remote SHAs, artifact
+hashes and hosted validation separately. MTADF logistic inference and the optional
+TITE-BOIN12 run-in remain isolated development work.
