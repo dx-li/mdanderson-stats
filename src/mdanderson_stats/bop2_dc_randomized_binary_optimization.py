@@ -220,8 +220,10 @@ def optimize_bop2_dc_randomized_binary(
         (int(control_prefix[int(n)]) + 1) * (int(treatment_prefix[int(n)]) + 1) for n in base.looks
     )
     comparison_work = 2 * decision_work
-    # Four error-interval corners are classified at each candidate look.
-    exact_work = comparison_work + 2 * candidate_count * (transition_work + 4 * decision_work)
+    # Each of four error-interval classifications scans the complete schedule,
+    # even though the supplied count-state table belongs to one look.
+    classification_work = 4 * int(base.looks.size) * decision_work
+    exact_work = comparison_work + 2 * candidate_count * (transition_work + classification_work)
     if comparison_work > _MAX_COMPARISON_CELLS:
         raise ValueError("posterior count-state comparison table exceeds its work bound")
     first_fraction = int(base.looks[0]) / base.max_subjects
