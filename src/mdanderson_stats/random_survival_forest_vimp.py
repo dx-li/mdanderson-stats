@@ -16,6 +16,7 @@ from .random_survival_forest import (
     _integer,
     _oob_concordance_error,
     _PackedTree,
+    _tree_goes_left,
 )
 
 _MAX_IMPORTANCE_WORK = 100_000_000
@@ -55,7 +56,9 @@ def _route_hazard(
     while tree.feature[node] >= 0:
         column = int(tree.feature[node])
         value = override_value if column == override_column else profile[column]
-        node = int(tree.left[node] if value <= tree.threshold[node] else tree.right[node])
+        node = int(
+            tree.left[node] if _tree_goes_left(tree, node, float(value)) else tree.right[node]
+        )
     count = int(tree.event_count[node])
     if count == 0 or time_grid.size == 0:
         return 0.0
@@ -64,6 +67,67 @@ def _route_hazard(
     positions = np.searchsorted(tree.event_time[steps], time_grid, side="right") - 1
     present = positions >= 0
     return float(tree.cumulative_hazard[offset + positions[present]].sum())
+
+
+@dataclass(frozen=True)
+class RandomSurvivalForestAntiSplitImportance:
+    """Blockwise OOB importance from anti-split routing.
+
+    At target-feature nodes, ``vimp_threshold`` is the probability that the
+    ordinary daughter choice is flipped. The default 1.0 implements literal
+    opposite-daughter routing and matches the documented randomForestSRC
+    threshold default.
+    """
+
+    feature_indices: np.ndarray
+    block_size: int
+    block_count: int
+    ignored_tree_indices: np.ndarray
+    baseline_error: FloatArray
+    perturbed_error: FloatArray
+    block_importance: FloatArray
+    valid_block_count: np.ndarray
+    importance: FloatArray
+    vimp_threshold: float
+    random_state: int | None
+
+
+def _route_anti_hazard(
+    tree: _PackedTree,
+    profile: FloatArray,
+    time_grid: FloatArray,
+    feature: int,
+    *,
+    threshold: float,
+    rng: np.random.Generator,
+) -> float:
+    node = 0
+    while tree.feature[node] >= 0:
+        column = int(tree.feature[node])
+        goes_left = _tree_goes_left(tree, node, float(profile[column]))
+        if column == feature:
+            draw = rng.random()
+            if threshold > 0 and draw <= threshold:
+                goes_left = not goes_left
+        node = int(tree.left[node] if goes_left else tree.right[node])
+    count = int(tree.event_count[node])
+    if count == 0 or time_grid.size == 0:
+        return 0.0
+    offset = int(tree.event_offset[node])
+    steps = slice(offset, offset + count)
+    positions = np.searchsorted(tree.event_time[steps], time_grid, side="right") - 1
+    present = positions >= 0
+    return float(tree.cumulative_hazard[offset + positions[present]].sum())
+
+
+def _threshold(value: float) -> float:
+    raw = np.asarray(value)
+    if raw.ndim != 0 or raw.dtype.kind not in "iuf" or isinstance(value, (bool, np.bool_)):
+        raise ValueError("vimp_threshold must be a real scalar in [0, 1]")
+    result = float(raw)
+    if not np.isfinite(result) or not 0 <= result <= 1:
+        raise ValueError("vimp_threshold must be a real scalar in [0, 1]")
+    return result
 
 
 def _feature_selection(value: ArrayLike | None, count: int) -> np.ndarray:
@@ -235,5 +299,148 @@ def permutation_random_survival_forest_importance(
         _freeze(block_importance),
         _readonly_int(valid_count),
         _freeze(importance),
+        random_state,
+    )
+
+
+def anti_split_random_survival_forest_importance(
+    fit: RandomSurvivalForestFit,
+    time: ArrayLike,
+    event: ArrayLike,
+    covariates: ArrayLike | None = None,
+    *,
+    feature_indices: ArrayLike | None = None,
+    block_size: int | None = None,
+    vimp_threshold: float = 1.0,
+    rng: np.random.Generator | None = None,
+    random_state: int | None = None,
+    max_work: int = _MAX_IMPORTANCE_WORK,
+) -> RandomSurvivalForestAntiSplitImportance:
+    """Compute OOB anti-split importance for selected fitted features.
+
+    Each OOB case follows its ordinary path except at internal nodes split on
+    the selected feature, where one uniform draw flips the branch with
+    probability ``vimp_threshold``. The default 1.0 matches the pinned
+    randomForestSRC wrapper's threshold default. This function uses Python's
+    reproducible NumPy stream; native tree-specific stream parity is not
+    claimed. The default block is the whole forest; native R defaults to 10.
+    """
+    if fit.inbag_membership is None or fit.oob is None or fit.training_fingerprint is None:
+        raise ValueError("fit must be created with compute_oob=True for anti-split importance")
+    if (
+        len(fit.trees) != fit.n_trees
+        or fit.inbag_membership.ndim != 2
+        or fit.inbag_membership.shape[0] != fit.n_trees
+        or fit.inbag_membership.shape[1] * 8 < fit.oob.contributor_count.size
+        or fit.inbag_membership.shape[1] * 8 - fit.oob.contributor_count.size >= 8
+    ):
+        raise ValueError("fit contains inconsistent packed OOB membership")
+    if (rng is None) == (random_state is None):
+        raise ValueError("provide exactly one of rng or random_state")
+    if rng is not None and not isinstance(rng, np.random.Generator):
+        raise TypeError("rng must be a numpy Generator")
+    threshold = _threshold(vimp_threshold)
+    work_limit = _integer(max_work, "max_work", 1, _MAX_IMPORTANCE_WORK)
+    t, e, x = _forest_data(time, event, covariates)
+    if x.shape[1] != fit.covariate_count:
+        raise ValueError("training covariate count does not match the OOB fit")
+    if _forest_fingerprint(t, e, x) != fit.training_fingerprint:
+        raise ValueError("training data values or row order do not match the OOB fit")
+    selected = _feature_selection(feature_indices, fit.covariate_count)
+    if selected.size == 0:
+        raise ValueError("anti-split importance requires at least one fitted covariate")
+    if block_size is None:
+        size = fit.n_trees
+    else:
+        size = _integer(block_size, "block_size", 1, fit.n_trees)
+    block_count = fit.n_trees // size
+    used_trees = block_count * size
+    ignored = np.arange(used_trees, fit.n_trees, dtype=np.int64)
+    rows = t.size
+    output_cells = selected.size * block_count
+    if 2 * output_cells + block_count + selected.size + ignored.size > _MAX_IMPORTANCE_CELLS:
+        raise ValueError("anti-split importance outputs exceed the combined cell budget")
+    oob_by_tree = np.empty(used_trees, dtype=np.int64)
+    for tree_index in range(used_trees):
+        packed = fit.inbag_membership[tree_index]
+        oob_by_tree[tree_index] = rows - int(np.unpackbits(packed, bitorder="little")[:rows].sum())
+    route_rows = int(oob_by_tree.sum())
+    route_work = selected.size * route_rows * (fit.time_grid.size + fit.max_depth) * 2
+    pair_work = (selected.size + 1) * block_count * rows * rows
+    if route_work + pair_work > work_limit:
+        raise ValueError("anti-split routing/concordance work exceeds max_work")
+
+    if random_state is not None:
+        random_state = _integer(random_state, "random_state", 0, np.iinfo(np.int32).max)
+        generator = np.random.default_rng(random_state)
+    else:
+        assert rng is not None
+        generator = rng
+    baseline_error = np.full(block_count, np.nan, dtype=np.float64)
+    perturbed_error = np.full((selected.size, block_count), np.nan, dtype=np.float64)
+    block_importance = np.full_like(perturbed_error, np.nan)
+    for block in range(block_count):
+        first_tree = block * size
+        last_tree = first_tree + size
+        baseline_sum = np.zeros(rows, dtype=np.float64)
+        contributors = np.zeros(rows, dtype=np.int64)
+        for tree_index in range(first_tree, last_tree):
+            inbag = np.unpackbits(fit.inbag_membership[tree_index], bitorder="little")[
+                :rows
+            ].astype(bool)
+            oob_rows = np.flatnonzero(~inbag)
+            tree = fit.trees[tree_index]
+            for row in oob_rows:
+                baseline_sum[row] += _route_hazard(tree, x[row], fit.time_grid)
+                contributors[row] += 1
+        baseline_mortality = np.full(rows, np.nan, dtype=np.float64)
+        present = contributors > 0
+        baseline_mortality[present] = baseline_sum[present] / contributors[present]
+        baseline_error[block], _ = _oob_concordance_error(t, e, baseline_mortality, contributors)
+        for feature_position, feature_value in enumerate(selected):
+            feature = int(feature_value)
+            perturbed_sum = np.zeros(rows, dtype=np.float64)
+            for tree_index in range(first_tree, last_tree):
+                inbag = np.unpackbits(fit.inbag_membership[tree_index], bitorder="little")[
+                    :rows
+                ].astype(bool)
+                oob_rows = np.flatnonzero(~inbag)
+                tree = fit.trees[tree_index]
+                for row in oob_rows:
+                    perturbed_sum[row] += _route_anti_hazard(
+                        tree,
+                        x[row],
+                        fit.time_grid,
+                        feature,
+                        threshold=threshold,
+                        rng=generator,
+                    )
+            perturbed_mortality = np.full(rows, np.nan, dtype=np.float64)
+            perturbed_mortality[present] = perturbed_sum[present] / contributors[present]
+            perturbed_error[feature_position, block], _ = _oob_concordance_error(
+                t, e, perturbed_mortality, contributors
+            )
+            if np.isfinite(baseline_error[block]) and np.isfinite(
+                perturbed_error[feature_position, block]
+            ):
+                block_importance[feature_position, block] = (
+                    perturbed_error[feature_position, block] - baseline_error[block]
+                )
+    valid = np.isfinite(block_importance)
+    valid_count = valid.sum(axis=1).astype(np.int64)
+    importance = np.full(selected.size, np.nan, dtype=np.float64)
+    found = valid_count > 0
+    importance[found] = np.nansum(block_importance[found], axis=1) / valid_count[found]
+    return RandomSurvivalForestAntiSplitImportance(
+        _readonly_int(selected),
+        size,
+        block_count,
+        _readonly_int(ignored),
+        _freeze(baseline_error),
+        _freeze(perturbed_error),
+        _freeze(block_importance),
+        _readonly_int(valid_count),
+        _freeze(importance),
+        threshold,
         random_state,
     )

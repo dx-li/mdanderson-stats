@@ -244,3 +244,28 @@ lint, formatting and type checks passed. A training fingerprint checks exact
 canonical training values and row order, without storing another feature matrix.
 Prospective work bounds cover routing and pair comparisons, with row-sized
 temporary vectors and bounded feature-by-block output arrays.
+
+## Anti-split importance
+
+The pinned randomForestSRC source describes `importance=TRUE` as anti VIMP
+and the R help (`man/rfsrc.Rd`, VIMP section) says this sends each case to the
+opposite daughter at a target-variable split. In `src/randomForestSRC.c`,
+`getAntiMembership` routes OOB members through `antiMembershipGeneric`
+(approximately lines 4058–4114). The generic routine compares each node's split
+variable with the requested feature and flips its ordinary daughter when a
+uniform draw is at most `RF_vimpThreshold`; non-target splits retain their
+ordinary branch. The pinned `utilities.R` helper `is.hidden.vimp.threshold` (lines 1165–1180)
+confirms the default is 1.0 and accepts values in [0,1], with zero disabling
+flips. The Python API exposes `vimp_threshold` with that same default, but its
+NumPy stream is not native tree-specific RNG parity. It reuses the existing
+OOB block concordance estimator, complete-block tail exclusion, undefined-block
+handling, training fingerprint, and bounded workspace contract.
+
+The same C file's `randomMembershipGeneric` (approximately lines 4542–4595)
+defines the separate `importance="random"` route: at target splits, a single
+uniform selects either the original daughter or a left/right draw weighted by
+the node's represented sample counts. This Python tranche does not implement
+that mode because fitted trees retain neither per-node represented counts nor
+bootstrap multiplicities; reconstructing them from the packed boolean in-bag
+mask would be wrong for replacement sampling. Preserving those counts in the
+fit representation is required before an exact random-routing implementation.
