@@ -23,12 +23,14 @@ from .bop2_dc_randomized_survival_simulation import (
     BOP2DCRandomizedSurvivalSimulation,
     simulate_bop2_dc_randomized_survival,
 )
+from .bop2_dc_randomized_survival_simulation import (
+    _MAX_RETAINED_CELLS as _MAX_SIMULATION_RETAINED_CELLS,
+)
 from .bop2_dc_survival_trial import _freeze, _replay_seed, _trial_count
 from .bop2_survival_trial import _survival_paths
 
 _MAX_CANDIDATES = 10_000
 _MAX_TOTAL_WORK = 100_000_000
-_MAX_DEFAULT_WORK = 50_000_000
 _MAX_PATH_CELLS = 1_000_000
 _MAX_LOOK_WORK = 30_000_000
 _MAX_PROBABILITY_CELLS = 2_000_000
@@ -254,11 +256,25 @@ def optimize_bop2_dc_randomized_survival(
 
     path_chunk_rows = _path_chunk_rows(design.max_subjects, margin_count)
     probability_cells = 2 * 4 * look_count * trials
-    candidate_result_cells = candidate_count * (2 * len(_DECISIONS) * 3 + 32)
-    validation_cells = validation_trials * 34 + 40
+    # Candidate arrays coexist with their frozen result copies at return time.
+    # The 110-cell charge includes both copies of the decision/rate/ESS arrays
+    # and the four retained candidate-parameter columns.
+    candidate_result_cells = candidate_count * 110
+    validation_simulation_cells = (
+        validation_trials * (2 * 17 + 3 + 2 * design.max_subjects + 18 * look_count)
+        + len(_DECISIONS) * 6
+        + 16
+    )
+    if validation_simulation_cells > _MAX_SIMULATION_RETAINED_CELLS:
+        raise ValueError("validation simulator exceeds its retained result cell budget")
+    validation_oc_cells = 2 * (3 * len(_DECISIONS) + 8)
     path_chunk_cells = path_chunk_rows * design.max_subjects
     fixed_retained_cells = (
-        probability_cells + candidate_result_cells + validation_cells + 8 * path_chunk_cells
+        probability_cells
+        + candidate_result_cells
+        + validation_simulation_cells
+        + validation_oc_cells
+        + 8 * path_chunk_cells
     )
     remaining = _MAX_RETAINED_CELLS - fixed_retained_cells
     candidate_batch_cells = min(_MAX_CANDIDATE_BATCH_CELLS, remaining // 10)
