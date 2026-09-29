@@ -1,13 +1,11 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `1abdfdb` adds interval-PH cluster
-coefficient bootstrap and random-routing survival-forest importance. Earlier
-competing-risk bootstrap, TITE-CRM prior ESS, visit preparation and survival
-workflows remain included.
-Local `master` contains this validated checkpoint. Fresh read-only
-checks still show GitHub `master` and `main` at `45b6e307`; their earlier
-changes are already merged locally. The newer statistical additions have not
-been confirmed published. See the final section for current package checks.
+Latest verified package checkpoint: `c38cca5` adds optional individual-gel
+Pinnacle denoising, rectangular backgrounds and scheduled Phase2Delay trial
+simulation. The final section records validation. Network publication was
+restored on September 29; the earlier verified push put `a796f1d` on GitHub
+`master`, `main` and `feat/condis-svm`. The local artifact manifest records the
+full branch SHAs after each independently verified publication.
 
 The user explicitly requested that all completed work be pushed to GitHub and
 that stable programs be available on `master`. The public repository is
@@ -31,9 +29,9 @@ development branch through the available GitHub connector was rejected with:
 
 > MCP tool call requires approval, but approval policy is never
 
-No remote publication succeeded. No further write attempt, force push, approval
-override or alternative publication transport was attempted after that rejection.
-User authorization is present; usable publishing permissions are still required.
+At that point no remote publication succeeded. No further write attempt, force
+push, approval override or alternative publication transport was attempted
+until the later environment change documented under Publication restored.
 
 Once publishing is available, an ordinary fast-forward push can publish the local
 checkpoint to both branches and preserve the development branch:
@@ -1119,3 +1117,68 @@ shell DNS failure and connector rejection (approval required while approval
 policy is never) have no confirmed resolution. Neither write route was
 retried or bypassed. Local branch advancement and artifacts do not establish
 remote publication.
+
+
+## Publication restored — September 29
+
+The execution environment changed from restricted network access to enabled
+network access. An ordinary remote read and fetch succeeded. All three remote
+branches were verified to be ancestors of validated local master, then an
+atomic fast-forward push published `a796f1d` to `master`, `main` and
+`feat/condis-svm`. A separate `git ls-remote` check at 2026-09-29 15:32:40 UTC
+returned the full SHA `a796f1d7fce7f3adf0a42cfc71c0d4703f36c387` for each branch.
+This resolves the earlier 185-commit publication backlog. No force push,
+connector-approval bypass or history rewrite was used. Ongoing Pinnacle and
+Phase2Delay implementations remain in separate checkouts pending validation.
+
+
+## Pinnacle and Phase2Delay community workflows
+
+Verified code is `c38cca5`. Luna implemented both workflows in isolated
+checkouts and a separate Luna reviewer examined the calendar contract. Root
+reviewed numerical and memory boundaries, integrated public exports and guides,
+and verified the combined package. No dependencies or CI workflows were added.
+
+Pinnacle adds explicitly configured per-gel wavelet denoising and rectangular
+local backgrounds. Detection uses the denoised raw average; optional per-gel
+reconstructions supply peak/background measurements while image-volume
+normalization uses raw pixels. The processing order is a documented Python
+choice pending native executable confirmation. Combined memory accounting
+includes retained pipeline images and result matrices, respects both pipeline
+and per-gel budgets, and releases measurement views between gels.
+
+Phase2Delay adds scheduled calendar replay, calibrated Weibull event delays,
+Poisson accrual and serial operating-characteristic summaries. Its monitoring
+gate counts full assessment windows, not early observed responses. Absolute
+completion/event timestamps handle same-time enrollment and non-binary time
+rounding. Stopping excludes future patients and decisions. Explicit terminal
+policies distinguish decision time from completion of enrolled follow-up.
+Seed lineage reproduces individual trials and their analyses; compact results
+and work/storage bounds avoid retaining every posterior draw across trials.
+Continuous-monitoring equivalence, native priors/calibration and reports remain
+open. Both source entries remain partial; counts stay 63 implemented, 66
+partial and nine pending.
+
+All 30 affected Pinnacle and Phase2Delay checks pass in 5.896 seconds at
+137.84 MiB peak process RSS with zero swaps. They include existing unchanged-C
+wavelet and independent R measurement/hazard references, cropped nonzero
+per-gel denoising, combined-memory rejection, calendar gate/ties/early stopping,
+seed replay and independent Weibull fixtures. The regenerated base-R reference
+verifies eight calibrations, 48 inverse-CDF values and sevenfold time scaling
+in 0.243 seconds at 78.45 MiB peak child RSS, zero swaps. Targeted lint,
+formatting and type checks pass. Numerical processes ran serially with one
+BLAS/OpenMP thread; the full repository test suite was not rerun because the
+change is confined to these workflows.
+
+Cached wheel and source builds succeed. Isolated wheel verification passes
+all 1,580 exports, byte equality for 565 committed package source/data files,
+all 138 catalog entries, preserved licenses/notices and four examples across
+the two affected guides. It takes 13.135 seconds at 125.50 MiB peak RSS with
+zero swaps. The distribution retains its mixed-license qualification.
+
+The package artifacts correspond to `c38cca5`. The publication checkpoint adds
+only this audit record before advancing local master. Publication uses an
+ordinary atomic fast-forward push of the same checkpoint to GitHub master,
+main and the development branch, followed by independent remote-SHA verification.
+The local artifact manifest records the resulting remote state and hashes;
+a locally advanced branch alone is not evidence of publication.
