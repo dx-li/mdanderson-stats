@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `28fc12f` adds the published MDS-HOPE
-relative-risk score and serial four-arm Parallel Phase I/II summaries. The final
+Latest verified package checkpoint: `78076d9` adds ARAND calendar replay and
+the published MDS-HOPE five-group alternative. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1233,3 +1233,43 @@ advances master and main together by an ordinary atomic fast-forward push, also
 updating the development branch. Independent remote-SHA verification and local
 artifact hashes are recorded in the ignored `dist/community-checkpoint.json`;
 a local commit alone does not establish GitHub publication.
+
+
+## ARAND calendar and MDS-HOPE risk-group checkpoint
+
+Verified package code is `78076d992112183f5a443436e72697f9627e7133`.
+Luna implemented both additions in isolated checkouts. Root integrated public
+exports, executable guides, source catalog and independent risk-group references.
+No dependencies or CI workflows were added.
+
+ARAND adds bounded binary and exponential calendar replay: potential outcomes
+remain hidden until observed, suspended arms can reactivate, permanent futility
+prevents allocation, and final selection includes temporarily suspended arms.
+Explicit policies expose source-ambiguous ordering, allocation floors, ties and
+duration/minimum-enrollment precedence. Preflight work and retained-history
+limits precede large allocations. The simulator and aggregate reports remain
+separate development work; native controller equivalence is not claimed.
+
+MDS-HOPE adds the published five-group alternative while preserving the
+six-group default. Explicit calibration remains required, and native numeric
+cytogenetic encoding and absolute-survival calibration remain unavailable.
+Coverage stays 63 implemented, 67 partial and eight pending catalog entries.
+
+All 21 affected tests, 34 independent R risk-boundary cases and four guide
+examples pass together in 1.481 seconds at 147.53 MiB peak RSS with zero swaps.
+The affected posterior tests retain their 52 independent R probability checks.
+Focused lint, formatting and type checks pass. The full repository suite was
+not rerun because the change is confined to these methods and integration.
+
+Cached wheel and source builds pass. Isolated wheel verification checks all
+1,592 exports, byte equality for 568 committed package source/data files in
+both artifacts, all 138 catalog entries, preserved license notices and all four
+guide examples. It takes 11.183 seconds at 126.08 MiB peak RSS with zero swaps.
+Numerical and build execution remained serial with thread limits. Existing
+mixed-license qualifications remain explicit.
+
+This audit is the only change after the verified package revision. Publication
+advances master, main and the development branch by ordinary atomic
+fast-forward push. Independent remote-SHA verification and local artifact
+hashes are recorded in the ignored `dist/community-checkpoint.json`; a local
+commit alone does not establish GitHub publication.
