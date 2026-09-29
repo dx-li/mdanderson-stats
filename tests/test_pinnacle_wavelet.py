@@ -3,6 +3,7 @@ import pytest
 
 from mdanderson_stats.pinnacle_pipeline import run_pinnacle
 from mdanderson_stats.pinnacle_wavelet import (
+    PinnacleDenoiseSettings,
     pinnacle_daubechies_filter,
     pinnacle_denoise,
     pinnacle_irdwt,
@@ -54,12 +55,19 @@ def test_two_pass_pipeline_detects_on_average_and_preserves_crop_coordinates():
         peak_radius=0,
         background="none",
         normalization="none",
+        quantification_denoising=PinnacleDenoiseSettings(
+            filter_length=2,
+            threshold_multiplier=0,
+            convention="paper",
+            levels=1,
+        ),
     )
     assert result.image_count == 2
     assert result.denoising.origin == (1, 2)
     assert result.denoising.region == (1, 7, 2, 8)
     assert [tuple(pair) for pair in result.peaks.coordinates] == [(3, 4)]
     np.testing.assert_allclose(result.quantification.raw[:, 0], [10, 12])
+    assert result.quantification.denoising_noise_estimates.shape == (2,)
     assert result.quantification.coordinates[0, 0] == 3
 
 

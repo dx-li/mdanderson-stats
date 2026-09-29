@@ -23,7 +23,14 @@ from .pinnacle import (
     pinnacle_mean_image,
     pinnacle_quantify,
 )
-from .pinnacle_wavelet import PinnacleDenoiseResult, pinnacle_denoise
+from .pinnacle_wavelet import (
+    PinnacleDenoiseResult,
+    PinnacleDenoiseSettings,
+    _denoise_level_count,
+    _denoise_work_bytes,
+    _integer,
+    pinnacle_denoise,
+)
 
 
 @dataclass(frozen=True)
@@ -89,7 +96,7 @@ def run_pinnacle(
     background: Literal[
         "none", "local_minimum", "local_quantile", "global_quantile"
     ] = "local_minimum",
-    background_radius: int = 100,
+    background_radius: int | tuple[int, int] = 100,
     background_quantile: float = 0.0,
     normalization: Literal[
         "none", "mean_pinnacle", "image_volume", "pinnacle_sum"
@@ -98,6 +105,7 @@ def run_pinnacle(
     threshold_multiplier: float = 2.0,
     levels: int | None = None,
     convention: str = "paper",
+    quantification_denoising: PinnacleDenoiseSettings | None = None,
     max_images: int = _MAX_IMAGES,
     max_output_cells: int = _MAX_OUTPUT_CELLS,
     max_work_bytes: int = 512 * 1024 * 1024,
@@ -106,8 +114,9 @@ def run_pinnacle(
 
     The first pass averages RAW images and denoises that single average, as in
     the paper. The second pass quantifies original raw gels at those detected
-    coordinates. The factory must replay the same ordered aligned images; a
-    bounded content digest verifies count, dimensions and pixel identity
+    coordinates, optionally denoising each gel independently. The factory
+    must replay the same ordered aligned images; a bounded content digest
+    verifies count, dimensions and pixel identity
     between passes. The input stack is never cached.
     """
     if not callable(images_factory):
@@ -116,6 +125,7 @@ def run_pinnacle(
         raise ValueError("max_images must be an integer")
     if not 2 <= max_images <= _MAX_IMAGES:
         raise ValueError(f"max_images must be between 2 and {_MAX_IMAGES}")
+    max_work_bytes = _integer(max_work_bytes, "max_work_bytes", 1, 1024 * 1024 * 1024)
 
     first_images, first_hash, first_count, first_shape = _image_pass(
         images_factory, max_images=int(max_images)
@@ -125,13 +135,18 @@ def run_pinnacle(
         raise ValueError("at least two images are required")
     source_shape = first_shape[0]
     _, _, crop_bounds = _region(region, source_shape)
+    denoise_levels = _denoise_level_count(levels, average.shape)
+    held_image_bytes = average.size * 8
+    average_work_bytes = _denoise_work_bytes(average.shape, denoise_levels)
+    if average_work_bytes + 2 * held_image_bytes > max_work_bytes:
+        raise ValueError("average-image denoising exceeds the combined max_work_bytes bound")
     denoised = pinnacle_denoise(
         average,
         filter_length=filter_length,
         threshold_multiplier=threshold_multiplier,
         levels=levels,
         convention=convention,
-        max_work_bytes=max_work_bytes,
+        max_work_bytes=max_work_bytes - 2 * held_image_bytes,
     )
     denoised = replace(
         denoised,
@@ -167,6 +182,8 @@ def run_pinnacle(
         region=crop_bounds,
         max_images=int(max_images),
         max_output_cells=max_output_cells,
+        denoising=quantification_denoising,
+        _reserved_work_bytes=2 * average.size * 8,
     )
     if (
         first_count[0] != second_count[0]

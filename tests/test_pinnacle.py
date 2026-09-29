@@ -6,6 +6,7 @@ from mdanderson_stats.pinnacle import (
     pinnacle_mean_image,
     pinnacle_quantify,
 )
+from mdanderson_stats.pinnacle_wavelet import PinnacleDenoiseSettings
 
 
 def test_mean_image_streams_aligned_images_and_applies_crop():
@@ -87,3 +88,57 @@ def test_bounded_iterators_and_incompatible_inputs_fail_loudly():
         pinnacle_quantify(
             [np.ones((3, 3))], [[1, 1]], background="local_minimum", normalization="mean_pinnacle"
         )
+
+
+def test_rectangular_background_window_and_scalar_compatibility():
+    image = np.full((7, 7), 10.0)
+    image[2, 1] = 1.0
+    coords = [[3, 3]]
+    rectangular = pinnacle_quantify(
+        [image],
+        coords,
+        peak_radius=0,
+        background="local_quantile",
+        background_radius=(1, 2),
+        background_quantile=0,
+        normalization="none",
+    )
+    square = pinnacle_quantify(
+        [image],
+        coords,
+        peak_radius=0,
+        background="local_quantile",
+        background_radius=1,
+        background_quantile=0,
+        normalization="none",
+    )
+    assert rectangular.background[0, 0] == 1
+    assert square.background[0, 0] == 10
+    assert rectangular.background_radius == (1, 2)
+    assert square.background_radius == 1
+
+
+def test_individual_gel_denoising_preserves_raw_volume_and_rejects_negative_raw():
+    image = np.ones((8, 8))
+    image[3, 4] = 8
+    settings = PinnacleDenoiseSettings(
+        filter_length=2,
+        threshold_multiplier=0,
+        convention="paper",
+        levels=1,
+    )
+    result = pinnacle_quantify(
+        [image],
+        [[3, 4]],
+        peak_radius=0,
+        background="none",
+        normalization="image_volume",
+        denoising=settings,
+    )
+    np.testing.assert_allclose(result.raw, [[8]], atol=1e-13)
+    assert result.normalization_factors[0] == np.sum(image)
+    assert result.denoising == settings
+    assert result.denoising_noise_estimates.shape == (1,)
+    assert result.denoising_thresholds.shape == (1,)
+    with pytest.raises(ValueError, match="nonnegative"):
+        pinnacle_quantify([-np.ones((8, 8))], [[3, 4]], denoising=settings, normalization="none")

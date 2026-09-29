@@ -66,9 +66,18 @@ denoiser level defaults, and included immutable copies/temporaries in a
 conservative `(3*levels+16)` image-buffer budget. Nonrepresentable wavelet
 coefficients raise an explicit arithmetic error.
 
-The GUI's optional per-gel denoising during quantification, independently sized
-row/column background windows, native TIFF/project formats, interactive editing
-and report/executable equivalence remain open. Catalog entry 95 is **partial**.
+The detailed GUI manual (§3.4, pp. 9–11) permits optional denoising of each gel
+during quantification (default off; threshold multiplier 3.6) and independently
+sized horizontal and vertical background windows. The Python API represents
+these as opt-in `PinnacleDenoiseSettings` and a `(row_radius, column_radius)`
+pair while retaining scalar square radii. It denoises each raw gel sequentially,
+allows signed reconstruction only inside measurement calculations, and keeps
+raw image volume normalization and the replay digest tied to original inputs.
+Because the executable's operation order is undocumented, this implementation
+detects on the denoised raw average first, then applies optional per-gel
+denoising before peak and background measurement. Native TIFF/project formats,
+interactive editing and report/executable equivalence remain open. Catalog
+entry 95 is **partial**.
 The catalog now has **62 implemented, 62 partial and 14 pending** entries.
 
 ## Validation and resource use

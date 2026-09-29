@@ -93,6 +93,11 @@ def _check_work(shape: tuple[int, int], levels: int, work_bytes: object) -> int:
     return budget
 
 
+def _denoise_work_bytes(shape: tuple[int, int], levels: int) -> int:
+    """Conservative full-image-buffer estimate used by pipeline accounting."""
+    return shape[0] * shape[1] * (3 * levels + 16) * np.dtype(float).itemsize
+
+
 def pinnacle_daubechies_filter(filter_length: int = 8) -> tuple[FloatArray, FloatArray]:
     """Return the minimum-phase orthonormal scaling and wavelet taps (sum sqrt(2)).
 
@@ -309,6 +314,28 @@ def pinnacle_irdwt(transform: PinnacleWaveletTransform) -> FloatArray:
         detail_arrays.append(bands)  # type: ignore[arg-type]
     reconstructed = _synthesize(low, tuple(detail_arrays), scaling, wavelet)
     return _freeze(reconstructed)
+
+
+@dataclass(frozen=True)
+class PinnacleDenoiseSettings:
+    """Explicit wavelet settings reusable for individual-gel quantification."""
+
+    filter_length: int
+    threshold_multiplier: float
+    convention: str
+    levels: int | None = None
+    max_work_bytes: int = _DEFAULT_WORK_BYTES
+
+    def __post_init__(self) -> None:
+        _filter_length(self.filter_length)
+        multiplier = _scalar(self.threshold_multiplier, "threshold_multiplier")
+        if multiplier < 0:
+            raise ValueError("threshold_multiplier must be finite and nonnegative")
+        if self.convention not in {"paper", "rwt"}:
+            raise ValueError("convention must be 'paper' or 'rwt'")
+        if self.levels is not None:
+            _integer(self.levels, "levels", 1, 20)
+        _integer(self.max_work_bytes, "max_work_bytes", 1, _MAX_WORK_BYTES)
 
 
 @dataclass(frozen=True)

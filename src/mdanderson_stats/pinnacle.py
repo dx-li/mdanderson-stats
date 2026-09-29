@@ -11,7 +11,7 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from itertools import chain
 from math import isfinite
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -19,6 +19,9 @@ from scipy.ndimage import minimum_filter
 
 from ._cdflib import _freeze
 from ._validation import FloatArray
+
+if TYPE_CHECKING:
+    from .pinnacle_wavelet import PinnacleDenoiseSettings
 
 _MAX_IMAGES = 200
 _MAX_PIXELS = 4_194_304
@@ -109,10 +112,13 @@ class PinnacleQuantification:
     normalized: FloatArray
     normalization_factors: FloatArray
     background_method: str
-    background_radius: int
+    background_radius: int | tuple[int, int]
     background_quantile: float
     normalization: str
     region: tuple[int, int, int, int]
+    denoising: PinnacleDenoiseSettings | None = None
+    denoising_noise_estimates: FloatArray | None = None
+    denoising_thresholds: FloatArray | None = None
 
 
 def pinnacle_mean_image(
@@ -217,13 +223,38 @@ def pinnacle_detect_peaks(
 
 
 def _window(
-    image: FloatArray, row: int, col: int, radius: int, bounds: tuple[int, int, int, int]
+    image: FloatArray,
+    row: int,
+    col: int,
+    radius: int | tuple[int, int],
+    bounds: tuple[int, int, int, int],
 ) -> FloatArray:
+    row_radius, col_radius = (radius, radius) if isinstance(radius, int) else radius
     r0, r1, c0, c1 = bounds
     return image[
-        max(r0, row - radius) : min(r1, row + radius + 1),
-        max(c0, col - radius) : min(c1, col + radius + 1),
+        max(r0, row - row_radius) : min(r1, row + row_radius + 1),
+        max(c0, col - col_radius) : min(c1, col + col_radius + 1),
     ]
+
+
+def _background_radii(value: object) -> tuple[tuple[int, int], int | tuple[int, int]]:
+    if isinstance(value, (int, np.integer)) and not isinstance(value, (bool, np.bool_)):
+        radius = int(value)
+        radii = (radius, radius)
+        supplied: int | tuple[int, int] = radius
+    elif isinstance(value, tuple) and len(value) == 2:
+        parsed: list[int] = []
+        for item in value:
+            if isinstance(item, (bool, np.bool_)) or not isinstance(item, (int, np.integer)):
+                raise ValueError("background_radius tuple must contain two integers")
+            parsed.append(int(item))
+        radii = (parsed[0], parsed[1])
+        supplied = radii
+    else:
+        raise ValueError("background_radius must be an integer or a (row,column) integer pair")
+    if any(radius < 0 or radius > 1000 for radius in radii):
+        raise ValueError("background radii must be integers in [0,1000]")
+    return radii, supplied
 
 
 def pinnacle_quantify(
@@ -234,7 +265,7 @@ def pinnacle_quantify(
     background: Literal[
         "none", "local_minimum", "local_quantile", "global_quantile"
     ] = "local_minimum",
-    background_radius: int = 100,
+    background_radius: int | tuple[int, int] = 100,
     background_quantile: float = 0.0,
     normalization: Literal[
         "none", "mean_pinnacle", "image_volume", "pinnacle_sum"
@@ -242,6 +273,8 @@ def pinnacle_quantify(
     region: tuple[int, int, int, int] | None = None,
     max_images: int = _MAX_IMAGES,
     max_output_cells: int = _MAX_OUTPUT_CELLS,
+    denoising: PinnacleDenoiseSettings | None = None,
+    _reserved_work_bytes: int = 0,
 ) -> PinnacleQuantification:
     """Quantify local pinnacle maxima with explicit background and normalization.
 
@@ -254,16 +287,25 @@ def pinnacle_quantify(
         raise ValueError("unsupported background method")
     if normalization not in {"none", "mean_pinnacle", "image_volume", "pinnacle_sum"}:
         raise ValueError("unsupported normalization")
-    for value, name, maximum in (
-        (peak_radius, "peak_radius", 100),
-        (background_radius, "background_radius", 1000),
+    if (
+        isinstance(peak_radius, bool)
+        or not isinstance(peak_radius, (int, np.integer))
+        or not 0 <= peak_radius <= 100
     ):
-        if (
-            isinstance(value, bool)
-            or not isinstance(value, (int, np.integer))
-            or not 0 <= value <= maximum
-        ):
-            raise ValueError(f"{name} must be an integer in [0,{maximum}]")
+        raise ValueError("peak_radius must be an integer in [0,100]")
+    peak_radius = int(peak_radius)
+    background_radii, supplied_background_radius = _background_radii(background_radius)
+    if (
+        isinstance(_reserved_work_bytes, bool)
+        or not isinstance(_reserved_work_bytes, int)
+        or _reserved_work_bytes < 0
+    ):
+        raise ValueError("reserved work bytes must be a nonnegative integer")
+    if denoising is not None:
+        from .pinnacle_wavelet import PinnacleDenoiseSettings
+
+        if not isinstance(denoising, PinnacleDenoiseSettings):
+            raise ValueError("denoising must be PinnacleDenoiseSettings or None")
     quantile = _scalar(background_quantile, "background_quantile")
     if not 0 <= quantile <= 1:
         raise ValueError("background_quantile must be in [0,1]")
@@ -318,6 +360,8 @@ def pinnacle_quantify(
     raw_rows: list[FloatArray] = []
     background_rows: list[FloatArray] = []
     factor_values: list[float] = []
+    noise_values: list[float] = []
+    threshold_values: list[float] = []
     work = 0
     image_count = 0
     for image_index, image_item in enumerate(chain((first_item,), iterator)):
@@ -335,20 +379,68 @@ def pinnacle_quantify(
         work += image.shape[0] * image.shape[1]
         if work > _MAX_WORK_PIXELS:
             raise ValueError("quantification exceeds the bounded pixel-work limit")
-        cropped = image[rs, cs]
+        raw_cropped = image[rs, cs]
+        cropped = raw_cropped
+        measured = image
+        if denoising is not None:
+            from .pinnacle_wavelet import _denoise_work_bytes, pinnacle_denoise
+
+            levels = denoising.levels
+            if levels is None:
+                # Match pinnacle_denoise's default level calculation.
+                from .pinnacle_wavelet import _denoise_level_count
+
+                levels = _denoise_level_count(None, cropped.shape)
+            wavelet_bytes = _denoise_work_bytes(cropped.shape, levels)
+            # Keep room for caller-held pipeline images, accumulated result rows,
+            # and the transient raw/denoised gel while the wavelet is active.
+            # Includes row lists, current rows, matrix construction/correction,
+            # normalized values and immutable returned copies.
+            output_bytes = (2 * image_count + 10 * (image_count + 1)) * coords.shape[0] * 8
+            held_bytes = 3 * first.size * 8 + _reserved_work_bytes
+            total_bytes = wavelet_bytes + output_bytes + held_bytes
+            if total_bytes > denoising.max_work_bytes:
+                raise ValueError(
+                    "individual-gel denoising exceeds the combined max_work_bytes bound"
+                )
+            denoised = pinnacle_denoise(
+                image,
+                filter_length=denoising.filter_length,
+                threshold_multiplier=denoising.threshold_multiplier,
+                levels=denoising.levels,
+                convention=denoising.convention,
+                region=bounds,
+                max_work_bytes=denoising.max_work_bytes - output_bytes - held_bytes,
+            )
+            measured = np.asarray(denoised.image)
+            cropped = measured
+            noise_values.append(denoised.noise_estimate)
+            threshold_values.append(denoised.threshold)
         local_values = np.empty(coords.shape[0], dtype=float)
         backgrounds = np.zeros(coords.shape[0], dtype=float)
         minimum_map: FloatArray | None = None
         if background == "local_minimum" and coords.shape[0]:
             minimum_map = minimum_filter(
-                cropped, size=2 * int(background_radius) + 1, mode="nearest"
+                cropped,
+                size=(2 * background_radii[0] + 1, 2 * background_radii[1] + 1),
+                mode="nearest",
             )
             work += cropped.size
             if work > _MAX_WORK_PIXELS:
                 raise ValueError("background quantification exceeds the bounded pixel-work limit")
         for peak_index, (row_value, col_value) in enumerate(coords):
             row, col = int(row_value), int(col_value)
-            spot = _window(image, row, col, int(peak_radius), bounds)
+            spot = (
+                _window(
+                    measured,
+                    row - bounds[0],
+                    col - bounds[2],
+                    peak_radius,
+                    (0, measured.shape[0], 0, measured.shape[1]),
+                )
+                if denoising is not None
+                else _window(measured, row, col, peak_radius, bounds)
+            )
             work += spot.size
             if work > _MAX_WORK_PIXELS:
                 raise ValueError("peak quantification exceeds the bounded pixel-work limit")
@@ -357,7 +449,17 @@ def pinnacle_quantify(
                 assert minimum_map is not None
                 backgrounds[peak_index] = float(minimum_map[row - bounds[0], col - bounds[2]])
             elif background == "local_quantile":
-                bg_window = _window(image, row, col, int(background_radius), bounds)
+                bg_window = (
+                    _window(
+                        measured,
+                        row - bounds[0],
+                        col - bounds[2],
+                        background_radii,
+                        (0, measured.shape[0], 0, measured.shape[1]),
+                    )
+                    if denoising is not None
+                    else _window(measured, row, col, background_radii, bounds)
+                )
                 work += bg_window.size
                 if work > _MAX_WORK_PIXELS:
                     raise ValueError(
@@ -383,13 +485,20 @@ def pinnacle_quantify(
                 raise ValueError("pinnacle_sum normalization requires at least one peak")
             factor = float(np.sum(corrected))
         else:
-            factor = float(np.sum(cropped))
+            factor = float(np.sum(raw_cropped))
         if not isfinite(factor) or factor <= 0:
             if normalization == "none":
                 raise ArithmeticError("normalization factor is not representable")
             raise ValueError(f"{normalization} normalization requires a positive finite factor")
         factor_values.append(factor)
         image_count += 1
+        # Do not carry this gel's reconstruction or minimum map into the next
+        # gel's wavelet allocation.
+        if denoising is not None:
+            del denoised
+        measured = image
+        cropped = raw_cropped
+        minimum_map = None
     if image_count == 0:
         raise ValueError("at least one image is required")
     output_raw = np.vstack(raw_rows)
@@ -407,8 +516,11 @@ def pinnacle_quantify(
         _freeze(normalized),
         _freeze(factors),
         background,
-        int(background_radius),
+        supplied_background_radius,
         quantile,
         normalization,
         bounds,
+        denoising,
+        None if denoising is None else _freeze(np.asarray(noise_values)),
+        None if denoising is None else _freeze(np.asarray(threshold_values)),
     )
