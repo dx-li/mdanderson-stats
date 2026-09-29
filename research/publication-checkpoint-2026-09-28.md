@@ -1,9 +1,9 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `5115a87` adds interval competing-risk
-coefficient bootstrap uncertainty and scalar-start TITE-CRM prior ESS with
-explicit follow-up versus legacy enrollment-time criteria. Earlier interval-PH
-bootstrap, visit preparation and survival-forest workflows remain included.
+Latest verified package checkpoint: `1abdfdb` adds interval-PH cluster
+coefficient bootstrap and random-routing survival-forest importance. Earlier
+competing-risk bootstrap, TITE-CRM prior ESS, visit preparation and survival
+workflows remain included.
 Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
@@ -1062,3 +1062,60 @@ including this audit are unpublished. The earlier shell DNS failure and
 connector rejection (approval required while approval policy is never) have no
 confirmed resolution. Neither write route was retried or bypassed. Local
 artifacts and local branch advancement do not establish remote publication.
+
+
+## Cluster bootstrap and random-routing forest importance
+
+The verified code checkpoint is `1abdfdb`. Two Luna implementers worked in
+separate checkouts; a Luna reviewer checked the source contracts and supplied
+an unchanged-C routing reference. Root integrated public exports, examples,
+notices and source comparisons. Entry 166 retains partial status: the catalog
+still has 63 implemented entries, 66 partial and nine pending. These counts
+are not an estimate of remaining engineering time.
+
+The interval-PH cluster bootstrap samples complete groups with replacement.
+Integer frequency weights preserve repeated group observations without
+allocating an expanded input matrix. Unequal group sizes, deterministic
+label/tape mapping, default failure propagation and explicit optional failure
+records are documented. Two fixed tapes expanded by the unchanged icenReg
+helper produce 84 and 100 rows. Python slopes and sample covariance agree
+with expanded-row native PH fits within 2.795e-7 and 2.905e-8 respectively.
+The public example completes all eight refits. Shared-loader extraction
+preserves the five original PH reference cases; all eight existing
+PH/ordinary-bootstrap CSVs remain unchanged. Serial native generation takes
+6.977 seconds, peaks at 309.80 MiB child RSS and reports zero swaps.
+
+Random-routing importance retains each node's represented sample count,
+including bootstrap duplicates. It implements the pinned source's coupled
+uniform threshold rule and uses the existing complete-block OOB concordance
+estimator, categorical encoding and undefined-block/tail reporting. All 15
+unchanged native C routing/draw-count reference rows regenerate byte-for-byte
+in 0.480 seconds at 36.66 MiB child RSS, zero swaps. Native RNG and full native
+forest parity are not claimed.
+
+The 31 focused affected checks pass in 3.50 seconds at 145.64 MiB peak RSS,
+zero swaps. They cover expanded-row equivalence, resample failure handling,
+bootstrap multiplicities, core forest/OOB behavior, categorical relabeling,
+zero-threshold identity and complete-block replay. After adding the native
+coefficient/covariance fixture assertions to the existing expansion test,
+that test passes again in 1.81 seconds. Both public examples and the native
+coefficient comparison pass in 0.937 seconds at 121.78 MiB RSS, zero swaps.
+Targeted lint, formatting and worker type checks pass. No CI workflow was
+added, no dependencies installed, and numerical jobs ran serially with one
+BLAS/OpenMP thread.
+
+Cached wheel/source builds pass. The isolated wheel check verifies 1,572
+public exports, byte equality of all 564 packaged source/data files against
+committed code, all 138 catalog entries, retained notices and both new guide
+examples. It takes 9.841 seconds, peaks at 125.41 MiB RSS and reports zero
+swaps. The distribution retains its mixed-license qualification.
+
+Local `master` contains this verified code plus this publication record as the
+sole additional change. The wheel, source distribution and verified all-refs
+Git bundle preserve completed root and Luna work. A read-only check at
+2026-09-29 04:52:00 UTC still shows GitHub `master` and `main` at `45b6e307`;
+185 local-master commits including this audit are unpublished. The earlier
+shell DNS failure and connector rejection (approval required while approval
+policy is never) have no confirmed resolution. Neither write route was
+retried or bypassed. Local branch advancement and artifacts do not establish
+remote publication.
