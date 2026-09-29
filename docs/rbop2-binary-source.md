@@ -34,12 +34,15 @@ The cited article is Zhao, Yang, Lee, Wang and Yuan (2022),
 *Bayesian Optimal Phase II Design for Randomized Clinical Trials*, Statistics
 in Biopharmaceutical Research 14:423–432,
 [DOI 10.1080/19466315.2022.2050290](https://doi.org/10.1080/19466315.2022.2050290).
-Its full calibration formulas and the app's paired-endpoint decision algorithms
-were not available from the retrieved sources. They remain open work. The
-paired-prior PDF also displays marginal-mean numerators containing only `n10`
-or `n01`, although its stated marginal definitions include the joint `n11`
-cell. The displayed equations were visually checked; their inconsistency must
-be resolved before treating them as a native algorithm specification.
+The help files provide the binary design's calibration objective, while native
+candidate-generation details remain unavailable. The finite-grid method in
+Python implements that objective over an explicit caller-supplied set; it does
+not claim native-grid parity. The app's paired-endpoint decision algorithms
+remain unresolved. The paired-prior PDF also displays marginal-mean numerators
+containing only `n10` or `n01`, although its stated marginal definitions
+include the joint `n11` cell. The displayed equations were visually checked;
+their inconsistency must be resolved before treating them as a native
+algorithm specification.
 
 `tools/reference_rbop2_binary.R` enumerates all 16 complete outcome paths for
 two patients per arm. Both priors are Beta(1,1), with looks `[[1,1],[2,2]]`,

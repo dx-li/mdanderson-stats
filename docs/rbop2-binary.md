@@ -1,8 +1,8 @@
 # rBOP2 binary efficacy and toxicity
 
 Catalog 150 now supports supplied-cutoff binary monitoring, boundary tables,
-and exact operating characteristics. The [source review](rbop2-binary-source.md)
-describes the native rules and the calibration work that remains open.
+exact operating characteristics, and a caller-grid calibration method. The
+[source review](rbop2-binary-source.md) describes native rules and limits.
 
 ```python
 from mdanderson_stats import rbop2_binary_design
@@ -59,8 +59,10 @@ are the final-only negative and positive masses.
 `overall_positive` is the achieved type-I error when evaluated at an appropriate
 null scenario and power when evaluated at an alternative. Supplying cutoffs
 does not guarantee a nominal error rate or optimality. The native app separates
-calibration priors from informative analysis priors; this core performs no
-automatic calibration and does not imply that separation on the user's behalf.
+calibration priors from informative analysis priors. The optional
+[finite-grid calibration method](rbop2-calibration.md) makes both priors
+explicit and evaluates their operating characteristics separately; it does
+not infer the native candidate cutoff grid.
 
 Numerical posterior calculations reuse stable beta-difference quadrature and
 report estimated absolute errors. Integer-shape, zero-margin comparisons near
@@ -74,5 +76,5 @@ work, processes scenarios sequentially, and reuses decision tables. It does not
 allocate trial-by-patient simulation arrays. Returned arrays are read-only.
 The sum of posterior count states over looks is capped at 20,000; a separate
 5,000,000-operation matrix-work estimate includes every look and scenario.
-Multiple-efficacy and efficacy/toxicity joint rules, native calibration,
-allocation rounding, and integrated report export remain open.
+Multiple-efficacy and efficacy/toxicity joint rules, native cutoff-grid
+reproduction, allocation rounding, and integrated report export remain open.
