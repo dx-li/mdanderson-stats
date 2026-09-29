@@ -177,18 +177,21 @@ def _candidate_oc(
     error_lrv: FloatArray,
     error_cmv: FloatArray,
     parameters: FloatArray,
-) -> tuple[FloatArray, float, float, float]:
+) -> tuple[NDArray[np.int64], float, float, float]:
     n_trials = tails_lrv.shape[1]
     labels = np.full(n_trials, "continue", dtype="U16")
     stopped_at = np.full(n_trials, design.max_subjects, dtype=np.int64)
     for look_index, raw_n in enumerate(design.looks):
-        total = np.full(n_trials, int(raw_n), dtype=np.int64)
+        active = labels == "continue"
+        if not np.any(active):
+            break
+        total = np.full(int(np.count_nonzero(active)), int(raw_n), dtype=np.int64)
         decisions = randomized_dual_decisions(
             total,
-            tails_lrv[look_index],
-            tails_cmv[look_index],
-            error_lrv[look_index],
-            error_cmv[look_index],
+            tails_lrv[look_index, active],
+            tails_cmv[look_index, active],
+            error_lrv[look_index, active],
+            error_cmv[look_index, active],
             max_subjects=design.max_subjects,
             looks=design.looks,
             lambda_lrv=float(parameters[0]),
@@ -197,14 +200,14 @@ def _candidate_oc(
             gamma_cmv=float(parameters[3]),
             graduate_at_interim=design.graduate_at_interim,
         )
-        active = labels == "continue"
-        terminal = active & (decisions != "continue")
-        labels[terminal] = decisions[terminal]
-        stopped_at[terminal] = int(raw_n)
-    probabilities = np.array([np.mean(labels == label) for label in _TERMINAL])
+        terminal = decisions != "continue"
+        active_indices = np.flatnonzero(active)
+        labels[active_indices[terminal]] = decisions[terminal]
+        stopped_at[active_indices[terminal]] = int(raw_n)
+    counts = np.array([np.count_nonzero(labels == label) for label in _TERMINAL], dtype=np.int64)
     mean_n = float(np.mean(stopped_at))
     mcse_n = float(np.std(stopped_at, ddof=1) / np.sqrt(n_trials)) if n_trials > 1 else np.nan
-    return probabilities, mean_n, mcse_n, float(max(np.max(error_lrv), np.max(error_cmv)))
+    return counts, mean_n, mcse_n, float(max(np.max(error_lrv), np.max(error_cmv)))
 
 
 def _limits(value: float, name: str) -> float:
@@ -299,13 +302,13 @@ def optimize_bop2_dc_randomized_normal(
     result_cells = 80 * candidate_count + parameter_matrix.size
     comparison_calls = 2 * 21 * (2 * design.quadrature_limit - 1)
     comparison_work = 2 * (n_cal + n_val) * design.looks.size * comparison_calls
-    decision_work = (
-        2 * n_cal * candidate_count * int(design.looks.size) * 4 * int(design.looks.size)
-    )
+    decision_work = 4 * int(design.looks.size) ** 2 * 2 * (n_cal * candidate_count + n_val)
     if path_cells > _MAX_PATH_CELLS:
         raise ValueError("calibration and validation paths exceed the one-million-cell budget")
     live_path_cells = 3 * max_stage * design.max_subjects + tail_cells
-    live_fit_cells = 16 * design.max_subjects + 4 * max_stage
+    # Includes one path's Normal sufficient-statistic scratch, active-path
+    # labels/indices, and the four-corner decision helper's temporary vectors.
+    live_fit_cells = 16 * design.max_subjects + 64 * max_stage
     if result_cells + live_path_cells + live_fit_cells > _MAX_RETAINED_CELLS:
         raise ValueError(
             "candidate evidence and Normal path workspace exceed the two-million-cell budget"
@@ -326,7 +329,7 @@ def optimize_bop2_dc_randomized_normal(
         int(seq.generate_state(1, dtype=np.uint64)[0]) for seq in (cal_seq, val_seq)
     )
     grids_rows = parameter_matrix
-    decision_probs = np.zeros((2, candidate_count, len(_TERMINAL)), dtype=np.float64)
+    decision_counts = np.zeros((2, candidate_count, len(_TERMINAL)), dtype=np.int64)
     expected_n = np.zeros((2, candidate_count), dtype=np.float64)
     enrollment_mcse = np.zeros_like(expected_n)
     max_error = np.zeros((2, candidate_count), dtype=np.float64)
@@ -338,19 +341,20 @@ def optimize_bop2_dc_randomized_normal(
         )
         # The common tail arrays are reused for every candidate in this scenario.
         for ci, parameters in enumerate(grids_rows):
-            probabilities, mean_n, mcse_n, maxerr = _candidate_oc(
+            counts, mean_n, mcse_n, maxerr = _candidate_oc(
                 design, tails_lrv, tails_cmv, error_lrv, error_cmv, parameters
             )
-            decision_probs[scenario, ci] = probabilities
+            decision_counts[scenario, ci] = counts
             expected_n[scenario, ci] = mean_n
             enrollment_mcse[scenario, ci] = mcse_n
             max_error[scenario, ci] = maxerr
         del tails_lrv, tails_cmv, error_lrv, error_cmv
 
-    false_go = decision_probs[0, :, 1] + decision_probs[0, :, 2]
-    false_no_go = decision_probs[1, :, 0] + decision_probs[1, :, 4]
-    correct_go = decision_probs[1, :, 1] + decision_probs[1, :, 2]
-    false_consider = np.maximum(decision_probs[0, :, 3], decision_probs[1, :, 3])
+    decision_probs = decision_counts.astype(np.float64) / n_cal
+    false_go = (decision_counts[0, :, 1] + decision_counts[0, :, 2]) / n_cal
+    false_no_go = (decision_counts[1, :, 0] + decision_counts[1, :, 4]) / n_cal
+    correct_go = (decision_counts[1, :, 1] + decision_counts[1, :, 2]) / n_cal
+    false_consider = np.maximum(decision_counts[0, :, 3], decision_counts[1, :, 3]) / n_cal
     feasible = (false_go <= fg_limit) & (false_no_go <= fn_limit)
     if fc_limit is not None:
         feasible &= false_consider <= fc_limit
@@ -394,7 +398,7 @@ def optimize_bop2_dc_randomized_normal(
     del standardized
     val_rng = np.random.default_rng(val_seed)
     val_standardized = val_rng.standard_normal((n_val, design.max_subjects, 2))
-    validation_decision = np.zeros((2, len(_TERMINAL)), dtype=np.float64)
+    validation_counts = np.zeros((2, len(_TERMINAL)), dtype=np.int64)
     validation_n = np.zeros(2, dtype=np.float64)
     validation_n_mcse = np.zeros(2, dtype=np.float64)
     validation_error = np.zeros(2, dtype=np.float64)
@@ -402,17 +406,18 @@ def optimize_bop2_dc_randomized_normal(
         tails_lrv, tails_cmv, error_lrv, error_cmv = _stage_paths(
             val_standardized, truths[scenario], truth_sds[scenario], design
         )
-        probs, mean_n, mcse_n, maxerr = _candidate_oc(
+        counts, mean_n, mcse_n, maxerr = _candidate_oc(
             selected_design, tails_lrv, tails_cmv, error_lrv, error_cmv, parameter_matrix[selected]
         )
-        validation_decision[scenario] = probs
+        validation_counts[scenario] = counts
         validation_n[scenario], validation_n_mcse[scenario] = mean_n, mcse_n
         validation_error[scenario] = maxerr
         del tails_lrv, tails_cmv, error_lrv, error_cmv
-    val_fg = float(validation_decision[0, 1] + validation_decision[0, 2])
-    val_fn = float(validation_decision[1, 0] + validation_decision[1, 4])
-    val_fc = float(max(validation_decision[0, 3], validation_decision[1, 3]))
-    val_cgr = float(validation_decision[1, 1] + validation_decision[1, 2])
+    validation_decision = validation_counts.astype(np.float64) / n_val
+    val_fg = float((validation_counts[0, 1] + validation_counts[0, 2]) / n_val)
+    val_fn = float((validation_counts[1, 0] + validation_counts[1, 4]) / n_val)
+    val_fc = float(max(validation_counts[0, 3], validation_counts[1, 3]) / n_val)
+    val_cgr = float((validation_counts[1, 1] + validation_counts[1, 2]) / n_val)
     val_feasible = val_fg <= fg_limit and val_fn <= fn_limit
     if fc_limit is not None:
         val_feasible &= val_fc <= fc_limit

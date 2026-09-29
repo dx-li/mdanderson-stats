@@ -93,3 +93,32 @@ def test_candidate_cutoff_underflow_is_rejected_before_simulation() -> None:
             n_validation=2,
             rng=1,
         )
+
+
+def test_absorbed_paths_are_not_reclassified_at_later_ambiguous_looks() -> None:
+    from mdanderson_stats.bop2_dc_randomized_normal_optimization import _candidate_oc
+
+    design = bop2_dc_randomized_normal_design(
+        4,
+        -0.25,
+        0.25,
+        control_prior=(0.0, 1.0, 2.0, 1.0),
+        treatment_prior=(0.0, 1.0, 2.0, 1.0),
+        arm_assignments=(0, 1, 0, 1),
+        looks=(2, 4),
+        lambda_lrv=0.5,
+        lambda_cmv=0.5,
+        gamma_lrv=0.0,
+        gamma_cmv=0.0,
+        comparison_tolerance=1e-6,
+        quadrature_limit=40,
+    )
+    counts, _, _, _ = _candidate_oc(
+        design,
+        np.array([[0.1], [0.5]]),
+        np.array([[0.1], [0.5]]),
+        np.array([[0.0], [0.5]]),
+        np.array([[0.0], [0.5]]),
+        np.array([0.5, 0.5, 0.0, 0.0]),
+    )
+    assert counts.tolist() == [1, 0, 0, 0, 0]
