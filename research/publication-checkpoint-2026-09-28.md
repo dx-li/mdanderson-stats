@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `6de56f1` adds iBOIN final MTD selection
-and complete-outcome simulation, plus bounded serial AL/BDA TITE-BOIN12
-operating-characteristic simulation. The final
+Latest verified package checkpoint: `2194af6` adds MERIT interim sample-size
+and final-boundary calibration, plus explicit dose-specific Beta priors
+throughout TPI posterior summaries, conduct and simulation. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1665,3 +1665,56 @@ successful GitHub quality and Python 3.12, 3.13 and 3.14 jobs (run 36622145716).
 Those hosted results are for that revision. This audit-only commit follows the
 verified code before atomic fast-forward publication; the local manifest records
 the independently checked remote branch SHAs, refreshed artifacts and new run.
+
+
+## September 29 — interim calibration and informative TPI priors
+
+Verified package code is `2194af61788a312a8bb0b3ef6e816c0a0190fe65`.
+Luna implemented both additions. MERIT searches maximum enrollment and final
+integer toxicity/efficacy boundaries under an explicit interim schedule,
+persistent stops and survivor-only final pooling. It reports each paper
+corner's error, both powers, enrollment and Monte Carlo uncertainty. Adaptive
+paths share latent draws across candidate sizes; integer event counts avoid
+rounding drift in empirical probability constraints and ties. Work and array
+storage are preflighted before advancing the random generator.
+
+TPI accepts caller-specified Beta shape pairs by dose, consistently applying
+them to posterior masses, safety, dose-specific tables, trial conduct, final
+isotonic point selection and simulation. The simulator shares compact
+ordinary/barred-move and safety tables across identical prior rows. This is
+an explicit conjugate generalization of the recovered common-prior model;
+undocumented native prior calibration is not inferred. Common-prior defaults
+and sampled trial outputs are preserved.
+
+The workers pass 11 affected MERIT checks and eight TPI checks. Four focused
+MERIT search checks pass again after final work-accounting and real-input
+guards. All numerical checks treat warnings as errors. Independent verification
+checks 30 posterior references computed with 70-digit Decimal arithmetic and
+finite binomial sums, with maximum absolute error 3.89e-16. Six common-prior
+configurations (240 trials) reproduce published `78d319f` outputs; a 4,096-trial
+heterogeneous-prior simulation agrees with exact probabilities and moments
+from 21 enumerated terminal states within the stated sampling tolerance.
+
+Independent MERIT verification reproduces the published no-interim search
+and all nine nonempty-interim corner summaries through separate trial-runner
+replays, with zero differences in empirical probabilities. These checks verify
+implementation and event accounting; they are not guarantees of underlying
+power/error after selecting a design using Monte Carlo data. Targeted Ruff,
+formatting, mypy and diff checks pass. No new dependency or CI job was added.
+
+The built wheel and source archive match all 581 committed package source/data
+files byte-for-byte. All 1,644 public exports resolve, and five executable
+examples across four affected guides pass directly from the wheel. License
+notices remain included. Package verification takes 11.608 seconds, peaks at
+127.94 MiB and reports zero swaps. Final focused numerical validation peaks
+at 157.17 MiB; numerical, build and static processes ran serially under the
+existing thread limits. No broad local suite was run.
+
+Catalog totals remain 63 implemented, 67 partial and eight pending. TPI tuning,
+isotonic intervals and native workflows, and MERIT native pooling/rounding
+conventions and reports remain open. Mixed-license terms are unchanged.
+At the latest inspection, published `78d319f` has successful hosted quality,
+Python 3.12 and Python 3.13 jobs; Python 3.14 is still running. These statuses
+are for the preceding revision. This audit-only commit follows verified code;
+the local manifest records the new atomic fast-forward publication, independently
+verified branch SHAs and hosted run separately.
