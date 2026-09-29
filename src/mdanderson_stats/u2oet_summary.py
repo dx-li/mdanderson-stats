@@ -75,6 +75,8 @@ def summarize_u2oet_trials(trials: Iterable[U2OETTrial]) -> U2OETOperatingCharac
     for trial in trials:
         if not isinstance(trial, U2OETTrial) or not trial.design_json:
             raise ValueError("require trial results with recorded design metadata")
+        if getattr(trial, "replay_only", False):
+            raise ValueError("explicit-tape replay trials are not independent OC replicates")
         if not design:
             design = trial.design_json
         elif design != trial.design_json:
