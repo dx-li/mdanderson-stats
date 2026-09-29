@@ -13,5 +13,5 @@
       "sha256": "7d9cda3db82c2dd761e080bb8e1bea0747942b159a164839cc4e27e3c4922e65"
     }
   ],
-  "scope": "Original TPI posterior-mass decisions, Table 1, two-patient safety gate, permanent dose exclusion, isotonic point selection and batched complete-outcome simulation. Explicit lower/upper multipliers resolve inconsistent K labels. Boundary clamping and isotonic defaults are Python conventions; native parity is not claimed."
+  "scope": "Original TPI posterior-mass decisions, Table 1, two-patient safety gate, permanent dose exclusion, isotonic point selection and batched complete-outcome simulation. Explicit lower/upper multipliers resolve inconsistent K labels. Boundary clamping and isotonic defaults are Python conventions; native parity is not claimed. Caller-supplied dose-specific Beta shapes are an explicit conjugate generalization of the source common-prior model, not recovered native informative-prior defaults."
 }

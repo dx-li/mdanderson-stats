@@ -10,7 +10,10 @@ presentation. Original software files are not redistributed.
 ## Posterior decisions
 
 At each dose, the default prior is Beta(.005,.005); `prior=(a,b)` allows a common
-alternative prior for sensitivity analysis. With y toxicities among n evaluable
+alternative prior for sensitivity analysis. [Dose-specific priors](tpi-informative-priors.md)
+accept a matrix of Beta shape pairs, with an explicit final dose axis or
+one-based `dose=` for individual summaries. This is a conjugate Python
+generalization of the recovered common-prior model. With y toxicities among n evaluable
 patients, the posterior is Beta(a+y,b+n-y). Its standard deviation s sets interval
 boundaries `target - lower_sd*s` and `target + upper_sd*s`. Intersecting these
 intervals with [0,1] accommodates boundaries outside the probability domain.
@@ -104,6 +107,6 @@ for beta tails, the safety gate and exclusion/selection rules, and exhaustive
 small-trial paths against batched simulation. These establish the stated Python
 behavior, not native random-stream or full software parity.
 
-**Entry 72 remains partial.** Scenario-based tuning, dose-specific informative
-priors, posterior isotonic interval simulation, native archive audit and
+**Entry 72 remains partial.** Scenario-based tuning,
+posterior isotonic interval simulation, native archive audit and
 spreadsheet/report workflows remain pending.

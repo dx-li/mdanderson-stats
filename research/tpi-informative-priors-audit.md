@@ -25,8 +25,25 @@ constructing or consuming its random generator. Duplicate prior rows share
 lookup tables. The existing common-prior precomputation and random draw path
 is left intact.
 
-Validation should cover common-prior regression, direct Beta posterior means
-and interval masses under dose-specific shapes, selected-dose action tables,
-dose-axis mismatch errors, and seeded simulation against a small path
-enumeration. No native dose-specific prior calibration or application parity
-is claimed.
+Eight affected TPI tests pass, covering common-prior behavior, dose-axis
+posterior summaries, explicit-dose tables and simulation. The worker run took
+3.79 seconds, peaked at 136.59 MiB and reported zero swaps. Targeted Ruff
+and mypy checks pass. No native dose-specific prior calibration or application
+parity is claimed.
+
+## Independent integration checks
+
+`tools/reference_tpi_informative.py` computes 30 integer-shape Beta posterior
+references using 70-digit Decimal arithmetic and finite binomial sums, without
+NumPy, SciPy or package imports. Posterior means, standard deviations, interval
+bounds/masses and overdose probabilities match within 3.89e-16 absolute error.
+The fixture is `tests/fixtures/tpi-informative-beta.csv`.
+
+Six seeded common-prior comparisons (240 trials) match every result field and
+readonly flag from published `78d319f`. Separately, exact enumeration of six
+patient-level Bernoulli outcomes yields 21 distinct terminal trial states for
+a heterogeneous three-dose prior. A 4,096-trial batched run agrees with exact
+selection probabilities and enrollment/toxicity means within six Monte Carlo
+standard errors plus one-trial discretization tolerance. This checks the
+compact simulator against direct patient-level decisions and final selection.
+The independent run takes 0.545 seconds, peaks at 124.48 MiB and reports zero swaps.

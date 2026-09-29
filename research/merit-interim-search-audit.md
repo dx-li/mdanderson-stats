@@ -51,3 +51,35 @@ candidate's corner-by-boundary summaries, not patient histories or a
 trial-by-boundary tensor. Preflight estimates state bytes, summary and
 evaluation scratch, trial/scenario updates, histogram scans, and boundary-grid
 cumulative work before drawing random outcomes.
+
+The fixed-size Power I evaluator also now subtracts integer event counts
+before dividing by the replicate count. This removes last-bit subtraction
+differences between empirical probabilities at constraint and tie boundaries.
+The mathematical event and corner definitions are unchanged.
+
+The work preflight includes trial-level histogram scans and the sum of
+nonempty subset counts across survivor patterns (`3**d - 2**d`), plus grid
+cumulative passes. Its default 500-million-unit ceiling accommodates the
+two-dose default search horizon and trial count while bounding larger requests.
+The estimate measures computational work, not seconds; the scratch estimate
+bounds working arrays, not total process RSS.
+
+## Independent integration checks
+
+Eleven affected MERIT tests pass, including boundary-event enumeration and
+no-interim reduction. The worker run took 2.17 seconds, peaked at 146.86 MiB
+and reported zero swaps; targeted Ruff and mypy pass.
+
+A separate comparison against published `78d319f` reproduces its no-interim
+1,000-trial search result `(n,mT,mE)=(30,7,9)` and all reported corner rates
+within 1e-15. A nonempty interim schedule selects `(21,6,7)` in a separate
+2,000-trial scenario. Replaying each of its six null and three alternative
+corners through the existing trial runner reproduces all selected-boundary
+probabilities exactly, and matches mean enrollment and its MCSE. These are
+checks of empirical event accounting, not fresh-data guarantees of the
+selected design's underlying error or power. The comparison takes 0.223 seconds,
+peaks at 127.23 MiB and reports zero swaps.
+
+After the final work-budget accounting and real-input guard, the four focused
+interim-search checks pass again with warnings treated as errors: 2.22 seconds,
+157.17 MiB peak RSS and zero swaps.

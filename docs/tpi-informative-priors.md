@@ -5,8 +5,7 @@ For a separately elicited prior at each dose, pass a matrix with one `(a, b)`
 row per dose:
 
 ```python
-from mdanderson_stats.tpi import TPIDesign
-from mdanderson_stats.tpi_simulation import simulate_tpi
+from mdanderson_stats import TPIDesign, simulate_tpi
 
 design = TPIDesign(
     target=0.30,

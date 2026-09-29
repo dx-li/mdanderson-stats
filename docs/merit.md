@@ -170,7 +170,9 @@ admissible sets, selection probabilities/Monte Carlo errors, and optional powers
 
 **Catalog status is partial.** Native stopped-arm pooling, fractional-look rounding,
 current app source/default and published-version parity, scenario files and reports
-remain pending. Sample-size search still optimizes fixed-size trials; the interim
-simulator can evaluate the resulting design with monitoring but does not recalibrate
-its boundaries automatically. The implementation is based on the public v2
-manuscript and app help, with the differences described above.
+remain pending. [Interim sample-size search](merit-interim-search.md) now calibrates
+maximum enrollment and final integer boundaries while retaining the explicit
+interim schedule, permanent arm stops and survivor-only pooling. It reports
+corner-specific error, powers, enrollment and Monte Carlo uncertainty. The
+implementation is based on the public v2 manuscript and app help, with the
+differences described above.

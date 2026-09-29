@@ -5,8 +5,7 @@ with an explicit `MERITInterims` schedule. The interim posterior targets must
 match the acceptable alternative rates supplied to the search:
 
 ```python
-from mdanderson_stats import MERITInterims
-from mdanderson_stats.merit_interim_search import merit_interim_sample_size
+from mdanderson_stats import MERITInterims, merit_interim_sample_size
 
 result = merit_interim_sample_size(
     interims=MERITInterims(

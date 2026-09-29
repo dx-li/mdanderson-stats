@@ -15,7 +15,7 @@ from .merit_simulation import _correlation, _draw
 
 _MAX_PATIENTS = 200
 _MAX_TRIALS = 100_000
-_MAX_WORK = 250_000_000
+_MAX_WORK = 500_000_000
 _MAX_MEMORY_BYTES = 256 * 1024 * 1024
 
 
@@ -146,10 +146,17 @@ def merit_interim_sample_size(
     definition = _integer(power_definition, "power_definition", 1, 2)
     _integer(max_work, "max_work", 1, _MAX_WORK)
     MERITDesign(1, 0, 0, d, isotonic_toxicity, isotonic_efficacy)
-    rates = finite(
-        [toxicity_null, toxicity_alternative, efficacy_null, efficacy_alternative, alpha, power],
-        "rates and targets",
-    )
+    raw_rates = [
+        toxicity_null,
+        toxicity_alternative,
+        efficacy_null,
+        efficacy_alternative,
+        alpha,
+        power,
+    ]
+    if np.iscomplexobj(raw_rates):
+        raise ValueError("rates and targets must be real")
+    rates = finite(raw_rates, "rates and targets")
     if (
         rates.shape != (6,)
         or np.any((rates <= 0) | (rates >= 1))
@@ -194,7 +201,10 @@ def merit_interim_sample_size(
     subset_count = 2**d - 1
     pattern_count = 2**d - 1
     histogram_work = repetitions * boundary_families * subset_count * d * candidate_count
-    grid_work = 4 * boundary_families * pattern_count * grid_sum
+    # Sum nonempty dose subsets across all nonempty survivor patterns.
+    # Each union table also needs its cumulative grid passes.
+    pattern_subset_count = 3**d - 2**d
+    grid_work = boundary_families * (pattern_subset_count + 4 * pattern_count) * grid_sum
     state_work = 6 * maximum * scenario_count * repetitions * d
     boundary_work = histogram_work + grid_work
     work_estimate = int(boundary_work + state_work)

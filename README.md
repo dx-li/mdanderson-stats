@@ -878,7 +878,10 @@ conventions and reporting remain pending.
 [MERIT](docs/merit.md) adds isotonic dose selection, Bayesian interim decisions,
 correlated endpoint simulation and sample-size/boundary optimization for randomized
 dose-optimization trials. Trial replay and simulation support separate interim
-schedules and permanent arm stops. Native pooling conventions and reports remain pending.
+schedules and permanent arm stops. [Interim calibration](docs/merit-interim-search.md)
+searches final boundaries and maximum sample size under that stopping policy,
+with corner-specific power, error and enrollment summaries. Native pooling
+conventions and reports remain pending.
 
 [ESS Regression](docs/regression-ess.md) adds normal and logistic regression prior
 effective sample sizes, including parameter subvectors, using direct expected
@@ -901,7 +904,9 @@ remain pending.
 
 [Original TPI](docs/tpi.md) adds posterior-SD intervals, original-paper decision
 tables, two-patient safety gating, isotonic MTD selection and batched simulation,
-alongside the existing mTPI implementation.
+alongside the existing mTPI implementation. [Dose-specific Beta priors](docs/tpi-informative-priors.md)
+provide an explicit conjugate extension throughout posterior summaries, conduct,
+selection and simulation, using compact lookup tables for distinct priors.
 
 [aPCoA](docs/apcoa.md) adds covariate-adjusted principal coordinates, signed
 spectral diagnostics and grouped before/after plots, checked against the original

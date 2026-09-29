@@ -37,5 +37,5 @@
       "sha256": "12c4344ef631e878c621ea54a99cf8544dd20813ea1b29105991f62267b5da83"
     }
   ],
-  "scope": "Author manuscript v2 sections 2.2-2.5, Table 2 and public app help. Fixed-size search plus explicit-convention interim boundaries, replay and simulation. Native stopped-arm pooling and app reports remain partial."
+  "scope": "Author manuscript v2 sections 2.2-2.5, Table 2 and public app help. Fixed-size and explicit-schedule interim sample-size/final-boundary search, interim boundaries, replay and simulation. Survivor-only pooling, corner-based Monte Carlo calibration and common random numbers are explicit Python policies; native stopped-arm pooling and app reports remain partial."
 }

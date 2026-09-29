@@ -866,6 +866,7 @@ from .mds_hope import (
 )
 from .median_effect import MedianEffectFit, fit_median_effect
 from .merit import MERITDesign, MERITMonitoring, MERITSelection, merit_monitor
+from .merit_interim_search import MERITInterimSearch, merit_interim_sample_size
 from .merit_interims import MERITInterimBoundaries, MERITInterims
 from .merit_search import MERITSearch, merit_sample_size
 from .merit_simulation import MERITSimulation, simulate_merit
@@ -2475,6 +2476,8 @@ __all__ = [
     "simulate_merit",
     "MERITSearch",
     "merit_sample_size",
+    "MERITInterimSearch",
+    "merit_interim_sample_size",
     "ChiSquareOrderBounds",
     "chi_square_order_bounds",
     "BayesianChiSquare",

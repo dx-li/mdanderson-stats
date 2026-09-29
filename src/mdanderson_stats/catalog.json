@@ -2611,13 +2611,15 @@
         "Vectorized mTPI unit-probability-mass decisions and full decision table under uniform beta priors",
         "Paper safety rules, persistent exclusions and isotonic posterior-mean MTD selection with explicit weights",
         "Batched complete-outcome cohort simulation with allocations, selections, safety stops and Monte Carlo uncertainty",
-        "Original TPI posterior-SD interval decisions, common informative priors, two-patient safety gate, permanent exclusion, isotonic MTD selection and batched complete-outcome simulation"
+        "Original TPI posterior-SD interval decisions, common informative priors, two-patient safety gate, permanent exclusion, isotonic MTD selection and batched complete-outcome simulation",
+        "Explicit dose-specific Beta-prior extension for original TPI posterior summaries, safety/decision tables, dose conduct, isotonic point selection and batched simulation; compact lookup tables share identical priors. Source common-prior defaults are unchanged; docs/tpi-informative-priors.md."
       ],
       "validation": [
         "Exact rational beta-polynomial probabilities and extreme tails; published Excel screenshot columns at n=3,6,12,30",
         "Exhaustive small-trial response-path operating characteristics, safety sequence, isotonic ties and seeded replay; tests/test_mtpi.py",
         "Pending TPI tuning, native source/weight audit, mTPI prior sensitivity, posterior isotonic intervals and spreadsheet/report workflows; docs/mtpi.md",
-        "Original TPI: published Table 1, independent weighted beta quadrature, safety/selection and exact small-trial path checks; tests/test_tpi.py; limitations in docs/tpi.md"
+        "Original TPI: published Table 1, independent weighted beta quadrature, safety/selection and exact small-trial path checks; tests/test_tpi.py; limitations in docs/tpi.md",
+        "Dose-axis and scalar-dose summaries, explicit per-dose tables, common-prior regression and seeded heterogeneous-prior simulation; tests/test_tpi_informative_priors.py. Dose-varying shapes are a Python conjugate generalization, not recovered native defaults."
       ]
     },
     {
@@ -4598,13 +4600,15 @@
         "Batched isotonic toxicity/efficacy admissible-set selection and explicit-prior Bayesian interim monitoring",
         "Gaussian-latent correlated binary endpoint simulation with dose selection probabilities and both generalized powers",
         "Vectorized Monte Carlo sample-size and boundary search across all published corner null and alternative configurations",
-        "Independent-arm integer interim boundaries, separate endpoint looks, persistent-stop trial replay and simulation with survivor-only final isotonic pooling"
+        "Independent-arm integer interim boundaries, separate endpoint looks, persistent-stop trial replay and simulation with survivor-only final isotonic pooling",
+        "merit_interim_sample_size: bounded joint maximum-sample-size and final integer-boundary search under an explicit interim schedule, persistent arm stops, survivor-only pooling, corner-specific powers/error and enrollment means with MCSEs. Adaptive paths are reused across candidate sample sizes; docs/merit-interim-search.md."
       ],
       "validation": [
         "Four focused tests: independent PAVA reference, exhaustive boundary-event enumeration, beta/binomial/Gaussian probability checks and independent search validation; tests/test_merit.py",
         "Seeded Table 2 example reproduces n=26, toxicity_max=7, efficacy_min=9; docs/merit.md",
         "Three additional checks: direct posterior boundary equivalence, frozen-stop replay/survivor pooling and exact stopping-path probabilities; tests/test_merit_interims.py",
-        "Pending native stopped-arm pooling, fractional-look rounding, source/version parity and app reports; sample-size search is fixed-size without interim recalibration"
+        "Pending native stopped-arm pooling, fractional-look rounding, source/version parity and app reports",
+        "Direct enumeration of survivor-pattern boundary events, no-interim reduction, separate corner powers and enrollment MCSEs, and preflight rejection before advancing RNG; tests/test_merit_interim_search.py. Integer event-count aggregation avoids floating subtraction in Power I feasibility/tie comparisons."
       ]
     },
     {
