@@ -7,7 +7,9 @@ finite-grid calibration; survival has calendar simulation and Monte Carlo
 finite-grid calibration. The Normal endpoint now has posterior monitoring,
 replay, simulation and independently checked finite-grid calibration.
 Randomized binary comparisons now include fixed-allocation monitoring, replay
-and exact operating characteristics, with optional early graduation.
+and exact operating characteristics, with optional early graduation. Randomized
+Normal and exponential-survival comparisons now have monitoring, replay and
+bounded serial simulation with independent R evidence.
 
 The cached primary preprint, `research/raw/BOP2-DC/paper.txt`, also establishes
 these source-backed targets:
@@ -29,7 +31,8 @@ these source-backed targets:
   difference probabilities, arm allocation and trial conduct; independent
   single-arm decisions do not substitute. The binary-arm implementation is
   independently checked in `bop2-dc-randomized-binary-audit.md`; continuous and
-  survival randomized workflows remain open, as does randomized calibration.
+  survival workflows are checked in `bop2-dc-randomized-normal-audit.md` and
+  `bop2-dc-randomized-survival-audit.md`. Randomized calibration remains open.
   Section 3.2 gives simulation
   examples and an example 2:1 allocation, which is not a universal default.
 

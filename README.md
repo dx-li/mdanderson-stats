@@ -1190,8 +1190,12 @@ precision under large measurement offsets. [Normal calibration](docs/bop2-dc-nor
 adds common-path grid selection and independent holdout evidence.
 [Randomized binary comparisons](docs/bop2-dc-randomized-binary.md) add independent
 arm posteriors, optional early graduation, fixed-allocation replay and exact
-operating characteristics. Randomized continuous/survival workflows and
-randomized-design calibration remain open.
+operating characteristics. [Randomized Normal comparisons](docs/bop2-dc-randomized-normal.md)
+add independent Student-t posterior differences, complete-outcome replay and
+bounded simulation. [Randomized survival comparisons](docs/bop2-dc-randomized-survival.md)
+add median-time differences, as-of censoring and fixed/Poisson accrual simulation.
+Both support graduation and retain numerical-error safeguards. Randomized-design
+calibration remains open.
 
 [BARPO](docs/barpo.md) adds binary posterior monitoring with or without a control
 and four adaptive allocation methods: BARCP, BARN2N, BARMTV and explicit-target

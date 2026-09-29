@@ -1,0 +1,11 @@
+case_id,max_subjects,median_lrv,median_cmv,lambda_lrv,lambda_cmv,gamma_lrv,gamma_cmv,control_a,control_b,treatment_a,treatment_b,assignments,looks,enrollment_times,event_durations,final_followup,graduate_at_interim
+final_go,4,-4,-2,0.05,0.05,0.5,0.5,1,2,1,2,0101,2;4,0;1;2;3,0.1;Inf;Inf;Inf,0.5,0
+final_no_go,4,0,0.5,0.95,0.95,0,0,1,2,1,2,0101,4,0;1;2;3,Inf;0.1;Inf;0.1,0.5,0
+final_consider_equal,4,0,0.25,0.5,0.5,0.5,0.5,1,2,1,2,0101,2;4,0;1;2;3,0.1;0.1;0.1;0.1,0.5,0
+early_no_go,4,0,1,0.9,0.9,0,0,1,2,1,2,0101,2;4,0;1;2;3,Inf;0.1;Inf;Inf,0.5,0
+early_graduate,4,-100,-50,0.05,0.05,0.5,0.5,1,2,1,2,0101,2;4,0;1;2;3,Inf;Inf;Inf;Inf,0.5,1
+empty_treatment_at_look1,4,0,1,0.1,0.1,0.5,0.5,1,2,2,5,0011,1;4,0;1;2;3,0;Inf;Inf;Inf,0.5,0
+tied_arrivals_pending_and_zero_duration,4,-0.5,0.5,0.2,0.2,0.5,0.5,1,2,2,4,0011,2;4,0;0;1;1,0;Inf;0.5;Inf,0.5,0
+asymmetric_allocation,5,-0.5,0.25,0.2,0.2,0.5,0.5,1.5,2,2,3,00101,2;5,0;0.5;1;1;2,0.2;Inf;0;Inf;0.75,0.3,0
+scale_1e-100,4,-4e-100,-2e-100,0.05,0.05,0.5,0.5,1,2e-100,1,2e-100,0101,2;4,0;1e-100;2e-100;3e-100,1e-101;Inf;Inf;Inf,5e-101,0
+scale_1e100,4,-4e100,-2e100,0.05,0.05,0.5,0.5,1,2e100,1,2e100,0101,2;4,0;1e100;2e100;3e100,1e99;Inf;Inf;Inf,5e99,0

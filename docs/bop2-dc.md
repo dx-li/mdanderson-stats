@@ -58,7 +58,9 @@ supports posterior monitoring, trial replay, simulation and
 [finite-grid calibration](bop2-dc-normal-calibration.md).
 [Randomized binary comparisons](bop2-dc-randomized-binary.md) support independent
 arm posteriors, early graduation, replay and exact OCs for an explicit allocation.
-Randomized continuous/survival workflows, randomized calibration and generated
-app reports remain open. See
+[Randomized Normal outcomes](bop2-dc-randomized-normal.md) and
+[randomized survival outcomes](bop2-dc-randomized-survival.md) add independent
+arm posterior differences, trial replay and bounded serial simulation.
+Randomized calibration and generated app reports remain open. See
 [source notes](bop2-dc-source.md) and the
 [independent numerical references](bop2-dc-reference.md).

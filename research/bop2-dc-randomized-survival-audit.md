@@ -54,3 +54,31 @@ The default of 100 trials is a workload choice, not a paper default. Preflight
 bounds path cells, repeated-look scans, retained summaries, and the conservative
 inverse-gamma quadrature total before seed use. NumPy RNG and calendar parity with
 the source software are not claimed.
+
+
+## Independent reference and integrated verification
+
+`tools/reference_bop2_dc_randomized_survival.R` integrates directly against a
+standardized control Gamma density, splitting at the negative-margin support
+boundary. It uses neither Python's Gamma quantile transformation nor its
+calendar implementation. Ten fixed tapes and 17 reached analyses cover all
+terminal actions, an empty arm, zero-duration events, tied arrivals, pending
+censoring, unequal allocation and `1e-100`/`1e100` time-unit changes. A
+nonsymmetric zero-margin Beta-ratio case independently verifies probability
+`2/3` and the experimental-minus-control orientation.
+
+The checker also supplies exact fixed/Poisson-arrival and exponential-event
+tapes for 48 simulated trials with 71 reached looks. R independently computes
+as-of sufficient statistics and stopping decisions; all per-trial arm counts,
+events, exposure, calendar times and decision summaries agree, as do aggregate
+means and Monte Carlo errors. The 763 checked numeric summaries include 24
+interim graduations. Maximum posterior discrepancy is `4.922e-11`, within
+reported numerical errors. The check takes .5517 seconds after imports;
+Python and R peaks are 110.13 and 82.67 MiB (a conservative combined upper bound
+of 192.80 MiB), with zero Python swaps.
+
+Parent review repaired an omitted graduation category in simulated frequency
+summaries and expanded the retained-memory estimate to include owned copies,
+Unicode decision storage and replay scratch. Decision counts must conserve
+all trials. Five monitor/replay tests and four simulation tests pass, including
+an explicit graduation regression, unit invariance and pre-RNG work rejection.

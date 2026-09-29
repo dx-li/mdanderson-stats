@@ -4419,7 +4419,9 @@
         "Exact paired finite-grid calibration with asymmetric endpoint controls, explicit joint truths, association-preserving candidate OCs, false-decision constraints and CGR/futile-ESS objectives",
         "Continuous Normal endpoint with explicit Normal-Inverse-Gamma prior, centered Student-t posterior tails, strict dual-criterion monitoring, absorbing replay and bounded serial operating-characteristic simulation with seed/MCSE summaries",
         "Normal endpoint finite-grid calibration with explicit grids, truth-centered common paths, full candidate OC/MCSE evidence, CGR/futile-ESS selection and independent holdout feasibility without reselection",
-        "Randomized binary-arm posterior risk differences with explicit Beta priors/allocation tape, signed margins, optional OBrien-Fleming graduation, absorbing replay and exact conditional operating characteristics; numerical decision ambiguity raises explicitly"
+        "Randomized binary-arm posterior risk differences with explicit Beta priors/allocation tape, signed margins, optional OBrien-Fleming graduation, absorbing replay and exact conditional operating characteristics; numerical decision ambiguity raises explicitly",
+        "Randomized Normal arm comparisons with explicit independent NIG priors, bounded Student-t difference quadrature, common-offset-stable monitoring/replay and serial fixed-allocation simulation with graduation and MCSE summaries",
+        "Randomized exponential-survival comparisons with explicit independent mean-survival IG priors, signed median-time differences, as-of censoring/zero-duration events, absorbing calendar replay and fixed/Poisson accrual simulation with arm-level audit summaries"
       ],
       "validation": [
         "Five independent base-R posterior and decision cases match Python",
@@ -4434,7 +4436,9 @@
         "Independent base-R Normal reference verifies 8 cases, 16 posterior analyses and 64 fixed simulation paths with 154 reached analyses: 898 summaries agree, covering all decisions, strict equality, 1e15 measurement offsets and 1e-100/1e100 changes of units. docs/bop2-dc-normal.md",
         "Independent base-R Normal calibration replay verifies 18 candidates and 836 probability/enrollment/MCSE summaries across both objectives and holdouts. A 4% calibration false-go constraint passes at 2/64 and fails on independent validation at 3/48 without reselection; large-offset candidate results are unchanged. docs/bop2-dc-normal-calibration.md",
         "Independent base-R Beta polynomial integration and 64 response paths across four randomized-binary designs verify 100 analyses and 336 summaries, including 12 exact OC scenarios, unequal allocation, signed margins, early graduation and strict equality; largest posterior discrepancy 1.094e-10 is within reported numerical error. docs/bop2-dc-randomized-binary.md",
-        "Substantive remaining methods include randomized continuous/survival workflows and randomized-design calibration in source §2.4; these are distinct from app report parity. research/bop2-dc-remaining-methods.md"
+        "Independent R Student-t density integration and Cauchy identities verify 12 randomized Normal cases, 21 reached analyses, and 48 simulated trials with 78 looks: 263 numeric summaries agree, including early graduation, strict equality, unequal/empty arms, 1e15 offsets and unit changes. Maximum posterior discrepancy 6.273e-10 is within reported error. docs/bop2-dc-randomized-normal.md",
+        "Independent R Gamma-density integration and calendar calculations verify 10 randomized survival tapes/17 looks and 48 fixed/Poisson-accrual trials/71 looks: 763 summaries agree, including 24 graduations, zero-duration events, pending censoring, allocation asymmetry and 1e±100 units. Largest posterior discrepancy 4.922e-11 is within reported error. docs/bop2-dc-randomized-survival.md",
+        "Randomized-design calibration in source §2.4 remains a substantive gap; completed monitor/replay/simulation workflows do not imply native application/report/RNG parity. research/bop2-dc-remaining-methods.md"
       ]
     },
     {

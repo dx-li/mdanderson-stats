@@ -309,6 +309,27 @@ from .bop2_dc_randomized_binary import (
     BOP2DCRandomizedBinaryState,
     bop2_dc_randomized_binary_design,
 )
+from .bop2_dc_randomized_normal import (
+    BOP2DCRandomizedNormalDesign,
+    BOP2DCRandomizedNormalReplay,
+    BOP2DCRandomizedNormalState,
+    bop2_dc_randomized_normal_design,
+)
+from .bop2_dc_randomized_normal_simulation import (
+    BOP2DCRandomizedNormalSimulation,
+    simulate_bop2_dc_randomized_normal,
+)
+from .bop2_dc_randomized_survival import (
+    BOP2DCRandomizedSurvivalDesign,
+    BOP2DCRandomizedSurvivalState,
+    BOP2DCRandomizedSurvivalTrial,
+    bop2_dc_randomized_survival_design,
+    run_bop2_dc_randomized_survival_trial,
+)
+from .bop2_dc_randomized_survival_simulation import (
+    BOP2DCRandomizedSurvivalSimulation,
+    simulate_bop2_dc_randomized_survival,
+)
 from .bop2_dc_survival import (
     BOP2DCSurvivalDesign,
     BOP2DCSurvivalState,
@@ -1699,6 +1720,19 @@ __all__ = [
     "BOP2DCRandomizedBinaryReplay",
     "BOP2DCRandomizedBinaryState",
     "bop2_dc_randomized_binary_design",
+    "BOP2DCRandomizedNormalDesign",
+    "BOP2DCRandomizedNormalReplay",
+    "BOP2DCRandomizedNormalState",
+    "bop2_dc_randomized_normal_design",
+    "BOP2DCRandomizedNormalSimulation",
+    "simulate_bop2_dc_randomized_normal",
+    "BOP2DCRandomizedSurvivalDesign",
+    "BOP2DCRandomizedSurvivalState",
+    "BOP2DCRandomizedSurvivalTrial",
+    "bop2_dc_randomized_survival_design",
+    "run_bop2_dc_randomized_survival_trial",
+    "BOP2DCRandomizedSurvivalSimulation",
+    "simulate_bop2_dc_randomized_survival",
     "BOP2DCPairedGridOC",
     "BOP2DCPairedInfeasibleError",
     "BOP2DCPairedOptimization",
