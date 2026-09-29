@@ -26,6 +26,9 @@ class BOINCombinationSimulation:
     mean_patients: FloatArray
     mean_toxicities: FloatArray
     stop_reason: tuple[str, ...]
+    titration_patients: NDArray[np.int64]
+    titration_endpoint: NDArray[np.int64]
+    titration_end_reason: tuple[str, ...]
 
 
 def _pair(value: object, name: str, rows: int, columns: int) -> Pair:
@@ -52,12 +55,24 @@ def simulate_boin_combination(
     cohort_size: int = 3,
     trials: int = 1000,
     start_dose: Sequence[int] = (1, 1),
+    titration: bool = False,
     rng: int | np.random.Generator | None = None,
 ) -> BOINCombinationSimulation:
-    """Simulate independent binary DLT outcomes and final BOIN MTD selection."""
+    """Simulate BOIN combination trials, optionally using CRAN's titration prelude.
+
+    With ``titration=True`` and cohorts larger than one, the trial starts with
+    one patient at each visited cell. It moves one row or column upward with
+    equal probability when both moves are available, and stops titrating at
+    the first DLT or the upper-right cell. The first ordinary cohort tops the
+    titration endpoint up to ``cohort_size``; ``cohorts`` still counts ordinary
+    cohorts. Cohort size one disables titration, matching the CRAN simulator.
+    """
     if not isinstance(design, BOINCombDesign):
         raise ValueError("design must be a BOINCombDesign")
-    probability = finite(true_toxicity, "true_toxicity")
+    raw_probability = np.asarray(true_toxicity)
+    if np.iscomplexobj(raw_probability):
+        raise ValueError("true_toxicity must be real-valued")
+    probability = finite(raw_probability, "true_toxicity")
     if (
         probability.ndim != 2
         or not all(2 <= size <= 100 for size in probability.shape)
@@ -72,11 +87,20 @@ def simulate_boin_combination(
     if settings.shape != (3,) or np.any(settings < 1):
         raise ValueError("cohorts, cohort_size and trials must be positive integers")
     ncohort, size, repetitions = (int(value) for value in settings)
-    if ncohort * size > 1000:
+    if not isinstance(titration, (bool, np.bool_)):
+        raise ValueError("titration must be boolean")
+    use_titration = bool(titration) and size > 1
+    start = _pair(start_dose, "start_dose", *probability.shape)
+    extra_staircase = (
+        probability.shape[0] - start[0] + probability.shape[1] - start[1] if use_titration else 0
+    )
+    if ncohort * size + extra_staircase > 1000:
         raise ValueError("the trial may enroll at most 1000 patients")
     if repetitions > 1_000_000 or repetitions * probability.size > 2_000_000:
         raise ValueError("require at most 1000000 trials and 2000000 trial-dose cells")
-    start = _pair(start_dose, "start_dose", *probability.shape)
+    estimated_bytes = repetitions * (64 * probability.size + 768)
+    if estimated_bytes > 128 * 1024 * 1024:
+        raise ValueError("simulation retained and working arrays exceed the 128 MiB budget")
     generator = np.random.default_rng(rng)
     shape = probability.shape
     patients = np.zeros((repetitions, *shape), dtype=np.int64)
@@ -85,17 +109,55 @@ def simulate_boin_combination(
     selected = np.zeros((repetitions, 2), dtype=np.int64)
     reasons = np.full(repetitions, "max_cohorts", dtype="U32")
     current = [start] * repetitions
+    titration_patients = np.zeros_like(patients)
+    titration_endpoint = np.zeros((repetitions, 2), dtype=np.int64)
+    default_titration_reason = (
+        "cohort_size_one" if bool(titration) and size == 1 else "not_requested"
+    )
+    titration_reasons = np.full(repetitions, default_titration_reason, dtype="U16")
+    if use_titration:
+        for trial_index in range(repetitions):
+            dose = start
+            while True:
+                i, j = dose[0] - 1, dose[1] - 1
+                event = int(generator.binomial(1, probability[i, j]))
+                patients[trial_index, i, j] += 1
+                toxicities[trial_index, i, j] += event
+                titration_patients[trial_index, i, j] += 1
+                titration_endpoint[trial_index] = dose
+                if event:
+                    titration_reasons[trial_index] = "first_dlt"
+                    break
+                if i == shape[0] - 1 and j == shape[1] - 1:
+                    titration_reasons[trial_index] = "upper_right"
+                    break
+                if i < shape[0] - 1 and j < shape[1] - 1:
+                    if generator.integers(2) == 0:
+                        dose = (dose[0] + 1, dose[1])
+                    else:
+                        dose = (dose[0], dose[1] + 1)
+                elif i == shape[0] - 1:
+                    dose = (dose[0], dose[1] + 1)
+                else:
+                    dose = (dose[0] + 1, dose[1])
+            current[trial_index] = dose
     active = np.ones(repetitions, dtype=bool)
-    for _ in range(ncohort):
+    for cohort_index in range(ncohort):
         rows = np.flatnonzero(active)
         if rows.size == 0:
             break
         coordinates = np.asarray([current[index] for index in rows], dtype=np.int64) - 1
         event_probability = probability[coordinates[:, 0], coordinates[:, 1]]
-        events = generator.binomial(size, event_probability)
-        patients[rows, coordinates[:, 0], coordinates[:, 1]] += size
+        if use_titration and cohort_index == 0:
+            enrolled = size - patients[rows, coordinates[:, 0], coordinates[:, 1]]
+            events = generator.binomial(enrolled, event_probability)
+            patients[rows, coordinates[:, 0], coordinates[:, 1]] += enrolled
+        else:
+            events = generator.binomial(size, event_probability)
+            patients[rows, coordinates[:, 0], coordinates[:, 1]] += size
         toxicities[rows, coordinates[:, 0], coordinates[:, 1]] += events
-        for trial_index in rows:
+        for trial_index_value in rows:
+            trial_index = int(trial_index_value)
             current_pair = current[trial_index]
             i, j = current_pair[0] - 1, current_pair[1] - 1
             current_n = int(patients[trial_index, i, j])
@@ -158,4 +220,7 @@ def simulate_boin_combination(
         _owned(patients.mean(axis=0)),
         _owned(toxicities.mean(axis=0)),
         tuple(str(reason) for reason in reasons),
+        _owned(titration_patients),
+        _owned(titration_endpoint),
+        tuple(str(reason) for reason in titration_reasons),
     )
