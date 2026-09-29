@@ -39,8 +39,9 @@ post-event status codes are not interpreted (the input remains a real numeric
 vector). Baseline covariates are taken from the chronologically earliest
 retained visit and must be finite there. The supplied covariate array must be
 real numeric; later values are otherwise ignored, matching the source's use of
-one row per subject. They are not interpreted as time-varying covariates. The result retains source
-row indices for the lower boundary, upper event, and baseline covariates.
+one row per subject. They are not interpreted as time-varying covariates. The
+result retains source row indices for the lower boundary, upper event, and
+baseline covariates.
 
 `Surv2.R` rejects `v >= u`, so zero-time or otherwise zero-length event
 intervals are rejected. Causes must be coded 0, 1, or 2. The conversion helper
@@ -54,5 +55,23 @@ The public preparation function is
 covariates=None)`. It returns read-only arrays aligned by sorted subject ID,
 plus zero-based provenance/exclusion indices. IDs are limited to homogeneous
 finite numeric or string values. Visit rows, covariate columns, and total
-covariate cells are bounded before numeric conversion. No independent native
-R execution or numerical fit reference is claimed by this audit.
+covariate cells are bounded before numeric conversion. Numeric list IDs retain
+their original scalar identity before conversion, so adjacent values above
+2^53 cannot collapse; mixed numeric/string IDs are rejected. Nested two- and
+three-dimensional row containers are rejected before numeric materialization.
+
+## Validation record
+
+The six focused converter tests pass, including chronological first-event
+conversion, censoring, missing-time and post-event provenance, tied/zero-length
+interval rejection, numeric-ID precision, mixed-ID rejection and nested-shape
+preflight. They ran in 1.39 seconds with a child peak RSS of 134,135,808 bytes
+and zero swaps. Ruff format/check and mypy for the new module pass.
+
+`tools/reference_intccr_visits.R` verifies the pinned source hashes and was run
+against the cached author files. Its sorted/unsorted `dataprep` outputs and
+`Surv2` outputs (including the exact-event error) matched the checked-in native
+fixtures byte-for-byte. The run took 0.275 seconds, peaked at 87,162,880 bytes
+child RSS and reported zero swaps. The corrected Python ledger is a separate
+explicit expectation: it sorts chronologically and retains the first-event
+subject that native `dataprep` accidentally drops.
