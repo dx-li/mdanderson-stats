@@ -105,7 +105,6 @@ unsigned int route_one(unsigned int n, unsigned int left_n,
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     default_root = Path(__file__).resolve().parents[1]
     ap.add_argument("--root", type=Path, default=default_root)
     ap.add_argument(
@@ -152,6 +151,8 @@ def main() -> None:
         writer.writerows(rows)
     mismatches = [r["case_id"] for r in rows if r["match"] != "true"]
     print(f"source={PIN} function={FUNCTION} cases={len(rows)} mismatches={mismatches}")
+    if mismatches:
+        raise SystemExit(f"native random-routing reference mismatch: {mismatches}")
 
 
 if __name__ == "__main__":
