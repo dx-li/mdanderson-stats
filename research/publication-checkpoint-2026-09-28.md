@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `2194af6` adds MERIT interim sample-size
-and final-boundary calibration, plus explicit dose-specific Beta priors
-throughout TPI posterior summaries, conduct and simulation. The final
+Latest verified package checkpoint: `29e7ad6` adds source-defined accelerated
+titration to ordinary BOIN combination simulation, with native transition
+references and conservative preallocation limits. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1718,3 +1718,31 @@ Python 3.12 and Python 3.13 jobs; Python 3.14 is still running. These statuses
 are for the preceding revision. This audit-only commit follows verified code;
 the local manifest records the new atomic fast-forward publication, independently
 verified branch SHAs and hosted run separately.
+
+## BOIN combination accelerated titration checkpoint
+
+At `29e7ad6`, ordinary BOIN combination simulation supports the CRAN 2.7.2
+single-patient staircase, first-DLT/upper-right exit and first-cohort top-up.
+Prelude counts, endpoints and exit reasons are retained; the total-patient
+limit includes earlier staircase visits. A conservative 128 MiB working-state
+estimate is checked before allocation or RNG use. The app's separate cap,
+moderate-toxicity option, 3+3 run-in and waterfall titration remain open.
+
+Nine original R transition expressions agree exactly with Python, and 100
+no-titration trials reproduce every existing result field from the published
+`39a67b3` implementation. Seven focused simulation checks pass, as do targeted
+Ruff and mypy. Independent comparison took 1.612 seconds, peaked at 121.55 MiB
+RSS and reported zero swaps; focused tests peaked at 131.72 MiB with zero swaps.
+
+Cached wheel/source builds pass. The isolated wheel check verifies all 1,644
+exports, all 581 committed source/data files in both artifacts, retained
+licenses/notices and four executable blocks across both combination guides.
+It took 12.133 seconds, peaked at 127.20 MiB and reported zero swaps. Coverage
+remains 63 implemented / 67 partial / 8 pending. Local numerical and build
+processes were serial; no dependencies or CI workflows were added. Neural
+SurvivalContour work remains in separate feature checkouts until reviewed.
+
+Before this publication, the preceding `39a67b3` hosted workflow had passed
+quality and Python 3.12/3.13; Python 3.14 was still running. This is not a
+complete-matrix success claim. The local publication manifest records freshly
+verified branch SHAs and subsequent hosted status separately.
