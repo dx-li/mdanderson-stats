@@ -1,5 +1,24 @@
 # Third-party notices
 
+## CRM and TITE-CRM prior information
+
+`crm_prior_ess.py` and `tite_crm_prior_ess.py` implement the empirical-power
+CRM model and prior-information criteria checked against BayesESS 0.1.19,
+by Jaejoon Song, Satoshi Morita and J. Jack Lee (GPL >=2), at revision
+`4bbf4df3789912b967774e8ff5c3a2d6d5646cdd`, and Ken Cheung's dfcrm 0.2-2.1
+(GPL-2), at revision `18891ccb969e3e4f87e4489a04b48df227bb9273`.
+Upstream terms remain applicable to adapted portions; the bundled
+[GPL version 2 text](notices/cmprsk-GPL-2.txt) is retained. Original R source is
+an ignored reference input and is not bundled or required at runtime.
+
+The Python implementation uses bounded deterministic posterior integration
+and exact conditional subset expectations. It explicitly distinguishes
+full-real posterior moments from dfcrm's finite moment-numerator convention,
+and observed follow-up from BayesESS's legacy enrollment-time weighting.
+Pinned source references, unchanged-source replay and numerical differences
+are documented in `research/crm-prior-ess-audit.md` and
+`research/tite-crm-prior-ess-audit.md`.
+
 ## EasyCellType ranked enrichment
 
 `easycelltype_gsea.py` provides a separately named Python implementation of

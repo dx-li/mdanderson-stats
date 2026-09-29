@@ -1313,6 +1313,7 @@ from .tite_boin12 import (
 )
 from .tite_boin_simulation import TITEBOINSimulation, simulate_tite_boin
 from .tite_boin_trial import TITEBOINStep, TITEBOINTrial, run_tite_boin_trial
+from .tite_crm_prior_ess import TITECRMPriorESSSimulation, simulate_tite_crm_prior_ess
 from .tite_keyboard import (
     TITEEffectiveSampleSize,
     TITEKeyboardDecision,
@@ -1535,6 +1536,8 @@ __all__ = [
     "simulate_crm",
     "CRMPriorESSSimulation",
     "simulate_crm_prior_ess",
+    "TITECRMPriorESSSimulation",
+    "simulate_tite_crm_prior_ess",
     "CiBolusObservation",
     "CiBolusPrediction",
     "CiBolusPrior",

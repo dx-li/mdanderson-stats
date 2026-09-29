@@ -75,7 +75,7 @@ value. Tests compare all seven native-convention results against the unmodified
 R functions, verify conjugate information updates and time-unit behavior, and
 check broadcasting, fractional concentrations and extreme variance scales.
 
-**Catalog status is partial.** Unknown-mean variance models, TITE-CRM, plots and native
+**Catalog status is partial.** Unknown-mean variance models, plots and native
 reports remain pending. The native survival ESS
 criterion now has a [deterministic expectation implementation](survival-ess.md).
 The [regression ESS functions](regression-ess.md) now include the app's original
@@ -84,5 +84,7 @@ subvector crossings, verified against the author source with shared covariates.
 The [CRM prior ESS workflow](crm-prior-ess.md) now simulates complete adaptive
 trials and evaluates expected random-subset information, with explicit native
 moment/grid conventions and original R dose-allocation references.
+The [TITE-CRM extension](tite-crm-prior-ess.md) adds delayed toxicity and explicit
+observed-follow-up versus legacy enrollment-time information criteria.
 The unknown-mean variance calculation has unresolved source conventions
 documented in the [variance ESS audit](../research/normal-variance-ess-audit.md).

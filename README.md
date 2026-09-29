@@ -913,7 +913,9 @@ with vectorized inputs and an explicit choice between information-based and nati
 gamma–exponential conventions. [CRM prior ESS](docs/crm-prior-ess.md) adds adaptive
 empiric-model trial simulation and expected subset-information paths, with explicit
 full versus native posterior moments and continuous versus coarse-grid ESS.
-TITE-CRM and unknown-mean variance ESS remain pending.
+[TITE-CRM prior ESS](docs/tite-crm-prior-ess.md) adds delayed-toxicity trial
+histories, observed follow-up assessment and an explicit legacy arrival-time
+criterion, preserving signed information. Unknown-mean variance ESS remains pending.
 
 [Survival prior ESS](docs/survival-ess.md) evaluates the native censored-exponential
 information criterion analytically, avoiding Monte Carlo noise and patient loops.

@@ -113,6 +113,6 @@ posterior mode. `work_units` records this conservative reserved budget;
 `quadrature_evaluations` records the actual integrand calls. Each integral
 also enforces its evaluation ceiling while running.
 
-TITE-CRM, unknown-mean variance ESS and native reports remain separate gaps
-in entry 154. The TITE source uses enrollment times where follow-up weights
-are needed, requiring a separate explicit convention and audit.
+[TITE-CRM prior ESS](tite-crm-prior-ess.md) separately supports delayed toxicity,
+with explicit observed-follow-up and legacy enrollment-time conventions.
+Unknown-mean variance ESS and native reports remain gaps in entry 154.

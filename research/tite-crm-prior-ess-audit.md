@@ -94,9 +94,9 @@ all-DLT, and all-non-DLT histories at prior SD `sqrt(1.34)` and 4, under both
 moment conventions. Against direct-product likelihood and scalar adaptive
 quadrature, maximum absolute discrepancies were `1.3004353e-10` (full) and
 `7.4550144e-11` (native truncated); runtime was 0.172 seconds with 121.31 MiB
-peak process RSS and no swap. The portable R generator has not been rerun from
-this feature checkout because the pinned raw source files are only present in
-the root source repository; root will regenerate after integration. The
+peak process RSS and no swap. After integration, the portable R generator
+regenerated all five fixtures byte-identically in a separate ignored directory
+(0.541 seconds, 84.30 MiB peak child RSS, zero swaps). The
 reproducible project test command is:
 
 ```sh
