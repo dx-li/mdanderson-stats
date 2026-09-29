@@ -6,7 +6,9 @@ through ten independent arms. [Calendar replay](arand-calendar.md) now connects
 these building blocks to explicit patient tapes, allocation floors, reversible
 suspension, permanent futility, monitoring gates and final selection. The replay
 requires explicit policies where the guide leaves native behavior unspecified.
-Full native simulation/reporting parity remains open.
+[Serial simulation](arand-simulation.md) adds Poisson accrual, binary and
+exponential scenarios, reproducible trial seeds and compact operating
+characteristics. Full native simulation/reporting parity remains open.
 
 Sources: [MD Anderson entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62),
 [version 5.2 guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ARAND/ARandUsersGuide.pdf),
@@ -134,6 +136,7 @@ performance guarantee or native program benchmark.
 The [calendar workflow](arand-calendar.md) implements arrival-time and scheduled
 looks, accrued-outcome handling, enrollment gates, final follow-up and selection.
 It exposes floor, ranking, simultaneous-trigger and duration/minimum choices as
-Python policies. Native random streams, exact native control semantics and
-multi-trial reports remain open. No native numerical-engine or full
+Python policies. The [simulation workflow](arand-simulation.md) provides
+per-arm selection, patient-count and status summaries. Native random streams,
+exact native control semantics and original report formatting remain open. No native numerical-engine or full
 trial-controller parity is claimed.

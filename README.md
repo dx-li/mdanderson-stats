@@ -1130,8 +1130,10 @@ stable exponential tuning. Vectorized multi-arm integration agrees with 52
 independent R calculations. [Calendar replay](docs/arand-calendar.md) now adds
 delayed-outcome handling, adaptive allocation, reversible suspension, permanent
 futility, enrollment/duration limits and final selection. Explicit controller
-policies document choices the native guide leaves unspecified. Native-engine
-parity and full operating-characteristic reports remain open.
+policies document choices the native guide leaves unspecified.
+[Serial simulation](docs/arand-simulation.md) adds Poisson accrual, binary or
+exponential scenarios and per-arm operating characteristics with reproducible
+trial seeds and bounded storage. Native-engine and report parity remain open.
 
 [PRT](docs/prt.md) now computes predictive toxicity risks from aligned posterior
 draws and applies the published cohort-suspension, dose-movement and final-selection

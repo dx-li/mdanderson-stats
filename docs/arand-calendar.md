@@ -165,6 +165,6 @@ weights. No parallel simulations or numerical workers are started.
 The posterior kernels have 52 independent R reference comparisons. Calendar
 checks cover delayed information, exact event-time availability, reversible
 suspension, minimum-enrollment gates, strict cutoffs, terminal eligibility and
-duration/follow-up limits. Native random streams, native control-order/floor
-parity, multi-trial operating-characteristic reports and the full desktop
-workflow remain open.
+duration/follow-up limits. [Serial simulation](arand-simulation.md) generates
+these tapes and summarizes operating characteristics. Native random streams,
+native control-order/floor parity and the full desktop workflow remain open.

@@ -63,6 +63,12 @@ from .arand_posterior import (
     arand_binary_posterior,
     arand_survival_posterior,
 )
+from .arand_simulation import (
+    ArandSimulationConfig,
+    ArandSimulationResult,
+    simulate_arand,
+    simulate_arand_trial,
+)
 from .asypow import AsymptoticPower, asypow_information
 from .asypow_design import asypow_design_information, asypow_reparameterize
 from .asypow_generic import asypow_smo_generic
@@ -1942,6 +1948,10 @@ __all__ = [
     "arand_best_probability",
     "arand_binary_posterior",
     "arand_survival_posterior",
+    "ArandSimulationConfig",
+    "ArandSimulationResult",
+    "simulate_arand",
+    "simulate_arand_trial",
     "BlockArandDesign",
     "BlockArandPlan",
     "BlockArandDecision",

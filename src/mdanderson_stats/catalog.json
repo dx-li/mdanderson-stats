@@ -2275,7 +2275,8 @@
         "Minimum-enrollment monitoring gates, strict efficacy/futility cutoffs, reversible suspension, permanent futility, final eligibility and enrollment/duration/follow-up limits; immutable compact trial records",
         "Required explicit Python policies for floor transformation, futile-arm ranking, trigger order, duration/minimum precedence, ties and all-suspended behavior; no inferred native defaults; docs/arand-calendar.md",
         "Preflight tape, retained-look, patient-scan and posterior-work bounds before full outcome arrays; absolute event deadlines, forwarded integration tolerance and no allocation weighting at terminal/final inspections",
-        "Remaining: Poisson-accrual simulation and aggregate operating characteristics, exact native controller/RNG/report parity"
+        "Remaining: exact native controller/RNG/report parity",
+        "Bounded serial Poisson-accrual simulation for binary and exponential mean/median scenarios, replayable trial seeds and compact selection, arm-status, enrollment and duration operating characteristics; explicit candidate-exhaustion errors and aggregate work/storage budgets."
       ],
       "validation": [
         "52 probabilities checked against independent R integration in original parameter coordinates: beta/inverse-gamma, 3/10 arms and both directions; maximum absolute difference 6.26e-11",
@@ -2283,7 +2284,8 @@
         "One measured reference pass reduced from 2.62 to 1.12 seconds by vectorizing competing-arm CDFs; no native controller or numerical-engine parity claim",
         "Eleven focused calendar scenarios cover initial allocation, binary/exponential outcomes, delayed and exact-deadline availability, suspension/reactivation, strict monitoring gates, all-futile/no-winner, suspended final winners, incomplete follow-up, terminal clipping, scheduled looks after the last arrival and zero-enrollment duration termination; tests/test_arand_calendar.py",
         "Controller rules reviewed against local version 5.2 guide sections 3.1–3.4; unresolved native conventions exposed as required Python policy; research/arand-controller-audit.md",
-        "Executable guide examples independently check Beta(4,1) versus Beta(1,4) final best-arm probability 69/70 and reconstruct exponential event/exposure totals; docs/arand-calendar.md"
+        "Executable guide examples independently check Beta(4,1) versus Beta(1,4) final best-arm probability 69/70 and reconstruct exponential event/exposure totals; docs/arand-calendar.md",
+        "Fifteen posterior/calendar/simulation tests, three seeded mean-versus-median trial comparisons, a 512-trial Poisson expected-enrollment/zero-enrollment check and the executable simulation guide; docs/arand-simulation.md and research/arand-simulation-audit.md. Native RNG and desktop report equivalence remain open."
       ]
     },
     {

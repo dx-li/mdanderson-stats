@@ -178,25 +178,17 @@ def _prepared(
             raise ValueError("exponential scenarios do not use binary_window")
         window = 0.0
 
-    candidate_count = _integer(
-        max_candidate_arrivals, "max_candidate_arrivals", 1, _MAX_CANDIDATES
-    )
+    candidate_count = _integer(max_candidate_arrivals, "max_candidate_arrivals", 1, _MAX_CANDIDATES)
     arms = len(prior)
     candidate_cells = candidate_count * arms
     if candidate_cells > _MAX_CANDIDATE_ARM_CELLS:
         raise ValueError("candidate-by-arm potential outcomes exceed two million cells")
 
     looks_raw = np.asarray(config.analysis_times)
-    if (
-        looks_raw.ndim != 1
-        or looks_raw.size > 10_000
-    ):
+    if looks_raw.ndim != 1 or looks_raw.size > 10_000:
         raise ValueError("analysis_times must be a strictly increasing nonnegative vector")
     arrivals = finite(looks_raw, "analysis_times")
-    if (
-        np.any(arrivals < 0)
-        or np.any(np.diff(arrivals) <= 0)
-    ):
+    if np.any(arrivals < 0) or np.any(np.diff(arrivals) <= 0):
         raise ValueError("analysis_times must be a strictly increasing nonnegative vector")
     if config.max_enrollment is None and config.max_duration is None:
         raise ValueError("max_enrollment or max_duration must be specified")
@@ -371,13 +363,10 @@ def simulate_arand_trial(
         data_seed=seed_value,
     )
     reached_enrollment_limit = (
-        config.max_enrollment is not None
-        and len(result.assignments) >= config.max_enrollment
+        config.max_enrollment is not None and len(result.assignments) >= config.max_enrollment
     )
     early_stop_covered = (
-        result.stopped_early
-        and result.stop_time is not None
-        and result.stop_time <= arrivals[-1]
+        result.stopped_early and result.stop_time is not None and result.stop_time <= arrivals[-1]
     )
     duration_covered = (
         config.max_duration is not None
