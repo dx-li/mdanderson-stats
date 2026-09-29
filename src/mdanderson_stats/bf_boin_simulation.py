@@ -30,6 +30,9 @@ class BFBOINSimulation:
     backfill_history: tuple[NDArray[np.bool_], ...]
     escalation_end: FloatArray
     trial_duration: FloatArray
+    expansion_stop_reason: tuple[str, ...]
+    expansion_patients: NDArray[np.int64]
+    expansion_end: FloatArray
 
     @property
     def final_assessments(self) -> tuple[FloatArray, ...]:
@@ -84,6 +87,7 @@ def simulate_bf_boin(
     accrual_rate: float = 1.0,
     dlt_window: float = 1.0,
     arrival_distribution: str = "uniform",
+    expand_after_escalation: bool = False,
     rng: int | np.random.Generator | None = None,
 ) -> BFBOINSimulation:
     """Run primary-mode BF-BOIN with separate DLT and response observation.
@@ -92,6 +96,14 @@ def simulate_bf_boin(
     window. DLT times are calibrated Weibull endpoints and observed at the
     earlier event time or window. Arrivals use one persistent renewal schedule;
     the first arrival is at time zero.
+
+    With ``expand_after_escalation=True``, a completed escalation (including
+    the optional precision stop) is followed by fixed-dose expansion one level
+    below the last dose actually treated for escalation. Expansion uses
+    ordinary BF-BOIN backfill eligibility and ends at the target dose's
+    assigned-patient cap or when it closes for toxicity. This asynchronous
+    calendar continuation is an explicit Python policy; the source specifies
+    the target dose and stopping conditions, but not calendar timing.
     """
     if not isinstance(design, BFBOINDesign):
         raise ValueError("design must be a BFBOINDesign")
@@ -119,6 +131,8 @@ def simulate_bf_boin(
     rate, window = _positive(accrual_rate, "accrual_rate"), _positive(dlt_window, "dlt_window")
     if arrival_distribution not in ("uniform", "exponential"):
         raise ValueError("arrival_distribution must be 'uniform' or 'exponential'")
+    if not isinstance(expand_after_escalation, (bool, np.bool_)):
+        raise ValueError("expand_after_escalation must be Boolean")
     bound = repetitions * (int(np.max(cohort_counts)) * size + toxicity.size * design.n_cap)
     if bound > 100_000:
         raise ValueError("requested trials and retained patient records exceed 100000")
@@ -132,6 +146,9 @@ def simulate_bf_boin(
     selected: NDArray[np.int64] = np.zeros(repetitions, dtype=np.int64)
     reasons, dose_histories, arrival_histories = [], [], []
     assessment_histories, dlt_histories, response_histories, backfill_histories = [], [], [], []
+    expansion_reasons: list[str] = []
+    expansion_counts = np.zeros(repetitions, dtype=np.int64)
+    expansion_ends = np.full(repetitions, np.nan)
     escalation_ends, durations = np.zeros(repetitions), np.zeros(repetitions)
 
     for trial in range(repetitions):
@@ -142,6 +159,7 @@ def simulate_bf_boin(
         # dlt_seen, response_seen, backfill
         records: list[_PatientRecord] = []
         next_arrival, clock, dose = 0.0, 0.0, start
+        last_escalation_dose: int | None = None
         reason = "max_cohorts"
         arrival_steps = 0
         arrival_limit = 100_000
@@ -201,6 +219,7 @@ def simulate_bf_boin(
                 clock = advance_arrival()
                 observe(clock)
                 current.append(enroll(dose - 1, clock, False))
+                last_escalation_dose = dose
             while not all(records[i].dlt_seen for i in current):
                 next_dlt = min(
                     records[i].dlt_assessment for i in current if not records[i].dlt_seen
@@ -240,6 +259,88 @@ def simulate_bf_boin(
                 break
             dose = decision.next_dose
         escalation_ends[trial] = clock
+
+        expansion_reason = "not_requested"
+        if expand_after_escalation:
+            expansion_ends[trial] = clock
+            if reason == "stop_safety":
+                expansion_reason = "safety_stopped"
+            elif last_escalation_dose is None or last_escalation_dose <= 1:
+                expansion_reason = "no_lower_dose"
+            else:
+                expansion_dose = last_escalation_dose - 1
+                expansion_index = expansion_dose - 1
+                expansion_reason = "activity_unavailable"
+                observe(clock)
+                while True:
+                    if assigned[trial, expansion_index] >= design.n_cap:
+                        expansion_reason = "assigned_cap"
+                        break
+
+                    eligibility = design.backfill_eligibility(
+                        evaluated,
+                        observed_dlt,
+                        assigned[trial],
+                        last_escalation_dose,
+                        response_observed=activity,
+                        eliminated=excluded,
+                    )
+                    if eligibility.closed[expansion_index]:
+                        expansion_reason = "toxicity_closed"
+                        break
+
+                    next_observation = min(
+                        (
+                            time
+                            for record in records
+                            for time, seen in (
+                                (record.dlt_assessment, record.dlt_seen),
+                                (record.response_assessment, record.response_seen),
+                            )
+                            if not seen
+                        ),
+                        default=np.inf,
+                    )
+                    if not eligibility.eligible[expansion_index]:
+                        if not np.isfinite(next_observation):
+                            expansion_reason = "activity_unavailable"
+                            break
+                        while next_arrival < next_observation:
+                            clock = advance_arrival()
+                        clock = next_observation
+                        observe(clock)
+                        continue
+
+                    if next_arrival < next_observation:
+                        clock = advance_arrival()
+                        observe(clock)
+                        if assigned[trial, expansion_index] >= design.n_cap:
+                            expansion_reason = "assigned_cap"
+                            break
+                        eligibility = design.backfill_eligibility(
+                            evaluated,
+                            observed_dlt,
+                            assigned[trial],
+                            last_escalation_dose,
+                            response_observed=activity,
+                            eliminated=excluded,
+                        )
+                        if eligibility.closed[expansion_index]:
+                            expansion_reason = "toxicity_closed"
+                            break
+                        if eligibility.eligible[expansion_index]:
+                            enroll(expansion_index, clock, True)
+                            expansion_counts[trial] += 1
+                        continue
+
+                    if not np.isfinite(next_observation):
+                        raise RuntimeError("eligible expansion has no finite calendar event")
+                    clock = next_observation
+                    observe(clock)
+
+                expansion_ends[trial] = clock
+        expansion_reasons.append(expansion_reason)
+
         observe(np.inf)
         patients[trial], toxicities[trial] = evaluated, observed_dlt
         durations[trial] = max((r.response_assessment for r in records), default=clock)
@@ -272,4 +373,7 @@ def simulate_bf_boin(
         tuple(backfill_histories),
         _owned(escalation_ends),
         _owned(durations),
+        tuple(expansion_reasons),
+        _owned(expansion_counts),
+        _owned(expansion_ends),
     )

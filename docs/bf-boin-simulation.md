@@ -24,9 +24,12 @@ follow-up.
 `escalation_end` records the last escalation decision; `trial_duration` includes
 final follow-up.
 
-The simulator supports the primary escalation-time backfill mode. Expansion
-after escalation and titration are separate workflows and are intentionally not
-accepted as silently ignored options.
+The simulator supports primary escalation-time backfill by default. Set
+`expand_after_escalation=True` for the source-described BARD BF-BOIN expansion
+at one level below the last actually treated escalation dose. Expansion uses
+the same renewal arrivals and observed-outcome checks, and records its terminal
+status, patient count and end time separately. Its asynchronous timing is a
+Python policy; see the [expansion guide](bard-expansion.md) for details.
 
 DLT and response are sampled independently. Responses from either enrollment
 component can establish activity. Decisions occur at completion of the current

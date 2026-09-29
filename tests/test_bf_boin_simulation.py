@@ -62,3 +62,58 @@ def test_arrivals_continue_as_a_renewal_process_between_cohorts():
     )
     assert result.arrival_history[0][3] > result.assessment_history[0][2]
     assert not np.any(np.isclose(result.arrival_history[0], result.assessment_history[0]))
+
+
+def test_post_escalation_expansion_stays_one_dose_below_last_escalation_cohort():
+    result = simulate_bf_boin(
+        BFBOINDesign(n_cap=3),
+        [0.0, 0.0, 0.0],
+        [1.0, 1.0, 1.0],
+        cohorts=2,
+        cohort_size=1,
+        trials=1,
+        start_dose=1,
+        expand_after_escalation=True,
+        accrual_rate=0.001,
+        rng=21,
+    )
+
+    # With no toxicity, the next dose after the second cohort is dose 3, but
+    # expansion is anchored to dose 2, the last dose actually treated.
+    assert result.expansion_stop_reason == ("assigned_cap",)
+    assert result.expansion_patients.tolist() == [2]
+    assert result.assigned.tolist() == [[3, 1, 0]]
+    assert result.backfill_history[0].sum() == 2
+    assert result.expansion_end[0] > result.escalation_end[0]
+    assert np.all(result.arrival_history[0][-2:] >= result.escalation_end[0])
+    assert result.trial_duration[0] >= result.expansion_end[0]
+
+
+def test_expansion_without_activity_or_lower_dose_returns_explicit_status():
+    no_activity = simulate_bf_boin(
+        BFBOINDesign(n_cap=3),
+        [0.0, 0.0],
+        [0.0, 0.0],
+        cohorts=2,
+        cohort_size=1,
+        trials=1,
+        expand_after_escalation=True,
+        rng=22,
+    )
+    assert no_activity.expansion_stop_reason == ("activity_unavailable",)
+    assert no_activity.expansion_patients.tolist() == [0]
+    assert np.isfinite(no_activity.expansion_end[0])
+
+    lowest_only = simulate_bf_boin(
+        BFBOINDesign(n_cap=3),
+        [0.0, 0.0],
+        [1.0, 1.0],
+        cohorts=1,
+        cohort_size=1,
+        trials=1,
+        expand_after_escalation=True,
+        rng=23,
+    )
+    assert lowest_only.expansion_stop_reason == ("no_lower_dose",)
+    assert lowest_only.expansion_patients.tolist() == [0]
+    assert np.isfinite(lowest_only.expansion_end[0])
