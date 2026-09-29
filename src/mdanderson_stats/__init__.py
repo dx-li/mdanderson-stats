@@ -1481,6 +1481,7 @@ from .wfmm_empirical_bayes import WFMMShrinkage, calibrate_wfmm_shrinkage
 from .wfmm_model import WFMMCoefficientFit, WFMMPrior, fit_wfmm_coefficients
 from .wfmm_posterior import WFMMPosteriorSummary, wfmm_summarize
 from .wfmm_selection import WFMMSelection, wfmm_restore_coefficients, wfmm_select_coefficients
+from .wfmm_variance_init import WFMMVarianceInitialization, initialize_wfmm_variances
 from .windows import (
     WindowCrossValidation,
     WindowNeighborCrossValidation,
@@ -1507,6 +1508,8 @@ __all__ = [
     "wfmm_restore_coefficients",
     "WFMMShrinkage",
     "calibrate_wfmm_shrinkage",
+    "WFMMVarianceInitialization",
+    "initialize_wfmm_variances",
     "WFMMPrior",
     "WFMMCoefficientFit",
     "fit_wfmm_coefficients",

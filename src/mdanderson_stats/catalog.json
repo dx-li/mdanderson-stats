@@ -2571,7 +2571,8 @@
         "Reconstruction of posterior draws, effect/time contrasts, pointwise quantiles, effect-size probabilities, sign-tail scores, simultaneous bands and SiMBaS probabilities with bounded intermediate storage.",
         "Empirical-Bayes fixed-effect shrinkage conditional on supplied covariance components, full GLS estimates with conditional sampling variances, partition-wise EM diagnostics and exact all-spike boundary support.",
         "Coefficient-variance and data-space variance-function posterior summaries, optional posterior mean covariance/plugin correlation and bounded retained covariance draws with the original inverse-transform orientation.",
-        "Explicit coefficient-index or wavelet-partition selection preserving original labels and packed positions, with bounded zero-filled posterior coefficient/variance restoration before inverse reconstruction."
+        "Explicit coefficient-index or wavelet-partition selection preserving original labels and packed positions, with bounded zero-filled posterior coefficient/variance restoration before inverse reconstruction.",
+        "Opt-in per-coefficient REML variance initialization: analytic single-residual model, bounded serial mixed-model optimization, structural identifiability checks and explicit raw/start/floor/boundary/convergence diagnostics; native initialization is not inferred."
       ],
       "validation": [
         "Hand-computed Haar coefficients, scalar db4 calculations, energy/reconstruction checks and 12-point non-power-of-two input; tests/test_wfmm_basis.py.",
@@ -2581,7 +2582,8 @@
         "Independent base-R GLS and four direct mixture-likelihood optimizations agree with shrinkage calibration; all-spike sampling, conditioning and convergence checks; tests/test_wfmm_empirical_bayes.py and research/wfmm-audit.md.",
         "Haar covariance identity/PSD, nonsymmetric custom-basis orientation, posterior variance summaries and oversized retained-output rejection; tests/test_wfmm_covariance.py.",
         "Selected partition/order and zero-fill identities, posterior-shaped restoration and allocation preflight; tests/test_wfmm_selection.py. Public selected-coefficient calibration/fit/reconstruction example executed with noncontiguous partition labels.",
-        "Pending automatic variance initialization, native inverse-gamma defaults, additional transforms/boundaries/compression, prediction workflows and native files/kernel parity."
+        "Independent base-R residual-only and balanced random-intercept REML references, fixed-design scale/likelihood checks, numerical-zero and nonidentifiable boundaries, strict evaluation budgets and initializer-to-sampler workflow; research/wfmm-variance-init-audit.md.",
+        "Pending native variance/proposal initialization, inverse-gamma defaults, additional transforms/boundaries/compression, prediction workflows and native files/kernel parity."
       ]
     },
     {

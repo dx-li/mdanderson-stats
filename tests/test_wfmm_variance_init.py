@@ -23,7 +23,9 @@ def test_residual_only_reml_matches_closed_form_and_independent_reference():
     assert result.starts_usable
 
     rescaled_design = initialize_wfmm_variances(y, 1e200 * np.ones((4, 1)))
-    np.testing.assert_allclose(rescaled_design.fixed_effect_estimates[0, 0], 2.5e-200)
+    np.testing.assert_allclose(
+        rescaled_design.fixed_effect_estimates[0, 0], 2.5e-200, rtol=1e-14, atol=0
+    )
     np.testing.assert_allclose(rescaled_design.raw_residual_variance, result.raw_residual_variance)
 
 

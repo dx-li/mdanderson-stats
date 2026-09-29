@@ -3,9 +3,10 @@
 The [MD Anderson WFMM software](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/70)
 fits functional fixed and random effects in a transformed coefficient space.
 Python supports orthogonal transforms, coefficient-specific Bayesian mixed
-models, reconstruction and posterior curve summaries. Catalog entry 70 is
-**partial**: automatic initialization, other transform families and native
-file workflows remain open.
+models, reconstruction and posterior curve summaries. An explicit Python REML
+initializer supplies starting variance estimates. Catalog entry 70 is
+**partial**: native initialization/prior defaults, other transform families and
+native file workflows remain open.
 
 ## Transform and reconstruct curves
 
@@ -111,6 +112,63 @@ variance arrays; zero-filled variances describe the retained subspace only.
 The native guide records retained indices as `DIndex` and their count as
 `Kstar`. Its automatic energy filtering and native high/low-pass flag
 conventions remain unverified; this API uses explicit indices or bands.
+
+## Initialize variance components from the data
+
+`initialize_wfmm_variances` estimates random-effect and residual variances
+separately for each transformed coefficient under the Gaussian mixed model.
+It is an optional Python policy. The recovered sources do not specify the
+native initializer or its inverse-gamma prior calibration.
+
+```python
+import numpy as np
+from mdanderson_stats import initialize_wfmm_variances
+
+x = np.ones((8, 1))
+z = np.eye(4)[[0, 0, 1, 1, 2, 2, 3, 3]]
+first_coefficient = np.array([-1.7, -1.3, -0.7, -0.3, 0.3, 0.7, 1.3, 1.7])
+coefficients = np.column_stack((first_coefficient, 3 + first_coefficient / 2))
+initial = initialize_wfmm_variances(coefficients, x, z)
+print(initial.raw_random_variance)
+print(initial.raw_residual_variance)
+print(initial.optimizer_success, initial.status)
+```
+
+The model is `V = sum_g(q_g * Z_g @ Z_g.T) + diag(s[residual_strata])`,
+with the same group labels as `fit_wfmm_coefficients`. A fixed-effects-only
+model with one residual variance uses the direct estimate `RSS / (N-P)`.
+Other models optimize a bounded restricted likelihood using Cholesky solves,
+processing coefficients one at a time. Rank-deficient fixed designs,
+nonpositive residual degrees of freedom, and covariance components that cannot
+be distinguished in the residual space are rejected.
+
+Use `initial.random_variance` and `initial.residual_variance` as the corresponding
+inputs to `calibrate_wfmm_shrinkage` or `fit_wfmm_coefficients`. For a model
+without random effects, omit `random_variance` when calling those functions.
+Inverse-gamma prior shapes/scales and sampling proposal SDs remain separate
+inputs. Conditioning a fit on these estimates omits variance-estimation
+uncertainty; sampling the variances requires explicit priors and proposals.
+
+Inspect `optimizer_success`, `status`, `optimizer_message`, and the lower/upper
+bound flags before using an initialization. `starts_usable` means positive
+starting values are available; it does not imply optimizer convergence or
+adequate model fit. Finite optimization-bound estimates are retained as
+estimated, rather than silently converted to zero.
+
+`positive_floor_ratio=1e-8` supplies the minimum starting variance as that
+ratio times the squared maximum absolute observation in each coefficient.
+This floor changes only sampler starts: the raw estimates and floor flags
+remain available. Residuals at linear-algebra roundoff scale receive an
+explicit numerical-boundary status and retain their normalized residual norm.
+All-zero coefficients need a caller-supplied positive `zero_data_floor` in
+variance units; otherwise their starts remain zero and `starts_usable` is false.
+These rules do not define a Bayesian prior.
+
+Iteration, likelihood-evaluation, design-size and projected covariance-rank
+limits are checked explicitly. The initializer may reject a large model that
+is otherwise accepted by the sampler. Independent residual-only and balanced
+random-intercept references are recorded in the
+[initialization audit](../research/wfmm-variance-init-audit.md).
 
 ## Fit functional fixed and random effects
 
@@ -360,7 +418,7 @@ reconstruction/energy identities, independent exact Gaussian-mixture posterior
 references, a conjugate inverse-gamma variance posterior and hand-calculated
 contrast/band summaries. Native MCMC random-number parity is not claimed.
 
-Automatic variance initialization and
+Native variance initialization and
 proposal selection, native inverse-gamma defaults, additional transforms and
 boundary rules, compression, prediction workflows and native file
 formats remain open. The [source and implementation audit](../research/wfmm-audit.md)

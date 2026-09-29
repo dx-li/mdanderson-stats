@@ -38,8 +38,9 @@ bands, variance functions and covariance reconstruction. Empirical-Bayes
 shrinkage calibration is available conditional on supplied variance estimates.
 Explicit coefficient or wavelet-band selection preserves original positions
 for reconstruction after fitting a reduced model.
-Variance priors and proposal settings remain explicit;
-automatic variance initialization and additional native workflows remain open.
+A bounded REML initializer estimates starting random-effect and residual
+variances under an explicit Python policy. Variance priors and proposal settings
+remain explicit; native initialization and additional native workflows remain open.
 
 ## Development
 
