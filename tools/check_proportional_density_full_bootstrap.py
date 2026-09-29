@@ -7,13 +7,13 @@ import time
 from pathlib import Path
 
 import numpy as np
+from numpy.testing import assert_allclose
+
+from mdanderson_stats.proportional_density import proportional_density
 from mdanderson_stats.proportional_density_full_bootstrap import (
     ProportionalDensityFullBootstrapTape,
     proportional_density_full_bootstrap,
 )
-from numpy.testing import assert_allclose
-
-from mdanderson_stats.proportional_density import proportional_density
 
 root = Path(__file__).resolve().parents[1]
 fixtures = root / "tests/fixtures"

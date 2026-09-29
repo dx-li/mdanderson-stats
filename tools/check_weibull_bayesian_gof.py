@@ -7,8 +7,9 @@ import time
 from pathlib import Path
 
 import numpy as np
-from mdanderson_stats.weibull_bayesian_gof import weibull_fixed_shape_bayesian_gof
 from numpy.testing import assert_allclose
+
+from mdanderson_stats.weibull_bayesian_gof import weibull_fixed_shape_bayesian_gof
 
 root = Path(__file__).resolve().parents[1]
 with (root / "tests/fixtures/weibull-bayesian-inputs.csv").open() as stream:
