@@ -49,7 +49,12 @@ from .anovaddp_updates import (
     anovaddp_variance_posterior,
 )
 from .apcoa import AdjustedPCoA, PCoAOrdination, adjusted_pcoa
-from .apcoa_plot import plot_adjusted_pcoa
+from .apcoa_plot import (
+    AdjustedPCoAPlotGeometry,
+    PCoAGroupPlotGeometry,
+    adjusted_pcoa_plot_geometry,
+    plot_adjusted_pcoa,
+)
 from .arand_calendar import (
     ArandCalendarLook,
     ArandCalendarTrial,
@@ -155,6 +160,7 @@ from .bayesian_monitoring import (
 )
 from .bchm import BCHMBorrowResult, BCHMCluster, BCHMFit, bchm_borrow, bchm_cluster, bchm_fit
 from .bchm_clustering import BCHMClusterResult
+from .bchm_plot import plot_bchm_cluster, plot_bchm_density, plot_bchm_posterior
 from .bcrm_decision import BCRMDecision, bcrm_decision
 from .bcrm_model import (
     BCRMCurve,
@@ -1796,6 +1802,9 @@ __all__ = [
     "bchm_borrow",
     "bchm_cluster",
     "bchm_fit",
+    "plot_bchm_cluster",
+    "plot_bchm_density",
+    "plot_bchm_posterior",
     "BaCISClassification",
     "BaCISClassificationDIC",
     "BaCISEquivalentSampleSize",
@@ -2460,6 +2469,9 @@ __all__ = [
     "CondiSImputation",
     "condis_impute",
     "plot_adjusted_pcoa",
+    "AdjustedPCoAPlotGeometry",
+    "PCoAGroupPlotGeometry",
+    "adjusted_pcoa_plot_geometry",
     "AdjustedPCoA",
     "PCoAOrdination",
     "adjusted_pcoa",

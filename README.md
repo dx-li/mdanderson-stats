@@ -910,7 +910,9 @@ selection and simulation, using compact lookup tables for distinct priors.
 
 [aPCoA](docs/apcoa.md) adds covariate-adjusted principal coordinates, signed
 spectral diagnostics and grouped before/after plots, checked against the original
-R implementation and independent regression calculations.
+R implementation and independent regression calculations. Optional group
+ellipses and medoid connectors follow the source's covariance and matrix-row
+profile conventions; their geometry is also available without plotting.
 
 [CondiS](docs/condis.md) adds censored-lifetime imputation using conditional
 restricted survival means, with native linear and KM-step interpolation.
@@ -1375,6 +1377,8 @@ prevent claiming reproduction of the paper's classification tables.
 co-clustering similarities and a separate similarity-weighted hierarchy for each
 subgroup. It preserves the native similarity floors and rounded efficacy rule,
 with bounded sampling and independent R numerical references.
+[Analysis plots](docs/bchm-plots.md) show subgroup clusters, posterior means
+and intervals, and subgroup posterior densities using verified R conventions.
 
 [EffTox dose finding](docs/efftox.md) adds the bivariate efficacy/toxicity
 model, elicited-probability/ESS calibration, bounded posterior fitting, modern Lp and

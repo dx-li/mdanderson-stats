@@ -1,5 +1,26 @@
 # Third-party notices
 
+## BCHM and aPCoA analysis plots
+
+`bchm_plot.py` implements the subgroup-cluster, posterior-response and posterior-
+density views advertised by BCHM 1.00 by Nan Chen and J. Jack Lee, including its
+`boa.hpd` interval convention. BCHM identifies LGPL-2 in its DESCRIPTION;
+the license is preserved in
+[notices/BCHM-LGPL-2.txt](notices/BCHM-LGPL-2.txt). Applicable upstream terms
+remain attached to adapted portions. Gaussian density evaluation uses the
+documented R bandwidth rule and direct kernel summation; original R code and
+posterior draws are not distributed.
+
+The aPCoA plotting additions follow Yushu Shi's aPCoA 1.3, car 3.0-12 and
+cluster 2.1.6.
+aPCoA and car identify GPL (>= 2); the existing
+[GPL version 2 text](notices/cmprsk-GPL-2.txt) is retained for these adaptations.
+The car ellipse implementation is by John Fox, Sanford Weisberg, Brad Price
+and contributors. Source versions, numerical conventions and independent R
+references are recorded in the corresponding guides. These Python adaptations
+are maintained independently; original package sources are reference inputs
+and are not included in the distribution.
+
 ## CRM and TITE-CRM prior information
 
 `crm_prior_ess.py` and `tite_crm_prior_ess.py` implement the empirical-power

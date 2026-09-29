@@ -202,7 +202,9 @@ example, allowing Monte Carlo error in both reported results. Small regressions
 cover silhouette singletons, resource preflight, boundary empirical means and
 probability rounding. These checks leave the existing CI configuration unchanged.
 
-Native report formats, interactive file workflows and direct end-to-end
-Shiny/JAGS output parity remain open. The
+The cached app advertises CSV upload/save, PDF report download and MCMC sample
+download. Its saved HTML does not contain the server handlers, PDF contents or
+MCMC export schema; those app I/O/report contracts remain unimplemented.
+Direct end-to-end Shiny/JAGS output parity also remains open. The
 mathematical checks validate the declared model and allocation algorithm, not
 convergence for arbitrary inputs or complete application parity.

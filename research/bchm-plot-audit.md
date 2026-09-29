@@ -40,3 +40,21 @@ Across 3,072 ordinate checks, maximum absolute FFT-versus-direct difference
 was `0.00080059613964` and RMS difference was `0.00014747799121`; direct
 Gaussian values agreed with the independent reference to `1e-12` absolute and
 relative tolerance.
+
+## Remaining source-backed scope
+
+The cached package exports the fit and these three plots. The cached app and
+official help advertise the same result summaries and figures; no separate
+operating-characteristic simulation, calibration or sample-size workflow was
+found. The cached app does advertise CSV upload/save, PDF report download and
+MCMC sample download. Their server handlers and output schemas were not
+captured, so app I/O/report parity remains open alongside the documented
+sampler and density-evaluation differences. No unadvertised statistical
+workflow was added to fill these integration gaps.
+
+The integrated source check reproduced all 18 HPD intervals, six bandwidths,
+and 3,072 direct Gaussian ordinates (maximum absolute difference `5.56e-15`).
+It also checked display rounding against an actual small fit and explicit
+failure for an unrepresentable density peak. The three-panel preview was
+rendered and visually inspected. The combined BCHM/aPCoA check took 0.538
+seconds, peaked at 155.83 MiB resident memory and reported zero swaps.

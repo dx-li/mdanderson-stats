@@ -4257,11 +4257,13 @@
       "status": "partial",
       "implemented_features": [
         "Original and covariate-adjusted PCoA via scaled distance centering and rank-revealing SVD projection, with explicit intercept convention",
-        "Positive coordinates, full signed spectra, negative-inertia diagnostics and optional grouped comparison plots"
+        "Positive coordinates, full signed spectra, negative-inertia diagnostics and optional grouped comparison plots",
+        "Optional group ellipses with the car covariance/F-radius/pivoted-factor convention and row-profile medoid connectors; reusable bounded geometry with group sample/medoid indices, covariance ranks and distance-recovery clipping diagnostics; docs/apcoa.md."
       ],
       "validation": [
         "Unmodified R aPCoA 1.3 non-Euclidean fixture, independent Euclidean regression residuals, rank deficiency and distance scales 1e-200..1e200; tests/test_apcoa.py",
-        "Pending native ellipses, medoid connectors, interactive file/formula handling and full app audit; docs/apcoa.md"
+        "Independent R matrix equations with unchanged car 3.0-12 ellipse and cluster 2.1.6 PAM references: four group/panel geometries, 208 ellipse vertices and ten medoid tie cases; rank-degenerate and extreme-scale checks; tests/test_apcoa_plot_geometry.py.",
+        "Pending interactive file/formula handling, exact visual styling and full app workflow audit; docs/apcoa.md."
       ]
     },
     {
@@ -4550,12 +4552,14 @@
       "implemented_features": [
         "Native patient-weighted Gaussian CRP clustering, streaming co-clustering, d0 and 0.001 similarity floors, and maximum-silhouette representative partition.",
         "Target-specific similarity-weighted logistic-normal borrowing with Gamma shape/rate precision, bounded sequential sampling and posterior diagnostics.",
-        "Separate raw and R-compatible three-decimal efficacy probabilities, strict decisions and explicit app versus CRAN parameter configurations."
+        "Separate raw and R-compatible three-decimal efficacy probabilities, strict decisions and explicit app versus CRAN parameter configurations.",
+        "Optional subgroup-cluster, posterior-mean/HPD and posterior-density plots, preserving source display rounding, boa.hpd intervals, R nrd0 bandwidth and Gaussian support with bounded direct kernel evaluation; docs/bchm-plots.md."
       ],
       "validation": [
         "Native R integrated allocation references, exact three-subgroup partition enumeration, random-mean borrowing quadrature and official five-subgroup help example; tests/test_bchm_reference.py.",
         "Silhouette, resource-budget, empirical-prior and endpoint regressions; tests/test_bchm.py.",
-        "Pending native plot/report and file workflows and direct Shiny/JAGS parity; docs/bchm.md."
+        "Independent R plotting references: 18 native HPD intervals, six bandwidth cases and 3,072 direct Gaussian ordinates; documented differences from native FFT density interpolation and chain selection; tests/test_bchm_plot.py.",
+        "Pending remaining report/file workflows and direct Shiny/JAGS parity; docs/bchm.md."
       ]
     },
     {

@@ -144,10 +144,10 @@ def _density_grid(
     normalizer = bandwidth * sqrt(2 * pi) * x.size
     for start in range(0, points, chunk_size):
         stop = min(points, start + chunk_size)
-        with np.errstate(over="ignore", invalid="ignore", under="ignore"):
+        with np.errstate(over="ignore", invalid="ignore", under="ignore", divide="ignore"):
             z = (grid[start:stop, None] - x[None, :]) / bandwidth
             kernel = np.exp(-0.5 * z * z)
-        density[start:stop] = kernel.sum(axis=1) / normalizer
+            density[start:stop] = kernel.sum(axis=1) / normalizer
     if np.any(~np.isfinite(density)):
         raise ArithmeticError("Gaussian density evaluation is non-finite")
     return grid, density

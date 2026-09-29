@@ -1,5 +1,16 @@
 # Statistical coverage priority audit — September 28, 2026
 
+September 29 update: BCHM's three advertised analysis plots and aPCoA's
+source-convention data ellipses and row-profile medoid connectors are now
+implemented and checked against independent R references. BCHM's cached
+package/help exposes no additional scientific computation beyond its fit,
+summaries and these plots. Its app advertises CSV, PDF and MCMC downloads,
+but the available cache lacks their server handlers and output schemas.
+These are remaining app I/O/report parity gaps; they are not evidence of a
+missing calibration or simulation method. Prioritize other entries' missing
+scientific workflows over reproducing those report formats. The historical
+audit below records the earlier state.
+
 The user prioritizes usable Python statistical methods over reproducing every
 desktop interface or adding CI for each small change. Catalog status covers
 broader software workflows, so the 63 implemented / 66 partial / 9 pending entry
