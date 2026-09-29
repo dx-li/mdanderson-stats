@@ -79,8 +79,14 @@ failed replications are not silently discarded.
 
 ```python
 ess_result = simulate_bacis_oc(
-    [0.3], replications=4, draws=64, warmup=32, chains=2,
-    outcome_rng=3153, sampler_rng=13153, compute_ess=True,
+    [0.3],
+    replications=4,
+    draws=64,
+    warmup=32,
+    chains=2,
+    outcome_rng=3153,
+    sampler_rng=13153,
+    compute_ess=True,
 )
 print(ess_result.mean_equivalent_sample_size)
 print(ess_result.equivalent_sample_size_mcse)

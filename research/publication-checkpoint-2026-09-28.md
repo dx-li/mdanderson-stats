@@ -1996,8 +1996,12 @@ It took 11.468 seconds, peaked at 127.39 MiB RSS and reported zero swaps.
 No broad local suite, dependency installation or CI workflow was added.
 
 Coverage remains 63 implemented, 67 partial and eight pending entries. Native
-workflow limitations and mixed-license terms remain explicit. At inspection,
-the preceding `03804d5` hosted quality and Python 3.12 jobs passed; Python 3.13
-and 3.14 were still running. The local manifest records fresh independent
-master/main/development branch verification and the subsequent hosted run.
-This final audit-only commit changes no verified numerical code.
+workflow limitations and mixed-license terms remain explicit. The preceding
+`03804d5` hosted quality job and all three Python 3.12–3.14 jobs are now
+independently confirmed successful. The subsequent `ceafd12` hosted run found
+only formatting violations in two executable guide examples before reaching
+the numerical jobs. Those examples were reformatted, and repository-wide Ruff
+lint and formatting checks now pass. No numerical code or checks were changed.
+The local manifest records fresh independent master/main/development branch
+verification and the replacement hosted run; its status is reported separately
+from the completed preceding run.

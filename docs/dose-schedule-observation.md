@@ -46,9 +46,7 @@ assert adjudicated.patient.event and adjudicated.patient.time == 10
 assert adjudicated.patient.administration_times.tolist() == [2]
 assert adjudicated.delivered_administration_times.tolist() == [2, 10, 11, 24]
 
-prior = DoseSchedulePrior(
-    [-2.0, np.log(2.0), np.log(10.0)], [0.3, 0.0, 0.0], dose_count=1
-)
+prior = DoseSchedulePrior([-2.0, np.log(2.0), np.log(10.0)], [0.3, 0.0, 0.0], dose_count=1)
 fit = fit_dose_schedule(
     [adjudicated.patient],
     prior,
