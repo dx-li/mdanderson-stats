@@ -286,7 +286,9 @@ table disagree, so published-table reproduction is not claimed.
 [Analytical classification density plots](bacis-plot.md) display the latent
 posterior without MCMC or smoothing, with separate limits on each side of zero.
 
-Additional response/prior plots, native file formats, average subgroup ESS
-across simulated trials and automatic cutoff calibration remain open.
+Optional simulation summaries now retain each trial's subgroup ESS, with
+arithmetic means and Monte Carlo errors across replications. Additional
+response/prior plots, native file formats and automatic cutoff calibration
+remain open.
 The mathematical references validate the declared model, not native random
 streams, convergence for arbitrary priors or complete application parity.

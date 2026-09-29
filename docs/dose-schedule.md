@@ -164,7 +164,11 @@ and [source record](dose-schedule-sources.json) for the validated scope.
 
 [Calendar trial replay](dose-schedule-trials.md) now combines event generation,
 as-of-arrival fitting, allocation and complete final follow-up with bounded
-memory/work and recorded random tapes. Aggregate operating characteristics and
-calibration, delayed classification of persistent low-grade toxicity, and
-native files/reports remain open. The original Windows executable has not been
+memory/work and recorded random tapes.
+[Aggregate operating characteristics](dose-schedule-simulation.md) run trials
+serially with Monte Carlo errors. [Delayed-toxicity observations](dose-schedule-observation.md)
+accept explicit adjudications, backdate qualifying events to onset, and report
+whether unresolved episodes can still change the final analysis.
+Automatic calibration, generated low-grade episode histories, within-patient
+adaptation policies and native files/reports remain open. The original Windows executable has not been
 run for equivalence; the executable and article are not bundled.

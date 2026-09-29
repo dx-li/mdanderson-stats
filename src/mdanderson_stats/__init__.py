@@ -656,6 +656,12 @@ from .dose_schedule import (
 )
 from .dose_schedule_decision import DoseScheduleDecision, dose_schedule_decision
 from .dose_schedule_fit import DoseScheduleFit, fit_dose_schedule
+from .dose_schedule_observation import (
+    DoseScheduleEpisodeStatus,
+    DoseSchedulePatientObservation,
+    DoseScheduleToxicityEpisode,
+    observe_dose_schedule_patient,
+)
 from .dose_schedule_prior import DoseSchedulePrior, dose_schedule_moment_prior
 from .dose_schedule_simulation import (
     DoseScheduleOperatingCharacteristics,
@@ -1711,6 +1717,10 @@ __all__ = [
     "pinnacle_rdwt",
     "run_pinnacle",
     "DoseSchedulePatient",
+    "DoseScheduleEpisodeStatus",
+    "DoseSchedulePatientObservation",
+    "DoseScheduleToxicityEpisode",
+    "observe_dose_schedule_patient",
     "DoseSchedulePrior",
     "DoseScheduleFit",
     "DoseScheduleDecision",

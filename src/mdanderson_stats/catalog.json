@@ -2690,7 +2690,8 @@
         "Strict posterior overdose screening and nearest-target selection with explicit no-skip conventions, initial allocation and final-selection rules",
         "Bounded calendar trial replay with inverse cumulative-hazard events, as-of-arrival posterior updates, actual administration histories, permanent interim termination, complete final follow-up and full replay tapes",
         "Serial aggregate operating characteristics with replayable event/sampler seed pairs, selection and stopping rates, mean allocation/enrollment/duration, pooled observed toxicity, trial-clustered Monte Carlo errors and cumulative work bounds",
-        "Automatic calibration, delayed low-grade-to-DLT classification, within-patient adaptation and native file/report equivalence remain pending"
+        "As-of toxicity episode adjudication with qualifying onset backdating, masked future decisions, separate actual-delivery and likelihood histories, and explicit final-ascertainment readiness; docs/dose-schedule-observation.md.",
+        "Automatic calibration, generated low-grade episode processes, within-patient adaptation policies and native file/report equivalence remain pending."
       ],
       "validation": [
         "tests/test_dose_schedule.py",
@@ -2706,7 +2707,8 @@
         "docs/dose-schedule-trials.md",
         "docs/dose-schedule-sources.json",
         "research/dose-schedule-audit.md",
-        "Three focused aggregate checks verify recorded-seed replay, count and clustered-error reconstruction, shared-budget rejection before RNG use and duration scaling by 1e200; tests/test_dose_schedule_simulation.py, docs/dose-schedule-simulation.md and research/dose-schedule-aggregate-audit.md"
+        "Three focused aggregate checks verify recorded-seed replay, count and clustered-error reconstruction, shared-budget rejection before RNG use and duration scaling by 1e200; tests/test_dose_schedule_simulation.py, docs/dose-schedule-simulation.md and research/dose-schedule-aggregate-audit.md",
+        "Thirteen focused observation/core checks plus 14 hand-calculated as-of ledgers at three extreme time scales; exact two-administration event likelihood, future-information masking, horizon/finality rules and integer history immutability; tests/test_dose_schedule_observation.py and research/dose-schedule-adjudication-audit.md."
       ]
     },
     {
@@ -4403,7 +4405,8 @@
         "Analytical latent-theta posterior density, both probability tails and moments, plus bounded independent posterior sampling from the exact half-normal mixture.",
         "Complete one-trial numerical workflow composing classification, borrowing and variance-matched ESS, with native ten-row ordering, strict unrounded decisions, original data and separate three-decimal output.",
         "Serial binomial-trial operating characteristics with subgroup classification/efficacy rates, null-specific errors and power, familywise false-positive and single-cluster probabilities, Monte Carlo standard errors, separate random streams and compact per-trial sampler diagnostics; docs/bacis-simulation.md.",
-        "Optional analytical latent-classification density overlays with exact disconnected one-sided limits at zero, native/custom/automatic windows, bounded grids and preserved caller axes; docs/bacis-plot.md."
+        "Optional analytical latent-classification density overlays with exact disconnected one-sided limits at zero, native/custom/automatic windows, bounded grids and preserved caller axes; docs/bacis-plot.md.",
+        "Optional per-replication/subgroup equivalent sample size with native fixed-response-count variance matching, stable subgroup means and Monte Carlo errors, unchanged default random streams and explicit failure context; docs/bacis-simulation.md."
       ],
       "validation": [
         "Official application v1.0.1.0, help and author bacistool 1.0.0 source pinned in docs/bacis-sources.json; source conflicts and displayed-versus-CRAN prior defaults documented.",
@@ -4414,7 +4417,8 @@
         "Native one-trial row-source audit, singleton posterior/binomial-tail references, strict cutoff equality, and a bounded five-subgroup borrowing workflow; tests/test_bacis_trial.py and research/bacis-trial-audit.md.",
         "Independent base-R singleton decision table and exact binomial rates, 32-trial replay at each null/alternative truth, mixed-group metric aggregation and public guide checks; three focused tests. Numerical integration peaked at 114.7 MiB RSS with zero process swaps. research/bacis-simulation-audit.md.",
         "Three focused classification-plot tests plus two rendered and visually inspected public examples, unclipped peaks and preserved blank/inverted axes. Integration peaked at 160.2 MiB RSS, zero process swaps; research/bacis-file-audit.md.",
-        "Pending: additional response/prior plots, native file formats, simulation-average ESS and automatic cutoff calibration. A paper/software classification discrepancy prevents claiming published-table reproduction; native random-stream parity is not claimed. See docs/bacis.md."
+        "Pending: additional response/prior plots, native file formats and automatic cutoff calibration. A paper/software classification discrepancy prevents claiming published-table reproduction; native random-stream parity is not claimed. See docs/bacis.md.",
+        "Ten focused simulation/ESS checks and 20 independent R polynomial roots plus five subgroup mean/MCSE references; large finite ESS aggregation, one-replication uncertainty and pre-RNG resource rejection; tools/reference_bacis_oc_ess.R and research/bacis-simulation-audit.md."
       ]
     },
     {

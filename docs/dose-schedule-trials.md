@@ -106,7 +106,10 @@ They do not establish native executable or random-stream parity.
 
 [Aggregate operating characteristics](dose-schedule-simulation.md) now run
 these trials serially with replayable seeds and Monte Carlo error summaries.
-Automatic calibration, the paper example's delayed classification of persistent
-low-grade toxicity, and native files/reports remain open. The replay assigns
+[Explicit delayed-toxicity observations](dose-schedule-observation.md) provide
+as-of event/censoring records for caller-supplied adjudication histories. They
+are separate from this simulator's triangular-hazard event generator.
+Automatic calibration, generated low-grade episode processes and native
+files/reports remain open. The replay assigns
 a fixed regimen to each patient; within-patient dose or schedule adaptation
 requires a separately specified policy.

@@ -1370,7 +1370,9 @@ preserve their one-sided limits at zero and support native or automatic ranges.
 ten-row numerical summary, retaining full precision alongside rounded output.
 [Serial operating-characteristic simulation](docs/bacis-simulation.md) adds
 classification, efficacy, familywise false-positive and single-cluster rates
-with Monte Carlo errors and retained sampler diagnostics. Source conflicts
+with Monte Carlo errors and retained sampler diagnostics. Optional subgroup
+ESS summaries retain each trial's estimate and report its mean and Monte Carlo
+error. Source conflicts
 prevent claiming reproduction of the paper's classification tables.
 
 [BCHM subgroup borrowing](docs/bchm.md) adds patient-weighted clustering,
@@ -1473,8 +1475,11 @@ adds event generation, as-of-arrival posterior updates, actual administration
 histories and final follow-up, with separate replayable random streams and
 shared work bounds. [Aggregate simulations](docs/dose-schedule-simulation.md)
 report selection, stopping, allocation, observed toxicity and duration with
-Monte Carlo errors and replayable event/sampler seed pairs. Automatic
-calibration, delayed toxicity classification and native workflows remain open.
+Monte Carlo errors and replayable event/sampler seed pairs.
+[Delayed-toxicity observations](docs/dose-schedule-observation.md) apply explicit
+adjudications as they become known, backdate qualifying events to onset, and
+separate delivered treatment from likelihood exposure. Automatic calibration,
+generated low-grade episodes and native workflows remain open.
 
 [CiBolus](docs/cibolus.md) models immediate and subsequent response to a bolus
 plus continuous infusion, with response-dependent toxicity. Exact and interval

@@ -1,5 +1,21 @@
 # Statistical coverage priority audit — September 28, 2026
 
+September 29 conduct/simulation update: BaCIS simulations now optionally retain
+native-definition ESS by replication/subgroup, with stable subgroup means and
+Monte Carlo errors. Dose Schedule Finder now accepts explicit delayed toxicity
+adjudications and creates likelihood records using only information available
+at each analysis. Qualifying events are backdated to onset; actual treatment
+after onset remains separately available. Pending earlier episodes block final
+readiness. The paper does not specify a low-grade episode generator or fully
+resolve an automatic day-14 adjudication boundary; neither was invented.
+
+A review of RF-SRC 3.2.2's alternative `logrankscore` branch found an apparent
+inconsistency between covariate-sort indices and score/member indices in
+`logRankNCR`. The default implemented log-rank branch is separate. Extending
+to this alternative needs an independent native/published-method comparison
+before deciding whether to reproduce or correct that behavior; it was not
+ported blindly.
+
 September 29 update: BCHM's three advertised analysis plots and aPCoA's
 source-convention data ellipses and row-profile medoid connectors are now
 implemented and checked against independent R references. BCHM's cached
