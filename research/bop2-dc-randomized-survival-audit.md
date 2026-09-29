@@ -115,3 +115,23 @@ cap bounds `2*(trials + validation_trials)*looks*21*(2*300 - 1)` by 100,000,000.
 Together, these imply the holdout simulator's retained-cell total stays below
 about 1.22 million, under its 2-million cap. The explicit nested check is kept as
 defense in depth if either outer budget changes.
+
+## Independent calibration evidence
+
+`tools/reference_bop2_dc_randomized_survival_calibration.R` directly integrates
+Gamma rate densities and independently computes as-of event/exposure statistics
+from full arrival/event tapes. The checker evaluates 12 candidates under each
+of three configurations: fixed-arrival CGR, fixed-arrival futile ESS, and
+Poisson-arrival CGR with a negative LRV and no graduation. Each has 24
+calibration and 18 independent validation trials per truth. All 1,791 checked
+counts, probabilities, MCSEs, enrollment and held-out arm event/exposure
+summaries agree, as do feasibility and selected designs. CGR selects index 4
+and futile ESS index 6 on the shared fixed-arrival grid. Control medians differ
+between the futile and effective scenarios.
+
+The independent check takes 4.865 seconds after imports; Python peak RSS is
+119.36 MiB, R peak 92.21 MiB, and zero swaps (conservative combined peak bound
+211.57 MiB). Three focused calibration tests pass in addition to existing core
+and simulation checks. Root review increased peak-memory accounting for owned
+result copies and preflights the nested holdout simulator's retained-data cap
+before consuming RNG state. No new CI workflow or broad simulation was added.
