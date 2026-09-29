@@ -10,7 +10,7 @@ from ._cdflib import _freeze
 from ._validation import FloatArray
 
 _MAX_GRID_CELLS = 200_000
-_MAX_RECORDS = 200
+_MAX_RECORDS = 400
 
 
 def _real(value: ArrayLike, name: str, maximum: int = _MAX_GRID_CELLS) -> FloatArray:
