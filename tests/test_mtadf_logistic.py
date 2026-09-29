@@ -52,7 +52,7 @@ def test_global_initial_action_uses_the_safest_available_prior_dose():
     assert decision.action == "start"
     assert decision.dose == 0
     assert decision.posterior is None
-    assert np.all(np.isnan(decision.efficacy_mean))
+    assert decision.efficacy_mean is None
 
 
 def test_local_slope_probability_obeys_symmetric_design_reference():
@@ -93,23 +93,77 @@ def test_global_decision_checks_fit_data_and_drops_unsafe_current_dose():
     n = [12, 12, 12]
     y = [1, 2, 3]
     doses = [1.0, 2.0, 3.0]
-    fit = mtadf_logistic_posterior(
-        n, y, doses, draws=64, warmup=64, chains=2, rng=np.random.default_rng(5)
-    )
     decision = mtadf_logistic_decision(
         n,
         [0, 12, 12],
         y,
         doses,
         current_dose=2,
-        posterior=fit,
         prior=mtadf_toxicity_prior(),
     )
     assert not decision.toxicity.admissible[2]
     assert decision.action == "treat"
     assert decision.dose == 0
+    assert decision.posterior is None
     with pytest.raises(ValueError, match="match dose coding and efficacy counts"):
+        fit = mtadf_logistic_posterior(
+            n, y, doses, draws=32, warmup=32, chains=2, rng=np.random.default_rng(5)
+        )
         mtadf_logistic_decision(n, [0, 0, 0], [1, 2, 2], doses, current_dose=1, posterior=fit)
+
+
+def test_global_all_unsafe_and_untreated_current_handling():
+    all_unsafe = mtadf_logistic_decision([12, 12], [12, 12], [2, 2], [1.0, 2.0], current_dose=0)
+    assert all_unsafe.action == "stop"
+    assert all_unsafe.posterior is None
+    with pytest.raises(ValueError, match="current_dose must have observed subjects"):
+        mtadf_logistic_decision([12, 0], [0, 0], [2, 0], [1.0, 2.0], current_dose=1)
+
+
+def test_local_unsafe_current_drops_before_fitting_and_requires_observed_current():
+    decision = mtadf_local_logistic_decision(
+        [12, 12, 12],
+        [0, 12, 12],
+        [1, 2, 3],
+        [1.0, 2.0, 3.0],
+        current_dose=2,
+        window_length=2,
+    )
+    assert decision.action == "treat"
+    assert decision.dose == 0
+    assert decision.posterior is None
+    with pytest.raises(ValueError, match="current_dose must have observed subjects"):
+        mtadf_local_logistic_decision(
+            [12, 0, 0],
+            [0, 0, 0],
+            [1, 0, 0],
+            [1.0, 2.0, 3.0],
+            current_dose=1,
+        )
+
+
+def test_local_bounce_guard_fit_is_matched_and_retained():
+    n, y, tox, doses = [10, 10, 10], [1, 8, 4], [0, 0, 0], [1.0, 2.0, 3.0]
+    options = dict(draws=32, warmup=32, chains=2)
+    current_fit = mtadf_local_logistic_posterior(
+        n, y, doses, current_dose=1, rng=np.random.default_rng(40), **options
+    )
+    guard_fit = mtadf_local_logistic_posterior(
+        n, y, doses, current_dose=2, rng=np.random.default_rng(41), **options
+    )
+    decision = mtadf_local_logistic_decision(
+        n,
+        tox,
+        y,
+        doses,
+        current_dose=1,
+        posterior=current_fit,
+        bounce_guard_posterior=guard_fit,
+        efficacy_escalation_cutoff=0.01,
+        efficacy_deescalation_cutoff=0.001,
+    )
+    assert decision.bounce_guard_posterior is guard_fit
+    assert decision.posterior is current_fit
 
 
 def test_local_final_decision_uses_existing_isotonic_safety_and_selection():

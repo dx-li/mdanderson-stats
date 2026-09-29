@@ -22,6 +22,17 @@ local model uses the last `l` adjacent doses through the current dose,
 The L-logistic final selection uses the existing double-sided isotonic
 estimator, as stated in Section 2.4.
 
+An independent tensor Gauss-Legendre reference in transformed Cauchy-prior
+coordinates checked the global posterior for `n=[10,10,10]`,
+`y=[2,7,4]`, `doses=[-1,0,1]`. Quadrature orders 128 and 192 agreed within
+`3.32e-14`; their predictions were
+`[0.22308657936014006, 0.6662037623234378, 0.40920684688553677]`. The Python
+fit at seed `20260929` returned posterior means
+`[0.2118507251, 0.6784212879, 0.4049271112]`, each within 1.82 reported batch
+MCSEs. Split R-hat values were `[1.018, 1.030, 1.014]`; acceptance rates ranged
+from 0.237 to 0.313. This is an independent statistical reference, not native
+application or sampler-sequence parity.
+
 Posterior inference uses a bounded, multi-chain random-walk Metropolis sampler
 with warmup-only scalar-scale adaptation. The paper says to use MCMC but does
 not specify a sampler, tuning, chain count, burn-in, or diagnostics. Draw count,
@@ -40,7 +51,9 @@ safety-first drop to a safe dose, and stop when no dose is admissible. Local
 movement similarly clamps at boundaries, rejects unsafe destinations, and
 drops to a safe lower dose or stops if none exists. These choices provide a
 usable and explicit Python policy; they are not asserted as author-program
-behavior.
+behavior. Safety-only stop/drop paths do not require efficacy MCMC. Once
+enrollment has started, an interim current dose must itself have observations;
+the API does not substitute a different observed dose silently.
 
 The local source starts with one cohort at each of the first `l` levels. This
 API surfaces that as sequential initial-ramp actions, then uses the slope
@@ -50,15 +63,20 @@ per-dose minimum sample size or early stopping threshold beyond toxicity
 admissibility. Near the lowest dose boundary, a local window cannot contain
 `l` lower-or-current levels; as an explicit Python convention, the first `l`
 dose levels form the window there. Final isotonic selection requires no
-current dose and runs without a logistic posterior fit.
+current dose and runs without a logistic posterior fit. When an escalation
+would invoke the source bounce guard using a previously treated next dose, the
+next-window posterior can be supplied explicitly and its diagnostics remain in
+the result. Combined current/bounce draw storage and transition work receive a
+decision-level preflight.
 
 ## Validation
 
 Focused tests check seeded replay, posterior array dimensions and bounds,
 local slope symmetry and an independent transformed-Cauchy quadrature
-reference, fit/count matching, toxicity-safe actions and final isotonic
-selection. The three affected MTADF test files passed: 14 tests in 2.32 seconds
-with warnings treated as errors. Peak RSS was 141,312,000 bytes (138,000 KiB)
+reference, fit/count matching, toxicity-first stop/drop actions,
+treated-current validation, local bounce-guard diagnostics and final isotonic
+selection. The three affected MTADF test files passed: 17 tests in 2.27 seconds
+with warnings treated as errors. Peak RSS was 140,656,640 bytes (137,360 KiB)
 with zero process swaps. Ruff check/format and targeted mypy passed. These
 checks support the independent Python model and policies; no native
 random-stream or app-output parity is claimed.

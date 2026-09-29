@@ -5,6 +5,8 @@ conduct choices are explicit Python conventions, not claims of native-app
 parity.
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 
 import numpy as np
@@ -78,9 +80,12 @@ def _mcmc_options(draws: int, warmup: int, chains: int) -> tuple[int, int, int]:
 def _preflight_work(
     draws: int, warmup: int, chains: int, dose_count: int, parameter_count: int
 ) -> None:
-    # Count full retained arrays plus two transient summary arrays and one
-    # additional safety margin for sort/interval temporaries.
-    if chains * draws * (parameter_count + 3 * dose_count) > _MAX_RETAINED_CELLS:
+    # Parameters, probabilities, slope indicators when present, and summary
+    # sort/interval temporaries are bounded together.
+    if (
+        chains * draws * (parameter_count + 2 * dose_count + 3 * max(parameter_count, dose_count))
+        > _MAX_RETAINED_CELLS
+    ):
         raise ValueError("posterior draws and summary temporaries exceed the 2 million cell bound")
     if chains * (draws + warmup) * dose_count > 20_000_000:
         raise ValueError(
@@ -92,6 +97,51 @@ def _local_window_indices(current: int, length: int, dose_count: int) -> NDArray
     """Use preceding levels where possible; use the first window at the low boundary."""
     start = min(max(0, current - length + 1), dose_count - length)
     return np.arange(start, start + length, dtype=np.int64)
+
+
+def _preflight_local_decision(
+    window_length: int,
+    fit_shapes: list[tuple[int, int]],
+    generated_fit_count: int,
+    draws: int,
+    warmup: int,
+    chains: int,
+) -> None:
+    cells_per_draw = 2 + 2 * window_length + 3 * max(2, window_length)
+    stored_and_temporary_cells = sum(
+        fit_chains * fit_draws * cells_per_draw + 7 * (3 + window_length)
+        for fit_chains, fit_draws in fit_shapes
+    )
+    transition_cells = (
+        0
+        if generated_fit_count == 0
+        else generated_fit_count * chains * (draws + warmup) * window_length
+    )
+    if stored_and_temporary_cells > _MAX_RETAINED_CELLS:
+        raise ValueError(
+            "combined current and bounce posterior storage exceeds its 2 million cell bound"
+        )
+    if transition_cells > 20_000_000:
+        raise ValueError(
+            "combined current and bounce fitting exceeds the 20 million transition-cell bound"
+        )
+
+
+def _local_fit_matches(
+    fit: MTADFLocalLogisticPosterior,
+    subjects: FloatArray,
+    responses: FloatArray,
+    doses: FloatArray,
+    current: int,
+    length: int,
+) -> bool:
+    indices = _local_window_indices(current, length, subjects.size)
+    return (
+        fit.window_length == length
+        and np.array_equal(fit.window_doses, doses[indices])
+        and np.array_equal(fit.window_subjects, subjects[indices])
+        and np.array_equal(fit.window_responses, responses[indices])
+    )
 
 
 def _sampler(
@@ -117,15 +167,16 @@ def _sampler(
     log_prior_constant = -np.log(np.pi * prior_scales)
 
     def log_target(z: FloatArray) -> float:
-        with np.errstate(over="ignore", invalid="ignore"):
+        with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
             theta = z * prior_scales
             eta = design @ theta
-        if not np.all(np.isfinite(eta)) or not np.all(np.isfinite(theta)):
-            return -np.inf
-        ll = np.sum(y * -np.logaddexp(0.0, -eta) + (n - y) * -np.logaddexp(0.0, eta))
-        # Independent Cauchy(0, prior_scale) priors in original coefficients.
-        lp = np.sum(log_prior_constant - 2 * np.log(np.hypot(1.0, z)))
-        return float(ll + lp)
+            if not np.all(np.isfinite(eta)) or not np.all(np.isfinite(theta)):
+                return -np.inf
+            ll = np.sum(y * -np.logaddexp(0.0, -eta) + (n - y) * -np.logaddexp(0.0, eta))
+            # Independent Cauchy(0, prior_scale) priors in original coefficients.
+            lp = np.sum(log_prior_constant - 2 * np.log(np.hypot(1.0, z)))
+            target_value = float(ll + lp)
+        return target_value if np.isfinite(target_value) else -np.inf
 
     target = 0.30
     for chain in range(chains):
@@ -139,7 +190,9 @@ def _sampler(
         for iteration in range(total):
             proposal = state + rng.normal(size=dimension) * scale
             candidate = log_target(proposal)
-            was_accepted = np.log(rng.random()) < candidate - current
+            uniform = float(rng.random())
+            log_uniform = -np.inf if uniform == 0 else np.log(uniform)
+            was_accepted = log_uniform < candidate - current
             if was_accepted:
                 state, current = proposal, candidate
                 if iteration >= warmup:
@@ -321,7 +374,7 @@ class MTADFLogisticDecision:
     action: str
     dose: int | None
     reason: str
-    efficacy_mean: FloatArray
+    efficacy_mean: FloatArray | None
     toxicity: MTADFDecision
     posterior: MTADFLogisticPosterior | None
 
@@ -336,6 +389,7 @@ class MTADFLocalLogisticDecision:
     toxicity: MTADFDecision
     posterior: MTADFLocalLogisticPosterior | None
     final_decision: MTADFDecision | None
+    bounce_guard_posterior: MTADFLocalLogisticPosterior | None = None
 
 
 def mtadf_logistic_decision(
@@ -373,19 +427,46 @@ def mtadf_logistic_decision(
         )
         safe = np.flatnonzero(toxicity.admissible)
         if safe.size == 0:
-            return MTADFLogisticDecision(
-                "stop", None, "no_admissible_dose", _freeze(np.full(n.size, np.nan)), toxicity, None
-            )
+            return MTADFLogisticDecision("stop", None, "no_admissible_dose", None, toxicity, None)
         return MTADFLogisticDecision(
             "start",
             int(safe[0]),
             "lowest_admissible_dose",
-            _freeze(np.full(n.size, np.nan)),
+            None,
+            toxicity,
+            None,
+        )
+    current = (
+        None if current_dose is None else _positive_int(current_dose, "current_dose", 0, n.size - 1)
+    )
+    if not final and current is None:
+        raise ValueError("current_dose is required after enrollment has begun")
+    if not final and current is not None and n[current] == 0:
+        raise ValueError("current_dose must have observed subjects")
+    toxicity = mtadf_decision(
+        n,
+        toxicities,
+        y,
+        current_dose=current,
+        final=final,
+        toxicity_limit=toxicity_limit,
+        safety_cutoff=safety_cutoff,
+        prior=prior,
+    )
+    safe = np.flatnonzero(toxicity.admissible)
+    if safe.size == 0:
+        return MTADFLogisticDecision("stop", None, "no_admissible_dose", None, toxicity, None)
+    if not final and current is not None and not toxicity.admissible[current]:
+        return MTADFLogisticDecision(
+            "treat",
+            int(safe[-1]),
+            "unsafe_current_drop_to_highest_admissible",
+            None,
             toxicity,
             None,
         )
     if posterior is None:
-        raise ValueError("posterior fit is required after enrollment has begun")
+        raise ValueError("posterior fit is required when efficacy guides a decision")
     if (
         not isinstance(posterior, MTADFLogisticPosterior)
         or not np.array_equal(posterior.doses, d)
@@ -393,27 +474,8 @@ def mtadf_logistic_decision(
         or not np.array_equal(posterior.responses, y)
     ):
         raise ValueError("posterior fit must match dose coding and efficacy counts")
-    current = (
-        None if current_dose is None else _positive_int(current_dose, "current_dose", 0, n.size - 1)
-    )
-    anchor = current
-    if np.any(n) and (anchor is None or n[anchor] == 0):
-        anchor = int(np.flatnonzero(n)[0])
-    toxicity = mtadf_decision(
-        n,
-        toxicities,
-        y,
-        current_dose=anchor,
-        final=final,
-        toxicity_limit=toxicity_limit,
-        safety_cutoff=safety_cutoff,
-        prior=prior,
-    )
     mean = posterior.posterior_mean_efficacy
-    safe = np.flatnonzero(toxicity.admissible)
-    if safe.size == 0:
-        action, dose, reason = "stop", None, "no_admissible_dose"
-    elif final:
+    if final:
         action, dose, reason = (
             "select_obd",
             int(safe[np.argmax(mean[safe])]),
@@ -422,9 +484,6 @@ def mtadf_logistic_decision(
     elif current is None:
         dose = int(safe[0])
         action, reason = "start", "lowest_admissible_dose"
-    elif not toxicity.admissible[current]:
-        dose = int(safe[-1])
-        action, reason = "treat", "unsafe_current_drop_to_highest_admissible"
     else:
         target = int(safe[np.argmax(mean[safe])])
         dose = current + int(np.sign(target - current))
@@ -449,6 +508,7 @@ def mtadf_local_logistic_decision(
     warmup: int = 1000,
     chains: int = 4,
     rng: np.random.Generator | None = None,
+    bounce_guard_posterior: MTADFLocalLogisticPosterior | None = None,
     toxicity_limit: float = 0.3,
     safety_cutoff: float = 0.8,
     prior: MTADFPrior | None = None,
@@ -505,12 +565,13 @@ def mtadf_local_logistic_decision(
         )
     if current is None:
         raise ValueError("current_dose is required after enrollment has begun")
-    anchor = current if n[current] else int(np.flatnonzero(n)[0])
+    if n[current] == 0:
+        raise ValueError("current_dose must have observed subjects")
     toxicity = mtadf_decision(
         n,
         toxicities,
         y,
-        current_dose=anchor,
+        current_dose=current,
         final=final,
         toxicity_limit=toxicity_limit,
         safety_cutoff=safety_cutoff,
@@ -518,6 +579,20 @@ def mtadf_local_logistic_decision(
     )
     if not np.any(toxicity.admissible):
         return MTADFLocalLogisticDecision("stop", None, "no_admissible_dose", toxicity, None, None)
+    if not toxicity.admissible[current]:
+        lower_safe = np.flatnonzero(toxicity.admissible[:current])
+        if lower_safe.size:
+            return MTADFLocalLogisticDecision(
+                "treat",
+                int(lower_safe[-1]),
+                "unsafe_current_drop_to_highest_lower_admissible",
+                toxicity,
+                None,
+                None,
+            )
+        return MTADFLocalLogisticDecision(
+            "stop", None, "unsafe_current_without_safe_lower_dose", toxicity, None, None
+        )
     ce1, ce2 = (
         scalar(efficacy_escalation_cutoff, "efficacy_escalation_cutoff"),
         scalar(efficacy_deescalation_cutoff, "efficacy_deescalation_cutoff"),
@@ -535,6 +610,32 @@ def mtadf_local_logistic_decision(
         return MTADFLocalLogisticDecision(
             "start", dose, "initial_local_dose_ramp", toxicity, None, None
         )
+    if posterior is not None and not _local_fit_matches(posterior, n, y, d, current, length):
+        raise ValueError("posterior fit does not match the current local window")
+    guard_possible = current + 1 < n.size and n[current + 1] > 0
+    fit_shapes: list[tuple[int, int]] = []
+    if posterior is None:
+        draws, warmup, chains = _mcmc_options(draws, warmup, chains)
+        fit_shapes.append((chains, draws))
+    else:
+        fit_shapes.append(posterior.parameter_draws.shape[:2])
+    if guard_possible:
+        if bounce_guard_posterior is None:
+            if posterior is not None:
+                draws, warmup, chains = _mcmc_options(draws, warmup, chains)
+            fit_shapes.append((chains, draws))
+        elif not isinstance(bounce_guard_posterior, MTADFLocalLogisticPosterior):
+            raise ValueError("bounce_guard_posterior must be a local logistic posterior fit")
+        else:
+            if not _local_fit_matches(bounce_guard_posterior, n, y, d, current + 1, length):
+                raise ValueError("bounce_guard_posterior does not match the next local window")
+            fit_shapes.append(bounce_guard_posterior.parameter_draws.shape[:2])
+    elif bounce_guard_posterior is not None:
+        raise ValueError("bounce_guard_posterior requires observed next-dose data")
+    generated_count = int(posterior is None) + int(
+        guard_possible and bounce_guard_posterior is None
+    )
+    _preflight_local_decision(length, fit_shapes, generated_count, draws, warmup, chains)
     if posterior is None:
         if rng is None:
             raise ValueError("rng is required when posterior is not supplied")
@@ -549,48 +650,38 @@ def mtadf_local_logistic_decision(
             chains=chains,
             rng=rng,
         )
-    elif (
-        posterior.window_length != length
-        or not np.array_equal(
-            posterior.window_doses, d[_local_window_indices(current, length, n.size)]
-        )
-        or not np.array_equal(
-            posterior.window_subjects, n[_local_window_indices(current, length, n.size)]
-        )
-        or not np.array_equal(
-            posterior.window_responses, y[_local_window_indices(current, length, n.size)]
-        )
-    ):
-        raise ValueError("posterior fit does not match the current local window")
     p_positive = posterior.probability_positive_slope
     desired = current + 1 if p_positive > ce1 else current - 1 if p_positive < ce2 else current
+    used_bounce_guard_posterior = None
     if desired > current and current + 1 < n.size and n[current + 1] > 0:
-        if rng is None:
-            raise ValueError("rng is required to evaluate the local bounce guard")
-        next_posterior = mtadf_local_logistic_posterior(
-            n,
-            y,
-            d,
-            current_dose=current + 1,
-            window_length=length,
-            draws=draws,
-            warmup=warmup,
-            chains=chains,
-            rng=rng,
-        )
+        if bounce_guard_posterior is None:
+            if rng is None:
+                raise ValueError("rng is required to evaluate the local bounce guard")
+            next_posterior = mtadf_local_logistic_posterior(
+                n,
+                y,
+                d,
+                current_dose=current + 1,
+                window_length=length,
+                draws=draws,
+                warmup=warmup,
+                chains=chains,
+                rng=rng,
+            )
+        else:
+            next_posterior = bounce_guard_posterior
+        used_bounce_guard_posterior = next_posterior
         if next_posterior.probability_positive_slope < ce2:
             desired = current
     desired = min(max(desired, 0), n.size - 1)
-    if not toxicity.admissible[current]:
-        lower_safe = np.flatnonzero(toxicity.admissible[:current])
-        if lower_safe.size:
-            desired = int(lower_safe[-1])
-        else:
-            return MTADFLocalLogisticDecision(
-                "stop", None, "unsafe_current_without_safe_lower_dose", toxicity, posterior, None
-            )
-    elif not toxicity.admissible[desired]:
+    if not toxicity.admissible[desired]:
         desired = current
     return MTADFLocalLogisticDecision(
-        "treat", int(desired), "local_slope_policy", toxicity, posterior, None
+        "treat",
+        int(desired),
+        "local_slope_policy",
+        toxicity,
+        posterior,
+        None,
+        used_bounce_guard_posterior,
     )
