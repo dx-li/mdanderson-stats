@@ -77,6 +77,27 @@ flags for nonfinite diagnostics. Inspect these and choose sufficient sampler
 budgets for the intended application. A numerical fit failure stops the run;
 failed replications are not silently discarded.
 
+```python
+ess_result = simulate_bacis_oc(
+    [0.3], replications=32, draws=32, warmup=0, chains=2,
+    outcome_rng=153, sampler_rng=1153, compute_ess=True,
+)
+print(ess_result.mean_equivalent_sample_size)
+print(ess_result.equivalent_sample_size_mcse)
+```
+
+Set `compute_ess=True` to additionally retain the native fixed-response-count
+variance-match ESS for every replication and subgroup. The result exposes
+`equivalent_sample_size_by_replication`, its per-subgroup arithmetic mean
+`mean_equivalent_sample_size`, and the standard error of that mean in
+`equivalent_sample_size_mcse`. With one replication the MCSE is `None`. An ESS
+failure identifies the replication and subgroup and stops the request; the
+summary never silently drops a failed ESS. This averaging rule is an explicit
+Python summary convention. The archived one-trial package returns one ESS per
+subgroup, and the paper reports subgroup-specific ESS by scenario, but no
+native simulation aggregation implementation is available to establish exact
+table-generation parity.
+
 Outcome generation and sampler seeds use separate random streams. Supply
 distinct seeds or independent generators for reproducibility. Resource and
 model settings are validated before random generation; per-fit allocations,
@@ -92,5 +113,5 @@ classification discrepancy. The archived package has no operating-characteristic
 driver, and the paper's stated fixed-cutoff model conflicts with its reported
 classification rates. This simulator implements the archived model under
 explicit settings; it does not certify reproduction of the paper's tables.
-Average subgroup ESS, automatic cutoff calibration and native reports remain
-outside this interface. Catalog entry 153 remains partial.
+Automatic cutoff calibration and native reports remain outside this interface.
+Catalog entry 153 remains partial.

@@ -16,11 +16,13 @@ from numpy.typing import ArrayLike, NDArray
 
 from ._validation import FloatArray, scalar
 from .bacis import _integer, _probability, _readonly, bacis_fit
+from .bacis_ess import bacis_equivalent_sample_size
 
 _MAX_GROUPS = 100
 _MAX_REPLICATIONS = 1_000
 _MAX_TOTAL_SAMPLER_STEPS = 20_000_000
 _MAX_RESULT_CELLS = 2_000_000
+_MAX_ESS_WORK_PER_GROUP = 2_000
 
 
 def _generator(value: int | np.random.Generator | None, name: str) -> np.random.Generator:
@@ -29,6 +31,32 @@ def _generator(value: int | np.random.Generator | None, name: str) -> np.random.
     if value is None or (isinstance(value, (int, np.integer)) and not isinstance(value, bool)):
         return np.random.default_rng(value)
     raise ValueError(f"{name} must be an integer seed, Generator, or None")
+
+
+def _summarize_equivalent_sample_sizes(
+    values: NDArray[np.float64],
+) -> tuple[FloatArray, FloatArray | None]:
+    """Return subgroup means and MCSEs with scaling before sums/squares."""
+    if values.ndim != 2 or values.shape[0] < 1 or values.shape[1] < 1:
+        raise ValueError("ESS values must have shape (replications, groups)")
+    if not np.isfinite(values).all() or np.any(values < 0.0):
+        raise ValueError("ESS values must be finite and nonnegative")
+    scale = np.max(values, axis=0)
+    scale[scale == 0.0] = 1.0
+    scaled = values / scale[None, :]
+    scaled_mean = np.mean(scaled, axis=0)
+    mean = scale * scaled_mean
+    if not np.isfinite(mean).all():
+        raise ArithmeticError("mean equivalent sample size is not representable")
+    if values.shape[0] == 1:
+        return _readonly(mean), None
+    centered = scaled - scaled_mean[None, :]
+    scaled_mcse = np.sqrt(np.sum(centered * centered, axis=0) / (values.shape[0] - 1))
+    scaled_mcse /= np.sqrt(values.shape[0])
+    mcse = scale * scaled_mcse
+    if not np.isfinite(mcse).all():
+        raise ArithmeticError("equivalent sample size MCSE is not representable")
+    return _readonly(mean), _readonly(mcse)
 
 
 @dataclass(frozen=True)
@@ -40,7 +68,11 @@ class BaCISOperatingCharacteristics:
     familywise false-positive rate is the chance that at least one subgroup
     with truth ``<= phi_low`` is efficacious; it is ``None`` when there are no
     null subgroups. ``power`` is defined for truth ``> phi_low``, including
-    intermediate rates between the two classification centers.
+    intermediate rates between the two classification centers. Optional ESS
+    results are ``None`` unless ``compute_ess=True``. When requested, the
+    per-replication array has axes ``(replications, groups)`` and its
+    arithmetic mean is subgroup-specific. MCSE is ``None`` for one
+    replication because between-replication uncertainty is not estimable.
     """
 
     true_response_rates: FloatArray
@@ -77,6 +109,9 @@ class BaCISOperatingCharacteristics:
     draws: int
     warmup: int
     chains: int
+    equivalent_sample_size_by_replication: FloatArray | None = None
+    mean_equivalent_sample_size: FloatArray | None = None
+    equivalent_sample_size_mcse: FloatArray | None = None
 
 
 def simulate_bacis_oc(
@@ -98,6 +133,7 @@ def simulate_bacis_oc(
     chains: int = 2,
     outcome_rng: int | np.random.Generator | None = None,
     sampler_rng: int | np.random.Generator | None = None,
+    compute_ess: bool = False,
     max_work: int = 20_000_000,
 ) -> BaCISOperatingCharacteristics:
     """Simulate independent subgroup outcomes and analyze each replication.
@@ -107,7 +143,9 @@ def simulate_bacis_oc(
     explicit Generators must not share a BitGenerator; callers who create
     separate Generators are responsible for choosing distinct initial states.
     Work is serial and bounded by ``max_work`` (itself capped internally),
-    measured as ``replications * groups * chains * (draws + warmup)``.
+    measured as ``replications * groups * chains * (draws + warmup)`` plus a
+    conservative 2,000 work units per subgroup-replication when ``compute_ess``
+    is true. The ESS result array is included in the retained-result cell limit.
     """
     raw_truth = np.asarray(true_response_rates)
     if raw_truth.ndim != 1 or not 1 <= raw_truth.size <= _MAX_GROUPS:
@@ -139,6 +177,8 @@ def simulate_bacis_oc(
     trial_counts = trial_values.astype(np.int64)
 
     reps = _integer(replications, "replications", 1, _MAX_REPLICATIONS)
+    if not isinstance(compute_ess, (bool, np.bool_)):
+        raise ValueError("compute_ess must be boolean")
     low, high = _probability(phi_low, "phi_low"), _probability(phi_high, "phi_high")
     if low >= high:
         raise ValueError("phi_low must be less than phi_high")
@@ -173,12 +213,17 @@ def simulate_bacis_oc(
     if per_fit_retained > 500_000 or per_fit_steps > 1_000_000:
         raise ValueError("per-fit sampler dimensions exceed the bacis_fit work limits")
     sampler_steps = reps * per_fit_steps
+    ess_work = reps * groups * _MAX_ESS_WORK_PER_GROUP if compute_ess else 0
+    total_work = sampler_steps + ess_work
     if sampler_steps > _MAX_TOTAL_SAMPLER_STEPS:
         raise ValueError("simulation sampler work exceeds the 20,000,000-step hard limit")
     work_limit = _integer(max_work, "max_work", 1, _MAX_TOTAL_SAMPLER_STEPS)
-    if sampler_steps > work_limit:
+    if compute_ess and total_work > _MAX_TOTAL_SAMPLER_STEPS:
+        raise ValueError("simulation sampler and ESS work exceeds the hard work limit")
+    if total_work > work_limit:
         raise ValueError("simulation sampler work exceeds max_work")
-    if reps * groups * 4 > _MAX_RESULT_CELLS:
+    result_cells = reps * groups * (5 if compute_ess else 4)
+    if result_cells > _MAX_RESULT_CELLS:
         raise ValueError("simulation result arrays exceed the 2,000,000-cell limit")
 
     if (
@@ -205,6 +250,7 @@ def simulate_bacis_oc(
     max_rhat = np.empty(reps, dtype=float)
     max_mcse = np.empty(reps, dtype=float)
     diagnostic_nonfinite = np.empty(reps, dtype=bool)
+    equivalent_sample_sizes = np.empty((reps, groups), dtype=np.float64) if compute_ess else None
 
     for replication in range(reps):
         seed = int(sampler_generator.integers(0, np.iinfo(np.int64).max))
@@ -235,6 +281,20 @@ def simulate_bacis_oc(
             finite_rhat.size != fit.summary.split_rhat.size
             or finite_mcse.size != fit.summary.batch_mean_mcse.size
         )
+        if equivalent_sample_sizes is not None:
+            for group in range(groups):
+                try:
+                    ess = bacis_equivalent_sample_size(
+                        fit.probability_samples[:, :, group : group + 1],
+                        successes[replication, group : group + 1],
+                        trial_counts[group : group + 1],
+                    )
+                except (ArithmeticError, ValueError) as exc:
+                    raise ValueError(
+                        "equivalent sample size failed for replication "
+                        f"{replication}, subgroup {group}: {exc}"
+                    ) from exc
+                equivalent_sample_sizes[replication, group] = ess.equivalent_sample_size[0]
         del fit
 
     null_groups = truth <= low
@@ -262,6 +322,11 @@ def simulate_bacis_oc(
     single_cluster_events = np.all(high_cluster == high_cluster[:, :1], axis=1)
     single_cluster = float(single_cluster_events.mean())
     single_cluster_se = float(np.sqrt(single_cluster * (1 - single_cluster) / reps))
+
+    mean_ess: FloatArray | None = None
+    ess_mcse: FloatArray | None = None
+    if equivalent_sample_sizes is not None:
+        mean_ess, ess_mcse = _summarize_equivalent_sample_sizes(equivalent_sample_sizes)
 
     return BaCISOperatingCharacteristics(
         _readonly(truth),
@@ -298,4 +363,7 @@ def simulate_bacis_oc(
         draw_count,
         warmup_count,
         chain_count,
+        _readonly(equivalent_sample_sizes) if equivalent_sample_sizes is not None else None,
+        mean_ess,
+        ess_mcse,
     )

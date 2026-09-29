@@ -94,3 +94,32 @@ verify plumbing only, not converged multigroup operating characteristics.
 The singleton oracle verifies decision semantics. Multigroup borrowing
 continues to rely on the separately validated two-stage model and its
 retained convergence diagnostics.
+
+## Optional subgroup equivalent sample sizes
+
+The archived `bacistool` source returns one ESS for each subgroup in a
+completed trial. In `R/internal.R`, `OneTrial` computes
+`compESS(1 / var(p.sampled), xDat[i], xObs[i])` separately for subgroup `i`;
+`bacisOneTrial.R` places this vector in the “Effective sample size” result row.
+The input variance is the unbiased variance of the retained posterior response
+probability draws. The implementation follows the package's fixed-response-
+count variance matching, which chooses among admissible roots using the
+observed response rate. This is more specific than the paper's description of
+matching beta posterior mean and variance, so the optional simulator summary
+does not claim to reproduce the paper's published ESS table exactly.
+
+When requested, Python retains this per-trial, per-subgroup vector and reports
+the arithmetic mean over replications for each subgroup, with sample-standard-
+deviation MCSE. The archived package and paper report subgroup-specific
+values, but the simulation aggregation code was not included in the recovered
+package; arithmetic averaging is therefore an explicit Python summary rule.
+Undefined fixed-y matches stop the simulation with replication/subgroup
+context rather than dropping that replicate.
+
+Focused verification for the optional path passed 10 BaCIS simulation/ESS tests
+with warnings treated as errors (4.20 seconds, peak RSS 129,810,432 bytes or
+123.80 MiB, zero swaps). An independent base-R polynomial-root fixture matched
+20 per-trial subgroup ESS values and five subgroup mean/MCSE summaries; the
+largest absolute ESS difference was `9.31e-13`. Ruff check/format and mypy
+passed for the changed simulation module and tests. This is bounded numerical
+verification, not full paper-table or convergence validation.
