@@ -47,3 +47,26 @@ count as explicit computational settings. Its MCSE and split-Rhat are
 diagnostics, not automatic convergence guarantees. Supplementary sections
 were not needed to recover the three conditional formulas; any further
 application defaults remain unverified.
+
+## Numerical validation
+
+Twenty-five focused BDA, TITE conduct and reference tests passed with warnings
+treated as errors in 1.77 seconds, at 134.97 MiB peak RSS and zero swaps.
+Targeted Ruff checks, formatting and mypy passed. Complete-data summaries
+reduce directly to the existing BOIN12 calculation; pending-state checks cover
+reproducibility, repeated imputation, conservation and numerical bounds.
+
+The independent `tools/reference_tite_boin12_bda.py` enumerates all 16 labeled
+missing-state assignments for a four-patient example. Each term is integrated
+analytically with the multivariate beta ratio of Dirichlet normalizers, then
+the complete-data BOIN12 summaries are averaged using those exact state
+probabilities. The synthetic prior `(1.2,0.8,0.3,0.7)` has concentration three;
+it is a numerical reference, not the article's ESS-one prior.
+
+A separate seeded sampler comparison uses four chains, 1,000 warmup steps
+and 4,000 retained draws per chain. All 13 joint-probability, completed-count
+and BOIN12 summaries agree within 1.372 estimated batch MCSEs. Maximum split
+R-hat is 1.000205 for joint probabilities and 1.000271 for BOIN12 metrics.
+The reference/comparison process took 3.321 seconds, peaked at 126.39 MiB RSS
+and reported zero swaps. These checks validate the explicit model and Python
+sampler; they do not establish native application equivalence.

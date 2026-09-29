@@ -44,9 +44,10 @@ as b, the main paper gives
 
 The reciprocal formula for pending efficacy follows by exchanging endpoints.
 The article points derivations of the three missing-data patterns to
-Supplementary Section S.3. The both-pending conditional and the fully
-specified four-cell prior were not recoverable from the local source cache or
-the accessible primary-article text. No BDA sampler is introduced here, since
-choosing a joint prior association or filling in the missing derivation would
-be an unlabelled modeling assumption. Native chain length, burn-in, and other
-sampler settings are likewise not specified in the recovered main article.
+Supplementary Section S.3. The initial final-selection review did not recover
+the both-pending formula. A subsequent inspection of the main article recovered
+Equations 8–10 and the stated working independence of event times, sufficient
+to implement all three patterns. The [BDA implementation audit](tite-boin12-bda-audit.md)
+supersedes that retrieval limitation. The exact joint prior association and
+native sampler settings remain unspecified; the Python BDA API requires
+explicit prior concentrations and exposes its computational settings.
