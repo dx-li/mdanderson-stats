@@ -897,6 +897,12 @@ from .multc_core import (
     MultcState,
     multc_lean_design,
 )
+from .multc_simulation import (
+    MultcSimulationConfig,
+    MultcSimulationResult,
+    simulate_multc,
+    simulate_multc_trial,
+)
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
 from .multinomial_power import MultinomialPower, format_multinomial_power, multinomial_power
@@ -1678,6 +1684,10 @@ __all__ = [
     "MultcCalendarLook",
     "MultcCalendarTrial",
     "run_multc_calendar_trial",
+    "MultcSimulationConfig",
+    "MultcSimulationResult",
+    "simulate_multc_trial",
+    "simulate_multc",
     "EffToxPrior",
     "EffToxPriorMoments",
     "EffToxCalibration",

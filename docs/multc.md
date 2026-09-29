@@ -2,7 +2,8 @@
 
 Catalog entries **12 (Multc Lean)** and **3 (Multc99)** are partial. Python
 provides marginal response/toxicity monitoring, full and reachable stopping
-boundaries, sequential decisions, and exact joint operating characteristics.
+boundaries, sequential decisions, exact joint operating characteristics, and
+calendar simulation with explicit endpoint timing.
 This includes the fixed-reference Phase IIa rules described for Multc99;
 Multc99's broader multiple-event designs remain pending. The official
 [Multc Lean catalog](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12)
@@ -186,9 +187,85 @@ The [user guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareF
 specifies exponential arrival times and a truncated-exponential response-time
 model, but it does not specify a distinct toxicity ascertainment-time law.
 This API therefore requires explicit timing inputs. It does not claim native
-duration simulation or random-stream parity. Five independent R examples
+duration or random-stream parity. Five independent R examples
 verify calendar paths using direct beta tails and enumeration of hypothetical
 pending completions; see the [audit](../research/multc-calendar-audit.md).
+
+## Simulate trial duration
+
+`simulate_multc_trial` generates paired outcomes and observation times, then
+runs the calendar replay. `simulate_multc` repeats this serially and reports
+enrollment, eventual response/toxicity totals, stopping decisions, accrual and
+follow-up duration, pause time, and Monte Carlo standard errors.
+
+```python
+from mdanderson_stats import MultcSimulationConfig, multc_lean_design, simulate_multc
+
+duration_design = multc_lean_design(
+    12,
+    response_prior=(1, 1),
+    toxicity_prior=(1, 1),
+    historical_response=0.3,
+    historical_toxicity=0.3,
+    response_cutoff=0.95,
+    toxicity_cutoff=0.95,
+    min_subjects=3,
+    cohort_size=3,
+    pretrial_check=False,
+)
+timing = MultcSimulationConfig(
+    duration_design,
+    response_window=2,
+    toxicity_delay=1,
+    response_timing="conditional_truncated_exponential",
+)
+simulation = simulate_multc(
+    timing,
+    [0.12, 0.28, 0.18, 0.42],  # both, response only, toxicity only, neither
+    accrual_rate=3,
+    trials=32,
+    seed=2026,
+)
+print(simulation.mean_duration, simulation.duration_mcse)
+print(simulation.decisions, simulation.decision_probability)
+```
+
+The accrual rate and delays must use the same time unit. The first enrollment
+is time zero; later gaps are exponential with mean `1/accrual_rate` on the
+accrual-open clock. Durations therefore start at first enrollment. They do
+not include waiting between study opening and the first patient. The
+prior-only screen can instead stop a trial with zero enrollment and duration.
+
+For responding patients, the underlying exponential response time has 95%
+probability of occurring by `response_window`. The required `response_timing`
+choice resolves the guide's ambiguous truncation convention:
+
+- `conditional_truncated_exponential` conditions that time to fall within
+  the window, with no point mass at its end.
+- `clip_at_window` clips later response times to the window, putting 5% of
+  responding patients at its end.
+
+Nonresponses become known at the response window. Every patient's toxicity
+status becomes known after the explicitly supplied `toxicity_delay`, including
+those without toxicity. Joint outcome probabilities preserve response/toxicity
+association; positive response times are generated independently of toxicity
+status and accrual. For other timing models, supply observation times directly
+to `run_multc_calendar_trial`.
+
+The reported duration and accrual intervals are empirical 2.5th–97.5th
+percentiles using linear interpolation, not confidence intervals for the mean.
+MCSEs describe simulation uncertainty and are undefined (`NaN`) for a single
+trial. All simulations, including prior-only rejections, contribute to the
+denominators. `cap_complete` means maximum enrollment, not an efficacy or safety
+declaration. Returned `trial_seeds` reproduce individual histories through
+`simulate_multc_trial` with the same configuration, truth and accrual rate.
+
+Up to 10,000 simulations run serially, releasing each history before the next
+trial. Default preflight limits are 500 million work units and 512 million
+estimated storage bytes; callers can lower them. These bounds cover retained
+summaries and estimated live simulation storage, not the interpreter or
+imported libraries. No native random-stream or duration-distribution parity
+is claimed. See the [simulation audit](../research/multc-simulation-audit.md).
 
 ## Numerical scope and remaining work
 
@@ -213,10 +290,10 @@ type check also passed. The full repository test suite was not run for this
 isolated addition; validation concentrated on the statistical calculations and
 bounded allocations.
 
-Aggregate duration simulation remains pending: native
+The native
 [accrual logistics](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcLogistics.pdf)
 allow accrual to continue while outcomes are pending when they cannot change the
-next decision; the replay above implements that decision logic. Native
+next decision; the replay and simulation above implement that decision logic. Native
 configuration/report formats, protocol documents, and
 the general Multc99 multiple-event workflow are also pending. Parameter
 elicitation and distribution inequalities already have separate package APIs:

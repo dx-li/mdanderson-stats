@@ -88,6 +88,7 @@
       "implemented_features": [
         "Documented Multc99 Phase IIa fixed-historical-rate marginal stopping rules via multc_lean_design; native lower response cutoff mapped to complementary upper cutoff",
         "Response-only, toxicity-only or combined monitoring with explicit cutoff-one disabling; Python exact joint trial probabilities extend the native Phase IIa subset",
+        "Explicit paired-endpoint calendar replay and serial duration simulation are available for the supported Phase IIa mapping; native timing and RNG parity are not claimed",
         "General Multc99 multiple-event workflows, native source/archive audit and file/report interfaces remain pending; see docs/multc.md"
       ],
       "validation": [
@@ -270,14 +271,16 @@
         "Full marginal stopping bounds and compact reachable first-crossing count intervals",
         "Bounded exact joint response/toxicity operating characteristics: separate stop reasons, sample-size distribution, mean/SD and expected event counts; explicit independence helper",
         "Bounded single-trial calendar replay with separately supplied endpoint availability, look-ahead suspension, frozen accrual-open clock and complete follow-up",
-        "Aggregate duration simulation, native configuration/report formats and protocol memo remain pending; see docs/multc.md"
+        "Serial joint-outcome calendar simulation with explicit clipped/conditional response timing, caller-supplied toxicity delay, replayable child seeds and duration/decision/enrollment summaries with Monte Carlo error",
+        "Native timing/RNG parity, configuration/report formats and protocol memo remain pending; see docs/multc.md"
       ],
       "validation": [
         "Official N=30 statistical tutorial full/potential boundaries before the sample cap",
         "Independent base-R direct shifted-beta integrations and complete 4^6 paired-outcome path enumeration for cohort sizes 1 and 2 with different associations",
         "Focused checks for support endpoints, tail underflow, strict symmetry ties, pretrial rejection and allocation caps; no native binary execution",
         "Five independent R direct-beta/pending-completion calendar scenarios: 18 patient rows and 12 look rows; tools/reference_multc_calendar.R and tests/fixtures/multc-calendar-*.csv",
-        "Calendar checks for no future-outcome use, suspension/resumption, cap-bound metadata and unrepresentable positive time increments; research/multc-calendar-audit.md"
+        "Calendar checks for no future-outcome use, suspension/resumption, cap-bound metadata and unrepresentable positive time increments; research/multc-calendar-audit.md",
+        "Eight focused calendar/simulation checks including analytic fixed-enrollment duration mean/MCSE, joint outcome truth, seed replay, extreme timing representation and work/storage preflight; research/multc-simulation-audit.md"
       ]
     },
     {
