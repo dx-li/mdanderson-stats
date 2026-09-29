@@ -1,6 +1,6 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `55eb2dc` adds BOP2-DC Normal endpoint
+Latest verified package checkpoint: `365871a` adds BOP2-DC Normal endpoint
 monitoring/replay/simulation and exact paired-endpoint finite-grid calibration.
 Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
@@ -667,3 +667,25 @@ write route was retried or bypassed. Updated packages and the verified
 all-refs bundle preserve committed root/Luna checkpoints locally. Uncommitted
 Normal calibration and randomized-comparison work is outside the validated
 package and local `master`.
+
+### Normal simulation precision follow-up
+
+Before closing this batch, review identified that adding a large absolute
+truth mean during simulation could erase residual variation before the
+otherwise centered monitor received it. Commit `d21a011` generates residuals
+and shifts the design instead. The parent verified that the previous code
+changed decisions/enrollment for two of 32 trials at seed 0 after a `1e15`
+model offset, while the corrected version agrees exactly. Commit `365871a`
+records that discriminating regression and documents the simulation coordinates.
+The five focused Normal tests pass; the parent reran the corrected regression
+and all 898 independent-R summaries successfully.
+
+The final wheel/source build is verified at
+`365871ae63440de8cca2855686d69ab94283fdf8`: all 1,504 exports, 544 source/data
+files, catalog/license checks and both guide examples pass. Verification takes
+10.888 seconds, peaks at 109.12 MiB and reports zero swaps. Local `master`
+advances to this checkpoint plus the present audit. The verified code is
+117 commits ahead of the last verified GitHub heads at `45b6e307`; publication
+restrictions are unchanged. In-progress Normal calibration and randomized
+comparison implementations remain on worker branches pending independent
+reference checks.
