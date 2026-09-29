@@ -29,3 +29,23 @@ so the result is conditional on the chosen tape and does not average over
 allocation schedules. Candidate selection is only over the caller's finite
 grid; ties preserve product/input order after the stated primary and secondary
 objectives.
+
+## Independent check
+
+`tools/reference_bop2_dc_randomized_binary_calibration.R` integrates Beta
+differences using an integer-shape finite-polynomial CDF and enumerates all
+16 response paths for each four-patient candidate. The checker compares 66
+candidate configurations in five grids: CGR with graduation, futile ESS with
+graduation, no graduation, duplicate-candidate ties, and an infeasible grid.
+All 1,980 probability/enrollment summaries agree within 2e-14 absolute error;
+feasibility and selection agree. CGR selects index 0 and ESS index 4 in the
+shared graduation grid. Runtime after imports was 0.264 seconds, peak RSS
+109.79 MiB, and zero swaps on the validation machine.
+
+This reference exposed floating accumulation changing an exact expected-N tie
+by 4e-16. Selection and inclusive OC limits now recognize only relative
+binary64 roundoff, scaled by trial length, without an absolute floor that
+would erase rare-event differences. Posterior decision cutoffs remain strict.
+A separate guard rejects whole-grid cutoff underflow before table allocation,
+and resource preflight accounts for every shared-rule schedule scan and live
+four-corner string workspace. No additional CI workflow was introduced.

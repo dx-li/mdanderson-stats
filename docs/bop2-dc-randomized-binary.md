@@ -83,5 +83,60 @@ limit. Outcomes must be completely observed; there is no delayed-data protocol.
 Independent base-R integration and exhaustive four-patient path enumeration
 verify posterior tails, strict decisions, early graduation, unequal allocation
 and operating characteristics. See the
-[audit](../research/bop2-dc-randomized-binary-audit.md). Randomized-design
-calibration remains open.
+[audit](../research/bop2-dc-randomized-binary-audit.md).
+
+## Finite-grid calibration
+
+`optimize_bop2_dc_randomized_binary` searches the four lambda/gamma grids with
+exact operating characteristics conditional on the allocation tape. Both truth
+pairs are explicit `(control_probability, treatment_probability)` values;
+control rates may differ between the futile and effective scenarios. The
+futile treatment-control effect must be smaller than the effective effect,
+and the effective effect must meet CMV.
+
+```python
+from mdanderson_stats import optimize_bop2_dc_randomized_binary
+
+calibrated = optimize_bop2_dc_randomized_binary(
+    4, theta_lrv=0, theta_cmv=.2,
+    futile_truth=(.2, .2), effective_truth=(.1, .7),
+    control_prior=(1, 2), treatment_prior=(2, 1),
+    arm_assignments=(0, 1, 0, 1), looks=(2, 4),
+    lambda_lrv_grid=(.6, .8), lambda_cmv_grid=(.2, .4),
+    gamma_lrv_grid=(0, .5), gamma_cmv_grid=(0, .5),
+    false_go_limit=.87, false_no_go_limit=.05, false_consider_limit=.2,
+    graduate_at_interim=True, objective="cgr",
+)
+print(calibrated.selected_index)
+print(calibrated.candidates.expected_sample_size[:, calibrated.selected_index])
+```
+
+This tiny, deliberately permissive example illustrates selection, not clinical
+error targets. `objective="cgr"` maximizes effective-truth favorable decisions,
+then minimizes futile expected enrollment; `"ess_futile"` reverses those
+priorities. Favorable decisions include early graduation and final go. False
+no-go includes interim and final no-go at the effective truth; optional false
+consider is the larger final-consider probability across the two truths.
+No feasible candidate raises `BOP2DCRandomizedBinaryInfeasibleError`.
+
+`candidates.parameters` has columns lambda-LRV, lambda-CMV, gamma-LRV,
+gamma-CMV in Cartesian product order (last grid varies fastest).
+`decision_probability` has axes `(truth, candidate, look, decision)`;
+`sample_size_probability` retains `(truth, candidate, look)`, and
+`expected_sample_size` is `(truth, candidate)`. Truth order is futile then
+effective. All candidates, including infeasible ones, remain visible when a
+selection is available. Arrays are owned and read-only.
+
+Posterior comparison tables are cached once per count state and reused across
+the grid. Roundoff-level score ties retain input order, using a relative
+binary64 tolerance scaled by trial length with no absolute floor. The same
+small tolerance preserves inclusive error limits. It does not relax the strict
+posterior decision rules or their quadrature safeguards. These conditional
+exact probabilities have no Monte Carlo standard errors or holdout simulation.
+Grid size, comparison tables, recursion work and live memory are bounded before
+computation; exceeding a bound raises rather than silently approximating.
+
+Independent R integration and exhaustive response-path enumeration validate
+66 candidate configurations, both selection objectives, tied candidates and
+infeasibility: 1,980 probability/enrollment summaries agree. See the
+[calibration audit](../research/bop2-dc-randomized-binary-calibration-audit.md).

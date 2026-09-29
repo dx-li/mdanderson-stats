@@ -1,0 +1,11 @@
+config_id,scenario,control_probability,treatment_probability
+cgr_grad,futile,0.2,0.2
+cgr_grad,effective,0.1,0.7
+ess_grad,futile,0.2,0.2
+ess_grad,effective,0.1,0.7
+ess_nograd,futile,0.35,0.2
+ess_nograd,effective,0.1,0.7
+tie_first,futile,0.2,0.2
+tie_first,effective,0.1,0.7
+infeasible,futile,0.2,0.2
+infeasible,effective,0.1,0.7
