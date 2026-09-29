@@ -192,9 +192,7 @@ def bootstrap_interval_competing_risk_coefficients(
         raise ValueError("interval competing-risk bootstrap fit exceeds the per-fit work limit")
     estimated_fit_work = int(max_iterations) * (original_work + b * replicate_work)
     if estimated_fit_work > _MAX_TOTAL_FIT_WORK:
-        raise ValueError(
-            "worst-case bootstrap fitting work exceeds the 2000000000-unit hard limit"
-        )
+        raise ValueError("worst-case bootstrap fitting work exceeds the 2000000000-unit hard limit")
 
     tape = (
         None

@@ -82,5 +82,9 @@ rewriting unrelated fixtures. The default input and output locations are the
 committed fixture paths; the ignored `research/raw/intccr` source cache and
 the required source-only R prerequisites must be available.
 
+The portable generator was executed from the integrated checkout into a separate
+ignored directory. All five regenerated fixture files were byte-identical to
+the committed references (2.224 seconds, 92.50 MiB peak child RSS, zero swaps).
+
 Ruff, mypy, Python compilation, and `git diff --check` pass on the final source.
 No full suite or large simulation was run.
