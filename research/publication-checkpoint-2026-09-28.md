@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `78076d9` adds ARAND calendar replay and
-the published MDS-HOPE five-group alternative. The final
+Latest verified package checkpoint: `71538dd` adds ARAND serial simulation
+and operating-characteristic summaries. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1273,3 +1273,40 @@ advances master, main and the development branch by ordinary atomic
 fast-forward push. Independent remote-SHA verification and local artifact
 hashes are recorded in the ignored `dist/community-checkpoint.json`; a local
 commit alone does not establish GitHub publication.
+
+
+## ARAND simulation community checkpoint
+
+Verified package code is `71538dd9b922da35b7f65d310d4d5a804835854d`.
+Luna implemented bounded serial Poisson-accrual simulation and per-arm
+operating-characteristic summaries for binary and exponential outcomes. Root
+reviewed completion proofs and numerical stability, integrated public exports
+and guides, and checked the assembled package. Candidate exhaustion raises
+instead of silently truncating trials; duration summaries use scaled arithmetic
+and each history is released before the next trial. Separate suspension,
+permanent-futility and early-winner-displacement events avoid guessing the
+native dropped-arm aggregation. Trial seeds reproduce individual histories.
+
+All 15 affected tests pass. Three seeded two-arm exponential comparisons
+preserve assignments, observed events and probabilities when converting means
+to medians. A 512-trial single-arm simulation matches Poisson expected enrollment
+and zero-enrollment probability within six analytical Monte Carlo standard
+errors. Combined checks take 1.639 seconds at 147.12 MiB peak RSS, zero swaps;
+the public simulation example also passes. Targeted lint, formatting and type
+checks pass. No broad numerical suite or new CI pipeline was introduced.
+
+The previous GitHub run stopped at import ordering in two pre-existing reference
+scripts. This checkpoint makes the two narrow import-only corrections shown by
+that job; it does not claim that a new hosted run has already passed.
+
+Cached wheel/source builds and isolated wheel verification pass: 1,596 exports,
+569 committed package source/data files byte-identical in both artifacts, 138
+catalog entries, preserved notices and three examples from two guides. Package
+verification takes 11.020 seconds at 125.95 MiB peak RSS, zero swaps. Coverage
+remains 63 implemented, 67 partial and eight pending. Native ARAND controller,
+RNG and desktop report equivalence remain open; mixed-license terms still apply.
+
+This audit-only addition follows the verified code. Publication uses an ordinary
+atomic fast-forward push to master, main and the development branch, with
+independent remote verification and artifact hashes in the local ignored
+manifest. Trinary EffTox calibration remains isolated development work.
