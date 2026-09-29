@@ -95,4 +95,5 @@ require integration. These are resource limits, not clinical design defaults.
 
 Independent R Gamma-density integration and as-of calendar calculations provide
 validation; see the [audit](../research/bop2-dc-randomized-survival-audit.md).
-Randomized survival calibration remains open.
+[Finite-grid calibration](bop2-dc-randomized-calibration.md) adds explicit
+error constraints, full candidate evidence and an independent holdout.

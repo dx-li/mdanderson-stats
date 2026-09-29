@@ -4421,7 +4421,10 @@
         "Normal endpoint finite-grid calibration with explicit grids, truth-centered common paths, full candidate OC/MCSE evidence, CGR/futile-ESS selection and independent holdout feasibility without reselection",
         "Randomized binary-arm posterior risk differences with explicit Beta priors/allocation tape, signed margins, optional OBrien-Fleming graduation, absorbing replay and exact conditional operating characteristics; numerical decision ambiguity raises explicitly",
         "Randomized Normal arm comparisons with explicit independent NIG priors, bounded Student-t difference quadrature, common-offset-stable monitoring/replay and serial fixed-allocation simulation with graduation and MCSE summaries",
-        "Randomized exponential-survival comparisons with explicit independent mean-survival IG priors, signed median-time differences, as-of censoring/zero-duration events, absorbing calendar replay and fixed/Poisson accrual simulation with arm-level audit summaries"
+        "Randomized exponential-survival comparisons with explicit independent mean-survival IG priors, signed median-time differences, as-of censoring/zero-duration events, absorbing calendar replay and fixed/Poisson accrual simulation with arm-level audit summaries",
+        "Randomized binary finite-grid calibration with cached Beta count-state comparisons, exact conditional operating characteristics, all-candidate evidence and numerically stable CGR/futile-ESS selection",
+        "Randomized Normal finite-grid calibration with separate arm means/SDs, shared truth-centered paths, full candidate probability/enrollment/MCSE evidence and independent holdout feasibility without reselection",
+        "Randomized survival finite-grid calibration with arm-specific medians, common arrival/event paths, cached posterior differences, candidate counts/MCSEs and independent holdout arm event/exposure summaries"
       ],
       "validation": [
         "Five independent base-R posterior and decision cases match Python",
@@ -4438,7 +4441,10 @@
         "Independent base-R Beta polynomial integration and 64 response paths across four randomized-binary designs verify 100 analyses and 336 summaries, including 12 exact OC scenarios, unequal allocation, signed margins, early graduation and strict equality; largest posterior discrepancy 1.094e-10 is within reported numerical error. docs/bop2-dc-randomized-binary.md",
         "Independent R Student-t density integration and Cauchy identities verify 12 randomized Normal cases, 21 reached analyses, and 48 simulated trials with 78 looks: 263 numeric summaries agree, including early graduation, strict equality, unequal/empty arms, 1e15 offsets and unit changes. Maximum posterior discrepancy 6.273e-10 is within reported error. docs/bop2-dc-randomized-normal.md",
         "Independent R Gamma-density integration and calendar calculations verify 10 randomized survival tapes/17 looks and 48 fixed/Poisson-accrual trials/71 looks: 763 summaries agree, including 24 graduations, zero-duration events, pending censoring, allocation asymmetry and 1e±100 units. Largest posterior discrepancy 4.922e-11 is within reported error. docs/bop2-dc-randomized-survival.md",
-        "Randomized-design calibration in source §2.4 remains a substantive gap; completed monitor/replay/simulation workflows do not imply native application/report/RNG parity. research/bop2-dc-remaining-methods.md"
+        "Independent R Beta integration and full response-path enumeration verify 66 binary candidate configurations and 1980 numeric summaries, distinct CGR/ESS winners, stable ties and infeasibility. research/bop2-dc-randomized-binary-calibration-audit.md",
+        "Independent R Student-t density integration verifies 36 Normal candidate configurations and 1092 summaries, distinct CGR/ESS winners and a calibration-pass/holdout-fail case without reselection. research/bop2-dc-randomized-normal-calibration-audit.md",
+        "Independent R Gamma-density integration/calendar replay verifies 36 survival candidate configurations and 1791 summaries, fixed/Poisson accrual, signed margins, different objective winners and held-out arm events/exposure. research/bop2-dc-randomized-survival-audit.md",
+        "Randomized multiple/co-primary endpoint models, combined decisions, conduct/OCs and calibration remain a substantive source-backed gap. Completed single-endpoint workflows do not imply native application/report/RNG parity. research/bop2-dc-remaining-methods.md"
       ]
     },
     {

@@ -1194,8 +1194,11 @@ operating characteristics. [Randomized Normal comparisons](docs/bop2-dc-randomiz
 add independent Student-t posterior differences, complete-outcome replay and
 bounded simulation. [Randomized survival comparisons](docs/bop2-dc-randomized-survival.md)
 add median-time differences, as-of censoring and fixed/Poisson accrual simulation.
-Both support graduation and retain numerical-error safeguards. Randomized-design
-calibration remains open.
+Both support graduation and retain numerical-error safeguards. Randomized binary
+calibration uses exact conditional operating characteristics; [Normal and survival
+calibration](docs/bop2-dc-randomized-calibration.md) reuse common paths and report
+independent holdout feasibility without reselection. Randomized multiple and
+co-primary endpoint workflows remain open.
 
 [BARPO](docs/barpo.md) adds binary posterior monitoring with or without a control
 and four adaptive allocation methods: BARCP, BARN2N, BARMTV and explicit-target

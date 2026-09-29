@@ -9,7 +9,10 @@ replay, simulation and independently checked finite-grid calibration.
 Randomized binary comparisons now include fixed-allocation monitoring, replay
 and exact operating characteristics, with optional early graduation. Randomized
 Normal and exponential-survival comparisons now have monitoring, replay and
-bounded serial simulation with independent R evidence.
+bounded serial simulation with independent R evidence. All three single-endpoint
+randomized models now have finite-grid calibration: exact conditional binary
+recursion, and Normal/survival common-path Monte Carlo calibration with independent
+holdouts. Their dedicated calibration audits record independent R evidence.
 
 The cached primary preprint, `research/raw/BOP2-DC/paper.txt`, also establishes
 these source-backed targets:
@@ -32,11 +35,27 @@ these source-backed targets:
   single-arm decisions do not substitute. The binary-arm implementation is
   independently checked in `bop2-dc-randomized-binary-audit.md`; continuous and
   survival workflows are checked in `bop2-dc-randomized-normal-audit.md` and
-  `bop2-dc-randomized-survival-audit.md`. Randomized calibration remains open.
+  `bop2-dc-randomized-survival-audit.md`. Single-endpoint randomized calibration is now independently checked.
   Section 3.2 gives simulation
   examples and an example 2:1 allocation, which is not a universal default.
 
-These are source-backed methods, not report-format or UI differences. The
-public catalog remains partial until coverage is established. The source's
+## Remaining randomized multiple/co-primary endpoints
+
+The paper also explicitly covers multiple/co-primary endpoints in randomized
+trials (abstract lines 33–34 and introduction lines 89–97). Section 2.1.4
+(lines 239–279) gives the joint Multinomial–Dirichlet endpoint model; §2.2
+(lines 369–411) specifies OR/AND combination of endpoint decisions. Section
+2.4 extends the previously described models to independent arms and posterior
+experimental-minus-control comparisons. Section 3.2 (lines 663–667) explicitly
+reports randomized multiple-endpoint and efficacy/toxicity simulations in
+Supplement Tables S3–S4.
+
+The current paired-endpoint implementation is single-arm. Randomized paired
+posterior comparisons, combined decisions, trial conduct/operating
+characteristics and calibration remain a substantive method-family gap.
+The cached main paper does not contain the full supplement scenarios, so
+table-level parity must not be claimed without obtaining those settings.
+These gaps are separate from native UI, report formats or RNG parity. The
+public catalog remains partial until this statistical family is covered. The source's
 effective-truth and clinical-utility guidance should be documented without
 inventing additional restrictions on caller-declared futile scenarios.

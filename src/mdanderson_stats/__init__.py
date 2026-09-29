@@ -309,11 +309,24 @@ from .bop2_dc_randomized_binary import (
     BOP2DCRandomizedBinaryState,
     bop2_dc_randomized_binary_design,
 )
+from .bop2_dc_randomized_binary_optimization import (
+    BOP2DCRandomizedBinaryCandidateEvidence,
+    BOP2DCRandomizedBinaryInfeasibleError,
+    BOP2DCRandomizedBinaryOptimization,
+    optimize_bop2_dc_randomized_binary,
+)
 from .bop2_dc_randomized_normal import (
     BOP2DCRandomizedNormalDesign,
     BOP2DCRandomizedNormalReplay,
     BOP2DCRandomizedNormalState,
     bop2_dc_randomized_normal_design,
+)
+from .bop2_dc_randomized_normal_optimization import (
+    BOP2DCRandomizedNormalCandidateEvidence,
+    BOP2DCRandomizedNormalInfeasibleError,
+    BOP2DCRandomizedNormalOperatingCharacteristics,
+    BOP2DCRandomizedNormalOptimization,
+    optimize_bop2_dc_randomized_normal,
 )
 from .bop2_dc_randomized_normal_simulation import (
     BOP2DCRandomizedNormalSimulation,
@@ -325,6 +338,12 @@ from .bop2_dc_randomized_survival import (
     BOP2DCRandomizedSurvivalTrial,
     bop2_dc_randomized_survival_design,
     run_bop2_dc_randomized_survival_trial,
+)
+from .bop2_dc_randomized_survival_optimization import (
+    BOP2DCRandomizedSurvivalCalibrationOC,
+    BOP2DCRandomizedSurvivalInfeasibleError,
+    BOP2DCRandomizedSurvivalOptimization,
+    optimize_bop2_dc_randomized_survival,
 )
 from .bop2_dc_randomized_survival_simulation import (
     BOP2DCRandomizedSurvivalSimulation,
@@ -1720,16 +1739,29 @@ __all__ = [
     "BOP2DCRandomizedBinaryReplay",
     "BOP2DCRandomizedBinaryState",
     "bop2_dc_randomized_binary_design",
+    "BOP2DCRandomizedBinaryCandidateEvidence",
+    "BOP2DCRandomizedBinaryInfeasibleError",
+    "BOP2DCRandomizedBinaryOptimization",
+    "optimize_bop2_dc_randomized_binary",
     "BOP2DCRandomizedNormalDesign",
     "BOP2DCRandomizedNormalReplay",
     "BOP2DCRandomizedNormalState",
     "bop2_dc_randomized_normal_design",
+    "BOP2DCRandomizedNormalCandidateEvidence",
+    "BOP2DCRandomizedNormalInfeasibleError",
+    "BOP2DCRandomizedNormalOperatingCharacteristics",
+    "BOP2DCRandomizedNormalOptimization",
+    "optimize_bop2_dc_randomized_normal",
     "BOP2DCRandomizedNormalSimulation",
     "simulate_bop2_dc_randomized_normal",
     "BOP2DCRandomizedSurvivalDesign",
     "BOP2DCRandomizedSurvivalState",
     "BOP2DCRandomizedSurvivalTrial",
     "bop2_dc_randomized_survival_design",
+    "BOP2DCRandomizedSurvivalCalibrationOC",
+    "BOP2DCRandomizedSurvivalInfeasibleError",
+    "BOP2DCRandomizedSurvivalOptimization",
+    "optimize_bop2_dc_randomized_survival",
     "run_bop2_dc_randomized_survival_trial",
     "BOP2DCRandomizedSurvivalSimulation",
     "simulate_bop2_dc_randomized_survival",

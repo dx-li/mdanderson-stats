@@ -95,4 +95,5 @@ posterior difference is substituted when integration fails.
 Independent R density integration, analytic Cauchy differences and deterministic
 trial tapes provide validation; see the
 [numerical audit](../research/bop2-dc-randomized-normal-audit.md).
-Randomized Normal calibration remains open.
+[Finite-grid calibration](bop2-dc-randomized-calibration.md) adds explicit
+error constraints, full candidate evidence and an independent holdout.
