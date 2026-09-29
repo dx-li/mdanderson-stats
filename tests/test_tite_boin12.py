@@ -9,6 +9,20 @@ def design() -> BOIN12Design:
     return BOIN12Design(0.35, 0.25, utilities=(100.0, 30.0, 65.0, 0.0))
 
 
+def _runin_data(n_current: int, current_toxicities: int, *, pending: int = 0):
+    doses = np.asarray([1, 1, 1] + [2] * n_current)
+    toxicity = np.asarray(
+        [0, 0, 0] + [1] * current_toxicities + [0] * (n_current - current_toxicities)
+    )
+    efficacy = np.ones(doses.size, dtype=int)
+    toxicity_followup = np.ones(doses.size, dtype=float)
+    efficacy_followup = np.full(doses.size, 2.0)
+    if pending:
+        toxicity[-pending:] = -1
+        toxicity_followup[-pending:] = 0.25
+    return doses, toxicity, efficacy, toxicity_followup, efficacy_followup
+
+
 def test_effective_sample_size_and_pending_conditional_mean() -> None:
     result = tite_boin12_posterior(
         design(),
@@ -190,3 +204,92 @@ def test_invalid_cutoff_is_rejected_before_pending_suspension() -> None:
             n_doses=1,
             current_dose=1,
         )
+
+
+@pytest.mark.parametrize("n_current", [3, 6])
+def test_optional_3plus3_runin_deescalates_at_two_observed_dlt(n_current: int) -> None:
+    args = _runin_data(n_current, 2)
+    result = tite_boin12_decision(
+        BOIN12Design(0.25, 0.25, toxicity_cutoff=0.95),
+        *args,
+        toxicity_window=1.0,
+        efficacy_window=2.0,
+        n_doses=2,
+        current_dose=2,
+        run_in_3plus3=True,
+    )
+    assert result.action == "deescalate"
+    assert result.next_dose == 1
+
+
+@pytest.mark.parametrize(("n_current", "events"), [(3, 1), (4, 2), (6, 1)])
+def test_runin_leaves_other_counts_to_ordinary_conduct(n_current: int, events: int) -> None:
+    args = _runin_data(n_current, events)
+    common = dict(
+        toxicity_window=1.0,
+        efficacy_window=2.0,
+        n_doses=2,
+        current_dose=2,
+    )
+    ordinary = tite_boin12_decision(BOIN12Design(0.25, 0.25), *args, **common)
+    runin = tite_boin12_decision(BOIN12Design(0.25, 0.25), *args, **common, run_in_3plus3=True)
+    assert (runin.action, runin.next_dose) == (ordinary.action, ordinary.next_dose)
+
+
+def test_runin_obeys_pending_gate_and_toxicity_limit_restriction() -> None:
+    args = _runin_data(3, 2, pending=1)
+    result = tite_boin12_decision(
+        BOIN12Design(0.25, 0.25),
+        *args,
+        toxicity_window=1.0,
+        efficacy_window=2.0,
+        n_doses=2,
+        current_dose=2,
+        max_pending_toxicity=0.2,
+        run_in_3plus3=True,
+    )
+    assert result.action == "suspend_pending"
+    assert result.posterior is None
+
+    with pytest.raises(ValueError, match="only when toxicity_limit is 0.25"):
+        tite_boin12_decision(
+            design(),
+            *args,
+            toxicity_window=1.0,
+            efficacy_window=2.0,
+            n_doses=2,
+            current_dose=2,
+            run_in_3plus3=True,
+        )
+
+
+def test_runin_at_lowest_dose_stops_and_does_not_assign_an_eliminated_lower_dose() -> None:
+    result = tite_boin12_decision(
+        BOIN12Design(0.25, 0.25),
+        [1, 1, 1],
+        [1, 1, 0],
+        [1, 1, 1],
+        [1.0, 1.0, 1.0],
+        [2.0, 2.0, 2.0],
+        toxicity_window=1.0,
+        efficacy_window=2.0,
+        n_doses=2,
+        current_dose=1,
+        run_in_3plus3=True,
+    )
+    assert result.action == "stop_safety"
+    assert result.next_dose is None
+
+    args = _runin_data(3, 2)
+    blocked_lower = tite_boin12_decision(
+        BOIN12Design(0.25, 0.25),
+        *args,
+        toxicity_window=1.0,
+        efficacy_window=2.0,
+        n_doses=2,
+        current_dose=2,
+        eliminated=[True, False],
+        run_in_3plus3=True,
+    )
+    assert blocked_lower.action == "stop_no_admissible_neighbor"
+    assert blocked_lower.next_dose is None

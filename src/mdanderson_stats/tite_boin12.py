@@ -221,6 +221,7 @@ def tite_boin12_decision(
     eliminated: ArrayLike | None = None,
     max_pending_toxicity: float = 0.5,
     max_pending_efficacy: float = 0.5,
+    run_in_3plus3: bool = False,
 ) -> TITEBOIN12Decision:
     if not isinstance(design, BOIN12Design):
         raise ValueError("design must be a BOIN12Design")
@@ -228,6 +229,10 @@ def tite_boin12_decision(
     ce = scalar(design.efficacy_cutoff, "efficacy_cutoff")
     if not 0 < ct < 1 or not 0 < ce < 1:
         raise ValueError("toxicity_cutoff and efficacy_cutoff must lie in (0,1)")
+    if not isinstance(run_in_3plus3, (bool, np.bool_)):
+        raise ValueError("run_in_3plus3 must be a boolean")
+    if run_in_3plus3 and design.toxicity_limit != 0.25:
+        raise ValueError("the 3+3 run-in is available only when toxicity_limit is 0.25")
     current_value = scalar(current_dose, "current_dose")
     if current_value != int(current_value):
         raise ValueError("current_dose must be an integer dose index in [1,n_doses]")
@@ -283,6 +288,27 @@ def tite_boin12_decision(
     if not np.any(allowed):
         return TITEBOIN12Decision(
             "stop_safety", None, _readonly(~allowed, np.bool_), result.pending_counts, result
+        )
+    if run_in_3plus3 and result.N[current] in (3, 6) and result.observed_events[current, 0] >= 2:
+        if current == 0:
+            return TITEBOIN12Decision(
+                "stop_safety", None, _readonly(~allowed, np.bool_), result.pending_counts, result
+            )
+        lower_dose = current - 1
+        if allowed[lower_dose]:
+            return TITEBOIN12Decision(
+                "deescalate",
+                lower_dose + 1,
+                _readonly(~allowed, np.bool_),
+                result.pending_counts,
+                result,
+            )
+        return TITEBOIN12Decision(
+            "stop_no_admissible_neighbor",
+            None,
+            _readonly(~allowed, np.bool_),
+            result.pending_counts,
+            result,
         )
     rate = float(result.MLE[current, 0])
     boin = design._boin
