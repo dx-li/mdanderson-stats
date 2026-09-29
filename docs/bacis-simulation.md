@@ -79,8 +79,8 @@ failed replications are not silently discarded.
 
 ```python
 ess_result = simulate_bacis_oc(
-    [0.3], replications=32, draws=32, warmup=0, chains=2,
-    outcome_rng=153, sampler_rng=1153, compute_ess=True,
+    [0.3], replications=4, draws=64, warmup=32, chains=2,
+    outcome_rng=3153, sampler_rng=13153, compute_ess=True,
 )
 print(ess_result.mean_equivalent_sample_size)
 print(ess_result.equivalent_sample_size_mcse)
@@ -97,6 +97,12 @@ Python summary convention. The archived one-trial package returns one ESS per
 subgroup, and the paper reports subgroup-specific ESS by scenario, but no
 native simulation aggregation implementation is available to establish exact
 table-generation parity.
+
+Even a valid posterior fit can have a sampled variance outside the range of
+the fixed-response-count beta match. More posterior draws can reduce sampling
+noise but cannot guarantee that every fitted distribution has an admissible
+ESS. The small example above demonstrates the interface, not adequate
+simulation or posterior precision.
 
 Outcome generation and sampler seeds use separate random streams. Supply
 distinct seeds or independent generators for reproducibility. Resource and
