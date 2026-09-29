@@ -43,7 +43,7 @@ class TPIDesign:
     lower_sd: float = 1.5
     upper_sd: float = 1.0
     elimination_probability: float = 0.95
-    prior: tuple[float, float] = (0.005, 0.005)
+    prior: ArrayLike = (0.005, 0.005)
 
     def __post_init__(self) -> None:
         for name in ["target", "lower_sd", "upper_sd", "elimination_probability"]:
@@ -52,25 +52,88 @@ class TPIDesign:
             raise ValueError("target and elimination_probability must be in (0,1)")
         if not 1e-6 <= min(self.lower_sd, self.upper_sd) or max(self.lower_sd, self.upper_sd) > 100:
             raise ValueError("SD multipliers must be in [1e-6,100]")
+        if np.iscomplexobj(self.prior):
+            raise ValueError("prior shapes must be real")
         prior = finite(self.prior, "prior")
-        if prior.shape != (2,) or np.any(prior < 1e-6) or prior.sum() > 1e6:
-            raise ValueError("prior must contain two shapes >=1e-6 with sum <=1e6")
-        object.__setattr__(self, "prior", (float(prior[0]), float(prior[1])))
-        if betaincc(*self.prior, self.target) > self.elimination_probability:
+        if prior.shape == (2,):
+            if np.any(prior < 1e-6) or prior.sum() > 1e6:
+                raise ValueError("prior shapes must be >=1e-6 with sum <=1e6")
+            normalized: tuple[float, float] | tuple[tuple[float, float], ...] = (
+                float(prior[0]),
+                float(prior[1]),
+            )
+            a_prior, b_prior = prior[0], prior[1]
+        elif prior.ndim == 2 and 1 <= prior.shape[0] <= 100 and prior.shape[1] == 2:
+            if np.any(prior < 1e-6) or np.any(prior.sum(axis=1) > 1e6):
+                raise ValueError("each per-dose prior requires shapes >=1e-6 with sum <=1e6")
+            normalized = tuple((float(pair[0]), float(pair[1])) for pair in prior)
+            a_prior, b_prior = prior[:, 0], prior[:, 1]
+        else:
+            raise ValueError("prior must be a shape pair or a (dose_count, 2) shape matrix")
+        object.__setattr__(self, "prior", normalized)
+        if np.any(betaincc(a_prior, b_prior, self.target) > self.elimination_probability):
             raise ValueError(
                 "prior considers untried doses unsafe; revise prior or candidate doses"
             )
 
-    def posterior(self, patients: ArrayLike, toxicities: ArrayLike) -> TPIPosterior:
+    @property
+    def has_dose_specific_prior(self) -> bool:
+        """Whether ``prior`` contains one (a,b) pair per dose."""
+        return np.asarray(self.prior).ndim == 2
+
+    @property
+    def dose_prior_shapes(self) -> tuple[tuple[float, float], ...] | None:
+        """Normalized prior shape pairs when a prior was supplied per dose."""
+        if not self.has_dose_specific_prior:
+            return None
+        return tuple((float(a), float(b)) for a, b in np.asarray(self.prior))
+
+    @property
+    def prior_dose_count(self) -> int | None:
+        """Number of explicitly configured dose priors, or None for a common prior."""
+        shapes = self.dose_prior_shapes
+        return None if shapes is None else len(shapes)
+
+    def _prior_for_dose(self, dose: int | None) -> tuple[FloatArray | float, FloatArray | float]:
+        prior = np.asarray(self.prior, dtype=np.float64)
+        if not self.has_dose_specific_prior:
+            if dose is not None:
+                value = scalar(dose, "dose")
+                if isinstance(dose, (bool, np.bool_)) or value != int(value) or value < 1:
+                    raise ValueError("dose must be a positive one-based integer")
+            return float(prior[0]), float(prior[1])
+        if dose is not None:
+            value = scalar(dose, "dose")
+            if (
+                isinstance(dose, (bool, np.bool_))
+                or value != int(value)
+                or not 1 <= value <= prior.shape[0]
+            ):
+                raise ValueError("dose must identify a configured one-based dose")
+            return float(prior[int(value) - 1, 0]), float(prior[int(value) - 1, 1])
+        return prior[:, 0], prior[:, 1]
+
+    def posterior(
+        self, patients: ArrayLike, toxicities: ArrayLike, *, dose: int | None = None
+    ) -> TPIPosterior:
         """Posterior masses E/S/D with intervals intersected with [0,1].
 
         Zero patients is allowed for prior summaries; trial actions require data.
         No division by interval widths is performed (unlike mTPI).
         """
+        if np.iscomplexobj(patients) or np.iscomplexobj(toxicities):
+            raise ValueError("patient and toxicity counts must be real")
         n, y = np.broadcast_arrays(count(patients, "patients"), count(toxicities, "toxicities"))
         if n.size > 2000000 or np.any((n > 200) | (y > n)):
             raise ValueError("require 0<=toxicities<=patients<=200 and <=2 million cells")
-        a, b = y + self.prior[0], n - y + self.prior[1]
+        prior_a, prior_b = self._prior_for_dose(dose)
+        if self.has_dose_specific_prior and dose is None:
+            if n.ndim == 0 or n.shape[-1] != self.prior_dose_count:
+                raise ValueError(
+                    "per-dose priors require dose= or count arrays with the configured "
+                    "dose count on the last axis"
+                )
+        a, b = y + prior_a, n - y + prior_b
         total = a + b
         mean = a / total
         sd = np.sqrt((a / total) * (b / total) / (total + 1))
@@ -95,15 +158,17 @@ class TPIDesign:
             _owned((n >= 2) & (overdose > self.elimination_probability)),
         )
 
-    def decision_table(self, max_patients: int = 30) -> MTPITable:
+    def decision_table(self, max_patients: int = 30, *, dose: int | None = None) -> MTPITable:
         """Rows DLTs 0..N, columns patients 1..N; U flags an unsafe dose."""
+        if self.has_dose_specific_prior and dose is None:
+            raise ValueError("dose= is required for a per-dose-prior decision table")
         value = scalar(max_patients, "max_patients")
         if value != int(value) or not 1 <= value <= 200:
             raise ValueError("max_patients must be an integer in [1,200]")
         n, y = np.arange(1, int(value) + 1), np.arange(int(value) + 1)
         nn, yy = np.broadcast_arrays(n[None, :], y[:, None])
         valid = yy <= nn
-        result = self.posterior(nn[valid], yy[valid])
+        result = self.posterior(nn[valid], yy[valid], dose=dose)
         action = np.full(valid.shape, "", dtype="U2")
         action[valid] = np.char.add(
             np.array(["D", "S", "E"])[result.move + 1], np.where(result.unsafe, "U", "")
@@ -113,6 +178,8 @@ class TPIDesign:
     def _state(
         self, patients: ArrayLike, toxicities: ArrayLike, eliminated: ArrayLike | None
     ) -> tuple[FloatArray, TPIPosterior, NDArray[np.bool_]]:
+        if np.iscomplexobj(patients) or np.iscomplexobj(toxicities):
+            raise ValueError("patient and toxicity counts must be real")
         n, y = count(patients, "patients"), count(toxicities, "toxicities")
         if n.ndim != 1 or not 1 <= n.size <= 100 or y.shape != n.shape or n.sum() > 200:
             raise ValueError("require matching 1..100 dose vectors and total enrollment <=200")
