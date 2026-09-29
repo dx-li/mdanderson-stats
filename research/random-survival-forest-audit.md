@@ -275,3 +275,9 @@ that mode because fitted trees retain neither per-node represented counts nor
 bootstrap multiplicities; reconstructing them from the packed boolean in-bag
 mask would be wrong for replacement sampling. Preserving those counts in the
 fit representation is required before an exact random-routing implementation.
+
+The integrated categorical/anti checkpoint matches the unchanged native
+branch/mask kernels and passes 20 focused checks. Detailed source scope,
+resource measurements, category-relabeling invariance and preserved numeric
+permutation references are recorded in
+[the categorical audit](survival-forest-categorical-audit.md#integrated-numerical-validation).

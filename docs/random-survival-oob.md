@@ -94,8 +94,8 @@ zero-based tree indices are returned.
 The Python default `block_size=None` uses all trees as one block. The native
 randomForestSRC default for explicit permutation importance is a block size of
 10; supply that value to select the same block convention. Its default
-`importance=True` instead uses anti-split importance, which this API does not
-implement. Smaller blocks and a single whole-forest block are different
+`importance=True` instead uses anti-split importance, available through the
+separate function below. Smaller blocks and a single whole-forest block are different
 estimators. `feature_indices` optionally selects distinct zero-based columns.
 
 Supply either `random_state` or a generator through `rng`. Random permutations
@@ -105,5 +105,41 @@ valid-block counts. Work limits apply before permutation, and pair comparisons
 use row-sized temporary vectors. The independent native-kernel reference checks
 whole-forest, three-tree and single-tree blocks, including an ignored tail,
 an undefined block and zero importance for a constant feature. Native RNG
-equivalence, anti-split/random importance and importance confidence intervals
+equivalence, random-routing importance and importance confidence intervals
 remain outside this implementation.
+
+## Anti-split importance
+
+`anti_split_random_survival_forest_importance` perturbs traversal of an OOB
+case: whenever a node splits on the selected feature, the case goes to the
+opposite child. Other splits follow their ordinary rule. This applies at each
+matching node reached along the perturbed path, including categorical splits.
+The resulting error increases measure a different perturbation from shuffling
+feature values.
+
+```python
+from mdanderson_stats import anti_split_random_survival_forest_importance
+
+anti = anti_split_random_survival_forest_importance(
+    fit, time, event, x, block_size=5, random_state=1772,
+)
+assert anti.block_count == 2
+assert anti.ignored_tree_indices.tolist() == [10, 11]
+assert anti.importance.shape == (1,)
+```
+
+The default `vimp_threshold=1.0` always reverses a matching branch, matching
+the pinned native default. A value between zero and one flips the branch with
+that probability; zero leaves every branch unchanged. One uniform is drawn at
+each matching node even at thresholds zero or one. Draw order is block, feature,
+tree, ascending OOB row, then traversal order. An explicit `random_state` or
+`rng` makes that Python stream replayable; it does not reproduce native
+tree-specific streams.
+
+Original training inputs and row order are required. The complete-block
+estimator, omitted-tail reporting, handling of undefined errors and work bounds
+follow the permutation interface. `block_size=None` again means one block of
+all trees; pass `block_size=10` for the native block convention when the forest
+has at least ten trees. Retain negative importance values and inspect
+`valid_block_count` before interpreting an estimate. Neither estimator supplies
+an importance confidence interval.

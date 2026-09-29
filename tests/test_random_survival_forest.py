@@ -231,9 +231,7 @@ def test_unordered_categorical_subset_routing_and_unknown_levels() -> None:
 def test_factor_partition_planning_is_bounded_and_respects_native_exact_boundary() -> None:
     levels = np.arange(100, dtype=np.float64)
     assert _factor_split_plan(levels[:4], node_size=7, nsplit=7) == (7, True, ())
-    candidate_count, exact, probabilities = _factor_split_plan(
-        levels, node_size=100, nsplit=10
-    )
+    candidate_count, exact, probabilities = _factor_split_plan(levels, node_size=100, nsplit=10)
     assert candidate_count == 10 and not exact
     candidates = list(
         _factor_split_candidates(

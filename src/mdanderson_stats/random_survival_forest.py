@@ -323,9 +323,7 @@ def _factor_split_plan(
         return 0, True, ()
     partition_count = (1 << (count - 1)) - 1
     exact = count <= 32 and (
-        partition_count < node_size
-        if nsplit == 0
-        else partition_count <= min(node_size, nsplit)
+        partition_count < node_size if nsplit == 0 else partition_count <= min(node_size, nsplit)
     )
     sizes = tuple(range(1, count // 2 + 1))
     if exact:
@@ -536,9 +534,7 @@ def _grow_tree(
                         candidate_count, exact, group_probabilities = _factor_split_plan(
                             unique_values, int(rows.size), nsplit
                         )
-                        budget.split_work += int(
-                            candidate_count * (rows.size + unique_values.size)
-                        )
+                        budget.split_work += int(candidate_count * (rows.size + unique_values.size))
                         candidate_iterator = _factor_split_candidates(
                             unique_values,
                             candidate_count,
@@ -961,9 +957,7 @@ def fit_random_survival_forest(
         budget.max_depth,
         packed_membership,
         oob,
-        _forest_fingerprint(
-            t, e, raw_x, categorical_levels if categorical else ()
-        )
+        _forest_fingerprint(t, e, raw_x, categorical_levels if categorical else ())
         if compute_oob
         else None,
         categorical_levels,
@@ -1013,9 +1007,7 @@ def predict_random_survival_forest(
     work_limit = _integer(max_prediction_work, "max_prediction_work", 1, _MAX_PREDICTION_WORK)
     cells = int(profile_values.shape[0] * time_values.size)
     categorical_copy = (
-        profile_values.size
-        if any(levels is not None for levels in categorical_levels)
-        else 0
+        profile_values.size if any(levels is not None for levels in categorical_levels) else 0
     )
     combined_cells = 8 * cells + profile_values.size + time_values.size + categorical_copy
     if combined_cells > output_limit:

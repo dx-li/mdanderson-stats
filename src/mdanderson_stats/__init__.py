@@ -1022,7 +1022,9 @@ from .random_survival_forest_contour import (
     random_survival_forest_contour,
 )
 from .random_survival_forest_vimp import (
+    RandomSurvivalForestAntiSplitImportance,
     RandomSurvivalForestPermutationImportance,
+    anti_split_random_survival_forest_importance,
     permutation_random_survival_forest_importance,
 )
 from .ranges import RangeComparisons, kwrange, range2
@@ -2120,6 +2122,8 @@ __all__ = [
     "random_survival_forest_contour",
     "RandomSurvivalForestPermutationImportance",
     "permutation_random_survival_forest_importance",
+    "RandomSurvivalForestAntiSplitImportance",
+    "anti_split_random_survival_forest_importance",
     "IntervalCompetingRiskFit",
     "IntervalCompetingRiskPrediction",
     "IntervalCompetingRiskContour",

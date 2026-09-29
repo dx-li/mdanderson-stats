@@ -1467,13 +1467,16 @@ parameter-draw matrix for the main surface and selected quantile curves.
 [Royston–Parmar spline models](docs/survival-spline.md) add hazard, odds and
 normal links with configurable log-time knots, globally monotone survival
 curves, joint covariance, predictions and contours.
-[Random survival forests](docs/random-survival-forest.md) add numeric log-rank
-trees, separately averaged Kaplan–Meier survival and Nelson–Aalen hazards,
+[Random survival forests](docs/random-survival-forest.md) add log-rank trees
+with continuous and explicitly declared categorical predictors, separately
+averaged Kaplan–Meier survival and Nelson–Aalen hazards,
 and contours from fitted forests. Sequential tree growth, sparse leaf curves
 and explicit work limits bound computation. Optional [out-of-bag diagnostics](docs/random-survival-oob.md)
 report held-out survival/hazard curves, contributor counts and concordance error.
-Permutation importance adds per-tree OOB shuffling and blockwise error increases,
-with explicit counts for usable blocks and omitted tail trees.
+Permutation and anti-split importance add per-tree OOB perturbations and
+blockwise error increases, with explicit counts for usable blocks and omitted
+tail trees. Category maps are retained for consistent prediction and importance;
+continuous contour axes support categorical adjustment profiles.
 [Interval-censored proportional-hazards models](docs/interval-survival.md)
 fit mixed exact, interval, left- and right-censored observations with a
 nonparametric Turnbull baseline. Predictions and continuous-covariate contours

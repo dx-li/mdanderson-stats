@@ -1,4 +1,4 @@
-"""Explicit permutation variable importance for numeric survival forests."""
+"""Permutation and anti-split importance for continuous/categorical survival forests."""
 
 from __future__ import annotations
 
