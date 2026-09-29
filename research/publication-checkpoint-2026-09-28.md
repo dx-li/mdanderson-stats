@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `ec1c213` adds five neural survival
-families, with independent high-precision mathematical references, public
-fitting/prediction/contour APIs and bounded numerical work. The final
+Latest verified package checkpoint: `84a3ed9` adds stratified interval-PH
+coefficient bootstrapping and BF-BOIN post-escalation expansion, with independent
+references, preserved existing outputs and bounded serial work. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1782,3 +1782,49 @@ the preceding `f009c60` hosted workflow has successful quality and Python
 3.12/3.13 jobs; Python 3.14 is still running. The local manifest records the
 newly published branch SHAs and hosted status separately; no complete-matrix
 success is inferred from the earlier jobs.
+
+
+## Stratified bootstrap and BF-BOIN expansion checkpoint
+
+At `84a3ed9`, shared-coefficient stratified interval-PH models gain coefficient
+bootstrapping with required within-stratum or pooled resampling policies.
+Weighted draw sizes use accurate sums, repeated sampled rows become frequency
+weights, and tapes/counts/failures remain visible. Pooled samples missing an
+original group fail explicitly. Covariance and standard errors are conditional
+on successful refits. This is a documented statistical extension of the
+implemented interval-likelihood target, not a recovered native app default.
+
+BF-BOIN simulation gains optional post-escalation expansion at one dose below
+the last cohort actually treated. It stops at the assigned-count cap or first
+toxicity closure and retains separate expansion diagnostics. The target and
+stopping rules come from the cached BARD expansion guide; asynchronous timing
+is an explicit Python policy. The response window and disabled-option random
+stream remain unchanged. No BF-BLRM or hidden stage-two calendar extension is
+inferred.
+
+Eight affected stratified-model/bootstrap checks and 12 BF-BOIN checks pass
+with warnings as errors and one BLAS thread. Targeted Ruff, formatting and
+mypy pass. Independent base-R cloglog references reproduce five successful
+bootstrap coefficients to 4.98e-7 and covariance to 2.42e-7, with one explicit
+unsupported all-censored-group draw. Covariate units 1e-100 and 1e100 and
+pre-RNG work rejection pass. Eighty published no-expansion trials reproduce
+every existing result field exactly. Sixty expansion trials verify 206 new
+assignments, fixed-dose/cap rules and chronological follow-up; two toxicity
+closures are independently confirmed at their first qualifying assessments.
+The combined root check peaks at 108.52 MiB RSS and reports zero swaps;
+focused worker checks peak below 131 MiB.
+
+Cached wheel/source builds pass. Isolated wheel validation verifies all
+1,651 public exports, exact committed bytes for all 584 package source/data
+files in both artifacts, preserved license notices and both executable guide
+examples. It takes 12.265 seconds, peaks at 111.42 MiB RSS and reports zero
+swaps. Catalog counts remain 63 implemented, 67 partial and eight pending.
+No dependencies, broad local test runs or CI workflows were added. Remaining
+native workflow and mixed-license limitations stay documented.
+
+The preceding `cf802a2` hosted quality job passed. Its Python 3.13 runner
+received a shutdown signal at 21:44:17 UTC on September 29; pytest had shown
+progress through 12% without an assertion failure before cancellation. The
+other two matrix jobs were cancelled. This is incomplete hosted validation,
+not a full pass. The local manifest records the new publication and subsequent
+hosted run separately.
