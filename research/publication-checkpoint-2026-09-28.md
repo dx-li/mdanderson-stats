@@ -1,7 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `2ccfc5a` adds BayesFactorTTE calendar
-replay and bounded serial simulation, plus staggered AL/BDA TITE-BOIN12 calendar replay. The final
+Latest verified package checkpoint: `6de56f1` adds iBOIN final MTD selection
+and complete-outcome simulation, plus bounded serial AL/BDA TITE-BOIN12
+operating-characteristic simulation. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1615,3 +1616,52 @@ previous published checkpoint `aef4a91`, GitHub quality and Python 3.12/3.13
 jobs had passed and Python 3.14 was still running; no full matrix success is
 inferred from the focused local checks. Existing mixed-license terms remain
 included in both distributions.
+
+
+## September 29 — iBOIN and TITE-BOIN12 operating characteristics
+
+Verified package code is `6de56f1471648e426378240166bfc87b891c4b80`.
+Luna implemented both workflows. iBOIN now exposes final isotonic MTD selection
+with explicit historical-borrowing, weight, candidate, tie and final-bound
+policies, a seeded single-trial runner and serial operating characteristics.
+The aggregate runner shares the existing conduct transitions without retaining
+cohort decision histories. It reports selection/stopping probabilities,
+enrollment and toxicity means, enrollment quantiles and Monte Carlo errors.
+
+TITE-BOIN12 now runs serial AL/BDA calendar trials from joint binary truths,
+with Gumbel conversion, explicit fixed/exponential arrival and conditional
+uniform event-time policies, independently replayable trial streams and
+selection, allocation, stopping and time summaries with Monte Carlo uncertainty.
+Both runners preflight bounded work and storage. Undocumented native policies
+remain explicit limitations; neither addition establishes full application parity.
+
+The iBOIN worker reports 20 affected checks passing; the integrated final
+selector/simulator passes nine focused checks after explicit array-typing
+adjustments. All seven final TITE simulation checks pass. Warnings are errors.
+Independent integration verifies 36 exact rational isotonic projections
+(maximum absolute difference 5.56e-17), all 1,456 small replay histories against
+published `61f151f`, and the aggregate summaries from 12 separately replayed
+trial seeds. Robust-effective ESS and empty final-bound eligibility also pass.
+The exact fixture generator uses only standard-library rational arithmetic
+and exhaustive contiguous partitions. Targeted Ruff, formatting, mypy and
+diff checks pass. No new dependency or CI workflow was introduced.
+
+The cached wheel/source build and isolated package verification pass:
+1,642 public exports, all 580 committed package source/data files byte-identical
+in both distributions, seven executable blocks across three affected guides,
+all 138 catalog entries and preserved license notices. Package verification
+took 11.358 seconds, peaked at 120.73 MiB and reported zero swaps. Final
+focused numerical processes peaked at 148.27 MiB; the independent comparison
+peaked at 124.80 MiB. Numerical, build and type-checking processes ran serially
+under the existing numerical-library thread limits.
+
+Coverage remains 63 implemented, 67 partial and eight pending. iBOIN native
+final-selection defaults/reports and TITE categorical/native details remain
+open; the latter's published day-315 AL illustration discrepancy remains
+documented. Existing mixed-license terms are included in both distributions.
+
+The preceding published `61f151f` checkpoint has independently confirmed
+successful GitHub quality and Python 3.12, 3.13 and 3.14 jobs (run 36622145716).
+Those hosted results are for that revision. This audit-only commit follows the
+verified code before atomic fast-forward publication; the local manifest records
+the independently checked remote branch SHAs, refreshed artifacts and new run.
