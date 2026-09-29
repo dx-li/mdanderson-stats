@@ -269,6 +269,15 @@ from .bop2_dc import (
     BOP2DCState,
     bop2_dc_design,
 )
+from .bop2_dc_normal import (
+    BOP2DCNormalDesign,
+    BOP2DCNormalSimulation,
+    BOP2DCNormalState,
+    BOP2DCNormalTrial,
+    bop2_dc_normal_design,
+    run_bop2_dc_normal_trial,
+    simulate_bop2_dc_normal,
+)
 from .bop2_dc_optimization import (
     BOP2DCInfeasibleError,
     BOP2DCOptimization,
@@ -279,6 +288,12 @@ from .bop2_dc_paired import (
     BOP2DCPairedOperatingCharacteristics,
     BOP2DCPairedState,
     bop2_dc_paired_design,
+)
+from .bop2_dc_paired_optimization import (
+    BOP2DCPairedGridOC,
+    BOP2DCPairedInfeasibleError,
+    BOP2DCPairedOptimization,
+    optimize_bop2_dc_paired,
 )
 from .bop2_dc_survival import (
     BOP2DCSurvivalDesign,
@@ -1653,6 +1668,17 @@ __all__ = [
     "BOP2DCInfeasibleError",
     "BOP2DCOptimization",
     "optimize_bop2_dc",
+    "BOP2DCNormalDesign",
+    "BOP2DCNormalSimulation",
+    "BOP2DCNormalState",
+    "BOP2DCNormalTrial",
+    "bop2_dc_normal_design",
+    "run_bop2_dc_normal_trial",
+    "simulate_bop2_dc_normal",
+    "BOP2DCPairedGridOC",
+    "BOP2DCPairedInfeasibleError",
+    "BOP2DCPairedOptimization",
+    "optimize_bop2_dc_paired",
     "BOP2DCSurvivalDesign",
     "BOP2DCSurvivalState",
     "bop2_dc_survival_design",

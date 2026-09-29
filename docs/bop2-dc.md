@@ -48,12 +48,13 @@ illustrative and do not establish false-decision-rate control.
 [Finite-grid parameter optimization](bop2-dc-optimization.md) supports false-go,
 false-no-go and optional false-consider constraints. [Paired monitoring](bop2-dc-paired.md)
 supports efficacy/toxicity and multiple efficacy endpoints, including exact
-operating characteristics from joint outcome probabilities. Paired parameter
-calibration remains pending. [Time-to-event monitoring](bop2-dc-survival.md)
+operating characteristics from joint outcome probabilities and
+[exact finite-grid calibration](bop2-dc-paired-calibration.md).
+[Time-to-event monitoring](bop2-dc-survival.md)
 includes calendar replay and operating-characteristic simulation;
 [survival calibration](bop2-dc-survival-calibration.md) adds finite-grid selection
-and independent holdout checks. The primary paper's continuous Normal endpoint
-and randomized arm comparisons remain unimplemented, alongside generated app
-reports. See
+and independent holdout checks. The [continuous Normal endpoint](bop2-dc-normal.md)
+supports posterior monitoring, trial replay and simulation. Its calibration,
+randomized arm comparisons and generated app reports remain open. See
 [source notes](bop2-dc-source.md) and the
 [independent numerical references](bop2-dc-reference.md).

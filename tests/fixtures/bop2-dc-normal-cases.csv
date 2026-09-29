@@ -1,0 +1,9 @@
+case_id,observations,max_subjects,looks,prior_mean,prior_precision,prior_shape,prior_scale,theta_lrv,theta_cmv,lambda_lrv,lambda_cmv,gamma_lrv,gamma_cmv,observation_offset
+negative,-3;-2;-4;-2,4,2;4,0,1,2,1,0,1,0.9,0.8,0.5,0.5,0
+positive_go,2;3;2;4,4,2;4,0,0.5,2,1,0,1,0.6,0.3,0.5,0.5,0
+mixed_consider,-0.3;0.4;0.8;-0.1,4,2;4,0,1,2,1,0,1,0.5,0.5,0.5,0.5,0
+strict_equality,-1;1;-1;1,4,2;4,0,1,2,1,0,1,0.5,0.99,0,0,0
+offset_base,-0.5;0;0.25;0.75,8,4;8,0,0.5,1.5,0.2,0,0.5,0.9,0.9,0.5,0.5,0
+offset_1e15,-0.5;0;0.25;0.75,8,4;8,0,0.5,1.5,0.2,0,0.5,0.9,0.9,0.5,0.5,1e15
+tiny_units,-2e-100;-5e-101;1e-100;3e-100,4,2;4,2.5e-101,1.3,2.5,9e-201,-2e-101,1.1e-100,0.65,0.35,0.5,0.5,0
+huge_units,-2e100;-5e99;1e100;3e100,4,2;4,2.5e99,1.3,2.5,9e199,-2e99,1.1e100,0.65,0.35,0.5,0.5,0

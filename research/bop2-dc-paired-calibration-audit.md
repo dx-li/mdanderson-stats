@@ -44,3 +44,28 @@ There is no simulation, random-number stream, Monte Carlo error, or claim of
 continuous-grid optimization. The procedure assumes fully observed binary
 endpoints at the configured enrollment looks; it does not add calendar-time
 accrual or delayed outcome ascertainment.
+
+## Independent verification
+
+`tools/reference_bop2_dc_paired_calibration.R` independently enumerates all
+256 four-patient paths under each joint truth. It calculates marginal Beta
+tails directly in base R and applies the strict decision rules to each path,
+including early absorption. The 48-row fixture covers both endpoint modes,
+three joint associations with identical marginal rates, and eight asymmetric
+cutoff/exponent combinations at looks 2 and 4.
+
+False-go, false-no-go and false-consider bounds are .35, .5 and .3 in this
+reference. Each scenario includes feasible and infeasible candidates. Both
+objectives, selected parameter rows, all outcome probabilities, stopping and
+sample-size distributions, expected enrollment and derived metrics agree in
+`tools/check_bop2_dc_paired_calibration.py`: 1,920 numeric summaries across
+both objectives. Efficacy/toxicity selects candidate 1 for CGR and candidate 0
+for futile expected sample size. Changing association while preserving the
+two marginal rates changes operating characteristics, as it should.
+
+The Python reference comparison took .0971 seconds after imports, with
+120.63 MiB peak resident memory and no reported swaps. The R generator and
+Python comparison were run sequentially. Three focused worker tests also
+passed, including infeasibility and preflight work rejection. The retained
+allocation bound accounts for both working arrays and returned owned copies.
+No new CI workflow or native optimizer parity is claimed.

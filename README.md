@@ -1182,8 +1182,12 @@ stopping. Survival adds calendar replay, bounded exponential-trial simulation,
 replay seeds and Monte Carlo errors, with independent calendar and analytic
 operating-characteristic references. [Survival calibration](docs/bop2-dc-survival-calibration.md)
 selects from explicit parameter grids with independent holdout results and
-visible validation failures. Paired calibration, the paper's continuous Normal
-endpoint and randomized comparisons remain open.
+visible validation failures. [Paired calibration](docs/bop2-dc-paired-calibration.md)
+uses exact correlated-outcome probabilities over an explicit control grid.
+The [continuous Normal endpoint](docs/bop2-dc-normal.md) adds conjugate posterior
+monitoring, trial replay and simulation, with centered calculations preserving
+precision under large measurement offsets. Normal calibration and randomized
+comparisons remain open.
 
 [BARPO](docs/barpo.md) adds binary posterior monitoring with or without a control
 and four adaptive allocation methods: BARCP, BARN2N, BARMTV and explicit-target

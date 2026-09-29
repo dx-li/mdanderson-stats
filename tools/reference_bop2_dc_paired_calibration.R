@@ -12,7 +12,7 @@ dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
 N <- 4L
 looks <- c(2L, 4L)
 prior <- c(0.3, 0.2, 0.4, 0.1)
-limits <- c(false_go = 1, false_no_go = 1, false_consider = 1)
+limits <- c(false_go = 0.35, false_no_go = 0.5, false_consider = 0.3)
 
 # Candidate grids are rows of two endpoint-specific controls. The nested loop
 # order matches Python itertools.product: the first grid is outermost.

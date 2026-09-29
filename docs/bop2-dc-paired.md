@@ -67,6 +67,7 @@ designs exceed this OC limit even though monitoring supports them. This calculat
 observed outcomes at the configured enrollment looks and does not model
 calendar-time accrual or delayed observations.
 
-Paired parameter calibration remains pending.
+[Exact finite-grid calibration](bop2-dc-paired-calibration.md) selects cutoff
+and information-exponent combinations under explicit false-decision limits.
 See [source notes](bop2-dc-paired-source.md) and
 [independent references](bop2-dc-reference.md).

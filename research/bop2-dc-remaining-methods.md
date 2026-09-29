@@ -2,12 +2,13 @@
 
 This audit concerns catalog #156, not the separate BOP2 #112 application.
 Binary efficacy has exact operating characteristics and finite-grid calibration;
-paired endpoints have exact correlated-outcome operating characteristics;
-survival has calendar simulation and Monte Carlo finite-grid calibration.
-Paired calibration is the current next implementation task.
+paired endpoints have exact correlated-outcome operating characteristics and
+finite-grid calibration; survival has calendar simulation and Monte Carlo
+finite-grid calibration. The Normal endpoint now has posterior monitoring,
+replay and simulation; its calibration is being implemented separately.
 
 The cached primary preprint, `research/raw/BOP2-DC/paper.txt`, also establishes
-two substantive remaining targets:
+these source-backed targets:
 
 - Section 2.1.2 (printed page 5, text lines 166–202) specifies a single-arm
   Normal endpoint. For `Y ~ Normal(theta,sigma²)`, the prior is
@@ -15,8 +16,9 @@ two substantive remaining targets:
   `sigma² ~ InvGamma(a2,b2)`. Its conjugate update has precision `n0+n`,
   shape `a2+n/2`, location `(n0*theta0+n*ybar)/(n0+n)`, and scale
   `b2+SSE/2+n0*n*(ybar-theta0)²/(2*(n0+n))`. The marginal Student-t tail
-  supplies the two posterior threshold probabilities. Monitoring, replay,
-  simulation and calibration require separate implementation evidence.
+  supplies the two posterior threshold probabilities. Monitoring, replay and
+  simulation now have independent R evidence in `bop2-dc-normal-audit.md`.
+  Finite-grid calibration remains open.
 - Section 2.4 (printed pages 12–13, text lines 466–495) specifies randomized
   comparisons. Fit arm models independently and compare
   `theta_experimental-theta_control` with both clinical thresholds. The source
