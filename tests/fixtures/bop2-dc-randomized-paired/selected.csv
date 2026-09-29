@@ -1,0 +1,9 @@
+"config_id","objective","selected_index","FGR","FNGR","CGR","FCR","EN_futile","EN_effective"
+"multi_cgr","cgr",0,0.362208,0.1436,0.6552,0.327268,3.136,2.88
+"multi_cgr","ess_futile",8,0.184569,0.592775,0.407225,0,2.462,2.91
+"multi_assoc","cgr",0,0.362208,0.1512,0.6552,0.322624,3.136,2.88
+"multi_assoc","ess_futile",8,0.184569,0.592775,0.407225,0,2.462,2.91
+"coprimary","cgr",9,0.054189,0.69565,0.212175,0.092175,3.202,3.66
+"coprimary","ess_futile",8,0.030051,0.829600000000001,0.1195875,0.0508125,2.246,2.39
+"multi_infeasible","cgr",NA,NA,NA,NA,NA,NA,NA
+"multi_infeasible","ess_futile",NA,NA,NA,NA,NA,NA,NA

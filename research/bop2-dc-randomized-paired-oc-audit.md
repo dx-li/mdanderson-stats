@@ -11,3 +11,52 @@ For each look, posterior tail/error values are cached over endpoint success-coun
 The reported exact work estimate is a conservative operation-count budget, not a runtime guarantee. Posterior comparison integration reports estimated quadrature errors rather than rigorous bounds; a candidate state whose decision changes over those error corners raises an arithmetic error rather than receiving a midpoint-only action.
 
 Source boundary: BOP2-DC paper sections 2.1.4 and 2.2 define the paired Dirichlet endpoints and composite action rules; section 2.4 defines the arm-difference comparison. The implementation reuses those source-backed monitoring rules and adds only finite-grid recursion/calibration around a fixed allocation tape. Native randomization, native calibration search order, and other trial implementation details are not claimed.
+
+## Independent numerical validation
+
+The standalone base-R oracle uses an integer-shape finite-binomial-sum Beta
+CDF, density integration and exhaustive four-category outcome tapes. Four
+fixtures each enumerate 256 tapes for 16 cutoff candidates. They cover
+multiple efficacy, efficacy/toxicity with reduced toxicity, matching marginal
+truths with different association, and a zero-limit infeasible grid. All inputs
+and generated reference tables are in
+`tests/fixtures/bop2-dc-randomized-paired/`; they are mathematical examples,
+not supplement settings or recommended clinical designs.
+
+The Python checker verifies 388 case-specific posterior states, all 27,104
+reached path/look decisions, 64 candidate metric rows, 256 per-scenario/candidate/
+look OC rows, both objectives and infeasibility, and 24 representative public
+replays. Public replays also match terminal enrollment and the reached look
+schedule. The largest posterior difference is `6.2506744e-10`, within the
+reported Python quadrature error plus `3e-12` reference allowance. Maximum
+candidate-metric and OC differences are `1.3323e-15` (checks use `2e-12`).
+The multiple-efficacy fixtures select candidate 0 for CGR and 8 for futile ESS;
+efficacy/toxicity selects 9 and 8. Changing association while preserving
+marginals changes decision probabilities, including a .0076 FNGR difference.
+
+The amended R run took 22.159 seconds, with 214.75 MiB child-process high-water
+RSS and zero swaps. The corrected Python comparison took 4.480 seconds,
+154.70 MiB and zero swaps. Ten integrated focused core/OC/simulation tests
+passed in 1.94 seconds, with 141.95 MiB and zero swaps. Numerical processes
+ran serially with BLAS/OpenMP thread limits of one. No full repository suite
+or new CI workflow was added.
+
+The documented 40-patient, 100-trial simulation took 0.687 seconds including
+imports/design construction, peaked at 103.47 MiB, and reported zero swaps.
+It cached 130 marginal count pairs, returned expected enrollment 36.9, and
+terminal probabilities `(graduate, stop_no_go, final_go, final_consider,
+final_no_go) = (.13, .01, .41, .43, .02)`. Separate focused checks reproduce
+12 nondegenerate seeded paths and an eight-trial degenerate truth with exact
+early stopping. These are bounded numerical checks, not a precision study.
+
+From the repository root, the reference can be regenerated and checked with:
+
+```sh
+Rscript tools/reference_bop2_dc_randomized_paired_calibration.R
+PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python tools/check_bop2_dc_randomized_paired.py
+```
+
+Root adapted only reference-tool default paths and formatting after the worker
+run, then reran the committed-form Python checker successfully against all
+saved tables. Root review also checked endpoint-axis indexing, single-scenario
+batch shape, absorbing lattice lifetime and the marginal-cache work bound.

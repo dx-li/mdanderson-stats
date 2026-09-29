@@ -1,0 +1,5 @@
+config_id,endpoint,max_subjects,looks,arm_assignments,control_prior,treatment_prior,lrv,cmv,lambda_lrv_grid,lambda_cmv_grid,gamma_lrv_grid,gamma_cmv_grid,graduate_at_interim,false_go_limit,false_no_go_limit,false_consider_limit
+multi_cgr,multiple_efficacy,4,2;4,0101,1;2;3;1,2;1;1;3,0.00;0.05,0.10;0.15,"0.35,0.45;0.55,0.65","0.40,0.60;0.50,0.70","0,0;0.5,0.5","0,0;0.5,0.5",1,1,1,1
+multi_assoc,multiple_efficacy,4,2;4,0101,1;2;3;1,2;1;1;3,0.00;0.05,0.10;0.15,"0.35,0.45;0.55,0.65","0.40,0.60;0.50,0.70","0,0;0.5,0.5","0,0;0.5,0.5",1,1,1,1
+coprimary,efficacy_toxicity,4,2;4,0101,2;1;1;2,1;3;2;1,0.0;0.0,0.15;-0.10,"0.35,0.45;0.55,0.65","0.40,0.60;0.50,0.70","0,0;0.5,0.5","0,0;0.5,0.5",1,1,1,1
+multi_infeasible,multiple_efficacy,4,2;4,0101,1;2;3;1,2;1;1;3,0.00;0.05,0.10;0.15,"0.35,0.45;0.55,0.65","0.40,0.60;0.50,0.70","0,0;0.5,0.5","0,0;0.5,0.5",1,0,0,0

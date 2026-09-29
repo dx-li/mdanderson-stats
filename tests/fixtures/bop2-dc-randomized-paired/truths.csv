@@ -1,0 +1,9 @@
+config_id,scenario,control_probability,treatment_probability
+multi_cgr,futile,0.10;0.20;0.15;0.55,0.15;0.18;0.18;0.49
+multi_cgr,effective,0.10;0.20;0.15;0.55,0.40;0.25;0.20;0.15
+multi_assoc,futile,0;0.30;0.25;0.45,0.33;0;0;0.67
+multi_assoc,effective,0;0.30;0.25;0.45,0.60;0.05;0;0.35
+coprimary,futile,0.10;0.20;0.15;0.55,0.12;0.18;0.18;0.52
+coprimary,effective,0.10;0.20;0.15;0.55,0.05;0.60;0.05;0.30
+multi_infeasible,futile,0.10;0.20;0.15;0.55,0.15;0.18;0.18;0.49
+multi_infeasible,effective,0.10;0.20;0.15;0.55,0.40;0.25;0.20;0.15
