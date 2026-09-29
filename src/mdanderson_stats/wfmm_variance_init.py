@@ -50,15 +50,40 @@ def _frozen_int(value: ArrayLike) -> NDArray[np.int64]:
     return array
 
 
+def _restore_fixed_effects(
+    beta: FloatArray,
+    response_scale: float,
+    design_scale: FloatArray,
+    column_norm: FloatArray,
+) -> FloatArray:
+    """Undo normalized scales without overflowing intermediate ratios."""
+    restored = (
+        np.asarray(beta, dtype=np.longdouble)
+        * np.longdouble(response_scale)
+        / np.asarray(column_norm, dtype=np.longdouble)
+        / np.asarray(design_scale, dtype=np.longdouble)
+    )
+    if not np.isfinite(restored).all() or np.any(
+        np.abs(restored) > np.longdouble(np.finfo(np.float64).max)
+    ):
+        raise ArithmeticError("fixed-effect estimates are not representable")
+    result = np.asarray(restored, dtype=np.float64)
+    if not np.isfinite(result).all():
+        raise ArithmeticError("fixed-effect estimates are not representable")
+    return result
+
+
 @dataclass(frozen=True)
 class WFMMVarianceInitialization:
     """Raw REML estimates and positive sampler starts, indexed by component/K.
 
     ``random_variance`` and ``residual_variance`` are the positive starts for
     ``fit_wfmm_coefficients`` when ``starts_usable`` is true. Their raw REML
-    estimates are retained separately; zero lower-bound estimates are lifted
-    by the documented scale-relative floor. The floor is a Python numerical
-    policy and does not define an inverse-gamma prior.
+    estimates are retained separately; exact or numerical-zero estimates are
+    lifted by the documented scale-relative floor. Mixed-model optimizer
+    estimates at the finite log-ratio bound remain positive and are flagged.
+    The floor is a Python numerical policy and does not define an
+    inverse-gamma prior.
     """
 
     random_variance: FloatArray
@@ -312,7 +337,7 @@ def initialize_wfmm_variances(
     rank_work = rank_cells * component_count
     analytic_residual_only = random_count == 0 and residual_count == 1
     work = (
-        0
+        (coefficient_count + 1) * rows * fixed_count**2
         if analytic_residual_only
         else coefficient_count
         * int(max_evaluations)
@@ -334,7 +359,7 @@ def initialize_wfmm_variances(
     scaled_x /= column_norm
     if np.linalg.matrix_rank(scaled_x) != fixed_count:
         raise ValueError("fixed_design must have full column rank")
-    if np.any(y != 0.0):
+    if not analytic_residual_only:
         _component_basis_rank(scaled_x, z, random_groups, residual_groups)
 
     raw_random = np.zeros((random_count, coefficient_count), dtype=np.float64)
@@ -384,7 +409,9 @@ def initialize_wfmm_variances(
             * max(1.0, float(np.linalg.norm(normalized_y)))
         )
         if residual_norms[coefficient] <= numerical_zero_tolerance:
-            fixed[:, coefficient] = (observed_scale / x_scale) * (beta_ols / column_norm)
+            fixed[:, coefficient] = _restore_fixed_effects(
+                beta_ols, observed_scale, x_scale, column_norm
+            )
             floored[:, coefficient] = True
             floor = floor_ratio * variance_scale
             if floor == 0.0 or not np.isfinite(floor):
@@ -414,7 +441,9 @@ def initialize_wfmm_variances(
             raw_residual[0, coefficient] = variance
             start_residual[0, coefficient] = max(variance, floor)
             floored[0, coefficient] = variance < floor
-            fixed[:, coefficient] = (observed_scale / x_scale) * (beta_ols / column_norm)
+            fixed[:, coefficient] = _restore_fixed_effects(
+                beta_ols, observed_scale, x_scale, column_norm
+            )
             sign, logdet_information = np.linalg.slogdet(scaled_x.T @ scaled_x)
             if sign <= 0.0 or not np.isfinite(logdet_information):
                 raise ArithmeticError("fixed-effect information determinant is invalid")
@@ -467,7 +496,9 @@ def initialize_wfmm_variances(
         start_residual[:, coefficient] = start[random_count:]
         lower[:, coefficient], upper[:, coefficient] = at_lower, at_upper
         floored[:, coefficient] = raw < start
-        fixed[:, coefficient] = (observed_scale / x_scale) * (beta_scaled / column_norm)
+        fixed[:, coefficient] = _restore_fixed_effects(
+            beta_scaled, observed_scale, x_scale, column_norm
+        )
         ll[coefficient] = (
             restricted
             - 0.5 * (rows - fixed_count) * np.log(variance_scale)

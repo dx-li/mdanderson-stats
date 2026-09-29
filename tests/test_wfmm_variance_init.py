@@ -22,6 +22,10 @@ def test_residual_only_reml_matches_closed_form_and_independent_reference():
     np.testing.assert_allclose(result.restricted_log_likelihood[0], float(ref["log_reml"]))
     assert result.starts_usable
 
+    rescaled_design = initialize_wfmm_variances(y, 1e200 * np.ones((4, 1)))
+    np.testing.assert_allclose(rescaled_design.fixed_effect_estimates[0, 0], 2.5e-200)
+    np.testing.assert_allclose(rescaled_design.raw_residual_variance, result.raw_residual_variance)
+
 
 def test_balanced_random_intercept_reml_matches_independent_reference():
     with FIXTURES.open(newline="") as stream:
@@ -81,6 +85,8 @@ def test_rejects_unidentified_designs_and_caps_actual_likelihood_evaluations():
         initialize_wfmm_variances(y, np.column_stack((x, x)))
     with pytest.raises(ValueError, match="not identifiable"):
         initialize_wfmm_variances(y, x, x.copy())
+    with pytest.raises(ValueError, match="not identifiable"):
+        initialize_wfmm_variances(np.zeros_like(y), x, x.copy())
 
     z = np.zeros((4, 2))
     z[:2, 0] = 1.0
