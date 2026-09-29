@@ -1,7 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `c44eddd` adds BOP2-DC finite-grid
-calibration for randomized binary, Normal and exponential-survival outcomes.
+Latest verified package checkpoint: `e0d319d` adds randomized paired BOP2-DC
+monitoring, absorbing replay, exact operating characteristics/calibration and
+bounded joint-outcome simulation.
 Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
@@ -837,3 +838,51 @@ approval, but approval policy is never`) still block publication. No rejected
 write route was retried or bypassed. Refreshed wheel/source packages and a
 verified all-refs bundle preserve the root and committed Luna checkpoints,
 including all three now-integrated randomized single-endpoint calibrators.
+
+## Randomized paired endpoint checkpoint
+
+Verified package code `e0d319d58bca84eb3a49290f9a0007d000a92c02` integrates
+Luna's randomized paired monitoring/replay, exact OC/calibration and simulation
+modules. Independent arm Dirichlet models support multiple efficacy and
+efficacy/toxicity with raw treatment-minus-control margins, OR/AND decisions
+and optional composed interim graduation. Exact recursion preserves endpoint
+association and caches marginal comparisons across candidates. Serial simulation
+supports larger designs without constructing the four-dimensional exact state
+lattice. Twelve public exports and a runnable guide make these workflows
+available to package users.
+
+Independent base-R integration and exhaustive joint-category tapes verify 388
+case-specific posterior states, 27,104 reached path/look decisions, 64 candidate
+metric rows, 256 per-scenario/candidate/look OC rows, both optimization objectives,
+infeasibility and 24 public replays. Maximum posterior disagreement is
+`6.2507e-10`, within reported numerical error; OC and candidate metric differences
+are at most `1.3323e-15`. Reference scripts and all generated tables are retained
+for reproducibility. Review corrected count-axis indexing, single-scenario batch
+shape, live-lattice memory accounting and the marginal simulation-cache bound.
+
+All ten integrated focused tests pass in 1.94 seconds. Targeted Ruff/format and
+mypy checks across three numerical modules pass. Three public guide examples
+pass; a two-million-patient simulation request is rejected before consuming
+the caller's RNG. The full repository numerical suite was not rerun, and no
+CI workflow or dependency was added. Numerical processes ran serially with
+thread limits of one. The R reference process peaked at 214.75 MiB; Python
+reference comparison peaked at 154.70 MiB, both with zero swaps. The documented
+100-trial/40-patient simulation took 0.687 seconds, peaked at 103.47 MiB and
+recorded zero swaps.
+
+Cached wheel/source builds pass. Isolated wheel verification checks 1,552 public
+exports, exact committed bytes for 557 source/data files in both artifacts,
+preserved licenses/notices, all 138 catalog entries and all three new guide
+examples. It takes 12.285 seconds, peaks at 116.44 MiB and records zero swaps.
+Coverage remains 63 implemented, 66 partial and nine pending. The randomized
+two-endpoint family is now covered; more than two decision endpoints, supplement
+settings and native application/optimizer/report equivalence remain outside
+verified scope, so BOP2-DC retains its partial label.
+
+Local `master` is advanced to the verified code plus this audit. A fresh
+read-only GitHub check still shows both `master` and `main` at `45b6e307`.
+There are 150 newer local commits at the verified code checkpoint, or 151
+including this audit. Publication remains blocked by the earlier shell DNS
+failure and connector approval rejection; neither write route was retried or
+bypassed. Updated wheel/source artifacts and the verified all-refs bundle
+preserve the committed root and Luna work for publication when access permits.
