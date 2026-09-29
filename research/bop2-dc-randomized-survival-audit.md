@@ -34,8 +34,9 @@ its as-of calendar time, stratifies event count and exposure by the fixed arm
 tape, and stops at the first no-go or optional graduation. Final follow-up is
 added after the last enrollment. Input order breaks tied arrival times. Native
 randomization, accrual timing, and RNG parity are not claimed. Aggregate
-randomized-survival operating characteristics are implemented as a bounded
-Python extension. Calibration and native RNG/timing parity remain out of scope.
+randomized-survival operating characteristics and finite-grid calibration are
+implemented as bounded Python extensions. Native RNG/timing parity remains out
+of scope.
 
 Replay preflights total numerical work before its first posterior calculation.
 The conservative bound charges `21 * (2 * 300 - 1)` quadrature evaluations
@@ -82,3 +83,25 @@ summaries and expanded the retained-memory estimate to include owned copies,
 Unicode decision storage and replay scratch. Decision counts must conserve
 all trials. Five monitor/replay tests and four simulation tests pass, including
 an explicit graduation regression, unit invariance and pre-RNG work rejection.
+
+## Finite-grid calibration
+
+The finite-grid calibrator accepts explicit futile and effective control/treatment
+median pairs. It requires positive arm medians, a strictly ordered treatment-effect
+difference, and an effective difference at least CMV; the caller-declared futile
+difference is not constrained to be at or below LRV. It varies only the four
+lambda/gamma grids while preserving the design's priors, fixed allocation, looks,
+graduation setting, and margins. Shared standardized arrival and event draws are
+reused across candidates and both truth pairs. Posterior tails/error estimates are
+computed once per truth, trial, and look, then reused; candidate decisions must be
+invariant over all four estimated-error interval corners.
+
+Calibration and validation use separate seeds. The selected candidate is checked
+on independent validation paths without reselection. False-go counts interim
+graduation or final go under the futile truth; false-no-go counts interim no-go or
+final no-go under the effective truth; correct go includes graduation. Optional
+final-consider control uses the larger of the two truth-specific rates. The
+empirical finite-grid constraints are not guarantees about true operating
+characteristics. The calibration default of 100 trials per stage is a workload
+choice, and a hard work preflight limits comparisons, candidate decisions, path
+scans, and retained tables before RNG use.

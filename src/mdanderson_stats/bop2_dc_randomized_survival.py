@@ -163,23 +163,9 @@ class BOP2DCRandomizedSurvivalDesign:
         ):
             raise ArithmeticError("posterior inverse-gamma parameters are not representable")
 
-        p_lrv = np.empty(batch_shape, dtype=np.float64)
-        p_cmv = np.empty(batch_shape, dtype=np.float64)
-        err_lrv = np.empty(batch_shape, dtype=np.float64)
-        err_cmv = np.empty(batch_shape, dtype=np.float64)
-        for index in np.ndindex(batch_shape):
-            args = (
-                float(shape_e[index]),
-                float(scale_e[index]),
-                float(shape_c[index]),
-                float(scale_c[index]),
-            )
-            p_lrv[index], err_lrv[index] = _median_difference_probability(
-                *args, self.median_lrv, self.comparison_tolerance
-            )
-            p_cmv[index], err_cmv[index] = _median_difference_probability(
-                *args, self.median_cmv, self.comparison_tolerance
-            )
+        p_lrv, err_lrv, p_cmv, err_cmv = _posterior_comparison_tails(
+            self, shape_c, scale_c, shape_e, scale_e
+        )
         decision = randomized_dual_decisions(
             total_indices,
             p_lrv,
@@ -210,6 +196,36 @@ class BOP2DCRandomizedSurvivalDesign:
             _owned(err_cmv),
             decision,
         )
+
+
+def _posterior_comparison_tails(
+    design: BOP2DCRandomizedSurvivalDesign,
+    shape_c: FloatArray,
+    scale_c: FloatArray,
+    shape_e: FloatArray,
+    scale_e: FloatArray,
+) -> tuple[FloatArray, FloatArray, FloatArray, FloatArray]:
+    """Calculate posterior tails/errors without applying candidate decision cutoffs."""
+    batch_shape = np.broadcast_shapes(shape_c.shape, scale_c.shape, shape_e.shape, scale_e.shape)
+    shape_c, scale_c, shape_e, scale_e = np.broadcast_arrays(shape_c, scale_c, shape_e, scale_e)
+    p_lrv = np.empty(batch_shape, dtype=np.float64)
+    p_cmv = np.empty(batch_shape, dtype=np.float64)
+    err_lrv = np.empty(batch_shape, dtype=np.float64)
+    err_cmv = np.empty(batch_shape, dtype=np.float64)
+    for index in np.ndindex(batch_shape):
+        args = (
+            float(shape_e[index]),
+            float(scale_e[index]),
+            float(shape_c[index]),
+            float(scale_c[index]),
+        )
+        p_lrv[index], err_lrv[index] = _median_difference_probability(
+            *args, design.median_lrv, design.comparison_tolerance
+        )
+        p_cmv[index], err_cmv[index] = _median_difference_probability(
+            *args, design.median_cmv, design.comparison_tolerance
+        )
+    return p_lrv, err_lrv, p_cmv, err_cmv
 
 
 def _log_gamma_quantile(shape: float, probability: float) -> float:
