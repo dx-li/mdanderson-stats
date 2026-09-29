@@ -4424,7 +4424,10 @@
         "Randomized exponential-survival comparisons with explicit independent mean-survival IG priors, signed median-time differences, as-of censoring/zero-duration events, absorbing calendar replay and fixed/Poisson accrual simulation with arm-level audit summaries",
         "Randomized binary finite-grid calibration with cached Beta count-state comparisons, exact conditional operating characteristics, all-candidate evidence and numerically stable CGR/futile-ESS selection",
         "Randomized Normal finite-grid calibration with separate arm means/SDs, shared truth-centered paths, full candidate probability/enrollment/MCSE evidence and independent holdout feasibility without reselection",
-        "Randomized survival finite-grid calibration with arm-specific medians, common arrival/event paths, cached posterior differences, candidate counts/MCSEs and independent holdout arm event/exposure summaries"
+        "Randomized survival finite-grid calibration with arm-specific medians, common arrival/event paths, cached posterior differences, candidate counts/MCSEs and independent holdout arm event/exposure summaries",
+        "Randomized paired multiple-efficacy and efficacy/toxicity models with independent four-cell Dirichlet arm priors, marginal Beta risk-difference comparisons, combined OR/AND decisions, optional composed interim graduation and absorbing fixed-allocation replay",
+        "Randomized paired exact operating characteristics and finite-grid calibration preserve joint endpoint association across both arms, cache marginal comparisons and retain all-candidate per-look probabilities with CGR/futile-ESS selection",
+        "Randomized paired serial Monte Carlo operating characteristics with joint-category draws, bounded marginal-posterior caches, per-trial replay seeds, terminal enrollment/actions and Monte Carlo errors"
       ],
       "validation": [
         "Five independent base-R posterior and decision cases match Python",
@@ -4444,7 +4447,8 @@
         "Independent R Beta integration and full response-path enumeration verify 66 binary candidate configurations and 1980 numeric summaries, distinct CGR/ESS winners, stable ties and infeasibility. research/bop2-dc-randomized-binary-calibration-audit.md",
         "Independent R Student-t density integration verifies 36 Normal candidate configurations and 1092 summaries, distinct CGR/ESS winners and a calibration-pass/holdout-fail case without reselection. research/bop2-dc-randomized-normal-calibration-audit.md",
         "Independent R Gamma-density integration/calendar replay verifies 36 survival candidate configurations and 1791 summaries, fixed/Poisson accrual, signed margins, different objective winners and held-out arm events/exposure. research/bop2-dc-randomized-survival-audit.md",
-        "Randomized multiple/co-primary endpoint models, combined decisions, conduct/OCs and calibration remain a substantive source-backed gap. Completed single-endpoint workflows do not imply native application/report/RNG parity. research/bop2-dc-remaining-methods.md"
+        "Independent R Beta integration and exhaustive joint-category paths verify 388 case-specific posterior states, 27104 reached path/look decisions, 64 randomized paired candidates, 256 OC rows, both objective selections and 24 public replays. Largest tail discrepancy 6.251e-10 is within reported quadrature error; candidate and OC discrepancies are at most 1.333e-15. Ten focused tests pass. research/bop2-dc-randomized-paired-oc-audit.md",
+        "Randomized paired simulation reproduces seeded public replays and deterministic joint truths; a 40-patient/100-trial example takes 0.687 seconds with 103.47 MiB peak RSS and no swaps. More than two decision endpoints, native reports/RNG/optimizer parity and supplementary-table settings remain outside verified scope. docs/bop2-dc-randomized-paired.md"
       ]
     },
     {

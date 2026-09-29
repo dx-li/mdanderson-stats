@@ -332,6 +332,24 @@ from .bop2_dc_randomized_normal_simulation import (
     BOP2DCRandomizedNormalSimulation,
     simulate_bop2_dc_randomized_normal,
 )
+from .bop2_dc_randomized_paired import (
+    BOP2DCRandomizedPairedDesign,
+    BOP2DCRandomizedPairedReplay,
+    BOP2DCRandomizedPairedState,
+    bop2_dc_randomized_paired_design,
+)
+from .bop2_dc_randomized_paired_optimization import (
+    BOP2DCRandomizedPairedCandidateEvidence,
+    BOP2DCRandomizedPairedInfeasibleError,
+    BOP2DCRandomizedPairedOperatingCharacteristics,
+    BOP2DCRandomizedPairedOptimization,
+    bop2_dc_randomized_paired_operating_characteristics,
+    optimize_bop2_dc_randomized_paired,
+)
+from .bop2_dc_randomized_paired_simulation import (
+    BOP2DCRandomizedPairedSimulation,
+    simulate_bop2_dc_randomized_paired,
+)
 from .bop2_dc_randomized_survival import (
     BOP2DCRandomizedSurvivalDesign,
     BOP2DCRandomizedSurvivalState,
@@ -1754,6 +1772,18 @@ __all__ = [
     "optimize_bop2_dc_randomized_normal",
     "BOP2DCRandomizedNormalSimulation",
     "simulate_bop2_dc_randomized_normal",
+    "BOP2DCRandomizedPairedDesign",
+    "BOP2DCRandomizedPairedReplay",
+    "BOP2DCRandomizedPairedState",
+    "bop2_dc_randomized_paired_design",
+    "BOP2DCRandomizedPairedCandidateEvidence",
+    "BOP2DCRandomizedPairedInfeasibleError",
+    "BOP2DCRandomizedPairedOperatingCharacteristics",
+    "BOP2DCRandomizedPairedOptimization",
+    "bop2_dc_randomized_paired_operating_characteristics",
+    "optimize_bop2_dc_randomized_paired",
+    "BOP2DCRandomizedPairedSimulation",
+    "simulate_bop2_dc_randomized_paired",
     "BOP2DCRandomizedSurvivalDesign",
     "BOP2DCRandomizedSurvivalState",
     "BOP2DCRandomizedSurvivalTrial",

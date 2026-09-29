@@ -61,6 +61,11 @@ arm posteriors, early graduation, replay and exact OCs for an explicit allocatio
 [Randomized Normal outcomes](bop2-dc-randomized-normal.md) and
 [randomized survival outcomes](bop2-dc-randomized-survival.md) add independent
 arm posterior differences, trial replay and bounded serial simulation.
-Randomized calibration and generated app reports remain open. See
+[Randomized calibration](bop2-dc-randomized-calibration.md) adds explicit-grid
+selection for those three single-endpoint models.
+[Randomized paired outcomes](bop2-dc-randomized-paired.md) add joint Dirichlet
+arm models, OR/AND decisions, exact operating characteristics and calibration,
+and bounded serial simulation for multiple efficacy or efficacy/toxicity.
+Generated app reports and native compatibility remain open. See
 [source notes](bop2-dc-source.md) and the
 [independent numerical references](bop2-dc-reference.md).

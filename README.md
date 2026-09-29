@@ -47,7 +47,9 @@ uv run --extra plot pytest
 GitHub validation runs on pushes to `main`, pull requests targeting `main` or
 `master`, and manual dispatches. Pushes outside `main` do not trigger validation
 by themselves; updates to open pull requests targeting `main` or `master` still
-run validation. `master` mirrors the checkpoint tested on `main`.
+run validation. Stable community checkpoints are collected on `master` after
+numerical and package validation; [publication records](research/publication-checkpoint-2026-09-28.md)
+distinguish local checkpoints from confirmed GitHub publication.
 Formatting, lint, types and packaging must pass before the Python 3.12–3.14
 test matrix starts. At most two matrix jobs run at once, with a 25-minute limit
 per job; a newer run cancels a superseded run for the same branch or pull request.
@@ -1197,8 +1199,12 @@ add median-time differences, as-of censoring and fixed/Poisson accrual simulatio
 Both support graduation and retain numerical-error safeguards. Randomized binary
 calibration uses exact conditional operating characteristics; [Normal and survival
 calibration](docs/bop2-dc-randomized-calibration.md) reuse common paths and report
-independent holdout feasibility without reselection. Randomized multiple and
-co-primary endpoint workflows remain open.
+independent holdout feasibility without reselection.
+[Randomized paired outcomes](docs/bop2-dc-randomized-paired.md) add joint
+Dirichlet arm models for multiple efficacy or efficacy/toxicity, combined
+monitoring and absorbing replay, exact conditional operating characteristics
+and finite-grid calibration. Bounded serial simulation supports larger designs
+while retaining endpoint association and per-trial replay seeds.
 
 [BARPO](docs/barpo.md) adds binary posterior monitoring with or without a control
 and four adaptive allocation methods: BARCP, BARN2N, BARMTV and explicit-target

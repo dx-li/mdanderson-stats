@@ -39,7 +39,7 @@ these source-backed targets:
   Section 3.2 gives simulation
   examples and an example 2:1 allocation, which is not a universal default.
 
-## Remaining randomized multiple/co-primary endpoints
+## Randomized multiple/co-primary endpoints
 
 The paper also explicitly covers multiple/co-primary endpoints in randomized
 trials (abstract lines 33–34 and introduction lines 89–97). Section 2.1.4
@@ -50,12 +50,24 @@ experimental-minus-control comparisons. Section 3.2 (lines 663–667) explicitly
 reports randomized multiple-endpoint and efficacy/toxicity simulations in
 Supplement Tables S3–S4.
 
-The current paired-endpoint implementation is single-arm. Randomized paired
-posterior comparisons, combined decisions, trial conduct/operating
-characteristics and calibration remain a substantive method-family gap.
+The randomized paired implementation now provides independent four-cell
+Dirichlet arm models, marginal posterior differences, OR/AND endpoint decisions,
+absorbing replay, exact joint-outcome operating characteristics and finite-grid
+calibration. Bounded serial simulation supplies operating characteristics when
+the four-dimensional exact state lattice exceeds its resource limits. See
+the [randomized paired guide](../docs/bop2-dc-randomized-paired.md) and
+[source mapping](bop2-dc-randomized-paired-source.md).
+
+Two binary indicators can also represent a larger categorical outcome after
+exactly aggregating counts, prior shapes and truth probabilities into their
+four indicator combinations. More than two decision endpoints, nonbinary
+utility-weighted posterior criteria, delayed paired observations and calibration
+beyond the bounded exact recursion remain separate scope.
 The cached main paper does not contain the full supplement scenarios, so
 table-level parity must not be claimed without obtaining those settings.
-These gaps are separate from native UI, report formats or RNG parity. The
-public catalog remains partial until this statistical family is covered. The source's
-effective-truth and clinical-utility guidance should be documented without
-inventing additional restrictions on caller-declared futile scenarios.
+The optional paired graduation rule is a documented composition of the scalar
+randomized superiority rule with the endpoint OR/AND rule, not independently
+verified native paired-graduation pseudocode. These qualifications and native
+UI, report and RNG parity keep the public catalog partial. Effective truths
+must satisfy the clinical-go composition; no additional LRV restriction is
+invented for caller-declared futile scenarios.
