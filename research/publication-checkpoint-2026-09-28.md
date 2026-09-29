@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `f4158b4` adds MTADF global/local logistic
-trial simulation and TITE-BOIN12 Bayesian data augmentation. The final
+Latest verified package checkpoint: `32061b4` adds TITE-BOIN12 Bayesian
+data-augmentation dose conduct and explicit-policy 1+a+b rare-disease cohorts. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1537,3 +1537,42 @@ with unchanged example syntax trees. Hosted quality, Python 3.12 and Python
 inspected. The new hosted run is recorded separately. Only this audit follows
 verified package code before ordinary atomic fast-forward publication and
 independent remote-SHA verification of master, main and development.
+
+## Bayesian dose conduct and generalized rare-disease cohorts
+
+Verified package code is `32061b468e8f8a996c403975a8c98873954c2200`.
+Luna implemented BDA neighboring-dose decisions with pending-data suspension
+before sampling, persistent exclusions and completed-imputation toxicity rates.
+A shared transition helper preserves the existing AL behavior. Source-defined
+rules are distinguished from explicit Python rate, run-in and precision policies.
+The new public API and examples are documented in the BDA guide.
+
+The rare-disease design and simulator now accept the captured app's 15 cohort
+size pairs: a=1..3 and b=1..5. Nondefault sizes require an explicit admissibility
+count threshold, because the saved source does not specify generalized exclusion
+settings. Review caught and repaired a fixed three-outcome simulation width;
+the 1+3+5 regression verifies all nine patients' outcomes are counted. Default
+1+2+3 behavior and its independent reference checks remain intact. The README
+now gives direct master-branch checkout and installation instructions.
+
+Twenty-nine focused TITE checks and nine rare-disease checks pass with warnings
+treated as errors. Targeted Ruff, formatting and type checks pass. The final
+worker processes peak at 133.62 and 150.42 MiB RSS with zero swaps. Root's
+independent exact-integral comparison validates the BDA movement-rate estimate
+within 0.201 conservative MCSE, taking 3.517 seconds at 124.19 MiB with zero
+swaps. Validation runs sequentially; no broad local suite or new CI is added.
+
+Cached wheel/source builds and isolated wheel verification pass: 1,625 public
+exports, all 575 package source/data files byte-identical to committed Git in
+both artifacts, eight executable examples across three affected guides, all
+138 catalog entries and preserved license notices. Verification takes 14.038
+seconds, peaks at 118.09 MiB and reports zero swaps. Coverage remains 63
+implemented, 67 partial and eight pending. Calendar/native-policy gaps and
+the existing mixed-license terms remain explicit.
+
+At the last pre-publication inspection, the preceding `1ea1efa` checkpoint has
+successful hosted quality, Python 3.12 and Python 3.13 checks; Python 3.14 is
+still running. These are not results for the new checkpoint. This audit-only
+commit follows the verified code. The local manifest records the subsequent
+atomic fast-forward publication, independently checked remote SHAs and the new
+hosted run separately.
