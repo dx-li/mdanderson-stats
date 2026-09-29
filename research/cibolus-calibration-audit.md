@@ -44,3 +44,10 @@ evaluations and 34,512 work units (124,567,552-byte peak RSS, zero swaps).
 The maximum split-Rhat was 4.11, so this confirms bounded 400-record execution
 only; eight draws are far too few to assess convergence or claim an elicited
 prior estimate.
+
+The retained-cell preflights include the raw/frozen fit arrays, conservative
+`14 * chains * draws * (11 + regimen_count)` chain-summary scratch, and live
+probability/count/output buffers. Probability moment calculations clip only
+64-epsilon excursions outside [0,1] and reject larger violations; materially
+negative beta-moment ESS is also an arithmetic error rather than a reported
+invalid value.

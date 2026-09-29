@@ -74,18 +74,30 @@ def _joint_grid(value: ArrayLike, expected: tuple[int, ...]) -> FloatArray:
 
 
 def _moment_triplet(samples: FloatArray) -> tuple[FloatArray, FloatArray, FloatArray]:
-    mean = np.mean(samples, axis=0)
+    values = np.asarray(samples, dtype=float)
+    tolerance = 64 * np.finfo(float).eps
+    if (
+        not np.all(np.isfinite(values))
+        or np.any(values < -tolerance)
+        or np.any(values > 1 + tolerance)
+    ):
+        raise ArithmeticError("prior-predictive probability is outside [0, 1]")
+    values = np.clip(values, 0.0, 1.0)
+    mean = np.mean(values, axis=0)
     # The empirical prior-predictive distribution uses its population moment.
     # This also keeps the plug-in beta-moment variance within m*(1-m).
-    variance = np.var(samples, axis=0, ddof=0)
-    constant = np.all(samples == samples[0:1], axis=0)
-    mean = np.where(constant, samples[0], mean)
+    variance = np.var(values, axis=0, ddof=0)
+    constant = np.all(values == values[0:1], axis=0)
+    mean = np.where(constant, values[0], mean)
     variance = np.where(constant, 0.0, variance)
     ess = np.full_like(mean, np.nan)
     numerator = mean * (1.0 - mean)
     positive_variance = variance > 0
     np.divide(numerator, variance, out=ess, where=positive_variance)
     ess[positive_variance] -= 1.0
+    if np.any(ess[positive_variance] < -1e-12):
+        raise ArithmeticError("empirical probability moments imply a negative beta ESS")
+    ess[positive_variance] = np.maximum(ess[positive_variance], 0.0)
     constant_interior = (~positive_variance) & (mean > 0) & (mean < 1)
     ess[constant_interior] = np.inf
     return (
@@ -175,7 +187,8 @@ def cibolus_prior_predictive_moments(
     fit_retained = sample_count * fit_retained_per_draw
     temporary_cells = sample_count * regimens * (categories + e.size + 1)
     output_cells = regimens * (categories * 4 + e.size * 3 + 30)
-    if 2 * fit_retained + temporary_cells + 2 * output_cells > retained_limit:
+    fit_summary_scratch = 14 * sample_count * (11 + regimens)
+    if 2 * fit_retained + fit_summary_scratch + temporary_cells + 2 * output_cells > retained_limit:
         raise ValueError("prior predictive live arrays exceed max_retained_cells")
     utility = np.zeros((categories, 2))
     fit = fit_cibolus(
@@ -342,7 +355,7 @@ def calibrate_cibolus_prior(
     fit_retained = chains * draws * fit_retained_per_draw
     count_cells = counts_shape_cells(reps, c.size, q.size, category_count)
     output_cells = reps * (11 * 5 + 4)
-    fit_summary_scratch = 4 * chains * draws * 11
+    fit_summary_scratch = 14 * chains * draws * (11 + regimen_count)
     live_cells = (
         truth.size + 2 * fit_retained + fit_summary_scratch + 2 * output_cells + 2 * count_cells
     )
