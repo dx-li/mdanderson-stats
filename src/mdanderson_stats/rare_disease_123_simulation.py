@@ -1,4 +1,4 @@
-"""Batched complete-cohort 1+2+3 trials with correlated binary endpoints."""
+"""Batched complete-cohort 1+a+b trials with correlated binary endpoints."""
 
 from dataclasses import dataclass
 
@@ -41,7 +41,8 @@ def simulate_rare_disease_123(
 
     Correlation is between latent standard normals, not binary endpoints.
     Selected dose 0 means no OBD; selection arrays index [none, dose 1, ...].
-    Means are per dose. Each trial enrolls at most six patients per dose.
+    Means are per dose. Each trial enrolls at most
+    ``design.maximum_patients_per_dose`` at a dose.
     """
     rates = finite(toxicity_rates, "toxicity_rates")
     if rates.ndim != 1 or not 2 <= rates.size <= 20:
@@ -63,7 +64,10 @@ def simulate_rare_disease_123(
     current = np.full(trials, start, dtype=np.int64)
     selected = np.zeros(trials, dtype=np.int64)
     active = np.arange(trials)
-    cohort = np.array([1, 2, 0, 3, 0, 0, 0])
+    cohort = np.zeros(design.maximum_patients_per_dose + 1, dtype=np.int64)
+    cohort[0] = 1
+    cohort[1] = design.second_cohort_size
+    cohort[1 + design.second_cohort_size] = design.third_cohort_size
     for _ in range(3 * doses):
         if active.size == 0:
             break
@@ -78,7 +82,9 @@ def simulate_rare_disease_123(
             design, n[active], t[active], r[active], j, excluded[active]
         )
         excluded[active] = masks
-        full = (proposed >= 0) & (n[active, np.maximum(proposed, 0)] == 6)
+        full = (proposed >= 0) & (
+            n[active, np.maximum(proposed, 0)] == design.maximum_patients_per_dose
+        )
         selected[active[full]] = proposed[full] + 1
         continuing = (proposed >= 0) & ~full
         active = active[continuing]

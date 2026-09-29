@@ -24,7 +24,7 @@ class RareDisease123Decision:
 
 @dataclass(frozen=True)
 class RareDisease123Design:
-    """1+2+3 with an explicitly supplied efficacy Beta prior; one-based doses.
+    """Generalized 1+a+b with explicit efficacy Beta prior; one-based doses.
 
     The native protocol omits the prior. Beta(1,1) reproduces its default decision
     tables, but it is deliberately not an implicit default. Full outcomes only.
@@ -35,6 +35,9 @@ class RareDisease123Design:
     minimum_efficacy: float = 0.6
     efficacy_cutoff: float = 0.9
     escalation_cutoff: float = 0.5
+    second_cohort_size: int = 2
+    third_cohort_size: int = 3
+    admissibility_min_patients: int | None = None
 
     def __post_init__(self) -> None:
         prior = finite(self.efficacy_prior, "efficacy_prior")
@@ -43,6 +46,23 @@ class RareDisease123Design:
         object.__setattr__(self, "efficacy_prior", tuple(map(float, prior)))
         for name in ["target_toxicity", "minimum_efficacy", "efficacy_cutoff", "escalation_cutoff"]:
             object.__setattr__(self, name, scalar(getattr(self, name), name))
+        second = _integer(self.second_cohort_size, "second_cohort_size")
+        third = _integer(self.third_cohort_size, "third_cohort_size")
+        if not 1 <= second <= 3 or not 1 <= third <= 5:
+            raise ValueError("second_cohort_size must be 1..3 and third_cohort_size must be 1..5")
+        object.__setattr__(self, "second_cohort_size", second)
+        object.__setattr__(self, "third_cohort_size", third)
+        threshold = self.admissibility_min_patients
+        if threshold is None:
+            if (second, third) != (2, 3):
+                raise ValueError(
+                    "nondefault cohort sizes require an explicit admissibility_min_patients"
+                )
+            threshold = 3
+        threshold = _integer(threshold, "admissibility_min_patients")
+        if not 1 <= threshold <= 1 + second + third:
+            raise ValueError("admissibility_min_patients must be within the per-dose maximum")
+        object.__setattr__(self, "admissibility_min_patients", threshold)
         if not 0.05 <= self.target_toxicity <= 0.6 or not 0.1 <= self.minimum_efficacy <= 0.9:
             raise ValueError("target_toxicity must be in [.05,.6], minimum_efficacy in [.1,.9]")
         if (
@@ -59,6 +79,33 @@ class RareDisease123Design:
         design = BOINDesign(self.target_toxicity)
         return design.escalation_boundary, design.deescalation_boundary
 
+    @property
+    def cumulative_cohort_sizes(self) -> tuple[int, int, int, int]:
+        """Allowed cumulative counts after zero, one, two and three cohorts."""
+        return (
+            0,
+            1,
+            1 + self.second_cohort_size,
+            1 + self.second_cohort_size + self.third_cohort_size,
+        )
+
+    @property
+    def maximum_patients_per_dose(self) -> int:
+        return self.cumulative_cohort_sizes[-1]
+
+    def next_cohort_size(self, cumulative_count: int) -> int:
+        """Return the next cohort increment for an allowed cumulative count."""
+        count_at_dose = _integer(cumulative_count, "cumulative_count")
+        if count_at_dose == 0:
+            return 1
+        if count_at_dose == 1:
+            return self.second_cohort_size
+        if count_at_dose == 1 + self.second_cohort_size:
+            return self.third_cohort_size
+        if count_at_dose == self.maximum_patients_per_dose:
+            raise ValueError("dose has already received all three cohorts")
+        raise ValueError("cumulative_count is not an allowed cohort boundary")
+
     def next_dose(
         self,
         patients: ArrayLike,
@@ -70,8 +117,9 @@ class RareDisease123Design:
     ) -> RareDisease123Decision:
         """Apply protocol dose rules and select OBD upon assignment to a full dose.
 
-        Counts per dose must be 0,1,3,6. First assignment treats 1 patient, second
-        adds 2 and third adds 3. Assignment to an admissible six-patient dose
+        Counts per dose must match the configured cumulative cohort totals.
+        First assignment treats one patient; later assignments add the configured
+        second and third cohort sizes. Assignment to an admissible full dose
         terminates with that dose selected. Carry eliminated between decisions.
         """
         n, t, r = (
@@ -84,12 +132,13 @@ class RareDisease123Design:
             or not 2 <= n.size <= 20
             or t.shape != n.shape
             or r.shape != n.shape
-            or not np.isin(n, [0, 1, 3, 6]).all()
+            or not np.isin(n, self.cumulative_cohort_sizes).all()
             or np.any(t > n)
             or np.any(r > n)
         ):
             raise ValueError(
-                "require matching 2..20 dose vectors, n in {0,1,3,6}, and endpoint counts <=n"
+                "require matching dose vectors, allowed cumulative cohort counts, "
+                "and endpoint counts <=n"
             )
         j = _integer(current_dose, "current_dose") - 1
         if not 0 <= j < n.size or n[j] == 0:
@@ -110,12 +159,12 @@ class RareDisease123Design:
         size = 0
         if proposed is None:
             action, next_dose = "stop_no_obd", None
-        elif n[proposed] == 6:
+        elif n[proposed] == self.maximum_patients_per_dose:
             action, next_dose, selected = "select_obd", None, proposed + 1
         else:
             action = "escalate" if proposed > j else "deescalate" if proposed < j else "stay"
             next_dose = proposed + 1
-            size = {0: 1, 1: 2, 3: 3}[int(n[proposed])]
+            size = self.next_cohort_size(int(n[proposed]))
         return RareDisease123Decision(
             action,
             next_dose,
@@ -140,8 +189,11 @@ def _next_batch(
     rate = np.divide(t, n, out=np.zeros(n.shape), where=n > 0)
     a, b = design.efficacy_prior
     acceptable = betaincc(r + a, n - r + b, design.minimum_efficacy)
-    excluded = excluded | np.maximum.accumulate((n > 1) & (rate >= ld), axis=1)
-    excluded |= (n > 1) & (
+    threshold = design.admissibility_min_patients
+    assert threshold is not None
+    evaluated = n >= threshold
+    excluded = excluded | np.maximum.accumulate(evaluated & (rate >= ld), axis=1)
+    excluded |= evaluated & (
         betainc(r + a, n - r + b, design.minimum_efficacy) >= design.efficacy_cutoff
     )
     rows = np.arange(n.shape[0])

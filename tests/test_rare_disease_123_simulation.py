@@ -14,7 +14,7 @@ def test_simulation_matches_exhaustive_cohort_paths(vary_toxicity):
 
     @lru_cache(None)
     def paths(n, t, r, j, excluded):
-        size = {0: 1, 1: 2, 3: 3}[n[j]]
+        size = design.next_cohort_size(n[j])
         result = np.zeros(5)  # no OBD, dose 1, dose 2, N at dose 1, N at dose 2
         for count in range(size + 1):
             weight = comb(size, count) * rates[j] ** count * (1 - rates[j]) ** (size - count)
@@ -67,3 +67,15 @@ def test_extremes_correlation_and_reproducibility():
         )
     with pytest.raises(ValueError):
         simulate_rare_disease_123(design, [0.2, 0.6], [0.2], trials=10)
+
+
+def test_generalized_cohort_simulation_obeys_configured_per_dose_maximum():
+    design = RareDisease123Design(
+        (1, 1), second_cohort_size=1, third_cohort_size=1, admissibility_min_patients=3
+    )
+    result = simulate_rare_disease_123(
+        design, [0.0, 0.0], [1.0, 1.0], start_dose=2, trials=10, correlation=0, rng=28
+    )
+    np.testing.assert_array_equal(result.selected_dose, np.full(10, 2))
+    np.testing.assert_array_equal(result.patients, np.tile([0, 3], (10, 1)))
+    assert result.patients.max() == design.maximum_patients_per_dose

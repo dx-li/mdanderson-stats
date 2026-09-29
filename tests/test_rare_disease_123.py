@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from mdanderson_stats import RareDisease123Design
 
@@ -35,6 +36,43 @@ def test_cohort_progression_and_selection_only_at_next_assigned_full_dose():
     move = design.next_dose([1, 6, 0], [0, 3, 0], [1, 6, 0], 2)
     assert move.next_dose == 1 and move.cohort_size == 2
     assert move.selected_dose is None
+
+
+def test_generalized_1ab_cohort_sizes_and_explicit_admissibility_cutoff():
+    for second in (1, 2, 3):
+        for third in (1, 2, 3, 4, 5):
+            design = RareDisease123Design(
+                (1, 1),
+                second_cohort_size=second,
+                third_cohort_size=third,
+                admissibility_min_patients=3,
+            )
+            maximum = 1 + second + third
+            assert design.cumulative_cohort_sizes == (0, 1, 1 + second, maximum)
+            assert design.next_cohort_size(0) == 1
+            assert design.next_cohort_size(1) == second
+            assert design.next_cohort_size(1 + second) == third
+            assert design.maximum_patients_per_dose == maximum
+            selected = design.next_dose([maximum, 0], [0, 0], [maximum, 0], 1)
+            assert selected.selected_dose == 1
+    with pytest.raises(ValueError, match="admissibility_min_patients"):
+        RareDisease123Design((1, 1), second_cohort_size=1, third_cohort_size=1)
+    default = RareDisease123Design((1, 1))
+    for invalid_count in (True, 1.0, 2):
+        with pytest.raises(ValueError, match="cumulative_count"):
+            default.next_cohort_size(invalid_count)
+
+    # This is an explicit Python extension: with 1+a=2, the caller's
+    # threshold 3 postpones toxicity/futility exclusion until the next cohort.
+    design = RareDisease123Design(
+        (1, 1), second_cohort_size=1, third_cohort_size=1, admissibility_min_patients=3
+    )
+    after_second = design.next_dose([2, 0], [2, 0], [2, 0], 1)
+    assert after_second.next_dose == 1 and after_second.cohort_size == 1
+    assert not after_second.eliminated[0]
+    after_third = design.next_dose([3, 0], [3, 0], [3, 0], 1)
+    assert after_third.action == "stop_no_obd"
+    assert after_third.eliminated[0]
 
 
 def test_exemptions_exclusions_and_exploration_limit():
