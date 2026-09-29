@@ -1,0 +1,7 @@
+"case","original_weight_sum","bootstrap_draw_count","unique_rows","status"
+"unit_a",96,96,65,"fit"
+"unit_b",96,96,65,"fit"
+"unit_singular",96,96,1,"singular_design"
+"weighted_a",192,192,79,"fit"
+"weighted_b",192,192,77,"fit"
+"weighted_singular",192,192,1,"singular_design"
