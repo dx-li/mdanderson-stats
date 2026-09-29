@@ -1,10 +1,9 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `4873075` adds ordinary interval-PH
-coefficient bootstrap covariance/standard errors and repeated-visit preparation
-for interval competing risks, with explicit failures/exclusions and source-row
-provenance. The earlier categorical forest and anti-split workflows remain
-included.
+Latest verified package checkpoint: `5115a87` adds interval competing-risk
+coefficient bootstrap uncertainty and scalar-start TITE-CRM prior ESS with
+explicit follow-up versus legacy enrollment-time criteria. Earlier interval-PH
+bootstrap, visit preparation and survival-forest workflows remain included.
 Local `master` contains this validated checkpoint. Fresh read-only
 checks still show GitHub `master` and `main` at `45b6e307`; their earlier
 changes are already merged locally. The newer statistical additions have not
@@ -1013,3 +1012,53 @@ A read-only check at 2026-09-29 03:37:55 UTC still shows GitHub `master` and
 unpublished. The earlier DNS failure and connector approval restriction have
 no confirmed resolution. Neither write route was retried or bypassed, and
 local artifacts do not establish remote publication.
+
+## Competing-risk bootstrap and TITE-CRM prior ESS
+
+The verified code checkpoint is `5115a87`. Two Luna implementers worked in
+separate checkouts; a Luna reviewer supplied unchanged-source references and
+checked the statistical contracts. Root integrated the public interfaces,
+examples and notices, reviewed numerical edge cases and verified packaging.
+Entries 154 and 166 retain partial status: the full catalog remains 63
+implemented, 66 partial and nine pending. These counts do not estimate the
+remaining engineering time or establish full native application coverage.
+
+The competing-risk bootstrap resamples complete rows, rebuilds each sample's
+spline knots and returns coefficient covariance and standard errors. Invalid
+resamples and optimizer failures have explicit policies and aligned records.
+Eight focused checks pass in 2.52 seconds at 139.78 MiB peak process RSS, with
+zero swaps. Seeded draws reproduce an explicit tape exactly, and coefficient
+and standard-error scaling remains correct under covariate units of 1e-100
+and 1e100. The public example's eight refits converge. All five native R
+bootstrap fixtures regenerate byte-identically in 2.224 seconds at 92.50 MiB
+peak child RSS, with zero swaps. Known native optimizer defects are disclosed;
+native fitted slopes are compatibility records, not certified optima.
+
+TITE-CRM supports fixed and Poisson accrual, pending toxicity histories,
+explicit assessment timing, signed expected-subset information and full-real
+or legacy truncated-numerator posterior moments. Seven focused checks pass
+in 1.36 seconds at 130.48 MiB RSS, zero swaps. Fixed and Poisson trial paths
+match the unchanged dfcrm source, and the assessment excludes a toxicity
+that occurs after the cutoff. Twelve independent posterior-moment comparisons
+at default and diffuse prior scales have maximum absolute discrepancies of
+1.31e-10 for full moments and 7.46e-11 for the legacy convention. The five
+portable R fixtures regenerate byte-identically in 0.541 seconds at 84.30 MiB
+child RSS, zero swaps. Review corrected near-one curvature cancellation,
+normalizer convergence checks and overflow-prone ESS crossing detection.
+
+Targeted lint, formatting and type checks pass. No new CI workflow or broad
+numerical test run was added. Numerical processes ran serially with one
+BLAS/OpenMP thread; no dependencies were installed. Cached wheel and source
+builds pass. The isolated wheel check verifies all 1,568 public exports,
+563 packaged source/data files against committed bytes, all 138 catalog entries,
+retained licenses/notices and both new guide examples. It takes 10.629 seconds,
+peaks at 125.27 MiB RSS and reports zero swaps.
+
+Local `master` includes the verified code plus this publication record. The
+refreshed wheel, source distribution and verified all-refs Git bundle preserve
+the completed root and Luna commits. A read-only check at 2026-09-29 04:14:18 UTC
+still shows GitHub `master` and `main` at `45b6e307`; 178 local-master commits
+including this audit are unpublished. The earlier shell DNS failure and
+connector rejection (approval required while approval policy is never) have no
+confirmed resolution. Neither write route was retried or bypassed. Local
+artifacts and local branch advancement do not establish remote publication.
