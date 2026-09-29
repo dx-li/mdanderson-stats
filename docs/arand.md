@@ -2,10 +2,11 @@
 
 Catalog entry **62 remains partial**. The binary and time-to-event posterior
 models, best-arm probabilities and exponential tuning are implemented for one
-through ten independent arms. Native calendar simulation, allocation floors,
-reversible loser suspension, permanent futility, stopping order and full
-operating-characteristic reporting still require implementation and verification.
-These functions are statistical building blocks, not a trial controller.
+through ten independent arms. [Calendar replay](arand-calendar.md) now connects
+these building blocks to explicit patient tapes, allocation floors, reversible
+suspension, permanent futility, monitoring gates and final selection. The replay
+requires explicit policies where the guide leaves native behavior unspecified.
+Full native simulation/reporting parity remains open.
 
 Sources: [MD Anderson entry](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62),
 [version 5.2 guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ARAND/ARandUsersGuide.pdf),
@@ -130,8 +131,9 @@ Vectorized CDF evaluation reduced one local pass through the 52-reference
 workload from 2.62 to 1.12 seconds; this is a workload measurement, not a general
 performance guarantee or native program benchmark.
 
-The archive's design controls and full simulation kernel have not been ported.
-The remaining work includes native timing and accrued-outcome rules, allocation
-floor semantics, suspended/futile-arm inclusion in probability calculations,
-minimum-enrollment gates, final follow-up and selection, and simulation reports.
-No native numerical-engine or complete trial-controller parity is claimed.
+The [calendar workflow](arand-calendar.md) implements arrival-time and scheduled
+looks, accrued-outcome handling, enrollment gates, final follow-up and selection.
+It exposes floor, ranking, simultaneous-trigger and duration/minimum choices as
+Python policies. Native random streams, exact native control semantics and
+multi-trial reports remain open. No native numerical-engine or full
+trial-controller parity is claimed.

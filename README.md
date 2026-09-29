@@ -1127,8 +1127,11 @@ share a bounded posterior cache.
 survival posterior core for up to ten arms: largest/smallest parameter
 probabilities, mean/median survival parameterizations, threshold exceedance and
 stable exponential tuning. Vectorized multi-arm integration agrees with 52
-independent R calculations. Calendar conduct and native stopping/allocation
-controls remain pending.
+independent R calculations. [Calendar replay](docs/arand-calendar.md) now adds
+delayed-outcome handling, adaptive allocation, reversible suspension, permanent
+futility, enrollment/duration limits and final selection. Explicit controller
+policies document choices the native guide leaves unspecified. Native-engine
+parity and full operating-characteristic reports remain open.
 
 [PRT](docs/prt.md) now computes predictive toxicity risks from aligned posterior
 draws and applies the published cohort-suspension, dose-movement and final-selection

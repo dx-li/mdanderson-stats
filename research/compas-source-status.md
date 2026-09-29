@@ -24,3 +24,10 @@ inputs, and numerical examples or native outputs. Existing BCHM and platform
 allocation modules offer possible computational building blocks, but their
 statistical assumptions do not establish ComPAS behavior. An independent-arm
 beta-binomial monitor would not resolve this source gap.
+
+On September 29 the authors' public home page was retrieved successfully. Its
+ComPAS card still linked only to `one-page-shell.html#ComPAS`, and the publication
+list provided the citation without a manuscript or source download. The Wiley
+article remained unavailable to the reader. No institutional app was requested:
+a saved browser permission currently blocks the MD Anderson domain. The primary
+method and its numerical constants therefore remain unrecovered.

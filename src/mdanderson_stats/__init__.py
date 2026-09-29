@@ -50,6 +50,12 @@ from .anovaddp_updates import (
 )
 from .apcoa import AdjustedPCoA, PCoAOrdination, adjusted_pcoa
 from .apcoa_plot import plot_adjusted_pcoa
+from .arand_calendar import (
+    ArandCalendarLook,
+    ArandCalendarTrial,
+    ArandControllerPolicy,
+    arand_calendar_replay,
+)
 from .arand_posterior import (
     ArandBestProbability,
     ArandPosterior,
@@ -1927,6 +1933,10 @@ __all__ = [
     "prt_predictive_risk",
     "prt_decision",
     "prt_final_selection",
+    "ArandCalendarLook",
+    "ArandCalendarTrial",
+    "ArandControllerPolicy",
+    "arand_calendar_replay",
     "ArandBestProbability",
     "ArandPosterior",
     "arand_best_probability",

@@ -332,6 +332,14 @@ native predictions were retrieved, and no clinical model values were guessed.
 The [PubMed record](https://pubmed.ncbi.nlm.nih.gov/33852918/) provides a stable
 primary-publication identifier for subsequent retrieval.
 
+A September 29 direct retrieval check resolved the publisher article identifier
+to `S0012369221006760`, but its `1-s2.0-S0012369221006760-mmc1.pdf` supplement
+endpoint returned HTTP 403. Europe PMC's full-text XML endpoint returned HTTP
+500 and the NCBI open-access lookup returned HTTP 404. The PMC reader still
+showed a browser challenge. These attempts did not recover the required model
+constants or baseline survival. Do not repeat them without new access or a new
+source lead.
+
 ## WFMM and FLECS90
 
 WFMM's [archived institutional page](https://bioinformatics.mdanderson.org/public-software/archive/wfmm/)
