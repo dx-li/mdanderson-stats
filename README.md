@@ -1206,8 +1206,10 @@ titration options, waterfall titration, the 3+3 run-in and generated protocols r
 utility desirability tables, single-stage dose decisions, final OBD selection
 and joint-outcome cohort simulation. Independent R calculations validate the
 posterior, ranks and selection examples. Exact risk-benefit tradeoff mapping
-also feeds the existing decision and simulation APIs. Two-stage conduct,
-unresolved 3+3 run-in precedence and generated reports remain open; native
+also feeds the existing decision and simulation APIs. [Two-stage conduct](docs/boin12-two-stage.md)
+adds toxicity-only escalation followed by joint-endpoint optimization, with
+explicit threshold timing and retained trial outcomes. Unresolved 3+3 run-in
+precedence and generated reports remain open; native
 support for nonadditive RDS enumeration is unverified.
 
 [BF-BOIN](docs/bf-boin.md) adds backfill eligibility, pooled dose decisions,
@@ -1216,7 +1218,9 @@ patient counts are kept separate. Calendar simulation includes delayed DLT and
 response observation, auditable patient histories and Monte Carlo errors.
 [Optional post-escalation expansion](docs/bard-expansion.md) holds enrollment
 one dose below the last escalation cohort, with assigned-count caps and
-toxicity closure. Titration and generated reports remain open.
+toxicity closure. [Accelerated titration](docs/bf-boin-titration.md) adds
+single-patient escalation, DLT/grade-2 triggers and dose-cap transitions, with
+explicit grade-2 probabilities and assessment timing. Generated reports remain open.
 
 [BOP2-DC](docs/bop2-dc.md) adds binary efficacy monitoring with distinct
 go/consider/no-go outcomes and exact operating characteristics. Independent
@@ -1320,7 +1324,10 @@ patients into covariate balancing, counts them toward the total enrollment
 target, and connects new assignments to final OBD selection. Priors, safety
 pooling weights and tie policies are explicit. [Accelerated titration](docs/bard-titration.md)
 adds one-patient dose progression, grade-2 triggers and the distinct dose-cap
-transitions. Expansion, stage-two calendar timing and native reports remain open.
+transitions. [BF-BOIN titration](docs/bf-boin-titration.md) provides the corresponding
+option for that stage-one model, and [BF-BOIN expansion](docs/bard-expansion.md)
+continues enrollment at the fixed lower dose. BF-BLRM expansion, stage-two
+calendar timing and native reports remain open.
 
 [TITE-BOIN12 AL methods](docs/tite-boin12.md) add patient-level handling of
 pending toxicity and efficacy, joint utility posteriors, interim dose conduct

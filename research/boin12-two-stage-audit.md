@@ -39,3 +39,15 @@ Dose Finding in Oncology,” *JCO Precision Oncology* 4 (2020), 1393–1402,
 <https://pmc.ncbi.nlm.nih.gov/articles/PMC7713525/>. No native two-stage
 outcome fixture was located; numerical validation uses exact beta-tail
 identities and deterministic cohort ledgers.
+
+## Validation
+
+Twenty-two affected BOIN12 tests pass with warnings treated as errors, with
+129.23 MiB peak resident memory and zero swaps. Targeted Ruff formatting/lint
+and mypy checks pass. An independent integration check evaluates 320 Stage 1
+safety decisions against 70-digit decimal finite-binomial sums equivalent to
+the integer-shape Beta posterior tails. It also checks efficacy invariance,
+adjacent safe destinations, a deterministic stage-transition ledger, and work
+budget rejection before random draws. The combined numerical audit with
+BF-BOIN titration took 0.265 seconds after imports, peaked at 125.12 MiB and
+reported zero swaps. Source backend random-stream parity is not claimed.

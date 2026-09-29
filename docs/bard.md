@@ -99,9 +99,12 @@ into allocation and final selection under the paper's inclusive total target.
 guide's dose transitions with explicit assessment timing and BF-BLRM safety
 policies. [BF-BOIN post-escalation expansion](bard-expansion.md) implements the
 guide's fixed lower-dose continuation and stopping rule with explicit calendar
-choices. Stage-two calendar timing, native per-arm quota interpretation,
-calibration and native reports remain open. Existing BF-BOIN components provide separate stage-one
-functionality; this addition does not claim the full BARD workflow is complete.
+choices. [BF-BOIN accelerated titration](bf-boin-titration.md) supplies the
+guide's singleton and top-up transitions for that model, with explicit
+grade-2 probabilities and observation timing. Stage-two calendar timing,
+native per-arm quota interpretation, calibration and native reports remain
+open. Existing BF-BOIN components provide separate stage-one functionality;
+this addition does not claim the full BARD workflow is complete.
 
 ## Numerical validation and sources
 

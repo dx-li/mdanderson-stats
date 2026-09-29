@@ -31,6 +31,11 @@ the same renewal arrivals and observed-outcome checks, and records its terminal
 status, patient count and end time separately. Its asynchronous timing is a
 Python policy; see the [expansion guide](bard-expansion.md) for details.
 
+[Accelerated titration](bf-boin-titration.md) optionally starts with one
+patient per dose and source-defined DLT/grade-2 triggers. It requires explicit
+grade-2 probabilities and assessment timing, retains the ordinary cohort
+budget for the top-up transition, and can precede optional expansion.
+
 DLT and response are sampled independently. Responses from either enrollment
 component can establish activity. Decisions occur at completion of the current
 cohort's DLT assessments; the third-party R reference instead processes decisions

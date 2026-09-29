@@ -1,7 +1,7 @@
 """Two-stage toxicity-only to BOIN12 utility dose finding.
 
-The cached BOIN12 application specifies a caller-selected threshold S and
-switches after a cohort when any dose has at least S treated patients.  The
+The cached BOIN12 application specifies a caller-selected threshold S. This
+implementation switches after a cohort when any dose has at least S treated patients. The
 triggering cohort is assigned under Stage 1; Stage 2 governs the next
 assignment.  Stage 1 uses BOIN toxicity movement boundaries and the BOIN12
 posterior safety cutoff, without a minimum-sample-size safety guard.  These
@@ -250,12 +250,10 @@ def simulate_boin12_two_stage(
     ncohort, size, repetitions = (int(value) for value in settings)
     if ncohort * size > 1000:
         raise ValueError("the trial may enroll at most 1000 patients")
-    if (
-        repetitions > 1_000_000
-        or repetitions * doses > 2_000_000
-        or repetitions * ncohort * doses > 2_000_000
-    ):
+    if repetitions > 1_000_000 or repetitions * doses > 2_000_000:
         raise ValueError("require at most 1000000 trials and 2000000 trial-dose cells")
+    if repetitions * ncohort * doses > 2_000_000:
+        raise ValueError("simulation work budget exceeds 2000000 trial-cohort-dose evaluations")
 
     # All settings and dimensions are checked before creating or consuming RNG.
     generator = np.random.default_rng(rng)

@@ -247,6 +247,12 @@ from .boin12 import admissibility as boin12_admissibility
 from .boin12 import posterior as boin12_posterior
 from .boin12 import rank_desirability as boin12_rank_desirability
 from .boin12_simulation import BOIN12Simulation, simulate_boin12
+from .boin12_two_stage import (
+    BOIN12TwoStageDecision,
+    BOIN12TwoStageSimulation,
+    boin12_two_stage_next_dose,
+    simulate_boin12_two_stage,
+)
 from .boin_combination import BOINCombDecision, BOINCombDesign, BOINCombSelection
 from .boin_combination_simulation import BOINCombinationSimulation, simulate_boin_combination
 from .boin_protocol import boin_protocol
@@ -2677,11 +2683,15 @@ __all__ = [
     "BOIN12RDSTable",
     "BOIN12Selection",
     "BOIN12Simulation",
+    "BOIN12TwoStageDecision",
+    "BOIN12TwoStageSimulation",
     "boin12_admissibility",
     "boin12_posterior",
     "boin12_rank_desirability",
     "boin12_tradeoff_utilities",
     "simulate_boin12",
+    "boin12_two_stage_next_dose",
+    "simulate_boin12_two_stage",
     "BOINCombDecision",
     "BOINCombDesign",
     "BOINCombSelection",

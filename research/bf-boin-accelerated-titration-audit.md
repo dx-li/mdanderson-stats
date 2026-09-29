@@ -38,3 +38,22 @@ reports observed when the titration decision was made. The final patient
 histories may contain grade-2 results observed after titration has ended.
 `titration_end` records the calendar time the singleton prelude ends; the
 trial duration includes the grade-2 follow-up horizon when this option is on.
+
+## Validation
+
+Eleven affected simulation/titration tests pass with warnings treated as
+errors; targeted Ruff and mypy checks and the guide example pass. Every
+existing result field reproduces 80 trials from published checkpoint
+`d770fde`, spanning uniform/exponential arrivals and expansion on/off. The
+worker's focused tests and baseline comparisons peaked at 128.93 MiB with
+zero swaps.
+
+An independent integration audit reconstructs 60 enabled-titration patient
+ledgers from reported outcomes and observation times: 19 first-DLT exits,
+16 second-grade-2 exits, 13 lower-cap transitions and 12 highest-cap exits.
+It verifies serial singleton observation, absence of backfill during
+titration, strict arrival chronology, grade-2 counts at exit, cohort-budget
+accounting, exclusive toxicity categories and complete follow-up through
+late grade-2 assessments. The combined audit with BOIN12's numerical
+references took 0.265 seconds after imports, peaked at 125.12 MiB and
+reported zero swaps. No native calendar random-stream parity is claimed.

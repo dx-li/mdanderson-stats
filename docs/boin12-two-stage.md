@@ -6,8 +6,7 @@ dose optimization. Supply `stage1_threshold` explicitly; the application
 requires an integer from 6 through 12 and recommends 6.
 
 ```python
-from mdanderson_stats.boin12 import BOIN12Design
-from mdanderson_stats.boin12_two_stage import simulate_boin12_two_stage
+from mdanderson_stats import BOIN12Design, simulate_boin12_two_stage
 
 design = BOIN12Design(toxicity_limit=0.35, efficacy_limit=0.25)
 truth = [
@@ -17,7 +16,15 @@ truth = [
 result = simulate_boin12_two_stage(
     design, truth, stage1_threshold=6, cohorts=8, cohort_size=3, trials=100, rng=21
 )
+assert result.patients.shape == (100, 2)
 ```
+
+For an observed trial, `boin12_two_stage_next_dose` accepts cumulative patient,
+toxicity and efficacy counts, the current dose, the required threshold, and
+retained `eliminated` flags. Supply joint efficacy-without-toxicity counts for
+nonadditive utilities. Its `admissible` mask describes local candidates;
+`eliminated` records exclusions across all doses. Stage 1 returns no utility
+posterior because efficacy does not govern its assignment.
 
 The cohort that first brings any dose to `stage1_threshold` remains a Stage 1
 cohort. The transition is evaluated after that cohort, so Stage 2 makes the
@@ -34,11 +41,12 @@ Beta(1,1) prior, with a dose admissible only when this tail is strictly below
 policy does not add a minimum sample-size guard or automatically exclude
 higher doses. If the current dose is excluded above dose 1, the decision moves
 down one level only when that adjacent dose is admissible; otherwise it stops
-with `stop_no_admissible_neighbor`. Exclusion of dose 1 stops for safety. For
+with `stop_no_admissible_neighbor`. Exclusion of the current dose when it is
+dose 1 stops for safety. For
 an admissible current dose, rate `<= escalation_boundary` moves up one level,
 rate `>= deescalation_boundary` moves down one level, and an interior rate
 stays; a blocked escalation stays, while a blocked de-escalation stops. The
-global no-admissible-dose safety stop and safety exclusion at dose 1 precede
+global no-admissible-dose safety stop and exclusion of the current lowest dose precede
 `early_stop_patients`. The precision stop then precedes ordinary movement and
 the nonterminal fallback from an excluded middle dose.
 
@@ -47,6 +55,10 @@ utility, and early-stop rules. Final selection always calls
 `BOIN12Design.select_obd` on all observed counts. Cohorts are fully observed
 and assigned sequentially in this simulator; delayed outcomes are outside its
 scope.
+
+Requests are checked before random draws: at most 1,000 patients per trial,
+1,000,000 trials, 2,000,000 retained trial-dose cells and 2,000,000
+trial-cohort-dose evaluations are allowed.
 
 The source help specifies the S threshold and which endpoint criteria belong
 to each stage, but does not fully describe stage-boundary ordering, persistence
