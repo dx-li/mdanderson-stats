@@ -1,6 +1,10 @@
 import numpy as np
+import pytest
 
 from mdanderson_stats.bop2_dc_randomized_normal import bop2_dc_randomized_normal_design
+from mdanderson_stats.bop2_dc_randomized_normal_simulation import (
+    simulate_bop2_dc_randomized_normal,
+)
 
 
 def _design(*, shift=0.0, assignments=(0, 1, 0, 1), looks=(2, 4)):
@@ -57,3 +61,58 @@ def test_replay_allows_a_prior_only_empty_arm_at_an_interim_look() -> None:
     assert replay.states[0].treatment_n == 0
     assert replay.terminal_decision == replay.states[-1].decision
     np.testing.assert_array_equal(replay.arm_assignments_observed, [0, 0, 1, 1])
+
+
+def test_normal_simulation_is_replayable_and_common_shift_invariant() -> None:
+    shift = 1e15
+    kwargs = dict(
+        max_subjects=4,
+        theta_lrv=0.0,
+        theta_cmv=0.5,
+        control_prior=(0.25, 4.0, 2.0, 3.0),
+        treatment_prior=(0.25, 4.0, 2.0, 3.0),
+        arm_assignments=[0, 1, 0, 1],
+        looks=[2, 4],
+        lambda_lrv=0.5,
+        lambda_cmv=0.5,
+    )
+    base_design = bop2_dc_randomized_normal_design(**kwargs)
+    shifted_design = bop2_dc_randomized_normal_design(
+        **{
+            **kwargs,
+            "control_prior": (shift + 0.25, 4.0, 2.0, 3.0),
+            "treatment_prior": (shift + 0.25, 4.0, 2.0, 3.0),
+        }
+    )
+    base = simulate_bop2_dc_randomized_normal(
+        base_design, 0.25, 1.0, 0.5, 1.0, n_trials=12, rng=815
+    )
+    shifted = simulate_bop2_dc_randomized_normal(
+        shifted_design,
+        shift + 0.25,
+        1.0,
+        shift + 0.5,
+        1.0,
+        n_trials=12,
+        rng=815,
+    )
+    replay = simulate_bop2_dc_randomized_normal(
+        base_design, 0.25, 1.0, 0.5, 1.0, n_trials=12, rng=base.rng_seed
+    )
+
+    np.testing.assert_array_equal(shifted.decision_count, base.decision_count)
+    np.testing.assert_array_equal(shifted.look_decision_probability, base.look_decision_probability)
+    np.testing.assert_array_equal(replay.decision_probability, base.decision_probability)
+    assert np.count_nonzero(base.decision_probability) > 1
+    assert np.sum(base.decision_probability) == 1.0
+    assert np.sum(base.sample_size_probability) == 1.0
+    assert base.expected_sample_size == replay.expected_sample_size
+    assert np.all(base.decision_mcse >= 0)
+
+
+def test_normal_simulation_quadrature_work_preflight_does_not_consume_rng() -> None:
+    design = _design()
+    rng1, rng2 = np.random.default_rng(4), np.random.default_rng(4)
+    with pytest.raises(ValueError, match="quadrature-work budget"):
+        simulate_bop2_dc_randomized_normal(design, 0.0, 1.0, 0.5, 1.0, n_trials=100_000, rng=rng1)
+    assert rng1.random() == rng2.random()

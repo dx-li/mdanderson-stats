@@ -19,3 +19,12 @@ updates, preserving a common additive shift while leaving difference margins
 unchanged. This is a Python numerical implementation, not a claim of native
 BOP2-DC executable parity. Calibration and randomized assignment generation
 are separate future scopes.
+
+
+The aggregate simulator uses independent per-arm Normal truths and the fixed
+assignment tape. It generates outcomes serially in coordinates centered on the
+control truth, returns compact terminal/per-look probabilities and Monte Carlo
+standard errors, and records a replayable seed. It retains no simulated patient
+or posterior histories. Hard preflight bounds cover patient cells, repeated
+look replay work, result cells, and worst-case adaptive-quadrature evaluations;
+the 100-trial default is a Python resource choice, not a native recommendation.

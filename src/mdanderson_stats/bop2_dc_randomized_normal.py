@@ -421,7 +421,7 @@ def bop2_dc_randomized_normal_design(
     if np.any(assignments > 1) or not np.any(assignments == 0) or not np.any(assignments == 1):
         raise ValueError("arm_assignments must use 0/1 and include both arms")
     schedule = _look_tape(looks, n)
-    work = int(schedule.size) * 2 * 21 * limit
+    work = int(schedule.size) * 2 * 21 * (2 * limit - 1)
     if work > _MAX_COMPARISON_WORK:
         raise ValueError("Student-t comparison exceeds its deterministic quadrature work budget")
     for gamma, level, label in ((gl, ll, "LRV"), (gc, lc, "CMV")):
