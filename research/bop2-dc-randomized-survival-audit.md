@@ -105,3 +105,13 @@ empirical finite-grid constraints are not guarantees about true operating
 characteristics. The calibration default of 100 trials per stage is a workload
 choice, and a hard work preflight limits comparisons, candidate decisions, path
 scans, and retained tables before RNG use.
+
+The calibrator also checks the holdout simulator's own retained-cell formula
+before RNG use and includes its per-trial outputs in the combined live-memory
+estimate. Under the current outer limits this nested simulator guard is
+mathematically dominated: because LRV < CMV at least one margin is nonzero, the
+path cap bounds `2*(trials + validation_trials)*N` by 1,000,000 and the comparison
+cap bounds `2*(trials + validation_trials)*looks*21*(2*300 - 1)` by 100,000,000.
+Together, these imply the holdout simulator's retained-cell total stays below
+about 1.22 million, under its 2-million cap. The explicit nested check is kept as
+defense in depth if either outer budget changes.

@@ -144,39 +144,3 @@ def test_futile_truth_is_not_restricted_to_lrv_and_preflight_keeps_rng_unchanged
             rng=rng,
         )
     assert rng.bit_generator.state == state_before
-
-
-def test_holdout_retention_limit_is_preflighted_before_rng_use():
-    n = 1000
-    looks = (*range(1, 237), n)
-    design = bop2_dc_randomized_survival_design(
-        max_subjects=n,
-        median_lrv=0.0,
-        median_cmv=0.0,
-        control_prior=(2.0, 1.0),
-        treatment_prior=(2.0, 1.0),
-        arm_assignments=[0, 1] * (n // 2),
-        looks=looks,
-        lambda_lrv=0.2,
-        lambda_cmv=0.4,
-    )
-    rng = np.random.default_rng(77)
-    state_before = deepcopy(rng.bit_generator.state)
-    with pytest.raises(ValueError, match="validation simulator.*retained result cell budget"):
-        optimize_bop2_dc_randomized_survival(
-            design,
-            (2.0, 2.5),
-            (2.0, 4.0),
-            lambda_lrv_grid=[0.2],
-            lambda_cmv_grid=[0.4],
-            gamma_lrv_grid=[0.5],
-            gamma_cmv_grid=[0.5],
-            accrual_rate=4.0,
-            final_followup=0.5,
-            false_go_limit=1.0,
-            false_no_go_limit=1.0,
-            n_trials=1,
-            n_validation=499,
-            rng=rng,
-        )
-    assert rng.bit_generator.state == state_before
