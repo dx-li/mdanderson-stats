@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `29e7ad6` adds source-defined accelerated
-titration to ordinary BOIN combination simulation, with native transition
-references and conservative preallocation limits. The final
+Latest verified package checkpoint: `ec1c213` adds five neural survival
+families, with independent high-precision mathematical references, public
+fitting/prediction/contour APIs and bounded numerical work. The final
 section records validation; earlier sections preserve prior checkpoint history. Network publication was
 restored on September 29; the earlier verified push put `a796f1d` on GitHub
 `master`, `main` and `feat/condis-svm`. The local artifact manifest records the
@@ -1746,3 +1746,39 @@ Before this publication, the preceding `39a67b3` hosted workflow had passed
 quality and Python 3.12/3.13; Python 3.14 was still running. This is not a
 complete-matrix success claim. The local publication manifest records freshly
 verified branch SHAs and subsequent hosted status separately.
+
+
+## Five neural survival families checkpoint
+
+At `ec1c213`, DeepSurv, CoxTime, DeepHitSingle, LogisticHazard and PCHazard
+provide fitting, point survival prediction and covariate contours through a
+bounded NumPy network. The source audit documents full-risk-set Cox objectives,
+Breslow ties, source-defined discrete likelihoods and label transforms, and
+explicit differences from native stochastic training. Fitted transforms and
+weights are immutable; training diagnostics remain visible. There is no claim
+of optimizer-stream parity, convergence for every fit or uncertainty intervals.
+
+Independent 85-digit Decimal references cover all five losses, 56 derivatives,
+six log-baseline increments and 48 Cox/CoxTime predictions. Maximum differences
+are below 2.23e-16. Extreme score shifts, PCHazard logits and a 2,000-profile by
+10,000-baseline-event streamed prediction check pass. An overflowing Adam
+squared-gradient accumulator now fails explicitly. Ten focused checks pass
+with warnings as errors; targeted Ruff, formatting and mypy pass. Focused
+validation peaks at 145.84 MiB RSS and reports zero swaps. A separate read-only
+review finds no material integration blocker.
+
+Cached wheel/source builds pass. The isolated wheel check verifies all 1,649
+exports and exact committed bytes for all 583 package source/data files in
+both artifacts, preserved licenses/notices and two executable examples across
+the neural and BOIN titration guides. It takes 12.169 seconds, peaks at
+114.53 MiB RSS and reports zero swaps. Numerical and build processes remain
+serial, with one BLAS thread and no new dependencies or CI workflows.
+
+Catalog totals remain 63 implemented, 67 partial and eight pending.
+SurvivalContour remains partial because stratified interval-PH bootstrapping,
+remaining forest workflows, broader categorical encoding and full native app
+workflows are still open. Mixed-license terms remain unchanged. At inspection,
+the preceding `f009c60` hosted workflow has successful quality and Python
+3.12/3.13 jobs; Python 3.14 is still running. The local manifest records the
+newly published branch SHAs and hosted status separately; no complete-matrix
+success is inferred from the earlier jobs.
