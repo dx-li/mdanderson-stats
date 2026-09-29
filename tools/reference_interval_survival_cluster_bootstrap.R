@@ -13,31 +13,48 @@ input <- read.csv("tests/fixtures/interval-survival-inputs.csv")
 input <- input[input$case == "mixed", , drop = FALSE]
 input <- input[order(input$row), , drop = FALSE]
 stopifnot(nrow(input) == 96L, input$covariates[[1L]] == 2L)
-input$cluster_id <- rep(seq_len(nrow(input) / 4L), each = 4L)
+group_labels <- c(20L, 10L, 40L, 30L)
+group_sizes <- c(18L, 22L, 26L, 30L)
+input$cluster_id <- rep(group_labels, times = group_sizes)
 x <- as.matrix(input[, c("x1", "x2")])
 lower <- input$lower
 upper <- input$upper
 cluster_id <- input$cluster_id
 
-# The unchanged native helper chooses cluster groups and concatenates all rows.
-# Equal four-row groups make its generated row tape recoverable without changing
-# the helper; the fixture records the corresponding zero-based cluster indices.
-set.seed(18421)
+# Fixed zero-based indices in Python-sorted label order (10, 20, 30, 40).
+# A narrow `sample` adapter feeds these choices to the unchanged native
+# make_sample_inds helper, which still performs the actual row expansion.
 replicates <- 2L
-cluster_draws <- matrix(NA_integer_, replicates, max(cluster_id))
+cluster_draws <- rbind(c(0L, 1L, 1L, 3L), c(2L, 0L, 3L, 0L))
+stopifnot(nrow(cluster_draws) == replicates)
+sorted_labels <- sort(unique(cluster_id))
+sorted_sizes <- as.integer(table(factor(cluster_id, levels = sorted_labels)))
 row_tapes <- vector("list", replicates)
+sample_call <- 0L
+sample <- function(x, size, replace = FALSE, prob = NULL, ...) {
+  if (identical(as.integer(x), seq_len(length(sorted_labels))) &&
+      size == length(sorted_labels) && isTRUE(replace) && is.null(prob)) {
+    sample_call <<- sample_call + 1L
+    return(cluster_draws[sample_call, ] + 1L)
+  }
+  base::sample(x, size = size, replace = replace, prob = prob, ...)
+}
 for (b in seq_len(replicates)) {
   rows <- make_sample_inds(cluster_id)
-  stopifnot(length(rows) == length(cluster_id))
-  group_starts <- seq.int(1L, length(rows), by = 4L)
-  selected_ids <- cluster_id[rows[group_starts]]
-  stopifnot(all(vapply(seq_along(group_starts), function(j) {
-    start <- group_starts[[j]]
-    all(cluster_id[rows[start:(start + 3L)]] == selected_ids[[j]])
-  }, logical(1))))
-  cluster_draws[b, ] <- selected_ids - 1L
+  expected_rows <- sum(sorted_sizes[cluster_draws[b, ] + 1L])
+  stopifnot(length(rows) == expected_rows)
+  cursor <- 1L
+  for (selected in cluster_draws[b, ] + 1L) {
+    count <- sorted_sizes[[selected]]
+    sampled_group <- rows[cursor:(cursor + count - 1L)]
+    stopifnot(all(cluster_id[sampled_group] == sorted_labels[[selected]]))
+    cursor <- cursor + count
+  }
   row_tapes[[b]] <- rows
 }
+rm(sample)
+stopifnot(sample_call == replicates)
+stopifnot(identical(as.integer(vapply(row_tapes, length, integer(1))), c(84L, 100L)))
 
 original <- native_fit(lower, upper, x, rep(1, nrow(input)))
 native_slopes <- matrix(NA_real_, replicates, ncol(x))
@@ -85,4 +102,4 @@ write.csv(data.frame(
 write.csv(do.call(rbind, native_metrics),
           "tests/fixtures/interval-survival-cluster-metrics.csv", row.names = FALSE)
 cat("replicates", replicates, "covariance_df", replicates - 1L,
-    "rows", nrow(input), "clusters", max(cluster_id), "\n")
+    "rows", nrow(input), "clusters", length(sorted_labels), "\n")

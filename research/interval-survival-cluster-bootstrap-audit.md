@@ -23,8 +23,10 @@ covariance reflects cluster sampling.
 ## Python contract and limits
 
 `bootstrap_interval_survival_cluster_coefficients` requires one nonempty
-integer or string ID per observation, with a homogeneous ID type. Its sorted
-unique labels define columns in the zero-based `(B, G)` cluster-draw tape.
+integer or string ID per observation, with a homogeneous ID type. Python-sorted
+unique labels define columns in the zero-based `(B, G)` cluster-draw tape. This
+is a deterministic Python convention, not a claim of identical factor ordering
+to every R locale.
 Each replicate draws G IDs with replacement. Repeated selected clusters are
 represented by integer frequency weights on their member rows, which keeps
 the likelihood and endpoint support equivalent to concatenating those rows
@@ -53,9 +55,13 @@ cluster bootstrap reference scripts. Run
 `Rscript tools/reference_interval_survival_cluster_bootstrap.R` from the
 repository root after restoring the ignored `research/raw/icenReg` cache. The
 cluster reference sources the pinned `clusterBootstrap.R` by its verified Git
-blob hash, uses the repository's mixed interval fixture with four rows per
-synthetic cluster, and records the source helper's fixed-seed selected-group
-tape before fitting each repeated-row sample. It writes input, tape, slope,
-covariance, and fit-summary CSVs under `tests/fixtures/`. These fixtures check
-source fitting and covariance construction with a replayable tape; they do not
-claim R/Python RNG stream parity.
+blob hash, uses the repository's 96-row mixed interval fixture with unequal
+cluster sizes `(18, 22, 26, 30)` and labels `(20, 10, 40, 30)`, and records the
+fixed zero-based tape `[[0, 1, 1, 3], [2, 0, 3, 0]]` in Python-sorted label
+order `(10, 20, 30, 40)`. A narrow `sample` adapter feeds those choices to the
+unchanged `make_sample_inds`; the source helper performs row expansion and
+native refits use those expanded rows. The resulting row counts are 84 and
+100. The generator writes input, tape, slope, covariance, and fit-summary CSVs
+under `tests/fixtures/`. These fixtures check source fitting and covariance
+construction with a replayable tape; they do not claim R/Python RNG stream
+parity.

@@ -34,7 +34,7 @@ _MAX_CLUSTER_BOOTSTRAP_FIT_WORK = 2_000_000_000
 class IntervalSurvivalClusterBootstrap:
     """Cluster bootstrap fits and survivor-conditional coefficient covariance.
 
-    ``cluster_draw_indices`` indexes ``cluster_labels`` in its sorted order.
+    ``cluster_draw_indices`` indexes ``cluster_labels`` in Python-sorted order.
     Each row contains exactly one draw per original cluster; its
     ``resampled_row_counts`` entry is the expanded observation count before
     equivalent repeated rows are collapsed to integer frequency weights.
@@ -66,7 +66,7 @@ class IntervalSurvivalClusterBootstrap:
 
 
 def _cluster_map(values: ArrayLike, n_rows: int) -> tuple[np.ndarray, tuple[str | int, ...]]:
-    """Encode homogeneous integer or string cluster IDs in sorted source order."""
+    """Encode homogeneous integer or string cluster IDs in Python-sorted order."""
     if isinstance(values, (str, bytes)):
         raise ValueError("cluster_ids must be a one-dimensional label sequence")
     if isinstance(values, np.ndarray):
@@ -127,7 +127,8 @@ def bootstrap_interval_survival_cluster_coefficients(
     """Refit interval PH after sampling the original clusters with replacement.
 
     Every replicate draws ``G`` clusters from the ``G`` observed clusters,
-    where labels are sorted as in the source's factor-based split. The
+    where labels are sorted with Python's ordering. The native helper also
+    groups by factor level; exact string ordering can depend on R collation.
     zero-based ``cluster_draw_indices`` tape has shape ``(replicates, G)`` and
     indexes that sorted label tuple. Repeated cluster draws multiply each
     member observation's integer case weight; this is likelihood-equivalent
