@@ -498,6 +498,12 @@ from .cibolus import (
     cibolus_response,
     cibolus_toxicity,
 )
+from .cibolus_calibration import (
+    CiBolusPriorCalibration,
+    CiBolusPriorPredictiveMoments,
+    calibrate_cibolus_prior,
+    cibolus_prior_predictive_moments,
+)
 from .cibolus_decision import CiBolusDecision, cibolus_decision
 from .cibolus_fit import CiBolusFit, fit_cibolus
 from .cibolus_simulation import (
@@ -1359,6 +1365,7 @@ from .u2oet_decision import (
 from .u2oet_fit import U2OETFit, fit_u2oet, u2oet_parameter_names
 from .u2oet_gao import U2OETGAOMarginal, u2oet_gao_probabilities
 from .u2oet_gao_fit import U2OETGAOFit, fit_u2oet_gao, u2oet_gao_parameter_names
+from .u2oet_gao_simulation import U2OETGAOTrial, simulate_u2oet_gao_trial
 from .u2oet_patients import (
     U2OETPatientDecision,
     U2OETPatients,
@@ -1534,6 +1541,10 @@ __all__ = [
     "simulate_cibolus_trial",
     "CiBolusOperatingCharacteristics",
     "simulate_cibolus_operating_characteristics",
+    "CiBolusPriorCalibration",
+    "CiBolusPriorPredictiveMoments",
+    "calibrate_cibolus_prior",
+    "cibolus_prior_predictive_moments",
     "PinnacleAnalysis",
     "PinnacleDenoiseResult",
     "PinnaclePeaks",
@@ -1954,6 +1965,8 @@ __all__ = [
     "U2OETGAOFit",
     "fit_u2oet_gao",
     "u2oet_gao_parameter_names",
+    "U2OETGAOTrial",
+    "simulate_u2oet_gao_trial",
     "u2oet_standardize",
     "AccflfData",
     "read_accflf_data",

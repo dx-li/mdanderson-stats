@@ -2721,7 +2721,8 @@
         "Calendar-based single-trial simulation with exponential arrivals, uniform observation delays, pending snapshots, cached posterior summaries, no-enrollment stopping, complete final follow-up and explicit acceptable/tried final-ranking conventions",
         "Multi-trial selection, stopping, enrollment, duration and normalized Rselect/Rtreat summaries with Monte Carlo errors, retained diagnostics and compatible-design/independent-seed checks",
         "Explicit-coefficient GAO raw-dose ordinal probabilities with endpoint-specific positive link shapes, shared positive interaction, Gaussian-copula joint cells, grouped/partial likelihoods and expected utility",
-        "Explicit-prior GAO posterior fitting in named normal coordinates, including raw intercepts/slopes, log link/interaction and Fisher-z association, complete and toxicity-only counts, retained chain/draw probabilities, diagnostics and bounded likelihood work; native prior mapping and GAO calibration/calendar integration remain pending"
+        "Explicit-prior GAO posterior fitting in named normal coordinates, including raw intercepts/slopes, log link/interaction and Fisher-z association, complete and toxicity-only counts, retained chain/draw probabilities, diagnostics and bounded likelihood work; native prior mapping and GAO calibration remain pending",
+        "Explicit-prior GAO calendar simulation with complete/toxicity-only/pending snapshots, cohort/surplus allocation, final follow-up and acceptable/tried selection, retained replay tapes, cumulative likelihood-work limits and independent-trial summary compatibility; docs/u2oet-gao-trials.md"
       ],
       "validation": [
         "Independent R implementation of published equations: 549 joint cells across five cases, 2-4 categories, three models, two centerings and FGM association endpoints",
@@ -2736,7 +2737,8 @@
         "End-to-end pending/cohort/follow-up and toxicity-only stop tests; nine-patient source-scenario pilot with independently reconstructed interim availability counts; native final-selection parity and multi-trial operating characteristics remain unverified",
         "Hand-calculated three-trial operating-characteristic summaries and MCSEs, streamed simulation aggregation and undefined constant-utility scores; full published operating-characteristic reproduction remains pending",
         "440 independent R GAO joint cells and 15 grouped likelihoods across binary/ordinal categories, link shapes, negative/positive Gaussian correlation and limiting copulas; tools/reference_u2oet_gao.R, docs/u2oet-gao.md and research/u2oet-gao-audit.md",
-        "Independent base-R GAO posterior quadrature for a free raw efficacy intercept and Fisher-z association: 38 summaries within 1.028 estimated Monte Carlo errors and maximum split Rhat 1.00347; four focused fitter checks pass. tools/reference_u2oet_gao_fit.R, tests/fixtures/u2oet-gao-posterior.csv, docs/u2oet-gao-fit.md and research/u2oet-gao-fit-audit.md"
+        "Independent base-R GAO posterior quadrature for a free raw efficacy intercept and Fisher-z association: 38 summaries within 1.028 estimated Monte Carlo errors and maximum split Rhat 1.00347; four focused fitter checks pass. tools/reference_u2oet_gao_fit.R, tests/fixtures/u2oet-gao-posterior.csv, docs/u2oet-gao-fit.md and research/u2oet-gao-fit-audit.md",
+        "Four independent base-R GAO calendar ledgers: nine patient rows, six interim snapshots, four final snapshots and sixteen utility values agree within 6.66e-16; four focused driver tests pass. tools/reference_u2oet_gao_calendar.R, tools/check_u2oet_gao_calendar.py, research/u2oet-gao-trial-audit.md"
       ]
     },
     {
@@ -2970,7 +2972,8 @@
         "Strict posterior toxicity and efficacy screens, posterior expected-utility allocation, concentration no-skip restrictions, initial assignment and final selection",
         "Complete-outcome CiBolus cohort simulation from joint response-category/toxicity truth, explicit outcome uniforms, once-per-cohort posterior fitting, concentration-only no-skip and unrestricted final selection; compact diagnostics and cumulative work bounds, docs/cibolus-trials.md.",
         "Serial aggregate complete-outcome simulation with selection/no-selection and stopping probabilities, mean allocation/enrollment, pooled toxicity/response/category rates, trial-clustered Monte Carlo errors, replayable per-trial seeds and cumulative work bounds.",
-        "Prior elicitation/calibration, calendar/pending-outcome conduct, native input/report workflows and executable equivalence remain pending"
+        "Balanced pseudo-data calibration from caller-supplied full joint response/toxicity grids, averaged posterior log-coordinate means, replicate counts/seeds/diagnostics and caller-selected resulting SDs; prior-predictive probability moments and beta-moment ESS, including the paper-specific four-probability subset. Supports 400 pseudo-patients with cumulative work and combined storage limits; docs/cibolus-calibration.md",
+        "Automatic prior-variance selection, calendar/pending-outcome conduct, native input/report workflows and executable equivalence remain pending"
       ],
       "validation": [
         "tests/test_cibolus.py",
@@ -2986,7 +2989,8 @@
         "research/cibolus-audit.md",
         "Three focused simulator tests plus independent base-R quadrature/ledgers: 36 joint-category rows (max error 5.27e-16), six patient records and 18 regimen/look rows (utility error 2.84e-14); final untried-regimen selection and first-cohort stop.",
         "Two free-prior cohort fits reproduce sequential actual fitter calls exactly; root comparison 0.947 seconds after imports, 117.50 MiB peak RSS and zero reported swaps; tools/reference_cibolus_trial.R and research/cibolus-trial-audit.md.",
-        "Three focused aggregate checks verify seed replay, count conservation, pooled ratio Monte Carlo errors, shared-budget preflight and preservation of infinite Rhat; tests/test_cibolus_simulation.py. No native timing or executable parity claimed."
+        "Three focused aggregate checks verify seed replay, count conservation, pooled ratio Monte Carlo errors, shared-budget preflight and preservation of infinite Rhat; tests/test_cibolus_simulation.py. No native timing or executable parity claimed.",
+        "Five focused prior-calibration checks; independent R quadrature for two actual pseudo datasets gives log-beta0 mean differences of 0.342/0.552 reported sampler MCSE. Direct-prior toxicity means agree within 0.035 MCSE; fixed response moments have exact zero variance/infinite ESS after direct-CDF correction. A bounded 400-patient SD20 run completes, but short-chain Rhat4.11 is not convergence evidence. research/cibolus-calibration-audit.md and tools/reference_cibolus_calibration.R"
       ]
     },
     {

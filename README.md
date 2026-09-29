@@ -1078,8 +1078,10 @@ parity and published operating-characteristic validation remain pending.
 [GAO model probabilities](docs/u2oet-gao.md) additionally support explicit
 raw-dose coefficients, a shared interaction and Gaussian-copula likelihoods;
 [GAO posterior fitting](docs/u2oet-gao-fit.md) adds explicit normal-prior
-coordinates, complete/partial outcomes and retained chain diagnostics. Native
-prior interpretation and GAO calibration/calendar integration remain open.
+coordinates, complete/partial outcomes and retained chain diagnostics.
+[GAO calendar trials](docs/u2oet-gao-trials.md) connect that fitter to pending
+outcomes, cohort allocation and final selection, with cumulative work limits
+and replay inputs. Native prior interpretation and GAO calibration remain open.
 
 [CATBUB](docs/catbub.md) provides categorical-utility posterior comparisons,
 Dirichlet Monte Carlo, a success-only binary comparator, sequential multinomial
@@ -1407,8 +1409,11 @@ references. [Complete-outcome trials](docs/cibolus-trials.md) generate joint
 response/toxicity categories, update after each cohort and apply concentration
 no-skip and unrestricted final selection, with replayable outcome inputs and
 cumulative work limits. Serial aggregate simulation reports selection and
-observed-outcome rates, Monte Carlo errors and per-trial replay seeds. Calendar
-conduct, prior calibration and native workflows remain open.
+observed-outcome rates, Monte Carlo errors and per-trial replay seeds.
+[Prior calibration](docs/cibolus-calibration.md) adds balanced pseudo data,
+posterior-mean averaging, prior probability moments and beta ESS, with explicit
+joint elicitation tables and prior variances. Automatic variance selection,
+calendar conduct and native workflows remain open.
 
 [Pinnacle](docs/pinnacle.md) detects and quantifies protein spots in aligned
 two-dimensional gel images. It combines streaming image averaging, undecimated

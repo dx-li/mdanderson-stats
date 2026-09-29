@@ -35,8 +35,8 @@ The subsequent triage distinguishes native workflow gaps from new mathematical
 extensions. Dose Schedule Finder calendar replay and PLBARPO control operating
 characteristics are integrated, along with Multc Lean pending-outcome calendar
 replay. Dose Schedule Finder aggregate OCs and explicit-prior U2OET GAO
-fitting are also integrated. Native GAO prior interpretation and integration
-into its calibration/calendar drivers remain separate gaps.
+fitting are also integrated. Native GAO prior interpretation and prior calibration remain separate gaps;
+the explicit-prior GAO calendar driver is now connected.
 These additions build on implemented posterior calculations and supply
 missing trial workflows or named models.
 
@@ -63,7 +63,7 @@ a generic method with a similar name.
 | Entry | Remaining named method or workflow | Qualification / evidence |
 | --- | --- | --- |
 | SYNERGY #18 | Four 2007 parametric response surfaces and 2008 wild-bootstrap intervals | Current semiparametric surface fitting is present; [guide](../docs/synergy-surface.md). |
-| U2OET #77 | Native GAO prior interpretation and GAO calibration/calendar integration | Explicit-coefficient GAO probabilities, Gaussian likelihoods and [explicit-prior posterior fitting](../docs/u2oet-gao-fit.md) are available. PDS/CMI/hybrid fitting, calendar replay and aggregate OCs already exist; [guide](../docs/u2oet.md). |
+| U2OET #77 | Native GAO prior interpretation and GAO prior calibration | Explicit-coefficient GAO probabilities, Gaussian likelihoods and [explicit-prior posterior fitting](../docs/u2oet-gao-fit.md) are available. PDS/CMI/hybrid fitting, calendar replay and aggregate OCs already exist; [guide](../docs/u2oet.md). |
 | BARD #165 | Expansion, stage-two calendar timing, native per-arm quota behavior and calibration | BF-BLRM model fitting, calendar replay with optional accelerated titration and stage-two continuation now connect eligible carryover, minimization and final OBD selection under a combined enrollment target. Hidden native settings need explicit caller configuration or further source evidence; [continuation guide](../docs/bard-two-stage.md), [titration guide](../docs/bard-titration.md). |
 | SurvivalContour #166 | Five neural prediction/learning workflows and interval-model bootstrap uncertainty | Ordinary/stratified right-censored Cox, AFT/splines, numeric forests, interval PH/competing-risk and shared-coefficient stratified interval-PH are available. The five named neural learners require distinct backend contracts; [contour guide](../docs/survival-contour.md), [stratified interval guide](../docs/interval-survival-stratified.md). |
 | Proportional Density #78 | Unequal-censoring treatment-effect null calibration and bootstrap parameter uncertainty | Failure-only and full-data disease-curve goodness-of-fit bootstraps are present. The downloaded archive has no bootstrap code; distinguish paper workflows/extensions from missing native routines; [guide](../docs/proportional-density.md). |
@@ -113,7 +113,10 @@ checked against independent R outcome/decision references and sequential
 actual posterior fits; [guide](../docs/cibolus-trials.md). Serial aggregate
 operating characteristics now add selection/stop rates, allocation and pooled
 outcome summaries, trial-clustered Monte Carlo errors and replayable seeds.
-Calendar conduct and prior calibration remain open. Numeric survival-forest
+Balanced pseudo-data prior calibration and prior-predictive beta ESS are now
+available with explicit joint elicitation tables and caller-selected variances;
+[guide](../docs/cibolus-calibration.md). Calendar conduct and automatic variance
+selection remain open. Numeric survival-forest
 out-of-bag curves and native-convention concordance error are now implemented
 and checked against unchanged native C kernels. Explicit permutation importance
 is also implemented, with independent native-kernel comparisons covering whole-

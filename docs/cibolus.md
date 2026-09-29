@@ -161,7 +161,7 @@ prior draws and do not use warmup. With observations, fitting uses serial
 elliptical slice sampling, an explicit Python alternative to the paper's
 coordinate-wise sampling scheme.
 
-The fitter accepts at most 200 observations, 20 concentration levels, 20 bolus
+The fitter accepts at most 400 observations, 20 concentration levels, 20 bolus
 levels and 20 detection endpoints. The combined retained parameter, likelihood,
 joint-probability and grid-summary arrays cannot exceed two million cells.
 Likelihood evaluation and patient/prediction work budgets are also enforced;
@@ -187,6 +187,9 @@ the checks actually completed.
 joint response/toxicity cells, fits after each cohort and applies the allocation
 and final-selection rules. Aggregate simulation reports selection/stopping,
 allocation, pooled outcome rates, Monte Carlo errors and replayable seeds.
-Full prior elicitation/calibration, calendar and pending-outcome conduct,
-native input/report workflows and executable parity remain open. The article and original
-executable are not bundled.
+[Prior calibration](cibolus-calibration.md) accepts full joint elicitation tables,
+averages balanced pseudo-posterior log means and reports prior probability
+moments and beta ESS under caller-selected variances. Automatic variance
+selection, calendar and pending-outcome conduct, native input/report workflows
+and executable parity remain open. The article and original executable are not
+bundled.

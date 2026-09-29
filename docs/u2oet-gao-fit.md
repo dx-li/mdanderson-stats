@@ -83,8 +83,9 @@ as toxicity-only. Unobserved patients contribute no outcome likelihood.
 two dose axes and two outcome axes. Flattening only chain/draw axes lets the
 existing `u2oet_posterior` and allocation functions consume the fitted
 probabilities. The fit also retains names, prior settings, counts and actual
-likelihood work. Existing automatic trial and prior-calibration drivers do
-not yet call this GAO fitter.
+likelihood work. The [GAO calendar trial driver](u2oet-gao-trials.md) connects
+this fitter to pending-outcome trial conduct and aggregate summaries. GAO
+prior calibration remains open.
 
 Blocked elliptical slice sampling updates the free normal-prior coordinates.
 Shape and retained-storage checks precede large allocations. Likelihood
