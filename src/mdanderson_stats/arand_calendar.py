@@ -687,6 +687,8 @@ def arand_calendar_replay(
             enrollment_closed = True
             anchor_time = duration
             reason = "maximum_duration"
+        if enrollment_closed and at > anchor_time + followup:
+            break
         if (
             scheduled(at)
             and policy.same_time_order == "analysis_before_arrival"

@@ -243,3 +243,25 @@ def test_scheduled_look_after_last_arrival_runs_before_duration_terminal():
     assert result.reason == "early_winner"
     assert result.stop_time == 2.0
     assert result.early_winner == 0
+
+
+def test_arrival_after_duration_terminal_is_not_attempted():
+    result = arand_calendar_replay(
+        [100.0],
+        [0.0],
+        prior=[[1.0, 1.0]],
+        family="binary",
+        analysis_times=[],
+        max_enrollment=None,
+        max_duration=5.0,
+        final_followup=0.0,
+        minimum_enrollment=1,
+        binary_outcomes=[[1]],
+        binary_window=1.0,
+        policy=_policy(),
+    )
+
+    assert result.attempted_arrivals == 0
+    assert result.assignments.size == 0
+    assert result.final_analysis_time == 5.0
+    assert result.final_winner is None
