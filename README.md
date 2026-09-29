@@ -1482,6 +1482,9 @@ fit mixed exact, interval, left- and right-censored observations with a
 nonparametric Turnbull baseline. Predictions and continuous-covariate contours
 return explicit survival identification bounds, preserving uncertainty within
 observation intervals and beyond the last finite observation.
+[Coefficient bootstrapping](docs/interval-survival-bootstrap.md) adds ordinary
+interval-PH regression covariance and standard errors, with weighted resampling,
+explicit failed-fit records and replayable row selections.
 [Stratified interval models](docs/interval-survival-stratified.md) fit shared
 covariate effects and separate group baselines jointly, with matching
 group-specific predictions and contours.
@@ -1490,8 +1493,10 @@ two causes jointly with monotone spline baselines and generalized odds-rate
 links. They return regression covariance, both incidence curves and
 continuous-covariate contours, with optional two-/three-dimensional plots.
 An explicit starting-boundary approximation and constrained-convergence
-diagnostics accompany probability checks on requested profiles. Neural models
-and interval-model bootstrap uncertainty remain open.
+diagnostics accompany probability checks on requested profiles. Repeated-visit
+data can be converted into subject-level intervals with baseline covariates
+and source-row provenance. Neural models, stratified/cluster interval-PH and
+competing-risk bootstrap workflows remain open.
 
 [STPLAN study planning](docs/stplan.md) provides all 25 forward power and retention
 procedures for normal, log-normal, exponential, correlation, binary, and Poisson

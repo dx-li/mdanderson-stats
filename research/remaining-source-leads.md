@@ -163,7 +163,11 @@ pass five native reference cases, independent score/constraint checks and unit
 rescaling checks; see the audit and `docs/interval-survival.md`. Shared-coefficient
 stratified interval fits are now implemented with independent baseline supports
 and joint likelihood fitting; see `docs/interval-survival-stratified.md` and
-`research/interval-stratified-audit.md`. Bootstrap uncertainty remains open.
+`research/interval-stratified-audit.md`. Ordinary-PH coefficient bootstrapping
+now follows the native weighted resample/frequency-weight/covariance contract;
+see `research/interval-survival-bootstrap-audit.md`. Stratified/cluster
+resampling remains separate. Native `survCIs` explicitly excludes `ic_sp`, so
+baseline confidence bands must not be inferred from that coefficient bootstrap.
 
 ## Interval-censored competing-risk regression
 
@@ -194,12 +198,28 @@ cause-specific prediction and contour workflow are now implemented. Native
 parameter/prediction references, direct probability and derivative checks,
 unit-rescaling checks and the four focused tests are recorded in
 `research/interval-competing-risk-audit.md`; bootstrap uncertainty remains open.
+Repeated-visit conversion now implements the source's first-event rule with
+corrected chronological sorting and consistent first-visit event retention.
+Native defect fixtures and source-row provenance are recorded in
+`research/interval-competing-risk-data-audit.md`.
 
 The [implementation contract](interval-competing-risk-audit.md) records the
 additional response, spline, initialization and least-squares covariance
 sources, and source-level derivative discrepancies requiring numerical review.
 Pure-R optimizer dependencies are available for a source-only reference run;
 no package installation is required for that approach.
+
+The same pinned upstream tree also supplies `R/bssmle_se.R`, blob
+`c923ec3cd71842c4e4895d34905c635381ade5d6`, now saved in the ignored source
+cache. For `nboot > 1`, it resamples rows uniformly with replacement, rebuilds
+the sample's empirical spline knots on each refit, extracts the two regression
+blocks, drops NA coefficient rows and takes their sample covariance. It does
+not catch refit errors: a resample missing either cause appears to abort through
+`Surv2`, rather than enter the failed-optimizer count. Native `nboot=1` returns
+a coefficient vector as `Sigma`, not a covariance. Intercept-only input is
+internally represented by a zero column and two nominal zero slopes. These
+source edge cases require explicit Python conventions and a numerical reference
+before implementation; no competing-risk bootstrap is claimed here.
 
 ## Neural survival models already use a Python backend
 

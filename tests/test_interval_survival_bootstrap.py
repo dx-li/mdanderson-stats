@@ -137,19 +137,13 @@ def test_pinned_icenreg_prescribed_bootstrap_coefficients_and_covariance() -> No
     ):
         rows = [row for row in inputs if row["case"] == input_case]
         lower = np.array([float(row["lower"]) for row in rows])
-        upper = np.array(
-            [float(row["upper"]) if row["upper"] != "Inf" else np.inf for row in rows]
-        )
+        upper = np.array([float(row["upper"]) if row["upper"] != "Inf" else np.inf for row in rows])
         x = np.array([[float(row["x1"]), float(row["x2"])] for row in rows])
         weights = np.array([float(row["weight"]) for row in rows])
         names = (f"{prefix}_a", f"{prefix}_b", f"{prefix}_singular")
         tape = np.array(
             [
-                [
-                    int(row["row_id_zero_based"])
-                    for row in resamples
-                    if row["case"] == name
-                ]
+                [int(row["row_id_zero_based"]) for row in resamples if row["case"] == name]
                 for name in names
             ],
             dtype=np.int64,

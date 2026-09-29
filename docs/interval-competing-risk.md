@@ -41,6 +41,47 @@ finite endpoints `(lower, upper]`. A zero lower endpoint represents left
 censoring. This smooth interval-likelihood API does not reinterpret equal
 endpoints as an exact event.
 
+## Preparing repeated visits
+
+Use `prepare_interval_competing_risk_visits` when each input row is a visit.
+It orders visits within each subject, finds the first observed cause and uses
+the preceding event-free visit as the lower endpoint. An event at the first
+visit produces `(0, time]`. A subject with no event is right-censored at the
+last visit. Baseline covariates come from the earliest retained visit.
+
+```python
+import numpy as np
+from mdanderson_stats import prepare_interval_competing_risk_visits
+
+visits = prepare_interval_competing_risk_visits(
+    subject_id=["b", "a", "b", "a", "c"],
+    visit_time=[3, 2, 1, 4, 5],
+    status=[1, 2, 0, 0, 0],
+    covariates=[[20], [30], [10], [40], [50]],
+)
+assert visits.subject_id == ("a", "b", "c")
+np.testing.assert_array_equal(visits.lower, [0, 1, 5])
+np.testing.assert_array_equal(visits.upper, [2, 3, np.inf])
+np.testing.assert_array_equal(visits.event, [2, 1, 0])
+np.testing.assert_array_equal(visits.covariates[:, 0], [30, 10, 50])
+np.testing.assert_array_equal(visits.ignored_post_event_rows, [3])
+```
+
+For a dataset suitable for estimation, pass `visits.lower`, `visits.upper`,
+`visits.event` and `visits.covariates` to `fit_interval_competing_risk`.
+Conversion itself does not require both causes, whereas fitting does.
+Covariates remain baseline values; later measurements are not a time-varying
+regression model. Missing visit times are dropped with their original row
+indices reported. Tied times within a subject and zero-length event intervals
+are rejected. Returned endpoint and covariate source indices trace each
+subject-level record to the original rows.
+
+The [visit-conversion audit](../research/interval-competing-risk-data-audit.md)
+documents two corrections to `intccr::dataprep`: chronological sorting and
+retention of subjects whose first visit is already an event.
+
+## Regression model
+
 The model for cause `j` is
 `F_j(t | x) = 1 - (1 + alpha_j * exp(eta_j(t,x)))^(-1/alpha_j)`.
 Here `eta_j(t,x) = B(t) phi_j + (x - covariate_mean) beta_j`: the returned
@@ -115,5 +156,5 @@ See the [source and numerical audit](../research/interval-competing-risk-audit.m
 for pinned `intccr` sources, the native derivative discrepancies and reference
 scope. The original author's contour starts at zero even when that time lies
 outside the fitted range; this interface starts at the fitted lower boundary.
-Categorical encoding, visit-data conversion and the broader SurvivalContour
+Categorical encoding, bootstrap uncertainty and the broader SurvivalContour
 application remain separate coverage items.

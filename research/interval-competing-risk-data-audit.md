@@ -75,3 +75,11 @@ fixtures byte-for-byte. The run took 0.275 seconds, peaked at 87,162,880 bytes
 child RSS and reported zero swaps. The corrected Python ledger is a separate
 explicit expectation: it sorts chronologically and retains the first-event
 subject that native `dataprep` accidentally drops.
+
+Root integration reconstructs the documented 120-subject two-cause study from
+203 visit records supplied in reverse order. The converter recovers all lower
+and upper endpoints, causes and baseline covariates exactly; the resulting
+arrays fit successfully through the public competing-risk API. This check,
+together with bootstrap replay and unit checks, takes 1.365 seconds, peaks at
+120.12 MiB RSS and reports zero swaps. The twelve affected focused tests also
+pass together (2.437 seconds, 140.95 MiB RSS, zero swaps).

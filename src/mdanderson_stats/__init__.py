@@ -749,11 +749,19 @@ from .interval_competing_risk_contour import (
     plot_interval_competing_risk_contour_2d,
     plot_interval_competing_risk_contour_3d,
 )
+from .interval_competing_risk_data import (
+    IntervalCompetingRiskVisitData,
+    prepare_interval_competing_risk_visits,
+)
 from .interval_survival import (
     IntervalSurvivalFit,
     IntervalSurvivalPrediction,
     fit_interval_survival,
     predict_interval_survival,
+)
+from .interval_survival_bootstrap import (
+    IntervalSurvivalBootstrap,
+    bootstrap_interval_survival_coefficients,
 )
 from .interval_survival_contour import (
     IntervalSurvivalContour,
@@ -2127,6 +2135,8 @@ __all__ = [
     "IntervalCompetingRiskFit",
     "IntervalCompetingRiskPrediction",
     "IntervalCompetingRiskContour",
+    "IntervalCompetingRiskVisitData",
+    "prepare_interval_competing_risk_visits",
     "fit_interval_competing_risk",
     "predict_interval_competing_risk",
     "interval_competing_risk_contour",
@@ -2135,6 +2145,8 @@ __all__ = [
     "IntervalSurvivalFit",
     "IntervalSurvivalPrediction",
     "IntervalSurvivalContour",
+    "IntervalSurvivalBootstrap",
+    "bootstrap_interval_survival_coefficients",
     "fit_interval_survival",
     "predict_interval_survival",
     "interval_survival_contour",

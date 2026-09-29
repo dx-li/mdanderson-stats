@@ -132,12 +132,8 @@ def _sample_covariance(samples: FloatArray) -> tuple[FloatArray, FloatArray]:
     # becomes representable after multiplication by the other scale.
     cov_mantissa, cov_exponent = np.frexp(cov_normalized)
     scale_mantissa, scale_exponent = np.frexp(scale)
-    covariance_mantissa = (
-        cov_mantissa * scale_mantissa[:, None] * scale_mantissa[None, :]
-    )
-    covariance_exponent = (
-        cov_exponent + scale_exponent[:, None] + scale_exponent[None, :]
-    )
+    covariance_mantissa = cov_mantissa * scale_mantissa[:, None] * scale_mantissa[None, :]
+    covariance_exponent = cov_exponent + scale_exponent[:, None] + scale_exponent[None, :]
     with np.errstate(over="ignore", invalid="ignore"):
         covariance = np.ldexp(covariance_mantissa, covariance_exponent)
     if not np.isfinite(covariance).all():
@@ -229,10 +225,7 @@ def bootstrap_interval_survival_coefficients(
         raise ValueError("bootstrap sampling and row-collapse work exceeds the 50000000-unit limit")
     tape_cells = prod((b, resample_size)) if resample_indices is not None else 0
     result_cells = (
-        5 * prod((b, n_covariates))
-        + n_covariates * n_covariates
-        + 2 * n_covariates
-        + 2 * b
+        5 * prod((b, n_covariates)) + n_covariates * n_covariates + 2 * n_covariates + 2 * b
     )
     scratch_cells = resample_size + 4 * n_rows + 4 * n_covariates
     if 2 * tape_cells + result_cells + scratch_cells > _MAX_OUTPUT_CELLS:
@@ -249,19 +242,13 @@ def bootstrap_interval_survival_coefficients(
     per_fit_bound = n_rows * replicate_support_bound
     if per_fit_bound > int(max_work):
         raise ValueError("bootstrap replicate interval likelihood work exceeds max_work")
-    estimated_fit_work = int(max_iterations) * (
-        n_rows * original_support + b * per_fit_bound
-    )
+    estimated_fit_work = int(max_iterations) * (n_rows * original_support + b * per_fit_bound)
     if estimated_fit_work > _MAX_BOOTSTRAP_FIT_WORK:
-        raise ValueError(
-            "worst-case bootstrap fitting work exceeds the 2000000000-unit hard limit"
-        )
+        raise ValueError("worst-case bootstrap fitting work exceeds the 2000000000-unit hard limit")
     tape = (
         None
         if resample_indices is None
-        else _index_tape(
-            resample_indices, replicates=b, resample_size=resample_size, n_rows=n_rows
-        )
+        else _index_tape(resample_indices, replicates=b, resample_size=resample_size, n_rows=n_rows)
     )
 
     # The original fit is deterministic. Complete it before creating/advancing

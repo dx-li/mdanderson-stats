@@ -1044,6 +1044,10 @@ endpoint inclusion, stable log-domain arithmetic and explicit survival
 identification bounds. Its contour API does not claim equivalence to the
 original application's unresolved `mets` interval2 route. See
 `research/interval-survival-audit.md` for source hashes and validation scope.
+The separate coefficient-bootstrap interface follows the pinned package's
+weighted row-resampling, frequency-weight refitting and sample-covariance
+conventions. Fixed-resample native references and differences in failure
+reporting are documented in `research/interval-survival-bootstrap-audit.md`.
 
 `interval_competing_risk.py` and its contour interface independently implement
 the two-cause generalized odds-rate interval likelihood and residualized-score
@@ -1058,6 +1062,10 @@ SurvivalContour revision credited above. Python uses its own constrained fit,
 corrected constraint derivatives and an explicit finite lower-boundary incidence
 tolerance. Native optimizer results are compatibility diagnostics, not certified
 maximum-likelihood targets. See `research/interval-competing-risk-audit.md`.
+The repeated-visit preparation interface follows the same pinned package's
+`dataprep` first-event rule, with corrected chronological ordering and first-visit
+event handling. `research/interval-competing-risk-data-audit.md` records these
+differences and native source references.
 
 ## Bayesian success calibration
 

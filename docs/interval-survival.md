@@ -59,8 +59,9 @@ events to an interval midpoint.
 Right-censored observations can leave probability beyond the last finite
 observation. The bounds preserve that tail uncertainty without extrapolating a
 parametric tail or placing a fabricated failure at a finite time. Statistical
-uncertainty in fitted coefficients and the baseline is separate; this interface
-does not invent a Wald covariance or confidence band for the nonparametric fit.
+uncertainty in fitted coefficients and the baseline is separate.
+[Coefficient bootstrapping](interval-survival-bootstrap.md) estimates regression
+covariance and standard errors; it does not supply baseline confidence bands.
 
 Fits accept up to 20,000 observations, 100 numeric covariates and 2,000 support
 intervals, subject to the work limit. Prediction and contour functions check
@@ -93,5 +94,6 @@ The broader SurvivalContour entry remains partial. The separate
 [interval-censored competing-risk model](interval-competing-risk.md) supplies
 two-cause generalized odds-rate regression and incidence contours.
 [Stratified interval-PH](interval-survival-stratified.md) adds shared coefficients
-and group-specific baselines. Bootstrap uncertainty, neural model workflows and other
-outstanding application features are tracked separately in the catalog.
+and group-specific baselines. Ordinary-PH coefficient bootstrap uncertainty is
+available separately; stratified/cluster and competing-risk bootstrap workflows,
+neural models and other application features remain tracked in the catalog.

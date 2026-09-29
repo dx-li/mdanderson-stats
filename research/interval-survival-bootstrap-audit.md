@@ -22,6 +22,11 @@ coefficient row per requested replicate, represents failures as NaN, and
 labels covariance/SE as conditional on successful fits. With fewer than two
 successes these summaries are undefined.
 
+Python also applies its existing fit validation and convergence requirements
+to every replicate; invalid or nonconvergent fits are recorded as failures.
+This is stricter than the native helper's explicit singular-design check and
+does not claim identical acceptance for every native optimizer result.
+
 `ic_sp` applies `adjustIntervals(B=c(0,1))` before saving the data environment
 that the bootstrap resamples. It moves the lower endpoint inward by `1e-10`
 for every interval wider than `2e-10`, including right-censored rows, while
@@ -76,3 +81,16 @@ bounded by `replicates * ceil(sum(weights))` before random state is consumed.
 Covariance rescaling uses binary mantissa/exponent arithmetic. If a nonzero
 covariance entry cannot be represented as a float64 value, the operation
 raises `ArithmeticError` rather than returning a misleading zero or infinity.
+
+Root integration runs the twelve bootstrap/visit-conversion checks together
+(2.437 seconds, 140.95 MiB peak RSS, zero swaps). Four seeded weighted resamples
+with a fractional total weight reproduce an independently generated explicit
+row tape exactly; the sample size is 87. Changing covariate units by `1e100`
+and `1e-100` preserves coefficient draws and covariance after conversion back
+to the original units. The combined workflow check, including visit-to-fit
+integration, takes 1.365 seconds at 120.12 MiB peak RSS, zero swaps.
+
+The portable R generator was executed from the integrated root. All eight
+parent/bootstrap CSV fixtures remained byte-identical. This run took 4.724
+seconds, with 309.00 MiB peak child RSS (including the serial native reference
+builder) and zero swaps. No additional dependencies were installed.

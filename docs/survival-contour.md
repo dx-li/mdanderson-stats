@@ -163,8 +163,11 @@ models](interval-competing-risk.md), [numeric survival forests](random-survival-
 and [simulated parametric intervals](survival-uncertainty.md) provide further
 implemented families with their documented numerical and native-parity limits.
 [Stratified interval-PH](interval-survival-stratified.md) adds shared regression
-effects with group-specific interval baselines. Interval bootstrap uncertainty,
-five neural model workflows, remaining forest features and the full native app
+effects with group-specific interval baselines.
+[Ordinary interval-PH coefficient bootstrapping](interval-survival-bootstrap.md)
+adds covariance and standard errors with visible failed replicates.
+Stratified/cluster and competing-risk bootstraps, five neural model workflows,
+remaining forest features and the full native app
 workflow remain open. Entry 166 stays partial.
 
 The original author's two- and three-dimensional Cox helper outputs provide
