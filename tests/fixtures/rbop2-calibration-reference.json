@@ -1,0 +1,383 @@
+{
+  "looks": [
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      2
+    ]
+  ],
+  "cutoff_candidates": [
+    [
+      [
+        ".25",
+        ".8"
+      ],
+      [
+        ".8",
+        ".8"
+      ]
+    ],
+    [
+      [
+        ".25",
+        ".9"
+      ],
+      [
+        ".9",
+        ".9"
+      ]
+    ],
+    [
+      [
+        ".05",
+        ".95"
+      ],
+      [
+        ".8",
+        ".8"
+      ]
+    ],
+    [
+      [
+        ".6",
+        ".9"
+      ],
+      [
+        ".8",
+        ".8"
+      ]
+    ],
+    [
+      [
+        ".25",
+        ".9"
+      ],
+      [
+        ".9",
+        ".9"
+      ]
+    ]
+  ],
+  "alpha": 0.2,
+  "priors": {
+    "calibration": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "analysis": [
+      [
+        2,
+        1
+      ],
+      [
+        1,
+        2
+      ]
+    ]
+  },
+  "endpoints": {
+    "efficacy": {
+      "null_rates": [
+        0.3,
+        0.3
+      ],
+      "alternative_rates": [
+        0.6,
+        0.3
+      ],
+      "expected_selected_index": 3,
+      "candidates": {
+        "calibration": [
+          {
+            "index": 0,
+            "null_positive": 0.3318,
+            "null_expected_total": 3.16,
+            "alternative_positive": 0.6132,
+            "alternative_expected_total": 2.92,
+            "rational": {
+              "null_positive": "1659/5000",
+              "null_expected_total": "79/25",
+              "alternative_positive": "1533/2500",
+              "alternative_expected_total": "73/25"
+            }
+          },
+          {
+            "index": 1,
+            "null_positive": 0.0441,
+            "null_expected_total": 3.58,
+            "alternative_positive": 0.1764,
+            "alternative_expected_total": 3.76,
+            "rational": {
+              "null_positive": "441/10000",
+              "null_expected_total": "179/50",
+              "alternative_positive": "441/2500",
+              "alternative_expected_total": "94/25"
+            }
+          },
+          {
+            "index": 2,
+            "null_positive": 0.2877,
+            "null_expected_total": 4.0,
+            "alternative_positive": 0.5628,
+            "alternative_expected_total": 4.0,
+            "rational": {
+              "null_positive": "2877/10000",
+              "null_expected_total": "4",
+              "alternative_positive": "1407/2500",
+              "alternative_expected_total": "4"
+            }
+          },
+          {
+            "index": 3,
+            "null_positive": 0.1659,
+            "null_expected_total": 2.42,
+            "alternative_positive": 0.3696,
+            "alternative_expected_total": 2.84,
+            "rational": {
+              "null_positive": "1659/10000",
+              "null_expected_total": "121/50",
+              "alternative_positive": "231/625",
+              "alternative_expected_total": "71/25"
+            }
+          },
+          {
+            "index": 4,
+            "null_positive": 0.0441,
+            "null_expected_total": 3.58,
+            "alternative_positive": 0.1764,
+            "alternative_expected_total": 3.76,
+            "rational": {
+              "null_positive": "441/10000",
+              "null_expected_total": "179/50",
+              "alternative_positive": "441/2500",
+              "alternative_expected_total": "94/25"
+            }
+          }
+        ],
+        "analysis": [
+          {
+            "index": 0,
+            "null_positive": 0.79,
+            "null_expected_total": 2.42,
+            "alternative_positive": 0.88,
+            "alternative_expected_total": 2.24,
+            "rational": {
+              "null_positive": "79/100",
+              "null_expected_total": "121/50",
+              "alternative_positive": "22/25",
+              "alternative_expected_total": "56/25"
+            }
+          },
+          {
+            "index": 1,
+            "null_positive": 0.3318,
+            "null_expected_total": 3.58,
+            "alternative_positive": 0.6132,
+            "alternative_expected_total": 3.16,
+            "rational": {
+              "null_positive": "1659/5000",
+              "null_expected_total": "179/50",
+              "alternative_positive": "1533/2500",
+              "alternative_expected_total": "79/25"
+            }
+          },
+          {
+            "index": 2,
+            "null_positive": 0.3318,
+            "null_expected_total": 3.58,
+            "alternative_positive": 0.6132,
+            "alternative_expected_total": 3.16,
+            "rational": {
+              "null_positive": "1659/5000",
+              "null_expected_total": "179/50",
+              "alternative_positive": "1533/2500",
+              "alternative_expected_total": "79/25"
+            }
+          },
+          {
+            "index": 3,
+            "null_positive": 0.3318,
+            "null_expected_total": 3.16,
+            "alternative_positive": 0.6132,
+            "alternative_expected_total": 2.92,
+            "rational": {
+              "null_positive": "1659/5000",
+              "null_expected_total": "79/25",
+              "alternative_positive": "1533/2500",
+              "alternative_expected_total": "73/25"
+            }
+          },
+          {
+            "index": 4,
+            "null_positive": 0.3318,
+            "null_expected_total": 3.58,
+            "alternative_positive": 0.6132,
+            "alternative_expected_total": 3.16,
+            "rational": {
+              "null_positive": "1659/5000",
+              "null_expected_total": "179/50",
+              "alternative_positive": "1533/2500",
+              "alternative_expected_total": "79/25"
+            }
+          }
+        ]
+      }
+    },
+    "toxicity": {
+      "null_rates": [
+        0.3,
+        0.3
+      ],
+      "alternative_rates": [
+        0.1,
+        0.3
+      ],
+      "expected_selected_index": 3,
+      "candidates": {
+        "calibration": [
+          {
+            "index": 0,
+            "null_positive": 0.3318,
+            "null_expected_total": 3.16,
+            "alternative_positive": 0.4482,
+            "alternative_expected_total": 3.32,
+            "rational": {
+              "null_positive": "1659/5000",
+              "null_expected_total": "79/25",
+              "alternative_positive": "2241/5000",
+              "alternative_expected_total": "83/25"
+            }
+          },
+          {
+            "index": 1,
+            "null_positive": 0.0441,
+            "null_expected_total": 3.58,
+            "alternative_positive": 0.0729,
+            "alternative_expected_total": 3.86,
+            "rational": {
+              "null_positive": "441/10000",
+              "null_expected_total": "179/50",
+              "alternative_positive": "729/10000",
+              "alternative_expected_total": "193/50"
+            }
+          },
+          {
+            "index": 2,
+            "null_positive": 0.2877,
+            "null_expected_total": 4.0,
+            "alternative_positive": 0.4293,
+            "alternative_expected_total": 4.0,
+            "rational": {
+              "null_positive": "2877/10000",
+              "null_expected_total": "4",
+              "alternative_positive": "4293/10000",
+              "alternative_expected_total": "4"
+            }
+          },
+          {
+            "index": 3,
+            "null_positive": 0.1659,
+            "null_expected_total": 2.42,
+            "alternative_positive": 0.2511,
+            "alternative_expected_total": 2.54,
+            "rational": {
+              "null_positive": "1659/10000",
+              "null_expected_total": "121/50",
+              "alternative_positive": "2511/10000",
+              "alternative_expected_total": "127/50"
+            }
+          },
+          {
+            "index": 4,
+            "null_positive": 0.0441,
+            "null_expected_total": 3.58,
+            "alternative_positive": 0.0729,
+            "alternative_expected_total": 3.86,
+            "rational": {
+              "null_positive": "441/10000",
+              "null_expected_total": "179/50",
+              "alternative_positive": "729/10000",
+              "alternative_expected_total": "193/50"
+            }
+          }
+        ],
+        "analysis": [
+          {
+            "index": 0,
+            "null_positive": 0.0,
+            "null_expected_total": 2.42,
+            "alternative_positive": 0.0,
+            "alternative_expected_total": 2.54,
+            "rational": {
+              "null_positive": "0",
+              "null_expected_total": "121/50",
+              "alternative_positive": "0",
+              "alternative_expected_total": "127/50"
+            }
+          },
+          {
+            "index": 1,
+            "null_positive": 0.0,
+            "null_expected_total": 2.42,
+            "alternative_positive": 0.0,
+            "alternative_expected_total": 2.54,
+            "rational": {
+              "null_positive": "0",
+              "null_expected_total": "121/50",
+              "alternative_positive": "0",
+              "alternative_expected_total": "127/50"
+            }
+          },
+          {
+            "index": 2,
+            "null_positive": 0.0,
+            "null_expected_total": 4.0,
+            "alternative_positive": 0.0,
+            "alternative_expected_total": 4.0,
+            "rational": {
+              "null_positive": "0",
+              "null_expected_total": "4",
+              "alternative_positive": "0",
+              "alternative_expected_total": "4"
+            }
+          },
+          {
+            "index": 3,
+            "null_positive": 0.0,
+            "null_expected_total": 2.0,
+            "alternative_positive": 0.0,
+            "alternative_expected_total": 2.0,
+            "rational": {
+              "null_positive": "0",
+              "null_expected_total": "2",
+              "alternative_positive": "0",
+              "alternative_expected_total": "2"
+            }
+          },
+          {
+            "index": 4,
+            "null_positive": 0.0,
+            "null_expected_total": 2.42,
+            "alternative_positive": 0.0,
+            "alternative_expected_total": 2.54,
+            "rational": {
+              "null_positive": "0",
+              "null_expected_total": "121/50",
+              "alternative_positive": "0",
+              "alternative_expected_total": "127/50"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

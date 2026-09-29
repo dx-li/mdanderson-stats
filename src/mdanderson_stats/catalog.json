@@ -4323,12 +4323,13 @@
       "implemented_features": [
         "rbop2_binary_design: supplied-cutoff two-arm binary efficacy/toxicity monitoring, independent beta priors, signed risk-difference margins, strict futility and inclusive superiority decisions.",
         "Boundary tables and exact independent-binomial operating characteristics with early absorption, final versus overall conclusions, sample-size probabilities and expected arm/total enrollment for explicit per-arm looks.",
-        "Bounded sequential scenario evaluation and shared decision tables. Native automatic calibration, informative-prior calibration/analysis separation, allocation rounding, paired-endpoint decisions and report export remain open; see docs/rbop2-binary.md."
+        "Finite-candidate calibration maximizes power subject to a declared null type-I constraint; explicit calibration/analysis priors, immutable candidate diagnostics, smaller-null-enrollment/input-order ties and no-feasible-design reporting. Native automatic cutoff-grid construction, allocation rounding, paired-endpoint rules and report export remain open; docs/rbop2-calibration.md."
       ],
       "validation": [
         "Native V1.1.9.0 application and binary help PDFs pinned in docs/rbop2-binary-sources.json; source equations visually checked.",
         "Independent base-R integration and enumeration of all 16 four-outcome paths, ten endpoint/scenario combinations, exact 4/5 inclusive-cutoff cases, and six fractional-prior signed-margin posterior references.",
-        "Focused checks cover early absorbing decisions, declared unequal arm sizes, probability conservation and numerical/resource guards."
+        "Focused checks cover early absorbing decisions, declared unequal arm sizes, probability conservation and numerical/resource guards.",
+        "Finite-candidate calibration: independent exact-rational enumeration checks 60 candidate diagnostics plus four selected-design outputs; 24 fractional-prior/signed-margin/unequal-arm comparisons, duplicate ties and no-feasible cases pass; tools/reference_rbop2_calibration.py and docs/rbop2-calibration-source.md."
       ]
     },
     {
@@ -4577,7 +4578,8 @@
         "Observed weighted GSEA scores, signed modes, first-match set membership, separate fgsea leading-edge and DOSE core-enrichment conventions, explicit undefined zero-weight cores and bounded per-cluster work; docs/easycelltype-gsea.md.",
         "Ranked GSEA signed normalization, source-specific single/multiple-set pilots, adaptive multilevel tail inference, uncertainty diagnostics, BH adjustment and the dual p-value cutoff with bounded serial work and memory.",
         "GSEA hard/soft cell-type labels using raw-p minimum/fifth-position cutoffs with all ties, source DOSE ordering, hard precedence and separate cluster identities.",
-        "Remaining: bundled CellMarker/Clustermole/PanglaoDB references, species/tissue metadata, gene-ID conversion, native plots and app workflow parity."
+        "easycelltype_reference loads bounded local CSV/gzip author-format tables, filters Human/Mouse and species-specific tissues, preserves association order/duplicates including blank organs, and records file SHA-256 plus caller provenance; docs/easycelltype-reference.md.",
+        "Remaining: bundled CellMarker/Clustermole/PanglaoDB references, gene-ID conversion, native plots and app workflow parity."
       ],
       "validation": [
         "Nine original-R author-source cases, including duplicates, ties, top-five ranking, strict enrichment gate, empty overlap and a 1.84e-31 tail; tools/reference_easycelltype.R.",
@@ -4585,7 +4587,8 @@
         "Three focused behavior checks and isolated wheel example; tests/test_easycelltype.py and research/easycelltype-next-audit.md.",
         "Thirty unchanged-R fgsea/DOSE observed-score/core references across eight scenarios, including duplicate IDs, zero weights, signed modes and size filters; tools/reference_easycelltype_gsea.R and tests/test_easycelltype_gsea.py. Extreme non-hit scores do not erase small relative hit weights.",
         "66 native C++ cumulative scores, 66 unchanged R single-set scores and 22 native splitter score pairs; bounded twelve-seed adaptive tail comparison, deterministic replay and explicit resource/undefined-weight checks; research/easycelltype-gsea-audit.md.",
-        "Source-backed GSEA label tests cover minimum/fifth-position ties, cross-cluster hard ordering, unavailable rows and malformed evidence; public inference-to-label example passes."
+        "Source-backed GSEA label tests cover minimum/fifth-position ties, cross-cluster hard ordering, unavailable rows and malformed evidence; public inference-to-label example passes.",
+        "Reference loading preserves all 236,219 author association rows across the three tables and matches six independent R species/tissue selections exactly; four focused checks, synthetic installed-package example and compressed-line resource guard pass; research/easycelltype-reference-audit.md."
       ]
     },
     {

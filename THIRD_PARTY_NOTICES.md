@@ -28,7 +28,10 @@ It preserves source-specific behavior from fgsea 1.28.0 and DOSE 3.28.2,
 including their distinct leading-edge calculations; it is not the original
 package or an endorsed replacement. `easycelltype_gsea_multilevel.py` extends
 this with normalized scores and adaptive multilevel probabilities, while
-`easycelltype_gsea_labels.py` supplies hard/soft label processing. Applicable
+`easycelltype_gsea_labels.py` supplies hard/soft label processing.
+`easycelltype_reference.py` implements the author's species/tissue filtering
+for caller-supplied tables; `tools/reference_easycelltype_data.R` exports the
+pinned author tables locally without bundling their association rows. Applicable
 upstream terms below are retained for these adapted components too.
 
 fgsea is copyright 2016–2019 Alexey Sergushichev and distributed under MIT terms,

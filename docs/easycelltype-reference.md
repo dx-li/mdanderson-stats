@@ -57,3 +57,17 @@ explicit, versioned mapping. Input limits are 100 MB on disk, 32 MB expanded
 text, 65,536 characters per physical line and 200,000 rows. See the
 [source audit](../research/easycelltype-reference-audit.md) and the main
 [EasyCellType guide](easycelltype.md) for scope and method details.
+
+For a locally obtained EasyCellType 1.5.4 `R/sysdata.rda`, the repository includes
+an optional one-time exporter using base R:
+
+```sh
+Rscript --vanilla tools/reference_easycelltype_data.R path/to/sysdata.rda local-reference-csv
+```
+
+First verify the input against the SHA-256 in the source audit. The exporter
+writes `cellmarker.csv`, `clustermole.csv` and `panglao.csv`, plus small filtered
+reference files. Pass the desired CSV to `easycelltype_reference` and record its
+version and source in the metadata arguments. Python reference loading and
+annotation do not require R. Use each reference table under its applicable
+terms; the combined marker datasets are not redistributed with this package.

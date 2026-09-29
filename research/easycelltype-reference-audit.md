@@ -47,3 +47,19 @@ selected file serially, retaining only the selected species/tissue association
 tuples. These limits protect both compressed and plain CSV input from oversized
 records. These are Python safety bounds and provenance conveniences; native
 app table versions and symbol mapping remain separate questions.
+
+## Source validation
+
+The base-R exporter in `tools/reference_easycelltype_data.R` checks exact
+column names, row counts, absence of missing values and Human/Mouse species
+before exporting. Blank organ strings are present in the original data and
+are distinct from missing values. The source tables have 49,149 CellMarker,
+172,003 Clustermole and 15,067 Panglao rows. Their Human/Mouse counts are
+31,739/17,410, 166,235/5,768 and 7,697/7,370, respectively.
+
+Python preserves those counts and exactly matches the gene/type vectors from
+six independent R species/first-tissue selections, including source order and
+duplicates. Four focused behavior tests, the standalone synthetic guide,
+Ruff and mypy pass. The source comparison took 1.817 seconds, peaked at
+125.69 MiB resident memory and reported zero swaps. Full association tables
+and locally generated reference outputs remain ignored research inputs.

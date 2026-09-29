@@ -1294,7 +1294,10 @@ with Monte Carlo errors and central sample quantiles.
 [rBOP2 binary designs](docs/rbop2-binary.md) add two-arm efficacy and toxicity
 monitoring with signed margins, supplied look-specific cutoffs, boundary tables,
 and exact operating characteristics. Declared arm sizes support unequal
-allocation; native calibration and paired-endpoint rules remain open.
+allocation. [Finite-candidate calibration](docs/rbop2-calibration.md) maximizes
+power under a declared null-error limit and reports calibration and analysis
+priors separately. Native automatic cutoff-grid construction, allocation
+rounding and paired-endpoint rules remain open.
 
 [Phase2Delay](docs/phase2delay.md) adds interim monitoring for delayed response,
 toxicity and progression using correlated piecewise-exponential hazards and
@@ -1503,8 +1506,11 @@ contributing genes, and ranks hard/soft labels. The
 [ranked-enrichment workflow](docs/easycelltype-gsea.md) adds weighted GSEA
 statistics, the separate fgsea/DOSE contributing-gene conventions, normalized
 scores, adaptive multilevel tail probabilities, uncertainty and BH adjustment.
-GSEA hard/soft labels preserve ties and DOSE contributing genes. Bundled
-databases, metadata filtering and gene-ID conversion remain open.
+GSEA hard/soft labels preserve ties and DOSE contributing genes.
+[Reference loading](docs/easycelltype-reference.md) filters locally supplied
+author-format CSV or gzip tables by species and tissue while preserving source
+rows and recording a file checksum. Bundled databases, gene-ID conversion and
+native plots remain open.
 
 [SurvivalContour Cox surfaces](docs/survival-contour.md) fits ordinary or
 stratified Efron/Breslow models for right-censored data and returns survival

@@ -683,6 +683,7 @@ from .easycelltype_gsea_multilevel import (
     EasyCellTypeGSEAInferenceSet,
     easycelltype_gsea,
 )
+from .easycelltype_reference import EasyCellTypeReference, easycelltype_reference
 from .efftox_calibration import (
     EffToxCalibration,
     EffToxPriorMoments,
@@ -1151,6 +1152,7 @@ from .rbop2_binary import (
     Rbop2BinaryOperatingCharacteristics,
     rbop2_binary_design,
 )
+from .rbop2_calibration import Rbop2BinaryCalibration, calibrate_rbop2_binary
 from .regression_ess import RegressionESS, logistic_regression_ess, normal_regression_ess
 from .regression_ess_simulation import (
     RegressionESSSimulation,
@@ -1604,6 +1606,8 @@ __all__ = [
     "EasyCellTypeGSEALabel",
     "easycelltype_gsea_labels",
     "easycelltype_labels",
+    "EasyCellTypeReference",
+    "easycelltype_reference",
     "STPLANHistoricalAllocationPlan",
     "stplan_historical_allocation_plan",
     "STPLANPiecewiseModel",
@@ -1877,6 +1881,8 @@ __all__ = [
     "Rbop2BinaryMonitor",
     "Rbop2BinaryOperatingCharacteristics",
     "rbop2_binary_design",
+    "Rbop2BinaryCalibration",
+    "calibrate_rbop2_binary",
     "OneArmTTEDesign",
     "OneArmTTEMonitor",
     "OneArmTTESimulation",
