@@ -211,6 +211,24 @@ class BOP2DCRandomizedNormalState:
 
 
 @dataclass(frozen=True)
+class _BOP2DCRandomizedNormalPosterior:
+    control_n: int
+    treatment_n: int
+    control_location_centered: float
+    treatment_location_centered: float
+    location_offset: float
+    control_df: float
+    control_scale: float
+    treatment_df: float
+    treatment_scale: float
+    difference_location: float
+    posterior_lrv: float
+    posterior_cmv: float
+    absolute_error_lrv: float
+    absolute_error_cmv: float
+
+
+@dataclass(frozen=True)
 class BOP2DCRandomizedNormalReplay:
     """Fixed-allocation randomized Normal replay through a terminal scheduled look."""
 
@@ -251,9 +269,10 @@ class BOP2DCRandomizedNormalDesign:
             posterior = posterior.update(NormalSample.from_data(centered_values))
         return posterior
 
-    def monitor(
+    def _posterior_tails(
         self, control_observations: ArrayLike, treatment_observations: ArrayLike
-    ) -> BOP2DCRandomizedNormalState:
+    ) -> _BOP2DCRandomizedNormalPosterior:
+        """Compute candidate-independent posterior tails and quadrature errors."""
         control = _arm_vector(control_observations, "control_observations", self.max_subjects)
         treatment = _arm_vector(treatment_observations, "treatment_observations", self.max_subjects)
         total = int(control.size + treatment.size)
@@ -306,22 +325,7 @@ class BOP2DCRandomizedNormalDesign:
             self.comparison_tolerance,
             self.quadrature_limit,
         )
-        decision = randomized_dual_decisions(
-            np.asarray([total], dtype=np.int64),
-            np.asarray([p_lrv]),
-            np.asarray([p_cmv]),
-            np.asarray([error_lrv]),
-            np.asarray([error_cmv]),
-            max_subjects=self.max_subjects,
-            looks=self.looks,
-            lambda_lrv=self.lambda_lrv,
-            lambda_cmv=self.lambda_cmv,
-            gamma_lrv=self.gamma_lrv,
-            gamma_cmv=self.gamma_cmv,
-            graduate_at_interim=self.graduate_at_interim,
-        )
-        return BOP2DCRandomizedNormalState(
-            total,
+        return _BOP2DCRandomizedNormalPosterior(
             int(control.size),
             int(treatment.size),
             c_location,
@@ -336,6 +340,43 @@ class BOP2DCRandomizedNormalDesign:
             p_cmv,
             error_lrv,
             error_cmv,
+        )
+
+    def monitor(
+        self, control_observations: ArrayLike, treatment_observations: ArrayLike
+    ) -> BOP2DCRandomizedNormalState:
+        posterior = self._posterior_tails(control_observations, treatment_observations)
+        total = posterior.control_n + posterior.treatment_n
+        decision = randomized_dual_decisions(
+            np.asarray([total], dtype=np.int64),
+            np.asarray([posterior.posterior_lrv]),
+            np.asarray([posterior.posterior_cmv]),
+            np.asarray([posterior.absolute_error_lrv]),
+            np.asarray([posterior.absolute_error_cmv]),
+            max_subjects=self.max_subjects,
+            looks=self.looks,
+            lambda_lrv=self.lambda_lrv,
+            lambda_cmv=self.lambda_cmv,
+            gamma_lrv=self.gamma_lrv,
+            gamma_cmv=self.gamma_cmv,
+            graduate_at_interim=self.graduate_at_interim,
+        )
+        return BOP2DCRandomizedNormalState(
+            total,
+            posterior.control_n,
+            posterior.treatment_n,
+            posterior.control_location_centered,
+            posterior.treatment_location_centered,
+            posterior.location_offset,
+            posterior.control_df,
+            posterior.control_scale,
+            posterior.treatment_df,
+            posterior.treatment_scale,
+            posterior.difference_location,
+            posterior.posterior_lrv,
+            posterior.posterior_cmv,
+            posterior.absolute_error_lrv,
+            posterior.absolute_error_cmv,
             str(decision[0]),
         )
 
