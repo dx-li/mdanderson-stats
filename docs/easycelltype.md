@@ -48,6 +48,50 @@ to strings; missing identifiers and nonfinite scores are rejected. Inputs are
 parallel one-dimensional vectors. Reference associations must be nonempty;
 an empty query returns an empty result.
 
+## Selecting rows from a local reference table
+
+`easycelltype_reference` performs the source's database/species/tissue row
+selection on a caller-provided CSV or `.csv.gz` file. It requires the author
+table columns `celltype`, `spe`, `organ` and `entrezid` in that order. The
+loader preserves row order and duplicate associations and exposes its gene and
+cell-type tuples to the Fisher or GSEA API:
+
+```python
+from mdanderson_stats import easycelltype_fisher, easycelltype_reference
+
+reference = easycelltype_reference(
+    "cellmarker.csv.gz",
+    database="cellmarker",
+    species="Human",
+    tissues=["Blood", "Peripheral blood"],
+    source_version="EasyCellType 1.5.4 author snapshot",
+    source_provenance="Author repository commit e85e8187c540f66994b5ca12fe95f5d9eb95f1f5",
+)
+result = easycelltype_fisher(
+    query_genes=["7157", "1956", "7422"],
+    clusters=["cluster1"] * 3,
+    scores=[2.1, 1.2, -0.4],
+    reference_genes=reference.genes,
+    reference_cell_types=reference.cell_types,
+)
+print(reference.source_sha256, reference.selected_rows)
+```
+
+The package does not bundle marker rows. The caller supplies and owns the
+source-form data file; `source_version`, `source_provenance`, the file's
+SHA-256, total rows and selected rows are retained with the immutable
+reference. `requested_tissues` records the deduplicated request (`None` means
+all organs), while `selected_tissues` records the actual retained organs in
+source order. Tissue names are validated after species filtering; any unknown
+requested name raises. Empty tissue lists mean all organs. The table's genes
+are EntrezIDs; symbol conversion is not guessed or performed by the loader.
+Blank source `organ` values are retained for an unfiltered selection and can
+be selected explicitly with `tissues=[""]`.
+Input limits are 100 MB on disk, 32 MB expanded text, 65,536 characters per
+physical line and 200,000 rows; this also bounds compressed-input expansion.
+See the [local-reference source audit](../research/easycelltype-reference-audit.md)
+for provenance and limits.
+
 ## Exact source convention
 
 For each cluster and cell type, let `N` be the total number of reference rows,
@@ -97,12 +141,14 @@ Python preserves first-seen cluster order rather than R's sorted split names.
 
 ## Scope and validation
 
-The port is limited to supplied associations, modified Fisher tests, adjustment,
-score summaries, contributing genes and hard/soft label selection. Bundled
-CellMarker/Clustermole/PanglaoDB snapshots, species/tissue metadata, symbol/Entrez
-conversion, full GSEA probabilities and native plots remain open; the catalog
-entry stays partial. A separate [ranked-enrichment score API](easycelltype-gsea.md)
-now provides observed GSEA statistics and contributing-gene conventions.
+The port covers supplied-association Fisher tests, adjustment, score summaries,
+contributing genes and hard/soft label selection, plus the separate
+[ranked-enrichment workflow](easycelltype-gsea.md), including its probability
+outputs. The local reference loader below applies source database/species/tissue
+selection to caller-supplied author-format tables. Bundled marker snapshots,
+symbol/Entrez conversion and native plots remain open; the catalog entry stays
+partial. See the [local-reference source audit](../research/easycelltype-reference-audit.md)
+for provenance, blank-organ handling and input bounds.
 
 Nine independent original-R cases check row multiplicity, overlap ordering,
 adjusted probabilities, exact ties, score ranking, top-five selection, empty
