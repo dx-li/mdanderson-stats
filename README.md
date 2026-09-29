@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-63 implemented, 66 partial, and 9 pending. Each method's guide explains its
+63 implemented, 67 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. These labels cover
 complete software workflows: a partial entry can already include every
 advertised statistical endpoint while report or native-compatibility gaps remain.
@@ -22,6 +22,13 @@ conditions for some legacy routines; the complete distribution is mixed-license.
 The implementation uses NumPy broadcasting and compiled SciPy numerical kernels.
 Numba will be considered for measured simulation bottlenecks. This is an independent
 project and is not an MD Anderson release.
+
+[MDS-HOPE](docs/mds-hope.md) implements the recovered published Cox score,
+predictor contributions, reference-profile hazard ratios and six-group cutoffs.
+The cytogenetic score must be explicitly encoded; risk grouping requires an
+already-standardized score or caller-supplied reference constants. The source
+does not supply the original calibration or baseline survival, so native app
+equivalence and absolute survival prediction remain open.
 
 [WFMM functional mixed models](docs/wfmm.md) now support orthogonal wavelet
 transforms, Bayesian fixed/random-effect fitting with coefficient-specific

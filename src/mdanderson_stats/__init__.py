@@ -825,6 +825,14 @@ from .ksbin2_probability import (
 from .ksbin2_study import KSTwoSampleStudy, ksbin2_study
 from .kstage_binomial import KStageBinomial
 from .lognormal_bayesian_gof import LognormalBayesianGOF, lognormal_complete_data_bayesian_gof
+from .mds_hope import (
+    MDSHopeCovariates,
+    MDSHopeRiskClassification,
+    MDSHopeScore,
+    mds_hope_risk_groups,
+    mds_hope_score,
+    mds_hope_standardized_risk_groups,
+)
 from .median_effect import MedianEffectFit, fit_median_effect
 from .merit import MERITDesign, MERITMonitoring, MERITSelection, merit_monitor
 from .merit_interims import MERITInterimBoundaries, MERITInterims
@@ -1459,6 +1467,12 @@ from .windows import (
 )
 
 __all__ = [
+    "MDSHopeCovariates",
+    "MDSHopeRiskClassification",
+    "MDSHopeScore",
+    "mds_hope_risk_groups",
+    "mds_hope_score",
+    "mds_hope_standardized_risk_groups",
     "WFMMBasis",
     "WFMMTransformed",
     "wfmm_basis",

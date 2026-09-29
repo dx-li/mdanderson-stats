@@ -7,8 +7,8 @@ implemented features, validation evidence and source provenance for each entry.
 | Status | Entries | Meaning |
 | --- | ---: | --- |
 | Implemented | 63 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 66 | Documented Python methods are available; some methods or workflows remain open. |
-| Pending | 9 | No implementation is yet recorded. |
+| Partial | 67 | Documented Python methods are available; some methods or workflows remain open. |
+| Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
 A partial entry may already cover every advertised statistical endpoint while
@@ -132,6 +132,7 @@ some legacy adaptations retain commercial-use restrictions.
 | IPDfromKM: Reconstruct Individual Patient Data (IPD) From Kaplan-Meier Survival Curve | [online #151](https://biostatistics.mdanderson.org/shinyapps/IPDfromKM) | [Guide](ipdfromkm.md) |
 | Keyboard: a novel Bayesian toxicity probability interval design for phase I clinical trial | [online #127](https://biostatistics.mdanderson.org/shinyapps/Keyboard) | [Guide](keyboard.md) |
 | KeyboardComb: the Keyboard Design for Drug Combination Trials | [online #121](https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/) | See catalog feature and validation notes |
+| MDS-HOPE: An interactive risk assessment tool for patients treated with HMA | [online #171](https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/) | [Guide](mds-hope.md) |
 | MERIT: Multiple-dose Randomized Phase II Trial Design for Dose Optimization and Sample Size Determination | [online #160](https://biostatistics.mdanderson.org/shinyapps/MERIT/) | [Guide](merit.md) |
 | Multc Lean | [desktop #12](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12) | [Monitoring and calendar replay](multc.md) |
 | Multc99 | [desktop #3](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/3) | See catalog feature and validation notes |
@@ -169,7 +170,6 @@ some legacy adaptations retain commercial-use restrictions.
 | FLECS90 | [desktop #43](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/43) | See catalog feature and validation notes |
 | K-COMPASS: Estimate systemic-therapy free survival following MDT for oligometastatic clear cell RCC | [online #169](https://biostatistics.mdanderson.org/shinyapps/K-COMPASS/) | See catalog feature and validation notes |
 | MDS-DPSS: An Interactive Dynamic Prognostic Scoring System Tool for MDS | [online #170](https://biostatistics.mdanderson.org/shinyapps/MDS-DPSS/) | See catalog feature and validation notes |
-| MDS-HOPE: An interactive risk assessment tool for patients treated with HMA | [online #171](https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/) | See catalog feature and validation notes |
 | Predicting survival for patients with malignant pleural effusions using the BLESS models | [online #149](https://biostatistics.mdanderson.org/shinyapps/BLESS) | See catalog feature and validation notes |
 | Risk of CNS Metastasis in Clinically Localized Melanoma | [online #161](https://biostatistics.mdanderson.org/shinyapps/CNSRISK) | See catalog feature and validation notes |
 | RMC-COMPASS: Renal Medullary Carcinoma - Clinical and Outcomes Model for Prognostic Assessment and Survival Stratification | [online #174](https://biostatistics.mdanderson.org/shinyapps/RMC-COMPASS/) | See catalog feature and validation notes |

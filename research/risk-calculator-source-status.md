@@ -1,6 +1,6 @@
 # Pending risk-calculator sources
 
-Bounded primary-source review on September 28, 2026 did not establish the full
+Bounded primary-source review on September 28–29, 2026 did not establish the full
 prediction equations for these three catalog entries. They remain pending;
 variable lists and rounded hazard ratios are insufficient to reproduce a model.
 
@@ -21,8 +21,10 @@ publication supplement or author model code is the next useful source.
 
 ## MDS-DPSS, entry 170
 
-No exact-title primary paper, model code or coefficient table was found in the
-bounded search. The official app was inaccessible to the read-only renderer.
+A September 29 static retrieval of the MDS-DPSS route returned a page titled
+MDS-HOPE (PID 1183, version 1.0.0, updated November 21, 2025). This route alias
+does not establish an independently specified dynamic DPSS model. No exact-title
+primary paper, model code or coefficient table was found in the bounded search.
 The time-updating rules, predictor coding and risk outputs remain unverified.
 Do not substitute WPSS, IPSS-R or another MD Anderson score based on name alone.
 
@@ -41,3 +43,14 @@ available in the static page. Exact coefficients, predictor transformations,
 baseline survival and clamping limits were not retrieved; no primary paper was
 identified by the targeted search. Do not assume a corrected-calcium formula or
 reuse coefficients from a different renal-cancer model.
+
+## Separate MDS-HOPE recovery and access limits
+
+For entry 171, the publisher-hosted supplement yielded Equation S1 and six-group
+cutoffs; see [its audit](mds-hope-source-status.md). The missing cytogenetic
+encoding and original standardization constants were not recovered. A saved
+browser permission blocked interactive access to the MD Anderson domain on
+September 29. No alternate transport was used to bypass that denial; the
+implementation uses the previously retrieved publisher supplement and local
+source records. Static K-COMPASS and RMC-COMPASS pages retrieved before the
+denial still did not expose their exact fitted parameter sets.

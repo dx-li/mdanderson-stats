@@ -1,0 +1,4 @@
+"case","standardized_score_test_value","expected"
+"negative_infinity","-Inf","reject_nonfinite_score"
+"positive_infinity","Inf","reject_nonfinite_score"
+"not_a_number","NaN","reject_nonfinite_score"

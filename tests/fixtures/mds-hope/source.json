@@ -1,0 +1,18 @@
+{
+  "method": "MDS-HOPE published Supplemental Equation S1",
+  "paper": "https://doi.org/10.1038/s41375-026-02895-5",
+  "supplement": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41375-026-02895-5/MediaObjects/41375_2026_2895_MOESM1_ESM.docx",
+  "retrieved": "2026-09-29",
+  "supplement_sha256": "ff9c43b8fa47aece229e999c415b118d514175576a6215abd391a20757a5cdfd",
+  "generator": "tools/reference_mds_hope.R",
+  "reference_implementation": "Independent base-R linear algebra and nested cutoff comparisons; no Python outputs used.",
+  "fixture_scope": "Synthetic one-predictor and genotype profiles, reference-profile hazard ratios, six-group boundary cases, nonfinite rejection cases.",
+  "cytogenetic_score": "Explicit synthetic numeric inputs only; five-category source mapping unavailable.",
+  "standardization": "Center 0.25 and SD 2 are arbitrary fixture constants, not recovered study calibration.",
+  "precision": "Numeric CSV fields use 17 significant digits to preserve adjacent cutoff cases.",
+  "limitations": [
+    "Published rounded coefficients only.",
+    "No recovered training-score center/SD or baseline survival.",
+    "No deployed-app equivalence claim."
+  ]
+}
