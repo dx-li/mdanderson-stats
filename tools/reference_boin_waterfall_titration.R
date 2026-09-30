@@ -96,6 +96,8 @@ run_titration_case('first_dlt_safety',c(1L,0L,0L,0L),c(2L,rep(0L,7)))
 run_titration_case('last_dlt',c(0L,0L,0L,1L),c(0L,1L,0L,1L,rep(0L,4)))
 run_titration_case('global_budget_after_titration',c(0L,0L,0L,0L),rep(0L,4),
   budgets=c(1L,1L))
+run_titration_case('global_budget_suffix_exclusion',c(0L,0L,1L,0L),rep(0L,4),
+  budgets=c(1L,1L),cohort_size=2L)
 run_titration_case('single_patient_cohorts',c(0L,0L,0L,0L),rep(0L,8),
   budgets=c(4L,2L),cohort_size=1L)
 write.csv(do.call(rbind,summaries),'tests/fixtures/boin-waterfall-titration.csv',row.names=FALSE)

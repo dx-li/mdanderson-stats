@@ -92,6 +92,13 @@
 "global_budget_after_titration",6,0.9
 "global_budget_after_titration",7,0.9
 "global_budget_after_titration",8,0.9
+"global_budget_suffix_exclusion",0,0.9
+"global_budget_suffix_exclusion",1,0.9
+"global_budget_suffix_exclusion",2,0.1
+"global_budget_suffix_exclusion",3,0.9
+"global_budget_suffix_exclusion",4,0.9
+"global_budget_suffix_exclusion",5,0.9
+"global_budget_suffix_exclusion",6,0.9
 "single_patient_cohorts",0,0.9
 "single_patient_cohorts",1,0.9
 "single_patient_cohorts",2,0.9

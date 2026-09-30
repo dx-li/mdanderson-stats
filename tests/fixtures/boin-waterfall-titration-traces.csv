@@ -32,6 +32,10 @@
 "global_budget_after_titration",1,"titration",2,2,1,0
 "global_budget_after_titration",1,"titration",2,3,1,0
 "global_budget_after_titration",1,"cohort",2,3,2,0
+"global_budget_suffix_exclusion",1,"titration",1,1,1,0
+"global_budget_suffix_exclusion",1,"titration",2,1,1,0
+"global_budget_suffix_exclusion",1,"titration",2,2,1,1
+"global_budget_suffix_exclusion",1,"cohort",2,2,1,0
 "single_patient_cohorts",1,"cohort",1,1,1,0
 "single_patient_cohorts",1,"cohort",2,1,1,0
 "single_patient_cohorts",1,"cohort",2,2,1,0
