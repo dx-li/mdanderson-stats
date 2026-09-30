@@ -1,0 +1,60 @@
+{
+  "snapshot": {
+    "package": "EasyCellType",
+    "version": "1.5.4",
+    "repository": "https://github.com/rx-li/EasyCellType",
+    "commit": "e85e8187c540f66994b5ca12fe95f5d9eb95f1f5",
+    "license": "Artistic-2.0",
+    "license_source": "DESCRIPTION",
+    "sysdata_sha256": "845023954bf3fb6d7426bd7544e095cb7306b42eec5912f9733f27daac8be77b",
+    "upstream_database_release_versions": "not recorded in the EasyCellType snapshot"
+  },
+  "tables": {
+    "cellmarker": {
+      "source_csv": "cellmarker.csv",
+      "source_rows": 49149,
+      "source_csv_bytes": 2518955,
+      "source_csv_sha256": "297a0cf666066426c69d50184d86eb12ff975c7d6d5e125a62467a6d99a6baee",
+      "bundled_file": "cellmarker.csv.gz",
+      "bundled_bytes": 210259,
+      "bundled_sha256": "c6c1892ddeca843eac137a1b8152cfa00cb806fb1dd647aa6ebc730a03fc6835",
+      "upstream": {
+        "name": "CellMarker",
+        "citation": "Hu et al. (2023), CellMarker 2.0, Nucleic Acids Research, doi:10.1093/nar/gkac947",
+        "license": "not separately recorded for the embedded table in the EasyCellType snapshot",
+        "url": "https://doi.org/10.1093/nar/gkac947"
+      }
+    },
+    "clustermole": {
+      "source_csv": "clustermole.csv",
+      "source_rows": 172003,
+      "source_csv_bytes": 7417502,
+      "source_csv_sha256": "6499b6b861e4ee482e6610ce92445b918e3635a7d3bb3c8c6ae4d529dfceb329",
+      "bundled_file": "clustermole.csv.gz",
+      "bundled_bytes": 684024,
+      "bundled_sha256": "cc3b54728a1bdeb66cfba458766162c40cfbec907843ce11444984b8d1e9f408",
+      "upstream": {
+        "name": "Clustermole",
+        "citation": "Dolgalev (2021), Clustermole: Unbiased Single-Cell Transcriptomic Data Cell Type Identification",
+        "license": "MIT + file LICENSE for the Clustermole package; EasyCellType snapshot does not retain a separate upstream release identifier",
+        "url": "https://github.com/igordot/clustermole"
+      }
+    },
+    "panglao": {
+      "source_csv": "panglao.csv",
+      "source_rows": 15067,
+      "source_csv_bytes": 681768,
+      "source_csv_sha256": "6e6d06b7031cc6e791f2a40ec61425d43d26e37c67fc1f15387c63286eb15a0b",
+      "bundled_file": "panglao.csv.gz",
+      "bundled_bytes": 74170,
+      "bundled_sha256": "c0c26e2ff7513f9a9f813c2fdc943445d306bbab877746ecf4e6c2d3247c7dc0",
+      "upstream": {
+        "name": "PanglaoDB",
+        "citation": "Franzén, Gan, and Björkegren (2019), PanglaoDB: a web server for exploration of mouse and human single-cell RNA sequencing data, Database, baz046",
+        "license": "not separately recorded for the embedded table in the EasyCellType snapshot",
+        "url": "https://academic.oup.com/database/article/doi/10.1093/database/baz046/5427041"
+      }
+    }
+  },
+  "conversion": "Exact author-format CSV bytes are gzip-compressed with an empty embedded filename and mtime zero; rows, columns, values, duplicates, and order are unchanged."
+}
