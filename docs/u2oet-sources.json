@@ -1121,5 +1121,11 @@
       "bytes": 75073,
       "sha256": "559761b1aa897f6fc65de442ee7778ff005c40caa5be51903de5733308e5cc51"
     }
-  ]
+  ],
+  "paper2010": {
+    "url": "https://odin.mdacc.tmc.edu/~pfthall/main/Biometrics_2dose_utility.pdf",
+    "sha256": "9ffc425871b3cd3f837ef22ce0bbec45ae247b06269928b7ad265332ccc344b8",
+    "bytes": 179602,
+    "role": "Original centered-dose GAO model; endpoint-specific signed interactions, ordinal marginals and Gaussian copula, equations 3\u20139."
+  }
 }

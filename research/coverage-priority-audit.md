@@ -191,3 +191,18 @@ not promote the catalog status or claim full native equivalence. The retired
 See [BOP2 source provenance](../docs/bop2-sources.json),
 [the survival guide](../docs/bop2-survival.md) and
 [the desktop mapping](../docs/bop2-desktop.md).
+
+
+## TITE-Keyboard adaptive timing source check
+
+The cached primary paper, section 2.3, defines a shared scaled-Beta conditional
+DLT-time distribution and weights as its posterior-averaged CDF. It does not
+specify the timing-parameter posterior likelihood for censored or pending
+observations, nor whether observed DLT times alone enter that fit. These choices
+matter because event ascertainment depends on available follow-up. The method
+text gives independent Gamma(.1,.1) priors as an example, while the simulation
+sensitivity analysis uses Gamma(.5,.5); their parameter convention is not stated.
+The cached app supports the already implemented uniform and informative
+three-piece weights. An automatic adaptive timing fitter needs additional
+source evidence; a supplied-draw CDF helper alone would not close this workflow
+gap. No native adaptive-weight implementation is claimed.
