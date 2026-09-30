@@ -80,6 +80,15 @@ def test_pair_validation_is_explicit_and_existing_orthogonal_api_remains():
         wfmm_basis(2, transform="custom", analysis_matrix=identity)
     with pytest.raises(ValueError, match="numerical inverses"):
         wfmm_basis(2, transform="custom", analysis_matrix=identity, synthesis_matrix=2 * identity)
+    ill_conditioned = np.asarray([[1.0, 1e16], [0.0, 1.0]])
+    ill_conditioned_inverse = np.asarray([[1.0, -1e16], [0.0, 1.0]])
+    with pytest.raises(ValueError, match="condition-number limit"):
+        wfmm_basis(
+            2,
+            transform="custom",
+            analysis_matrix=ill_conditioned,
+            synthesis_matrix=ill_conditioned_inverse,
+        )
     with pytest.raises(ValueError, match="cannot be combined"):
         wfmm_basis(
             2,

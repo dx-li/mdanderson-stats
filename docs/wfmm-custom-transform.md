@@ -25,10 +25,15 @@ np.testing.assert_allclose(reconstructed, curves)
 
 The paired matrices must both be finite square `(time_count,time_count)` arrays
 and numerical two-sided inverses within absolute tolerance `2e-10`. The code
-does not calculate a missing inverse or silently regularize an ill-conditioned
-pair. The old `custom_matrix` interface remains available for orthogonal
-matrices and keeps its previous transpose reconstruction behavior. Supplying
-both interfaces, or only one member of the pair, is an error.
+also requires the infinity-norm condition estimate
+`||analysis_matrix||inf * ||synthesis_matrix||inf` to be at most `1e8`. The
+estimate is evaluated in the log domain, so uniform reciprocal scaling does
+not by itself cause rejection. This guards against round-trip information loss
+in pairs that multiply to identity in floating point but are too ill-conditioned
+for reliable use. The code does not calculate a missing inverse or silently
+regularize a pair. The old `custom_matrix` interface remains available for
+orthogonal matrices and keeps its previous transpose reconstruction behavior.
+Supplying both interfaces, or only one member of the pair, is an error.
 
 This accepts the guide's square custom-matrix case. It does not implement
 rectangular PCA, retained-component projection or the named `PCw`/`wPC`

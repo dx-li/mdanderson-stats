@@ -22,6 +22,7 @@ _MAX_TIME_POINTS = 4096
 _MAX_INPUT_CELLS = 2_000_000
 _MAX_WORK = 200_000_000
 _MAX_LEVELS = 12
+_MAX_CUSTOM_CONDITION = 1e8
 
 TransformKind = Literal["identity", "wavelet", "custom"]
 
@@ -39,6 +40,15 @@ def _setting(value: object, name: str, minimum: int, maximum: int) -> int:
     if not minimum <= result <= maximum:
         raise ValueError(f"{name} must be in [{minimum},{maximum}]")
     return result
+
+
+def _log_infinity_norm(matrix: FloatArray) -> float:
+    """Compute log(||matrix||_inf) with only one row of temporary storage."""
+    maximum = max(float(np.max(np.abs(row))) for row in matrix)
+    if maximum == 0.0:
+        return float("-inf")
+    scaled_row_sums = (float(np.sum(np.abs(row) / maximum)) for row in matrix)
+    return float(np.log(maximum) + np.log(max(scaled_row_sums)))
 
 
 @dataclass(frozen=True)
@@ -151,6 +161,11 @@ def wfmm_basis(
             synthesis = np.asarray(raw_synthesis, dtype=np.float64)
             if not np.all(np.isfinite(analysis)) or not np.all(np.isfinite(synthesis)):
                 raise ValueError("analysis and synthesis matrices must be finite")
+            log_condition = _log_infinity_norm(analysis) + _log_infinity_norm(synthesis)
+            if log_condition > np.log(_MAX_CUSTOM_CONDITION):
+                raise ValueError(
+                    "analysis/synthesis matrix pair exceeds condition-number limit 1e8"
+                )
             with np.errstate(over="ignore", invalid="ignore"):
                 left_product = analysis @ synthesis
                 right_product = synthesis @ analysis
@@ -162,6 +177,7 @@ def wfmm_basis(
                 or not np.allclose(right_product, identity, rtol=0.0, atol=2e-10)
             ):
                 raise ValueError("analysis_matrix and synthesis_matrix must be numerical inverses")
+            del left_product, right_product, identity
             analysis_frozen = _freeze(analysis)
             synthesis_frozen = _freeze(synthesis)
         else:
