@@ -2795,13 +2795,15 @@
         "Explicit equal-censoring model with pooled reverse KM and asymptotic LR calibration; default unequal-censoring fit leaves LR p-value uncalibrated. Archive incidence Wald statistic retained.",
         "proportional_density_bootstrap: section 3.1 failure-only observed-density goodness-of-fit test, fixed censoring offsets, exact step integral to common follow-up, seeded resampling, Monte Carlo p-value and explicit bounds for failed replicate fits.",
         "proportional_density_full_bootstrap: full-data disease-curve Delta_n goodness-of-fit calibration, fixed within-arm event/censor counts, refitted censoring and disease curves, exact right-continuous integration to original tau, explicit resample tapes and unresolved-fit p-value bounds.",
+        "proportional_density_profile: common-censoring conditional likelihood-ratio tests for arbitrary beta with profiled intercept, and inverted beta confidence intervals; explicit censoring assumption, stable time scaling, bounded work and checked endpoint residuals. docs/proportional-density-profile.md.",
         "Remaining: unequal-censoring treatment-effect null calibration and bootstrap parameter uncertainty."
       ],
       "validation": [
         "Three datasets compared with archived R routines after documented missing-helper/current-R compatibility repairs, and independent R GLM offset fits: coefficients within 3e-6 and 5e-9 respectively; docs/proportional-density.md.",
         "Three focused tests: native curves/masses/Greenwood errors, score residual and normalization, time scaling 1e-150/1e150, arm exchange, tied analytic null, immutable results, separation and unsupported censoring tails.",
         "Five fixed bootstrap resamples agree with independent R GLM/ecdf integration within 2e-13; hand-calculated integral, time-unit invariance and failed-resample calibration bounds checked.",
-        "Independent R survival::survfit and stats::glm calculations match 9 original/replicate statistics and 104 curve rows across separate/pooled censoring; maximum area error 4.30e-14 and curve error 7.46e-14. Six focused PropDen checks pass. docs/proportional-density-full-bootstrap.md and tools/reference_proportional_density_full_bootstrap.R"
+        "Independent R survival::survfit and stats::glm calculations match 9 original/replicate statistics and 104 curve rows across separate/pooled censoring; maximum area error 4.30e-14 and curve error 7.46e-14. Six focused PropDen checks pass. docs/proportional-density-full-bootstrap.md and tools/reference_proportional_density_full_bootstrap.R",
+        "Independent base-R GLM/profile inversion: 90 estimates/tests/limits across five cases and 15 intervals agree within 2.003e-13; 30 endpoint LR residuals below 8.882e-15. Arm exchange, time units 1e+/-150 and extreme confidence checked; six focused tests pass. research/proportional-density-profile-audit.md."
       ]
     },
     {
@@ -3362,15 +3364,16 @@
         "TITE-BOIN and Rolling Six calendar simulations with common-scenario comparison, allocation/toxicity/duration summaries, Monte Carlo errors and Markdown reporting",
         "Ordinary combination simulation, final contour selection and interactive waterfall subtrial planning",
         "Standardized or informative-prior toxicity follow-up weights and single-agent English/Chinese statistical protocol text",
-        "Complete no-titration waterfall replay and serial simulation, including special same-row/fallback transitions, actual observations, contour diagnostics and Monte Carlo errors; docs/boin-waterfall.md",
-        "Remaining: combination titration/run-in, TITE/combination protocols, native Word/HTML and saved-project formats; desktop executable equivalence is not verified"
+        "Complete waterfall replay and serial simulation with optional first-subtrial accelerated titration, including special same-row/fallback transitions, actual observations, contour diagnostics and Monte Carlo errors; docs/boin-waterfall.md",
+        "Remaining: native combination titration/run-in equivalence, TITE/combination protocols, native Word/HTML and saved-project formats; desktop executable equivalence is not verified"
       ],
       "validation": [
         "Capability specification from desktop 1.1.0 and TITE-BOIN guide; docs/boin-desktop-sources.json links shared method source records",
         "Existing published and original-R BOIN/combination references, published TITE-BOIN thresholds, and exhaustive published Rolling Six decision-table states",
         "Focused comparison safety/highest-dose/reproducibility/preflight checks; independent aggregation/MCSE, 1e100 time rescaling and finite 1e308 duration summaries; tests/test_boin_time_comparison.py",
         "Documented STFT example yields 1.7; comparison usage executed with bounded serial simulations",
-        "Six original-R subtrial and six full-workflow references, independent exhaustive isotonic oracle, source count-loss regression and bounded simulation aggregation; research/boin-waterfall-workflow-audit.md"
+        "Six original-R subtrial and six full-workflow references, independent exhaustive isotonic oracle, source count-loss regression and bounded simulation aggregation; research/boin-waterfall-workflow-audit.md",
+        "Seven original BOIN 2.7.2 titration reference workflows retain 43 assignments, 11 subtrial snapshots and final exclusion masks, including top-up, enrollment overshoot, global-budget suffix elimination and cohort-size-one disabling. Native dropped observations are preserved in Python. research/boin-waterfall-titration-audit.md."
       ]
     },
     {
@@ -3808,16 +3811,17 @@
         "Weighted bivariate isotonic single-MTD and contour selection with native rounding, selection adjustment and optional bound-MTD restriction",
         "Waterfall next-subtrial planning from accumulated data with weighted one-dimensional isotonic selection and subtrial safety",
         "Complete-outcome ordinary combination cohort simulation with trial-level counts, selection probabilities and Monte Carlo errors",
-        "Complete no-titration waterfall replay and serial simulation, including special same-row/fallback transitions, actual observations, contour diagnostics and Monte Carlo errors; docs/boin-waterfall.md",
+        "Complete waterfall replay and serial simulation with optional first-subtrial accelerated titration, including special same-row/fallback transitions, actual observations, contour diagnostics and Monte Carlo errors; docs/boin-waterfall.md",
         "CRAN accelerated titration for ordinary combination simulation: single-patient staircase, first-DLT/upper-right stop, first-cohort top-up, immutable prelude counts/endpoint and preallocation bounds; docs/boin-combination-titration.md",
-        "Remaining: app titration cap/moderate-toxicity stopping, waterfall titration, 3+3 run-in, enumerated desirability-rank tables and generated protocols/reports"
+        "Remaining: app titration cap/moderate-toxicity stopping, 3+3 run-in, enumerated desirability-rank tables and generated protocols/reports"
       ],
       "validation": [
         "BOIN 2.7.2 native boundary, movement, selection and waterfall references; independent unrounded Iso::biviso fits",
         "Full native contour pairs, source rounding and cross-closure checks; safety and accumulated-subtrial replay",
         "Seeded simulation and numerical stability checks; source/backend differences documented in docs/boin-combination-source.md",
         "Six original-R subtrial and six full-workflow references, independent exhaustive isotonic oracle, source count-loss regression and bounded simulation aggregation; research/boin-waterfall-workflow-audit.md",
-        "Nine original-R titration/first-cohort transition cases match exactly; 100 no-titration trials reproduce all published result fields. Seven focused simulation checks, pre-RNG memory rejection; research/boin-combination-titration-audit.md."
+        "Nine original-R titration/first-cohort transition cases match exactly; 100 no-titration trials reproduce all published result fields. Seven focused simulation checks, pre-RNG memory rejection; research/boin-combination-titration-audit.md.",
+        "Seven original BOIN 2.7.2 titration reference workflows retain 43 assignments, 11 subtrial snapshots and final exclusion masks, including top-up, enrollment overshoot, global-budget suffix elimination and cohort-size-one disabling. Native dropped observations are preserved in Python. research/boin-waterfall-titration-audit.md."
       ]
     },
     {

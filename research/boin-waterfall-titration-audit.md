@@ -57,3 +57,9 @@ generator when the extra-staircase bound is exceeded. The run completed in
 2.114 seconds with peak `ru_maxrss` 134,725,632 bytes and zero swaps. Targeted
 Ruff lint/format and mypy checks passed. No full suite or large simulation was
 run.
+
+After integration, all seven final `source_contour` results also matched the
+original-R selections. The public `selected_contour` retains the documented
+admissibility check that withholds an untreated/excluded destination. This
+additional comparison took 0.0051 seconds after imports, peaked at 121.875 MiB
+RSS and reported zero swaps.

@@ -106,9 +106,9 @@ def proportional_density_profile(
     # has <=80 intercept iterations. Each CI endpoint has <=64 bracketing and
     # <=100 root evaluations. Include input scans as well as event-vector work.
     # brentq can evaluate both endpoints in addition to maxiter interior points;
-    # the bracket confirmation adds one call after its bounded expansion.
+    # bracket confirmation and final residual verification add two more calls.
     profile_calls = 2 + (
-        2 * (_ROOT_BRACKET_ITERATIONS + 1 + _ROOT_ITERATIONS + 2) if interval else 0
+        2 * (_ROOT_BRACKET_ITERATIONS + 2 + _ROOT_ITERATIONS + 2) if interval else 0
     )
     record_passes = 3 * (32 + t.size.bit_length()) + 16
     bound = int(

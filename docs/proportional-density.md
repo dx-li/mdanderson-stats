@@ -67,6 +67,11 @@ separately. This is not an exact finite-sample test. The incidence p-value follo
 the archive's unpooled Greenwood Wald calculation, not the paper's pooled-null
 variance expression. It is `None` when both standard errors are zero.
 
+[Profile-likelihood inference](proportional-density-profile.md) tests any
+specified `beta` while profiling the nuisance intercept, and supplies an
+interval by inverting that test. It requires an explicit common-censoring
+assumption and does not calibrate the unequal-censoring likelihood ratio.
+
 `proportional_density_pepe(time, estimated_survival, nonparametric_survival)`
 returns the archive's squared-curve-area statistic, using unit weight and
 **right-endpoint rectangles** from time zero to the final supplied failure.

@@ -1100,6 +1100,10 @@ from .proportional_density_full_bootstrap import (
     ProportionalDensityFullBootstrapTape,
     proportional_density_full_bootstrap,
 )
+from .proportional_density_profile import (
+    ProportionalDensityProfileResult,
+    proportional_density_profile,
+)
 from .prt import (
     PRTDecision,
     PRTPredictiveRisk,
@@ -2251,6 +2255,8 @@ __all__ = [
     "ProportionalDensityFullBootstrap",
     "ProportionalDensityFullBootstrapTape",
     "proportional_density_full_bootstrap",
+    "ProportionalDensityProfileResult",
+    "proportional_density_profile",
     "ProportionalDensityFit",
     "proportional_density",
     "proportional_density_pepe",

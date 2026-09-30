@@ -133,8 +133,12 @@ record the returned native values rather than UI text.
 
 ## Complete waterfall workflow
 
-The [waterfall guide](boin-waterfall.md) documents the complete no-titration
-replay and simulator. Six original-R subtrial references and six full-wrapper
+The [waterfall guide](boin-waterfall.md) documents replay and simulation,
+including optional first-subtrial accelerated titration. Seven additional
+original-R titration workflows check patient assignments, terminal top-up,
+enrollment limits and exclusion masks. The app's separate titration cap and
+3+3 run-in remain outside that source-defined branch.
+Six original-R subtrial references and six full-wrapper
 references cover the staircase, ordinary row traversal, same-row search,
 fallback and safety stops. The full-wrapper generator substitutes an independent
 exhaustive six-cell isotonic oracle for the unavailable `Iso` call; the conduct

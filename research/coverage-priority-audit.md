@@ -1,5 +1,20 @@
 # Statistical coverage priority audit — September 28, 2026
 
+September 30 inference/conduct update: Proportional Density now supports the
+paper's common-censoring profile test for arbitrary beta, with confidence
+limits obtained by inversion and an explicit common-censoring assertion.
+Unequal-censoring bootstrap calibration remains separate. BOIN waterfall
+replay and serial simulation now include the source-defined first-subtrial
+titration path, terminal top-up and actual enrollment accounting. The app's
+additional titration cap and 3+3 run-in are still unverified.
+
+A renewed bounded source review found no recovered BLESS reference baseline,
+bCRM bivariate likelihood/prior, ToxFinder second-stage information criterion
+or SYNERGY parametric equations sufficient to close those gaps. Existing
+source-status notes identify the missing artifacts. The archived, inactive
+STPLAN matched-pairs procedure is a further source-backed method candidate;
+it should be labeled as a legacy option rather than a current active menu item.
+
 September 30 fitting/prediction update: the original 2010 GAO model now has
 posterior fitting under explicit Gaussian-coordinate inputs, a joint
 dose-grid validity restriction and uniform association. Independent integration

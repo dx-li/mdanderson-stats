@@ -1,4 +1,5 @@
 # Independent common-censoring profile-likelihood reference for PropDen §3.2.
+# Shen, Qin and Costantino (2007), https://pmc.ncbi.nlm.nih.gov/articles/PMC2721282/.
 # The source conditions on observed failures.  Under common censoring, the
 # censoring-survival ratio is one, leaving the offset log(m1/m0) in the
 # failure-arm logistic regression.  Confidence limits below are a Python-port
