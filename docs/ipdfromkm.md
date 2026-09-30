@@ -79,7 +79,10 @@ Records are sorted by time, with events before censors at a tied time.
   error even when the reconstructed drop is exact.
 - Input cleaning is explicit: malformed/nonmonotone coordinates are rejected.
   Native coordinate cleaning is available separately below. Interactive image
-  digitizing, graphical reports and the native KS diagnostic are not yet ported.
+  digitizing and graphical reports are not yet ported. The separate
+  [reconstruction report](ipdfromkm-diagnostics.md) supplies the source's rounded
+  precision summaries and KS diagnostic, with an explicit limitation on the
+  interpretation of its nominal p-value.
   Survival confidence/quantile summaries and the two-arm Cox comparison are
   available below.
   Catalog entry 151 remains **partial**.

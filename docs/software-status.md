@@ -129,7 +129,7 @@ some legacy adaptations retain commercial-use restrictions.
 | EasyCellType: Automatic annotation tool designed for Sing-cell RNA sequencing data | [online #159](https://biostatistics.mdanderson.org/shinyapps/EasyCellType/) | [Fisher guide](easycelltype.md), [ranked scores](easycelltype-gsea.md), [bundled references](easycelltype-builtin-reference.md) |
 | EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Guide](efftox.md), [trinary calibration](efftox-trinary-calibration.md) |
 | Find optimal biological dose (OBD) for targeted and immune therapies | [online #142](https://biostatistics.mdanderson.org/shinyapps/UBOIN) | [Guide](uboin.md) |
-| IPDfromKM: Reconstruct Individual Patient Data (IPD) From Kaplan-Meier Survival Curve | [online #151](https://biostatistics.mdanderson.org/shinyapps/IPDfromKM) | [Guide](ipdfromkm.md) |
+| IPDfromKM: Reconstruct Individual Patient Data (IPD) From Kaplan-Meier Survival Curve | [online #151](https://biostatistics.mdanderson.org/shinyapps/IPDfromKM) | [Guide](ipdfromkm.md), [reconstruction diagnostics](ipdfromkm-diagnostics.md) |
 | Keyboard: a novel Bayesian toxicity probability interval design for phase I clinical trial | [online #127](https://biostatistics.mdanderson.org/shinyapps/Keyboard) | [Guide](keyboard.md) |
 | KeyboardComb: the Keyboard Design for Drug Combination Trials | [online #121](https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/) | See catalog feature and validation notes |
 | MDS-HOPE: An interactive risk assessment tool for patients treated with HMA | [online #171](https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/) | [Guide](mds-hope.md) |

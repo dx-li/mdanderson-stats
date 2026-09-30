@@ -1,5 +1,24 @@
 # Third-party notices
 
+## IPDfromKM reconstruction diagnostics
+
+`ipdfromkm_diagnostics.py` follows the report calculations in IPDfromKM 0.1.10,
+by Na Liu, J. Jack Lee and Yanhong Zhou, at source revision
+`16ea3e163b8ad409e51e035154c52803dcb1c28b`. The package declares GPL-2;
+applicable terms remain attached to adapted portions, with the existing
+[GPL version 2 text](notices/cmprsk-GPL-2.txt) retained. The Python report
+distinguishes the source's signed maximum-error calculation from the correctly
+named maximum absolute error. Its nominal two-sample KS comparison follows the
+documented R 4.4.1 default and does not establish goodness of fit for paired,
+reconstructed curves. Original R source and data are reference inputs and are
+not bundled or required at runtime.
+
+The decimal-rounding helper follows R's `fround.c`, checked for R 4.4.1
+against revision `702728a10fb4f4385cbc0818c55b106c423aab12` of the
+R-4-4 branch. That source credits Ross Ihaka (1998) and the R Core Team
+(2000–2020) and permits GPL version 2 or later; the GPL version 2 text linked
+above is retained for this adaptation.
+
 ## BCHM and aPCoA analysis plots
 
 `bchm_plot.py` implements the subgroup-cluster, posterior-response and posterior-

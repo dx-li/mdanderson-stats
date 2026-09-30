@@ -1,5 +1,13 @@
 # Statistical coverage priority audit — September 28, 2026
 
+September 30 IPDfromKM update: reconstruction report diagnostics now include
+the original rounded precision summaries and two-sample KS discrepancy. The
+source's signed maximum is named explicitly and accompanied by the actual
+maximum absolute error. R-compatible decimal rounding, exact tied-label tails
+and paired missing-row handling are independently checked. The nominal KS
+p-value is retained for report parity; it is not calibrated inference for these
+paired, fitted curve values. Image digitizing and native graphics remain open.
+
 September 30 EasyCellType update: the package now includes the author's pinned
 CellMarker, Clustermole and PanglaoDB reference tables, so annotation can start
 without R or a separate download. The bounded loader verifies snapshot hashes

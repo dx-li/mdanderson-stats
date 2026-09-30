@@ -983,8 +983,11 @@ searches are also available. Native reporting remains pending.
 from Kaplan–Meier coordinates, with native coordinate cleaning, optional reported
 risk counts and total events. It returns fitted curves and reconstruction errors;
 two-arm Efron Cox comparisons, survival confidence intervals, landmark summaries
-and survival quantiles are also available. Digitizing and native graphics remain
-pending.
+and survival quantiles are also available. The separate
+[reconstruction report](docs/ipdfromkm-diagnostics.md) adds the native rounded
+precision summaries and KS discrepancy, with its legacy nominal p-value
+explicitly distinguished from calibrated inference. Digitizing and native
+graphics remain pending.
 
 [ASYPOW](docs/asypow.md) adds information-matrix power, sample-size and
 significance calculations with independent-group binomial, Poisson and

@@ -4385,14 +4385,16 @@
       "implemented_features": [
         "Modified iterative KM reconstruction from cleaned coordinates, with optional risk table and total-event input; patient records, fitted curve and unrounded error diagnostics. Native coordinate cleaning with outlier deletion, cumulative-minimum correction, duplicate reduction and provenance. Digitizing and secondary reporting remain pending.",
         "Two-arm Efron Cox comparison: log hazard ratio, model standard error, Wald interval and native Cox score test. ",
-        "Survival summaries: Greenwood log confidence intervals, Nelson–Aalen cumulative hazard/SE, landmark probabilities, midpoint plateau quantiles and inverted confidence limits. Image digitizing, native graphics and remaining diagnostics remain pending."
+        "Survival summaries: Greenwood log confidence intervals, Nelson\u2013Aalen cumulative hazard/SE, landmark probabilities, midpoint plateau quantiles and inverted confidence limits. Image digitizing and native graphics/report interfaces remain pending.",
+        "Source-report reconstruction diagnostics: R-compatible three-decimal rounding, native n-1 RMSE and signed maximum with a separate true maximum absolute error; paired missing-value omission with provenance; exact tied-label or asymptotic KS discrepancy and explicitly uncalibrated nominal p-value; docs/ipdfromkm-diagnostics.md."
       ],
       "validation": [
         "tests/test_ipdfromkm.py",
         "docs/ipdfromkm.md",
         "tests/test_ipdfromkm_preprocess.py",
         "tests/test_ipdfromkm_cox.py",
-        "tests/test_ipdfromkm_survival.py"
+        "tests/test_ipdfromkm_survival.py",
+        "Independent R 4.4.1 diagnostic ledger, a 6,000-value identical-binary64 rounding holdout, tied/untied and small-tail exact calculations, asymptotic switching, paired missing rows, and focused reconstruction regression checks; research/ipdfromkm-diagnostics-audit.md."
       ]
     },
     {

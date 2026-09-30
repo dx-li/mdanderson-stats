@@ -846,6 +846,7 @@ from .intervals import (
 )
 from .ipdfromkm import ReconstructedIPD, reconstruct_ipd
 from .ipdfromkm_cox import IPDCoxComparison, ipd_cox_compare
+from .ipdfromkm_diagnostics import IPDReconstructionDiagnostics, ipd_reconstruction_diagnostics
 from .ipdfromkm_preprocess import PreparedKMCurve, prepare_km_coordinates
 from .ipdfromkm_survival import (
     IPDSurvivalCurve,
@@ -2464,6 +2465,8 @@ __all__ = [
     "ipd_survival_summary",
     "IPDCoxComparison",
     "ipd_cox_compare",
+    "IPDReconstructionDiagnostics",
+    "ipd_reconstruction_diagnostics",
     "PreparedKMCurve",
     "prepare_km_coordinates",
     "ReconstructedIPD",

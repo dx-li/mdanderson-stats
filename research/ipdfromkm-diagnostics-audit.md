@@ -80,3 +80,19 @@ decimal rounding, the `n_x*n_y=10000` asymptotic branch, identical samples and
 paired missing rows. Inputs and outputs are preserved in
 `tests/fixtures/ipdfromkm-diagnostics-{input,summary}.csv`. The source package
 is GPL-2; its source files remain ignored research inputs.
+
+
+## Validation checkpoint
+
+Ten independent R diagnostic scenarios cover nontrivial tied-label tails,
+complete separation at 99 points, the 100-point asymptotic switch, precision
+summaries and missing pairs. The exact 99-point separation tail agrees with
+`2 / choose(198, 99)` (about `8.79e-59`) using a relative comparison against
+the actual Python result. Two focused diagnostic checks and three existing
+reconstruction checks pass with warnings treated as errors. The integrated
+run took 1.795 seconds, peaked at 148.70 MiB RSS and reported zero swaps.
+Targeted Ruff, formatting (including the guide) and worker mypy pass. The
+rounding holdout described above compares all 6,000 values at identical binary
+inputs; decimal text parsing was excluded from that comparison. Numerical work
+ran serially with library threads limited to one, without installations or a
+full local suite.

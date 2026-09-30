@@ -56,6 +56,8 @@ def test_source_report_metrics_and_r_441_ks_defaults() -> None:
             rel_tol=2e-8,
             abs_tol=1e-15,
         )
+        if summary["case"] == "exact_separation_99":
+            assert result.ks_pvalue == pytest.approx(2 / math.comb(198, 99), rel=1e-12, abs=1e-300)
         assert result.ks_method == ("exact" if summary["ks_exact"] == "TRUE" else "asymptotic")
 
     signed = next(row for row in summaries if row["case"] == "signed_error")
@@ -64,10 +66,6 @@ def test_source_report_metrics_and_r_441_ks_defaults() -> None:
     assert float(separated["ks_pvalue"]) == pytest.approx(2 / math.comb(10, 5))
     tied_tail = next(row for row in summaries if row["case"] == "tied_tail_exact")
     assert 0 < float(tied_tail["ks_pvalue"]) < 1
-    separated_99 = next(row for row in summaries if row["case"] == "exact_separation_99")
-    assert float(separated_99["ks_pvalue"]) == pytest.approx(
-        2 / math.comb(198, 99), rel=1e-12, abs=1e-300
-    )
 
 
 def test_diagnostics_reject_unpaired_or_nonprobability_inputs() -> None:
