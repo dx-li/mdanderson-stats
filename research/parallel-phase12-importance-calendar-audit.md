@@ -47,19 +47,17 @@ optimizer iterations as if they were integration components.
 
 ## Validation
 
-Focused command used the repository virtualenv, `PYTHONDONTWRITEBYTECODE=1`,
-single-thread OpenBLAS/OpenMP/vecLib, and warnings-as-errors. Ten tests passed
-in 2.77 seconds across `test_phase12_calendar_importance.py`,
-`test_phase12_calendar.py`, and `test_parallel_phase12.py`; peak process RSS was
-143,867,904 bytes and `ru_nswap` was zero. The new checks exercised seeded
-replay, an actual importance fit used at phase-II interim and final analyses,
-pending-toxicity masking, component-work accounting, and rejection of an
-over-budget request before the caller RNG state advanced. After that run, the
-cache test was narrowed to a 24-patient endpoint that should reuse the interim
-fit for the final analysis; an explicit repeated-tally assertion was added.
-That last test-only tightening was not rerun in this checkout because the
-numerical slot transferred to another lane. Targeted Ruff check/format and mypy on
-`parallel_phase12_calendar.py` passed. `git diff --check` is run before commit.
+Focused commands used the repository virtualenv, `PYTHONDONTWRITEBYTECODE=1`,
+single-thread OpenBLAS/OpenMP/vecLib, and warnings-as-errors. The final integrated
+run passed all ten checks across `test_phase12_calendar_importance.py`,
+`test_phase12_calendar.py`, and `test_parallel_phase12.py` in 2.601 seconds,
+with 145.95 MiB peak RSS and zero swaps. Checks exercise seeded replay, an actual
+importance fit used at phase-II interim and final analyses, pending-toxicity
+masking, and rejection of an over-budget request before the caller RNG advances.
+The 24-patient case explicitly asserts that the final analysis reuses an
+unchanged interim tally, with work counted only for actual fits. This final run
+includes the cache assertion added after the worker's earlier validation.
+Targeted Ruff check/format and mypy on `parallel_phase12_calendar.py` passed.
 
 The central independent checker is `tools/reference_phase12_model.R`; it
 validates posterior moments for an importance mixture, not native proposal or

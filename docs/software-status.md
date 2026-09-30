@@ -137,7 +137,7 @@ some legacy adaptations retain commercial-use restrictions.
 | Multc Lean | [desktop #12](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12) | [Monitoring and calendar replay](multc.md) |
 | Multc99 | [desktop #3](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/3) | See catalog feature and validation notes |
 | One Arm Time to Event Simulator | [desktop #98](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/98) | See catalog feature and validation notes |
-| Parallel phase I and II design | [desktop #85](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85) | [Guide](parallel-phase12.md) |
+| Parallel phase I and II design | [desktop #85](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85) | [Guide](parallel-phase12.md), [importance calendar](parallel-phase12-importance-calendar.md) |
 | PerfectMatch | [desktop #7](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/7) | [Guide](perfectmatch.md) |
 | Pinnacle | [desktop #95](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/95) | [Guide](pinnacle.md) |
 | Platform Design of Bayesian Adaptive Randomization with Posterior Probability | [online #137](https://biostatistics.mdanderson.org/shinyapps/PLBARPO/) | [Control monitoring](plbarpo-control.md), [active allocation](plbarpo-allocation.md), [no-control trials](plbarpo-trials.md), [control trials](plbarpo-control-trials.md) |
@@ -147,7 +147,7 @@ some legacy adaptations retain commercial-use restrictions.
 | Sample Size Determination for Decentralized Clinical Trials (DCTs) | [online #164](https://biostatistics.mdanderson.org/shinyapps/DCTs) | [Guide](dct-normal.md) |
 | Single arm phase II monitoring using Bayes factor with iMOM prior for binary outcome | [online #143](https://biostatistics.mdanderson.org/shinyapps/BFMonitor) | [Guide](bfmonitor.md) |
 | STPLAN | [desktop #41](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/41) | [Guide](stplan.md) |
-| SurvivalContour: Show Survival Prediction in Contour Plot | [online #166](https://biostatistics.mdanderson.org/shinyapps/survivalContour/) | [Guide](survival-contour.md) |
+| SurvivalContour: Show Survival Prediction in Contour Plot | [online #166](https://biostatistics.mdanderson.org/shinyapps/survivalContour/) | [Guide](survival-contour.md), [forest rank splits](random-survival-forest-logrankscore.md) |
 | SYNERGY | [desktop #18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18) | [Guide](interaction-index.md) |
 | Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials | [online #129](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/) | [Guide](tite-boin.md) |
 | Time-to-Event Keyboard Design for Phase I Clinical Trials | [online #135](https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD) | [Guide](tite-keyboard.md) |

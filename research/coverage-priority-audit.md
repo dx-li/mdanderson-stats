@@ -12,10 +12,19 @@ the source's evidence-plus-60-component stopping rule and direct use in source
 decisions. Independent R posterior means agree within 1.04 combined Monte
 Carlo errors. The optimizer/Hessian construction differs from the original;
 raw-integral convergence and posterior-ratio uncertainty are reported separately.
-The calendar driver still uses elliptical-slice sampling. Exact native
+The calendar driver now offers this backend for interim and final fits, with
+separate data/posterior streams, cached observed tallies, aggregate work limits
+and per-analysis error diagnostics. Elliptical-slice sampling remains the default. Exact native
 optimizer/RNG and input/report parity remain open. Catalog counts remain
 63 implemented, 67 partial and eight pending; these additions do not imply
 complete reproduction of either original software application.
+
+September 30 survival-forest update: the optional Hothorn–Lausen `logrankscore`
+criterion uses maximum-rank time ties and expanded bootstrap multiplicities,
+with the unchanged ordinary log-rank default. The pinned `coin` transform
+provides an independent reference for this documented statistical method;
+exact RF-SRC alternative-branch indexing behavior is not claimed. Forest
+missing-value handling, other split rules and native app workflows remain open.
 
 September 30 matched-pairs update: STPLAN's archived Miettinen paired binary
 method now supplies power, bounded pilot-based inverse planning and the source's
@@ -166,13 +175,13 @@ a generic method with a similar name.
 | SYNERGY #18 | Four 2007 parametric response surfaces and 2008 wild-bootstrap intervals | Current semiparametric surface fitting is present; [guide](../docs/synergy-surface.md). |
 | U2OET #77 | Native GAO prior interpretation and GAO prior calibration | Explicit-coefficient GAO probabilities, Gaussian likelihoods and [explicit-prior posterior fitting](../docs/u2oet-gao-fit.md) are available. PDS/CMI/hybrid fitting, calendar replay and aggregate OCs already exist; [guide](../docs/u2oet.md). |
 | BARD #165 | Expansion, stage-two calendar timing, native per-arm quota behavior and calibration | BF-BLRM model fitting, calendar replay with optional accelerated titration and stage-two continuation now connect eligible carryover, minimization and final OBD selection under a combined enrollment target. Hidden native settings need explicit caller configuration or further source evidence; [continuation guide](../docs/bard-two-stage.md), [titration guide](../docs/bard-titration.md). |
-| SurvivalContour #166 | Five neural prediction/learning workflows; stratified interval-PH bootstrap | Ordinary/stratified right-censored Cox, AFT/splines, numeric/categorical forests, interval PH/competing-risk and shared-coefficient stratified interval-PH are available. Ordinary and cluster PH coefficient bootstrap, competing-risk coefficient bootstrap and repeated-visit conversion are now included. The pinned icenReg source explicitly does not provide nonparametric baseline confidence bands. The five neural learners require distinct backend contracts; [contour guide](../docs/survival-contour.md), [cluster bootstrap guide](../docs/interval-survival-cluster-bootstrap.md). |
+| SurvivalContour #166 | Forest missing-value handling and split rules beyond log-rank/Hothorn–Lausen; broader categorical encoding and native app workflows | The [Hothorn–Lausen criterion](../docs/random-survival-forest-logrankscore.md) is now available. Current code also includes all five [neural survival families](../docs/survival-neural.md), with explicit training choices, and [stratified interval-PH coefficient bootstrap](../docs/interval-survival-stratified-bootstrap.md), with explicit Python resampling policies. Their validated implementation commits are `ec1c213` and `2ebc49b`; the earlier gap wording was stale. Ordinary/stratified Cox, AFT/splines, interval PH/competing-risk, coefficient bootstraps and numeric/categorical forests remain available. The pinned icenReg source does not supply nonparametric baseline confidence bands. |
 | Proportional Density #78 | Unequal-censoring treatment-effect null calibration and bootstrap parameter uncertainty | Failure-only and full-data disease-curve goodness-of-fit bootstraps are present. The downloaded archive has no bootstrap code; distinguish paper workflows/extensions from missing native routines; [guide](../docs/proportional-density.md). |
-| BOIN12 #148 | Two-stage mode and unresolved 3+3 run-in precedence | Tradeoff-to-utility mapping now supports the existing posterior/decision/OBD/simulation workflow. Multilevel endpoints are marked under development in the cached app. Nonadditive joint RDS native support remains unverified; [guide](../docs/boin12.md). |
+| BOIN12 #148 | Native two-stage conduct details and unresolved 3+3 run-in precedence | The [two-stage decision/simulation workflow](../docs/boin12-two-stage.md) is already available, with explicit Python choices where source help does not specify stage-one movement, boundary ordering or safety persistence. It was integrated at `0055027`; exact native conduct remains unverified. Multilevel endpoints are marked under development, and nonadditive joint RDS native support is unverified; [guide](../docs/boin12.md). |
 
 This audit confirms that substantial statistical work remains alongside many
 presentation-only or parity gaps. No percentage or fixed completion date can
-be inferred from 63 implemented / 66 partial / 9 pending, and inaccessible
+be inferred from 63 implemented / 67 partial / 8 pending, and inaccessible
 primary sources remain a separate constraint on full coverage.
 
 ## Run-in and parametric-source clarification

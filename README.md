@@ -1163,6 +1163,9 @@ updates, phase-I progression, blocked accrual and phase-II allocation/stopping.
 An optional [importance sampler](docs/parallel-phase12-importance.md) adds
 the source's mixture weighting and vector stopping rule, with bounded work,
 posterior uncertainty and direct use in the six-dose decision functions.
+The [calendar simulator](docs/parallel-phase12-importance-calendar.md) can use
+this backend at interim and final analyses, with aggregate work limits and
+per-analysis uncertainty diagnostics; the existing MCMC backend remains the default.
 Its component audits cover 100 native posterior-decision cases and 948 phase-I
 transitions. Source eligibility quirks and final analysis with pending outcomes
 are explicit; complete final follow-up is an optional extension. Native reporting
@@ -1598,6 +1601,9 @@ add per-tree OOB perturbations and
 blockwise error increases, with explicit counts for usable blocks and omitted
 tail trees. Category maps are retained for consistent prediction and importance;
 continuous contour axes support categorical adjustment profiles.
+An optional [Hothorn–Lausen split rule](docs/random-survival-forest-logrankscore.md)
+uses standardized survival rank scores, including maximum-rank time ties and
+bootstrap multiplicities. The existing log-rank rule remains the default.
 [Interval-censored proportional-hazards models](docs/interval-survival.md)
 fit mixed exact, interval, left- and right-censored observations with a
 nonparametric Turnbull baseline. Predictions and continuous-covariate contours

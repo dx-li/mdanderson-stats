@@ -1,6 +1,9 @@
 # Random survival forests
 
-A survival forest fits many log-rank decision trees to right-censored data.
+A survival forest fits many decision trees to right-censored data, using
+log-rank splits by default. An optional
+[Hothorn–Lausen criterion](random-survival-forest-logrankscore.md) uses
+standardized survival rank scores with maximum-rank time ties.
 Each leaf estimates a Kaplan–Meier survival curve and a Nelson–Aalen cumulative
 hazard curve. Predictions average the leaf curves over trees, allowing nonlinear
 covariate effects without specifying a parametric survival distribution.
@@ -134,7 +137,8 @@ operations; they do not guarantee total application memory use.
 
 This interface covers ordinary right-censored survival with continuous and
 explicitly declared categorical predictors. Competing risks, missing-value
-imputation and other split rules remain separate work. It does not claim to
+imputation and split rules beyond log-rank and Hothorn–Lausen remain separate work.
+It does not claim to
 reproduce the entire randomForestSRC
 package or native random stream. Catalog entry 166 remains partial.
 

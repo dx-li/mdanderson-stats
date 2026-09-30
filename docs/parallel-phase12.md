@@ -213,8 +213,11 @@ An optional [adaptive importance backend](parallel-phase12-importance.md)
 implements the source's mixture-density weighting and vector stopping rule.
 It reports both raw-integral and posterior-ratio uncertainty and works with
 the source decision functions. Its bounded optimizer and analytic Hessian
-differ from the original numerical proposal construction. The calendar driver
-continues to use the existing elliptical-slice sampler.
+differ from the original numerical proposal construction. The
+[calendar driver](parallel-phase12-importance-calendar.md) accepts
+`posterior_backend="importance"` for interim and final analyses, retaining
+per-analysis integration counts, convergence flags and uncertainty estimates.
+The existing elliptical-slice sampler remains the default.
 
 Validation uses an [independent R importance calculation](phase12-model-reference.json)
 with 200,000 draws from an inflated-Laplace/prior-normal mixture (importance ESS
