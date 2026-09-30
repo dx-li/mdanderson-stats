@@ -18,6 +18,10 @@ from .u2oet_gao import (
 )
 
 
+class _InvalidGAO2010Domain(ValueError):
+    """A finite parameter state lies outside the grid-valid model support."""
+
+
 def _dose_grid_2010(value: ArrayLike, name: str) -> FloatArray:
     doses = _real(value, name)
     if (
@@ -150,7 +154,7 @@ def _log_hazard(
                 if bracket <= 0.0 or bracket <= 1e-8 * magnitude:
                     precise = _decimal_log_bracket(first, second, parameters.gamma)
                     if precise is None:
-                        raise ValueError(
+                        raise _InvalidGAO2010Domain(
                             "negative gamma makes the 2010 GAO continuation probability invalid "
                             "on at least one dose pair and threshold"
                         )
@@ -172,14 +176,14 @@ def _log_hazard(
             if abs(gap) <= cancellation_bound:
                 precise = _decimal_log_bracket(first, second, parameters.gamma)
                 if precise is None:
-                    raise ValueError(
+                    raise _InvalidGAO2010Domain(
                         "negative gamma makes the 2010 GAO continuation probability invalid "
                         "on at least one dose pair and threshold"
                     )
                 log_sum[index] = precise
                 continue
             if gap < -cancellation_bound:
-                raise ValueError(
+                raise _InvalidGAO2010Domain(
                     "negative gamma makes the 2010 GAO continuation probability invalid "
                     "on at least one dose pair and threshold"
                 )
