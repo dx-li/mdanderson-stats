@@ -12,8 +12,11 @@ spreadsheet macros are not redistributed.
 
 ## Method and conventions
 
-At a dose with `y` toxicities among `n` evaluable patients, the posterior is
-Beta(`y+1`, `n-y+1`). Three intervals partition the unit interval at `lower` and
+At a dose with `y` toxicities among `n` evaluable patients, the default posterior
+is Beta(`y+1`, `n-y+1`). A common Beta(`prior_alpha`, `prior_beta`) prior may be
+specified for the paper's [fixed-loss prior sensitivity](mtpi-prior-sensitivity.md);
+the posterior then becomes Beta(`prior_alpha+y`, `prior_beta+n-y`).
+Three intervals partition the unit interval at `lower` and
 `upper`. The posterior mass divided by interval width is the unit probability
 mass (UPM). The largest UPM selects escalation, staying, or de-escalation.
 This is mTPI, rather than the original 2007 TPI or the later mTPI-2 method.
@@ -94,8 +97,15 @@ On the development machine, the full 200-patient decision table took about
 The [original 2007 TPI design](tpi.md) now has separate posterior decisions,
 safety rules, MTD selection and batched simulation.
 
+[Posterior isotonic intervals](mtpi-isotonic-posterior.md) implement the paper's
+draw-then-transform inference procedure, with marginal equal-tailed intervals,
+posterior means and optional joint draws. The supplied dose grid includes
+untried-dose prior draws; weights, grid scope and empirical quantiles are
+explicit Python choices. This inference does not change final MTD selection.
+
 **Catalog status remains partial.** TPI tuning, native archive/source and
-isotonic-weight audit, mTPI prior-sensitivity
-options, posterior isotonic interval simulation, and native spreadsheet/report
-workflows remain pending. The published screenshot validates the checked mTPI
+isotonic-weight audit, prior-specific penalty recalibration and native
+spreadsheet/report workflows remain pending. The paper describes penalty
+recalibration as ongoing research; its Table 3 fixed-loss prior sensitivity
+is available. The published screenshot validates the checked default mTPI
 decisions; it does not establish parity for all software features.

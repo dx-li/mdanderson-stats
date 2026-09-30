@@ -854,6 +854,12 @@ workflows remain pending.
 [Toxicity Probability Intervals](docs/mtpi.md) adds mTPI decision tables, paper
 safety rules, isotonic final selection and batched trial simulation. Original TPI
 calibration and native software workflow audits remain pending.
+[Posterior isotonic intervals](docs/mtpi-isotonic-posterior.md) add the paper's
+draw-then-transform uncertainty estimates, with bounded sampling and optional
+joint draws across the supplied dose grid.
+[Prior sensitivity](docs/mtpi-prior-sensitivity.md) applies the paper's common
+beta-prior choices consistently to decisions, safety, selection and simulation
+while retaining its fixed loss calibration.
 
 [CI of Interaction Index and SYNERGY](docs/interaction-index.md) share median-effect
 regression and Loewe interaction indices with log-delta confidence intervals for
@@ -1154,6 +1160,9 @@ Python replay matches 24 native C decision histories, with independent R checks
 of 179 posterior comparisons. The later six-dose C++ variant now has an integrated
 calendar simulator combining the shared logistic response posterior, beta toxicity
 updates, phase-I progression, blocked accrual and phase-II allocation/stopping.
+An optional [importance sampler](docs/parallel-phase12-importance.md) adds
+the source's mixture weighting and vector stopping rule, with bounded work,
+posterior uncertainty and direct use in the six-dose decision functions.
 Its component audits cover 100 native posterior-decision cases and 948 phase-I
 transitions. Source eligibility quirks and final analysis with pending outcomes
 are explicit; complete final follow-up is an optional extension. Native reporting

@@ -933,6 +933,10 @@ from .mtadf_logistic_simulation import (
 )
 from .mtadf_simulation import MTADFSimulation, simulate_mtadf
 from .mtpi import MTPIDesign, MTPIPosterior, MTPISelection, MTPITable
+from .mtpi_isotonic_posterior import (
+    MTPIIsotonicPosteriorIntervals,
+    mtpi_isotonic_posterior_intervals,
+)
 from .mtpi_simulation import MTPISimulation, simulate_mtpi
 from .muhaz import MuhazFixed, muhaz_fixed
 from .muhaz_global import MuhazGlobal, muhaz_global
@@ -996,6 +1000,7 @@ from .parallel_phase12_decision import (
     phase12_source_decision,
     phase12_source_final_selection,
 )
+from .parallel_phase12_importance import Phase12ImportanceFit, fit_phase12_importance
 from .parallel_phase12_model import (
     Phase12ModelFit,
     Phase12Snapshot,
@@ -2127,6 +2132,8 @@ __all__ = [
     "phase12_source_decision",
     "phase12_source_final_selection",
     "Phase12ModelFit",
+    "Phase12ImportanceFit",
+    "fit_phase12_importance",
     "Phase12Snapshot",
     "fit_phase12_model",
     "phase12_snapshot",
@@ -2593,6 +2600,8 @@ __all__ = [
     "fit_median_effect",
     "quantile_normalize",
     "MTPIDesign",
+    "MTPIIsotonicPosteriorIntervals",
+    "mtpi_isotonic_posterior_intervals",
     "MTPIPosterior",
     "MTPISelection",
     "MTPITable",

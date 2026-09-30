@@ -9,8 +9,7 @@ MTD-selection rule.
 
 ```python
 import numpy as np
-from mdanderson_stats import MTPIDesign
-from mdanderson_stats.mtpi_isotonic_posterior import mtpi_isotonic_posterior_intervals
+from mdanderson_stats import MTPIDesign, mtpi_isotonic_posterior_intervals
 
 result = mtpi_isotonic_posterior_intervals(
     MTPIDesign(target=0.30, lower=0.25, upper=0.35),
@@ -24,17 +23,19 @@ result = mtpi_isotonic_posterior_intervals(
 print(result.lower, result.median, result.upper)
 ```
 
-At dose `j`, the untransformed posterior is `Beta(y[j] + 1,
-n[j] - y[j] + 1)`, matching the uniform independent beta priors used by
-`MTPIDesign`. The full supplied dose grid is transformed; an untried dose has
-`n=0` and therefore contributes its `Beta(1,1)` prior draw. For each draw,
+At dose `j`, the untransformed posterior is
+`Beta(prior_alpha + y[j], prior_beta + n[j] - y[j])`, using the independent
+common beta prior supplied to `MTPIDesign` (uniform by default).
+The full supplied dose grid is transformed; an untried dose has `n=0` and
+therefore contributes a draw from that prior. For each draw,
 increasing weighted isotonic regression pools any order violations. Equal
 weights are the default; a positive finite `weights` vector is an explicit
 alternative policy. The paper does not state whether the interval operation
 should include untried doses; this API explicitly transforms the complete
 supplied grid, with untried doses contributing their prior draws.
 
-The returned bounds are equal-tailed intervals calculated with
+The returned bounds are marginal equal-tailed intervals, not simultaneous
+coverage bands across the dose grid. They are calculated with
 `numpy.quantile(method="linear")`; `median` and `mean` summarize the transformed
 draws. These posterior means are not the same as isotonic regression applied
 once to the vector of beta posterior means. The source does not choose the

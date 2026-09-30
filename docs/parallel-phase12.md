@@ -209,6 +209,13 @@ threshold; retained chains allow further precision assessment. The source poster
 decision rules and integrated calendar simulator are supplied below. Native
 integration parity remains pending.
 
+An optional [adaptive importance backend](parallel-phase12-importance.md)
+implements the source's mixture-density weighting and vector stopping rule.
+It reports both raw-integral and posterior-ratio uncertainty and works with
+the source decision functions. Its bounded optimizer and analytic Hessian
+differ from the original numerical proposal construction. The calendar driver
+continues to use the existing elliptical-slice sampler.
+
 Validation uses an [independent R importance calculation](phase12-model-reference.json)
 with 200,000 draws from an inflated-Laplace/prior-normal mixture (importance ESS
 about 145,977). All four coefficient means and six response means agree within
@@ -223,7 +230,8 @@ independent observation of calendar outcomes. Reference generation is in
 
 `phase12_source_decision(fit, enrolled, phase_one_admissible=..., closed=...,
 suspended=...)` applies the archived C++ posterior decision logic to a
-`Phase12ModelFit`. Masks and enrollment counts each have six entries. Omit
+`Phase12ModelFit` or `Phase12ImportanceFit`. Masks and enrollment counts each
+have six entries. Omit
 `closed` to initialize it from phase-I inadmissibility; pass the returned masks
 on subsequent evaluations. Toxicity closure is permanent; suspension can reverse.
 The caller determines when a calendar analysis is due.

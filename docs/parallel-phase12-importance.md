@@ -9,7 +9,7 @@ default.
 ```python
 import numpy as np
 
-from mdanderson_stats.parallel_phase12_importance import fit_phase12_importance
+from mdanderson_stats import fit_phase12_importance
 
 tally = np.zeros((6, 4))
 tally[:, 0] = [8, 7, 6, 5, 4, 3]  # no response, response, no DLT, DLT

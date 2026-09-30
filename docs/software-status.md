@@ -137,7 +137,7 @@ some legacy adaptations retain commercial-use restrictions.
 | Multc Lean | [desktop #12](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12) | [Monitoring and calendar replay](multc.md) |
 | Multc99 | [desktop #3](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/3) | See catalog feature and validation notes |
 | One Arm Time to Event Simulator | [desktop #98](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/98) | See catalog feature and validation notes |
-| Parallel phase I and II design | [desktop #85](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85) | See catalog feature and validation notes |
+| Parallel phase I and II design | [desktop #85](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85) | [Guide](parallel-phase12.md) |
 | PerfectMatch | [desktop #7](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/7) | [Guide](perfectmatch.md) |
 | Pinnacle | [desktop #95](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/95) | [Guide](pinnacle.md) |
 | Platform Design of Bayesian Adaptive Randomization with Posterior Probability | [online #137](https://biostatistics.mdanderson.org/shinyapps/PLBARPO/) | [Control monitoring](plbarpo-control.md), [active allocation](plbarpo-allocation.md), [no-control trials](plbarpo-trials.md), [control trials](plbarpo-control-trials.md) |

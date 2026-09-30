@@ -1,5 +1,22 @@
 # Statistical coverage priority audit — September 28, 2026
 
+September 30 mTPI / Parallel Phase I/II update: mTPI now supplies the paper's
+posterior isotonic intervals and Table-3 common Beta-prior sensitivity with
+Uniform-calibrated losses fixed. Beta-CDF identities, density quadrature and
+closed-form two-dose projection checks validate the new inference; default
+screenshot decisions remain unchanged. Prior-specific penalty recalibration
+and native spreadsheet conventions remain separate gaps.
+
+Parallel Phase I/II now has an optional bounded mixture importance fitter with
+the source's evidence-plus-60-component stopping rule and direct use in source
+decisions. Independent R posterior means agree within 1.04 combined Monte
+Carlo errors. The optimizer/Hessian construction differs from the original;
+raw-integral convergence and posterior-ratio uncertainty are reported separately.
+The calendar driver still uses elliptical-slice sampling. Exact native
+optimizer/RNG and input/report parity remain open. Catalog counts remain
+63 implemented, 67 partial and eight pending; these additions do not imply
+complete reproduction of either original software application.
+
 September 30 matched-pairs update: STPLAN's archived Miettinen paired binary
 method now supplies power, bounded pilot-based inverse planning and the source's
 two no-pilot initial-size heuristics. Original Fortran and independent R

@@ -2622,18 +2622,22 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Vectorized mTPI unit-probability-mass decisions and full decision table under uniform beta priors",
+        "Vectorized mTPI unit-probability-mass decisions and full decision table under default uniform or explicit common beta priors, retaining Uniform-calibrated losses",
         "Paper safety rules, persistent exclusions and isotonic posterior-mean MTD selection with explicit weights",
         "Batched complete-outcome cohort simulation with allocations, selections, safety stops and Monte Carlo uncertainty",
         "Original TPI posterior-SD interval decisions, common informative priors, two-patient safety gate, permanent exclusion, isotonic MTD selection and batched complete-outcome simulation",
-        "Explicit dose-specific Beta-prior extension for original TPI posterior summaries, safety/decision tables, dose conduct, isotonic point selection and batched simulation; compact lookup tables share identical priors. Source common-prior defaults are unchanged; docs/tpi-informative-priors.md."
+        "Explicit dose-specific Beta-prior extension for original TPI posterior summaries, safety/decision tables, dose conduct, isotonic point selection and batched simulation; compact lookup tables share identical priors. Source common-prior defaults are unchanged; docs/tpi-informative-priors.md.",
+        "mTPI posterior isotonic intervals from independent beta draws transformed across the supplied dose grid, with marginal means/medians/equal-tailed bounds, explicit weights, bounded storage and optional joint draws; docs/mtpi-isotonic-posterior.md",
+        "Table-3 fixed-loss common Beta-prior sensitivity applied consistently to mTPI UPM decisions, overdose safety, isotonic point selection, batched trial simulation and posterior interval draws; docs/mtpi-prior-sensitivity.md"
       ],
       "validation": [
         "Exact rational beta-polynomial probabilities and extreme tails; published Excel screenshot columns at n=3,6,12,30",
         "Exhaustive small-trial response-path operating characteristics, safety sequence, isotonic ties and seeded replay; tests/test_mtpi.py",
-        "Pending TPI tuning, native source/weight audit, mTPI prior sensitivity, posterior isotonic intervals and spreadsheet/report workflows; docs/mtpi.md",
+        "Pending TPI tuning, native source/weight audit, prior-specific penalty recalibration and spreadsheet/report workflows; docs/mtpi.md",
         "Original TPI: published Table 1, independent weighted beta quadrature, safety/selection and exact small-trial path checks; tests/test_tpi.py; limitations in docs/tpi.md",
-        "Dose-axis and scalar-dose summaries, explicit per-dose tables, common-prior regression and seeded heterogeneous-prior simulation; tests/test_tpi_informative_priors.py. Dose-varying shapes are a Python conjugate generalization, not recovered native defaults."
+        "Dose-axis and scalar-dose summaries, explicit per-dose tables, common-prior regression and seeded heterogeneous-prior simulation; tests/test_tpi_informative_priors.py. Dose-varying shapes are a Python conjugate generalization, not recovered native defaults.",
+        "Isotonic posterior inference: one-dose beta quantiles and exact two-uniform-dose projected means/CDF, immutable monotone joint draws, pre-RNG work/tail rejection; tests/test_mtpi_isotonic_posterior.py. Full supplied-grid scope, weights and empirical quantiles are explicit Python choices, not recovered native defaults.",
+        "21 focused mTPI, prior-sensitivity and isotonic-interval tests pass: exact integer-beta CDF identities, fractional-prior density quadrature, nonuniform posterior selection/draws, default screenshot decisions and seeded simulation replay; research/mtpi-prior-sensitivity-audit.md. Common shapes are bounded to >=1e-6 with sum <=1e6."
       ]
     },
     {
@@ -2982,7 +2986,8 @@
         "Six-dose phase-I asymmetric dose opening, 3/6-patient toxicity resolution and analytically marginalized fair-coin assignment; phase-I toxicity/phase-II response cohort-boundary accrual readiness",
         "Integrated six-dose calendar simulation with rounded arrivals/event delays, blocked attempts, phase-I/II orchestration, separate data/posterior streams and source final selection with optional complete follow-up",
         "Bounded serial four-arm operating-characteristic reporting with per-trial replay seeds, selection/no-selection and stopping rates, allocation/enrollment summaries, trial-clustered pooled outcome-rate errors and explicitly supplied optimal-arm sets; docs/parallel-phase12-oc.md",
-        "Remaining: native input/report workflows, six-dose native integration parity and full published operating-characteristic replication"
+        "Bounded six-dose mixture importance posterior: full mixture-density weighting, native evidence-plus-60-component adaptive stopping, analytic mode/Hessian proposal, separate raw-integral and posterior-ratio errors, and source-decision interoperability; docs/parallel-phase12-importance.md",
+        "Remaining: native optimizer/proposal and RNG equivalence, input/report workflows and full published operating-characteristic replication; the calendar driver retains elliptical-slice fitting"
       ],
       "validation": [
         "Python replay matches final selection and all outcome/enrollment counts for 24 trials run through original C control flow; numerical and RNG callbacks replace missing/platform-specific dependencies and are explicitly disclosed",
@@ -2993,7 +2998,8 @@
         "100 complete original C++ phase-I histories: 948 states with all four fair-coin branches match masks, completion, closure and assignment probabilities; separate boundary-time checks for phase-specific accrual readiness",
         "Calendar integration checks reconstruct observed endpoint counts and blocked arrivals, cover toxicity stops and optional final follow-up; archived Case 1 pilot reaches 80 patients with coefficient split-Rhat below 1.02 (not an operating-characteristic replication)",
         "tests/test_parallel_phase12.py: deterministic safety-stop summaries, all-trial denominators, seed replay, trial-clustered ratio errors and undefined zero-allocation/one-trial uncertainty",
-        "research/parallel-phase12-oc-audit.md"
+        "research/parallel-phase12-oc-audit.md",
+        "Five focused importance tests: prior evidence and contrast checks, replay, paired-ratio Monte Carlo error, source-decision interoperability and work preflight. New 10000-draw importance response means agree with independent R estimates within 1.04 combined Monte Carlo errors (maximum absolute difference 0.0010111); research/parallel-phase12-importance-audit.md. No exact native optimizer/RNG parity is claimed."
       ]
     },
     {
