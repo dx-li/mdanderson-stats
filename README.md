@@ -44,8 +44,9 @@ already-standardized score or caller-supplied reference constants. The source
 does not supply the original calibration or baseline survival, so native app
 equivalence and absolute survival prediction remain open.
 
-[WFMM functional mixed models](docs/wfmm.md) now support orthogonal wavelet
-transforms, Bayesian fixed/random-effect fitting with coefficient-specific
+[WFMM functional mixed models](docs/wfmm.md) now support orthogonal wavelets and
+[supplied custom transform pairs](docs/wfmm-custom-transform.md),
+Bayesian fixed/random-effect fitting with coefficient-specific
 variances, and reconstructed posterior curves with contrasts and simultaneous
 bands, variance functions and covariance reconstruction. Empirical-Bayes
 shrinkage calibration is available conditional on supplied variance estimates.
@@ -1102,7 +1103,10 @@ efficacy/toxicity probabilities for two-agent combinations, with stable joint
 log probabilities, likelihoods and expected utilities. Posterior-draw summaries
 and new-cohort allocation include acceptability, patient-surplus randomization
 and escalation restrictions. Multi-chain posterior fitting supports explicit
-priors and complete outcomes. IID prior draws, beta-moment prior information
+priors and complete outcomes. An [adaptive precision controller](docs/u2oet-adaptive-precision.md)
+continues PDS/CMI/hybrid chains toward per-chain corner-utility MCSE targets,
+with a draw cap and separate convergence diagnostics.
+IID prior draws, beta-moment prior information
 and pseudo-trial prior calibration are available. Additional coordinate and joint
 link moves address diffuse-prior mixing. Gaussian-copula scenario construction
 and native scenario/dose/utility readers are available. Patient snapshots,

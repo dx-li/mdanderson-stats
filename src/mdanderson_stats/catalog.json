@@ -2565,7 +2565,7 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "Periodic orthogonal Daubechies db1–db10, identity and custom orthogonal transforms with inverse reconstruction and retained scale/partition labels.",
+        "Periodic orthogonal Daubechies db1–db10 and identity transforms, legacy orthogonal custom matrices and explicit square analysis/synthesis inverse pairs, with conditioning checks, inverse reconstruction and retained scale/partition labels.",
         "Coefficient-specific spike-and-slab fixed effects, independent random-effect levels and residual strata, and explicit inverse-gamma variance priors with bounded marginal MCMC.",
         "Positive-truncated normal variance updates with Hastings correction, optional Gaussian random-effect draws, explicit generators and posterior chain diagnostics.",
         "Reconstruction of posterior draws, effect/time contrasts, pointwise quantiles, effect-size probabilities, sign-tail scores, simultaneous bands and SiMBaS probabilities with bounded intermediate storage.",
@@ -2583,7 +2583,8 @@
         "Haar covariance identity/PSD, nonsymmetric custom-basis orientation, posterior variance summaries and oversized retained-output rejection; tests/test_wfmm_covariance.py.",
         "Selected partition/order and zero-fill identities, posterior-shaped restoration and allocation preflight; tests/test_wfmm_selection.py. Public selected-coefficient calibration/fit/reconstruction example executed with noncontiguous partition labels.",
         "Independent base-R residual-only and balanced random-intercept REML references, fixed-design scale/likelihood checks, numerical-zero and nonidentifiable boundaries, strict evaluation budgets and initializer-to-sampler workflow; research/wfmm-variance-init-audit.md.",
-        "Pending native variance/proposal initialization, inverse-gamma defaults, additional transforms/boundaries/compression, prediction workflows and native files/kernel parity."
+        "Pending native variance/proposal initialization, inverse-gamma defaults, additional transforms/boundaries/compression, prediction workflows and native files/kernel parity.",
+        "Five independent base-R supplied-matrix cases compare 1199 coefficients, reconstructed curves, posterior summaries and covariance/variance-function values; maximum scaled discrepancy 5.49e-15. Ill-conditioned inverse pairs are rejected and reciprocal uniform scales through 1e±200 are checked; tools/reference_wfmm_custom_transforms.R, tools/check_wfmm_custom_transforms.py, research/wfmm-custom-transform-audit.md."
       ]
     },
     {
@@ -2742,7 +2743,8 @@
         "Multi-trial selection, stopping, enrollment, duration and normalized Rselect/Rtreat summaries with Monte Carlo errors, retained diagnostics and compatible-design/independent-seed checks",
         "Explicit-coefficient GAO raw-dose ordinal probabilities with endpoint-specific positive link shapes, shared positive interaction, Gaussian-copula joint cells, grouped/partial likelihoods and expected utility",
         "Explicit-prior GAO posterior fitting in named normal coordinates, including raw intercepts/slopes, log link/interaction and Fisher-z association, complete and toxicity-only counts, retained chain/draw probabilities, diagnostics and bounded likelihood work; native prior mapping and GAO calibration remain pending",
-        "Explicit-prior GAO calendar simulation with complete/toxicity-only/pending snapshots, cohort/surplus allocation, final follow-up and acceptable/tried selection, retained replay tapes, cumulative likelihood-work limits and independent-trial summary compatibility; docs/u2oet-gao-trials.md"
+        "Explicit-prior GAO calendar simulation with complete/toxicity-only/pending snapshots, cohort/surplus allocation, final follow-up and acceptable/tried selection, retained replay tapes, cumulative likelihood-work limits and independent-trial summary compatibility; docs/u2oet-gao-trials.md",
+        "Standalone adaptive precision fitting for PDS/CMI/hybrid models: genuine chain-state continuation, per-chain four-corner utility batch-means MCSE/SD targets, explicit draw/work/memory caps, and separate classical split-Rhat diagnostics. Fixed-budget calendar callers and GAO remain separate; docs/u2oet-adaptive-precision.md."
       ],
       "validation": [
         "Independent R implementation of published equations: 549 joint cells across five cases, 2-4 categories, three models, two centerings and FGM association endpoints",
@@ -2758,7 +2760,8 @@
         "Hand-calculated three-trial operating-characteristic summaries and MCSEs, streamed simulation aggregation and undefined constant-utility scores; full published operating-characteristic reproduction remains pending",
         "440 independent R GAO joint cells and 15 grouped likelihoods across binary/ordinal categories, link shapes, negative/positive Gaussian correlation and limiting copulas; tools/reference_u2oet_gao.R, docs/u2oet-gao.md and research/u2oet-gao-audit.md",
         "Independent base-R GAO posterior quadrature for a free raw efficacy intercept and Fisher-z association: 38 summaries within 1.028 estimated Monte Carlo errors and maximum split Rhat 1.00347; four focused fitter checks pass. tools/reference_u2oet_gao_fit.R, tests/fixtures/u2oet-gao-posterior.csv, docs/u2oet-gao-fit.md and research/u2oet-gao-fit-audit.md",
-        "Four independent base-R GAO calendar ledgers: nine patient rows, six interim snapshots, four final snapshots and sixteen utility values agree within 6.66e-16; four focused driver tests pass. tools/reference_u2oet_gao_calendar.R, tools/check_u2oet_gao_calendar.py, research/u2oet-gao-trial-audit.md"
+        "Four independent base-R GAO calendar ledgers: nine patient rows, six interim snapshots, four final snapshots and sixteen utility values agree within 6.66e-16; four focused driver tests pass. tools/reference_u2oet_gao_calendar.R, tools/check_u2oet_gao_calendar.py, research/u2oet-gao-trial-audit.md",
+        "Independent base-R within-chain moments/MCSE ratios and split-Rhat references across three trace lengths and utility scales 1e±200: 252 diagnostics agree within 2.89e-15 after scale normalization. Continued-chain replay, valid short-tail schedules, undefined constant-utility precision and pre-RNG work rejection pass; tools/reference_u2oet_precision.R, tools/check_u2oet_precision.py, research/u2oet-adaptive-precision-audit.md."
       ]
     },
     {

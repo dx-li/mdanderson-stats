@@ -118,7 +118,10 @@ Remaining coverage includes:
   drivers (explicit-prior GAO fitting is supplied separately).
 - Validation of complete trial operating characteristics.
   Explicit-prior fitting, pseudo-trial centers and prior ESS are supplied below.
-- Adaptive MCMC precision targets and native final-selection validation.
+- Adaptive GAO precision control, use of adaptive precision in calendar drivers,
+  and native final-selection validation. The standalone PDS/CMI/hybrid
+  [adaptive fitter](u2oet-adaptive-precision.md) now monitors all four corner
+  utilities per chain and reports whether its requested target was reached.
 - Complete native configuration/reports.
   Calendar simulation, open-cohort handling and partial likelihoods are supplied below.
 

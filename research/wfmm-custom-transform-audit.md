@@ -37,7 +37,17 @@ Focused validation in this branch covers inverse round trips, transform and
 covariance orientation, variance-function diagonals, invalid matrix pairs,
 legacy orthogonal-matrix behavior, rejection of an exactly represented
 ill-conditioned shear, and finite covariance under uniform matrix rescaling
-through `1e-200` and `1e200`. Independent base-R mathematical references are
-prepared for integration comparison; they do not exercise the native WFMM
-application. This branch's checks do not claim native runtime or file-workflow
-parity.
+through `1e-200` and `1e200`. Eighteen focused basis, covariance, posterior,
+selection and paired-transform checks pass with warnings treated as errors;
+the condition-guard follow-up passes the twelve affected basis/covariance/pair
+checks. Ruff, formatting and targeted mypy pass. The larger focused run peaks
+at 140.61 MiB RSS with zero swaps; numerical processes run serially.
+
+`tools/reference_wfmm_custom_transforms.R` independently computes five supplied
+inverse-pair cases with base-R solves and matrix products: shear, triangular,
+nonsymmetric and uniformly rescaled matrices. `tools/check_wfmm_custom_transforms.py`
+compares 1,199 transformed/reconstructed values, curve moments/quantiles/bands,
+covariances and variance-function summaries. Maximum scaled discrepancy is
+`5.49e-15`; the integrated comparison peaks at 123.83 MiB RSS and reports zero
+swaps. These are mathematical references, not native WFMM runtime or
+file-workflow comparisons.

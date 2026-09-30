@@ -11,8 +11,7 @@ retained draws explicitly; it does not infer simulation or conduct defaults.
 ```python
 import numpy as np
 
-from mdanderson_stats.u2oet_adaptive_precision import fit_u2oet_adaptive_precision
-from mdanderson_stats.u2oet_fit import u2oet_parameter_names
+from mdanderson_stats import fit_u2oet_adaptive_precision, u2oet_parameter_names
 
 names = u2oet_parameter_names(2, 2, model="cmi")
 prior_mean = np.zeros(len(names) - 1)
@@ -25,7 +24,9 @@ counts = np.zeros((2, 2, 2, 2))
 counts[0, 0, 1, 0] = 3
 counts[1, 1, 0, 1] = 2
 result = fit_u2oet_adaptive_precision(
-    [1, 2], [1, 2], counts,
+    [1, 2],
+    [1, 2],
+    counts,
     prior_mean=prior_mean,
     prior_sd=prior_sd,
     utility=[[0, 1], [2, 0]],

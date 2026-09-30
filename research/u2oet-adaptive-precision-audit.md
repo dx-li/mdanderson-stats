@@ -55,3 +55,38 @@ split-Rhat workspace. Chunking limits per-call
 sampler arrays, while the retained posterior and utility summaries remain
 available in the result. These are workload estimates, not RSS or runtime
 guarantees.
+
+## Numerical validation
+
+Four focused tests pass with warnings treated as errors. They check continued
+chains against explicit fixed-sampler calls, short final chunks, constant
+utilities, rejection before RNG consumption and batch-means diagnostics.
+Targeted Ruff, formatting and mypy pass. The measured focused run took 1.93
+seconds, peaked at 127.00 MiB RSS and reported zero swaps.
+
+`tools/reference_u2oet_precision.R` generates independent base-R references
+for two-chain four-corner traces of lengths 16, 37 and 64, including equal
+and unequal constant chains. `tools/check_u2oet_precision.py` compares 252
+SD, MCSE, ratio and classical split-Rhat diagnostics at utility scales
+`1e-200`, `1` and `1e200`. The maximum absolute difference after undoing
+the scale is `2.89e-15`. The comparison took .008 seconds, peaked at 123.27
+MiB RSS and reported zero swaps. These validate the documented Python
+diagnostics, not an unspecified native batching or continuation algorithm.
+
+An end-to-end CMI fit used two chains, 100 warmup draws, 512 starting retained
+draws and 512-draw extensions, with an upper cap of 4096 and a .05 precision
+target. It used the existing logistic-normal reference configuration: three
+doses per agent, ten observations at the central combination (three efficacy
+responses, no toxicities), near-fixed slope and toxicity parameters, and a
+standard-normal efficacy intercept. With seed 7771 the controller continued
+to 1024 draws per chain and met every corner target. The largest MCSE/SD ratio
+was .047268 and the largest corner split-Rhat was 1.000069. The efficacy
+intercept and response-probability means differed from the existing independent
+R quadrature references by 2.363 and 2.145 estimated MCSEs. The run took 1.026
+seconds, peaked at 121.34 MiB RSS and reported zero swaps. This is a bounded
+continuation and posterior-accuracy check, not validation of trial operating
+characteristics or all model parameters' precision.
+
+Numerical processes ran serially with numerical-library thread counts fixed
+at one. Adaptive GAO fitting and integration into calendar/simulation drivers
+remain separate work.

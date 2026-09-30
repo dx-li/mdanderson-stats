@@ -2,8 +2,9 @@
 
 The [MD Anderson WFMM software](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/70)
 fits functional fixed and random effects in a transformed coefficient space.
-Python supports orthogonal transforms, coefficient-specific Bayesian mixed
-models, reconstruction and posterior curve summaries. An explicit Python REML
+Python supports orthogonal wavelets and supplied custom transform pairs,
+coefficient-specific Bayesian mixed models, reconstruction and posterior curve
+summaries. An explicit Python REML
 initializer supplies starting variance estimates. Catalog entry 70 is
 **partial**: native initialization/prior defaults, other transform families and
 native file workflows remain open.
@@ -34,9 +35,12 @@ These are explicit Python conventions, not a claim to reproduce native WFMM
 binary ordering or boundary-extension modes.
 
 Use `transform="identity"` to retain the original columns. For
-`transform="custom"`, provide a square `custom_matrix` with orthonormal
-columns: the forward calculation is `curves @ custom_matrix`, and inversion
-uses its transpose. Custom transforms do not center the input. PCA, energy
+`transform="custom"`, provide either a square `custom_matrix` with orthonormal
+columns, or separate square `analysis_matrix` and `synthesis_matrix` numerical
+inverses. The former keeps transpose reconstruction; the latter uses the
+guide's explicit forward and reverse products. See the
+[paired custom-transform guide](wfmm-custom-transform.md) for validation and
+covariance interpretation. Custom transforms do not center the input. PCA, energy
 compression, alternate boundary modes and multidimensional transforms remain
 open.
 
@@ -376,7 +380,11 @@ print(residual_covariance.correlation_from_mean_variance[0])
 ```
 
 Each component corresponds to one supplied random-effect level or residual
-stratum. With `D=Y*W`, its data-space covariance is `W*diag(omega)*W.T`.
+stratum. With synthesis matrix `S` in `Y=D*S`, its data-space covariance is
+`S.T*diag(omega)*S`. For an orthogonal analysis matrix `W`, `S=W.T`, giving
+the familiar `W*diag(omega)*W.T`. Supplied non-orthogonal transform pairs use
+their own synthesis matrix, and do not preserve the meaning of an unchanged
+coefficient-space prior across bases.
 The diagonal-only default computes each draw's variance function without
 materializing a time-by-time matrix for every draw. Results include mean,
 sample SD and linearly interpolated quantiles in both coefficient space and

@@ -1498,6 +1498,10 @@ from .tteconduct import (
     tteconduct_monitor,
 )
 from .u2oet import U2OETMarginal, U2OETProbabilities, u2oet_probabilities, u2oet_standardize
+from .u2oet_adaptive_precision import (
+    U2OETAdaptivePrecisionResult,
+    fit_u2oet_adaptive_precision,
+)
 from .u2oet_calibration import U2OETCalibration, calibrate_u2oet_prior
 from .u2oet_decision import (
     U2OETAllocation,
@@ -2155,6 +2159,8 @@ __all__ = [
     "u2oet_prior_ess",
     "U2OETFit",
     "fit_u2oet",
+    "U2OETAdaptivePrecisionResult",
+    "fit_u2oet_adaptive_precision",
     "u2oet_parameter_names",
     "U2OETAllocation",
     "U2OETCriteria",

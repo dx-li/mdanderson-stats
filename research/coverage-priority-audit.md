@@ -1,5 +1,16 @@
 # Statistical coverage priority audit — September 28, 2026
 
+September 29 transform/precision update: WFMM now accepts explicit square
+analysis/synthesis inverse pairs, propagates covariance through the supplied
+synthesis matrix and rejects severely ill-conditioned pairs. U2OET has a
+standalone adaptive PDS/CMI/hybrid fitter that continues chains toward the
+guide's per-chain corner-utility precision targets, with a finite draw cap
+and separate split-Rhat diagnostics. Independent R comparisons and bounded
+posterior checks are recorded in the component audits. WFMM PCA/PCw/wPC and
+retained-component semantics, adaptive GAO fitting and adaptive precision in
+trial drivers remain open. Current catalog counts are 63 implemented,
+67 partial and eight pending; historical counts below describe earlier states.
+
 September 29 conduct/simulation update: BaCIS simulations now optionally retain
 native-definition ESS by replication/subgroup, with stable subgroup means and
 Monte Carlo errors. Dose Schedule Finder now accepts explicit delayed toxicity
