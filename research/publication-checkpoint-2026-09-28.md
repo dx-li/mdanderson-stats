@@ -1,7 +1,7 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `59d5dbd` adds the archived STPLAN matched-pairs
-power and planning methods. The final section records validation; earlier
+Latest verified package checkpoint: `42045e9` adds mTPI posterior isotonic
+intervals, fixed-loss prior sensitivity and six-dose Phase I/II importance fitting. The final section records validation; earlier
 sections preserve checkpoint history. The preceding published checkpoint
 `2b53d37` passed hosted quality and Python 3.12–3.14 checks.
 The local artifact manifest records full branch SHAs after each independently
@@ -2242,3 +2242,50 @@ verified at `2b53d37689ed4c274379bf18142866dad972ff86`. That checkpoint's
 [hosted run](https://github.com/dx-li/mdanderson-stats/actions/runs/36657466078)
 passed quality and Python 3.12, 3.13 and 3.14 jobs. The ignored local artifact
 manifest records the new remote SHAs and latest hosted-run status after push.
+
+
+## September 30 mTPI and Phase I/II inference publication
+
+Package-code revision `42045e9da4dbe252c8e0ff19633dd0a60a2b0f9b` adds mTPI
+posterior intervals by drawing independent beta probabilities and isotonic-
+transforming each joint draw. It reports marginal bounds and optional joint
+samples under explicit grid, weight and empirical-quantile conventions. The
+paper's Table-3 common-prior sensitivity now applies consistently to decisions,
+safety, selection, simulation and intervals, with Uniform-calibrated losses
+held fixed. Default decisions and positional API arguments are preserved.
+Prior-specific penalty recalibration remains unsupported by the available source.
+
+The six-dose Parallel Phase I/II model now has a separate bounded importance
+fitter. Full-mixture density weighting and the original evidence-plus-60-summary
+stopping rule are retained. The implementation reports raw-integral errors,
+posterior-ratio errors and whether the stopping criterion passed. It uses an
+analytic Hessian and a bounded optimizer rather than the native numerical
+proposal construction. It integrates with the source decision functions;
+the existing calendar driver continues to use elliptical-slice fitting.
+
+Luna implemented these methods in isolated checkouts; root and a read-only
+reviewer checked the source contracts and integration. Twenty-one focused mTPI
+checks pass, including exact beta identities, fractional-prior quadrature,
+closed-form two-dose projected moments/CDF, default screenshot decisions and
+seeded replay. Five focused importance checks pass, including direct paired-
+ratio Monte Carlo errors and an independent R response-mean comparison. The
+maximum response-mean difference was 0.0010111, or 1.04 combined Monte Carlo
+standard errors. Existing model/decision compatibility checks also passed.
+Targeted Ruff, formatting and mypy pass. The largest measured focused run used
+136.16 MiB RSS and reported zero swaps. Numerical work ran serially with library
+threads limited to one; no full local suite, dependency installation or new CI
+workflow was added.
+
+Cached wheel/source builds pass. Isolated wheel verification matches all 597
+committed package files in both archives, resolves all 1,687 public exports and
+executes all three new guide examples. Notices are retained, and ignored native
+sources/binaries are excluded. Verification took 11.98 seconds, peaked at
+114.39 MiB RSS and reported zero swaps. Counts remain 63 implemented, 67 partial
+and eight pending; full native software coverage is not claimed.
+
+Before publication, remote master/main/development were independently verified
+at `5634ec317e756cf9c27557e14065163649ed99fb`. Its hosted quality, Python 3.12
+and Python 3.13 jobs have passed; Python 3.14 is still running at this check.
+The latest entirely passed hosted checkpoint remains `2b53d37`. The ignored
+artifact manifest records new remote SHAs and hosted status after publication.
+This audit-only commit does not change the verified package code.
