@@ -1,7 +1,8 @@
 # STPLAN inverse planning
 
-`stplan_solve` finds a design parameter from a target power using any of the
-[25 STPLAN forward methods](stplan.md). It supports sample sizes, effects,
+`stplan_solve` finds a design parameter from a target power using the
+[25 active STPLAN forward methods](stplan.md) and the archive's
+[legacy matched-pairs binary method](stplan-matched-pairs.md). It supports sample sizes, effects,
 probabilities, standard deviations, significance levels, accrual, follow-up,
 and the other numerical arguments exposed by those methods. It solves one study
 design at a time; the forward APIs retain their array broadcasting support.
@@ -177,7 +178,9 @@ source's original tolerances explain small differences in numerical roots.
 Original source is not redistributed. See [provenance](stplan-sources.json).
 
 Native automatic bound/branch selection, integer allocation of proportional K-group totals,
-the inactive matched-pairs procedure, and session/report workflows remain open.
+and session/report workflows remain open. The legacy matched-pairs method adds
+bounded effect, sample-size and significance planning with fixed pilot counts;
+its no-pilot initial-size estimates have a separate, explicit interface.
 Alternative survival-curve inputs are available through the
 [survival input converters](stplan-survival-inputs.md).
 Joint accrual-time/control-allocation planning is available through the

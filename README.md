@@ -1634,3 +1634,7 @@ and reporting remain open. [Survival input conversions](docs/stplan-survival-inp
 cover medians, survival percentages, historical person-time, and piecewise curves.
 The [historical-control planner](docs/stplan-historical-planning.md) also finds
 accrual duration and new-control allocation jointly, including boundary solutions.
+The archive's [legacy matched-pairs binary method](docs/stplan-matched-pairs.md)
+adds pilot-based power and inverse planning, plus preliminary-size recommendations
+when pilot observations are unavailable. Its two-sided approximation retains only
+the rejection tail in the direction of the effect, as in the original routine.

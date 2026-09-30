@@ -6,6 +6,9 @@ partial. All 25 power and retention procedures in the current main menu have
 independent Python implementations, checked against original Fortran output and
 independent probability sums or integration. Bounded inverse planning is also
 available across these methods; native automatic planning workflows remain partial.
+The archive's inactive [matched-pairs binary procedure](stplan-matched-pairs.md)
+also has a Python power calculation and planning interface. It is separate from
+the 25 active menu procedures and from the matched case-control mixture.
 
 ## Continuous and correlation power
 
@@ -187,7 +190,7 @@ source files are not redistributed.
 
 Still open: native automatic inverse bounds and branch discovery, integer allocation of
 proportional K-group totals, and native session/report workflows.
-The old matched-pairs option is present in the archive
-but commented out of the current main menu; it will be tracked separately from
-active menu features. See [source provenance](stplan-sources.json) for the archive
+The old matched-pairs option is implemented and documented separately because
+its call is commented out of the current main menu. See
+[source provenance](stplan-sources.json) for the archive
 identity and reproduction inputs.

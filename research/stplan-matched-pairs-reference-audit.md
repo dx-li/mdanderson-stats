@@ -40,11 +40,12 @@ detecting a difference in the direction of truth, not the sum of both tails.
 Without preliminary cell counts, `qmpd` treats `z10` and `z01` as marginal
 proportions for groups 1 and 0 and uses
 `psi=theta1+theta2-2*theta1*theta2`; they are not joint discordant-cell
-probabilities. With these estimates (`iwhich=5`) it returns a conservative
-sample size and recommends an initial pilot of `n/4`. With neither estimates
+probabilities. With these estimates (`iwhich=5`) it returns what the source
+calls a conservative sample size and recommends an initial pilot of `n/4`. With neither estimates
 nor pilot data (`iwhich=6`), it assumes group proportions `0.1` and `0.9`,
-returns the resulting conservative sample size, and recommends `n/6`. Both
-recommendations are unrounded.
+returns the resulting size, and recommends `n/6`. Both recommendations are
+unrounded heuristics, not guaranteed conservative bounds over arbitrary
+within-pair dependence.
 
 For the sample-size inverse, the original code squares
 `z_(1-alpha)*psi + z_power*sqrt(psi^2-delta^2*(3+psi)/4)`. When this quantity

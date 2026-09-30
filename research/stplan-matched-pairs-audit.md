@@ -61,3 +61,20 @@ the literal source equations, the generic inverse registration, scale
 invariance of the paired table, no-pilot mode outputs, and invalid variance
 geometry. The guide distinguishes this approximate legacy method from exact
 matched case-control inference and from current STPLAN menu status.
+
+Integrated validation ran 13 focused tests across the new method/reference
+checks and existing STPLAN inverse-planning checks, with warnings treated as
+errors. All passed in 2.978 seconds including the test wrapper, with 144.0 MiB
+peak RSS and zero process swaps. The reference checks cover all 12 new native
+and independent R cases, plus the existing 33 R planning cases and native
+inverse cases. Further checks cover total counts exceeding floating-point
+range while normalized proportions remain valid, a variance term near
+`1e-300`, near-boundary no-pilot geometry, empty arrays, and rejection before
+an oversized broadcast allocation. Targeted Ruff, formatting and mypy passed;
+an independent final source/code review found no substantive blockers.
+
+Python rejects the native lost-sign example: the source returns approximately
+107.204 pairs for target power 0.01, but its forward power is approximately
+0.165025. The reference fixtures preserve that result as evidence, not as an
+expected Python solution. No full local package suite or CI expansion was
+used for this addition.

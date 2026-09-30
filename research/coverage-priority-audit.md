@@ -1,5 +1,15 @@
 # Statistical coverage priority audit — September 28, 2026
 
+September 30 matched-pairs update: STPLAN's archived Miettinen paired binary
+method now supplies power, bounded pilot-based inverse planning and the source's
+two no-pilot initial-size heuristics. Original Fortran and independent R
+references cover 12 cases; the Python API rejects a native squared-inverse
+result that misses its requested power. Stable calculations cover extreme
+pilot scaling and near-boundary variance. The method remains labeled as an
+inactive native menu option. All 25 active forward procedures were already
+available; automatic native bound/branch discovery and session/report parity
+remain separate gaps.
+
 September 30 inference/conduct update: Proportional Density now supports the
 paper's common-censoring profile test for arbitrary beta, with confidence
 limits obtained by inversion and an explicit common-censoring assertion.

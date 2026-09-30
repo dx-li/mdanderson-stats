@@ -1330,6 +1330,11 @@ from .stplan_historical_planning import (
     STPLANHistoricalAllocationPlan,
     stplan_historical_allocation_plan,
 )
+from .stplan_matched_pairs import (
+    STPLANMatchedPairsInitialSize,
+    stplan_matched_pairs_initial_size,
+    stplan_matched_pairs_power,
+)
 from .stplan_planning import STPLAN_METHODS, STPLANMethod, STPLANSolution, stplan_solve
 from .stplan_poisson import stplan_poisson_two_sample_power
 from .stplan_survival import (
@@ -1643,6 +1648,9 @@ __all__ = [
     "easycelltype_reference",
     "STPLANHistoricalAllocationPlan",
     "stplan_historical_allocation_plan",
+    "STPLANMatchedPairsInitialSize",
+    "stplan_matched_pairs_initial_size",
+    "stplan_matched_pairs_power",
     "STPLANPiecewiseModel",
     "stplan_exponential_hazard",
     "stplan_historical_control_hazard",

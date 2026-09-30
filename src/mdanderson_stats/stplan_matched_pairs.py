@@ -47,7 +47,7 @@ def _table_psi(
         raise ValueError("pilot table total must be at least 1")
     scaled = tuple(cell / scale for cell in cells)
     scaled_total = scaled[0] + scaled[1] + scaled[2] + scaled[3]
-    if np.any((scale < 1) & (scale * scaled_total < 1)):
+    if np.any(np.minimum(scale, 1.0) * scaled_total < 1):
         raise ValueError("pilot table total must be at least 1")
 
     # Normalize before addition so large finite counts cannot overflow. The

@@ -569,5 +569,41 @@
     "independent_reproduction": "Rscript tools/reference_stplan_historical_allocation.R tests/fixtures/stplan-historical-allocation-r.csv",
     "native_comparison": "All six original outputs agree with independent R within 1e-8 relative duration and 2e-8 absolute allocation (or 1e-6 relative allocation).",
     "original_source_redistributed": false
+  },
+  "matched_pairs_reference": {
+    "harness": "tools/reference_stplan_matched_pairs.f90",
+    "fixture": "tests/fixtures/stplan-matched-pairs-native.csv",
+    "cases": 12,
+    "source_files": [
+      "qmpd.f",
+      "pmpd.f",
+      "psimpd.f",
+      "fmpd.f",
+      "qmfinv.f",
+      "qdzero.f",
+      "qrange.f",
+      "dinvnr.f",
+      "cumnor.f",
+      "d1mach.f",
+      "stvaln.f",
+      "devlpl.f"
+    ],
+    "flags": [
+      "-std=legacy",
+      "-fallow-argument-mismatch"
+    ],
+    "native_reproduction": "Compile the native harness and the listed original STPLAN 4.5 SOURCE files, in order, with gfortran and the listed flags; run the resulting executable to produce the native CSV. The harness supplies console-unit values for QRANGE and reconstructs no-pilot power from source psi after QMPD returns its size. All native numerical routines are unchanged.",
+    "independent_harness": "tools/reference_stplan_matched_pairs.R",
+    "independent_fixture": "tests/fixtures/stplan-matched-pairs-reference.csv",
+    "independent_reproduction": "Rscript tools/reference_stplan_matched_pairs.R > tests/fixtures/stplan-matched-pairs-reference.csv",
+    "independent_method": "Base-R normal CDF and quantiles, direct pilot variance expression, and numerical roots for valid inverse questions; the low-target native closed-form defect is independently reconstructed and forward-checked.",
+    "native_comparison": "Inverse effect differs by 1.98e-8 and its attained power by 8.94e-8 within native QMFINV tolerance. A requested no-pilot power of 0.01 returns native n=107.20425279175998 but attained power 0.16502500436240453; Python rejects that lost-sign inverse.",
+    "python_validation": [
+      "tests/test_stplan_matched_pairs.py",
+      "tests/test_stplan_matched_pairs_references.py"
+    ],
+    "audit": "research/stplan-matched-pairs-reference-audit.md",
+    "native_menu_status": "CALL ampd is commented out in stplan.f90; this is archived legacy coverage, separate from the 25 active forward procedures.",
+    "original_source_redistributed": false
   }
 }
