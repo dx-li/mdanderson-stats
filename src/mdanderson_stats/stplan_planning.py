@@ -38,6 +38,7 @@ from .stplan_discrete import (
     stplan_responder_normal_approximation_power,
     stplan_retention_probability,
 )
+from .stplan_matched_pairs import stplan_matched_pairs_power
 from .stplan_poisson import stplan_poisson_two_sample_power
 from .stplan_survival import (
     stplan_censored_exponential_one_sample_power,
@@ -51,7 +52,9 @@ from .survival_sample_size import exponential_event_probability
 _MAX_EVALUATIONS = 20_000
 _MAX_VECTOR_SIZE = 200_000
 _MAX_CUMULATIVE_WORK = 5_000_000
-_FORBIDDEN_COMPUTE = frozenset({"sides", "tail_tolerance", "continued_followup", "model_arm"})
+_FORBIDDEN_COMPUTE = frozenset(
+    {"sides", "tail_tolerance", "continued_followup", "model_arm", "z11", "z10", "z01", "z00"}
+)
 type ForwardFunction = Callable[..., ArrayLike]
 
 
@@ -122,6 +125,7 @@ STPLAN_METHODS: Mapping[str, STPLANMethod] = MappingProxyType(
             (stplan_correlation_two_sample_power, frozenset(), (("n1", "n2"),), ()),
             (stplan_case_control_power, frozenset(), (("n_cases", "n_controls"),), ()),
             (stplan_matched_case_control_power, frozenset({"n_pairs"}), (), ()),
+            (stplan_matched_pairs_power, frozenset(), (), ()),
             (stplan_poisson_two_sample_power, frozenset(), (), ()),
             (stplan_censored_exponential_one_sample_power, frozenset(), (), ()),
             (stplan_george_desu_survival_power, frozenset(), (), ()),

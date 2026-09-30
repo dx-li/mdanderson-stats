@@ -33,7 +33,7 @@ def test_scalar_continuous_solve_returns_forward_verified_inputs():
         rtol=0,
         atol=1e-14,
     )
-    assert len(STPLAN_METHODS) == 25
+    assert len(STPLAN_METHODS) == 26
 
 
 def test_exact_binomial_sample_size_returns_first_attaining_integer():
