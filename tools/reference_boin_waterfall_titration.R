@@ -18,6 +18,7 @@ run_titration_case <- function(name, prelude, events, budgets=c(4L,2L),
   prelude_seen <- FALSE
   local_trace <- local_subtrials <- list()
   uniforms <- numeric()
+  final_native_excluded <- NULL
   record <- function(cell, patients, toxicities, phase, append_uniform=TRUE) {
     local_trace[[length(local_trace)+1L]] <<- data.frame(case=name,
       subtrial=current_subtrial, phase=phase,
@@ -62,7 +63,11 @@ run_titration_case <- function(name, prelude, events, budgets=c(4L,2L),
       toxicities=flat(result$ntox), eliminated=flat(result$elimi))
     result
   }
-  native$reference_fit <- function(x,w,warn=TRUE) enumerated_biviso(x,w)
+  native$reference_fit <- function(x,w,warn=TRUE) {
+    # Original wrapper replaces precisely its excluded cells by1.1 here.
+    final_native_excluded <<- x>1
+    enumerated_biviso(x,w)
+  }
   out <- native$get.oc.comb.waterfall(matrix(.3,2,3),target=.3,ncohort=budgets,
     cohortsize=cohort_size,n.earlystop=12,ntrial=1,titration=TRUE)
   trace <- do.call(rbind,local_trace)
@@ -83,6 +88,7 @@ run_titration_case <- function(name, prelude, events, budgets=c(4L,2L),
     actual_total_patients=sum(trace$patients),
     actual_total_toxicities=sum(trace$toxicities),
     native_patients=flat(out$npatients), native_toxicities=flat(out$ntox),
+    native_eliminated=flat(final_native_excluded),
     native_selected=flat(out$selpercent/100))
   traces[[length(traces)+1L]] <<- trace
   subtrials[[length(subtrials)+1L]] <<- do.call(rbind,local_subtrials)
