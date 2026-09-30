@@ -7,7 +7,10 @@ from numpy.typing import ArrayLike
 
 from ._cdflib import _freeze
 from ._validation import FloatArray, count, finite
+from .parallel_phase12_importance import Phase12ImportanceFit
 from .parallel_phase12_model import Phase12ModelFit
+
+_Phase12DecisionFit = Phase12ModelFit | Phase12ImportanceFit
 
 
 def _mask(value: ArrayLike, name: str) -> np.ndarray:
@@ -38,7 +41,7 @@ class Phase12SourceDecision:
 
 
 def phase12_source_decision(
-    fit: Phase12ModelFit,
+    fit: _Phase12DecisionFit,
     enrolled: ArrayLike,
     *,
     phase_one_admissible: ArrayLike,
@@ -52,8 +55,8 @@ def phase12_source_decision(
     candidates and comparators. `selected_eligible` exposes this source behavior.
     This is a source-rule evaluator, not a complete calendar trial controller.
     """
-    if not isinstance(fit, Phase12ModelFit):
-        raise TypeError("fit must be a Phase12ModelFit")
+    if not isinstance(fit, (Phase12ModelFit, Phase12ImportanceFit)):
+        raise TypeError("fit must be a Phase12ModelFit or Phase12ImportanceFit")
     initial = _mask(phase_one_admissible, "phase_one_admissible")
     shut = ~initial if closed is None else _mask(closed, "closed")
     if np.any(~initial & ~shut):
@@ -119,15 +122,15 @@ def phase12_source_decision(
 
 
 def phase12_source_final_selection(
-    fit: Phase12ModelFit, *, closed: ArrayLike, suspended: ArrayLike
+    fit: _Phase12DecisionFit, *, closed: ArrayLike, suspended: ArrayLike
 ) -> int | None:
     """Archived PickWinner: open, unsuspended maximum future probability > .90.
 
     The source uses stopping-rule slot 2 (.90), not its separately configured
     but unused future-study slot 4 (.80). Native first-dose tie order is retained.
     """
-    if not isinstance(fit, Phase12ModelFit):
-        raise TypeError("fit must be a Phase12ModelFit")
+    if not isinstance(fit, (Phase12ModelFit, Phase12ImportanceFit)):
+        raise TypeError("fit must be a Phase12ModelFit or Phase12ImportanceFit")
     shut, paused = _mask(closed, "closed"), _mask(suspended, "suspended")
     future = _probability(fit.future_probability, (6,), "future_probability")
     candidates = np.flatnonzero(~shut & ~paused & (future > 0.90))
