@@ -10,10 +10,36 @@ from ._cdflib import _freeze
 from ._validation import FloatArray
 from .hierarchical_binomial import summarize_chains
 from .u2oet import _real, u2oet_standardize
+from .u2oet_adaptive_precision import (
+    _MAX_LIVE_CELLS as _MAX_ADAPTIVE_LIVE_CELLS,
+)
+from .u2oet_adaptive_precision import (
+    _MAX_RETAINED_JOINT_CELLS as _MAX_ADAPTIVE_RETAINED_CELLS,
+)
+from .u2oet_adaptive_precision import (
+    _MAX_WORK as _MAX_ADAPTIVE_FIT_WORK,
+)
+from .u2oet_adaptive_precision import (
+    _adaptive_resource_plan,
+    fit_u2oet_adaptive_precision,
+)
 from .u2oet_decision import U2OETCriteria, U2OETPosterior, _integer, u2oet_posterior
 from .u2oet_fit import fit_u2oet, u2oet_parameter_names
 from .u2oet_patients import U2OETPatients, u2oet_next_patient, u2oet_patients
 from .u2oet_scenario import U2OETScenario
+
+_MAX_ADAPTIVE_TRIAL_WORK = 500_000_000_000
+
+
+@dataclass(frozen=True)
+class U2OETAdaptiveSettings:
+    """Explicit adaptive MCMC precision target, draw limits and trial work cap."""
+
+    target_mcse_ratio: float
+    initial_draws: int
+    max_draws_per_chain: int
+    batch_draws: int = 256
+    max_total_work: int = 100_000_000_000
 
 
 @dataclass(frozen=True)
@@ -27,6 +53,9 @@ class U2OETTrialDecision:
     max_split_rhat: float
     continuing_cohort: bool
     reason: str
+    precision_target_met: bool | None = None
+    precision_draws_per_chain: int | None = None
+    corner_mcse_ratio: FloatArray | None = None
 
 
 @dataclass(frozen=True)
@@ -48,6 +77,36 @@ class U2OETTrial:
     posterior_seed: int
     final_scope: str
     design_json: str = ""
+    final_precision_target_met: bool | None = None
+    final_precision_draws_per_chain: int | None = None
+    final_corner_mcse_ratio: FloatArray | None = None
+
+
+def _adaptive_settings(
+    settings: U2OETAdaptiveSettings | None,
+    *,
+    warmup: int,
+) -> U2OETAdaptiveSettings | None:
+    if settings is None:
+        return None
+    if not isinstance(settings, U2OETAdaptiveSettings):
+        raise ValueError("adaptive_precision must be U2OETAdaptiveSettings or None")
+    target = _real(settings.target_mcse_ratio, "adaptive target_mcse_ratio")
+    if target.ndim != 0 or not 0.001 <= float(target) <= 0.05:
+        raise ValueError("adaptive target_mcse_ratio must lie in [.001, .05]")
+    initial = _integer(settings.initial_draws, "adaptive initial_draws", 8, 100_000)
+    maximum = _integer(settings.max_draws_per_chain, "adaptive max_draws_per_chain", 8, 100_000)
+    batch = _integer(settings.batch_draws, "adaptive batch_draws", 8, 100_000)
+    total_work = _integer(
+        settings.max_total_work, "adaptive max_total_work", 1, _MAX_ADAPTIVE_TRIAL_WORK
+    )
+    if warmup > 10_000:
+        raise ValueError("adaptive warmup must not exceed 10000")
+    if initial < warmup:
+        raise ValueError("adaptive initial_draws must be at least warmup")
+    if initial > maximum:
+        raise ValueError("adaptive initial_draws must not exceed max_draws_per_chain")
+    return U2OETAdaptiveSettings(float(target), initial, maximum, batch, total_work)
 
 
 def _window(value: ArrayLike, name: str) -> FloatArray:
@@ -82,6 +141,7 @@ def simulate_u2oet_trial(
     warmup: int = 500,
     chains: int = 4,
     coordinate_updates: bool = True,
+    adaptive_precision: U2OETAdaptiveSettings | None = None,
     rng: np.random.Generator,
 ) -> U2OETTrial:
     """Simulate arrivals, outcomes, cohort decisions and complete final follow-up.
@@ -134,42 +194,73 @@ def simulate_u2oet_trial(
     draws = _integer(draws, "draws", 8, 100_000)
     warmup = _integer(warmup, "warmup", 0, 100_000)
     chains = _integer(chains, "chains", 2, 16)
-    if draws * chains * scenario.joint.size > 20_000_000:
+    adaptive = _adaptive_settings(adaptive_precision, warmup=warmup)
+    if adaptive is None and draws * chains * scenario.joint.size > 20_000_000:
         raise ValueError("retained joint draws per posterior exceed 20 million cells")
     ew, tw = (
         _window(efficacy_window, "efficacy_window"),
         _window(toxicity_window, "toxicity_window"),
     )
+    adaptive_plan = None
+    adaptive_fit_work_cap = None
+    if adaptive is not None:
+        adaptive_plan = _adaptive_resource_plan(
+            joint_shape=shape,
+            dimension=len(names) - 1,
+            coordinate_updates=bool(coordinate_updates),
+            warmup=warmup,
+            chains=chains,
+            initial_draws=adaptive.initial_draws,
+            max_draws_per_chain=adaptive.max_draws_per_chain,
+            batch_draws=adaptive.batch_draws,
+        )
+        if adaptive_plan.work > _MAX_ADAPTIVE_FIT_WORK:
+            raise ValueError("one adaptive fit exceeds the standalone sampler work cap")
+        if adaptive_plan.retained_joint_cells > _MAX_ADAPTIVE_RETAINED_CELLS:
+            raise ValueError("one adaptive fit exceeds the retained posterior cell cap")
+        if adaptive_plan.live_cells > _MAX_ADAPTIVE_LIVE_CELLS:
+            raise ValueError("one adaptive fit exceeds the live posterior cell cap")
+        whole_trial_work = maximum * adaptive_plan.work
+        if whole_trial_work > adaptive.max_total_work:
+            raise ValueError(
+                "maximum adaptive fit count exceeds adaptive max_total_work before sampling"
+            )
+        adaptive_fit_work_cap = min(_MAX_ADAPTIVE_FIT_WORK, adaptive.max_total_work // maximum)
+        if adaptive_plan.work > adaptive_fit_work_cap:
+            raise ValueError("per-fit adaptive work exceeds the divided whole-trial work cap")
     gap = _real(mean_interarrival, "mean_interarrival")
     if gap.ndim or gap <= 0:
         raise ValueError("mean_interarrival must be a positive scalar")
+    design = {
+        "format_version": 1,
+        "doses1": d1.tolist(),
+        "doses2": d2.tolist(),
+        "scenario_joint": scenario.joint.tolist(),
+        "utility": u.tolist(),
+        "criteria": asdict(criteria),
+        "prior_mean": mu.tolist(),
+        "prior_sd": sd.tolist(),
+        "initial": first,
+        "max_patients": maximum,
+        "cohort_size": cohort,
+        "surplus": surplus,
+        "top": top,
+        "greedy": bool(greedy),
+        "efficacy_window": ew.tolist(),
+        "toxicity_window": tw.tolist(),
+        "mean_interarrival": float(gap),
+        "final_scope": final_scope,
+        "model": model,
+        "centering": centering,
+        "draws": draws,
+        "warmup": warmup,
+        "chains": chains,
+        "coordinate_updates": bool(coordinate_updates),
+    }
+    if adaptive is not None:
+        design["adaptive_precision"] = asdict(adaptive)
     design_json = json.dumps(
-        {
-            "format_version": 1,
-            "doses1": d1.tolist(),
-            "doses2": d2.tolist(),
-            "scenario_joint": scenario.joint.tolist(),
-            "utility": u.tolist(),
-            "criteria": asdict(criteria),
-            "prior_mean": mu.tolist(),
-            "prior_sd": sd.tolist(),
-            "initial": first,
-            "max_patients": maximum,
-            "cohort_size": cohort,
-            "surplus": surplus,
-            "top": top,
-            "greedy": bool(greedy),
-            "efficacy_window": ew.tolist(),
-            "toxicity_window": tw.tolist(),
-            "mean_interarrival": float(gap),
-            "final_scope": final_scope,
-            "model": model,
-            "centering": centering,
-            "draws": draws,
-            "warmup": warmup,
-            "chains": chains,
-            "coordinate_updates": bool(coordinate_updates),
-        },
+        design,
         sort_keys=True,
         separators=(",", ":"),
         allow_nan=False,
@@ -185,6 +276,7 @@ def simulate_u2oet_trial(
     posterior: U2OETPosterior | None = None
     rhat = np.nan
     fits = 0
+    precision_record: tuple[bool, int, FloatArray] | None = None
 
     def snapshot(now: float) -> U2OETPatients:
         rows = np.array(records, dtype=float).reshape(-1, 5)
@@ -195,34 +287,71 @@ def simulate_u2oet_trial(
             rows, dose_counts=(d1.size, d2.size), efficacy_levels=shape[2], toxicity_levels=shape[3]
         )
 
-    def update(data: U2OETPatients) -> tuple[U2OETPosterior, float]:
-        nonlocal posterior, cached_counts, fits, rhat
+    def update(
+        data: U2OETPatients,
+    ) -> tuple[U2OETPosterior, float, tuple[bool, int, FloatArray] | None]:
+        nonlocal posterior, cached_counts, fits, rhat, precision_record
         if cached_counts is None or not (
             np.array_equal(data.complete, cached_counts[0])
             and np.array_equal(data.toxicity_only, cached_counts[1])
         ):
-            fit = fit_u2oet(
-                d1,
-                d2,
-                data.complete,
-                toxicity_only=data.toxicity_only,
-                prior_mean=mu,
-                prior_sd=sd,
-                model=model,
-                centering=centering,
-                draws=draws,
-                warmup=warmup,
-                chains=chains,
-                coordinate_updates=coordinate_updates,
-                rng=fit_rng,
-            )
+            if adaptive is None:
+                fit = fit_u2oet(
+                    d1,
+                    d2,
+                    data.complete,
+                    toxicity_only=data.toxicity_only,
+                    prior_mean=mu,
+                    prior_sd=sd,
+                    model=model,
+                    centering=centering,
+                    draws=draws,
+                    warmup=warmup,
+                    chains=chains,
+                    coordinate_updates=coordinate_updates,
+                    rng=fit_rng,
+                )
+                precision_record = None
+            else:
+                assert adaptive_plan is not None and adaptive_fit_work_cap is not None
+                adaptive_fit = fit_u2oet_adaptive_precision(
+                    d1,
+                    d2,
+                    data.complete,
+                    toxicity_only=data.toxicity_only,
+                    prior_mean=mu,
+                    prior_sd=sd,
+                    utility=u,
+                    target_mcse_ratio=adaptive.target_mcse_ratio,
+                    initial_draws=adaptive.initial_draws,
+                    max_draws_per_chain=adaptive.max_draws_per_chain,
+                    batch_draws=adaptive.batch_draws,
+                    model=model,
+                    centering=centering,
+                    warmup=warmup,
+                    chains=chains,
+                    coordinate_updates=coordinate_updates,
+                    max_work=adaptive_fit_work_cap,
+                    rng=fit_rng,
+                )
+                if not adaptive_fit.target_met:
+                    raise ArithmeticError(
+                        "adaptive posterior reached its draw cap without meeting "
+                        "the corner utility precision target; no decision was made"
+                    )
+                fit = adaptive_fit.fit
+                precision_record = (
+                    True,
+                    adaptive_fit.draws_per_chain,
+                    _freeze(adaptive_fit.mcse_ratio),
+                )
             posterior = u2oet_posterior(fit.joint.reshape(-1, *shape), u, criteria=criteria)
             diagnostics = summarize_chains(fit.parameters)
             rhat = float(np.max(diagnostics.split_rhat))
             cached_counts = (data.complete, data.toxicity_only)
             fits += 1
         assert posterior is not None
-        return posterior, rhat
+        return posterior, rhat, precision_record
 
     now = 0.0
     early = False
@@ -235,7 +364,7 @@ def simulate_u2oet_trial(
                 raise ArithmeticError("arrival times are not representable as strictly increasing")
             now = next_time
             data = snapshot(now)
-            current, diagnostic = update(data)
+            current, diagnostic, decision_precision = update(data)
             decision = u2oet_next_patient(
                 current,
                 data,
@@ -257,6 +386,9 @@ def simulate_u2oet_trial(
                     diagnostic,
                     decision.continuing_cohort,
                     decision.reason,
+                    None if decision_precision is None else decision_precision[0],
+                    None if decision_precision is None else decision_precision[1],
+                    None if decision_precision is None else decision_precision[2],
                 )
             )
             if not np.any(decision.probabilities):
@@ -275,7 +407,7 @@ def simulate_u2oet_trial(
         times.append(observed)
     analysis_time = max(now, float(np.max(times)))
     final_data = snapshot(analysis_time)
-    final, final_rhat = update(final_data)
+    final, final_rhat, final_precision = update(final_data)
     acceptable = final.acceptable.copy()
     if final_scope == "tried":
         acceptable &= final_data.treated > 0
@@ -299,4 +431,7 @@ def simulate_u2oet_trial(
         int(seeds[1]),
         final_scope,
         design_json,
+        None if final_precision is None else final_precision[0],
+        None if final_precision is None else final_precision[1],
+        None if final_precision is None else final_precision[2],
     )

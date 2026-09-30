@@ -30,6 +30,59 @@ _MAX_WORK = 20_000_000_000
 
 
 @dataclass(frozen=True)
+class _AdaptiveResourcePlan:
+    batch_sizes: tuple[int, ...]
+    effective_draws: int
+    work: int
+    retained_joint_cells: int
+    live_cells: int
+
+
+def _adaptive_resource_plan(
+    *,
+    joint_shape: tuple[int, ...],
+    dimension: int,
+    coordinate_updates: bool,
+    warmup: int,
+    chains: int,
+    initial_draws: int,
+    max_draws_per_chain: int,
+    batch_draws: int,
+) -> _AdaptiveResourcePlan:
+    """Shared pure chunk/work/memory planning for standalone and calendar fits."""
+    joint_cells = int(np.prod(joint_shape, dtype=np.int64))
+    schedule: list[int] = []
+    remaining = max_draws_per_chain - initial_draws
+    while remaining >= 8:
+        size = min(batch_draws, remaining)
+        tail = remaining - size
+        if 0 < tail < 8:
+            size += tail
+        schedule.append(size)
+        remaining -= size
+    effective_draws = initial_draws + sum(schedule)
+    groups = 2 + (dimension if coordinate_updates else 0)
+    chunks = 1 + len(schedule)
+    work = chains * (warmup + effective_draws) * (groups * 1000 + 3) * joint_cells
+    work += chunks * chains * joint_cells
+    work += chunks * chains * effective_draws * 4
+    retained_joint_cells = chains * effective_draws * joint_cells
+    live_cells = (
+        chains
+        * effective_draws
+        * (
+            3 * (joint_cells + dimension + 2)  # retained chunks and concatenate/freeze copies
+            + 4  # retained corner utility traces
+            + 16  # normalized traces, batch means, and dispersion scratch
+            + 8  # split-Rhat input, sort, interval, split, and batch scratch
+        )
+    )
+    return _AdaptiveResourcePlan(
+        tuple(schedule), effective_draws, work, retained_joint_cells, live_cells
+    )
+
+
+@dataclass(frozen=True)
 class U2OETAdaptivePrecisionResult:
     """Adaptive fit and per-chain MC precision for the four grid corners."""
 
@@ -246,51 +299,34 @@ def fit_u2oet_adaptive_precision(
     )
     names = u2oet_parameter_names(n.shape[2], n.shape[3], model=model)
     dimension = len(names) - 1
-    groups = 2 + (dimension if coordinate_updates else 0)
-    schedule: list[int] = []
-    remaining = max_draws_per_chain - initial_draws
-    while remaining >= 8:
-        size = min(batch_draws, remaining)
-        tail = remaining - size
-        if 0 < tail < 8:
-            size += tail
-        schedule.append(size)
-        remaining -= size
-    effective_cap = initial_draws + sum(schedule)
-    iterations = warmup + effective_cap
-    work = chains * iterations * (groups * 1000 + 3) * n.size
-    chunks = 1 + len(schedule)
-    work += chunks * chains * n.size
-    work += chunks * chains * effective_cap * 4
-    if work > max_work:
-        raise ValueError("worst-case adaptive sampler work exceeds max_work")
-    retained_cells = chains * effective_cap * n.size
-    if retained_cells > _MAX_RETAINED_JOINT_CELLS:
-        raise ValueError("adaptive retained posterior exceeds the 4-million-cell memory cap")
-    live_cells = (
-        chains
-        * effective_cap
-        * (
-            3 * (n.size + dimension + 2)  # retained chunks plus concatenate/freeze copies
-            + 4  # retained corner utility traces
-            + 16  # normalized traces, batch means, and dispersion scratch
-            + 8  # split-Rhat input, sort, interval, split, and batch scratch
-        )
+    plan = _adaptive_resource_plan(
+        joint_shape=n.shape,
+        dimension=dimension,
+        coordinate_updates=bool(coordinate_updates),
+        warmup=warmup,
+        chains=chains,
+        initial_draws=initial_draws,
+        max_draws_per_chain=max_draws_per_chain,
+        batch_draws=batch_draws,
     )
-    if live_cells > _MAX_LIVE_CELLS:
+    if plan.work > max_work:
+        raise ValueError("worst-case adaptive sampler work exceeds max_work")
+    if plan.retained_joint_cells > _MAX_RETAINED_JOINT_CELLS:
+        raise ValueError("adaptive retained posterior exceeds the 4-million-cell memory cap")
+    if plan.live_cells > _MAX_LIVE_CELLS:
         raise ValueError("adaptive retained and temporary arrays exceed the live-cell memory cap")
 
     parameter_parts: list[FloatArray] = []
     joint_parts: list[FloatArray] = []
     likelihood_parts: list[FloatArray] = []
-    utility_values = np.empty((chains, effective_cap, 4))
+    utility_values = np.empty((chains, plan.effective_draws, 4))
     acceptance_weighted = np.zeros(chains)
     evaluations = 0
     retained = 0
     warmup_fit = warmup
     current_initial = initial
-    pending_sizes = iter(schedule)
-    while retained < effective_cap:
+    pending_sizes = iter(plan.batch_sizes)
+    while retained < plan.effective_draws:
         requested = initial_draws if retained == 0 else next(pending_sizes)
         batch = fit_u2oet(
             d1,
