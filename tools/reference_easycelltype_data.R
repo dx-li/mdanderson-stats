@@ -2,7 +2,7 @@
 # Input: author R/sysdata.rda, Git blob 788349b5140d932a76b988441ffb01e250cb64e5.
 # Verify the input SHA-256 before running:
 # 845023954bf3fb6d7426bd7544e095cb7306b42eec5912f9733f27daac8be77b.
-# Outputs are caller-owned reference files; this project does not bundle them.
+# Exports support local files and the pinned bundled-reference conversion.
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) != 2L) stop("Supply sysdata.rda and a CSV output directory")
 source <- new.env(parent = emptyenv())

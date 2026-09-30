@@ -1551,8 +1551,9 @@ scores, adaptive multilevel tail probabilities, uncertainty and BH adjustment.
 GSEA hard/soft labels preserve ties and DOSE contributing genes.
 [Reference loading](docs/easycelltype-reference.md) filters locally supplied
 author-format CSV or gzip tables by species and tissue while preserving source
-rows and recording a file checksum. Bundled databases, gene-ID conversion and
-native plots remain open.
+rows and recording a file checksum. [Bundled reference tables](docs/easycelltype-builtin-reference.md)
+provide the pinned EasyCellType 1.5.4 CellMarker, Clustermole and Panglao snapshots
+without R or a download. Gene-ID conversion and native plots remain open.
 
 [SurvivalContour Cox surfaces](docs/survival-contour.md) fits ordinary or
 stratified Efron/Breslow models for right-censored data and returns survival

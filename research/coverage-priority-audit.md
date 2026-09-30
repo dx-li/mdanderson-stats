@@ -1,5 +1,21 @@
 # Statistical coverage priority audit — September 28, 2026
 
+September 30 EasyCellType update: the package now includes the author's pinned
+CellMarker, Clustermole and PanglaoDB reference tables, so annotation can start
+without R or a separate download. The bounded loader verifies snapshot hashes
+and full row counts, and the packaged data exactly match all 236,219 cached
+author-export rows. Gene-symbol conversion still requires a versioned mapping;
+no upstream database release identifier or mapping policy was invented.
+
+A further review of cached sources across the remaining partial entries found
+that many documented gaps concern native files, reports, plots or unspecified
+calibration defaults. In the surveyed entries, the next missing scientific
+workflows depend on unavailable equations, coefficients, baselines or operational
+rules. Reproducing extra dependency features without evidence that the original
+application exposes them does not increase source-software method coverage.
+Catalog counts remain 63 implemented, 67 partial and eight pending; these are
+software-workflow counts, not a percentage of completed statistical methods.
+
 September 30 Brier-gradient forest update: optional scalar `bs.gradient`
 splitting now follows the pinned RF-SRC C event-grid, shared failure-weight
 and strict censor-time conventions. Compiled unchanged C helpers and an

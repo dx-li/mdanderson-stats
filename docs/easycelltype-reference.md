@@ -1,7 +1,8 @@
 # EasyCellType local reference tables
 
-The loader selects database, species and tissue rows from a caller-provided
-author-format CSV or gzip CSV. It does not download or bundle marker tables.
+The path-based loader selects database, species and tissue rows from a
+caller-provided author-format CSV or gzip CSV. For the packaged author snapshots,
+use the [bundled-reference loader](easycelltype-builtin-reference.md).
 This small example uses a temporary synthetic table, so it can run from an
 installed package without private or external data:
 
@@ -70,4 +71,5 @@ writes `cellmarker.csv`, `clustermole.csv` and `panglao.csv`, plus small filtere
 reference files. Pass the desired CSV to `easycelltype_reference` and record its
 version and source in the metadata arguments. Python reference loading and
 annotation do not require R. Use each reference table under its applicable
-terms; the combined marker datasets are not redistributed with this package.
+terms. The packaged references are fixed exports of the pinned author snapshot;
+this optional exporter is for preparing local files from an original R asset.

@@ -6,10 +6,7 @@ returned immutable reference can be passed directly to the existing Fisher or
 GSEA workflows:
 
 ```python
-from mdanderson_stats.easycelltype import easycelltype_fisher
-from mdanderson_stats.easycelltype_builtin_reference import (
-    easycelltype_builtin_reference,
-)
+from mdanderson_stats import easycelltype_builtin_reference, easycelltype_fisher
 
 reference = easycelltype_builtin_reference(
     "cellmarker", "Human", tissues=("Kidney",)
@@ -21,6 +18,8 @@ result = easycelltype_fisher(
     reference_genes=reference.genes,
     reference_cell_types=reference.cell_types,
 )
+assert reference.source_name == "cellmarker.csv.gz"
+print(reference.selected_rows, result.clusters[0].cluster)
 ```
 
 The identifiers are Entrez IDs. This loader does not map symbols, download

@@ -4623,7 +4623,8 @@
         "Ranked GSEA signed normalization, source-specific single/multiple-set pilots, adaptive multilevel tail inference, uncertainty diagnostics, BH adjustment and the dual p-value cutoff with bounded serial work and memory.",
         "GSEA hard/soft cell-type labels using raw-p minimum/fifth-position cutoffs with all ties, source DOSE ordering, hard precedence and separate cluster identities.",
         "easycelltype_reference loads bounded local CSV/gzip author-format tables, filters Human/Mouse and species-specific tissues, preserves association order/duplicates including blank organs, and records file SHA-256 plus caller provenance; docs/easycelltype-reference.md.",
-        "Remaining: bundled CellMarker/Clustermole/PanglaoDB references, gene-ID conversion, native plots and app workflow parity."
+        "easycelltype_builtin_reference supplies pinned EasyCellType 1.5.4 CellMarker, Clustermole and PanglaoDB references without R or network access, with source/gzip hashes, species/tissue filtering and preserved row multiplicity; docs/easycelltype-builtin-reference.md.",
+        "Remaining: gene-ID conversion, native plots and app workflow parity."
       ],
       "validation": [
         "Nine original-R author-source cases, including duplicates, ties, top-five ranking, strict enrichment gate, empty overlap and a 1.84e-31 tail; tools/reference_easycelltype.R.",
@@ -4632,7 +4633,8 @@
         "Thirty unchanged-R fgsea/DOSE observed-score/core references across eight scenarios, including duplicate IDs, zero weights, signed modes and size filters; tools/reference_easycelltype_gsea.R and tests/test_easycelltype_gsea.py. Extreme non-hit scores do not erase small relative hit weights.",
         "66 native C++ cumulative scores, 66 unchanged R single-set scores and 22 native splitter score pairs; bounded twelve-seed adaptive tail comparison, deterministic replay and explicit resource/undefined-weight checks; research/easycelltype-gsea-audit.md.",
         "Source-backed GSEA label tests cover minimum/fifth-position ties, cross-cluster hard ordering, unavailable rows and malformed evidence; public inference-to-label example passes.",
-        "Reference loading preserves all 236,219 author association rows across the three tables and matches six independent R species/tissue selections exactly; four focused checks, synthetic installed-package example and compressed-line resource guard pass; research/easycelltype-reference-audit.md."
+        "Reference loading preserves all 236,219 author association rows across the three tables and matches six independent R species/tissue selections exactly; four focused checks, synthetic installed-package example and compressed-line resource guard pass; research/easycelltype-reference-audit.md.",
+        "Nine focused bundled/local-reference and Fisher checks pass; all 236,219 bundled rows decompress byte-for-byte to the cached author CSV exports, with original R-object, plain CSV and compressed-asset hashes verified; research/easycelltype-builtin-reference-audit.md."
       ]
     },
     {

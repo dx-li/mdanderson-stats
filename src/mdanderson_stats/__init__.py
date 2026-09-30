@@ -682,6 +682,7 @@ from .easycelltype import (
     easycelltype_fisher,
     easycelltype_labels,
 )
+from .easycelltype_builtin_reference import easycelltype_builtin_reference
 from .easycelltype_gsea import (
     EasyCellTypeGSEACluster,
     EasyCellTypeGSEAResult,
@@ -1652,6 +1653,7 @@ __all__ = [
     "easycelltype_labels",
     "EasyCellTypeReference",
     "easycelltype_reference",
+    "easycelltype_builtin_reference",
     "STPLANHistoricalAllocationPlan",
     "stplan_historical_allocation_plan",
     "STPLANMatchedPairsInitialSize",

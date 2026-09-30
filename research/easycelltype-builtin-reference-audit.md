@@ -29,8 +29,9 @@ Attribution and licensing:
 
 - EasyCellType 1.5.4 declares Artistic-2.0 in its
   [DESCRIPTION](https://github.com/rx-li/EasyCellType/blob/e85e8187c540f66994b5ca12fe95f5d9eb95f1f5/DESCRIPTION).
-- CellMarker is attributed to Hu et al. (2023),
-  [CellMarker 2.0](https://doi.org/10.1093/nar/gkac947). The particular
+- CellMarker is attributed to Zhang et al. (2019),
+  [CellMarker](https://doi.org/10.1093/nar/gky900); Hu et al. (2023)
+  describe the later [CellMarker 2.0](https://doi.org/10.1093/nar/gkac947). The particular
   embedded release and a data-specific license were not recorded in the
   EasyCellType snapshot.
 - Clustermole is attributed to Dolgalev (2021),
@@ -49,3 +50,19 @@ The packaged asset is derived from the pinned EasyCellType package's
 Artistic-2.0-declared data object. Citations above preserve known upstream
 provenance; no paper or website license is inferred to govern a data table when
 the pinned snapshot does not record that fact.
+
+
+## Focused validation
+
+Nine focused checks across the bundled loader, local-reference loader and Fisher
+annotation pass, including annotation from the real CellMarker Kidney subset.
+Ruff check/format and targeted mypy pass in the implementation checkout. That
+sequence peaked at 137.30 MiB resident memory and reported zero swaps.
+
+An independent streaming check verified the original R object's pinned hash,
+each plain CSV hash, each packaged gzip hash, deterministic gzip headers, and
+byte equality of every decompressed asset with its cached author CSV export.
+The three tables contain 236,219 association rows in 968,453 compressed bytes.
+This comparison took 0.018 seconds, peaked at 29.77 MiB and reported zero swaps.
+The earlier local-reference audit provides the original R row/filter comparison;
+this addition preserves those same table bytes and annotation algorithms.

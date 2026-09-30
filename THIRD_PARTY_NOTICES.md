@@ -51,9 +51,12 @@ package or an endorsed replacement. `easycelltype_gsea_multilevel.py` extends
 this with normalized scores and adaptive multilevel probabilities, while
 `easycelltype_gsea_labels.py` supplies hard/soft label processing.
 `easycelltype_reference.py` implements the author's species/tissue filtering
-for caller-supplied tables; `tools/reference_easycelltype_data.R` exports the
-pinned author tables locally without bundling their association rows. Applicable
-upstream terms below are retained for these adapted components too.
+for caller-supplied tables. `easycelltype_builtin_reference.py` additionally
+loads three packaged reference tables from EasyCellType 1.5.4 at commit
+`e85e8187c540f66994b5ca12fe95f5d9eb95f1f5`. Its Artistic-2.0-declared
+`R/sysdata.rda` is converted to CSV with `tools/reference_easycelltype_data.R`
+and compressed without changing the rows, fields or order. The converted
+tables retain applicable upstream terms and are not relicensed as MIT.
 
 fgsea is copyright 2016–2019 Alexey Sergushichev and distributed under MIT terms,
 preserved in [notices/fgsea-MIT.txt](notices/fgsea-MIT.txt). DOSE and
@@ -65,9 +68,25 @@ from the local R distribution's license collection. Applicable upstream terms
 are retained for adapted portions. This modified Python work is distributed
 under the distinct name mdanderson-stats with its source available.
 
-The [source audit](research/easycelltype-gsea-audit.md) records exact revisions,
-file hashes, behavioral differences and original-R reference execution.
-Upstream package source, executables and marker databases are not bundled.
+The marker resources are credited to Zhang et al. (2019), CellMarker
+([doi:10.1093/nar/gky900](https://doi.org/10.1093/nar/gky900)); Igor Dolgalev,
+Clustermole ([author repository](https://github.com/igordot/clustermole)); and
+Franzén, Gan and Björkegren (2019), PanglaoDB
+([doi:10.1093/database/baz046](https://doi.org/10.1093/database/baz046)).
+The Clustermole package's MIT notice is retained in
+[notices/clustermole-MIT.txt](notices/clustermole-MIT.txt). Its copyright
+metadata was verified at revision `85ecfdad06095f7559001c9a8eb43ae03aa04f5b`;
+this does not identify the Clustermole release embedded in EasyCellType.
+The pinned EasyCellType snapshot does not separately record the database
+release identifiers or every underlying data contribution's license.
+No paper license is assumed to license a separate database, and these tables
+are not presented as current live releases.
+
+The [GSEA audit](research/easycelltype-gsea-audit.md) and
+[bundled-reference audit](research/easycelltype-builtin-reference-audit.md)
+record exact revisions, file hashes, behavioral differences and reference
+execution. Original R package source, serialized objects and executables are
+not bundled; the three converted marker tables and their provenance are.
 
 ## Pinnacle wavelet processing
 

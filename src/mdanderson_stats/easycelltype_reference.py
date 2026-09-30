@@ -99,7 +99,7 @@ def easycelltype_reference(
 
     The selected CSV or ``.csv.gz`` is streamed once after a bounded checksum
     pass. This accepts caller-provided author-format tables; it does not claim
-    that an arbitrary table is an official snapshot or bundle any database.
+    that an arbitrary table is an official snapshot.
     ``source_version`` and ``source_provenance`` are recorded as caller input.
     Input limits are 100 MB compressed/on disk, 32 MB expanded UTF-8 text,
     65,536 characters per physical line and 200,000 rows.

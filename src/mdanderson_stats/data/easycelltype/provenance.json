@@ -20,9 +20,9 @@
       "bundled_sha256": "c6c1892ddeca843eac137a1b8152cfa00cb806fb1dd647aa6ebc730a03fc6835",
       "upstream": {
         "name": "CellMarker",
-        "citation": "Hu et al. (2023), CellMarker 2.0, Nucleic Acids Research, doi:10.1093/nar/gkac947",
+        "citation": "Zhang et al. (2019), CellMarker: a manually curated resource of cell markers in human and mouse, Nucleic Acids Research, doi:10.1093/nar/gky900; Hu et al. (2023), CellMarker 2.0, doi:10.1093/nar/gkac947. Embedded release not recorded.",
         "license": "not separately recorded for the embedded table in the EasyCellType snapshot",
-        "url": "https://doi.org/10.1093/nar/gkac947"
+        "url": "https://doi.org/10.1093/nar/gky900"
       }
     },
     "clustermole": {

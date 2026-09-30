@@ -50,6 +50,11 @@ an empty query returns an empty result.
 
 ## Selecting rows from a local reference table
 
+For the packaged CellMarker, Clustermole and Panglao snapshots, use
+[`easycelltype_builtin_reference`](easycelltype-builtin-reference.md). It
+returns the same reference object without a local data-preparation step.
+The following loader supports a caller-supplied table instead.
+
 `easycelltype_reference` performs the source's database/species/tissue row
 selection on a caller-provided CSV or `.csv.gz` file. It requires the author
 table columns `celltype`, `spe`, `organ` and `entrezid` in that order. The
@@ -77,8 +82,8 @@ result = easycelltype_fisher(
 print(reference.source_sha256, reference.selected_rows)
 ```
 
-The package does not bundle marker rows. The caller supplies and owns the
-source-form data file; `source_version`, `source_provenance`, the file's
+For this path-based loader, the caller supplies the source-form data file;
+`source_version`, `source_provenance`, the file's
 SHA-256, total rows and selected rows are retained with the immutable
 reference. `requested_tissues` records the deduplicated request (`None` means
 all organs), while `selected_tissues` records the actual retained organs in
@@ -144,9 +149,10 @@ Python preserves first-seen cluster order rather than R's sorted split names.
 The port covers supplied-association Fisher tests, adjustment, score summaries,
 contributing genes and hard/soft label selection, plus the separate
 [ranked-enrichment workflow](easycelltype-gsea.md), including its probability
-outputs. The local reference loader below applies source database/species/tissue
-selection to caller-supplied author-format tables. Bundled marker snapshots,
-symbol/Entrez conversion and native plots remain open; the catalog entry stays
+outputs. The local reference loader applies source database/species/tissue
+selection to caller-supplied author-format tables; the bundled loader supplies
+the pinned author snapshot. Symbol/Entrez conversion and native plots remain open;
+the catalog entry stays
 partial. See the [local-reference source audit](../research/easycelltype-reference-audit.md)
 for provenance, blank-organ handling and input bounds.
 
