@@ -1,5 +1,18 @@
 # Statistical coverage priority audit — September 28, 2026
 
+September 30 Brier-gradient forest update: optional scalar `bs.gradient`
+splitting now follows the pinned RF-SRC C event-grid, shared failure-weight
+and strict censor-time conventions. Compiled unchanged C helpers and an
+independent R ledger agree on five cases. Node workspace is linear in its
+row count; the full native engine and additional split rules remain separate.
+
+September 30 six-dose simulation update: serial operating-characteristic
+reporting now wraps the six-dose calendar with either posterior backend.
+It exposes replay seeds, early/final/no selection, raw source eligibility
+flags, separate generated and observed endpoint denominators, trial-level
+Monte Carlo errors and cached-fit convergence/work summaries. Published
+scenario replication and exact native report output remain distinct gaps.
+
 September 30 mTPI / Parallel Phase I/II update: mTPI now supplies the paper's
 posterior isotonic intervals and Table-3 common Beta-prior sensitivity with
 Uniform-calibrated losses fixed. Beta-CDF identities, density quadrature and

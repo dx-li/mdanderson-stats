@@ -415,7 +415,9 @@ def simulate_phase12_calendar_oc(
     # and attempts plus their frozen arrays, compact analysis snapshots/errors,
     # the largest fit's returned/scratch arrays, and aggregate output vectors.
     if posterior_backend == "mcmc":
-        fit_bytes = chain_count * draw_count * 256
+        # A cached fit can coexist with its replacement and the latter's
+        # sorted, split-chain, and variance/quantile summary scratch arrays.
+        fit_bytes = chain_count * draw_count * 512
     else:
         fit_bytes = 8 * 1024**2
     estimated_bytes = (
@@ -423,7 +425,9 @@ def simulate_phase12_calendar_oc(
         + attempt_cap * 256
         + max_fits * 4096
         + fit_bytes
-        + trial_count * 24
+        # Seed copies, duration array, Python final-time list and its temporary
+        # numeric conversion can coexist when constructing the result.
+        + trial_count * 80
         + 128 * 1024
     )
     if estimated_bytes > allocation_cap:

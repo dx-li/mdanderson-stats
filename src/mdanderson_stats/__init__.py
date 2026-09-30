@@ -1044,6 +1044,7 @@ from .phase2delay_calendar import (
     simulate_phase2_delay_calendar,
     simulate_phase2_delay_calendar_oc,
 )
+from .phase12_calendar_oc import Phase12CalendarOC, simulate_phase12_calendar_oc
 from .pinnacle import (
     PinnaclePeaks,
     PinnacleQuantification,
@@ -2125,6 +2126,8 @@ __all__ = [
     "Phase12CalendarTrial",
     "Phase12CalendarAnalysis",
     "simulate_phase12_calendar",
+    "Phase12CalendarOC",
+    "simulate_phase12_calendar_oc",
     "Phase12PhaseOne",
     "phase12_phase_one",
     "phase12_accrual_ready",

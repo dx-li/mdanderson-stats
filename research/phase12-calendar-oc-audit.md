@@ -52,10 +52,13 @@ The preflight upper-bounds patient assignments, calendar attempts, importance
 component evaluations (`67 * integrations` per importance fit), mode
 iterations, and configured MCMC chain-transition slots. The MCMC quantity is a
 transition proxy; it is not a likelihood-evaluation count. The elliptical-
-slice MCMC loop can make up to 1,000 shrink proposals per coordinate update;
-this is distinct from the importance optimizer's mode-iteration cap. One-trial allocation is estimated conservatively from
-record, attempt, analysis, fit, seed, time, and compact result storage. This is
-not a guaranteed process-RSS ceiling because Python, BLAS, and other runtime
+slice MCMC loop can make up to 1,000 shrink proposals per update;
+this is distinct from the importance optimizer's mode-iteration cap.
+One-trial allocation is estimated conservatively from record, attempt,
+analysis, fit, seed, time, and compact result storage. It includes the previous
+cached fit overlapping its replacement and summary scratch arrays, plus the
+seed and duration copies used for final aggregation. This is not a guaranteed
+process-RSS ceiling because Python, BLAS, and other runtime
 allocations are outside the result's accounting. All work is serial.
 
 Work and allocation limits are Python safeguards. The archived C++ source's
@@ -75,3 +78,6 @@ simulation. The documented 20-trial MCMC example executes successfully.
 On the focused run, the new OC tests plus the existing calendar and importance
 calendar tests passed (10 tests, 1.95 seconds, peak RSS 143,605,760 bytes,
 zero swaps). Targeted Ruff checks/format and mypy for the new module passed.
+After tightening the allocation estimate for overlapping fits and aggregate
+copies, all four OC checks passed again with warnings as errors (3.339 seconds,
+142.83 MiB peak RSS, zero swaps).

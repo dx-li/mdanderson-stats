@@ -51,8 +51,8 @@ threshold equality after a prior event, and a censor tied to an event.
 helper bodies, verifies the source blob hash, compiles those helpers with a
 small array adapter, and compares the same five ledgers. This validates the
 native helper kernels, not the full forest engine or its complete R interface.
-The two checked-in fixtures contain five native-helper rows and five
-independent-reference rows. The focused `tests/test_random_survival_forest.py`
+The two checked-in fixtures each cover five cases with row-level gradients
+and candidate scores. The focused `tests/test_random_survival_forest.py`
 run passed (25 tests); Ruff check/format and targeted mypy passed. The
 eight-tree public guide example ran successfully. The serial validation
 sequence took 3.708 seconds, reached 172,326,912 bytes peak RSS (about 164.3

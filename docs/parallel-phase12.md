@@ -386,8 +386,10 @@ admissibility when custom limits interrupt phase I.
 Results retain patient records, per-patient phase (0/1), attempted arrivals
 (columns: time, prior enrollment, prior phase, blocked flag), phase-II starting
 enrollment, stopping reason/time, final-analysis time and selection. Each analysis
-retains its snapshot, decision (`None` for final selection), and maximum
-coefficient split-Rhat; `last_fit` retains the latest posterior draws. Independent
+retains its snapshot, decision (`None` for final selection), and backend-specific
+diagnostics. MCMC analyses report maximum coefficient split-Rhat; importance
+analyses report integration counts, convergence and Monte Carlo errors.
+`last_fit` retains the latest backend's fit, including draws only for MCMC. Independent
 returned data and posterior seeds isolate simulation randomness from posterior
 sampling. Unchanged tallies reuse the previous fit. No exact native random-stream
 or adaptive-importance-sampler equivalence is claimed.
@@ -398,5 +400,8 @@ versus complete final follow-up. The [archived Case 1 pilot](phase12-calendar-pi
 is reproducible with `uv run python tools/pilot_phase12_calendar.py`. Its finite
 MCMC budget and diagnostic values are recorded; it is a workflow check, not a
 published operating-characteristic replication or proof of precision near decision
-thresholds. Native input/report workflows, multi-trial reporting and full published
-operating-characteristic validation remain pending.
+thresholds. [Six-dose operating-characteristic summaries](phase12-calendar-oc.md)
+now provide bounded serial multi-trial reporting, replay seeds, separate
+generated/observed endpoints and trial-level Monte Carlo errors. Native
+input/report workflows and full published operating-characteristic replication
+remain pending.

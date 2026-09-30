@@ -6,7 +6,7 @@ summaries. It retains one trial at a time; patient histories and posterior draws
 are not accumulated across trials.
 
 ```python
-from mdanderson_stats.phase12_calendar_oc import simulate_phase12_calendar_oc
+from mdanderson_stats import simulate_phase12_calendar_oc
 
 oc = simulate_phase12_calendar_oc(
     toxicity_probability=[0.03, 0.06, 0.10, 0.16, 0.24, 0.34],
@@ -63,7 +63,7 @@ MCMC backend reports maximum split-R-hat and configured chain transition
 slots. An infinite maximum diagnostic remains infinite; nonfinite fit counts
 are reported separately. The MCMC transition count is a workload proxy, not a
 count of likelihood evaluations. The elliptical-slice MCMC loop can make up to
-1,000 shrink proposals for a coordinate update; this is distinct from the
+1,000 shrink proposals for an update; this is distinct from the
 importance backend's mode-iteration cap.
 
 Trial `i` has the independent seed

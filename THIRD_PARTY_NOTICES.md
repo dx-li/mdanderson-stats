@@ -1070,8 +1070,10 @@ and compiled objects are not redistributed. An independent deterministic tree
 driver uses those kernels for additional fixtures, without executing the
 complete native forest engine. Categorical subset splitting, OOB diagnostics,
 permutation importance, anti-split routing and represented-count-weighted
-random routing were checked against the same
-pinned source. The contour contract also follows the original
+random routing and the scalar Brier-gradient split criterion were checked
+against the same pinned source. The Brier reference harness compiles unchanged
+C helper bodies from an independently supplied source cache; those bodies and
+compiled objects are not redistributed. The contour contract also follows the original
 author `rfsrcContour.R` at the SurvivalContour revision credited above.
 Python uses a distinct seeded random stream and bounded sequential fitting and
 prediction. See `research/random-survival-forest-audit.md` for source hashes,
