@@ -30,7 +30,7 @@ class MTPIIsotonicPosteriorIntervals:
 
     ``lower`` and ``upper`` use equal-tailed ``numpy.quantile(method='linear')``
     intervals. When requested, ``transformed_draws`` has axes draw and dose.
-    The full dose grid is included: an untried dose uses its Beta(1, 1) prior.
+    The full dose grid is included: an untried dose uses the design prior.
     """
 
     lower: FloatArray
@@ -58,9 +58,10 @@ def mtpi_isotonic_posterior_intervals(
     """Sample marginal intervals after transforming independent beta draws.
 
     Every sample draws one toxicity probability per dose from its independent
-    ``Beta(y + 1, n - y + 1)`` posterior, then applies weighted increasing
-    isotonic regression across the complete dose grid. Untried doses therefore
-    contribute their design prior ``Beta(1, 1)``. Equal weights are the default;
+    ``Beta(prior_alpha + y, prior_beta + n - y)`` posterior, then applies
+    weighted increasing isotonic regression across the complete dose grid.
+    Untried doses therefore contribute their design prior
+    ``Beta(prior_alpha, prior_beta)``. Equal weights are the default;
     explicitly supplied positive weights define an alternate Python policy.
 
     The Monte Carlo size, Generator, confidence level and empirical linear
@@ -126,8 +127,8 @@ def mtpi_isotonic_posterior_intervals(
         raise ArithmeticError("relative isotonic weights cannot be represented")
 
     transformed = np.empty((draw_count, doses), dtype=float)
-    alpha = y + 1
-    beta = n - y + 1
+    alpha = y + design.prior_alpha
+    beta = n - y + design.prior_beta
     for index in range(draw_count):
         sample = rng.beta(alpha, beta)
         transformed[index] = isotonic_regression(sample, weights=normalized_weights).x

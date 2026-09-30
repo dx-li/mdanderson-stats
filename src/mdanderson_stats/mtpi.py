@@ -1,4 +1,4 @@
-"""Modified toxicity probability interval decisions under uniform beta priors."""
+"""Modified toxicity probability interval decisions under independent beta priors."""
 
 from dataclasses import dataclass
 
@@ -39,18 +39,29 @@ class MTPISelection:
 class MTPIDesign:
     """mTPI (2010), not original TPI or mTPI-2. Dose indices are one-based.
 
-    Uniform priors govern decisions and inference. Numerical UPM ties prefer
-    D over S over E. The paper does not specify a tie policy for UPM scores.
-    Complete outcomes only, at most 200 patients in a trial.
+    Independent common ``Beta(prior_alpha, prior_beta)`` priors govern each
+    dose. The default ``Beta(1, 1)`` reproduces the usual uniform-prior design.
+    Numerical UPM ties prefer D over S over E. The paper does not specify a tie
+    policy for UPM scores. Complete outcomes only, at most 200 patients in a
+    trial.
     """
 
     target: float = 0.3
     lower: float = 0.25
     upper: float = 0.35
     elimination_probability: float = 0.95
+    prior_alpha: float = 1.0
+    prior_beta: float = 1.0
 
     def __post_init__(self) -> None:
-        for name in ["target", "lower", "upper", "elimination_probability"]:
+        for name in [
+            "target",
+            "lower",
+            "upper",
+            "elimination_probability",
+            "prior_alpha",
+            "prior_beta",
+        ]:
             object.__setattr__(self, name, scalar(getattr(self, name), name))
         if not 0 < self.lower < self.target < self.upper < 1:
             raise ValueError("require 0 < lower < target < upper < 1")
@@ -58,17 +69,22 @@ class MTPIDesign:
             raise ValueError("each interval must have width at least 1e-6")
         if not 0 < self.elimination_probability < 1:
             raise ValueError("elimination_probability must be in (0,1)")
+        if min(self.prior_alpha, self.prior_beta) < 1e-6:
+            raise ValueError("prior shapes must be at least 1e-6")
+        if self.prior_alpha + self.prior_beta > 1e6:
+            raise ValueError("prior shape sum must not exceed 1e6")
 
     def posterior(self, patients: ArrayLike, toxicities: ArrayLike) -> MTPIPosterior:
         """Vectorized posterior intervals ordered underdose, equivalence, overdose.
 
-        Move +1/0/-1 is the UPM decision before safety. Unsafe uses the strict
+        The posterior uses the design's independent common beta prior. Move
+        +1/0/-1 is the UPM decision before safety. Unsafe uses the strict
         posterior probability cutoff, without a minimum three-patient gate.
         """
         n, y = np.broadcast_arrays(count(patients, "patients"), count(toxicities, "toxicities"))
         if np.any((n < 1) | (n > 200) | (y > n)):
             raise ValueError("require 1 <= patients <= 200 and 0 <= toxicities <= patients")
-        a, b = y + 1, n - y + 1
+        a, b = y + self.prior_alpha, n - y + self.prior_beta
         left, right = betainc(a, b, self.lower), betaincc(a, b, self.upper)
         center = np.where(
             betainc(a, b, self.upper) <= 0.5,
@@ -130,7 +146,9 @@ class MTPIDesign:
             if given.dtype != bool or given.shape != n.shape:
                 raise ValueError("eliminated must be a matching boolean vector")
             excluded |= given
-        overdose = betaincc(y + 1, n - y + 1, self.target)
+        posterior_alpha = y + self.prior_alpha
+        posterior_beta = n - y + self.prior_beta
+        overdose = betaincc(posterior_alpha, posterior_beta, self.target)
         excluded = np.maximum.accumulate(excluded)
         return n, y, excluded, overdose
 
@@ -174,13 +192,15 @@ class MTPIDesign:
         eliminated: ArrayLike | None = None,
         weights: ArrayLike | None = None,
     ) -> MTPISelection:
-        """Isotonic uniform-prior posterior means; equal weights unless supplied.
+        """Isotonic beta-posterior means; equal weights unless supplied.
 
         Fits all tried doses, then selects among nonexcluded tried doses. On equal
         distances prefer the highest tied dose at/below target, otherwise the lowest.
         Explicit weights permit a chosen isotonic convention; native weights await audit.
         """
         n, y, excluded, overdose = self._state(patients, toxicities, eliminated)
+        posterior_alpha = y + self.prior_alpha
+        posterior_beta = n - y + self.prior_beta
         w = np.ones(n.shape) if weights is None else finite(weights, "weights")
         if w.shape != n.shape or np.any(w <= 0):
             raise ValueError("weights must be a positive matching vector")
@@ -191,7 +211,8 @@ class MTPIDesign:
             if np.any(normalized_weights <= 0):
                 raise ArithmeticError("relative isotonic weights cannot be represented")
             fitted[treated] = isotonic_regression(
-                (y[treated] + 1) / (n[treated] + 2), weights=normalized_weights
+                posterior_alpha[treated] / (posterior_alpha[treated] + posterior_beta[treated]),
+                weights=normalized_weights,
             ).x
         admissible = treated & ~excluded & (overdose <= self.elimination_probability)
         if n[0] > 0 and overdose[0] > self.elimination_probability:
