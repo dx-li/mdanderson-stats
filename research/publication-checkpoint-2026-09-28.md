@@ -1,10 +1,11 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `400fe6c` adds serial six-dose calendar
-operating-characteristic summaries and optional scalar Brier-gradient forest
-splits. The final section records validation; earlier sections preserve
-checkpoint history. The preceding published checkpoint `77a5fb4` has passed
-hosted quality and Python 3.12, 3.13 and 3.14 checks.
+Latest verified package checkpoint: `70d92b6` adds pinned EasyCellType
+CellMarker, Clustermole and PanglaoDB reference data with bounded loading.
+The final section records validation; earlier sections preserve checkpoint
+history. The published checkpoint `77a5fb4` has passed all hosted jobs;
+`b25b5c3` has passed quality and Python 3.12/3.13, with Python 3.14 still running
+at the pre-publication check.
 The local artifact manifest records full branch SHAs after each independently
 verified publication to `master`, `main` and `feat/condis-svm`.
 
@@ -2381,3 +2382,43 @@ Before publication, remote master/main/development independently matched
 run `36663751699` passed quality and Python 3.12, 3.13 and 3.14. The ignored
 artifact manifest records the new verified remote SHAs and new hosted run
 separately. This audit-only commit changes no verified package code.
+
+
+## September 30 bundled EasyCellType reference data
+
+Package-code revision `70d92b6453b892c7f7a266865df718f0665f5231` adds the
+three reference tables embedded in the pinned EasyCellType 1.5.4 author package.
+A public loader selects Human/Mouse and optional tissues without R or downloads.
+It retains row order and duplicates, verifies the compressed file identity and
+full source-row count, and returns stable provenance from ordinary or zipped
+wheel resources. The source's Entrez IDs remain unchanged; versioned symbol
+conversion and native plotting/app parity remain separate gaps.
+
+Luna implemented the addition in an isolated checkout. A read-only review and
+root integration checks found no remaining blocker. Nine focused bundled/local
+reference and Fisher checks pass, with targeted Ruff, formatting and mypy.
+The worker validation peaked at 137.30 MiB RSS with zero swaps. An independent
+streaming comparison verified original R-object, plain CSV and gzip hashes,
+deterministic gzip headers, and exact decompressed equality for all 236,219
+cached author-export rows. It took 0.018 seconds, peaked at 29.77 MiB and
+reported zero swaps. Applicable Artistic-2.0 terms and Clustermole attribution
+are retained; individual upstream database releases and all contribution-level
+licenses are not recorded in the source snapshot. The data are not represented
+as current releases or relicensed as MIT.
+
+Cached wheel/source builds pass. An isolated interpreter matched all 603
+committed package files in both archives and resolved all 1,690 public exports.
+The public annotation example executes from the wheel, and all three bundled
+references load with exact expected source/species row counts and stable
+filenames. Licenses/notices remain included, and ignored native caches/binaries
+remain excluded. This check took 12.384 seconds, peaked at 115.50 MiB RSS and
+reported zero swaps. Numerical checks ran serially with library threads limited
+to one. No full local suite, dependency installation or CI expansion was added.
+Counts remain 63 implemented, 67 partial and eight pending.
+
+Before publication, remote master/main/development independently matched
+`b25b5c3b1b4da643f0c5b0e606a29a21a90ed616`. Its hosted quality and Python
+3.12/3.13 checks passed; Python 3.14 remained in progress. The latest completely
+passed hosted checkpoint observed was `77a5fb4` (run `36663751699`). The ignored
+artifact manifest records fresh remote verification and the new hosted run
+separately. This audit-only commit changes no verified packaged code.
