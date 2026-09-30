@@ -22,8 +22,8 @@ A renewed bounded source review found no recovered BLESS reference baseline,
 bCRM bivariate likelihood/prior, ToxFinder second-stage information criterion
 or SYNERGY parametric equations sufficient to close those gaps. Existing
 source-status notes identify the missing artifacts. The archived, inactive
-STPLAN matched-pairs procedure is a further source-backed method candidate;
-it should be labeled as a legacy option rather than a current active menu item.
+STPLAN matched-pairs procedure was subsequently implemented as described above;
+it is labeled as a legacy option rather than a current active menu item.
 
 September 30 fitting/prediction update: the original 2010 GAO model now has
 posterior fitting under explicit Gaussian-coordinate inputs, a joint

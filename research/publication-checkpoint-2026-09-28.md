@@ -1,9 +1,9 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `408766c` adds Proportional Density profile
-inference and BOIN waterfall accelerated titration. The final section records
-validation; earlier sections preserve checkpoint history. The preceding
-published checkpoint `729abd8` passed hosted quality and Python 3.12–3.14 checks.
+Latest verified package checkpoint: `59d5dbd` adds the archived STPLAN matched-pairs
+power and planning methods. The final section records validation; earlier
+sections preserve checkpoint history. The preceding published checkpoint
+`2b53d37` passed hosted quality and Python 3.12–3.14 checks.
 The local artifact manifest records full branch SHAs after each independently
 verified publication to `master`, `main` and `feat/condis-svm`.
 
@@ -2210,3 +2210,35 @@ method coverage without claiming complete native application equivalence.
 
 The local manifest records independent publication verification and fresh
 hosted validation separately. This audit-only commit changes no packaged code.
+
+
+## September 30 STPLAN matched-pairs publication
+
+Package-code revision `59d5dbdb43e8b801dbea2ea49333e9a348e36fc1` adds
+the archived Miettinen paired-binary power calculation, bounded pilot-based
+effect/sample-size/significance inversion and explicit no-pilot initial-size
+heuristics. It preserves the native dominant-tail convention and unrounded
+pilot recommendations, while rejecting a native squared inverse that returns
+107.204 pairs for requested power 0.01 but achieves approximately 0.165025.
+The inactive native menu status and limitations are documented. STPLAN remains
+partial for automatic native planning and session/report workflows.
+
+Thirteen focused tests passed with warnings treated as errors, including
+12 new original-Fortran/independent-R cases and existing inverse-planning
+references. Checks also exercise extreme count scaling, tiny variance factors,
+near-boundary no-pilot geometry and allocation preflight. The integrated test
+process took 2.978 seconds, peaked at 144.0 MiB RSS and recorded zero swaps.
+Targeted Ruff, format checks and mypy passed; independent final review found
+no substantive blockers. No full local suite or CI expansion was added.
+
+The wheel and source archive match all 595 committed package files. The wheel
+exposes 1,683 public names, and all six Python examples in the matched-pairs
+and inverse-planning guides execute from that isolated wheel. Package verification
+took 11.802 seconds, peaked at 117.16 MiB RSS and recorded zero swaps.
+Catalog status counts remain 63 implemented, 67 partial and 8 pending.
+
+Before this publication, GitHub master/main/development were independently
+verified at `2b53d37689ed4c274379bf18142866dad972ff86`. That checkpoint's
+[hosted run](https://github.com/dx-li/mdanderson-stats/actions/runs/36657466078)
+passed quality and Python 3.12, 3.13 and 3.14 jobs. The ignored local artifact
+manifest records the new remote SHAs and latest hosted-run status after push.
