@@ -2112,3 +2112,56 @@ The preceding `dfcc002` hosted quality job and all Python 3.12–3.14 jobs are
 independently confirmed successful. The local artifact manifest records fresh
 master/main/development publication verification and the new hosted run
 separately. This audit-only commit changes no packaged numerical code.
+
+
+## Original GAO inference and WFMM prediction checkpoint
+
+Verified package revision `7a4553f4350a046e1fc7d17e7fe32919455002f5` adds
+posterior fitting for the original 2010 GAO model. Caller-supplied Gaussian
+coordinates cover alpha, log-lambda and signed gamma, jointly restricted to
+parameter values valid on every supplied dose pair and threshold. Association
+has a separate uniform prior or an explicit fixed value. Endpoint-block
+elliptical slice updates and uniform Metropolis proposals retain read-only
+parameter/probability draws, original dose grids and diagnostics. Native
+prior-center calibration and executable sampler parity remain separate work.
+
+WFMM gains posterior prediction for explicit future fixed and random designs.
+Existing random levels reuse retained conditional draws; each new level is
+sampled once per posterior state and shared by all rows loading that level.
+Optional residuals are independent by row in coefficient space. Existing
+inverse reconstruction and summaries then propagate uncertainty into curves.
+The independent-level model and prediction target are explicit; native
+prediction-file formats and PCA/retention semantics are not inferred.
+
+Luna implemented both additions. Twenty-one focused tests pass with warnings
+as errors (16 new/existing GAO and five WFMM checks), along with repository-wide
+Ruff lint/format and targeted mypy. Independent base-R quadrature checks the
+joint restricted prior and complete/toxicity-only posteriors plus an analytic
+uniform-correlation posterior. All 31 summaries agree within 1.891 estimated
+Monte Carlo errors; maximum checked split-Rhat is 1.00454. These reduced fits
+do not establish mixing for every full-model analysis.
+
+Independent WFMM finite-mixture references cover 192 deterministic conditional
+curve values and 168 predictive means/covariances. They include shared new
+levels, distinct variance strata, varying posterior variance draws and a
+nonorthogonal synthesis matrix. Stochastic discrepancies stay within 2.081
+estimated Monte Carlo errors. This checks prediction conditional on supplied
+posterior draws, separately from earlier fitting validation.
+
+Numerical processes ran serially with library threads fixed at one. Focused
+worker runs peaked at 132.11 MiB RSS or less; independent WFMM and GAO checks
+peaked at 125.23 and 116.58 MiB and took .266 and 32.056 seconds. All reported
+zero swaps. No dependency installation, broad local numerical suite or new CI
+workflow was added.
+
+Cached wheel/source builds pass. Isolated wheel verification executes all three
+examples in the two new guides, resolves all 1,678 public exports, and matches
+all 593 committed package files in both archives. License notices remain intact
+and native binaries/raw research files are excluded. It took 16.617 seconds,
+peaked at 128.02 MiB RSS and reported zero swaps. Coverage remains 63
+implemented, 67 partial and eight pending; these additions deepen two partial
+entries without claiming full native workflow coverage.
+
+The local manifest separately records independent master/main/development
+publication verification, the latest fully passed hosted checkpoint and the
+fresh hosted run. This audit-only commit changes no packaged numerical code.
