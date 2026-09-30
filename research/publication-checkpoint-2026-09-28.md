@@ -1,11 +1,11 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `70d92b6` adds pinned EasyCellType
-CellMarker, Clustermole and PanglaoDB reference data with bounded loading.
-The final section records validation; earlier sections preserve checkpoint
-history. The published checkpoint `77a5fb4` has passed all hosted jobs;
-`b25b5c3` has passed quality and Python 3.12/3.13, with Python 3.14 still running
-at the pre-publication check.
+Latest verified package checkpoint: `00e871d` adds IPDfromKM reconstruction
+report diagnostics, including native decimal rounding and an explicitly nominal
+KS comparison. The final section records validation; earlier sections preserve
+checkpoint history. Published `4c4a573` has passed hosted quality and Python
+3.12/3.13 checks; Python 3.14 is still running at the pre-publication check.
+The latest completely passed hosted checkpoint observed remains `77a5fb4`.
 The local artifact manifest records full branch SHAs after each independently
 verified publication to `master`, `main` and `feat/condis-svm`.
 
@@ -2422,3 +2422,40 @@ Before publication, remote master/main/development independently matched
 passed hosted checkpoint observed was `77a5fb4` (run `36663751699`). The ignored
 artifact manifest records fresh remote verification and the new hosted run
 separately. This audit-only commit changes no verified packaged code.
+
+
+## September 30 IPDfromKM report diagnostics
+
+Package-code revision `00e871d0697338629011ff1ac76ac421face5be3` adds the
+original report's rounded precision summaries and two-sample KS diagnostic.
+It preserves unrounded observed values, paired missing-row omission with
+retained indices, and the native signed maximum under an explicit name beside
+the true maximum absolute error. Exact tied-label probabilities use integer
+counts to retain tiny tails; larger samples use the limiting KS distribution.
+The nominal p-value is not calibrated inference for paired reconstructed curves.
+Existing reconstruction and its unrounded error metrics remain unchanged.
+
+Luna implemented the component, followed by root integration and read-only
+review. Ten independent R reference scenarios and five focused checks pass.
+A separate binary64 holdout matches R 4.4.1 rounding on all 6,000 values;
+identical input bytes exclude decimal-parser differences from the comparison.
+The actual 99-point separation tail agrees with `2 / choose(198, 99)` (about
+`8.79e-59`) under a relative check. The final focused run took 1.795 seconds,
+peaked at 148.70 MiB RSS and reported zero swaps. Targeted Ruff, guide formatting
+and worker mypy pass. Applicable IPDfromKM and R GPL terms are retained.
+
+Cached wheel/source builds pass. An isolated interpreter matched all 604
+committed package files in both archives, resolved all 1,692 public exports,
+verified retained license notices and executed the public diagnostic example.
+Verification took 10.752 seconds, peaked at 129.28 MiB RSS and reported zero
+swaps. Numerical work ran serially; no new dependencies, full local suite or
+CI workflow were added. Counts remain 63 implemented, 67 partial and eight
+pending. Image digitizing and native graphics remain separate IPDfromKM gaps.
+
+The preceding `c2577d7` hosted run failed only because the new EasyCellType
+guide's code block needed formatting. The correction was published at
+`4c4a57362a4e170b75cda0f3a438cf14d738038b`, independently verified on
+master/main/development. Its hosted quality and Python 3.12/3.13 jobs passed;
+Python 3.14 was still running before this publication. The ignored artifact
+manifest records the new publication and hosted status separately. This
+audit-only commit changes no verified packaged code.
