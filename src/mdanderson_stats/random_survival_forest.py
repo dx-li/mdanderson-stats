@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from hashlib import blake2b
 from itertools import combinations
 from math import lgamma, log
+from typing import Literal
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -29,6 +30,7 @@ _MAX_OOB_WORK = 100_000_000
 _OOB_TIE_EPSILON = 1e-9
 _SPLIT_EPSILON = 1e-9
 _MAX_FACTOR_SPLIT_LEVELS = 2_000_000
+_SPLIT_RULES = ("logrank", "logrankscore")
 
 
 @dataclass(frozen=True)
@@ -98,6 +100,7 @@ class RandomSurvivalForestFit:
     oob: RandomSurvivalForestOOB | None = None
     training_fingerprint: bytes | None = None
     categorical_levels: tuple[FloatArray | None, ...] = ()
+    split_rule: Literal["logrank", "logrankscore"] = "logrank"
 
 
 @dataclass(frozen=True)
@@ -422,6 +425,39 @@ def _logrank_score(
     return numerator / denominator
 
 
+def _logrankscore_scores(time: FloatArray, event: FloatArray) -> FloatArray:
+    """Hothorn--Lausen individual scores with maximum-rank time ties.
+
+    This is the published/source-vignette convention: every equal observed
+    time receives its maximum rank, and each event-time group contributes
+    ``d / (n - rank + 1)`` to the cumulative score term.
+    """
+    n = int(time.size)
+    event_times, inverse, counts = np.unique(time, return_inverse=True, return_counts=True)
+    events = np.bincount(inverse, weights=event, minlength=event_times.size)
+    rank = np.cumsum(counts, dtype=np.int64)
+    increments = events / (n - rank + 1.0)
+    cumulative = np.cumsum(increments)
+    return event - cumulative[inverse]
+
+
+def _logrankscore_split_score(scores: FloatArray, left: np.ndarray) -> float:
+    """Absolute standardized Hothorn--Lausen score for a daughter split."""
+    n = int(scores.size)
+    n_left = int(np.count_nonzero(left))
+    if n_left == 0 or n_left == n:
+        return float("nan")
+    if np.all(scores == scores[0]):
+        return 0.0
+    centered_sum = float(np.sum(scores[left] - np.mean(scores)))
+    variance = float(np.var(scores, ddof=1))
+    denominator = float(np.sqrt(n_left * (1.0 - n_left / n) * variance))
+    magnitude = abs(centered_sum)
+    if denominator == 0.0:
+        raise ArithmeticError("nonconstant log-rank scores have an unrepresentable variance")
+    return magnitude / denominator
+
+
 def _leaf_curve(time: FloatArray, event: FloatArray) -> tuple[FloatArray, FloatArray, FloatArray]:
     event_times, failures, at_risk = _parent_counts(time, event)
     if event_times.size == 0:
@@ -484,6 +520,7 @@ def _grow_tree(
     max_split_work: int,
     max_leaf_records: int,
     categorical_columns: frozenset[int],
+    split_rule: Literal["logrank", "logrankscore"],
     retain_represented_count: bool = False,
 ) -> _PackedTree:
     feature = [-1]
@@ -531,6 +568,12 @@ def _grow_tree(
                 parent_event_times, parent_events, parent_at_risk = _parent_counts(
                     node_time, node_event
                 )
+                rank_scores = None
+                if split_rule == "logrankscore":
+                    budget.split_work += rows.size * ((rows.size - 1).bit_length() + 4)
+                    if budget.split_work > max_split_work:
+                        raise ValueError("forest exceeds max_split_work budget")
+                    rank_scores = _logrankscore_scores(node_time, node_event)
                 for column in selected:
                     unique_values = np.unique(x[rows, column])
                     if unique_values.size < 2:
@@ -567,14 +610,18 @@ def _grow_tree(
                         left_count = int(np.count_nonzero(left_mask))
                         if left_count == 0 or left_count == rows.size:
                             continue
-                        score = _logrank_score(
-                            node_time,
-                            node_event,
-                            left_mask,
-                            parent_events,
-                            parent_at_risk,
-                            parent_event_times,
-                        )
+                        if split_rule == "logrank":
+                            score = _logrank_score(
+                                node_time,
+                                node_event,
+                                left_mask,
+                                parent_events,
+                                parent_at_risk,
+                                parent_event_times,
+                            )
+                        else:
+                            assert rank_scores is not None
+                            score = _logrankscore_split_score(rank_scores, left_mask)
                         if score - best_score > _SPLIT_EPSILON:
                             best_score = score
                             best_feature = int(column)
@@ -803,6 +850,7 @@ def fit_random_survival_forest(
     covariates: ArrayLike | None = None,
     *,
     categorical_features: ArrayLike | None = None,
+    split_rule: Literal["logrank", "logrankscore"] = "logrank",
     n_trees: int = 500,
     mtry: int | None = None,
     nodesize: int = 15,
@@ -819,7 +867,7 @@ def fit_random_survival_forest(
     max_oob_cells: int = _MAX_OOB_CELLS,
     max_oob_work: int = _MAX_OOB_WORK,
 ) -> RandomSurvivalForestFit:
-    """Fit log-rank trees for right-censored data with numeric/nominal features.
+    """Fit right-censored survival trees with numeric/nominal features.
 
     Events use status 1 and right censoring uses status 0. Trees use axis-aligned
     Numeric features use ordered cuts; ``categorical_features`` names nominal
@@ -835,11 +883,19 @@ def fit_random_survival_forest(
     bootstrap represented counts, and OOB curves, mortality and concordance
     error; the default avoids this storage and work. Rows without an OOB tree
     remain undefined (NaN), never in-bag-filled.
+
+    ``split_rule="logrank"`` preserves the default source-pinned score.
+    ``split_rule="logrankscore"`` uses the published Hothorn--Lausen
+    standardized rank scores with maximum-rank time ties. This corrects
+    indexing defects identified in RF-SRC's optional ``SURV_LRSCR`` branch;
+    it does not claim numerical parity with that branch.
     """
     if not isinstance(replace, (bool, np.bool_)):
         raise ValueError("replace must be boolean")
     if not isinstance(compute_oob, (bool, np.bool_)):
         raise ValueError("compute_oob must be boolean")
+    if not isinstance(split_rule, str) or split_rule not in _SPLIT_RULES:
+        raise ValueError("split_rule must be 'logrank' or 'logrankscore'")
     oob_cell_limit = _budget_limit(max_oob_cells, "max_oob_cells", _MAX_OOB_CELLS, _MAX_OOB_CELLS)
     oob_work_limit = _budget_limit(max_oob_work, "max_oob_work", _MAX_OOB_WORK, _MAX_OOB_WORK)
     tree_count = _integer(n_trees, "n_trees", 1, _MAX_TREES)
@@ -930,6 +986,7 @@ def fit_random_survival_forest(
                 max_split_work=split_limit,
                 max_leaf_records=leaf_limit,
                 categorical_columns=categorical_set,
+                split_rule=split_rule,
                 retain_represented_count=bool(compute_oob),
             )
         )
@@ -975,6 +1032,7 @@ def fit_random_survival_forest(
         if compute_oob
         else None,
         categorical_levels,
+        split_rule,
     )
 
 

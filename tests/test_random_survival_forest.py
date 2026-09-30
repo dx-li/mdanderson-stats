@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import json
 from pathlib import Path
 from typing import Any
@@ -14,6 +15,8 @@ from mdanderson_stats.random_survival_forest import (
     _factor_split_plan,
     _leaf_curve,
     _logrank_score,
+    _logrankscore_scores,
+    _logrankscore_split_score,
     _PackedTree,
     _time_grid,
     _tree_goes_left,
@@ -22,6 +25,145 @@ from mdanderson_stats.random_survival_forest import (
 )
 
 FIXTURE = Path(__file__).parent / "fixtures" / "random-survival-forest-native.json"
+LOGRANKSCORE_FIXTURE = Path(__file__).parent / "fixtures" / "random-survival-logrankscore-coin.csv"
+
+
+def _direct_hothorn_lausen(time: np.ndarray, event: np.ndarray) -> np.ndarray:
+    """Small scalar reference for the published maximum-rank transform."""
+    n = time.size
+    unique = np.unique(time)
+    result = np.empty(n)
+    for i, observed_time in enumerate(time):
+        cumulative = 0.0
+        for event_time in unique:
+            if event_time <= observed_time:
+                d = float(np.sum((time == event_time) & (event == 1)))
+                maximum_rank = int(np.count_nonzero(time <= event_time))
+                cumulative += d / (n - maximum_rank + 1)
+        result[i] = event[i] - cumulative
+    return result
+
+
+def _direct_hl_split(scores: np.ndarray, left: np.ndarray) -> float:
+    n = scores.size
+    n_left = int(left.sum())
+    centered = scores[left] - float(scores.mean())
+    variance = float(np.sum((scores - scores.mean()) ** 2) / (n - 1))
+    return abs(float(centered.sum())) / np.sqrt(n_left * (1 - n_left / n) * variance)
+
+
+def test_hothorn_lausen_scores_use_max_ranks_for_tied_times_and_duplicates() -> None:
+    # Duplicate rows represent bootstrap multiplicities, not a single weighted row.
+    time = np.array([1.0, 1.0, 2.0, 2.0, 4.0, 4.0, 5.0])
+    event = np.array([1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0])
+    expected = _direct_hothorn_lausen(time, event)
+    scores = _logrankscore_scores(time, event)
+    np.testing.assert_allclose(scores, expected, rtol=0.0, atol=2e-16)
+    for left in (
+        np.array([1, 1, 0, 0, 0, 0, 0], dtype=bool),
+        np.array([0, 0, 1, 1, 1, 0, 0], dtype=bool),
+    ):
+        np.testing.assert_allclose(
+            _logrankscore_split_score(scores, left),
+            _direct_hl_split(expected, left),
+            rtol=2e-15,
+            atol=0.0,
+        )
+
+
+def test_hothorn_lausen_scores_match_pinned_coin_source() -> None:
+    rows: dict[str, list[dict[str, str]]] = {}
+    with LOGRANKSCORE_FIXTURE.open(newline="") as source:
+        for row in csv.DictReader(source):
+            rows.setdefault(row["case"], []).append(row)
+    assert set(rows) == {"unique", "ties", "bootstrap_duplicates", "censor_before_event"}
+    for case in rows.values():
+        time = np.asarray([float(row["time"]) for row in case])
+        event = np.asarray([float(row["event"]) for row in case])
+        coin_score = np.asarray([float(row["coin_score"]) for row in case])
+        expected = np.asarray([float(row["hothorn_lausen_score"]) for row in case])
+        actual = _logrankscore_scores(time, event)
+        np.testing.assert_allclose(actual, expected, rtol=2e-15, atol=2e-15)
+        np.testing.assert_allclose(actual, -coin_score, rtol=0.0, atol=0.0)
+
+
+def test_logrankscore_fit_is_opt_in_and_records_rule() -> None:
+    time = np.array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+    event = np.array([1.0, 0.0, 1.0, 0.0, 1.0, 0.0])
+    x = np.arange(time.size, dtype=np.float64)[:, None]
+    scores = _direct_hothorn_lausen(time, event)
+    candidates = []
+    for cut in np.unique(x[:, 0])[:-1]:
+        left = x[:, 0] <= cut
+        candidates.append((_direct_hl_split(scores, left), float(cut)))
+    expected_cut = max(enumerate(candidates), key=lambda item: (item[1][0], -item[0]))[1][1]
+    fit = fit_random_survival_forest(
+        time,
+        event,
+        x,
+        split_rule="logrankscore",
+        n_trees=1,
+        mtry=1,
+        nodesize=1,
+        nsplit=0,
+        sample_fraction=1.0,
+        random_state=4,
+    )
+    assert fit.split_rule == "logrankscore"
+    assert fit.trees[0].feature[0] == 0
+    assert fit.trees[0].threshold[0] == expected_cut
+    default_fit = fit_random_survival_forest(
+        time,
+        event,
+        x,
+        n_trees=1,
+        mtry=1,
+        nodesize=1,
+        nsplit=0,
+        sample_fraction=1.0,
+        random_state=4,
+    )
+    assert default_fit.split_rule == "logrank"
+
+
+def test_logrankscore_categorical_candidates_keep_row_alignment_under_permutation() -> None:
+    time = np.arange(1.0, 10.0)
+    event = np.array([1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0])
+    category = np.repeat([10.0, 20.0, 30.0], 3)
+    scores = _direct_hothorn_lausen(time, event)
+    candidates = []
+    for level in np.unique(category):
+        left = category == level
+        candidates.append((_direct_hl_split(scores, left), level))
+    best_score = max(score for score, _ in candidates)
+
+    def selected_level_set(order: np.ndarray) -> set[float]:
+        fit = fit_random_survival_forest(
+            time[order],
+            event[order],
+            category[order, None],
+            categorical_features=[0],
+            split_rule="logrankscore",
+            n_trees=1,
+            mtry=1,
+            nodesize=1,
+            nsplit=0,
+            sample_fraction=1.0,
+            random_state=8,
+        )
+        tree = fit.trees[0]
+        start = int(tree.split_level_offset[0])
+        stop = start + int(tree.split_level_count[0])
+        mapped = fit.categorical_levels[0]
+        assert mapped is not None
+        chosen = set(float(value) for value in mapped[tree.split_levels[start:stop]])
+        chosen_score = next(score for score, level in candidates if chosen == {level})
+        np.testing.assert_allclose(chosen_score, best_score, rtol=2e-15, atol=0.0)
+        return chosen
+
+    identity = np.arange(time.size)
+    permutation = np.array([6, 0, 4, 8, 2, 7, 1, 5, 3])
+    assert selected_level_set(identity) == selected_level_set(permutation)
 
 
 def test_shared_tree_router_preserves_numeric_less_equal_split() -> None:
