@@ -1,4 +1,4 @@
-"""Bounded orthogonal time-series transforms used by WFMM.
+"""Bounded time-series transforms used by WFMM.
 
 Wavelet transforms use periodic decimation with a documented Python packing
 convention: ``[a_J, d_J, ..., d_1]``.  Coefficients are generated with the
@@ -55,6 +55,16 @@ class WFMMBasis:
     coefficient_scale: NDArray[np.int64]
     coefficient_partition: NDArray[np.int64]
     max_work: int
+    custom_synthesis_matrix: FloatArray | None = None
+
+    @property
+    def synthesis_matrix(self) -> FloatArray:
+        """Custom inverse matrix, or the legacy orthogonal transpose."""
+        if self.custom_synthesis_matrix is not None:
+            return self.custom_synthesis_matrix
+        if self.custom_matrix is None:
+            raise ValueError("custom basis is missing its synthesis matrix")
+        return self.custom_matrix.T
 
 
 @dataclass(frozen=True)
@@ -73,15 +83,19 @@ def wfmm_basis(
     levels: int | None = None,
     filter_length: int = 8,
     custom_matrix: ArrayLike | None = None,
+    analysis_matrix: ArrayLike | None = None,
+    synthesis_matrix: ArrayLike | None = None,
     max_work: int = _MAX_WORK,
 ) -> WFMMBasis:
-    """Build identity, periodic orthogonal-wavelet, or full orthogonal basis metadata.
+    """Build identity, periodic wavelet, or custom basis metadata.
 
     Wavelet filter lengths are even numbers 2..20 (Daubechies db1..db10).
     ``levels`` must divide ``time_count`` by ``2**levels``; the default uses
-    the largest supported level. A custom transform is a square orthogonal
-    matrix whose columns are basis vectors. It cannot be combined with wavelet
-    settings. Work and coefficient storage are checked before matrix copies.
+    the largest supported level. A custom transform can use the backward-
+    compatible ``custom_matrix`` orthogonal basis, or the guide's explicit
+    square ``analysis_matrix``/``synthesis_matrix`` inverse pair. Custom
+    matrices cannot be combined with wavelet settings. Work and coefficient
+    storage are checked before matrix copies.
     """
     size = _setting(time_count, "time_count", 2, _MAX_TIME_POINTS)
     budget = _setting(max_work, "max_work", 1, _MAX_WORK)
@@ -90,8 +104,10 @@ def wfmm_basis(
 
     empty = _freeze(np.empty(0, dtype=np.float64))
     if transform == "identity":
-        if levels is not None or custom_matrix is not None:
-            raise ValueError("identity transform does not accept levels or custom_matrix")
+        if levels is not None or any(
+            value is not None for value in (custom_matrix, analysis_matrix, synthesis_matrix)
+        ):
+            raise ValueError("identity transform does not accept custom matrices or levels")
         scale = np.zeros(size, dtype=np.int64)
         partition = np.zeros(size, dtype=np.int64)
         return WFMMBasis(
@@ -110,21 +126,59 @@ def wfmm_basis(
     if transform == "custom":
         if levels is not None:
             raise ValueError("custom transform does not accept levels")
-        if custom_matrix is None:
-            raise ValueError("custom transform requires custom_matrix")
-        if size * size > _MAX_INPUT_CELLS or size**3 > budget:
-            raise ValueError("custom orthogonal basis exceeds bounded matrix/work limits")
-        raw = np.asarray(custom_matrix)
-        if raw.shape != (size, size) or raw.dtype.kind not in "iuf":
-            raise ValueError("custom_matrix must be a real square matrix matching time_count")
-        matrix = np.asarray(raw, dtype=np.float64)
-        if not np.all(np.isfinite(matrix)):
-            raise ValueError("custom_matrix must be finite")
-        gram = matrix.T @ matrix
-        if not np.all(np.isfinite(gram)) or not np.allclose(
-            gram, np.eye(size), rtol=0.0, atol=2e-10
-        ):
-            raise ValueError("custom_matrix columns must be orthonormal")
+        paired = analysis_matrix is not None or synthesis_matrix is not None
+        if custom_matrix is not None and paired:
+            raise ValueError("custom_matrix cannot be combined with a matrix pair")
+        if paired and (analysis_matrix is None or synthesis_matrix is None):
+            raise ValueError("analysis_matrix and synthesis_matrix must be supplied together")
+        if custom_matrix is None and not paired:
+            raise ValueError("custom transform requires custom_matrix or a matrix pair")
+        matrix_work = 2 * size**3 if paired else size**3
+        matrix_live = 7 * size**2 if paired else size**2
+        if matrix_live > _MAX_INPUT_CELLS or matrix_work > budget:
+            raise ValueError("custom basis exceeds bounded matrix/work limits")
+        if paired:
+            raw_analysis = np.asarray(analysis_matrix)
+            raw_synthesis = np.asarray(synthesis_matrix)
+            if (
+                raw_analysis.shape != (size, size)
+                or raw_synthesis.shape != (size, size)
+                or raw_analysis.dtype.kind not in "iuf"
+                or raw_synthesis.dtype.kind not in "iuf"
+            ):
+                raise ValueError("analysis and synthesis matrices must be real square matrices")
+            analysis = np.asarray(raw_analysis, dtype=np.float64)
+            synthesis = np.asarray(raw_synthesis, dtype=np.float64)
+            if not np.all(np.isfinite(analysis)) or not np.all(np.isfinite(synthesis)):
+                raise ValueError("analysis and synthesis matrices must be finite")
+            with np.errstate(over="ignore", invalid="ignore"):
+                left_product = analysis @ synthesis
+                right_product = synthesis @ analysis
+            identity = np.eye(size)
+            if (
+                not np.all(np.isfinite(left_product))
+                or not np.all(np.isfinite(right_product))
+                or not np.allclose(left_product, identity, rtol=0.0, atol=2e-10)
+                or not np.allclose(right_product, identity, rtol=0.0, atol=2e-10)
+            ):
+                raise ValueError("analysis_matrix and synthesis_matrix must be numerical inverses")
+            analysis_frozen = _freeze(analysis)
+            synthesis_frozen = _freeze(synthesis)
+        else:
+            assert custom_matrix is not None
+            raw = np.asarray(custom_matrix)
+            if raw.shape != (size, size) or raw.dtype.kind not in "iuf":
+                raise ValueError("custom_matrix must be a real square matrix matching time_count")
+            matrix = np.asarray(raw, dtype=np.float64)
+            if not np.all(np.isfinite(matrix)):
+                raise ValueError("custom_matrix must be finite")
+            gram = matrix.T @ matrix
+            if not np.all(np.isfinite(gram)) or not np.allclose(
+                gram, np.eye(size), rtol=0.0, atol=2e-10
+            ):
+                raise ValueError("custom_matrix columns must be orthonormal")
+            analysis_frozen = _freeze(matrix)
+            synthesis_frozen = _freeze(matrix.T)
         zeros = np.zeros(size, dtype=np.int64)
         return WFMMBasis(
             "custom",
@@ -133,14 +187,15 @@ def wfmm_basis(
             None,
             empty,
             empty,
-            _freeze(matrix),
+            analysis_frozen,
             _frozen_int(zeros),
             _frozen_int(zeros),
             budget,
+            synthesis_frozen,
         )
 
-    if custom_matrix is not None:
-        raise ValueError("wavelet transform does not accept custom_matrix")
+    if any(value is not None for value in (custom_matrix, analysis_matrix, synthesis_matrix)):
+        raise ValueError("wavelet transform does not accept custom matrices")
     maximum_levels = min(_MAX_LEVELS, (size & -size).bit_length() - 1)
     level_count = maximum_levels if levels is None else _setting(levels, "levels", 1, _MAX_LEVELS)
     if level_count < 1 or level_count > maximum_levels or size % (1 << level_count):
@@ -264,9 +319,8 @@ def wfmm_inverse(coefficients: ArrayLike, basis: WFMMBasis) -> FloatArray:
     if basis.transform == "identity":
         result = values.copy()
     elif basis.transform == "custom":
-        assert basis.custom_matrix is not None
         with np.errstate(over="ignore", invalid="ignore"):
-            result = values @ basis.custom_matrix.T
+            result = values @ basis.synthesis_matrix
     else:
         approximation_count = basis.time_count >> basis.levels
         current = values[:, :approximation_count]

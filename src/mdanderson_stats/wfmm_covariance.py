@@ -79,8 +79,7 @@ def _basis_rows(basis: WFMMBasis) -> FloatArray:
     if basis.transform == "identity":
         return np.eye(basis.time_count, dtype=np.float64)
     if basis.transform == "custom":
-        assert basis.custom_matrix is not None
-        return basis.custom_matrix.T
+        return basis.synthesis_matrix
     rows = np.empty((basis.time_count, basis.time_count), dtype=np.float64)
     chunk_rows = min(
         _BASIS_CHUNK_ROWS,
@@ -132,7 +131,9 @@ def wfmm_covariance(variances: ArrayLike, basis: WFMMBasis) -> FloatArray:
     else:
         inverse_rows = _basis_rows(basis)
         for index, omega in enumerate(flattened):
-            covariance = inverse_rows.T @ (omega[:, None] * inverse_rows)
+            with np.errstate(over="ignore", invalid="ignore", under="ignore"):
+                weighted_rows = np.sqrt(omega)[:, None] * inverse_rows
+                covariance = weighted_rows.T @ weighted_rows
             covariance = 0.5 * covariance + 0.5 * covariance.T
             if not np.all(np.isfinite(covariance)):
                 raise ArithmeticError("WFMM covariance is not representable")
@@ -161,16 +162,14 @@ def _draw_variance_functions(variances: FloatArray, basis: WFMMBasis) -> FloatAr
     for start in range(0, coefficient_count, rows_per_call):
         end = min(start + rows_per_call, coefficient_count)
         if basis.transform == "custom":
-            assert basis.custom_matrix is not None
-            inverse_rows = basis.custom_matrix.T[start:end]
+            inverse_rows = basis.synthesis_matrix[start:end]
         else:
             inverse_rows = _inverse_basis_rows(basis, start, end)
-        output += np.einsum(
-            "sck,kt->sct",
-            flattened[:, :, start:end],
-            inverse_rows * inverse_rows,
-            optimize=True,
-        )
+        with np.errstate(over="ignore", invalid="ignore", under="ignore"):
+            for offset, basis_row in enumerate(inverse_rows):
+                root_weight = np.sqrt(flattened[:, :, start + offset])[:, :, None]
+                contribution_root = root_weight * basis_row[None, None, :]
+                output += contribution_root * contribution_root
     if not np.all(np.isfinite(output)):
         raise ArithmeticError("WFMM variance function is not representable")
     return output
