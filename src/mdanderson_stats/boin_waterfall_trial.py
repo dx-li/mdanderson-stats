@@ -82,6 +82,7 @@ class WaterfallCohort:
     dose: DoseCombination
     patients: int
     toxicities: int
+    phase: str = "cohort"
 
 
 @dataclass(frozen=True)
@@ -130,6 +131,9 @@ class BOINWaterfallTrial:
     total_patients: int
     total_toxicities: int
     stop_reason: str
+    titration_patients: NDArray[np.int64]
+    titration_endpoint: DoseCombination | None
+    titration_end_reason: str
 
 
 def _slice_candidate(
@@ -250,15 +254,19 @@ def run_boin_waterfall_trial(
     start_dose: int = 1,
     early_stop_patients: int = 12,
     bound_mtd: bool = False,
+    titration: bool = False,
 ) -> BOINWaterfallTrial:
-    """Replay one no-titration waterfall trial from assigned-patient uniforms.
+    """Replay one waterfall trial from an assigned-patient uniform tape.
 
     The tape is consumed sequentially in assignment order, cohort by cohort;
-    it has one uniform value per maximum planned patient.  This makes conduct
-    deterministic while retaining dose-specific potential toxicity
-    probabilities. Dose labels and search spaces are one-based. Python applies
-    the extra-safe interim rule whenever the first active dose has at least
-    three patients; the R wrapper nests that check under a nonmissing standard
+    with titration enabled, the first ``len(staircase)`` entries are reserved
+    for the full source-style single-patient staircase draw, and later entries
+    are used for cohort enrollment. Dose labels and search spaces are one-based.
+    The native waterfall wrapper starts titration at staircase position one
+    even when ``start_dose`` is supplied; this replay follows that convention.
+    Cohort size one disables titration as in the source. Python applies the
+    extra-safe interim rule whenever the first active dose has at least three
+    patients; the R wrapper nests that check under a nonmissing standard
     elimination boundary. The final selector also uses its distinct uniform
     prior for its extra-safe check.
     """
@@ -271,22 +279,58 @@ def run_boin_waterfall_trial(
     early = _integer(early_stop_patients, "early_stop_patients", 1, _MAX_PATIENTS)
     if not isinstance(bound_mtd, (bool, np.bool_)):
         raise ValueError("bound_mtd must be boolean")
+    if not isinstance(titration, (bool, np.bool_)):
+        raise ValueError("titration must be boolean")
     space = _initial_space(rows, columns)
-    initial_position = _integer(start_dose, "start_dose", 1, len(space)) - 1
+    requested_start = _integer(start_dose, "start_dose", 1, len(space)) - 1
+    use_titration = bool(titration) and size > 1
+    initial_position = 0 if use_titration else requested_start
+    prelude_size = len(space) if use_titration else 0
+    required_tape = maximum + (prelude_size - 1 if use_titration else 0)
     raw_tape = np.asarray(outcome_uniforms)
-    if raw_tape.ndim != 1 or raw_tape.size != maximum or raw_tape.dtype.kind not in "iuf":
-        raise ValueError(f"outcome_uniforms must be a real vector of length {maximum}")
+    if raw_tape.ndim != 1 or raw_tape.size != required_tape or raw_tape.dtype.kind not in "iuf":
+        raise ValueError(f"outcome_uniforms must be a real vector of length {required_tape}")
     tape = np.asarray(raw_tape, dtype=float)
     if not np.all(np.isfinite(tape)) or np.any((tape < 0) | (tape >= 1)):
         raise ValueError("outcome_uniforms must be finite values in [0,1)")
-    boundary_table = design.boundary_table(maximum)
+    maximum_actual = maximum + (prelude_size - 1 if use_titration else 0)
+    if maximum_actual > _MAX_PATIENTS:
+        raise ValueError("planned enrollment plus titration overhead must not exceed 1000 patients")
+    boundary_table = design.boundary_table(maximum_actual)
 
     patients = np.zeros((rows, columns), dtype=np.int64)
     toxicities = np.zeros_like(patients)
     eliminated = np.zeros((rows, columns), dtype=bool)
     all_cohorts: list[WaterfallCohort] = []
     subtrials: list[WaterfallSubtrial] = []
+    titration_patients = np.zeros_like(patients)
+    titration_endpoint: DoseCombination | None = None
+    titration_end_reason = "cohort_size_one" if bool(titration) and size == 1 else "not_requested"
     cursor = 0
+    first_local_n: NDArray[np.int64] | None = None
+    first_local_y: NDArray[np.int64] | None = None
+    if use_titration:
+        titration_events = tape[:prelude_size] < np.asarray(
+            [probability[row - 1, column - 1] for row, column in space]
+        )
+        first_event = np.flatnonzero(titration_events)
+        endpoint_position = int(first_event[0]) if first_event.size else len(space) - 1
+        titration_end_reason = "first_dlt" if first_event.size else "upper_dose_no_dlt"
+        titration_endpoint = space[endpoint_position]
+        first_local_n = np.zeros(len(space), dtype=np.int64)
+        first_local_y = np.zeros(len(space), dtype=np.int64)
+        first_local_n[: endpoint_position + 1] = 1
+        if first_event.size:
+            first_local_y[endpoint_position] = 1
+        for position, dose in enumerate(space[: endpoint_position + 1]):
+            event = int(bool(titration_events[position]))
+            row, column = dose
+            patients[row - 1, column - 1] += 1
+            toxicities[row - 1, column - 1] += event
+            titration_patients[row - 1, column - 1] += 1
+            all_cohorts.append(WaterfallCohort(1, position + 1, dose, 1, event, "titration"))
+        cursor = prelude_size
+        initial_position = endpoint_position
     stop_reason = "completed_search"
     fallback_used = False
     # Descriptor fields: search space, start index, budget index, special same-row
@@ -301,25 +345,36 @@ def run_boin_waterfall_trial(
             break
         subtrial_index = len(subtrials) + 1
         budget = budgets[budget_index]
-        local_n = np.zeros(len(next_space), dtype=np.int64)
-        local_y = np.zeros_like(local_n)
+        if use_titration and subtrial_index == 1:
+            if first_local_n is None or first_local_y is None:
+                raise ArithmeticError("missing initial titration counts")
+            local_n = first_local_n.copy()
+            local_y = first_local_y.copy()
+        else:
+            local_n = np.zeros(len(next_space), dtype=np.int64)
+            local_y = np.zeros_like(local_n)
         local_eliminated = np.zeros(len(next_space), dtype=bool)
         position = next_position
-        trace: list[WaterfallCohort] = []
+        trace = [item for item in all_cohorts if item.subtrial == subtrial_index]
         local_stop = "cohort_budget"
         for cohort in range(1, budget + 1):
             row, column = next_space[position]
             p = probability[row - 1, column - 1]
-            sl = tape[cursor : cursor + size]
-            if sl.size != size:
+            top_up = use_titration and subtrial_index == 1 and cohort == 1
+            cohort_patients = size - 1 if top_up else size
+            sl = tape[cursor : cursor + cohort_patients]
+            if sl.size != cohort_patients:
                 raise ArithmeticError("outcome tape exhausted before the planned cohort")
             events = int(np.count_nonzero(sl < p))
-            cursor += size
-            local_n[position] += size
+            cursor += cohort_patients
+            local_n[position] += cohort_patients
             local_y[position] += events
-            patients[row - 1, column - 1] += size
+            patients[row - 1, column - 1] += cohort_patients
             toxicities[row - 1, column - 1] += events
-            record = WaterfallCohort(subtrial_index, cohort, (row, column), size, events)
+            phase = "titration_topup" if top_up else "cohort"
+            record = WaterfallCohort(
+                subtrial_index, cohort, (row, column), cohort_patients, events, phase
+            )
             trace.append(record)
             all_cohorts.append(record)
 
@@ -380,7 +435,7 @@ def run_boin_waterfall_trial(
             WaterfallSubtrial(
                 subtrial_index,
                 next_space,
-                next_position + 1,
+                1 if use_titration and subtrial_index == 1 else next_position + 1,
                 budget,
                 tuple(trace),
                 _frozen_counts(patients),
@@ -422,6 +477,9 @@ def run_boin_waterfall_trial(
             break
         if column < columns:
             eliminated[row - 1, column:] = True
+        if use_titration and int(patients.sum()) >= maximum:
+            stop_reason = "planned_enrollment_reached"
+            break
         next_space = _row_space(row - 1, columns)
         # A row search begins at column 2. After selecting column j, begin
         # one column higher, at local index j-1, clipped to the final column.
@@ -452,4 +510,7 @@ def run_boin_waterfall_trial(
         int(patients.sum()),
         int(toxicities.sum()),
         stop_reason,
+        _frozen_counts(titration_patients),
+        titration_endpoint,
+        titration_end_reason,
     )

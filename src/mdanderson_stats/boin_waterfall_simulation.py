@@ -40,6 +40,8 @@ class WaterfallTrialHistory:
     selected_contour: tuple[DoseCombination | None, ...]
     continuity_blocked: NDArray[np.bool_]
     stop_reason: str
+    titration_endpoint: DoseCombination | None
+    titration_end_reason: str
 
 
 @dataclass(frozen=True)
@@ -65,6 +67,9 @@ class BOINWaterfallSimulation:
     stop_reason: tuple[str, ...]
     total_patients: NDArray[np.int64]
     total_toxicities: NDArray[np.int64]
+    titration_patients: NDArray[np.int64]
+    titration_endpoint: tuple[DoseCombination | None, ...]
+    titration_end_reason: tuple[str, ...]
 
 
 def _frozen_int(values: NDArray[np.int64]) -> NDArray[np.int64]:
@@ -90,11 +95,14 @@ def simulate_boin_waterfall(
     early_stop_patients: int = 12,
     bound_mtd: bool = False,
     rng: int | np.random.Generator | None = None,
+    titration: bool = False,
 ) -> BOINWaterfallSimulation:
     """Run independent waterfall trials serially and retain compact histories.
 
     Each trial receives a fresh sequential uniform tape; trial conduct consumes
-    it in assigned cohort order. Titration is not simulated in this release.
+    it in assigned-patient order. Optional source-style titration reserves a
+    full initial-staircase tape prefix, then tops up the terminal cell before
+    ordinary first-subtrial movement. Cohort size one disables titration.
     """
     if not isinstance(design, BOINCombDesign):
         raise ValueError("design must be a BOINCombDesign")
@@ -107,6 +115,15 @@ def simulate_boin_waterfall(
     early = _integer(early_stop_patients, "early_stop_patients", 1, 1000)
     if not isinstance(bound_mtd, (bool, np.bool_)):
         raise ValueError("bound_mtd must be boolean")
+    if not isinstance(titration, (bool, np.bool_)):
+        raise ValueError("titration must be boolean")
+    use_titration = bool(titration) and size > 1
+    prelude_size = len(_initial_space(rows, columns)) if use_titration else 0
+    titration_overhead = prelude_size - 1 if use_titration else 0
+    maximum_actual = maximum + titration_overhead
+    tape_length = maximum + titration_overhead
+    if maximum_actual > 1000:
+        raise ValueError("planned enrollment plus titration overhead must not exceed 1000 patients")
     if rng is not None and not isinstance(rng, np.random.Generator):
         raw_rng = np.asarray(rng)
         if (
@@ -116,9 +133,9 @@ def simulate_boin_waterfall(
             or int(raw_rng) < 0
         ):
             raise ValueError("rng must be a nonnegative integer seed, Generator or None")
-    cells = repetitions * (3 * rows * columns + 3 * rows + 2) + 4 * rows * columns + 2 * rows
-    cohort_records = repetitions * sum(budgets)
-    outcome_draws = repetitions * maximum
+    cells = repetitions * (4 * rows * columns + 3 * rows + 2) + 4 * rows * columns + 2 * rows
+    cohort_records = repetitions * (sum(budgets) + prelude_size)
+    outcome_draws = repetitions * tape_length
     if (
         cells > _MAX_OUTPUT_CELLS
         or cohort_records > _MAX_COHORT_RECORDS
@@ -134,10 +151,13 @@ def simulate_boin_waterfall(
     selected = np.zeros((repetitions, rows), dtype=np.int64)
     totals_n = np.zeros(repetitions, dtype=np.int64)
     totals_y = np.zeros(repetitions, dtype=np.int64)
+    titration_n = np.zeros(shape, dtype=np.int64)
     reasons: list[str] = []
+    titration_endpoints: list[DoseCombination | None] = []
+    titration_reasons: list[str] = []
     histories: list[WaterfallTrialHistory] = []
     for trial_index in range(repetitions):
-        uniforms = generator.random(maximum)
+        uniforms = generator.random(tape_length)
         result: BOINWaterfallTrial = run_boin_waterfall_trial(
             design,
             probability,
@@ -147,16 +167,20 @@ def simulate_boin_waterfall(
             start_dose=start,
             early_stop_patients=early,
             bound_mtd=bound_mtd,
+            titration=titration,
         )
         patients[trial_index] = result.patients
         toxicities[trial_index] = result.toxicities
         eliminated[trial_index] = result.eliminated
         totals_n[trial_index] = result.total_patients
         totals_y[trial_index] = result.total_toxicities
+        titration_n[trial_index] = result.titration_patients
         for row, pair in enumerate(result.selected_contour):
             if pair is not None:
                 selected[trial_index, row] = pair[1]
         reasons.append(result.stop_reason)
+        titration_endpoints.append(result.titration_endpoint)
+        titration_reasons.append(result.titration_end_reason)
         histories.append(
             WaterfallTrialHistory(
                 tuple(subtrial.dose_space for subtrial in result.subtrials),
@@ -168,6 +192,8 @@ def simulate_boin_waterfall(
                 result.selected_contour,
                 result.continuity_blocked,
                 result.stop_reason,
+                result.titration_endpoint,
+                result.titration_end_reason,
             )
         )
 
@@ -195,4 +221,7 @@ def simulate_boin_waterfall(
         tuple(reasons),
         _frozen_int(totals_n),
         _frozen_int(totals_y),
+        _frozen_int(titration_n),
+        tuple(titration_endpoints),
+        tuple(titration_reasons),
     )

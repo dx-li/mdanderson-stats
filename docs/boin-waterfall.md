@@ -1,7 +1,8 @@
 # BOIN waterfall trials and simulation
 
-`run_boin_waterfall_trial` and `simulate_boin_waterfall` provide complete-outcome,
-no-titration waterfall trials for a two-drug dose grid. They complement the
+`run_boin_waterfall_trial` and `simulate_boin_waterfall` provide complete-outcome
+waterfall trials for a two-drug dose grid, with optional source-style single-
+patient titration before the first subtrial. They complement the
 [interactive next-subtrial planner](boin-combination.md), which operates on
 accumulated data. A trial executes the initial staircase, subsequent row
 searches and the special same-row search used by the original BOIN R simulator.
@@ -9,11 +10,12 @@ searches and the special same-row search used by the original BOIN R simulator.
 ## Deterministic replay
 
 The replay receives a toxicity-probability grid, one cohort budget per row and
-a uniform-outcome tape. It consumes one tape value per assigned patient, in
-cohort order. A DLT occurs when that value is below the assigned cell's toxicity
-probability. The tape has length `sum(cohort_budgets)*cohort_size`; a stopped
-trial can leave the end unused. Budgets apply in executed-subtrial order, not
-to fixed dose rows.
+a uniform-outcome tape. With titration disabled, it consumes one tape value
+per assigned patient, in cohort order. A DLT occurs when that value is below
+the assigned cell's toxicity probability. The tape has length
+`sum(cohort_budgets)*cohort_size`; a stopped trial can leave the end unused.
+Budgets apply in executed-subtrial order, not to fixed dose rows. Titration
+uses the separate prefix and length described below.
 
 ```python
 import numpy as np
@@ -31,6 +33,62 @@ np.testing.assert_array_equal(trial.patients, [[3, 0, 6], [3, 3, 3]])
 assert trial.selected_contour == ((1, 3), (2, 3))
 assert len(trial.subtrials) == 2
 ```
+
+## Optional first-subtrial titration
+
+With `titration=True` and `cohort_size > 1`, the first subtrial starts at the
+first position of the initial staircase: down the first column, then across
+the last row. The native waterfall wrapper starts here regardless of its
+starting-dose value, so Python retains that convention. It assigns one patient
+to each visited cell through the first DLT, or to the full staircase if no DLT
+occurs. It then tops up the terminal cell by `cohort_size - 1` before applying
+the usual first-subtrial movement rules. The top-up counts as the first cohort
+of that subtrial; later cohorts use the full requested size. Cohort size one
+disables titration, matching the native routine.
+
+The replay reserves the first `rows + columns - 1` tape values for the full
+initial staircase draw. Values after the first DLT are consumed but do not
+represent assigned patients, matching the native vector draw. Remaining values
+are consumed for top-up and ordinary cohorts. The required tape length is
+`sum(cohort_budgets) * cohort_size + rows + columns - 2`; the simulation uses
+the same fixed per-trial tape length. This is a Python replay convention for
+deterministic assignment, not native RNG-stream parity. With `titration=False`,
+the prior tape length and random draw sequence are unchanged.
+
+```python
+import numpy as np
+from mdanderson_stats import BOINCombDesign, run_boin_waterfall_trial
+
+trial = run_boin_waterfall_trial(
+    BOINCombDesign(target=0.3),
+    np.zeros((2, 3)),
+    cohort_budgets=[1, 1],
+    outcome_uniforms=np.full(9, 0.9),  # 4 staircase + 5 cohort slots.
+    cohort_size=3,
+    titration=True,
+)
+assert trial.titration_endpoint == (2, 3)
+assert trial.titration_end_reason == "upper_dose_no_dlt"
+np.testing.assert_array_equal(trial.titration_patients, [[1, 0, 0], [1, 1, 1]])
+assert trial.total_patients == trial.patients.sum() == 6
+```
+
+`titration_patients` records only assigned staircase patients. The cohort trace
+labels the single-patient run-in as `phase="titration"`, the initial top-up as
+`phase="titration_topup"`, and ordinary enrollments as `phase="cohort"`.
+The cohort number is phase-local: titration steps and the first cohort/top-up
+can both be numbered one; `phase` distinguishes them. The first subtrial's
+`start_position` remains one, the first actually assigned staircase position,
+while `titration_endpoint` separately records where the ordinary first cohort
+continues.
+The result also reports the endpoint and whether titration ended at the first
+DLT or at the upper dose without a DLT. Global stopping compares the actual
+retained enrollment with the requested planned total; it does not infer
+enrollment from the number of tape values consumed. The source checks the
+planned total after completing a started subtrial, so actual enrollment can
+exceed the requested cohort total by at most the staircase length minus one.
+The Python preflight includes this overhead and keeps the maximum possible
+actual enrollment at 1,000 patients.
 
 Dose pairs, subtrial labels and starting positions are one-based.
 `start_dose` identifies a position along the first staircase, rather than a
@@ -86,11 +144,12 @@ recommendation. Compact histories preserve the source-continuity diagnostics.
 each row directly.
 
 Resource limits are explicit: grids have 2 to 20 rows and columns with rows no
-greater than columns, each trial plans at most 1,000 patients, and a simulation
-has at most 100,000 trials, two million combined result-array cells, 200,000
-planned cohort records and twenty million outcome draws. Invalid settings and
-output limits are checked before advancing
-the supplied generator. Tapes and fits are constructed one trial at a time.
+greater than columns; planned enrollment plus possible titration overhead is
+at most 1,000 patients. A simulation has at most 100,000 trials, two million
+combined result-array cells, 200,000 planned cohort and staircase records and
+twenty million outcome draws. Invalid settings and output limits are checked
+before advancing the supplied generator. Tapes and fits are constructed one
+trial at a time.
 
 ## Statistical conventions and source differences
 
@@ -130,5 +189,5 @@ The full-wrapper reference replaces only the unavailable `Iso` call with an
 independent exhaustive six-cell isotonic fit; existing original `Iso::biviso`
 fixtures separately validate the shared numerical primitive.
 
-Accelerated titration, the app's 3+3 run-in, integrated reports/protocols and
-desktop executable parity remain outside this workflow.
+The app's separate 3+3 run-in, integrated reports/protocols and desktop
+executable parity remain outside this workflow.
