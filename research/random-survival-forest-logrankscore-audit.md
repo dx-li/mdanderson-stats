@@ -25,8 +25,10 @@ computes one score per sampled node row in node order, then applies each existin
 candidate mask in that same order. Duplicated bootstrap rows remain distinct
 observations for ranking, candidate sizes and the variance denominator. The
 Python API therefore implements the documented method, not native
-`SURV_LRSCR`'s apparent indexing behavior. It also does not add the separately
-advertised `bs.gradient` rule, competing risks or missing-value imputation.
+`SURV_LRSCR`'s apparent indexing behavior. The separately advertised
+`bs.gradient` criterion is implemented in
+`random-survival-forest-brier-audit.md`; competing risks and missing-value
+imputation remain outside this ordinary right-censored forest scope.
 
 A four-row source-index diagnostic makes the mapping discrepancy concrete.
 Take `(time,event,x)` rows `(1,1,3)`, `(4,0,2)`, `(2,1,4)`, `(3,0,1)`. In

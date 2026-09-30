@@ -11,6 +11,8 @@ import numpy as np
 import pytest
 
 from mdanderson_stats.random_survival_forest import (
+    _brier_gradient_data,
+    _brier_gradient_split_score,
     _factor_split_candidates,
     _factor_split_plan,
     _leaf_curve,
@@ -26,6 +28,148 @@ from mdanderson_stats.random_survival_forest import (
 
 FIXTURE = Path(__file__).parent / "fixtures" / "random-survival-forest-native.json"
 LOGRANKSCORE_FIXTURE = Path(__file__).parent / "fixtures" / "random-survival-logrankscore-coin.csv"
+BRIER_NATIVE_FIXTURE = Path(__file__).parent / "fixtures" / "random-survival-brier-native.csv"
+BRIER_REFERENCE_FIXTURE = Path(__file__).parent / "fixtures" / "random-survival-brier-reference.csv"
+
+
+def test_brier_gradient_matches_rf_src_selected_point_and_shared_failure_weight() -> None:
+    # At q=.9 parent KM never falls to .1, so QE uses the final event point.
+    # C uses G(t-) for survivors and G(previous event time-) for every failure
+    # by t, rather than subject-specific G(T_i-).
+    time = np.array([1.0, 1.5, 2.0, 3.0])
+    event = np.array([1.0, 0.0, 1.0, 0.0])
+    qe_index, gamma = _brier_gradient_data(time, event, 0.9)
+    assert qe_index == 2
+    assert gamma is not None
+    np.testing.assert_allclose(gamma, [6 / 7, 0.0, 6 / 7, -12 / 7], rtol=0.0, atol=2e-16)
+    left = np.array([True, True, False, False])
+    np.testing.assert_allclose(
+        _brier_gradient_split_score(gamma, left), 9 / 49, rtol=2e-15, atol=0.0
+    )
+
+
+def test_brier_gradient_qe_threshold_equality_and_first_index_zero() -> None:
+    time = np.array([1.0, 2.0])
+    event = np.array([1.0, 0.0])
+    # KM survival is exactly .5 at the first event. The native condition is
+    # survival > 1-q, so equality stops the scan and produces QE index zero.
+    qe_index, gamma = _brier_gradient_data(time, event, 0.5)
+    assert qe_index == 0
+    assert gamma is not None and np.array_equal(gamma, np.zeros(2))
+
+
+def test_brier_gradient_no_crossing_selects_last_event_time() -> None:
+    time = np.array([1.0, 2.0, 3.0, 4.0])
+    event = np.array([1.0, 1.0, 0.0, 0.0])
+    # With q=.9, KM survival remains above .1 at every event point.
+    qe_index, gamma = _brier_gradient_data(time, event, 0.9)
+    assert qe_index == 2
+    assert gamma is not None and np.isfinite(gamma).all()
+
+
+def test_brier_gradient_first_event_failure_uses_censor_survival_before_it() -> None:
+    time = np.array([1.0, 2.0, 3.0])
+    event = np.array([0.0, 1.0, 0.0])
+    qe_index, gamma = _brier_gradient_data(time, event, 0.9)
+    assert qe_index == 1
+    assert gamma is not None
+    np.testing.assert_allclose(gamma, [0.0, 1.5, -1.5], rtol=0.0, atol=3e-16)
+
+
+def test_brier_gradient_matches_extracted_c_helpers_and_independent_r_reference() -> None:
+    def read_cases(path: Path) -> dict[str, list[dict[str, str]]]:
+        grouped: dict[str, list[dict[str, str]]] = {}
+        with path.open(newline="") as source:
+            for row in csv.DictReader(source):
+                grouped.setdefault(row["case"], []).append(row)
+        return grouped
+
+    native = read_cases(BRIER_NATIVE_FIXTURE)
+    reference = read_cases(BRIER_REFERENCE_FIXTURE)
+    assert set(native) == set(reference)
+    for name, rows in native.items():
+        other = reference[name]
+        time = np.asarray([float(row["time"]) for row in rows])
+        event = np.asarray([float(row["event"]) for row in rows])
+        prob = float(rows[0]["prob"])
+        native_gamma = np.asarray([float(row["gamma"]) for row in rows])
+        reference_gamma = np.asarray([float(row["gamma"]) for row in other])
+        qe = int(rows[0]["qe_index"])
+        assert all(int(row["qe_index"]) == qe for row in rows + other)
+        actual_qe, actual = _brier_gradient_data(time, event, prob)
+        assert actual_qe == qe
+        assert actual is not None
+        np.testing.assert_allclose(actual, native_gamma, rtol=2e-15, atol=2e-15)
+        np.testing.assert_allclose(actual, reference_gamma, rtol=2e-15, atol=2e-15)
+        left = np.asarray([row["left"] == "True" for row in rows])
+        expected_score = float(rows[0]["score"])
+        np.testing.assert_allclose(
+            _brier_gradient_split_score(actual, left), expected_score, rtol=2e-15, atol=2e-15
+        )
+        np.testing.assert_allclose(
+            [float(row["score"]) for row in rows],
+            [float(row["score"]) for row in other],
+            rtol=2e-15,
+            atol=2e-15,
+        )
+
+
+def test_brier_gradient_is_opt_in_and_records_probability() -> None:
+    time = np.arange(1.0, 9.0)
+    event = np.array([1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0])
+    x = np.arange(time.size, dtype=np.float64)[:, None]
+    fit = fit_random_survival_forest(
+        time,
+        event,
+        x,
+        split_rule="bs.gradient",
+        prob=0.65,
+        n_trees=1,
+        mtry=1,
+        nodesize=1,
+        nsplit=0,
+        sample_fraction=1.0,
+        random_state=17,
+    )
+    assert fit.split_rule == "bs.gradient"
+    assert fit.split_probability == 0.65
+    assert fit.trees[0].feature[0] == 0
+
+
+def test_brier_gradient_reuses_numeric_and_categorical_candidate_generation() -> None:
+    time = np.array([1.0, 1.5, 2.0, 3.0])
+    event = np.array([1.0, 0.0, 1.0, 0.0])
+    x = np.array([0.0, 0.0, 1.0, 1.0])[:, None]
+    kwargs = dict(
+        split_rule="bs.gradient",
+        prob=0.9,
+        n_trees=1,
+        mtry=1,
+        nodesize=1,
+        nsplit=0,
+        sample_fraction=1.0,
+        random_state=3,
+    )
+    numeric = fit_random_survival_forest(time, event, x, **kwargs)
+    assert numeric.trees[0].threshold[0] == 0.0
+
+    categorical = fit_random_survival_forest(
+        time,
+        event,
+        x + 10.0,
+        categorical_features=[0],
+        **kwargs,
+    )
+    assert categorical.trees[0].categorical_node[0]
+    assert categorical.trees[0].split_level_count[0] == 1
+
+
+@pytest.mark.parametrize("prob", [0.0, 1.0, np.nan, np.inf, True, 1j])
+def test_brier_gradient_rejects_invalid_probability(prob: object) -> None:
+    with pytest.raises(ValueError, match="prob"):
+        fit_random_survival_forest(
+            [1.0, 2.0], [1.0, 0.0], [0.0, 1.0], split_rule="bs.gradient", prob=prob
+        )
 
 
 def _direct_hothorn_lausen(time: np.ndarray, event: np.ndarray) -> np.ndarray:

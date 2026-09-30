@@ -30,7 +30,8 @@ _MAX_OOB_WORK = 100_000_000
 _OOB_TIE_EPSILON = 1e-9
 _SPLIT_EPSILON = 1e-9
 _MAX_FACTOR_SPLIT_LEVELS = 2_000_000
-_SPLIT_RULES = ("logrank", "logrankscore")
+_SPLIT_RULES = ("logrank", "logrankscore", "bs.gradient")
+_DEFAULT_BRIER_PROB = 0.90
 
 
 @dataclass(frozen=True)
@@ -100,7 +101,8 @@ class RandomSurvivalForestFit:
     oob: RandomSurvivalForestOOB | None = None
     training_fingerprint: bytes | None = None
     categorical_levels: tuple[FloatArray | None, ...] = ()
-    split_rule: Literal["logrank", "logrankscore"] = "logrank"
+    split_rule: Literal["logrank", "logrankscore", "bs.gradient"] = "logrank"
+    split_probability: float | None = None
 
 
 @dataclass(frozen=True)
@@ -458,6 +460,88 @@ def _logrankscore_split_score(scores: FloatArray, left: np.ndarray) -> float:
     return magnitude / denominator
 
 
+def _brier_gradient_data(
+    time: FloatArray, event: FloatArray, probability: float
+) -> tuple[int, FloatArray | None]:
+    """Return RF-SRC's scalar QE event index and its node gradient.
+
+    A zero index deliberately returns an all-zero gradient: the native split
+    loop skips that QE point while retaining a zero objective for candidates.
+    ``None`` denotes an unusable IPCW point when a required censor-survival
+    denominator is zero.
+    """
+    event_times, failures, at_risk = _parent_counts(time, event)
+    if event_times.size == 0:
+        return 0, None
+    survival = np.cumprod(1.0 - failures / at_risk)
+    threshold = 1.0 - probability
+    crossing = np.flatnonzero(survival <= threshold)
+    selected = int(crossing[0] - 1) if crossing.size else int(event_times.size - 1)
+    if selected < 0:
+        return 0, np.zeros(time.size, dtype=np.float64)
+
+    censor_times = np.unique(time[event == 0])
+    if censor_times.size:
+        censor_counts = np.bincount(
+            np.searchsorted(censor_times, time[event == 0]), minlength=censor_times.size
+        ).astype(np.float64)
+        censor_risk = (
+            time.size - np.searchsorted(np.sort(time), censor_times, side="left")
+        ).astype(np.float64)
+        censor_survival = np.cumprod(1.0 - censor_counts / censor_risk)
+    else:
+        censor_survival = np.empty(0, dtype=np.float64)
+
+    evaluation_time = event_times[selected]
+    # C's gHat[0] is the reverse-KM value before the first event. For a
+    # selected first event this is G(event_times[0]-), not one by default.
+    previous_time = event_times[selected - 1] if selected else event_times[0]
+
+    def censor_survival_before(target: float) -> float:
+        position = int(np.searchsorted(censor_times, target, side="left"))
+        return 1.0 if position == 0 else float(censor_survival[position - 1])
+
+    g_at_evaluation = censor_survival_before(float(evaluation_time))
+    g_at_previous = censor_survival_before(float(previous_time))
+    survivors = time > evaluation_time
+    failures_by_evaluation = (time <= evaluation_time) & (event == 1)
+    if (np.any(survivors) and g_at_evaluation <= 0) or (
+        np.any(failures_by_evaluation) and g_at_previous <= 0
+    ):
+        return selected + 1, None
+
+    weights = np.zeros(time.size, dtype=np.float64)
+    with np.errstate(over="ignore", divide="ignore", invalid="ignore"):
+        weights[survivors] = 1.0 / g_at_evaluation
+        weights[failures_by_evaluation] = 1.0 / g_at_previous
+        denominator = float(np.sum(weights))
+    if not np.isfinite(weights).all() or not np.isfinite(denominator) or denominator <= 0.0:
+        return selected + 1, None
+    y = survivors.astype(np.float64)
+    with np.errstate(over="ignore", divide="ignore", invalid="ignore"):
+        f_hat = float(np.sum(weights * y) / denominator)
+        gamma = -2.0 * weights * (y - f_hat)
+    if not np.isfinite(gamma).all():
+        return selected + 1, None
+    return selected + 1, gamma
+
+
+def _brier_gradient_split_score(gamma: FloatArray | None, left: np.ndarray) -> float:
+    """Native global Brier-gradient objective for one candidate partition."""
+    if gamma is None:
+        return float("nan")
+    n = int(gamma.size)
+    n_left = int(np.count_nonzero(left))
+    n_right = n - n_left
+    if n_left == 0 or n_right == 0:
+        return float("nan")
+    with np.errstate(over="ignore", invalid="ignore"):
+        left_mean = float(np.sum(gamma[left]) / n_left)
+        right_mean = float(np.sum(gamma[~left]) / n_right)
+        score = (n_left / n) * left_mean**2 + (n_right / n) * right_mean**2
+    return score
+
+
 def _leaf_curve(time: FloatArray, event: FloatArray) -> tuple[FloatArray, FloatArray, FloatArray]:
     event_times, failures, at_risk = _parent_counts(time, event)
     if event_times.size == 0:
@@ -520,7 +604,8 @@ def _grow_tree(
     max_split_work: int,
     max_leaf_records: int,
     categorical_columns: frozenset[int],
-    split_rule: Literal["logrank", "logrankscore"],
+    split_rule: Literal["logrank", "logrankscore", "bs.gradient"],
+    split_probability: float | None,
     retain_represented_count: bool = False,
 ) -> _PackedTree:
     feature = [-1]
@@ -569,11 +654,18 @@ def _grow_tree(
                     node_time, node_event
                 )
                 rank_scores = None
+                brier_gamma = None
                 if split_rule == "logrankscore":
                     budget.split_work += rows.size * ((rows.size - 1).bit_length() + 4)
                     if budget.split_work > max_split_work:
                         raise ValueError("forest exceeds max_split_work budget")
                     rank_scores = _logrankscore_scores(node_time, node_event)
+                elif split_rule == "bs.gradient":
+                    budget.split_work += rows.size * ((rows.size - 1).bit_length() + 8)
+                    if budget.split_work > max_split_work:
+                        raise ValueError("forest exceeds max_split_work budget")
+                    assert split_probability is not None
+                    _, brier_gamma = _brier_gradient_data(node_time, node_event, split_probability)
                 for column in selected:
                     unique_values = np.unique(x[rows, column])
                     if unique_values.size < 2:
@@ -619,9 +711,16 @@ def _grow_tree(
                                 parent_at_risk,
                                 parent_event_times,
                             )
-                        else:
+                        elif split_rule == "logrankscore":
                             assert rank_scores is not None
                             score = _logrankscore_split_score(rank_scores, left_mask)
+                        else:
+                            budget.split_work += rows.size
+                            if budget.split_work > max_split_work:
+                                raise ValueError("forest exceeds max_split_work budget")
+                            score = _brier_gradient_split_score(brier_gamma, left_mask)
+                        if split_rule == "bs.gradient" and np.isnan(score):
+                            continue
                         if score - best_score > _SPLIT_EPSILON:
                             best_score = score
                             best_feature = int(column)
@@ -850,7 +949,8 @@ def fit_random_survival_forest(
     covariates: ArrayLike | None = None,
     *,
     categorical_features: ArrayLike | None = None,
-    split_rule: Literal["logrank", "logrankscore"] = "logrank",
+    split_rule: Literal["logrank", "logrankscore", "bs.gradient"] = "logrank",
+    prob: float | None = None,
     n_trees: int = 500,
     mtry: int | None = None,
     nodesize: int = 15,
@@ -889,13 +989,28 @@ def fit_random_survival_forest(
     standardized rank scores with maximum-rank time ties. This corrects
     indexing defects identified in RF-SRC's optional ``SURV_LRSCR`` branch;
     it does not claim numerical parity with that branch.
+    ``split_rule="bs.gradient"`` uses RF-SRC 3.2.2's one-point global Brier
+    score gradient. ``prob`` is its scalar failure-quantile probability
+    (default 0.9); it selects one prior event-grid point using the parent
+    Kaplan--Meier curve's ``1 - prob`` survival threshold.
     """
     if not isinstance(replace, (bool, np.bool_)):
         raise ValueError("replace must be boolean")
     if not isinstance(compute_oob, (bool, np.bool_)):
         raise ValueError("compute_oob must be boolean")
     if not isinstance(split_rule, str) or split_rule not in _SPLIT_RULES:
-        raise ValueError("split_rule must be 'logrank' or 'logrankscore'")
+        raise ValueError("split_rule must be 'logrank', 'logrankscore', or 'bs.gradient'")
+    if split_rule == "bs.gradient":
+        raw_prob = _DEFAULT_BRIER_PROB if prob is None else prob
+        if isinstance(raw_prob, (bool, np.bool_)) or np.iscomplexobj(raw_prob):
+            raise ValueError("prob must be a real number strictly between 0 and 1")
+        split_probability = scalar(raw_prob, "prob")
+        if not 0.0 < split_probability < 1.0:
+            raise ValueError("prob must be strictly between 0 and 1")
+    else:
+        if prob is not None:
+            raise ValueError("prob is only available with split_rule='bs.gradient'")
+        split_probability = None
     oob_cell_limit = _budget_limit(max_oob_cells, "max_oob_cells", _MAX_OOB_CELLS, _MAX_OOB_CELLS)
     oob_work_limit = _budget_limit(max_oob_work, "max_oob_work", _MAX_OOB_WORK, _MAX_OOB_WORK)
     tree_count = _integer(n_trees, "n_trees", 1, _MAX_TREES)
@@ -987,6 +1102,7 @@ def fit_random_survival_forest(
                 max_leaf_records=leaf_limit,
                 categorical_columns=categorical_set,
                 split_rule=split_rule,
+                split_probability=split_probability,
                 retain_represented_count=bool(compute_oob),
             )
         )
@@ -1033,6 +1149,7 @@ def fit_random_survival_forest(
         else None,
         categorical_levels,
         split_rule,
+        split_probability,
     )
 
 
