@@ -2060,3 +2060,55 @@ The preceding `fcffaf8` hosted quality job and all three Python 3.12–3.14 jobs
 are independently confirmed successful. The local artifact manifest records
 fresh master/main/development publication verification and the new hosted run
 separately. This final audit-only commit changes no packaged numerical code.
+
+
+## U2OET adaptive calendar and original GAO checkpoint
+
+Verified package revision `68f1e8d880801edba90417dbbc8244fb96634be5` connects
+adaptive corner-utility precision to PDS/CMI/hybrid calendar trials. Each new
+complete/toxicity-only count state, including final follow-up, must meet the
+requested precision target. Cached states reuse their posterior and compact
+diagnostics; an insufficient draw cap raises before that fit can determine an
+assignment. Whole-trial work and per-fit storage estimates are checked before
+splitting the caller's random stream. The fixed-budget route remains available.
+
+The original 2010 GAO probability model has a separate public interface for
+centered dose grids and endpoint-specific signed interactions. Its negative
+interaction constraint is checked across all dose pairs and thresholds, with
+bounded Decimal fallback for material cancellation. It returns ordinal joint
+probabilities, utilities and complete/toxicity-only likelihoods. It is distinct
+from the existing 2017 comparison model; original-prior posterior fitting,
+calibration and native parameter-file mapping remain open.
+
+Luna implemented both components. Twenty-four focused checks pass with warnings
+treated as errors: 14 adaptive/fixed calendar and precision checks, and ten
+new/existing GAO probability checks. Independent base-R references reproduce
+680 joint cells, 60 likelihoods and 100 utilities, with maximum absolute error
+`4.84e-13`. Translation and dose-unit rescaling through `1e±150` also pass.
+These are mathematical references, not native executable parity claims.
+
+The public calendar example was replayed through the standalone fitter from
+its recorded posterior seed. All posterior summaries and precision diagnostics
+matched exactly for three cached interim decisions and the final analysis.
+The interim fit used 512 draws per chain and the final fit extended to 4096;
+maximum corner MCSE/SD ratios were .047138 and .046497, below the .05 target.
+This reduced-model example checks integration, not full trial operating
+characteristics or precision for every model parameter.
+
+Repository-wide Ruff lint/format and targeted mypy pass. Numerical processes
+ran serially with library thread counts fixed at one. Final focused worker runs
+peaked below 132 MiB RSS; the independent comparison and calendar replay peaked
+at 120.02 and 123.55 MiB. All reported zero swaps. No broad local numerical
+suite, dependency installation or CI workflow was added.
+
+Cached wheel/source builds pass. Isolated wheel validation executes both new
+guide examples, verifies all 1,674 public exports and exact committed bytes for
+all 591 package files in both archives, and checks preserved license notices
+and excluded native binaries. It took 15.838 seconds, peaked at 110.92 MiB RSS
+and reported zero swaps. Coverage remains 63 implemented, 67 partial and eight
+pending entries. Mixed-license terms and remaining workflow limits are explicit.
+
+The preceding `dfcc002` hosted quality job and all Python 3.12–3.14 jobs are
+independently confirmed successful. The local artifact manifest records fresh
+master/main/development publication verification and the new hosted run
+separately. This audit-only commit changes no packaged numerical code.
