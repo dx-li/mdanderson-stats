@@ -1,9 +1,10 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `42045e9` adds mTPI posterior isotonic
-intervals, fixed-loss prior sensitivity and six-dose Phase I/II importance fitting. The final section records validation; earlier
-sections preserve checkpoint history. The preceding published checkpoint
-`2b53d37` passed hosted quality and Python 3.12–3.14 checks.
+Latest verified package checkpoint: `a83936b` adds six-dose calendar importance
+fitting and optional Hothorn–Lausen forest splits. The final section records
+validation; earlier sections preserve checkpoint history. The latest fully
+passed hosted checkpoint remains `2b53d37`; the preceding `54ae048` has passed
+quality and Python 3.12/3.13 while its Python 3.14 job is still running.
 The local artifact manifest records full branch SHAs after each independently
 verified publication to `master`, `main` and `feat/condis-svm`.
 
@@ -2289,3 +2290,50 @@ and Python 3.13 jobs have passed; Python 3.14 is still running at this check.
 The latest entirely passed hosted checkpoint remains `2b53d37`. The ignored
 artifact manifest records new remote SHAs and hosted status after publication.
 This audit-only commit does not change the verified package code.
+
+
+## September 30 calendar importance and survival-rank splits
+
+Package-code revision `a83936b1f4bc068730c6f501e7e3e76795f4e511` connects the
+six-dose importance fitter to actual interim and final calendar decisions.
+Observed tallies reuse the latest fit, while current snapshots retain endpoint
+availability. Separate data/posterior streams, pre-seed whole-trial work bounds,
+actual uncached work counts and per-analysis evidence/error/convergence fields
+make the behavior inspectable. The existing MCMC backend remains the default.
+Native cap-return behavior can use an unconverged estimate; the result exposes
+that flag and its Monte Carlo errors.
+
+Survival forests now offer Hothorn–Lausen standardized rank-score splitting,
+including maximum-rank time ties and expanded bootstrap duplicates. Numeric and
+categorical candidates use their existing routing and tie conventions. The
+unchanged pinned `coin` R transform independently supplies 23 score references;
+a concrete four-row reconstruction documents RF-SRC's alternative-branch
+indexing discrepancy. This implements the documented statistical criterion,
+without claiming exact behavior of that native branch. Ordinary log-rank
+splitting remains the default.
+
+Luna implemented both changes in isolated checkouts. Root and a read-only
+reviewer checked the contracts and integration. Twenty-two focused checks pass
+with warnings as errors: ten calendar checks include real interim/final
+importance analyses and explicit unchanged-tally reuse, while twelve forest
+checks include exhaustive numeric/categorical split references and input-row
+permutation. Targeted Ruff, formatting and mypy pass. The final integrated
+calendar run took 2.601 seconds and peaked at 145.95 MiB RSS. The forest's serial
+reference/test/static/example sequence peaked at about 161.5 MiB. All measured
+processes reported zero swaps; numerical work ran one process at a time with
+library threads limited to one. No full local suite, installation or CI expansion
+was added.
+
+Cached wheel/source builds pass. Isolated wheel verification matches all 597
+committed package files in both archives, resolves all 1,687 public exports and
+runs the two new public guide examples. Notices remain included; ignored native
+sources and binaries remain excluded. Verification took 10.829 seconds, peaked
+at 128.56 MiB RSS and reported zero swaps. Catalog counts remain 63 implemented,
+67 partial and eight pending: these extensions improve two partial entries.
+
+Before publication, remote master/main/development were independently verified
+at `54ae04834859873d38f37a5832b2e608f925b24b`. Its hosted quality and Python
+3.12/3.13 jobs passed; Python 3.14 was still running. The older `5634ec3` run's
+Python 3.14 job was cancelled. No overall success is claimed for either run.
+The ignored artifact manifest records fresh publication verification and the
+new hosted run separately. This audit-only commit changes no packaged code.
