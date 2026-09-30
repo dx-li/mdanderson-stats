@@ -1115,13 +1115,20 @@ calendar simulation includes pending outcomes and explicit final-selection
 conventions. Multi-trial summaries report selection, enrollment, duration and
 normalized utility performance with Monte Carlo errors. Native final-selection
 parity and published operating-characteristic validation remain pending.
-[GAO model probabilities](docs/u2oet-gao.md) additionally support explicit
+[Adaptive trial sampling](docs/u2oet-adaptive-trial.md) applies the corner-utility
+precision target to interim and final PDS/CMI/hybrid fits, with bounded work,
+recorded diagnostics and explicit failure if the draw cap is insufficient.
+[2017 GAO comparison probabilities](docs/u2oet-gao.md) additionally support explicit
 raw-dose coefficients, a shared interaction and Gaussian-copula likelihoods;
 [GAO posterior fitting](docs/u2oet-gao-fit.md) adds explicit normal-prior
 coordinates, complete/partial outcomes and retained chain diagnostics.
 [GAO calendar trials](docs/u2oet-gao-trials.md) connect that fitter to pending
 outcomes, cohort allocation and final selection, with cumulative work limits
 and replay inputs. Native prior interpretation and GAO calibration remain open.
+The separate [original 2010 GAO model](docs/u2oet-gao2010.md) now supports
+centered doses, endpoint-specific signed interactions, ordinal probabilities
+and complete/toxicity-only likelihoods. Original-prior fitting and calibration
+remain open; its parameters are distinct from the 2017 comparison model.
 
 [CATBUB](docs/catbub.md) provides categorical-utility posterior comparisons,
 Dirichlet Monte Carlo, a success-only binary comparator, sequential multinomial

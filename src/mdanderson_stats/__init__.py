@@ -1512,6 +1512,7 @@ from .u2oet_decision import (
 )
 from .u2oet_fit import U2OETFit, fit_u2oet, u2oet_parameter_names
 from .u2oet_gao import U2OETGAOMarginal, u2oet_gao_probabilities
+from .u2oet_gao2010 import U2OETGAO2010Marginal, u2oet_gao2010_probabilities
 from .u2oet_gao_fit import U2OETGAOFit, fit_u2oet_gao, u2oet_gao_parameter_names
 from .u2oet_gao_simulation import U2OETGAOTrial, simulate_u2oet_gao_trial
 from .u2oet_patients import (
@@ -1534,7 +1535,12 @@ from .u2oet_scenario import (
     read_u2oet_utility,
     u2oet_scenario,
 )
-from .u2oet_simulation import U2OETTrial, U2OETTrialDecision, simulate_u2oet_trial
+from .u2oet_simulation import (
+    U2OETAdaptiveSettings,
+    U2OETTrial,
+    U2OETTrialDecision,
+    simulate_u2oet_trial,
+)
 from .u2oet_summary import U2OETOperatingCharacteristics, summarize_u2oet_trials
 from .uaroet import (
     UAROETProbabilities,
@@ -2139,6 +2145,7 @@ __all__ = [
     "U2OETOperatingCharacteristics",
     "summarize_u2oet_trials",
     "U2OETTrial",
+    "U2OETAdaptiveSettings",
     "U2OETTrialDecision",
     "simulate_u2oet_trial",
     "U2OETPatients",
@@ -2171,6 +2178,8 @@ __all__ = [
     "U2OETProbabilities",
     "u2oet_probabilities",
     "U2OETGAOMarginal",
+    "U2OETGAO2010Marginal",
+    "u2oet_gao2010_probabilities",
     "u2oet_gao_probabilities",
     "U2OETGAOFit",
     "fit_u2oet_gao",

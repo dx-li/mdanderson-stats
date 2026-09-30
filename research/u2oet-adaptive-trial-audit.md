@@ -38,7 +38,7 @@ field set and fixed sampler calls/RNG path are unchanged.
 The calendar preflight uses the same pure chunk/work/live-cell plan as the
 standalone fitter. It conservatively assumes up to `max_patients` distinct
 posterior fits, including a distinct final fit, multiplies worst-case per-fit
-likelihood-cell work by that bound, and rejects over-budget requests before
+sampler-work estimate by that bound, and rejects over-budget requests before
 splitting the caller's RNG. The standalone per-fit retained-joint and live
 array caps apply unchanged. These work estimates are guardrails, not guarantees
 of elapsed time or total process RSS.
@@ -49,3 +49,27 @@ The simulation route uses the existing PDS, CMI or PDS+CMI fit selected by
 `model`. GAO remains separate. Corner utility precision is not a convergence
 certificate and says nothing directly about the precision of every model
 parameter, other utility cells, or efficacy/toxicity risk probabilities.
+
+
+## Focused validation
+
+Fourteen focused tests pass with warnings treated as errors: the real adaptive
+calendar integration and cap failures, standalone continuation/precision tests,
+fixed calendar behavior and GAO constructor compatibility. The successful
+calendar example uses a CMI fit with one materially free coordinate, two chains,
+512 starting draws and a 4096-draw cap. It exercises pending-data caching and a
+distinct complete-data final fit. A low whole-trial work cap and adaptive warmup
+above 10,000 are rejected before RNG consumption. An unused fixed-mode `draws`
+value does not override adaptive storage limits. Targeted Ruff, formatting and
+mypy pass. The measured test run peaked at 131.97 MiB RSS with zero swaps;
+numerical processes ran serially. This is integration evidence, not a full
+published operating-characteristic reproduction.
+
+Root executed the public calendar example and replayed its two fits directly
+through the standalone adaptive API using the recorded posterior seed. All
+posterior summaries and precision diagnostics matched exactly for the three
+cached pending-data decisions and the distinct final analysis. The pending
+fit met the target at 512 draws per chain (maximum ratio .047138); the final
+fit extended to 4096 draws (maximum ratio .046497). The run took 9.292 seconds,
+peaked at 123.55 MiB RSS and reported zero swaps. This verifies the calendar
+integration and stream/cache behavior against the separately validated fitter.

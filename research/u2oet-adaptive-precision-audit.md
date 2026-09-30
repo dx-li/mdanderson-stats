@@ -88,5 +88,6 @@ continuation and posterior-accuracy check, not validation of trial operating
 characteristics or all model parameters' precision.
 
 Numerical processes ran serially with numerical-library thread counts fixed
-at one. Adaptive GAO fitting and integration into calendar/simulation drivers
-remain separate work.
+at one. Adaptive GAO fitting remains separate work. Subsequent
+[calendar integration](u2oet-adaptive-trial-audit.md) connects this controller
+to PDS/CMI/hybrid interim and final analyses.

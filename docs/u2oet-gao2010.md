@@ -9,7 +9,7 @@ calculation, not posterior fitting or native-application parity.
 ```python
 import numpy as np
 
-from mdanderson_stats.u2oet_gao2010 import (
+from mdanderson_stats import (
     U2OETGAO2010Marginal,
     u2oet_gao2010_probabilities,
 )

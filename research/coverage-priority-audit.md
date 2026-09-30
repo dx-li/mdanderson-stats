@@ -1,5 +1,15 @@
 # Statistical coverage priority audit — September 28, 2026
 
+September 30 U2OET update: adaptive corner-utility precision is now connected
+to PDS/CMI/hybrid calendar trials, including final follow-up and cached-data
+decisions. The original 2010 GAO probability model is separately implemented
+with centered raw doses and endpoint-specific signed interactions. It is
+distinct from the existing 2017 raw-dose/shared-positive-interaction model;
+the latter's fitted priors must not be substituted for the former. Original
+GAO prior fitting, calibration and native parameter-file mapping remain open.
+The TITE-Keyboard timing source check below identifies an unresolved posterior
+likelihood contract; a generic timing helper would not complete that workflow.
+
 September 29 transform/precision update: WFMM now accepts explicit square
 analysis/synthesis inverse pairs, propagates covariance through the supplied
 synthesis matrix and rejects severely ill-conditioned pairs. U2OET has a

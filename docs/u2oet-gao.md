@@ -4,7 +4,9 @@
 model in Appendix A of the [U2OET paper](https://odin.mdacc.tmc.edu/~pfthall/main/JRCCS_2017_ph12_2agent_utility.pdf).
 They evaluate explicitly supplied parameters, joint likelihoods and expected
 utilities. [Posterior fitting](u2oet-gao-fit.md) uses explicit caller-defined
-priors. Native prior-file interpretation remains pending.
+priors. Native prior-file interpretation remains pending. The
+[original 2010 GAO model](u2oet-gao2010.md) has a separate API for centered
+doses and endpoint-specific signed interactions.
 
 ```python
 import numpy as np

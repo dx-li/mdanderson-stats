@@ -71,12 +71,15 @@ truncation or direct reuse of the 2017 prior sampler would change the prior.
 Root's standalone base-R reference evaluates the published formula over binary
 and ordinal grids, endpoint-specific positive, zero and negative interactions,
 small link shapes, and Gaussian correlations `{-1, -0.65, 0, 0.55, 1}`. It also
-covers complete and toxicity-only grouped likelihoods; root will run this
-independent reference checker after integration. The worker's focused checks
+covers complete and toxicity-only grouped likelihoods. The integrated checker
+passes 680 joint cells, 60 complete/partial/combined likelihood values and 100
+expected utilities, plus dose translations and unit changes through 1e±150.
+The maximum absolute discrepancy is `4.84e-13`; the run took .087 seconds,
+peaked at 120.02 MiB RSS and reported zero swaps. Reproduction uses
+`tools/reference_u2oet_gao2010.R` and `tools/check_u2oet_gao2010.py`. The worker's focused checks
 passed 10 tests in 1.85 seconds, including the existing 2017 GAO probability
 tests, with warnings treated as errors, peak RSS 136,527,872 bytes and zero
 swaps. Targeted Ruff lint/format and mypy checks passed. Negative-interaction
 tests include the near-boundary probe `eta_1=eta_2=0`,
 `gamma=-2+2^-40`, `lambda=1`, a nonzero-predictor Decimal reference, and the
-large-predictor cancellation case `eta=(1000,0)`, `gamma=-1`. No base-R error
-maximum is claimed before root's independent comparison runs.
+large-predictor cancellation case `eta=(1000,0)`, `gamma=-1`. These validate the stated equations, not native executable parity.

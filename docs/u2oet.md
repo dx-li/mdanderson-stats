@@ -114,12 +114,14 @@ a fixed reference table; R is not a runtime or CI dependency.
 
 Remaining coverage includes:
 
-- Native GAO prior interpretation and integration into calibration/calendar
-  drivers (explicit-prior GAO fitting is supplied separately).
+- Native GAO prior interpretation, original-prior fitting and calibration/calendar
+  integration. The [original 2010 GAO probability kernel](u2oet-gao2010.md)
+  and the separate 2017 explicit-prior GAO fitter are available.
 - Validation of complete trial operating characteristics.
   Explicit-prior fitting, pseudo-trial centers and prior ESS are supplied below.
-- Adaptive GAO precision control, use of adaptive precision in calendar drivers,
-  and native final-selection validation. The standalone PDS/CMI/hybrid
+- Adaptive GAO precision control and native final-selection validation.
+  PDS/CMI/hybrid [calendar trials](u2oet-adaptive-trial.md) now optionally use
+  adaptive precision for interim and final fits. The standalone
   [adaptive fitter](u2oet-adaptive-precision.md) now monitors all four corner
   utilities per chain and reports whether its requested target was reached.
 - Complete native configuration/reports.

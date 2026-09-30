@@ -44,10 +44,9 @@ print(result.mcse_ratio)  # rows are chains; columns follow corner_indices
 print(result.corner_split_rhat)  # separate convergence diagnostic, not a stop rule
 ```
 
-Use `result.fit` anywhere the fixed-budget sampler result is expected, such as
-computing `u2oet_posterior(result.fit.joint, utility)`. Existing fixed-budget
-fits and calendar/simulation callers are unchanged; adaptive precision is a
-standalone fit option.
+Use `result.fit` with existing posterior summaries, flattening the chain and
+draw axes of its `joint` array before calling `u2oet_posterior`. Fixed-budget
+fits remain available alongside this adaptive fit option.
 
 `target_met` is true only when all chain/corner ratios are finite and at
 most the requested target. `termination="draw_cap"` reports that the explicit
@@ -88,3 +87,7 @@ normalized diagnostic traces, batch means, and split-Rhat work arrays; it is an
 allocation bound estimate rather than an RSS guarantee. `corner_split_rhat` uses the
 project's classical split-Rhat summary implementation and is reported
 separately; it is not the guide's precision criterion or a convergence guarantee.
+
+The [adaptive calendar-trial guide](u2oet-adaptive-trial.md) connects this
+monitor to interim and final PDS/CMI/hybrid analyses. The fixed-budget trial
+path remains the default.
