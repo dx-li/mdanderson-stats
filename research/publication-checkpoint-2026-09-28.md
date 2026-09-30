@@ -1,10 +1,10 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `a83936b` adds six-dose calendar importance
-fitting and optional Hothorn–Lausen forest splits. The final section records
-validation; earlier sections preserve checkpoint history. The latest fully
-passed hosted checkpoint remains `2b53d37`; the preceding `54ae048` has passed
-quality and Python 3.12/3.13 while its Python 3.14 job is still running.
+Latest verified package checkpoint: `400fe6c` adds serial six-dose calendar
+operating-characteristic summaries and optional scalar Brier-gradient forest
+splits. The final section records validation; earlier sections preserve
+checkpoint history. The preceding published checkpoint `77a5fb4` has passed
+hosted quality and Python 3.12, 3.13 and 3.14 checks.
 The local artifact manifest records full branch SHAs after each independently
 verified publication to `master`, `main` and `feat/condis-svm`.
 
@@ -2337,3 +2337,47 @@ at `54ae04834859873d38f37a5832b2e608f925b24b`. Its hosted quality and Python
 Python 3.14 job was cancelled. No overall success is claimed for either run.
 The ignored artifact manifest records fresh publication verification and the
 new hosted run separately. This audit-only commit changes no packaged code.
+
+
+## September 30 six-dose operating characteristics and Brier splits
+
+Package-code revision `400fe6cb30a5b382e74c51b054204f2bcef5ea22` adds bounded
+serial six-dose calendar summaries for both posterior backends. Direct per-trial
+seeds support replay; early/final/no-selection partitions preserve source
+eligibility quirks. Generated endpoint truth and observed endpoint counts have
+separate denominators. Trial-level Monte Carlo errors, enrollment/time summaries
+and cached-fit convergence/work diagnostics expose uncertainty and computation.
+Only one trial is retained. Allocation preflight accounts for an old fit
+coexisting with its replacement and scratch arrays, plus final aggregate copies;
+it is explicitly an estimate, not a total process-RSS guarantee.
+
+Survival forests now offer scalar `bs.gradient` splitting with RF-SRC's selected
+prior event-grid point, shared failure weights and strict censor-survival left
+limits. The default log-rank rule is preserved. Compiled unchanged pinned C
+helpers and an independent R ledger agree on 17 gradients across five cases
+and the corresponding candidate scores. Numeric/categorical candidates and
+bootstrap row multiplicities retain existing forest conventions. The helper
+uses linear node workspace; complete native forest/RNG equivalence is not claimed.
+
+Luna implemented both additions in separate checkouts. Root and a read-only
+reviewer checked source contracts, scientific behavior and integration. Ten
+focused calendar/OC checks and 25 focused forest checks pass. After the memory
+estimate adjustment, the four OC checks passed again with warnings as errors:
+3.339 seconds, 142.83 MiB peak RSS, zero swaps. The forest's serial validation
+sequence took 3.708 seconds, peaked at 172,326,912 bytes (about 164.3 MiB), and
+reported zero swaps. Targeted Ruff, formatting and mypy pass. Numerical work
+ran serially with numerical-library threads limited to one; no full local
+suite, new dependencies or CI expansion was added.
+
+Cached wheel and source builds pass. An isolated interpreter matched all 598
+committed package files in both archives, resolved all 1,689 public exports,
+verified retained license notices and ran both new public guide examples.
+It took 10.56 seconds, peaked at 129.0 MiB RSS and reported zero swaps. Ignored
+native source caches and binaries remain excluded. Counts remain 63 implemented,
+67 partial and eight pending; these are coverage additions within partial entries.
+
+Before publication, remote master/main/development independently matched
+`77a5fb4543706a900e709e54a626e15051f2c3a3`. Its existing hosted validation
+run `36663751699` passed quality and Python 3.12, 3.13 and 3.14. The ignored
+artifact manifest records the new verified remote SHAs and new hosted run
+separately. This audit-only commit changes no verified package code.
