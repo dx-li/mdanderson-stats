@@ -1513,6 +1513,11 @@ from .u2oet_decision import (
 from .u2oet_fit import U2OETFit, fit_u2oet, u2oet_parameter_names
 from .u2oet_gao import U2OETGAOMarginal, u2oet_gao_probabilities
 from .u2oet_gao2010 import U2OETGAO2010Marginal, u2oet_gao2010_probabilities
+from .u2oet_gao2010_fit import (
+    U2OETGAO2010Fit,
+    fit_u2oet_gao2010,
+    u2oet_gao2010_parameter_names,
+)
 from .u2oet_gao_fit import U2OETGAOFit, fit_u2oet_gao, u2oet_gao_parameter_names
 from .u2oet_gao_simulation import U2OETGAOTrial, simulate_u2oet_gao_trial
 from .u2oet_patients import (
@@ -1570,6 +1575,7 @@ from .wfmm_covariance import WFMMCovarianceSummary, wfmm_covariance, wfmm_summar
 from .wfmm_empirical_bayes import WFMMShrinkage, calibrate_wfmm_shrinkage
 from .wfmm_model import WFMMCoefficientFit, WFMMPrior, fit_wfmm_coefficients
 from .wfmm_posterior import WFMMPosteriorSummary, wfmm_summarize
+from .wfmm_prediction import wfmm_predict_coefficients
 from .wfmm_selection import WFMMSelection, wfmm_restore_coefficients, wfmm_select_coefficients
 from .wfmm_variance_init import WFMMVarianceInitialization, initialize_wfmm_variances
 from .windows import (
@@ -1605,6 +1611,7 @@ __all__ = [
     "fit_wfmm_coefficients",
     "WFMMPosteriorSummary",
     "wfmm_summarize",
+    "wfmm_predict_coefficients",
     "WFMMCovarianceSummary",
     "wfmm_covariance",
     "wfmm_summarize_covariance",
@@ -2180,6 +2187,9 @@ __all__ = [
     "U2OETGAOMarginal",
     "U2OETGAO2010Marginal",
     "u2oet_gao2010_probabilities",
+    "U2OETGAO2010Fit",
+    "fit_u2oet_gao2010",
+    "u2oet_gao2010_parameter_names",
     "u2oet_gao_probabilities",
     "U2OETGAOFit",
     "fit_u2oet_gao",

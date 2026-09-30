@@ -50,7 +50,24 @@ Array/work/evaluation ceilings are documented in
 Focused tests exercise explicit coordinate ordering, fixed and free
 association behavior, immutable retained draws, joint grid-support rejection,
 and validation/budget failures before the supplied random generator advances.
-The source-backed independent quadrature comparison is generated separately
-by the repository owner and will be recorded with its measured errors after
-the integrated comparison runs. This audit does not claim native application
-parity or prior-center calibration.
+Sixteen focused new/existing GAO tests pass with warnings treated as errors,
+as do targeted Ruff, formatting and mypy checks. The worker run took 2.04
+seconds, peaked at 131.77 MiB RSS and reported zero swaps.
+
+The independent base-R reference integrates two variable Gaussian coordinates
+(an intercept and signed interaction) jointly across the dose-grid support
+boundary. It checks both the restricted prior and complete-data posterior.
+The same marginal model supplies a toxicity-only reference. A separate
+uniform-correlation posterior uses the analytic Gaussian quadrant formula
+and integration over `asin(rho)`, including its `cos(angle)` Jacobian. Base-R
+64/128-node refinements differ by at most `2.58e-10`.
+
+Four integrated runs, each with two chains, 512 warmup and 4,096 retained draws,
+pass all 31 posterior mean, variance, cross-moment and probability comparisons.
+The maximum discrepancy is 1.891 estimated Monte Carlo errors; the maximum
+classical split-Rhat among checked summaries is 1.00454. The run took 32.056
+seconds, peaked at 116.58 MiB RSS and reported zero swaps. Reproduction uses
+`tools/reference_u2oet_gao2010_fit.R` and `tools/check_u2oet_gao2010_fit.py`.
+These reduced-dimensional comparisons validate the stated target and update
+mechanisms, not mixing for every full-model analysis. This audit does not
+claim native application parity or prior-center calibration.

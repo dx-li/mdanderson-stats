@@ -4,7 +4,9 @@ The original 2010 GAO model is exposed separately from the 2017 GAO
 comparison. It centers each agent's dose grid, allows endpoint-specific
 interaction coefficients (including valid negative values), and combines the
 ordinal margins with a Gaussian copula. This is a fixed-parameter probability
-calculation, not posterior fitting or native-application parity.
+calculation. A separate [posterior fitter](u2oet-gao2010-fit.md) now supplies
+inference under explicit prior inputs and a documented joint support rule;
+neither interface claims native-application parity.
 
 ```python
 import numpy as np
@@ -78,7 +80,7 @@ a larger one.
 separate probability model for evaluability. Thus it does not fit or model the
 paper's `zeta` parameter or informative evaluability mechanism.
 
-This module does not implement the paper's prior calibration, original-prior
+This module does not implement the paper's prior calibration, native
 posterior sampler, dose-selection rule or clinical trial workflow. The paper
 states normal priors for the linear coefficients and interactions, lognormal
 priors for endpoint link shapes, and a uniform prior for the copula correlation;

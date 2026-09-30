@@ -31,6 +31,9 @@ fit = fit_u2oet_gao2010(
 )
 ```
 
+This short example demonstrates the interface. Its small draw count does not
+establish adequate posterior precision for a trial analysis.
+
 The named Gaussian coordinates are threshold-major within each endpoint:
 intercept for agent 1, intercept for agent 2, slope for agent 1, slope for
 agent 2; then endpoint `log_lambda` and `gamma`. Efficacy coordinates precede
@@ -66,5 +69,5 @@ and the minimum evaluations. Hard ceilings are 20 million retained scalar
 cells, 100 million dose/category work units, and 1 million likelihood
 evaluations. Elliptical slice updates also have a bounded 1,000-step bracket
 search. Increase runtime cautiously; the Gaussian-copula rectangle kernel has
-its own numerical work limit. No observations are generated or retained by
-this fitter.
+its own numerical work limit. This fits supplied grouped data; it does not
+simulate or conduct trials.

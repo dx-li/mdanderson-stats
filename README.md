@@ -50,6 +50,9 @@ Bayesian fixed/random-effect fitting with coefficient-specific
 variances, and reconstructed posterior curves with contrasts and simultaneous
 bands, variance functions and covariance reconstruction. Empirical-Bayes
 shrinkage calibration is available conditional on supplied variance estimates.
+[Posterior prediction](docs/wfmm-prediction.md) covers future latent curves and
+replicates, with explicit existing/new random-effect designs and shared-level
+dependence propagated through posterior variance draws.
 Explicit coefficient or wavelet-band selection preserves original positions
 for reconstruction after fitting a reduced model.
 A bounded REML initializer estimates starting random-effect and residual
@@ -1127,8 +1130,11 @@ outcomes, cohort allocation and final selection, with cumulative work limits
 and replay inputs. Native prior interpretation and GAO calibration remain open.
 The separate [original 2010 GAO model](docs/u2oet-gao2010.md) now supports
 centered doses, endpoint-specific signed interactions, ordinal probabilities
-and complete/toxicity-only likelihoods. Original-prior fitting and calibration
-remain open; its parameters are distinct from the 2017 comparison model.
+and complete/toxicity-only likelihoods. Its separate
+[posterior fitter](docs/u2oet-gao2010-fit.md) uses caller-supplied Gaussian
+coordinates jointly restricted to the valid dose-grid domain and a uniform
+association prior. Elicited prior calibration and native mapping remain open;
+its parameters are distinct from the 2017 comparison model.
 
 [CATBUB](docs/catbub.md) provides categorical-utility posterior comparisons,
 Dirichlet Monte Carlo, a success-only binary comparator, sequential multinomial

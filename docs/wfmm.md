@@ -3,8 +3,8 @@
 The [MD Anderson WFMM software](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/70)
 fits functional fixed and random effects in a transformed coefficient space.
 Python supports orthogonal wavelets and supplied custom transform pairs,
-coefficient-specific Bayesian mixed models, reconstruction and posterior curve
-summaries. An explicit Python REML
+coefficient-specific Bayesian mixed models, reconstruction, posterior curve
+summaries and [future-curve prediction](wfmm-prediction.md). An explicit Python REML
 initializer supplies starting variance estimates. Catalog entry 70 is
 **partial**: native initialization/prior defaults, other transform families and
 native file workflows remain open.
@@ -428,6 +428,6 @@ contrast/band summaries. Native MCMC random-number parity is not claimed.
 
 Native variance initialization and
 proposal selection, native inverse-gamma defaults, additional transforms and
-boundary rules, compression, prediction workflows and native file
+boundary rules, compression and native prediction/file
 formats remain open. The [source and implementation audit](../research/wfmm-audit.md)
 tracks these gaps and the independent references.

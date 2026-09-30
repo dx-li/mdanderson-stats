@@ -43,7 +43,7 @@ native prediction input/output schema, and no native executable prediction
 parity is claimed. Repeated levels are represented by shared design columns;
 residual rows are independent conditional on the posterior state.
 
-## Validation plan
+## Validation
 
 Focused tests use a small synthetic `WFMMCoefficientFit` to verify exact fixed
 and retained-existing coefficient predictions, shared new-level contributions,
@@ -51,6 +51,21 @@ residual mapping, read-only outputs, RNG requirements, malformed mappings and
 preflight failures. Root's independent base-R fixture compares mixture
 predictive means/covariances and conditional means for fixed-only, existing,
 new-latent and replicate targets under varying posterior draws and a
-nonorthogonal synthesis matrix. It checks prediction coefficients before the
-existing inverse-basis curve reconstruction; it does not claim native runtime
-parity.
+nonorthogonal synthesis matrix. The integrated comparison executes the existing
+inverse-basis reconstruction and checks its resulting predictive curves; it
+does not claim native runtime parity.
+
+The five focused tests pass, as do targeted Ruff, formatting and mypy checks.
+The worker's test run peaked at 132.11 MiB RSS and reported zero swaps. A
+direct-module guide smoke run also passed; package-level examples are checked
+after public export integration.
+
+The independent base-R comparison passes 192 deterministic conditional curve
+values and all 168 predictive mean/covariance checks. Stochastic targets each
+use 8,192 draws from eight equally weighted supplied posterior states, with
+shared new levels, distinct variance strata and nonorthogonal reconstruction.
+The maximum discrepancy is 2.081 estimated Monte Carlo errors. The comparison
+took .266 seconds, peaked at 125.23 MiB RSS and reported zero swaps. This checks
+propagation conditional on supplied posterior states; it is not a new
+validation of the original fitting posterior. Reproduce with
+`tools/reference_wfmm_prediction.R` and `tools/check_wfmm_prediction.py`.

@@ -73,8 +73,8 @@ native prediction output formats and file workflow are not claimed. Output,
 working-cell and multiplication work limits are checked before prediction
 allocations and random draws.
 
-To predict independent future levels with observation noise, reuse the fitted
-variance draws and provide the corresponding component maps:
+For two future curves sharing a new random-effect level, with independent
+observation noise, reuse the fitted variance draws and provide component maps:
 
 ```python
 replicates = wfmm_predict_coefficients(

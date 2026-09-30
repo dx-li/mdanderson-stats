@@ -1,5 +1,16 @@
 # Statistical coverage priority audit — September 28, 2026
 
+September 30 fitting/prediction update: the original 2010 GAO model now has
+posterior fitting under explicit Gaussian-coordinate inputs, a joint
+dose-grid validity restriction and uniform association. Independent integration
+checks the constrained prior, complete/toxicity-only posteriors and correlation
+posterior. Elicited prior-center calibration and native workflow mapping remain
+open. WFMM now supplies posterior predictive coefficients for existing/new
+random-effect levels and future replicates, with independent mixture moment
+checks. PCA/PCw/wPC and automatic retention still lack exact native contracts;
+the predictive interface does not claim native file-format parity. Historical
+remaining-scope notes below describe their earlier checkpoints.
+
 September 30 U2OET update: adaptive corner-utility precision is now connected
 to PDS/CMI/hybrid calendar trials, including final follow-up and cached-data
 decisions. The original 2010 GAO probability model is separately implemented
