@@ -1,12 +1,11 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `11a91c5` adds optional BaCIS subgroup ESS
-summaries across simulated trials and Dose Schedule Finder observations with
-explicit delayed-toxicity adjudications, with bounded serial verification. The final
-section records validation; earlier sections preserve prior checkpoint history. Network publication was
-restored on September 29; the earlier verified push put `a796f1d` on GitHub
-`master`, `main` and `feat/condis-svm`. The local artifact manifest records the
-full branch SHAs after each independently verified publication.
+Latest verified package checkpoint: `408766c` adds Proportional Density profile
+inference and BOIN waterfall accelerated titration. The final section records
+validation; earlier sections preserve checkpoint history. The preceding
+published checkpoint `729abd8` passed hosted quality and Python 3.12–3.14 checks.
+The local artifact manifest records full branch SHAs after each independently
+verified publication to `master`, `main` and `feat/condis-svm`.
 
 The user explicitly requested that all completed work be pushed to GitHub and
 that stable programs be available on `master`. The public repository is
@@ -2165,3 +2164,49 @@ entries without claiming full native workflow coverage.
 The local manifest separately records independent master/main/development
 publication verification, the latest fully passed hosted checkpoint and the
 fresh hosted run. This audit-only commit changes no packaged numerical code.
+
+## Profile inference and waterfall titration checkpoint
+
+Verified package revision `408766c45f4f701571e8c9de0b71c1a61c149f6d` adds the
+source-defined Proportional Density likelihood-ratio test for an arbitrary
+beta under explicitly asserted common censoring. The intercept is profiled;
+confidence limits invert the same one-degree-of-freedom test. Stable time
+scaling, both confidence tails, likelihood residual checks and bounded work
+protect the numerical calculation. Unequal-censoring bootstrap calibration
+and incidence inference are separate from this new interface.
+
+BOIN waterfall replay and serial simulation now support the original R
+first-subtrial titration branch. A complete staircase draw prefix is retained,
+but only visited patients count as assignments. The reached cell is topped
+up once; subsequent subtrials use ordinary cohorts. Actual counts govern
+enrollment stopping, including the source's possible budget overshoot and
+the suffix exclusion applied at the last selected dose. The Python result
+retains observations that the native wrapper can drop. Native app-specific
+titration caps and 3+3 run-in remain open.
+
+Luna implemented both additions. Fourteen focused existing/new tests pass
+with warnings as errors, along with targeted Ruff, formatting and mypy.
+Independent base-R GLMs and profile inversion match 90 estimates/tests/limits
+across five cases and 15 intervals within 2.003e-13; 30 endpoint LR residuals
+are below 8.882e-15. Extreme time units, arm exchange and confidence tails
+are checked. Seven original BOIN 2.7.2 workflows reproduce 43 assignments,
+11 subtrial snapshots and final exclusion masks, with explicit accounting for
+the native dropped-count defect. All seven final source-contour selections
+also match independently.
+
+Numerical checks ran one process at a time with library threads limited to
+one. Focused worker runs peaked below 132 MiB RSS and reported zero swaps.
+No dependency installation, broad local numerical suite or new CI workflow
+was added. The preceding published `729abd8` quality and all Python 3.12–3.14
+jobs were independently confirmed successful at 01:45 UTC on September 30.
+
+Cached wheel/source builds pass. Isolated wheel verification executes all
+four examples in the two affected guides, resolves all 1,680 public exports
+and matches all 594 committed package files in both archives. License notices
+are preserved and native binaries/raw sources are excluded. Verification
+took 10.97 seconds, peaked at 114.8 MiB RSS and reported zero swaps. Counts
+remain 63 implemented, 67 partial and eight pending. These additions improve
+method coverage without claiming complete native application equivalence.
+
+The local manifest records independent publication verification and fresh
+hosted validation separately. This audit-only commit changes no packaged code.
