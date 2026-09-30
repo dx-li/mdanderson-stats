@@ -2005,3 +2005,58 @@ lint and formatting checks now pass. No numerical code or checks were changed.
 The local manifest records fresh independent master/main/development branch
 verification and the replacement hosted run; its status is reported separately
 from the completed preceding run.
+
+
+## WFMM custom transforms and U2OET adaptive precision checkpoint
+
+Verified package revision `83f2df9db833d64f47e3b27d253cbbc3d38257a3` adds
+WFMM square analysis/synthesis inverse pairs, retaining the existing orthogonal
+API. Reconstruction and data-space covariance use the supplied synthesis
+matrix. Two-sided inverse checks and a scale-stable condition estimate reject
+unstable pairs; variance weighting avoids premature overflow under reciprocal
+uniform scales. PCA, rectangular retained-component rules and native workflows
+remain separate gaps.
+
+U2OET gains a standalone adaptive PDS/CMI/hybrid fitter. It continues complete
+chain states, monitors each chain's four corner-utility batch-means MCSE/SD
+ratios, and returns the achieved precision, draw-cap termination and separate
+classical split-Rhat diagnostics. Work and live-array estimates are bounded
+before sampling. Constant-utility precision is undefined and cannot pass.
+The undocumented batch construction and extension schedule are explicit Python
+choices. GAO and fixed-budget trial drivers are outside this addition.
+
+Luna implemented both components; root reviewed and integrated them. Twenty-two
+focused tests pass with warnings treated as errors (18 WFMM and four U2OET).
+The condition-guard follow-up also reran its twelve affected tests. Independent
+base-R comparisons cover 1,199 WFMM transform/reconstruction, posterior-summary
+and covariance values, with maximum scaled discrepancy `5.49e-15`, and 252
+U2OET precision/Rhat diagnostics at utility scales `1e-200`, `1` and `1e200`,
+with maximum normalized absolute discrepancy `2.89e-15`. These are independent
+mathematical references, not native executable comparisons.
+
+A bounded end-to-end U2OET posterior run extended two chains from 512 to 1024
+retained draws, stopped before the 4096-draw cap, and met the .05 precision
+target with maximum corner ratio .047268 and maximum corner split-Rhat
+1.000069. Its efficacy intercept and probability means agreed with existing
+independent R quadrature references within 2.363 and 2.145 estimated MCSEs.
+This does not establish every parameter's precision or trial operating
+characteristics. See the component audits for settings and remaining scope.
+
+Repository-wide Ruff lint and formatting and targeted mypy checks pass.
+Numerical processes ran serially with numerical-library thread counts fixed
+at one. The largest measured focused run peaked at 140.61 MiB RSS; independent
+WFMM and U2OET comparisons peaked at 123.83 and 123.27 MiB, and the posterior
+integration run at 121.34 MiB. All reported zero swaps. No broad local numerical
+suite, dependency installation or new CI workflow was added.
+
+Cached wheel/source builds pass. Isolated wheel validation executes both new
+guide examples, verifies all 1,671 public exports and exact committed bytes
+for all 590 packaged source/data files in both archives, and checks preserved
+license notices and excluded native binaries. It took 11.967 seconds, peaked
+at 122.55 MiB RSS and reported zero swaps. Coverage remains 63 implemented,
+67 partial and eight pending entries; mixed-license limitations remain explicit.
+
+The preceding `fcffaf8` hosted quality job and all three Python 3.12–3.14 jobs
+are independently confirmed successful. The local artifact manifest records
+fresh master/main/development publication verification and the new hosted run
+separately. This final audit-only commit changes no packaged numerical code.
