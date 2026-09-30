@@ -1,6 +1,7 @@
 """Integrated calendar simulation of the six-dose P12Xuelin workflow."""
 
 from dataclasses import dataclass
+from typing import Literal
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -12,7 +13,16 @@ from .parallel_phase12_decision import (
     phase12_source_decision,
     phase12_source_final_selection,
 )
+from .parallel_phase12_importance import (
+    Phase12ImportanceFit,
+    fit_phase12_importance,
+)
+from .parallel_phase12_importance import (
+    _settings as _importance_settings,
+)
 from .parallel_phase12_model import (
+    _MEAN,
+    _SD,
     Phase12ModelFit,
     Phase12Snapshot,
     fit_phase12_model,
@@ -20,13 +30,23 @@ from .parallel_phase12_model import (
 )
 from .parallel_phase12_progression import phase12_accrual_ready, phase12_phase_one
 
+_MAX_TOTAL_IMPORTANCE_COMPONENT_EVALUATIONS = 100_000_000
+_MAX_TOTAL_MODE_ITERATIONS = 2_100_000
+
 
 @dataclass(frozen=True)
 class Phase12CalendarAnalysis:
     time: float
     snapshot: Phase12Snapshot
     decision: Phase12SourceDecision | None
-    max_split_rhat: float
+    max_split_rhat: float | None
+    posterior_backend: str = "mcmc"
+    posterior_integrations: int | None = None
+    posterior_converged: bool | None = None
+    posterior_mode_iterations: int | None = None
+    posterior_log_evidence: float | None = None
+    log_integral_mc_se: FloatArray | None = None
+    ratio_mc_se: FloatArray | None = None
 
 
 @dataclass(frozen=True)
@@ -45,9 +65,11 @@ class Phase12CalendarTrial:
     reason: str
     stop_time: float
     final_analysis_time: float | None
-    last_fit: Phase12ModelFit | None
+    last_fit: Phase12ModelFit | Phase12ImportanceFit | None
     data_seed: int
     posterior_seed: int
+    posterior_component_evaluations: int = 0
+    posterior_mode_iterations: int = 0
 
 
 def _integer(value: int, name: str, low: int, high: int) -> int:
@@ -68,9 +90,15 @@ def simulate_phase12_calendar(
     max_duration: float = float("inf"),
     max_attempts: int = 100000,
     complete_followup: bool = False,
+    posterior_backend: Literal["mcmc", "importance"] = "mcmc",
     draws: int = 2000,
     warmup: int = 1000,
     chains: int = 4,
+    importance_relative_error: float = 0.001,
+    importance_max_integrations: int = 10_000,
+    importance_multivariate_weight: float = 0.99,
+    importance_max_mode_iterations: int = 1_000,
+    max_total_posterior_component_evaluations: int = 50_000_000,
     rng: np.random.Generator,
 ) -> Phase12CalendarTrial:
     """Simulate phase I, blocked accrual attempts, phase II and source final selection.
@@ -80,7 +108,9 @@ def simulate_phase12_calendar(
     final analysis is at the last attempted arrival, not after full follow-up.
     complete_followup=True extends final follow-up only when the trial has not
     already closed/terminated. Early selections retain the documented source
-    eligibility quirk. No exact native RNG or importance-sampler parity is claimed.
+    eligibility quirk. ``posterior_backend="importance"`` opts into bounded
+    vector importance fitting; the MCMC backend and its defaults are unchanged.
+    No exact native RNG or importance-sampler parity is claimed.
     """
     tox, eff = (
         finite(toxicity_probability, "toxicity_probability"),
@@ -104,6 +134,49 @@ def simulate_phase12_calendar(
     draws = _integer(draws, "draws", 8, 100000)
     warmup = _integer(warmup, "warmup", 0, 100000)
     chains = _integer(chains, "chains", 2, 16)
+    if posterior_backend not in ("mcmc", "importance"):
+        raise ValueError("posterior_backend must be 'mcmc' or 'importance'")
+    importance_max_integrations = _integer(
+        importance_max_integrations, "importance_max_integrations", 100, 1_000_000
+    )
+    if importance_max_integrations % 100:
+        raise ValueError("importance_max_integrations must be a multiple of 100")
+    importance_max_mode_iterations = _integer(
+        importance_max_mode_iterations, "importance_max_mode_iterations", 1, 10_000
+    )
+    total_work_limit = _integer(
+        max_total_posterior_component_evaluations,
+        "max_total_posterior_component_evaluations",
+        67,
+        _MAX_TOTAL_IMPORTANCE_COMPONENT_EVALUATIONS,
+    )
+    relative_error = scalar(importance_relative_error, "importance_relative_error")
+    mixture_weight = scalar(importance_multivariate_weight, "importance_multivariate_weight")
+    if posterior_backend == "importance":
+        _importance_settings(
+            _MEAN,
+            _SD,
+            0.30,
+            0.10,
+            0.33,
+            (0.1, 0.9),
+            relative_error,
+            importance_max_integrations,
+            mixture_weight,
+            importance_max_mode_iterations,
+        )
+        # At most one interim fit every five post-phase-I patients plus the
+        # final analysis. The preflight occurs before drawing either child seed.
+        max_analyses = maximum // 5 + 1
+        worst_component_work = max_analyses * importance_max_integrations * 67
+        worst_mode_work = max_analyses * importance_max_mode_iterations
+        if worst_component_work > total_work_limit:
+            raise ValueError(
+                "worst-case importance component work exceeds "
+                "max_total_posterior_component_evaluations"
+            )
+        if worst_mode_work > _MAX_TOTAL_MODE_ITERATIONS:
+            raise ValueError("worst-case posterior mode iterations exceed the calendar limit")
     duration = float(max_duration)
     if np.isnan(duration) or duration <= 0:
         raise ValueError("max_duration must be positive (infinity is allowed)")
@@ -130,20 +203,72 @@ def simulate_phase12_calendar(
     reason = "maximum enrollment"
     early = future = None
     selected_eligible: bool | None = None
-    last_fit: Phase12ModelFit | None = None
+    last_fit: Phase12ModelFit | Phase12ImportanceFit | None = None
     cached_tally: FloatArray | None = None
+    posterior_component_evaluations = 0
+    posterior_mode_iterations = 0
 
-    def analyze(at: float) -> tuple[Phase12Snapshot, Phase12ModelFit, float]:
+    def analyze(
+        at: float,
+    ) -> tuple[Phase12Snapshot, Phase12ModelFit | Phase12ImportanceFit]:
         nonlocal last_fit, cached_tally
+        nonlocal posterior_component_evaluations, posterior_mode_iterations
         snapshot = phase12_snapshot(records, time=at)
         if cached_tally is None or not np.array_equal(snapshot.tally, cached_tally):
-            last_fit = fit_phase12_model(
-                snapshot.tally, draws=draws, warmup=warmup, chains=chains, rng=posterior_rng
-            )
+            if posterior_backend == "mcmc":
+                last_fit = fit_phase12_model(
+                    snapshot.tally, draws=draws, warmup=warmup, chains=chains, rng=posterior_rng
+                )
+            else:
+                remaining = total_work_limit - posterior_component_evaluations
+                call_limit = min(
+                    importance_max_integrations,
+                    (remaining // (67 * 100)) * 100,
+                )
+                if call_limit < 100:
+                    raise RuntimeError("calendar importance work budget exhausted")
+                last_fit = fit_phase12_importance(
+                    snapshot.tally,
+                    integration_relative_error=relative_error,
+                    max_integrations=call_limit,
+                    mixture_multivariate=mixture_weight,
+                    max_mode_iterations=importance_max_mode_iterations,
+                    rng=posterior_rng,
+                )
+                posterior_component_evaluations += last_fit.integrations * 67
+                posterior_mode_iterations += last_fit.mode_iterations
+                if posterior_mode_iterations > _MAX_TOTAL_MODE_ITERATIONS:
+                    raise RuntimeError("calendar posterior mode iteration budget exhausted")
             cached_tally = snapshot.tally
         assert last_fit is not None
-        diagnostic = float(np.max(last_fit.coefficient_summary.split_rhat))
-        return snapshot, last_fit, diagnostic
+        return snapshot, last_fit
+
+    def analysis_record(
+        at: float,
+        snapshot: Phase12Snapshot,
+        fit: Phase12ModelFit | Phase12ImportanceFit,
+        decision: Phase12SourceDecision | None,
+    ) -> Phase12CalendarAnalysis:
+        if isinstance(fit, Phase12ModelFit):
+            return Phase12CalendarAnalysis(
+                at,
+                snapshot,
+                decision,
+                float(np.max(fit.coefficient_summary.split_rhat)),
+            )
+        return Phase12CalendarAnalysis(
+            at,
+            snapshot,
+            decision,
+            None,
+            "importance",
+            fit.integrations,
+            fit.converged,
+            fit.mode_iterations,
+            fit.log_evidence,
+            fit.log_integral_mc_se,
+            fit.ratio_mc_se,
+        )
 
     def arrival(at: float) -> float:
         gap = float(np.floor(data_rng.exponential(365 / rate) + 0.5))
@@ -188,7 +313,7 @@ def simulate_phase12_calendar(
                 start = len(records)
                 weights = admissible / admissible.sum()
         if start is not None and len(records) > start and (len(records) - start) % 5 == 0:
-            snapshot, fit, diagnostic = analyze(time)
+            snapshot, fit = analyze(time)
             decision = phase12_source_decision(
                 fit,
                 snapshot.enrolled,
@@ -197,7 +322,7 @@ def simulate_phase12_calendar(
                 suspended=suspended,
             )
             closed, suspended = decision.closed, decision.suspended
-            analyses.append(Phase12CalendarAnalysis(time, snapshot, decision, diagnostic))
+            analyses.append(analysis_record(time, snapshot, fit, decision))
             if decision.terminated or decision.arm_closed:
                 reason, early = decision.reason, decision.selected
                 selected_eligible = decision.selected_eligible
@@ -221,10 +346,10 @@ def simulate_phase12_calendar(
         final_time = time
         if complete_followup and records:
             final_time = max(time, float(np.max(np.asarray(records)[:, [3, 5]])))
-        snapshot, fit, diagnostic = analyze(final_time)
+        snapshot, fit = analyze(final_time)
         future = phase12_source_final_selection(fit, closed=closed, suspended=suspended)
         selected_eligible = True if future is not None else None
-        analyses.append(Phase12CalendarAnalysis(final_time, snapshot, None, diagnostic))
+        analyses.append(analysis_record(final_time, snapshot, fit, None))
     masks = [np.frombuffer(x.tobytes(), dtype=bool) for x in (closed, suspended, admissible)]
     return Phase12CalendarTrial(
         _freeze(np.asarray(records).reshape(-1, 6)),
@@ -244,4 +369,6 @@ def simulate_phase12_calendar(
         last_fit,
         int(seeds[0]),
         int(seeds[1]),
+        posterior_component_evaluations,
+        posterior_mode_iterations,
     )
