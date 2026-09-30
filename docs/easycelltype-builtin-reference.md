@@ -8,9 +8,7 @@ GSEA workflows:
 ```python
 from mdanderson_stats import easycelltype_builtin_reference, easycelltype_fisher
 
-reference = easycelltype_builtin_reference(
-    "cellmarker", "Human", tissues=("Kidney",)
-)
+reference = easycelltype_builtin_reference("cellmarker", "Human", tissues=("Kidney",))
 result = easycelltype_fisher(
     query_genes=("915", "916", "917"),
     clusters=("cluster-1",) * 3,
