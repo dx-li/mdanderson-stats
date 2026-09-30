@@ -1,0 +1,11 @@
+"case","n","omitted","rmse","mean_absolute_error","legacy_signed_max_error","max_absolute_error","ks_statistic","ks_pvalue","ks_exact"
+"signed_error",5,0,0.112,0.1,-0.1,0.1,0.2,1,TRUE
+"tied_exact",6,0,0.063,0.033,0.1,0.1,0.166666666666667,1,TRUE
+"tied_tail_exact",6,0,0.438,0.4,0.4,0.4,0.5,0.318181818181818,TRUE
+"distinct_exact",8,0,0.026,0.024,0.03,0.03,0.125,1,TRUE
+"exact_separation",5,0,0.559,0.5,0.5,0.5,1,0.00793650793650794,TRUE
+"exact_separation_99",99,0,0.906,0.901,0.901,0.901,0.999999999999998,8.79086755893401e-59,TRUE
+"decimal_rounding",5,0,0.001,0.001,0.001,0.001,0.2,1,TRUE
+"asymptotic_tied",100,0,0.36,0.295,0.78,0.78,0.18,0.0783230850480076,FALSE
+"identical",7,0,0,0,0,0,0,1,TRUE
+"paired_missing",5,1,0.046,0.038,0.05,0.05,0.2,1,TRUE
