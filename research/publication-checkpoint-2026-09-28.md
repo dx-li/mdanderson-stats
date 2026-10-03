@@ -1,11 +1,13 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `00e871d` adds IPDfromKM reconstruction
-report diagnostics, including native decimal rounding and an explicitly nominal
-KS comparison. The final section records validation; earlier sections preserve
-checkpoint history. Published `4c4a573` has passed hosted quality and Python
-3.12/3.13 checks; Python 3.14 is still running at the pre-publication check.
-The latest completely passed hosted checkpoint observed remains `77a5fb4`.
+Latest verified package checkpoint: `89c1268` adds SYNERGY wild-bootstrap
+resampling and serial refits, with descriptive sample SD and explicit limits on
+native interval equivalence. The final section records validation; earlier
+sections preserve checkpoint history. Published `b67c028` has now passed all
+hosted quality and Python 3.12/3.13/3.14 checks in
+[run 36670725350](https://github.com/dx-li/mdanderson-stats/actions/runs/36670725350).
+That is the latest completely passed hosted checkpoint observed before this
+publication; the new revision's hosted results are recorded separately.
 The local artifact manifest records full branch SHAs after each independently
 verified publication to `master`, `main` and `feat/condis-svm`.
 
@@ -2459,3 +2461,35 @@ master/main/development. Its hosted quality and Python 3.12/3.13 jobs passed;
 Python 3.14 was still running before this publication. The ignored artifact
 manifest records the new publication and hosted status separately. This
 audit-only commit changes no verified packaged code.
+
+## October 3: SYNERGY wild-bootstrap resampling
+
+Luna implemented the source-defined Mammen generator and serial marginal-
+baseline/REML refits; a separate Luna agent produced an independent base-R
+reference. Root reviewed and integrated the result at `89c1268`. Five fixed
+multiplier tapes cover 13 observations, including repeated dose pairs. The
+maximum absolute departure difference against R is `1.30e-10`.
+
+Ten focused tests pass with warnings treated as errors. Response scaling by
+`1e-200` and `1e200` preserves the normalized mean and sample SD within
+`1.06e-10` and `6.53e-12` absolute error respectively. The integrated check
+used 2.106 seconds, 149.36 MiB peak RSS and zero process swaps. Targeted Ruff,
+formatting and worker mypy checks pass. Numerical processes ran serially.
+No new CI workflow or full local test run was added.
+
+The wheel and source archive match all 605 committed package files; all 1,694
+public exports resolve, and the self-contained bootstrap guide runs from the
+isolated wheel. Package verification used 11.614 seconds, 114.16 MiB peak RSS
+and zero process swaps. Artifacts retain the existing mixed-license notices.
+
+Bootstrap samples and descriptive sample SD are usable now. The source's exact
+normal-interval centering/denominator and four older parametric surfaces remain
+unverified. The entry stays partial, and catalog counts remain 63 implemented,
+67 partial and eight pending. Bounded new primary-source searches did not
+recover the missing fitted risk-model parameters; the K-COMPASS predictor list
+was clarified without inventing coefficients or absolute survival predictions.
+
+Before this publication, remote master/main/development were independently
+verified at `b67c028`. The artifact manifest records the subsequent publication
+SHA, rebuilt artifact hashes, Git bundle verification and new hosted run state
+after the remote push is independently checked.
