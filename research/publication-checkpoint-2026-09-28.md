@@ -1,11 +1,11 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `89c1268` adds SYNERGY wild-bootstrap
-resampling and serial refits, with descriptive sample SD and explicit limits on
-native interval equivalence. The final section records validation; earlier
-sections preserve checkpoint history. Published `b67c028` has now passed all
-hosted quality and Python 3.12/3.13/3.14 checks in
-[run 36670725350](https://github.com/dx-li/mdanderson-stats/actions/runs/36670725350).
+Latest verified package checkpoint: `89f6082` adds BCSTTE Gamma, inverse-Gamma
+and log-logistic posterior fits with explicit priors and right-censored
+likelihoods. The final section records validation; earlier sections preserve
+checkpoint history. Published `9f6c1eb` has passed all hosted quality and
+Python 3.12/3.13/3.14 checks in
+[run 37157021641](https://github.com/dx-li/mdanderson-stats/actions/runs/37157021641).
 That is the latest completely passed hosted checkpoint observed before this
 publication; the new revision's hosted results are recorded separately.
 The local artifact manifest records full branch SHAs after each independently
@@ -2493,3 +2493,36 @@ Before this publication, remote master/main/development were independently
 verified at `b67c028`. The artifact manifest records the subsequent publication
 SHA, rebuilt artifact hashes, Git bundle verification and new hosted run state
 after the remote push is independently checked.
+
+## October 3: three additional BCSTTE family fitters
+
+Luna implemented the guide's Gamma, inverse-Gamma and log-logistic models,
+using explicit proper correlated Gaussian priors on log shape and log scale.
+The fitters support noninformative right censoring, including zero follow-up
+and prior-only data. Complete-data draws retain paired CDF evaluations for
+Johnson's diagnostic; censored fits do not invent a native diagnostic.
+Root integrated public exports and documentation at `89f6082`.
+
+Independent base-R quadrature covers six complete/censored cases. All 72
+posterior moment, covariance and CDF summaries agree within 3.232 estimated
+batch-means Monte Carlo errors; maximum split R-hat is 1.005445. A separate
+Luna review and root review corrected density normalization, the event-only
+time Jacobian, tiny-shape Gamma tails and large-shape cancellation before
+publication. Nine focused tests pass with warnings treated as errors.
+Twelve unit changes at factors `1e-200` and `1e200` preserve centered draws
+within `5.73e-14` and expected likelihood shifts within `4.55e-13`.
+Integrated checks peak at 145.12 MiB with no process swaps. Targeted mypy,
+Ruff lint and formatting pass.
+
+Cached wheel and source builds pass. An isolated wheel resolves 1,698 public
+exports, matches all 606 committed package files in both artifacts, preserves
+license notices and runs the new public guide example. This verification used
+11.258 seconds, 132.53 MiB peak RSS and no process swaps. No full local suite,
+new dependency or CI workflow was added. Catalog status remains partial;
+counts remain 63 implemented, 67 partial and eight pending.
+
+The preceding `9f6c1eb` hosted run passed all four jobs on attempt two; the first
+attempt failed during a GitHub API request in setup, before tests. No CI change
+was needed. The local manifest records the new publication and hosted state
+separately. The independently sourced log-odds-rate core and its posterior
+integration remain in their isolated development checkouts at this checkpoint.
