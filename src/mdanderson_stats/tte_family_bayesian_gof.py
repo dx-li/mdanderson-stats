@@ -19,7 +19,7 @@ from scipy.special import gammainc, gammaincc, gammaln, log_expit
 
 from ._log_odds_rate import log_odds_rate_components
 from ._validation import FloatArray, finite, scalar
-from .bayesian_chi_square import BayesianChiSquare, bayesian_chi_square_cdf
+from .bayesian_chi_square import BayesianChiSquare, _event_indicator, bayesian_chi_square_cdf
 from .boin import _owned
 from .cdflib_gamma_factor import _large_log_factor
 from .cdflib_gamma_support import _local_log_gamma
@@ -393,15 +393,7 @@ def _family_bayesian_gof(
         n = int(time_shape[0])
         if not 2 <= n <= _MAX_RETAINED_CELLS or np.iscomplexobj(times):
             raise ValueError("times must be a one-dimensional real vector with n >= 2")
-    if event is None:
-        events = np.ones(n, dtype=bool)
-    else:
-        if _input_shape(event, "event") != (n,) or np.iscomplexobj(event):
-            raise ValueError("event must be a one-dimensional Boolean vector matching times")
-        raw_event = np.asarray(event)
-        if raw_event.dtype.kind != "b":
-            raise ValueError("event must contain actual Boolean values")
-        events = raw_event.astype(bool, copy=True)
+    events = _event_indicator(event, n)
     if _input_shape(prior_mean, "prior_mean") != (2,):
         raise ValueError("prior_mean must contain log shape and log scale means")
     if _input_shape(prior_covariance, "prior_covariance") != (2, 2):
@@ -628,15 +620,7 @@ def log_odds_rate_bayesian_gof(
         if not 2 <= n <= _MAX_RETAINED_CELLS or np.iscomplexobj(times):
             raise ValueError("times must be a one-dimensional real vector with n >= 2")
 
-    if event is None:
-        events = np.ones(n, dtype=bool)
-    else:
-        if _input_shape(event, "event") != (n,) or np.iscomplexobj(event):
-            raise ValueError("event must be a one-dimensional Boolean vector matching times")
-        raw_event = np.asarray(event)
-        if raw_event.dtype.kind != "b":
-            raise ValueError("event must contain actual Boolean values")
-        events = raw_event.astype(bool, copy=True)
+    events = _event_indicator(event, n)
     if _input_shape(prior_mean, "prior_mean") != (3,):
         raise ValueError("prior_mean must contain log shape, log scale, and log c means")
     if _input_shape(prior_covariance, "prior_covariance") != (3, 3):

@@ -8,6 +8,7 @@ from mdanderson_stats.tte_family_bayesian_gof import (
     gamma_bayesian_gof,
     inverse_gamma_bayesian_gof,
     log_logistic_bayesian_gof,
+    log_odds_rate_bayesian_gof,
 )
 from mdanderson_stats.weibull_unknown_shape_gof import _relative_log_times
 
@@ -196,3 +197,38 @@ def test_unit_rescaling_and_budget_rejection_are_stable_before_rng_use():
             rng=rng,
         )
     assert repr(rng.bit_generator.state) == state
+
+
+def test_flat_boolean_event_lists_over_sixteen_times_work_for_all_families():
+    times = np.linspace(0.5, 5.0, 20).tolist()
+    event = [index % 3 != 0 for index in range(len(times))]
+    for family in (
+        gamma_bayesian_gof,
+        inverse_gamma_bayesian_gof,
+        log_logistic_bayesian_gof,
+    ):
+        result = family(
+            times,
+            event=event,
+            prior_mean=[np.log(2.0), np.log(2.0)],
+            prior_covariance=[[0.3, 0.04], [0.04, 0.4]],
+            rng=np.random.default_rng(742),
+            draws=8,
+            warmup=0,
+            chains=2,
+        )
+        np.testing.assert_array_equal(result.event, event)
+        assert result.diagnostic is None
+
+    odds_rate = log_odds_rate_bayesian_gof(
+        times,
+        event=event,
+        prior_mean=[np.log(2.0), np.log(2.0), 0.0],
+        prior_covariance=np.diag([0.3, 0.4, 0.3]),
+        rng=np.random.default_rng(742),
+        draws=8,
+        warmup=0,
+        chains=2,
+    )
+    np.testing.assert_array_equal(odds_rate.event, event)
+    assert odds_rate.diagnostic is None

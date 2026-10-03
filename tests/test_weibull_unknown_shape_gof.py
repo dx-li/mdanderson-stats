@@ -103,3 +103,67 @@ def test_preflight_rejects_work_and_invalid_covariance_before_rng_use() -> None:
             rng=rng1,
         )
     assert rng1.random() == rng2.random()
+
+
+def test_right_censor_likelihood_unit_invariance_and_zero_time_censoring() -> None:
+    times = np.array([0.0, 0.7, 1.4, 2.8, 4.0])
+    event = np.array([False, True, False, True, False])
+    mean = np.log([1.4, 1.8])
+    covariance = np.array([[0.2, 0.04], [0.04, 0.3]])
+    options = dict(draws=24, warmup=5, chains=2, bins=3)
+    fit = weibull_unknown_shape_bayesian_gof(
+        times,
+        event=event,
+        prior_mean=mean,
+        prior_covariance=covariance,
+        rng=np.random.default_rng(154),
+        **options,
+    )
+    assert fit.diagnostic is None
+    np.testing.assert_array_equal(fit.event, event)
+    shape = np.exp(fit.parameters[..., 0])
+    scale = np.exp(fit.parameters[..., 1] + fit.log_scale_offset)
+    log_ratio = np.log(times[1:])[None, None, :] - np.log(scale)[:, :, None]
+    hazard = np.exp(shape[:, :, None] * log_ratio)
+    observed_events = event[1:]
+    terms = -hazard
+    event_terms = (
+        np.log(shape)[:, :, None]
+        - np.log(times[1:])[None, None, :]
+        + shape[:, :, None] * log_ratio
+        - hazard
+    )
+    terms = np.where(observed_events[None, None, :], event_terms, terms)
+    expected = np.sum(terms, axis=-1)
+    np.testing.assert_allclose(fit.log_likelihood, expected, rtol=2e-13, atol=2e-13)
+
+    multiplier = 1e80
+    shifted = weibull_unknown_shape_bayesian_gof(
+        times * multiplier,
+        event=event.tolist(),
+        prior_mean=[mean[0], mean[1] + np.log(multiplier)],
+        prior_covariance=covariance,
+        rng=np.random.default_rng(154),
+        **options,
+    )
+    np.testing.assert_allclose(shifted.parameters, fit.parameters, rtol=0, atol=4e-13)
+    np.testing.assert_allclose(
+        shifted.log_likelihood,
+        fit.log_likelihood - np.count_nonzero(event) * np.log(multiplier),
+        rtol=0,
+        atol=3e-12,
+    )
+    assert shifted.diagnostic is None
+
+    all_zero = weibull_unknown_shape_bayesian_gof(
+        [0.0, 0.0, 0.0],
+        event=[False, False, False],
+        prior_mean=mean,
+        prior_covariance=covariance,
+        draws=8,
+        warmup=0,
+        chains=2,
+        rng=np.random.default_rng(155),
+    )
+    np.testing.assert_array_equal(all_zero.log_likelihood, 0.0)
+    assert all_zero.diagnostic is None

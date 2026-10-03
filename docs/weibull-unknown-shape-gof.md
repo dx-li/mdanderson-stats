@@ -2,7 +2,9 @@
 
 `weibull_unknown_shape_bayesian_gof` jointly estimates Weibull shape and scale,
 then applies the [Johnson posterior diagnostic](bayesian-chi-square.md) to
-complete positive event times. It complements the
+complete positive event times. It also supports a caller-supplied right-censor
+indicator for the posterior fit; censored fits do not return that diagnostic.
+It complements the
 [fixed-shape exact-posterior workflow](weibull-bayesian-gof.md).
 
 ```python
@@ -27,6 +29,16 @@ log_shapes = fit.parameters[..., 0]
 log_scales = fit.parameters[..., 1] + fit.log_scale_offset
 print(np.exp(log_shapes).mean(), np.exp(log_scales).mean())
 print(fit.parameter_summary.split_rhat)
+
+# Right-censored follow-up uses event density or survival as appropriate.
+censored_fit = weibull_unknown_shape_bayesian_gof(
+    [0.4, 0.8, 1.1, 1.7, 2.5],
+    event=[True, False, True, False, False],
+    prior_mean=prior_mean,
+    prior_covariance=[[0.16, 0.056], [0.056, 0.49]],
+    rng=np.random.default_rng(660941),
+)
+assert censored_fit.diagnostic is None
 ```
 
 ## Model and prior
@@ -45,9 +57,17 @@ Correlation is supported. These are explicit Python prior coordinates;
 the source guide does not establish the native program's prior or fitter.
 
 Serial elliptical slice sampling draws both parameters jointly. Each retained
-pair evaluates all observations before the existing diagnostic forms
-equal-probability bin counts and its `bins-1` reference statistic. Draws from
-this sampler are correlated. The returned `parameter_summary` includes means,
+pair evaluates the observed-data likelihood. With `event=True` for an exact
+event and `False` for right censoring, the likelihood contribution is
+`f(t | beta, eta)` or `S(t | beta, eta)`, respectively. This assumes
+noninformative censoring and models the event-time distribution only; it does
+not model the censoring mechanism. A zero-time censored observation contributes
+`S(0)=1`; exact events must have positive times. A proper supplied Gaussian
+prior permits an all-censored sample. The usual Johnson diagnostic is computed
+only when all observations are complete, because the guide does not specify a
+censored-data transform. For complete data it forms equal-probability bin
+counts and the `bins-1` reference statistic. Draws from this sampler are
+correlated. The returned `parameter_summary` includes means,
 intervals, classical split R-hat and batch-means Monte Carlo errors; these are
 diagnostics, not convergence guarantees. Inspect chains and use suitable
 dispersed starts and adequate warmup/draw counts for the dataset.
@@ -65,8 +85,8 @@ To change time units by factor `c`, multiply observations by `c` and add
 `log(c)` to the prior and initial log-scale coordinates. Covariance is
 unchanged. Relative log times and a centered sampling likelihood preserve
 this transformation without subtracting large, nearly equal likelihood
-terms. Parameter-independent density constants are restored only in the
-reported likelihoods.
+terms. Reported likelihoods restore event-only density constants; a unit
+change shifts them by minus the number of exact events times `log(c)`.
 
 Likelihood-evaluation, total-work and combined-memory budgets are checked
 before sampling and enforced during slice updates. The combined bound includes
@@ -76,10 +96,10 @@ initial states, unrepresentable shape coordinates, numerical failures and
 budget exhaustion raise explicit errors. No approximate fit is returned after
 a failed sampler.
 
-Complete continuous observations are required. Censoring in this fitter,
-rounding, native prior defaults and native reporting remain separate coverage gaps.
-The Johnson reference is asymptotic; posterior-average reference probabilities
-are not calibrated p-values for an averaged statistic.
+Right censoring is supported under the stated likelihood convention. Rounding,
+native prior defaults and native reporting remain separate coverage gaps. The
+Johnson reference is asymptotic; posterior-average reference probabilities are
+not calibrated p-values for an averaged statistic.
 
 ## Validation
 

@@ -9,10 +9,10 @@ from dataclasses import dataclass
 from typing import cast
 
 import numpy as np
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 
 from ._validation import FloatArray, finite, scalar
-from .bayesian_chi_square import BayesianChiSquare, bayesian_chi_square_cdf
+from .bayesian_chi_square import BayesianChiSquare, _event_indicator, bayesian_chi_square_cdf
 from .boin import _owned
 from .hierarchical_binomial import ChainSummary, summarize_chains
 
@@ -26,12 +26,13 @@ _LOG_FLOAT_MAX = float(np.log(np.finfo(float).max))
 
 @dataclass(frozen=True)
 class WeibullUnknownShapeGOF:
-    """Joint posterior draws and Johnson diagnostic for complete Weibull data.
+    """Joint posterior draws and optional Johnson diagnostic for Weibull data.
 
     ``parameters[..., 0]`` is log shape and ``parameters[..., 1]`` is log scale
     centered by ``log_scale_offset``. Add the offset to recover the absolute
     log-scale coordinate. Posterior samples keep the shape/scale pairing used
-    for every observed-time CDF evaluation.
+    for every observed-time CDF evaluation when a complete-data diagnostic is
+    returned. The event indicator is always retained by fitter results.
     """
 
     parameter_names: tuple[str, str]
@@ -45,7 +46,8 @@ class WeibullUnknownShapeGOF:
     likelihood_evaluations: int
     likelihood_work_units: int
     warmup: int
-    diagnostic: BayesianChiSquare
+    diagnostic: BayesianChiSquare | None
+    event: NDArray[np.bool_] | None = None
 
 
 def _input_shape(value: ArrayLike, name: str) -> tuple[int, ...]:
@@ -97,14 +99,19 @@ def _relative_log_times(x: FloatArray) -> tuple[FloatArray, float]:
     return relative, offset
 
 
-def _log_likelihood(coordinates: FloatArray, relative_log_times: FloatArray) -> float:
+def _log_likelihood(
+    coordinates: FloatArray,
+    relative_log_times: FloatArray,
+    event: NDArray[np.bool_],
+    observed: NDArray[np.bool_],
+) -> float:
     log_shape, centered_log_scale = map(float, coordinates)
     if not np.isfinite(log_shape) or not np.isfinite(centered_log_scale):
         raise ArithmeticError("Weibull log-parameter proposal is nonfinite")
     if not _LOG_FLOAT_MIN <= log_shape <= _LOG_FLOAT_MAX:
         raise ArithmeticError("Weibull shape proposal is outside representable range")
     shape = float(np.exp(log_shape))
-    log_ratio = relative_log_times - centered_log_scale
+    log_ratio = relative_log_times[observed] - centered_log_scale
     if np.any(~np.isfinite(log_ratio)):
         return -np.inf
     with np.errstate(over="ignore", under="ignore", invalid="ignore"):
@@ -114,10 +121,15 @@ def _log_likelihood(coordinates: FloatArray, relative_log_times: FloatArray) -> 
         if np.any(log_hazard > _LOG_FLOAT_MAX):
             return -np.inf
         hazard = np.exp(log_hazard)
-        # Parameter-dependent kernel; the omitted -sum(log(times)) is
-        # constant in the parameters and restored for public likelihoods.
+        event_observed = event[observed]
+        event_ratios = log_ratio[event_observed]
+        # Event density contributes log shape and shape*log(t/scale). All
+        # positive follow-up times contribute the hazard; zero-time censoring
+        # contributes exactly log S(0) = 0.
         result = float(
-            relative_log_times.size * log_shape + shape * float(np.sum(log_ratio)) - np.sum(hazard)
+            np.count_nonzero(event_observed) * log_shape
+            + shape * float(np.sum(event_ratios))
+            - np.sum(hazard)
         )
     if np.isnan(result) or result == np.inf:
         raise ArithmeticError("Weibull log likelihood is invalid")
@@ -127,6 +139,7 @@ def _log_likelihood(coordinates: FloatArray, relative_log_times: FloatArray) -> 
 def weibull_unknown_shape_bayesian_gof(
     times: ArrayLike,
     *,
+    event: ArrayLike | None = None,
     prior_mean: ArrayLike,
     prior_covariance: ArrayLike,
     draws: int = 1000,
@@ -141,11 +154,15 @@ def weibull_unknown_shape_bayesian_gof(
 ) -> WeibullUnknownShapeGOF:
     """Fit an unknown-shape Weibull model using serial elliptical slice sampling.
 
-    The complete-data density is the guide's Weibull density with shape ``beta``
-    and scale ``eta``. The caller supplies a proper bivariate Normal prior for
+    The guide's Weibull density has shape ``beta`` and scale ``eta``. The
+    caller supplies a proper bivariate Normal prior for
     ``(log(beta), log(eta))``. Prior arrays use absolute coordinates; retained
-    log-scale samples are centered for time-unit stability. No prior defaults,
-    censoring, rounding transform, or BCSTTE executable parity are claimed.
+    log-scale samples are centered for time-unit stability. The event argument
+    is an actual-Boolean vector, with True for an exact event and False for
+    right censoring. This uses the ordinary event-density/survival likelihood
+    under noninformative censoring; it does not model the censoring mechanism.
+    No prior defaults, rounding transform, censored-data Johnson diagnostic, or
+    BCSTTE executable parity are claimed.
 
     Overflowing-hazard states have zero representable likelihood and are
     rejected by the slice bracket. Nonrepresentable shape coordinates, invalid
@@ -163,7 +180,7 @@ def weibull_unknown_shape_bayesian_gof(
         except TypeError as exc:
             raise ValueError("times must be a one-dimensional vector") from exc
         if not 2 <= n <= _MAX_RETAINED_CELLS:
-            raise ValueError("require at least two complete positive event times")
+            raise ValueError("require at least two observations")
         for item in sequence:
             if not np.isscalar(item):
                 raise ValueError("times must be a one-dimensional vector")
@@ -174,9 +191,10 @@ def weibull_unknown_shape_bayesian_gof(
             raise ValueError("times must be a one-dimensional vector")
         n = int(time_shape[0])
         if not 2 <= n <= _MAX_RETAINED_CELLS:
-            raise ValueError("require at least two complete positive event times")
+            raise ValueError("require at least two observations")
         if np.iscomplexobj(times):
             raise ValueError("times must be real")
+    events = _event_indicator(event, n)
 
     if _input_shape(prior_mean, "prior_mean") != (2,):
         raise ValueError("prior_mean must contain log shape and log scale means")
@@ -249,10 +267,18 @@ def weibull_unknown_shape_bayesian_gof(
         starts = np.broadcast_to(mean, (chain_count, 2)).copy()
 
     x = finite(times, "times")
-    if x.ndim != 1 or np.any(x <= 0):
-        raise ValueError("require at least two complete positive event times")
-    relative, offset = _relative_log_times(x)
-    log_likelihood_constant = -(n * offset + float(np.sum(relative)))
+    if x.ndim != 1 or np.any(x < 0) or np.any(x[events] <= 0):
+        raise ValueError("exact events require positive times; times cannot be negative")
+    positive = x > 0
+    relative: FloatArray = np.zeros(n, dtype=float)
+    if np.any(positive):
+        relative_positive, offset = _relative_log_times(x[positive])
+        relative[positive] = relative_positive
+    else:
+        # An all-zero censored sample has likelihood one for every parameter.
+        offset = float(mean[1])
+    event_count = int(np.count_nonzero(events))
+    log_likelihood_constant = -(event_count * offset + float(np.sum(relative[events])))
     centered_mean = mean.copy()
     centered_mean[1] -= offset
     centered_starts = starts.copy()
@@ -268,13 +294,13 @@ def weibull_unknown_shape_bayesian_gof(
             raise ArithmeticError("Weibull likelihood-evaluation budget exhausted")
         if work + n > work_limit:
             raise ArithmeticError("Weibull likelihood-work budget exhausted")
-        result = _log_likelihood(state, relative)
+        result = _log_likelihood(state, relative, events, positive)
         evaluations += 1
         work += n
         return result
 
-    parameters = np.empty((chain_count, size, 2), dtype=float)
-    log_likelihood = np.empty((chain_count, size), dtype=float)
+    parameters: FloatArray = np.empty((chain_count, size, 2), dtype=float)
+    log_likelihood: FloatArray = np.empty((chain_count, size), dtype=float)
     for chain in range(chain_count):
         state = centered_starts[chain].copy()
         ll = evaluate(state)
@@ -307,20 +333,22 @@ def weibull_unknown_shape_bayesian_gof(
                 parameters[chain, draw] = state
                 log_likelihood[chain, draw] = ll + log_likelihood_constant
 
-    all_cdf = np.empty((total_draws, n), dtype=float)
-    flat = parameters.reshape((total_draws, 2))
-    for start in range(0, total_draws, 256):
-        stop = min(start + 256, total_draws)
-        shape_logs = flat[start:stop, 0, None]
-        centered_log_scale = flat[start:stop, 1, None]
-        with np.errstate(over="ignore", under="ignore", invalid="ignore"):
-            shape = np.exp(shape_logs)
-            log_hazard = shape * (relative[None, :] - centered_log_scale)
-            hazard = np.exp(log_hazard)
-            all_cdf[start:stop] = -np.expm1(-hazard)
-        if np.any(np.isnan(all_cdf[start:stop])):
-            raise ArithmeticError("Weibull posterior CDF became indeterminate")
-    diagnostic = bayesian_chi_square_cdf(all_cdf, bins=bin_count, critical_probability=level)
+    diagnostic = None
+    if np.all(events):
+        all_cdf: FloatArray = np.empty((total_draws, n), dtype=float)
+        flat = parameters.reshape((total_draws, 2))
+        for start in range(0, total_draws, 256):
+            stop = min(start + 256, total_draws)
+            shape_logs = flat[start:stop, 0, None]
+            centered_log_scale = flat[start:stop, 1, None]
+            with np.errstate(over="ignore", under="ignore", invalid="ignore"):
+                shape = np.exp(shape_logs)
+                log_hazard = shape * (relative[None, :] - centered_log_scale)
+                hazard = np.exp(log_hazard)
+                all_cdf[start:stop] = -np.expm1(-hazard)
+            if np.any(np.isnan(all_cdf[start:stop])):
+                raise ArithmeticError("Weibull posterior CDF became indeterminate")
+        diagnostic = bayesian_chi_square_cdf(all_cdf, bins=bin_count, critical_probability=level)
     frozen_parameters = _owned(parameters)
     return WeibullUnknownShapeGOF(
         ("log_shape", "centered_log_scale"),
@@ -335,4 +363,5 @@ def weibull_unknown_shape_bayesian_gof(
         work,
         burn,
         diagnostic,
+        event=_owned(events),
     )
