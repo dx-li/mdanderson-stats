@@ -3,9 +3,9 @@
 Latest verified package checkpoint: `1da08a2` extends exponential and both
 Weibull posterior workflows to right censoring, fixes long Boolean event lists,
 and adds event-count inputs for survival success-criterion design. The final section records validation; earlier sections preserve
-checkpoint history. Published `9f6c1eb` has passed all hosted quality and
+checkpoint history. Published `3fe4bf8` has passed all hosted quality and
 Python 3.12/3.13/3.14 checks in
-[run 37157021641](https://github.com/dx-li/mdanderson-stats/actions/runs/37157021641).
+[run 37161305171](https://github.com/dx-li/mdanderson-stats/actions/runs/37161305171).
 That is the latest completely passed hosted checkpoint observed before this
 publication; the new revision's hosted results are recorded separately.
 The local artifact manifest records full branch SHAs after each independently

@@ -102,8 +102,11 @@ np.testing.assert_allclose(fit.log_posterior_rate, np.log(18))
 assert fit.diagnostic.statistic.shape == (1000,)
 
 censored = exponential_bayesian_gof(
-    [1, 2, 4, 8], prior_shape=2, prior_rate=3,
-    event=[True, False, True, False], rng=66,
+    [1, 2, 4, 8],
+    prior_shape=2,
+    prior_rate=3,
+    event=[True, False, True, False],
+    rng=66,
 )
 assert censored.posterior_shape == 4
 np.testing.assert_allclose(censored.log_posterior_rate, np.log(18))
