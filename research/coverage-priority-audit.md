@@ -1,12 +1,13 @@
 # Statistical coverage priority audit — September 28, 2026
 
-October 3 BCSTTE update: Gamma, inverse-Gamma and log-logistic shape/scale
-fitting now covers three additional distributions advertised by the cached
-guide. Explicit correlated Gaussian log-parameter priors support complete or
-right-censored observations, with Johnson diagnostics restricted to complete
-data. Native priors and the censored diagnostic remain unresolved. The
-log-odds-rate formula is inconsistent and is still not implemented. Earlier
-BIC/DIC gap wording was unsupported by the guide and has been corrected.
+October 3 BCSTTE update: Gamma, inverse-Gamma, log-logistic and generalized
+log-odds-rate posterior fitting now covers all seven advertised distribution
+families. The last family's missing factor of c is resolved by an independent
+primary definition from Shen and Thall. Explicit correlated Gaussian
+log-parameter priors support complete or right-censored observations in these
+four new workflows, with Johnson diagnostics restricted to complete data.
+Native priors and the censored diagnostic remain unresolved. Earlier BIC/DIC
+gap wording was unsupported by the guide and has been corrected.
 This expands numerical coverage without claiming complete native program parity.
 
 October 3 SYNERGY update: the source-defined wild-bootstrap generator and

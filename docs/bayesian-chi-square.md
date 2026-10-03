@@ -12,6 +12,10 @@ A [Gamma, inverse-Gamma and log-logistic workflow](tte-family-bayesian-gof.md)
 jointly fits shape and scale under explicit Gaussian log-parameter priors,
 with complete observations or explicitly identified right censoring. The
 Johnson diagnostic is supplied only for complete data.
+A [log-odds-rate workflow](log-odds-rate-bayesian-gof.md) jointly estimates
+shape, scale and the odds-rate parameter under an explicit Gaussian prior on
+their logarithms. All seven distribution families advertised by the guide now
+have posterior-fitting workflows, with the native-prior qualifications below.
 The sources are the [BCS TTE guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BCSTTE/BCSTTE_UsersGuide.pdf)
 (August 15, 2006) and Johnson's
 [A Bayesian chi-square test for goodness-of-fit](https://arxiv.org/abs/math/0508593),
@@ -103,8 +107,8 @@ chi-square marginals, search correction, and extreme-tail underflow.
 
 ## Remaining coverage and source issues
 
-**Catalog status is partial.** The log-odds-rate family, rounded observations,
-the native censored-data diagnostic, censoring support in the earlier family
+**Catalog status is partial.** Rounded observations, the native censored-data
+diagnostic, censoring support in the earlier family
 fitters, native fitting/priors and fallback priors, native Rychlik rank/trim
 conventions, sorting and native HTML reports remain pending.
 The generic interface can consume verified posterior CDF draws from other models,
@@ -117,5 +121,9 @@ The guide's `--censor` example conflicts with its option definition. Its log-log
 variance omits subtraction of the squared mean, and its log-odds-rate survival
 expression lacks the factor of c needed for the stated Weibull limit and moments.
 The log-logistic fitter uses the guide's consistent density and survival formulas,
-not its erroneous variance expression. The inconsistent log-odds-rate definition
-remains unimplemented. No complete BCSTTE or censoring-method parity is claimed.
+not its erroneous variance expression. The log-odds-rate workflow uses the
+independent Shen–Thall primary definition, which supplies the missing factor
+of c and agrees with the stated limiting families. Its variance also requires
+shape greater than twice c, a stronger condition than the guide's stated
+finite-mean condition. See the [source audit](../research/log-odds-rate-source-audit.md).
+No complete BCSTTE or native censoring-method parity is claimed.

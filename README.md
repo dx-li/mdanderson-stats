@@ -887,9 +887,11 @@ diagnostic references. A [joint Weibull fitter](docs/weibull-unknown-shape-gof.m
 estimates both shape and scale with correlated log-parameter priors and bounded
 posterior sampling. [Gamma, inverse-Gamma and log-logistic fits](docs/tte-family-bayesian-gof.md)
 add complete-data and right-censored inference with explicit log-parameter priors;
-the Johnson diagnostic is restricted to complete data. The log-odds-rate family,
-native censored diagnostic, prior defaults, rank/trim conventions and reporting
-remain pending.
+the Johnson diagnostic is restricted to complete data. The
+[log-odds-rate fitter](docs/log-odds-rate-bayesian-gof.md) adds the seventh
+advertised distribution family using a primary-source correction to the guide's
+survival formula. Native censored diagnostics, prior defaults, rank/trim
+conventions and reporting remain pending.
 
 [MERIT](docs/merit.md) adds isotonic dose selection, Bayesian interim decisions,
 correlated endpoint simulation and sample-size/boundary optimization for randomized

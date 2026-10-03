@@ -95,3 +95,12 @@ R `2.1521681`). The largest split R-hat was `1.000712`. The comparison used
 (complete) and `20261004` (right-censored). It took `25.443` seconds and
 peaked at `139.58 MiB` on the validation host. No native BCSTTE numerical
 parity is claimed.
+
+Root integration passed 22 focused tests across the three existing families,
+the log-odds-rate core and the new fitter. Sixteen complete/censored time-unit
+comparisons across the four families used factors `1e-200` and `1e200`:
+centered parameters changed by at most `5.73e-14`, event-adjusted likelihoods
+by at most `4.55e-13`, and complete-data bin counts were unchanged. This check
+took `0.430` seconds after imports, peaked at `148.38 MiB`, and recorded no
+process swaps. Targeted lint, formatting and type checks passed. No full local
+suite or new CI pipeline was used for this addition.

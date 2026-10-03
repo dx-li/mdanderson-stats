@@ -17,7 +17,7 @@ parity.
 
 ```python
 import numpy as np
-from mdanderson_stats.tte_family_bayesian_gof import log_odds_rate_bayesian_gof
+from mdanderson_stats import log_odds_rate_bayesian_gof
 
 fit = log_odds_rate_bayesian_gof(
     [0.45, 0.8, 1.3, 2.1, 3.4],
