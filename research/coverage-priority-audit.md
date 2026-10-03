@@ -1,5 +1,12 @@
 # Statistical coverage priority audit — September 28, 2026
 
+October 3 SYNERGY update: the source-defined wild-bootstrap generator and
+serial marginal-baseline/REML refits now return departure draws and descriptive
+sample standard deviations. The source interval's unresolved centering and
+denominator are kept separate from this usable resampling workflow; no native
+confidence interval is claimed. The four 2007 parametric surfaces still need
+their exact equations. Entry counts remain unchanged.
+
 September 30 IPDfromKM update: reconstruction report diagnostics now include
 the original rounded precision summaries and two-sample KS discrepancy. The
 source's signed maximum is named explicitly and accompanied by the actual

@@ -866,8 +866,11 @@ regression and Loewe interaction indices with log-delta confidence intervals for
 observed combinations and fixed-ratio curves, plus the normal-coefficient Monte
 Carlo comparator with retained draws. SYNERGY also provides a
 [semiparametric response surface](docs/synergy-surface.md) with raw/log-dose
-baselines and REML thin-plate smoothing. Other parametric surfaces, bootstrap
-intervals and native workflows remain pending.
+baselines and REML thin-plate smoothing. Its
+[wild-bootstrap workflow](docs/synergy-surface-bootstrap.md) generates Mammen
+resamples and refits each marginal baseline and spline, returning departure
+draws and descriptive sample standard deviations. Other parametric surfaces,
+the original bootstrap interval convention and native workflows remain pending.
 
 [Decentralized trial planning](docs/dct-normal.md) adds continuous and binary
 sample sizes with onsite/offsite heterogeneity, unequal arm variances and repeated

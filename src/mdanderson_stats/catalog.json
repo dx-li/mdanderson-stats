@@ -416,13 +416,15 @@
         "Fixed-ray interaction curves with uncertainty from independent component and combination regressions",
         "Normal-coefficient Monte Carlo comparison with paper RMS formula, retained draws and slope-reversal diagnostics",
         "Semiparametric raw-dose common-intercept and log-dose varying-potency baselines, natural thin-plate spline departure with REML smoothing and BLUP predictions on an explicit transformed-response scale.",
-        "Repeated-dose observations, original-knot affine constraints, explicit smoothing parameters, competing-minimum screening, optimizer/boundary diagnostics and bounded prediction chunks."
+        "Repeated-dose observations, original-knot affine constraints, explicit smoothing parameters, competing-minimum screening, optimizer/boundary diagnostics and bounded prediction chunks.",
+        "Source-defined two-stage Mammen wild-bootstrap resampling with half/double-lambda anchors, fresh marginal-baseline and REML refits, optional retained training-row departure draws and stable descriptive sample SD; bounded serial work, replay tapes and refit diagnostics. Native interval convention remains unverified; docs/synergy-surface-bootstrap.md."
       ],
       "validation": [
         "Eight focused tests: regression, published three-drug identity, delta variances, exact Monte Carlo RMS reconstruction, small-noise agreement and unstable-slope diagnostics; tests/test_interaction_index.py and tests/test_interaction_monte_carlo.py",
         "Three focused surface tests check marginal fits, inverse-dose additivity, constrained penalized equations, REML and exact-fit rejection; tests/test_synergy_surface.py.",
         "Independent base-R augmented spline solves and full-covariance REML agree with surface predictions and smoothing; research/synergy-response-surface-audit.md.",
-        "Pending four 2007 parametric surfaces, wild-bootstrap intervals, plots, source case studies and native workflows; docs/interaction-index.md and docs/synergy-surface.md."
+        "Pending four 2007 parametric surfaces, wild-bootstrap intervals, plots, source case studies and native workflows; docs/interaction-index.md and docs/synergy-surface.md.",
+        "Five independent base-R fixed-tape bootstrap references compare synthetic responses, half/double-lambda anchors, fresh REML refits and departure summaries; ten focused tests pass. Response-unit invariance at 1e-200 and 1e200 is checked with bounded memory; research/synergy-wild-bootstrap-audit.md. Descriptive sample SD does not claim the original normal-interval convention."
       ]
     },
     {

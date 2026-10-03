@@ -55,3 +55,14 @@ the source SD convention is unresolved.
 The four 2007 parametric response surfaces, source interval convention, native
 random stream, case-study reproduction, and native reports/plots remain
 unimplemented. This addition alone does not complete SYNERGY catalog entry 18.
+
+## Integrated checkpoint
+
+All ten focused surface/bootstrap tests passed with warnings treated as errors.
+The same five-tape workflow was also checked after multiplying responses by
+`1e-200` and `1e200`. After undoing the unit change, the maximum absolute
+differences were `1.06e-10` for the mean and `6.53e-12` for the sample SD.
+The combined check took 2.106 seconds, peaked at 149.36 MiB and reported zero
+process swaps. Targeted Ruff checks and formatting passed; the implementation
+checkout's targeted mypy check also passed. The full local suite was not run;
+the existing GitHub workflow supplies the broader checks after publication.

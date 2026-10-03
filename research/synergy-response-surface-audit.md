@@ -4,8 +4,10 @@ The [official catalog entry 18](https://biostatistics.mdanderson.org/SoftwareDow
 lists four one-parameter response surfaces from Lee et al. (2007),
 DOI `10.1080/10543400701199593`, and the 2008 semiparametric method. Existing
 `interaction_index.py` covers the separate median-effect/Loewe interval methods.
-The semiparametric fit is now available; the four parametric surfaces and
-wild-bootstrap inference remain open.
+The semiparametric fit and source-defined wild-bootstrap generation/refitting
+are now available. The [resampling audit](synergy-wild-bootstrap-audit.md)
+separates that workflow from the unresolved native interval convention. The
+four parametric surfaces and native wild-bootstrap intervals remain open.
 
 ## Semiparametric source contract
 

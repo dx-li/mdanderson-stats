@@ -101,6 +101,8 @@ records the reference fixtures and remaining source uncertainties.
 
 SYNERGY remains **partial**. The four 2007 parametric surfaces, wild-bootstrap
 intervals, native reports/plots and original case-study reproduction remain
-open. The bootstrap residual and multiplier construction is documented, but
-its exact standard-error centering and denominator have not been verified;
-this API does not invent an interval convention.
+open. The [wild-bootstrap resampling workflow](synergy-surface-bootstrap.md)
+implements the documented residual, multiplier and refitting steps. It returns
+departure draws and ordinary sample standard deviations as an explicit Python
+summary convention. The source interval's exact standard-error centering and
+denominator have not been verified, so no native interval is claimed.
