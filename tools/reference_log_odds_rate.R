@@ -45,13 +45,16 @@ prior_covariance <- matrix(c(.13,.035,-.018,
                              .035,.19,.04,
                              -.018,.04,.16),3,3,byrow=TRUE)
 stopifnot(min(eigen(prior_covariance,symmetric=TRUE,only.values=TRUE)$values)>0)
+prior_upper <- chol(prior_covariance)
+stopifnot(max(abs(crossprod(prior_upper)-prior_covariance)) < 1e-14)
 cases <- list(complete=rep(1,5),right_censored=c(1,0,1,1,0))
 
 posterior_reference <- function(events,nquad) {
   q <- legendre(nquad)
   grid <- expand.grid(z1=q$x,z2=q$x,z3=q$x)
   standardized <- as.matrix(grid)
-  log_coordinates <- sweep(standardized %*% t(chol(prior_covariance)),2,
+  # R's chol returns upper U with t(U) %*% U = Sigma. Row vectors multiply U.
+  log_coordinates <- sweep(standardized %*% prior_upper,2,
                            prior_mean,'+')
   prior_log_weight <- dnorm(grid$z1,log=TRUE)+dnorm(grid$z2,log=TRUE)+
     dnorm(grid$z3,log=TRUE)+log(q$w[match(grid$z1,q$x)])+
