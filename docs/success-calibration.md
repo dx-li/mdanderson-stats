@@ -96,7 +96,7 @@ accuracy for arbitrarily rare conditioning events.
 ## Normal outcomes and survival approximation
 
 ```python
-from mdanderson_stats import normal_success_oc
+from mdanderson_stats import normal_success_oc, survival_success_oc
 
 # One normal mean with known patient SD=1 and n=74.
 single = normal_success_oc(
@@ -117,16 +117,15 @@ two_arm = normal_success_oc(
     analysis_sd=[1, 1],
     null_mean=[0, 0],
 )
-# Approximate log(HR) sampling SE from D=120 events and 2:1 allocation.
-r = 2 / 3
-survival = normal_success_oc(
+# Approximate log(HR) OC from D=120 events and 2:1 treatment:control allocation.
+survival = survival_success_oc(
     0.95,
-    standard_error=1 / np.sqrt(120 * r * (1 - r)),
+    events=120,
+    treatment_allocation=2 / 3,
     design_mean=np.log(0.8),
     design_sd=0.2,
     analysis_mean=0,
     analysis_sd=1,
-    direction="less",
 )
 ```
 
@@ -145,9 +144,16 @@ directly, avoiding subtraction of tiny tails from near-one probabilities.
 Posterior weights use scaled standard deviations. Numerically singular
 correlations or failed quadrature raise errors.
 
-For survival, the paper approximates the log-hazard-ratio estimator as normal
-with variance `1/(D*r*(1-r))`. This API evaluates that approximation; it does not
-fit Cox models, simulate censoring, or estimate the required event count.
+For survival, Supplement §S2.3 approximates the log-hazard-ratio estimator as
+normal with variance `1/(D*r*(1-r))`, where `D` is the supplied expected total
+event count and `r` is the treatment allocation fraction. The
+`survival_success_oc` adapter applies this formula and delegates to
+`normal_success_oc` with direction `less`, since lower log hazard ratios favor
+treatment. Its effect and prior parameters are scalar log-hazard-ratio values.
+This evaluates a fixed event-count approximation; it does not infer event
+counts from accrual, follow-up, or censoring, fit a Cox model, or model the
+censoring mechanism. For direct control of the sampling standard error or for
+other effect directions, use `normal_success_oc`.
 
 ## Calibration, evidence and remaining coverage
 

@@ -12,6 +12,7 @@ from mdanderson_stats.success_calibration import (
     binary_two_arm_success_oc,
     calibrate_success_cutoff,
     normal_success_oc,
+    survival_success_oc,
 )
 
 
@@ -122,3 +123,41 @@ def test_normal_weak_truth_score_correlation():
     result = normal_success_oc(0.7, standard_error=1e6, analysis_sd=1e6)
     assert result.incorrect_decision_probability == pytest.approx(0.5, abs=1e-6)
     assert result.bayesian_power == pytest.approx(norm.sf(np.sqrt(2) * norm.ppf(0.7)), abs=1e-12)
+
+
+def test_survival_event_count_adapter_uses_source_information_approximation():
+    events, allocation = 120, 2 / 3
+    expected = normal_success_oc(
+        0.95,
+        standard_error=1 / np.sqrt(events * allocation * (1 - allocation)),
+        design_mean=np.log(0.8),
+        design_sd=0.2,
+        analysis_mean=0.0,
+        analysis_sd=1.0,
+        direction="less",
+    )
+    observed = survival_success_oc(
+        0.95,
+        events=events,
+        treatment_allocation=allocation,
+        design_mean=np.log(0.8),
+        design_sd=0.2,
+        analysis_mean=0.0,
+        analysis_sd=1.0,
+    )
+    np.testing.assert_allclose(astuple(observed), astuple(expected), atol=0, rtol=0)
+
+    fractional = survival_success_oc(0.95, events=120.5, treatment_allocation=allocation)
+    fractional_expected = normal_success_oc(
+        0.95,
+        standard_error=1 / np.sqrt(120.5 * allocation * (1 - allocation)),
+        direction="less",
+    )
+    np.testing.assert_allclose(astuple(fractional), astuple(fractional_expected), atol=0, rtol=0)
+
+    for invalid_events in (0, -1, [10, 20]):
+        with pytest.raises(ValueError):
+            survival_success_oc(0.95, events=invalid_events, treatment_allocation=0.5)
+    for invalid_allocation in (0, 1, -0.1, 1.1):
+        with pytest.raises(ValueError):
+            survival_success_oc(0.95, events=100, treatment_allocation=invalid_allocation)

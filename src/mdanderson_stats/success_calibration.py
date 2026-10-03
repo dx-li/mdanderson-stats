@@ -221,6 +221,60 @@ def normal_success_oc(
     return _result(tp, fp, tn, fn, alpha)
 
 
+def survival_success_oc(
+    cutoff: float,
+    *,
+    events: float,
+    treatment_allocation: float,
+    design_mean: float = 0.0,
+    design_sd: float = 1.0,
+    analysis_mean: float = 0.0,
+    analysis_sd: float = 1.0,
+    margin: float = 0.0,
+    null_mean: float | None = None,
+) -> SuccessOperatingCharacteristics:
+    """Evaluate log-hazard-ratio success OCs from an event-count approximation.
+
+    The supplied ``events`` is the expected total number of events, and
+    ``treatment_allocation`` is the fraction assigned to treatment. The paper's
+    approximation gives ``SE(log(HR)) = 1/sqrt(D*r*(1-r))``. Success is fixed
+    to ``log(HR) < margin`` (the ``less`` direction). This evaluates the
+    specified normal approximation; it does not predict events or model
+    accrual, censoring, or a Cox likelihood.
+    """
+    event_count = scalar(events, "events")
+    if event_count <= 0:
+        raise ValueError("events must be a positive scalar")
+    allocation = scalar(treatment_allocation, "treatment_allocation")
+    if not 0 < allocation < 1:
+        raise ValueError("treatment_allocation must be strictly between 0 and 1")
+
+    information = event_count * allocation * (1 - allocation)
+    if not np.isfinite(information) or information <= 0:
+        raise ValueError("event count and allocation do not yield finite information")
+    standard_error = 1 / np.sqrt(information)
+
+    # This adapter describes one log-hazard ratio, not the generic two-arm
+    # normal-mean interface. Reject vectors rather than silently changing models.
+    scalar(design_mean, "design_mean")
+    scalar(design_sd, "design_sd")
+    scalar(analysis_mean, "analysis_mean")
+    scalar(analysis_sd, "analysis_sd")
+    if null_mean is not None:
+        scalar(null_mean, "null_mean")
+    return normal_success_oc(
+        cutoff,
+        standard_error=standard_error,
+        design_mean=design_mean,
+        design_sd=design_sd,
+        analysis_mean=analysis_mean,
+        analysis_sd=analysis_sd,
+        margin=margin,
+        direction="less",
+        null_mean=null_mean,
+    )
+
+
 @dataclass(frozen=True)
 class SuccessCalibration:
     cutoff: float
