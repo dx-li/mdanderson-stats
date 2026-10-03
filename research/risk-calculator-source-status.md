@@ -1,6 +1,6 @@
 # Pending risk-calculator sources
 
-Bounded primary-source review on September 28–29, 2026 did not establish the full
+Bounded primary-source reviews on September 28–29 and October 3, 2026 did not establish the full
 prediction equations for these three catalog entries. They remain pending;
 variable lists and rounded hazard ratios are insufficient to reproduce a model.
 
@@ -14,10 +14,13 @@ without concurrent systemic therapy.
 
 The identified primary publication is Tang et al., *European Urology* 89
 (2026), 313–317, [DOI 10.1016/j.eururo.2026.01.004](https://doi.org/10.1016/j.eururo.2026.01.004).
-Accessible descriptions identify Weibull regression with four clinical variables
-plus baseline KIM-1 and circulating tumor DNA. Exact coefficients, transformations,
-and intercept/scale or equivalent baseline survival were not retrieved. The
-publication supplement or author model code is the next useful source.
+The [primary publication record](https://pubmed.ncbi.nlm.nih.gov/41765697/) and
+indexed article identify Weibull regression using KIM-1, circulating tumor DNA,
+previous systemic-treatment count, performance status, metastatic-lesion count,
+and the interval between diagnosis and metastasis. These predictor names do not
+specify their coding or transformations. Exact coefficients and intercept/scale
+or equivalent baseline survival were not retrieved. The publication supplement
+or author model code is the next useful source.
 
 ## MDS-DPSS, entry 170
 
