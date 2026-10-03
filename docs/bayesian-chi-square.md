@@ -4,8 +4,11 @@ This implementation provides Johnson's posterior chi-square calculation for
 complete continuous observations and an exponential workflow with an exact
 Gamma posterior. A [fixed-shape Weibull workflow](weibull-bayesian-gof.md)
 extends that exact posterior diagnostic using stable centered rate draws.
+Both conjugate workflows also fit noninformative right-censored observations;
+their goodness-of-fit diagnostic is restricted to complete data.
 A [joint Weibull workflow](weibull-unknown-shape-gof.md) estimates unknown shape
-and scale under an explicit Gaussian prior on their logarithms.
+and scale under an explicit Gaussian prior on their logarithms, also supporting
+noninformative right censoring.
 A [lognormal workflow](lognormal-bayesian-gof.md) jointly fits unknown log-location
 and log-variance using an explicit proper Normal-Inverse-Gamma prior.
 A [Gamma, inverse-Gamma and log-logistic workflow](tte-family-bayesian-gof.md)
@@ -74,12 +77,15 @@ positive normal float to avoid zero bounds from extreme-tail underflow.
 
 ## Exact exponential posterior
 
-`exponential_bayesian_gof(times, prior_shape=..., prior_rate=..., samples=1000, ...)`
-requires complete positive event times. The exponential rate has a Gamma prior
-with explicitly supplied shape and rate. Posterior shape is prior shape plus n;
-posterior rate is prior rate plus the sum of event times. Both prior parameters
-may be zero, denoting the improper inverse-rate prior with a proper posterior
-for the supported data. These priors are explicit Python choices, not recovered
+`exponential_bayesian_gof(times, prior_shape=..., prior_rate=..., event=None, ...)`
+uses an explicit Gamma shape/rate prior on the exponential rate. Omitted
+`event` means every observation is an exact event; otherwise supply an actual
+Boolean vector (`True` for an event, `False` for a right censor). Posterior shape
+is prior shape plus the number of events; posterior rate is prior rate plus the
+sum of all observed follow-up times. Exact times must be positive, and zero-time
+censors are allowed. Both prior parameters may be zero, denoting the improper
+inverse-rate prior, only if the posterior has positive shape and rate.
+These priors are explicit Python choices, not recovered
 BCSTTE defaults. Parameter samples are retained as log rates. Time sums and CDF
 evaluation use log-space calculations to preserve unit invariance.
 
@@ -94,7 +100,22 @@ fit = exponential_bayesian_gof([1, 2, 4, 8], prior_shape=2, prior_rate=3, sample
 assert fit.posterior_shape == 6
 np.testing.assert_allclose(fit.log_posterior_rate, np.log(18))
 assert fit.diagnostic.statistic.shape == (1000,)
+
+censored = exponential_bayesian_gof(
+    [1, 2, 4, 8], prior_shape=2, prior_rate=3,
+    event=[True, False, True, False], rng=66,
+)
+assert censored.posterior_shape == 4
+np.testing.assert_allclose(censored.log_posterior_rate, np.log(18))
+assert censored.diagnostic is None
 ```
+
+These fits assume independent, noninformative right censoring. All-censored
+inputs are permitted when the posterior is proper, a Python extension beyond
+the guide's requirement of at least one event. The source does not define a
+censored-data Johnson transform, so censored fits return `diagnostic=None`.
+The [conjugate censoring audit](../research/bayesian-chi-square-conjugate-censoring-audit.md)
+derives the exposure and event-count update.
 
 Six focused tests cover independent Pearson calculations and endpoint bins,
 reference summaries, exact Gamma posterior moments, seeded unit invariance over
@@ -108,8 +129,8 @@ chi-square marginals, search correction, and extreme-tail underflow.
 ## Remaining coverage and source issues
 
 **Catalog status is partial.** Rounded observations, the native censored-data
-diagnostic, censoring support in the earlier family
-fitters, native fitting/priors and fallback priors, native Rychlik rank/trim
+diagnostic, censoring support in the lognormal fitter, native fitting/priors
+and fallback priors, native Rychlik rank/trim
 conventions, sorting and native HTML reports remain pending.
 The generic interface can consume verified posterior CDF draws from other models,
 but it does not itself fit those models or impute censored observations.

@@ -1372,8 +1372,8 @@ from .success_calibration import (
     binary_two_arm_success_oc,
     calibrate_success_cutoff,
     normal_success_oc,
-    survival_success_oc,
     prepare_binary_two_arm_success,
+    survival_success_oc,
 )
 from .survan_baseline import SurvanBaseline, survan_baseline
 from .survan_cox import SurvanCox, survan_cox

@@ -1,5 +1,21 @@
 # Statistical coverage priority audit — September 28, 2026
 
+October 3 censoring/design update: exponential and fixed-shape Weibull fits
+now use both event counts and censored follow-up exposure in their exact Gamma
+posteriors. Joint unknown-shape Weibull fitting also combines event densities
+and censor survival probabilities under its explicit correlated prior.
+Zero-time censors and proper all-censored posteriors are supported;
+the latter are an explicit Python extension to the native input rule. The
+Bayesian success-criteria workflow also accepts expected event counts and
+treatment allocation directly for the source's log-hazard-ratio normal
+approximation. Native censored diagnostics and calibration-search rules remain
+separate gaps.
+
+Root integration passes 48 focused tests, including a correction allowing
+Boolean censoring lists longer than 16 observations in the four new TTE-family
+fits. The shared validator rejects nested inputs before materializing them.
+All affected numerical checks run serially; existing CI is unchanged.
+
 October 3 BCSTTE update: Gamma, inverse-Gamma, log-logistic and generalized
 log-odds-rate posterior fitting now covers all seven advertised distribution
 families. The last family's missing factor of c is resolved by an independent

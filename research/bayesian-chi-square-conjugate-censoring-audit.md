@@ -52,3 +52,13 @@ a proper posterior. All-zero censored data therefore require positive prior
 shape and rate. Existing common time-scale centering and fixed-shape Weibull
 power scaling are retained, and the CDF/diagnostic arrays are avoided when a
 censored diagnostic is not defined.
+
+## Integrated validation
+
+Root ran 48 focused tests across the conjugate fits, unknown-shape Weibull,
+the four additional TTE families, and success calibration: all passed with
+warnings treated as errors. The test process used 2.609 seconds, peaked at
+203.42 MiB RSS, and reported zero process swaps. Targeted lint/format checks
+and mypy over all five changed statistical modules passed. These were focused
+local checks; no full local suite, dependency installation or new CI workflow
+was added.
