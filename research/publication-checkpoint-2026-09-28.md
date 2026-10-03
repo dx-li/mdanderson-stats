@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `89f6082` adds BCSTTE Gamma, inverse-Gamma
-and log-logistic posterior fits with explicit priors and right-censored
-likelihoods. The final section records validation; earlier sections preserve
+Latest verified package checkpoint: `4509a8a` adds generalized log-odds-rate
+posterior fitting, completing Python fitting workflows for all seven BCSTTE
+distribution families with explicit prior contracts. The final section records validation; earlier sections preserve
 checkpoint history. Published `9f6c1eb` has passed all hosted quality and
 Python 3.12/3.13/3.14 checks in
 [run 37157021641](https://github.com/dx-li/mdanderson-stats/actions/runs/37157021641).
@@ -2526,3 +2526,40 @@ attempt failed during a GitHub API request in setup, before tests. No CI change
 was needed. The local manifest records the new publication and hosted state
 separately. The independently sourced log-odds-rate core and its posterior
 integration remain in their isolated development checkouts at this checkpoint.
+
+## October 3: seventh BCSTTE distribution family
+
+Luna implemented the generalized log-odds-rate model and posterior fitter; root
+reviewed the numerical contract, integrated public exports and updated coverage
+at `4509a8a`. Shen and Thall's primary model resolves the guide's missing factor
+of c. The model includes log-logistic survival at c=1 and the Weibull limit as
+c approaches zero. The explicit Gaussian prior on all three log parameters is
+a Python contract, not a recovered native default.
+
+Independent three-dimensional R quadrature and four serial Python chains agree
+on all 34 posterior summaries within 2.619 batch-means Monte Carlo errors;
+maximum split R-hat is 1.000712. Root identified and corrected a transposed R
+Cholesky factor before comparison against the final targets; preliminary
+comparisons against the wrong covariance were discarded. Quadrature sensitivity
+is at most 1.70e-6. The final comparison used 25.443 seconds and 139.58 MiB RSS.
+
+All 22 focused integration tests pass. Sixteen complete/censored unit changes
+at factors 1e-200/1e200 preserve centered draws within 5.73e-14 and expected
+likelihood shifts within 4.55e-13. These checks peak at 148.38 MiB with zero
+process swaps. Targeted lint, formatting and type checks pass.
+
+Cached wheel and source builds pass. An isolated interpreter matches all 607
+committed package files in both archives, resolves 1,700 public exports, checks
+license notices and executes the public log-odds-rate example. Package checking
+used 14.050 seconds and 112.22 MiB RSS with zero process swaps. No full local
+suite, dependency installation or new CI workflow was needed.
+
+All seven advertised distributions now have fitting workflows. Censoring in
+the earlier family fitters, native prior defaults, the censored Johnson
+diagnostic, rank/trim conventions and native reports remain separate gaps.
+Counts remain 63 implemented, 67 partial and eight pending.
+
+The previous 6319a4f hosted run has passed quality and Python 3.12/3.13; its
+Python 3.14 job was still running at the last observation. The local manifest
+records this publication's independently verified master/main/development SHAs
+and hosted state separately from the latest fully passed hosted checkpoint.
