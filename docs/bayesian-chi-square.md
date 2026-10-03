@@ -8,6 +8,10 @@ A [joint Weibull workflow](weibull-unknown-shape-gof.md) estimates unknown shape
 and scale under an explicit Gaussian prior on their logarithms.
 A [lognormal workflow](lognormal-bayesian-gof.md) jointly fits unknown log-location
 and log-variance using an explicit proper Normal-Inverse-Gamma prior.
+A [Gamma, inverse-Gamma and log-logistic workflow](tte-family-bayesian-gof.md)
+jointly fits shape and scale under explicit Gaussian log-parameter priors,
+with complete observations or explicitly identified right censoring. The
+Johnson diagnostic is supplied only for complete data.
 The sources are the [BCS TTE guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BCSTTE/BCSTTE_UsersGuide.pdf)
 (August 15, 2006) and Johnson's
 [A Bayesian chi-square test for goodness-of-fit](https://arxiv.org/abs/math/0508593),
@@ -99,16 +103,19 @@ chi-square marginals, search correction, and extreme-tail underflow.
 
 ## Remaining coverage and source issues
 
-**Catalog status is partial.** Right-censoring, rounded observations,
-four other distribution-family workflows, native
-fitting/priors and fallback priors,
-native Rychlik rank/trim conventions, BIC/DIC, sorting and native HTML reports
-remain pending.
+**Catalog status is partial.** The log-odds-rate family, rounded observations,
+the native censored-data diagnostic, censoring support in the earlier family
+fitters, native fitting/priors and fallback priors, native Rychlik rank/trim
+conventions, sorting and native HTML reports remain pending.
 The generic interface can consume verified posterior CDF draws from other models,
 but it does not itself fit those models or impute censored observations.
+BIC and DIC were previously listed as missing native features, but the cached
+guide does not establish them as program outputs; they are not counted as
+unimplemented advertised methods.
 
 The guide's `--censor` example conflicts with its option definition. Its log-logistic
 variance omits subtraction of the squared mean, and its log-odds-rate survival
 expression lacks the factor of c needed for the stated Weibull limit and moments.
-These are recorded for the remaining source audit; they have not been implemented
-as distribution definitions. No complete BCSTTE or censoring-method parity is claimed.
+The log-logistic fitter uses the guide's consistent density and survival formulas,
+not its erroneous variance expression. The inconsistent log-odds-rate definition
+remains unimplemented. No complete BCSTTE or censoring-method parity is claimed.

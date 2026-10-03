@@ -1506,6 +1506,12 @@ from .toxicity_timing import toxicity_time_quantile
 from .tpi import TPIDesign, TPIPosterior
 from .tpi_simulation import simulate_tpi
 from .trax import TRAXData, TRAXPlot, trax, trax_data
+from .tte_family_bayesian_gof import (
+    TTEFamilyBayesianGOF,
+    gamma_bayesian_gof,
+    inverse_gamma_bayesian_gof,
+    log_logistic_bayesian_gof,
+)
 from .tteconduct import (
     TTEConductBoundary,
     TTEConductBoundaryTable,
@@ -2599,6 +2605,10 @@ __all__ = [
     "weibull_unknown_shape_bayesian_gof",
     "LognormalBayesianGOF",
     "lognormal_complete_data_bayesian_gof",
+    "TTEFamilyBayesianGOF",
+    "gamma_bayesian_gof",
+    "inverse_gamma_bayesian_gof",
+    "log_logistic_bayesian_gof",
     "dct_binary_sample_size",
     "DCTNormalSampleSize",
     "dct_normal_sample_size",

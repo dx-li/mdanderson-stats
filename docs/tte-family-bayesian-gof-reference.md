@@ -52,3 +52,11 @@ not turn a nonzero Gamma CDF/survival into zero or one. A Gamma event-density
 check at shape `1e12` exercises the existing stable CDFLIB gamma factor near
 its mode. These checks support the implemented formulas and sampler behavior;
 they do not establish native BCSTTE parity or guarantee MCMC convergence.
+
+The integrated package passes nine focused tests with warnings treated as
+errors. Twelve additional checks change time units by `1e-200` and `1e200`
+for all three families with both complete and censored observations. Maximum
+centered-parameter drift is `5.73e-14`; maximum error after the event-count
+log-likelihood shift is `4.55e-13`. Complete-data bin counts are identical.
+This bounded check peaks at 145.12 MiB resident memory and reports no process
+swaps. Targeted Ruff formatting/lint and module mypy checks also pass.

@@ -456,10 +456,10 @@ def _family_bayesian_gof(
     if np.all(events):
         cdf = np.empty((total_draws, n))
         flat = parameters.reshape(total_draws, 2)
-        for start in range(0, total_draws, 256):
-            stop = min(start + 256, total_draws)
-            cdf[start:stop] = _family_cdf(
-                flat[start:stop, 0, None], flat[start:stop, 1, None], relative, family
+        for batch_start in range(0, total_draws, 256):
+            stop = min(batch_start + 256, total_draws)
+            cdf[batch_start:stop] = _family_cdf(
+                flat[batch_start:stop, 0, None], flat[batch_start:stop, 1, None], relative, family
             )
         if np.any(~np.isfinite(cdf)) or np.any((cdf < 0) | (cdf > 1)):
             raise ArithmeticError("posterior CDF evaluation became invalid")

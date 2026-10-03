@@ -31,20 +31,21 @@ The second retained parameter and its chain summary are centered log scale;
 add `log_scale_offset` to recover absolute log scale. Prior means and supplied
 initial values use absolute log scale. To change time units by a factor `c`,
 multiply times by `c` and add `log(c)` to the prior and initial log-scale
-coordinates. Split R-hat and batch-means Monte Carlo errors can help inspect
+coordinates, keeping the covariance unchanged. Reported log likelihoods use
+absolute time units. Split R-hat and batch-means Monte Carlo errors can help inspect
 sampling, but do not guarantee convergence.
 
 The log likelihood and Gamma tails are evaluated in centered log-time
 coordinates. Underflowed incomplete-gamma tails use convergent series or
-continued fractions in log space; unsupported numerical states are rejected
-by the bounded sampler rather than being silently treated as exact zeros.
+continued fractions in log space. Numerical failures and exhausted work
+budgets raise errors; no partial fit is returned after a sampling failure.
 Sampling uses serial elliptical slice updates with work, draw, and retained
 array limits. These workflows do not claim native BCSTTE fitting, prior,
 report, or executable parity.
 
 ```python
 import numpy as np
-from mdanderson_stats.tte_family_bayesian_gof import gamma_bayesian_gof
+from mdanderson_stats import gamma_bayesian_gof
 
 fit = gamma_bayesian_gof(
     [1.2, 2.0, 3.1, 4.0],

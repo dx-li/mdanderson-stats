@@ -76,8 +76,8 @@ initial states, unrepresentable shape coordinates, numerical failures and
 budget exhaustion raise explicit errors. No approximate fit is returned after
 a failed sampler.
 
-Complete continuous observations are required. Censoring, rounding, native
-prior defaults, BIC/DIC and native reporting remain separate coverage gaps.
+Complete continuous observations are required. Censoring in this fitter,
+rounding, native prior defaults and native reporting remain separate coverage gaps.
 The Johnson reference is asymptotic; posterior-average reference probabilities
 are not calibrated p-values for an averaged statistic.
 
