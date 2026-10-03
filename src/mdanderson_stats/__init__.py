@@ -1372,6 +1372,7 @@ from .success_calibration import (
     binary_two_arm_success_oc,
     calibrate_success_cutoff,
     normal_success_oc,
+    survival_success_oc,
     prepare_binary_two_arm_success,
 )
 from .survan_baseline import SurvanBaseline, survan_baseline
@@ -2093,6 +2094,7 @@ __all__ = [
     "binary_two_arm_success_oc",
     "calibrate_success_cutoff",
     "normal_success_oc",
+    "survival_success_oc",
     "RoseDesign",
     "RoseOperatingCharacteristics",
     "RoseSimulation",

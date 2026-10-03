@@ -4968,7 +4968,7 @@
       "implemented_features": [
         "Exact single-arm beta-binomial operating characteristics with distinct design and analysis priors and either decision direction",
         "Two-arm binary response-count enumeration for arbitrary risk-difference margins in [-1,1], direct shifted beta tails and reusable tables for fast cutoff evaluation",
-        "One- and two-arm known-variance normal operating characteristics, separate conjugate arm weights, direct joint decision/truth quadrant integration; log-hazard-ratio approximation supported through sampling SE",
+        "One- and two-arm known-variance normal operating characteristics, separate conjugate arm weights, direct joint decision/truth quadrant integration; log-hazard-ratio approximation supported through sampling SE or explicit expected-event-count and treatment-allocation inputs",
         "Bayesian power, conditional power, Bayesian Type I error, PID, FOR, point-null frequentist error and explicit-grid PID cutoff calibration; undefined conditional probabilities retained as None",
         "Remaining: native calibration-search and report/plot parity; candidate-grid calibration is explicit"
       ],
@@ -4977,7 +4977,8 @@
         "Analytic normal quadrant identity, 300000-trial unequal-prior two-arm simulation, direction reflections and direct rare success tail below 1e-20",
         "Discrete cutoff calibration and zero-success handling; reused beta-order routine has independent R validation",
         "32 independent R beta-difference integrals across skewed/concentrated shapes and positive/negative margins; exact uniform identities, endpoint and reflection checks",
-        "Prepared tables agree with direct OCs; 500 cutoff evaluations benchmarked separately from one-time quadrature"
+        "Prepared tables agree with direct OCs; 500 cutoff evaluations benchmarked separately from one-time quadrature",
+        "Source Supplement S2.3 fixed-event log-hazard-ratio adapter agrees exactly with the known-variance normal OC kernel at integer and fractional expected event counts; five focused success-calibration tests pass"
       ]
     },
     {
