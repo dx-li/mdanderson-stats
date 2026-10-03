@@ -24,6 +24,16 @@ Monte Carlo errors, absolute discrepancies, split R-hat values, and work counts
 are recorded in
 [`tte-family-bayesian-gof-python-comparison.csv`](../tests/fixtures/tte-family-bayesian-gof-python-comparison.csv).
 
+The comparison initialized each chain at the supplied prior mean. It used
+`numpy.random.default_rng(817 + 10 * family_index + case_index)`, with family
+indices Gamma=0, inverse-Gamma=1, log-logistic=2 and case indices complete=0,
+censored=1. For Monte Carlo errors, each chain's 1,000 retained draws were
+split into 20 consecutive batches of 50; the 80 batch means were pooled and
+their sample standard deviation (`ddof=1`) divided by `sqrt(80)`. The reported
+split R-hat divides each chain into its first and last 500 draws and uses the
+usual within/between-chain variance estimate on those eight half-chains. The
+largest recorded split R-hat is 1.00544474 (inverse-Gamma censored).
+
 | Case | Largest discrepancy / batch-means MCSE | Metric | Maximum split R-hat | Likelihood evaluations / work units |
 |---|---:|---|---:|---:|
 | Gamma, complete | 3.23 | log-shape variance | 1.003 | 13,764 / 68,820 |
