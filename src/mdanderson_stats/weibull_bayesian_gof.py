@@ -15,7 +15,11 @@ import numpy as np
 from numpy.typing import ArrayLike
 
 from ._validation import FloatArray, finite, scalar
-from .bayesian_chi_square import BayesianChiSquare, bayesian_chi_square_cdf
+from .bayesian_chi_square import (
+    BayesianChiSquare,
+    _event_indicator,
+    bayesian_chi_square_cdf,
+)
 from .boin import _owned
 
 _MAX_CDF_AND_SUMMARY_CELLS = 20_000_000
@@ -41,7 +45,7 @@ class WeibullBayesianGOF:
     posterior_rate_log_scale: float
     posterior_rate_scaled_sum: float
     weibull_shape: float
-    diagnostic: BayesianChiSquare
+    diagnostic: BayesianChiSquare | None
 
 
 def weibull_fixed_shape_bayesian_gof(
@@ -50,25 +54,31 @@ def weibull_fixed_shape_bayesian_gof(
     weibull_shape: float,
     prior_shape: float,
     prior_rate: float,
+    event: ArrayLike | None = None,
     samples: int = 1000,
     bins: int | None = None,
     critical_probability: float = 0.95,
     rng: int | np.random.Generator | None = None,
 ) -> WeibullBayesianGOF:
-    """Fit a complete-data Weibull model with fixed shape and explicit Gamma prior.
+    """Fit a fixed-shape Weibull model with optional right censoring.
 
     The Weibull CDF is ``1 - exp(-lambda * t**weibull_shape)`` with
     ``lambda = scale**(-weibull_shape)``. ``prior_shape`` and ``prior_rate``
-    specify a Gamma prior on lambda, parameterized by shape and rate. The
-    prior rate has units ``time**weibull_shape``. Zero prior parameters are
-    permitted when the resulting posterior is proper (the observations here
-    ensure positive posterior shape and rate).
+    specify a Gamma prior on lambda, parameterized by shape and rate. ``event``
+    marks exact events; false entries are right-censored. Under noninformative
+    censoring, the posterior is Gamma(``prior_shape + event_count``, rate
+    ``prior_rate + sum(times**weibull_shape)``). The prior rate has units
+    ``time**weibull_shape``. Zero prior parameters are permitted only when the
+    resulting posterior is proper.
 
-    Only complete positive event times are accepted. Censoring, rounded-time
-    likelihoods, and unknown-shape fitting are outside this API. CDFs are
-    evaluated in log space and generated in row chunks; the joint CDF and
-    Johnson diagnostic workspaces have a combined 20-million-cell cap checked
-    before random draws.
+    Censored fits return no Johnson diagnostic because no censored-data CDF
+    transform is specified by the source. Exact events require positive times;
+    zero-time right censors are allowed. The Python conjugate extension permits
+    all-censored data when the posterior is proper, although the native guide
+    states that its program requires at least one uncensored observation.
+    Rounded-time likelihoods and unknown-shape fitting are outside this API.
+    Complete-data CDFs are evaluated in log space and generated in row chunks;
+    diagnostic workspaces are checked before random draws.
     """
     for value, name in (
         (weibull_shape, "weibull_shape"),
@@ -92,9 +102,7 @@ def weibull_fixed_shape_bayesian_gof(
         except TypeError as exc:
             raise ValueError("times must be a one-dimensional vector") from exc
         if not 2 <= n_times <= _MAX_CDF_AND_SUMMARY_CELLS:
-            raise ValueError(
-                "require a one-dimensional vector of at least two complete event times"
-            )
+            raise ValueError("require a one-dimensional vector of at least two observations")
         for item in sequence:
             if not np.isscalar(item):
                 raise ValueError("times must be a one-dimensional vector")
@@ -107,9 +115,7 @@ def weibull_fixed_shape_bayesian_gof(
         if np.iscomplexobj(times):
             raise ValueError("times must be real")
         if not 2 <= n_times <= _MAX_CDF_AND_SUMMARY_CELLS:
-            raise ValueError(
-                "require a one-dimensional vector of at least two complete event times"
-            )
+            raise ValueError("require a one-dimensional vector of at least two observations")
     if beta <= 0 or a < 0 or b < 0:
         raise ValueError("weibull_shape must be positive; prior_shape/rate must be nonnegative")
     if not np.isfinite(size) or size != int(size) or not 1 <= size <= _MAX_SAMPLES:
@@ -124,38 +130,55 @@ def weibull_fixed_shape_bayesian_gof(
         or not 0 < level < 1
     ):
         raise ValueError("bins must be 2..1000 and critical_probability must lie in (0,1)")
-    cdf_cells = int(size) * n_times
-    summary_cells = int(size) * int(bin_count)
+    events = _event_indicator(event, n_times)
+    cdf_cells = int(size) * n_times if np.all(events) else 0
+    summary_cells = int(size) * int(bin_count) if np.all(events) else 0
     # Account for CDF output, count/freeze copies, draws and centered samples.
     chunk_cells = min(int(size), 256) * n_times
     if (
-        cdf_cells + 2 * summary_cells + 3 * int(size) + 6 * n_times + 4 * chunk_cells
+        cdf_cells
+        + 2 * summary_cells
+        + 3 * int(size)
+        + 6 * n_times
+        + (4 * chunk_cells if np.all(events) else 0)
         > _MAX_CDF_AND_SUMMARY_CELLS
     ):
         raise ValueError("Weibull CDF and diagnostic workspaces exceed 20 million cells")
 
     x = finite(times, "times")
-    if x.ndim != 1 or np.any(x <= 0):
-        raise ValueError("require at least two positive complete event times")
-    posterior_shape = a + n_times
+    if x.ndim != 1 or np.any(x < 0) or np.any(x[events] <= 0):
+        raise ValueError("event times must be positive and all times nonnegative")
+    event_count = int(np.count_nonzero(events))
+    posterior_shape = a + event_count
     if not np.isfinite(posterior_shape) or posterior_shape <= 0:
-        raise ArithmeticError("Weibull posterior Gamma shape is not representable")
-    xmax = float(np.max(x))
-    relative = (x - xmax) / xmax
-    centered_log_powers = np.empty_like(x)
-    near_max = relative > -0.5
-    with np.errstate(over="ignore", invalid="ignore"):
-        centered_log_powers[near_max] = beta * np.log1p(relative[near_max])
-        centered_log_powers[~near_max] = beta * (np.log(x[~near_max]) - np.log(xmax))
-    with np.errstate(over="ignore", invalid="ignore"):
-        log_power_scale = beta * np.log(xmax)
-    if not np.isfinite(log_power_scale) or np.any(np.isnan(centered_log_powers)):
+        raise ValueError("the Gamma posterior must have positive shape and rate")
+    positive = x > 0
+    centered_log_powers = np.full_like(x, -np.inf)
+    if np.any(positive):
+        xmax = float(np.max(x[positive]))
+        relative = (x[positive] - xmax) / xmax
+        positive_log_powers = np.empty(np.count_nonzero(positive), dtype=float)
+        near_max = relative > -0.5
+        with np.errstate(over="ignore", invalid="ignore"):
+            positive_log_powers[near_max] = beta * np.log1p(relative[near_max])
+            positive_log_powers[~near_max] = beta * (np.log(x[positive][~near_max]) - np.log(xmax))
+            log_power_scale = beta * np.log(xmax)
+        centered_log_powers[positive] = positive_log_powers
+    else:
+        log_power_scale = -np.inf
+    if (
+        np.isnan(log_power_scale)
+        or log_power_scale == np.inf
+        or np.any(np.isnan(centered_log_powers))
+    ):
         raise ArithmeticError("weibull_shape * log(times) exceeds floating-point range")
     log_prior_rate = np.log(b) if b > 0 else -np.inf
     # Scale likelihood powers relative to the maximum observed time before
     # multiplying by shape; this preserves close-time differences even when
     # beta*log(t) itself is enormous. Scale the prior rate by the same factor.
     rate_log_scale = float(max(log_power_scale, log_prior_rate))
+    if not np.isfinite(rate_log_scale):
+        raise ValueError("the Gamma posterior rate must be positive")
     power_log_offset = log_power_scale - rate_log_scale
     with np.errstate(over="ignore", under="ignore", invalid="ignore"):
         scaled_power = np.exp(centered_log_powers + power_log_offset)
@@ -179,21 +202,23 @@ def weibull_fixed_shape_bayesian_gof(
     centered_log_rates = np.log(rate_draws) - np.log(scaled_rate_sum)
     log_rate_offset = -rate_log_scale
 
-    cdf = np.empty((int(size), n_times), dtype=float)
-    for start in range(0, int(size), 256):
-        stop = min(start + 256, int(size))
-        with np.errstate(over="ignore", under="ignore", invalid="ignore"):
-            log_hazard = (
-                centered_log_rates[start:stop, None]
-                + centered_log_powers[None, :]
-                + power_log_offset
-            )
-            hazard = np.exp(log_hazard)
-            cdf[start:stop] = -np.expm1(-hazard)
-        if np.any(np.isnan(cdf[start:stop])):
-            raise ArithmeticError("Weibull CDF evaluation produced indeterminate values")
+    diagnostic = None
+    if np.all(events):
+        cdf = np.empty((int(size), n_times), dtype=float)
+        for start in range(0, int(size), 256):
+            stop = min(start + 256, int(size))
+            with np.errstate(over="ignore", under="ignore", invalid="ignore"):
+                log_hazard = (
+                    centered_log_rates[start:stop, None]
+                    + centered_log_powers[None, :]
+                    + power_log_offset
+                )
+                hazard = np.exp(log_hazard)
+                cdf[start:stop] = -np.expm1(-hazard)
+            if np.any(np.isnan(cdf[start:stop])):
+                raise ArithmeticError("Weibull CDF evaluation produced indeterminate values")
 
-    diagnostic = bayesian_chi_square_cdf(cdf, bins=int(bin_count), critical_probability=level)
+        diagnostic = bayesian_chi_square_cdf(cdf, bins=int(bin_count), critical_probability=level)
     return WeibullBayesianGOF(
         _owned(centered_log_rates),
         log_rate_offset,

@@ -32,6 +32,22 @@ log_rates = fit.centered_log_rate_samples + fit.log_rate_offset
 print(log_rates.mean(), fit.diagnostic.area_against_reference)
 ```
 
+For right-censored data, pass a Boolean `event` vector (`True` for an exact
+event, `False` for a right censor). The posterior remains conjugate:
+
+```python
+fit = weibull_fixed_shape_bayesian_gof(
+    [0.5, 1.25, 2.0, 3.5],
+    weibull_shape=1.7,
+    prior_shape=2.25,
+    prior_rate=0.8,
+    event=[True, False, True, False],
+    rng=6607,
+)
+assert fit.posterior_shape == 4.25
+assert fit.diagnostic is None
+```
+
 ## Model and prior
 
 For shape `beta`, scale `eta`, and transformed rate `lambda = eta**(-beta)`,
@@ -39,11 +55,20 @@ For shape `beta`, scale `eta`, and transformed rate `lambda = eta**(-beta)`,
 ```text
 F(t) = 1 - exp(-lambda * t**beta)
 lambda ~ Gamma(prior_shape, rate=prior_rate)
-lambda | observed times ~ Gamma(prior_shape + n, rate=prior_rate + sum(t**beta))
+lambda | times, events ~ Gamma(prior_shape + d,
+                               rate=prior_rate + sum(t**beta))
 ```
 
-All observations must be complete positive continuous event times. Shape is
-specified, not estimated. The prior rate has units `time**beta`. A change of
+Here `d` is the number of exact events; every event and censor contributes its
+observed time to cumulative exposure. This likelihood assumes independent,
+noninformative right censoring. Zero-time censors contribute no exposure and
+are allowed; exact events must have positive times. Censored fits return no
+Johnson diagnostic because the source does not define a censored-data CDF
+transform. Proper-posterior all-censored inputs are supported as an explicit
+Python extension, although the native BCSTTE guide says its program requires at
+least one uncensored observation.
+
+Shape is specified, not estimated. The prior rate has units `time**beta`. A change of
 time units by factor `c` requires changing the prior rate by `c**beta` to
 represent the same prior. Zero prior hyperparameters define improper priors;
 the supported complete data yield a proper posterior. For example, setting
@@ -52,7 +77,7 @@ not recovered BCSTTE prior defaults.
 
 The shape-one model reduces to the exponential workflow. Other shapes permit
 increasing or decreasing hazards. The function does not estimate an unknown
-Weibull shape or supply censored/rounded-data diagnostics. It therefore adds a
+Weibull shape or supply rounded-time likelihoods or censored-data diagnostics. It therefore adds a
 specified-shape family without claiming complete coverage of the native
 Weibull fitter.
 The companion [unknown-shape workflow](weibull-unknown-shape-gof.md) jointly

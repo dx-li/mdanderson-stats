@@ -163,3 +163,108 @@ def test_centered_time_powers_resolve_adjacent_huge_times() -> None:
     expected = bayesian_chi_square_cdf(cdf, bins=4)
     np.testing.assert_array_equal(result.diagnostic.bin_counts, expected.bin_counts)
     np.testing.assert_allclose(result.diagnostic.statistic, expected.statistic, rtol=0, atol=0)
+
+
+def test_fixed_shape_weibull_right_censor_update_and_zero_time_censor() -> None:
+    times = np.array([0.5, 1.0, 2.5, 0.0])
+    event = np.array([True, False, True, False])
+    beta, prior_shape, prior_rate = 1.5, 1.25, 0.75
+    result = weibull_fixed_shape_bayesian_gof(
+        times,
+        weibull_shape=beta,
+        prior_shape=prior_shape,
+        prior_rate=prior_rate,
+        event=event,
+        samples=6000,
+        rng=771,
+    )
+    expected_rate = prior_rate + np.sum(times**beta)
+    assert result.posterior_shape == prior_shape + event.sum()
+    assert np.exp(result.log_posterior_rate) == pytest.approx(expected_rate)
+    assert result.diagnostic is None
+    hazards = np.exp(result.centered_log_rate_samples + result.log_rate_offset) * expected_rate
+    assert hazards.mean() == pytest.approx(result.posterior_shape, rel=0.025)
+
+
+def test_fixed_shape_weibull_all_censored_and_zero_exposure_prior() -> None:
+    all_censored = np.zeros(3, dtype=bool)
+    result = weibull_fixed_shape_bayesian_gof(
+        [0.0, 1.0, 2.0],
+        weibull_shape=2.0,
+        prior_shape=2.0,
+        prior_rate=0.5,
+        event=all_censored,
+        samples=32,
+        rng=22,
+    )
+    assert result.posterior_shape == 2.0
+    assert result.log_posterior_rate == pytest.approx(np.log(5.5))
+    assert result.diagnostic is None
+
+    zero_censor = weibull_fixed_shape_bayesian_gof(
+        [0.0, 0.0],
+        weibull_shape=1.7,
+        prior_shape=2.0,
+        prior_rate=0.5,
+        event=np.zeros(2, dtype=bool),
+        samples=32,
+        rng=23,
+    )
+    assert zero_censor.log_posterior_rate == pytest.approx(np.log(0.5))
+    with pytest.raises(ValueError, match="positive shape and rate"):
+        weibull_fixed_shape_bayesian_gof(
+            [0.0, 0.0],
+            weibull_shape=1.7,
+            prior_shape=0,
+            prior_rate=0,
+            event=np.zeros(2, dtype=bool),
+            rng=23,
+        )
+
+
+def test_fixed_shape_weibull_complete_sequence_and_censored_units():
+    times = np.array([0.5, 1.0, 2.5, 4.0])
+    common = dict(
+        weibull_shape=1.5,
+        prior_shape=1.5,
+        prior_rate=0.75,
+        samples=128,
+        bins=3,
+        rng=401,
+    )
+    implicit = weibull_fixed_shape_bayesian_gof(times, **common)
+    explicit = weibull_fixed_shape_bayesian_gof(
+        times, event=np.ones(times.size, dtype=bool), **common
+    )
+    np.testing.assert_array_equal(
+        implicit.centered_log_rate_samples, explicit.centered_log_rate_samples
+    )
+    np.testing.assert_array_equal(implicit.diagnostic.statistic, explicit.diagnostic.statistic)
+
+    event = np.array([True, False, True, False])
+    base = weibull_fixed_shape_bayesian_gof(
+        times,
+        weibull_shape=1.5,
+        prior_shape=1.5,
+        prior_rate=0.75,
+        event=event,
+        samples=128,
+        rng=402,
+    )
+    scale = 1e100
+    shifted = weibull_fixed_shape_bayesian_gof(
+        times * scale,
+        weibull_shape=1.5,
+        prior_shape=1.5,
+        prior_rate=0.75 * scale**1.5,
+        event=event,
+        samples=128,
+        rng=402,
+    )
+    np.testing.assert_allclose(
+        shifted.centered_log_rate_samples + shifted.log_rate_offset + 1.5 * np.log(scale),
+        base.centered_log_rate_samples + base.log_rate_offset,
+        rtol=0,
+        atol=3e-13,
+    )
+    assert shifted.diagnostic is None
