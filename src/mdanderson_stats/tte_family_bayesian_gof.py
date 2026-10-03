@@ -1,11 +1,12 @@
-"""Bayesian chi-square workflows for three BCSTTE TTE families.
+"""Bayesian chi-square workflows for four BCSTTE TTE families.
 
 The guide supplies family densities and survival functions, but not prior or
-fitting defaults. These workflows therefore require an explicit proper
-correlated Gaussian prior on log(shape), log(scale). Right censoring uses the
-ordinary event-density / right-tail-survival likelihood; Johnson's diagnostic
-is returned only for complete samples because the guide does not define a
-censored-data CDF diagnostic.
+fitting defaults. Gamma, inverse-Gamma and log-logistic workflows require a
+proper correlated Gaussian prior on log(shape), log(scale); the generalized
+log-odds-rate workflow requires one on log(shape), log(scale), log(c). Right
+censoring uses ordinary event-density and right-tail-survival likelihoods.
+Johnson's diagnostic is returned only for complete samples because the guide
+does not define a censored-data CDF diagnostic.
 """
 
 from collections.abc import Callable, Sequence
@@ -16,6 +17,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 from scipy.special import gammainc, gammaincc, gammaln, log_expit
 
+from ._log_odds_rate import log_odds_rate_components
 from ._validation import FloatArray, finite, scalar
 from .bayesian_chi_square import BayesianChiSquare, bayesian_chi_square_cdf
 from .boin import _owned
@@ -71,6 +73,82 @@ class TTEFamilyBayesianGOF:
     likelihood_work_units: int
     warmup: int
     diagnostic: BayesianChiSquare | None
+
+
+@dataclass(frozen=True)
+class LogOddsRateBayesianGOF:
+    """Joint posterior draws for the generalized log-odds-rate model.
+
+    ``parameters[..., 0]`` is log shape, ``[..., 1]`` is centered log scale,
+    and ``[..., 2]`` is log ``c``. Add ``log_scale_offset`` to the second
+    coordinate to recover absolute log scale. Censored fits have no Johnson
+    diagnostic because no censored-data transform is specified by the source.
+    """
+
+    parameter_names: tuple[str, str, str]
+    parameters: FloatArray
+    log_likelihood: FloatArray
+    parameter_summary: ChainSummary
+    times: FloatArray
+    event: NDArrayBool
+    log_scale_offset: float
+    prior_mean: FloatArray
+    prior_covariance: FloatArray
+    likelihood_evaluations: int
+    likelihood_work_units: int
+    warmup: int
+    diagnostic: BayesianChiSquare | None
+
+
+def _sample_elliptical_slice_chains(
+    *,
+    centered_mean: FloatArray,
+    cholesky: FloatArray,
+    centered_starts: FloatArray,
+    draws: int,
+    warmup: int,
+    rng: np.random.Generator,
+    evaluate: Callable[[FloatArray], float],
+    likelihood_adjustment: float,
+    label: str,
+) -> tuple[FloatArray, FloatArray]:
+    """Run the shared bounded elliptical-slice sampler in any dimension."""
+    chain_count = centered_starts.shape[0]
+    dimension = centered_mean.size
+    parameters = np.empty((chain_count, draws, dimension), dtype=float)
+    log_likelihood = np.empty((chain_count, draws), dtype=float)
+    for chain in range(chain_count):
+        state = centered_starts[chain].copy()
+        ll = evaluate(state)
+        if not np.isfinite(ll):
+            raise ValueError(f"initial {label} state has zero representable likelihood")
+        for iteration in range(warmup + draws):
+            direction = cholesky @ rng.standard_normal(dimension)
+            height = ll + np.log1p(-rng.random())
+            angle = float(rng.uniform(0, 2 * np.pi))
+            lower, upper = angle - 2 * np.pi, angle
+            for _ in range(_MAX_SLICE_STEPS):
+                proposal = (
+                    centered_mean
+                    + (state - centered_mean) * np.cos(angle)
+                    + direction * np.sin(angle)
+                )
+                trial = evaluate(proposal)
+                if trial >= height:
+                    state, ll = proposal, trial
+                    break
+                if angle < 0:
+                    lower = angle
+                else:
+                    upper = angle
+                angle = float(rng.uniform(lower, upper))
+            else:
+                raise ArithmeticError(f"{label} elliptical-slice update failed in chain {chain}")
+            if iteration >= warmup:
+                draw = iteration - warmup
+                parameters[chain, draw] = state
+                log_likelihood[chain, draw] = ll + likelihood_adjustment
+    return parameters, log_likelihood
 
 
 def _log_regularized_gamma_tail(
@@ -419,39 +497,17 @@ def _family_bayesian_gof(
         work += n + tail_work[0]
         return val
 
-    parameters = np.empty((chain_count, size, 2))
-    log_likelihood = np.empty((chain_count, size))
-    for chain in range(chain_count):
-        state = starts[chain].copy()
-        ll = evaluate(state)
-        if not np.isfinite(ll):
-            raise ValueError(f"initial {family} state has zero representable likelihood")
-        for iteration in range(burn + size):
-            direction = cholesky @ rng.standard_normal(2)
-            height = ll + np.log1p(-rng.random())
-            angle = float(rng.uniform(0, 2 * np.pi))
-            lower, upper = angle - 2 * np.pi, angle
-            for _ in range(_MAX_SLICE_STEPS):
-                proposal = (
-                    centered_mean
-                    + (state - centered_mean) * np.cos(angle)
-                    + direction * np.sin(angle)
-                )
-                trial = evaluate(proposal)
-                if trial >= height:
-                    state, ll = proposal, trial
-                    break
-                if angle < 0:
-                    lower = angle
-                else:
-                    upper = angle
-                angle = float(rng.uniform(lower, upper))
-            else:
-                raise ArithmeticError(f"{family} elliptical-slice update failed in chain {chain}")
-            if iteration >= burn:
-                draw = iteration - burn
-                parameters[chain, draw] = state
-                log_likelihood[chain, draw] = ll - int(np.count_nonzero(events)) * offset
+    parameters, log_likelihood = _sample_elliptical_slice_chains(
+        centered_mean=centered_mean,
+        cholesky=cholesky,
+        centered_starts=starts,
+        draws=size,
+        warmup=burn,
+        rng=rng,
+        evaluate=evaluate,
+        likelihood_adjustment=-int(np.count_nonzero(events)) * offset,
+        label=family,
+    )
     diagnostic = None
     if np.all(events):
         cdf = np.empty((total_draws, n))
@@ -525,3 +581,211 @@ def _make_family_function(family: str) -> Callable[..., TTEFamilyBayesianGOF]:
 gamma_bayesian_gof = _make_family_function("gamma")
 inverse_gamma_bayesian_gof = _make_family_function("inverse_gamma")
 log_logistic_bayesian_gof = _make_family_function("log_logistic")
+
+
+def log_odds_rate_bayesian_gof(
+    times: ArrayLike,
+    *,
+    prior_mean: ArrayLike,
+    prior_covariance: ArrayLike,
+    event: ArrayLike | None = None,
+    draws: int = 1000,
+    warmup: int = 500,
+    chains: int = 4,
+    initial: ArrayLike | None = None,
+    bins: int | None = None,
+    critical_probability: float = 0.95,
+    rng: np.random.Generator,
+    max_likelihood_evaluations: int = 1_000_000,
+    max_work: int = 100_000_000,
+) -> LogOddsRateBayesianGOF:
+    """Fit the log-odds-rate family under an explicit Gaussian log prior.
+
+    The proper correlated Normal prior is supplied on absolute
+    ``(log_shape, log_scale, log_c)`` coordinates. The sampler centers only
+    log scale, returning that coordinate with ``log_scale_offset``. The prior
+    is an explicit Python convention; no BCSTTE native prior or fitting
+    defaults are claimed. ``event=True`` marks an exact event and ``False`` a
+    right-censored observation. Censored fits have no Johnson diagnostic.
+    """
+    if not isinstance(rng, np.random.Generator):
+        raise ValueError("rng must be an explicit NumPy Generator")
+    time_shape = getattr(times, "shape", None)
+    if time_shape is None:
+        sequence = cast(Sequence[object], times)
+        try:
+            n = len(sequence)
+        except TypeError as exc:
+            raise ValueError("times must be a one-dimensional vector") from exc
+        if not 2 <= n <= _MAX_RETAINED_CELLS:
+            raise ValueError("times must contain at least two observations")
+        if any(not np.isscalar(item) or np.iscomplexobj(item) for item in sequence):
+            raise ValueError("times must be a one-dimensional real vector")
+    else:
+        if len(time_shape) != 1:
+            raise ValueError("times must be a one-dimensional vector")
+        n = int(time_shape[0])
+        if not 2 <= n <= _MAX_RETAINED_CELLS or np.iscomplexobj(times):
+            raise ValueError("times must be a one-dimensional real vector with n >= 2")
+
+    if event is None:
+        events = np.ones(n, dtype=bool)
+    else:
+        if _input_shape(event, "event") != (n,) or np.iscomplexobj(event):
+            raise ValueError("event must be a one-dimensional Boolean vector matching times")
+        raw_event = np.asarray(event)
+        if raw_event.dtype.kind != "b":
+            raise ValueError("event must contain actual Boolean values")
+        events = raw_event.astype(bool, copy=True)
+    if _input_shape(prior_mean, "prior_mean") != (3,):
+        raise ValueError("prior_mean must contain log shape, log scale, and log c means")
+    if _input_shape(prior_covariance, "prior_covariance") != (3, 3):
+        raise ValueError("prior_covariance must be a 3x3 matrix")
+    if np.iscomplexobj(prior_mean) or np.iscomplexobj(prior_covariance):
+        raise ValueError("prior arrays must be real")
+    mean = finite(prior_mean, "prior_mean")
+    covariance = finite(prior_covariance, "prior_covariance")
+    if mean.shape != (3,) or covariance.shape != (3, 3):
+        raise ValueError("prior arrays must have shapes (3,) and (3,3)")
+    if not np.array_equal(covariance, covariance.T):
+        raise ValueError("prior_covariance must be symmetric")
+    try:
+        cholesky = np.linalg.cholesky(covariance)
+    except np.linalg.LinAlgError as exc:
+        raise ValueError("prior_covariance must be positive definite") from exc
+    if not _LOG_FLOAT_MIN <= mean[0] <= _LOG_FLOAT_MAX:
+        raise ValueError("prior log-shape mean must represent a positive finite shape")
+
+    size = _bounded_integer(draws, "draws", 8, 100_000)
+    burn = _bounded_integer(warmup, "warmup", 0, 100_000)
+    chain_count = _bounded_integer(chains, "chains", 2, 16)
+    bin_count = (
+        max(2, int(np.floor(n**0.4 + 0.5)))
+        if bins is None
+        else _bounded_integer(bins, "bins", 2, 1000)
+    )
+    level = scalar(critical_probability, "critical_probability")
+    if not 0 < level < 1:
+        raise ValueError("critical_probability must lie in (0,1)")
+    evaluation_limit = _bounded_integer(
+        max_likelihood_evaluations,
+        "max_likelihood_evaluations",
+        1,
+        _MAX_LIKELIHOOD_EVALUATIONS,
+    )
+    work_limit = _bounded_integer(max_work, "max_work", 1, _MAX_WORK_UNITS)
+    total_draws = chain_count * size
+    cdf_cells = total_draws * n if np.all(events) else 0
+    summary_cells = total_draws * bin_count if cdf_cells else 0
+    retained_cells = (
+        cdf_cells + 3 * summary_cells + 31 * total_draws + 8 * n + 4 * min(total_draws, 256) * n
+    )
+    if retained_cells > _MAX_RETAINED_CELLS:
+        raise ValueError("posterior and diagnostic arrays exceed 20 million cells")
+    minimum = chain_count * (1 + burn + size)
+    if minimum > evaluation_limit or minimum * n > work_limit:
+        raise ValueError("minimum chain work exceeds the requested likelihood budget")
+
+    if initial is None:
+        starts = np.broadcast_to(mean, (chain_count, 3)).copy()
+    else:
+        initial_shape = _input_shape(initial, "initial")
+        if initial_shape not in ((3,), (chain_count, 3)) or np.iscomplexobj(initial):
+            raise ValueError("initial must be one real log-parameter vector or one per chain")
+        supplied = finite(initial, "initial")
+        starts = (
+            np.broadcast_to(supplied, (chain_count, 3)).copy()
+            if supplied.shape == (3,)
+            else supplied.copy()
+        )
+
+    x = finite(times, "times")
+    if x.ndim != 1 or np.any(x < 0) or np.any(x[events] <= 0):
+        raise ValueError("exact events require positive times; times cannot be negative")
+    positive = x[x > 0]
+    relative = np.zeros_like(x)
+    if positive.size:
+        relative_positive, offset = _relative_log_times(positive)
+        relative[x > 0] = relative_positive
+    else:
+        offset = float(mean[1])
+    centered_mean = mean.copy()
+    centered_mean[1] -= offset
+    centered_starts = starts.copy()
+    centered_starts[:, 1] -= offset
+    if np.any(~np.isfinite(centered_mean)) or np.any(~np.isfinite(centered_starts)):
+        raise ArithmeticError("centered log-scale coordinates are not representable")
+
+    evaluations = work = 0
+
+    def evaluate(state: FloatArray) -> float:
+        nonlocal evaluations, work
+        if evaluations >= evaluation_limit or work + n > work_limit:
+            raise ArithmeticError("log-odds-rate likelihood budget exhausted")
+        if np.any(~np.isfinite(state)) or not _LOG_FLOAT_MIN <= float(state[0]) <= _LOG_FLOAT_MAX:
+            evaluations += 1
+            work += n
+            return -np.inf
+        observed = x > 0
+        if np.any(observed):
+            log_density, log_survival, _ = log_odds_rate_components(
+                relative[observed],
+                float(state[0]),
+                float(state[1]),
+                float(state[2]),
+            )
+            terms = np.where(events[observed], log_density, log_survival)
+        else:
+            terms = np.zeros(0, dtype=float)
+        if np.any(np.isnan(terms)) or np.any(terms == np.inf):
+            raise ArithmeticError("log-odds-rate likelihood became indeterminate")
+        result = float(np.sum(terms, dtype=np.float64))
+        if np.isnan(result) or result == np.inf:
+            raise ArithmeticError("log-odds-rate likelihood sum became indeterminate")
+        evaluations += 1
+        work += n
+        return result
+
+    parameters, log_likelihood = _sample_elliptical_slice_chains(
+        centered_mean=centered_mean,
+        cholesky=cholesky,
+        centered_starts=centered_starts,
+        draws=size,
+        warmup=burn,
+        rng=rng,
+        evaluate=evaluate,
+        likelihood_adjustment=-int(np.count_nonzero(events)) * offset,
+        label="log-odds-rate",
+    )
+    diagnostic = None
+    if np.all(events):
+        cdf = np.empty((total_draws, n), dtype=float)
+        flat = parameters.reshape((total_draws, 3))
+        for batch_start in range(0, total_draws, 256):
+            stop = min(batch_start + 256, total_draws)
+            for row in range(batch_start, stop):
+                _, _, cdf[row] = log_odds_rate_components(
+                    relative,
+                    float(flat[row, 0]),
+                    float(flat[row, 1]),
+                    float(flat[row, 2]),
+                )
+        if np.any(~np.isfinite(cdf)) or np.any((cdf < 0) | (cdf > 1)):
+            raise ArithmeticError("log-odds-rate posterior CDF evaluation became invalid")
+        diagnostic = bayesian_chi_square_cdf(cdf, bins=bin_count, critical_probability=level)
+
+    return LogOddsRateBayesianGOF(
+        ("log_shape", "centered_log_scale", "log_c"),
+        _owned(parameters),
+        _owned(log_likelihood),
+        summarize_chains(parameters),
+        _owned(x),
+        _owned(events),
+        offset,
+        _owned(mean),
+        _owned(covariance),
+        evaluations,
+        work,
+        burn,
+        diagnostic,
+    )

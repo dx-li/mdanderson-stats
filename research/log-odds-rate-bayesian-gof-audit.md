@@ -76,15 +76,22 @@ and dispersed starts. It compares 17 posterior summaries per event pattern
 against the order-45 R fixture (34 comparisons total), estimating Monte Carlo
 error by chain batch means.
 
-The first comparison is invalidated because the R reference transformed
-standard Normal rows using `t(chol(covariance))`. R's `chol` returns upper
-triangular `U` with `t(U) U = covariance`; row-vector draws must multiply `U`,
-not `t(U)`. The mistaken transform therefore used a different covariance.
-The reference now asserts `crossprod(U) == covariance` to numerical tolerance,
-multiplies row nodes by `U`, and the posterior fixture has been regenerated.
-Order-35 to order-45 quadrature changes are at most `1.70e-6` (complete) and
-`9.36e-7` (right-censored). No Python-versus-R posterior agreement claim is
-made until the corrected fixture is checked with the same fixed seeds
-(`20261003` complete, `20261004` right-censored). The comparison utility
-records runtime, peak memory, MCSE-scaled errors, and split R-hat. No native
-BCSTTE numerical parity is claimed.
+An initial comparison was discarded after finding that the R reference
+transformed standard Normal rows using `t(chol(covariance))`. R's `chol`
+returns upper triangular `U` with `t(U) U = covariance`; row-vector draws must
+multiply `U`, not `t(U)`. The mistaken transform therefore used a different
+covariance. The corrected R reference asserts `crossprod(U) == covariance`
+to numerical tolerance, multiplies row nodes by `U`, and regenerates the
+posterior fixture. Order-35 to order-45 quadrature changes are at most
+`1.70e-6` (complete) and `9.36e-7` (right-censored).
+
+With the corrected fixture, the fixed-seed Python comparison passed for all 34
+metrics. The largest difference was 2.6186 batch-means MCSE for the
+right-censored log-shape/log-scale covariance (absolute error `0.00215280`,
+MCSE `0.000822109`; Python `0.0460276`, R `0.0481804`). The largest absolute
+error was `0.0105110` for right-censored posterior mean scale (Python `2.1626791`,
+R `2.1521681`). The largest split R-hat was `1.000712`. The comparison used
+16,000 retained draws per chain, 1,000 warmup draws, and seeds `20261003`
+(complete) and `20261004` (right-censored). It took `25.443` seconds and
+peaked at `139.58 MiB` on the validation host. No native BCSTTE numerical
+parity is claimed.

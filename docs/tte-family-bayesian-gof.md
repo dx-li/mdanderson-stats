@@ -55,3 +55,8 @@ fit = gamma_bayesian_gof(
 )
 assert fit.diagnostic is not None
 ```
+
+The guide also defines a generalized log-odds-rate family with a third positive
+parameter `c`. Its posterior workflow is documented separately in the
+[log-odds-rate guide](log-odds-rate-bayesian-gof.md), which uses a proper
+correlated Gaussian prior on `(log_shape, log_scale, log_c)`.
