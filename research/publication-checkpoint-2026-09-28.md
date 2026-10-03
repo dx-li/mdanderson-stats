@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `4509a8a` adds generalized log-odds-rate
-posterior fitting, completing Python fitting workflows for all seven BCSTTE
-distribution families with explicit prior contracts. The final section records validation; earlier sections preserve
+Latest verified package checkpoint: `1da08a2` extends exponential and both
+Weibull posterior workflows to right censoring, fixes long Boolean event lists,
+and adds event-count inputs for survival success-criterion design. The final section records validation; earlier sections preserve
 checkpoint history. Published `9f6c1eb` has passed all hosted quality and
 Python 3.12/3.13/3.14 checks in
 [run 37157021641](https://github.com/dx-li/mdanderson-stats/actions/runs/37157021641).
@@ -2563,3 +2563,46 @@ The previous 6319a4f hosted run has passed quality and Python 3.12/3.13; its
 Python 3.14 job was still running at the last observation. The local manifest
 records this publication's independently verified master/main/development SHAs
 and hosted state separately from the latest fully passed hosted checkpoint.
+
+## October 3: censored exponential/Weibull and survival design inputs
+
+Luna added noninformative right censoring to the exponential and fixed-shape
+Weibull conjugate fits, and to joint unknown-shape Weibull sampling. The
+conjugate update counts events in posterior shape and all follow-up exposure
+in posterior rate. Zero-time censors contribute likelihood one. Proper
+all-censored posteriors are explicitly a Python extension beyond the native
+minimum-one-event input rule. Censored fits do not invent a Johnson diagnostic.
+
+An independent direct R quadrature reference covers mixed and all-censored
+unknown-shape Weibull posteriors: 21 summaries agree within 1.501 batch-means
+Monte Carlo errors, maximum split R-hat 1.001993, and quadrature/domain changes
+at most 7.20e-11. The Python comparison used 1.017 seconds and 131.77 MiB RSS.
+The shared event validator now accepts Boolean lists longer than 16 observations
+and rejects nested inputs before materialization. Existing public Weibull result
+field ordering is preserved.
+
+The success-criteria adapter accepts expected total events and treatment
+allocation directly, deriving the source's log-hazard-ratio standard error and
+using the existing normal operating-characteristic kernel. Fractional expected
+event counts are accepted; no accrual or censoring generator is inferred.
+
+Root integrated the batch at `1da08a2`. All 48 focused tests passed with warnings
+treated as errors; validation used 2.609 seconds, 203.42 MiB peak RSS and zero
+process swaps. Targeted lint/format and mypy over all five changed statistical
+modules passed. The latter also resolves the worker-invocation discrepancy;
+no unresolved type-check failure remains at this integrated checkpoint.
+
+Cached builds and isolated wheel checks passed: all 607 committed package
+files match both archives, all 1,701 public exports resolve, license notices
+are retained and five relevant example blocks across four guides execute. The
+success-calibration check selected the changed normal/survival example and
+supplied the NumPy import shown earlier in that guide. Package checking used
+11.603 seconds, 118.09 MiB RSS and zero process swaps. No full local suite,
+new CI workflow or dependencies were added.
+
+Catalog counts remain 63 implemented, 67 partial and eight pending. Lognormal
+censoring is being implemented and independently referenced in isolated
+checkouts; it is not included in this published checkpoint. Native priors,
+censored diagnostics and remaining native workflow conventions remain explicit
+gaps. Remote publication and hosted checks are recorded separately in the
+local artifact manifest after an independently verified push.
