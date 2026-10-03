@@ -877,22 +877,19 @@ sample sizes with onsite/offsite heterogeneity, unequal arm variances and repeat
 measurements, explicit allocation rounding and achieved power. Native rounding
 and reports remain pending.
 
-[Bayesian Chi Square TTE Fit](docs/bayesian-chi-square.md) adds the complete-data
-posterior diagnostic, exact exponential-posterior workflow and dependent
-order-statistic bounds. The [fixed-shape Weibull workflow](docs/weibull-bayesian-gof.md)
-adds exact Gamma-prior inference with stable centered rate draws. The
-[lognormal workflow](docs/lognormal-bayesian-gof.md) jointly fits log-location
-and log-variance with an explicit conjugate prior and independent integrated
-diagnostic references. A [joint Weibull fitter](docs/weibull-unknown-shape-gof.md)
-estimates both shape and scale with correlated log-parameter priors and bounded
-posterior sampling. Exponential and both Weibull workflows support
-noninformative right censoring. [Gamma, inverse-Gamma and log-logistic fits](docs/tte-family-bayesian-gof.md)
-add complete-data and right-censored inference with explicit log-parameter priors;
-the Johnson diagnostic is restricted to complete data. The
-[log-odds-rate fitter](docs/log-odds-rate-bayesian-gof.md) adds the seventh
-advertised distribution family using a primary-source correction to the guide's
-survival formula. Native censored diagnostics, prior defaults, rank/trim
-conventions and reporting remain pending.
+[Bayesian Chi Square TTE Fit](docs/bayesian-chi-square.md) covers posterior
+goodness-of-fit workflows for all seven distributions in the BCSTTE guide.
+Exponential and fixed-shape Weibull models have exact Gamma-prior posteriors;
+unknown-shape Weibull, Gamma, inverse-Gamma, log-logistic and log-odds-rate
+models use explicit Gaussian priors on transformed parameters. The complete-data
+[lognormal workflow](docs/lognormal-bayesian-gof.md) uses a proper
+Normal-Inverse-Gamma prior. Its
+[right-censored workflow](docs/lognormal-right-censored-bayesian.md) uses that
+same explicit prior with a Gibbs sampler; censor integration does not leave a
+conjugate posterior. All seven families accept noninformative right censoring.
+The Johnson diagnostic is limited to complete observations, and the dedicated
+right-censored lognormal result has no such diagnostic. Native prior defaults,
+censored diagnostics, rank/trim conventions and reporting remain pending.
 
 [MERIT](docs/merit.md) adds isotonic dose selection, Bayesian interim decisions,
 correlated endpoint simulation and sample-size/boundary optimization for randomized

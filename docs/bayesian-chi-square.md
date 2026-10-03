@@ -18,13 +18,38 @@ Johnson diagnostic is supplied only for complete data.
 A [log-odds-rate workflow](log-odds-rate-bayesian-gof.md) jointly estimates
 shape, scale and the odds-rate parameter under an explicit Gaussian prior on
 their logarithms. All seven distribution families advertised by the guide now
-have posterior-fitting workflows, with the native-prior qualifications below.
+have Python posterior-fitting workflows, with explicit prior choices and
+right-censor likelihoods.
 The sources are the [BCS TTE guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BCSTTE/BCSTTE_UsersGuide.pdf)
 (August 15, 2006) and Johnson's
 [A Bayesian chi-square test for goodness-of-fit](https://arxiv.org/abs/math/0508593),
 *Annals of Statistics* 32:2361–2384 (2004), equations (2)–(3).
 [Provenance](bayesian-chi-square-sources.json) records the retrieved documents.
 Original programs and documents are not redistributed.
+
+## Distribution and fitting coverage
+
+| Distribution | Python fitting API | Prior used by the Python workflow | Observations |
+| --- | --- | --- | --- |
+| Exponential | `exponential_bayesian_gof` | Gamma(shape, rate) on the rate | Complete or right-censored |
+| Weibull | Fixed shape: `weibull_fixed_shape_bayesian_gof`; unknown shape: `weibull_unknown_shape_bayesian_gof` | Fixed: Gamma(shape, rate) on `lambda = scale**(-shape)`; unknown: proper correlated Gaussian on (log shape, log scale) | Complete or right-censored |
+| Lognormal | `lognormal_complete_data_bayesian_gof`; `lognormal_right_censored_bayesian_fit` | Proper Normal-Inverse-Gamma prior; censored-data posterior is sampled by Gibbs and is not conjugate after censor integration | Complete or right-censored |
+| Gamma | `gamma_bayesian_gof` | Proper correlated Gaussian on (log shape, log scale) | Complete or right-censored |
+| Inverse-Gamma | `inverse_gamma_bayesian_gof` | Proper correlated Gaussian on (log shape, log scale) | Complete or right-censored |
+| Log-logistic | `log_logistic_bayesian_gof` | Proper correlated Gaussian on (log shape, log scale) | Complete or right-censored |
+| Generalized log-odds-rate | `log_odds_rate_bayesian_gof` | Proper correlated Gaussian on (log shape, log scale, log c) | Complete or right-censored |
+
+The Weibull distribution offers fixed-shape and unknown-shape workflows.
+Censored likelihoods use the event density for exact events and the survival
+function for right censors, under noninformative censoring; they do not model
+the censoring mechanism. Workflows that return the Johnson diagnostic do so
+only for complete observations; the dedicated right-censored lognormal fitter
+has no diagnostic.
+Explicit proper-prior workflows permit all-censored samples when the posterior
+is proper. This Python capability extends the guide's input rule requiring at
+least one event; it does not claim native prior, fitter, or diagnostic parity.
+All priors in this table are Python API conventions, not recovered BCSTTE
+defaults.
 
 ## Generic posterior calculation
 
@@ -132,8 +157,7 @@ chi-square marginals, search correction, and extreme-tail underflow.
 ## Remaining coverage and source issues
 
 **Catalog status is partial.** Rounded observations, the native censored-data
-diagnostic, censoring support in the lognormal fitter, native fitting/priors
-and fallback priors, native Rychlik rank/trim
+diagnostic, native fitting/priors and fallback priors, native Rychlik rank/trim
 conventions, sorting and native HTML reports remain pending.
 The generic interface can consume verified posterior CDF draws from other models,
 but it does not itself fit those models or impute censored observations.
