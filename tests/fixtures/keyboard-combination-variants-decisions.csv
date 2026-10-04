@@ -1,0 +1,16 @@
+"case","algorithm","movement","eligible_candidates","selected_candidates","candidate_count"
+"escalate_diagonal_competition","key2","escalate","2,1;1,2","2,1",2
+"escalate_diagonal_competition","key3","escalate","2,1;1,2;2,2","2,2",3
+"escalate_diagonal_competition","key4","escalate","2,1;1,2","2,1;1,2",2
+"deescalate_diagonal_competition","key2","deescalate","1,2;2,1;1,1","1,1",3
+"deescalate_diagonal_competition","key3","deescalate","1,2;2,1;1,1","1,1",3
+"deescalate_diagonal_competition","key4","deescalate","1,2;2,1","1,2;2,1",2
+"masked_escalation","key2","escalate","1,2","1,2",1
+"masked_escalation","key3","escalate","1,2;2,2","2,2",2
+"masked_escalation","key4","escalate","1,2","1,2",1
+"boundary_escalation","key2","escalate","2,3","2,3",1
+"boundary_escalation","key3","escalate","2,3","2,3",1
+"boundary_escalation","key4","escalate","2,3","2,3",1
+"uniform_axial_tie","key2","escalate","2,1;1,2","2,1;1,2",2
+"uniform_axial_tie","key3","escalate","2,1;1,2;2,2","2,1;1,2;2,2",3
+"uniform_axial_tie","key4","escalate","2,1;1,2","2,1;1,2",2
