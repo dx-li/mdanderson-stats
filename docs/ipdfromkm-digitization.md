@@ -74,7 +74,7 @@ coordinates alone cannot establish that relationship. No confidence ribbon is
 drawn. The native ±5 RMSE ribbon is a visual tolerance, not a statistical
 confidence interval.
 
-This supplies a usable manual image/calibration/plot workflow without claiming
-native graphical styling, file-format byte identity, automatic tracing, or GUI
-parity. Catalog entry 151 remains partial for remaining application and
-workflow differences.
+This supplies the recovered functional manual image/calibration/plot workflow
+without claiming native graphical styling, file-format byte identity, automatic
+tracing, or GUI parity. Compatibility with the legacy application's remaining
+UI and export behavior has not been verified.
