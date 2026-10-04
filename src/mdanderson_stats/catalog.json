@@ -4191,13 +4191,15 @@
         "Exact joint Dirichlet posterior utility means and variances for binary and categorical efficacy/toxicity, with explicit prior and category thresholds.",
         "Inclusive Beta-marginal admissibility and winner, utility-proportional or equal allocation probabilities over caller-supplied eligibility.",
         "Complete-outcome stage-I/II controller, fixed uniform-Beta stage-I safety, optional 3+3 run-in, B1 exploration, sample-size stopping and final utility-based OBD selection with explicit candidate scope.",
-        "Bounded complete-outcome cohort simulation for joint categorical probabilities, stable native Gumbel binary scenario construction, selection/allocation summaries and Monte Carlo errors."
+        "Bounded complete-outcome cohort simulation for joint categorical probabilities, stable native Gumbel binary scenario construction, selection/allocation summaries and Monte Carlo errors.",
+        "Source-defined Stage-I accelerated titration with an observed-category prefix planner, explicit grade-2/DLT distinction, highest/lower dose-cap handoffs, toxicity-triggered cohort top-up, hard patient-budget truncation and compact simulation path summaries."
       ],
       "validation": [
         "Official U-BOIN V2.4.4.0 application and primary paper sources pinned in docs/uboin-sources.json; no hidden native prior or tie rule assumed.",
         "Independent base-R Dirichlet cross moments and Beta tails cover binary, 3x3 and prior-only 2x3 outcomes.",
         "Independent base-R stage-I boundaries across four targets verify decisions around escalation, de-escalation and elimination cutoffs. Eight Gumbel reference cases and exact two-cohort trial enumeration verify joint cells and complete-trial selection probabilities.",
-        "Pending: accelerated titration, delayed-outcome/immune-response imputation, native simulation and report parity; see docs/uboin.md."
+        "Focused treatment-ledger references validate clean highest/lower caps, first-DLT and second-grade-2 triggers, higher starting doses, truncated top-up and a budget exhausted at a lower cap; cohort-size-one and highest-dose starts preserve ordinary seeded simulation. docs/uboin.md and research/uboin-titration-audit.md.",
+        "Pending: delayed-outcome/immune-response imputation, native categorical simulation and report parity; see docs/uboin.md."
       ]
     },
     {

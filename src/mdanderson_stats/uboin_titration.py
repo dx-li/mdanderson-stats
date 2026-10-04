@@ -95,8 +95,10 @@ def uboin_stage1_titration_plan(
     size = _integer(cohort_size, "cohort_size", 1, 100)
     patient_limit = _integer(max_patients, "max_patients", 1, 1000)
     dlt = _integer(dlt_level, "dlt_level", 1, 2)
-    cap = maximum if titration_cap is None else _integer(
-        titration_cap, "titration_cap", start, maximum
+    cap = (
+        maximum
+        if titration_cap is None
+        else _integer(titration_cap, "titration_cap", start, maximum)
     )
     if dlt >= category_count:
         raise ValueError("dlt_level must be a valid split index for toxicity categories")
@@ -110,9 +112,7 @@ def uboin_stage1_titration_plan(
 
     if grade2_toxicity_level is None:
         raise ValueError("accelerated titration requires an explicit grade-2 toxicity category")
-    grade2_level = _integer(
-        grade2_toxicity_level, "grade2_toxicity_level", 2, category_count
-    )
+    grade2_level = _integer(grade2_toxicity_level, "grade2_toxicity_level", 2, category_count)
     if grade2_level - 1 >= dlt:
         raise ValueError("grade-2 toxicity category must be below the DLT category split")
 
@@ -142,8 +142,10 @@ def uboin_stage1_titration_plan(
             return plan
         if dose == cap:
             if cap == maximum:
-                reason, resume, top_up = "highest_dose_cap", dose, min(
-                    size - 1, patient_limit - len(path)
+                reason, resume, top_up = (
+                    "highest_dose_cap",
+                    dose,
+                    min(size - 1, patient_limit - len(path)),
                 )
             else:
                 reason, resume, top_up = "lower_cap_without_trigger", dose + 1, 0
@@ -165,6 +167,12 @@ def uboin_stage1_titration_plan(
     if next_dose > cap or len(path) >= patient_limit:
         raise ValueError("titration plan could not determine an exit")
     return UBOINTitrationPlan(
-        tuple(path), grade2_count, "continue", path[-1] if path else None,
-        next_dose, 0, False, next_dose
+        tuple(path),
+        grade2_count,
+        "continue",
+        path[-1] if path else None,
+        next_dose,
+        0,
+        False,
+        next_dose,
     )

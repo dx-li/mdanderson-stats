@@ -1597,6 +1597,7 @@ from .uaroet_simulation import (
 from .uboin import UBOINPosterior, uboin_allocation, uboin_posterior
 from .uboin_conduct import UBOINDecision, UBOINDesign, UBOINSelection
 from .uboin_simulation import UBOINSimulation, simulate_uboin, uboin_gumbel_probabilities
+from .uboin_titration import UBOINTitrationPlan, uboin_stage1_titration_plan
 from .weibull_bayesian_gof import WeibullBayesianGOF, weibull_fixed_shape_bayesian_gof
 from .weibull_unknown_shape_gof import (
     WeibullUnknownShapeGOF,
@@ -1888,6 +1889,8 @@ __all__ = [
     "bacis_theta_posterior",
     "sample_bacis_theta",
     "UBOINSimulation",
+    "UBOINTitrationPlan",
+    "uboin_stage1_titration_plan",
     "simulate_uboin",
     "uboin_gumbel_probabilities",
     "UBOINDecision",

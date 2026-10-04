@@ -371,3 +371,16 @@ The cached app supports the already implemented uniform and informative
 three-piece weights. An automatic adaptive timing fitter needs additional
 source evidence; a supplied-draw CDF helper alone would not close this workflow
 gap. No native adaptive-weight implementation is claimed.
+
+## U-BOIN accelerated titration
+
+The cached official titration guide now supports the complete-outcome Stage-I
+singleton prelude in `simulate_uboin` and an observed-path planning API. The
+implementation distinguishes a clean highest-dose cap, which completes the
+current cohort, from a clean lower cap, which starts a full cohort at the next
+dose. DLT and second-grade-2 triggers complete the current cohort; the hard
+patient budget truncates enrollment. Explicit grade-2 category mapping avoids
+inferring moderate toxicity from a binary DLT flag. Focused source-ledger checks
+cover these transitions, and no-effect settings preserve the ordinary random
+path. Delayed-outcome imputation and native reports remain open; entry 142 stays
+partial. See [the audit](uboin-titration-audit.md).

@@ -153,9 +153,7 @@ def simulate_uboin(
                     "grade2_toxicity_level must identify a category below the DLT split"
                 )
         elif use_titration:
-            raise ValueError(
-                "accelerated_titration requires an explicit grade2_toxicity_level"
-            )
+            raise ValueError("accelerated_titration requires an explicit grade2_toxicity_level")
         initial_plan = uboin_stage1_titration_plan(
             [],
             max_dose=d,
@@ -203,9 +201,7 @@ def simulate_uboin(
                 dose = plan.next_titration_dose
                 draw = rng.multinomial(1, probabilities[dose - 1].reshape(-1))
                 counts[dose - 1] += draw.reshape(e, t)
-                categories.append(
-                    int(np.flatnonzero(draw.reshape(e, t).sum(axis=0))[0]) + 1
-                )
+                categories.append(int(np.flatnonzero(draw.reshape(e, t).sum(axis=0))[0]) + 1)
                 plan = uboin_stage1_titration_plan(
                     categories,
                     max_dose=d,

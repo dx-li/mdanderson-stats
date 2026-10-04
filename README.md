@@ -1395,7 +1395,10 @@ posterior moments, toxicity/efficacy admissibility and winner, proportional or
 equal allocation probabilities. Two-stage conduct includes safety monitoring,
 3+3 run-in, exploration and final OBD selection. Bounded cohort simulation
 accepts categorical scenarios or binary Gumbel probabilities. Priors and
-candidate scope are explicit; titration and delayed-outcome imputation remain open.
+candidate scope are explicit. Optional Stage-I accelerated titration adds
+single-patient escalation, first-DLT/second-grade-2 triggers and the source's
+dose-cap and cohort top-up rules, with an observed-path planner. Grade-2 outcomes
+are explicitly distinguished from DLT. Delayed-outcome imputation remains open.
 
 [BaCIS subgroup borrowing](docs/bacis.md) adds deterministic low/high response
 classification and within-cluster hierarchical inference, including native
