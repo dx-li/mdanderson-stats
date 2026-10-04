@@ -150,10 +150,30 @@ guide says two-outcome mode averages the toxicity and efficacy transformed dose
 vectors. Two separately fitted scalar models therefore do not reproduce the
 documented bivariate program.
 
-The joint toxicity/efficacy likelihood and association prior, two-stage trial
-conduct, futility monitoring, post-trial four-parameter logistic fit, native
-file formats and full simulation workflow remain pending. No native random-seed
-or numerical output parity is claimed.
+The guide defines high-level two-stage control: stage 1 seeks the MTD and may
+end after the configured minimum enrollment when either the trial maximum is
+reached or the current MTD enrollment limit is met; stage 2 seeks the MED and
+has corresponding maximum-enrollment and MED-enrollment stopping rules. If the
+MED is above the MTD, allocation stays at the MTD and uses its configured
+enrollment limit. The exact native posterior estimate used to identify MTD and
+MED, and the full per-patient transition controller, are not specified here.
+
+The guide also defines the futility controls and says futility stopping is
+independent of sample-size stopping. It explicitly specifies the zero-gap rule:
+after both extreme doses reach the required enrollment, stop unless confidence
+that maximum-dose effect exceeds minimum-dose effect is greater than 90%. The
+configuration permits a positive `min-diff`, but the guide does not say whether
+the same 90% confidence cutoff applies to that positive-gap comparison. The
+futility rule is therefore not exposed as a general native decision function.
+
+The post-trial four-parameter logistic is described only as a summary fit; it
+does not affect trial allocation or stopping. It is fit to one outcome, using
+toxicity when both outcomes are modeled, with a user-selected confidence level
+(default 95%). The guide and cached configuration do not specify the four-
+parameter curve equation, likelihood/objective, optimizer, or interval method,
+so the estimator remains unsupported. The joint toxicity/efficacy likelihood,
+association prior and mapping of the native `Psi` field are also unresolved.
+No native random-seed or numerical-output parity is claimed.
 
 Independent [base-R reference calculations](../tools/reference_bcrm.R) integrate
 the same scalar posterior for the official Goodman skeleton, bounded
