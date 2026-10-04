@@ -1,0 +1,4 @@
+"case","direction","n_arms","se_1","se_2","design_mean_1","design_mean_2","design_sd_1","design_sd_2","analysis_mean_1","analysis_mean_2","analysis_sd_1","analysis_sd_2","null_mean_1","null_mean_2","margin","cutoff_min","cutoff_max","target_pid"
+"normal_greater","greater",1,0.45,NA,0.1,NA,0.38,NA,-0.05,NA,0.72,NA,0.15,NA,0.15,0.6,0.999,0.12
+"normal_unequal_two_arm","greater",2,0.4,0.6,0.45,0.1,0.38,0.65,0.08,0.18,0.31,1.1,0.2,0,0.2,0.6,0.999,0.1
+"normal_reflected_less","less",2,0.4,0.6,-0.45,-0.1,0.38,0.65,-0.08,-0.18,0.31,1.1,-0.2,0,-0.2,0.6,0.999,0.1

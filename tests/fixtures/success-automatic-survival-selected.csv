@@ -1,0 +1,3 @@
+"case","target_pid","cutoff_min","cutoff_max","cutoff_tolerance","lower_infeasible","upper_feasible","lower_pid","upper_pid","success_probability","true_positive","false_positive","correlation","evaluations"
+"survival_base",0.1,0.6,0.999,1e-08,0.6,0.6,0.083679263697171,0.083679263697171,0.58629975000497,0.537238618618718,0.0490611313862513,0.864163774554388,1
+"survival_rescaled",0.1,0.6,0.999,1e-08,0.6,0.6,0.083679263697171,0.083679263697171,0.58629975000497,0.537238618618718,0.0490611313862513,0.864163774554388,1

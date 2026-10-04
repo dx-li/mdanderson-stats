@@ -1,0 +1,3 @@
+"case","events","treatment_allocation","design_mean","design_sd","analysis_mean","analysis_sd","margin","direction","cutoff_min","cutoff_max","target_pid"
+"survival_base",120,0.4,-0.18,0.32,-0.04,0.75,-0.05,"less",0.6,0.999,0.1
+"survival_rescaled",480,0.4,-0.09,0.16,-0.02,0.375,-0.025,"less",0.6,0.999,0.1
