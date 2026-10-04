@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `128fa72` adds generalized categorical
-BOP2-DC workflows and KeyboardComb key2/key3/key4 movement variants alongside
-the bCRM allocation correction and U-BOIN accelerated titration. The final
+Latest verified package checkpoint: `4325e6a` adds bounded adaptive precision
+for the 2017 GAO posterior fitter alongside generalized categorical BOP2-DC,
+KeyboardComb movement variants, bCRM allocation and U-BOIN titration. The final
 section records validation; earlier sections preserve checkpoint history.
 Published `4e69098` has passed all hosted quality and
 Python 3.12/3.13/3.14 checks in
@@ -2762,3 +2762,33 @@ The source-catalog counts remain unchanged. The stable branches receive these
 validated components; ongoing GAO adaptive-precision implementation stays in
 its isolated development checkout. Remote SHAs and artifact hashes are recorded
 after independent publication verification.
+
+
+## 2026-10-04: GAO adaptive corner precision
+
+The explicit-prior 2017 GAO sampler now supports the U2OET guide's per-chain,
+four-corner utility batch-means MCSE/SD target through
+`fit_u2oet_gao_adaptive_precision`. It runs warmup once, resumes full chain
+coordinate vectors, reports target attainment and separate split-Rhat, and
+bounds retained/live arrays. Aggregate preflight checks minimum work; each
+chunk receives remaining cumulative evaluation/work budgets and actual slice
+work is counted. This accepts useful free-prior settings without treating the
+1000-step slice rejection ceiling as expected work. Native prior mapping,
+calibration and adaptive GAO calendar integration remain open.
+
+Five focused tests pass with warnings as errors, including manual-chunk
+continuation, reconstructed diagnostics, zero-variance precision, pre-RNG
+budget rejection, a four-chain 500-warmup/500-draw fit, and explicit runtime
+exhaustion. Root validation used 2.323 seconds, 147.03 MiB process peak RSS and
+zero reported swaps. Independent code review found no remaining material work
+or live-cell accounting gap. Root Ruff checks and targeted mypy pass.
+
+The cached wheel and source build at `4325e6a` pass isolated verification:
+all 614 committed package files match both archives, all 1,719 exports resolve,
+license notices are retained, and seven examples across five changed guides
+execute. This used 11.061 seconds, 131.98 MiB process peak RSS and zero swaps.
+No full local suite or additional CI workflow was run. At inspection, the
+previous `98b2b51` hosted run was queued; this is not a claim that the latest
+revision has passed all hosted checks. The source-catalog status counts remain
+unchanged. Remote SHAs and artifact hashes are recorded locally after the
+independent publication check.
