@@ -96,3 +96,25 @@ than wrapping that public paper-policy decision function. The source's
 Metropolis settings do not establish random-stream equivalence for a Python
 sampler. No new logistic model or numerical validation is claimed by this
 source-only handoff.
+
+## Global fitting algorithm: variance-dependent prior updates
+
+A follow-up inspection of the cached `arm` 1.6-06.01 source identifies another
+material contract for the global route. Its `bayesglm` coefficient fit uses
+iteratively reweighted least squares with appended prior rows. The update
+recalculates prior standard deviations using squared centered coefficients,
+the current coefficient sampling variance and the prior scale/df
+(`bayesglm.R`, `.bayesglm.fit.loop.updateState`, lines 525–572). For the
+intercept it uses the patient-expanded column means to center the coefficient
+and transform its sampling variance. For binomial outcomes the dispersion is
+one.
+
+Therefore an ordinary optimizer of the Cauchy log-posterior is not by itself
+a reproduction of this iterative coefficient-estimation procedure: the
+variance contribution to the prior update is material. “Coefficient-mode”
+in earlier coverage notes identifies use of fitted coefficients instead of
+posterior-mean efficacy, and must not be read as proof of an exact MAP
+algorithm. Implementing the global author route requires this recovered
+fitting contract or an explicitly different numerical method with a verified
+comparison. This was a source inspection, not a numerical validation or a
+new implementation.
