@@ -185,6 +185,8 @@ these are interface/search differences rather than missing power calculations.
 Native session/report workflows also remain open. No native integer allocation
 rule exists for proportional K-group totals. See the
 [coverage boundary audit](../research/stplan-coverage-boundary-audit.md).
+For reusable named forward and bounded-inverse cases with portable JSON and
+HTML output, see the [saved community study workflow](stplan-study.md).
 The legacy matched-pairs method adds bounded effect, sample-size and
 significance planning with fixed pilot counts;
 its no-pilot initial-size estimates have a separate, explicit interface.
