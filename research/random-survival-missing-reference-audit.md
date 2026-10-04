@@ -97,6 +97,14 @@ copy source code. It makes no broader licensing claim about RF-SRC.
   though a final imputed response time is snapped. The Python reference should
   not collapse these contracts into one universal completed response array.
 
+- A bootstrap replicate with no observed donor for a response is rejected at
+  the root: `getNodeSign` (`2180–2250`) sets the bootstrap result false when a
+  response's missingness signature is entirely absent. `growTreeRecursive`
+  (`35470–35476`) then suppresses terminal creation for that replicate. This
+  is a skipped tree, not a terminal that falls back to a global response donor.
+  Consequently, Python `requested_trees` and effective `n_trees` can differ
+  under `na_action="impute"`; reported curves average over retained trees.
+
 ## Reference scope and use
 
 `tools/reference_random_survival_missing.R` generates small CSV ledgers under
