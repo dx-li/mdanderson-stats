@@ -153,6 +153,10 @@ def test_uboin_titration_replay_contract() -> None:
     assert prefix.next_titration_dose == 2
     with pytest.raises(ValueError, match="after the titration stop"):
         uboin_stage1_titration_plan([3, 1], **common)
+    with pytest.raises(ValueError, match="toxicity_categories.*real vector"):
+        uboin_stage1_titration_plan(np.array([1 + 2j]), **common)
+    with pytest.raises(ValueError, match="max_dose.*real scalar"):
+        uboin_stage1_titration_plan([1], **{**common, "max_dose": [4]})
 
 
 def _three_category_design(*, max_patients: int, s1: int, s2: int) -> UBOINDesign:

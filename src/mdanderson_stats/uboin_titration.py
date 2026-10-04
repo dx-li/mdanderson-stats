@@ -2,6 +2,7 @@
 
 from collections.abc import Sequence
 from dataclasses import dataclass
+from typing import cast
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -29,7 +30,12 @@ class UBOINTitrationPlan:
 
 
 def _integer(value: int, name: str, low: int, high: int) -> int:
-    candidate = scalar(value, name)
+    if isinstance(value, np.ndarray):
+        if value.ndim != 0 or np.iscomplexobj(value):
+            raise ValueError(f"{name} must be a real scalar")
+    elif not np.isscalar(value) or np.iscomplexobj(value):
+        raise ValueError(f"{name} must be a real scalar")
+    candidate = scalar(cast(float, value), name)
     if candidate != np.floor(candidate) or not low <= candidate <= high:
         raise ValueError(f"{name} must be an integer in [{low}, {high}]")
     return int(candidate)
@@ -41,6 +47,8 @@ def _category_vector(value: ArrayLike, maximum_length: int) -> NDArray[np.float6
             raise ValueError("toxicity_categories must be a one-dimensional vector")
         if value.size > maximum_length:
             raise ValueError("toxicity_categories exceed the titration path limit")
+        if np.iscomplexobj(value):
+            raise ValueError("toxicity_categories must be a one-dimensional real vector")
     else:
         if not isinstance(value, Sequence) or isinstance(value, (str, bytes)):
             raise ValueError("toxicity_categories must be a one-dimensional sequence")

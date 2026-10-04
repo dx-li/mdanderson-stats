@@ -20,9 +20,9 @@ starting dose at the highest level make the option have no effect.
 Source record:
 
 - Official guide: [Titration.pdf](https://biostatistics.mdanderson.org/shinyapps/UBOIN/Titration.pdf)
-- Cached source: `/Users/dxli2/math stats/mdanderson-stats/research/raw/UBOIN/Titration.pdf`
+- Cached source: `research/raw/UBOIN/Titration.pdf`
 - Cached PDF SHA-256: `8063427ee0f3feaf3e0eb69bbc6ac93ae37c9fa40096df72faa3b9e5381611eb`
-- Text extraction: `/Users/dxli2/math stats/mdanderson-stats/research/raw/UBOIN/Titration.txt`
+- Text extraction: `research/raw/UBOIN/Titration.txt`
 - Application version: U-BOIN 2.4.4.0, PID 1014; source inventory is in
   `docs/uboin-sources.json`.
 

@@ -148,18 +148,33 @@ Titration has no effect when `cohort_size=1` or the starting dose is already
 the highest dose; those cases preserve the ordinary simulation path.
 
 ```python
-result = simulate_uboin(
-    trial,
+import numpy as np
+from mdanderson_stats import UBOINDesign, simulate_uboin
+
+categorical_trial = UBOINDesign(
+    prior=[[1 / 6] * 3, [1 / 6] * 3],
+    utilities=[[0, 10, 20], [30, 60, 100]],
+    candidate_scope="tried",
+    dlt_level=2,
+    s1=6,
+    s2=12,
+    max_patients=20,
+)
+joint_probabilities = np.zeros((4, 2, 3))
+joint_probabilities[:, 1, 0] = 1.0  # response, no toxicity
+
+titration = simulate_uboin(
+    categorical_trial,
     joint_probabilities,
     cohort_size=3,
     accelerated_titration=True,
-    titration_cap=5,
+    titration_cap=2,
     grade2_toxicity_level=2,
-    trials=1000,
+    trials=10,
     seed=142,
 )
-print(result.titration_end_reason)
-print(result.titration_patients, result.titration_end_dose)
+print(titration.titration_end_reason)
+print(titration.titration_patients, titration.titration_end_dose)
 ```
 
 The simulator reports the number of singleton titration patients, the
