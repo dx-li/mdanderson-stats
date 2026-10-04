@@ -72,7 +72,7 @@ def bcrm_extreme_allocation_probability(
         raise ValueError("correction must be a scalar")
     elif np.iscomplexobj(correction):
         raise ValueError("correction must be real-valued")
-    gamma = scalar(correction, "correction")
+    gamma = scalar(float(np.asarray(correction, dtype=np.float64)), "correction")
     if np.any((target <= 0) | (target >= 1)):
         raise ValueError("target_fraction must lie strictly inside (0, 1)")
     if np.any((allocated < 0) | (allocated > 1)):

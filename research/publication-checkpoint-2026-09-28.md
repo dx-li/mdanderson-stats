@@ -2707,3 +2707,12 @@ quality and Python 3.12/3.13/3.14 checks.
 Catalog entries 15 and 142 remain partial for their explicitly documented
 remaining workflows. The remote branch SHAs, artifact hashes and subsequent
 hosted status are recorded separately after publication.
+
+The first hosted quality check for that publication found one bCRM typing
+mismatch after NumPy scalar validation widened the inferred input type. The
+wrapper now explicitly converts the already validated scalar to a Python float
+before passing it to the shared validator. Targeted mypy with imported types
+retained and three focused allocation tests pass (1.560 seconds, 144.50 MiB
+peak RSS, zero swaps). Hosted tests were skipped after the type-check failure;
+they were not reported as passed. The previous `4e69098` remains the most
+recent completely passed hosted checkpoint until a later run completes.
