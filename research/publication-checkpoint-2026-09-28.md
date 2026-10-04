@@ -3063,3 +3063,38 @@ local suite, installation or new CI workflow was added. The previous published
 in run `37178837952`. Entry 166 and full catalog coverage remain unfinished;
 the next missing-outcome and repeated-imputation source contracts are recorded.
 The local manifest records independently verified remote SHAs and artifacts.
+
+## 2026-10-04: Missing-data OOB concordance and global Brier scores
+
+Missing-outcome survival forests now compute OOB concordance from eligible
+tree-terminal response pools. The scoring response averages already-snapped
+per-tree times without re-snapping that mean, uses modal statuses and draws
+from original observed outcomes only when an OOB pool is empty. Immutable
+completed responses, missingness and fallback flags make the calculation
+inspectable. Stable streaming means handle finite times near `1e308`; retained
+leaf scalars and routes avoid a dense tree-by-row response cube.
+
+The source's global-censor Brier/CRPS option now accepts predictor-imputed
+forests with complete retained outcomes. Full-original fingerprints and exact
+fit/OOB row maps protect alignment, including rows removed because all inputs
+were missing. Imputed retained outcomes, the imputed censoring-forest route,
+imputed VIMP and repeated imputation remain explicitly unfinished.
+
+Three Luna agents supplied the engine, Brier adapter and independent base-R
+references. Root review corrected the time-summary interpretation, overflow
+handling and random-draw ordering, and strengthened the donor-pool reference
+cases so wrong in-bag inclusion or reversed draw order changes the result.
+All 75 affected checks pass with warnings as errors in 3.730 seconds, with
+144.31 MiB peak RSS and zero swaps. Integrated scoped Ruff, formatting and
+mypy checks pass. No native whole-forest random-stream parity is claimed.
+
+Cached builds at `ca029ce` pass isolated verification: all 622 committed package
+files match both archives, all 1,734 public exports resolve, notices are
+retained and both missing-data guide examples run from the wheel. Verification
+took 19.683 seconds, peaked at 105.42 MiB RSS and reported zero swaps. Jobs
+remained serial with single-threaded numerical libraries; no full local suite,
+installation or new CI workflow was added. The preceding `aae0750` hosted run
+was still in progress when checked; `8e9642a` remains the latest independently
+verified all-green hosted checkpoint. Entry 166 and full catalog coverage
+remain active work. The local manifest records verified publication SHAs and
+artifact hashes.
