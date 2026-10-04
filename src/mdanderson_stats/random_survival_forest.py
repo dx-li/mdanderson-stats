@@ -28,6 +28,7 @@ _MAX_PREDICTION_WORK = 100_000_000
 _MAX_OOB_CELLS = 2_000_000
 _MAX_OOB_WORK = 100_000_000
 _MAX_IMPUTATION_CELLS = 2_000_000
+_MAX_IMPUTATION_WORK = 100_000_000
 _OOB_TIE_EPSILON = 1e-9
 _SPLIT_EPSILON = 1e-9
 _MAX_FACTOR_SPLIT_LEVELS = 2_000_000
@@ -57,6 +58,7 @@ class _PackedTree:
     training_leaf_node: np.ndarray | None = None
     terminal_time: FloatArray | None = None
     terminal_event: FloatArray | None = None
+    terminal_predictor: FloatArray | None = None
 
 
 @dataclass(frozen=True)
@@ -124,6 +126,17 @@ class RandomSurvivalForestFit:
     training_row_indices: np.ndarray | None = None
     original_training_fingerprint: bytes | None = None
     requested_trees: int | None = None
+    requested_imputation_passes: int = 1
+    imputation_passes: int = 1
+    total_sampled_rows: int | None = None
+    total_split_work: int | None = None
+    total_node_count: int | None = None
+    total_leaf_event_records: int | None = None
+    total_imputation_work: int = 0
+    completed_time: FloatArray | None = None
+    completed_event: FloatArray | None = None
+    completed_covariates: FloatArray | None = None
+    imputation_fallback_used: np.ndarray | None = None
 
 
 @dataclass(frozen=True)
@@ -885,6 +898,7 @@ def _pack_tree(
     training_leaf_node: np.ndarray | None = None,
     terminal_time: list[float] | None = None,
     terminal_event: list[float] | None = None,
+    terminal_predictor: list[list[float]] | None = None,
 ) -> _PackedTree:
     return _PackedTree(
         _freeze_index(np.asarray(feature), np.dtype(np.int32)),
@@ -911,6 +925,9 @@ def _pack_tree(
         else _freeze_index(training_leaf_node, np.dtype(np.int32)),
         None if terminal_time is None else _freeze(np.asarray(terminal_time, dtype=np.float64)),
         None if terminal_event is None else _freeze(np.asarray(terminal_event, dtype=np.float64)),
+        None
+        if terminal_predictor is None
+        else _freeze(np.asarray(terminal_predictor, dtype=np.float64)),
     )
 
 
@@ -937,6 +954,11 @@ def _grow_tree(
     original_missing_event: np.ndarray | None = None,
     master_times: FloatArray | None = None,
     max_imputation_cells: int = _MAX_DESIGN_CELLS,
+    update_missing_values: bool = True,
+    missing_aware_splits: bool = True,
+    retain_terminal_summaries: bool = True,
+    retain_terminal_predictors: bool = False,
+    prediction_donor_mask: np.ndarray | None = None,
 ) -> _PackedTree:
     feature = [-1]
     threshold = [np.nan]
@@ -967,23 +989,31 @@ def _grow_tree(
     else:
         missing_predictor_mask = None
         has_original_missing = False
+    feature_count = x.shape[1]
     imputation_donors: list[tuple[FloatArray, ...]] | None = (
         [tuple(np.empty(0, dtype=np.float64) for _ in range(x.shape[1]))]
         if imputation_mode
         else None
     )
     if imputation_mode:
-        fixed_cells = int(x.size + 6 * x.shape[0])
+        fixed_cells = int(
+            x.size + 6 * x.shape[0] + (feature_count if retain_terminal_predictors else 0)
+        )
         if budget.imputation_cells + fixed_cells > max_imputation_cells:
             raise ValueError("forest exceeds max_imputation_cells budget")
         budget.imputation_cells += fixed_cells
     training_leaf_node = np.full(x.shape[0], -1, dtype=np.int32) if imputation_mode else None
-    terminal_time = [float("nan")] if imputation_mode else None
-    terminal_event = [float("nan")] if imputation_mode else None
+    terminal_time = [float("nan")] if imputation_mode and retain_terminal_summaries else None
+    terminal_event = [float("nan")] if imputation_mode and retain_terminal_summaries else None
+    terminal_predictor = (
+        [[float("nan")] * x.shape[1]] if imputation_mode and retain_terminal_predictors else None
+    )
+    prediction_missing_mask = (
+        missing_predictor_mask if prediction_donor_mask is None else prediction_donor_mask
+    )
     budget.nodes += 1
     if budget.nodes > max_nodes:
         raise ValueError("forest exceeds max_nodes budget")
-    feature_count = x.shape[1]
     initial_features = np.ones(feature_count, dtype=bool)
     if imputation_mode:
         assert original_missing_x is not None
@@ -1007,14 +1037,16 @@ def _grow_tree(
                 raise ValueError("forest exceeds max_split_work budget")
             for column in range(feature_count):
                 assert missing_predictor_mask is not None
-                donor_rows = rows[~missing_predictor_mask[rows, column]]
-                required_cells = int(2 * donor_rows.size + 1)
+                assert prediction_missing_mask is not None
+                prediction_donor_rows = rows[~prediction_missing_mask[rows, column]]
+                required_cells = int(2 * prediction_donor_rows.size + 1)
                 if budget.imputation_cells + required_cells > max_imputation_cells:
                     raise ValueError("forest exceeds max_imputation_cells budget")
-                donor_values = x[donor_rows, column].copy()
+                donor_values = x[prediction_donor_rows, column].copy()
                 budget.imputation_cells += required_cells
                 node_donors.append(donor_values)
-                if np.any(missing_predictor_mask[all_rows, column]):
+                if update_missing_values and np.any(missing_predictor_mask[all_rows, column]):
+                    donor_rows = rows[~missing_predictor_mask[rows, column]]
                     filled, _ = _impute_node_values(
                         x[:, column],
                         missing_predictor_mask[:, column],
@@ -1024,15 +1056,16 @@ def _grow_tree(
                     )
                     missing_positions = np.flatnonzero(missing_predictor_mask[all_rows, column])
                     x[all_rows[missing_positions], column] = filled[missing_positions]
-            for values, mask, kind in (
-                (time, original_missing_time, "time"),
-                (event, original_missing_event, "categorical"),
-            ):
-                donor_rows = rows[~mask[rows]]
-                if np.any(mask[all_rows]):
-                    filled, _ = _impute_node_values(values, mask, donor_rows, all_rows, rng=rng)
-                    missing_positions = np.flatnonzero(mask[all_rows])
-                    values[all_rows[missing_positions]] = filled[missing_positions]
+            if update_missing_values:
+                for values, mask in (
+                    (time, original_missing_time),
+                    (event, original_missing_event),
+                ):
+                    donor_rows = rows[~mask[rows]]
+                    if np.any(mask[all_rows]):
+                        filled, _ = _impute_node_values(values, mask, donor_rows, all_rows, rng=rng)
+                        missing_positions = np.flatnonzero(mask[all_rows])
+                        values[all_rows[missing_positions]] = filled[missing_positions]
             assert imputation_donors is not None
             imputation_donors[node] = tuple(node_donors)
         budget.max_depth = max(budget.max_depth, depth)
@@ -1044,7 +1077,7 @@ def _grow_tree(
         best_score = -np.inf
         next_permissible = permissible.copy()
         stop_time, stop_event = node_time, node_event
-        if imputation_mode:
+        if imputation_mode and missing_aware_splits:
             assert original_missing_time is not None
             assert original_missing_event is not None
             complete_outcomes = ~(original_missing_time[rows] | original_missing_event[rows])
@@ -1072,7 +1105,7 @@ def _grow_tree(
                         column = int(remaining[selected_index])
                         remaining = np.delete(remaining, selected_index)
                         score_rows = rows
-                        if imputation_mode:
+                        if imputation_mode and missing_aware_splits:
                             assert original_missing_time is not None
                             assert original_missing_event is not None
                             assert missing_predictor_mask is not None
@@ -1130,7 +1163,7 @@ def _grow_tree(
                         )
                     for column in selected:
                         score_rows = rows
-                        if imputation_mode:
+                        if imputation_mode and missing_aware_splits:
                             assert original_missing_time is not None
                             assert original_missing_event is not None
                             assert missing_predictor_mask is not None
@@ -1230,39 +1263,69 @@ def _grow_tree(
                 assert original_missing_time is not None
                 assert original_missing_event is not None
                 assert master_times is not None
-                assert terminal_time is not None and terminal_event is not None
-                time_fill = (
-                    _terminal_impute_value(
-                        time,
-                        original_missing_time,
-                        rows,
-                        rows[original_missing_time[rows]],
-                        kind="time",
-                        master_times=master_times,
-                        rng=rng,
+                if retain_terminal_summaries:
+                    assert terminal_time is not None and terminal_event is not None
+                    time_fill = (
+                        _terminal_impute_value(
+                            time,
+                            original_missing_time,
+                            rows,
+                            rows[original_missing_time[rows]],
+                            kind="time",
+                            master_times=master_times,
+                            rng=rng,
+                        )
+                        if np.any(original_missing_time[all_rows])
+                        else None
                     )
-                    if np.any(original_missing_time[all_rows])
-                    else None
-                )
-                event_fill = (
-                    _terminal_impute_value(
-                        event,
-                        original_missing_event,
-                        rows,
-                        rows[original_missing_event[rows]],
-                        kind="categorical",
-                        master_times=master_times,
-                        rng=rng,
+                    event_fill = (
+                        _terminal_impute_value(
+                            event,
+                            original_missing_event,
+                            rows,
+                            rows[original_missing_event[rows]],
+                            kind="categorical",
+                            master_times=master_times,
+                            rng=rng,
+                        )
+                        if np.any(original_missing_event[all_rows])
+                        else None
                     )
-                    if np.any(original_missing_event[all_rows])
-                    else None
-                )
-                if time_fill is not None:
-                    terminal_time[node] = time_fill
-                    time[all_rows[original_missing_time[all_rows]]] = time_fill
-                if event_fill is not None:
-                    terminal_event[node] = event_fill
-                    event[all_rows[original_missing_event[all_rows]]] = event_fill
+                    if time_fill is not None:
+                        terminal_time[node] = time_fill
+                        if update_missing_values:
+                            time[all_rows[original_missing_time[all_rows]]] = time_fill
+                    if event_fill is not None:
+                        terminal_event[node] = event_fill
+                        if update_missing_values:
+                            event[all_rows[original_missing_event[all_rows]]] = event_fill
+                if terminal_predictor is not None:
+                    assert original_missing_x is not None
+                    assert imputation_donors is not None
+                    for column in range(feature_count):
+                        if not np.any(original_missing_x[all_rows, column]):
+                            continue
+                        # RF-SRC suppresses terminal LMI summaries when the
+                        # bootstrap root had no observed predictor donor.
+                        if imputation_donors[0][column].size == 0:
+                            continue
+                        donor_rows = rows[~original_missing_x[rows, column]]
+                        if donor_rows.size == 0:
+                            donor_rows = rows[original_missing_x[rows, column]]
+                        if donor_rows.size == 0:
+                            continue
+                        values = x[donor_rows, column]
+                        if column in categorical_columns:
+                            levels, counts = np.unique(values, return_counts=True)
+                            modes = levels[counts == counts.max()]
+                            value = float(
+                                modes[0]
+                                if modes.size == 1
+                                else modes[int(rng.integers(modes.size))]
+                            )
+                        else:
+                            value = float(_stable_column_mean(values.reshape(-1, 1))[0])
+                        terminal_predictor[node][column] = value
                 assert training_leaf_node is not None
                 training_leaf_node[all_rows] = node
                 node_time = time[rows]
@@ -1327,15 +1390,22 @@ def _grow_tree(
             if represented_count is not None:
                 represented_count.append(int(left_rows.size) if _ == 0 else int(right_rows.size))
             if imputation_donors is not None:
-                if budget.imputation_cells + feature_count + 2 > max_imputation_cells:
+                terminal_summary_cells = feature_count if terminal_predictor is not None else 0
+                if (
+                    budget.imputation_cells + feature_count + 2 + terminal_summary_cells
+                    > max_imputation_cells
+                ):
                     raise ValueError("forest exceeds max_imputation_cells budget")
-                budget.imputation_cells += feature_count + 2
+                budget.imputation_cells += feature_count + 2 + terminal_summary_cells
                 imputation_donors.append(
                     tuple(np.empty(0, dtype=np.float64) for _ in range(feature_count))
                 )
-                assert terminal_time is not None and terminal_event is not None
-                terminal_time.append(float("nan"))
-                terminal_event.append(float("nan"))
+                if terminal_time is not None:
+                    terminal_time.append(float("nan"))
+                if terminal_event is not None:
+                    terminal_event.append(float("nan"))
+                if terminal_predictor is not None:
+                    terminal_predictor.append([float("nan")] * feature_count)
         # Native trees process the left branch first; preserve that random
         # draw order by pushing right before left on this LIFO work list.
         stack.append((right_index, right_rows, right_all_rows, next_permissible, depth + 1))
@@ -1360,6 +1430,7 @@ def _grow_tree(
         training_leaf_node,
         terminal_time,
         terminal_event,
+        terminal_predictor,
     )
 
 
@@ -1701,6 +1772,8 @@ def fit_random_survival_forest(
     max_oob_work: int = _MAX_OOB_WORK,
     na_action: Literal["raise", "omit", "impute"] = "raise",
     max_imputation_cells: int = _MAX_IMPUTATION_CELLS,
+    nimpute: int = 1,
+    max_imputation_work: int = _MAX_IMPUTATION_WORK,
 ) -> RandomSurvivalForestFit:
     """Fit right-censored survival trees with numeric/nominal features.
 
@@ -1765,6 +1838,9 @@ def fit_random_survival_forest(
     random_splits = _integer(nsplit, "nsplit", 0, _MAX_ROWS)
     if na_action not in ("raise", "omit", "impute"):
         raise ValueError("na_action must be 'raise', 'omit', or 'impute'")
+    requested_passes = _integer(nimpute, "nimpute", 1, _MAX_TREES)
+    if requested_passes > 1 and na_action != "impute":
+        raise ValueError("nimpute > 1 requires na_action='impute'")
     original_missing_x: np.ndarray | None = None
     original_missing_time: np.ndarray | None = None
     original_missing_event: np.ndarray | None = None
@@ -1877,6 +1953,12 @@ def fit_random_survival_forest(
         _MAX_IMPUTATION_CELLS,
         _MAX_IMPUTATION_CELLS,
     )
+    imputation_work_limit = _budget_limit(
+        max_imputation_work,
+        "max_imputation_work",
+        _MAX_IMPUTATION_WORK,
+        _MAX_IMPUTATION_WORK,
+    )
     split_limit = _budget_limit(max_split_work, "max_split_work", 100_000_000, _MAX_SPLIT_WORK)
     leaf_limit = _budget_limit(
         max_leaf_event_records,
@@ -1890,13 +1972,42 @@ def fit_random_survival_forest(
         sample_size = min(sample_size, int(t.size))
     if sample_size < 1:
         raise ValueError("sample_fraction rounds to an empty tree sample")
-    sampled_rows = tree_count * sample_size
-    if sampled_rows > sample_limit:
+    effective_passes = requested_passes if na_action == "impute" and imputation_performed else 1
+    total_sampled_rows = effective_passes * tree_count * sample_size
+    if total_sampled_rows > sample_limit:
         raise ValueError("forest exceeds max_sampled_rows budget")
     if na_action == "impute":
         minimum_imputation_cells = tree_count * (
             x.size + 6 * t.size + x.shape[1] * (2 * sample_size + 1)
         )
+        if effective_passes > 1:
+            assert original_missing_x is not None
+            pool_n_fields = x.shape[1] + 2
+            active_categorical = [
+                (column, levels)
+                for column, levels in enumerate(categorical_levels)
+                if levels is not None and np.any(original_missing_x[:, column])
+            ]
+            pool_category_cells = sum(
+                t.size * int(levels.size) + int(levels.size) for _, levels in active_categorical
+            )
+            minimum_imputation_cells += (
+                tree_count * ((t.size + 7) // 8)
+                + x.shape[1] * tree_count
+                + 9 * t.size * pool_n_fields
+                + int(master_times.size if master_times is not None else 0)
+                + 2 * tree_count
+                + 1
+                + pool_category_cells
+                + t.size * pool_n_fields
+                + t.size * (x.shape[1] + 2)
+            )
+            pool_work = (tree_count + 1) * t.size * pool_n_fields
+            pool_work += sum(t.size * int(levels.size) for _, levels in active_categorical)
+            pool_work += t.size * max(1, t.size.bit_length()) * len(active_categorical)
+            minimum_pool_work = (effective_passes - 1) * pool_work
+            if minimum_pool_work > imputation_work_limit:
+                raise ValueError("imputation pooling exceeds max_imputation_work budget")
         if minimum_imputation_cells > imputation_limit:
             raise ValueError(
                 "imputation work arrays and root donors exceed max_imputation_cells budget"
@@ -1927,60 +2038,152 @@ def fit_random_survival_forest(
         membership = np.zeros((tree_count, packed_width), dtype=np.uint8)
     rng = np.random.default_rng(seed)
     budget = _Budget()
-    trees: list[_PackedTree] = []
-    effective_membership: list[np.ndarray] = []
-    for tree_index in range(tree_count):
-        bootstrap = rng.choice(t.size, size=sample_size, replace=bool(replace))
-        if na_action == "impute":
-            assert original_missing_time is not None
-            assert original_missing_event is not None
-            if np.all(original_missing_time[bootstrap]) or np.all(
-                original_missing_event[bootstrap]
-            ):
-                continue
-        if membership is not None:
-            inbag = np.zeros(t.size, dtype=np.uint8)
-            inbag[bootstrap] = 1
-            packed_inbag = np.packbits(inbag, bitorder="little")
-            if na_action == "impute":
-                effective_membership.append(packed_inbag)
-            else:
-                membership[tree_index] = packed_inbag
-        if na_action == "impute":
-            tree_x, tree_t, tree_e = x.copy(), t.copy(), e.copy()
-        else:
-            tree_x, tree_t, tree_e = x, t, e
-        trees.append(
-            _grow_tree(
-                tree_x,
-                tree_t,
-                tree_e,
-                bootstrap,
-                rng=rng,
-                mtry=feature_count,
-                nodesize=leaf_size,
-                nsplit=random_splits,
-                budget=budget,
-                max_nodes=node_limit,
-                max_split_work=split_limit,
-                max_leaf_records=leaf_limit,
-                categorical_columns=categorical_set,
-                split_rule=split_rule,
-                split_probability=split_probability,
-                retain_represented_count=bool(compute_oob),
-                original_missing_x=original_missing_x,
-                original_missing_time=original_missing_time,
-                original_missing_event=original_missing_event,
-                master_times=master_times,
-                max_imputation_cells=imputation_limit,
+    current_time, current_event, current_x = t, e, x
+    fallback_used = (
+        np.zeros((t.size, 2 + x.shape[1]), dtype=bool)
+        if na_action == "impute" and effective_passes > 1
+        else None
+    )
+    cumulative_sampled = 0
+    total_imputation_work = 0
+    final_trees: list[_PackedTree] = []
+    final_membership: np.ndarray | None = membership
+    final_sampled_rows = 0
+    final_budget = (0, 0, 0)
+    for pass_index in range(effective_passes):
+        iterative = effective_passes > 1
+        last_pass = pass_index == effective_passes - 1
+        pass_membership: np.ndarray | None = (
+            membership
+            if compute_oob
+            else (
+                np.zeros((tree_count, (t.size + 7) // 8), dtype=np.uint8)
+                if iterative and not last_pass
+                else None
             )
         )
-    if not trees:
-        raise ValueError("no bootstrap replicate had observed donors for every outcome variable")
-    if na_action == "impute":
-        sampled_rows = len(trees) * sample_size
-        if membership is not None:
-            membership = np.asarray(effective_membership, dtype=np.uint8)
+        effective_tree_index = 0
+        trees: list[_PackedTree] = []
+        # Retained donor storage belongs to one pass at a time. The global
+        # sample/split/node/leaf counters below remain cumulative.
+        budget.imputation_cells = 0
+        budget.max_depth = 0
+        split_work_before_pass = budget.split_work
+        for tree_index in range(tree_count):
+            bootstrap = rng.choice(t.size, size=sample_size, replace=bool(replace))
+            cumulative_sampled += sample_size
+            if na_action == "impute":
+                assert original_missing_time is not None
+                assert original_missing_event is not None
+                if np.all(original_missing_time[bootstrap]) or np.all(
+                    original_missing_event[bootstrap]
+                ):
+                    continue
+            needs_membership = pass_membership is not None
+            if needs_membership:
+                inbag = np.zeros(t.size, dtype=np.uint8)
+                inbag[bootstrap] = 1
+                packed_inbag = np.packbits(inbag, bitorder="little")
+                if iterative:
+                    next_cells = budget.imputation_cells + packed_inbag.size
+                    if next_cells > imputation_limit:
+                        raise ValueError("forest exceeds max_imputation_cells budget")
+                    budget.imputation_cells = next_cells
+                assert pass_membership is not None
+                pass_membership[effective_tree_index] = packed_inbag
+            if na_action == "impute":
+                tree_x, tree_t, tree_e = current_x.copy(), current_time.copy(), current_event.copy()
+            else:
+                tree_x, tree_t, tree_e = current_x, current_time, current_event
+            trees.append(
+                _grow_tree(
+                    tree_x,
+                    tree_t,
+                    tree_e,
+                    bootstrap,
+                    rng=rng,
+                    mtry=feature_count,
+                    nodesize=leaf_size,
+                    nsplit=random_splits,
+                    budget=budget,
+                    max_nodes=node_limit,
+                    max_split_work=split_limit,
+                    max_leaf_records=leaf_limit,
+                    categorical_columns=categorical_set,
+                    split_rule=split_rule,
+                    split_probability=split_probability,
+                    retain_represented_count=bool(compute_oob),
+                    original_missing_x=original_missing_x,
+                    original_missing_time=original_missing_time,
+                    original_missing_event=original_missing_event,
+                    master_times=master_times,
+                    max_imputation_cells=imputation_limit,
+                    update_missing_values=(not iterative or pass_index == 0),
+                    missing_aware_splits=(not iterative or pass_index == 0),
+                    retain_terminal_summaries=(not iterative or not last_pass),
+                    retain_terminal_predictors=iterative and not last_pass,
+                    prediction_donor_mask=(
+                        np.zeros_like(original_missing_x)
+                        if iterative and last_pass and original_missing_x is not None
+                        else None
+                    ),
+                )
+            )
+            effective_tree_index += 1
+        if not trees:
+            raise ValueError(
+                "no bootstrap replicate had observed donors for every outcome variable"
+            )
+        if pass_membership is not None and na_action == "impute":
+            pass_membership = pass_membership[: len(trees)]
+        retained_sampled_rows = len(trees) * sample_size
+        pass_node_count = sum(int(tree.feature.size) for tree in trees)
+        pass_leaf_records = sum(int(tree.event_time.size) for tree in trees)
+        if iterative and not last_pass:
+            assert pass_membership is not None
+            assert original_missing_time is not None
+            assert original_missing_event is not None
+            assert original_missing_x is not None
+            assert master_times is not None
+            from ._random_survival_forest_imputation import pool_imputation_summaries
+
+            pool_cell_budget = imputation_limit - budget.imputation_cells
+            pooled = pool_imputation_summaries(
+                current_time,
+                current_event,
+                current_x,
+                original_missing_time,
+                original_missing_event,
+                original_missing_x,
+                tuple(trees),
+                pass_membership,
+                master_times=master_times,
+                rng=rng,
+                categorical_features=tuple(sorted(categorical_set)),
+                selection="oob",
+                max_cells=pool_cell_budget,
+                max_work=imputation_work_limit - total_imputation_work,
+            )
+            total_imputation_work += pooled.work_units
+            current_time, current_event, current_x = pooled.time, pooled.event, pooled.covariates
+            assert fallback_used is not None
+            fallback_used |= pooled.fallback_used
+            # Explicitly release one forest before beginning the next pass.
+            del pass_membership, trees
+            budget.imputation_cells = 0
+            continue
+        final_trees = trees
+        final_sampled_rows = retained_sampled_rows
+        final_membership = pass_membership if compute_oob else None
+        final_budget = (
+            pass_node_count,
+            pass_leaf_records,
+            budget.split_work - split_work_before_pass,
+        )
+
+    trees = final_trees
+    membership = final_membership
+    sampled_rows = final_sampled_rows
     packed_membership = (
         None
         if membership is None
@@ -1993,9 +2196,9 @@ def fit_random_survival_forest(
         None
         if membership is None
         else _oob_curves(
-            t,
-            e,
-            x,
+            current_time,
+            current_event,
+            current_x,
             tuple(trees),
             output_grid,
             membership,
@@ -2003,12 +2206,33 @@ def fit_random_survival_forest(
             max_work=oob_work_limit,
             row_indices=row_indices,
             compute_concordance=True,
-            missing_time=original_missing_time if na_action == "impute" else None,
-            missing_event=original_missing_event if na_action == "impute" else None,
-            rng=rng if na_action == "impute" else None,
+            missing_time=(
+                original_missing_time if na_action == "impute" and effective_passes == 1 else None
+            ),
+            missing_event=(
+                original_missing_event if na_action == "impute" and effective_passes == 1 else None
+            ),
+            rng=rng if na_action == "impute" and effective_passes == 1 else None,
             max_cells=oob_cell_limit,
         )
     )
+    completed_covariates: FloatArray | None = None
+    completed_time: FloatArray | None = None
+    completed_event: FloatArray | None = None
+    frozen_fallback: np.ndarray | None = None
+    if na_action == "impute" and effective_passes > 1:
+        completed_time = _freeze(current_time)
+        completed_event = _freeze(current_event)
+        completed_covariates_array = np.array(current_x, dtype=np.float64, copy=True)
+        for column, levels in enumerate(categorical_levels):
+            if levels is not None:
+                codes = np.rint(completed_covariates_array[:, column]).astype(np.int64)
+                completed_covariates_array[:, column] = levels[codes]
+        completed_covariates = _freeze(completed_covariates_array)
+        if fallback_used is not None:
+            frozen_fallback = np.frombuffer(fallback_used.tobytes(), dtype=np.bool_).reshape(
+                fallback_used.shape
+            )
     return RandomSurvivalForestFit(
         _freeze(output_grid),
         _freeze(
@@ -2028,9 +2252,9 @@ def fit_random_survival_forest(
         bool(replace),
         seed,
         sampled_rows,
-        budget.leaf_records,
-        budget.nodes,
-        budget.split_work,
+        final_budget[1],
+        final_budget[0],
+        final_budget[2],
         budget.max_depth,
         packed_membership,
         oob,
@@ -2045,6 +2269,17 @@ def fit_random_survival_forest(
         _freeze_index(row_indices, np.dtype(np.int64)),
         original_fingerprint,
         tree_count,
+        requested_passes,
+        effective_passes,
+        cumulative_sampled if effective_passes > 1 else sampled_rows,
+        budget.split_work,
+        budget.nodes,
+        budget.leaf_records,
+        total_imputation_work,
+        completed_time,
+        completed_event,
+        completed_covariates,
+        frozen_fallback,
     )
 
 

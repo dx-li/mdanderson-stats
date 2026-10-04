@@ -23,10 +23,17 @@ class _UniformSource(Protocol):
 
 
 class _TreeSummary(Protocol):
-    training_leaf_node: np.ndarray | None
-    terminal_time: FloatArray | None
-    terminal_event: FloatArray | None
-    terminal_predictor: FloatArray | None
+    @property
+    def training_leaf_node(self) -> np.ndarray | None: ...
+
+    @property
+    def terminal_time(self) -> FloatArray | None: ...
+
+    @property
+    def terminal_event(self) -> FloatArray | None: ...
+
+    @property
+    def terminal_predictor(self) -> FloatArray | None: ...
 
 
 @dataclass(frozen=True)
