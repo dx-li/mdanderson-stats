@@ -7,8 +7,9 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import numpy as np
-
 from mdanderson_stats._random_survival_forest_imputation import pool_imputation_summaries
+
+from mdanderson_stats.random_survival_forest import fit_random_survival_forest
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -102,3 +103,36 @@ def test_coupled_oob_pool_matches_fixed_uniform_ledger() -> None:
     rebuilt_grid = _values(grid_row["completed_event_grid_if_rebuilt"])
     assert 9.0 not in expected_grid
     assert 9.0 in rebuilt_grid
+
+
+def test_iterated_fit_keeps_original_event_grid_and_row_mapping() -> None:
+    time = np.asarray([1.0, 2.0, np.nan, 4.0, 5.0, 6.0, 7.0, 8.0, np.nan])
+    event = np.asarray([1.0, 1.0, 0.0, np.nan, 1.0, 0.0, 1.0, 0.0, np.nan])
+    covariates = np.asarray([[1.0], [2.0], [np.nan], [4.0], [5.0], [6.0], [7.0], [8.0], [np.nan]])
+    fit = fit_random_survival_forest(
+        time,
+        event,
+        covariates,
+        na_action="impute",
+        nimpute=2,
+        n_trees=2,
+        sample_fraction=0.875,
+        replace=False,
+        nodesize=1,
+        nsplit=0,
+        ntime=None,
+        compute_oob=False,
+        random_state=1,
+    )
+
+    np.testing.assert_array_equal(fit.training_row_indices, np.arange(8))
+    np.testing.assert_array_equal(fit.time_grid, np.asarray([1.0, 2.0, 5.0, 7.0]))
+    assert fit.requested_imputation_passes == 2
+    assert fit.imputation_passes == 2
+    assert fit.completed_time is not None and fit.completed_event is not None
+    assert fit.completed_covariates is not None
+    assert fit.completed_time.shape == (8,)
+    assert fit.completed_event.shape == (8,)
+    assert fit.completed_covariates.shape == (8, 1)
+    assert fit.completed_event[3] == 1.0
+    assert fit.completed_time[3] == 4.0

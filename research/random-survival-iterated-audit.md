@@ -55,3 +55,12 @@ detectably wrong. These are direct semantic references; the pass ledger only
 records which state each stage consumes. It does not verify the forest's
 orchestration or model-fitting outcomes, and none of the artifacts imply
 whole-forest native RNG or numerical parity.
+
+The focused Python comparison also calls the public forest fitter for two
+imputation passes with a fully missing row removed from the analyzed data.
+With fixed NumPy seed 1, an originally missing event at time 4 is imputed as
+an event, while the retained event-interest grid remains the original
+`[1, 2, 5, 7]`. This checks the row map, completed arrays, pass metadata and
+the distinction between the fixed original grid and the completed outcomes;
+it is a Python engine integration check, not independent native numerical
+parity.
