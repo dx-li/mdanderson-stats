@@ -61,13 +61,13 @@ def pdnn_fit_correlations(
         (probeset_ids, "probeset_ids"),
     ):
         _preflight_size(value, name)
+        if np.iscomplexobj(value):
+            raise ValueError(f"{name} must be real-valued")
     observed = finite(observed_signal, "observed_signal")
     fitted = finite(fitted_signal, "fitted_signal")
     ids = count(probeset_ids, "probeset_ids")
     if observed.ndim != 1 or fitted.shape != observed.shape or ids.shape != observed.shape:
         raise ValueError("signals and probeset_ids must be equal-length one-dimensional arrays")
-    if np.any(ids >= 2**53):
-        raise ValueError("probeset_ids must be exactly representable nonnegative integers < 2**53")
     n = observed.size
     if n == 0:
         raise ValueError("probe count must be positive")
