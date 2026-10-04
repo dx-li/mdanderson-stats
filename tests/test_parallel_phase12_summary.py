@@ -54,7 +54,11 @@ def test_streamed_probability_moments_match_native_running_variance_reference():
         assert summary.analysis_call_count == len(case["rows"])
         assert summary.nonconverged_analysis_call_count == len(case["rows"]) // 2
         np.testing.assert_allclose(
-            summary.component_means, case["component_means"], rtol=0, atol=2e-16
+            # Welford means and the native sum/n differ by a few rounding bits.
+            summary.component_means,
+            case["component_means"],
+            rtol=0,
+            atol=2 * np.finfo(float).eps,
         )
         np.testing.assert_allclose(
             summary.component_sample_variances,

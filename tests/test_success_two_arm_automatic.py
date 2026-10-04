@@ -79,8 +79,12 @@ def test_integer_beta_states_match_independent_fraction_oracle() -> None:
 
     result = _search_table(table, float(target), (float(lower), 0.99))
     assert result.cutoff == float(expected[0])
-    assert result.operating_characteristics.true_positive == pytest.approx(float(expected[1]))
-    assert result.operating_characteristics.false_positive == pytest.approx(float(expected[2]))
+    assert result.operating_characteristics.true_positive == pytest.approx(
+        float(expected[1]), rel=0, abs=5e-16
+    )
+    assert result.operating_characteristics.false_positive == pytest.approx(
+        float(expected[2]), rel=0, abs=5e-16
+    )
     assert result.operating_characteristics.incorrect_decision_probability == pytest.approx(
         float(expected[2] / (expected[1] + expected[2])), rel=0, abs=5e-16
     )

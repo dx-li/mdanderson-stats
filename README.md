@@ -1238,6 +1238,9 @@ updates, phase-I progression, blocked accrual and phase-II allocation/stopping.
 An optional [importance sampler](docs/parallel-phase12-importance.md) adds
 the source's mixture weighting and vector stopping rule, with bounded work,
 posterior uncertainty and direct use in the six-dose decision functions.
+The [probability summary](docs/parallel-phase12-probability-summary.md) streams
+an explicit sequence of importance fits into the source's 60 component means
+and sample variances, with analysis-call and nonconvergence counts.
 The [calendar simulator](docs/parallel-phase12-importance-calendar.md) can use
 this backend at interim and final analyses, with aggregate work limits and
 per-analysis uncertainty diagnostics; the existing MCMC backend remains the default.
@@ -1296,6 +1299,9 @@ decision. Automatic searches enumerate every single-arm binary decision state
 or bracket a normal/survival cutoff to a specified tolerance. Supplied-grid
 calibration remains available, and reusable two-arm binary probability tables
 avoid repeating quadrature when evaluating many cutoffs.
+An [automatic two-arm binary search](docs/success-two-arm-automatic.md) now
+scans conservative error-separated decision states while respecting
+posterior integration uncertainty and retaining nonmonotone PID behavior.
 
 [KeyboardComb](docs/keyboard-combination.md) now supports two-drug dose decisions,
 posterior safety monitoring, weighted two-dimensional isotonic MTD selection and

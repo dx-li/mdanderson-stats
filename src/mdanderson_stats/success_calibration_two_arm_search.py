@@ -171,8 +171,8 @@ def _search_table(
             candidates.add(candidate)
 
     # Within a positive-error interval the existing table refuses evaluation.
-    # The first representable float above its right edge gives the smallest
-    # numerically distinguishable cutoff for the state on the right.
+    # The first representable float above its right edge gives a conservative
+    # candidate for the state on the right.
     for _, right in intervals:
         if right >= lower:
             candidate = float(np.nextafter(right, np.inf))

@@ -1155,6 +1155,10 @@ from .parallel_phase12_scenarios import (
     parallel_phase12_scenario_from_native_input,
     simulate_parallel_phase12_scenarios,
 )
+from .parallel_phase12_summary import (
+    Phase12ProbabilitySummary,
+    summarize_phase12_importance_fits,
+)
 from .parameter_distribution import ParameterDistribution
 from .parameter_solver import solve_distribution_moments, solve_distribution_quantiles
 from .parametric_survival import (
@@ -1548,6 +1552,7 @@ from .success_calibration_continuous import (
     calibrate_normal_success_cutoff,
     calibrate_survival_success_cutoff,
 )
+from .success_calibration_two_arm_search import calibrate_binary_two_arm_success_cutoff
 from .survan_baseline import SurvanBaseline, survan_baseline
 from .survan_cox import SurvanCox, survan_cox
 from .survan_descriptive import (
@@ -2403,6 +2408,7 @@ __all__ = [
     "binary_two_arm_success_oc",
     "calibrate_success_cutoff",
     "calibrate_binary_success_cutoff",
+    "calibrate_binary_two_arm_success_cutoff",
     "calibrate_normal_success_cutoff",
     "calibrate_survival_success_cutoff",
     "normal_success_oc",
@@ -2465,6 +2471,8 @@ __all__ = [
     "Phase12ModelFit",
     "Phase12ImportanceFit",
     "fit_phase12_importance",
+    "Phase12ProbabilitySummary",
+    "summarize_phase12_importance_fits",
     "Phase12Snapshot",
     "fit_phase12_model",
     "phase12_snapshot",

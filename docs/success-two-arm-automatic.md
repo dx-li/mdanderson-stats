@@ -1,8 +1,8 @@
 # Automatic two-arm binary success-cutoff calibration
 
 `calibrate_binary_two_arm_success_cutoff` searches the finite decision states of
-the existing two-arm beta-binomial model. It minimizes the cutoff among
-numerically distinguishable cutoffs in the supplied closed interval whose
+the existing two-arm beta-binomial model. It selects the smallest conservative
+error-separated candidate in the supplied closed interval whose
 computed probability of incorrect decision (PID) is at most `target` and whose
 Bayesian success probability is positive.
 
@@ -30,8 +30,8 @@ or is below it (`direction="less"`). Success uses the strict rule
 `null_treatment_rate` defaults to that same value. Explicitly supply a
 margin-boundary pair when that is the intended null.
 
-The search prepares the two-arm response-count table once and examines all
-distinguishable decision states. PID need not be monotone in the cutoff when the
+The search prepares the two-arm response-count table once and scans its
+conservative error-separated candidates. PID need not be monotone in the cutoff when the
 design and analysis priors differ, so this search does not use binary search.
 The smallest-feasible policy is a Python convention; the application help gives
 the default cutoff interval `[0.6, 0.999]` but does not specify its optimizer or
@@ -44,7 +44,8 @@ those intervals. When an interval removes a decision boundary, the candidate
 on its right is the first float above the merged conservative interval endpoint.
 This is the smallest feasible cutoff among those conservative candidates, not
 a claim that every guard-safe floating-point value was searched. If the
-intervals leave no distinguishable cutoff or no feasible state can be assessed, the function raises
+intervals leave no distinguishable cutoff or no feasible state can be assessed,
+the function raises
 `ArithmeticError` and explains that mathematical feasibility is unresolved;
 it does not label the case infeasible. At cutoff zero, the existing table's
 special endpoint rule is preserved.

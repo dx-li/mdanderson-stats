@@ -3041,10 +3041,11 @@
         "Bounded six-dose mixture importance posterior: full mixture-density weighting, native evidence-plus-60-component adaptive stopping, analytic mode/Hessian proposal, separate raw-integral and posterior-ratio errors, and source-decision interoperability; docs/parallel-phase12-importance.md",
         "Optional importance backend for six-dose calendar interim/final analyses: observed-tally fit reuse, separate data/posterior streams, pre-seed aggregate integration/mode budgets, actual uncached work counts and per-analysis evidence/error/convergence diagnostics; docs/parallel-phase12-importance-calendar.md.",
         "Bounded serial six-dose calendar operating-characteristic summaries for both posterior backends: direct per-trial seed replay, early/future/no-selection partitions, source ineligible-selection flags, generated and observed endpoint counts with separate denominators, trial-clustered rate errors, enrollment/time summaries and cached-fit convergence/work diagnostics; docs/phase12-calendar-oc.md.",
-        "Remaining: C++ posterior-kernel summaries, full published operating-characteristic replication; native optimizer/proposal and RNG parity are not claimed.",
+        "Remaining: automatic capture of native per-scenario analysis calls, posterior-mode/Laplace parameter tallies and full published operating-characteristic replication; native optimizer/proposal and RNG parity are not claimed.",
         "Six-dose calendar duration mean and population variance in months, exact seven source-indexed order statistics and explicit small-sample availability",
         "Native four-arm efficacy-first eight-probability input parser and bounded named scenario batches with captured seeds/truths, MCSEs and atomic text reports",
-        "Source-defined six-dose DF3+3 phase-I enrollment, generated-toxicity, admissibility and early-toxicity tallies with explicit all-trial denominators, completed-phase-I counts and Monte Carlo errors; interrupted phase-I trials contribute zero to native tallies; docs/phase12-calendar-oc.md"
+        "Source-defined six-dose DF3+3 phase-I enrollment, generated-toxicity, admissibility and early-toxicity tallies with explicit all-trial denominators, completed-phase-I counts and Monte Carlo errors; interrupted phase-I trials contribute zero to native tallies; docs/phase12-calendar-oc.md",
+        "Source-defined 60-component posterior probability summary over an explicitly supplied sequence of importance fits, with streaming means/sample variances, analysis-call count and nonconverged-fit count; docs/parallel-phase12-probability-summary.md."
       ],
       "validation": [
         "Python replay matches final selection and all outcome/enrollment counts for 24 trials run through original C control flow; numerical and RNG callbacks replace missing/platform-specific dependencies and are explicitly disclosed",
@@ -3061,7 +3062,8 @@
         "Ten focused new/existing calendar checks pass, including direct seed derivation, exact replayed selection/enrollment/generated counts, observed endpoint denominators and nondegenerate pooled-response Monte Carlo errors reconstructed from per-trial residuals. The public 20-trial example executes. Worker peak 143605760 bytes RSS, zero swaps; research/phase12-calendar-oc-audit.md. Full native operating-characteristic replication is not claimed.",
         "Calendar seed replay, source-index order/units, huge-constant duration stability and named-scenario input/report equivalence; 9 focused tests, Ruff and mypy pass; research/phase12-calendar-duration-audit.md",
         "Source crosswalk identifies remaining C++ posterior-kernel printouts, stale no-fit tally behavior and completed DF3+3 decision/tally coverage; research/parallel-phase12-scenario-report-audit.md",
-        "Source tally call-site review and focused direct-trial replay, lowest-dose toxicity closure and interrupted-before-tally checks; tests/test_phase12_calendar_oc.py"
+        "Source tally call-site review and focused direct-trial replay, lowest-dose toxicity closure and interrupted-before-tally checks; tests/test_phase12_calendar_oc.py",
+        "Three synthetic summary-vector cases match 360 mean/variance values from the unchanged cached C++ RunningVariance accumulator, including one-fit and nearly constant inputs. The fixture validates across-call statistics, not native posterior fitting or automatic calendar invocation capture; tools/reference_phase12_probability_summary.cpp and tests/test_parallel_phase12_summary.py."
       ]
     },
     {
@@ -5110,7 +5112,8 @@
         "Bayesian power, conditional power, Bayesian Type I error, PID, FOR, point-null frequentist error and explicit-grid PID cutoff calibration; undefined conditional probabilities retained as None",
         "Automatic single-arm binary PID calibration over every response-count decision state in a bounded cutoff interval, using monotonicity for O(n log n) search and the strict posterior cutoff rule",
         "Automatic one- and two-arm normal and fixed-event survival PID calibration with a feasible cutoff, bounded bisection bracket and explicit numerical/evaluation-limit errors",
-        "Remaining: native optimizer, rounding and report/plot parity; two-arm binary calibration still requires an explicit candidate grid"
+        "Remaining: native optimizer, rounding and report/plot parity; Python searches use explicit documented numerical conventions.",
+        "Automatic two-arm binary PID calibration scans conservative error-separated response-count states with compensated suffix sums, strict cutoff ties and explicit unresolved-calibration errors. It permits nonmonotone PID, reuses one prepared table, and bounds enumeration at 40000 states; docs/success-two-arm-automatic.md."
       ],
       "validation": [
         "Exact uniform-prior binary identities for single and two arms and independent design-prior integration of single-arm rejection probabilities",
@@ -5119,7 +5122,8 @@
         "32 independent R beta-difference integrals across skewed/concentrated shapes and positive/negative margins; exact uniform identities, endpoint and reflection checks",
         "Prepared tables agree with direct OCs; 500 cutoff evaluations benchmarked separately from one-time quadrature",
         "Source Supplement S2.3 fixed-event log-hazard-ratio adapter agrees exactly with the known-variance normal OC kernel at integer and fractional expected event counts; five focused success-calibration tests pass",
-        "Independent base-R beta-binomial decision states and interior probes, conditional-normal quadrature and survival rescaling references; exact strict-tie identity, feasible/infeasible cutoff brackets and bounded search checks (research/success-automatic-reference-audit.md)"
+        "Independent base-R beta-binomial decision states and interior probes, conditional-normal quadrature and survival rescaling references; exact strict-tie identity, feasible/infeasible cutoff brackets and bounded search checks (research/success-automatic-reference-audit.md)",
+        "Three focused checks cover independent exact-Fraction integer-beta posterior and operating-characteristic sums, nonmonotone PID, strict ties, conservative quadrature-error intervals, endpoint behavior and resource preflight; tests/test_success_two_arm_automatic.py. Computed PID is not a rigorous bound on design-prior integration error; research/success-two-arm-automatic-audit.md."
       ]
     },
     {

@@ -29,7 +29,7 @@ and ineffective design-prior masses, and frequentist null masses. It bounds
 each arm to 1,000 patients and the joint count pairs to 40,000. The new search
 validates the requested model and resource limits before preparing the table,
 then sorts the flattened states once and computes compensated suffix sums. It
-checks every distinguishable threshold state; it does not assume PID is
+checks the conservative error-separated candidates; it does not assume PID is
 monotone when the analysis and design priors differ. A final chosen threshold
 is evaluated again by `BinarySuccessTable.evaluate` for the complete returned
 record.

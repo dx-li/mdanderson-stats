@@ -159,14 +159,17 @@ other effect directions, use `normal_success_oc`.
 
 For automatic calibration within a cutoff range, use the
 [single-arm binary search](success-binary-calibration.md) or the
+[two-arm binary search](success-two-arm-automatic.md), or the
 [normal and survival searches](success-continuous-calibration.md).
 The binary search covers the finite set of response-count decision states.
 The continuous searches return a feasible cutoff and a numerical bracket for
 the smallest feasible cutoff. Both retain the existing Python convention of
 choosing the smallest feasible threshold, which maximizes success probability
 among feasible nested decision sets. They do not reproduce an uninspected
-native optimizer. Two-arm binary calibration still uses an explicit grid;
-its posterior quadrature uncertainty is checked at each requested cutoff.
+native optimizer. The two-arm binary search scans conservative error-separated
+decision states, preserving the posterior quadrature guard
+and allowing PID to be nonmonotone. Its target applies to the computed PID;
+classification guards do not provide a rigorous error bound for that ratio.
 
 `calibrate_success_cutoff` returns the smallest supplied candidate whose PID
 meets the target and whose success probability is positive. Candidates are

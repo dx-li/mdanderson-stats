@@ -76,3 +76,8 @@ its cutoff.
 The implementation stores no draws and caps the request at 67 million
 summary-component evaluations. Given a fixed seed, callers can replay a run
 with a newly created NumPy `Generator` using the same bit generator and seed.
+
+Use the [across-analysis probability summary](parallel-phase12-probability-summary.md)
+to aggregate an explicitly supplied sequence of these fits. It reports means
+and sample variances across analysis calls; these differ from the posterior
+uncertainty and integration errors of an individual fit.
