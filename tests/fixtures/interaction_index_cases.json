@@ -1,0 +1,82 @@
+{
+  "source": {
+    "citation": "Lee and Kong (2009), Confidence Intervals of Interaction Index for Assessing Multiple Drug Interaction, Statistics in Biopharmaceutical Research 1:4-17, doi:10.1198/sbr.2009.0001",
+    "sections": "Section 4.2, Tables 2 and 3, Figures 4 and 5",
+    "url": "https://doi.org/10.1198/sbr.2009.0001",
+    "independent_reference": "tools/reference_interaction_index_cases.R"
+  },
+  "cases": [
+    {
+      "id": "umscc22b-sch66336-4hpr",
+      "label": "UMSCC22B: SCH66336 + 4-HPR",
+      "response_label": "Fractional survival",
+      "dose_unit": "μM",
+      "component_labels": ["SCH66336", "4-HPR"],
+      "single_agent_doses": [[0.1, 0.5, 1.0, 2.0, 4.0], [0.1, 0.5, 1.0, 2.0]],
+      "single_agent_responses": [[0.6701, 0.6289, 0.5577, 0.4550, 0.3755], [0.7666, 0.5833, 0.5706, 0.4934]],
+      "combination_total_doses": [0.2, 1.0, 2.0, 4.0],
+      "combination_responses": [0.6539, 0.4919, 0.3551, 0.2341],
+      "combination_proportions": [1.0, 1.0],
+      "printed_fits": [
+        {"intercept": 0.094, "intercept_se": 0.085, "slope": -0.335, "slope_se": 0.066, "median_dose": 1.326, "residual_sd": 0.187},
+        {"intercept": 0.217, "intercept_se": 0.073, "slope": -0.398, "slope_se": 0.058, "median_dose": 1.726, "residual_sd": 0.129},
+        {"intercept": -0.225, "intercept_se": 0.092, "slope": -0.596, "slope_se": 0.082, "median_dose": 0.686, "residual_sd": 0.182}
+      ],
+      "reference_fits": [
+        {"intercept": 0.094381923778154, "intercept_se": 0.084534364965728, "slope": -0.334915551482806, "slope_se": 0.066072256241895, "median_dose": 1.32552436131639, "residual_sd": 0.187075498593962},
+        {"intercept": 0.216987101892263, "intercept_se": 0.072552233822033, "slope": -0.397594922117781, "slope_se": 0.0579824242472649, "median_dose": 1.72590090500713, "residual_sd": 0.128837541774761},
+        {"intercept": -0.224521367262065, "intercept_se": 0.0916036206376207, "slope": -0.595931028787293, "slope_se": 0.081993832437462, "median_dose": 0.686082563777322, "residual_sd": 0.182191137212283}
+      ],
+      "printed_observed_indices": [0.791, 0.609, 0.256, 0.103],
+      "printed_observed_intervals": [[0.202, 3.091], [0.169, 2.193], [0.060, 1.087], [0.018, 0.581]],
+      "reference_observed": {
+        "log_index": [-0.234125278323168, -0.495190907858041, -1.36179260305449, -2.27686636114451],
+        "log_standard_error": [0.530078914612575, 0.49805429909232, 0.562367259492383, 0.674683193985846],
+        "interval": [[0.202556482038608, 3.09097307096598], [0.169402075924825, 2.19262274240308], [0.0603615078007861, 1.0874314626599], [0.0181117437631573, 0.581271113827721]],
+        "pooled_logit_variance": 0.027637990172733
+      },
+      "reference_ray": {
+        "effect": [0.75, 0.5, 0.25],
+        "log_index": [0.462041495424335, -0.78185300526045, -1.96072776858008],
+        "log_standard_error": [0.556370757730936, 0.246266834355286, 0.532965914308772],
+        "interval": [[0.425893360641147, 5.91593336955226], [0.25558978191405, 0.81912017147019], [0.0399154466935576, 0.496355119188296]]
+      }
+    },
+    {
+      "id": "phenanthroline-adp",
+      "label": "o-Phenanthroline + ADP",
+      "response_label": "Fractional inhibition",
+      "dose_unit": null,
+      "component_labels": ["o-Phenanthroline", "ADP"],
+      "single_agent_doses": [[8.7, 17.4, 26.1, 34.8, 43.5], [0.5, 1.0, 1.5, 2.0, 2.5]],
+      "single_agent_responses": [[0.132, 0.267, 0.411, 0.476, 0.548], [0.175, 0.400, 0.492, 0.542, 0.592]],
+      "combination_total_doses": [9.2, 18.4, 27.6, 36.8, 46.0],
+      "combination_responses": [0.507, 0.769, 0.872, 0.919, 0.944],
+      "combination_proportions": [17.4, 1.0],
+      "printed_fits": [
+        {"intercept": -4.696, "intercept_se": 0.145, "slope": 1.302, "slope_se": 0.046, "median_dose": 36.803, "residual_sd": 0.058},
+        {"intercept": -0.601, "intercept_se": 0.079, "slope": 1.178, "slope_se": 0.127, "median_dose": 1.666, "residual_sd": 0.161},
+        {"intercept": -3.843, "intercept_se": 0.038, "slope": 1.739, "slope_se": 0.012, "median_dose": 9.117, "residual_sd": 0.015}
+      ],
+      "printed_observed_indices": null,
+      "printed_observed_intervals": null,
+      "reference_fits": [
+        {"intercept": -4.6956513872188, "intercept_se": 0.144559440548261, "slope": 1.30232743061133, "slope_se": 0.0455712393266682, "median_dose": 36.8031830865841, "residual_sd": 0.0579219054549288},
+        {"intercept": -0.60076106860331, "intercept_se": 0.0794141067965194, "slope": 1.17750670898278, "slope_se": 0.126681383453813, "median_dose": 1.66562024896309, "residual_sd": 0.161014429796677},
+        {"intercept": -3.84317662380472, "intercept_se": 0.0375498414334379, "slope": 1.73884300547872, "slope_se": 0.0116355849468968, "median_dose": 9.11746533059779, "residual_sd": 0.0147890481181747}
+      ],
+      "reference_observed": {
+        "log_index": [-0.645313465341023, -0.906451111215838, -1.08160863165448, -1.20699511707324, -1.30419069870194],
+        "log_standard_error": [0.106084928530793, 0.129012962478304, 0.151096194252341, 0.168357330497319, 0.182143700763212],
+        "interval": [[0.404584795441002, 0.679952051028758], [0.294600682559026, 0.553901855328116], [0.234259055771755, 0.490716081783619], [0.198106470246467, 0.451563366273392], [0.173794749136393, 0.423796827637862]],
+        "pooled_logit_variance": 0.0146402968671393
+      },
+      "reference_ray": {
+        "effect": [0.25, 0.5, 0.75],
+        "log_index": [-0.368770831030259, -0.631549262594603, -0.892357478353422],
+        "log_standard_error": [0.0577652275879332, 0.0397280576742544, 0.0793090327946515],
+        "interval": [[0.60686746603202, 0.788126390711948], [0.486061377051345, 0.581771132125033], [0.342402965111276, 0.490196973585975]]
+      }
+    }
+  ]
+}
