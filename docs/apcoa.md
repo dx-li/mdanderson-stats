@@ -149,9 +149,16 @@ geometries, 208 ellipse vertices, and ten medoid tie cases are checked. No R
 dependency is required by Python or its tests. See the
 [overlay source audit](../research/apcoa-plot-geometry-audit.md).
 
-**Catalog status is partial.** Core ordinations and opt-in native-style
-data ellipses/medoid connectors and labeled CSV/TSV input preparation are
-implemented. Arbitrary R formula/contrast/rank conventions, exact visual
-styling, and a full app workflow audit remain pending.
-Matching these numerical fixtures does not establish parity for every input or
-display option.
+The source-defined functional Python workflow is covered for explicitly
+encoded numeric designs: labeled CSV/TSV inputs are aligned, nuisance columns
+are prepared under a documented coding/intercept convention, both ordinations
+are computed, and the grouped plot can include source-referenced overlays.
+The [workflow coverage review](../research/apcoa-workflow-completion-audit.md)
+records the app steps and remaining source boundaries. No additional
+statistical calculation or download payload was specified in the cached app
+material.
+
+This does not claim exact R formula/contrast/QR parity, native styling, or
+Shiny result-download bytes. The numerical references validate the stated
+matrix and plot conventions; they do not establish parity for every possible
+R formula or display option.
