@@ -57,3 +57,20 @@ The Python checker compares the engine's deterministic private aggregation
 helper and native-convention concordance calculation against these immutable
 values. A full fit may use a distinct NumPy stream, and aggregate tie outcomes
 are consequently not expected to match native seeded runs.
+
+## Integrated validation, 2026-10-04
+
+All 75 affected forest, OOB, Brier, importance and reference checks pass with
+warnings as errors in 3.730 seconds, with 144.31 MiB peak process RSS and zero
+swaps. The R ledgers regenerated and all five direct OOB reference comparisons
+pass. Separate public-fit checks cover global fallback with no OOB trees and
+representable means of terminal times near `1e308`. Predictor-imputed Brier
+contributions match independent global censor/IPCW equations, with complete
+retained outcomes, dropped all-missing rows and stale-row-map rejection.
+
+Scoped Ruff, formatting and mypy checks pass for the integrated source. The
+engine retains per-leaf response scalars and row routes, without a dense
+tree-by-row response cube. OOB time means accumulate stably, status-mode ties
+precede field-ordered fallback draws, and resource preflights include the added
+state. Numerical and static checks remain serial with single-threaded numerical
+libraries; no full local suite, installation or new CI workflow was added.

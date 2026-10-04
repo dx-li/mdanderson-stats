@@ -6,12 +6,10 @@ single-pass tree-local imputation workflow. The chosen policy and a fingerprint
 of the original input are recorded in the fit. OOB results expose
 `row_indices`, mapping each OOB row back to the caller's input. The fit records
 `requested_trees` and the effective `n_trees`; bootstrap trees with no observed
-response donors are skipped, so these counts can differ. OOB concordance is
-available when outcomes are complete, including fits with imputed predictors.
-If time or event status was imputed, OOB concordance is unavailable:
-`concordance_available` is false, `concordance_error` is NaN, and
-`comparable_pairs` is zero. Complete-data calls retain their existing behavior
-and random-number path.
+response donors are skipped, so these counts can differ. OOB concordance uses
+complete outcomes directly or completes missing outcomes from eligible tree
+terminal summaries. Complete-data calls retain their existing behavior and
+random-number path.
 
 ```python
 import numpy as np
@@ -102,11 +100,59 @@ use the modal donor value, with the source tie rule.
 
 This is one imputation pass. It does not implement `nimpute > 1`, which in
 RF-SRC aggregates an initial OOB imputation and refits the forest. It also does
-not claim native R/C random-stream parity. Missing-aware Brier and VIMP
-calculations are not defined by this adapter batch and explicitly reject fits
-where imputation was performed. Ordinary prediction accepts complete profiles
+not claim native R/C random-stream parity. VIMP still rejects fits where
+imputation was performed. Ordinary prediction accepts complete profiles
 from an imputed fit; a profile containing missing values requires the
 prediction imputation path and an explicit `random_state`.
+
+## OOB diagnostics with missing data
+
+For a missing response component, OOB concordance pools completed terminal
+values only from trees where that row was OOB. Per-tree terminal times are
+already snapped to the master grid; their pooled mean is left unsnapped for
+scoring. Event status uses the modal terminal value with seeded tie handling.
+If no eligible terminal value exists, the corresponding original observed
+full-data values supply a sampled fallback. Observed response values remain
+unchanged. Rows without an OOB prediction are excluded from comparable pairs.
+
+When outcomes were missing, `fit.oob.completed_time` and `completed_event`
+retain these scoring responses; `original_missing_time` and
+`original_missing_event` mark the completed components. The two columns of
+`response_fallback_used` identify time and status fallback respectively.
+These immutable arrays align with `fit.oob.row_indices`. They describe the
+OOB scoring calculation; a final imputation summary uses a separate time-grid
+snap. `concordance_error` remains NaN if no comparable pairs exist.
+
+```python
+partial_time = time.copy()
+partial_time[2] = np.nan
+outcome_imputed = fit_random_survival_forest(
+    partial_time,
+    event,
+    x,
+    na_action="impute",
+    n_trees=8,
+    nodesize=1,
+    compute_oob=True,
+    random_state=19,
+)
+assert outcome_imputed.oob.concordance_available
+assert np.isfinite(outcome_imputed.oob.completed_time).all()
+assert outcome_imputed.oob.original_missing_time[2]
+
+from mdanderson_stats import random_survival_forest_oob_brier_score
+
+# The earlier fit has missing predictors and complete outcomes.
+brier = random_survival_forest_oob_brier_score(imputed, time, event, x)
+assert np.isfinite(brier.crps)
+```
+
+The default `censor_model="km"` Brier/CRPS calculation supports missing
+predictors when analyzed outcomes are complete. Its global censor estimate
+depends on outcomes and the saved OOB predictions. It verifies the full
+original-input fingerprint and applies the fit's row map, including removal
+of wholly missing rows. Missing retained outcomes and imputed fits with
+`censor_model="rfsrc"` remain unsupported; both raise explicit errors.
 
 The implementation follows the inspected randomForestSRC missing-value
 workflow independently. See the committed [missing-data reference audit](../research/random-survival-missing-reference-audit.md)

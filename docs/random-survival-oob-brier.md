@@ -28,9 +28,11 @@ This is a full-training OOB evaluator. Pass the original times, event
 indicators, covariates, and row order used to fit the forest. A fingerprint
 check rejects different or reordered training data. For `na_action="omit"`,
 the evaluator filters by the fit's retained row map before scoring; `row_indices`
-maps its Brier rows back to the original input. For `na_action="impute"` with
-actual missing values, it raises because missing-specific Brier semantics are
-not implemented. All analyzed training outcomes contribute to the censoring
+maps its Brier rows back to the original input. For `na_action="impute"`, the
+default `censor_model="km"` supports missing predictors when analyzed outcomes
+are complete. Missing analyzed outcomes and imputed fits with the separate
+`censor_model="rfsrc"` remain unsupported. All analyzed training outcomes
+contribute to the censoring
 distribution; only rows with at least one OOB prediction contribute to score
 means. A row without OOB contributors remains NaN in `brier`.
 `valid_row_count` reports the number of analyzed rows with OOB curves.
@@ -81,7 +83,9 @@ print(forest_scores.score_row_count, forest_scores.crps)
 
 The source fits with `na.action="na.omit"` by default but separately overlays
 stored imputed covariates for prediction. This Python route applies the fit's
-explicit omission row map and does not guess the native imputed Brier workflow.
+explicit row map. Its global-censor route can use saved OOB curves directly
+with complete outcomes and imputed predictors; the separate censoring-forest
+route still requires complete analyzed predictors.
 Zero censor-survival values are not clipped. Literal source weighting
 can yield NaN for an inactive `0/0` term; those row/time contributions are
 omitted from that time's mean and reflected in `score_row_count`. A positive

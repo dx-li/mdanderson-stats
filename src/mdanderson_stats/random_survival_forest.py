@@ -65,6 +65,10 @@ class RandomSurvivalForestOOB:
 
     Rows with zero tree contributors have NaN curves and mortality. The
     concordance error is ``1-C`` using the native 1e-9 absolute tie rules.
+    When outcomes were missing, ``completed_time`` and ``completed_event``
+    contain the OOB scoring responses. Time averages remain unsnapped at this
+    stage. ``response_fallback_used`` has time and event columns; all row-level
+    arrays align with ``row_indices``.
     """
 
     time_grid: FloatArray

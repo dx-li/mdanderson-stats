@@ -1124,9 +1124,16 @@ It retains original missingness for candidate-specific split masks, uses
 completed outcomes in terminal curves, and supports prediction from retained
 training donors. An independent base-R ledger checks donor multiplicity,
 split masks, terminal summaries and time-grid conventions without executing
-the native forest. Python uses a distinct random stream and explicit resource
-limits; iterative imputation and missing-response OOB metrics remain outside
-this implementation. See `research/random-survival-missing-reference-audit.md`.
+the native forest. Missing-outcome OOB concordance follows the separate
+performance-response contract: it averages per-tree snapped terminal times
+without snapping their ensemble mean, with modal statuses and observed-data
+fallback. Independent R response and concordance ledgers check this contract.
+The global-censor Brier path also accepts imputed predictors with complete
+analyzed outcomes. Python uses a distinct random stream and explicit resource
+limits; iterative imputation and remaining missing-data diagnostics are still
+open. See `research/random-survival-missing-reference-audit.md`,
+`research/random-survival-missing-oob-audit.md` and
+`research/random-survival-missing-brier-audit.md`.
 
 `random_survival_forest_brier.py` independently implements the same revision's
 full-training OOB Brier/CRPS helper with its exponential censor-hazard estimate,

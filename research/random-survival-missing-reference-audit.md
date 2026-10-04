@@ -137,10 +137,13 @@ Candidate cutpoints and scores exclude original missing responses and the
 candidate's missing predictor values. Terminal outcomes include completed
 responses; OOB routes reuse the tree's recorded terminal assignments.
 Predictor-only imputation still permits concordance with complete outcomes.
-Missing-outcome concordance is unavailable until the separate unsnapped OOB
-response contract is implemented. Imputed-fit Brier/VIMP, repeated imputation,
-and RF-SRC's automatic removal of entirely missing predictor columns remain
-open; the latter columns are rejected explicitly.
+Missing-outcome concordance and imputed-fit Brier/VIMP were unavailable at
+this initial checkpoint. Subsequent OOB response completion and predictor-only
+global-censor Brier support are documented in
+`random-survival-missing-oob-audit.md` and
+`random-survival-missing-brier-audit.md`. Repeated imputation and RF-SRC's
+automatic removal of entirely missing predictor columns remain open; the
+latter columns are rejected explicitly.
 
 All 64 affected forest, reference and adapter checks pass with warnings as
 errors in 3.140 seconds, with 148.80 MiB process peak RSS and zero swaps.
