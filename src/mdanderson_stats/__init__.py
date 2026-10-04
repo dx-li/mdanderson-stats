@@ -1075,6 +1075,7 @@ from .pinnacle import (
     pinnacle_quantify,
 )
 from .pinnacle_pipeline import PinnacleAnalysis, run_pinnacle
+from .pinnacle_tiff import PinnacleTiffFrame, PinnacleTiffSource
 from .pinnacle_wavelet import (
     PinnacleDenoiseResult,
     PinnacleDenoiseSettings,
@@ -1786,6 +1787,8 @@ __all__ = [
     "PinnacleDenoiseSettings",
     "PinnaclePeaks",
     "PinnacleQuantification",
+    "PinnacleTiffFrame",
+    "PinnacleTiffSource",
     "PinnacleWaveletTransform",
     "pinnacle_daubechies_filter",
     "pinnacle_denoise",

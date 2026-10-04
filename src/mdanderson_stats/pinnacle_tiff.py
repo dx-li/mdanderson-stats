@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
+import re
+import sys
 from collections.abc import Iterator, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-import re
-import sys
 from typing import Protocol
 
 import numpy as np
@@ -30,8 +30,7 @@ def _pillow_image_module():
     version_match = re.match(r"^(\d+)\.(\d+)(?:\.|$)", PIL.__version__)
     if version_match is None or not (12, 3) <= tuple(map(int, version_match.groups())) < (13, 0):
         raise ImportError(
-            "PinnacleTiffSource supports Pillow >=12.3,<13; "
-            "install mdanderson-stats[image]"
+            "PinnacleTiffSource supports Pillow >=12.3,<13; install mdanderson-stats[image]"
         )
     return Image
 
@@ -137,7 +136,7 @@ def _frame_metadata(
     if (height, width) != expected_shape:
         raise ValueError(f"{path} frame {frame} has inconsistent orientation dimensions")
     decoder_float_byteswap = False
-    tiles = getattr(image, "tile", ())
+    tiles: Sequence[object] = getattr(image, "tile", ())
     tile = tiles[0] if len(tiles) == 1 else None
     args = getattr(tile, "args", None)
     rawmode = args[0] if isinstance(args, tuple) and args else None
@@ -224,7 +223,9 @@ class PinnacleTiffSource:
                     or not isinstance(selector, int)
                     or not 0 <= selector < _MAX_IMAGES
                 ):
-                    raise ValueError(f"frame selectors must be None or integers in [0,{_MAX_IMAGES})")
+                    raise ValueError(
+                        f"frame selectors must be None or integers in [0,{_MAX_IMAGES})"
+                    )
         if len(paths) > max_images:
             raise ValueError("TIFF source exceeds max_images")
 
@@ -237,9 +238,7 @@ class PinnacleTiffSource:
             if not path.is_file():
                 raise ValueError(f"TIFF path is not a regular file: {path}")
             try:
-                with path.open("rb") as stream, Image.open(
-                    stream, formats=["TIFF"]
-                ) as image:
+                with path.open("rb") as stream, Image.open(stream, formats=["TIFF"]) as image:
                     if selector is None:
                         try:
                             image.seek(1)
@@ -305,9 +304,7 @@ class PinnacleTiffSource:
         Image = _pillow_image_module()
 
         for expected in self._frames:
-            with expected.path.open("rb") as stream, Image.open(
-                stream, formats=["TIFF"]
-            ) as image:
+            with expected.path.open("rb") as stream, Image.open(stream, formats=["TIFF"]) as image:
                 if not expected.selected_explicitly:
                     try:
                         image.seek(1)
@@ -332,13 +329,17 @@ class PinnacleTiffSource:
                 if actual != expected:
                     raise ValueError(f"TIFF metadata changed after preflight: {expected.image_id}")
                 image.load()
-                pixels: NDArray[np.generic] = np.array(image, copy=True)
+                pixels: NDArray[np.integer | np.floating] = np.array(image, copy=True)
             # Pillow 12.3 decodes some 8-bit WhiteIsZero scalar TIFFs through
             # the inverting L;I raw mode. Restore the stored samples. Other
             # supported depths use non-inverting raw modes in this decoder.
             if expected.photometric == 0 and expected.bits_per_sample == 8:
                 pixels = np.asarray(255 - pixels, dtype=pixels.dtype)
-            if expected.decoder_float_byteswap and pixels.dtype.kind == "f" and pixels.dtype.itemsize == 4:
+            if (
+                expected.decoder_float_byteswap
+                and pixels.dtype.kind == "f"
+                and pixels.dtype.itemsize == 4
+            ):
                 # Pillow's libtiff path returns native-order bytes, but the
                 # unchanged TIFF-order float rawmode interprets them as file order.
                 pixels = pixels.byteswap()
@@ -352,7 +353,5 @@ class PinnacleTiffSource:
             if pixels.ndim != 2 or pixels.shape != expected.shape or pixels.dtype.kind not in "iuf":
                 raise ValueError(f"TIFF decoder returned an unsupported array: {expected.image_id}")
             if not np.all(np.isfinite(pixels)) or np.any(pixels < 0):
-                raise ValueError(
-                    f"TIFF pixels must be finite and nonnegative: {expected.image_id}"
-                )
+                raise ValueError(f"TIFF pixels must be finite and nonnegative: {expected.image_id}")
             yield pixels

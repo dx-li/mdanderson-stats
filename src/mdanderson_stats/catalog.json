@@ -3259,7 +3259,8 @@
         "Periodic redundant Daubechies transform, inverse reconstruction and explicit paper/RWT hard-threshold denoising conventions with bounded memory",
         "Replayable two-pass workflow with raw-gel averaging before denoising, full-image peak coordinates and streamed input identity checks",
         "Optional sequential per-gel wavelet denoising with explicit settings, rectangular local backgrounds and raw-volume normalization; combined pipeline and per-gel memory bounds",
-        "Native image/project formats, interactive editing, reporting and executable equivalence remain open"
+        "Replayable bounded grayscale TIFF input with explicit page selection, orientation-normalized stored intensities, immutable source metadata and one-frame-at-a-time decoding through optional Pillow",
+        "Native project formats, unsupported TIFF variants, interactive editing, reporting and executable equivalence remain open"
       ],
       "validation": [
         "tests/test_pinnacle.py",
@@ -3275,7 +3276,10 @@
         "tests/fixtures/pinnacle-wavelet.json",
         "docs/pinnacle.md",
         "docs/pinnacle-sources.json",
-        "research/pinnacle-audit.md"
+        "research/pinnacle-audit.md",
+        "tests/test_pinnacle_tiff_reference.py",
+        "tests/helpers/pinnacle_tiff_writer.py",
+        "research/pinnacle-tiff-reference-audit.md"
       ]
     },
     {

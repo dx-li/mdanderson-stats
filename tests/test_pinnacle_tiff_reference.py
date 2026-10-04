@@ -8,9 +8,9 @@ import pytest
 pytest.importorskip("PIL")
 
 from helpers.pinnacle_tiff_writer import write_gray_tiff
-from mdanderson_stats.pinnacle_tiff import PinnacleTiffSource
 
 from mdanderson_stats.pinnacle_pipeline import run_pinnacle
+from mdanderson_stats.pinnacle_tiff import PinnacleTiffSource
 
 
 def _source_with_companion(path):

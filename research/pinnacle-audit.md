@@ -150,5 +150,30 @@ The workspace preflight uses a conservative per-pixel estimate covering decode
 and array conversion, including overlap with the previous streamed frame.
 Pillow allocation behavior remains implementation-dependent, so the estimate
 is not a process-memory guarantee. This adapter does not claim native
-project-file or GUI parity; integrated validation results will be appended by
-the root coordinator.
+project-file or GUI parity.
+
+## TIFF integration validation (2026-10-04 UTC)
+
+The reader opens each TIFF through a binary file stream, avoiding Pillow's
+filename-based memory map. The latter maps an oriented image using dimensions
+that have already been exchanged, before the decoder applies orientation;
+the independent rectangular uint16 fixture exposed incorrect pixels and shape.
+The stream path preserves stored dimensions during decode and applies the
+orientation once. It also closes both image and file handles before yielding.
+Pillow is an optional `image` extra, constrained to versions >=12.3,<13; the
+lazy loader enforces that range when this source is used.
+
+The independent byte-writer fixtures and all affected existing Pinnacle checks
+pass together: **40 tests**, warnings treated as errors, **2.062 seconds**,
+**157.84 MiB** peak process RSS, and **zero swaps**. This includes the original
+R/C numerical references, raw and compressed stored samples, high unsigned
+32-bit values, both float byte orders, explicit page selection, orientation,
+resource rejection, and file-to-array pipeline agreement. Unsupported signed
+libtiff byte-order routes fail during header preflight. Targeted Ruff,
+formatting and source mypy checks pass. Numerical work stayed serial with one
+BLAS/OpenMP thread. No full local suite or new CI workflow was added.
+
+The TIFF workflow is an additional usable input route. Catalog entry 95 remains
+partial because native project files, interactive edits, reports, unsupported
+TIFF variants and executable-level equivalence remain outside the verified
+implementation.

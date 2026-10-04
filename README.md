@@ -24,7 +24,8 @@ cd mdanderson-stats
 python -m pip install .
 ```
 
-Use `python -m pip install '.[plot]'` for optional figures. For reproducible
+Use `python -m pip install '.[plot]'` for optional figures, or
+`python -m pip install '.[image]'` for Pinnacle TIFF input. For reproducible
 analyses, record the source revision with `git rev-parse HEAD` and retain
 the method settings and random seeds. Development setup is described below.
 
@@ -1565,10 +1566,13 @@ two-dimensional gel images. It combines streaming image averaging, undecimated
 Daubechies wavelet denoising, peak detection, background correction and
 normalization. Optional per-gel denoising and rectangular local backgrounds
 keep detection on the denoised average of raw gels and preserve raw image-volume
-normalization.
+normalization. A replayable TIFF source reads aligned grayscale gels one at a
+time, preserves numerical intensity samples and makes multi-frame selection
+explicit. It feeds the same verified analysis pipeline and retains file/frame
+identifiers for matching the result rows to input images.
 Explicit resource limits bound image processing. Independent R
 calculations and original Rice Wavelet Toolbox C outputs provide numerical
-references. Native image/project formats and application workflow equivalence
+references. Unsupported TIFF variants, native project formats and application workflow equivalence
 remain open. This product includes software developed by Rice University,
 Houston, Texas and its contributors; see the [preserved license](notices/rice-wavelet-LICENSE.txt).
 
