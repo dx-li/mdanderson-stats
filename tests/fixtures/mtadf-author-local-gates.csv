@@ -1,0 +1,11 @@
+case,position,dose,p_backward_nonpositive,p_forward_positive,ce1,ce2,admissible_count,action,desired_dose,capped_dose
+lower_at_ce1_stays,lower,1,,0.3,0.3,0.4,5,posterior_gate,1,1
+lower_above_ce1_moves_up,lower,1,,0.300001,0.3,0.4,5,posterior_gate,2,2
+top_at_1_minus_ce1_stays,top,5,0.7,,0.3,0.4,5,posterior_gate,5,5
+top_above_1_minus_ce1_moves_down,top,5,0.700001,,0.3,0.4,5,posterior_gate,4,4
+untried_at_1_minus_ce2_moves_up,interior_untried,3,0.6,,0.3,0.4,5,posterior_gate,4,4
+untried_above_1_minus_ce2_stays,interior_untried,3,0.600001,,0.3,0.4,5,posterior_gate,3,3
+tried_both_strict_gates_move_up,interior_tried,3,0.6,0.300001,0.3,0.4,5,posterior_gate,4,4
+tried_backward_above_1_minus_ce1_moves_down,interior_tried,3,0.700001,0.9,0.3,0.4,5,posterior_gate,2,2
+tried_forward_at_ce1_does_not_move_up,interior_tried,3,0.6,0.3,0.3,0.4,5,posterior_gate,3,3
+admissibility_one_shortcuts_fit_and_caps_at_one,safety_cap,4,,,0.3,0.4,1,safety_only_no_fit,1,1
