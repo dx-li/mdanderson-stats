@@ -111,9 +111,9 @@ dose index. Stage-I movement is clamped at the lowest/highest level; a blocked
 escalation stays at the current dose, and an eliminated current dose moves to an
 available lower dose. These edge policies are documented Python choices.
 
-The controller accepts at most 100 doses and 1,000 total observations. Accelerated
-titration, delayed-efficacy/immune-response imputation and native reports
-remain unimplemented. The application's categorical controls also carry
+The controller accepts at most 100 doses and 1,000 total observations.
+Delayed-efficacy/immune-response imputation and native reports remain
+unimplemented. The application's categorical controls also carry
 under-development labels; native categorical output parity is not claimed.
 
 The independent base-R script `tools/reference_uboin.R` checks binary, 3×3 and
@@ -124,6 +124,51 @@ The paper supplement was inaccessible behind a challenge page during the audit.
 `tools/reference_uboin_conduct.R` independently computes 28 stage-I boundary
 rows across four targets; decisions on both sides of these cutoffs check
 escalation, de-escalation and toxicity elimination against base R.
+
+## Stage-I accelerated titration
+
+`simulate_uboin(..., accelerated_titration=True)` applies the source's
+single-patient Stage-I dose path before ordinary cohorts. At each step it
+enrolls one patient at the current dose and moves up one dose if neither the
+first DLT nor the second grade-2 toxicity has occurred. Set
+`titration_cap=None` to use the highest dose, or provide a one-based upper dose
+cap. When a toxicity trigger occurs, or a clean path reaches the highest dose,
+the simulator adds up to `cohort_size - 1` patients at the last titration dose
+to complete its first cohort. A clean path reaching a lower cap instead starts
+a full cohort at the next higher dose. The hard `max_patients` limit truncates
+that top-up when necessary. Ordinary U-BOIN decisions resume after the prelude;
+all titration observations remain in the joint count ledger.
+
+The toxicity categories must distinguish moderate grade 2 from DLT. Supply the
+one-based ordinal `grade2_toxicity_level` explicitly; it must identify a
+category below the design's DLT split. For categories `[none, grade 2, DLT]`,
+use `dlt_level=2` and `grade2_toxicity_level=2`. Binary toxicity data cannot
+distinguish grade 2 from DLT and are rejected for an active titration path.
+Titration has no effect when `cohort_size=1` or the starting dose is already
+the highest dose; those cases preserve the ordinary simulation path.
+
+```python
+result = simulate_uboin(
+    trial,
+    joint_probabilities,
+    cohort_size=3,
+    accelerated_titration=True,
+    titration_cap=5,
+    grade2_toxicity_level=2,
+    trials=1000,
+    seed=142,
+)
+print(result.titration_end_reason)
+print(result.titration_patients, result.titration_end_dose)
+```
+
+The simulator reports the number of singleton titration patients, the
+cumulative grade-2 count over that path, its ending dose and reason. The
+standalone `uboin_stage1_titration_plan` function can replay an observed
+one-based toxicity-category path and return the exact dose path, pending
+singleton dose, top-up count and ordinary-cohort handoff. See the
+[source audit](../research/uboin-titration-audit.md) for the guide wording and
+the treatment-ledger cases used to pin these conventions.
 
 ## Complete-outcome operating characteristics
 
