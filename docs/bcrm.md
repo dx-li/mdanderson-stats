@@ -160,8 +160,9 @@ MED, and the full per-patient transition controller, are not specified here.
 
 The guide also defines the futility controls and says futility stopping is
 independent of sample-size stopping. It explicitly specifies the zero-gap rule:
-after both extreme doses reach the required enrollment, stop unless confidence
-that maximum-dose effect exceeds minimum-dose effect is greater than 90%. The
+after both extreme doses reach the required enrollment, stop unless the trial
+is "90% confident" that maximum-dose effect exceeds minimum-dose effect. The
+guide does not specify equality handling at that confidence threshold. The
 configuration permits a positive `min-diff`, but the guide does not say whether
 the same 90% confidence cutoff applies to that positive-gap comparison. The
 futility rule is therefore not exposed as a general native decision function.
