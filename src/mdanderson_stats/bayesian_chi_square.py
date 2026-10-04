@@ -1,4 +1,4 @@
-"""Johnson's posterior chi-square diagnostic for complete continuous observations."""
+"""Johnson's posterior chi-square diagnostics for continuous and discrete data."""
 
 from collections.abc import Sequence
 from dataclasses import dataclass
@@ -11,6 +11,9 @@ from scipy.special import gammainc, gammaincc, gammaincinv, logsumexp
 from ._validation import FloatArray, finite, scalar
 from .boin import _owned
 from .chi_square_order_bounds import ChiSquareOrderBounds, chi_square_order_bounds
+
+_MAX_DISCRETE_CDF_CELLS = 1_000_000
+_MAX_DISCRETE_COUNT_CELLS = 2_000_000
 
 
 @dataclass(frozen=True)
@@ -86,6 +89,151 @@ def bayesian_chi_square_cdf(
         critical,
         float(np.mean(statistic > critical)),
     )
+
+
+def _bounded_matrix_shape(value: object, name: str) -> tuple[int, int]:
+    """Inspect only bounded built-in matrix forms before NumPy materialization."""
+    if isinstance(value, np.ndarray):
+        if value.ndim != 2:
+            raise ValueError(f"{name} must be a two-dimensional real matrix")
+        rows, columns = value.shape
+    elif isinstance(value, (list, tuple)):
+        rows = len(value)
+        if rows < 1:
+            raise ValueError(f"{name} must have at least one posterior draw")
+        if rows > _MAX_DISCRETE_CDF_CELLS:
+            raise ValueError(f"{name} exceeds the discrete CDF cell limit")
+        first = value[0]
+        if isinstance(first, np.ndarray):
+            if first.ndim != 1:
+                raise ValueError(f"{name} must be a rectangular matrix")
+            columns = first.size
+        elif isinstance(first, (list, tuple)):
+            columns = len(first)
+        else:
+            raise ValueError(f"{name} must be a rectangular matrix")
+        if columns < 1 or rows * columns > _MAX_DISCRETE_CDF_CELLS:
+            raise ValueError(f"{name} exceeds the discrete CDF cell limit")
+        for row in value:
+            if isinstance(row, np.ndarray):
+                if row.ndim != 1:
+                    raise ValueError(f"{name} must be a rectangular matrix")
+                row_length = row.size
+                if row.dtype.kind not in "fiu":
+                    raise ValueError(f"{name} must contain real numeric values")
+            elif isinstance(row, (list, tuple)):
+                row_length = len(row)
+            else:
+                raise ValueError(f"{name} must be a rectangular matrix")
+            if row_length != columns:
+                raise ValueError(f"{name} must be a rectangular matrix")
+            if isinstance(row, (list, tuple)):
+                for item in row:
+                    if isinstance(item, np.ndarray):
+                        if item.ndim != 0 or item.dtype.kind not in "fiu":
+                            raise ValueError(f"{name} cells must be real numeric scalars")
+                        item = item.item()
+                    if isinstance(item, (bool, np.bool_)) or not isinstance(
+                        item, (int, float, np.integer, np.floating)
+                    ):
+                        raise ValueError(f"{name} cells must be real numeric scalars")
+        return rows, columns
+    else:
+        raise TypeError(f"{name} must be a NumPy array or a bounded list/tuple matrix")
+    if rows < 1 or columns < 1 or rows * columns > _MAX_DISCRETE_CDF_CELLS:
+        raise ValueError(f"{name} must be nonempty and within the discrete CDF cell limit")
+    if value.dtype.kind not in "fiu":
+        raise ValueError(f"{name} must contain real numeric values")
+    return rows, columns
+
+
+def _discrete_cdf_matrix(value: object, shape: tuple[int, int], name: str) -> FloatArray:
+    if isinstance(value, np.ndarray) and value.dtype.kind not in "fiu":
+        raise ValueError(f"{name} must contain real numeric values")
+    try:
+        with np.errstate(over="ignore", invalid="ignore"):
+            matrix = np.array(value, dtype=np.float64, copy=True)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError(f"{name} must contain real numeric values") from exc
+    if matrix.shape != shape or np.any(~np.isfinite(matrix)) or np.any((matrix < 0) | (matrix > 1)):
+        raise ValueError(f"{name} must match the matrix shape and contain values in [0,1]")
+    return matrix
+
+
+def bayesian_chi_square_discrete_cdf(
+    left_cdf_samples: ArrayLike,
+    right_cdf_samples: ArrayLike,
+    *,
+    rng: int | np.random.Generator,
+    bins: int | None = None,
+    critical_probability: float = 0.95,
+) -> BayesianChiSquare:
+    """Randomize posterior CDF mass for observed discrete or rounded data.
+
+    Each input has shape ``(posterior draws, observations)``. For a discrete
+    observation, its CDF mass is ``(F(y-), F(y)]``; for a rounded observation,
+    it is the CDF mass over the reported rounding interval. The same row in the
+    two inputs must come from one joint posterior parameter draw. Independent
+    uniforms allocate each observed mass across the equal-probability bins by
+    forming ``F_left + U * (F_right - F_left)``. The resulting values are
+    analyzed by :func:`bayesian_chi_square_cdf` using its upper-inclusive bin
+    boundaries. Zero or unrepresentable mass (equal CDF bounds) is rejected.
+
+    This function does not fit a discrete or rounded-data likelihood. The
+    posterior draws must already condition on the corresponding discrete mass
+    or rounded interval probability. Right-censored observations are not
+    supported by this transform. RNG is an explicit nonnegative integer seed
+    or NumPy Generator. The asymptotic chi-square reference retains the
+    regularity limitations described for the continuous diagnostic.
+    """
+    left_shape = _bounded_matrix_shape(left_cdf_samples, "left_cdf_samples")
+    right_shape = _bounded_matrix_shape(right_cdf_samples, "right_cdf_samples")
+    if left_shape != right_shape:
+        raise ValueError("left_cdf_samples and right_cdf_samples must have matching shapes")
+    draws, observations = left_shape
+    if observations < 2:
+        raise ValueError("at least two observations are required")
+    bin_count = (
+        max(2, int(np.floor(observations**0.4 + 0.5))) if bins is None else scalar(bins, "bins")
+    )
+    level = scalar(critical_probability, "critical_probability")
+    if (
+        not np.isfinite(bin_count)
+        or bin_count != int(bin_count)
+        or not 2 <= bin_count <= 1000
+        or not 0 < level < 1
+        or draws * int(bin_count) > _MAX_DISCRETE_COUNT_CELLS
+    ):
+        raise ValueError(
+            "require 2..1000 bins, critical probability in (0,1), "
+            "and at most 2 million posterior-draw/bin cells"
+        )
+    if isinstance(rng, np.random.Generator):
+        generator = rng
+    elif isinstance(rng, (int, np.integer)) and not isinstance(rng, (bool, np.bool_)):
+        seed = int(rng)
+        if not 0 <= seed <= np.iinfo(np.uint64).max:
+            raise ValueError("rng seed must be a nonnegative uint64 integer")
+        generator = np.random.default_rng(seed)
+    else:
+        raise TypeError("rng must be an explicit nonnegative integer seed or NumPy Generator")
+
+    left = _discrete_cdf_matrix(left_cdf_samples, left_shape, "left_cdf_samples")
+    right = _discrete_cdf_matrix(right_cdf_samples, right_shape, "right_cdf_samples")
+    if np.any(left >= right):
+        raise ValueError("every observed discrete/rounded value must have positive CDF mass")
+    uniform = generator.random(left_shape)
+    with np.errstate(over="ignore", invalid="ignore"):
+        randomized_cdf = left + uniform * (right - left)
+    # A positive uniform can round back to the open lower endpoint. Keep it
+    # inside the mass interval so a boundary atom is not assigned below itself.
+    # If adjacent floats leave no representable interior, this selects right;
+    # the binning routine's upper-inclusive edge rule then remains authoritative.
+    randomized_cdf = np.maximum(randomized_cdf, np.nextafter(left, right))
+    randomized_cdf = np.minimum(randomized_cdf, right)
+    if np.any(~np.isfinite(randomized_cdf)):
+        raise ArithmeticError("randomized CDF values are not representable")
+    return bayesian_chi_square_cdf(randomized_cdf, bins=int(bin_count), critical_probability=level)
 
 
 @dataclass(frozen=True)

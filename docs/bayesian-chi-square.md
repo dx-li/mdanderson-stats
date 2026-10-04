@@ -60,6 +60,29 @@ parameter vector from its posterior. Covariate-specific distributions may vary
 across observations, as in the paper's first corollary. Posterior-predictive
 observations and repeated maximum-likelihood estimates are not substitutes.
 
+For discrete observations or rounded continuous measurements, use
+`bayesian_chi_square_discrete_cdf(left_cdf_samples, right_cdf_samples, rng=...)`.
+Supply the posterior CDF immediately before and after each observed atom, or at
+the lower and upper ends of each reported rounding interval. The two matrices
+must preserve the same joint posterior draw in each row, and every supplied
+interval must have positive representable probability mass. The function draws
+an independent uniform position inside each interval, then uses the same
+equal-probability bins and Pearson statistic as the continuous API. This is the
+randomized discrete extension described by Johnson; the public BCSTTE guide's
+rounded-integer survival example uses `(t - 1/2, t + 1/2)` intervals.
+
+The diagnostic does not fit a discrete or rounded likelihood. Compute bounds
+from posterior draws conditioned on the corresponding atom probability or
+rounding-interval probability; passing point-density fits or a posterior
+conditioned on the unrounded midpoint is not equivalent. This randomized CDF
+transform does not cover right censoring. Input matrices are limited to one
+million draw-observation cells and the result to two million draw-bin cells.
+An explicit nonnegative uint64 seed or NumPy `Generator` is required; the
+uniform randomization is a Python convention and is not claimed to reproduce
+the native program's random stream. Intervals with no representable interior
+float use their upper endpoint under the existing upper-inclusive bin rule;
+this is a finite-precision convention. See the [discrete/rounded method audit](../research/bayesian-chi-square-discrete-audit.md).
+
 Equal-probability intervals include their upper endpoints. Numerical CDF zero
 belongs to the first interval. Counts produce the Pearson statistic with
 expected count `n/K`, and the reference distribution has `K-1` degrees of freedom,
@@ -116,7 +139,11 @@ evaluation use log-space calculations to preserve unit invariance.
 
 ```python
 import numpy as np
-from mdanderson_stats import bayesian_chi_square_cdf, exponential_bayesian_gof
+from mdanderson_stats import (
+    bayesian_chi_square_cdf,
+    bayesian_chi_square_discrete_cdf,
+    exponential_bayesian_gof,
+)
 
 result = bayesian_chi_square_cdf([[0, 0.25, 0.5, 0.75, 1]], bins=4)
 np.testing.assert_array_equal(result.bin_counts, [[2, 1, 1, 1]])
@@ -138,7 +165,29 @@ np.testing.assert_allclose(censored.log_posterior_rate, np.log(18))
 assert censored.diagnostic is None
 ```
 
-These fits assume independent, noninformative right censoring. All-censored
+For a discrete example, suppose independent observations follow a geometric
+model on `{0, 1, ...}` with event-count parameter `q`. With a `Beta(1, 1)` prior,
+the posterior after observing the displayed values is
+`Beta(1 + n, 1 + sum(y))`. The following draws are correctly conditioned on
+that discrete likelihood; they illustrate the API and are not a native BCSTTE
+fit or comparison.
+
+```python
+import numpy as np
+from mdanderson_stats import bayesian_chi_square_discrete_cdf
+
+observed = np.array([0, 1, 1, 2, 3])
+draws = np.random.default_rng(11).beta(
+    1 + observed.size, 1 + int(observed.sum()), size=512
+)
+log_survival = np.log1p(-draws[:, None])
+left = -np.expm1(observed[None, :] * log_survival)
+right = -np.expm1((observed[None, :] + 1) * log_survival)
+diagnostic = bayesian_chi_square_discrete_cdf(left, right, bins=3, rng=20261004)
+assert diagnostic.bin_counts.shape == (512, 3)
+```
+
+The exponential fits above assume independent, noninformative right censoring. All-censored
 inputs are permitted when the posterior is proper, a Python extension beyond
 the guide's requirement of at least one event. The source does not define a
 censored-data Johnson transform, so censored fits return `diagnostic=None`.
@@ -156,9 +205,11 @@ chi-square marginals, search correction, and extreme-tail underflow.
 
 ## Remaining coverage and source issues
 
-**Catalog status is partial.** Rounded observations, the native censored-data
-diagnostic, native fitting/priors and fallback priors, native Rychlik rank/trim
-conventions, sorting and native HTML reports remain pending.
+**Catalog status is partial.** The source-defined randomized discrete/rounded
+CDF diagnostic is available from caller-supplied posterior CDF mass bounds.
+Native rounded-data fitting, the native censored-data diagnostic, native
+fitting/priors and fallback priors, native Rychlik rank/trim conventions,
+sorting and native HTML reports remain pending.
 The generic interface can consume verified posterior CDF draws from other models,
 but it does not itself fit those models or impute censored observations.
 BIC and DIC were previously listed as missing native features, but the cached

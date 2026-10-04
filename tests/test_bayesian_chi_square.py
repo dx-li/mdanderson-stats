@@ -2,7 +2,11 @@ import numpy as np
 import pytest
 from scipy.stats import chi2
 
-from mdanderson_stats import bayesian_chi_square_cdf, exponential_bayesian_gof
+from mdanderson_stats import (
+    bayesian_chi_square_cdf,
+    exponential_bayesian_gof,
+)
+from mdanderson_stats.bayesian_chi_square import bayesian_chi_square_discrete_cdf
 
 
 def test_bin_endpoints_direct_pearson_statistics_and_reference_summaries():
@@ -16,6 +20,56 @@ def test_bin_endpoints_direct_pearson_statistics_and_reference_summaries():
     assert result.critical_value == pytest.approx(chi2.ppf(0.95, 3))
     assert result.degrees_of_freedom == 3
     assert not result.statistic.flags.writeable
+
+
+def test_discrete_cdf_mass_randomization_matches_hand_binning_and_replays():
+    left = np.array([[0.00, 0.10, 0.24, 0.40, 0.50, 0.74], [0.20, 0.24, 0.25, 0.70, 0.90, 0.10]])
+    right = np.array([[0.20, 0.40, 0.30, 0.60, 0.80, 0.90], [0.40, 0.30, 0.75, 0.90, 1.00, 0.90]])
+    seed = 1234
+    uniforms = np.random.default_rng(seed).random(left.shape)
+    randomized = left + uniforms * (right - left)
+    randomized = np.maximum(randomized, np.nextafter(left, right))
+    expected_counts = np.zeros((left.shape[0], 4), dtype=int)
+    edges = (0.25, 0.5, 0.75)
+    for row_index, row in enumerate(randomized):
+        for value in row:
+            bin_index = 0
+            while bin_index < len(edges) and value > edges[bin_index]:
+                bin_index += 1
+            expected_counts[row_index, bin_index] += 1
+    expected_statistic = np.sum((expected_counts - 1.5) ** 2 / 1.5, axis=1)
+
+    result = bayesian_chi_square_discrete_cdf(left, right, bins=4, rng=seed)
+    replay = bayesian_chi_square_discrete_cdf(left, right, bins=4, rng=seed)
+    np.testing.assert_array_equal(result.bin_counts, expected_counts)
+    np.testing.assert_allclose(result.statistic, expected_statistic, rtol=0, atol=0)
+    np.testing.assert_array_equal(result.bin_counts, replay.bin_counts)
+    np.testing.assert_array_equal(result.statistic, replay.statistic)
+    assert result.degrees_of_freedom == 3
+
+
+def test_discrete_cdf_boundaries_and_invalid_preflight_do_not_consume_generator():
+    edge = 0.5
+    left = np.array([[np.nextafter(edge, 0.0), edge]])
+    right = np.array([[edge, np.nextafter(edge, 1.0)]])
+    boundary = bayesian_chi_square_discrete_cdf(left, right, bins=2, rng=5)
+    np.testing.assert_array_equal(boundary.bin_counts, [[1, 1]])
+
+    valid_left = np.array([[0.1, 0.2]])
+    for invalid_left, invalid_right in (
+        (valid_left, np.array([[0.4, 0.2]])),
+        ([[0.1, [0.2]]], [[0.4, 0.5]]),
+        ([[0.1, 0.2 + 1j]], [[0.4, 0.5]]),
+        ([[0.1, True]], [[0.4, 0.5]]),
+        (
+            np.broadcast_to(np.array([[0.1]]), (1001, 1000)),
+            np.broadcast_to(np.array([[0.2]]), (1001, 1000)),
+        ),
+    ):
+        actual, control = np.random.default_rng(8), np.random.default_rng(8)
+        with pytest.raises(ValueError):
+            bayesian_chi_square_discrete_cdf(invalid_left, invalid_right, bins=4, rng=actual)
+        assert actual.random() == control.random()
 
 
 def test_exact_rate_posterior_and_time_unit_invariance():
