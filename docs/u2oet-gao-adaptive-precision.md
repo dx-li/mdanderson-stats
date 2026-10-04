@@ -74,10 +74,12 @@ for every model parameter. Chunk boundaries change random-number consumption,
 so this workflow is not expected to match a single fixed-length fit from the
 same seed.
 
-Before consuming randomness, the wrapper checks aggregate worst-case
-likelihood evaluations and full-grid work over warmup and every possible
-chunk, including one deterministic initial-state likelihood check per chain,
-plus retained and temporary array estimates. These conservative limits
-reuse the GAO sampler's per-evaluation hard caps and the adaptive wrapper's
-4-million retained-joint-cell and 12-million live-cell policies. They are
-resource estimates, not RSS or runtime guarantees.
+Before consuming randomness, the wrapper checks minimum aggregate likelihood
+evaluations and full-grid work over warmup and every possible chunk, including
+one deterministic initial-state likelihood check per chain. It then passes
+the remaining global budgets to each chunk and accounts actual evaluations
+and work; if a slice update needs more than the remaining allowance, the
+sampler raises explicitly. Retained and temporary arrays are separately
+preflighted. These limits reuse the GAO sampler's hard caps and the adaptive
+wrapper's 4-million retained-joint-cell and 12-million live-cell policies.
+They are resource estimates, not RSS or runtime guarantees.

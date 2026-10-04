@@ -143,3 +143,49 @@ def test_zero_variance_corners_do_not_pass_precision_target():
     assert not result.target_met
     assert np.all(result.posterior_sd == 0)
     assert np.all(np.isnan(result.mcse_ratio))
+
+
+def test_free_prior_accepts_burnin_500_with_four_chains():
+    mean, sd, counts, toxicity_only = _inputs()
+    result = fit_u2oet_gao_adaptive_precision(
+        [1, 2],
+        [1, 2],
+        counts,
+        prior_mean=mean,
+        prior_sd=sd,
+        toxicity_only=toxicity_only,
+        utility=np.array([[0.0, 1.0], [2.0, 0.0]]),
+        target_mcse_ratio=0.05,
+        max_draws_per_chain=500,
+        initial_draws=500,
+        batch_draws=64,
+        warmup=500,
+        chains=4,
+        rng=np.random.default_rng(774),
+    )
+    assert result.draws_per_chain == 500
+    assert result.fit.parameters.shape == (4, 500, mean.size)
+    assert np.isfinite(result.fit.likelihood_evaluations)
+    assert result.fit.likelihood_evaluations < 1_000_000
+
+
+def test_runtime_slice_budget_exhaustion_is_explicit():
+    mean, sd, counts, toxicity_only = _inputs()
+    with pytest.raises(ArithmeticError, match="likelihood-evaluation budget exhausted"):
+        fit_u2oet_gao_adaptive_precision(
+            [1, 2],
+            [1, 2],
+            counts,
+            prior_mean=mean,
+            prior_sd=sd,
+            toxicity_only=toxicity_only,
+            utility=np.ones((2, 2)),
+            target_mcse_ratio=0.01,
+            max_draws_per_chain=8,
+            initial_draws=8,
+            warmup=0,
+            chains=2,
+            max_likelihood_evaluations=20,
+            max_work=320,
+            rng=np.random.default_rng(775),
+        )

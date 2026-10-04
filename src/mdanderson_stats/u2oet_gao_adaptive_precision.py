@@ -18,7 +18,6 @@ from .u2oet_decision import _integer
 from .u2oet_gao import _dose_grid
 from .u2oet_gao_fit import (
     _MAX_LIKELIHOOD_EVALUATIONS,
-    _MAX_SLICE_STEPS,
     _MAX_WORK_UNITS,
     U2OETGAOFit,
     _input_shape,
@@ -168,19 +167,24 @@ def fit_u2oet_gao_adaptive_precision(
     joint_shape = (*n.shape[:2], e_levels, t_levels)
     joint_cells = int(np.prod(joint_shape))
     free = int(np.count_nonzero(prior_scale > 0))
-    iterations = warmup + effective_draws
     chunks = 1 + len(schedule)
-    per_chain_evaluations = chunks + iterations * _MAX_SLICE_STEPS if free else chunks
-    # A deterministic initial-state likelihood check is performed once per
-    # chain before RNG use, in addition to the fitter's chunk evaluations.
-    worst_evaluations = chains * (per_chain_evaluations + 1)
-    worst_work = worst_evaluations * joint_cells
-    if worst_evaluations > max_likelihood_evaluations:
-        raise ValueError("worst-case adaptive GAO evaluations exceed max_likelihood_evaluations")
-    if worst_work > max_work:
-        raise ValueError("worst-case adaptive GAO work exceeds max_work")
+    iterations = warmup + effective_draws
+    # Each chunk starts with one likelihood evaluation per chain. The sampler
+    # then needs at least one accepted proposal per free-coordinate sweep.
+    # Slice rejection can require more; remaining caps are passed through so
+    # that actual work, rather than the 1000-step theoretical ceiling, governs.
+    minimum_evaluations = chains * (1 + chunks + (iterations if free else 0))
+    minimum_work = minimum_evaluations * joint_cells
+    if minimum_evaluations > max_likelihood_evaluations:
+        raise ValueError("minimum adaptive GAO evaluations exceed max_likelihood_evaluations")
+    if minimum_work > max_work:
+        raise ValueError("minimum adaptive GAO work exceeds max_work")
     retained_joint_cells = chains * effective_draws * joint_cells
-    live_cells = chains * effective_draws * (3 * (joint_cells + dimension + 2) + 4 + 16 + 8)
+    largest_chunk = max((initial_draws, *schedule))
+    live_cells = chains * (
+        effective_draws * (2 * (joint_cells + dimension + 1) + 14 * dimension + 2 + 4 + 16 + 8)
+        + largest_chunk * (14 * dimension + 2 * joint_cells + 2)
+    )
     if retained_joint_cells > _MAX_RETAINED_JOINT_CELLS:
         raise ValueError("adaptive retained GAO posterior exceeds the 4-million-cell cap")
     if live_cells > _MAX_LIVE_CELLS:
@@ -199,10 +203,20 @@ def fit_u2oet_gao_adaptive_precision(
     utility_values = np.empty((chains, effective_draws, 4))
     current_initial: ArrayLike | None = initial
     retained = 0
-    evaluations = 0
-    work = 0
+    evaluations = chains
+    work = chains * joint_cells
+    remaining_evaluations = max_likelihood_evaluations - evaluations
+    remaining_work = max_work - work
     for index, requested in enumerate((initial_draws, *schedule)):
         chunk_warmup = warmup if index == 0 else 0
+        chunk_minimum_evaluations = chains * (1 + (chunk_warmup + requested if free else 0))
+        chunk_minimum_work = chunk_minimum_evaluations * joint_cells
+        if remaining_evaluations < chunk_minimum_evaluations:
+            raise ArithmeticError(
+                "aggregate GAO likelihood-evaluation budget exhausted before chunk"
+            )
+        if remaining_work < chunk_minimum_work:
+            raise ArithmeticError("aggregate GAO likelihood-work budget exhausted before chunk")
         batch = fit_u2oet_gao(
             d1,
             d2,
@@ -214,8 +228,8 @@ def fit_u2oet_gao_adaptive_precision(
             warmup=chunk_warmup,
             chains=chains,
             initial=current_initial,
-            max_likelihood_evaluations=max_likelihood_evaluations,
-            max_work=max_work,
+            max_likelihood_evaluations=remaining_evaluations,
+            max_work=remaining_work,
             rng=rng,
         )
         parameter_parts.append(batch.parameters)
@@ -225,6 +239,8 @@ def fit_u2oet_gao_adaptive_precision(
         retained += requested
         evaluations += batch.likelihood_evaluations
         work += batch.likelihood_work_units
+        remaining_evaluations -= batch.likelihood_evaluations
+        remaining_work -= batch.likelihood_work_units
         current_initial = batch.parameters[:, -1, :]
         sd, mcse, ratio = _diagnostics(utility_values[:, :retained])
         if np.all(np.isfinite(ratio)) and np.all(ratio <= target_mcse_ratio):
@@ -243,8 +259,8 @@ def fit_u2oet_gao_adaptive_precision(
         toxicity_only=_freeze(nt),
         prior_mean=_freeze(mu),
         prior_sd=_freeze(prior_scale),
-        likelihood_evaluations=evaluations + chains,
-        likelihood_work_units=work + chains * joint_cells,
+        likelihood_evaluations=evaluations,
+        likelihood_work_units=work,
         warmup=warmup,
         efficacy_levels=e_levels,
         toxicity_levels=t_levels,

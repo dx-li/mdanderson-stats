@@ -34,21 +34,26 @@ remainder is not sampled. Undefined ratios from zero posterior SD do not pass.
 The wrapper inherits the fitter's 2–16 chain range, narrower than the guide's
 1–20 control range.
 
-Before RNG use, a conservative plan checks all chunks up to the maximum draw
-count against aggregate worst-case likelihood evaluations, dose/category
-grid work (including the pre-RNG start likelihood for every chain), four-million
-retained joint cells, and twelve-million live cells.
-The work bound charges up to 1000 likelihood proposals per free-coordinate
-slice update, including warmup. These are deterministic allocation/work
-estimates rather than runtime or RSS guarantees. The returned split-Rhat is a
+Before RNG use, a conservative plan checks that the aggregate minimum
+likelihood evaluations and dose/category grid work for all chunks fit the
+requested budgets, including one pre-RNG start likelihood per chain. It also
+checks four-million retained joint cells and twelve-million live cells. The
+minimum work charges one accepted proposal per free-coordinate slice update,
+including warmup. Remaining evaluation/work budgets are passed into each
+chunk, where the sampler can explicitly fail if slice rejection requires more
+work than remains. These are deterministic allocation/work estimates rather
+than runtime or RSS guarantees. The returned split-Rhat is a
 separate descriptive diagnostic, not an additional source-defined stop rule.
 
 ## Validation
 
-Three focused tests pass. They compare the wrapper's two-chunk result with
+Five focused tests pass with warnings treated as errors. They compare the wrapper's two-chunk result with
 manual calls to the fixed GAO fitter using the same continuation vectors,
 recompute all corner diagnostics from retained probabilities, reject an
 aggregate-work overrun before RNG state changes, and check that constant
-corner utilities cannot pass. The targeted pytest run took 1.48 seconds.
+corner utilities cannot pass. They also exercise a four-chain free-coordinate
+run with 500 warmup and 500 retained draws per chain, plus explicit exhaustion
+during a slice update under a nearly minimum runtime budget. The focused run
+took 2.24 seconds.
 Ruff format/check and module-scoped mypy with silent imports pass. No native
 executable comparison or RSS measurement was performed.
