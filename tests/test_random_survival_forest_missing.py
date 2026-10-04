@@ -146,8 +146,15 @@ def test_node_local_imputation_routes_oob_and_prediction_without_mutating_profil
     )
     assert fit.imputation_performed
     assert fit.requested_trees == fit.n_trees == 3
-    assert fit.oob is not None and not fit.oob.concordance_available
-    assert fit.oob.comparable_pairs == 0
+    assert fit.oob is not None and fit.oob.concordance_available
+    assert fit.oob.completed_time is not None and np.isfinite(fit.oob.completed_time).all()
+    assert fit.oob.completed_event is not None and np.isin(fit.oob.completed_event, (0, 1)).all()
+    np.testing.assert_array_equal(
+        fit.oob.original_missing_time, [False, False, False, False, True, False]
+    )
+    np.testing.assert_array_equal(fit.oob.original_missing_event, np.zeros(6, dtype=bool))
+    assert fit.oob.response_fallback_used is not None
+    assert fit.oob.response_fallback_used.shape == (6, 2)
     assert all(tree.training_leaf_node is not None for tree in fit.trees)
     contributing = fit.oob.contributor_count > 0
     assert np.any(contributing)
@@ -255,3 +262,42 @@ def test_prediction_omission_matches_complete_profiles_and_retains_original_posi
     assert np.isnan(profiles[[0, 2]]).all()
     with pytest.raises(ValueError, match="every prediction profile"):
         predict_random_survival_forest(fit, profiles=[[np.nan]], na_action="omit")
+
+
+def test_missing_response_oob_uses_global_fallback_when_no_tree_is_oob() -> None:
+    fit = fit_random_survival_forest(
+        [np.nan, 2.0, 3.0, 4.0],
+        [1.0, np.nan, 1.0, 0.0],
+        [[0.0], [1.0], [2.0], [3.0]],
+        na_action="impute",
+        n_trees=1,
+        replace=False,
+        sample_fraction=1.0,
+        nodesize=1,
+        random_state=23,
+        compute_oob=True,
+    )
+    assert fit.oob is not None and fit.oob.concordance_available
+    np.testing.assert_array_equal(fit.oob.contributor_count, np.zeros(4, dtype=np.int64))
+    assert fit.oob.completed_time is not None and np.isfinite(fit.oob.completed_time).all()
+    assert fit.oob.completed_event is not None
+    np.testing.assert_array_equal(fit.oob.response_fallback_used[0], [True, False])
+    np.testing.assert_array_equal(fit.oob.response_fallback_used[1], [False, True])
+    assert np.isnan(fit.oob.concordance_error)
+
+
+def test_oob_time_pooling_handles_large_finite_times() -> None:
+    fit = fit_random_survival_forest(
+        [np.nan, 1.0e308, 1.0e308, 1.0e308],
+        [1.0, 0.0, 1.0, 0.0],
+        [[0.0], [1.0], [2.0], [3.0]],
+        na_action="impute",
+        n_trees=3,
+        replace=False,
+        sample_fraction=0.5,
+        nodesize=1,
+        random_state=29,
+        compute_oob=True,
+    )
+    assert fit.oob is not None and fit.oob.completed_time is not None
+    assert fit.oob.completed_time[0] == 1.0e308

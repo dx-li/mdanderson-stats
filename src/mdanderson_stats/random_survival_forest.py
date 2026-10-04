@@ -55,6 +55,8 @@ class _PackedTree:
     represented_count: np.ndarray | None = None
     imputation_donors: tuple[tuple[FloatArray, ...], ...] | None = None
     training_leaf_node: np.ndarray | None = None
+    terminal_time: FloatArray | None = None
+    terminal_event: FloatArray | None = None
 
 
 @dataclass(frozen=True)
@@ -74,6 +76,11 @@ class RandomSurvivalForestOOB:
     comparable_pairs: int
     row_indices: np.ndarray | None = None
     concordance_available: bool = True
+    completed_time: FloatArray | None = None
+    completed_event: FloatArray | None = None
+    original_missing_time: np.ndarray | None = None
+    original_missing_event: np.ndarray | None = None
+    response_fallback_used: np.ndarray | None = None
 
 
 @dataclass(frozen=True)
@@ -872,6 +879,8 @@ def _pack_tree(
     represented_count: list[int] | None = None,
     imputation_donors: list[tuple[FloatArray, ...]] | None = None,
     training_leaf_node: np.ndarray | None = None,
+    terminal_time: list[float] | None = None,
+    terminal_event: list[float] | None = None,
 ) -> _PackedTree:
     return _PackedTree(
         _freeze_index(np.asarray(feature), np.dtype(np.int32)),
@@ -896,6 +905,8 @@ def _pack_tree(
         None
         if training_leaf_node is None
         else _freeze_index(training_leaf_node, np.dtype(np.int32)),
+        None if terminal_time is None else _freeze(np.asarray(terminal_time, dtype=np.float64)),
+        None if terminal_event is None else _freeze(np.asarray(terminal_event, dtype=np.float64)),
     )
 
 
@@ -958,11 +969,13 @@ def _grow_tree(
         else None
     )
     if imputation_mode:
-        fixed_cells = int(x.size + 4 * x.shape[0])
+        fixed_cells = int(x.size + 6 * x.shape[0])
         if budget.imputation_cells + fixed_cells > max_imputation_cells:
             raise ValueError("forest exceeds max_imputation_cells budget")
         budget.imputation_cells += fixed_cells
     training_leaf_node = np.full(x.shape[0], -1, dtype=np.int32) if imputation_mode else None
+    terminal_time = [float("nan")] if imputation_mode else None
+    terminal_event = [float("nan")] if imputation_mode else None
     budget.nodes += 1
     if budget.nodes > max_nodes:
         raise ValueError("forest exceeds max_nodes budget")
@@ -1213,6 +1226,7 @@ def _grow_tree(
                 assert original_missing_time is not None
                 assert original_missing_event is not None
                 assert master_times is not None
+                assert terminal_time is not None and terminal_event is not None
                 time_fill = (
                     _terminal_impute_value(
                         time,
@@ -1240,8 +1254,10 @@ def _grow_tree(
                     else None
                 )
                 if time_fill is not None:
+                    terminal_time[node] = time_fill
                     time[all_rows[original_missing_time[all_rows]]] = time_fill
                 if event_fill is not None:
+                    terminal_event[node] = event_fill
                     event[all_rows[original_missing_event[all_rows]]] = event_fill
                 assert training_leaf_node is not None
                 training_leaf_node[all_rows] = node
@@ -1307,12 +1323,15 @@ def _grow_tree(
             if represented_count is not None:
                 represented_count.append(int(left_rows.size) if _ == 0 else int(right_rows.size))
             if imputation_donors is not None:
-                if budget.imputation_cells + feature_count > max_imputation_cells:
+                if budget.imputation_cells + feature_count + 2 > max_imputation_cells:
                     raise ValueError("forest exceeds max_imputation_cells budget")
-                budget.imputation_cells += feature_count
+                budget.imputation_cells += feature_count + 2
                 imputation_donors.append(
                     tuple(np.empty(0, dtype=np.float64) for _ in range(feature_count))
                 )
+                assert terminal_time is not None and terminal_event is not None
+                terminal_time.append(float("nan"))
+                terminal_event.append(float("nan"))
         # Native trees process the left branch first; preserve that random
         # draw order by pushing right before left on this LIFO work list.
         stack.append((right_index, right_rows, right_all_rows, next_permissible, depth + 1))
@@ -1335,6 +1354,8 @@ def _grow_tree(
         represented_count,
         imputation_donors,
         training_leaf_node,
+        terminal_time,
+        terminal_event,
     )
 
 
@@ -1412,6 +1433,114 @@ def _oob_concordance_error(
     return 1.0 - concordant / (2.0 * pairs), pairs
 
 
+def _complete_oob_responses(
+    time: FloatArray,
+    event: FloatArray,
+    missing_time: np.ndarray,
+    missing_event: np.ndarray,
+    trees: tuple[_PackedTree, ...],
+    membership: np.ndarray,
+    *,
+    rng: np.random.Generator,
+    max_cells: int,
+    max_work: int,
+) -> tuple[FloatArray, FloatArray, np.ndarray]:
+    """Complete missing response fields from OOB terminal pools, then source fallback."""
+    n = int(time.size)
+    if missing_time.shape != (n,) or missing_event.shape != (n,):
+        raise ValueError("missing response masks must align with OOB rows")
+    if len(trees) != membership.shape[0] or membership.shape[1] != (n + 7) // 8:
+        raise ValueError("OOB membership must align with trees and response rows")
+    cells = 14 * n
+    work = 2 * n * len(trees)
+    if cells > max_cells:
+        raise ValueError("OOB response completion exceeds max_oob_cells budget")
+    if work > max_work:
+        raise ValueError("OOB response completion exceeds max_oob_work budget")
+
+    completed_time = time.copy()
+    completed_event = event.copy()
+    time_mean = np.zeros(n, dtype=np.float64)
+    time_count = np.zeros(n, dtype=np.int64)
+    event_count = np.zeros((n, 2), dtype=np.int64)
+    for tree_index, tree in enumerate(trees):
+        if (
+            tree.training_leaf_node is None
+            or tree.terminal_time is None
+            or tree.terminal_event is None
+        ):
+            raise RuntimeError("fit lacks terminal response summaries needed for OOB completion")
+        inbag = np.unpackbits(membership[tree_index], bitorder="little")[:n].astype(bool)
+        rows = np.flatnonzero(~inbag)
+        if not rows.size:
+            continue
+        nodes = tree.training_leaf_node[rows]
+        if np.any(nodes < 0):
+            raise RuntimeError("imputed training route is missing a terminal node")
+        need_time = missing_time[rows]
+        if np.any(need_time):
+            values = tree.terminal_time[nodes[need_time]]
+            if not np.isfinite(values).all():
+                raise RuntimeError("OOB terminal time summary is missing")
+            for row, value in zip(rows[need_time], values, strict=True):
+                count = int(time_count[row]) + 1
+                time_mean[row] += (float(value) - time_mean[row]) / count
+                time_count[row] = count
+        need_event = missing_event[rows]
+        if np.any(need_event):
+            values = tree.terminal_event[nodes[need_event]]
+            if not np.isin(values, (0.0, 1.0)).all():
+                raise RuntimeError("OOB terminal status summary is missing or invalid")
+            selected_rows = rows[need_event]
+            np.add.at(event_count[:, 0], selected_rows[values == 0.0], 1)
+            np.add.at(event_count[:, 1], selected_rows[values == 1.0], 1)
+
+    fallback_used = np.zeros((n, 2), dtype=bool)
+    needs_time = np.flatnonzero(missing_time)
+    if needs_time.size:
+        local = time_count[needs_time] > 0
+        local_rows = needs_time[local]
+        completed_time[local_rows] = time_mean[local_rows]
+        if not np.isfinite(completed_time[local_rows]).all():
+            raise ArithmeticError("OOB completed time mean is not finite")
+
+    needs_event = np.flatnonzero(missing_event)
+    if needs_event.size:
+        zero = event_count[needs_event, 0]
+        one = event_count[needs_event, 1]
+        has_pool = (zero + one) > 0
+        pooled_rows = needs_event[has_pool]
+        pooled_zero, pooled_one = zero[has_pool], one[has_pool]
+        ties = pooled_zero == pooled_one
+        completed_event[pooled_rows[pooled_zero > pooled_one]] = 0.0
+        completed_event[pooled_rows[pooled_one > pooled_zero]] = 1.0
+        tied_rows = pooled_rows[ties]
+        if tied_rows.size:
+            completed_event[tied_rows] = rng.integers(2, size=tied_rows.size)
+    fallback_time_rows = np.flatnonzero(missing_time & (time_count == 0))
+    if fallback_time_rows.size:
+        donors = np.flatnonzero(~missing_time)
+        if not donors.size:
+            raise ValueError("OOB time completion has no observed full-data fallback donor")
+        completed_time[fallback_time_rows] = time[
+            donors[rng.integers(donors.size, size=fallback_time_rows.size)]
+        ]
+        fallback_used[fallback_time_rows, 0] = True
+    if needs_event.size:
+        fallback_rows = needs_event[~has_pool]
+        if fallback_rows.size:
+            donors = np.flatnonzero(~missing_event)
+            if not donors.size:
+                raise ValueError("OOB status completion has no observed full-data fallback donor")
+            completed_event[fallback_rows] = event[
+                donors[rng.integers(donors.size, size=fallback_rows.size)]
+            ]
+            fallback_used[fallback_rows, 1] = True
+    if not np.isfinite(completed_time).all() or not np.isin(completed_event, (0.0, 1.0)).all():
+        raise ArithmeticError("OOB completed responses are not finite binary survival data")
+    return completed_time, completed_event, fallback_used
+
+
 def _oob_curves(
     time: FloatArray,
     event: FloatArray,
@@ -1424,15 +1553,28 @@ def _oob_curves(
     max_work: int,
     row_indices: np.ndarray | None = None,
     compute_concordance: bool = True,
+    missing_time: np.ndarray | None = None,
+    missing_event: np.ndarray | None = None,
+    rng: np.random.Generator | None = None,
+    max_cells: int = _MAX_OOB_CELLS,
 ) -> RandomSurvivalForestOOB:
     n = time.size
     oob_rows = 0
     for packed in membership:
         inbag_count = int(np.unpackbits(packed, bitorder="little")[:n].sum())
         oob_rows += n - inbag_count
+    has_missing_response = bool(
+        (missing_time is not None and np.any(missing_time))
+        or (missing_event is not None and np.any(missing_event))
+    )
     work = oob_rows * (time_grid.size + max_depth) + n * n
+    if has_missing_response:
+        work += 2 * n * len(trees)
     if work > max_work:
         raise ValueError("OOB curve and concordance work exceeds max_oob_work budget")
+    response_cells = 14 * n if has_missing_response else 0
+    if response_cells + 8 * n * time_grid.size + 16 * n > max_cells:
+        raise ValueError("OOB curves and response completion exceed max_oob_cells budget")
     survival_sum = np.zeros((n, time_grid.size), dtype=np.float64)
     hazard_sum = np.zeros_like(survival_sum)
     contributors = np.zeros(n, dtype=np.int64)
@@ -1476,9 +1618,30 @@ def _oob_curves(
     cumulative_hazard[present] = hazard_sum[present] / contributors[present, None]
     mortality = np.full(n, np.nan, dtype=np.float64)
     mortality[present] = cumulative_hazard[present].sum(axis=1)
+    completed_time: FloatArray | None = None
+    completed_event: FloatArray | None = None
+    fallback_used: np.ndarray | None = None
+    if has_missing_response:
+        if missing_time is None or missing_event is None or rng is None:
+            raise ValueError("OOB response completion requires both missing masks and a seeded RNG")
+        completed_time, completed_event, fallback_used = _complete_oob_responses(
+            time,
+            event,
+            missing_time,
+            missing_event,
+            trees,
+            membership,
+            rng=rng,
+            max_cells=max_cells - 8 * n * time_grid.size - 16 * n,
+            max_work=max_work - oob_rows * (time_grid.size + max_depth) - n * n,
+        )
+        compute_concordance = True
     if compute_concordance:
         concordance_error, comparable_pairs = _oob_concordance_error(
-            time, event, mortality, contributors
+            time if completed_time is None else completed_time,
+            event if completed_event is None else completed_event,
+            mortality,
+            contributors,
         )
     else:
         concordance_error, comparable_pairs = float("nan"), 0
@@ -1495,6 +1658,17 @@ def _oob_curves(
             np.dtype(np.int64),
         ),
         compute_concordance,
+        None if completed_time is None else _freeze(completed_time),
+        None if completed_event is None else _freeze(completed_event),
+        None
+        if missing_time is None
+        else np.frombuffer(np.asarray(missing_time, dtype=bool).tobytes(), dtype=np.bool_),
+        None
+        if missing_event is None
+        else np.frombuffer(np.asarray(missing_event, dtype=bool).tobytes(), dtype=np.bool_),
+        None
+        if fallback_used is None
+        else np.frombuffer(fallback_used.tobytes(), dtype=np.bool_).reshape(fallback_used.shape),
     )
 
 
@@ -1558,7 +1732,10 @@ def fit_random_survival_forest(
     while original missingness excludes rows from candidate-specific scores.
     Donor-less outcome bootstraps are skipped; ``requested_trees`` records the
     attempted count. ``max_imputation_cells`` bounds retained donors and work
-    arrays. Missing-outcome OOB concordance is explicitly unavailable.
+    arrays. With OOB enabled, originally missing outcome fields are completed
+    from OOB terminal response pools, with full-data observed-value fallback
+    only when a row has no OOB pool; the completed responses and fallback flags
+    are retained in the OOB result.
     """
     if not isinstance(replace, (bool, np.bool_)):
         raise ValueError("replace must be boolean")
@@ -1714,7 +1891,7 @@ def fit_random_survival_forest(
         raise ValueError("forest exceeds max_sampled_rows budget")
     if na_action == "impute":
         minimum_imputation_cells = tree_count * (
-            x.size + 4 * t.size + x.shape[1] * (2 * sample_size + 1)
+            x.size + 6 * t.size + x.shape[1] * (2 * sample_size + 1)
         )
         if minimum_imputation_cells > imputation_limit:
             raise ValueError(
@@ -1728,7 +1905,15 @@ def fit_random_survival_forest(
         packed_width = (t.size + 7) // 8
         membership_cells = tree_count * packed_width
         output_cells = t.size * output_grid.size
-        combined_cells = 2 * membership_cells + 8 * output_cells + 16 * t.size
+        response_cells = 0
+        if (
+            na_action == "impute"
+            and original_missing_time is not None
+            and original_missing_event is not None
+            and (np.any(original_missing_time) or np.any(original_missing_event))
+        ):
+            response_cells = 14 * t.size
+        combined_cells = 2 * membership_cells + 8 * output_cells + 16 * t.size + response_cells
         node_budget = min(node_limit, oob_cell_limit - combined_cells)
         if node_budget < tree_count:
             raise ValueError("OOB membership, curves, and node counts exceed max_oob_cells budget")
@@ -1797,11 +1982,9 @@ def fit_random_survival_forest(
         if membership is None
         else np.frombuffer(membership.tobytes(), dtype=np.uint8).reshape(membership.shape)
     )
-    missing_outcomes = False
     if na_action == "impute":
         assert original_missing_time is not None
         assert original_missing_event is not None
-        missing_outcomes = bool(np.any(original_missing_time) or np.any(original_missing_event))
     oob = (
         None
         if membership is None
@@ -1815,7 +1998,11 @@ def fit_random_survival_forest(
             max_depth=budget.max_depth,
             max_work=oob_work_limit,
             row_indices=row_indices,
-            compute_concordance=not missing_outcomes,
+            compute_concordance=True,
+            missing_time=original_missing_time if na_action == "impute" else None,
+            missing_event=original_missing_event if na_action == "impute" else None,
+            rng=rng if na_action == "impute" else None,
+            max_cells=oob_cell_limit,
         )
     )
     return RandomSurvivalForestFit(
