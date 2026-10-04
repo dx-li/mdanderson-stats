@@ -377,6 +377,9 @@ class STPLANStudySpecification:
             bound_inputs = signature(spec.function).bind_partial(**fixed)
             bound_inputs.apply_defaults()
             fixed = dict(bound_inputs.arguments)
+            if not indexed_k:
+                for key in keys:
+                    fixed.pop(key, None)
             target = _number(case.target_power, "target_power")
             if not 0 < target < 1:
                 raise ValueError("target_power must lie strictly between 0 and 1")

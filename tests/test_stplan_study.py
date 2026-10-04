@@ -30,6 +30,14 @@ def _specification():
             {"difference": 0.5, "sd": 1.0},
         ),
         STPLANInverseCase(
+            "normal alpha",
+            "stplan_normal_one_sample_power",
+            "alpha",
+            0.8,
+            (0.0001, 0.49),
+            {"difference": 0.5, "sd": 1.0, "sample_size": 20},
+        ),
+        STPLANInverseCase(
             "exact binomial size",
             "stplan_exact_binomial_power",
             "sample_size",
@@ -62,12 +70,15 @@ def test_json_replay_and_html_capture_inputs_bounds_and_fractional_allocation(tm
         [row.achieved_power for row in replayed.results]
     )
     assert original.results[1].value == pytest.approx(26.1375038059685, abs=2e-7)
-    assert original.results[2].value == 35
-    assert original.results[2].achieved_power == pytest.approx(0.804825496569362)
-    assert original.results[2].evaluations == 35
-    assert original.results[2].previous_value == 34
-    assert original.results[2].previous_power == pytest.approx(0.766919046716108)
-    ksample = original.results[3]
+    assert original.results[2].value == pytest.approx(0.0900291512320887, abs=2e-8)
+    assert replayed.results[2].value == pytest.approx(original.results[2].value)
+    assert original.results[2].inputs["alpha"] == pytest.approx(original.results[2].value)
+    assert original.results[3].value == 35
+    assert original.results[3].achieved_power == pytest.approx(0.804825496569362)
+    assert original.results[3].evaluations == 35
+    assert original.results[3].previous_value == 34
+    assert original.results[3].previous_power == pytest.approx(0.766919046716108)
+    ksample = original.results[4]
     assert ksample.value == pytest.approx(308.310043775048, abs=2e-7)
     assert ksample.inputs["sample_sizes"] == pytest.approx((77.07751094, 154.15502189, 77.07751094))
     assert "Explicit search bounds" in original.to_html()
@@ -81,7 +92,7 @@ def test_json_replay_and_html_capture_inputs_bounds_and_fractional_allocation(tm
     saved_results = json.loads(result_path.read_text())
     assert saved_results["specification"]
     assert "native automatic-bound defaults" in saved_results["limitations"]
-    exact = saved_results["results"][2]
+    exact = saved_results["results"][3]
     assert exact["evaluations"] == 35 and exact["previous_value"] == 34
     assert html_path.read_text() == original.to_html()
 
