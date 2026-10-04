@@ -155,7 +155,7 @@ counts from accrual, follow-up, or censoring, fit a Cox model, or model the
 censoring mechanism. For direct control of the sampling standard error or for
 other effect directions, use `normal_success_oc`.
 
-## Calibration, evidence and remaining coverage
+## Calibration, evidence and compatibility
 
 For automatic calibration within a cutoff range, use the
 [single-arm binary search](success-binary-calibration.md) or the
@@ -184,9 +184,10 @@ independent simulation with unequal normal arm priors, direction-reflection
 identities, a success probability below `1e-20`, and a discrete calibration case.
 The separate beta-ordering routine has existing independent R validation.
 
-Nonzero binary margins are now supported. This catalog entry remains **partial**:
-original calibration-search parity and native application report/plot parity
-remain unverified or unimplemented. The application help specifies a default
+The Python workflow covers the source-defined binary, normal and fixed-event
+survival calculations and PID calibration, including nonzero binary margins.
+Original calibration-search parity and native application report/plot parity
+are not claimed. The application help specifies a default
 candidate range of `[0.6,0.999]` but does not describe its search algorithm.
 Python distinguishes exhaustive binary-state search, tolerance-bounded
 normal/survival search and the original supplied-grid search. Source PDF SHA-256:

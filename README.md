@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-81 implemented, 49 partial, and 8 pending. Each method's guide explains its
+84 implemented, 46 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -1240,7 +1240,10 @@ the source's mixture weighting and vector stopping rule, with bounded work,
 posterior uncertainty and direct use in the six-dose decision functions.
 The [probability summary](docs/parallel-phase12-probability-summary.md) streams
 an explicit sequence of importance fits into the source's 60 component means
-and sample variances, with analysis-call and nonconvergence counts.
+and sample variances. Calendar and scenario simulations capture these summaries
+automatically, including reused fits with separate refit counts. Available final
+fits also provide posterior-mode means and Laplace mixture variances, with
+explicit no-fit and nonconvergence counts.
 The [calendar simulator](docs/parallel-phase12-importance-calendar.md) can use
 this backend at interim and final analyses, with aggregate work limits and
 per-analysis uncertainty diagnostics; the existing MCMC backend remains the default.
@@ -1250,8 +1253,10 @@ and trial-level Monte Carlo errors. Generated outcomes and outcomes observed at
 stopping have separate totals and denominators; convergence diagnostics remain visible.
 Its component audits cover 100 native posterior-decision cases and 948 phase-I
 transitions. Source eligibility quirks and final analysis with pending outcomes
-are explicit; complete final follow-up is an optional extension. Native reporting
-and published operating-characteristic replication remain outstanding.
+are explicit; complete final follow-up is an optional extension. The four-arm
+and six-dose Python workflows are covered. Exact native random streams and
+report formats are not reproduced; full published operating-characteristic
+replication remains a validation limitation.
 
 [BlockARAND](docs/blockarand.md) now supports two-arm block adaptive randomization:
 posterior allocation, rational block sizes, balanced burn-in, patient-wise stopping

@@ -51,3 +51,19 @@ not errors for the design-prior truth probabilities used in PID. The selected
 target comparison therefore applies to the computed PID and is not a rigorous
 upper bound on the exact PID. Existing limitations for rare float64
 probabilities remain.
+
+## Functional coverage review
+
+The recovered paper covers single- and two-arm binary outcomes, single- and
+two-arm known-variance normal outcomes, and the fixed-event-count two-arm
+log-hazard-ratio approximation. Each has operating-characteristic calculations
+and automatic PID calibration in Python. The added two-arm binary search closes
+the last identified missing calibration family. Choosing the smallest feasible
+cutoff maximizes success probability among the nested decision sets; it does
+not require PID itself to be monotone.
+
+Under the repository's functional workflow criterion, catalog entry 173 is
+implemented. Native optimizer, rounding and report/plot equivalence remain
+compatibility limitations. Conservative candidate separation and computed-PID
+precision remain numerical limitations, as described above; this classification
+does not certify exact PID bounds or an exact global optimum.
