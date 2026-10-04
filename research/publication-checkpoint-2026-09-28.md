@@ -2983,3 +2983,49 @@ automatic variance selection, pending-outcome/calendar conduct and native
 input/report/executable parity remain open. Full catalog coverage remains
 active; the local manifest records the new remote SHAs and artifact hashes
 after independent publication verification.
+
+## 2026-10-04: Grade-two adjudication and original GAO cohort conduct
+
+Dose Schedule Finder now adjudicates supplied grade-two toxicity histories
+under the paper's persistence or attributed-dose-reduction rule, retaining
+onset scoring and as-of information boundaries. The author-hosted 2007 paper
+was inspected and recorded with hashes. Exact-deadline handling is an explicit
+Python convention; stochastic episode generation and clinical dose modification
+remain open. Ten affected checks pass with warnings as errors in 1.866 seconds,
+with 133.73 MiB process peak RSS and zero swaps.
+
+Original 2010 GAO now supplies posterior-utility decisions and actual-fitter
+cohort simulation. It applies the paper's strict global all-dose toxicity
+stop, upper-neighbor escalation restrictions and unrestricted final selection.
+Explicit categorical truth and independent efficacy evaluability produce
+complete and toxicity-only counts. Results retain outcome tapes, initial
+states, seeds, work budgets and compact diagnostics. Fitting remains serial;
+minimum work and retained storage are checked before random-state consumption,
+actual fitting shares cumulative budgets, and posterior draws are released
+between looks. Mixed-direction eligibility and tie handling are documented
+Python conventions. Native prior elicitation, Gibbs-sampler parity, clinical
+adaptation and original-model calendar conduct remain open.
+
+Luna agents supplied both implementations, an independent base-R reference,
+and review. The reference checks four synthetic posterior cases, 2,304 joint
+cells and 36 summary rows, including strict inner/outer threshold ties and
+an individually unsafe utility optimum when the global stopping rule permits
+continuation. It does not claim native executable or operating-characteristic
+parity. Final review bounded malformed tape widths before traversal and retained
+sampler starts in replay metadata. All 20 affected GAO probability, fitter and
+conduct checks pass with warnings as errors in 2.174 seconds, with 139.47 MiB
+process peak RSS and zero swaps. Scoped Ruff, formatting and mypy checks pass.
+
+Cached builds at `6786fd1` pass isolated package verification: all 621 committed
+package files match both archives, all 1,734 public exports resolve, license
+notices remain present and both updated guide examples execute from the wheel.
+Verification took 11.467 seconds, peaked at 116.27 MiB RSS and reported zero
+swaps. Numerical, static, build and package jobs remained sequential with
+single-threaded numerical libraries. No full local suite, package installation
+or new CI workflow was added. The previous `26844df` checkpoint passed hosted
+quality and Python 3.12/3.13/3.14 checks in run `37176952290`.
+
+Both catalog entries remain partial. Full catalog coverage stays active;
+RF-SRC missing-data semantics are traced to the pinned native source for the
+next implementation batch. The local manifest records independently verified
+publication branch SHAs and artifact hashes.
