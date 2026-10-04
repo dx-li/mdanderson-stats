@@ -1,7 +1,7 @@
 """Observed-versus-fitted log-intensity correlations by probeset."""
 
-from dataclasses import dataclass
 from collections.abc import Sized
+from dataclasses import dataclass
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -9,16 +9,25 @@ from numpy.typing import ArrayLike, NDArray
 from ._validation import count, finite
 from .beta_binomial import _owned
 
-FloatArray = NDArray[np.float64]
-IntArray = NDArray[np.int64]
+type FloatArray = NDArray[np.float64]
+type IntArray = NDArray[np.int64]
 _MAX_PROBES = 500_000
 
 
 def _preflight_size(value: ArrayLike, name: str) -> None:
+    shape = getattr(value, "shape", None)
+    if shape is not None and len(shape) != 1:
+        raise ValueError(f"{name} must be one-dimensional")
     if isinstance(value, np.ndarray) and value.size > _MAX_PROBES:
         raise ValueError(f"{name} exceeds the {_MAX_PROBES}-probe workspace limit")
     if isinstance(value, Sized) and len(value) > _MAX_PROBES:
         raise ValueError(f"{name} exceeds the {_MAX_PROBES}-probe workspace limit")
+    if isinstance(value, Sized) and len(value) == 0:
+        raise ValueError(f"{name} must be nonempty")
+    if isinstance(value, (list, tuple)) and any(
+        isinstance(item, (list, tuple, np.ndarray)) for item in value
+    ):
+        raise ValueError(f"{name} must be one-dimensional")
 
 
 @dataclass(frozen=True)

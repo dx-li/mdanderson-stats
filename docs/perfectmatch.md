@@ -103,7 +103,8 @@ labels and does not map fitted rows back to probesets. Signals are positive raw
 intensities and are logged inside the function. The manual does not specify the
 correlation variant or behavior for degenerate groups; Python uses Pearson's
 coefficient and returns NaN for singleton groups or groups constant in either
-log signal. Inputs are not refitted or filtered.
+log signal. Probeset IDs must be nonnegative integers smaller than 2**53.
+Inputs are not refitted or filtered.
 To bound temporary arrays, each input is limited to 500,000 probes; larger
 arrays should be summarized in explicit chunks only when each probeset remains
 within a single chunk.
