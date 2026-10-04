@@ -6,7 +6,10 @@ module therefore requires ``candidate_scope`` explicitly and documents the
 remaining conduct choices in the design docstrings.
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass, field
+from typing import TYPE_CHECKING
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -14,7 +17,15 @@ from scipy.special import betaincc
 
 from ._validation import FloatArray, count, finite, scalar
 from .boin import BOINDesign
-from .uboin import UBOINPosterior, uboin_allocation, uboin_posterior
+from .uboin import (
+    UBOINPosterior,
+    _uboin_allocation_from_summaries,
+    uboin_allocation,
+    uboin_posterior,
+)
+
+if TYPE_CHECKING:
+    from .uboin_imputation import UBOINMIDecision
 
 
 def _readonly(value: ArrayLike, dtype: np.dtype | type = np.float64) -> NDArray:
@@ -196,6 +207,56 @@ class UBOINDesign:
         )
         return UBOINSelection(posterior, _readonly(eligible, dtype=np.bool_), dose)
 
+    def _stage2_action(
+        self,
+        counts: NDArray[np.float64],
+        eliminated: NDArray[np.bool_],
+        mean_utility: ArrayLike,
+        admissible: ArrayLike,
+    ) -> tuple[str, FloatArray, int | None, int | None]:
+        """Shared Stage-II control ordering for complete and imputed data."""
+        n = counts.sum(axis=(1, 2))
+        total = int(n.sum())
+        d = n.size
+        if eliminated[0]:
+            return "stop_safety", _readonly(np.zeros(d)), None, None
+        if total >= self.max_patients or np.any(n >= self.s2):
+            eligible = n > 0 if self.candidate_scope == "tried" else np.ones(d, dtype=bool)
+            winner = _uboin_allocation_from_summaries(
+                mean_utility, admissible, eligible=eligible & ~eliminated, method="winner"
+            )
+            selected = int(np.flatnonzero(winner)[0] + 1) if np.any(winner) else None
+            action = "stop_max_patients" if total >= self.max_patients else "stop_s2"
+            return action, _readonly(np.zeros(d)), None, selected
+
+        tried = np.flatnonzero(n > 0)
+        highest = int(tried[-1])
+        rate = float(counts[highest, :, self.dlt_level :].sum() / n[highest])
+        if (
+            rate <= self._boin.escalation_boundary
+            and highest + 1 < d
+            and not eliminated[highest + 1]
+        ):
+            target = highest + 2
+            return "escalate", self._onehot(d, target), target, None
+
+        eligible = n > 0 if self.candidate_scope == "tried" else np.ones(d, dtype=bool)
+        eligible &= ~eliminated
+        winner = _uboin_allocation_from_summaries(
+            mean_utility, admissible, eligible=eligible, method="winner"
+        )
+        if not np.any(winner):
+            return "stop_no_admissible", _readonly(np.zeros(d)), None, None
+        probabilities = _uboin_allocation_from_summaries(
+            mean_utility, admissible, eligible=eligible, method=self.method
+        )
+        next_dose = (
+            int(np.flatnonzero(probabilities == 1)[0] + 1)
+            if np.count_nonzero(probabilities) == 1
+            else None
+        )
+        return "assign", probabilities, next_dose, None
+
     def select_obd(
         self, counts: ArrayLike, *, eliminated: ArrayLike | None = None
     ) -> UBOINSelection:
@@ -203,6 +264,35 @@ class UBOINDesign:
         observed, d, _, _ = self._validate_counts(counts)
         mask = self._mask(eliminated, d)
         return self._selection(observed, mask)
+
+    def decision_multiple_imputation(
+        self,
+        observed_counts: ArrayLike,
+        pending_dose: ArrayLike,
+        pending_toxicity: ArrayLike,
+        efficacy_probabilities: ArrayLike,
+        *,
+        current_dose: int,
+        eliminated: ArrayLike | None = None,
+        rng: np.random.Generator,
+    ) -> UBOINMIDecision:
+        """Run Stage-II MI conduct from caller-supplied predictive probabilities.
+
+        This evaluates pending-efficacy completions; it does not fit the
+        paper's delayed-efficacy prediction model.
+        """
+        from .uboin_imputation import uboin_stage2_multiple_imputation
+
+        return uboin_stage2_multiple_imputation(
+            self,
+            observed_counts,
+            pending_dose,
+            pending_toxicity,
+            efficacy_probabilities,
+            current_dose=current_dose,
+            eliminated=eliminated,
+            rng=rng,
+        )
 
     @staticmethod
     def _mask(eliminated: ArrayLike | None, d: int) -> NDArray[np.bool_]:
@@ -260,6 +350,11 @@ class UBOINDesign:
             probabilities = np.zeros(d)
             probabilities[self.starting_dose - 1] = 1
             return self._result(1, "start", posterior, mask, d, probabilities, self.starting_dose)
+        if effective_stage == 2:
+            action, probabilities, next_dose, selected = self._stage2_action(
+                observed, mask, posterior.mean_utility, posterior.admissible
+            )
+            return self._result(2, action, posterior, mask, d, probabilities, next_dose, selected)
         if total >= self.max_patients:
             selection = self._selection(observed, mask)
             return self._result(
@@ -326,25 +421,7 @@ class UBOINDesign:
                 action = "stay"
             return self._result(1, action, posterior, mask, d, self._onehot(d, target), target)
 
-        tried = np.flatnonzero(n > 0)
-        highest = int(tried[-1])
-        rate = float(observed[highest, :, self.dlt_level :].sum() / n[highest])
-        boin = self._boin
-        if rate <= boin.escalation_boundary and highest + 1 < d and not mask[highest + 1]:
-            target = highest + 2
-            return self._result(2, "escalate", posterior, mask, d, self._onehot(d, target), target)
-        selection = self._selection(observed, mask)
-        if selection.dose is None:
-            return self._result(2, "stop_no_admissible", selection.posterior, mask, d)
-        probabilities = uboin_allocation(
-            selection.posterior, eligible=selection.eligible, method=self.method
-        )
-        next_dose = (
-            int(np.flatnonzero(probabilities == 1)[0] + 1)
-            if np.count_nonzero(probabilities) == 1
-            else None
-        )
-        return self._result(2, "assign", selection.posterior, mask, d, probabilities, next_dose)
+        raise AssertionError("effective Stage-II decision must use the shared selector")
 
     @staticmethod
     def _onehot(d: int, target: int) -> FloatArray:

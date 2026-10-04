@@ -153,17 +153,36 @@ def uboin_allocation(
     """
     if not isinstance(posterior, UBOINPosterior):
         raise TypeError("posterior must be a UBOINPosterior")
-    means = finite(posterior.mean_utility, "posterior.mean_utility")
-    admissible = np.asarray(posterior.admissible, dtype=bool)
     candidate = np.asarray(eligible)
-    if candidate.shape != means.shape or candidate.dtype.kind != "b":
-        raise ValueError("eligible must be a boolean vector matching the number of doses")
+    return _uboin_allocation_from_summaries(
+        posterior.mean_utility, posterior.admissible, eligible=candidate, method=method
+    )
+
+
+def _uboin_allocation_from_summaries(
+    mean_utility: ArrayLike,
+    admissible: ArrayLike,
+    *,
+    eligible: ArrayLike,
+    method: str = "winner",
+) -> FloatArray:
+    """Allocate from already-computed dose summaries without a fake posterior."""
+    means = finite(mean_utility, "mean_utility")
+    allowed_by_posterior = np.asarray(admissible)
+    candidate = np.asarray(eligible)
+    if (
+        means.ndim != 1
+        or allowed_by_posterior.shape != means.shape
+        or allowed_by_posterior.dtype.kind != "b"
+        or candidate.shape != means.shape
+        or candidate.dtype.kind != "b"
+    ):
+        raise ValueError("admissible and eligible must be boolean vectors matching mean_utility")
     if method not in ("winner", "proportional", "equal"):
         raise ValueError("method must be 'winner', 'proportional', or 'equal'")
-    allowed = candidate & admissible
+    indices = np.flatnonzero(candidate & allowed_by_posterior)
     probabilities = np.zeros(means.size, dtype=np.float64)
-    indices = np.flatnonzero(allowed)
-    if indices.size == 0:
+    if not indices.size:
         return _readonly(probabilities)
     if method == "winner":
         probabilities[indices[np.argmax(means[indices])]] = 1.0
