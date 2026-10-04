@@ -48,6 +48,16 @@ class U2OETGAOAdaptivePrecisionResult:
     batch_draws: int
 
 
+@dataclass(frozen=True)
+class _GAOAdaptivePlan:
+    schedule: tuple[int, ...]
+    effective_draws: int
+    minimum_evaluations: int
+    minimum_work: int
+    retained_joint_cells: int
+    live_cells: int
+
+
 def _draw_schedule(initial: int, maximum: int, batch: int) -> tuple[int, ...]:
     sizes: list[int] = []
     remaining = maximum - initial
@@ -59,6 +69,41 @@ def _draw_schedule(initial: int, maximum: int, batch: int) -> tuple[int, ...]:
         sizes.append(size)
         remaining -= size
     return tuple(sizes)
+
+
+def _adaptive_resource_plan(
+    *,
+    joint_shape: tuple[int, ...],
+    dimension: int,
+    chains: int,
+    free: bool,
+    warmup: int,
+    initial_draws: int,
+    max_draws_per_chain: int,
+    batch_draws: int,
+) -> _GAOAdaptivePlan:
+    """Share adaptive draw, minimum-work and memory planning with the calendar."""
+    schedule = _draw_schedule(initial_draws, max_draws_per_chain, batch_draws)
+    effective_draws = initial_draws + sum(schedule)
+    joint_cells = int(np.prod(joint_shape))
+    chunks = 1 + len(schedule)
+    iterations = warmup + effective_draws
+    minimum_evaluations = chains * (1 + chunks + (iterations if free else 0))
+    minimum_work = minimum_evaluations * joint_cells
+    retained_joint_cells = chains * effective_draws * joint_cells
+    largest_chunk = max((initial_draws, *schedule))
+    live_cells = chains * (
+        effective_draws * (2 * (joint_cells + dimension + 1) + 14 * dimension + 2 + 4 + 16 + 8)
+        + largest_chunk * (14 * dimension + 2 * joint_cells + 2)
+    )
+    return _GAOAdaptivePlan(
+        schedule,
+        effective_draws,
+        minimum_evaluations,
+        minimum_work,
+        retained_joint_cells,
+        live_cells,
+    )
 
 
 def fit_u2oet_gao_adaptive_precision(
@@ -162,32 +207,30 @@ def fit_u2oet_gao_adaptive_precision(
     u = _real(utility, "utility")
     if u.shape != n.shape[-2:] or np.any(u < 0):
         raise ValueError("utility must be a nonnegative efficacy-by-toxicity matrix")
-    schedule = _draw_schedule(initial_draws, max_draws_per_chain, batch_draws)
-    effective_draws = initial_draws + sum(schedule)
     joint_shape = (*n.shape[:2], e_levels, t_levels)
     joint_cells = int(np.prod(joint_shape))
     free = int(np.count_nonzero(prior_scale > 0))
-    chunks = 1 + len(schedule)
-    iterations = warmup + effective_draws
+    plan = _adaptive_resource_plan(
+        joint_shape=joint_shape,
+        dimension=dimension,
+        chains=chains,
+        free=bool(free),
+        warmup=warmup,
+        initial_draws=initial_draws,
+        max_draws_per_chain=max_draws_per_chain,
+        batch_draws=batch_draws,
+    )
     # Each chunk starts with one likelihood evaluation per chain. The sampler
     # then needs at least one accepted proposal per free-coordinate sweep.
     # Slice rejection can require more; remaining caps are passed through so
     # that actual work, rather than the 1000-step theoretical ceiling, governs.
-    minimum_evaluations = chains * (1 + chunks + (iterations if free else 0))
-    minimum_work = minimum_evaluations * joint_cells
-    if minimum_evaluations > max_likelihood_evaluations:
+    if plan.minimum_evaluations > max_likelihood_evaluations:
         raise ValueError("minimum adaptive GAO evaluations exceed max_likelihood_evaluations")
-    if minimum_work > max_work:
+    if plan.minimum_work > max_work:
         raise ValueError("minimum adaptive GAO work exceeds max_work")
-    retained_joint_cells = chains * effective_draws * joint_cells
-    largest_chunk = max((initial_draws, *schedule))
-    live_cells = chains * (
-        effective_draws * (2 * (joint_cells + dimension + 1) + 14 * dimension + 2 + 4 + 16 + 8)
-        + largest_chunk * (14 * dimension + 2 * joint_cells + 2)
-    )
-    if retained_joint_cells > _MAX_RETAINED_JOINT_CELLS:
+    if plan.retained_joint_cells > _MAX_RETAINED_JOINT_CELLS:
         raise ValueError("adaptive retained GAO posterior exceeds the 4-million-cell cap")
-    if live_cells > _MAX_LIVE_CELLS:
+    if plan.live_cells > _MAX_LIVE_CELLS:
         raise ValueError("adaptive GAO arrays exceed the 12-million-cell live-memory cap")
 
     # Validate all chain starts without consuming randomness. The aggregate
@@ -200,14 +243,14 @@ def fit_u2oet_gao_adaptive_precision(
     parameter_parts: list[FloatArray] = []
     joint_parts: list[FloatArray] = []
     likelihood_parts: list[FloatArray] = []
-    utility_values = np.empty((chains, effective_draws, 4))
+    utility_values = np.empty((chains, plan.effective_draws, 4))
     current_initial: ArrayLike | None = initial
     retained = 0
     evaluations = chains
     work = chains * joint_cells
     remaining_evaluations = max_likelihood_evaluations - evaluations
     remaining_work = max_work - work
-    for index, requested in enumerate((initial_draws, *schedule)):
+    for index, requested in enumerate((initial_draws, *plan.schedule)):
         chunk_warmup = warmup if index == 0 else 0
         chunk_minimum_evaluations = chains * (1 + (chunk_warmup + requested if free else 0))
         chunk_minimum_work = chunk_minimum_evaluations * joint_cells

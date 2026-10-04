@@ -10,6 +10,18 @@ from numpy.typing import ArrayLike
 from ._validation import FloatArray
 from .u2oet import _real, u2oet_standardize
 from .u2oet_decision import U2OETCriteria, U2OETPosterior, _integer, u2oet_posterior
+from .u2oet_gao_adaptive_precision import (
+    _MAX_LIVE_CELLS as _MAX_ADAPTIVE_LIVE_CELLS,
+)
+from .u2oet_gao_adaptive_precision import (
+    _MAX_RETAINED_JOINT_CELLS as _MAX_ADAPTIVE_RETAINED_CELLS,
+)
+from .u2oet_gao_adaptive_precision import (
+    _adaptive_resource_plan as _gao_adaptive_resource_plan,
+)
+from .u2oet_gao_adaptive_precision import (
+    fit_u2oet_gao_adaptive_precision,
+)
 from .u2oet_gao_fit import (
     _MAX_LIKELIHOOD_EVALUATIONS,
     _MAX_RETAINED_CELLS,
@@ -19,7 +31,13 @@ from .u2oet_gao_fit import (
 )
 from .u2oet_patients import U2OETPatients, u2oet_next_patient, u2oet_patients
 from .u2oet_scenario import U2OETScenario
-from .u2oet_simulation import U2OETTrial, U2OETTrialDecision, _window
+from .u2oet_simulation import (
+    U2OETAdaptiveSettings,
+    U2OETTrial,
+    U2OETTrialDecision,
+    _adaptive_settings,
+    _window,
+)
 
 _MAX_TRIAL_CELLS = 25_000_000
 
@@ -128,6 +146,7 @@ def simulate_u2oet_gao_trial(
     data_uniforms: ArrayLike | None = None,
     max_likelihood_evaluations: int = _MAX_LIKELIHOOD_EVALUATIONS,
     max_work: int = _MAX_WORK_UNITS,
+    adaptive_precision: U2OETAdaptiveSettings | None = None,
     rng: np.random.Generator,
 ) -> U2OETGAOTrial:
     """Run the existing U2OET calendar and allocation rules with GAO fitting.
@@ -144,7 +163,10 @@ def simulate_u2oet_gao_trial(
     posterior stream. If omitted, the returned trial retains generated tapes.
     The model is refit only when available complete or toxicity-only counts
     change. Cumulative fit budgets and the combined fit/history cell bound
-    cover every refit rather than resetting for each calendar look.
+    cover every refit rather than resetting for each calendar look. Optional
+    ``adaptive_precision`` applies a four-corner utility target at each changed
+    data state; an unmet target or exhausted cumulative budget prevents that
+    patient assignment.
     """
     if not isinstance(rng, np.random.Generator) or not isinstance(scenario, U2OETScenario):
         raise ValueError("require an explicit Generator and U2OETScenario")
@@ -198,6 +220,7 @@ def simulate_u2oet_gao_trial(
     draws = _integer(draws, "draws", 8, 100_000)
     warmup = _integer(warmup, "warmup", 0, 100_000)
     chains = _integer(chains, "chains", 2, 16)
+    adaptive = _adaptive_settings(adaptive_precision, warmup=warmup)
     max_likelihood_evaluations = _integer(
         max_likelihood_evaluations,
         "max_likelihood_evaluations",
@@ -208,9 +231,33 @@ def simulate_u2oet_gao_trial(
     free = bool(np.any(sd > 0))
     minimum_evaluations = _minimum_fit_evaluations(chains, warmup, draws, free)
     joint_cells = int(np.prod(shape, dtype=np.int64))
-    if minimum_evaluations > max_likelihood_evaluations:
+    adaptive_plan = None
+    trial_work_cap = max_work
+    analysis_draws = draws
+    if adaptive is not None:
+        adaptive_plan = _gao_adaptive_resource_plan(
+            joint_shape=shape,
+            dimension=len(names),
+            chains=chains,
+            free=free,
+            warmup=warmup,
+            initial_draws=adaptive.initial_draws,
+            max_draws_per_chain=adaptive.max_draws_per_chain,
+            batch_draws=adaptive.batch_draws,
+        )
+        trial_work_cap = min(max_work, adaptive.max_total_work)
+        if adaptive_plan.minimum_evaluations * maximum > max_likelihood_evaluations:
+            raise ValueError("minimum adaptive GAO trial evaluations exceed the cumulative budget")
+        if adaptive_plan.minimum_work * maximum > trial_work_cap:
+            raise ValueError("minimum adaptive GAO trial work exceeds the cumulative budget")
+        if adaptive_plan.retained_joint_cells > _MAX_ADAPTIVE_RETAINED_CELLS:
+            raise ValueError("adaptive GAO fit exceeds the retained posterior cell cap")
+        if adaptive_plan.live_cells > _MAX_ADAPTIVE_LIVE_CELLS:
+            raise ValueError("adaptive GAO fit exceeds the live posterior cell cap")
+        analysis_draws = adaptive_plan.effective_draws
+    elif minimum_evaluations > max_likelihood_evaluations:
         raise ValueError("minimum GAO fit evaluations exceed the cumulative trial budget")
-    if minimum_evaluations * joint_cells > max_work:
+    if adaptive is None and minimum_evaluations * joint_cells > max_work:
         raise ValueError("minimum GAO fit work exceeds the cumulative trial budget")
     if initial_parameters is None:
         initial_values = None
@@ -249,52 +296,62 @@ def simulate_u2oet_gao_trial(
                 "positive observation delays are not representable at this calendar scale"
             )
     dose_pairs = d1.size * d2.size
-    fit_cells = chains * draws * (14 * len(names) + 2 * joint_cells + 2)
-    posterior_cells = chains * draws * (2 * dose_pairs + joint_cells)
+    posterior_cells = chains * analysis_draws * (2 * dose_pairs + joint_cells)
     history_cells = maximum * (5 * dose_pairs + 24) + maximum * 12 + 2 * joint_cells
+    if adaptive_plan is not None:
+        history_cells += maximum * chains * 4
     tape_cells = maximum * 5 + maximum
-    combined_cells = fit_cells + posterior_cells + history_cells + tape_cells
-    if fit_cells > _MAX_RETAINED_CELLS or combined_cells > _MAX_TRIAL_CELLS:
+    if adaptive_plan is None:
+        fit_cells = chains * analysis_draws * (14 * len(names) + 2 * joint_cells + 2)
+        combined_cells = fit_cells + posterior_cells + history_cells + tape_cells
+        retained_fit_exceeded = fit_cells > _MAX_RETAINED_CELLS
+    else:
+        combined_cells = adaptive_plan.live_cells + posterior_cells + history_cells + tape_cells
+        retained_fit_exceeded = adaptive_plan.retained_joint_cells > _MAX_ADAPTIVE_RETAINED_CELLS
+    if retained_fit_exceeded or combined_cells > _MAX_TRIAL_CELLS:
         raise ValueError(
             "combined GAO fit, posterior, calendar and history storage exceeds its bound"
         )
 
+    design: dict[str, object] = {
+        "format_version": 1,
+        "model": "gao",
+        "doses1": d1.tolist(),
+        "doses2": d2.tolist(),
+        "scenario_joint": p_true.tolist(),
+        "utility": utility_array.tolist(),
+        "criteria": asdict(criteria),
+        "prior_coordinate_names": names,
+        "prior_mean": mean.tolist(),
+        "prior_sd": sd.tolist(),
+        "initial_parameters": None if initial_values is None else initial_values.tolist(),
+        "initial": first,
+        "max_patients": maximum,
+        "cohort_size": cohort,
+        "surplus": surplus_value,
+        "top": top_value,
+        "greedy": bool(greedy),
+        "efficacy_window": ew.tolist(),
+        "toxicity_window": tw.tolist(),
+        "mean_interarrival": float(gap),
+        "arrival_schedule": "explicit" if planned_arrivals is not None else "exponential",
+        "arrival_times": None if planned_arrivals is None else planned_arrivals.tolist(),
+        "uniform_tape_sha256": (
+            None
+            if uniforms is None
+            else hashlib.sha256(np.ascontiguousarray(uniforms).tobytes()).hexdigest()
+        ),
+        "final_scope": final_scope,
+        "draws": draws,
+        "warmup": warmup,
+        "chains": chains,
+        "max_likelihood_evaluations": max_likelihood_evaluations,
+        "max_work": max_work,
+    }
+    if adaptive is not None:
+        design["adaptive_precision"] = asdict(adaptive)
     design_json = json.dumps(
-        {
-            "format_version": 1,
-            "model": "gao",
-            "doses1": d1.tolist(),
-            "doses2": d2.tolist(),
-            "scenario_joint": p_true.tolist(),
-            "utility": utility_array.tolist(),
-            "criteria": asdict(criteria),
-            "prior_coordinate_names": names,
-            "prior_mean": mean.tolist(),
-            "prior_sd": sd.tolist(),
-            "initial_parameters": None if initial_values is None else initial_values.tolist(),
-            "initial": first,
-            "max_patients": maximum,
-            "cohort_size": cohort,
-            "surplus": surplus_value,
-            "top": top_value,
-            "greedy": bool(greedy),
-            "efficacy_window": ew.tolist(),
-            "toxicity_window": tw.tolist(),
-            "mean_interarrival": float(gap),
-            "arrival_schedule": "explicit" if planned_arrivals is not None else "exponential",
-            "arrival_times": None if planned_arrivals is None else planned_arrivals.tolist(),
-            "uniform_tape_sha256": (
-                None
-                if uniforms is None
-                else hashlib.sha256(np.ascontiguousarray(uniforms).tobytes()).hexdigest()
-            ),
-            "final_scope": final_scope,
-            "draws": draws,
-            "warmup": warmup,
-            "chains": chains,
-            "max_likelihood_evaluations": max_likelihood_evaluations,
-            "max_work": max_work,
-        },
+        design,
         sort_keys=True,
         separators=(",", ":"),
         allow_nan=False,
@@ -319,6 +376,7 @@ def simulate_u2oet_gao_trial(
     cached_counts: tuple[FloatArray, FloatArray] | None = None
     posterior: U2OETPosterior | None = None
     rhat = float("nan")
+    precision_record: tuple[bool, int, FloatArray] | None = None
     max_rhat = float("nan")
     fits = 0
     total_evaluations = 0
@@ -336,35 +394,76 @@ def simulate_u2oet_gao_trial(
             toxicity_levels=shape[3],
         )
 
-    def update(data: U2OETPatients) -> tuple[U2OETPosterior, float]:
-        nonlocal posterior, cached_counts, fits, rhat, max_rhat
+    def update(
+        data: U2OETPatients,
+    ) -> tuple[U2OETPosterior, float, tuple[bool, int, FloatArray] | None]:
+        nonlocal posterior, cached_counts, fits, rhat, max_rhat, precision_record
         nonlocal total_evaluations, total_work
         if cached_counts is None or not (
             np.array_equal(data.complete, cached_counts[0])
             and np.array_equal(data.toxicity_only, cached_counts[1])
         ):
             remaining_evaluations = max_likelihood_evaluations - total_evaluations
-            remaining_work = max_work - total_work
-            if (
-                remaining_evaluations < minimum_evaluations
-                or remaining_work < minimum_evaluations * joint_cells
+            remaining_work = trial_work_cap - total_work
+            if remaining_evaluations < (
+                adaptive_plan.minimum_evaluations
+                if adaptive_plan is not None
+                else minimum_evaluations
+            ) or remaining_work < (
+                adaptive_plan.minimum_work
+                if adaptive_plan is not None
+                else minimum_evaluations * joint_cells
             ):
                 raise ArithmeticError("cumulative GAO trial fit budget exhausted")
-            fit = fit_u2oet_gao(
-                d1,
-                d2,
-                data.complete,
-                toxicity_only=data.toxicity_only,
-                prior_mean=mean,
-                prior_sd=sd,
-                draws=draws,
-                warmup=warmup,
-                chains=chains,
-                initial=initial_values,
-                rng=posterior_rng,
-                max_likelihood_evaluations=remaining_evaluations,
-                max_work=remaining_work,
-            )
+            if adaptive_plan is None:
+                fit = fit_u2oet_gao(
+                    d1,
+                    d2,
+                    data.complete,
+                    toxicity_only=data.toxicity_only,
+                    prior_mean=mean,
+                    prior_sd=sd,
+                    draws=draws,
+                    warmup=warmup,
+                    chains=chains,
+                    initial=initial_values,
+                    rng=posterior_rng,
+                    max_likelihood_evaluations=remaining_evaluations,
+                    max_work=remaining_work,
+                )
+                precision_record = None
+            else:
+                assert adaptive is not None
+                adaptive_fit = fit_u2oet_gao_adaptive_precision(
+                    d1,
+                    d2,
+                    data.complete,
+                    toxicity_only=data.toxicity_only,
+                    prior_mean=mean,
+                    prior_sd=sd,
+                    utility=utility_array,
+                    target_mcse_ratio=adaptive.target_mcse_ratio,
+                    initial_draws=adaptive.initial_draws,
+                    max_draws_per_chain=adaptive.max_draws_per_chain,
+                    batch_draws=adaptive.batch_draws,
+                    warmup=warmup,
+                    chains=chains,
+                    initial=initial_values,
+                    max_likelihood_evaluations=remaining_evaluations,
+                    max_work=remaining_work,
+                    rng=posterior_rng,
+                )
+                if not adaptive_fit.target_met:
+                    raise ArithmeticError(
+                        "adaptive GAO posterior reached its draw cap without meeting "
+                        "the corner utility precision target; no decision was made"
+                    )
+                fit = adaptive_fit.fit
+                precision_record = (
+                    True,
+                    adaptive_fit.draws_per_chain,
+                    adaptive_fit.mcse_ratio,
+                )
             total_evaluations += fit.likelihood_evaluations
             total_work += fit.likelihood_work_units
             posterior = u2oet_posterior(
@@ -376,7 +475,7 @@ def simulate_u2oet_gao_trial(
             cached_counts = (data.complete, data.toxicity_only)
             fits += 1
         assert posterior is not None
-        return posterior, rhat
+        return posterior, rhat, precision_record
 
     now = 0.0
     stopped_early = False
@@ -386,7 +485,7 @@ def simulate_u2oet_gao_trial(
             pair = first
         else:
             data = snapshot(now)
-            current, diagnostic = update(data)
+            current, diagnostic, decision_precision = update(data)
             decision = u2oet_next_patient(
                 current,
                 data,
@@ -408,6 +507,9 @@ def simulate_u2oet_gao_trial(
                     diagnostic,
                     decision.continuing_cohort,
                     decision.reason,
+                    None if decision_precision is None else decision_precision[0],
+                    None if decision_precision is None else decision_precision[1],
+                    None if decision_precision is None else decision_precision[2],
                 )
             )
             if not np.any(decision.probabilities):
@@ -444,7 +546,7 @@ def simulate_u2oet_gao_trial(
     stop_time = now
     analysis_time = max(stop_time, float(np.max(outcome_times)))
     final_data = snapshot(analysis_time)
-    final_posterior, final_rhat = update(final_data)
+    final_posterior, final_rhat, final_precision = update(final_data)
     acceptable = final_posterior.acceptable.copy()
     if final_scope == "tried":
         acceptable &= final_data.treated > 0
@@ -474,4 +576,7 @@ def simulate_u2oet_gao_trial(
         planned_arrival_times=planned_arrivals,
         data_uniforms=uniforms,
         replay_only=explicit_uniform_tape,
+        final_precision_target_met=None if final_precision is None else final_precision[0],
+        final_precision_draws_per_chain=None if final_precision is None else final_precision[1],
+        final_corner_mcse_ratio=None if final_precision is None else final_precision[2],
     )

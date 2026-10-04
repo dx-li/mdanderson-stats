@@ -102,6 +102,71 @@ This driver implements the stated Python timing and final-selection conventions.
 Native prior calibration, native file/report workflows and reproduction of
 published trial operating characteristics remain separate work.
 
+## Adaptive GAO posterior precision
+
+The same calendar can opt into the U2OET guide's four-corner utility precision
+target through `U2OETAdaptiveSettings`. Settings are explicit and shared with
+the PDS/CMI calendar API; their target range and retained-draw constraints
+come from the guide, while chunking and continuation are Python conventions.
+The GAO-specific fit still requires the caller's explicit prior coordinates.
+
+```python
+from mdanderson_stats import U2OETAdaptiveSettings
+
+adaptive_trial = simulate_u2oet_gao_trial(
+    [1, 3],
+    [2, 5],
+    scenario,
+    [[20, 0], [100, 50]],
+    prior_mean=mean,
+    prior_sd=sd,
+    initial=(0, 0),
+    criteria=criteria,
+    max_patients=4,
+    cohort_size=2,
+    efficacy_window=(2, 2),
+    toxicity_window=(0.5, 0.5),
+    mean_interarrival=1,
+    draws=16,  # retained only for fixed-mode compatibility
+    warmup=8,
+    chains=2,
+    adaptive_precision=U2OETAdaptiveSettings(
+        target_mcse_ratio=0.05,
+        initial_draws=512,
+        max_draws_per_chain=2048,
+        batch_draws=512,
+        max_total_work=10_000_000,
+    ),
+    rng=np.random.default_rng(7721),
+)
+print(adaptive_trial.final_precision_target_met)
+print(adaptive_trial.final_precision_draws_per_chain)
+print(adaptive_trial.final_corner_mcse_ratio)
+```
+
+For adaptive mode, `initial_draws` must be at least the warmup count. The
+existing GAO fitter supports 2–16 chains; warmup also inherits the settings
+validator's 10,000-draw limit. Before advancing the caller's RNG, the trial
+preflights the minimum fit work over the maximum possible number of fits,
+adaptive fit live memory, and the combined posterior/history/tape storage.
+The whole-trial work allowance is the smaller of `max_work` and
+`adaptive_precision.max_total_work`; evaluation limits continue to use
+`max_likelihood_evaluations`. Both budgets are cumulative across changed
+count states. Sampler rejections can consume more than minimum work; the
+remaining allowance is passed to each analysis and exhaustion raises rather
+than resetting the budget.
+
+The existing sufficient-statistic cache remains in force: if complete and
+toxicity-only counts are unchanged, the posterior and precision diagnostics
+are reused. Each decision records the precision target status, draw count and
+four corner ratios; final equivalents are available on the trial result.
+An adaptive fit that reaches its cap without meeting the target raises
+`ArithmeticError` before the corresponding dose assignment or final selection.
+It never silently substitutes an under-precise posterior. Adaptive settings
+are stored in `design_json`, so replicate summaries continue to require
+matching designs. Fixed mode leaves its JSON and RNG path unchanged. This is
+Python adaptive GAO coverage, not native adaptive-mode or prior-default parity.
+
 Four independent R calendar ledgers check patient assignments, pending-outcome
 snapshots, utility calculations, stopping and final selection. The
 [audit](../research/u2oet-gao-trial-audit.md) records those comparisons and the
