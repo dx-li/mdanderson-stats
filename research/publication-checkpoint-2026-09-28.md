@@ -3098,3 +3098,43 @@ was still in progress when checked; `8e9642a` remains the latest independently
 verified all-green hosted checkpoint. Entry 166 and full catalog coverage
 remain active work. The local manifest records verified publication SHAs and
 artifact hashes.
+
+## 2026-10-04: Iterated survival-forest imputation
+
+Ordinary survival forests now support bounded `nimpute > 1` fitting. Nonfinal
+passes pool OOB terminal scalar imputations and re-snap missing times to the
+fixed original master grid. Later splits use completed data while original
+masks retain their bootstrap-donor and predictor-eligibility roles. The final
+forest uses the preceding completed data without another pooled update.
+Immutable completed arrays use original categorical labels and row maps;
+separate cumulative counters and limits bound work across passes.
+
+Three Luna agents implemented the engine, pooled summaries and independent
+base-R references. Root integration corrected row-map coverage, checked
+aggregate categorical storage and source tie rules, and reviewed default
+behavior against the previously published code. All 85 affected checks pass
+with warnings as errors in 4.356 seconds, peaking at 148.44 MiB RSS with zero
+swaps. Eight seeded single-pass cases match checkpoint `48a86e5` across all
+four split rules and both sampling modes. Additional checks cover finite
+`1e308` means, aggregate categorical allocation rejection, rejected-bootstrap
+membership, final-response OOB scoring, three-pass categorical decoding and
+missing-profile prediction. Those runs peaked at 118.75 and 114.55 MiB with
+zero swaps. Integrated scoped Ruff, formatting and five-module mypy pass.
+
+Cached builds at `c498970` pass isolated verification: all 623 committed
+package files match both archives, all 1,734 public exports resolve, notices
+are retained and three missing-data guide examples run from the wheel.
+Verification took 12.348 seconds, peaked at 119.95 MiB RSS and reported zero
+swaps. Numerical, static and packaging jobs stayed serial and bounded. No
+full local suite, installation or new CI workflow was added. Checkpoint
+`48a86e5` passed every hosted quality and Python 3.12/3.13/3.14 job in run
+`37182489808`.
+
+The [coverage priority review](statistical-coverage-priority-2026-10-04.md)
+separates missing statistical contracts from input/report/application gaps
+in the inspected programs. The recovered SurvivalContour model-family
+routes already have Python counterparts; arbitrary optional dependency
+features do not define additional demonstrated app requirements. Entry 166
+and full catalog coverage remain unfinished, with no status promotion or
+native random-stream parity claim. The local manifest records verified
+publication SHAs and artifact hashes.
