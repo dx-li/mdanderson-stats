@@ -158,12 +158,14 @@
       "implemented_features": [
         "Reference and average-rank quantile normalization with explicit tie averaging",
         "Position-weighted nearest-neighbor PDNN energies, stable predicted signals and conditional probeset expression with explicit exclusion rules",
-        "Analytic-gradient staged local PDNN fitting of stacking energies, position weights, log expression and array-wide nonspecific amount/background"
+        "Analytic-gradient staged local PDNN fitting of stacking energies, position weights, log expression and array-wide nonspecific amount/background",
+        "Per-probeset Pearson correlation of observed and fitted natural-log intensities using original probe-row IDs, stable relative logs, explicit undefined constant/singleton groups and a bounded no-refit workflow; Pearson and row selection are documented Python conventions"
       ],
       "validation": [
         "Six focused tests: normalization, energies, conditional expression, extreme scales, finite-difference gradient agreement, amplitude recovery and joint-fit error reduction",
         "200000-probe/20000-probeset performance and synthetic recovery audit; see docs/perfectmatch.md",
-        "Pending CEL/parameter/annotation formats, full QC/export/display workflows, real-array/native optimizer audit and native scaling conventions"
+        "Pending CEL/parameter/annotation formats, full QC/export/display workflows, real-array/native optimizer audit and native scaling conventions",
+        "Four focused grouped-correlation checks cover scale invariance, interleaved groups, exact constants, nearby large signals and pre-conversion resource rejection; docs/perfectmatch.md and research/perfectmatch-correlation-audit.md. Native correlation variant and outlier subset remain unverified."
       ]
     },
     {

@@ -109,6 +109,19 @@ To bound temporary arrays, each input is limited to 500,000 probes; larger
 arrays should be summarized in explicit chunks only when each probeset remains
 within a single chunk.
 
+The earlier expression example can be summarized without refitting:
+
+```python
+from mdanderson_stats import pdnn_fit_correlations
+
+quality = pdnn_fit_correlations(signal, fit.fitted_signal, ids)
+np.testing.assert_array_equal(quality.probeset_ids, fit.probeset_ids)
+np.testing.assert_allclose(quality.correlation, [1.0, 1.0])
+```
+
+For an explicitly filtered summary, apply the same inclusion mask to all three
+inputs. The manual does not establish which outlier subset its correlation uses.
+
 ## Validation and performance
 
 Six focused tests cover both normalization modes and ties; independently summed

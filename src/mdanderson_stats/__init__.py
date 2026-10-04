@@ -1032,6 +1032,7 @@ from .parametric_survival import (
 from .parametric_survival_contour import ParametricSurvivalContour, parametric_survival_contour
 from .pdnn import PDNNExpression, pdnn_binding_energy, pdnn_expression, pdnn_signal
 from .pdnn_fit import PDNNConvergenceError, PDNNFit, PDNNParameters, fit_pdnn
+from .pdnn_fit_correlation import PDNNFitCorrelations, pdnn_fit_correlations
 from .pehaz import PiecewiseHazard, pehaz
 from .phase2_predictive import (
     Phase2PredictiveCandidate,
@@ -2664,6 +2665,8 @@ __all__ = [
     "PDNNExpression",
     "PDNNConvergenceError",
     "PDNNFit",
+    "PDNNFitCorrelations",
+    "pdnn_fit_correlations",
     "PDNNParameters",
     "fit_pdnn",
     "pdnn_binding_energy",

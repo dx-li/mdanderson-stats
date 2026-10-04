@@ -1,5 +1,12 @@
 # Statistical coverage priority audit — September 28, 2026
 
+October 3 PerfectMatch update: per-probeset observed/fitted log-intensity
+correlation now summarizes existing PDNN fits. Pearson correlation, undefined
+constant/singleton groups and use of all supplied rows are explicit Python
+conventions where the manual is silent. Group-relative logs preserve nearby
+large intensities; preflight limits inputs to 500,000 probes before conversion.
+Native quality-control and file/report parity remain partial.
+
 October 3 lognormal update: a separate bounded data-augmentation Gibbs fitter
 completes right-censored posterior support for all seven BCSTTE distributions.
 It uses an explicit proper Normal-Inverse-Gamma prior, retains paired location
