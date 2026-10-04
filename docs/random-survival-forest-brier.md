@@ -54,7 +54,9 @@ nonmissing node rows, RF-SRC maximizes
 ```
 
 The same ordered numeric cuts, categorical subsets, bootstrap multiplicities,
-and candidate tie policy as the other forest split rules are used. If required
+and candidate tie policy as the score-maximizing forest split rules are used.
+The separate `split_rule="random"` follows RF-SRC's first-valid random split
+workflow instead. If required
 inverse censor-survival weights cannot be represented, that candidate has no
 usable score; if no candidate remains, the node is terminal. No infinite score
 or artificial weight floor is introduced. The resolved probability is

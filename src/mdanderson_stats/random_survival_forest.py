@@ -30,7 +30,7 @@ _MAX_OOB_WORK = 100_000_000
 _OOB_TIE_EPSILON = 1e-9
 _SPLIT_EPSILON = 1e-9
 _MAX_FACTOR_SPLIT_LEVELS = 2_000_000
-_SPLIT_RULES = ("logrank", "logrankscore", "bs.gradient")
+_SPLIT_RULES = ("logrank", "logrankscore", "bs.gradient", "random")
 _DEFAULT_BRIER_PROB = 0.90
 
 
@@ -101,7 +101,7 @@ class RandomSurvivalForestFit:
     oob: RandomSurvivalForestOOB | None = None
     training_fingerprint: bytes | None = None
     categorical_levels: tuple[FloatArray | None, ...] = ()
-    split_rule: Literal["logrank", "logrankscore", "bs.gradient"] = "logrank"
+    split_rule: Literal["logrank", "logrankscore", "bs.gradient", "random"] = "logrank"
     split_probability: float | None = None
 
 
@@ -373,6 +373,38 @@ def _factor_split_candidates(
         yield candidate_levels, float("nan")
 
 
+def _random_factor_group_probabilities(count: int) -> tuple[np.ndarray, FloatArray]:
+    """Return RF-SRC partition cardinalities and their native group masses."""
+    group_sizes = np.arange(1, count // 2 + 1, dtype=np.int64)
+    if count < 2:
+        raise ValueError("a random factor split requires at least two levels")
+    log_weights = np.asarray(
+        [
+            lgamma(count + 1)
+            - lgamma(int(size) + 1)
+            - lgamma(count - int(size) + 1)
+            - (log(2.0) if 2 * int(size) == count else 0.0)
+            for size in group_sizes
+        ],
+        dtype=np.float64,
+    )
+    probabilities = np.exp(log_weights - np.max(log_weights))
+    probabilities /= probabilities.sum()
+    return group_sizes, probabilities
+
+
+def _random_factor_partition(levels: FloatArray, rng: np.random.Generator) -> FloatArray:
+    """Draw one RF-SRC unordered factor partition with uniform partition mass.
+
+    RF-SRC first weights each represented partition-cardinality group by its
+    number of complementary partitions, then samples a subset uniformly
+    within that group. A balanced split is counted once after complementing.
+    """
+    group_sizes, probabilities = _random_factor_group_probabilities(int(levels.size))
+    group_size = int(rng.choice(group_sizes, p=probabilities))
+    return np.sort(rng.choice(levels, size=group_size, replace=False))
+
+
 def _parent_counts(
     time: FloatArray, event: FloatArray
 ) -> tuple[FloatArray, FloatArray, FloatArray]:
@@ -604,7 +636,7 @@ def _grow_tree(
     max_split_work: int,
     max_leaf_records: int,
     categorical_columns: frozenset[int],
-    split_rule: Literal["logrank", "logrankscore", "bs.gradient"],
+    split_rule: Literal["logrank", "logrankscore", "bs.gradient", "random"],
     split_probability: float | None,
     retain_represented_count: bool = False,
 ) -> _PackedTree:
@@ -645,87 +677,126 @@ def _grow_tree(
         if rows.size >= 2 * nodesize and not _stop_before_split(node_time, node_event):
             candidate_features = np.flatnonzero(permissible)
             if candidate_features.size:
-                selected = rng.choice(
-                    candidate_features,
-                    size=min(mtry, candidate_features.size),
-                    replace=False,
-                )
-                parent_event_times, parent_events, parent_at_risk = _parent_counts(
-                    node_time, node_event
-                )
-                rank_scores = None
-                brier_gamma = None
-                if split_rule == "logrankscore":
-                    budget.split_work += rows.size * ((rows.size - 1).bit_length() + 4)
-                    if budget.split_work > max_split_work:
-                        raise ValueError("forest exceeds max_split_work budget")
-                    rank_scores = _logrankscore_scores(node_time, node_event)
-                elif split_rule == "bs.gradient":
-                    budget.split_work += rows.size * ((rows.size - 1).bit_length() + 8)
-                    if budget.split_work > max_split_work:
-                        raise ValueError("forest exceeds max_split_work budget")
-                    assert split_probability is not None
-                    _, brier_gamma = _brier_gradient_data(node_time, node_event, split_probability)
-                for column in selected:
-                    unique_values = np.unique(x[rows, column])
-                    if unique_values.size < 2:
-                        next_permissible[column] = False
-                        continue
-                    candidate_iterator: Iterator[tuple[np.ndarray | None, float]]
-                    if int(column) in categorical_columns:
-                        candidate_count, exact, group_probabilities = _factor_split_plan(
-                            unique_values, int(rows.size), nsplit
+                if split_rule == "random":
+                    # RF-SRC counts every sampled variable against mtry,
+                    # including a variable found constant at this node. It
+                    # proceeds to the next draw only when that variable has
+                    # no split candidate; the first valid candidate wins.
+                    # Its no-missing, uniform-weight fast path enumerates in
+                    # stored order only when mtry>1 covers every permissible
+                    # feature. mtry==1 remains a random draw even at size one.
+                    remaining = candidate_features.copy()
+                    ordered_selection = mtry > 1 and mtry >= remaining.size
+                    for _ in range(min(mtry, candidate_features.size)):
+                        selected_index = (
+                            0 if ordered_selection else int(rng.integers(remaining.size))
                         )
-                        budget.split_work += int(candidate_count * (rows.size + unique_values.size))
-                        candidate_iterator = _factor_split_candidates(
-                            unique_values,
-                            candidate_count,
-                            exact,
-                            group_probabilities,
-                            rng,
-                        )
-                    else:
-                        cuts = unique_values[:-1]
-                        if nsplit > 0 and cuts.size > nsplit:
-                            cuts = np.sort(rng.choice(cuts, size=nsplit, replace=False))
-                        candidate_count = int(cuts.size)
-                        budget.split_work += int(rows.size * cuts.size)
-                        candidate_iterator = ((None, float(cut)) for cut in cuts)
-                    if budget.split_work > max_split_work:
-                        raise ValueError("forest exceeds max_split_work budget")
-                    for left_levels, cut in candidate_iterator:
-                        left_mask = (
-                            np.isin(x[rows, column], left_levels)
-                            if left_levels is not None
-                            else x[rows, column] <= cut
-                        )
-                        left_count = int(np.count_nonzero(left_mask))
-                        if left_count == 0 or left_count == rows.size:
+                        column = int(remaining[selected_index])
+                        remaining = np.delete(remaining, selected_index)
+                        budget.split_work += rows.size * ((rows.size - 1).bit_length() + 2)
+                        if budget.split_work > max_split_work:
+                            raise ValueError("forest exceeds max_split_work budget")
+                        unique_values = np.unique(x[rows, column])
+                        if unique_values.size < 2:
+                            next_permissible[column] = False
                             continue
-                        if split_rule == "logrank":
-                            score = _logrank_score(
-                                node_time,
-                                node_event,
-                                left_mask,
-                                parent_events,
-                                parent_at_risk,
-                                parent_event_times,
-                            )
-                        elif split_rule == "logrankscore":
-                            assert rank_scores is not None
-                            score = _logrankscore_split_score(rank_scores, left_mask)
-                        else:
-                            budget.split_work += rows.size
+                        if column in categorical_columns:
+                            budget.split_work += int(unique_values.size)
                             if budget.split_work > max_split_work:
                                 raise ValueError("forest exceeds max_split_work budget")
-                            score = _brier_gradient_split_score(brier_gamma, left_mask)
-                        if split_rule == "bs.gradient" and np.isnan(score):
+                            best_levels = _random_factor_partition(unique_values, rng)
+                        else:
+                            cut_index = int(rng.integers(unique_values.size - 1))
+                            best_threshold = float(unique_values[cut_index])
+                        best_feature = column
+                        best_score = 0.0
+                        break
+                else:
+                    selected = rng.choice(
+                        candidate_features,
+                        size=min(mtry, candidate_features.size),
+                        replace=False,
+                    )
+                    parent_event_times, parent_events, parent_at_risk = _parent_counts(
+                        node_time, node_event
+                    )
+                    rank_scores = None
+                    brier_gamma = None
+                    if split_rule == "logrankscore":
+                        budget.split_work += rows.size * ((rows.size - 1).bit_length() + 4)
+                        if budget.split_work > max_split_work:
+                            raise ValueError("forest exceeds max_split_work budget")
+                        rank_scores = _logrankscore_scores(node_time, node_event)
+                    elif split_rule == "bs.gradient":
+                        budget.split_work += rows.size * ((rows.size - 1).bit_length() + 8)
+                        if budget.split_work > max_split_work:
+                            raise ValueError("forest exceeds max_split_work budget")
+                        assert split_probability is not None
+                        _, brier_gamma = _brier_gradient_data(
+                            node_time, node_event, split_probability
+                        )
+                    for column in selected:
+                        unique_values = np.unique(x[rows, column])
+                        if unique_values.size < 2:
+                            next_permissible[column] = False
                             continue
-                        if score - best_score > _SPLIT_EPSILON:
-                            best_score = score
-                            best_feature = int(column)
-                            best_threshold = float(cut)
-                            best_levels = left_levels
+                        candidate_iterator: Iterator[tuple[np.ndarray | None, float]]
+                        if int(column) in categorical_columns:
+                            candidate_count, exact, group_probabilities = _factor_split_plan(
+                                unique_values, int(rows.size), nsplit
+                            )
+                            budget.split_work += int(
+                                candidate_count * (rows.size + unique_values.size)
+                            )
+                            candidate_iterator = _factor_split_candidates(
+                                unique_values,
+                                candidate_count,
+                                exact,
+                                group_probabilities,
+                                rng,
+                            )
+                        else:
+                            cuts = unique_values[:-1]
+                            if nsplit > 0 and cuts.size > nsplit:
+                                cuts = np.sort(rng.choice(cuts, size=nsplit, replace=False))
+                            candidate_count = int(cuts.size)
+                            budget.split_work += int(rows.size * cuts.size)
+                            candidate_iterator = ((None, float(cut)) for cut in cuts)
+                        if budget.split_work > max_split_work:
+                            raise ValueError("forest exceeds max_split_work budget")
+                        for left_levels, cut in candidate_iterator:
+                            left_mask = (
+                                np.isin(x[rows, column], left_levels)
+                                if left_levels is not None
+                                else x[rows, column] <= cut
+                            )
+                            left_count = int(np.count_nonzero(left_mask))
+                            if left_count == 0 or left_count == rows.size:
+                                continue
+                            if split_rule == "logrank":
+                                score = _logrank_score(
+                                    node_time,
+                                    node_event,
+                                    left_mask,
+                                    parent_events,
+                                    parent_at_risk,
+                                    parent_event_times,
+                                )
+                            elif split_rule == "logrankscore":
+                                assert rank_scores is not None
+                                score = _logrankscore_split_score(rank_scores, left_mask)
+                            else:
+                                budget.split_work += rows.size
+                                if budget.split_work > max_split_work:
+                                    raise ValueError("forest exceeds max_split_work budget")
+                                score = _brier_gradient_split_score(brier_gamma, left_mask)
+                            if split_rule == "bs.gradient" and np.isnan(score):
+                                continue
+                            if score - best_score > _SPLIT_EPSILON:
+                                best_score = score
+                                best_feature = int(column)
+                                best_threshold = float(cut)
+                                best_levels = left_levels
 
         if best_feature < 0:
             times, log_curve, hazard_curve = _leaf_curve(node_time, node_event)
@@ -949,7 +1020,7 @@ def fit_random_survival_forest(
     covariates: ArrayLike | None = None,
     *,
     categorical_features: ArrayLike | None = None,
-    split_rule: Literal["logrank", "logrankscore", "bs.gradient"] = "logrank",
+    split_rule: Literal["logrank", "logrankscore", "bs.gradient", "random"] = "logrank",
     prob: float | None = None,
     n_trees: int = 500,
     mtry: int | None = None,
@@ -993,13 +1064,15 @@ def fit_random_survival_forest(
     score gradient. ``prob`` is its scalar failure-quantile probability
     (default 0.9); it selects one prior event-grid point using the parent
     Kaplan--Meier curve's ``1 - prob`` survival threshold.
+    ``split_rule="random"`` draws one cut/partition on the first selected
+    feature with a valid split; it does not compare survival scores.
     """
     if not isinstance(replace, (bool, np.bool_)):
         raise ValueError("replace must be boolean")
     if not isinstance(compute_oob, (bool, np.bool_)):
         raise ValueError("compute_oob must be boolean")
     if not isinstance(split_rule, str) or split_rule not in _SPLIT_RULES:
-        raise ValueError("split_rule must be 'logrank', 'logrankscore', or 'bs.gradient'")
+        raise ValueError("split_rule must be 'logrank', 'logrankscore', 'bs.gradient', or 'random'")
     if split_rule == "bs.gradient":
         raw_prob = _DEFAULT_BRIER_PROB if prob is None else prob
         if isinstance(raw_prob, (bool, np.bool_)) or np.iscomplexobj(raw_prob):
