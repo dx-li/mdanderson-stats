@@ -1,0 +1,7 @@
+"original_row","analyzed_row","leaf_node","original_time","original_event","missing_time","missing_event","expected_completed_time","expected_completed_event","fallback_time","fallback_event"
+0,0,2,1,1,FALSE,FALSE,1,1,FALSE,FALSE
+2,1,0,NA,NA,TRUE,TRUE,3,0,FALSE,FALSE
+4,2,2,NA,NA,TRUE,TRUE,3,1,TRUE,TRUE
+7,3,1,9,NA,FALSE,TRUE,9,1,FALSE,FALSE
+9,4,2,3,0,FALSE,FALSE,3,0,FALSE,FALSE
+12,5,2,4,1,FALSE,FALSE,4,1,FALSE,FALSE

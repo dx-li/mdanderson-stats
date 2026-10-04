@@ -1,0 +1,4 @@
+"pass","role","missing_numeric","missing_category","missing_time","missing_status","terminal_summary_numeric","terminal_summary_category","terminal_summary_time_before_resnap","terminal_summary_time_after_resnap","terminal_summary_status"
+1,"first_pass_then_summarize",NA,NA,NA,NA,5,8,2,3,1
+2,"intermediate_pass_then_summarize",5,8,3,1,6,4,5,7,0
+3,"final_pass_no_postfit_summary",6,4,7,0,999,999,999,999,999

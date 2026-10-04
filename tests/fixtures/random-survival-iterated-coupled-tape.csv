@@ -1,0 +1,6 @@
+"sequence","operation","uniform","pool","expected_selected"
+1,"local_status_tie_row_2",0.25,"0;1",0
+2,"local_status_tie_row_4",0.75,"0;1",1
+3,"global_time_fallback_row_3",0.6,"1;9;3;4",3
+4,"global_status_fallback_row_3",0.75,"1;0;1",1
+5,"pooled_time_second_snap_row_2",0.75,"1;3;4;9",3

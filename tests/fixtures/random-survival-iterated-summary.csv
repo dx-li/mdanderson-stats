@@ -1,0 +1,8 @@
+"case","field_kind","selection","all_tree_terminal_values","inbag_flags","original_observed_fallback","uniform","master_grid","original_value","original_missing","selected_terminal_values","expected","fallback_used"
+"numeric_by_root_excludes_inbag_outlier","numeric","OOB","2;8;100","FALSE;FALSE;TRUE","1;3;7;9",NA,"",NA,TRUE,"2;8",5,FALSE
+"numeric_by_node_includes_all","numeric","ALL","2;8;100","FALSE;FALSE;TRUE","1;3;7;9",NA,"",NA,TRUE,"2;8;100",36.6666666666667,FALSE
+"categorical_mode_by_root","categorical","OOB","2;8;8;4","FALSE;FALSE;FALSE;TRUE","1;2;4;8",NA,"",NA,TRUE,"2;8;8",8,FALSE
+"categorical_tied_mode_fixed_tape","categorical","OOB","2;8;2;8","FALSE;FALSE;FALSE;FALSE","1;2;4;8",0.75,"",NA,TRUE,"2;8;2;8",8,FALSE
+"empty_oob_pool_global_fallback","numeric","OOB","","TRUE;TRUE","1;3;7;9",0.4,"",NA,TRUE,"",3,TRUE
+"time_mean_then_fixed_master_resnap","time","OOB","1;3","FALSE;FALSE","1;3;7;9",0.75,"1;3;7;9",NA,TRUE,"1;3",3,FALSE
+"observed_value_unchanged","time","OOB","1;3","FALSE;FALSE","1;3;7;9",NA,"1;3;7;9",7,FALSE,"1;3",7,FALSE

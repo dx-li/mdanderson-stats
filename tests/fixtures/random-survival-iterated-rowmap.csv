@@ -1,0 +1,5 @@
+"original_row","analyzed_row","original_time","original_event","event_interest_member","master_time_member"
+0,0,1,1,TRUE,TRUE
+2,1,3,0,FALSE,TRUE
+5,2,7,NA,FALSE,TRUE
+9,3,9,1,TRUE,TRUE
