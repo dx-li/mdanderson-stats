@@ -45,6 +45,13 @@
       "url": "https://aacr.silverchair-cdn.com/aacr/content_public/journal/clincancerres/24/20/10.1158_1078-0432.ccr-18-0246/2/10780432ccr180246-sup-195865_2_supp_4686492_p8kvw2.pdf",
       "bytes": 7508002,
       "sha256": "7cb473a3afd9641df0be708c259900df783277ab77e328d0ab03cf77df6078f6"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6191365/",
+      "doi": "10.1158/1078-0432.CCR-18-0246",
+      "retrieved_date": "2026-10-04",
+      "retrieval": "Indexed primary full-text search result; no direct PMC download. Direct publisher article returned HTTP403 and was not retried.",
+      "used": "Numerical Study definitions of MTD-relative selection/allocation and first-three-patient regret; continuous-accrual regret evaluation time remains unspecified."
     }
   ],
   "application_version": "2.5.4.0",

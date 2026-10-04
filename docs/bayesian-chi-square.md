@@ -177,9 +177,7 @@ import numpy as np
 from mdanderson_stats import bayesian_chi_square_discrete_cdf
 
 observed = np.array([0, 1, 1, 2, 3])
-draws = np.random.default_rng(11).beta(
-    1 + observed.size, 1 + int(observed.sum()), size=512
-)
+draws = np.random.default_rng(11).beta(1 + observed.size, 1 + int(observed.sum()), size=512)
 log_survival = np.log1p(-draws[:, None])
 left = -np.expm1(observed[None, :] * log_survival)
 right = -np.expm1((observed[None, :] + 1) * log_survival)

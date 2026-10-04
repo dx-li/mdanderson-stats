@@ -14,12 +14,15 @@ records the effective timing/design settings, decision sequence and newly
 computed scenario summaries in saved HTML. Final selection is available through
 `BOINDesign.select_mtd` once all outcomes are ascertained.
 
-The entry remains partial: source labels for correct/overdose selection and
-allocation and “regretful trials” do not establish all native evaluation conventions
-in the inspected material. The report therefore preserves the full selection
-distribution and per-dose mean allocations, without inventing a correct-MTD or
-regret classification. Native document templates and scheduler/RNG parity also
-remain unverified. See the [report crosswalk](../research/tite-boin-protocol-report-audit.md).
+The entry remains partial because the regretful-trial calculation still lacks
+an operational evaluation time. The primary paper links regret to failure to
+de-escalate when two of the first three patients at a dose have DLTs,
+including events that were pending at assignment. It does not identify which
+assignment or observation time should trigger that retrospective comparison.
+The report preserves the full selection distribution and per-dose mean
+allocations without inventing this timing rule. Native document templates and
+scheduler/RNG parity also remain unverified. See the
+[report crosswalk](../research/tite-boin-protocol-report-audit.md).
 
 ## Imputation and follow-up thresholds
 

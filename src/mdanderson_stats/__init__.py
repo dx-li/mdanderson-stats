@@ -164,6 +164,7 @@ from .bayesian_chi_square import (
     BayesianChiSquare,
     ExponentialBayesianGOF,
     bayesian_chi_square_cdf,
+    bayesian_chi_square_discrete_cdf,
     exponential_bayesian_gof,
 )
 from .bayesian_monitoring import (
@@ -1674,7 +1675,11 @@ from .tite_keyboard_protocol_report import (
     TITEKeyboardScenarioSummary,
     run_tite_keyboard_protocol,
 )
-from .tite_keyboard_simulation import TITEKeyboardSimulation, simulate_tite_keyboard
+from .tite_keyboard_simulation import (
+    TITEKeyboardAllocationRisks,
+    TITEKeyboardSimulation,
+    simulate_tite_keyboard,
+)
 from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_keyboard_trial
 from .top_binary import TOPBinaryBoundaries, TOPBinaryDecision, TOPBinaryDesign
 from .top_calendar import TOPBinarySimulation, TOPBinaryTrial, TOPCalendarStep, run_top_binary_trial
@@ -2973,6 +2978,7 @@ __all__ = [
     "BayesianChiSquare",
     "ExponentialBayesianGOF",
     "bayesian_chi_square_cdf",
+    "bayesian_chi_square_discrete_cdf",
     "exponential_bayesian_gof",
     "WeibullBayesianGOF",
     "weibull_fixed_shape_bayesian_gof",
@@ -3151,6 +3157,7 @@ __all__ = [
     "TITEKeyboardTrial",
     "run_tite_keyboard_trial",
     "TITEKeyboardSimulation",
+    "TITEKeyboardAllocationRisks",
     "simulate_tite_keyboard",
     "TITEKeyboardBoundaries",
     "tite_keyboard_boundaries",

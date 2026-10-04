@@ -13,14 +13,25 @@ sequence.
 | Select MTD uses completed/evaluable per-dose patient and DLT counts | `BOINDesign.select_mtd` | Kept separate from scenario reports; no synthetic patient-count inputs are accepted |
 | Protocol tab offers HTML/Word templates, flowchart and Table 1 | Cached `research/raw/TITE-BOIN/app.html`, Trial Protocol tab | No document-template or native flowchart rendering is claimed |
 
-The cached app's simulation UI and published supplement identify correct/overdose
-selection, correct/overdose allocation, regretful trials and average duration as
-operating-characteristic labels. They do not, in the inspected app HTML or guide,
-fully define a native report schema or all evaluation conventions for those
-labels. This report therefore presents the simulator's exact selection
-distribution and per-dose mean allocation counts without assigning an
-unverified “correct MTD” or regret definition. Its scenario truth is included so
-users can conduct an explicitly chosen downstream evaluation.
+The [primary article's Numerical Study section](https://pmc.ncbi.nlm.nih.gov/articles/PMC6191365/)
+defines selection and allocation relative to the true MTD, including allocation
+above and below it. It also defines regret through a failure to de-escalate
+when two of a dose's first three patients have DLTs. The surrounding explanation
+explicitly includes decisions that become regrettable after pending outcomes
+resolve. Thus regret is a trial-level history statistic, not a transformation
+of mean dose allocations.
+
+The article does not specify the operational comparison time: the next
+assignment, the second DLT's ascertainment, or an earlier decision evaluated
+retrospectively. This matters for continuous accrual and revisited doses. The
+current report consequently preserves the simulator's selection distribution
+and per-dose mean allocation counts without assigning a purported native
+regret indicator. The article resolves the named metric's high-level meaning;
+its precise history rule and native report schema remain unverified.
+
+The main-article evidence above was available in an indexed primary full-text
+result on October 4, 2026. Direct publisher retrieval returned HTTP 403; it was
+not retried. No main-article PDF was downloaded or redistributed.
 
 Cached source anchors: `research/raw/TITE-BOIN/app.html` tab labels and controls
 for Trial Setting, Simulation, Trial Protocol, STFT Calculator and Select MTD;

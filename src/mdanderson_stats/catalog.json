@@ -2481,7 +2481,8 @@
         "Unknown-shape Weibull joint posterior under an explicit correlated Gaussian log-shape/log-scale prior, with noninformative right censoring, complete-only Johnson diagnostics, serial elliptical-slice sampling, chain diagnostics and bounded likelihood/work/storage",
         "Gamma, inverse-Gamma and log-logistic joint shape/scale posterior fits under explicit correlated Gaussian log-parameter priors, with noninformative right censoring, complete-only Johnson diagnostics, stable Gamma log tails and bounded serial sampling",
         "Generalized log-odds-rate three-parameter posterior fitting under an explicit correlated Gaussian log prior, using the primary Shen-Thall survival model, noninformative right censoring and complete-only paired-draw Johnson diagnostics; all seven advertised distribution families now have Python fitting workflows",
-        "Lognormal right-censored posterior fitting by bounded serial data-augmentation Gibbs sampling under an explicit proper Normal-Inverse-Gamma prior, with paired location/variance draws, chain diagnostics, direct observed likelihoods, zero-time censor handling and proper all-censored support; all seven families now support right censoring"
+        "Lognormal right-censored posterior fitting by bounded serial data-augmentation Gibbs sampling under an explicit proper Normal-Inverse-Gamma prior, with paired location/variance draws, chain diagnostics, direct observed likelihoods, zero-time censor handling and proper all-censored support; all seven families now support right censoring",
+        "Randomized Johnson diagnostic for discrete atoms and rounded intervals from joint posterior CDF mass bounds, with explicit reproducible randomness, strict positive-mass validation and bounded input/output storage; rounded-likelihood fitting and censored diagnostics remain separate gaps"
       ],
       "validation": [
         "Three focused tests: direct Pearson statistics, exact posterior moments, extreme unit invariance, repeated-data/posterior calibration and misspecification detection; tests/test_bayesian_chi_square.py",
@@ -2494,7 +2495,8 @@
         "Independent base-R three-dimensional quadrature with the same correlated prior: 34 complete/censored posterior summaries within 2.619 batch-means Monte Carlo errors, maximum split Rhat 1.000712; corrected R Cholesky orientation verified explicitly and quadrature sensitivity at most 1.70e-6. Source-density identities, Weibull/log-logistic limits, extreme-tail, likelihood/unit-change and preflight checks. docs/log-odds-rate-bayesian-gof.md and research/log-odds-rate-bayesian-gof-audit.md",
         "Sixteen focused exponential/fixed-shape Weibull checks include exact censored posterior shape/rate, all-censored propriety, zero follow-up, unchanged complete-data seeds, censored time-unit rescaling and pre-RNG diagnostic budget rejection; research/bayesian-chi-square-conjugate-censoring-audit.md",
         "Two independent censored Weibull R quadrature cases, including zero follow-up and all-censored input: 21 posterior summaries within 1.501 batch-means Monte Carlo errors, maximum split Rhat 1.001993; root integration48 focused tests pass, including Boolean event lists over16 observations. research/weibull-unknown-shape-audit.md",
-        "Independent base-R direct-likelihood quadrature for mixed and all-censored lognormal data: 23 posterior moment/covariance/CDF summaries within 2.0010 batch-means Monte Carlo errors, maximum split Rhat 1.000292; domain/quadrature changes below 7.61e-10. Five focused censored-fit checks and two existing complete-data checks cover conjugate limits, time units, input ownership and bounded work. docs/lognormal-right-censored-bayesian.md and research/lognormal-right-censored-audit.md"
+        "Independent base-R direct-likelihood quadrature for mixed and all-censored lognormal data: 23 posterior moment/covariance/CDF summaries within 2.0010 batch-means Monte Carlo errors, maximum split Rhat 1.000292; domain/quadrature changes below 7.61e-10. Five focused censored-fit checks and two existing complete-data checks cover conjugate limits, time units, input ownership and bounded work. docs/lognormal-right-censored-bayesian.md and research/lognormal-right-censored-audit.md",
+        "Independent hand-binned Pearson counts, seeded replay, adjacent-float bin boundaries and pre-RNG rejection of invalid or oversized inputs; geometric-likelihood posterior example. research/bayesian-chi-square-discrete-audit.md"
       ]
     },
     {
@@ -3952,7 +3954,7 @@
         "Calendar replay and simulation with outcome/minimum-follow-up accrual releases, final complete-data selection, fixed/exponential arrivals and calibrated uniform/Weibull/log-logistic timing",
         "Optional complete-outcome 1/3 stay and pending-inclusive 2/6 de-escalation, including completion-suspension override, available in conduct/replay/simulation",
         "Rolling Six comparator conduct, calendar replay and calibrated simulation, with explicit strict-completion variant and terminal MTD/highest-dose interpretation",
-        "Reproducible saved HTML protocol with effective timing/design settings, exact cutoffs, decision sequence, recorded per-scenario seeds and compact selection/allocation/duration summaries; native correct-MTD/regret evaluation conventions and document/scheduler parity remain unresolved"
+        "Reproducible saved HTML protocol with effective timing/design settings, exact cutoffs, decision sequence, recorded per-scenario seeds and compact selection/allocation/duration summaries; native truth-dose and continuous-accrual regret evaluation conventions and document/scheduler parity remain unresolved"
       ],
       "validation": [
         "Twelve rounded Table S1 thresholds, independent rational imputation for all valid counts through n=12, complete-data BOIN reduction, safety/suspension precedence and weighted/time-rescaled follow-up",
@@ -3961,7 +3963,8 @@
         "Live app 2.5.4.0 decision-row capture for both optional 3+3 modifications, guide screenshot, complete-data modified-BOIN reduction, pending counts and safety precedence",
         "Published Rolling Six decision-table states, downward completion, six-patient capacity, deterministic calendars and shared scheduling checks; docs/rolling-six.md",
         "Bounded comparison safety/highest-dose cases, seed replay, RNG-preserving preflight, independent aggregation/MCSE, time-unit rescaling and overflow-safe duration means; docs/boin-time-comparison.md",
-        "Direct replay of recorded scenario seeds, exact custom-cutoff and effective timing preservation, bounded-work preflight and escaped atomic UTF-8 report; docs/tite-boin-protocol-report.md"
+        "Direct replay of recorded scenario seeds, exact custom-cutoff and effective timing preservation, bounded-work preflight and escaped atomic UTF-8 report; docs/tite-boin-protocol-report.md",
+        "Primary paper defines MTD-relative selection/allocation and regret from failure to de-escalate when two of the first three patients at a dose have DLT; continuous-accrual evaluation timing remains unresolved. research/tite-boin-protocol-report-audit.md"
       ]
     },
     {
@@ -4113,7 +4116,7 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Uniform and informative three-piece conditional time-to-DLT weights and batched effective sample-size calculator",
         "Interim TITE-Keyboard posterior decisions using the effective beta-likelihood approximation, with enrolled-count overdose control, sticky exclusions, pending-fraction suspension and two-observed-patient escalation requirement",
@@ -4123,7 +4126,8 @@
         "Vectorized window-censored Weibull/log-logistic event quantiles calibrated to dose toxicity and late-half probabilities, integrated into calendar simulation",
         "Adaptive shared-Beta timing posterior from observed DLT times and pending survival, with exact positive-mixture marginalization of dose toxicity probabilities, explicit Gamma priors, bounded serial sampling and diagnostics-gated approximate Keyboard decisions.",
         "Adaptive timing in causal calendar replay and serial simulation, with separate outcome/sampler streams, compact per-fit diagnostics and cumulative work limits",
-        "Saved HTML protocol and scenario reports capturing actual design/timing settings, exact seeds, decision flow, effective-follow-up and safety tables, selection/allocation/duration summaries and Monte Carlo errors"
+        "Saved HTML protocol and scenario reports capturing actual design/timing settings, exact seeds, decision flow, effective-follow-up and safety tables, selection/allocation/duration summaries and Monte Carlo errors",
+        "Paper-defined poor-allocation and overdose risks for an explicit one-based true MTD: fewer than six patients at the MTD and more than half of actual enrolled patients above it, with counts, proportions and Monte Carlo standard errors in fixed/adaptive simulations and reports"
       ],
       "validation": [
         "Published ESS and delayed-outcome examples; independent piecewise weights and fractional-beta interval identity",
@@ -4134,7 +4138,8 @@
         "Independent 340-digit quantile calculations, half-window calibration, extreme probability/time scaling and one-patient incidence/late-fraction Monte Carlo checks",
         "Independent nuisance-probability integration and refined two-dimensional timing-posterior quadrature check the adaptive weights; time-rescaling and existing controller checks preserve effective-likelihood and safety conventions. See docs/tite-keyboard-adaptive.md and research/tite-keyboard-adaptive-posterior-audit.md.",
         "Future-outcome perturbation leaves earlier fitted summaries unchanged; seeded stream replay, cumulative work accounting and normal-threshold adaptive guide simulation. See docs/tite-keyboard-adaptive-calendar.md.",
-        "Saved report scenario replay, exact settings and seeds, timing-option validation and bounded aggregate execution. Native OC column definitions and document/RNG parity remain unverified; see research/tite-keyboard-protocol-report-audit.md."
+        "Saved report scenario replay, exact settings and seeds, timing-option validation and bounded aggregate execution. Native document/layout and random-stream parity remain compatibility limits; see research/tite-keyboard-protocol-report-audit.md.",
+        "Hand-counted strict six-patient/half-enrollment boundaries, actual-enrollment denominator, fixed-scenario replay and adaptive-report forwarding; twelve focused checks pass. tests/test_tite_keyboard_calendar.py and tests/test_tite_keyboard_protocol_report.py"
       ]
     },
     {

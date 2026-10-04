@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-84 implemented, 46 partial, and 8 pending. Each method's guide explains its
+85 implemented, 45 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -790,6 +790,8 @@ these weights at each interim using only observed information, with separate
 outcome and sampler random streams and cumulative work limits.
 [Saved protocol reports](docs/tite-keyboard-protocol-report.md) capture settings,
 decision flow, numerical boundaries and scenario summaries with Monte Carlo errors.
+An explicit true-MTD dose also enables the paper's trial-level risks of allocating
+fewer than six patients to the MTD and more than half of enrolled patients above it.
 
 
 ## TITE-BOIN
@@ -927,9 +929,10 @@ Normal-Inverse-Gamma prior. Its
 [right-censored workflow](docs/lognormal-right-censored-bayesian.md) uses that
 same explicit prior with a Gibbs sampler; censor integration does not leave a
 conjugate posterior. All seven families accept noninformative right censoring.
-The Johnson diagnostic is limited to complete observations, and the dedicated
-right-censored lognormal result has no such diagnostic. Native prior defaults,
-censored diagnostics, rank/trim conventions and reporting remain pending.
+The Johnson diagnostic supports complete continuous observations and randomized
+discrete/rounded CDF bounds from an appropriately fitted posterior. The dedicated
+right-censored lognormal result has no such diagnostic. Native rounded-data fitting,
+prior defaults, censored diagnostics, rank/trim conventions and reporting remain pending.
 
 [MERIT](docs/merit.md) adds isotonic dose selection, Bayesian interim decisions,
 correlated endpoint simulation and sample-size/boundary optimization for randomized
