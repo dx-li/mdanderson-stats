@@ -1,6 +1,6 @@
 # Statistical coverage priority review
 
-This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard, OneArmTTE, BOIN, Pinnacle, EasyCellType, BOP2 online/retired desktop, BCHM, PoP, aPCoA and BOP2-DC subsequently completed their Python workflows, leaving 51 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
+This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard, OneArmTTE, BOIN, Pinnacle, EasyCellType, BOP2 online/retired desktop, BCHM, PoP, aPCoA and BOP2-DC, TOP and IPDfromKM subsequently completed their Python workflows, leaving 49 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
 
 A deeper cached-source review subsequently identified omitted overdose-allocation
 risk statistics in BOIN and Keyboard. Both are now implemented with their strict
@@ -14,7 +14,7 @@ in Python. Its optional modifier's precedence with conflicting backfill data is
 not explicit in the recovered guide, so the Python composition is documented and
 BF-BOIN has moved to section A.
 
-The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 49 entries in section A and 2 in section B, after the Parallel phase I/II source-output review identified unresolved kernel summaries. Its existing DF3+3 decisions and newly added phase-I tally outputs are covered. The Multc Lean saved-study review also distinguishes its unresolved native timing laws from ordinary file-format compatibility, moving that entry to section A. Review of Bayes Factor TTE, CRM Suite and CondiS likewise separates unresolved timing, decision precedence and prediction contracts from ordinary display or file compatibility; these entries also belong in section A. The PerfectMatch scaling review recovered its array-average-500 calculation but confirmed unresolved QC definitions, so that entry has moved to section A as well.
+The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 49 entries in section A and none in section B, after the Parallel phase I/II source-output review identified unresolved kernel summaries. Its existing DF3+3 decisions and newly added phase-I tally outputs are covered. The Multc Lean saved-study review also distinguishes its unresolved native timing laws from ordinary file-format compatibility, moving that entry to section A. Review of Bayes Factor TTE, CRM Suite and CondiS likewise separates unresolved timing, decision precedence and prediction contracts from ordinary display or file compatibility; these entries also belong in section A. The PerfectMatch scaling review recovered its array-average-500 calculation but confirmed unresolved QC definitions, so that entry has moved to section A as well.
 
 ## A. Statistical or source-contract uncertainty remains
 
@@ -72,10 +72,7 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 
 ## B. No additional calculation identified; remaining work is input, output, or application parity
 
-| Program | Remaining work seen in the inspected evidence | Evidence |
-| --- | --- | --- |
-| TOP (#134) | Joint monitoring, calendar simulation, finite-grid optimization and holdout validation exist; native optimizer grids/report/app-version parity remain. | [TOP guide](../docs/top-endpoints.md); [calibration guide](../docs/top-endpoints-calibration.md) |
-| IPDfromKM (#151) | Digitization and native graphics workflow remain; these are input/presentation features. | [IPDfromKM guide](../docs/ipdfromkm.md) |
+No entries remain in this category after the workflow completions and source-contract reviews above.
 
 The classifications above are review findings, not status changes. A source-contract uncertainty should be resolved before adding a purported native method; input and presentation work can still be useful community functionality without being described as statistical coverage.
 
@@ -108,4 +105,8 @@ The classifications above are review findings, not status changes. A source-cont
 
 - BOP2-DC (#156): all supported scalar, paired and general categorical methods, arm configurations, operating characteristics and explicit calibration now connect to captured-input community reports. Native report schemas and unavailable supplementary-table settings remain compatibility limits. See the [method audit](bop2-dc-remaining-methods.md) and [report crosswalk](bop2-dc-community-report-audit.md).
 
-These sixteen entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.
+- TOP (#134): binary efficacy, co-primary efficacy and efficacy/toxicity now connect posterior decisions, boundaries, calendar simulation, finite-grid calibration and captured-input community reports. Native optimizer controls and missing Word templates remain explicit compatibility limits. See the [workflow crosswalk](top-community-report-audit.md).
+
+- IPDfromKM (#151): image loading, manual axis/point acquisition, stable calibration and graphical reconstruction checks now connect to its existing preparation, reconstruction, survival and Cox methods. Native UI/export compatibility and interactive mouse validation remain explicit limits. See the [source crosswalk](ipdfromkm-digitization-audit.md).
+
+These eighteen entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.

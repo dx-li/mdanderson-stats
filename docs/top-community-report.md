@@ -18,17 +18,29 @@ design = TOPBinaryDesign(
     suspension="table",
     timing_probabilities=[0.5, 0.3, 0.2],
 )
-report = top_binary_report(design, [
-    TOPBinaryScenario(
-        label="null", response_probability=0.20, window=6,
-        accrual_rate=2, trials=20, seed=20261004,
-        arrival="exponential", response_distribution="uniform",
-    ),
-    TOPBinaryScenario(
-        label="promising", response_probability=0.40, window=6,
-        accrual_rate=2, trials=20, seed=20261005,
-    ),
-])
+report = top_binary_report(
+    design,
+    [
+        TOPBinaryScenario(
+            label="null",
+            response_probability=0.20,
+            window=6,
+            accrual_rate=2,
+            trials=20,
+            seed=20261004,
+            arrival="exponential",
+            response_distribution="uniform",
+        ),
+        TOPBinaryScenario(
+            label="promising",
+            response_probability=0.40,
+            window=6,
+            accrual_rate=2,
+            trials=20,
+            seed=20261005,
+        ),
+    ],
+)
 report.write_html("top-binary-report.html")
 ```
 
@@ -52,12 +64,20 @@ design = TOPMultiEndpointDesign(
     looks=[4, 8, 12],
     suspension="strict",
 )
-report = top_multiendpoint_report(design, [
-    TOPMultiEndpointScenario(
-        "reference", (0.12, 0.28, 0.18, 0.42), 2, 20, 20261006,
-        arrival="fixed", truth_timing_probabilities=(0.4, 0.35, 0.25),
-    ),
-])
+report = top_multiendpoint_report(
+    design,
+    [
+        TOPMultiEndpointScenario(
+            "reference",
+            (0.12, 0.28, 0.18, 0.42),
+            2,
+            20,
+            20261006,
+            arrival="fixed",
+            truth_timing_probabilities=(0.4, 0.35, 0.25),
+        ),
+    ],
+)
 report.write_html("top-joint-report.html")
 ```
 

@@ -89,11 +89,14 @@ from mdanderson_stats.pdnn_expression_scaling import pdnn_scale_expression
 
 scaled = pdnn_scale_expression(fit)
 print(scaled.log_scale_factor, scaled.log_expression)
-assert abs(
-    np.logaddexp.reduce(scaled.log_expression)
-    - np.log(len(scaled.log_expression))
-    - np.log(500)
-) < 1e-12
+assert (
+    abs(
+        np.logaddexp.reduce(scaled.log_expression)
+        - np.log(len(scaled.log_expression))
+        - np.log(500)
+    )
+    < 1e-12
+)
 ```
 
 ## Learning parameters

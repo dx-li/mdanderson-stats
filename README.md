@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-79 implemented, 51 partial, and 8 pending. Each method's guide explains its
+81 implemented, 49 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -949,8 +949,10 @@ timing weights. Its [calendar replay and simulation](docs/top-endpoints-simulati
 preserve joint endpoint outcomes and report observed decisions, enrollment and
 duration. [Finite-grid calibration](docs/top-endpoints-calibration.md) evaluates
 explicit joint null scenarios and one alternative with independent holdout
-validation. Native optimizer parity, reports and broader composite-null guarantees
-remain pending.
+validation. [Saved community reports](docs/top-community-report.md) capture all
+three endpoint modes, actual design settings, named scenarios, boundaries,
+seeds and simulation uncertainty. Native optimizer/template parity and guarantees
+over the entire composite null are not claimed.
 
 [Original TPI](docs/tpi.md) adds posterior-SD intervals, original-paper decision
 tables, two-patient safety gating, isotonic MTD selection and batched simulation,
@@ -1032,8 +1034,10 @@ two-arm Efron Cox comparisons, survival confidence intervals, landmark summaries
 and survival quantiles are also available. The separate
 [reconstruction report](docs/ipdfromkm-diagnostics.md) adds the native rounded
 precision summaries and KS discrepancy, with its legacy nominal p-value
-explicitly distinguished from calibrated inference. Digitizing and native
-graphics remain pending.
+explicitly distinguished from calibrated inference. The
+[image workflow](docs/ipdfromkm-digitization.md) adds manual axis/point selection,
+stable coordinate calibration, image previews and reconstruction/risk plots.
+Original patient records cannot be recovered exactly from a published curve.
 
 [ASYPOW](docs/asypow.md) adds information-matrix power, sample-size and
 significance calculations with independent-group binomial, Poisson and

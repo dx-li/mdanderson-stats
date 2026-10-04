@@ -29,7 +29,8 @@ each probe's fitted signal as `N_j / (1 + exp(E_ij))`. This supplies a
 per-probe affinity-like factor, but neither Eq. (1) nor later equations define
 the `.pdn` `avg_Affynity` aggregation or the probes included in that average.
 
-Eq. (4), p. 4, defines one mean squared error over all probes on an array. It is
+Eq. (4), p. 4, defines one mean squared error of natural-log intensities over
+all probes on an array. It is
 not a per-probeset statistic and does not establish the formula, scaling, or
 outlier handling for the manual's `err_T`. Eq. (5), p. 4, gives the
 per-probeset expression estimator and identifies probe exclusions for that

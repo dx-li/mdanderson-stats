@@ -221,11 +221,13 @@ At n=20 of N=40, the table suspends with 10 pending while the prose's strict
 inequality requires 11. Both conventions are exposed. The earlier arXiv table
 has different thresholds; this implementation targets the published table.
 
-**Catalog status is partial.** [Co-primary efficacy and efficacy/toxicity
+**The recovered functional Python workflow is implemented.** [Co-primary efficacy and efficacy/toxicity
 monitoring](top-endpoints.md) now supports separate endpoint assessment windows
 and mixture-uniform timing weights, with [calendar replay and joint-outcome
-simulation](top-endpoints-simulation.md). Multiple-endpoint calibration, native
-tuning grids, protocol-template parity and app version parity remain pending.
+simulation](top-endpoints-simulation.md). [Multiple-endpoint calibration](top-endpoints-calibration.md)
+searches supplied null scenarios and an alternative, with independent holdout
+validation. Native tuning grids, protocol-template formatting and exact app
+version parity remain unverified.
 The [named-scenario community report](top-community-report.md) saves binary and
 two-endpoint operating-characteristic summaries; it is not a native protocol
 template. Original PDFs and application files are not redistributed.

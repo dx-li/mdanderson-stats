@@ -6,8 +6,8 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 76 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 54 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 81 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 49 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -106,6 +106,8 @@ some legacy adaptations retain commercial-use restrictions.
 | Posterior Predictive Design for Phase I Clinical Trials | [online #175](https://biostatistics.mdanderson.org/shinyapps/PoPdesign/) | [Design, plots and saved inputs](pop-community-workflow.md) |
 | aPCoA: Covariate Adjusted Principal Coordinates Analysis | [online #147](https://biostatistics.mdanderson.org/shinyapps/aPCoA) | [Guide](apcoa.md) |
 | BOP2 design with decision making on dual criteria | [online #156](https://biostatistics.mdanderson.org/shinyapps/BOP2-DC) | [Methods](bop2-dc.md) and [reports](bop2-dc-community-report.md) |
+| TOP: Time-to-Event Bayesian Optimal Phase II Trial Design | [online #134](https://biostatistics.mdanderson.org/shinyapps/TOP2) | [Guide](top-endpoints.md), [study reports](top-community-report.md) |
+| IPDfromKM: Reconstruct Individual Patient Data (IPD) From Kaplan-Meier Survival Curve | [online #151](https://biostatistics.mdanderson.org/shinyapps/IPDfromKM) | [Guide](ipdfromkm.md), [reconstruction diagnostics](ipdfromkm-diagnostics.md), [image workflow](ipdfromkm-digitization.md) |
 
 ## Partially implemented
 
@@ -137,7 +139,6 @@ some legacy adaptations retain commercial-use restrictions.
 | Dose Schedule Finder | [desktop #75](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75) | [Model](dose-schedule.md), [calendar trials](dose-schedule-trials.md) |
 | EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Guide](efftox.md), [trinary calibration](efftox-trinary-calibration.md) |
 | Find optimal biological dose (OBD) for targeted and immune therapies | [online #142](https://biostatistics.mdanderson.org/shinyapps/UBOIN) | [Guide](uboin.md) |
-| IPDfromKM: Reconstruct Individual Patient Data (IPD) From Kaplan-Meier Survival Curve | [online #151](https://biostatistics.mdanderson.org/shinyapps/IPDfromKM) | [Guide](ipdfromkm.md), [reconstruction diagnostics](ipdfromkm-diagnostics.md) |
 | KeyboardComb: the Keyboard Design for Drug Combination Trials | [online #121](https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/) | See catalog feature and validation notes |
 | MDS-HOPE: An interactive risk assessment tool for patients treated with HMA | [online #171](https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/) | [Guide](mds-hope.md) |
 | MERIT: Multiple-dose Randomized Phase II Trial Design for Dose Optimization and Sample Size Determination | [online #160](https://biostatistics.mdanderson.org/shinyapps/MERIT/) | [Guide](merit.md) |
@@ -155,7 +156,6 @@ some legacy adaptations retain commercial-use restrictions.
 | Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials | [online #129](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/) | [Guide](tite-boin.md) |
 | Time-to-Event Keyboard Design for Phase I Clinical Trials | [online #135](https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD) | [Guide](tite-keyboard.md) |
 | TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | [online #152](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12) | [AL and final selection](tite-boin12.md); [BDA](tite-boin12-bda.md) |
-| TOP: Time-to-Event Bayesian Optimal Phase II Trial Design | [online #134](https://biostatistics.mdanderson.org/shinyapps/TOP2) | [Guide](top-endpoints.md) |
 | ToxFinder | [desktop #14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14) | [Guide](toxfinder.md); [prior elicitation](toxfinder-prior-elicitation.md) |
 | Toxicity Probability Intervals | [desktop #72](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/72) | [Guide](mtpi.md) |
 | Two-arm BOP2: Bayesian Optimal Phase II two-arm Design | [online #150](https://biostatistics.mdanderson.org/shinyapps/rBOP2) | See catalog feature and validation notes |

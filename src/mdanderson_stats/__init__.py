@@ -945,6 +945,17 @@ from .intervals import (
 from .ipdfromkm import ReconstructedIPD, reconstruct_ipd
 from .ipdfromkm_cox import IPDCoxComparison, ipd_cox_compare
 from .ipdfromkm_diagnostics import IPDReconstructionDiagnostics, ipd_reconstruction_diagnostics
+from .ipdfromkm_digitize import (
+    DigitizedKMCurve,
+    KMAxisCalibration,
+    KMImage,
+    digitize_km_points,
+    km_axis_calibration,
+    load_km_image,
+    pick_km_curve,
+    plot_ipdfromkm_diagnostics,
+    plot_km_digitization,
+)
 from .ipdfromkm_preprocess import PreparedKMCurve, prepare_km_coordinates
 from .ipdfromkm_survival import (
     IPDSurvivalCurve,
@@ -1662,6 +1673,16 @@ from .top_multi_calendar import (
 )
 from .top_multi_calibration import TOPMultiEndpointOptimization, optimize_top_multiendpoint
 from .top_multi_simulation import TOPMultiEndpointSimulation, simulate_top_multiendpoint
+from .top_report import (
+    TOPBinaryScenario,
+    TOPMultiEndpointScenario,
+    TOPReport,
+    TOPReportAction,
+    TOPReportCase,
+    TOPReportTable,
+    top_binary_report,
+    top_multiendpoint_report,
+)
 from .top_simulation import simulate_top_binary
 from .toxfinder_decision import (
     ToxFinderContour,
@@ -2774,6 +2795,15 @@ __all__ = [
     "prepare_km_coordinates",
     "ReconstructedIPD",
     "reconstruct_ipd",
+    "DigitizedKMCurve",
+    "KMAxisCalibration",
+    "KMImage",
+    "digitize_km_points",
+    "km_axis_calibration",
+    "load_km_image",
+    "pick_km_curve",
+    "plot_ipdfromkm_diagnostics",
+    "plot_km_digitization",
     "CONFINTSurvivalHazardRange",
     "ConfintSession",
     "confint_survival_hazard_range",
@@ -2883,6 +2913,14 @@ __all__ = [
     "simulate_top_multiendpoint",
     "TOPMultiEndpointOptimization",
     "optimize_top_multiendpoint",
+    "TOPBinaryScenario",
+    "TOPMultiEndpointScenario",
+    "TOPReport",
+    "TOPReportAction",
+    "TOPReportCase",
+    "TOPReportTable",
+    "top_binary_report",
+    "top_multiendpoint_report",
     "RegressionESS",
     "RegressionESSSimulation",
     "RegressionESSTrigger",
