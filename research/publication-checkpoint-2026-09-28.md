@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `60a9461` adds lognormal right-censored
-posterior fitting, completing this capability across all seven BCSTTE
-distributions. The final section records validation; earlier sections preserve
+Latest verified package checkpoint: `d2453af` adds stable per-probeset
+observed/fitted log-intensity correlations for PerfectMatch, alongside the
+published right-censored posterior workflows for all seven BCSTTE distributions. The final section records validation; earlier sections preserve
 checkpoint history. Published `3fe4bf8` has passed all hosted quality and
 Python 3.12/3.13/3.14 checks in
 [run 37161305171](https://github.com/dx-li/mdanderson-stats/actions/runs/37161305171).
@@ -2645,3 +2645,32 @@ conventions and reporting are still unverified. Completed statistical support
 does not imply complete reproduction of the original application. Remote
 branch verification, bundle hashes and existing hosted CI state are recorded
 separately in the local artifact manifest after publication.
+
+
+## October 3: PerfectMatch per-probeset correlation
+
+`pdnn_fit_correlations` summarizes existing observed and fitted PM intensities
+using the original per-probe group IDs. The manual defines correlation on lnPM;
+Pearson correlation and use of all supplied rows are explicit Python conventions
+because the native formula and outlier subset are unspecified. Singleton and
+constant groups return an explicitly undefined NaN correlation. The function
+does not refit the model or alter existing PDNN result constructors.
+
+Group-relative logs preserve near-constant signals even at large intensity
+scales. Input preflight rejects nested/oversized/complex vectors before numeric
+conversion; the 500,000-probe limit bounds linear working arrays. Four focused
+checks pass with warnings as errors. Three independent 100-digit Decimal
+references, including near-equal huge values and the positive binary64 range,
+agree within `1.11e-16` absolute correlation error. A 500,000-probe check across
+250,000 probesets also passed. Combined validation used 0.249 seconds after
+imports, 241.25 MiB peak process RSS and no swaps. Targeted Ruff/format and mypy
+checks passed; no full local suite or new CI workflow was added.
+
+Integrated code `d2453af` builds successfully. Isolated wheel verification finds
+all 609 committed package files identical in both archives, all 1,705 exports
+available and license notices retained. Both PerfectMatch guide examples run
+from the wheel, including the existing expression fit followed by the new
+correlation summary. Package verification used 10.169 seconds, 132.00 MiB RSS
+and no swaps. Catalog counts remain unchanged; native file, other quality-control
+and display workflows remain partial. The local manifest records independently
+verified remote branches, refreshed bundle hashes and hosted results.
