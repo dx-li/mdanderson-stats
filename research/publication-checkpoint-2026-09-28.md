@@ -1,9 +1,10 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `4325e6a` adds bounded adaptive precision
-for the 2017 GAO posterior fitter alongside generalized categorical BOP2-DC,
-KeyboardComb movement variants, bCRM allocation and U-BOIN titration. The final
-section records validation; earlier sections preserve checkpoint history.
+Latest verified package checkpoint: `494c321` adds GAO adaptive calendar
+trials and survival-forest OOB Brier/CRPS evaluation alongside the earlier
+standalone GAO precision, categorical BOP2-DC, KeyboardComb, bCRM and U-BOIN
+additions. The final section records validation; earlier sections preserve
+checkpoint history.
 Published `4e69098` has passed all hosted quality and
 Python 3.12/3.13/3.14 checks in
 [run 37164590012](https://github.com/dx-li/mdanderson-stats/actions/runs/37164590012).
@@ -2792,3 +2793,42 @@ previous `98b2b51` hosted run was queued; this is not a claim that the latest
 revision has passed all hosted checks. The source-catalog status counts remain
 unchanged. Remote SHAs and artifact hashes are recorded locally after the
 independent publication check.
+
+
+## 2026-10-04: GAO adaptive trials and forest prediction-error curves
+
+`simulate_u2oet_gao_trial` now optionally applies the existing explicit
+four-corner MCSE/SD target to each changed observed-data state and final
+follow-up. Unchanged sufficient statistics reuse both posterior and precision
+records. Whole-trial preflight shares the standalone resource plan, includes
+retained precision arrays, and checks minimum work before RNG use; subsequent
+fits share the remaining actual evaluation/work budgets. An unmet target or
+exhausted allowance fails before the associated decision. Fixed-mode JSON,
+random streams and fit behavior remain unchanged. Independent read-only
+review found no material budget, cache, metadata or memory defect.
+
+`random_survival_forest_oob_brier_score` evaluates full-training OOB survival
+curves with the pinned RF-SRC helper's exponential censor-hazard estimate,
+event-grid projection and tied-time conventions. It returns every observation's
+contribution, per-time error, projected censor survival, usable-row count and
+CRPS summaries. Censor estimation uses all training outcomes, including rows
+without OOB predictions; only score averaging excludes those rows. Four
+independent base-R cases agree with the unchanged source helper and with the
+Python implementation, including reduced grids. Integration preserves close
+representable time gaps at very large scales, and preflight includes output
+freeze copies. The censoring-forest and ambiguous subset routes remain outside
+this function; full native forest parity is not claimed.
+
+Root combined validation passed all 18 affected standalone, adaptive-calendar,
+fixed-calendar and Brier checks with warnings treated as errors: 5.653 seconds,
+148.03 MiB process peak RSS and zero reported swaps. Targeted Ruff/format/mypy
+checks pass. No full local suite, new CI workflow or installation was used.
+
+Cached builds and isolated package verification pass at `494c321`: all 615
+committed package files match both archives, all 1,721 public exports resolve,
+license notices are retained, and ten examples across seven updated guides
+execute. The package check took 11.631 seconds, with 128.91 MiB process peak RSS
+and zero swaps. Catalog statuses remain unchanged because completed components
+do not imply every native feature or source contract is covered. Stable and
+development remote SHAs and artifact hashes are recorded after independent
+publication verification in the local manifest.
