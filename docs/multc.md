@@ -267,6 +267,62 @@ summaries and estimated live simulation storage, not the interpreter or
 imported libraries. No native random-stream or duration-distribution parity
 is claimed. See the [simulation audit](../research/multc-simulation-audit.md).
 
+## Save a Python study input and scenario report
+
+`MultcStudySpecification` captures the monitoring settings and a named list of
+paired outcome-probability scenarios. Its exact operating characteristics use
+the same `MultcLeanDesign.operating_characteristics` calculation above. An
+optional `MultcStudySimulationSettings` runs the existing bounded calendar
+simulation for each scenario; this requires an explicit response timing
+convention and toxicity delay, as described above.
+
+```python
+from pathlib import Path
+from mdanderson_stats.multc_study import (
+    MultcStudySimulationSettings,
+    MultcStudySpecification,
+)
+
+study = MultcStudySpecification(
+    12,
+    (1, 1),
+    (1, 1),
+    0.3,
+    0.25,
+    [(0.12, 0.28, 0.18, 0.42), (0.05, 0.15, 0.35, 0.45)],
+    scenario_names=("target", "high toxicity"),
+    min_subjects=3,
+    cohort_size=3,
+    pretrial_check=False,
+    simulation=MultcStudySimulationSettings(
+        response_window=2,
+        toxicity_delay=1,
+        response_timing="conditional_truncated_exponential",
+        accrual_rate=3,
+        trials=32,
+        seed=2026,
+    ),
+).run()
+print(study.report())
+study.write_specification("multc-input.json")
+study.write_report("multc-scenarios.tsv", digits=17)
+replayed = MultcStudySpecification.from_json(
+    Path("multc-input.json").read_text(encoding="utf-8")
+).run()
+```
+
+The report puts exact scenario operating characteristics apart from Monte Carlo
+duration estimates, includes full and reachable stopping boundaries, and echoes
+the settings. JSON inputs are data rather than executable code. Saved-input and
+report layouts are community Python conventions; native Multc Lean configuration
+and report files remain unsupported. The optional simulation uses the same
+explicit Python calendar assumptions above and does not claim native timing or
+random-stream parity. JSON uses a versioned schema and rejects inputs larger
+than 1 MiB. Scenarios are limited to 100 per study; a 50-million default
+aggregate exact-work cap and the existing per-call OC and simulation preflight
+limits apply. This workflow covers Multc Lean's two-endpoint model only and does
+not complete the broader Multc99 multiple-event program.
+
 ## Numerical scope and remaining work
 
 Fixed-reference probabilities use direct beta CDF/survival functions. Random
