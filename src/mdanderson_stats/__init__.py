@@ -563,6 +563,7 @@ from .cibolus_trial import (
     simulate_cibolus_trial,
 )
 from .cid2bp import BinomialDifferenceInterval, cid2bp_interval
+from .cid2bp_session import CID2BPRecord, CID2BPRequest, CID2BPSession, cid2bp_session
 from .condis import CondiSImputation, condis_impute
 from .condis_boosting import CondiSBoostingRefinement, condis_boosting_refine
 from .condis_forest import (
@@ -1557,6 +1558,7 @@ from .tteconduct import (
     tteconduct_design,
     tteconduct_monitor,
 )
+from .tteconduct_report import TTEConductReport, tteconduct_report
 from .u2oet import U2OETMarginal, U2OETProbabilities, u2oet_probabilities, u2oet_standardize
 from .u2oet_adaptive_precision import (
     U2OETAdaptivePrecisionResult,
@@ -2015,9 +2017,11 @@ __all__ = [
     "TTEConductBoundaryTable",
     "TTEConductDesign",
     "TTEConductMonitor",
+    "TTEConductReport",
     "tteconduct_boundary_table",
     "tteconduct_design",
     "tteconduct_monitor",
+    "tteconduct_report",
     "PLBarpoActiveAllocation",
     "plbarpo_active_allocation",
     "PLBarpoControlMonitoring",
@@ -2580,6 +2584,10 @@ __all__ = [
     "confint_normal_sd_limit",
     "BinomialDifferenceInterval",
     "cid2bp_interval",
+    "CID2BPRecord",
+    "CID2BPRequest",
+    "CID2BPSession",
+    "cid2bp_session",
     "SurvivalPriorESS",
     "survival_prior_ess",
     "conjugate_prior_ess",

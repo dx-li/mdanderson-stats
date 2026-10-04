@@ -6,13 +6,14 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-63 implemented, 67 partial, and 8 pending. Each method's guide explains its
+65 implemented, 65 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. These labels cover
 complete software workflows: a partial entry can already include every
 advertised statistical endpoint while report or native-compatibility gaps remain.
 The [remaining-work review](research/statistical-coverage-priority-2026-10-04.md)
 separates unresolved statistical specifications from input, report and
-application-compatibility work across the 67 partial entries.
+application-compatibility work across the partial entries. TTEConduct and CID2BP
+now include their saved report workflows.
 
 Validated community checkpoints are published on
 [`master`](https://github.com/dx-li/mdanderson-stats/tree/master); `main`

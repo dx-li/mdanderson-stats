@@ -168,6 +168,9 @@ assert abs(exact.upper - 0.8159484324) < 1e-8
 
 The returned `BinomialDifferenceInterval` contains the estimate, limits,
 confidence and selected method. This API handles one comparison at a time.
+The [session API](cid2bp-session.md) accepts ordered comparisons using either
+successes/trials or successes/failures, varying confidence levels and methods,
+and writes a cumulative report that retains requested and resolved methods.
 
 Focused tests check the supplied native reference output for the first four
 methods, exact profile-likelihood limits for zero-event and separated samples,
@@ -176,5 +179,7 @@ special normal-method adjustments. Native output comparisons allow its stated
 1e-4 solver tolerance. The full original executable has not been rebuilt or run;
 its supplied reference output and computational source were used, plus compiled Peskun and exact-method computational routines.
 
-**All nine numerical menu options are available. Catalog status remains partial:**
-native session/report interfaces remain pending.
+**Catalog 38 is implemented.** All nine numerical menu options and the repeated
+comparison/report workflow are available. Explicit Python requests replace the
+terminal menu and retry loop; report formatting and the documented numerical
+corrections differ from the native program.

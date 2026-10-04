@@ -67,5 +67,12 @@ The six-row guide example is checked against independent base-R integration
 and root finding. See [source and reference details](tteconduct-source.md)
 for the published rounded day values and the explicit conversion that
 reproduces them. The Python table retains continuous values in the input
-time unit. Native HTML report save/reopen behavior remains unimplemented;
-calendar simulation belongs to the separate catalog 98 program.
+time unit. The [static HTML report](tteconduct-report.md) echoes the design
+inputs and table, saves as a self-contained file, and can be reopened in a
+browser. It uses continuous caller-unit values and an explicit search cap;
+native integer-day formatting is not reproduced. Calendar simulation belongs
+to the separate catalog 98 program.
+
+Catalog 63 is implemented under these documented Python conventions. Prior
+elicitation, monitoring, stopping tables, and saved report viewing cover the
+guide's workflows; an editable project format is not specified by the guide.

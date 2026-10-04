@@ -8,7 +8,7 @@ the entered counts, normalized successes/failures/trials, requested method,
 resolved method (so `auto` remains auditable), and interval.
 
 ```python
-from mdanderson_stats.cid2bp_session import CID2BPRequest, cid2bp_session
+from mdanderson_stats import CID2BPRequest, cid2bp_session
 
 session = cid2bp_session(
     [

@@ -1495,20 +1495,22 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Wald, continuity-corrected and Yates difference-of-binomial intervals with source Peskun boundary adjustments",
         "Cox-Snell profile-likelihood interval with constrained concave optimization and exact probability-boundary handling",
         "Vectorized native Peskun grid correction with explicit source upper-gap behavior",
         "Conservative and mid-P weighted-likelihood intervals using shared polynomial quadrature, exact integer ties and native automatic method choice",
-        "Brown exact binomial-tail inversion with numerical nuisance maximization, endpoint checks and vectorized tail evaluation"
+        "Brown exact binomial-tail inversion with numerical nuisance maximization, endpoint checks and vectorized tail evaluation",
+        "Bounded serial comparison sessions with both success/trial and success/failure entry, per-comparison confidence and ordered method choices, and cumulative reports retaining requested and resolved methods; docs/cid2bp-session.md."
       ],
       "validation": [
         "Archive reference output, analytic profile endpoints, sample-exchange symmetry and special boundary adjustments; tests/test_cid2bp.py",
-        "All nine numerical menu options implemented; session/report interfaces pending; docs/cid2bp.md",
+        "All nine numerical menu options and repeated comparison/report workflow implemented under documented Python conventions; docs/cid2bp.md and docs/cid2bp-session.md.",
         "Compiled original cfpesk comparisons, including asymmetric upper-gap case; tests/test_cid2bp_peskun.py",
         "Archive weighted examples, independent adaptive integration, automatic cutoff and sample-exchange/boundary cases; tests/test_cid2bp_weighted.py",
-        "Compiled original exact-method comparisons, analytic separated limits, independent nuisance enumeration and exhaustive small-sample outcomes on a probability grid; tests/test_cid2bp_exact.py"
+        "Compiled original exact-method comparisons, analytic separated limits, independent nuisance enumeration and exhaustive small-sample outcomes on a probability grid; tests/test_cid2bp_exact.py",
+        "Source example across all nine options, entry-mode normalization, method/confidence changes, resource preflight and report file preservation; tests/test_cid2bp_session.py."
       ]
     },
     {
@@ -2341,15 +2343,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "tteconduct_design and tteconduct_monitor: exponential/inverse-gamma survival monitoring against an uncertain historical standard, additive improvement margin, strict futility and maximum-patient accrual stops.",
         "tteconduct_boundary_table: continuous minimum total time on test by event count, with explicit search cap, probability error and residual reporting; consistent caller-selected time units.",
-        "Inverse-gamma moment and two-quantile prior elicitation is available through the existing Parameter Solver APIs. Native HTML report save/reopen and rounded day-table parity remain open; see docs/tteconduct.md and docs/tteconduct-source.md."
+        "Inverse-gamma moment and two-quantile prior elicitation through Parameter Solver APIs. Static HTML report echoes all seven inputs and Python search settings, saves atomically, and reopens for viewing; caller-unit continuous values replace native rounded-day formatting; docs/tteconduct-report.md."
       ],
       "validation": [
         "Independent base-R gamma integration and root finding for the six-row TTEConduct guide example; continuous roots reproduce the published day table under an explicit ceiling and 365.25/12 conversion.",
-        "Focused analytic zero-margin boundary, strict cutoff, maximum accrual, cap exhaustion, input validation and time-unit stability checks. Source: TTEConduct 2.0 Users Guide, November 6, 2006."
+        "Focused analytic zero-margin boundary, strict cutoff, maximum accrual, cap exhaustion, input validation and time-unit stability checks. Source: TTEConduct 2.0 Users Guide, November 6, 2006.",
+        "Source-guide workflow audit and focused HTML snapshot checks against existing boundary references, zero/cap semantics, escaped labels and failure-before-overwrite behavior; tests/test_tteconduct_report.py."
       ]
     },
     {

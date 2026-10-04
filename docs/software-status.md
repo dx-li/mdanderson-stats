@@ -6,8 +6,8 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 63 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 67 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 65 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 65 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -25,6 +25,8 @@ some legacy adaptations retain commercial-use restrictions.
 
 | Program | Source entry | Python documentation |
 | --- | --- | --- |
+| CID2BP | [desktop #38](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/38) | [Guide](cid2bp.md) |
+| TTEConduct | [desktop #63](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/63) | [Guide](tteconduct.md) |
 | ACCFLF | [desktop #16](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/16) | See catalog feature and validation notes |
 | ANOVA DDP | [desktop #67](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/67) | [Guide](anovaddp.md) |
 | Bayes Factor Binary | [desktop #94](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/94) | [Guide](bayes-factor-binary.md) |
@@ -120,7 +122,6 @@ some legacy adaptations retain commercial-use restrictions.
 | Calibration of Bayesian Success Criteria for Clinical Trials | [online #173](https://www.trialdesign.org/one-page-shell.html#BayesianCalibration) | See catalog feature and validation notes |
 | CI of Interaction Index | [desktop #65](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/65) | [Guide](interaction-index.md) |
 | CiBolus | [desktop #86](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86) | [Guide](cibolus.md), [Prior calibration](cibolus-calibration.md) |
-| CID2BP | [desktop #38](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/38) | [Guide](cid2bp.md) |
 | CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis | [online #157](https://biostatistics.mdanderson.org/shinyapps/CondiS/) | [Guide](condis.md) |
 | CONFINT | [desktop #64](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/64) | [Guide](confint.md) |
 | CRM Suite | [desktop #132](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132) | See catalog feature and validation notes |
@@ -155,7 +156,6 @@ some legacy adaptations retain commercial-use restrictions.
 | TOP: Time-to-Event Bayesian Optimal Phase II Trial Design | [online #134](https://biostatistics.mdanderson.org/shinyapps/TOP2) | [Guide](top-endpoints.md) |
 | ToxFinder | [desktop #14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14) | See catalog feature and validation notes |
 | Toxicity Probability Intervals | [desktop #72](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/72) | [Guide](mtpi.md) |
-| TTEConduct | [desktop #63](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/63) | See catalog feature and validation notes |
 | Two-arm BOP2: Bayesian Optimal Phase II two-arm Design | [online #150](https://biostatistics.mdanderson.org/shinyapps/rBOP2) | See catalog feature and validation notes |
 | U2OET | [desktop #77](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/77) | [PDS/CMI and trials](u2oet.md), [GAO probabilities](u2oet-gao.md), [GAO trials](u2oet-gao-trials.md) |
 | UAROET | [desktop #92](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/92) | [Guide](uaroet.md), [trial simulation](uaroet-trials.md) |

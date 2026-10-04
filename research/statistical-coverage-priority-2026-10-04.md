@@ -1,6 +1,6 @@
 # Statistical coverage priority review
 
-This is a bounded review of the current evidence for the 67 partial-program entries in scope. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. It does not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed.
+This bounded review originally covered 67 partial-program entries. TTEConduct and CID2BP subsequently completed their report workflows, leaving 65 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed.
 
 ## A. Statistical or source-contract uncertainty remains
 
@@ -55,8 +55,6 @@ This is a bounded review of the current evidence for the 67 partial-program entr
 | PerfectMatch (#7) | Mathematical calculations are covered; native parameter/data/output/rescaling, QC, plots and display workflows remain. | [PerfectMatch guide](../docs/perfectmatch.md) |
 | Multc Lean (#12) | Statistical rules/calendar are covered; native input, report and timing conventions remain. | [Multc guide](../docs/multc.md) |
 | ASYPOW (#33) | Core LR/SMO families are covered; remaining items are interactive/native workflows. | [ASYPOW guide](../docs/asypow.md) |
-| CID2BP (#38) | All nine numerical options are implemented; native session/report interface and documented optimizer/certification limits remain. | [CID2BP guide](../docs/cid2bp.md) |
-| TTEConduct (#63) | Stopping rules and boundaries are covered; HTML report save/reopen remains. | [TTEConduct guide](../docs/tteconduct.md) |
 | CONFINT (#64) | Mathematical assurance methods are covered; native session/report workflows remain. | [CONFINT guide](../docs/confint.md) |
 | Parallel phase I/II (#85) | C-design and six-dose calendar workflow are implemented; native configurable input, report and full parity remain. | [parallel phase guide](../docs/parallel-phase12.md) |
 | Bayes Factor TTE (#89) | Monitoring, boundaries, calendar replay and simulation are covered; native integer-day/text/HTML reports and timing are not established. | [Bayes Factor survival guide](../docs/bayes-factor-survival.md) |
@@ -80,3 +78,10 @@ This is a bounded review of the current evidence for the 67 partial-program entr
 | PoP (#175) | Source-defined boundaries, selection and operating characteristics are implemented; HTML/Word/report parity remains. | [PoP guide](../docs/pop-design.md) |
 
 The classifications above are review findings, not status changes. A source-contract uncertainty should be resolved before adding a purported native method; input and presentation work can still be useful community functionality without being described as statistical coverage.
+
+## Completed after this review
+
+- TTEConduct (#63): the static HTML report echoes design inputs and boundaries, saves atomically and reopens for viewing. Continuous caller-unit values and an explicit search cap are documented substitutions for native rounded-day presentation. See [report guide](../docs/tteconduct-report.md).
+- CID2BP (#38): bounded repeated comparisons support both count-entry modes, changing confidence/methods and cumulative reports for all nine numerical options. See [session guide](../docs/cid2bp-session.md).
+
+Both entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.
