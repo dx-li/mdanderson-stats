@@ -204,7 +204,13 @@ probability rounding. These checks leave the existing CI configuration unchanged
 
 The cached app advertises CSV upload/save, PDF report download and MCMC sample
 download. Its saved HTML does not contain the server handlers, PDF contents or
-MCMC export schema; those app I/O/report contracts remain unimplemented.
-Direct end-to-end Shiny/JAGS output parity also remains open. The
+MCMC export schema, so native CSV/PDF/sample-file parity is unknown. The Python
+package now offers a bounded named-scenario workflow with its own documented
+CSV input and long-form retained-probability export, plus a plain-text analysis
+report. It reuses `bchm_fit`; it is not a reconstruction of the hidden Shiny
+handlers or a native PDF/MCMC file. See the [workflow guide](bchm-scenarios.md)
+and [source crosswalk](../research/bchm-scenario-report-audit.md).
+Direct end-to-end Shiny/JAGS output parity and exact native I/O contracts
+remain open. The
 mathematical checks validate the declared model and allocation algorithm, not
 convergence for arbitrary inputs or complete application parity.

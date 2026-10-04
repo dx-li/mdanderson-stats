@@ -35,6 +35,7 @@ class BCHMBorrowResult:
     decision: bool
     similarity: FloatArray
     summary: ChainSummary
+    efficacy_indicators: NDArray[np.bool_] | None = None
 
 
 @dataclass(frozen=True)
@@ -262,6 +263,7 @@ def bchm_borrow(
     mu = np.full(chains, prior_mean)
     tau = np.ones(chains)
     out = np.empty((chains, draws))
+    efficacy_indicators = np.empty((chains, draws), dtype=bool)
     logit_target = float(logit(response_target))
     exceedances = 0
     for it in range(warmup + draws):
@@ -282,10 +284,12 @@ def bchm_borrow(
                 raise ArithmeticError("BCHM sampler reached non-finite state")
         if it >= warmup:
             out[:, it - warmup] = expit(th[:, target])
-            exceedances += int(np.count_nonzero(th[:, target] > logit_target))
+            efficacy_indicators[:, it - warmup] = th[:, target] > logit_target
+            exceedances += int(np.count_nonzero(efficacy_indicators[:, it - warmup]))
     summary = summarize_chains(out[:, :, None])
     prob = exceedances / (chains * draws)
     native = _native_probability(prob)
+    efficacy_indicators.setflags(write=False)
     return BCHMBorrowResult(
         int(target),
         _owned(out),
@@ -295,6 +299,7 @@ def bchm_borrow(
         native > thetaT,
         _owned(m),
         summary,
+        efficacy_indicators,
     )
 
 
