@@ -11,7 +11,13 @@ snapshot; it does not restore editable inputs or rerun the calculation.
 from mdanderson_stats import tteconduct_design, tteconduct_report
 
 design = tteconduct_design(
-    60, 295, 3, 10, 1, 0.03, 40,
+    60,
+    295,
+    3,
+    10,
+    1,
+    0.03,
+    40,
     max_total_time=40 * 120,
 )
 report = tteconduct_report(design, time_unit="months", events=[1, 2, 3, 4, 5, 6])

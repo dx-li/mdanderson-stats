@@ -14,7 +14,12 @@ session = cid2bp_session(
     [
         CID2BPRequest(7, 12, 1, 7, methods=("auto", "exact")),
         CID2BPRequest(
-            10, 10, 0, 10, entry="failures", confidence=0.99,
+            10,
+            10,
+            0,
+            10,
+            entry="failures",
+            confidence=0.99,
             methods=("wald", "cox_snell"),
         ),
     ]
