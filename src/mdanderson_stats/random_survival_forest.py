@@ -1552,6 +1552,13 @@ def fit_random_survival_forest(
     Kaplan--Meier curve's ``1 - prob`` survival threshold.
     ``split_rule="random"`` draws one cut/partition on the first selected
     feature with a valid split; it does not compare survival scores.
+
+    ``na_action="omit"`` fits complete rows and retains their original indices.
+    ``na_action="impute"`` uses one pass of node-local observed in-bag donors,
+    while original missingness excludes rows from candidate-specific scores.
+    Donor-less outcome bootstraps are skipped; ``requested_trees`` records the
+    attempted count. ``max_imputation_cells`` bounds retained donors and work
+    arrays. Missing-outcome OOB concordance is explicitly unavailable.
     """
     if not isinstance(replace, (bool, np.bool_)):
         raise ValueError("replace must be boolean")
@@ -1858,11 +1865,16 @@ def predict_random_survival_forest(
     max_output_cells: int = _MAX_OUTPUT_CELLS,
     max_prediction_work: int = _MAX_PREDICTION_WORK,
     random_state: int | None = None,
-    na_action: Literal["raise", "impute"] = "raise",
+    na_action: Literal["raise", "omit", "impute"] = "raise",
 ) -> RandomSurvivalForestPrediction:
-    """Predict the separately averaged survival and cumulative-hazard curves."""
-    if na_action not in ("raise", "impute"):
-        raise ValueError("prediction na_action must be 'raise' or 'impute'")
+    """Predict the separately averaged survival and cumulative-hazard curves.
+
+    ``na_action="omit"`` removes incomplete profiles and records their original
+    positions. ``na_action="impute"`` requires retained training donors and an
+    explicit ``random_state`` when a profile has missing values.
+    """
+    if na_action not in ("raise", "omit", "impute"):
+        raise ValueError("prediction na_action must be 'raise', 'omit', or 'impute'")
     if times is None:
         time_values = np.asarray(fit.time_grid)
     else:
@@ -1899,6 +1911,13 @@ def predict_random_survival_forest(
         or profile_values.size > _MAX_DESIGN_CELLS
     ):
         raise ValueError("profiles must have one column per fitted covariate")
+    row_indices = np.arange(profile_values.shape[0], dtype=np.int64)
+    if na_action == "omit" and np.any(profile_missing):
+        row_indices = np.flatnonzero(~np.any(profile_missing, axis=1))
+        if not row_indices.size:
+            raise ValueError("na_action removed every prediction profile")
+        profile_values = profile_values[row_indices]
+        profile_missing = np.zeros(profile_values.shape, dtype=bool)
     has_missing_profiles = bool(np.any(profile_missing))
     if has_missing_profiles:
         if na_action != "impute":
@@ -1931,8 +1950,9 @@ def predict_random_survival_forest(
         work += int(np.count_nonzero(profile_missing)) * fit.n_trees * (fit.max_depth + 1)
     if work > work_limit:
         raise ValueError("prediction exceeds max_prediction_work budget")
-    routed_profiles = _encode_profiles(profile_values, categorical_levels, profile_missing).copy()
+    routed_profiles = _encode_profiles(profile_values, categorical_levels, profile_missing)
     if has_missing_profiles:
+        routed_profiles = routed_profiles.copy()
         routed_profiles[profile_missing] = 0.0
     log_survival_sum = np.full((profile_values.shape[0], time_values.size), -np.inf)
     hazard_sum = np.zeros_like(log_survival_sum)
@@ -1987,5 +2007,5 @@ def predict_random_survival_forest(
         _freeze(survival),
         _freeze(log_survival),
         _freeze(cumulative_hazard),
-        _freeze_index(np.arange(profile_values.shape[0], dtype=np.int64), np.dtype(np.int64)),
+        _freeze_index(row_indices, np.dtype(np.int64)),
     )

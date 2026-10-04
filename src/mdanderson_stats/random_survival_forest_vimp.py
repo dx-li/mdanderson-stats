@@ -368,9 +368,7 @@ def anti_split_random_survival_forest_importance(
         raise TypeError("rng must be a numpy Generator")
     threshold = _threshold(vimp_threshold)
     work_limit = _integer(max_work, "max_work", 1, _MAX_IMPORTANCE_WORK)
-    t, e, raw_x, _ = _adapter_training_data(
-        fit, time, event, covariates, adapter="anti-split VIMP"
-    )
+    t, e, raw_x, _ = _adapter_training_data(fit, time, event, covariates, adapter="anti-split VIMP")
     selected = _feature_selection(feature_indices, fit.covariate_count)
     if selected.size == 0:
         raise ValueError("anti-split importance requires at least one fitted covariate")

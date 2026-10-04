@@ -128,10 +128,13 @@ clear error. The final integration run took 0.74 seconds, peaked at 153.9 MiB
 RSS and reported zero process swaps, using one BLAS/OpenMP thread.
 
 This adds the ordinary numeric forest family to SurvivalContour entry 166.
-The entry remains partial: interval-censored and neural families, native
-simulation-based intervals and full application workflows remain open. The
-forest interface does not implement missing-value imputation, competing-risk
-forests or alternative split rules. Categorical splitting was subsequently
+At that checkpoint the entry remained partial: interval-censored and neural
+families, native simulation-based intervals and full application workflows
+were still open. The initial forest interface did not implement missing-value imputation,
+competing-risk forests or alternative split rules. Subsequent additions cover
+categorical predictors, additional split rules, and single-pass missing-data
+fitting; see `random-survival-missing-reference-audit.md` for the latter's
+source contract and remaining limits. Categorical splitting was subsequently
 added with explicit caller-declared columns and retained level maps; categorical
 VIMP validates the raw training fingerprint and encodes profiles before tree
 routing. Subsequent OOB and permutation-importance additions are documented
@@ -210,7 +213,8 @@ Existing tree checks plus focused new OOB checks pass: six tests in 1.57
 seconds. Targeted lint, formatting and type checks pass. These are kernel and
 independent-tree comparisons, not a claim of native full-forest RNG parity.
 Categorical splitting, alternative split rules and missing-value handling
-remain separate remaining scope.
+were separate scope at this checkpoint; later sections and the dedicated
+missing-data reference audit document subsequent additions.
 
 ## Permutation importance and independent native comparison
 

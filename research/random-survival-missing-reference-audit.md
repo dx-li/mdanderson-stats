@@ -121,3 +121,34 @@ Python implementation uses a distinct NumPy random stream. Comparisons should
 target masks, donor pools, values under a fixed tape, leaf counts, and observable
 packed-tree/OOB outputs, rather than requiring native and Python seeded forests
 to be identical.
+
+## Python integration, 2026-10-04
+
+The public forest now supports complete-case omission and single-pass
+imputation for numeric and explicit categorical predictors and survival
+outcomes. Original-row maps align OOB, Brier and VIMP results after omission;
+adapters verify the full original input before applying the map. Prediction
+supports omission or seeded donor imputation without mutating caller arrays.
+Complete-data imputation mode retains prediction donors while preserving the
+ordinary seeded tree and OOB results. Requested and effective tree counts
+distinguish donor-less rejected root bootstraps.
+
+Candidate cutpoints and scores exclude original missing responses and the
+candidate's missing predictor values. Terminal outcomes include completed
+responses; OOB routes reuse the tree's recorded terminal assignments.
+Predictor-only imputation still permits concordance with complete outcomes.
+Missing-outcome concordance is unavailable until the separate unsnapped OOB
+response contract is implemented. Imputed-fit Brier/VIMP, repeated imputation,
+and RF-SRC's automatic removal of entirely missing predictor columns remain
+open; the latter columns are rejected explicitly.
+
+All 64 affected forest, reference and adapter checks pass with warnings as
+errors in 3.140 seconds, with 148.80 MiB process peak RSS and zero swaps.
+The fixed-tape references check donor multiplicity, mean/mode fallback,
+asymmetric time ties, original-mask root selection and completed leaf curves.
+Existing forest, OOB, Brier, importance and native-routing regressions remain
+green. Additional bounded checks cover missing categorical prediction replay,
+unseen-level rejection, omitted categorical Brier alignment and generic random
+feature selection with missing data; they use 128.02 MiB peak RSS and zero
+swaps. Scoped Ruff, formatting and mypy checks pass. Numerical/static jobs
+remain serial; no full local suite, installation or new CI workflow was added.

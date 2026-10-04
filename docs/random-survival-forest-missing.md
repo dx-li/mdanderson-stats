@@ -6,8 +6,9 @@ single-pass tree-local imputation workflow. The chosen policy and a fingerprint
 of the original input are recorded in the fit. OOB results expose
 `row_indices`, mapping each OOB row back to the caller's input. The fit records
 `requested_trees` and the effective `n_trees`; bootstrap trees with no observed
-response donors are skipped, so these counts can differ. For a fit where
-imputation was performed, OOB concordance is unavailable:
+response donors are skipped, so these counts can differ. OOB concordance is
+available when outcomes are complete, including fits with imputed predictors.
+If time or event status was imputed, OOB concordance is unavailable:
 `concordance_available` is false, `concordance_error` is NaN, and
 `comparable_pairs` is zero. Complete-data calls retain their existing behavior
 and random-number path.
@@ -23,18 +24,34 @@ x = np.column_stack((np.linspace(-1, 1, n), np.cos(np.arange(n))))
 x[4, 0] = np.nan
 
 imputed = fit_random_survival_forest(
-    time, event, x, na_action="impute", n_trees=8, nodesize=1,
-    compute_oob=True, random_state=12,
+    time,
+    event,
+    x,
+    na_action="impute",
+    n_trees=8,
+    nodesize=1,
+    compute_oob=True,
+    random_state=12,
 )
 prediction = predict_random_survival_forest(
-    imputed, [1, 5, 10], [[np.nan, 0.0]], na_action="impute", random_state=13,
+    imputed,
+    [1, 5, 10],
+    [[np.nan, 0.0]],
+    na_action="impute",
+    random_state=13,
 )
 assert prediction.survival.shape == (1, 3)
 assert (np.diff(prediction.survival, axis=1) <= 0).all()
 
 omitted = fit_random_survival_forest(
-    time, event, x, na_action="omit", n_trees=8, nodesize=1,
-    compute_oob=True, random_state=12,
+    time,
+    event,
+    x,
+    na_action="omit",
+    n_trees=8,
+    nodesize=1,
+    compute_oob=True,
+    random_state=12,
 )
 assert 4 not in omitted.training_row_indices
 ```
@@ -50,6 +67,11 @@ unrecoverable. Unlike RF-SRC's preprocessing, which drops an entirely missing
 predictor column, this interface rejects such a column because it does not
 silently change the fitted feature set. The fit also rejects a dataset from
 which omission removes every row.
+
+Prediction also accepts `na_action="omit"`: it returns only complete profiles,
+and `prediction.row_indices` maps them to the supplied profile positions.
+Omitting every profile raises an error. Missing-profile imputation instead
+requires `na_action="impute"` and a seed, as in the example above.
 
 The Brier-score and VIMP adapters accept omitted fits by verifying the full
 original-input fingerprint, then applying the fit's row map before their

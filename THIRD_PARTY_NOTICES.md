@@ -1118,6 +1118,16 @@ Python uses a distinct seeded random stream and bounded sequential fitting and
 prediction. See `research/random-survival-forest-audit.md` for source hashes,
 kernel scope and remaining native features.
 
+The forest missing-data path independently implements complete-case omission
+and first-pass node-local donor imputation from the same pinned RF-SRC source.
+It retains original missingness for candidate-specific split masks, uses
+completed outcomes in terminal curves, and supports prediction from retained
+training donors. An independent base-R ledger checks donor multiplicity,
+split masks, terminal summaries and time-grid conventions without executing
+the native forest. Python uses a distinct random stream and explicit resource
+limits; iterative imputation and missing-response OOB metrics remain outside
+this implementation. See `research/random-survival-missing-reference-audit.md`.
+
 `random_survival_forest_brier.py` independently implements the same revision's
 full-training OOB Brier/CRPS helper with its exponential censor-hazard estimate,
 optional 50-tree random-split censoring forest, event-grid projection and

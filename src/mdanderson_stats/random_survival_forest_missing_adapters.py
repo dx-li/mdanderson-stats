@@ -39,9 +39,7 @@ def _adapter_training_data(
         row_indices = np.arange(t.size, dtype=np.int64)
         return t, e, x, row_indices
 
-    original_time, original_event, original_x = _forest_data_allow_missing(
-        time, event, covariates
-    )
+    original_time, original_event, original_x = _forest_data_allow_missing(time, event, covariates)
     if original_x.shape[1] != fit.covariate_count:
         raise ValueError("training covariate count does not match the OOB fit")
     levels = fit.categorical_levels
@@ -80,10 +78,7 @@ def _adapter_training_data(
         retained_time = original_time[row_indices]
         retained_event = original_event[row_indices]
         retained_x = original_x[row_indices]
-    if any(
-        np.any(~np.isfinite(values))
-        for values in (retained_time, retained_event, retained_x)
-    ):
+    if any(np.any(~np.isfinite(values)) for values in (retained_time, retained_event, retained_x)):
         raise ValueError("fit row map retains values that are missing in the original input")
     t, e, x = _forest_data(retained_time, retained_event, retained_x)
     return t, e, x, row_indices

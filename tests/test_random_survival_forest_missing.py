@@ -235,3 +235,23 @@ def test_imputation_preflight_and_source_skipped_bootstrap_counts() -> None:
     assert fit.requested_trees == 10
     assert fit.n_trees == 8
     assert fit.sampled_rows == 8
+
+
+def test_prediction_omission_matches_complete_profiles_and_retains_original_positions() -> None:
+    fit = fit_random_survival_forest(
+        [1, 2, 3, 4],
+        [1, 0, 1, 0],
+        [[0], [1], [2], [3]],
+        n_trees=3,
+        nodesize=1,
+        random_state=17,
+    )
+    profiles = np.array([[np.nan], [0.5], [np.nan], [2.5]])
+    omitted = predict_random_survival_forest(fit, profiles=profiles, na_action="omit")
+    complete = predict_random_survival_forest(fit, profiles=profiles[[1, 3]])
+    np.testing.assert_array_equal(omitted.row_indices, [1, 3])
+    np.testing.assert_array_equal(omitted.survival, complete.survival)
+    np.testing.assert_array_equal(omitted.profile, complete.profile)
+    assert np.isnan(profiles[[0, 2]]).all()
+    with pytest.raises(ValueError, match="every prediction profile"):
+        predict_random_survival_forest(fit, profiles=[[np.nan]], na_action="omit")

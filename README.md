@@ -1666,6 +1666,12 @@ against its original C helpers, with linear-size node workspace.
 The [random split rule](docs/random-survival-forest-random-split.md) draws one
 continuous cut or categorical partition on the first usable selected feature;
 the censoring-forest Brier workflow uses this rule with the source's settings.
+[Missing-data forest fitting](docs/random-survival-forest-missing.md) adds
+complete-case omission with original-row maps and single-pass, node-local
+imputation from observed in-bag donors. Seeded prediction can complete missing
+profiles using retained training donors. OOB concordance is available when
+outcomes are complete. Missing-outcome concordance, imputed-fit Brier scores
+and importance, and repeated imputation remain open.
 [Interval-censored proportional-hazards models](docs/interval-survival.md)
 fit mixed exact, interval, left- and right-censored observations with a
 nonparametric Turnbull baseline. Predictions and continuous-covariate contours
