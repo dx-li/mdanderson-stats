@@ -67,8 +67,21 @@ vector. Consequently neither its variance convention nor a faithful probability
 vector crosswalk can be asserted. Importance-backend and MCMC summaries are
 not relabeled as this native Laplace/integral output.
 
-The Python calendar OC already reports enrollment, selection, stopping,
-toxicity/response and model-fit diagnostics. The source-defined, tractable
-duration summary is added there without retaining all trial records. C++
-posterior-kernel printouts, the native DF3+3 comparator, and exact native RNG
-parity remain separate limitations.
+The six-dose DF3+3 progression comparator is implemented in
+`parallel_phase12_progression.py` and checked against the extracted decision,
+opening, and randomization methods in `phase12-progression-reference.json`.
+Its transition report averages all source fair-coin branches; it does not claim
+native random-stream parity. The calendar OC also now reports the source
+DF3Plus3 phase-I tally: per-dose patient/toxicity/admissibility means, the
+source early-toxic-stop count, and Monte Carlo errors. These tallies include
+only trials that reach the native `TallySim` call, use all trials as the
+denominator, and count generated phase-I toxicity events whether observed or
+pending. They crosswalk to the native `#Patients`, `#Tox`, `#Pat`, and
+`%Admissible` output fields; the native `#Tox` label refers to a count. The
+reported Monte Carlo errors are Python OC additions. The existing
+final-trial admissibility summary remains separate and includes paths that
+were interrupted before the native tally point.
+
+Unresolved work is limited to the C++ posterior-kernel printouts and exact
+native RNG parity. The kernel's posterior mode/covariance and probability-vector
+summaries are not relabeled as MCMC or importance-backend outputs.

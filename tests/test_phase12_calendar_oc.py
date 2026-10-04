@@ -15,7 +15,7 @@ def test_seeded_aggregate_matches_independent_calendar_replays():
         [0.0] * 6,
         n_trials=2,
         seed=12031,
-        max_patients=18,
+        max_patients=24,
         max_attempts=100,
         draws=8,
         warmup=0,
@@ -34,11 +34,14 @@ def test_seeded_aggregate_matches_independent_calendar_replays():
     replay_enrollment = np.zeros(6, dtype=np.int64)
     replay_tox = np.zeros(6, dtype=np.int64)
     replay_response = np.zeros(6, dtype=np.int64)
+    replay_phase_one_treated = np.zeros(6, dtype=np.int64)
+    replay_phase_one_tox = np.zeros(6, dtype=np.int64)
+    replay_phase_one_admissible = np.zeros(6, dtype=np.int64)
     for trial_seed in result.per_trial_seeds:
         trial = simulate_phase12_calendar(
             [0.0] * 6,
             [0.0] * 6,
-            max_patients=18,
+            max_patients=24,
             max_attempts=100,
             draws=8,
             warmup=0,
@@ -56,6 +59,11 @@ def test_seeded_aggregate_matches_independent_calendar_replays():
             replay_enrollment[dose] += 1
             replay_response[dose] += int(row[2])
             replay_tox[dose] += int(row[4])
+        phase_one_records = trial.records[trial.phases == 0]
+        for row in phase_one_records:
+            replay_phase_one_treated[int(row[0])] += 1
+            replay_phase_one_tox[int(row[0])] += int(row[4])
+        replay_phase_one_admissible += trial.phase_one_admissible
 
     expected_selected = np.zeros(6, dtype=np.int64)
     for dose in replay_selections:
@@ -65,6 +73,13 @@ def test_seeded_aggregate_matches_independent_calendar_replays():
     np.testing.assert_array_equal(result.treated_total, replay_enrollment)
     np.testing.assert_array_equal(result.generated_response_total, replay_response)
     np.testing.assert_array_equal(result.generated_toxicity_total, replay_tox)
+    assert result.phase_one_tally_count == 2
+    assert result.phase_one_tally_probability == 1.0
+    np.testing.assert_allclose(result.phase_one_tally_mean_treated, replay_phase_one_treated / 2)
+    np.testing.assert_allclose(result.phase_one_tally_mean_toxicities, replay_phase_one_tox / 2)
+    np.testing.assert_allclose(
+        result.phase_one_tally_mean_admissible, replay_phase_one_admissible / 2
+    )
     assert result.selection_probability.sum() + result.no_selection_probability == pytest.approx(1)
     assert not np.isnan(result.mcse_total_enrollment)
     duration_months = np.asarray(replay_durations_months)
@@ -114,6 +129,47 @@ def test_source_duration_summary_is_stable_for_large_constant_times():
     assert indices.tolist() == [0, 0, 0, 1, 2, 2, 2]
     np.testing.assert_allclose(order_statistics[:4], expected)
     assert np.isnan(order_statistics[4:]).all()
+
+
+def test_native_phase_one_tally_matches_completed_toxic_stop_and_omits_incomplete_path():
+    stopped = simulate_phase12_calendar_oc(
+        [1.0] * 6,
+        [0.0] * 6,
+        n_trials=2,
+        seed=8551,
+        max_patients=18,
+        max_attempts=100,
+        draws=8,
+        warmup=0,
+        chains=2,
+    )
+    assert stopped.phase_one_tally_count == 2
+    assert stopped.phase_one_toxic_stop_count == 2
+    # With this arrival seed, one path's first two toxicities are observed
+    # before patient three arrives, so the source closes at two patients.
+    assert stopped.phase_one_tally_mean_patients == 2.5
+    np.testing.assert_array_equal(stopped.phase_one_tally_mean_treated, [2.5, 0, 0, 0, 0, 0])
+    np.testing.assert_array_equal(stopped.phase_one_tally_mean_toxicities, [2.5, 0, 0, 0, 0, 0])
+    assert stopped.phase_one_tally_mean_admissible.sum() == 0
+    assert stopped.phase_one_tally_mcse_patients == 0.5
+    assert not stopped.phase_one_tally_mean_treated.flags.writeable
+    assert not stopped.phase_one_tally_mcse_admissible.flags.writeable
+
+    interrupted = simulate_phase12_calendar_oc(
+        [0.0] * 6,
+        [0.0] * 6,
+        n_trials=2,
+        seed=8552,
+        max_patients=1,
+        max_attempts=100,
+        draws=8,
+        warmup=0,
+        chains=2,
+    )
+    assert interrupted.phase_one_tally_count == 0
+    assert interrupted.phase_one_toxic_stop_count == 0
+    assert interrupted.phase_one_tally_mean_patients == 0
+    np.testing.assert_array_equal(interrupted.phase_one_tally_mean_treated, np.zeros(6))
 
 
 def test_observed_count_and_pooled_rate_mcse_match_replayed_trial_ledgers():

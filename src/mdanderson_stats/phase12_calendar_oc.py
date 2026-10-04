@@ -240,6 +240,18 @@ class Phase12CalendarOC:
     phase_one_admissible_counts: NDArray[np.int64]
     phase_one_admissibility_probability: FloatArray
     phase_one_admissibility_mcse: FloatArray
+    phase_one_tally_count: int
+    phase_one_tally_probability: float
+    phase_one_toxic_stop_count: int
+    phase_one_toxic_stop_probability: float
+    phase_one_tally_mean_patients: float
+    phase_one_tally_mcse_patients: float
+    phase_one_tally_mean_treated: FloatArray
+    phase_one_tally_mcse_treated: FloatArray
+    phase_one_tally_mean_toxicities: FloatArray
+    phase_one_tally_mcse_toxicities: FloatArray
+    phase_one_tally_mean_admissible: FloatArray
+    phase_one_tally_mcse_admissible: FloatArray
     treated_total: NDArray[np.int64]
     mean_treated: FloatArray
     mcse_treated: FloatArray
@@ -487,6 +499,10 @@ def simulate_phase12_calendar_oc(
     future_counts = np.zeros(6, dtype=np.int64)
     stopping_counts = np.zeros(len(_STOP_REASONS), dtype=np.int64)
     admissible_counts = np.zeros(6, dtype=np.int64)
+    phase_one_tally_count = phase_one_toxic_stop_count = 0
+    phase_one_tally_means = {name: np.zeros(6) for name in ("patients", "toxicities", "admissible")}
+    phase_one_tally_m2 = {name: np.zeros(6) for name in phase_one_tally_means}
+    phase_one_patient_mean = phase_one_patient_m2 = 0.0
     no_selection_count = early_ineligible_count = 0
     optimal_selection_count = 0
     treated_total = np.zeros(6, dtype=np.int64)
@@ -609,6 +625,52 @@ def simulate_phase12_calendar_oc(
             len(records) if result.phase_two_start is None else int(result.phase_two_start)
         )
         phase_one_total += phase_one_count
+
+        # DF3Plus3::TallySim runs only when its state is done or the arm has
+        # closed. Partial phase I at the enrollment/duration boundary contributes
+        # zero to these native aggregates. The native stop counter tests whether
+        # the arm is closed at that instant, before the <=1-admissible closure.
+        phase_one_tallied = result.phase_two_start is not None or result.reason in {
+            "phase-I toxicity",
+            "at most one admissible dose",
+        }
+        phase_one_records = records[result.phases == 0] if records.size else records
+        phase_one_treated = np.zeros(6, dtype=np.int64)
+        phase_one_toxicities = np.zeros(6, dtype=np.int64)
+        phase_one_admissible = np.zeros(6, dtype=np.int64)
+        if phase_one_tallied:
+            phase_one_doses = (
+                phase_one_records[:, 0].astype(np.intp)
+                if phase_one_records.size
+                else np.empty(0, dtype=np.intp)
+            )
+            phase_one_treated = np.bincount(phase_one_doses, minlength=6).astype(np.int64)
+            phase_one_toxicities = (
+                np.bincount(
+                    phase_one_doses,
+                    weights=phase_one_records[:, 4],
+                    minlength=6,
+                ).astype(np.int64)
+                if phase_one_records.size
+                else np.zeros(6, dtype=np.int64)
+            )
+            phase_one_admissible = np.asarray(result.phase_one_admissible, dtype=np.int64)
+            phase_one_tally_count += 1
+            phase_one_toxic_stop_count += result.reason == "phase-I toxicity"
+        tally_patient_count = int(phase_one_treated.sum())
+        delta_phase_patients = tally_patient_count - phase_one_patient_mean
+        phase_one_patient_mean += delta_phase_patients / (trial_index + 1)
+        phase_one_patient_m2 += delta_phase_patients * (
+            tally_patient_count - phase_one_patient_mean
+        )
+        for name, values in (
+            ("patients", phase_one_treated),
+            ("toxicities", phase_one_toxicities),
+            ("admissible", phase_one_admissible),
+        ):
+            delta = values - phase_one_tally_means[name]
+            phase_one_tally_means[name] += delta / (trial_index + 1)
+            phase_one_tally_m2[name] += delta * (values - phase_one_tally_means[name])
 
         for name, values in (
             ("treated", treated),
@@ -766,6 +828,13 @@ def simulate_phase12_calendar_oc(
         if posterior_backend != "importance"
         else float(importance_nonconverged_trial_count / trial_count)
     )
+    phase_one_patient_summary = _mean_mcse(
+        np.asarray([phase_one_patient_mean]), np.asarray([phase_one_patient_m2]), trial_count
+    )
+    phase_one_tally_summaries = {
+        name: _mean_mcse(phase_one_tally_means[name], phase_one_tally_m2[name], trial_count)
+        for name in phase_one_tally_means
+    }
 
     return Phase12CalendarOC(
         trial_count,
@@ -792,6 +861,18 @@ def simulate_phase12_calendar_oc(
         _immutable_int(admissible_counts),
         _freeze(admissibility_probability),
         _freeze(_bernoulli_mcse(admissibility_probability, trial_count)),
+        phase_one_tally_count,
+        phase_one_tally_count / trial_count,
+        phase_one_toxic_stop_count,
+        phase_one_toxic_stop_count / trial_count,
+        float(phase_one_patient_mean),
+        float(phase_one_patient_summary[1][0]),
+        _freeze(phase_one_tally_means["patients"]),
+        _freeze(phase_one_tally_summaries["patients"][1]),
+        _freeze(phase_one_tally_means["toxicities"]),
+        _freeze(phase_one_tally_summaries["toxicities"][1]),
+        _freeze(phase_one_tally_means["admissible"]),
+        _freeze(phase_one_tally_summaries["admissible"][1]),
         _immutable_int(treated_total),
         _freeze(mean_treated),
         _freeze(mcse_treated),

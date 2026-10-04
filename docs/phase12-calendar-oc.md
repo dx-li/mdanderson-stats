@@ -70,6 +70,22 @@ clipped or replaced with an interpolated quantile. The C++ variable printed as
 and MCSE remain in days. Source paths and the exact index/unit mapping are
 recorded in the [duration audit](../research/phase12-calendar-duration-audit.md).
 
+`phase_one_tally_*` fields reproduce the separate DF3Plus3 phase-I aggregate.
+They include a trial only when the source calls `TallySim`: phase I has ended
+and either proceeds to phase II, stops with at most one admissible dose, or
+closes at the lowest dose for toxicity. The count and early-toxic-stop
+probability use all simulated trials as the denominator. Per-dose patient,
+toxicity, and admissibility means and MCSEs also use all trials; unfinished
+phase-I paths contribute zero, matching the native accumulator. Toxicities
+count generated DLT events, including outcomes not yet observed by the
+calendar, because the native tally checks the event indicator without an
+observation-time filter. `phase_one_admissibility_probability` remains the
+separate probability of each dose being admissible at trial end, including
+paths that do not reach the native tally point.
+These phase-I means correspond to native output fields `#Patients`, `#Tox`,
+`#Pat`, and `%Admissible` (where `#Tox` is a count); the reported MCSEs are
+Python additions.
+
 The optional `posterior_backend="importance"` uses the calendar's bounded
 adaptive importance fit. Its summaries report fit counts, nonconvergence,
 maximum ratio MCSE, raw component evaluations, and mode iterations. The

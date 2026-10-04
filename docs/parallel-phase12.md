@@ -406,5 +406,6 @@ generated/observed endpoints, trial-level Monte Carlo errors and source-indexed
 duration summaries. The separate four-arm C workflow now has a
 [native probability-input parser and saved scenario reports](parallel-phase12-scenario-report.md).
 The [source crosswalk](../research/parallel-phase12-scenario-report-audit.md)
-identifies unresolved C++ posterior-kernel summaries and the native DF3+3
-comparison. Full published operating-characteristic replication remains open.
+records the completed six-dose DF3+3 progression comparison and phase-I tally
+crosswalk. C++ posterior-kernel summaries, exact native RNG parity, and full
+published operating-characteristic replication remain open.
