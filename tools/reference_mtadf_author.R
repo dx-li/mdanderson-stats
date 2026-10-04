@@ -101,10 +101,14 @@ add_fit_case <- function(label, y, subjects) {
 add_fit_case("unequal_n", c(0.10, 0.80, 0.35, 0.70, 0.25), c(3, 6, 3, 12, 3))
 add_fit_case("flat_peak_tie", c(0.20, 0.80, 0.80, 0.20), c(3, 3, 3, 3))
 
-# Case A: before the first cohort the prior-based cap is all doses. After an
-# all-toxic but efficacy-favorable first cohort, the author simulator chooses
-# its next assignment using that stale cap, then updates admissibility. The
-# per-trial df.isotonic helper recomputes the cap first.
+# Case A: before the first cohort the prior-based cap is all doses. Under the
+# mathematically defined singleton identity fit (the policy used by the
+# independent reference), an all-toxic but efficacy-favorable first cohort
+# would let the simulator choose the next assignment using that stale cap,
+# then update admissibility. This is conditional rather than native execution
+# evidence: Iso 0.0-15's unconstrained Fortran search has no candidates at n=1
+# and subsequently indexes peak positions -1 and 0. The per-trial
+# df.isotonic helper recomputes the cap first.
 initial_cap <- admissible_cap(rep(0, 3), rep(0, 3))
 n_after <- c(3, 0, 0)
 tox_after <- c(3, 0, 0)

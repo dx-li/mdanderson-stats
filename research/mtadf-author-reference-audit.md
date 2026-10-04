@@ -14,11 +14,15 @@ unit weights for each dose-level response rate. Counts affect the observed
 rate `yeff/n`, but do not weight the regression across dose levels. The
 unconstrained mode algorithm visits half-index peak candidates in order,
 evaluates squared error, and retains the first candidate at an equal minimum.
-Its unimodal fit combines the rising and falling sequences around a peak; it
-is not equivalent by definition to fitting independent increasing/decreasing
-segments and selecting a split. PAVA defaults to unit weights and increasing
-order. Its Fortran implementation pools strict adjacent violations; equal
-fitted values need not be physically merged to have the same fitted sequence.
+At those half-index modes, the historical routine fits the rising prefix and
+falling suffix independently with PAVA. This is exactly the candidate split
+operation represented by the independent left/right PAVA reference. Iso also
+has a distinct branch for a fixed integer mode: it combines both side fits
+with the observed peak and applies pooling across them. The author calls omit
+`lmode`, so they use the half-index search, not the integer-mode branch. PAVA
+defaults to unit weights and increasing order. Its Fortran implementation
+merges strict adjacent violations; equal fitted values need not be physically
+merged to have the same fitted sequence.
 
 There are two consequential conduct differences between the author simulator
 and its per-trial `df.isotonic` function:
@@ -28,8 +32,15 @@ and its per-trial `df.isotonic` function:
    only after selecting that next dose. `df.isotonic` recalculates the cap
    from current counts before deciding. The fixture's all-toxic, favorable
    first cohort therefore moves the simulator from dose 1 to dose 2 using the
-   initial cap of 3, even though the freshly computed cap is 1. This is a
-   one-cohort lag in simulator code, not a general safety rule.
+   initial cap of 3, even though the freshly computed cap is 1, if the
+   one-point efficacy fit is taken to be its mathematical singleton value.
+   That fixture is conditional, because the era-matched Iso routine does not
+   define its unconstrained fit for one input: its candidate search has no
+   iterations, then its Fortran code derives peak indices -1 and 0 before
+   indexing the fitted vector. The simulator calls the fitter at this prefix,
+   so its first post-cohort behavior is not portable under this cached Iso
+   version. At two or more inputs, the one-cohort lag is a separate simulator
+   ordering convention, not a general safety rule.
 2. Final simulator selection computes `yeff/(n+0.0001)` over every dose,
    including untried levels. If every efficacy count is zero, all fitted
    values tie at zero; `tail(which(fit==max(fit)),1)` picks the rightmost dose,
@@ -42,7 +53,9 @@ and its per-trial `df.isotonic` function:
 reference. It enumerates contiguous constant-block partitions and minimizes
 squared error over feasible unimodal sequences rather than copying/loading
 Iso's implementation. Its compact fixture contains two grouped dose-rate
-vectors and the two simulator edge cases above. This provides focused source
+vectors and the two simulator edge cases above. For the singleton edge case,
+the base-R reference uses the well-defined identity fit; it explicitly does
+not claim that this is Iso 0.0-15's runtime output. This provides focused source
 evidence; it does not claim execution parity with Iso's compiled code, exact
 app dependency version, or full operating-characteristic/random-number
 parity. CRAN sources and hashes are recorded in

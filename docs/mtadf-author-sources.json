@@ -26,7 +26,7 @@
     "ufit(type='b') uniquely abbreviates type='both'; the second list component is the fitted response vector.",
     "The author's ufit calls omit weights, so each observed dose-rate point receives unit weight, regardless of its patient count.",
     "The unconstrained mode search visits half-index candidate peaks in order and keeps the first candidate attaining the strict minimum squared-error score.",
-    "For a chosen split, Iso's unimodal routine joins the increasing/decreasing side fits with the peak and applies isotonic pooling; this is not merely two independent PAVA fits separated at every observed dose.",
+    "With the author's unconstrained mode search, candidate peaks are half-indices, so the historical Iso routine fits the two sides independently by PAVA. The routine's separate fixed-integer-mode branch couples both sides through the observed peak, but the author calls do not request that branch.",
     "PAVA defaults to equal weights and increasing order; the Fortran routine pools strict violations only (previous fitted value greater than next).",
     "The MTADF author simulator uses an admissibility value computed before the current cohort to cap that cohort's next assignment, then recomputes admissibility after the assignment. df.isotonic recomputes admissibility before its decision.",
     "The simulator's final efficacy fit divides response counts by subjects plus 0.0001 at every dose, including untried doses; tail(which(fit == max(fit))) chooses the rightmost tied maximum, then safety caps that index."
@@ -39,7 +39,8 @@
       "Execution parity with Iso's compiled Fortran routines",
       "The exact Iso version installed by the historical app",
       "Complete random-sequence or full operating-characteristic parity"
-    ]
+    ],
+    "singleton_policy": "The base-R reference returns the sole observed value for a length-one vector, the mathematical singleton isotonic fit. Iso 0.0-15's unconstrained Fortran search has n-1=0 candidates, then derives invalid peak indices (-1 and 0); thus the one-tried-dose author call has no portable result in this cached version. The all-toxic first-cohort lag fixture is conditional on the mathematically defined singleton fit and is not native-execution parity evidence."
   },
   "current_release_comparison": {
     "version": "0.0-21",
