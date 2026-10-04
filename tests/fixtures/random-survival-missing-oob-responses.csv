@@ -1,6 +1,6 @@
-"case","field","recipient_id","was_originally_missing","oob_terminal_values","global_observed_fallback_values","uniform","pool","expected","fallback_used"
-"mean_of_snapped_tree_times_left_unsnapped","time",5,TRUE,"1;3","1;3;7;9",NA,"oob_tree_terminal",2,FALSE
-"status_mode_tie_low","status",6,TRUE,"0;1;0;1","0;1;0;1",0.25,"oob_tree_terminal",0,FALSE
-"status_mode_tie_high","status",7,TRUE,"0;1;0;1","0;1;0;1",0.75,"oob_tree_terminal",1,FALSE
-"empty_oob_time_global_fallback","time",5,TRUE,"","1;3;7;9",0.5,"full_data_observed_fallback",3,TRUE
-"empty_oob_status_global_fallback","status",5,TRUE,"","0;1;0;1",1,"full_data_observed_fallback",1,TRUE
+"case","field","recipient_id","was_originally_missing","oob_terminal_values","global_observed_fallback_values","inbag_terminal_outlier","uniform","pool","expected","fallback_used"
+"mean_of_snapped_tree_times_left_unsnapped","time",5,TRUE,"1;3","1;3;7;9",100,NA,"oob_tree_terminal",2,FALSE
+"status_mode_tie_low","status",6,TRUE,"0;1;0;1","0;1;0;1",NA,0.25,"oob_tree_terminal",0,FALSE
+"status_mode_tie_high","status",7,TRUE,"0;1;0;1","0;1;0;1",NA,0.75,"oob_tree_terminal",1,FALSE
+"empty_oob_time_global_fallback","time",5,TRUE,"","1;3;7;9",NA,0.5,"full_data_observed_fallback",3,TRUE
+"empty_oob_status_global_fallback","status",5,TRUE,"","0;1;0;1",NA,1,"full_data_observed_fallback",1,TRUE

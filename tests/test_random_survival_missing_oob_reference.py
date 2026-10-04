@@ -54,9 +54,18 @@ def _tree(terminal_time: float, terminal_event: float, row_count: int):
     )
 
 
-def _membership(row_count: int, trees: int, recipient: int, *, oob: bool) -> np.ndarray:
+def _membership(
+    row_count: int,
+    trees: int,
+    recipient: int,
+    *,
+    oob: bool,
+    inbag_outlier: bool = False,
+) -> np.ndarray:
     matrix = np.ones((trees, row_count), dtype=np.uint8)
     matrix[:, recipient] = 0 if oob else 1
+    if inbag_outlier:
+        matrix[-1, recipient] = 1
     return np.packbits(matrix, axis=1, bitorder="little")
 
 
@@ -65,6 +74,12 @@ def _single_recipient_case(row: dict[str, str]) -> tuple[np.ndarray, ...]:
     recipient = int(row["recipient_id"]) - 1
     time = np.linspace(1.0, float(n), n)
     event = np.asarray([float(i % 2) for i in range(n)])
+    fallback_time_values = [
+        float(value) for value in row["global_observed_fallback_values"].split(";") if value
+    ]
+    fallback_event_values = [
+        float(value) for value in row["global_observed_fallback_values"].split(";") if value
+    ]
     missing_time = np.zeros(n, dtype=bool)
     missing_event = np.zeros(n, dtype=bool)
     if row["field"] == "time":
@@ -75,13 +90,23 @@ def _single_recipient_case(row: dict[str, str]) -> tuple[np.ndarray, ...]:
     values = [float(value) for value in row["oob_terminal_values"].split(";") if value]
     is_oob = bool(values)
     if row["field"] == "time":
+        time[:4] = fallback_time_values
         terminal_times = values or [2.0, 8.0]
+        if row["inbag_terminal_outlier"] not in ("", "NA"):
+            terminal_times.append(float(row["inbag_terminal_outlier"]))
         terminal_events = [1.0] * len(terminal_times)
     else:
+        event[:4] = fallback_event_values
         terminal_events = values or [0.0, 1.0]
         terminal_times = [1.0] * len(terminal_events)
     trees = tuple(_tree(t, e, n) for t, e in zip(terminal_times, terminal_events, strict=True))
-    membership = _membership(n, len(trees), recipient, oob=is_oob)
+    membership = _membership(
+        n,
+        len(trees),
+        recipient,
+        oob=is_oob,
+        inbag_outlier=row["inbag_terminal_outlier"] not in ("", "NA"),
+    )
     if not is_oob:
         if row["field"] == "time":
             time[:4] = [1.0, 3.0, 7.0, 9.0]
@@ -127,6 +152,11 @@ def test_oob_missing_response_pools_match_fixed_tape_reference() -> None:
         recipient = int(row["recipient_id"]) - 1
         value = completed_time[recipient] if row["field"] == "time" else completed_event[recipient]
         assert value == target == float(row["expected"])
+        if case == "mean_of_snapped_tree_times_left_unsnapped":
+            observed_times = [
+                float(value) for value in row["global_observed_fallback_values"].split(";") if value
+            ]
+            assert value not in observed_times
         assert bool(fallback[recipient, 0 if row["field"] == "time" else 1]) == (
             row["fallback_used"] == "TRUE"
         )
@@ -208,6 +238,11 @@ def test_status_pool_ties_precede_time_global_fallback_draws() -> None:
         axis=1,
         bitorder="little",
     )
+    draw_rows = _read("random-survival-missing-oob-rng-order.csv")
+    tape = [
+        int(np.ceil(float(row["uniform"]) * len(row["pool"].split(";")))) - 1 for row in draw_rows
+    ]
+    assert tape == [1, 0]
     completed_time, completed_event, fallback = _complete_oob_responses(
         time,
         event,
@@ -215,11 +250,10 @@ def test_status_pool_ties_precede_time_global_fallback_draws() -> None:
         missing_event,
         trees,
         membership,
-        rng=_IndexTape(1, 1),  # status tie first, then time fallback
+        rng=_IndexTape(*tape),  # status tie first, then time fallback
         max_cells=1_000,
         max_work=1_000,
     )  # type: ignore[arg-type]
-    draw_rows = _read("random-survival-missing-oob-rng-order.csv")
     assert [row["operation"] for row in draw_rows] == [
         "status_tied_mode",
         "time_global_fallback",

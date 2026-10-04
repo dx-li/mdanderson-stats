@@ -36,6 +36,7 @@ response_cases <- data.frame(
   oob_terminal_values = c("1;3", "0;1;0;1", "0;1;0;1", "", ""),
   global_observed_fallback_values = c("1;3;7;9", "0;1;0;1", "0;1;0;1",
                                       "1;3;7;9", "0;1;0;1"),
+  inbag_terminal_outlier = c(100, NA, NA, NA, NA),
   uniform = c(NA, 0.25, 0.75, 0.5, 1),
   stringsAsFactors = FALSE
 )
@@ -71,9 +72,9 @@ draw_order <- data.frame(
   draw_order = 1:2,
   operation = c("status_tied_mode", "time_global_fallback"),
   pool = c("0;1", "1;3;7"),
-  uniform = c(0.75, 0.5),
-  selected_index_one_based = c(2L, 2L),
-  expected_value = c(1, 3),
+  uniform = c(0.75, 0.1),
+  selected_index_one_based = c(2L, 1L),
+  expected_value = c(1, 1),
   stringsAsFactors = FALSE
 )
 
@@ -149,6 +150,7 @@ write.csv(concordance_summary, file.path(out_dir, "random-survival-missing-oob-c
           row.names = FALSE, na = "NA")
 
 stopifnot(response_cases$expected[[1L]] == 2,
+          !(response_cases$expected[[1L]] %in% c(1, 3, 7, 9)),
           response_cases$expected[[2L]] == 0,
           response_cases$expected[[3L]] == 1,
           response_cases$expected[[4L]] == 3,

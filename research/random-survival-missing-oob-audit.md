@@ -30,7 +30,9 @@ its mode with random choice among tied modes. If the primary pool is
 empty, the source samples a value from original full-data observations where
 that field is present; an empty response fallback pool is fatal. Tree status
 ties and global fallback draws use the native helper's uniform-tape convention
-in the R reference, not R or NumPy seeded streams. Final response summaries use
+in the R reference, not R or NumPy seeded streams. All nonempty tree-pool
+aggregations (including tied status choices) precede the fallback pass; time
+fallback sampling precedes status fallback sampling. Final response summaries use
 a separate time-grid snap path and are not the response passed to OOB
 concordance.
 
@@ -47,7 +49,9 @@ output is NaN.
 `tools/reference_random_survival_missing_oob.R` writes small CSV ledgers for
 means of snapped per-tree OOB times left unsnapped at ensemble level, status
 mode ties, original-observation fallback, preservation of observed components,
-and concordance pair classification.
+and concordance pair classification. The time-mean case uses master-grid
+values 1 and 3, whose ensemble mean 2 is absent from the grid, plus an in-bag
+terminal-time outlier of 100 that must not enter the recipient's OOB pool.
 They are hand-specified source-equation cases, not full-forest simulations.
 The Python checker compares the engine's deterministic private aggregation
 helper and native-convention concordance calculation against these immutable
