@@ -144,9 +144,10 @@ output limits reject oversized requests. These bounds limit individual
 operations; they do not guarantee total application memory use.
 
 This interface covers ordinary right-censored survival with continuous and
-explicitly declared categorical predictors. Competing risks, multiple
-imputation, and split rules beyond log-rank, Hothorn–Lausen, Brier-gradient and
-random splitting remain separate work. See the
+explicitly declared categorical predictors, including single-pass or iterated
+missing-data fitting. It supports log-rank, Hothorn–Lausen, Brier-gradient and
+random splitting. Other randomForestSRC families and options are outside
+this interface. See the
 [missing-data guide](random-survival-forest-missing.md) for downstream adapter
 limits.
 It does not claim to

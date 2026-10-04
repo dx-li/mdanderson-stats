@@ -1805,11 +1805,22 @@ def fit_random_survival_forest(
     feature with a valid split; it does not compare survival scores.
 
     ``na_action="omit"`` fits complete rows and retains their original indices.
-    ``na_action="impute"`` uses one pass of node-local observed in-bag donors,
-    while original missingness excludes rows from candidate-specific scores.
+    ``na_action="impute"`` starts with node-local observed in-bag donors,
+    while original missingness excludes rows from first-pass candidate scores.
+    The default ``nimpute=1`` retains that single-pass forest. Larger values
+    pool OOB terminal imputations between passes and refit on completed data;
+    the final pass does not perform another pooled update. Originally observed
+    values and the original event/master time grids remain fixed. Complete
+    input needs only one effective pass. ``completed_time``, ``completed_event``
+    and ``completed_covariates`` contain the common final training data only
+    when multiple passes were performed. Categorical completions use original
+    labels. Final OOB concordance uses those completed responses.
     Donor-less outcome bootstraps are skipped; ``requested_trees`` records the
     attempted count. ``max_imputation_cells`` bounds retained donors and work
-    arrays. With OOB enabled, originally missing outcome fields are completed
+    arrays; ``max_imputation_work`` bounds cumulative pooling work. Existing
+    forest counters describe the final retained trees, while ``total_*``
+    counters record work across passes. With single-pass OOB enabled,
+    originally missing outcome fields are completed
     from OOB terminal response pools, with full-data observed-value fallback
     only when a row has no OOB pool; the completed responses and fallback flags
     are retained in the OOB result.

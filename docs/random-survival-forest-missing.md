@@ -2,7 +2,8 @@
 
 `fit_random_survival_forest` rejects missing values by default. Set
 `na_action="omit"` for complete-case fitting or `na_action="impute"` for the
-single-pass tree-local imputation workflow. The chosen policy and a fingerprint
+tree-local imputation workflow. Add `nimpute=2` or more for repeated imputation
+and refitting. The chosen policy and a fingerprint
 of the original input are recorded in the fit. OOB results expose
 `row_indices`, mapping each OOB row back to the caller's input. The fit records
 `requested_trees` and the effective `n_trees`; bootstrap trees with no observed
@@ -98,12 +99,68 @@ with no observed response donors is skipped. Numeric event times use the donor
 mean snapped to the forest's master time grid; binary or categorical values
 use the modal donor value, with the source tie rule.
 
-This is one imputation pass. It does not implement `nimpute > 1`, which in
-RF-SRC aggregates an initial OOB imputation and refits the forest. It also does
-not claim native R/C random-stream parity. VIMP still rejects fits where
+The default `nimpute=1` preserves this single-pass behavior. The Python
+generator does not reproduce native R/C random streams. VIMP still rejects fits where
 imputation was performed. Ordinary prediction accepts complete profiles
 from an imputed fit; a profile containing missing values requires the
 prediction imputation path and an explicit `random_state`.
+
+## Iterated imputation
+
+With `na_action="impute"` and `nimpute>1`, each nonfinal pass pools terminal
+imputations from trees where the recipient was OOB. Numeric predictors use
+means; categorical predictors and event status use modes with seeded ties.
+An empty pool draws from that variable's original observed values. Pooled
+missing times are snapped to the fixed grid of all originally observed times,
+including censoring times. This extra snap is separate from the unsnapped
+time means used for single-pass OOB concordance.
+
+Only originally missing cells are updated between passes. Later splits use
+the completed data, while original masks still govern bootstrap rejection
+and predictor eligibility. Intermediate passes compute new terminal summaries;
+the final pass fits the retained forest without another completion update.
+The prediction time grid remains based on the original complete events.
+
+The fit exposes `completed_time`, `completed_event`, and
+`completed_covariates`, aligned with `training_row_indices`. These immutable
+arrays are the data used by the final fit. Categorical covariates use the
+caller's original labels. Final OOB concordance evaluates these completed
+responses. This workflow does not provide multiple-imputation uncertainty
+intervals or Rubin's-rule pooling.
+
+`requested_imputation_passes` records the request and `imputation_passes`
+records the executed passes. `imputation_fallback_used` has time, status,
+then predictor columns and marks cells that needed a global donor in any
+between-pass summary. Work limits apply to the whole fit across its passes;
+the `total_sampled_rows`, `total_split_work`, `total_node_count`, and
+`total_leaf_event_records` fields report cumulative work. The existing
+forest counters describe the retained final forest. Intermediate forests
+are released before the next pass grows. `max_imputation_work` separately
+bounds the cumulative summary work reported by `total_imputation_work`.
+Complete input needs only one effective pass, even when more are requested.
+The shared `completed_*` arrays are available only after repeated imputation;
+single-pass trees have their own completions rather than one common dataset.
+
+```python
+partial_time = time.copy()
+partial_time[2] = np.nan
+iterated = fit_random_survival_forest(
+    partial_time,
+    event,
+    x,
+    na_action="impute",
+    nimpute=3,
+    n_trees=8,
+    nodesize=1,
+    compute_oob=True,
+    random_state=19,
+)
+assert iterated.imputation_passes == 3
+assert np.isfinite(iterated.completed_time).all()
+assert np.isfinite(iterated.completed_covariates).all()
+observed = np.isfinite(partial_time)
+np.testing.assert_array_equal(iterated.completed_time[observed], partial_time[observed])
+```
 
 ## OOB diagnostics with missing data
 

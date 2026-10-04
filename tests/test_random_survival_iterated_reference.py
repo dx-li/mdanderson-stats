@@ -7,8 +7,8 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import numpy as np
-from mdanderson_stats._random_survival_forest_imputation import pool_imputation_summaries
 
+from mdanderson_stats._random_survival_forest_imputation import pool_imputation_summaries
 from mdanderson_stats.random_survival_forest import fit_random_survival_forest
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -106,9 +106,9 @@ def test_coupled_oob_pool_matches_fixed_uniform_ledger() -> None:
 
 
 def test_iterated_fit_keeps_original_event_grid_and_row_mapping() -> None:
-    time = np.asarray([1.0, 2.0, np.nan, 4.0, 5.0, 6.0, 7.0, 8.0, np.nan])
-    event = np.asarray([1.0, 1.0, 0.0, np.nan, 1.0, 0.0, 1.0, 0.0, np.nan])
-    covariates = np.asarray([[1.0], [2.0], [np.nan], [4.0], [5.0], [6.0], [7.0], [8.0], [np.nan]])
+    time = np.asarray([1.0, 2.0, np.nan, np.nan, 4.0, 5.0, 6.0, 7.0, 8.0])
+    event = np.asarray([1.0, 1.0, 0.0, np.nan, np.nan, 1.0, 0.0, 1.0, 0.0])
+    covariates = np.asarray([[1.0], [2.0], [np.nan], [np.nan], [4.0], [5.0], [6.0], [7.0], [8.0]])
     fit = fit_random_survival_forest(
         time,
         event,
@@ -125,7 +125,7 @@ def test_iterated_fit_keeps_original_event_grid_and_row_mapping() -> None:
         random_state=1,
     )
 
-    np.testing.assert_array_equal(fit.training_row_indices, np.arange(8))
+    np.testing.assert_array_equal(fit.training_row_indices, [0, 1, 2, 4, 5, 6, 7, 8])
     np.testing.assert_array_equal(fit.time_grid, np.asarray([1.0, 2.0, 5.0, 7.0]))
     assert fit.requested_imputation_passes == 2
     assert fit.imputation_passes == 2
