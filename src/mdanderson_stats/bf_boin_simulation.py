@@ -206,6 +206,9 @@ def _validate_bard_response_truth(
     expected = bard_response_probabilities(intercepts, profiles, odds)
     if not np.allclose(conditional, expected, rtol=2e-12, atol=0.0):
         raise ValueError("response_model conditional probabilities do not match its intercepts")
+    # Use only recomputed probabilities from here onward. A tolerated serialized
+    # table is evidence to validate, never the source of endpoint bounds.
+    conditional = np.asarray(expected)
     expected_residuals = expected @ weights - target
     if not np.allclose(residuals, expected_residuals, rtol=8e-15, atol=0.0):
         raise ValueError("response_model marginal residuals do not match its inputs")

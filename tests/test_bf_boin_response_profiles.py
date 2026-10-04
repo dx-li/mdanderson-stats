@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 import numpy as np
 import pytest
 
@@ -130,6 +132,19 @@ def test_invalid_model_margin_and_rare_frechet_violation_fail_before_rng():
     )
     assert valid_rare_q is not None
     np.testing.assert_array_equal(valid_rare_q[0], [1e-310, 1e-310])
+
+    forged_conditional = np.array(model.conditional_probabilities, copy=True)
+    forged_conditional[0, 0] += 2e-14
+    forged = replace(model, conditional_probabilities=forged_conditional)
+    invalid_q = np.array(model.conditional_probabilities, copy=True)
+    invalid_q[0, 0] += 1e-14
+    with pytest.raises(ValueError, match="Frechet"):
+        _validate_bard_response_truth(
+            forged,
+            model.population_response,
+            np.asarray([1.0, 0.1]),
+            invalid_q,
+        )
 
     with pytest.raises(ValueError, match="Frechet"):
         simulate_bf_boin(
