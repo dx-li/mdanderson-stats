@@ -72,3 +72,10 @@ Generated app reports and native compatibility remain open. See
 The Python-defined, reusable static report workflow is documented in
 [BOP2-DC community reports](bop2-dc-community-report.md); it does not claim
 native report-file parity.
+
+[General categorical designs](bop2-dc-categorical.md) support more than two binary
+decision indicators and explicit any/all composition. The monitoring, replay,
+operating-characteristic, calibration and community report workflows complete
+the functional Python implementation for the recovered specification. Native
+app report schemas, supplementary-table scenarios and exact optimizer/random-stream
+parity remain outside that claim.

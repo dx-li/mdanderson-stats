@@ -131,10 +131,10 @@ def test_all_remaining_report_adapters_construct_from_core_designs():
         0.0,
         0.2,
         control_prior=(0.0, 1, 2, 1),
-            treatment_prior=(0.0, 1, 2, 1),
-            arm_assignments=[0, 1],
-            looks=[2],
-        )
+        treatment_prior=(0.0, 1, 2, 1),
+        arm_assignments=[0, 1],
+        looks=[2],
+    )
     randomized_survival = bop2_dc_randomized_survival_design(
         2,
         -1.0,

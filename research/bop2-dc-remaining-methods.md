@@ -60,14 +60,24 @@ the [randomized paired guide](../docs/bop2-dc-randomized-paired.md) and
 
 Two binary indicators can also represent a larger categorical outcome after
 exactly aggregating counts, prior shapes and truth probabilities into their
-four indicator combinations. More than two decision endpoints, nonbinary
-utility-weighted posterior criteria, delayed paired observations and calibration
-beyond the bounded exact recursion remain separate scope.
+four indicator combinations. The [general categorical workflow](../docs/bop2-dc-categorical.md)
+now also supports more than two binary decision indicators, mixed favorable
+directions, any/all composition, both arm configurations and bounded Monte Carlo
+candidate calibration. Nonbinary utility-weighted criteria and delayed paired
+observations are not additional specified methods in the inspected main paper.
 The cached main paper does not contain the full supplement scenarios, so
 table-level parity must not be claimed without obtaining those settings.
 The optional paired graduation rule is a documented composition of the scalar
 randomized superiority rule with the endpoint OR/AND rule, not independently
-verified native paired-graduation pseudocode. These qualifications and native
-UI, report and RNG parity keep the public catalog partial. Effective truths
-must satisfy the clinical-go composition; no additional LRV restriction is
-invented for caller-declared futile scenarios.
+verified native paired-graduation pseudocode. These are explicit compatibility
+boundaries rather than claims of native equivalence. Effective truths must
+satisfy the clinical-go composition; no additional LRV restriction is invented
+for caller-declared futile scenarios.
+
+The [community report workflow](../docs/bop2-dc-community-report.md) connects
+all nine report families to their existing exact or simulation engines and
+captures actual designs, priors, joint truths, allocation, seeds and outcomes.
+Together with the existing monitoring, replay, calibration and independent
+numerical references, it completes the functional Python workflow for the
+recovered BOP2-DC specification. Native report schemas, supplementary-table
+settings, optimizer trajectories and random streams remain unverified.

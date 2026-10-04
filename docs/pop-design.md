@@ -134,8 +134,14 @@ uses compact native inputs and maps labels back to avoid that defect.
 Standalone and simulation selection share one tie rule in Python; native
 functions disagree on exact ties. The [saved protocol workflow](pop-protocol-report.md)
 captures the actual design, full integer cutoffs, scenario seeds, operating
-characteristics and Monte Carlo errors in an HTML report. Native Word templates,
-plots and editable app scenario files are not reproduced. The cached plotting
+characteristics and Monte Carlo errors in an HTML report. The
+[community workflow](pop-community-workflow.md) adds MTD/target and selection-percentage
+plots, plus portable JSON scenario inputs that reopen and run through that report.
+Native Word templates, static flowchart artwork and editable app objects are not reproduced.
+The cached plotting
 documentation advertises credible intervals, but its executable selector and
 plot contain no interval calculation; that discrepancy remains explicit.
-Catalog entry 175 remains partial.
+The recovered calculation, simulation, plotting and saved-input/report workflows
+complete the functional Python implementation of catalog entry 175. The unresolved
+`plus3` display hooks have no recovered control or method and do not establish an
+additional calculation; no comparison algorithm is inferred from them.

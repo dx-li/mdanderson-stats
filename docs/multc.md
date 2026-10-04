@@ -278,7 +278,7 @@ convention and toxicity delay, as described above.
 
 ```python
 from pathlib import Path
-from mdanderson_stats.multc_study import (
+from mdanderson_stats import (
     MultcStudySimulationSettings,
     MultcStudySpecification,
 )

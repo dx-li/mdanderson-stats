@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import json
 import os
+import tempfile
 from dataclasses import asdict, dataclass, fields, is_dataclass, replace
 from pathlib import Path
-import tempfile
 from typing import Any, Literal, cast
 
 import numpy as np
@@ -63,7 +63,9 @@ def _validate_scenario_names(names: object, count: int) -> tuple[str, ...]:
         )
         or len(set(names)) != len(names)
     ):
-        raise ValueError("scenario_names must be unique nonempty names of at most 80 printable chars")
+        raise ValueError(
+            "scenario_names must be unique nonempty names of at most 80 printable chars"
+        )
     return tuple(names)
 
 
@@ -176,9 +178,7 @@ class MultcStudySpecification:
                 simulation_settings.trials * 112 + (self.max_subjects + 1) * 8
             ) * probabilities.shape[0]
             per_trial_storage = (
-                self.max_subjects * 256
-                + (1000 + 2 * self.max_subjects) * 768
-                + 32_768
+                self.max_subjects * 256 + (1000 + 2 * self.max_subjects) * 768 + 32_768
             )
             if retained_summary + per_trial_storage > simulation_settings.max_total_storage_bytes:
                 raise ValueError("simulation scenarios exceed max_total_storage_bytes")

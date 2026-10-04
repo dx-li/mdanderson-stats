@@ -8,17 +8,26 @@ so the document records the Python inputs and outputs and does not claim native
 format, control, RNG, or optimizer parity.
 
 ```python
-from mdanderson_stats.bop2_dc import bop2_dc_design
-from mdanderson_stats.bop2_dc_report import bop2_dc_binary_report
+from mdanderson_stats import bop2_dc_design, bop2_dc_binary_report
 
 design = bop2_dc_design(
-    20, lrv=0.2, cmv=0.3, prior=(0.5, 0.5), looks=[10, 20],
-    lambda_lrv=0.9, lambda_cmv=0.5, gamma_lrv=0.5, gamma_cmv=0.5,
+    20,
+    lrv=0.2,
+    cmv=0.3,
+    prior=(0.5, 0.5),
+    looks=[10, 20],
+    lambda_lrv=0.9,
+    lambda_cmv=0.5,
+    gamma_lrv=0.5,
+    gamma_cmv=0.5,
 )
-report = bop2_dc_binary_report(design, [
-    ("reference", 0.2),
-    ("promising", 0.4),
-])
+report = bop2_dc_binary_report(
+    design,
+    [
+        ("reference", 0.2),
+        ("promising", 0.4),
+    ],
+)
 report.write_html("bop2-dc-report.html")
 ```
 

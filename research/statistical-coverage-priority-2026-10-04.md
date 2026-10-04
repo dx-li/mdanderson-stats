@@ -1,6 +1,6 @@
 # Statistical coverage priority review
 
-This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard, OneArmTTE, BOIN, Pinnacle, EasyCellType, BOP2 online/retired desktop and BCHM subsequently completed their Python workflows, leaving 54 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
+This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard, OneArmTTE, BOIN, Pinnacle, EasyCellType, BOP2 online/retired desktop, BCHM, PoP, aPCoA and BOP2-DC subsequently completed their Python workflows, leaving 51 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
 
 A deeper cached-source review subsequently identified omitted overdose-allocation
 risk statistics in BOIN and Keyboard. Both are now implemented with their strict
@@ -14,7 +14,7 @@ in Python. Its optional modifier's precedence with conflicting backfill data is
 not explicit in the recovered guide, so the Python composition is documented and
 BF-BOIN has moved to section A.
 
-The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 44 entries in section A and 10 in section B, after the Parallel phase I/II source-output review identified unresolved kernel summaries. Its existing DF3+3 decisions and newly added phase-I tally outputs are covered.
+The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 45 entries in section A and 6 in section B, after the Parallel phase I/II source-output review identified unresolved kernel summaries. Its existing DF3+3 decisions and newly added phase-I tally outputs are covered. The Multc Lean saved-study review also distinguishes its unresolved native timing laws from ordinary file-format compatibility, moving that entry to section A.
 
 ## A. Statistical or source-contract uncertainty remains
 
@@ -22,8 +22,9 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 | --- | --- | --- |
 | EffTox (#2) | Legacy contour-fitting objective and trinary calibration/native behavior remain unverified. Existing binary/trinary mathematical APIs do not resolve these source choices. | [legacy contour audit](efftox-legacy-contour-audit.md); [trinary calibration audit](efftox-trinary-calibration-audit.md) |
 | Multc99 (#3) | Broader multiple-event scope was identified, but the archive/source was not recovered; only the fixed Phase-IIa contract is validated. | [Multc source records](../docs/multc-sources.json) |
+| Multc Lean (#12) | Saved study inputs, exact scenarios and calendar reports are covered. Native response-time truncation, toxicity ascertainment, suspension clock and pretrial/minimum-enrollment interaction remain unresolved; Python exposes explicit timing choices. | [Multc guide](../docs/multc.md); [simulation audit](multc-simulation-audit.md) |
 | ToxFinder (#14) | Physician-prior elicitation now solves and independently checks the published equations; the Table 1 discrepancy is documented. Stage-2 information criterion is unresolved; the guide’s second-derivative substitute does not establish the native Eq. 12 rule. | [ToxFinder guide](../docs/toxfinder.md) |
-| bCRM (#15) | Joint two-outcome likelihood/association prior, two-stage conduct, and post-trial four-parameter logistic fit lack a recovered contract. | [bCRM guide](../docs/bcrm.md); [source records](../docs/bcrm-sources.json) |
+| bCRM (#15) | High-level stage controls and zero-gap futility are documented. Joint two-outcome likelihood/association prior, exact transition rules, positive-gap futility cutoff and post-trial four-parameter logistic estimator remain unresolved. | [bCRM guide](../docs/bcrm.md); [source records](../docs/bcrm-sources.json) |
 | SYNERGY (#18) | The four 2007 parametric response surfaces and fitting procedures remain unavailable; the inspected PMC, publisher, and archive routes were exhausted. | [response-surface audit](synergy-response-surface-audit.md) |
 | STPLAN (#41) | Native inverse bounds and integer allocation of proportional group totals are unspecified. | [planning guide](../docs/stplan-planning.md) |
 | Adaptive Randomization (#62) | Explicit Python controller policies exist; native scheduler/control ordering, floors and RNG conventions remain unspecified. | [controller audit](arand-controller-audit.md); [calendar guide](../docs/arand-calendar.md) |
@@ -70,15 +71,11 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 | Program | Remaining work seen in the inspected evidence | Evidence |
 | --- | --- | --- |
 | PerfectMatch (#7) | PDNN fitting/expression, normalization, per-probeset correlations and the five-quantile chip summary are covered. Native parameter/data/output/rescaling, unspecified QC metrics and display workflows remain. | [PerfectMatch guide](../docs/perfectmatch.md); [quantile profile](../docs/perfectmatch-quantile-profile.md) |
-| Multc Lean (#12) | Statistical rules/calendar are covered; native input, report and timing conventions remain. | [Multc guide](../docs/multc.md) |
 | Bayes Factor TTE (#89) | Monitoring, boundaries, calendar replay, simulation and saved Python scenario reports are covered. Reports distinguish terminal stopping from later follow-up. Native integer-day boundaries, text input and calendar timing are not established. | [Bayes Factor survival guide](../docs/bayes-factor-survival.md) |
 | CRM Suite (#132) | CRM/BMA/DA posterior, pending look-ahead, calendar, cohort simulation and OC are implemented; native files/reports and older conduct differences remain. | [CRM conduct](../docs/crm-conduct.md); [CRM simulation](../docs/crm-simulation.md) |
 | TOP (#134) | Joint monitoring, calendar simulation, finite-grid optimization and holdout validation exist; native optimizer grids/report/app-version parity remain. | [TOP guide](../docs/top-endpoints.md); [calibration guide](../docs/top-endpoints-calibration.md) |
-| aPCoA (#147) | ID-aligned CSV/TSV input and explicit numeric/categorical encoding are covered. Arbitrary R formula/contrast/rank conventions and styling remain; no separate missing calculation was identified. | [aPCoA guide](../docs/apcoa.md); [labeled inputs](../docs/apcoa-inputs.md) |
 | IPDfromKM (#151) | Digitization and native graphics workflow remain; these are input/presentation features. | [IPDfromKM guide](../docs/ipdfromkm.md) |
-| BOP2-DC (#156) | Documented advertised workflows are covered; optional extensions are not automatically missing app methods. | [remaining-methods audit](bop2-dc-remaining-methods.md) |
 | CondiS (#157) | Eight refinement learners and the vignette's censored/imputed curve comparison are implemented. The separate vignette example uses target-derived inputs and pre-split imputation, so it does not establish future-subject prediction behavior. | [workflow audit](condis-workflow-audit.md) |
-| PoP (#175) | Boundaries, selection, operating characteristics and saved HTML protocols are implemented. Native Word/plot/scenario-file parity remains. Plot prose advertises intervals absent from the executable selector/plot, and cached comparison-pane hooks lack a recovered control or algorithm; neither establishes an additional calculation to infer. | [PoP guide](../docs/pop-design.md); [report audit](pop-protocol-report-audit.md) |
 
 The classifications above are review findings, not status changes. A source-contract uncertainty should be resolved before adding a purported native method; input and presentation work can still be useful community functionality without being described as statistical coverage.
 
@@ -105,4 +102,10 @@ The classifications above are review findings, not status changes. A source-cont
 
 - BCHM (#158): clustering, subgroup borrowing and plots now connect to bounded named analyses, captured inputs/seeds/diagnostics and portable input/report/sample files. Native PDF and JAGS output equivalence remain explicit limits. See the [workflow crosswalk](bchm-scenario-report-audit.md).
 
-These thirteen entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.
+- PoP (#175): boundaries, decisions, simulation and saved reports now connect to dose-position-safe MTD plots, selection-percentage plots and versioned scenario-input roundtrips. Native flowchart artwork, Word templates and undocumented comparison-pane hooks do not define additional recovered calculations. See the [workflow crosswalk](pop-community-workflow-audit.md).
+
+- aPCoA (#147): the completed labeled-input, explicit-design, ordination and grouped-plot workflow meets the functional Python criterion. R-specific formula/contrast interfaces and unspecified Shiny download layouts remain compatibility boundaries. See the [source crosswalk](apcoa-workflow-completion-audit.md).
+
+- BOP2-DC (#156): all supported scalar, paired and general categorical methods, arm configurations, operating characteristics and explicit calibration now connect to captured-input community reports. Native report schemas and unavailable supplementary-table settings remain compatibility limits. See the [method audit](bop2-dc-remaining-methods.md) and [report crosswalk](bop2-dc-community-report-audit.md).
+
+These sixteen entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.

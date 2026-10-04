@@ -446,6 +446,27 @@ from .bop2_dc_randomized_survival_simulation import (
     BOP2DCRandomizedSurvivalSimulation,
     simulate_bop2_dc_randomized_survival,
 )
+from .bop2_dc_report import (
+    BOP2DCCategoricalScenario,
+    BOP2DCNormalScenario,
+    BOP2DCRandomizedNormalScenario,
+    BOP2DCRandomizedPairedScenario,
+    BOP2DCRandomizedSurvivalScenario,
+    BOP2DCReport,
+    BOP2DCReportAction,
+    BOP2DCReportCase,
+    BOP2DCReportLook,
+    BOP2DCSurvivalScenario,
+    bop2_dc_binary_report,
+    bop2_dc_categorical_report,
+    bop2_dc_normal_report,
+    bop2_dc_paired_report,
+    bop2_dc_randomized_binary_report,
+    bop2_dc_randomized_normal_report,
+    bop2_dc_randomized_paired_report,
+    bop2_dc_randomized_survival_report,
+    bop2_dc_survival_report,
+)
 from .bop2_dc_survival import (
     BOP2DCSurvivalDesign,
     BOP2DCSurvivalState,
@@ -1049,6 +1070,7 @@ from .multc_simulation import (
     simulate_multc,
     simulate_multc_trial,
 )
+from .multc_study import MultcStudy, MultcStudySimulationSettings, MultcStudySpecification
 from .multi_input import MultiData, MultiInputWarning, parse_multi_data, read_multi_data
 from .multi_session import MultiSession
 from .multinomial_power import MultinomialPower, format_multinomial_power, multinomial_power
@@ -1199,6 +1221,8 @@ from .pop_protocol_report import (
     PoPScenarioSummary,
     run_pop_protocol,
 )
+from .pop_scenario_file import PoPInputScenario, PoPScenarioInput
+from .pop_selection_plot import plot_pop_selection, plot_pop_selection_percentages
 from .pop_simulation import PoPSimulation, simulate_pop
 from .predictive_binary import (
     BinaryPredictivePlan,
@@ -2012,6 +2036,9 @@ __all__ = [
     "run_multc_calendar_trial",
     "MultcSimulationConfig",
     "MultcSimulationResult",
+    "MultcStudy",
+    "MultcStudySpecification",
+    "MultcStudySimulationSettings",
     "simulate_multc_trial",
     "simulate_multc",
     "EffToxPrior",
@@ -2131,6 +2158,10 @@ __all__ = [
     "PoPProtocolReport",
     "PoPReportScenario",
     "PoPScenarioSummary",
+    "PoPInputScenario",
+    "PoPScenarioInput",
+    "plot_pop_selection",
+    "plot_pop_selection_percentages",
     "run_pop_protocol",
     "predictive_bayes_factor",
     "simulate_pop",
@@ -2287,6 +2318,25 @@ __all__ = [
     "BOP2DCOperatingCharacteristics",
     "BOP2DCState",
     "bop2_dc_design",
+    "BOP2DCCategoricalScenario",
+    "BOP2DCNormalScenario",
+    "BOP2DCReport",
+    "BOP2DCReportAction",
+    "BOP2DCReportCase",
+    "BOP2DCReportLook",
+    "BOP2DCRandomizedNormalScenario",
+    "BOP2DCRandomizedPairedScenario",
+    "BOP2DCRandomizedSurvivalScenario",
+    "BOP2DCSurvivalScenario",
+    "bop2_dc_binary_report",
+    "bop2_dc_categorical_report",
+    "bop2_dc_normal_report",
+    "bop2_dc_paired_report",
+    "bop2_dc_randomized_binary_report",
+    "bop2_dc_randomized_normal_report",
+    "bop2_dc_randomized_paired_report",
+    "bop2_dc_randomized_survival_report",
+    "bop2_dc_survival_report",
     "BFBOINSimulation",
     "simulate_bf_boin",
     "BFBOINBackfill",

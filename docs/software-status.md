@@ -103,6 +103,9 @@ some legacy adaptations retain commercial-use restrictions.
 | Bayesian Cluster Hierarchical Model for Subgroup Borrowing | [online #158](https://biostatistics.mdanderson.org/shinyapps/BCHM/) | [Guide](bchm.md), [input and reports](bchm-scenarios.md) |
 | BOP2 Desktop - Bayesian Optimal Phase II Design | [desktop #144](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/144) | [Successor workflow](bop2-desktop.md) |
 | BOP2: Bayesian Optimal Phase II Design with Simple and Complex Endpoints | [online #112](https://biostatistics.mdanderson.org/shinyapps/BOP2) | [Guide](bop2-binary.md) |
+| Posterior Predictive Design for Phase I Clinical Trials | [online #175](https://biostatistics.mdanderson.org/shinyapps/PoPdesign/) | [Design, plots and saved inputs](pop-community-workflow.md) |
+| aPCoA: Covariate Adjusted Principal Coordinates Analysis | [online #147](https://biostatistics.mdanderson.org/shinyapps/aPCoA) | [Guide](apcoa.md) |
+| BOP2 design with decision making on dual criteria | [online #156](https://biostatistics.mdanderson.org/shinyapps/BOP2-DC) | [Methods](bop2-dc.md) and [reports](bop2-dc-community-report.md) |
 
 ## Partially implemented
 
@@ -111,7 +114,6 @@ some legacy adaptations retain commercial-use restrictions.
 | 1+2+3: to find the optimal biological dose for rare diseases | [online #172](https://biostatistics.mdanderson.org/shinyapps/1plus2plus3) | [Guide](rare-disease-123.md) |
 | A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents | [online #114](https://biostatistics.mdanderson.org/shinyapps/MTADF/) | [Isotonic](mtadf.md) and [logistic](mtadf-logistic.md) methods |
 | Adaptive Randomization | [desktop #62](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62) | [Posterior](arand.md), [calendar](arand-calendar.md), [simulation](arand-simulation.md) |
-| aPCoA: Covariate Adjusted Principal Coordinates Analysis | [online #147](https://biostatistics.mdanderson.org/shinyapps/aPCoA) | [Guide](apcoa.md) |
 | Backfill Bayesian Optimal Interval (BF-BOIN) Design for Phase I Clinical Trials | [online #162](https://biostatistics.mdanderson.org/shinyapps/BF-BOIN/) | See catalog feature and validation notes |
 | Bayes Factor TTE | [desktop #89](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/89) | [Guide](bayes-factor-survival.md) |
 | Bayesian Adaptive Randomization and Efficacy Monitoring with Posterior Probability | [online #130](https://biostatistics.mdanderson.org/shinyapps/BARPO/) | [Guide](barpo-reference.md) |
@@ -126,7 +128,6 @@ some legacy adaptations retain commercial-use restrictions.
 | BMA CRM | [desktop #81](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/81) | See catalog feature and validation notes |
 | BOIN Design Desktop Program | [desktop #99](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99) | See catalog feature and validation notes |
 | BOIN12: Bayesian Optimal Interval Phase I/II Trial Design for Utility-Based Dose Finding | [online #148](https://biostatistics.mdanderson.org/shinyapps/BOIN12) | [Guide](boin12.md) |
-| BOP2 design with decision making on dual criteria | [online #156](https://biostatistics.mdanderson.org/shinyapps/BOP2-DC) | See catalog feature and validation notes |
 | Calibration of Bayesian Success Criteria for Clinical Trials | [online #173](https://www.trialdesign.org/one-page-shell.html#BayesianCalibration) | See catalog feature and validation notes |
 | CI of Interaction Index | [desktop #65](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/65) | [Guide](interaction-index.md) |
 | CiBolus | [desktop #86](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86) | [Guide](cibolus.md), [Prior calibration](cibolus-calibration.md) |
@@ -145,7 +146,6 @@ some legacy adaptations retain commercial-use restrictions.
 | Parallel phase I and II design | [desktop #85](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85) | [Guide](parallel-phase12.md), [importance calendar](parallel-phase12-importance-calendar.md), [six-dose simulation](phase12-calendar-oc.md) |
 | PerfectMatch | [desktop #7](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/7) | [Guide](perfectmatch.md) |
 | Platform Design of Bayesian Adaptive Randomization with Posterior Probability | [online #137](https://biostatistics.mdanderson.org/shinyapps/PLBARPO/) | [Control monitoring](plbarpo-control.md), [active allocation](plbarpo-allocation.md), [no-control trials](plbarpo-trials.md), [control trials](plbarpo-control-trials.md) |
-| Posterior Predictive Design for Phase I Clinical Trials | [online #175](https://biostatistics.mdanderson.org/shinyapps/PoPdesign/) | See catalog feature and validation notes |
 | Proportional density | [desktop #78](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/78) | [Guide](proportional-density.md) |
 | PRT | [desktop #69](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/69) | See catalog feature and validation notes |
 | Single arm phase II monitoring using Bayes factor with iMOM prior for binary outcome | [online #143](https://biostatistics.mdanderson.org/shinyapps/BFMonitor) | [Guide](bfmonitor.md) |

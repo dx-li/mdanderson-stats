@@ -276,7 +276,8 @@
         "Bounded exact joint response/toxicity operating characteristics: separate stop reasons, sample-size distribution, mean/SD and expected event counts; explicit independence helper",
         "Bounded single-trial calendar replay with separately supplied endpoint availability, look-ahead suspension, frozen accrual-open clock and complete follow-up",
         "Serial joint-outcome calendar simulation with explicit clipped/conditional response timing, caller-supplied toxicity delay, replayable child seeds and duration/decision/enrollment summaries with Monte Carlo error",
-        "Native timing/RNG parity, configuration/report formats and protocol memo remain pending; see docs/multc.md"
+        "Saved versioned JSON study inputs and atomic text reports capture full/reachable boundaries, exact named-scenario OCs, explicit timing assumptions, scenario seeds and calendar means/decision counts/probabilities/MCSEs. Aggregate work/storage are checked before computation; docs/multc.md.",
+        "Native response-time truncation, toxicity ascertainment law, suspension-clock and pretrial/minimum-enrollment conventions remain unresolved. Native file formats and protocol memo layout are not reproduced."
       ],
       "validation": [
         "Official N=30 statistical tutorial full/potential boundaries before the sample cap",
@@ -284,7 +285,8 @@
         "Focused checks for support endpoints, tail underflow, strict symmetry ties, pretrial rejection and allocation caps; no native binary execution",
         "Five independent R direct-beta/pending-completion calendar scenarios: 18 patient rows and 12 look rows; tools/reference_multc_calendar.R and tests/fixtures/multc-calendar-*.csv",
         "Calendar checks for no future-outcome use, suspension/resumption, cap-bound metadata and unrepresentable positive time increments; research/multc-calendar-audit.md",
-        "Eight focused calendar/simulation checks including analytic fixed-enrollment duration mean/MCSE, joint outcome truth, seed replay, extreme timing representation and work/storage preflight; research/multc-simulation-audit.md"
+        "Eight focused calendar/simulation checks including analytic fixed-enrollment duration mean/MCSE, joint outcome truth, seed replay, extreme timing representation and work/storage preflight; research/multc-simulation-audit.md",
+        "Saved-study tests check JSON replay, exact fixed-enrollment OCs, captured seeds, simulation work/storage preflight and malformed input handling; source numerical references remain those of the existing monitoring/calendar engines."
       ]
     },
     {
@@ -4376,7 +4378,7 @@
       ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Original and covariate-adjusted PCoA via scaled distance centering and rank-revealing SVD projection, with explicit intercept convention",
         "Positive coordinates, full signed spectra, negative-inertia diagnostics and optional grouped comparison plots",
@@ -4386,7 +4388,7 @@
       "validation": [
         "Unmodified R aPCoA 1.3 non-Euclidean fixture, independent Euclidean regression residuals, rank deficiency and distance scales 1e-200..1e200; tests/test_apcoa.py",
         "Independent R matrix equations with unchanged car 3.0-12 ellipse and cluster 2.1.6 PAM references: four group/panel geometries, 208 ellipse vertices and ten medoid tie cases; rank-degenerate and extreme-scale checks; tests/test_apcoa_plot_geometry.py.",
-        "Pending arbitrary R formula/contrast/rank conventions, exact visual styling and full app workflow audit; docs/apcoa.md.",
+        "Functional workflow source crosswalk covers aligned files, explicit nuisance design, ordinations, grouped plots and saved figures. Exact R formulas/contrasts/QR tolerances, Shiny download payloads and styling remain compatibility boundaries; research/apcoa-workflow-completion-audit.md.",
         "Five input-workflow tests cover shuffled distance/metadata IDs, categorical reference order, unchanged core results, constant numeric columns, duplicate/missing IDs and pre-encoding limits; all eight affected input/core tests pass with warnings as errors."
       ]
     },
@@ -4587,7 +4589,7 @@
       ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Binary efficacy dual-criterion posterior monitoring with interim futility and final go/consider/no-go decisions",
         "Separate interim response-count boundaries for statistical and clinical criteria",
@@ -4611,7 +4613,8 @@
         "Randomized paired exact operating characteristics and finite-grid calibration preserve joint endpoint association across both arms, cache marginal comparisons and retain all-candidate per-look probabilities with CGR/futile-ESS selection",
         "Randomized paired serial Monte Carlo operating characteristics with joint-category draws, bounded marginal-posterior caches, per-trial replay seeds, terminal enrollment/actions and Monte Carlo errors",
         "Generalized M-by-K binary indicator endpoints under joint Dirichlet priors, including more than two decision endpoints, mixed favorable directions, single-arm and fixed-allocation randomized monitoring, any/all decision composition, absorbing replay and bounded serial categorical simulation.",
-        "Finite categorical candidate calibration for correct-go probability or futile expected sample size, with explicit joint truths, false-go/no-go/optional-consider constraints, full candidate Monte Carlo summaries and replayable trial seeds."
+        "Finite categorical candidate calibration for correct-go probability or futile expected sample size, with explicit joint truths, false-go/no-go/optional-consider constraints, full candidate Monte Carlo summaries and replayable trial seeds.",
+        "Saved community HTML reports compute and capture all supported single-arm and randomized binary, Normal, survival, paired and generalized categorical analyses. Reports retain actual priors/cutoffs/allocation, joint truths, exact versus Monte Carlo outcomes, integer replay seeds, trial denominators and uncertainty summaries; docs/bop2-dc-community-report.md."
       ],
       "validation": [
         "Five independent base-R posterior and decision cases match Python",
@@ -4627,13 +4630,14 @@
         "Independent base-R Normal calibration replay verifies 18 candidates and 836 probability/enrollment/MCSE summaries across both objectives and holdouts. A 4% calibration false-go constraint passes at 2/64 and fails on independent validation at 3/48 without reselection; large-offset candidate results are unchanged. docs/bop2-dc-normal-calibration.md",
         "Independent base-R Beta polynomial integration and 64 response paths across four randomized-binary designs verify 100 analyses and 336 summaries, including 12 exact OC scenarios, unequal allocation, signed margins, early graduation and strict equality; largest posterior discrepancy 1.094e-10 is within reported numerical error. docs/bop2-dc-randomized-binary.md",
         "Independent R Student-t density integration and Cauchy identities verify 12 randomized Normal cases, 21 reached analyses, and 48 simulated trials with 78 looks: 263 numeric summaries agree, including early graduation, strict equality, unequal/empty arms, 1e15 offsets and unit changes. Maximum posterior discrepancy 6.273e-10 is within reported error. docs/bop2-dc-randomized-normal.md",
-        "Independent R Gamma-density integration and calendar calculations verify 10 randomized survival tapes/17 looks and 48 fixed/Poisson-accrual trials/71 looks: 763 summaries agree, including 24 graduations, zero-duration events, pending censoring, allocation asymmetry and 1e\u00b1100 units. Largest posterior discrepancy 4.922e-11 is within reported error. docs/bop2-dc-randomized-survival.md",
+        "Independent R Gamma-density integration and calendar calculations verify 10 randomized survival tapes/17 looks and 48 fixed/Poisson-accrual trials/71 looks: 763 summaries agree, including 24 graduations, zero-duration events, pending censoring, allocation asymmetry and 1e±100 units. Largest posterior discrepancy 4.922e-11 is within reported error. docs/bop2-dc-randomized-survival.md",
         "Independent R Beta integration and full response-path enumeration verify 66 binary candidate configurations and 1980 numeric summaries, distinct CGR/ESS winners, stable ties and infeasibility. research/bop2-dc-randomized-binary-calibration-audit.md",
         "Independent R Student-t density integration verifies 36 Normal candidate configurations and 1092 summaries, distinct CGR/ESS winners and a calibration-pass/holdout-fail case without reselection. research/bop2-dc-randomized-normal-calibration-audit.md",
         "Independent R Gamma-density integration/calendar replay verifies 36 survival candidate configurations and 1791 summaries, fixed/Poisson accrual, signed margins, different objective winners and held-out arm events/exposure. research/bop2-dc-randomized-survival-audit.md",
         "Independent R Beta integration and exhaustive joint-category paths verify 388 case-specific posterior states, 27104 reached path/look decisions, 64 randomized paired candidates, 256 OC rows, both objective selections and 24 public replays. Largest tail discrepancy 6.251e-10 is within reported quadrature error; candidate and OC discrepancies are at most 1.333e-15. Ten focused tests pass. research/bop2-dc-randomized-paired-oc-audit.md",
         "Randomized paired simulation reproduces seeded public replays and deterministic joint truths; a 40-patient/100-trial example takes 0.687 seconds with 103.47 MiB peak RSS and no swaps. Native reports/RNG/optimizer parity and supplementary-table settings remain outside verified scope; more than two decision endpoints are now supported by the general categorical workflow. docs/bop2-dc-randomized-paired.md",
-        "Independent base-R Beta tails and direct Beta-difference integration verify 36 categorical posterior probabilities, any/all and mixed-direction decisions, absorbing fixed-arm replay and reduction to the existing paired model. Two candidates across two joint truths are independently reaggregated from seeded public replays, including rates, MCSEs, expected sample size, feasibility and both objectives. docs/bop2-dc-categorical.md and research/bop2-dc-categorical-reference-audit.md."
+        "Independent base-R Beta tails and direct Beta-difference integration verify 36 categorical posterior probabilities, any/all and mixed-direction decisions, absorbing fixed-arm replay and reduction to the existing paired model. Two candidates across two joint truths are independently reaggregated from seeded public replays, including rates, MCSEs, expected sample size, feasibility and both objectives. docs/bop2-dc-categorical.md and research/bop2-dc-categorical-reference-audit.md.",
+        "Focused adapter checks exercise all nine report factories, both categorical arm modes, efficacy/toxicity labels, exact terminal probabilities, Monte Carlo counts/MCSE/denominators and integer seed preservation. Existing independent statistical references remain the numerical basis; native report schemas, supplement scenarios and RNG/optimizer parity are outside the functional claim."
       ]
     },
     {
@@ -5125,18 +5129,20 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "PoPDesign and predictive_bayes_factor: vectorized stable PrBF calculations, full/cohort decision boundaries, strict transition and directional sticky exclusion rules, and weighted isotonic MTD selection with dose-label-safe filtering.",
         "simulate_pop: bounded complete-outcome cohort simulation, optional accelerated titration, final partial cohorts, configurable starting dose and exclusion, selection/early-stop/risk probabilities with Monte Carlo errors, and compact per-trial counts.",
-        "Paper n>=3 final safety guard by default (zero reproduces package guard), consistent selection ties, corrected untried-dose indexing and honored risk cutoff. Native plots and scenario-file handling remain open; see docs/pop-design.md.",
-        "Saved HTML protocol workflow captures the revalidated design, complete integer cutoff table, actual per-scenario seeds, full selection probabilities/MCSE, mean allocation and DLT counts, all-dose exclusion stops, and independently evaluated under/over allocation risks at the actual requested cutoff; docs/pop-protocol-report.md."
+        "Paper n>=3 final safety guard by default (zero reproduces package guard), consistent selection ties, corrected untried-dose indexing and honored risk cutoff; native risk-branching and RNG differences remain explicit in docs/pop-design.md.",
+        "Saved HTML protocol workflow captures the revalidated design, complete integer cutoff table, actual per-scenario seeds, full selection probabilities/MCSE, mean allocation and DLT counts, all-dose exclusion stops, and independently evaluated under/over allocation risks at the actual requested cutoff; docs/pop-protocol-report.md.",
+        "Optional MTD/target and selection-percentage plots preserve original dose positions and the no-MTD category. Bounded versioned JSON captures design/scenario inputs and seeds, reopens and runs the existing report workflow; docs/pop-community-workflow.md. Native Word/session formats and static flowchart artwork are compatibility limits."
       ],
       "validation": [
         "Published Table 1 and PoPdesign 1.1.0 source/manual pinned alongside official application version1.0.0.0 in docs/pop-design-sources.json.",
         "360 native boundary rows at six targets, 39 native log-PrBF references, 30 native MTD states, and exact two-dose cohort-outcome enumeration for four scenarios.",
         "Focused tests cover titration, all-zero/all-toxic outcomes, strict equality, sticky exclusions, untried dose labels, paper versus native safety minimum, readonly results and pre-allocation resource bounds. Package and seeded simulation smoke checks use small sequential runs.",
-        "17 focused report, design and native-reference tests pass. Report summaries reproduce direct simulation from the recorded seeds and include nonexact target truths, complete cutoffs, bounded work and escaped atomic HTML. Native risk branching below cutoff 0.5, undocumented interval calculations and incomplete comparison-pane evidence remain explicit; research/pop-protocol-report-audit.md."
+        "17 focused report, design and native-reference tests pass. Report summaries reproduce direct simulation from the recorded seeds and include nonexact target truths, complete cutoffs, bounded work and escaped atomic HTML. Native risk branching below cutoff 0.5, undocumented interval calculations and incomplete comparison-pane evidence remain explicit; research/pop-protocol-report-audit.md.",
+        "Focused community workflow checks verify saved-input replay, unchanged simulation summaries, original-dose plot positions and probability-to-percentage conversion. No credible intervals are inferred from prose absent an executable calculation; research/pop-community-workflow-audit.md."
       ]
     }
   ]

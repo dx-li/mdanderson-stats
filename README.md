@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-76 implemented, 54 partial, and 8 pending. Each method's guide explains its
+79 implemented, 51 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -753,8 +753,9 @@ with conservative and joint-normal equivalence options.
 
 [BOIN](docs/boin.md) provides single-agent dose decisions, overdose safeguards,
 weighted isotonic MTD selection and trial simulation with accelerated titration. Published
-boundaries and original R results validate the core. This catalog entry remains
-partial for animation and native application parity. A [saved HTML report](docs/boin-protocol-report.md)
+boundaries and original R results validate the core. The validated Python workflow
+is complete; native animation and file formats remain compatibility limits.
+A [saved HTML report](docs/boin-protocol-report.md)
 combines English or Chinese methods text, the numerical decision table and newly
 computed scenario summaries, including source-defined overdose-allocation risks. Custom rate cutoffs
 can be entered directly, with numerically checked inversion to BOIN alternatives.
@@ -1362,6 +1363,10 @@ Dirichlet arm models for multiple efficacy or efficacy/toxicity, combined
 monitoring and absorbing replay, exact conditional operating characteristics
 and finite-grid calibration. Bounded serial simulation supports larger designs
 while retaining endpoint association and per-trial replay seeds.
+[General categorical designs](docs/bop2-dc-categorical.md) extend the joint model
+to more than two binary indicators. [Saved community reports](docs/bop2-dc-community-report.md)
+cover all supported endpoint and arm configurations, with actual inputs, seeds,
+decision probabilities and Monte Carlo errors.
 
 [General categorical endpoints](docs/bop2-dc-categorical.md) extend these
 workflows to more than two decision endpoints. Explicit binary indicators over
@@ -1431,6 +1436,8 @@ results and exact small-trial enumeration validate the numerical core.
 [Saved protocol reports](docs/pop-protocol-report.md) capture complete integer
 cutoffs, scenario seeds, selection and allocation summaries, and Monte Carlo
 errors from the same configured simulations.
+[Selection plots and portable inputs](docs/pop-community-workflow.md) preserve
+original dose positions and support saving, reopening and running scenario files.
 
 [BARD stage-two methods](docs/bard.md) add covariate-adaptive allocation using
 combined stage-one/stage-two history, plus utility and noninferiority OBD
@@ -1527,7 +1534,11 @@ rules, full and reachable boundaries, and exact joint stopping probabilities.
 The calculation retains outcome association and separates sample-cap completion
 from early stopping. A calendar replay handles separate endpoint availability,
 look-ahead suspension and complete follow-up with explicit timing inputs.
-Aggregate duration simulation and general Multc99 designs remain open.
+Serial duration simulation provides replay seeds and Monte Carlo errors.
+[Saved studies](docs/multc.md#save-a-python-study-input-and-scenario-report)
+capture design and timing settings, named truths, exact operating characteristics
+and calendar summaries in portable JSON inputs and readable reports.
+Native timing conventions and general Multc99 designs remain unresolved.
 
 [ToxFinder two-agent dose finding](docs/toxfinder.md) adds its six-parameter
 toxicity surface, explicit gamma priors and Bayesian posterior fitting with
