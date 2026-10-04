@@ -96,6 +96,15 @@ states raise errors. Outliers are not removed implicitly during fitting. The
 log-error objective is distinct from the conditional weighted expression equation
 (5); their expression estimates need not coincide with noisy observations.
 
+`pdnn_fit_correlations(observed_signal, fitted_signal, probeset_ids)` computes
+the Manual §4 per-probeset correlation between observed and model-fitted ln(PM).
+Supply the original probe-level IDs: `PDNNFit.probeset_ids` contains sorted unique
+labels and does not map fitted rows back to probesets. Signals are positive raw
+intensities and are logged inside the function. The manual does not specify the
+correlation variant or behavior for degenerate groups; Python uses Pearson's
+coefficient and returns NaN for singleton groups or groups constant in either
+log signal. Inputs are not refitted or filtered.
+
 ## Validation and performance
 
 Six focused tests cover both normalization modes and ties; independently summed
@@ -118,7 +127,7 @@ error `2.7e-15`. These are local measurements, not cross-machine guarantees.
 
 **Catalog status is partial.** Native parameter-file formats,
 Affymetrix text/binary CEL and binCEL workflows, probe sequence/annotation files,
-complete quality-control statistics, output formats, native rescaling conventions,
+quality-control statistics beyond the §4 per-probeset correlation, output formats, native rescaling conventions,
 and gene/image/scatter displays remain pending. Synthetic parameter-learning checks
 do not validate an end-to-end microarray analysis against real array data. No native
 optimization or display parity is claimed.
