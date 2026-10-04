@@ -779,7 +779,9 @@ The likelihood approximation, enrolled-count safety rule and accrual suspension
 are explicit. Precomputed effective-follow-up boundaries provide numerical lookup
 without rounded cutoffs. Calendar-time replay and simulation support staggered
 enrollment and outcome-driven pauses, with calibrated Weibull/log-logistic toxicity
-timing scenarios. Flowcharts and integrated reports remain pending.
+timing scenarios. [Adaptive timing weights](docs/tite-keyboard-adaptive.md)
+use shared timing inference with observed-event and pending-survival information,
+explicit priors, and sampling diagnostics. Flowcharts and integrated reports remain pending.
 
 
 ## TITE-BOIN
@@ -1452,7 +1454,10 @@ accepts categorical scenarios or binary Gumbel probabilities. Priors and
 candidate scope are explicit. Optional Stage-I accelerated titration adds
 single-patient escalation, first-DLT/second-grade-2 triggers and the source's
 dose-cap and cohort top-up rules, with an observed-path planner. Grade-2 outcomes
-are explicitly distinguished from DLT. Delayed-outcome imputation remains open.
+are explicitly distinguished from DLT. [Stage-II multiple imputation](docs/uboin-multiple-imputation.md)
+averages complete-data posterior calculations from supplied efficacy-prediction
+draws and preserves toxicity safety and trial conduct. The delayed-response
+prediction model itself remains open.
 
 [BaCIS subgroup borrowing](docs/bacis.md) adds deterministic low/high response
 classification and within-cluster hierarchical inference, including native
@@ -1507,6 +1512,9 @@ Aggregate duration simulation and general Multc99 designs remain open.
 toxicity surface, explicit gamma priors and Bayesian posterior fitting with
 log-parameter draws that preserve the paper's very small interaction exponents.
 It also supplies first-stage dose decisions and posterior target contours.
+[Physician-prior elicitation](docs/toxfinder-prior-elicitation.md) solves the
+published probability and odds-moment constraints with independent integration
+checks; the documented Table 1 discrepancy is preserved.
 Independent base-R calculations verify published scenario surfaces and a reduced
 posterior. Native second-stage information selection and full simulations remain
 open; the documentation records the source ambiguity.

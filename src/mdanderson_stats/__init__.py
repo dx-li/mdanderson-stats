@@ -1570,6 +1570,12 @@ from .tite_keyboard import (
     tite_keyboard_decision,
     toxicity_followup_weights,
 )
+from .tite_keyboard_adaptive import (
+    TITEKeyboardAdaptiveDecision,
+    TITEKeyboardAdaptiveWeights,
+    tite_keyboard_adaptive_decision,
+    tite_keyboard_adaptive_weights,
+)
 from .tite_keyboard_boundaries import TITEKeyboardBoundaries, tite_keyboard_boundaries
 from .tite_keyboard_simulation import TITEKeyboardSimulation, simulate_tite_keyboard
 from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_keyboard_trial
@@ -1594,6 +1600,12 @@ from .toxfinder_decision import (
     ToxFinderStage1Result,
     toxfinder_contour,
     toxfinder_stage1,
+)
+from .toxfinder_elicitation import (
+    ToxFinderAgentElicitation,
+    ToxFinderElicitationResult,
+    elicit_toxfinder_agent_prior,
+    elicit_toxfinder_prior,
 )
 from .toxfinder_model import (
     ToxFinderFit,
@@ -1704,6 +1716,7 @@ from .uaroet_simulation import (
 )
 from .uboin import UBOINPosterior, uboin_allocation, uboin_posterior
 from .uboin_conduct import UBOINDecision, UBOINDesign, UBOINSelection
+from .uboin_imputation import UBOINMIDecision, uboin_stage2_multiple_imputation
 from .uboin_simulation import UBOINSimulation, simulate_uboin, uboin_gumbel_probabilities
 from .uboin_titration import UBOINTitrationPlan, uboin_stage1_titration_plan
 from .weibull_bayesian_gof import WeibullBayesianGOF, weibull_fixed_shape_bayesian_gof
@@ -1927,6 +1940,10 @@ __all__ = [
     "toxfinder_contour",
     "toxfinder_stage1",
     "ToxFinderPrior",
+    "ToxFinderAgentElicitation",
+    "ToxFinderElicitationResult",
+    "elicit_toxfinder_agent_prior",
+    "elicit_toxfinder_prior",
     "ToxFinderFit",
     "fit_toxfinder",
     "toxfinder_standardize",
@@ -2010,6 +2027,8 @@ __all__ = [
     "UBOINSelection",
     "UBOINPosterior",
     "uboin_allocation",
+    "UBOINMIDecision",
+    "uboin_stage2_multiple_imputation",
     "uboin_posterior",
     "TITEBOIN12Decision",
     "TITEBOIN12Posterior",
@@ -2954,6 +2973,10 @@ __all__ = [
     "toxicity_followup_weights",
     "tite_effective_sample_size",
     "tite_keyboard_decision",
+    "TITEKeyboardAdaptiveDecision",
+    "TITEKeyboardAdaptiveWeights",
+    "tite_keyboard_adaptive_decision",
+    "tite_keyboard_adaptive_weights",
     "KeyboardDesign",
     "KeyboardPosterior",
     "KeyboardSelection",

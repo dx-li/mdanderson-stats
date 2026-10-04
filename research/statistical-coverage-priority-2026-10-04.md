@@ -14,13 +14,15 @@ in Python. Its optional modifier's precedence with conflicting backfill data is
 not explicit in the recovered guide, so the Python composition is documented and
 BF-BOIN has moved to section A.
 
+The adaptive TITE-Keyboard review recovered the joint timing model from the paper's generative specification. Its implementation includes pending survival as well as observed DLT times and has moved to section B. This leaves 42 entries in section A and 18 in section B.
+
 ## A. Statistical or source-contract uncertainty remains
 
 | Program | Unresolved contract | Evidence |
 | --- | --- | --- |
 | EffTox (#2) | Legacy contour-fitting objective and trinary calibration/native behavior remain unverified. Existing binary/trinary mathematical APIs do not resolve these source choices. | [legacy contour audit](efftox-legacy-contour-audit.md); [trinary calibration audit](efftox-trinary-calibration-audit.md) |
 | Multc99 (#3) | Broader multiple-event scope was identified, but the archive/source was not recovered; only the fixed Phase-IIa contract is validated. | [Multc source records](../docs/multc-sources.json) |
-| ToxFinder (#14) | Stage-2 information criterion is unresolved; the guide’s second-derivative substitute does not establish the native Eq. 12 rule. | [ToxFinder guide](../docs/toxfinder.md) |
+| ToxFinder (#14) | Physician-prior elicitation now solves and independently checks the published equations; the Table 1 discrepancy is documented. Stage-2 information criterion is unresolved; the guide’s second-derivative substitute does not establish the native Eq. 12 rule. | [ToxFinder guide](../docs/toxfinder.md) |
 | bCRM (#15) | Joint two-outcome likelihood/association prior, two-stage conduct, and post-trial four-parameter logistic fit lack a recovered contract. | [bCRM guide](../docs/bcrm.md); [source records](../docs/bcrm-sources.json) |
 | SYNERGY (#18) | The four 2007 parametric response surfaces and fitting procedures remain unavailable; the inspected PMC, publisher, and archive routes were exhausted. | [response-surface audit](synergy-response-surface-audit.md) |
 | STPLAN (#41) | Native inverse bounds and integer allocation of proportional group totals are unspecified. | [planning guide](../docs/stplan-planning.md) |
@@ -43,10 +45,9 @@ BF-BOIN has moved to section A.
 | TITE-BOIN (#129) | Conduct, timing, calendar simulation and saved protocol reports are covered. Native correct/overdose selection and allocation labels and regretful-trial evaluation conventions are not fully defined in the inspected material. The report preserves full selection probabilities and per-dose allocation summaries. | [TITE-BOIN guide](../docs/tite-boin.md); [report crosswalk](tite-boin-protocol-report-audit.md) |
 | BARPO (#130) | The DBCD desired-target vector construction is unknown; explicit vectors exist, but simultaneous-floor parity and reporting remain unresolved. | [BARPO guide](../docs/barpo.md); [trial guide](../docs/barpo-trials.md); [source guide](../docs/barpo-source.md) |
 | BMA-CRM calibration (#133) | Automatic skeleton calibration remains blocked by unresolved displayed Q, regression intercept and candidate-selection conventions. | [CRM model-selection guide](../docs/crm-model-selection.md); [source records](../docs/bmacrm-sources.json) |
-| TITE-Keyboard (#135) | The paper gives an adaptive pending-patient timing weight and effective non-DLT count update, but the inspected contract does not establish the joint posterior update for shared timing parameters: using only observed DLT times ignores interim follow-up truncation and pending-patient survival contributions. The app exposes uniform/piecewise timing, so this paper-method extension does not establish app parity. | [TITE-Keyboard guide](../docs/tite-keyboard.md); [source records](../docs/tite-keyboard-sources.json) |
 | Platform BARPO (#137) | Complete-outcome platform conduct is covered, but no sufficiently complete delayed-response controller contract was found. | [BARPO trials](../docs/plbarpo-trials.md); [BARPO control](../docs/plbarpo-control.md) |
 | Phase2Delay (#141) | Native priors, sampler, calibration and continuous-monitoring rules are unknown. | [Phase2Delay guide](../docs/phase2delay.md) |
-| U-BOIN (#142) | Delayed immune-outcome imputation remains pending. | [U-BOIN guide](../docs/uboin.md) |
+| U-BOIN (#142) | Multiple-imputation evaluation and stage-II conduct now accept supplied predictive probabilities. The scaled-logistic prediction fit and standardization contract remain unresolved. | [U-BOIN guide](../docs/uboin.md); [imputation audit](uboin-imputation-evaluation-audit.md) |
 | BFMonitor (#143) | ESS-to-shape calibration rule is unspecified. | [BFMonitor guide](../docs/bfmonitor.md) |
 | iBOIN (#145) | Isotonic weights, tie handling and final-selection defaults are unknown. | [iBOIN guide](../docs/iboin.md); [selection audit](iboin-selection-audit.md) |
 | BOIN12 (#148) | Run-in precedence is unspecified; multilevel behavior is under development. | [two-stage audit](boin12-two-stage-audit.md) |
@@ -74,6 +75,7 @@ BF-BOIN has moved to section A.
 | BOP2 online (#112) | Documented binary, ordinal/multiple, joint, survival, calendar, calibration and sample-size workflows are covered; saved Python protocols cover all six endpoints; native formats, animation and optimizer equivalence remain. | [BOP2 sources](../docs/bop2-sources.json); [binary guide](../docs/bop2-binary.md); [survival guide](../docs/bop2-survival.md) |
 | BOIN (#120) | Single-agent conduct, safety, final MTD, simulation, accelerated titration, 3+3 comparison, boundary inversion, overdose-allocation risks and saved protocol reports are covered; animation and native document/application parity remain. | [BOIN guide](../docs/boin.md); [allocation-risk audit](dose-allocation-risk-audit.md); [report guide](../docs/boin-protocol-report.md) |
 | CRM Suite (#132) | CRM/BMA/DA posterior, pending look-ahead, calendar, cohort simulation and OC are implemented; native files/reports and older conduct differences remain. | [CRM conduct](../docs/crm-conduct.md); [CRM simulation](../docs/crm-simulation.md) |
+| TITE-Keyboard (#135) | Uniform/informative workflows and adaptive shared timing-posterior weights with interim decisions are covered. Automatic adaptive timing in calendar replay, flowcharts, integrated reports and native sampler parity remain. The recovered model includes observed event times and pending survival. | [adaptive guide](../docs/tite-keyboard-adaptive.md); [posterior audit](tite-keyboard-adaptive-posterior-audit.md) |
 | TOP (#134) | Joint monitoring, calendar simulation, finite-grid optimization and holdout validation exist; native optimizer grids/report/app-version parity remain. | [TOP guide](../docs/top-endpoints.md); [calibration guide](../docs/top-endpoints-calibration.md) |
 | BOP2 desktop (#144) | Desktop product has been retired to the online application; remaining differences are product/input/presentation boundaries. | [desktop guide](../docs/bop2-desktop.md) |
 | aPCoA (#147) | ID-aligned CSV/TSV input and explicit numeric/categorical encoding are covered. Arbitrary R formula/contrast/rank conventions and styling remain; no separate missing calculation was identified. | [aPCoA guide](../docs/apcoa.md); [labeled inputs](../docs/apcoa-inputs.md) |

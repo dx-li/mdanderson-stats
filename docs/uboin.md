@@ -112,9 +112,12 @@ escalation stays at the current dose, and an eliminated current dose moves to an
 available lower dose. These edge policies are documented Python choices.
 
 The controller accepts at most 100 doses and 1,000 total observations.
-Delayed-efficacy/immune-response imputation and native reports remain
-unimplemented. The application's categorical controls also carry
-under-development labels; native categorical output parity is not claimed.
+The [multiple-imputation workflow](uboin-multiple-imputation.md) evaluates caller-supplied
+posterior-predictive efficacy probabilities, averages complete-data posterior
+functionals, and applies stage-II conduct. Fitting the delayed-efficacy/immune
+prediction model and native reports remain unimplemented. The application's
+categorical controls also carry under-development labels; native categorical
+output parity is not claimed.
 
 The independent base-R script `tools/reference_uboin.R` checks binary, 3×3 and
 prior-only 2×3 cases, including utility variance from Dirichlet cross moments.

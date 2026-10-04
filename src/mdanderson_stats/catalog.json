@@ -318,12 +318,14 @@
         "Explicit independent gamma priors and bounded log-coordinate slice sampling; authoritative log draws preserve the paper's tiny-shape interaction prior",
         "Stage-one dose decisions with explicit starting row, upward no-skip, post-toxicity midpoint expansion and lower-continuum mean interpolation",
         "Posterior target contours within explicit bounds, including endpoint crossings and residual-checked roots",
-        "Physician-prior elicitation, native second-stage information criterion, full simulations and native file/report parity remain pending; see docs/toxfinder.md"
+        "Physician-elicited independent Gamma priors solve the published probability and odds-moment constraints, with residual-checked fits and explicit interaction moments; see docs/toxfinder-prior-elicitation.md",
+        "Native second-stage information criterion, full simulations and native file/report parity remain pending; see docs/toxfinder.md"
       ],
       "validation": [
         "Independent base-R evaluation of four official case-study surfaces and zero-alpha scenarios; scalar nonconjugate posterior quadrature and analytic log-gamma moments",
         "Analytic workflow checks of offset L1 interpolation, direct higher-midpoint predictions, starting dose, revisited levels, no-skip and contour endpoints",
-        "Focused numerical checks for subnormal doses, interaction-exponent cancellation, reproducibility and allocation limits; no native executable or random-seed parity claim"
+        "Focused numerical checks for subnormal doses, interaction-exponent cancellation, reproducibility and allocation limits; no native executable or random-seed parity claim",
+        "Independent adaptive Gamma-density integration checks both agents against the probability constraints; bounded solver and finite-moment checks fail explicitly. The disagreement between the printed equations and Table 1 moments is documented in research/toxfinder-prior-elicitation-audit.md."
       ]
     },
     {
@@ -4087,7 +4089,8 @@
         "Precomputed effective non-DLT follow-up transition brackets and batched ordinary-decision lookup, with enrolled-count safety tables",
         "Calendar-time trial replay with potential outcomes, staggered fixed-dose cohorts, event-driven accrual suspension, final follow-up and auditable interim histories",
         "Calendar-time simulations with fixed/exponential arrival gaps and uniform/piecewise-uniform conditional DLT timing, separated from analysis timing weights",
-        "Vectorized window-censored Weibull/log-logistic event quantiles calibrated to dose toxicity and late-half probabilities, integrated into calendar simulation"
+        "Vectorized window-censored Weibull/log-logistic event quantiles calibrated to dose toxicity and late-half probabilities, integrated into calendar simulation",
+        "Adaptive shared-Beta timing posterior from observed DLT times and pending survival, with exact positive-mixture marginalization of dose toxicity probabilities, explicit Gamma priors, bounded serial sampling and diagnostics-gated approximate Keyboard decisions."
       ],
       "validation": [
         "Published ESS and delayed-outcome examples; independent piecewise weights and fractional-beta interval identity",
@@ -4095,7 +4098,8 @@
         "docs/tite-keyboard.md",
         "Published one-to-four-DLT follow-up thresholds, independent fractional-beta crossings, adjacent-endpoint checks and 10000 posterior/table comparisons",
         "Published staggered-cohort/day-165 trial prefix, future-outcome causality, precision-stop follow-up, timing/arrival distribution checks and full fixed/exponential multi-dose runs",
-        "Independent 340-digit quantile calculations, half-window calibration, extreme probability/time scaling and one-patient incidence/late-fraction Monte Carlo checks"
+        "Independent 340-digit quantile calculations, half-window calibration, extreme probability/time scaling and one-patient incidence/late-fraction Monte Carlo checks",
+        "Independent nuisance-probability integration and refined two-dimensional timing-posterior quadrature check the adaptive weights; time-rescaling and existing controller checks preserve effective-likelihood and safety conventions. See docs/tite-keyboard-adaptive.md and research/tite-keyboard-adaptive-posterior-audit.md."
       ]
     },
     {
@@ -4237,14 +4241,16 @@
         "Inclusive Beta-marginal admissibility and winner, utility-proportional or equal allocation probabilities over caller-supplied eligibility.",
         "Complete-outcome stage-I/II controller, fixed uniform-Beta stage-I safety, optional 3+3 run-in, B1 exploration, sample-size stopping and final utility-based OBD selection with explicit candidate scope.",
         "Bounded complete-outcome cohort simulation for joint categorical probabilities, stable native Gumbel binary scenario construction, selection/allocation summaries and Monte Carlo errors.",
-        "Source-defined Stage-I accelerated titration with an observed-category prefix planner, explicit grade-2/DLT distinction, highest/lower dose-cap handoffs, toxicity-triggered cohort top-up, hard patient-budget truncation and compact simulation path summaries."
+        "Source-defined Stage-I accelerated titration with an observed-category prefix planner, explicit grade-2/DLT distinction, highest/lower dose-cap handoffs, toxicity-triggered cohort top-up, hard patient-budget truncation and compact simulation path summaries.",
+        "Stage-II multiple-imputation evaluation of supplied posterior-predictive binary efficacy probabilities: separate completion functionals are averaged, known toxicity and enrollment are preserved, and shared conduct applies safety, stopping, B1 exploration and B2 allocation."
       ],
       "validation": [
         "Official U-BOIN V2.4.4.0 application and primary paper sources pinned in docs/uboin-sources.json; no hidden native prior or tie rule assumed.",
         "Independent base-R Dirichlet cross moments and Beta tails cover binary, 3x3 and prior-only 2x3 outcomes.",
         "Independent base-R stage-I boundaries across four targets verify decisions around escalation, de-escalation and elimination cutoffs. Eight Gumbel reference cases and exact two-cohort trial enumeration verify joint cells and complete-trial selection probabilities.",
         "Focused treatment-ledger references validate clean highest/lower caps, first-DLT and second-grade-2 triggers, higher starting doses, truncated top-up and a budget exhausted at a lower cap; cohort-size-one and highest-dose starts preserve ordinary seeded simulation. docs/uboin.md and research/uboin-titration-audit.md.",
-        "Pending: delayed-outcome/immune-response imputation, native categorical simulation and report parity; see docs/uboin.md."
+        "Pending: fitting the delayed efficacy/immune-response prediction model, native categorical simulation and report parity; see docs/uboin.md.",
+        "Independent mixture-tail calculations, deterministic completions, toxicity marginals, zero-pending controller equivalence and pending-patient safety/stopping checks; see docs/uboin-multiple-imputation.md and research/uboin-imputation-evaluation-audit.md."
       ]
     },
     {

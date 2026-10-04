@@ -111,8 +111,13 @@ escalation requirement when fewer than two patients have been observed.
 
 The older app Guide prints a greater-than-three criterion for extra safety;
 Python uses the same at-least-three convention as the existing Keyboard safety
-implementation. Adaptive timing weights discussed in the paper are not implemented;
-the app's uniform and informative three-piece timing choices are supported.
+implementation. The [adaptive timing workflow](tite-keyboard-adaptive.md)
+estimates the shared timing distribution using observed DLT event times and
+pending-patient survival contributions. It supplies posterior-mean weights to
+the same approximate Keyboard controller, with explicit timing priors and
+sampling diagnostics. The paper recommends uniform or informative weights for
+general use because sparse timing data yielded little improvement from adaptive
+weights. The app's uniform and informative three-piece choices remain supported.
 
 Validation includes the published ESS example, hand-calculated informative
 weights, time-unit invariance, an independent closed-form fractional-beta integral,

@@ -2,8 +2,8 @@
 
 Catalog entry [14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14)
 is **partially implemented**. The package provides the six-parameter toxicity
-surface, grouped likelihood, Bayesian posterior fitting, first-stage decisions
-and target-contour calculations. Priors are explicit;
+surface, grouped likelihood, physician-prior elicitation, Bayesian posterior
+fitting, first-stage decisions and target-contour calculations. Priors are explicit;
 there is no universal default prior. Source details and the distinction between
 the paper and the later software guides are recorded in
 [toxfinder-sources.json](toxfinder-sources.json).
@@ -33,6 +33,13 @@ can be included as dose rows with the other agent at zero. Do not include the
 same observations both in an already-updated prior and in the likelihood.
 
 ## Explicit priors and fitting
+
+The [physician-prior elicitation workflow](toxfinder-prior-elicitation.md)
+solves the paper's four equations for each agent and assembles an explicit
+`ToxFinderPrior`. It checks the probability constraints independently before
+returning a fit. The paper's rounded Table 1 moments do not exactly satisfy
+those equations; the guide records this discrepancy. Interaction moments remain
+required inputs.
 
 Each parameter has an independent gamma prior specified by its **mean and
 variance**, converted to shape `mean**2 / variance` and scale `variance / mean`.
@@ -129,8 +136,8 @@ contour geometry; it does not implement native second-stage selection.
 
 ## Remaining coverage
 
-Automated physician-prior elicitation, the native second-stage information
-criterion, full trial simulations, and TMML/CSV/GUI parity remain open.
+The native second-stage information criterion, full trial simulations, and
+TMML/CSV/GUI parity remain open.
 
 The second-stage information criterion requires further source clarification.
 As written, equation12 in the paper is a six-dimensional outer product, with
