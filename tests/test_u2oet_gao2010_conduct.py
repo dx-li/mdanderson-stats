@@ -125,3 +125,29 @@ def test_nested_truth_lists_are_bounded_by_the_declared_four_axes() -> None:
         rng=np.random.default_rng(91),
     )
     assert result.patients.records.shape == (1, 5)
+
+
+def test_malformed_replay_row_width_fails_before_rng_advances() -> None:
+    truth = np.full((2, 2, 2, 2), 0.25)
+    rng = np.random.default_rng(812)
+    reference = np.random.default_rng(812)
+    with pytest.raises(ValueError, match="outcome_uniforms must have shape"):
+        simulate_u2oet_gao2010_trial(
+            [0.0, 1.0],
+            [0.0, 2.0],
+            truth,
+            [[0.0, 0.0], [1.0, 1.0]],
+            prior_mean=np.zeros(12),
+            prior_sd=np.zeros(12),
+            starting=(0, 0),
+            n_patients=2,
+            efficacy_evaluability=1.0,
+            toxicity_limit=0.99,
+            draws=8,
+            warmup=0,
+            chains=2,
+            fixed_association=0.0,
+            outcome_uniforms=[[0.1, 0.2, 0.3], [0.4, 0.5, 0.6]],
+            rng=rng,
+        )
+    assert rng.random() == reference.random()

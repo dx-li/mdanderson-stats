@@ -105,22 +105,23 @@ def _uniform_tape(value: ArrayLike, n_patients: int) -> FloatArray:
         if value.size > 2 * _MAX_PATIENTS:
             raise ValueError("outcome_uniforms exceeds the patient tape bound")
     elif isinstance(value, (list, tuple)):
-
-        def inspect(item: object, depth: int) -> tuple[tuple[int, ...], int]:
-            if depth == 0:
+        if len(value) != n_patients:
+            raise ValueError("outcome_uniforms must have shape (n_patients, 2)")
+        # Check every row width before walking any entries, bounding malformed
+        # tapes without traversing an arbitrarily wide first row.
+        for row in value:
+            valid_row = (
+                row.ndim == 1 and row.shape == (2,) and row.size == 2
+                if isinstance(row, np.ndarray)
+                else isinstance(row, (list, tuple)) and len(row) == 2
+            )
+            if not valid_row:
+                raise ValueError("outcome_uniforms must have shape (n_patients, 2)")
+        for row in value:
+            for item in row:
                 if isinstance(item, (list, tuple, np.ndarray)):
                     raise ValueError("outcome_uniforms must be a two-column numeric tape")
-                return (), 1
-            if not isinstance(item, (list, tuple)) or len(item) > _MAX_PATIENTS:
-                raise ValueError("outcome_uniforms exceeds the patient tape bound")
-            parts = [inspect(child, depth - 1) for child in item]
-            if parts and any(shape != parts[0][0] for shape, _ in parts):
-                raise ValueError("outcome_uniforms must be rectangular")
-            return (len(item),) + (parts[0][0] if parts else ()), sum(size for _, size in parts)
-
-        shape, cells = inspect(value, 2)
-        if cells > 2 * _MAX_PATIENTS:
-            raise ValueError("outcome_uniforms exceeds the patient tape bound")
+        shape = (n_patients, 2)
     else:
         shape = getattr(value, "shape", None)
         size = getattr(value, "size", None)
@@ -383,7 +384,10 @@ def simulate_u2oet_gao2010_trial(
         "draws": draws,
         "warmup": warmup,
         "chains": chains,
+        "initial_parameters": starts.tolist(),
         "fixed_association": fixed_rho,
+        "max_likelihood_evaluations": max_likelihood_evaluations,
+        "max_work": max_work,
     }
     design_json = json.dumps(design, sort_keys=True, separators=(",", ":"), allow_nan=False)
 
