@@ -23,6 +23,8 @@ def toxicity_followup_weights(
     window. They are not marginal DLT rates. Follow-up/window use the same units.
     """
     duration = scalar(window, "window")
+    if duration <= 0:
+        raise ValueError("window must be positive")
     followup = finite(followup, "followup")
     if duration <= 0 or np.any((followup < 0) | (followup > duration)):
         raise ValueError("require window > 0 and followup in [0,window]")
@@ -95,6 +97,7 @@ def tite_keyboard_decision(
     window: float,
     *,
     trimester_probabilities: ArrayLike | None = None,
+    pending_weights: Sequence[ArrayLike] | None = None,
     pending_fraction_limit: float | None = 0.5,
     eliminated: ArrayLike | None = None,
 ) -> TITEKeyboardDecision:
@@ -117,24 +120,45 @@ def tite_keyboard_decision(
     if n[j] < 1:
         raise ValueError("current dose must have enrolled patients")
     duration = scalar(window, "window")
+    if duration <= 0:
+        raise ValueError("window must be positive")
     pending = np.zeros(len(n), dtype=np.int64)
     effective = np.zeros(len(n))
+    if pending_weights is not None and trimester_probabilities is not None:
+        raise ValueError("pending_weights and trimester_probabilities cannot both be supplied")
+    weight_rows: list[FloatArray] | None = None
+    if pending_weights is not None:
+        if not isinstance(pending_weights, Sequence) or isinstance(pending_weights, (str, bytes)):
+            raise ValueError("pending_weights must contain one vector per dose")
+        if len(pending_weights) != len(n):
+            raise ValueError("pending_weights must contain one vector per dose")
+        weight_rows = [
+            _bounded_decision_vector(value, f"pending_weights[{index}]")
+            for index, value in enumerate(pending_weights)
+        ]
     for level, times in enumerate(pending_followup):
-        times = finite(times, "pending_followup")
-        if times.ndim != 1 or np.any(times >= duration):
-            raise ValueError("pending follow-up must be 1D and strictly shorter than the window")
+        times = _bounded_decision_vector(times, f"pending_followup[{level}]")
+        if np.any((times < 0) | (times >= duration)):
+            raise ValueError("pending follow-up must be 1D and strictly shorter than window")
         pending[level] = times.size
         if pending[level] > n[level] - y[level]:
             raise ValueError(
                 "pending patients cannot exceed enrolled patients without observed DLT"
             )
-        ess = tite_effective_sample_size(
-            n[level] - pending[level],
-            times,
-            duration,
-            trimester_probabilities=trimester_probabilities,
-        )
-        effective[level] = ess.effective_sample_size
+        if pending_weights is None:
+            ess = tite_effective_sample_size(
+                n[level] - pending[level],
+                times,
+                duration,
+                trimester_probabilities=trimester_probabilities,
+            )
+            effective[level] = ess.effective_sample_size
+        else:
+            assert weight_rows is not None
+            weights = weight_rows[level]
+            if weights.shape != times.shape or np.any((weights < 0) | (weights > 1)):
+                raise ValueError("each pending weight vector must match follow-up and lie in [0,1]")
+            effective[level] = n[level] - pending[level] + np.sum(weights)
     limit = (
         None
         if pending_fraction_limit is None
@@ -169,3 +193,20 @@ def tite_keyboard_decision(
         _owned(safety),
         posterior,
     )
+
+
+def _bounded_decision_vector(value: ArrayLike, name: str) -> FloatArray:
+    if isinstance(value, np.ndarray):
+        if value.ndim != 1 or value.size > 200 or value.dtype.kind not in "biuf":
+            raise ValueError(f"{name} must be a bounded one-dimensional real vector")
+    elif isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
+        if len(value) > 200 or any(
+            isinstance(item, (list, tuple, np.ndarray)) or np.ndim(item) != 0 for item in value
+        ):
+            raise ValueError(f"{name} must be a bounded one-dimensional real vector")
+    else:
+        raise ValueError(f"{name} must be a bounded one-dimensional real vector")
+    if np.iscomplexobj(value):
+        raise ValueError(f"{name} must be real")
+    result = finite(value, name)
+    return np.array(result, dtype=float, copy=True)
