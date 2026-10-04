@@ -108,12 +108,11 @@ class BCHMScenario:
             or not 0 <= self.seed <= 2**63 - 1
         ):
             raise ValueError("seed must be an integer in [0, 2**63-1]")
-        y = np.asarray(self.successes)
-        n = np.asarray(self.trials)
-        if y.ndim != 1 or n.shape != y.shape or y.size < 1:
-            raise ValueError("successes and trials must be matching vectors")
-        object.__setattr__(self, "successes", tuple(y.tolist()))
-        object.__setattr__(self, "trials", tuple(n.tolist()))
+        from .bchm import _validate
+
+        y, n = _validate(self.successes, self.trials)
+        object.__setattr__(self, "successes", tuple(int(value) for value in y))
+        object.__setattr__(self, "trials", tuple(int(value) for value in n))
         labels = self.subgroup_labels
         if labels is None:
             labels = tuple(f"group_{i + 1}" for i in range(y.size))
@@ -132,9 +131,8 @@ class BCHMScenario:
             raise ValueError("subgroup_labels must be unique nonempty strings matching the data")
         object.__setattr__(self, "subgroup_labels", tuple(labels))
         from ._validation import scalar
-        from .bchm import _borrow_parameters, _sampling, _validate
+        from .bchm import _borrow_parameters, _sampling
 
-        _validate(self.successes, self.trials)
         _sampling(self.draws, self.warmup, self.chains, y.size, all_targets=True)
         _borrow_parameters(self.alpha1, self.beta1, self.tau2, self.phi1, self.deltaT, self.thetaT)
         mu, var0, vard, alpha = (
@@ -168,17 +166,30 @@ class BCHMScenario:
         ):
             raise ValueError("allocation MCMC budget too large")
 
+    @property
+    def labels(self) -> tuple[str, ...]:
+        """Validated subgroup names, present after construction."""
+        labels = self.subgroup_labels
+        if labels is None:
+            raise AssertionError("validated scenario is missing subgroup labels")
+        return labels
+
     def write_input_csv(self, path: str | os.PathLike[str]) -> Path:
         """Save the documented Python scenario-input format, repeating settings per subgroup."""
         destination = Path(path)
         rows = []
-        for label, y, n in zip(self.subgroup_labels, self.successes, self.trials, strict=True):
+        for label, y, n in zip(
+            self.labels,
+            np.asarray(self.successes),
+            np.asarray(self.trials),
+            strict=True,
+        ):
             rows.append(
                 {
                     "scenario": self.label,
                     "subgroup": label,
-                    "successes": y,
-                    "trials": n,
+                    "successes": int(y),
+                    "trials": int(n),
                     **{name: getattr(self, name) for name in _INPUT_FIELDS[4:]},
                 }
             )
@@ -197,28 +208,35 @@ class BCHMScenario:
                 raise ValueError(
                     "input CSV headers do not match the documented BCHM scenario format"
                 )
-            rows = []
-            for row in reader:
+            rows: list[dict[str, str]] = []
+            for raw_row in reader:
                 if len(rows) == 20:
                     raise ValueError("input CSV must contain at most 20 subgroup rows")
+                if None in raw_row:
+                    raise ValueError("input CSV contains extra columns")
+                row: dict[str, str] = {}
+                for name in _INPUT_FIELDS:
+                    value = raw_row.get(name)
+                    if not isinstance(value, str):
+                        raise ValueError("input CSV must contain complete subgroup rows")
+                    row[name] = value
                 rows.append(row)
-        if not rows or any(
-            row.get(None) is not None
-            or any(value is None for key, value in row.items() if key is not None)
-            for row in rows
-        ):
+        if not rows:
             raise ValueError("input CSV must contain 1..20 complete subgroup rows")
-        settings: dict[str, object] = {}
-        integer_names = {"seed", "burn_in", "iterations", "draws", "warmup", "chains"}
+
+        def integer_setting(name: str) -> int:
+            value = int(rows[0][name])
+            if any(int(row[name]) != value for row in rows[1:]):
+                raise ValueError(f"input CSV has inconsistent {name} values")
+            return value
+
+        def float_setting(name: str) -> float:
+            value = float(rows[0][name])
+            if any(float(row[name]) != value for row in rows[1:]):
+                raise ValueError(f"input CSV has inconsistent {name} values")
+            return value
+
         try:
-            for name in _INPUT_FIELDS[4:]:
-                parsed = int(rows[0][name]) if name in integer_names else float(rows[0][name])
-                if any(
-                    (int(row[name]) if name in integer_names else float(row[name])) != parsed
-                    for row in rows[1:]
-                ):
-                    raise ValueError(f"input CSV has inconsistent {name} values")
-                settings[name] = parsed
             if any(not row["scenario"] == rows[0]["scenario"] for row in rows):
                 raise ValueError("input CSV has inconsistent scenario labels")
             return cls(
@@ -226,7 +244,23 @@ class BCHMScenario:
                 subgroup_labels=tuple(row["subgroup"] for row in rows),
                 successes=tuple(int(row["successes"]) for row in rows),
                 trials=tuple(int(row["trials"]) for row in rows),
-                **settings,
+                seed=integer_setting("seed"),
+                mu=float_setting("mu"),
+                sigma02=float_setting("sigma02"),
+                sigmaD2=float_setting("sigmaD2"),
+                alpha=float_setting("alpha"),
+                d0=float_setting("d0"),
+                alpha1=float_setting("alpha1"),
+                beta1=float_setting("beta1"),
+                tau2=float_setting("tau2"),
+                phi1=float_setting("phi1"),
+                deltaT=float_setting("deltaT"),
+                thetaT=float_setting("thetaT"),
+                burn_in=integer_setting("burn_in"),
+                iterations=integer_setting("iterations"),
+                draws=integer_setting("draws"),
+                warmup=integer_setting("warmup"),
+                chains=integer_setting("chains"),
             )
         except (TypeError, ValueError, OverflowError) as exc:
             raise ValueError(f"invalid BCHM scenario input CSV: {exc}") from exc
@@ -376,10 +410,10 @@ class BCHMScenarioBatch:
         destination = Path(path)
         fields = ("scenario", "subgroup", "target_index", "chain", "draw", "probability")
 
-        def rows():
+        def rows() -> Iterable[dict[str, object]]:
             for item in self.scenarios:
                 for target, (subgroup, borrow) in enumerate(
-                    zip(item.scenario.subgroup_labels, item.fit.borrowing, strict=True)
+                    zip(item.scenario.labels, item.fit.borrowing, strict=True)
                 ):
                     for chain, samples in enumerate(borrow.samples):
                         for draw, probability in enumerate(samples):
@@ -431,9 +465,9 @@ def fit_bchm_scenarios(scenarios: Sequence[BCHMScenario]) -> BCHMScenarioBatch:
         if (
             not isinstance(s.iterations, (int, np.integer))
             or isinstance(s.iterations, (bool, np.bool_))
-            or s.iterations < 8
+            or s.iterations < 1
         ):
-            raise ValueError("iterations must be an integer >=8")
+            raise ValueError("iterations must be a positive integer")
         work += s.chains * (s.draws + s.warmup) * len(y) ** 2
         work += (s.burn_in + s.iterations) * len(y) ** 2
     if work > _MAX_TOTAL_WORK:
@@ -441,31 +475,32 @@ def fit_bchm_scenarios(scenarios: Sequence[BCHMScenario]) -> BCHMScenarioBatch:
 
     summaries = []
     for s in scenarios:
-        fit_args = {
-            name: getattr(s, name)
-            for name in (
-                "mu",
-                "sigma02",
-                "sigmaD2",
-                "alpha",
-                "d0",
-                "alpha1",
-                "beta1",
-                "tau2",
-                "phi1",
-                "deltaT",
-                "thetaT",
-                "burn_in",
-                "iterations",
-                "draws",
-                "warmup",
-                "chains",
-            )
-        }
-        fit = bchm_fit(s.successes, s.trials, seed=int(s.seed), **fit_args)
+        fit = bchm_fit(
+            s.successes,
+            s.trials,
+            seed=int(s.seed),
+            mu=s.mu,
+            sigma02=s.sigma02,
+            sigmaD2=s.sigmaD2,
+            alpha=s.alpha,
+            d0=s.d0,
+            alpha1=s.alpha1,
+            beta1=s.beta1,
+            tau2=s.tau2,
+            phi1=s.phi1,
+            deltaT=s.deltaT,
+            thetaT=s.thetaT,
+            burn_in=s.burn_in,
+            iterations=s.iterations,
+            draws=s.draws,
+            warmup=s.warmup,
+            chains=s.chains,
+        )
         master = np.random.default_rng(s.seed)
         cluster_seed = int(master.integers(2**31))
-        borrowing_seeds = tuple(int(master.integers(2**31)) for _ in s.successes)
+        borrowing_seeds = tuple(
+            int(master.integers(2**31)) for _ in range(np.asarray(s.successes).size)
+        )
         indicators_by_target = []
         for borrow in fit.borrowing:
             if borrow.efficacy_indicators is None:
@@ -476,8 +511,8 @@ def fit_bchm_scenarios(scenarios: Sequence[BCHMScenario]) -> BCHMScenarioBatch:
         similarity_mcse = _co_cluster_mcse(fit.allocations)
         efficacy_mcse = efficacy_diagnostics.batch_mean_mcse
         efficacy_rhat = efficacy_diagnostics.split_rhat
-        for value in (similarity_mcse, efficacy_mcse, efficacy_rhat):
-            value.setflags(write=False)
+        for diagnostic_array in (similarity_mcse, efficacy_mcse, efficacy_rhat):
+            diagnostic_array.setflags(write=False)
         summaries.append(
             BCHMScenarioSummary(
                 s,

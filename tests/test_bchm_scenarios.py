@@ -9,8 +9,8 @@ from mdanderson_stats.hierarchical_binomial import summarize_chains
 def test_scenario_report_csv_roundtrip_and_streamed_samples(tmp_path):
     scenario = BCHMScenario(
         "small illustration",
-        [1, 2],
-        [10, 12],
+        [1.0, 2.0],
+        [10.0, 12.0],
         seed=158,
         subgroup_labels=("A", "B"),
         burn_in=8,
@@ -21,6 +21,8 @@ def test_scenario_report_csv_roundtrip_and_streamed_samples(tmp_path):
     input_path = scenario.write_input_csv(tmp_path / "input.csv")
     loaded = BCHMScenario.from_input_csv(input_path)
     assert loaded == scenario
+    assert scenario.successes == (1, 2) and all(type(value) is int for value in scenario.successes)
+    assert scenario.trials == (10, 12) and all(type(value) is int for value in scenario.trials)
 
     batch = fit_bchm_scenarios((loaded,))
     result = batch.scenarios[0]
@@ -54,6 +56,8 @@ def test_bchm_scenario_preflight_rejects_bad_input_and_duplicate_names():
 
     with pytest.raises(ValueError, match="must be integers"):
         BCHMScenario("bad", [1.5], [10], seed=1)
+    with pytest.raises(ValueError, match="matching vectors"):
+        BCHMScenario("too many", np.ones(21), np.full(21, 10), seed=1)
     scenario = BCHMScenario("same", [1], [10], seed=1, burn_in=0, iterations=8, draws=8, warmup=0)
     with pytest.raises(ValueError, match="unique"):
         fit_bchm_scenarios((scenario, scenario))
