@@ -1,8 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `1da08a2` extends exponential and both
-Weibull posterior workflows to right censoring, fixes long Boolean event lists,
-and adds event-count inputs for survival success-criterion design. The final section records validation; earlier sections preserve
+Latest verified package checkpoint: `60a9461` adds lognormal right-censored
+posterior fitting, completing this capability across all seven BCSTTE
+distributions. The final section records validation; earlier sections preserve
 checkpoint history. Published `3fe4bf8` has passed all hosted quality and
 Python 3.12/3.13/3.14 checks in
 [run 37161305171](https://github.com/dx-li/mdanderson-stats/actions/runs/37161305171).
@@ -2606,3 +2606,42 @@ checkouts; it is not included in this published checkpoint. Native priors,
 censored diagnostics and remaining native workflow conventions remain explicit
 gaps. Remote publication and hosted checks are recorded separately in the
 local artifact manifest after an independently verified push.
+
+
+## October 3: lognormal censoring completes seven-family posterior support
+
+The new public `lognormal_right_censored_bayesian_fit` uses latent truncated
+normal log-times and joint Normal-Inverse-Gamma Gibbs updates under explicit
+proper hyperparameters. It returns paired location/variance chains, observed
+likelihoods, chain summaries and bounded-work counters. Zero-time censors add
+no information; entirely zero-censored samples draw directly from the prior.
+Complete-data fitting retains its existing independent conjugate workflow.
+
+Independent direct-likelihood R quadrature covers mixed and all-censored
+samples. All 23 posterior moment, covariance and predictive-CDF comparisons
+are within 2.0010 batch-means Monte Carlo errors, with maximum split R-hat
+1.000292. Quadrature refinement and domain widening changed reference values
+by less than 7.61e-10. The fixed-seed comparison used 9.68 seconds, 132.13 MiB
+peak RSS and no process swaps. Removing an unnecessary summary field afterward
+did not change the sampler or random-number sequence.
+
+Root integration at `60a9461` passes seven focused lognormal tests with warnings
+as errors, including both existing complete-data checks. Validation used
+3.017 seconds, 139.48 MiB peak RSS and zero process swaps. Targeted lint,
+Markdown/example formatting and source typing checks also passed. Review
+corrected input-array ownership and conservative memory/work accounting before
+publication, including prior-only draws and zero-time rows.
+
+Cached package builds and isolated wheel verification passed. All 608 committed
+package files match both archives; all 1,703 public exports resolve, license
+notices are retained, and the new public guide example executes. The package
+check used 12.019 seconds, 131.73 MiB peak RSS and zero process swaps. No full
+local suite, new CI workflow or dependency was added for this integration.
+
+The guide now maps every distribution to its API, explicit prior and complete
+or censored support. Catalog counts remain 63 implemented, 67 partial and eight
+pending: source-defined native priors, censored Johnson transforms, rank/trim
+conventions and reporting are still unverified. Completed statistical support
+does not imply complete reproduction of the original application. Remote
+branch verification, bundle hashes and existing hosted CI state are recorded
+separately in the local artifact manifest after publication.
