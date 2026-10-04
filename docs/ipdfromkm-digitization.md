@@ -25,7 +25,7 @@ calibration = km_axis_calibration(
     y_values=[0, 1],
     time_unit="months",
 )
-curve = digitize_km_points([[80, 80], [210, 92], [350, 140], [510, 220], [720, 390]], calibration)
+curve = digitize_km_points([[80, 80], [240, 172], [400, 264], [560, 356], [720, 448]], calibration)
 prepared = curve.prepare()
 ipd = reconstruct_ipd(
     prepared.time,
