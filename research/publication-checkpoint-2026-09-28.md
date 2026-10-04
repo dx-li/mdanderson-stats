@@ -1,11 +1,11 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `d2453af` adds stable per-probeset
-observed/fitted log-intensity correlations for PerfectMatch, alongside the
-published right-censored posterior workflows for all seven BCSTTE distributions. The final section records validation; earlier sections preserve
-checkpoint history. Published `3fe4bf8` has passed all hosted quality and
+Latest verified package checkpoint: `ed17c77` adds the bCRM extreme-dose
+allocation correction and U-BOIN Stage-I accelerated titration. The final
+section records validation; earlier sections preserve checkpoint history.
+Published `4e69098` has passed all hosted quality and
 Python 3.12/3.13/3.14 checks in
-[run 37161305171](https://github.com/dx-li/mdanderson-stats/actions/runs/37161305171).
+[run 37164590012](https://github.com/dx-li/mdanderson-stats/actions/runs/37164590012).
 That is the latest completely passed hosted checkpoint observed before this
 publication; the new revision's hosted results are recorded separately.
 The local artifact manifest records full branch SHAs after each independently
@@ -2674,3 +2674,36 @@ correlation summary. Package verification used 10.169 seconds, 132.00 MiB RSS
 and no swaps. Catalog counts remain unchanged; native file, other quality-control
 and display workflows remain partial. The local manifest records independently
 verified remote branches, refreshed bundle hashes and hosted results.
+
+## October 3: bCRM allocation correction and U-BOIN titration
+
+The bCRM simulation guide's extreme-dose allocation rule is now available as
+`bcrm_extreme_allocation_probability`. It uses the target and already-allocated
+fractions, the explicit correction exponent (default two), and the source's
+0.1/0.5 clipping limits. Log-domain threshold comparisons avoid overflow for
+extreme valid inputs. Seven focused tests and four extreme floating-point
+cases pass; the latter resolve exactly to the prescribed clipping values.
+Root numerical validation peaked at 147.23 MiB with no swaps. This component
+does not claim the source's complete efficacy-mode trial simulator.
+
+U-BOIN now has the source-defined Stage-I singleton escalation prelude in
+`simulate_uboin` and the public `uboin_stage1_titration_plan`. It requires an
+explicit grade-2 category distinct from DLT. Source-ledger cases verify first
+DLT, second grade-2 toxicity, clean highest/lower cap handoffs, higher starting
+doses, truncated top-up, and budget exhaustion exactly at a lower cap.
+No-effect settings preserve the ordinary seeded simulation. Ten focused tests,
+targeted Ruff and mypy passed; final worker validation peaked at 135.44 MiB
+with no swaps. Root formatting and lint checks also passed.
+
+At `ed17c77`, cached wheel/source builds and isolated verification pass. All
+610 committed package files match both archives, all 1,708 public exports
+resolve, notices are retained, and both new guide examples execute from the
+wheel. This check took 10.760 seconds and peaked at 130.33 MiB with no swaps.
+Numerical/build jobs ran serially with single-threaded numerical libraries;
+no full local suite, new CI workflow or dependency was introduced. The previous
+published checkpoint `4e69098` has now passed its complete existing hosted
+quality and Python 3.12/3.13/3.14 checks.
+
+Catalog entries 15 and 142 remain partial for their explicitly documented
+remaining workflows. The remote branch SHAs, artifact hashes and subsequent
+hosted status are recorded separately after publication.
