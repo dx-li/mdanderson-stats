@@ -1,0 +1,2 @@
+"case","row_id","time_original","event_original","time_missing","event_missing","expected_time","expected_event"
+"observed_component_preserved",10,4,1,TRUE,FALSE,2,1

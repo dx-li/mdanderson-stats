@@ -1,0 +1,8 @@
+"i","j","reason","pair_denominator","worse_increment"
+1,2,"later_i_failure_or_tied_failure_censor",2,1
+1,3,"later_i_failure_or_tied_failure_censor",2,2
+1,4,"later_i_failure_or_tied_failure_censor",2,2
+1,5,"later_i_failure_or_tied_failure_censor",2,2
+3,4,"tied_failures",2,1
+3,5,"later_i_failure_or_tied_failure_censor",2,2
+4,5,"later_i_failure_or_tied_failure_censor",2,2

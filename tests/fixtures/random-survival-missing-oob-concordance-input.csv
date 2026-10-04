@@ -1,0 +1,7 @@
+"case","row_id","time","event","risk","contributors"
+"eps_ties_and_zero_oob_contributors",1,1,1,2,2
+"eps_ties_and_zero_oob_contributors",2,1.0000000005,0,2.0000000005,1
+"eps_ties_and_zero_oob_contributors",3,2,1,0.5,2
+"eps_ties_and_zero_oob_contributors",4,2,1,1.5,1
+"eps_ties_and_zero_oob_contributors",5,3,0,0.1,1
+"eps_ties_and_zero_oob_contributors",6,4,1,9,0
