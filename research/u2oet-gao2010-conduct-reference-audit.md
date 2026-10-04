@@ -32,8 +32,25 @@ conservative implementation convention, not a claim of native software
 parity. Ties use row-major dose-grid order as a deterministic Python
 convention.
 
+The exact toxicity-boundary fixture uses the binary-representable value
+`0.25`. An initial decimal `0.3` fixture exposed different rounding after
+joint cells were serialized: two stored cells summed to a value one floating
+step above the intended threshold. The reference inputs were corrected;
+the implementation retains the source's literal strict comparison without
+an added tolerance. The outer stopping boundary is exactly `0.75`.
+
 Regenerate the small CSV fixtures with:
 
 ```sh
 Rscript tools/reference_u2oet_gao2010_conduct.R tests/fixtures
 ```
+
+Root integration validation passed all 19 affected probability, fitter and
+conduct checks with warnings as errors: 2.475 seconds, 137.89 MiB process
+peak RSS and zero swaps. The four supplied-draw cases contain 2,304 joint
+cells and 36 grid-summary rows; numeric comparisons use absolute tolerance
+2e-12 and no relative tolerance. The cohort checks run the actual fitter
+with fixed parameters and supplied outcome tapes, including toxicity-only
+observations and invalid-start rejection before random-state consumption.
+These checks complement the existing independent posterior-quadrature audit;
+they do not establish native executable or operating-characteristic parity.

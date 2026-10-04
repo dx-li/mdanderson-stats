@@ -9,16 +9,16 @@ dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
 utility <- matrix(c(0, 80, -100, 60), nrow = 2L, ncol = 2L)
 cases <- list(
-  interim = list(limit = 0.30, stop = 0.80, current = c(2L, 2L),
+  interim = list(limit = 0.25, stop = 0.80, current = c(2L, 2L),
                  tried = matrix(c(2L, 2L, 3L, 1L), ncol = 2L, byrow = TRUE),
                  pattern = "interim"),
-  stop_boundary = list(limit = 0.30, stop = 0.75, current = c(2L, 2L),
+  stop_boundary = list(limit = 0.25, stop = 0.75, current = c(2L, 2L),
                        tried = matrix(c(2L, 2L), ncol = 2L),
                        pattern = "boundary"),
-  global_stop = list(limit = 0.30, stop = 0.80, current = c(2L, 2L),
+  global_stop = list(limit = 0.25, stop = 0.80, current = c(2L, 2L),
                      tried = matrix(c(2L, 2L), ncol = 2L),
                      pattern = "unsafe"),
-  final = list(limit = 0.30, stop = 0.80, current = NULL,
+  final = list(limit = 0.25, stop = 0.80, current = NULL,
                tried = matrix(integer(), ncol = 2L), pattern = "final")
 )
 
@@ -52,7 +52,7 @@ for (case_name in names(cases)) {
       } else {
         # Cell (1,1) is exactly on the strict toxicity threshold. Other
         # cells vary by dose and draw so the global and local summaries differ.
-        p_tox <- if (d1 == 1L && d2 == 1L) 0.30 else
+        p_tox <- if (d1 == 1L && d2 == 1L) 0.25 else
           0.18 + 0.055 * (d1 + d2 - 2L) + 0.01 * (ordinal %% 3L)
       }
       p_eff <- min(0.92, 0.10 + 0.11 * d1 + 0.12 * d2 + 0.005 * (ordinal %% 4L))

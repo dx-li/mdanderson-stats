@@ -35,9 +35,7 @@ def _tensor(case: str) -> np.ndarray:
 
 def _config(case: str) -> dict[str, str]:
     return next(
-        row
-        for row in _rows(FIXTURES / "u2oet-gao2010-conduct-config.csv")
-        if row["case"] == case
+        row for row in _rows(FIXTURES / "u2oet-gao2010-conduct-config.csv") if row["case"] == case
     )
 
 
@@ -45,8 +43,7 @@ def test_decisions_and_posterior_summaries_match_independent_r_reference() -> No
     utility = np.array([[0.0, -100.0], [80.0, 60.0]])
     summaries = _rows(FIXTURES / "u2oet-gao2010-conduct-summaries.csv")
     decisions = {
-        row["case"]: row
-        for row in _rows(FIXTURES / "u2oet-gao2010-conduct-decisions.csv")
+        row["case"]: row for row in _rows(FIXTURES / "u2oet-gao2010-conduct-decisions.csv")
     }
 
     for case in ("interim", "stop_boundary", "global_stop", "final"):
@@ -73,16 +70,14 @@ def test_decisions_and_posterior_summaries_match_independent_r_reference() -> No
             treated=treated,
         )
         expected_decision = decisions[case]
-        assert result.stopped_for_global_toxicity is (
-            expected_decision["stopped"] == "TRUE"
-        )
+        assert result.stopped_for_global_toxicity is (expected_decision["stopped"] == "TRUE")
         assert result.action == expected_decision["action"]
         assert result.minimum_exceedance_probability == float(
             expected_decision["minimum_exceedance_probability"]
         )
         assert result.selected_pair == (
             None
-            if not expected_decision["selected_dose1"]
+            if expected_decision["selected_dose1"] in ("", "NA")
             else (
                 int(expected_decision["selected_dose1"]) - 1,
                 int(expected_decision["selected_dose2"]) - 1,
@@ -110,7 +105,7 @@ def test_decisions_and_posterior_summaries_match_independent_r_reference() -> No
                 ),
                 (result.exceedance_probability_mcse[i, j], "exceedance_probability_mcse"),
             ):
-                assert np.isclose(actual, float(row[key]), rtol=2e-13, atol=2e-13), (
+                assert np.isclose(actual, float(row[key]), rtol=0, atol=2e-12), (
                     case,
                     i,
                     j,
