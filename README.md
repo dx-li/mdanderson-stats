@@ -937,6 +937,9 @@ tables, two-patient safety gating, isotonic MTD selection and batched simulation
 alongside the existing mTPI implementation. [Dose-specific Beta priors](docs/tpi-informative-priors.md)
 provide an explicit conjugate extension throughout posterior summaries, conduct,
 selection and simulation, using compact lookup tables for distinct priors.
+[Posterior intervals](docs/tpi-isotonic-posterior.md) reuse the mTPI paper's
+beta-draw/isotonic inference procedure with TPI priors. Transformation weights,
+random draws and quantile conventions are explicit; native TPI tuning remains open.
 
 [aPCoA](docs/apcoa.md) adds covariate-adjusted principal coordinates, signed
 spectral diagnostics and grouped before/after plots, checked against the original
@@ -1295,7 +1298,11 @@ response observation, auditable patient histories and Monte Carlo errors.
 one dose below the last escalation cohort, with assigned-count caps and
 toxicity closure. [Accelerated titration](docs/bf-boin-titration.md) adds
 single-patient escalation, DLT/grade-2 triggers and dose-cap transitions, with
-explicit grade-2 probabilities and assessment timing. Generated reports remain open.
+explicit grade-2 probabilities and assessment timing. The guide's optional
+1/3 stay action, strict BF extra-safety count and strict final-MTD bound are
+supported. [Saved protocol reports](docs/bf-boin-protocol-report.md) capture
+design settings, timing and compact scenario summaries. Unspecified native
+modifier interactions and report aggregation formulas remain explicit.
 
 [BOP2-DC](docs/bop2-dc.md) adds binary efficacy monitoring with distinct
 go/consider/no-go outcomes and exact operating characteristics. Independent
@@ -1395,6 +1402,9 @@ and reports remain open.
 sticky dose exclusions, weighted isotonic MTD selection, and memory-bounded
 cohort simulation with accelerated titration. Published table values, native R
 results and exact small-trial enumeration validate the numerical core.
+[Saved protocol reports](docs/pop-protocol-report.md) capture complete integer
+cutoffs, scenario seeds, selection and allocation summaries, and Monte Carlo
+errors from the same configured simulations.
 
 [BARD stage-two methods](docs/bard.md) add covariate-adaptive allocation using
 combined stage-one/stage-two history, plus utility and noninferiority OBD

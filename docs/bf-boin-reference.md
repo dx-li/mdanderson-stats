@@ -58,16 +58,29 @@ lower candidate dose; choose the highest candidate with rate at or below the
 de-escalation boundary, or move below the pooling start if none qualifies.
 The CRAN implementation uses different strictness at exact boundary equality.
 These distinctions preclude treating its trial outputs as exact Python parity
-fixtures. The app also exposes optional 1/3-stay and 2/6-de-escalation modifiers.
+fixtures. The historical app audit recorded optional 1/3-stay and
+2/6-de-escalation modifiers. The restored guide explicitly defines only the
+1/3 option, at target 0.25. Python now supports that individual-action modifier.
+Its composition with conflicting backfill data is not explicit in the guide:
+Python modifies individual actions first, then applies the paper's usual
+pooled-conflict rules. Empirical closure and cumulative-pool thresholds remain
+unchanged. The 2/6 option's primary specification has not been restored and is
+not inferred from ordinary BOIN.
 
 The app's optional early stop is “assigned patients at the current dose >=
 `n_stop` and the next action is stay.”  The optional extra-safety rule requires
 more than three patients at dose 1 and `Pr(p1 > target) > P_E - delta` in the
 guide.  The CRAN implementation uses `n >= 3` in its corresponding conditional;
 this is a concrete backend/reference discrepancy at the boundary and should
-not be silently normalized.  Final MTD selection uses all observed dose data,
+not be silently normalized. Python now follows the guide's strict count in
+BF-BOIN movement, backfill safety, boundary tables and final selection, while
+retaining ordinary overdose elimination after at least three observations.
+The guide recommends a small positive offset up to 0.1; the wider existing
+Python offset parameter remains available explicitly. Final MTD selection uses all observed dose data,
 the BOIN elimination rule, and optionally requires the isotonic estimate at
-the selected MTD to be below the de-escalation boundary.
+the selected MTD to be strictly below the de-escalation boundary. The BF-specific
+selector now applies that strict candidate filter before choosing the nearest
+admissible estimate; ordinary BOIN's inclusive convention remains unchanged.
 
 If backfill is allowed after escalation ends, the app expansion rule treats
 patients at one dose below the latest escalation dose until that dose reaches

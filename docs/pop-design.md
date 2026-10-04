@@ -107,6 +107,10 @@ Underdose/overdose risk uses a strict comparison against
 `risk_cutoff * planned_sample_size`, and defines the true MTD as the first
 dose closest to target. The supplied risk cutoff is honored; the native
 wrapper accidentally omits it when calling its inner simulation routine.
+Python evaluates underdose and overdose flags independently. The native inner
+routine uses an `if/else if`, which can suppress the overdose flag if both
+conditions hold at a custom cutoff below 0.5. The default 0.8 cutoff cannot
+produce that overlap.
 
 ## Validation and native differences
 
@@ -128,6 +132,10 @@ DLTs at dose 1 and no patients at two higher doses produce `NA` in R. The
 Python selector correctly retains dose 1. The exact reference enumeration
 uses compact native inputs and maps labels back to avoid that defect.
 Standalone and simulation selection share one tie rule in Python; native
-functions disagree on exact ties. Native HTML/Word protocol generation,
-plots, scenario-file handling and report downloads remain open. Catalog
-entry 175 remains partial.
+functions disagree on exact ties. The [saved protocol workflow](pop-protocol-report.md)
+captures the actual design, full integer cutoffs, scenario seeds, operating
+characteristics and Monte Carlo errors in an HTML report. Native Word templates,
+plots and editable app scenario files are not reproduced. The cached plotting
+documentation advertises credible intervals, but its executable selector and
+plot contain no interval calculation; that discrepancy remains explicit.
+Catalog entry 175 remains partial.

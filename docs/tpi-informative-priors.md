@@ -47,5 +47,6 @@ Common-prior simulations retain their existing lookup and RNG path.
 
 These settings change only the prior used in the existing Beta posterior,
 posterior interval masses, safety checks, dose decisions, and isotonic point
-selection. They do not add scenario tuning, prior calibration, or isotonic
-posterior intervals, and they do not imply native application parity.
+selection. The separate [posterior interval function](tpi-isotonic-posterior.md)
+also accepts these priors. Neither feature supplies scenario tuning or prior
+calibration, and neither implies native application parity.

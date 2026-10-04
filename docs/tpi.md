@@ -107,6 +107,11 @@ for beta tails, the safety gate and exclusion/selection rules, and exhaustive
 small-trial paths against batched simulation. These establish the stated Python
 behavior, not native random-stream or full software parity.
 
-**Entry 72 remains partial.** Scenario-based tuning,
-posterior isotonic interval simulation, native archive audit and
+[Isotonic-transformed posterior intervals](tpi-isotonic-posterior.md) apply
+the mTPI paper's beta-draw inference procedure to the configured TPI posterior,
+including explicit dose-specific priors. This is separate from the posterior-SD
+intervals used for decisions and from the isotonic point estimate used for final
+selection; it does not establish an original-TPI software feature.
+
+**Entry 72 remains partial.** Scenario-based tuning, native archive audit and
 spreadsheet/report workflows remain pending.

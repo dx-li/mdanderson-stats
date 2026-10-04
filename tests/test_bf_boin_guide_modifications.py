@@ -33,8 +33,19 @@ def test_bf_extra_safety_uses_strictly_more_than_three_and_strict_mtd_bound():
     design = BFBOINDesign(
         target=0.25, elimination_probability=0.99, extra_safe=True, safety_offset=0.05
     )
-    assert not design.next_dose([3, 0], [2, 0], [3, 0], 1).eliminated[0]
-    assert design.next_dose([4, 0], [3, 0], [4, 0], 1).eliminated[0]
+    three = design.next_dose([3, 0], [2, 0], [3, 0], 1)
+    four = design.next_dose([4, 0], [3, 0], [4, 0], 1)
+    # Independent exact Beta(3,2) and Beta(4,2) upper tails at one quarter.
+    assert three.overdose_probability[0] == pytest.approx(243 / 256)
+    assert four.overdose_probability[0] == pytest.approx(63 / 64)
+    assert not three.eliminated[0]
+    assert four.eliminated[0]
+    assert design.select_mtd([3, 0], [2, 0]).dose == 1
+    assert design.select_mtd([4, 0], [3, 0]).dose is None
+    ordinary = BOINDesign(
+        target=0.25, elimination_probability=0.99, extra_safe=True, safety_offset=0.05
+    )
+    assert ordinary.next_dose([3, 0], [2, 0], 1).eliminated[0]
     table = design.boundary_table(4)
     assert table.lowest_stop_min[2] == table.eliminate_min[2]
     assert table.lowest_stop_min[3] <= 4

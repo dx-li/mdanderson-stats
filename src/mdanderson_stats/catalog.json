@@ -2653,7 +2653,8 @@
         "Original TPI posterior-SD interval decisions, common informative priors, two-patient safety gate, permanent exclusion, isotonic MTD selection and batched complete-outcome simulation",
         "Explicit dose-specific Beta-prior extension for original TPI posterior summaries, safety/decision tables, dose conduct, isotonic point selection and batched simulation; compact lookup tables share identical priors. Source common-prior defaults are unchanged; docs/tpi-informative-priors.md.",
         "mTPI posterior isotonic intervals from independent beta draws transformed across the supplied dose grid, with marginal means/medians/equal-tailed bounds, explicit weights, bounded storage and optional joint draws; docs/mtpi-isotonic-posterior.md",
-        "Table-3 fixed-loss common Beta-prior sensitivity applied consistently to mTPI UPM decisions, overdose safety, isotonic point selection, batched trial simulation and posterior interval draws; docs/mtpi-prior-sensitivity.md"
+        "Table-3 fixed-loss common Beta-prior sensitivity applied consistently to mTPI UPM decisions, overdose safety, isotonic point selection, batched trial simulation and posterior interval draws; docs/mtpi-prior-sensitivity.md",
+        "Isotonic-transformed posterior intervals apply the mTPI paper's beta-draw inference procedure to original TPI common or explicit dose-specific priors, including untried doses; bounded shared kernel, explicit weights/RNG/quantiles and optional retained draws. This is not recovered original-TPI software behavior or tuning; docs/tpi-isotonic-posterior.md."
       ],
       "validation": [
         "Exact rational beta-polynomial probabilities and extreme tails; published Excel screenshot columns at n=3,6,12,30",
@@ -2662,7 +2663,8 @@
         "Original TPI: published Table 1, independent weighted beta quadrature, safety/selection and exact small-trial path checks; tests/test_tpi.py; limitations in docs/tpi.md",
         "Dose-axis and scalar-dose summaries, explicit per-dose tables, common-prior regression and seeded heterogeneous-prior simulation; tests/test_tpi_informative_priors.py. Dose-varying shapes are a Python conjugate generalization, not recovered native defaults.",
         "Isotonic posterior inference: one-dose beta quantiles and exact two-uniform-dose projected means/CDF, immutable monotone joint draws, pre-RNG work/tail rejection; tests/test_mtpi_isotonic_posterior.py. Full supplied-grid scope, weights and empirical quantiles are explicit Python choices, not recovered native defaults.",
-        "21 focused mTPI, prior-sensitivity and isotonic-interval tests pass: exact integer-beta CDF identities, fractional-prior density quadrature, nonuniform posterior selection/draws, default screenshot decisions and seeded simulation replay; research/mtpi-prior-sensitivity-audit.md. Common shapes are bounded to >=1e-6 with sum <=1e6."
+        "21 focused mTPI, prior-sensitivity and isotonic-interval tests pass: exact integer-beta CDF identities, fractional-prior density quadrature, nonuniform posterior selection/draws, default screenshot decisions and seeded simulation replay; research/mtpi-prior-sensitivity-audit.md. Common shapes are bounded to >=1e-6 with sum <=1e6.",
+        "22 focused TPI/mTPI posterior checks pass, including direct heterogeneous-prior beta/PAVA replay, untried-dose priors, unchanged mTPI draws, exact projected-uniform identities and rejection before RNG consumption; research/tpi-isotonic-posterior-audit.md."
       ]
     },
     {
@@ -4753,10 +4755,12 @@
       "implemented_features": [
         "BF-BOIN backfill eligibility with observed activity at or below dose, assigned-count caps and reversible empirical toxicity closure",
         "Conflict-aware pooled escalation decisions with posterior safety exclusions and conditional assigned-count stopping",
-        "Final MTD selection using the shared BOIN isotonic estimator",
+        "Final MTD selection using the shared BOIN isotonic estimator with BF-specific safety exclusions and strict fitted-probability bound when requested",
         "Calendar simulation with uniform or exponential renewal arrivals, delayed DLT and response observation, patient histories and Monte Carlo errors",
         "Optional post-escalation expansion at one dose below the last actually treated escalation cohort, assigned-count cap and first toxicity closure, separate expansion counts/end reasons/times and complete follow-up; source-defined target/stops with explicit calendar choices. docs/bard-expansion.md.",
-        "Optional accelerated titration: one-patient dose progression, first-DLT/second-grade-2 exits, highest-dose top-up and lower-cap full-next-cohort transitions; explicit conditional grade-2 probabilities and assessment delay, cohort-budget accounting, titration exit diagnostics and complete follow-up. docs/bf-boin-titration.md."
+        "Optional accelerated titration: one-patient dose progression, first-DLT/second-grade-2 exits, highest-dose top-up and lower-cap full-next-cohort transitions; explicit conditional grade-2 probabilities and assessment delay, cohort-budget accounting, titration exit diagnostics and complete follow-up. docs/bf-boin-titration.md.",
+        "Guide-specific optional 1/3 stay action at target 0.25, strict lowest-dose extra-safe count n>3 with ordinary elimination retained at n>=3, strict final-MTD bound, and effective BF boundary tables. Modified individual actions precede pooled-conflict resolution as an explicit Python policy; native modifier interaction and historical 2/6 option remain unverified; docs/bf-boin.md.",
+        "Saved HTML design reports run bounded scenarios serially from a recorded seed, capture actual truth and calendar settings, and summarize selection/MCSE, allocation, DLTs, stop reasons, duration, expansion and titration. Allocation-share and early-stopping labels distinguish explicit Python quantities from unspecified native aggregation; docs/bf-boin-protocol-report.md."
       ],
       "validation": [
         "35 independent CRAN BOIN boundary rows agree with Python",
@@ -4764,7 +4768,8 @@
         "Six independent base-R Weibull calibrations match Python to relative tolerance 1e-12",
         "20 seeded trials audited for activity timing, allocation caps, count conservation and complete final follow-up",
         "Twelve focused BF-BOIN checks pass. All existing fields match 80 published no-expansion trials exactly; 60 expansion trials verify fixed-dose targeting, cap accounting, chronology and termination, including two independently reconstructed first toxicity closures. research/bard-expansion-audit.md.",
-        "Accelerated titration: 11 focused checks pass; all existing fields reproduce 80 published trials with titration disabled. Sixty independent patient ledgers cover all four exit reasons, observation chronology, grade-2 counts at exit, cohort budgets and full follow-up. Numerical checks below 129 MiB, zero swaps. research/bf-boin-accelerated-titration-audit.md."
+        "Accelerated titration: 11 focused checks pass; all existing fields reproduce 80 published trials with titration disabled. Sixty independent patient ledgers cover all four exit reasons, observation chronology, grade-2 counts at exit, cohort budgets and full follow-up. Numerical checks below 129 MiB, zero swaps. research/bf-boin-accelerated-titration-audit.md.",
+        "22 focused BF guide-rule, conduct, calendar, titration and report tests pass; report summaries reproduce serial direct simulation from captured settings. Integrated checks add exact Beta tails 243/256 and 63/64 across the extra-safe count boundary, final-selection propagation, ordinary BOIN preservation, strict fitted-bound equality, and BARD callers. The combined TPI/PoP/BF batch passed 48 focused tests at 158 MiB with zero swaps; research/bf-boin-protocol-report-audit.md."
       ]
     },
     {
@@ -5076,12 +5081,14 @@
       "implemented_features": [
         "PoPDesign and predictive_bayes_factor: vectorized stable PrBF calculations, full/cohort decision boundaries, strict transition and directional sticky exclusion rules, and weighted isotonic MTD selection with dose-label-safe filtering.",
         "simulate_pop: bounded complete-outcome cohort simulation, optional accelerated titration, final partial cohorts, configurable starting dose and exclusion, selection/early-stop/risk probabilities with Monte Carlo errors, and compact per-trial counts.",
-        "Paper n>=3 final safety guard by default (zero reproduces package guard), consistent selection ties, corrected untried-dose indexing and honored risk cutoff. Native plots, protocol/report generation and scenario-file handling remain open; see docs/pop-design.md."
+        "Paper n>=3 final safety guard by default (zero reproduces package guard), consistent selection ties, corrected untried-dose indexing and honored risk cutoff. Native plots and scenario-file handling remain open; see docs/pop-design.md.",
+        "Saved HTML protocol workflow captures the revalidated design, complete integer cutoff table, actual per-scenario seeds, full selection probabilities/MCSE, mean allocation and DLT counts, all-dose exclusion stops, and independently evaluated under/over allocation risks at the actual requested cutoff; docs/pop-protocol-report.md."
       ],
       "validation": [
         "Published Table 1 and PoPdesign 1.1.0 source/manual pinned alongside official application version1.0.0.0 in docs/pop-design-sources.json.",
         "360 native boundary rows at six targets, 39 native log-PrBF references, 30 native MTD states, and exact two-dose cohort-outcome enumeration for four scenarios.",
-        "Focused tests cover titration, all-zero/all-toxic outcomes, strict equality, sticky exclusions, untried dose labels, paper versus native safety minimum, readonly results and pre-allocation resource bounds. Package and seeded simulation smoke checks use small sequential runs."
+        "Focused tests cover titration, all-zero/all-toxic outcomes, strict equality, sticky exclusions, untried dose labels, paper versus native safety minimum, readonly results and pre-allocation resource bounds. Package and seeded simulation smoke checks use small sequential runs.",
+        "17 focused report, design and native-reference tests pass. Report summaries reproduce direct simulation from the recorded seeds and include nonexact target truths, complete cutoffs, bounded work and escaped atomic HTML. Native risk branching below cutoff 0.5, undocumented interval calculations and incomplete comparison-pane evidence remain explicit; research/pop-protocol-report-audit.md."
       ]
     }
   ]

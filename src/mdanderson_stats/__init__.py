@@ -208,6 +208,12 @@ from .beta_mixture_ml import fit_beta_mixture_ml
 from .beta_mixture_selection import BetaMixtureSelection, fit_beta_mixture_k, select_beta_mixture
 from .beta_mixture_testing import BetaMixtureTestingResult, beta_mixture_testing
 from .bf_boin import BFBOINBackfill, BFBOINDecision, BFBOINDesign
+from .bf_boin_report import (
+    BFBOINDesignReport,
+    BFBOINReportScenario,
+    BFBOINScenarioSummary,
+    bf_boin_design_report,
+)
 from .bf_boin_simulation import BFBOINSimulation, simulate_bf_boin
 from .binary_sample_size import (
     BinarySampleSize,
@@ -1135,6 +1141,12 @@ from .pop_design import (
     PoPSelection,
     predictive_bayes_factor,
 )
+from .pop_protocol_report import (
+    PoPProtocolReport,
+    PoPReportScenario,
+    PoPScenarioSummary,
+    run_pop_protocol,
+)
 from .pop_simulation import PoPSimulation, simulate_pop
 from .predictive_binary import (
     BinaryPredictivePlan,
@@ -1572,6 +1584,7 @@ from .toxfinder_model import (
 )
 from .toxicity_timing import toxicity_time_quantile
 from .tpi import TPIDesign, TPIPosterior
+from .tpi_isotonic_posterior import tpi_isotonic_posterior_intervals
 from .tpi_simulation import simulate_tpi
 from .trax import TRAXData, TRAXPlot, trax, trax_data
 from .tte_family_bayesian_gof import (
@@ -2019,6 +2032,10 @@ __all__ = [
     "PoPDesign",
     "PoPSelection",
     "PoPSimulation",
+    "PoPProtocolReport",
+    "PoPReportScenario",
+    "PoPScenarioSummary",
+    "run_pop_protocol",
     "predictive_bayes_factor",
     "simulate_pop",
     "Phase2DelayCalendarResult",
@@ -2175,6 +2192,10 @@ __all__ = [
     "BFBOINBackfill",
     "BFBOINDecision",
     "BFBOINDesign",
+    "BFBOINDesignReport",
+    "BFBOINReportScenario",
+    "BFBOINScenarioSummary",
+    "bf_boin_design_report",
     "KeyboardCombBoundaryTable",
     "KeyboardCombDecision",
     "KeyboardCombDesign",
@@ -2680,6 +2701,7 @@ __all__ = [
     "read_apcoa_metadata_csv",
     "TPIDesign",
     "TPIPosterior",
+    "tpi_isotonic_posterior_intervals",
     "simulate_tpi",
     "TOPBinaryOptimization",
     "TOPInfeasibleError",
