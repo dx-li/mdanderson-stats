@@ -1339,9 +1339,11 @@ and joint-outcome cohort simulation. Independent R calculations validate the
 posterior, ranks and selection examples. Exact risk-benefit tradeoff mapping
 also feeds the existing decision and simulation APIs. [Two-stage conduct](docs/boin12-two-stage.md)
 adds toxicity-only escalation followed by joint-endpoint optimization, with
-explicit threshold timing and retained trial outcomes. Unresolved 3+3 run-in
-precedence and generated reports remain open; native
-support for nonadditive RDS enumeration is unverified.
+explicit threshold timing and retained trial outcomes. [Saved design reports](docs/boin12-report.md)
+capture joint scenario probabilities, design settings, seeds, selection
+frequencies and Monte Carlo errors for reproducible single- or two-stage
+analyses. Unresolved 3+3 run-in precedence remains open; native support for
+nonadditive RDS enumeration is unverified.
 
 [BF-BOIN](docs/bf-boin.md) adds backfill eligibility, pooled dose decisions,
 posterior safety exclusions and final MTD selection. Assigned and evaluated

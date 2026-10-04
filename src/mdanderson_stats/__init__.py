@@ -311,6 +311,12 @@ from .boin12 import (
 from .boin12 import admissibility as boin12_admissibility
 from .boin12 import posterior as boin12_posterior
 from .boin12 import rank_desirability as boin12_rank_desirability
+from .boin12_report import (
+    BOIN12Report,
+    BOIN12ReportScenario,
+    BOIN12ScenarioSummary,
+    boin12_report,
+)
 from .boin12_simulation import BOIN12Simulation, simulate_boin12
 from .boin12_two_stage import (
     BOIN12TwoStageDecision,
@@ -3325,6 +3331,10 @@ __all__ = [
     "BOIN12Posterior",
     "BOIN12RDSTable",
     "BOIN12Selection",
+    "BOIN12Report",
+    "BOIN12ReportScenario",
+    "BOIN12ScenarioSummary",
+    "boin12_report",
     "BOIN12Simulation",
     "BOIN12TwoStageDecision",
     "BOIN12TwoStageSimulation",

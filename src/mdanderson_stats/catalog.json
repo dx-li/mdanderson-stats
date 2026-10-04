@@ -4444,7 +4444,8 @@
         "Joint multinomial cohort simulation preserving efficacy/toxicity dependence, with trial-level counts, exclusions, selections and Monte Carlo standard errors",
         "Exact risk-benefit tradeoff-to-utility mapping and BOIN12Design.from_tradeoff reuse the existing posterior, decision, final selection and simulation APIs",
         "Two-stage cohort decisions and joint-outcome simulation: toxicity-only escalation until a required per-dose S threshold, then ordinary BOIN12 optimization; strict posterior safety, per-dose sticky exclusions, retained outcomes and transition diagnostics, with explicit cohort-boundary and stopping policies. docs/boin12-two-stage.md.",
-        "Remaining native workflow gaps: unresolved 3+3 run-in precedence and generated reports/protocols. Multilevel endpoints are labeled under development in the inspected app; nonadditive joint RDS native support is unverified"
+        "Saved reproducible HTML design/scenario reports for single-stage and two-stage BOIN12: complete joint outcome truth, utility and boundary settings, exact integer seed, selection probabilities and MCSEs, mean outcomes, stopping and stage-transition summaries; serial bounded simulation. docs/boin12-report.md.",
+        "Remaining native workflow gaps: unresolved 3+3 run-in precedence. Multilevel endpoints are labeled under development in the inspected app; nonadditive joint RDS native support is unverified"
       ],
       "validation": [
         "Independent escalation 0.2.3 executable references: 15 posterior cases, 166 RDS rows, complete-data decision cases and final isotonic OBD examples",
@@ -4452,7 +4453,8 @@
         "Tradeoff affine identity with correlated joint cells, weights 0 and 1, invalid weights and mapped versus explicitly configured posterior/decision/OBD workflow",
         "docs/boin12.md and docs/boin12-reference.md",
         "Twenty-two focused BOIN12 checks pass, including exact cutoff equality, no minimum-three safety guard, unsafe-neighbor movement, stopping precedence and deterministic stage-transition ledgers; research/boin12-two-stage-audit.md.",
-        "Independent 70-digit finite-binomial references match 320 Stage 1 safety decisions; efficacy invariance, adjacent safe destinations, deterministic stage switching and pre-RNG work rejection pass. Combined integration audit 125.12 MiB, zero swaps."
+        "Independent 70-digit finite-binomial references match 320 Stage 1 safety decisions; efficacy invariance, adjacent safe destinations, deterministic stage switching and pre-RNG work rejection pass. Combined integration audit 125.12 MiB, zero swaps.",
+        "Thirteen focused report and simulator checks pass; three report checks verify direct-simulator summaries, pre-RNG work rejection, owned input snapshots, exact 64-bit seed rendering, joint truth capture, escaping and no-selection outcomes. Scoped Ruff and mypy pass; research/boin12-report-audit.md."
       ]
     },
     {
