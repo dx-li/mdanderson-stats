@@ -26,15 +26,46 @@ these model families: `survan_cox.py`, `interval_survival*.py`,
 it does not establish identical plotting, data-upload, report, or application
 defaults.
 
-## Unavailable source contract
+## Recovered prediction helpers and remaining statistical contract
 
-The R dispatcher calls `coxIntStrataContour` and `coxIntStrataContour3D` for
-stratified interval-PH models (`survivalContour.R` lines 207–212), but neither
-helper is among the cached package R files. The package table and `CI3D`
-documentation claim confidence intervals for this route, yet the missing
-helper means the app's exact stratified interval contour and uncertainty
-calculation cannot be recovered from this cache. Do not fill that gap by
-assuming the ordinary interval-PH helper generalizes unchanged.
+On October 4, a read-only check of the author's complete Git tree at the
+pinned revision recovered the two stratified helpers and their predictor.
+The original cache was incomplete; the files were available upstream.
+Saved bytes match these Git blob hashes:
+
+| File | Git blob |
+| --- | --- |
+| [R/coxIntStrataContour.R](https://github.com/YushuShi/survivalContour/blob/d4645f69f23fc1146c07432f576b4c40f85e1bba/R/coxIntStrataContour.R) | `35a2599badb0e2a5a98b2c9fdea92c5e35826b0b` |
+| [R/coxIntStrataContour3D.R](https://github.com/YushuShi/survivalContour/blob/d4645f69f23fc1146c07432f576b4c40f85e1bba/R/coxIntStrataContour3D.R) | `96a24706661e3774052f3ad48887281f6d0017f4` |
+| [R/predictPhreg.R](https://github.com/YushuShi/survivalContour/blob/d4645f69f23fc1146c07432f576b4c40f85e1bba/R/predictPhreg.R) | `d0c436c241bd1a1bd35ec86609b25a945dce1b49` |
+
+The dispatcher calls the helpers at lines 207–212. They use first-seen
+stratum order, a common covariate grid between the pooled 2.5th and 97.5th
+percentiles, and pooled numeric means or categorical modes for adjustment
+unless a profile is supplied. Time points come from the fitted object's
+unique times, prepending zero when needed. The 2D route plots survival;
+the 3D route also passes lower and upper confidence surfaces to the renderer.
+
+`predictPhreg` defaults to model-based uncertainty, log-scale limits and 95%
+confidence. It computes survival as `exp(-exp(x beta) H0(t))`. Its cumulative
+hazard variance combines baseline variance, coefficient covariance and a
+baseline/coefficient cross term derived from the fitted `mets` object's
+`E`, `S0`, `II` and `se.cumhaz` fields. Log-scale survival limits use
+`exp(log(S) +/- z * SE_cumulative_hazard)`, with the upper limit capped at
+one. Thus confidence surfaces are an actual statistical output, not only
+plot styling.
+
+Recovering the predictor does not resolve the advertised
+`mets::phreg(Surv(..., type="interval2"))` response-contract mismatch. The
+current Python estimator maximizes a genuine interval-censored likelihood;
+its Turnbull support-identification bounds are not sampling confidence
+limits. Counting-process variance fields cannot be substituted into that
+estimator without a valid derivation. Existing coefficient bootstraps do not
+provide baseline-survival confidence surfaces either. The
+[interval-likelihood audit](interval-survival-audit.md) and
+[stratified guide](../docs/interval-survival-stratified.md) describe the
+implemented target and remaining uncertainty scope. No prediction or
+confidence-interval calculation was executed or added during this source review.
 
 The cache contains the package wrapper, not the deployed Shiny server. It
 therefore cannot establish the live site's complete user workflow or report
