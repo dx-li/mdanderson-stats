@@ -1,10 +1,15 @@
 import json
 
+import numpy as np
 import pytest
 
 from mdanderson_stats.pop_design import PoPDesign
+from mdanderson_stats.pop_protocol_report import PoPReportScenario, run_pop_protocol
 from mdanderson_stats.pop_scenario_file import PoPInputScenario, PoPScenarioInput
-from mdanderson_stats.pop_selection_plot import plot_pop_selection
+from mdanderson_stats.pop_selection_plot import (
+    plot_pop_selection,
+    plot_pop_selection_percentages,
+)
 
 
 def _input() -> PoPScenarioInput:
@@ -67,4 +72,32 @@ def test_selector_plot_keeps_original_dose_positions_and_selected_marker():
         assert selected[0, 0] == selection.dose
         assert ax.collections[0].get_label() == "Selected MTD"
     assert "Target" in [line.get_label() for line in ax.lines]
+    plt.close(ax.figure)
+
+
+def test_selection_percentage_plot_keeps_no_mtd_and_percent_scale():
+    matplotlib = pytest.importorskip("matplotlib")
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    report = run_pop_protocol(
+        PoPDesign(target=0.25),
+        scenarios=(PoPReportScenario("selected scenario", (0.1, 0.25, 0.45)),),
+        total_patients=9,
+        cohort_size=3,
+        trials=5,
+        start_dose=1,
+        titration=False,
+        seed=26,
+    )
+    _, ax = plt.subplots()
+    plot_pop_selection_percentages(
+        report.scenarios[0], ax=ax, dose_labels=("low", "target", "high")
+    )
+    assert [tick.get_text() for tick in ax.get_xticklabels()] == ["No MTD", "low", "target", "high"]
+    np.testing.assert_allclose(
+        [patch.get_height() for patch in ax.patches],
+        100 * np.asarray(report.scenarios[0].selection_probability),
+    )
+    assert ax.get_ylabel() == "Selection percentage (%)"
     plt.close(ax.figure)

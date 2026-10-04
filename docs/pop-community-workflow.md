@@ -53,6 +53,19 @@ report = PoPScenarioInput.read_json("pop-scenarios.json").run()
 report.write_html("pop-report.html")
 ```
 
+The report retains final-selection probabilities in no-MTD-then-dose order.
+Use `plot_pop_selection_percentages` to draw that scenario's selection
+distribution. The Python plot converts the stored probability fractions to
+percentages, includes no-MTD as its own bar, and accepts optional labels for
+the dose bars.
+
+```python
+from mdanderson_stats import plot_pop_selection_percentages
+
+selection_ax = plot_pop_selection_percentages(report.scenarios[0])
+selection_ax.figure.savefig("pop-selection-percentages.png", dpi=120)
+```
+
 The JSON records the cutoff settings and random seed used by the Python
 simulation. Scenario vectors preserve original dose order; the selected dose
 and plot labels use those same indices. The run still follows the existing

@@ -8,6 +8,7 @@ import numpy as np
 
 from ._validation import scalar
 from .pop_design import PoPSelection
+from .pop_protocol_report import PoPScenarioSummary
 
 if TYPE_CHECKING:
     from matplotlib.axes import Axes
@@ -88,4 +89,50 @@ def plot_pop_selection(
     if dose_labels is not None:
         ax.set_xticklabels(dose_labels)
     ax.legend()
+    return ax
+
+
+def plot_pop_selection_percentages(
+    scenario: PoPScenarioSummary,
+    *,
+    ax: Axes | None = None,
+    dose_labels: tuple[str, ...] | None = None,
+) -> Axes:
+    """Plot simulated final-selection percentages, including the no-MTD outcome.
+
+    The first selection probability is the no-selection category; the
+    remaining entries map to the scenario's dose order. No uncertainty bars
+    are added because the source ``plot.pop`` selection plot contains none.
+    """
+
+    if not isinstance(scenario, PoPScenarioSummary):
+        raise TypeError("scenario must be a PoPScenarioSummary")
+    probabilities = np.asarray(scenario.selection_probability, dtype=float)
+    dose_count = len(scenario.true_toxicity)
+    if (
+        not 2 <= dose_count <= 100
+        or probabilities.shape != (dose_count + 1,)
+        or np.any(~np.isfinite(probabilities))
+        or np.any((probabilities < 0) | (probabilities > 1))
+        or not np.isclose(np.sum(probabilities), 1.0, rtol=0, atol=8 * np.finfo(float).eps)
+    ):
+        raise ValueError("scenario selection probabilities must be no-MTD plus one per dose")
+    if dose_labels is not None and (
+        not isinstance(dose_labels, tuple)
+        or len(dose_labels) != dose_count
+        or any(not isinstance(label, str) or not label for label in dose_labels)
+    ):
+        raise ValueError("dose_labels must be a tuple of one nonempty label per dose")
+
+    from matplotlib import pyplot as plt
+
+    if ax is None:
+        _, ax = plt.subplots()
+    labels = ["No MTD", *(dose_labels or tuple(f"Dose {i}" for i in range(1, dose_count + 1)))]
+    x = np.arange(dose_count + 1)
+    bars = ax.bar(x, 100 * probabilities, color=["0.65", *["C0"] * dose_count])
+    ax.set_xticks(x, labels)
+    ax.set(xlabel="Final selection", ylabel="Selection percentage (%)", ylim=(0, 100))
+    ax.bar_label(bars, fmt="%.1f%%", padding=2)
+    ax.set_title(scenario.label)
     return ax

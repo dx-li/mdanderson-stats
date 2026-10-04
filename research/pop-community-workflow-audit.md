@@ -12,6 +12,13 @@ composes that result without another statistical calculation. It preserves
 original dose positions instead of reproducing the native compressed-index
 plotting defect for untreated or excluded doses.
 
+`get.oc.pop.R` constructs a selection vector with one slot for each dose and a
+final no-MTD slot. `plot.pop.R` only bars the dose slots and labels the axis as
+percent, although `summary.pop.R` explicitly multiplies the probabilities by
+100. The Python selection plot uses the reported probability fractions,
+converts them to actual percentages, and retains no-MTD as a separate outcome.
+It does not add uncertainty bars; the cached selection plot has none.
+
 The existing `run_pop_protocol` accepts explicit scenarios but had no portable
 input roundtrip. `PoPScenarioInput` adds a bounded versioned JSON form of the
 design settings, scenario labels/truth vectors, simulation settings, and seed;
