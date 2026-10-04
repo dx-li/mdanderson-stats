@@ -8,9 +8,9 @@ planned-enrollment thresholds. TITE-BOIN's native correct-MTD and regret evaluat
 conventions remain unresolved, so that entry has moved to section A. This illustrates
 why a “no additional calculation identified” finding is provisional.
 
-The BF-BOIN review also found an omitted optional 1/3 stay rule and source-specific
-strictness in extra-safety stopping and final MTD screening. These are now covered
-in Python. Its optional modifier's precedence with conflicting backfill data is
+The BF-BOIN review recovered optional 1/3 stay and 2/6 de-escalation rules and
+source-specific strictness in extra-safety stopping and final MTD screening.
+These are now covered in Python. Modifier precedence with conflicting backfill data is
 not explicit in the recovered guide, so the Python composition is documented and
 BF-BOIN has moved to section A.
 
@@ -29,7 +29,7 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 | SYNERGY (#18) | The four 2007 parametric response surfaces and fitting procedures remain unavailable; the inspected PMC, publisher, and archive routes were exhausted. | [response-surface audit](synergy-response-surface-audit.md) |
 | Adaptive Randomization (#62) | Explicit Python controller policies exist; native scheduler/control ordering, floors and RNG conventions remain unspecified. | [controller audit](arand-controller-audit.md); [calendar guide](../docs/arand-calendar.md) |
 | CI of Interaction Index (#65) | Inference, plots, both published case studies and the three-drug simulation study are covered. The second simulation study's fixed-ray ratio is absent from recovered mathematics. Native pooling-denominator and file/report details remain unverified; the Python variance convention is explicit. | [workflow audit](interaction-index-workflow-audit.md); [case studies](../docs/interaction-index-case-studies.md); [three-drug study](../docs/interaction-index-study.md) |
-| Bayesian Chi-Square TTE (#66) | The discrete/rounded posterior-CDF diagnostic is covered. Native rounded-data fitting, censored diagnostics, native fitting/priors, fallback priors, Rychlik rank/trim convention, sorting, and reports remain uncertain. No BIC/DIC output contract was established. | [Bayesian chi-square guide](../docs/bayesian-chi-square.md) |
+| Bayesian Chi-Square TTE (#66) | Rounded interval-likelihood fitting now covers all seven families with explicit proper Gaussian parameter priors and paired randomized CDF diagnostics. Censored diagnostics, native fitting/priors, fallback priors, Rychlik rank/trim convention, sorting, and reports remain uncertain. No BIC/DIC output contract was established. | [Bayesian chi-square guide](../docs/bayesian-chi-square.md); [rounded-time guide](../docs/rounded-tte-bayesian-gof.md) |
 | PRT (#69) | The published covariance-weighted isotonic projection can materially leave [0,1]; original executable behavior is unresolved. | [PRT guide](../docs/prt.md) |
 | WFMM (#70) | Native prior/proposal defaults, `delta_omega` mapping, other transforms, compression and files remain unresolved. | [WFMM audit](wfmm-audit.md); [prediction guide](../docs/wfmm-prediction.md) |
 | TPI (#72) | Scenario-based tuning remains underspecified and unimplemented; this is distinct from the available TPI/mTPI rules and informative priors. | [TPI guide](../docs/tpi.md) |
@@ -57,8 +57,8 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 | BaCIS (#153) | Published fixed cutoff conflicts with reported operating characteristics; no automatic calibration procedure was recovered. Explicit-cutoff simulation remains usable. | [BaCIS simulation guide](../docs/bacis-simulation.md) |
 | BayesESS (#154) | Unknown-mean variance ESS has conflicting Hessian signs, an unspecified prior-df adjustment, and native scale/argument inconsistencies. | [variance ESS audit](normal-variance-ess-audit.md) |
 | MERIT (#160) | Source does not resolve how previously stopped arms enter later isotonic pooling. The Python policy remains explicit rather than a claimed native rule. | [interim audit](merit-interim-search-audit.md) |
-| BFBOIN (#162) | The optional 1/3 stay action, strict extra-safety count and strict final-MTD bound are implemented. The guide does not explicitly resolve how the optional action composes with conflicting lower-dose backfill data; Python applies modified individual actions before ordinary pooled-conflict resolution. Historical app evidence also mentions a 2/6 modifier whose current primary specification is unavailable. Reports preserve the actual settings and calendar summaries. | [BFBOIN guide](../docs/bf-boin.md); [reference audit](../docs/bf-boin-reference.md); [report audit](bf-boin-protocol-report-audit.md) |
-| BARD (#165) | Stage-2 timing, eligibility and quota rules remain unknown. | [integrated audit](bard-integrated-audit.md) |
+| BFBOIN (#162) | BARD guide Remarks 4–5 recover the optional 1/3 stay and 2/6 de-escalation rules, now implemented across their stated target ranges. Strict extra-safety count and final-MTD bounds are also covered. Native modifier precedence with conflicting backfill data remains unspecified; Python applies modified individual actions before ordinary pooled-conflict resolution. Reports preserve both flags and calendar summaries. | [BFBOIN guide](../docs/bf-boin.md); [modifier source audit](bf-boin-bard-modifiers-audit.md) |
+| BARD (#165) | The guide's complete BF-BOIN two-stage simulation with covariate-dependent response generation and balance/correct-OBD summaries remains unimplemented. The cached supplement supplies the response model and scenario intercepts. Native stage-two timing and hard-quota rules remain unresolved; eligibility is a caller-supplied clinical input. | [simulation crosswalk](bard-remaining-simulation-audit.md); [integrated audit](bard-integrated-audit.md) |
 | SurvivalContour (#166) | Recovered helpers provide model-based confidence-limit surfaces, but mapping app counting-process fields to Python interval-likelihood fitting remains unresolved. This is a contract boundary, not evidence that every optional forest-library feature is an app requirement. | [source coverage audit](survival-contour-coverage-audit.md) |
 | MDS-HOPE (#171) | Cytogenetics handling, standardization and baseline are absent from recovered sources. | [source status](mds-hope-source-status.md) |
 | Rare Disease 123 (#172) | Cohort staggering, generalized threshold and prior remain unknown. | [generalization audit](rare-disease-123-generalization-audit.md) |

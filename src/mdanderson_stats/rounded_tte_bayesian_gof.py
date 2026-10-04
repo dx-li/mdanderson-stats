@@ -153,7 +153,7 @@ def rounded_tte_bayesian_gof(
     The caller supplies a proper Gaussian prior in absolute coordinates:
     exponential log scale; lognormal ``(mu=E[log(T)], log(sigma))``; and for
     other families log shape/log scale, with log ``c`` for log-odds-rate. The
-    result centers only log scale or ``mu`` and adds ``time_offset`` back to
+    result centers only log scale or ``mu``; add ``time_offset`` back to
     recover the absolute coordinate. This is a Python prior contract; it does
     not reproduce family-specific conjugate priors of other fitters or assert
     BCSTTE executable defaults.

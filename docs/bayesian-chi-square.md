@@ -20,6 +20,10 @@ shape, scale and the odds-rate parameter under an explicit Gaussian prior on
 their logarithms. All seven distribution families advertised by the guide now
 have Python posterior-fitting workflows, with explicit prior choices and
 right-censor likelihoods.
+A [rounded-time workflow](rounded-tte-bayesian-gof.md) fits all seven families
+from finite observation intervals using their probability masses and an explicit
+proper transformed-Gaussian prior. It also evaluates the paired randomized
+Johnson diagnostic; right censoring is not supported by this interval fitter.
 The sources are the [BCS TTE guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BCSTTE/BCSTTE_UsersGuide.pdf)
 (August 15, 2006) and Johnson's
 [A Bayesian chi-square test for goodness-of-fit](https://arxiv.org/abs/math/0508593),
@@ -71,7 +75,10 @@ equal-probability bins and Pearson statistic as the continuous API. This is the
 randomized discrete extension described by Johnson; the public BCSTTE guide's
 rounded-integer survival example uses `(t - 1/2, t + 1/2)` intervals.
 
-The diagnostic does not fit a discrete or rounded likelihood. Compute bounds
+The generic diagnostic does not fit a discrete or rounded likelihood. The
+[rounded-time fitter](rounded-tte-bayesian-gof.md) supplies jointly sampled
+posterior parameters and paired CDF bounds for all seven continuous families.
+For other discrete models, compute bounds
 from posterior draws conditioned on the corresponding atom probability or
 rounding-interval probability; passing point-density fits or a posterior
 conditioned on the unrounded midpoint is not equivalent. This randomized CDF
@@ -204,8 +211,10 @@ chi-square marginals, search correction, and extreme-tail underflow.
 ## Remaining coverage and source issues
 
 **Catalog status is partial.** The source-defined randomized discrete/rounded
-CDF diagnostic is available from caller-supplied posterior CDF mass bounds.
-Native rounded-data fitting, the native censored-data diagnostic, native
+CDF diagnostic is available from caller-supplied posterior CDF mass bounds;
+the rounded-time fitter now supplies interval-likelihood posteriors for all
+seven guide families under explicit proper Gaussian parameter priors.
+The native censored-data diagnostic, native
 fitting/priors and fallback priors, native Rychlik rank/trim conventions,
 sorting and native HTML reports remain pending.
 The generic interface can consume verified posterior CDF draws from other models,

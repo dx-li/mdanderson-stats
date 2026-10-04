@@ -29,9 +29,9 @@ escalates and at least 2/6 de-escalates. The latter is applied as an explicit
 six-patient action override; the ordinary BOIN design remains unchanged. Both
 flags can be recorded in the protocol report. If both are enabled, their target
 ranges do not overlap, so construction rejects the incompatible combination.
-The guide does not explicitly specify this interaction, so the ordering is an
-explicit Python policy. Empirical backfill closure still uses the raw observed
-and adjacent pooled rates; safety exclusions take precedence.
+The guide does not specify how these modifiers compose with backfill conflicts,
+so the ordering is an explicit Python policy. Empirical backfill closure still
+uses the raw observed and adjacent pooled rates; safety exclusions take precedence.
 
 Ordinary posterior safety elimination starts at three evaluated patients.
 BF-BOIN's optional `extra_safe=True` rule requires **more than three** evaluated

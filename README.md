@@ -929,10 +929,12 @@ Normal-Inverse-Gamma prior. Its
 [right-censored workflow](docs/lognormal-right-censored-bayesian.md) uses that
 same explicit prior with a Gibbs sampler; censor integration does not leave a
 conjugate posterior. All seven families accept noninformative right censoring.
-The Johnson diagnostic supports complete continuous observations and randomized
+The [rounded-time workflow](docs/rounded-tte-bayesian-gof.md) fits all seven
+families using interval probabilities and explicit transformed-Gaussian priors,
+with a paired randomized Johnson diagnostic. The generic diagnostic also accepts
 discrete/rounded CDF bounds from an appropriately fitted posterior. The dedicated
-right-censored lognormal result has no such diagnostic. Native rounded-data fitting,
-prior defaults, censored diagnostics, rank/trim conventions and reporting remain pending.
+right-censored lognormal result has no such diagnostic. Native prior defaults,
+censored diagnostics, rank/trim conventions and reporting remain pending.
 
 [MERIT](docs/merit.md) adds isotonic dose selection, Bayesian interim decisions,
 correlated endpoint simulation and sample-size/boundary optimization for randomized
@@ -1350,8 +1352,9 @@ one dose below the last escalation cohort, with assigned-count caps and
 toxicity closure. [Accelerated titration](docs/bf-boin-titration.md) adds
 single-patient escalation, DLT/grade-2 triggers and dose-cap transitions, with
 explicit grade-2 probabilities and assessment timing. The guide's optional
-1/3 stay action, strict BF extra-safety count and strict final-MTD bound are
-supported. [Saved protocol reports](docs/bf-boin-protocol-report.md) capture
+1/3 stay action (targets 0.20–0.279), 2/6 de-escalation (targets 0.28–0.33),
+strict BF extra-safety count and strict final-MTD bound are supported.
+[Saved protocol reports](docs/bf-boin-protocol-report.md) capture
 design settings, timing and compact scenario summaries. Unspecified native
 modifier interactions and report aggregation formulas remain explicit.
 
@@ -1481,8 +1484,10 @@ pooling weights and tie policies are explicit. [Accelerated titration](docs/bard
 adds one-patient dose progression, grade-2 triggers and the distinct dose-cap
 transitions. [BF-BOIN titration](docs/bf-boin-titration.md) provides the corresponding
 option for that stage-one model, and [BF-BOIN expansion](docs/bard-expansion.md)
-continues enrollment at the fixed lower dose. BF-BLRM expansion, stage-two
-calendar timing and native reports remain open.
+continues enrollment at the fixed lower dose. The complete BF-BOIN two-stage
+scenario simulator, including covariate-dependent responses and balance/OBD
+summaries, remains open. The [remaining-work crosswalk](research/bard-remaining-simulation-audit.md)
+identifies the recovered response model and unresolved timing/quota conventions.
 
 [TITE-BOIN12 AL methods](docs/tite-boin12.md) add patient-level handling of
 pending toxicity and efficacy, joint utility posteriors, interim dose conduct

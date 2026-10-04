@@ -6,8 +6,9 @@ arrivals and assessment delays. It returns each assignment, posterior decision,
 completed outcome and final MTD. [Stage-two continuation](bard-two-stage.md)
 uses that result for eligible carryover, allocation and final OBD selection.
 [Accelerated titration](bard-titration.md) adds one-patient dose progression and
-grade-2 event handling. BARD remains partial: expansion, stage-two timing and
-native reports remain open.
+grade-2 event handling. BARD remains partial: the guide's complete BF-BOIN
+two-stage scenario simulation and balance/OBD summaries remain open. See the
+[remaining-work crosswalk](../research/bard-remaining-simulation-audit.md).
 
 ## A reproducible timeline
 

@@ -1362,6 +1362,7 @@ from .rose import (
     rose_select,
     simulate_rose,
 )
+from .rounded_tte_bayesian_gof import RoundedTTEBayesianGOF, rounded_tte_bayesian_gof
 from .schweder import (
     SchwederBootstrap,
     SchwederFit,
@@ -2994,6 +2995,8 @@ __all__ = [
     "log_logistic_bayesian_gof",
     "LogOddsRateBayesianGOF",
     "log_odds_rate_bayesian_gof",
+    "RoundedTTEBayesianGOF",
+    "rounded_tte_bayesian_gof",
     "dct_binary_sample_size",
     "DCTNormalSampleSize",
     "DCTSampleSizeReport",

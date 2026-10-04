@@ -48,5 +48,9 @@ mypy checks passing. Input dimensions, categorical representability, outcome
 types, inclusive target and work estimates are checked before allocation
 randomness. The result retains inclusion/exclusion identities, separate stage
 counts, assignment seeds and target shortfalls. No CI expansion, native app
-execution or large operating-characteristic run was performed. BARD remains
-partial while titration, expansion, stage-two timing and native parity are open.
+execution or large operating-characteristic run was performed. Subsequent work
+added accelerated titration and BF-BOIN expansion. BARD remains partial because
+the guide's complete two-stage operating-characteristic workflow is still
+missing; the [current simulation crosswalk](bard-remaining-simulation-audit.md)
+separates its recoverable calculations from unresolved native timing and quota
+conventions.
