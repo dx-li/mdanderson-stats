@@ -1162,6 +1162,10 @@ from .random_survival_forest import (
     fit_random_survival_forest,
     predict_random_survival_forest,
 )
+from .random_survival_forest_brier import (
+    RandomSurvivalForestOOBBrier,
+    random_survival_forest_oob_brier_score,
+)
 from .random_survival_forest_contour import (
     RandomSurvivalForestContour,
     random_survival_forest_contour,
@@ -2426,6 +2430,8 @@ __all__ = [
     "predict_survival_spline",
     "RandomSurvivalForestFit",
     "RandomSurvivalForestOOB",
+    "RandomSurvivalForestOOBBrier",
+    "random_survival_forest_oob_brier_score",
     "RandomSurvivalForestPrediction",
     "RandomSurvivalForestContour",
     "fit_random_survival_forest",

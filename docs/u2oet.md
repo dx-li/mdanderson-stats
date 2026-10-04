@@ -120,8 +120,9 @@ Remaining coverage includes:
   2017 explicit-prior GAO fitter are available.
 - Validation of complete trial operating characteristics.
   Explicit-prior fitting, pseudo-trial centers and prior ESS are supplied below.
-- Adaptive GAO calendar integration and native final-selection validation.
-  The standalone [GAO adaptive fitter](u2oet-gao-adaptive-precision.md) is available.
+- Native final-selection validation.
+  The standalone [GAO adaptive fitter](u2oet-gao-adaptive-precision.md) and its
+  optional [calendar integration](u2oet-gao-trials.md) are available.
   PDS/CMI/hybrid [calendar trials](u2oet-adaptive-trial.md) now optionally use
   adaptive precision for interim and final fits. The standalone
   [adaptive fitter](u2oet-adaptive-precision.md) now monitors all four corner
@@ -709,9 +710,9 @@ retained true outcomes and observation times. This is a workflow check, not a
 reproduction of the paper's 3000-trial operating characteristics.
 
 The separate [GAO calendar driver](u2oet-gao-trials.md) supports fixed-budget
-fits. [Adaptive PDS/CMI/hybrid calendar fitting](u2oet-adaptive-trial.md) and
+and optional adaptive fits. [Adaptive PDS/CMI/hybrid calendar fitting](u2oet-adaptive-trial.md) and
 the standalone [adaptive GAO fitter](u2oet-gao-adaptive-precision.md) are also
-available. Still pending: adaptive GAO calendar integration, first/new/old-dose
+available. Still pending: first/new/old-dose
 cohort-size semantics, complete native configuration/report workflows and
 validation of native final selection.
 

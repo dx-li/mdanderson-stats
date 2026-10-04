@@ -33,7 +33,7 @@ the `km` censoring path is implemented, not a separate censor forest. The fit's
 training fingerprint and row order are checked before scoring. Rows with zero
 OOB contributors stay NaN and are excluded only from score averages. The
 singleton-grid policy is explicit: zero trapezoid area, with standardized
-score NaN when its sole time is zero. Native source/RNG parity is not claimed.
+score NaN when its sole time is zero. Full native forest/RNG parity is not claimed.
 
 ## Implementation and validation
 
@@ -55,3 +55,7 @@ singleton/large-time integration policies. Four focused tests pass. Ruff
 check/format, module-scoped mypy with silent imports, and `git diff --check`
 pass. One serial focused run took 3.17 seconds, peaked at 141,328,384 bytes
 RSS, and reported zero swaps; no full suite or installation was run.
+
+Root integration repeated these comparisons alongside the affected GAO
+workflow checks: 18 checks passed in 5.653 seconds, with 148.03 MiB process
+peak RSS and zero swaps. Root targeted Ruff, format and mypy checks pass.

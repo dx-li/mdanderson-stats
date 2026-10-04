@@ -70,6 +70,11 @@ records exact agreement with 16 native concordance cases and 264 independently
 reconstructed native-kernel curve values. These checks do not establish
 native full-forest random-stream equivalence or confidence intervals.
 
+[OOB Brier scoring](random-survival-oob-brier.md) evaluates these survival
+curves with the source's censoring weights and returns per-time errors,
+per-observation contributions and integrated CRPS. It uses the complete
+training population to estimate censoring, including rows without OOB curves.
+
 ## Permutation importance
 
 `permutation_random_survival_forest_importance` measures the increase in OOB

@@ -1117,6 +1117,13 @@ Python uses a distinct seeded random stream and bounded sequential fitting and
 prediction. See `research/random-survival-forest-audit.md` for source hashes,
 kernel scope and remaining native features.
 
+`random_survival_forest_brier.py` independently implements the same revision's
+full-training OOB Brier/CRPS helper with its exponential censor-hazard estimate,
+event-grid projection and tied-time conventions. The reference harness loads
+the unchanged `get.brier.survival` R helper from a caller-supplied cache;
+upstream R function bodies are not redistributed. See
+`research/random-survival-oob-brier-audit.md` for the exact supported scope.
+
 `interval_survival.py` independently implements the nonparametric
 interval-censored proportional-hazards likelihood on Turnbull support
 intervals. Algorithm definitions and numerical references were checked against

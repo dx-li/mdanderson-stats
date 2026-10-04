@@ -29,12 +29,12 @@ row/grid/prediction combination. The companion contribution and curve files
 store the per-row terms and summaries. The generated fixtures are deterministic
 and do not depend on an R random-number stream.
 
-The generator was run once with base Rscript against the cached source. All
+The final generator was run with base Rscript against the cached source. All
 four event-grid, censor-survival, contribution-matrix, score, CRPS and
 standardized-CRPS comparisons passed. The command completed in about 0.4
 seconds; peak memory was not measured.
 
-Source provenance is randomForestSRC 3.2.2 at Git tag
+Source provenance is randomForestSRC 3.2.2 at Git revision
 `b4d099e262423362a8872c13c468e6dbe2f9e9da`; `R/utilities.survival.R` has blob
 `9ed62c12c118edd11d78fb85f2ec230448646406`. The implementation is intentionally
 validated against that helper's actual tied-time indexing: `sIndex(x, y)`

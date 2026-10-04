@@ -417,5 +417,20 @@ has a standalone wrapper for the 2017 explicit-prior GAO fitter. Warmup runs
 once; complete coordinate vectors resume each chain. The wrapper enforces
 cumulative actual likelihood/work budgets and conservative live-array bounds,
 and reports target attainment separately from split-Rhat. Native prior
-interpretation, calibration and adaptive GAO calendar integration remain open;
+interpretation and calibration remain open;
 entry 77 stays partial. See [the audit](u2oet-gao-adaptive-precision-audit.md).
+
+The 2017 GAO calendar driver also supports this precision criterion through
+the existing explicit adaptive settings. It caches fits and diagnostics by
+observed sufficient statistics, requires precision at final follow-up, and
+enforces cumulative evaluation/work and live-memory limits. Default fixed
+sampling remains compatible. See [the calendar audit](u2oet-gao-adaptive-trial-audit.md).
+
+## Survival forest prediction-error curves
+
+Full-training out-of-bag Brier scores and integrated CRPS now follow the pinned
+RF-SRC helper's actual censoring, tied-time and reduced-grid conventions.
+Independent unchanged-R-helper references cover four cases and compare every
+row contribution as well as censor survival, mean scores and integrated values.
+The censoring forest and native subset behavior remain outside this evaluator;
+entry 166 stays partial. See [the guide](../docs/random-survival-oob-brier.md).

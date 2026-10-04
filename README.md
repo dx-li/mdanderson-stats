@@ -1146,7 +1146,10 @@ chains toward a supplied four-corner utility MCSE/SD target and reports
 whether the target was reached within bounded draws and work.
 [GAO calendar trials](docs/u2oet-gao-trials.md) connect that fitter to pending
 outcomes, cohort allocation and final selection, with cumulative work limits
-and replay inputs. Native prior interpretation and GAO calibration remain open.
+and replay inputs. Optional adaptive precision applies the supplied corner
+target to interim and final analyses, reuses unchanged observed-data fits,
+and fails explicitly if the target or cumulative work limit cannot be met.
+Native prior interpretation and GAO calibration remain open.
 The separate [original 2010 GAO model](docs/u2oet-gao2010.md) now supports
 centered doses, endpoint-specific signed interactions, ordinal probabilities
 and complete/toxicity-only likelihoods. Its separate
@@ -1629,6 +1632,9 @@ averaged Kaplan–Meier survival and Nelson–Aalen hazards,
 and contours from fitted forests. Sequential tree growth, sparse leaf curves
 and explicit work limits bound computation. Optional [out-of-bag diagnostics](docs/random-survival-oob.md)
 report held-out survival/hazard curves, contributor counts and concordance error.
+[OOB Brier scores and integrated CRPS](docs/random-survival-oob-brier.md)
+add source-defined censoring weights, per-observation contributions and
+prediction-error curves, including the native event-grid and tie conventions.
 Permutation, anti-split and [random-routing importance](docs/random-survival-forest-random-importance.md)
 add per-tree OOB perturbations and
 blockwise error increases, with explicit counts for usable blocks and omitted

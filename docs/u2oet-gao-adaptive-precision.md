@@ -81,3 +81,7 @@ sampler raises explicitly. Retained and temporary arrays are separately
 preflighted. These limits reuse the GAO sampler's hard caps and the adaptive
 wrapper's 4-million retained-joint-cell and 12-million live-cell policies.
 They are resource estimates, not RSS or runtime guarantees.
+
+The [GAO calendar driver](u2oet-gao-trials.md) optionally applies this target
+to every changed observed-data state, including final follow-up, with shared
+trial-wide budgets and explicit failure when precision is insufficient.

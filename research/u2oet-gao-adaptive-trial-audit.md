@@ -52,5 +52,9 @@ refitting after final counts change, an unmet target before decision,
 pre-RNG whole-trial minimum-budget rejection, runtime cumulative exhaustion,
 and exact equivalence between omitted and explicit-`None` fixed mode. The run
 took 4.42 seconds, peaked at 145,162,240 bytes RSS and reported zero swaps.
-No native executable parity is claimed. Root will run the targeted static
-checks and integrated planner/wrapper/calendar validation.
+Root integration passes 18 affected checks across the shared planner,
+standalone adaptive fitter, adaptive/fixed GAO calendar and the separately
+integrated OOB Brier evaluator. That serial run used 5.653 seconds, 148.03 MiB
+process peak RSS and zero swaps. Targeted Ruff/format/mypy pass, and independent
+read-only review found no material budget, cache, metadata or memory defect.
+No native executable parity is claimed.
