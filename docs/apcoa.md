@@ -22,11 +22,18 @@ produce negative eigenvalues; these are retained in the reported spectrum.
 Supply an explicitly encoded n-by-p numeric covariate matrix in **the same sample
 order as the distance matrix**. For categorical covariates, supply the intended
 dummy columns. Covariates are not automatically centered or augmented with an
-intercept. This matches the R function's projection after it removes the formula
-intercept. Use `intercept=True` to include the constant direction explicitly.
+intercept. This uses the R function's projection equation; preparation of the
+formula design and its rank reduction are separate conventions.
+Use `intercept=True` to include the constant direction explicitly.
 Changing centering, dummy coding or intercept convention can change the result.
 The group of scientific interest belongs in plot labels, not necessarily in X:
 including it in X removes its linear contribution.
+
+The [labeled-input adapter](apcoa-inputs.md) reads bounded distance and metadata
+CSV/TSV files, aligns samples by unique IDs and records explicit numeric or
+categorical nuisance encodings. It retains main-group labels separately for
+plotting. Categorical level order and reference must be supplied; the adapter
+does not infer R contrast settings or perform R's formula-based QR reduction.
 
 The implementation scales each covariate column before SVD and projects onto the
 numerically identified column space. It accepts redundant and zero columns
@@ -143,7 +150,8 @@ dependency is required by Python or its tests. See the
 [overlay source audit](../research/apcoa-plot-geometry-audit.md).
 
 **Catalog status is partial.** Core ordinations and opt-in native-style
-data ellipses/medoid connectors are implemented. Interactive file/formula
-handling, exact visual styling, and a full app workflow audit remain pending.
+data ellipses/medoid connectors and labeled CSV/TSV input preparation are
+implemented. Arbitrary R formula/contrast/rank conventions, exact visual
+styling, and a full app workflow audit remain pending.
 Matching these numerical fixtures does not establish parity for every input or
 display option.

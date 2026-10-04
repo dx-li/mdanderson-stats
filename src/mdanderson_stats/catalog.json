@@ -1393,15 +1393,16 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
-        "Local information-matrix noncentrality and null projection for linear contrasts; noncentral chi-square power, continuous sample size and significance inversion; independent-group binomial, Poisson and uniformly accrued exponential-survival information. Full native workflow coverage remains pending.",
+        "Local information-matrix noncentrality and null projection for linear contrasts; noncentral chi-square power, continuous sample size and significance inversion; independent-group binomial, Poisson and uniformly accrued exponential-survival information.",
         "Linear/quadratic regression information for logistic and complementary-log-log binomial, Poisson and exponential-survival models; multiple independent groups and covariate-specific allocations.",
         "Ordinal cumulative-probability information and logistic/cloglog ordinal regression designs with linear/quadratic shared slopes and multiple independent groups.",
         "General design-matrix logistic and multiplicative-binomial log-linear information, plus delta-method information reparameterization using a supplied Jacobian.",
         "Original S-plus multinomial information for free category probabilities, corrected to include the implicit final category contribution.",
         "SMO binomial, Poisson, multinomial, ordinal and censored exponential-survival fixed-null and all-groups-equal tests, with optional df subtraction, stable expected-log-likelihood divergence and power/sample-size/significance inversion. Mixed fixed/equality constraints for binomial, Poisson and exponential-survival groups, with connected equality components and independent restriction counts. Partial fixed multinomial/ordinal nulls with corrected expected-likelihood redistribution of unconstrained category mass; general categorical fixed/equality components fitted by a positive-interior concave likelihood solver. Generic bounded expected-log-likelihood SMO with optional analytic gradients, fixed/equality components and convergence/cancellation checks. Logistic, complementary-log-log, Poisson and censored exponential-survival linear/quadratic regression SMO with mixed coefficient constraints, multiple groups and normalized design allocations. Explicit design-matrix SMO for multivariable logistic and the shared cloglog/Poisson/exponential families, plus multiplicative-binomial log-linear SMO with positive-scale coefficient constraints. Logistic/cloglog ordinal regression SMO with ordered intercepts, linear/quadratic shared slopes, multiple groups and mixed coefficient constraints.",
-        "LR and SMO sample-size inversion for paired target vectors with scalar/singleton expansion, read-only results, retained scalar return behavior and bounded serial roots; docs/asypow.md."
+        "LR and SMO sample-size inversion for paired target vectors with scalar/singleton expansion, read-only results, retained scalar return behavior and bounded serial roots; docs/asypow.md.",
+        "Model-to-report workflow over all existing LR information builders and SMO constructors: captured effective inputs/defaults, immutable bounded snapshots, exactly two supplied targets, calculated third target and complete significance/power/sample-size table; docs/asypow-workflow.md."
       ],
       "validation": [
         "tests/test_asypow.py",
@@ -1424,7 +1425,8 @@
         "tests/test_asypow_smo_design.py",
         "tests/test_asypow_smo_loglinear.py",
         "tests/test_asypow_smo_ordinal_regression.py",
-        "Independent base-R noncentral chi-square inversions, forward-power round trips, scalar compatibility, degrees-of-freedom modes, input-shape/resource guards and unrepresentable-size handling; tests/test_asypow_vector_sample_size.py and research/asypow-vector-inversion-audit.md."
+        "Independent base-R noncentral chi-square inversions, forward-power round trips, scalar compatibility, degrees-of-freedom modes, input-shape/resource guards and unrepresentable-size handling; tests/test_asypow_vector_sample_size.py and research/asypow-vector-inversion-audit.md.",
+        "Focused workflow checks cover all target directions, paired vectors, typed LR parameter order, SMO defaults and callback caveats; existing independent numerical references remain unchanged. Native console formatting and callback closure serialization are not claimed; research/asypow-workflow-audit.md."
       ]
     },
     {
@@ -4337,12 +4339,14 @@
       "implemented_features": [
         "Original and covariate-adjusted PCoA via scaled distance centering and rank-revealing SVD projection, with explicit intercept convention",
         "Positive coordinates, full signed spectra, negative-inertia diagnostics and optional grouped comparison plots",
-        "Optional group ellipses with the car covariance/F-radius/pivoted-factor convention and row-profile medoid connectors; reusable bounded geometry with group sample/medoid indices, covariance ranks and distance-recovery clipping diagnostics; docs/apcoa.md."
+        "Optional group ellipses with the car covariance/F-radius/pivoted-factor convention and row-profile medoid connectors; reusable bounded geometry with group sample/medoid indices, covariance ranks and distance-recovery clipping diagnostics; docs/apcoa.md.",
+        "Bounded CSV/TSV distance and metadata readers, exact sample-ID alignment, explicit numeric and treatment-coded categorical nuisance inputs, preserved group labels and immutable encoding provenance; docs/apcoa-inputs.md."
       ],
       "validation": [
         "Unmodified R aPCoA 1.3 non-Euclidean fixture, independent Euclidean regression residuals, rank deficiency and distance scales 1e-200..1e200; tests/test_apcoa.py",
         "Independent R matrix equations with unchanged car 3.0-12 ellipse and cluster 2.1.6 PAM references: four group/panel geometries, 208 ellipse vertices and ten medoid tie cases; rank-degenerate and extreme-scale checks; tests/test_apcoa_plot_geometry.py.",
-        "Pending interactive file/formula handling, exact visual styling and full app workflow audit; docs/apcoa.md."
+        "Pending arbitrary R formula/contrast/rank conventions, exact visual styling and full app workflow audit; docs/apcoa.md.",
+        "Five input-workflow tests cover shuffled distance/metadata IDs, categorical reference order, unchanged core results, constant numeric columns, duplicate/missing IDs and pre-encoding limits; all eight affected input/core tests pass with warnings as errors."
       ]
     },
     {
@@ -4762,14 +4766,16 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Continuous and binary weighted-z sample sizes for fully/partially decentralized trials with independent or exchangeably correlated outcomes and unequal treatment-arm variances",
-        "Explicit stratum/arm rounding and recomputed achieved power; known offsite bias and unequal randomization"
+        "Explicit stratum/arm rounding and recomputed achieved power; known offsite bias and unequal randomization",
+        "Continuous/binary report factory computes from captured effective settings and records allocation, unrounded and rounded totals, achieved power, citation and explicit participant/cluster units; readable atomic UTF-8 save and documented native-help rounding discrepancy; docs/dct-report.md."
       ],
       "validation": [
         "Six focused tests: equations 2.3/2.5 and binary variance derivation, app-help totals 228/136/76/284/246, direct power, Gaussian simulation and extreme-scale invariance; tests/test_dct_normal.py and tests/test_dct_binary.py",
-        "Pending native rounding and reports; supplement binary standardization inconsistency documented in docs/dct-normal.md"
+        "The native-help rounding discrepancy and supplement binary standardization inconsistency remain explicit in docs/dct-normal.md; the Python calculation/report workflow is complete.",
+        "Nine focused report and continuous/binary numerical tests pass with warnings as errors; effective defaults, saved report integrity and cluster/participant labels checked; research/dct-report-audit.md."
       ]
     },
     {

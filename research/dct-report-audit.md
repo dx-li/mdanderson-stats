@@ -21,3 +21,9 @@ produce 126. The report displays the computed Python allocation without a
 native-matching adjustment and calls out the difference only for that exact
 example input. No sample-size formula or rounding behavior is changed by this
 workflow.
+
+The continuous/binary calculation APIs and this report complete the source-defined
+planning workflow as a Python interface. Entry 164 is implemented under the same
+functional standard as the other completed report workflows: retained numerical
+validation and explicit inputs/results, without requiring identical web styling
+or reproducing a documented source-example discrepancy.

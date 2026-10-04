@@ -49,6 +49,16 @@ from .anovaddp_updates import (
     anovaddp_variance_posterior,
 )
 from .apcoa import AdjustedPCoA, PCoAOrdination, adjusted_pcoa
+from .apcoa_inputs import (
+    APCoADistanceTable,
+    APCoAMetadataTable,
+    CategoricalEncoding,
+    CovariateEncoding,
+    PreparedAPCoAInput,
+    prepare_apcoa_input,
+    read_apcoa_distance_csv,
+    read_apcoa_metadata_csv,
+)
 from .apcoa_plot import (
     AdjustedPCoAPlotGeometry,
     PCoAGroupPlotGeometry,
@@ -87,6 +97,7 @@ from .asypow_smo_design import asypow_smo_design
 from .asypow_smo_exponential import asypow_smo_exponential
 from .asypow_smo_ordinal_regression import asypow_smo_ordinal_regression
 from .asypow_smo_regression import asypow_smo_regression
+from .asypow_workflow import AsyPowCalculation, AsyPowCalculationRequest, asypow_calculate
 from .bacis import BaCISClassification, BaCISFit, bacis_classify, bacis_fit
 from .bacis_dic import BaCISClassificationDIC, bacis_classification_dic
 from .bacis_ess import BaCISEquivalentSampleSize, bacis_equivalent_sample_size
@@ -660,6 +671,7 @@ from .dcdflib_poisson import DCDFLIBPoisson, cdfpoi, cumpoi
 from .dcdflib_t import DCDFLIBStudentT, cdft, cumt
 from .dct_binary import dct_binary_sample_size
 from .dct_normal import DCTNormalSampleSize, dct_normal_sample_size
+from .dct_report import DCTSampleSizeReport, dct_sample_size_report
 from .diagnostic_population import (
     DiagnosticPopulation,
     diagnostic_population,
@@ -2550,6 +2562,9 @@ __all__ = [
     "asypow_regression_information",
     "AsymptoticPower",
     "asypow_information",
+    "AsyPowCalculation",
+    "AsyPowCalculationRequest",
+    "asypow_calculate",
     "asypow_group_information",
     "IPDSurvivalCurve",
     "IPDSurvivalQuantiles",
@@ -2636,6 +2651,14 @@ __all__ = [
     "AdjustedPCoA",
     "PCoAOrdination",
     "adjusted_pcoa",
+    "APCoADistanceTable",
+    "APCoAMetadataTable",
+    "CategoricalEncoding",
+    "CovariateEncoding",
+    "PreparedAPCoAInput",
+    "prepare_apcoa_input",
+    "read_apcoa_distance_csv",
+    "read_apcoa_metadata_csv",
     "TPIDesign",
     "TPIPosterior",
     "simulate_tpi",
@@ -2703,6 +2726,8 @@ __all__ = [
     "log_odds_rate_bayesian_gof",
     "dct_binary_sample_size",
     "DCTNormalSampleSize",
+    "DCTSampleSizeReport",
+    "dct_sample_size_report",
     "dct_normal_sample_size",
     "InteractionMonteCarlo",
     "interaction_index_monte_carlo",

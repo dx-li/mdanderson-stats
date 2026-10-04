@@ -6,8 +6,8 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 66 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 64 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 68 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 62 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -91,6 +91,8 @@ some legacy adaptations retain commercial-use restrictions.
 | TRAX | [desktop #60](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/60) | See catalog feature and validation notes |
 | Varying Cut-Point and Parameter Estimation of the ROC Curve Analysis | [online #105](https://biostatistics.mdanderson.org/shinyapps/DTROC/) | [Guide](diagnostic-and-roc.md) |
 | WINDOWS | [desktop #61](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/61) | [Guide](windows.md) |
+| ASYPOW | [desktop #33](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/33) | [Guide](asypow.md) |
+| Sample Size Determination for Decentralized Clinical Trials (DCTs) | [online #164](https://biostatistics.mdanderson.org/shinyapps/DCTs) | [Guide](dct-normal.md) |
 
 ## Partially implemented
 
@@ -100,7 +102,6 @@ some legacy adaptations retain commercial-use restrictions.
 | A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents | [online #114](https://biostatistics.mdanderson.org/shinyapps/MTADF/) | [Isotonic](mtadf.md) and [logistic](mtadf-logistic.md) methods |
 | Adaptive Randomization | [desktop #62](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62) | [Posterior](arand.md), [calendar](arand-calendar.md), [simulation](arand-simulation.md) |
 | aPCoA: Covariate Adjusted Principal Coordinates Analysis | [online #147](https://biostatistics.mdanderson.org/shinyapps/aPCoA) | [Guide](apcoa.md) |
-| ASYPOW | [desktop #33](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/33) | [Guide](asypow.md) |
 | Backfill Bayesian Optimal Interval (BF-BOIN) Design for Phase I Clinical Trials | [online #162](https://biostatistics.mdanderson.org/shinyapps/BF-BOIN/) | See catalog feature and validation notes |
 | Bayes Factor TTE | [desktop #89](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/89) | [Guide](bayes-factor-survival.md) |
 | Bayesian Adaptive Randomization and Efficacy Monitoring with Posterior Probability | [online #130](https://biostatistics.mdanderson.org/shinyapps/BARPO/) | [Guide](barpo-reference.md) |
@@ -145,7 +146,6 @@ some legacy adaptations retain commercial-use restrictions.
 | Posterior Predictive Design for Phase I Clinical Trials | [online #175](https://biostatistics.mdanderson.org/shinyapps/PoPdesign/) | See catalog feature and validation notes |
 | Proportional density | [desktop #78](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/78) | [Guide](proportional-density.md) |
 | PRT | [desktop #69](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/69) | See catalog feature and validation notes |
-| Sample Size Determination for Decentralized Clinical Trials (DCTs) | [online #164](https://biostatistics.mdanderson.org/shinyapps/DCTs) | [Guide](dct-normal.md) |
 | Single arm phase II monitoring using Bayes factor with iMOM prior for binary outcome | [online #143](https://biostatistics.mdanderson.org/shinyapps/BFMonitor) | [Guide](bfmonitor.md) |
 | STPLAN | [desktop #41](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/41) | [Guide](stplan.md) |
 | SurvivalContour: Show Survival Prediction in Contour Plot | [online #166](https://biostatistics.mdanderson.org/shinyapps/survivalContour/) | [Guide](survival-contour.md), [forest rank splits](random-survival-forest-logrankscore.md), [Brier splits](random-survival-forest-brier.md) |

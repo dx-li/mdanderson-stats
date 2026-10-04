@@ -21,5 +21,5 @@
       "inspection": "Sections A/B unequal variances and E binary endpoints; page 20 rendered to inspect theta inconsistency."
     }
   ],
-  "scope": "Continuous and binary weighted-z planning, including unequal arm variances and correlated outcomes. Native rounding and reporting pending."
+  "scope": "Continuous and binary weighted-z planning, including unequal arm variances and correlated outcomes, with an explicit-input calculation report. Native-help rounding and binary standardization discrepancies remain documented; native visual formatting is not reproduced."
 }

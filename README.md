@@ -6,14 +6,15 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-66 implemented, 64 partial, and 8 pending. Each method's guide explains its
+68 implemented, 62 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. These labels cover
 complete software workflows: a partial entry can already include every
 advertised statistical endpoint while report or native-compatibility gaps remain.
 The [remaining-work review](research/statistical-coverage-priority-2026-10-04.md)
 separates unresolved statistical specifications from input, report and
-application-compatibility work across the partial entries. TTEConduct, CID2BP
-and CONFINT now include their saved report workflows.
+application-compatibility work across the partial entries. ASYPOW and DCT now
+include complete calculation/report workflows; PerfectMatch adds chip quantile
+summaries and aPCoA adds sample-ID-aware CSV/TSV inputs.
 
 Validated community checkpoints are published on
 [`master`](https://github.com/dx-li/mdanderson-stats/tree/master); `main`

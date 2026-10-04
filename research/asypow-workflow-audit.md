@@ -18,3 +18,8 @@ cannot be reconstructed from a qualified callable name. No ASYPOW numerical
 method is omitted from the workflow registry: all existing LR information
 builders, generic LR, and available SMO constructors are mapped. Source
 anchors are from the cached local source tree; no new source was retrieved.
+
+With the already validated numerical families and vector target inversions,
+this workflow completes entry 33 as a Python interface. Existing documented
+source corrections remain in force; arbitrary callback closure state and
+native console formatting are not promised to round-trip through a report.

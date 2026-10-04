@@ -37,8 +37,9 @@ transform, or rank-pivot choice. Set `intercept=True` only when the constant
 direction should be included in the Python projection. See
 [`docs/apcoa.md`](apcoa.md) for the matrix equations and numerical conventions.
 The reviewed native formula and row-matching path is in
-[`aPCoA.R`](../research/raw/aPCoA/aPCoA/R/aPCoA.R); the application CSV controls
-are recorded in [`app.html`](../research/raw/aPCoA/app.html).
+`aPCoA.R`; the application CSV controls are recorded in the cached `app.html`.
+These local research snapshots are identified by the public
+[source provenance](apcoa-sources.json) and are not redistributed.
 
 ```python
 import csv
@@ -57,22 +58,26 @@ with TemporaryDirectory() as folder:
     metadata_path = Path(folder) / "metadata.csv"
     with distance_path.open("w", newline="", encoding="utf-8") as stream:
         writer = csv.writer(stream)
-        writer.writerows([
-            ["", "s1", "s2", "s3", "s4"],
-            ["s1", 0, 1, 3, 4],
-            ["s2", 1, 0, 2, 3],
-            ["s3", 3, 2, 0, 1],
-            ["s4", 4, 3, 1, 0],
-        ])
+        writer.writerows(
+            [
+                ["", "s1", "s2", "s3", "s4"],
+                ["s1", 0, 1, 3, 4],
+                ["s2", 1, 0, 2, 3],
+                ["s3", 3, 2, 0, 1],
+                ["s4", 4, 3, 1, 0],
+            ]
+        )
     with metadata_path.open("w", newline="", encoding="utf-8") as stream:
         writer = csv.writer(stream)
-        writer.writerows([
-            ["sample_id", "age", "batch", "treatment"],
-            ["s1", 20, "A", "control"],
-            ["s2", 35, "B", "control"],
-            ["s3", 42, "A", "drug"],
-            ["s4", 55, "C", "drug"],
-        ])
+        writer.writerows(
+            [
+                ["sample_id", "age", "batch", "treatment"],
+                ["s1", 20, "A", "control"],
+                ["s2", 35, "B", "control"],
+                ["s3", 42, "A", "drug"],
+                ["s4", 55, "C", "drug"],
+            ]
+        )
 
     distance = read_apcoa_distance_csv(distance_path)
     metadata = read_apcoa_metadata_csv(metadata_path)
@@ -80,9 +85,7 @@ with TemporaryDirectory() as folder:
         distance,
         metadata,
         numeric_covariates=("age",),
-        categorical_covariates={
-            "batch": CategoricalEncoding(("A", "B", "C"), reference="A")
-        },
+        categorical_covariates={"batch": CategoricalEncoding(("A", "B", "C"), reference="A")},
         main_group="treatment",
     )
     result = prepared.fit(components=None)

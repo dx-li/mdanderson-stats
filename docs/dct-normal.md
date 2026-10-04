@@ -59,7 +59,10 @@ unequal randomization, direct weighted-test power, perfect-correlation limits an
 dose-unit scaling by `1e-200` and `1e200`. Calculation uses log information to avoid
 squaring extreme SDs or effects. Required totals above one billion units raise.
 
-**Catalog status is partial.** App reporting and exact native rounding remain pending. For example,
+**Catalog status is implemented.** The [calculation report](dct-report.md)
+records effective settings, allocation units, rounded counts, achieved power
+and citation, and saves readable output. Native rounding differs in one
+documented help example:
 the help page lists 128 for a fully decentralized independent continuous trial
 with effect 10 and SD 20; direct formula rounding here gives 126. This discrepancy
 is documented rather than hidden by adding arbitrary participants. The model

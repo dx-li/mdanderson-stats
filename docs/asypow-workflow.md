@@ -31,8 +31,10 @@ method result, degrees of freedom, and the three-column target table. Settings
 are snapshotted before model construction; arrays in the recorded settings
 are owned and read-only. Input vectors must be scalar or one-dimensional and
 paired elementwise, with scalar broadcasting, under the same 10,000-target
-limit used by ASYPOW sample-size inversion. The report is capped at two
-megabytes.
+limit used by ASYPOW sample-size inversion. Settings share a one-million-unit
+snapshot budget across array elements, sequence/mapping entries and text.
+The report is capped at two million characters; oversized settings are rejected
+instead of silently omitted from the report.
 
 | Procedure | Model arguments | Existing calculation used |
 | --- | --- | --- |

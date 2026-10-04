@@ -1,6 +1,6 @@
 # Statistical coverage priority review
 
-This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP and CONFINT subsequently completed their report workflows, leaving 64 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed.
+This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW and DCT subsequently completed their report workflows, leaving 62 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed.
 
 ## A. Statistical or source-contract uncertainty remains
 
@@ -54,7 +54,6 @@ This bounded review originally covered 67 partial-program entries. TTEConduct, C
 | --- | --- | --- |
 | PerfectMatch (#7) | PDNN fitting/expression, normalization, per-probeset correlations and the five-quantile chip summary are covered. Native parameter/data/output/rescaling, unspecified QC metrics and display workflows remain. | [PerfectMatch guide](../docs/perfectmatch.md); [quantile profile](../docs/perfectmatch-quantile-profile.md) |
 | Multc Lean (#12) | Statistical rules/calendar are covered; native input, report and timing conventions remain. | [Multc guide](../docs/multc.md) |
-| ASYPOW (#33) | LR/SMO families and source-defined vector sample-size inversions are covered; remaining items are interactive/native reporting workflows. | [ASYPOW guide](../docs/asypow.md); [vector inversion audit](asypow-vector-inversion-audit.md) |
 | Parallel phase I/II (#85) | C-design and six-dose calendar workflow are implemented; native configurable input, report and full parity remain. | [parallel phase guide](../docs/parallel-phase12.md) |
 | Bayes Factor TTE (#89) | Monitoring, boundaries, calendar replay and simulation are covered; native integer-day/text/HTML reports and timing are not established. | [Bayes Factor survival guide](../docs/bayes-factor-survival.md) |
 | Pinnacle (#95) | Peak-detection algorithm is covered; unsupported TIFF encodings, project ingestion, interactive editing and reports remain. | [Pinnacle guide](../docs/pinnacle.md) |
@@ -66,14 +65,13 @@ This bounded review originally covered 67 partial-program entries. TTEConduct, C
 | CRM Suite (#132) | CRM/BMA/DA posterior, pending look-ahead, calendar, cohort simulation and OC are implemented; native files/reports and older conduct differences remain. | [CRM conduct](../docs/crm-conduct.md); [CRM simulation](../docs/crm-simulation.md) |
 | TOP (#134) | Joint monitoring, calendar simulation, finite-grid optimization and holdout validation exist; native optimizer grids/report/app-version parity remain. | [TOP guide](../docs/top-endpoints.md); [calibration guide](../docs/top-endpoints-calibration.md) |
 | BOP2 desktop (#144) | Desktop product has been retired to the online application; remaining differences are product/input/presentation boundaries. | [desktop guide](../docs/bop2-desktop.md) |
-| aPCoA (#147) | Remaining items are file, formula-display and styling workflows; no separate missing calculation was identified. | [aPCoA guide](../docs/apcoa.md) |
+| aPCoA (#147) | ID-aligned CSV/TSV input and explicit numeric/categorical encoding are covered. Arbitrary R formula/contrast/rank conventions and styling remain; no separate missing calculation was identified. | [aPCoA guide](../docs/apcoa.md); [labeled inputs](../docs/apcoa-inputs.md) |
 | IPDfromKM (#151) | Digitization and native graphics workflow remain; these are input/presentation features. | [IPDfromKM guide](../docs/ipdfromkm.md) |
 | BOP2-DC (#156) | Documented advertised workflows are covered; optional extensions are not automatically missing app methods. | [remaining-methods audit](bop2-dc-remaining-methods.md) |
 | CondiS (#157) | Eight refinement learners are implemented. The separate vignette example uses target-derived inputs and pre-split imputation, so it does not establish future-subject prediction behavior. | [workflow audit](condis-workflow-audit.md) |
 | BCHM (#158) | No additional advertised mathematical workflow was identified; file/report workflows and direct JAGS parity remain. | [BCHM guide](../docs/bchm.md) |
 | EasyCellType (#159) | Versioned gene-ID mapping and plot workflow remain. | [EasyCellType guide](../docs/easycelltype.md) |
 | BFBOIN (#162) | Report output and explicit calendar/RNG conventions remain. | [BFBOIN guide](../docs/bf-boin.md) |
-| DCT (#164) | Continuous/binary planning formulas are covered; native report and rounding behavior remain. | [DCT guide](../docs/dct-normal.md) |
 | PoP (#175) | Source-defined boundaries, selection and operating characteristics are implemented; HTML/Word/report parity remains. | [PoP guide](../docs/pop-design.md) |
 
 The classifications above are review findings, not status changes. A source-contract uncertainty should be resolved before adding a purported native method; input and presentation work can still be useful community functionality without being described as statistical coverage.
@@ -85,4 +83,7 @@ The classifications above are review findings, not status changes. A source-cont
 
 - CONFINT (#64): the repeated-calculation log records all eight source menu families, defaults and complete diagnostics in readable saved reports. See [report guide](../docs/confint-session.md) and [source crosswalk](report-workflow-completion-audit.md).
 
-These three entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.
+- ASYPOW (#33): all existing LR and SMO constructors are connected to a bounded calculation object that records actual settings, the computed target and all three result columns. See [workflow guide](../docs/asypow-workflow.md) and [source crosswalk](asypow-workflow-audit.md).
+- DCT (#164): continuous and binary calculations now produce saved reports with effective settings, explicit participant/cluster units, allocation and achieved power. The documented help-page rounding discrepancy remains explicit. See [report guide](../docs/dct-report.md).
+
+These five entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.

@@ -4,8 +4,11 @@ MD Anderson catalog entry 33, ASYPOW, calculates asymptotic power for nonlinear
 models. This port currently provides the shared information-matrix calculation
 and independent-group binomial, Poisson and exponential-survival information,
 including regression, ordinal, multinomial and general design-matrix models.
-Logistic/cloglog ordinal regression SMO is also available. Complete native
-workflows remain pending; the catalog status is **partial**.
+Logistic/cloglog ordinal regression SMO is also available. The
+[calculation/report workflow](asypow-workflow.md) constructs a model from
+recorded inputs, calculates the missing significance, power or sample-size
+target, and reports the complete table. Catalog status is **implemented**;
+documented numerical corrections and console-format differences remain explicit.
 
 The original S-plus 2.1 archive has a broader scope than the later R archive.
 In particular, it supplies separate SMO and multinomial routines documented in
@@ -985,7 +988,9 @@ local fit is not a global-optimality certificate. Concavity, identifiability,
 correct expectation/gradient calculations, and regularity for the chi-square
 approximation remain the model author's responsibility. For nonconcave models,
 compare feasible starts and independently establish that the fitted null is the
-relevant maximum before interpreting power. Native interactive prompts and full native workflow coverage remain pending.
+relevant maximum before interpreting power. Explicit Python requests replace native
+interactive prompts; the [report workflow](asypow-workflow.md) retains effective
+model inputs and target tables without claiming identical console formatting.
 
 ## Native comparisons and intentional corrections
 

@@ -3163,3 +3163,30 @@ installation or CI workflow was added. The previous published checkpoint
 `7156d2c` passed quality and all Python 3.12/3.13/3.14 jobs in hosted run
 `37185841695`. The local community manifest records the built-package checks,
 publication SHAs, artifact hashes and the new hosted run separately.
+
+## 2026-10-04: Labeled inputs and complete planning reports
+
+Three Luna workers implemented PerfectMatch's per-array five-quantile profile,
+ID-aligned aPCoA CSV/TSV preparation, the DCT planning report and ASYPOW's
+model-to-calculation report. Root reviewed integration, corrected target argument
+ordering and snapshot limits, and kept numerical jobs serial. The ASYPOW
+[source crosswalk](asypow-workflow-audit.md) and DCT
+[report audit](dct-report-audit.md) establish complete functional Python
+workflows for those two entries. Coverage is now 68 implemented, 62 partial
+and 8 pending. PerfectMatch and aPCoA retain their documented remaining gaps.
+
+Reports use the actual model inputs and effective defaults. DCT distinguishes
+participants from clusters and preserves the documented help-page rounding
+discrepancy. aPCoA aligns all input IDs and makes categorical coding explicit;
+it does not infer R formula/contrast conventions. PerfectMatch uses a documented
+linear-quantile rule without inventing chip-rejection thresholds.
+
+The integrated batch passed 42 focused checks with warnings treated as errors,
+scoped Ruff formatting/lint and four-module mypy. The sequential run took
+8.023 seconds, peaked at 355.23 MiB child-process RSS and recorded zero swaps.
+Existing independent numerical references remain in place. No full local suite,
+dependency installation or new CI workflow was added. Previous checkpoint
+`61de9c0` passed hosted quality and Python 3.12/3.13/3.14 in
+[run 37188261520](https://github.com/dx-li/mdanderson-stats/actions/runs/37188261520).
+The local community manifest records package verification, remote publication
+SHAs, hashes and the next hosted run separately.
