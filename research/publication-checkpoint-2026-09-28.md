@@ -2872,3 +2872,39 @@ Catalog statuses remain unchanged. Full coverage still requires unresolved
 source contracts, including U-BOIN delayed-response equations absent from the
 cached records. The local publication manifest records independently checked
 remote SHAs, artifact hashes and the newer hosted run separately.
+
+## 2026-10-04: Pinnacle TIFF file-to-analysis workflow
+
+`PinnacleTiffSource` now feeds aligned grayscale TIFF gels directly into the
+existing streaming analysis. It preserves stored intensities, explicitly
+selects multipage frames, records immutable source metadata, normalizes
+orientation and checks a bounded decode-workspace estimate. Independent TIFF
+bytes exposed two Pillow issues: non-native float byte order in the libtiff
+path and incorrect orientation dimensions in filename-based memory mapping.
+The adapter handles the verified float route and uses binary streams to avoid
+the mapping issue. Unsupported signed libtiff byte-order combinations fail
+at preflight. Native project/report/UI equivalence and unsupported TIFF
+variants remain open; entry 95 stays partial.
+
+All 40 affected Pinnacle checks pass with warnings as errors, including
+independent TIFF samples and the existing R/C numerical references. Root's
+run took 2.062 seconds, peaked at 157.84 MiB RSS and reported zero swaps.
+Targeted Ruff/format/mypy checks and the offline lock consistency check pass.
+The optional `image` extra adds Pillow >=12.3,<13 without changing the base
+dependencies or installing additional packages during this work.
+
+Cached builds at `2d83ca4` pass isolated wheel/source verification: all 616
+committed package files match both archives, 1,723 public names resolve,
+notices are retained, and all three Pinnacle guide examples execute. Base
+package import also succeeds with Pillow deliberately unavailable and TIFF
+use produces an actionable missing-extra error. The check took 10.903 seconds,
+peaked at 135.77 MiB RSS and reported zero swaps. No full local suite or new
+CI workflow was run. The previous published `0a2da16` checkpoint has now passed
+all hosted quality and Python 3.12/3.13/3.14 jobs in run `37171574028`.
+
+Three Luna agents handled implementation, independent fixtures and bounded
+source-gap review while numerical/static jobs remained serial. The additional
+review found no complete missing mathematical contract in the cached material
+for ComPAS, BLESS, CNSRISK, K-COMPASS, MDS-DPSS or RMC-COMPASS. Full catalog
+coverage remains an active objective. The local manifest records the new
+publication SHAs and artifact hashes after independent remote verification.
