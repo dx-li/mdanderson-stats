@@ -1,11 +1,12 @@
 # Bayesian optimal interval dose finding
 
 Catalog entry **120**, the [BOIN application](https://biostatistics.mdanderson.org/shinyapps/BOIN/),
-is **partially implemented**: single-agent local BOIN boundaries, cohort decisions,
+is **implemented as a Python workflow**: single-agent local BOIN boundaries, cohort decisions,
 overdose elimination, final MTD selection, fixed-cohort simulation and accelerated titration are available.
 The 3+3 comparison includes both sample-size matching options.
 Direct boundary-to-probability inversion and English/Chinese statistical protocol
-text are available; animation and the original HTML/Word report formats remain pending.
+text and saved HTML scenario reports are available. The original animation and
+Word template are not reproduced; see the [completion audit](../research/boin-workflow-completion-audit.md).
 [Combination BOIN](boin-combination.md) and [TITE-BOIN](tite-boin.md) have separate
 implementations and audits. The [desktop coverage map](boin-desktop.md) links
 entry 99 to these shared methods and identifies the remaining desktop workflows.

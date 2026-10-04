@@ -1,6 +1,6 @@
 # Statistical coverage priority review
 
-This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard and OneArmTTE subsequently completed their report workflows, leaving 60 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
+This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard, OneArmTTE and BOIN subsequently completed their Python workflows, leaving 59 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
 
 A deeper cached-source review subsequently identified omitted overdose-allocation
 risk statistics in BOIN and Keyboard. Both are now implemented with their strict
@@ -14,7 +14,7 @@ in Python. Its optional modifier's precedence with conflicting backfill data is
 not explicit in the recovered guide, so the Python composition is documented and
 BF-BOIN has moved to section A.
 
-The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 43 entries in section A and 17 in section B.
+The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 43 entries in section A and 16 in section B.
 
 ## A. Statistical or source-contract uncertainty remains
 
@@ -74,7 +74,6 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 | Bayes Factor TTE (#89) | Monitoring, boundaries, calendar replay, simulation and saved Python scenario reports are covered. Reports distinguish terminal stopping from later follow-up. Native integer-day boundaries, text input and calendar timing are not established. | [Bayes Factor survival guide](../docs/bayes-factor-survival.md) |
 | Pinnacle (#95) | Peak-detection algorithm is covered; unsupported TIFF encodings, project ingestion, interactive editing and reports remain. | [Pinnacle guide](../docs/pinnacle.md) |
 | BOP2 online (#112) | Documented binary, ordinal/multiple, joint, survival, calendar, calibration and sample-size workflows are covered; saved Python protocols cover all six endpoints; native formats, animation and optimizer equivalence remain. | [BOP2 sources](../docs/bop2-sources.json); [binary guide](../docs/bop2-binary.md); [survival guide](../docs/bop2-survival.md) |
-| BOIN (#120) | Single-agent conduct, safety, final MTD, simulation, accelerated titration, 3+3 comparison, boundary inversion, overdose-allocation risks and saved protocol reports are covered; animation and native document/application parity remain. | [BOIN guide](../docs/boin.md); [allocation-risk audit](dose-allocation-risk-audit.md); [report guide](../docs/boin-protocol-report.md) |
 | CRM Suite (#132) | CRM/BMA/DA posterior, pending look-ahead, calendar, cohort simulation and OC are implemented; native files/reports and older conduct differences remain. | [CRM conduct](../docs/crm-conduct.md); [CRM simulation](../docs/crm-simulation.md) |
 | TOP (#134) | Joint monitoring, calendar simulation, finite-grid optimization and holdout validation exist; native optimizer grids/report/app-version parity remain. | [TOP guide](../docs/top-endpoints.md); [calibration guide](../docs/top-endpoints-calibration.md) |
 | BOP2 desktop (#144) | Desktop product has been retired to the online application; remaining differences are product/input/presentation boundaries. | [desktop guide](../docs/bop2-desktop.md) |
@@ -101,4 +100,6 @@ The classifications above are review findings, not status changes. A source-cont
 
 - OneArmTTE (#98): ordered scenarios preserve independently reset integer seeds, actual design settings, early/final summaries and quantiles in saved HTML. Aggregate patient and actual monitoring-check budgets bound execution. See [report guide](../docs/one-arm-tte-report.md) and [cached-help crosswalk](one-arm-tte-report-audit.md).
 
-These seven entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.
+- BOIN (#120): the completed boundary, conduct, titration, 3+3 comparison, allocation-risk and saved protocol workflows meet the same functional Python standard as Keyboard. Animation and native Word/session formats remain documented compatibility limits. See the [completion audit](boin-workflow-completion-audit.md).
+
+These eight entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.

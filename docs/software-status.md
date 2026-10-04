@@ -6,15 +6,17 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 70 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 60 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 71 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 59 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
+Implemented entries provide usable Python workflows and recorded validation;
+identical native interfaces, file bytes and random streams are not required.
 A partial entry may already cover every advertised statistical endpoint while
-report or native-compatibility gaps remain, as in [online BOP2](bop2-binary.md). Read
-its guide for supported inputs, numerical limits and differences from native
-software. The project is independent of MD Anderson.
+input/output work or source-contract uncertainties remain. Read each guide for
+supported inputs, numerical limits and differences from native software. The
+project is independent of MD Anderson.
 
 Original contributions use the [MIT License](../LICENSE.md). Source references
 and adapted components have separate licensing histories. See
@@ -95,6 +97,7 @@ some legacy adaptations retain commercial-use restrictions.
 | Sample Size Determination for Decentralized Clinical Trials (DCTs) | [online #164](https://biostatistics.mdanderson.org/shinyapps/DCTs) | [Guide](dct-normal.md) |
 | Keyboard: a novel Bayesian toxicity probability interval design for phase I clinical trial | [online #127](https://biostatistics.mdanderson.org/shinyapps/Keyboard) | [Guide](keyboard.md) |
 | One Arm Time to Event Simulator | [desktop #98](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/98) | [Guide](one-arm-tte.md) · [Reports](one-arm-tte-report.md) |
+| Bayesian Optimal Interval (BOIN) Design for Phase I Clinical Trials | [online #120](https://biostatistics.mdanderson.org/shinyapps/BOIN/) | [Guide](boin.md) |
 
 ## Partially implemented
 
@@ -112,7 +115,6 @@ some legacy adaptations retain commercial-use restrictions.
 | Bayesian Effective Sample Size Calculator | [online #154](https://biostatistics.mdanderson.org/shinyapps/BayesESS) | [Guide](conjugate-ess.md) |
 | Bayesian hierarchical classification and information sharing for clinical trials with subgroups and binary outcomes | [online #153](https://biostatistics.mdanderson.org/shinyapps/BaCIS) | [Guide](bacis.md) |
 | Bayesian Model Averaging Continuous Reassessment Method | [online #133](https://biostatistics.mdanderson.org/shinyapps/BMACRM) | See catalog feature and validation notes |
-| Bayesian Optimal Interval (BOIN) Design for Phase I Clinical Trials | [online #120](https://biostatistics.mdanderson.org/shinyapps/BOIN/) | [Guide](boin.md) |
 | Bayesian Optimal Interval Design (BOIN) for Drug Combination Trials | [online #128](https://biostatistics.mdanderson.org/shinyapps/BOINComb/) | [Guide](boin-combination-source.md) |
 | Bayesian Optimal Interval Design with Informative Prior (iBOIN) for Phase I Clinical Trials | [online #145](https://biostatistics.mdanderson.org/shinyapps/iBOIN) | [Guide](iboin.md) |
 | Bayesian Phase 2 Design with Delayed Outcomes | [online #141](https://biostatistics.mdanderson.org/shinyapps/Phase2Delay) | See catalog feature and validation notes |

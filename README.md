@@ -6,10 +6,12 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-70 implemented, 60 partial, and 8 pending. Each method's guide explains its
-supported scope, validation and remaining limitations. These labels cover
-complete software workflows: a partial entry can already include every
-advertised statistical endpoint while report or native-compatibility gaps remain.
+71 implemented, 59 partial, and 8 pending. Each method's guide explains its
+supported scope, validation and remaining limitations. Implemented means a
+usable, validated Python workflow for the recovered software specification;
+it does not mean identical native interfaces, file bytes or random streams.
+Partial entries retain unfinished calculations, input/output workflows or
+source-contract uncertainties.
 The [remaining-work review](research/statistical-coverage-priority-2026-10-04.md)
 separates unresolved statistical specifications from input, report and
 application-compatibility work across the partial entries. Keyboard now includes
