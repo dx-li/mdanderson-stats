@@ -101,11 +101,13 @@ policies. [BF-BOIN post-escalation expansion](bard-expansion.md) implements the
 guide's fixed lower-dose continuation and stopping rule with explicit calendar
 choices. [BF-BOIN accelerated titration](bf-boin-titration.md) supplies the
 guide's singleton and top-up transitions for that model, with explicit
-grade-2 probabilities and observation timing. The guide's complete two-stage
-BF-BOIN simulation, including covariate-dependent response generation and
-balance/correct-OBD summaries, remains open. The cached paper includes its
-response model and scenario intercepts, providing a concrete implementation
-path. Stage-two timing, native per-arm quota interpretation, calibration and
+grade-2 probabilities and observation timing. The
+[response model](bard-response.md) provides covariate-dependent probabilities
+and marginal-rate calibration under an explicit joint factor distribution.
+[Published scenario records](bard-response-scenarios.md) preserve the
+paper's five-dose and three-dose inputs. The guide's complete two-stage
+BF-BOIN simulation and balance/correct-OBD summaries remain open.
+Stage-two timing, native per-arm quota interpretation, broader design calibration and
 reports also need explicit policies or further source evidence. See the
 [remaining simulation crosswalk](../research/bard-remaining-simulation-audit.md).
 

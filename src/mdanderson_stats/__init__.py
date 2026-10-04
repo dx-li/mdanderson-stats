@@ -128,6 +128,8 @@ from .bard_blrm_trial import (
     run_bard_blrm_trial,
 )
 from .bard_integrated import BARDBLRMStage2Patient, BARDBLRMStage2Result, continue_bard_trial
+from .bard_response import BARDResponseModel, bard_response_model, bard_response_probabilities
+from .bard_response_scenarios import BARDResponseScenario, bard_response_scenario
 from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
 from .barpo_simulation import BarpoSimulation, simulate_barpo
 from .barpo_trial import BarpoTrialLook, BarpoTrialResult, run_barpo_trial
@@ -2183,6 +2185,11 @@ __all__ = [
     "BARDSelectionResult",
     "bard_minimization",
     "bard_select_obd",
+    "BARDResponseModel",
+    "bard_response_model",
+    "bard_response_probabilities",
+    "BARDResponseScenario",
+    "bard_response_scenario",
     "BARDLogisticFit",
     "BARDLogisticPrior",
     "bard_blrm_probability",

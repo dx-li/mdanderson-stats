@@ -46,6 +46,8 @@ or interface behavior.
 
 Run with `Rscript tools/reference_bard_response.R`; the script prints
 calibration, conditional/marginal OR, and source-table discrepancy results.
+Set `BARD_REFERENCE_CSV` to an output path to retain the 40 scenario/dose
+reference rows for a separate implementation comparison.
 
 The independent run passed. The binary closed-form check gives intercept
 `-1.098612` for prevalence `.4`, marginal target `.35`, and conditional OR `3`.

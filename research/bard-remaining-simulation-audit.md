@@ -35,11 +35,12 @@ they cannot all be recovered from a stage-one dose-selection average.
 
 The package supplies BF-BOIN stage-one simulation, BF-BLRM fitting and calendar
 replay, patient-wise minimization, OBD selection, and a supplied-outcome
-BF-BLRM continuation. These do not yet provide the guide's complete BF-BOIN
-two-stage scenario simulation with covariate-dependent response generation,
+BF-BLRM continuation. The [response model](../docs/bard-response.md) now
+calibrates conditional response probabilities under an explicit joint factor
+distribution; [published scenario records](../docs/bard-response-scenarios.md)
+preserve the recovered table inputs. These do not yet provide the guide's
+complete BF-BOIN two-stage scenario simulation with retained patient covariates,
 automatic stage-one carryover, both final OBD summaries and balance metrics.
-The conditional response model and published scenario parameters provide a
-concrete starting point for this remaining implementation.
 
 Clinical eligibility and the dose pair are partly protocol inputs. The paper
 explicitly permits eligibility to differ between stages and selects the pair
@@ -51,19 +52,22 @@ The guide asks for a target count per arm, while the paper's general formula
 specifies a combined target including stage-one carryover. Neither inspected
 description gives a full hard-quota enforcement algorithm. Stage-two calendar
 timing and native joint outcome-generation conventions also need explicit
-policies or stronger evidence. Those uncertainties should be distinguished
-from the source-defined response model and operating-characteristic outputs
-that are still unimplemented. BARD therefore remains partial.
+policies or stronger evidence. Those source uncertainties are separate from
+the unfinished integration and operating-characteristic outputs. BARD remains
+partial.
 
-## Next implementable component
+## Response-model component and next integration
 
-A response-model calibration API can solve each dose's logistic intercept so
+The response-model calibration API solves each dose's logistic intercept so
 that its profile-weighted conditional response probabilities match the entered
 population response probability. Factor effects are log odds ratios relative
-to level 1. The API should accept an explicit joint profile distribution;
+to level 1. The API accepts an explicit joint profile distribution;
 constructing independent factors from their marginal probabilities is a
-documented Python convenience because the guide does not specify dependence.
+caller convention because the guide does not specify dependence.
 The paper's printed intercept table provides a separate numerical cross-check,
 with tolerance for its rounded coefficients. This component does not determine
 the joint toxicity/response law, which remains an explicit simulator input or
-policy.
+policy. The next integration must retain each generated patient's factors and
+conditional response probability through stage-one assignment, carryover and
+stage-two minimization, without changing existing stage-one random streams
+when the new model is absent.

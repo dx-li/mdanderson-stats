@@ -48,7 +48,10 @@ and are retained in returned conditional probabilities.
 Population rates of exactly 0 or 1 yield intercepts `-inf` or `+inf` and exact
 all-zero or all-one response probabilities. Interior rates use a bracketed
 log-tail inversion; an unresolved solve or numerically flat inverse raises
-`ArithmeticError`. Returned arrays are owned and read-only. The evaluator
+`ArithmeticError`. Inversion is rejected when the weighted response derivative,
+divided by the smaller target marginal tail, is below `1e-8`. This sensitivity
+guard is a Python numerical convention. Returned arrays are owned and
+read-only. The evaluator
 `bard_response_probabilities(intercepts, factor_profiles,
 response_odds_ratios)` uses the same profile and odds-ratio contract and can
 evaluate published scenario intercepts directly. Its intercepts may be

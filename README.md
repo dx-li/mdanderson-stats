@@ -1484,10 +1484,14 @@ pooling weights and tie policies are explicit. [Accelerated titration](docs/bard
 adds one-patient dose progression, grade-2 triggers and the distinct dose-cap
 transitions. [BF-BOIN titration](docs/bf-boin-titration.md) provides the corresponding
 option for that stage-one model, and [BF-BOIN expansion](docs/bard-expansion.md)
-continues enrollment at the fixed lower dose. The complete BF-BOIN two-stage
-scenario simulator, including covariate-dependent responses and balance/OBD
-summaries, remains open. The [remaining-work crosswalk](research/bard-remaining-simulation-audit.md)
-identifies the recovered response model and unresolved timing/quota conventions.
+continues enrollment at the fixed lower dose. The
+[response model](docs/bard-response.md) calibrates conditional response
+probabilities from population rates, categorical profiles and odds ratios.
+[Published scenarios](docs/bard-response-scenarios.md) preserve the paper's
+five-dose and three-dose inputs. The complete BF-BOIN two-stage scenario
+simulator and balance/OBD summaries remain open; the
+[remaining-work crosswalk](research/bard-remaining-simulation-audit.md)
+records the unresolved timing/quota conventions.
 
 [TITE-BOIN12 AL methods](docs/tite-boin12.md) add patient-level handling of
 pending toxicity and efficacy, joint utility posteriors, interim dose conduct
