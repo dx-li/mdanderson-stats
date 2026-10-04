@@ -5,7 +5,9 @@ binary, count, continuous, survival, and correlation outcomes. Python coverage i
 partial. All 25 power and retention procedures in the current main menu have
 independent Python implementations, checked against original Fortran output and
 independent probability sums or integration. Bounded inverse planning is also
-available across these methods; native automatic planning workflows remain partial.
+available across these methods. Partial status reflects native per-method
+automatic bounds/branch selection and session/report workflows, not an
+unimplemented power formula.
 The archive's inactive [matched-pairs binary procedure](stplan-matched-pairs.md)
 also has a Python power calculation and planning interface. It is separate from
 the 25 active menu procedures and from the matched case-control mixture.
@@ -141,7 +143,9 @@ target power within explicit bounds. Continuous solutions verify achieved power;
 integer attainment searches examine every candidate in the requested direction,
 preserving the nonmonotonic behavior of exact tests. Shared group sizes, indexed
 K-group parameters, and proportional total-size planning are supported.
-The result includes completed forward inputs and the achieved probability.
+For proportional K-group totals, the native procedure itself returns fractional
+group counts; no native rounding or integer-allocation rule is specified. The
+result includes completed forward inputs and the achieved probability.
 [Exact count-test significance planning](stplan-significance.md) selects the
 smallest attainable binomial or Poisson rejection region meeting a target power,
 and reports actual power when the target cannot be attained.
@@ -188,8 +192,10 @@ procedures, with explicit treatment of the two native empty-region sentinels.
 The second probe is `tools/reference_stplan_discrete.f90`. Original software and
 source files are not redistributed.
 
-Still open: native automatic inverse bounds and branch discovery, integer allocation of
-proportional K-group totals, and native session/report workflows.
+Still open: native per-method automatic bound/branch conventions and session/report
+workflows. Proportional K-group totals are a defined fractional planning procedure;
+integer enrollment allocation is not defined by the native source. See the
+[coverage boundary audit](../research/stplan-coverage-boundary-audit.md).
 The old matched-pairs option is implemented and documented separately because
 its call is commented out of the current main menu. See
 [source provenance](stplan-sources.json) for the archive

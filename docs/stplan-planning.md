@@ -156,10 +156,11 @@ multi_group = stplan_solve(
 # Total approximately 308.310044, allocated 1:2:1.
 ```
 
-Whole-vector proportional allocation retains fractional planning counts, as in
-the native model, and rejects `integer=True`. Integer enrollment allocation and
-its achieved power must be chosen separately. A single indexed group size can
-use integer search.
+Whole-vector proportional allocation returns fractional planning counts, as the
+native method specifies, and rejects `integer=True`. The manual/source gives no
+rounding or integer-allocation procedure for turning those proportions into
+enrollment counts. Choose integer group counts explicitly and evaluate their
+achieved power separately. A single indexed group size can use integer search.
 
 ## Validation and remaining workflows
 
@@ -177,9 +178,15 @@ normal effect/SD cases record the native approximation discussed above. The
 source's original tolerances explain small differences in numerical roots.
 Original source is not redistributed. See [provenance](stplan-sources.json).
 
-Native automatic bound/branch selection, integer allocation of proportional K-group totals,
-and session/report workflows remain open. The legacy matched-pairs method adds
-bounded effect, sample-size and significance planning with fixed pilot counts;
+The inverse APIs cover the available forward methods, but callers supply bounds
+that select one search bracket and, when relevant, one branch. Native
+per-method automatic bound defaults and branch conventions are not reproduced;
+these are interface/search differences rather than missing power calculations.
+Native session/report workflows also remain open. No native integer allocation
+rule exists for proportional K-group totals. See the
+[coverage boundary audit](../research/stplan-coverage-boundary-audit.md).
+The legacy matched-pairs method adds bounded effect, sample-size and
+significance planning with fixed pilot counts;
 its no-pilot initial-size estimates have a separate, explicit interface.
 Alternative survival-curve inputs are available through the
 [survival input converters](stplan-survival-inputs.md).
