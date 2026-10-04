@@ -1,4 +1,4 @@
-# Exhaustive single-arm binary success-cutoff search
+# Automatic single-arm binary success-cutoff search
 
 `calibrate_binary_success_cutoff` searches a closed cutoff interval for the
 single-arm beta-binomial operating-characteristic model. It uses the existing
@@ -6,9 +6,7 @@ single-arm beta-binomial operating-characteristic model. It uses the existing
 `calibrate_success_cutoff` helper.
 
 ```python
-from mdanderson_stats.success_calibration_binary_search import (
-    calibrate_binary_success_cutoff,
-)
+from mdanderson_stats import calibrate_binary_success_cutoff
 
 result = calibrate_binary_success_cutoff(
     40,
@@ -27,10 +25,12 @@ to `[0.6, 0.999]`. The source rule declares success when the posterior
 probability of the favorable effect is strictly greater than the cutoff.
 For a single-arm binary trial of size `n`, there are only `n + 1` possible
 response counts and thus finitely many posterior-probability breakpoints. The
-implementation evaluates the lower interval endpoint and the unique
-breakpoints inside the interval. At each breakpoint it applies the strict
-rule exactly, so these values represent every distinct decision set in the
-closed interval.
+implementation constructs the lower interval endpoint and the unique
+breakpoints inside the interval. These values represent every distinct
+decision set in the closed interval. Since PID decreases as less-favorable
+successful states are removed, binary search locates the first feasible
+state without evaluating every breakpoint. The search uses O(n) storage and
+O(n log n) work, including the operating-characteristic evaluations.
 
 The returned cutoff is the smallest evaluated threshold with positive success
 probability and PID no greater than `target`; that smallest-feasible tie policy
@@ -45,15 +45,12 @@ structurally nonempty success set with unrepresentable total success mass, or
 tail calculations that violate monotone response ordering, raise
 `ArithmeticError` rather than being treated as an infeasible design.
 
-This search is limited to single-arm binary outcomes. The current paper and
-application also describe two-arm, normal and log-hazard-ratio settings; this
-function does not infer a global optimizer for those models. For arbitrary
-caller-supplied candidate grids or those other models, use
+This search is limited to single-arm binary outcomes. Automatic searches for
+normal and log-hazard-ratio models are described in the
+[normal and survival calibration guide](success-continuous-calibration.md).
+For two-arm binary outcomes and arbitrary caller-supplied candidate grids, use
 [`calibrate_success_cutoff`](success-calibration.md#calibration-evidence-and-remaining-coverage)
-with the matching operating-characteristic function. The separate two-arm,
-normal and survival wrappers are documented in the
-[`normal and survival section`](success-calibration.md#normal-outcomes-and-survival-approximation)
-and are not used by this exact single-arm search.
+with the matching operating-characteristic function.
 
 The design prior generates the operating-characteristic truth and response
 counts, while the analysis prior determines each posterior success

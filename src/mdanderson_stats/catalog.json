@@ -4998,7 +4998,9 @@
         "Two-arm binary response-count enumeration for arbitrary risk-difference margins in [-1,1], direct shifted beta tails and reusable tables for fast cutoff evaluation",
         "One- and two-arm known-variance normal operating characteristics, separate conjugate arm weights, direct joint decision/truth quadrant integration; log-hazard-ratio approximation supported through sampling SE or explicit expected-event-count and treatment-allocation inputs",
         "Bayesian power, conditional power, Bayesian Type I error, PID, FOR, point-null frequentist error and explicit-grid PID cutoff calibration; undefined conditional probabilities retained as None",
-        "Remaining: native calibration-search and report/plot parity; candidate-grid calibration is explicit"
+        "Automatic single-arm binary PID calibration over every response-count decision state in a bounded cutoff interval, using monotonicity for O(n log n) search and the strict posterior cutoff rule",
+        "Automatic one- and two-arm normal and fixed-event survival PID calibration with a feasible cutoff, bounded bisection bracket and explicit numerical/evaluation-limit errors",
+        "Remaining: native optimizer, rounding and report/plot parity; two-arm binary calibration still requires an explicit candidate grid"
       ],
       "validation": [
         "Exact uniform-prior binary identities for single and two arms and independent design-prior integration of single-arm rejection probabilities",
@@ -5006,7 +5008,8 @@
         "Discrete cutoff calibration and zero-success handling; reused beta-order routine has independent R validation",
         "32 independent R beta-difference integrals across skewed/concentrated shapes and positive/negative margins; exact uniform identities, endpoint and reflection checks",
         "Prepared tables agree with direct OCs; 500 cutoff evaluations benchmarked separately from one-time quadrature",
-        "Source Supplement S2.3 fixed-event log-hazard-ratio adapter agrees exactly with the known-variance normal OC kernel at integer and fractional expected event counts; five focused success-calibration tests pass"
+        "Source Supplement S2.3 fixed-event log-hazard-ratio adapter agrees exactly with the known-variance normal OC kernel at integer and fractional expected event counts; five focused success-calibration tests pass",
+        "Independent base-R beta-binomial decision states and interior probes, conditional-normal quadrature and survival rescaling references; exact strict-tie identity, feasible/infeasible cutoff brackets and bounded search checks (research/success-automatic-reference-audit.md)"
       ]
     },
     {

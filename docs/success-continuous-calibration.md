@@ -7,7 +7,7 @@ and log-hazard-ratio operating-characteristic calculations; it adds no model,
 prior or decision rule.
 
 ```python
-from mdanderson_stats.success_calibration_continuous import (
+from mdanderson_stats import (
     calibrate_normal_success_cutoff,
     calibrate_survival_success_cutoff,
 )

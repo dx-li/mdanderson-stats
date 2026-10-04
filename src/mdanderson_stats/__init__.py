@@ -1400,6 +1400,12 @@ from .success_calibration import (
     prepare_binary_two_arm_success,
     survival_success_oc,
 )
+from .success_calibration_binary_search import calibrate_binary_success_cutoff
+from .success_calibration_continuous import (
+    ContinuousSuccessCalibration,
+    calibrate_normal_success_cutoff,
+    calibrate_survival_success_cutoff,
+)
 from .survan_baseline import SurvanBaseline, survan_baseline
 from .survan_cox import SurvanCox, survan_cox
 from .survan_descriptive import (
@@ -2133,10 +2139,14 @@ __all__ = [
     "BinarySuccessTable",
     "prepare_binary_two_arm_success",
     "SuccessCalibration",
+    "ContinuousSuccessCalibration",
     "SuccessOperatingCharacteristics",
     "binary_success_oc",
     "binary_two_arm_success_oc",
     "calibrate_success_cutoff",
+    "calibrate_binary_success_cutoff",
+    "calibrate_normal_success_cutoff",
+    "calibrate_survival_success_cutoff",
     "normal_success_oc",
     "survival_success_oc",
     "RoseDesign",

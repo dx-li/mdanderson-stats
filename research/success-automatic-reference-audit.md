@@ -1,7 +1,7 @@
 # Automatic success-cutoff calibration reference audit
 
 Reference batch prepared 2026-10-03. This is an independent mathematical
-reference for the automatic cutoff search, not a reconstruction of the Windows
+reference for the automatic cutoff search, not a reconstruction of the source
 application's optimizer or reports.
 
 ## Source contract
@@ -57,6 +57,14 @@ values and bisection brackets, and survival rescaling results under
 `tests/fixtures/success-automatic-*.csv`. These references check the underlying
 operating characteristics and the documented search conventions. They do not
 establish native cutoff optimizer, GUI, report, or plotting parity.
+
+R and SciPy beta-tail breakpoints can differ by a few ulps. Comparisons therefore
+check the selected decision state's probabilities and interior probes between
+breakpoints, rather than applying one library's rounded breakpoint to the other
+library's strict comparison. The exactly representable one-patient breakpoint
+at 0.25 separately checks exclusion at equality and inclusion immediately below.
+Reference comparisons with explicit absolute tolerances disable pytest's default
+relative tolerance.
 
 ## Validation
 

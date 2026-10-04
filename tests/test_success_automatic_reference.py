@@ -3,13 +3,13 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+
+from mdanderson_stats.success_calibration import binary_success_oc, normal_success_oc
 from mdanderson_stats.success_calibration_binary_search import calibrate_binary_success_cutoff
 from mdanderson_stats.success_calibration_continuous import (
     calibrate_normal_success_cutoff,
     calibrate_survival_success_cutoff,
 )
-
-from mdanderson_stats.success_calibration import binary_success_oc, normal_success_oc
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -42,16 +42,16 @@ def test_binary_strict_breakpoint_states_match_independent_r_reference():
                 **kwargs,
             )
             expected = selected[name]
-            assert calibrated.cutoff == pytest.approx(_f(expected, "cutoff"), abs=2e-14)
+            assert calibrated.cutoff == pytest.approx(_f(expected, "cutoff"), rel=0, abs=2e-14)
             assert (
                 calibrated.operating_characteristics.incorrect_decision_probability
-                == pytest.approx(_f(expected, "pid"), abs=2e-13)
+                == pytest.approx(_f(expected, "pid"), rel=0, abs=2e-13)
             )
             assert calibrated.operating_characteristics.true_positive == pytest.approx(
-                _f(expected, "true_positive"), abs=2e-13
+                _f(expected, "true_positive"), rel=0, abs=2e-13
             )
             assert calibrated.operating_characteristics.false_positive == pytest.approx(
-                _f(expected, "false_positive"), abs=2e-13
+                _f(expected, "false_positive"), rel=0, abs=2e-13
             )
             assert 1 <= calibrated.candidates_evaluated <= int(spec["n"]) + 2
             if name == "exact_n1":
@@ -77,14 +77,16 @@ def test_binary_strict_breakpoint_states_match_independent_r_reference():
             analysis_prior=(_f(spec, "analysis_alpha"), _f(spec, "analysis_beta")),
             direction=spec["direction"],
         )
-        assert observed.true_positive == pytest.approx(_f(row, "true_positive"), abs=3e-13)
-        assert observed.false_positive == pytest.approx(_f(row, "false_positive"), abs=3e-13)
-        assert observed.bayesian_power == pytest.approx(_f(row, "success_probability"), abs=3e-13)
+        assert observed.true_positive == pytest.approx(_f(row, "true_positive"), rel=0, abs=3e-13)
+        assert observed.false_positive == pytest.approx(_f(row, "false_positive"), rel=0, abs=3e-13)
+        assert observed.bayesian_power == pytest.approx(
+            _f(row, "success_probability"), rel=0, abs=3e-13
+        )
         if row["pid"] == "NA":
             assert observed.incorrect_decision_probability is None
         else:
             assert observed.incorrect_decision_probability == pytest.approx(
-                _f(row, "pid"), abs=3e-13
+                _f(row, "pid"), rel=0, abs=3e-13
             )
 
     # With one observation and uniform analysis prior, the zero-response
@@ -137,9 +139,9 @@ def test_normal_and_survival_bisection_match_independent_r_integrals():
         assert result.bracket[0] <= result.bracket[1]
         assert result.bracket[1] - result.bracket[0] <= result.cutoff_tolerance
         assert result.cutoff == result.bracket[1]
-        assert result.cutoff == pytest.approx(_f(ref, "upper_feasible"), abs=3e-8)
+        assert result.cutoff == pytest.approx(_f(ref, "upper_feasible"), rel=0, abs=3e-8)
         assert result.operating_characteristics.incorrect_decision_probability == pytest.approx(
-            _f(ref, "upper_pid"), abs=3e-8
+            _f(ref, "upper_pid"), rel=0, abs=3e-8
         )
         assert result.operating_characteristics.incorrect_decision_probability <= result.target
 
@@ -169,16 +171,20 @@ def test_normal_and_survival_bisection_match_independent_r_integrals():
             if arms == 2
             else _f(spec, "null_mean_1"),
         )
-        assert observed.incorrect_decision_probability == pytest.approx(_f(row, "pid"), abs=2e-10)
-        assert observed.bayesian_power == pytest.approx(_f(row, "success_probability"), abs=2e-10)
-        assert observed.true_positive == pytest.approx(_f(row, "true_positive"), abs=2e-10)
-        assert observed.false_positive == pytest.approx(_f(row, "false_positive"), abs=2e-10)
+        assert observed.incorrect_decision_probability == pytest.approx(
+            _f(row, "pid"), rel=0, abs=2e-10
+        )
+        assert observed.bayesian_power == pytest.approx(
+            _f(row, "success_probability"), rel=0, abs=2e-10
+        )
+        assert observed.true_positive == pytest.approx(_f(row, "true_positive"), rel=0, abs=2e-10)
+        assert observed.false_positive == pytest.approx(_f(row, "false_positive"), rel=0, abs=2e-10)
 
     reflected = calibrated_results["normal_reflected_less"].operating_characteristics
     original = calibrated_results["normal_unequal_two_arm"].operating_characteristics
-    assert reflected.true_positive == pytest.approx(original.true_positive, abs=2e-13)
-    assert reflected.false_positive == pytest.approx(original.false_positive, abs=2e-13)
-    assert reflected.bayesian_power == pytest.approx(original.bayesian_power, abs=2e-13)
+    assert reflected.true_positive == pytest.approx(original.true_positive, rel=0, abs=2e-13)
+    assert reflected.false_positive == pytest.approx(original.false_positive, rel=0, abs=2e-13)
+    assert reflected.bayesian_power == pytest.approx(original.bayesian_power, rel=0, abs=2e-13)
 
     survival_settings = _rows("success-automatic-survival-settings.csv")
     survival_selected = {r["case"]: r for r in _rows("success-automatic-survival-selected.csv")}
@@ -198,13 +204,13 @@ def test_normal_and_survival_bisection_match_independent_r_integrals():
             margin=_f(spec, "margin"),
         )
         ref = survival_selected[name]
-        assert result.cutoff == pytest.approx(_f(ref, "upper_feasible"), abs=3e-8)
+        assert result.cutoff == pytest.approx(_f(ref, "upper_feasible"), rel=0, abs=3e-8)
         assert result.operating_characteristics.incorrect_decision_probability == pytest.approx(
-            _f(ref, "upper_pid"), abs=3e-8
+            _f(ref, "upper_pid"), rel=0, abs=3e-8
         )
         survival_results[name] = result
     assert survival_results["survival_base"].cutoff == pytest.approx(
-        survival_results["survival_rescaled"].cutoff, abs=2e-14
+        survival_results["survival_rescaled"].cutoff, rel=0, abs=2e-14
     )
 
 

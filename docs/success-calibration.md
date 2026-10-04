@@ -157,6 +157,17 @@ other effect directions, use `normal_success_oc`.
 
 ## Calibration, evidence and remaining coverage
 
+For automatic calibration within a cutoff range, use the
+[single-arm binary search](success-binary-calibration.md) or the
+[normal and survival searches](success-continuous-calibration.md).
+The binary search covers the finite set of response-count decision states.
+The continuous searches return a feasible cutoff and a numerical bracket for
+the smallest feasible cutoff. Both retain the existing Python convention of
+choosing the smallest feasible threshold, which maximizes success probability
+among feasible nested decision sets. They do not reproduce an uninspected
+native optimizer. Two-arm binary calibration still uses an explicit grid;
+its posterior quadrature uncertainty is checked at each requested cutoff.
+
 `calibrate_success_cutoff` returns the smallest supplied candidate whose PID
 meets the target and whose success probability is positive. Candidates are
 sorted and deduplicated. It does not assume continuity or monotonicity of a
@@ -173,8 +184,9 @@ The separate beta-ordering routine has existing independent R validation.
 Nonzero binary margins are now supported. This catalog entry remains **partial**:
 original calibration-search parity and native application report/plot parity
 remain unverified or unimplemented. The application help specifies a default
-candidate range of `[0.6,0.999]` but does not describe its search algorithm; the
-Python API explicitly reports a grid-constrained result. Source PDF SHA-256:
+candidate range of `[0.6,0.999]` but does not describe its search algorithm.
+Python distinguishes exhaustive binary-state search, tolerance-bounded
+normal/survival search and the original supplied-grid search. Source PDF SHA-256:
 `eeb51252e5896c8fd2beedfd57d81de7f0d38d2978959af6a8478dbff22f4b81`.
 No original application code or paper PDF is distributed.
 

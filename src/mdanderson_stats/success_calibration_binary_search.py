@@ -125,8 +125,8 @@ def calibrate_binary_success_cutoff(
             sample_size,
             cutoff,
             margin=margin_value,
-            design_prior=tuple(float(value) for value in design),
-            analysis_prior=tuple(float(value) for value in analysis),
+            design_prior=(float(design[0]), float(design[1])),
+            analysis_prior=(float(analysis[0]), float(analysis[1])),
             direction=direction,
             null_rate=null,
         )

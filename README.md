@@ -1233,9 +1233,11 @@ this API's scope.
 design and analysis priors for single-arm binary, arbitrary-margin two-arm binary,
 and one-/two-arm normal models, including the paper's log-hazard-ratio
 approximation. It reports joint decision/truth probabilities, Bayesian power and
-error metrics, and searches candidate cutoffs for a target probability of
-incorrect decision. Reusable binary probability tables avoid repeating quadrature
-when evaluating or calibrating many cutoffs.
+error metrics, and calibrates cutoffs for a target probability of incorrect
+decision. Automatic searches enumerate every single-arm binary decision state
+or bracket a normal/survival cutoff to a specified tolerance. Supplied-grid
+calibration remains available, and reusable two-arm binary probability tables
+avoid repeating quadrature when evaluating many cutoffs.
 
 [KeyboardComb](docs/keyboard-combination.md) now supports two-drug dose decisions,
 posterior safety monitoring, weighted two-dimensional isotonic MTD selection and
