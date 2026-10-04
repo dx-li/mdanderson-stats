@@ -84,8 +84,11 @@ treated for escalation. These rules follow the audited primary method; the
 calendar schedule is an explicit Python convention.
 
 Current implementation differences remain visible in the report: the guide's
-optional `stay_at_one_of_three=True` modification changes the individual action
-at the current dose to stay for exactly one DLT among three at target 0.25.
+optional `stay_at_one_of_three=True` modification uses the target range 0.20–0.279
+and changes the current-dose action at exactly three patients to stay for one
+DLT (with 0/3 escalating and at least 2/3 de-escalating). The separate
+`deescalate_at_two_of_six=True` option applies for targets 0.28–0.33 and uses
+the guide's at-most-1/6 escalation and at-least-2/6 de-escalation actions.
 When it applies to a current-dose action in a backfill conflict, Python applies
 the modified individual action before the existing conflict-pooling rule; the
 Guide does not state this interaction explicitly, so native parity for that

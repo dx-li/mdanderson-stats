@@ -47,6 +47,18 @@ def test_report_replays_scenarios_serially_and_captures_guide_options():
     assert "&lt;low &amp; moderate&gt;" in html
     assert "Effective lowest-dose stop" in html
 
+    six_patient_design = BFBOINDesign(target=0.30, deescalate_at_two_of_six=True)
+    six_patient_report = bf_boin_design_report(
+        six_patient_design,
+        scenarios[:1],
+        cohorts=1,
+        cohort_size=2,
+        trials=2,
+        seed=720,
+    )
+    assert six_patient_report.design.deescalate_at_two_of_six
+    assert "Escalate at ≤1/6 and de-escalate at ≥2/6" in six_patient_report.to_html()
+
 
 def test_report_preflights_complete_work_before_simulation(monkeypatch):
     module = import_module("mdanderson_stats.bf_boin_report")

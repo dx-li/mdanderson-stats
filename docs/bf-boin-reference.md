@@ -58,14 +58,14 @@ lower candidate dose; choose the highest candidate with rate at or below the
 de-escalation boundary, or move below the pooling start if none qualifies.
 The CRAN implementation uses different strictness at exact boundary equality.
 These distinctions preclude treating its trial outputs as exact Python parity
-fixtures. The historical app audit recorded optional 1/3-stay and
-2/6-de-escalation modifiers. The restored guide explicitly defines only the
-1/3 option, at target 0.25. Python now supports that individual-action modifier.
+fixtures. The restored BARD guide defines both optional individual-action
+modifiers: 1/3 stay for targets 0.20–0.279, and at six patients escalate for at
+most 1/6 DLT and de-escalate for at least 2/6 when targets are 0.28–0.33.
+Python implements these BF-BOIN-specific rules without changing ordinary BOIN.
 Its composition with conflicting backfill data is not explicit in the guide:
 Python modifies individual actions first, then applies the paper's usual
 pooled-conflict rules. Empirical closure and cumulative-pool thresholds remain
-unchanged. The 2/6 option's primary specification has not been restored and is
-not inferred from ordinary BOIN.
+unchanged.
 
 The app's optional early stop is “assigned patients at the current dose >=
 `n_stop` and the next action is stay.”  The optional extra-safety rule requires

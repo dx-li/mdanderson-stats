@@ -69,15 +69,23 @@ class BFBOINDesign:
     safety_offset: float = 0.05
     bound_mtd: bool = False
     stay_at_one_of_three: bool = False
+    deescalate_at_two_of_six: bool = False
     _boin: BOINDesign = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
         target = scalar(self.target, "target")
-        for name in ("extra_safe", "bound_mtd", "stay_at_one_of_three"):
+        for name in (
+            "extra_safe",
+            "bound_mtd",
+            "stay_at_one_of_three",
+            "deescalate_at_two_of_six",
+        ):
             if not isinstance(getattr(self, name), (bool, np.bool_)):
                 raise ValueError(f"{name} must be boolean")
-        if self.stay_at_one_of_three and target != 0.25:
-            raise ValueError("the BF-BOIN 1/3 modification requires target == 0.25")
+        if self.stay_at_one_of_three and not 0.20 <= target <= 0.279:
+            raise ValueError("the BF-BOIN 1/3 modification requires target in [0.20,0.279]")
+        if self.deescalate_at_two_of_six and not 0.28 <= target <= 0.33:
+            raise ValueError("the BF-BOIN 2/6 modification requires target in [0.28,0.33]")
         base = BOINDesign(
             target,
             elimination_probability=self.elimination_probability,
@@ -87,7 +95,10 @@ class BFBOINDesign:
             extra_safe=False,
             safety_offset=self.safety_offset,
             bound_mtd=False,
-            stay_at_one_of_three=self.stay_at_one_of_three,
+            # Apply the BARD guide modifiers locally so their target ranges do
+            # not alter ordinary BOIN's independently documented validation.
+            stay_at_one_of_three=False,
+            deescalate_at_two_of_six=False,
         )
         cap = scalar(self.n_cap, "n_cap")
         if cap != int(cap) or cap < 1:
@@ -101,6 +112,7 @@ class BFBOINDesign:
         object.__setattr__(self, "extra_safe", bool(self.extra_safe))
         object.__setattr__(self, "bound_mtd", bool(self.bound_mtd))
         object.__setattr__(self, "stay_at_one_of_three", bool(self.stay_at_one_of_three))
+        object.__setattr__(self, "deescalate_at_two_of_six", bool(self.deescalate_at_two_of_six))
         object.__setattr__(self, "elimination_probability", base.elimination_probability)
         object.__setattr__(self, "safety_offset", base.safety_offset)
         object.__setattr__(self, "_boin", base)
@@ -123,6 +135,13 @@ class BFBOINDesign:
     def boundary_table(self, max_patients: int = 30) -> BOINBoundaryTable:
         """Return BOIN movement/elimination cutoffs and BF extra-safe cutoff."""
         table = self._boin.boundary_table(max_patients)
+        escalate = np.array(table.escalate_max, copy=True)
+        deescalate = np.array(table.deescalate_min, copy=True)
+        if self.stay_at_one_of_three and escalate.size >= 3:
+            deescalate[2] = 2
+        if self.deescalate_at_two_of_six and escalate.size >= 6:
+            escalate[5] = 1
+            deescalate[5] = 2
         lowest = np.array(table.lowest_stop_min, copy=True)
         if self.extra_safe:
             extra = self._boin._safety_boundary(
@@ -135,8 +154,8 @@ class BFBOINDesign:
             )
         return BOINBoundaryTable(
             table.patients,
-            table.escalate_max,
-            table.deescalate_min,
+            _owned(escalate),
+            _owned(deescalate),
             table.eliminate_min,
             _owned(lowest),
         )
@@ -231,6 +250,32 @@ class BFBOINDesign:
                 raise ValueError("backfilled must be a matching boolean vector")
         _, _, excluded, _ = self._state(n, y, eliminated)
         decision = self._boin.next_dose(n, y, c, eliminated=excluded)
+        current = c - 1
+        action, next_dose = decision.action, decision.next_dose
+        if action != "stop_safety" and not decision.eliminated[current]:
+            forced_move: int | None = None
+            if self.stay_at_one_of_three and n[current] == 3 and y[current] == 1:
+                forced_move = 0
+            if self.deescalate_at_two_of_six and n[current] == 6:
+                forced_move = 1 if y[current] <= 1 else -1
+            if forced_move is not None:
+                next_index = max(0, min(current + forced_move, len(n) - 1))
+                if decision.eliminated[next_index]:
+                    next_index = current
+                next_dose = next_index + 1
+                action = (
+                    "escalate"
+                    if next_index > current
+                    else "deescalate"
+                    if next_index < current
+                    else "stay"
+                )
+                decision = BOINDecision(
+                    action,
+                    next_dose,
+                    decision.eliminated,
+                    decision.overdose_probability,
+                )
         if response_observed is None:
             eligibility = BFBOINBackfill(
                 _owned(np.zeros(n.shape, dtype=bool)),
@@ -251,6 +296,10 @@ class BFBOINDesign:
         )
         if self.stay_at_one_of_three:
             individual[(n == 3) & (y == 1)] = 0
+        if self.deescalate_at_two_of_six:
+            six = n == 6
+            individual[six & (y <= 1)] = 1
+            individual[six & (y >= 2)] = -1
         lower_conflict = np.flatnonzero(
             bf[:current]
             & (

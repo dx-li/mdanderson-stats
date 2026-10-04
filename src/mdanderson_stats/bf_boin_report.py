@@ -98,6 +98,7 @@ def _snapshot_design(design: BFBOINDesign) -> BFBOINDesign:
         safety_offset=design.safety_offset,
         bound_mtd=design.bound_mtd,
         stay_at_one_of_three=design.stay_at_one_of_three,
+        deescalate_at_two_of_six=design.deescalate_at_two_of_six,
     )
 
 
@@ -195,6 +196,7 @@ class BFBOINDesignReport:
             ("Extra safety", design.extra_safe),
             ("Extra-safety offset", design.safety_offset),
             ("Stay at 1 DLT among 3 at current dose", design.stay_at_one_of_three),
+            ("Escalate at ≤1/6 and de-escalate at ≥2/6", design.deescalate_at_two_of_six),
             ("Bound selected MTD", design.bound_mtd),
             ("Ordinary cohorts", self.cohorts),
             ("Cohort size", self.cohort_size),

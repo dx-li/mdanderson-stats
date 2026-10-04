@@ -19,8 +19,16 @@ the resulting action stays at the current dose and its assigned count reaches
 the threshold. It is separate from the per-dose backfill cap `n_cap`.
 
 `BFBOINDesign(stay_at_one_of_three=True)` enables the guide's optional 1-DLT-of-3
-stay action at target 0.25. Python applies this modification to individual dose
-actions before resolving backfill conflicts with the usual pooled-rate rule.
+rule for targets from 0.20 through 0.279: at exactly three patients, 0/3
+escalates, 1/3 stays, and at least 2/3 de-escalates. Python applies this
+modification to individual dose actions before resolving backfill conflicts
+with the usual pooled-rate rule.
+`BFBOINDesign(deescalate_at_two_of_six=True)` enables the separate guide option
+for targets from 0.28 through 0.33: at exactly six patients, at most 1/6
+escalates and at least 2/6 de-escalates. The latter is applied as an explicit
+six-patient action override; the ordinary BOIN design remains unchanged. Both
+flags can be recorded in the protocol report. If both are enabled, their target
+ranges do not overlap, so construction rejects the incompatible combination.
 The guide does not explicitly specify this interaction, so the ordering is an
 explicit Python policy. Empirical backfill closure still uses the raw observed
 and adjacent pooled rates; safety exclusions take precedence.
