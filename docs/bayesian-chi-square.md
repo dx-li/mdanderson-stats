@@ -43,7 +43,7 @@ The Weibull distribution offers fixed-shape and unknown-shape workflows.
 Censored likelihoods use the event density for exact events and the survival
 function for right censors, under noninformative censoring; they do not model
 the censoring mechanism. Workflows that return the Johnson diagnostic do so
-only for complete observations; the dedicated right-censored lognormal fitter
+only for complete observations; the dedicated [right-censored lognormal fitter](lognormal-right-censored-bayesian.md)
 has no diagnostic.
 Explicit proper-prior workflows permit all-censored samples when the posterior
 is proper. This Python capability extends the guide's input rule requiring at

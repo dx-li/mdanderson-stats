@@ -878,7 +878,7 @@ measurements, explicit allocation rounding and achieved power. Native rounding
 and reports remain pending.
 
 [Bayesian Chi Square TTE Fit](docs/bayesian-chi-square.md) covers posterior
-goodness-of-fit workflows for all seven distributions in the BCSTTE guide.
+fitting for all seven distributions in the BCSTTE guide.
 Exponential and fixed-shape Weibull models have exact Gamma-prior posteriors;
 unknown-shape Weibull, Gamma, inverse-Gamma, log-logistic and log-odds-rate
 models use explicit Gaussian priors on transformed parameters. The complete-data

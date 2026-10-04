@@ -1,5 +1,14 @@
 # Statistical coverage priority audit — September 28, 2026
 
+October 3 lognormal update: a separate bounded data-augmentation Gibbs fitter
+completes right-censored posterior support for all seven BCSTTE distributions.
+It uses an explicit proper Normal-Inverse-Gamma prior, retains paired location
+and variance chains, and excludes zero-time censors from posterior updates.
+Mixed and all-censored fits agree with independent direct R quadrature across
+23 summaries within 2.0010 batch-means Monte Carlo errors, with maximum split
+R-hat 1.000292. The comparison used 132.13 MiB peak RSS and no swaps. Native
+priors and censored Johnson diagnostics remain unresolved.
+
 October 3 censoring/design update: exponential and fixed-shape Weibull fits
 now use both event counts and censored follow-up exposure in their exact Gamma
 posteriors. Joint unknown-shape Weibull fitting also combines event densities

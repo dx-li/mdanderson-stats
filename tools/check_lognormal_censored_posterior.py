@@ -1,4 +1,4 @@
-"""One fixed-seed Gibbs check against risk's direct R posterior quadrature."""
+"""One fixed-seed Gibbs check against independent direct R posterior quadrature."""
 
 from __future__ import annotations
 

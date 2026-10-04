@@ -881,6 +881,10 @@ from .ksbin2_probability import (
 from .ksbin2_study import KSTwoSampleStudy, ksbin2_study
 from .kstage_binomial import KStageBinomial
 from .lognormal_bayesian_gof import LognormalBayesianGOF, lognormal_complete_data_bayesian_gof
+from .lognormal_censored_bayesian import (
+    LognormalRightCensoredBayesianFit,
+    lognormal_right_censored_bayesian_fit,
+)
 from .mds_hope import (
     MDSHopeCovariates,
     MDSHopeRiskClassification,
@@ -2607,6 +2611,8 @@ __all__ = [
     "weibull_fixed_shape_bayesian_gof",
     "WeibullUnknownShapeGOF",
     "weibull_unknown_shape_bayesian_gof",
+    "LognormalRightCensoredBayesianFit",
+    "lognormal_right_censored_bayesian_fit",
     "LognormalBayesianGOF",
     "lognormal_complete_data_bayesian_gof",
     "TTEFamilyBayesianGOF",

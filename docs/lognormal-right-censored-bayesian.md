@@ -31,8 +31,8 @@ assert not fit.event[5]  # zero-time censor is retained in metadata
 ## Model and posterior update
 
 Let `Y=log(T)` and `V=sigma**2`. The prior is
-`V ~ InverseGamma(a0,b0)` and `mu | V ~ Normal(m0,V/kappa0)`, with all prior
-parameters positive. Exact events contribute the lognormal density. A positive
+`V ~ InverseGamma(a0,b0)` and `mu | V ~ Normal(m0,V/kappa0)`, with `kappa0`, `a0` and `b0`
+positive and `m0` any finite real location. Exact events contribute the lognormal density. A positive
 right censor at `c` contributes
 `S(c | mu,V) = Phi((mu-log(c))/sqrt(V))`. Under independent, noninformative
 censoring, the posterior after integrating censored rows is not another

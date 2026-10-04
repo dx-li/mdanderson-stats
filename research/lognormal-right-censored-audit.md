@@ -85,17 +85,17 @@ minimum proposal count before consuming the caller's RNG. Retention is limited
 to parameter, observed-likelihood and input metadata arrays.
 
 Independent validation compared posterior means, variances, covariance and
-posterior mean CDFs against risk's separate base-R quadrature of the direct
+posterior mean CDFs against independent base-R quadrature of the direct
 observed-data likelihood, not another latent-augmentation implementation. It
 used the fixed seeds `20261033` (mixed) and `20261034` (all censored), 12,000
 retained draws per chain, four chains, and 3,000 warmup updates. All 23
 case/metric comparisons were within 5 batch-means MCSE; the maximum was 2.0010
 MCSE. Maximum split R-hat was 1.000292. The run took 9.68 seconds and peaked at
-138,543,104 bytes (132.03 MiB) resident memory, with no swaps. The mixed case
+138,543,104 bytes (132.13 MiB) resident memory, with no swaps. The mixed case
 used 301,902 truncated-normal proposals and 997,902 total work units; the
 all-censored case used 371,391 proposals and 959,391 work units. See
 `tools/check_lognormal_censored_posterior.py` for the fixed comparison
-configuration. Risk's grid-121 to grid-151 quadrature change was at most
+configuration. The grid-121 to grid-151 quadrature change was at most
 `9.65e-13` (mixed) and `2.08e-13` (all-censored); widening the order-151 domain
 changed them by `3.86e-13` and `7.60e-10`, respectively.
 
