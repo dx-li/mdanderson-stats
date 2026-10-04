@@ -1,7 +1,10 @@
+from importlib import import_module
+
 import pytest
 
-import mdanderson_stats.cid2bp_session as session_module
 from mdanderson_stats.cid2bp_session import CID2BPRequest, cid2bp_session
+
+session_module = import_module("mdanderson_stats.cid2bp_session")
 
 
 def test_ordered_repeated_methods_entry_modes_and_report(tmp_path):
@@ -34,6 +37,9 @@ def test_ordered_repeated_methods_entry_modes_and_report(tmp_path):
     assert "exact\texact" in report
     destination = tmp_path / "session.tsv"
     assert result.write_report(destination) == destination
+    assert destination.read_text(encoding="utf-8") == report
+    with pytest.raises(ValueError, match="digits"):
+        result.write_report(destination, digits=0)
     assert destination.read_text(encoding="utf-8") == report
 
 
@@ -96,6 +102,20 @@ def test_preflight_rejects_whole_invalid_or_oversized_session_before_calculation
             [
                 CID2BPRequest(1, 2, 0, 2, methods=many_methods),
                 CID2BPRequest(1, 2, 0, 2, methods=many_methods),
+            ]
+        )
+    assert destination.read_text(encoding="utf-8") == "keep this report"
+
+    with pytest.raises(ValueError, match="2 million grid points"):
+        cid2bp_session(
+            [
+                CID2BPRequest(
+                    0,
+                    1500,
+                    0,
+                    1500,
+                    methods=("wald", "peskun_native"),
+                )
             ]
         )
     assert destination.read_text(encoding="utf-8") == "keep this report"

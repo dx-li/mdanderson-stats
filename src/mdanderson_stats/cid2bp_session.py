@@ -176,6 +176,8 @@ def cid2bp_session(requests: Sequence[CID2BPRequest]) -> CID2BPSession:
                 )
         if "exact" in request.methods and max(n1, n2) > 100:
             raise ValueError("exact permits at most 100 trials per sample")
+        if "peskun_native" in request.methods and (n1 + 1) * (n2 + 1) > 2_000_000:
+            raise ValueError("peskun_native permits at most 2 million grid points")
         prepared.append((request, n1, n2, confidence))
 
     records: list[CID2BPRecord] = []
