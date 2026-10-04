@@ -50,6 +50,82 @@ one row per gel and one column per detected peak, in the returned peak order.
 The workflow checks that both passes have identical ordered pixel data, counts
 and dimensions using a streaming digest; it rejects changing input.
 
+### Reading aligned TIFF gels
+
+`PinnacleTiffSource` is a replayable TIFF input for file-backed analyses. It
+preflights every selected TIFF frame before decoding any pixels, then opens,
+decodes, copies and closes one file at a time on each pass. Install Pillow
+through the optional `image` extra (`python -m pip install '.[image]'` from
+the repository checkout); this adapter supports Pillow >=12.3,<13.
+
+```python
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+import numpy as np
+from PIL import Image
+
+from mdanderson_stats import PinnacleTiffSource, run_pinnacle
+
+with TemporaryDirectory() as temporary_directory:
+    tiff_paths = []
+    for index, height in enumerate((18, 20, 22)):
+        pixels = np.full((16, 16), 2 + index, dtype=np.uint16)
+        pixels[7, 8] = height
+        path = Path(temporary_directory) / f"gel-{index}.tif"
+        Image.fromarray(pixels).save(path, format="TIFF")
+        tiff_paths.append(path)
+
+    tiff_source = PinnacleTiffSource(tiff_paths)
+    tiff_result = run_pinnacle(
+        tiff_source,
+        filter_length=2,
+        levels=2,
+        peak_radius=0,
+        background="none",
+        normalization="none",
+    )
+    assert len(tiff_source.image_ids) == tiff_result.image_count == 3
+    assert tiff_result.average_image.shape == (16, 16)
+```
+
+The order supplied in `paths` is retained. `image_ids` contains each resolved
+path and its zero-based selected frame, so the identity used by the pipeline's
+two-pass pixel digest is inspectable. The ordered header records are available
+in `frame_metadata`. The source accepts 2–200 selected TIFF frames and limits
+each image to 4,194,304 pixels. Its default 512 MiB
+`max_decode_bytes` preflight uses a conservative 48-byte-per-pixel workspace
+estimate for decoder buffers, array conversion and overlap with the previous
+streamed image. This is a preflight estimate, not a bound on Pillow's internal
+decoder or process-wide memory.
+
+Only single-sample grayscale integer or 32-bit floating-point TIFFs supported
+by Pillow >=12.3,<13 are accepted. Pixels must be finite and nonnegative;
+values are not rescaled. RGB, palette, alpha and other multichannel images are
+rejected rather than converted. Pillow applies TIFF Orientation
+metadata while loading; returned arrays therefore use Pillow's normalized
+top-left orientation, with dimensions measured after that orientation. The
+TIFF photometric tag is retained as metadata; for 8-bit WhiteIsZero files the
+source reverses Pillow's decoder inversion to preserve the stored numerical
+samples. No additional photometric inversion or display-oriented conversion
+is applied.
+
+Byte order is honored for supported samples; Pillow 12.3 does not support
+every TIFF combination. In particular, its decoder rejects big-endian
+WhiteIsZero unsigned 16-bit files, unsigned big-endian 32-bit TIFFs are not
+mapped by its scalar decoder, and non-native-order signed integer pages that
+use libtiff are rejected because their decoder rawmodes are not normalized.
+
+By default, each file must contain exactly one frame. For multipage inputs,
+provide one explicit selector per path, for example
+`PinnacleTiffSource([stack_path, stack_path], frame_indices=[0, 1])`. Repeated
+paths can select different pages. `None` requires a single-frame file, while
+an integer selects that zero-based page; selectors are bounded below 200 and
+included in each image ID. The source does not silently choose a page or treat
+an unselected multipage file as a stack. It does not cache decoded frames, and
+each repeated pass reopens the files; `run_pinnacle` verifies that the selected
+ordered pixels still match.
+
 The stages are also available separately through `pinnacle_mean_image`,
 `pinnacle_denoise`, `pinnacle_detect_peaks` and `pinnacle_quantify`.
 `pinnacle_daubechies_filter`, `pinnacle_rdwt` and `pinnacle_irdwt` expose the
@@ -184,6 +260,6 @@ This product includes software developed by Rice University, Houston, Texas
 and its contributors. The complete conditions are in the
 [preserved license](../notices/rice-wavelet-LICENSE.txt).
 
-Native TIFF/project-file ingestion, interactive peak editing and native report
-equivalence also remain open. No original Pinnacle executable, source archive
-or article PDF is bundled.
+Unsupported TIFF encoding combinations, native project-file ingestion,
+interactive peak editing and native report equivalence remain open. No original
+Pinnacle executable, source archive or article PDF is bundled.

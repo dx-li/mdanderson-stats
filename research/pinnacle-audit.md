@@ -124,3 +124,31 @@ This goal turn made progress. The complete catalog/publication objective remains
 active. The existing GitHub write approval block is unchanged; no alternate
 publication transport was attempted. Next reconcile BOIN desktop entry 99 with
 the already implemented method families and identify its actual remaining gaps.
+
+## TIFF input implementation note (2026-10-03)
+
+`PinnacleTiffSource` provides the file-backed route into the existing two-pass
+analysis. It preflights ordered TIFF headers and selected frame dimensions
+before decoding, opens and closes one frame at a time, exposes canonical
+path/frame identifiers, and replays the paths so the existing pixel-digest
+comparison remains authoritative. A multipage TIFF requires a zero-based frame
+selector for each selected page; repeated paths can contribute different pages
+to an aligned gel set. The input is a bounded list of explicitly selected
+two-dimensional frames, not an inferred TIFF stack.
+
+The source accepts supported scalar grayscale integer and 32-bit float TIFF
+modes, retains decoded numeric samples without rescaling, and rejects
+multichannel data. Pillow 12.3.0 normalizes TIFF Orientation on load. Its 8-bit
+WhiteIsZero raw mode inverts samples, so the adapter reverses that
+decoder-specific inversion to retain stored samples. For libtiff-decoded float
+pages, it inspects the actual codec rawmode and host byte order before deciding
+whether byte normalization is required; the uncompressed raw decoder is left
+untouched. Non-native-order libtiff signed-integer pages are rejected because
+Pillow 12.3.0 does not normalize those rawmodes. Big-endian WhiteIsZero 16-bit
+and unsigned 32-bit TIFFs are outside the supported Pillow decoder contract.
+The workspace preflight uses a conservative per-pixel estimate covering decode
+and array conversion, including overlap with the previous streamed frame.
+Pillow allocation behavior remains implementation-dependent, so the estimate
+is not a process-memory guarantee. This adapter does not claim native
+project-file or GUI parity; integrated validation results will be appended by
+the root coordinator.
