@@ -336,7 +336,7 @@ class BOP2DCCategoricalDesign:
         b = fsum(prior[i] for i in range(self.n_categories) if not selected[i])
         success = int(np.dot(counts, selected.astype(np.int64)))
         n = int(np.sum(counts, dtype=np.int64))
-        return a + success, b + n - success
+        return a + success, b + (n - success)
 
     def _posterior(
         self,

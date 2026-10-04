@@ -159,6 +159,21 @@ def test_oversized_nonmaterializing_matrix_rows_rejected_before_conversion():
         )
 
 
+def test_tiny_positive_complement_prior_survives_all_selected_counts():
+    design = bop2_dc_categorical_design(
+        10,
+        [[1, 0]],
+        combination="any",
+        directions="greater",
+        lrv=0.1,
+        cmv=0.2,
+        prior=(1.0, 1e-20),
+    )
+    state = design.monitor((10, 0))
+    assert np.all(np.isfinite(state.posterior_probability))
+    assert state.posterior_probability[0, 0] > 0.9
+
+
 def test_independent_r_reference_probabilities_for_single_and_randomized_cases():
     fixture = Path(__file__).parent / "fixtures" / "bop2-dc-categorical-reference.csv"
     with fixture.open(newline="") as handle:
