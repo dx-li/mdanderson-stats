@@ -23,6 +23,38 @@ should be explicit. Page 18's simulation uses means `(-1.1, 0)`, variances
 `(.16, .33)` and overdose cutoff `.30`; these are example values, not verified
 native defaults.
 
+## Printed prior and initial screening
+
+The printed raw-ratio model and simulation prior also constrain any attempt
+to reproduce the paper's OC tables. Since the slope and dose ratio are
+positive, `p_j > expit(log(alpha))` at every dose. Consequently,
+
+```text
+Pr(p_j >= .33) >= Pr(log(alpha) >= logit(.33))
+                 = 1 - Phi((logit(.33) + 1.1) / 2).
+```
+
+This lower bound is approximately 0.422, already above the paper's EWOC
+cutoff 0.30. Exact prior probabilities would therefore stop the existing
+Python replay at its initial prior screen with those printed inputs. Finite
+Monte Carlo estimates can vary, but do not resolve the specification issue.
+Initial prior screening is an explicit Python calendar policy; the recovered
+paper does not explain how the printed model/prior and the reported
+nonempty simulation trials are reconciled at initialization. Substituting a
+log-dose predictor or adjusting the prior would change the supplied model.
+Runnability with a separately declared illustrative prior is not evidence
+of reproduction of the published simulation tables.
+
+The independent base-R quadrature in
+[`reference_bard_blrm_initial_prior.R`](../tools/reference_bard_blrm_initial_prior.R)
+confirms the analytic lower bound `0.422341294769456`. For the five printed
+doses, prior overdose probabilities are `0.485814956587637`,
+`0.541650274204252`, `0.663872492569374`, `0.780063049134529`, and
+`0.885236818717403`. Estimated quadrature error is below `3.9e-12`; the
+omitted standard-normal tail mass is below `1.6e-23`. The reference ran with
+warnings treated as errors and asserts that every probability exceeds the
+cutoff. This check does not estimate a replacement prior.
+
 ## Decisions and backfill
 
 Pages 9–11 specify `PTT_j = Pr(gamma1 < p_j < gamma2 | data)` and

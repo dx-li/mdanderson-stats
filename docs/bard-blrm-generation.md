@@ -15,22 +15,33 @@ from mdanderson_stats.bard_blrm_generation import (
 )
 from mdanderson_stats.bard_response import bard_response_model
 
-response = bard_response_model(
-    [0.25, 0.40, 0.55], [[1], [2]], [0.7, 0.3], [[1.0, 2.0]]
-)
+response = bard_response_model([0.25, 0.40, 0.55], [[1], [2]], [0.7, 0.3], [[1.0, 2.0]])
 design = BARDBLRMSimulationDesign(
-    doses=[1, 2, 3], reference_dose=1,
+    doses=[1, 2, 3],
+    reference_dose=1,
     prior=BARDLogisticPrior([-3.0, 0.0], [0.0, 0.0]),
-    target_interval=[0.15, 0.35], eta=0.30,
-    cohort_size=1, max_escalation_patients=6, backfill_evaluable_cap=3,
-    draws=8, warmup=0, chains=2, max_arrivals=20,
-    arrival_distribution="exponential", accrual_rate=1.0, dlt_window=1.0,
+    target_interval=[0.15, 0.35],
+    eta=0.30,
+    cohort_size=1,
+    max_escalation_patients=6,
+    backfill_evaluable_cap=3,
+    draws=8,
+    warmup=0,
+    chains=2,
+    max_arrivals=20,
+    arrival_distribution="exponential",
+    accrual_rate=1.0,
+    dlt_window=1.0,
 )
-generated = simulate_bard_blrm_stage_one(
-    design, [0.05, 0.15, 0.30], response, rng=20261004
-)
+generated = simulate_bard_blrm_stage_one(design, [0.05, 0.15, 0.30], response, rng=20261004)
 trial = generated.trial
 ```
+
+The point-mass prior is an illustrative configuration for this small example.
+Use positive prior standard deviations to learn toxicity from observations,
+with enough posterior draws to resolve decisions near the safety cutoff.
+The [prior audit](../research/bard-blrm-audit.md) explains the separate
+initial-screening discrepancy in the paper's printed simulation settings.
 
 An integer or omitted seed is recorded in `generated.seed` and can be replayed;
 a supplied NumPy `Generator` is advanced directly and has `seed=None`. The

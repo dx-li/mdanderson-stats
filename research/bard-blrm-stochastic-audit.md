@@ -6,11 +6,14 @@ The cached primary article (`research/raw/BARD/paper.txt`) describes the
 two-stage BARD design in Section 2 (printed pages 7–12). For BF-BLRM, stage
 one selects a dose only after at least six patients have been treated there,
 and among doses with strict `POD < eta` selects the greatest posterior target
-probability (page 11, text near lines 438–445). The paper's simulation setting
-uses five doses, up to 30 escalation patients, cohorts of three, accrual rate
-3/month, a one-month DLT window, backfill cap 12 per dose, and stage-two total
-target 40; it carries the selected MTD and the dose one level below when that
-lower dose exists (printed page 16, lines 695–710).
+probability (page 11, text near lines 438–445). The paper's BF-BOIN simulation
+setting uses five doses, up to 30 escalation patients, cohorts of three,
+accrual rate 3/month, a one-month DLT window, backfill cap 12 per dose, and
+stage-two total target 40; it carries the selected MTD and the dose one level
+below when that lower dose exists (printed page 16, lines 695–710). The
+BF-BLRM escalation cap is separately calibrated to match BF-BOIN's mean
+stage-one sample size; its value is not supplied (lines 739–757), so this API
+requires an explicit cap.
 
 Stage two reuses eligible stage-one patients at the selected pair and adds
 patients until the combined target is reached (Section 2, printed pages
@@ -62,8 +65,10 @@ claiming undocumented app defaults.
 
 Exact reproduction of the paper's BF-BLRM simulation table remains blocked by
 the conflict already recorded in [the model audit](bard-blrm-audit.md): the
-paper's raw-ratio model/prior and initial prior-screening rule imply prior
-`POD` above the `.30` cutoff at the target dose before patients accrue. No
+paper's raw-ratio model/prior implies prior `POD` above the `.30` cutoff at
+every dose before patients accrue. The Python replay's initial prior screen
+therefore stops with exact prior probabilities; the paper does not resolve
+this initialization discrepancy. No
 prior, model, or screening rule is silently changed here. The saved stochastic
 workflow is useful for explicit feasible inputs but does not certify the
 published table's exact scenario parity.

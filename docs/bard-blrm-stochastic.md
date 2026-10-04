@@ -18,9 +18,7 @@ from mdanderson_stats import (
 )
 
 profiles = list(product((1, 2), repeat=1))
-response = bard_response_model(
-    [0.30, 0.48, 0.62], profiles, [0.5, 0.5], [[1.0, 1.5]]
-)
+response = bard_response_model([0.30, 0.48, 0.62], profiles, [0.5, 0.5], [[1.0, 1.5]])
 stage_two = BARDStageTwoDesign(
     total_target=12,
     eligible_profiles=[True, True],
@@ -40,9 +38,7 @@ stage_two = BARDStageTwoDesign(
 design = BARDBLRMSimulationDesign(
     doses=[1.0, 2.0, 3.0],
     reference_dose=1.0,
-    prior=BARDLogisticPrior(
-        mean=[-2.0, -0.6931471805599453], standard_deviation=[0.0, 0.0]
-    ),
+    prior=BARDLogisticPrior(mean=[-2.0, -0.6931471805599453], standard_deviation=[0.0, 0.0]),
     target_interval=[0.20, 0.30],
     eta=0.45,
     cohort_size=3,
@@ -55,9 +51,7 @@ design = BARDBLRMSimulationDesign(
     accrual_rate=3.0,
     dlt_window=1.0,
 )
-trial = run_bard_blrm_stochastic_trial(
-    design, [0.10, 0.22, 0.30], response, stage_two, rng=165
-)
+trial = run_bard_blrm_stochastic_trial(design, [0.10, 0.22, 0.30], response, stage_two, rng=165)
 assert trial.stage_two is not None  # This seed follows both trial stages.
 print(trial.status, trial.total_sample_size, trial.duration)
 print(trial.selected_dose_noninferiority, trial.selected_dose_utility)

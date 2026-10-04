@@ -135,6 +135,17 @@ from .bard_blrm_decision import (
     bard_blrm_next_dose,
     bard_blrm_select_mtd,
 )
+from .bard_blrm_generation import (
+    BARDBLRMSimulationDesign,
+    BARDGeneratedBLRMStageOne,
+    simulate_bard_blrm_stage_one,
+)
+from .bard_blrm_simulation import BARDBLRMSimulation, simulate_bard_blrm
+from .bard_blrm_stochastic import (
+    BARDBLRMStochasticStageTwoPatient,
+    BARDBLRMStochasticTrial,
+    run_bard_blrm_stochastic_trial,
+)
 from .bard_blrm_trial import (
     BARDBLRMPatient,
     BARDBLRMSnapshot,
@@ -2231,6 +2242,14 @@ __all__ = [
     "bard_blrm_backfill",
     "bard_blrm_next_dose",
     "bard_blrm_select_mtd",
+    "BARDBLRMSimulationDesign",
+    "BARDGeneratedBLRMStageOne",
+    "simulate_bard_blrm_stage_one",
+    "BARDBLRMSimulation",
+    "simulate_bard_blrm",
+    "BARDBLRMStochasticStageTwoPatient",
+    "BARDBLRMStochasticTrial",
+    "run_bard_blrm_stochastic_trial",
     "BARDBLRMPatient",
     "BARDBLRMSnapshot",
     "BARDBLRMStep",

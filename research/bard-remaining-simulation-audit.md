@@ -76,13 +76,35 @@ The guide's Section 1 explicitly identifies BF-BOIN as the application's
 stage-one design; its Section 2 advertises the corresponding OC workflow.
 The paper separately evaluates stochastic BARD-BLRM trials, including 30,000
 replicates per scenario and sample size, duration, balance and both PCS
-metrics (cached paper lines 791–823). The existing BF-BLRM calendar replay and
-supplied-outcome stage-two continuation do not generate and summarize that
-study. A stochastic BF-BLRM workflow is therefore a concrete remaining
-paper-method extension, rather than a missing feature advertised by the
-current app guide. Catalog 165 remains partial under the broader method
-coverage objective; the BF-BOIN saved workflow does not claim to complete
-that separate simulation study or recover hidden native conventions.
+metrics (cached paper lines 791–823). The
+[generated stage-one workflow](../docs/bard-blrm-generation.md),
+[full BF-BLRM trial](../docs/bard-blrm-stochastic.md), and
+[streaming summaries](../docs/bard-blrm-simulation.md) now supply these
+calculations by composing the existing posterior, calendar and stage-two
+kernels. The workflow bounds retained arrays and aggregate posterior work,
+rejects arrival-buffer truncation, preserves no-selection trials, and reports
+all modeled factors even when only a subset is balanced.
+
+## Completion boundary
+
+Catalog 165 is implemented for the recovered statistical scope: the guide's
+BF-BOIN workflow and the paper's BF-BLRM simulation methods are available.
+The cached sources identify no further complete statistical algorithm that
+is absent. Clinical eligibility, dose pairs, priors, joint outcome truth,
+arrival laws and escalation caps remain explicit protocol inputs. Native
+interfaces, document templates, hidden defaults and random streams are not
+completion requirements for these Python workflows.
+
+Exact reproduction of the paper's BF-BLRM tables remains unsupported. Its
+printed raw-ratio model and prior imply overdose probabilities above the
+cutoff before enrollment, which conflicts with the Python initial screen;
+the paper does not explain initialization. The independent
+[prior reference](bard-blrm-audit.md) establishes this numerically. The
+calibrated BF-BLRM escalation cap is also not disclosed; the printed cap of
+30 belongs to BF-BOIN. These source/setup limitations are retained, and no
+model, prior or stopping rule is altered to force table agreement. The
+small documented simulations demonstrate runnable configurations, not the
+paper's 30,000-trial experiment or native parity.
 
 ## Response-model integration
 

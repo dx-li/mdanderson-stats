@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-85 implemented, 45 partial, and 8 pending. Each method's guide explains its
+86 implemented, 44 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -1495,7 +1495,14 @@ enrollment, duration, allocation and factor balance, and correct selection with
 explicit denominators, retaining only one trial at a time.
 [Saved study inputs](docs/bard-study.md) capture the full scenario and seed for
 replay; [protocol and OC reports](docs/bard-report.md) save its settings,
-boundaries and results as self-contained HTML. The
+boundaries and results as self-contained HTML.
+[Stochastic BF-BLRM trials](docs/bard-blrm-stochastic.md) generate outcomes and
+connect both stages using the paper's logistic toxicity model;
+[streaming BF-BLRM summaries](docs/bard-blrm-simulation.md) report the same
+selection, enrollment, duration and balance metrics with aggregate sampling
+budgets. The [prior audit](research/bard-blrm-audit.md) records why the printed
+prior and initial screening policy do not reproduce the paper's trial tables.
+The
 [remaining-work crosswalk](research/bard-remaining-simulation-audit.md)
 distinguishes this app-advertised BF-BOIN workflow from the paper's separate
 BF-BLRM simulation study and records explicit timing/quota conventions.

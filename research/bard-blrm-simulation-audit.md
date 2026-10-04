@@ -39,3 +39,19 @@ workflow. The cached BARD app guide itself describes BF-BOIN in stage one;
 this feature does not claim the app exposes BF-BLRM simulation or that its
 hidden defaults, calendar, joint outcome law, posterior stream, or tables are
 reproduced byte for byte.
+
+## Validation checkpoint
+
+Eleven focused generation, two-stage and OC checks pass, including a
+nondegenerate posterior path, same-seed replay, common-count OBD analyses,
+no-selection denominators, all-factor balance and aggregate budget rejection.
+An independent integrated audit reconstructs 17 patient records with eight
+new stage-two patients, eligibility-conditioned profiles and a distinct
+stage-two endpoint-association table. Both balanced factors and the omitted
+third factor are retained. Joint counts and conditional response probabilities
+match the reconstructed ledger, the maximum uint64 seed is preserved, and
+mandatory carryover above the target is retained without new enrollment.
+The audit took 0.031 seconds after import, peaked at 135.23 MiB process RSS
+and reported zero swaps. The independent prior quadrature is recorded in
+[the model audit](bard-blrm-audit.md). Validation used bounded serial jobs;
+no full local suite or 30,000-trial simulation was run.

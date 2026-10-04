@@ -5,10 +5,11 @@
 The cached BARD paper's BF-BLRM model definition (Section 2, printed pp. 9–10)
 gives `logit(p_j)=log(alpha)+beta*(d_j/d*)`, positive `alpha,beta`, and
 independent Normal priors on `log(alpha), log(beta)`. Its simulation settings
-(Section 3, printed p. 16) specify five doses, 30-patient escalation cap,
-cohorts of three, accrual rate 3/month, one-month DLT window and backfill cap
-12. They do not specify the stochastic arrival-gap law, exact outcome-time
-generation, or a general calibrated escalation-cap procedure. The generated
+(Section 3, printed p. 16) specify five doses, a 30-patient BF-BOIN escalation
+cap, cohorts of three, accrual rate 3/month, one-month DLT window and backfill
+cap 12. BF-BLRM instead uses a calibrated escalation cap whose value and
+general calibration procedure are not recovered. The source also does not
+specify the stochastic arrival-gap law or exact outcome-time generation. The generated
 workflow therefore makes arrival law/rate, DLT window, explicit patient cap,
 prior, target, and sampler settings caller inputs; it makes no native RNG
 claim. Existing `run_bard_blrm_trial` remains the sole conduct and inference
@@ -20,7 +21,8 @@ target interval `(0.16, 0.33)`, doses `(10,20,50,100,200)`, reference dose
 Under the paper's printed raw-ratio curve and positive-beta prior, every dose
 probability is above `expit(log(alpha))`; hence prior `POD` at the 0.33 cutoff
 is at least `Pr(log(alpha)>=logit(0.33))`, about 0.42, which exceeds eta.
-Thus this prior triggers the existing all-overdose initial screen. The
+Exact prior probabilities therefore trigger the Python all-overdose initial
+screen; finite Monte Carlo estimates can vary. The
 generation layer does not change the source model equation, prior, or screen
 to force a simulated enrollment; examples use an explicitly illustrative
 prior that passes the implemented screen.

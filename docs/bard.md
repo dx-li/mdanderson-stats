@@ -115,9 +115,14 @@ seed for replay. [Protocol and OC reports](bard-report.md) present those setting
 boundaries and summaries in a self-contained HTML document. Stage-two timing,
 the joint endpoint law and the native per-arm quota interpretation use explicit
 Python policies; clinical eligibility and the dose pair remain protocol inputs.
-The paper's separate stochastic BF-BLRM study is not reproduced by the existing
-supplied-outcome BF-BLRM replay. See the
-[remaining simulation crosswalk](../research/bard-remaining-simulation-audit.md).
+[Generated BF-BLRM trials](bard-blrm-stochastic.md) and their
+[operating-characteristic summaries](bard-blrm-simulation.md) now cover the
+paper's separate two-stage model under explicit settings. They require a
+stage-one escalation cap, and retain aggregate sampling limits and posterior
+diagnostics. The printed prior conflicts with initial overdose screening;
+this is documented in the [prior audit](../research/bard-blrm-audit.md), so
+the published simulation tables are not claimed as reproduced. See the
+[coverage crosswalk](../research/bard-remaining-simulation-audit.md).
 
 ## Numerical validation and sources
 
