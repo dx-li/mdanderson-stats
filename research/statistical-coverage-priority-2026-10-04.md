@@ -14,7 +14,7 @@ in Python. Its optional modifier's precedence with conflicting backfill data is
 not explicit in the recovered guide, so the Python composition is documented and
 BF-BOIN has moved to section A.
 
-The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 45 entries in section A and 6 in section B, after the Parallel phase I/II source-output review identified unresolved kernel summaries. Its existing DF3+3 decisions and newly added phase-I tally outputs are covered. The Multc Lean saved-study review also distinguishes its unresolved native timing laws from ordinary file-format compatibility, moving that entry to section A.
+The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 48 entries in section A and 3 in section B, after the Parallel phase I/II source-output review identified unresolved kernel summaries. Its existing DF3+3 decisions and newly added phase-I tally outputs are covered. The Multc Lean saved-study review also distinguishes its unresolved native timing laws from ordinary file-format compatibility, moving that entry to section A. Review of Bayes Factor TTE, CRM Suite and CondiS likewise separates unresolved timing, decision precedence and prediction contracts from ordinary display or file compatibility; these entries also belong in section A.
 
 ## A. Statistical or source-contract uncertainty remains
 
@@ -65,17 +65,17 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 | MDS-HOPE (#171) | Cytogenetics handling, standardization and baseline are absent from recovered sources. | [source status](mds-hope-source-status.md) |
 | Rare Disease 123 (#172) | Cohort staggering, generalized threshold and prior remain unknown. | [generalization audit](rare-disease-123-generalization-audit.md) |
 | Success calibration (#173) | Native optimizer, search and rounding conventions remain unspecified; explicit Python calibration is separate from native parity. | [success calibration guide](../docs/success-calibration.md) |
+| Bayes Factor TTE (#89) | Monitoring, continuous boundaries, explicit-calendar simulation and saved reports are covered. Native arrival law, monitoring/final-analysis schedule and integer-day boundary convention remain unresolved; timing choices can change stopping probabilities and expected enrollment. | [calendar contract](../docs/bayes-factor-survival-calendar.md); [boundary precision](../docs/bayes-factor-survival.md) |
+| CRM Suite (#132) | CRM/BMA/DA inference, look-ahead and explicit-policy trial simulation are covered. Native precedence between the DA insufficient-observation wait and raw-rate restriction, and internal suspension scheduling remain unspecified; these can affect assignments and operating characteristics. Older desktop behavior is a separate version contract. | [DA decisions](../docs/dacrm.md); [simulation scheduling](../docs/crm-simulation.md) |
+| CondiS (#157) | Base imputation, all eight refiners and descriptive survival comparison are covered. The prediction example includes a target-derived input and performs imputation before splitting; it does not define a future-subject prediction or valid evaluation contract. Reactive app summary and prediction behavior were not recovered. | [workflow audit](condis-workflow-audit.md) |
 
 ## B. No additional calculation identified; remaining work is input, output, or application parity
 
 | Program | Remaining work seen in the inspected evidence | Evidence |
 | --- | --- | --- |
 | PerfectMatch (#7) | PDNN fitting/expression, normalization, per-probeset correlations and the five-quantile chip summary are covered. Native parameter/data/output/rescaling, unspecified QC metrics and display workflows remain. | [PerfectMatch guide](../docs/perfectmatch.md); [quantile profile](../docs/perfectmatch-quantile-profile.md) |
-| Bayes Factor TTE (#89) | Monitoring, boundaries, calendar replay, simulation and saved Python scenario reports are covered. Reports distinguish terminal stopping from later follow-up. Native integer-day boundaries, text input and calendar timing are not established. | [Bayes Factor survival guide](../docs/bayes-factor-survival.md) |
-| CRM Suite (#132) | CRM/BMA/DA posterior, pending look-ahead, calendar, cohort simulation and OC are implemented; native files/reports and older conduct differences remain. | [CRM conduct](../docs/crm-conduct.md); [CRM simulation](../docs/crm-simulation.md) |
 | TOP (#134) | Joint monitoring, calendar simulation, finite-grid optimization and holdout validation exist; native optimizer grids/report/app-version parity remain. | [TOP guide](../docs/top-endpoints.md); [calibration guide](../docs/top-endpoints-calibration.md) |
 | IPDfromKM (#151) | Digitization and native graphics workflow remain; these are input/presentation features. | [IPDfromKM guide](../docs/ipdfromkm.md) |
-| CondiS (#157) | Eight refinement learners and the vignette's censored/imputed curve comparison are implemented. The separate vignette example uses target-derived inputs and pre-split imputation, so it does not establish future-subject prediction behavior. | [workflow audit](condis-workflow-audit.md) |
 
 The classifications above are review findings, not status changes. A source-contract uncertainty should be resolved before adding a purported native method; input and presentation work can still be useful community functionality without being described as statistical coverage.
 
