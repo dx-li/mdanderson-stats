@@ -44,7 +44,8 @@ class TTEConductReport:
 
     def to_html(self) -> str:
         """Return a self-contained HTML report with full-precision values."""
-        time_unit = escape(_label(self.time_unit, "time_unit", 40))
+        unit_label = _label(self.time_unit, "time_unit", 40)
+        time_unit = escape(unit_label)
         title = escape(_label(self.title, "title", 120))
         design = self.design
         if not isinstance(design, TTEConductDesign):
@@ -72,7 +73,7 @@ class TTEConductReport:
             if row.beyond_cap:
                 boundary_text = "Not resolved within search cap"
             else:
-                boundary_text = f"{_number(row.minimum_total_time)} {time_unit}"
+                boundary_text = f"{_number(row.minimum_total_time)} {unit_label}"
             meaning = (
                 "Continuation criterion met at zero exposure"
                 if not row.beyond_cap and row.minimum_total_time == 0

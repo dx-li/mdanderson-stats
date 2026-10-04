@@ -66,6 +66,8 @@ def test_report_escapes_labels_and_renders_before_replacing_file(tmp_path, monke
     html = report.to_html()
     assert "Report &lt;script&gt;alert(1)&lt;/script&gt;" in html
     assert "months &lt;&amp;&gt;" in html
+    assert "<td>0 months &lt;&amp;&gt;</td>" in html
+    assert "&amp;lt;" not in html
     assert "<script>alert(1)</script>" not in html
 
     destination = tmp_path / "report.html"
