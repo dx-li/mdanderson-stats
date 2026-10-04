@@ -66,6 +66,11 @@ samples have well-defined restricted results: all-censored subjects before the
 horizon receive that horizon. These degenerate cases are not a native runtime
 parity claim.
 
+The [survival comparison](condis-survival-comparison.md) connects this result
+to the vignette's original-censored and all-event-imputed curves, censor marks
+and explicit risk table. Its optional plot is descriptive; imputed times are
+not treated as observed failures for uncertainty calculations.
+
 The estimated curve assumes independent censoring for the population being
 analyzed. Imputed targets are deterministic estimates, not observed failures and
 not multiple-imputation draws. For predictive evaluation, estimate imputations

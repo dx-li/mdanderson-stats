@@ -1,6 +1,6 @@
 # BCHM subgroup clustering and borrowing
 
-Catalog entry 158 is **partial**. BCHM first estimates subgroup similarities
+Catalog entry 158 has a completed Python workflow. BCHM first estimates subgroup similarities
 using Gaussian clustering of observed response rates, then fits a separate
 similarity-weighted logistic-normal hierarchy for each target subgroup.
 The method is described by

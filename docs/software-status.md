@@ -6,8 +6,8 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 73 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 57 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 76 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 54 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -100,6 +100,9 @@ some legacy adaptations retain commercial-use restrictions.
 | Bayesian Optimal Interval (BOIN) Design for Phase I Clinical Trials | [online #120](https://biostatistics.mdanderson.org/shinyapps/BOIN/) | [Guide](boin.md) |
 | Pinnacle | [desktop #95](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/95) | [Guide](pinnacle.md) |
 | EasyCellType: Automatic annotation tool designed for Sing-cell RNA sequencing data | [online #159](https://biostatistics.mdanderson.org/shinyapps/EasyCellType/) | [Fisher guide](easycelltype.md), [ranked scores](easycelltype-gsea.md), [bundled references](easycelltype-builtin-reference.md) |
+| Bayesian Cluster Hierarchical Model for Subgroup Borrowing | [online #158](https://biostatistics.mdanderson.org/shinyapps/BCHM/) | [Guide](bchm.md), [input and reports](bchm-scenarios.md) |
+| BOP2 Desktop - Bayesian Optimal Phase II Design | [desktop #144](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/144) | [Successor workflow](bop2-desktop.md) |
+| BOP2: Bayesian Optimal Phase II Design with Simple and Complex Endpoints | [online #112](https://biostatistics.mdanderson.org/shinyapps/BOP2) | [Guide](bop2-binary.md) |
 
 ## Partially implemented
 
@@ -113,7 +116,6 @@ some legacy adaptations retain commercial-use restrictions.
 | Bayes Factor TTE | [desktop #89](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/89) | [Guide](bayes-factor-survival.md) |
 | Bayesian Adaptive Randomization and Efficacy Monitoring with Posterior Probability | [online #130](https://biostatistics.mdanderson.org/shinyapps/BARPO/) | [Guide](barpo-reference.md) |
 | Bayesian Chi Square TTE fit | [desktop #66](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/66) | [Guide](bayesian-chi-square.md) |
-| Bayesian Cluster Hierarchical Model for Subgroup Borrowing | [online #158](https://biostatistics.mdanderson.org/shinyapps/BCHM/) | [Guide](bchm.md) |
 | Bayesian Effective Sample Size Calculator | [online #154](https://biostatistics.mdanderson.org/shinyapps/BayesESS) | [Guide](conjugate-ess.md) |
 | Bayesian hierarchical classification and information sharing for clinical trials with subgroups and binary outcomes | [online #153](https://biostatistics.mdanderson.org/shinyapps/BaCIS) | [Guide](bacis.md) |
 | Bayesian Model Averaging Continuous Reassessment Method | [online #133](https://biostatistics.mdanderson.org/shinyapps/BMACRM) | See catalog feature and validation notes |
@@ -125,12 +127,10 @@ some legacy adaptations retain commercial-use restrictions.
 | BOIN Design Desktop Program | [desktop #99](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99) | See catalog feature and validation notes |
 | BOIN12: Bayesian Optimal Interval Phase I/II Trial Design for Utility-Based Dose Finding | [online #148](https://biostatistics.mdanderson.org/shinyapps/BOIN12) | [Guide](boin12.md) |
 | BOP2 design with decision making on dual criteria | [online #156](https://biostatistics.mdanderson.org/shinyapps/BOP2-DC) | See catalog feature and validation notes |
-| BOP2 Desktop - Bayesian Optimal Phase II Design | [desktop #144](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/144) | See catalog feature and validation notes |
-| BOP2: Bayesian Optimal Phase II Design with Simple and Complex Endpoints | [online #112](https://biostatistics.mdanderson.org/shinyapps/BOP2) | [Guide](bop2-binary.md) |
 | Calibration of Bayesian Success Criteria for Clinical Trials | [online #173](https://www.trialdesign.org/one-page-shell.html#BayesianCalibration) | See catalog feature and validation notes |
 | CI of Interaction Index | [desktop #65](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/65) | [Guide](interaction-index.md) |
 | CiBolus | [desktop #86](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86) | [Guide](cibolus.md), [Prior calibration](cibolus-calibration.md) |
-| CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis | [online #157](https://biostatistics.mdanderson.org/shinyapps/CondiS/) | [Guide](condis.md) |
+| CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis | [online #157](https://biostatistics.mdanderson.org/shinyapps/CondiS/) | [Guide](condis.md), [curve comparison](condis-survival-comparison.md) |
 | CRM Suite | [desktop #132](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132) | See catalog feature and validation notes |
 | Dose Optimization with Backfill and Adaptive Randomization (BARD) | [online #165](https://biostatistics.mdanderson.org/shinyapps/BARD) | [Stage two](bard.md), [BF-BLRM model](bard-blrm.md) |
 | Dose Schedule Finder | [desktop #75](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75) | [Model](dose-schedule.md), [calendar trials](dose-schedule-trials.md) |

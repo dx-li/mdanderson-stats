@@ -3028,9 +3028,10 @@
         "Bounded six-dose mixture importance posterior: full mixture-density weighting, native evidence-plus-60-component adaptive stopping, analytic mode/Hessian proposal, separate raw-integral and posterior-ratio errors, and source-decision interoperability; docs/parallel-phase12-importance.md",
         "Optional importance backend for six-dose calendar interim/final analyses: observed-tally fit reuse, separate data/posterior streams, pre-seed aggregate integration/mode budgets, actual uncached work counts and per-analysis evidence/error/convergence diagnostics; docs/parallel-phase12-importance-calendar.md.",
         "Bounded serial six-dose calendar operating-characteristic summaries for both posterior backends: direct per-trial seed replay, early/future/no-selection partitions, source ineligible-selection flags, generated and observed endpoint counts with separate denominators, trial-clustered rate errors, enrollment/time summaries and cached-fit convergence/work diagnostics; docs/phase12-calendar-oc.md.",
-        "Remaining: C++ posterior-kernel summaries, native DF3+3 comparison and full published operating-characteristic replication; native optimizer/proposal and RNG parity are not claimed.",
+        "Remaining: C++ posterior-kernel summaries, full published operating-characteristic replication; native optimizer/proposal and RNG parity are not claimed.",
         "Six-dose calendar duration mean and population variance in months, exact seven source-indexed order statistics and explicit small-sample availability",
-        "Native four-arm efficacy-first eight-probability input parser and bounded named scenario batches with captured seeds/truths, MCSEs and atomic text reports"
+        "Native four-arm efficacy-first eight-probability input parser and bounded named scenario batches with captured seeds/truths, MCSEs and atomic text reports",
+        "Source-defined six-dose DF3+3 phase-I enrollment, generated-toxicity, admissibility and early-toxicity tallies with explicit all-trial denominators, completed-phase-I counts and Monte Carlo errors; interrupted phase-I trials contribute zero to native tallies; docs/phase12-calendar-oc.md"
       ],
       "validation": [
         "Python replay matches final selection and all outcome/enrollment counts for 24 trials run through original C control flow; numerical and RNG callbacks replace missing/platform-specific dependencies and are explicitly disclosed",
@@ -3046,7 +3047,8 @@
         "Ten focused calendar/operating-characteristic checks pass, including actual importance interim/final decisions, pending endpoint masking, explicit unchanged-tally cache reuse, uncached component-work accounting, seeded replay and pre-seed budget rejection. Integrated check: 2.601 seconds, 145.95 MiB RSS, zero swaps; research/parallel-phase12-importance-calendar-audit.md.",
         "Ten focused new/existing calendar checks pass, including direct seed derivation, exact replayed selection/enrollment/generated counts, observed endpoint denominators and nondegenerate pooled-response Monte Carlo errors reconstructed from per-trial residuals. The public 20-trial example executes. Worker peak 143605760 bytes RSS, zero swaps; research/phase12-calendar-oc-audit.md. Full native operating-characteristic replication is not claimed.",
         "Calendar seed replay, source-index order/units, huge-constant duration stability and named-scenario input/report equivalence; 9 focused tests, Ruff and mypy pass; research/phase12-calendar-duration-audit.md",
-        "Source crosswalk identifies remaining C++ posterior-kernel printouts, stale no-fit tally behavior and DF3+3 comparison scope; research/parallel-phase12-scenario-report-audit.md"
+        "Source crosswalk identifies remaining C++ posterior-kernel printouts, stale no-fit tally behavior and completed DF3+3 decision/tally coverage; research/parallel-phase12-scenario-report-audit.md",
+        "Source tally call-site review and focused direct-trial replay, lowest-dose toxicity closure and interrupted-before-tally checks; tests/test_phase12_calendar_oc.py"
       ]
     },
     {
@@ -3697,7 +3699,7 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Binary efficacy and toxicity posterior stopping rules and full-path monitoring with exact binomial operating characteristics",
         "Deduplicated finite-grid power calibration with strict or nearest-nominal type I error control, null-centered calibration prior and separate informative-prior analysis",
@@ -3715,7 +3717,8 @@
         "Joint efficacy/toxicity rational posterior checks, all-path enumeration, independent error identity and three-null grid optimum; docs/bop2-efftox.md",
         "Independent full size/parameter grid enumeration for all five categorical endpoint types and both sample-size objectives; docs/bop2-sample-size.md",
         "High-precision Erlang posterior identity, time-unit invariance, censored calendar replay, analytic single-look survival OC, full size/parameter-grid simulation optimum, independent calibration holdout and per-size stream isolation; docs/bop2-survival.md",
-        "Endpoint-specific report checks compare existing exact/seeded kernels and verify probability directions, joint dependence, final failure accounting and bounded input/output workflows; research/bop2-protocol-reports-audit.md. Reports describe specified designs and do not claim native optimization provenance."
+        "Endpoint-specific report checks compare existing exact/seeded kernels and verify probability directions, joint dependence, final failure accounting and bounded input/output workflows; research/bop2-protocol-reports-audit.md. Reports describe specified designs and do not claim native optimization provenance.",
+        "Functional Python workflow completion reviewed for all six BOP2 endpoints and saved protocols; retired desktop coverage is through its officially named online successor, without historical binary equivalence; research/bop2-workflow-completion-audit.md"
       ]
     },
     {
@@ -4299,7 +4302,7 @@
       ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Retired desktop distribution: the official entry explicitly directs users to online BOP2 (catalog 112); shared successor coverage is documented in docs/bop2-desktop.md",
         "Existing successor methods cover binary efficacy/toxicity, ordinal/multiple efficacy, joint efficacy/toxicity and single-arm survival monitoring, operating characteristics, calibration and sample-size searches",
@@ -4309,7 +4312,8 @@
       "validation": [
         "Official desktop retirement notice verified 2026-09-27 UTC: version 1.3.6.1, dated 2020-04-15, points to the online BOP2 application",
         "Existing exact rational/enumeration categorical references and independent survival/calibration checks are recorded under catalog 112 and docs/bop2-sources.json; no new numerical engine or duplicate tests",
-        "Current successor endpoint list observed at 1.4.29.0 (2026-09-16); numerical source snapshot remains 1.4.27.0 (2026-09-04), without a new-build parity claim"
+        "Current successor endpoint list observed at 1.4.29.0 (2026-09-16); numerical source snapshot remains 1.4.27.0 (2026-09-04), without a new-build parity claim",
+        "Functional Python workflow completion reviewed for all six BOP2 endpoints and saved protocols; retired desktop coverage is through its officially named online successor, without historical binary equivalence; research/bop2-workflow-completion-audit.md"
       ]
     },
     {
@@ -4653,7 +4657,8 @@
         "CondiS-X single-hidden-layer neural refinement with all nine size/decay candidates, explicit starts/folds, full-sample refit, event restoration and optimizer diagnostics",
         "CondiS-X radial epsilon-SVR with sampled bandwidth, repeated cross-validation, native all-or-nothing scaling, bounded pairwise optimization, full-sample refit and primal/dual diagnostics",
         "CondiS-X Gaussian gradient boosting with nine native tree-count/split settings, shared tree-prefix CV paths, fresh selected refit, bounded residual trees and event restoration",
-        "CondiS-X numeric random forests with native single mtry setting, bootstrap multiplicities, fold scores, full refit, event restoration and bounded optional per-tree/in-bag diagnostics"
+        "CondiS-X numeric random forests with native single mtry setting, bootstrap multiplicities, fold scores, full refit, event restoration and bounded optional per-tree/in-bag diagnostics",
+        "Censored-versus-imputed survival-curve comparison, original censor marks, explicit pre-event risk table and optional lazy Matplotlib figure; imputed all-event curve is descriptive only; docs/condis-survival-comparison.md"
       ],
       "validation": [
         "Hand conditional means, unmodified R CondiS 0.1.2 fixture, tied/unsorted data, degenerate samples and extreme time scales; tests/test_condis.py",
@@ -4663,7 +4668,8 @@
         "Native nnet 7.3-19 objective/gradient and early optimizer checkpoints, analytic one-unit network, tuning/refit diagnostics and explicit nonconvex trajectory limitations; tests/test_condis_neural.py and research/condis-refinement-audit.md",
         "Tight native kernlab 0.9-33 ordinary, wide and constant-predictor tuning/refit references, all-bound dual solution, coefficient reconstruction and kernel/bandwidth stability checks; tests/test_condis_svm.py and research/condis-svm-audit.md",
         "Original gbm 2.3.1 ordinary/wide shared-draw tree construction and prefix predictions, sample-size guard, adjacent-float split routing and extreme response-scale checks; tests/test_condis_boosting.py and research/condis-gbm-audit.md",
-        "First three original randomForest 4.7-1.2 trees reconstructed from saved uniforms; 500-tree CV/refit smoke, tiny/large RMSE stability and adjacent-float splits; explicit tied-path/degenerate-partition limits in research/condis-random-forest-audit.md and tests/test_condis_forest.py"
+        "First three original randomForest 4.7-1.2 trees reconstructed from saved uniforms; 500-tree CV/refit smoke, tiny/large RMSE stability and adjacent-float splits; explicit tied-path/degenerate-partition limits in research/condis-random-forest-audit.md and tests/test_condis_forest.py",
+        "Exact tied/zero/after-follow-up risk counts and curve/censor checks, optional plotting, and existing base-imputation checks; research/condis-survival-comparison-audit.md"
       ]
     },
     {
@@ -4675,18 +4681,20 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Native patient-weighted Gaussian CRP clustering, streaming co-clustering, d0 and 0.001 similarity floors, and maximum-silhouette representative partition.",
         "Target-specific similarity-weighted logistic-normal borrowing with Gamma shape/rate precision, bounded sequential sampling and posterior diagnostics.",
         "Separate raw and R-compatible three-decimal efficacy probabilities, strict decisions and explicit app versus CRAN parameter configurations.",
-        "Optional subgroup-cluster, posterior-mean/HPD and posterior-density plots, preserving source display rounding, boa.hpd intervals, R nrd0 bandwidth and Gaussian support with bounded direct kernel evaluation; docs/bchm-plots.md."
+        "Optional subgroup-cluster, posterior-mean/HPD and posterior-density plots, preserving source display rounding, boa.hpd intervals, R nrd0 bandwidth and Gaussian support with bounded direct kernel evaluation; docs/bchm-plots.md.",
+        "Bounded named subgroup analyses with immutable captured inputs, complete prior/sampler settings and actual child seeds; portable input CSV roundtrip, atomic text reports and streamed posterior-probability CSV; docs/bchm-scenarios.md",
+        "Chain-aware efficacy-probability diagnostics from retained original logit-scale indicators, posterior-mean diagnostics and sequential batch-means co-clustering errors"
       ],
       "validation": [
         "Native R integrated allocation references, exact three-subgroup partition enumeration, random-mean borrowing quadrature and official five-subgroup help example; tests/test_bchm_reference.py.",
         "Silhouette, resource-budget, empirical-prior and endpoint regressions; tests/test_bchm.py.",
         "Independent R plotting references: 18 native HPD intervals, six bandwidth cases and 3,072 direct Gaussian ordinates; documented differences from native FFT density interpolation and chain selection; tests/test_bchm_plot.py.",
-        "Pending remaining report/file workflows and direct Shiny/JAGS parity; docs/bchm.md."
+        "Existing independent BCHM numerical references retained; input/report/sample roundtrip, exact seed derivation and direct per-target batch-mean uncertainty checks; research/bchm-scenario-report-audit.md. Native PDF/file bytes and JAGS RNG parity are not claimed."
       ]
     },
     {

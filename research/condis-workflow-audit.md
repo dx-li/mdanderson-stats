@@ -15,8 +15,10 @@ censored sample with the imputed times treated as all events. It combines
 the two curves, displays censor marks, and requests a risk table. The Python
 imputation result already retains the original sample and an
 `ExploratorySurvival` curve, including risk, event, and censor counts. The
-existing `exploratory_survival` calculation can also provide the all-events
-curve; a CondiS-specific comparison/summary interface remains to be added.
+existing `exploratory_survival` calculation also provides the all-events
+curve. The [comparison workflow](../docs/condis-survival-comparison.md) now
+combines both curves, original censor marks and an explicit risk-time table,
+with an optional Python plot and no inferred confidence intervals.
 Do not assume that another module's confidence interval convention matches
 the original plotting package or app.
 
@@ -52,7 +54,7 @@ invent these contracts or count them as implemented from the page labels.
 
 All eight numerical learner workflows are now implemented, with numerical
 and native-comparison limits recorded in their respective audits. Remaining
-CondiS work includes reusable summary/curve data and an explicitly defined
+CondiS work includes further app input/summary behavior and an explicitly defined
 regression prediction workflow where supported by source evidence. Exact
 app input/report compatibility remains a separate unverified item. CondiS
 stays partial until its remaining scope is resolved; all eight learners

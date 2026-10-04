@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-73 implemented, 57 partial, and 8 pending. Each method's guide explains its
+76 implemented, 54 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -969,7 +969,8 @@ restricted survival means, with native linear and KM-step interpolation.
 All eight CondiS-X learners are available: linear, ridge, lasso, nearest-neighbor,
 neural, radial SVM, random forest and Gaussian gradient boosting. They include
 learner-specific tuning, full-sample refits and explicit
-censoring diagnostics.
+censoring diagnostics. The [survival comparison](docs/condis-survival-comparison.md)
+adds the vignette's two curves, censor marks and an explicit risk table.
 Neural fits expose iteration-limit diagnostics; their nonconvex fitting paths
 can differ from R even with identical starting weights.
 SVM fits expose scaling transformations and numerical optimality diagnostics.
@@ -1215,6 +1216,8 @@ Monte Carlo errors and reproducible per-trial seeds.
 those inputs and support the native four-arm probability-file order. Six-dose
 calendar results also provide source-indexed duration summaries with an explicit
 population-variance label for the native output misnamed standard deviation.
+Phase-I summaries now include the source-defined 3+3 enrollment, toxicity and
+admissibility tallies, with explicit handling of interrupted trials.
 Python replay matches 24 native C decision histories, with independent R checks
 of 179 posterior comparisons. The later six-dose C++ variant now has an integrated
 calendar simulator combining the shared logistic response posterior, beta toxicity
@@ -1501,6 +1504,9 @@ subgroup. It preserves the native similarity floors and rounded efficacy rule,
 with bounded sampling and independent R numerical references.
 [Analysis plots](docs/bchm-plots.md) show subgroup clusters, posterior means
 and intervals, and subgroup posterior densities using verified R conventions.
+[Named analysis reports](docs/bchm-scenarios.md) round-trip subgroup inputs,
+record actual priors and seeds, and export retained posterior probabilities
+as streamed CSV with sampling diagnostics.
 
 [EffTox dose finding](docs/efftox.md) adds the bivariate efficacy/toxicity
 model, elicited-probability/ESS calibration, bounded posterior fitting, modern Lp and

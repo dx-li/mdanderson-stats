@@ -17,8 +17,11 @@ catalog entry **112**.
 
 [Saved Python protocol reports](bop2-protocol-reports.md) connect all six
 successor endpoint families to captured settings, boundaries and operating
-characteristics. Both entries remain partial: native report formats, animation
-and native optimizer equivalence are not covered. The original desktop binary is no
+characteristics. The functional Python workflow is implemented for the online
+entry and for this retired entry through its official successor; see the
+[completion review](../research/bop2-workflow-completion-audit.md).
+Native report formats, animation and optimizer equivalence remain unverified.
+The original desktop binary is no
 longer supplied by its catalog page and has not been audited for equivalence.
 Successor features added after 2020 are not evidence that the retired desktop
 had those same options.

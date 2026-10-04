@@ -2,11 +2,10 @@
 
 `BCHMScenario` runs one named subgroup dataset through the existing `bchm_fit`
 numerical implementation. `fit_bchm_scenarios` runs a bounded set in order.
-These helpers live in `mdanderson_stats.bchm_scenarios`; the package-level
-exports are unchanged.
+These helpers are also available from the package's top-level namespace.
 
 ```python
-from mdanderson_stats.bchm_scenarios import BCHMScenario, fit_bchm_scenarios
+from mdanderson_stats import BCHMScenario, fit_bchm_scenarios
 
 scenario = BCHMScenario(
     "illustrative basket",

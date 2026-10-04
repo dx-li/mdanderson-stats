@@ -1,7 +1,7 @@
 # BOP2 binary efficacy and toxicity monitoring
 
 Catalog entry **112**, [BOP2](https://biostatistics.mdanderson.org/shinyapps/BOP2/),
-is partially implemented for binary efficacy and toxicity: specified-parameter monitoring,
+has a completed Python workflow for binary efficacy and toxicity: specified-parameter monitoring,
 exact operating characteristics, and power-maximizing finite-grid calibration.
 [Ordinal and multiple efficacy](bop2-paired.md) and
 [joint efficacy/toxicity](bop2-efftox.md) are also available. [Survival monitoring and Monte Carlo calibration](bop2-survival.md) are available;
@@ -11,6 +11,9 @@ is available.
 
 The retired [desktop entry 144](bop2-desktop.md) explicitly points to this
 online successor; the shared Python coverage is mapped there.
+The [completion review](../research/bop2-workflow-completion-audit.md) covers
+all six endpoint workflows while retaining the native optimizer and
+presentation limitations below.
 
 The app snapshot is version 1.4.27.0, updated September 4, 2026. Its binary-prior
 and error-control guides are pinned in [provenance](bop2-sources.json). The original

@@ -177,6 +177,12 @@ from .bayesian_monitoring import (
 from .bchm import BCHMBorrowResult, BCHMCluster, BCHMFit, bchm_borrow, bchm_cluster, bchm_fit
 from .bchm_clustering import BCHMClusterResult
 from .bchm_plot import plot_bchm_cluster, plot_bchm_density, plot_bchm_posterior
+from .bchm_scenarios import (
+    BCHMScenario,
+    BCHMScenarioBatch,
+    BCHMScenarioSummary,
+    fit_bchm_scenarios,
+)
 from .bcrm_decision import BCRMDecision, bcrm_decision, bcrm_extreme_allocation_probability
 from .bcrm_model import (
     BCRMCurve,
@@ -620,6 +626,11 @@ from .condis_neural import (
     fit_condis_neural,
 )
 from .condis_regularized import CondiSRegularizedRefinement, condis_regularized_refine
+from .condis_survival_comparison import (
+    CondiSSurvivalComparison,
+    condis_survival_comparison,
+    plot_condis_survival_comparison,
+)
 from .condis_svm import CondiSSVMRefinement, condis_svm_refine
 from .confint_binomial import (
     confint_binomial_event_limit,
@@ -2035,6 +2046,10 @@ __all__ = [
     "BCHMCluster",
     "BCHMClusterResult",
     "BCHMFit",
+    "BCHMScenario",
+    "BCHMScenarioBatch",
+    "BCHMScenarioSummary",
+    "fit_bchm_scenarios",
     "bchm_borrow",
     "bchm_cluster",
     "bchm_fit",
@@ -2755,6 +2770,9 @@ __all__ = [
     "RareDisease123Design",
     "RareDisease123Simulation",
     "simulate_rare_disease_123",
+    "CondiSSurvivalComparison",
+    "condis_survival_comparison",
+    "plot_condis_survival_comparison",
     "CondiSBoostingRefinement",
     "condis_boosting_refine",
     "CondiSForestFit",

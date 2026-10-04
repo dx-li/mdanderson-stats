@@ -980,8 +980,10 @@ using the P12Xuelin archive's C program as a behavioral reference. Original C/C+
 code, libraries, executables, papers and data are not bundled. The C++ source
 explicitly prohibits redistribution of the original program; the inspected C
 main/functions have no explicit general redistribution grant. The separate C++
-trial-conduct workflow remains outstanding; its logistic response model, beta
-toxicity model and outcome snapshots are independently implemented in Python. Numerical and control-flow validation, adapters
+workflow's logistic response model, beta toxicity model, six-dose phase-I
+progression, calendar conduct and operating-characteristic summaries are
+independently implemented in Python. Remaining source-output limits,
+numerical and control-flow validation, adapters
 and reporting differences are documented in `docs/parallel-phase12.md`.
 
 ## BlockARAND
