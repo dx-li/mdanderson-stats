@@ -26,6 +26,9 @@ simulation = simulate_keyboard_combination(
 )
 print(simulation.selection_probability)
 print(simulation.selection_mcse)
+
+# Select a separately published movement rule; default key1 remains unchanged.
+paper_variant = KeyboardCombDesign(target=0.3, movement_algorithm="key3")
 ```
 
 ## Decisions and safety
@@ -38,10 +41,28 @@ not decrease as either agent's dose increases.
 The target key extends from `target - margin_left` to `target + margin_right`;
 both margins default to `.05`. Endpoint keys are rescaled by their relative
 width, following the R package. The strongest key determines escalation,
-retention or de-escalation. Neighbor candidates change exactly one drug by one
-level; diagonal moves are excluded. Candidates are ranked by target-key mass
-under a Beta(.5,.5) posterior plus the source adjustment `.0005 * patients`.
+retention or de-escalation. The default `movement_algorithm="key1"` preserves
+the audited R package's non-diagonal neighbor set and ranking: candidates change
+exactly one drug by one level and are scored by target-key mass under a
+Beta(.5,.5) posterior plus the package adjustment `.0005 * patients`.
 Remaining ties use a fresh uniform choice from the supplied NumPy RNG.
+
+The published paper also defines source-specified alternatives `key2`, `key3`
+and `key4`. Set `movement_algorithm` to select one. These options rank candidate
+neighbors using the paper's unadjusted target-key posterior probability under
+Beta(1,1): key2 uses non-diagonal escalation and diagonal-capable
+de-escalation; key3 permits diagonal moves in either direction; key4 randomizes
+over non-diagonal candidates with probabilities proportional to their target-key
+posterior masses. Key2 and key3 choose uniformly among candidates tied at the
+largest mass. The returned decision records valid, noneliminated `candidate_doses`
+and the corresponding `candidate_probabilities` for these paper variants. For
+key2/key3 those probabilities describe uniform selection among tied maxima; for
+key4 they are the normalized posterior masses. Key1 keeps its prior result
+fields and scoring behavior. This option changes conduct movement only; safety,
+early stopping and final MTD selection retain the documented Python/package
+conventions. The simulator uses the selected movement algorithm through its
+design object. These paper variants do not imply native KeyboardComb package or
+app parity.
 
 Safety uses a separate Beta(1,1) prior. After at least three patients, a posterior
 probability above `cutoff_eli` (default `.95`) eliminates a combination and the
@@ -87,9 +108,11 @@ claimed. Native errors in low-count boundary construction are documented in the
 reference fixtures rather than reproduced as failures in valid Python trials.
 
 The original app also offers generated trial protocols and reports. Those
-interfaces and the paper's other movement variants are not implemented here;
-the catalog entry remains partial. This module implements the non-diagonal
-movement algorithm used by the audited R package.
+interfaces and paper key5 remain unimplemented; key5's paper paragraph says to
+randomize among two candidates while its defined diagonal candidate set contains
+three. The catalog entry remains partial. The default key1 behavior implements
+the non-diagonal algorithm used by the audited R package; key2-key4 implement
+the separately documented paper movement variants.
 
 
 ## Numerical evidence

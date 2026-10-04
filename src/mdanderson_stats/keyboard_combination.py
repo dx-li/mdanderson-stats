@@ -39,6 +39,8 @@ class KeyboardCombDecision:
     next_dose: DoseCombination | None
     eliminated: BoolMatrix
     overdose_probability: FloatArray
+    candidate_doses: tuple[DoseCombination, ...] = ()
+    candidate_probabilities: FloatArray | None = None
 
 
 @dataclass(frozen=True)
@@ -174,6 +176,7 @@ class KeyboardCombDesign:
     extra_safe: bool = False
     safety_offset: float = 0.05
     early_stop_patients: int | None = 100
+    movement_algorithm: str = "key1"
     intervals: FloatArray = field(init=False, repr=False)
     target_key: int = field(init=False)
     _cutoff_cache: dict[int, tuple[int, int, int]] = field(init=False, repr=False, compare=False)
@@ -198,6 +201,13 @@ class KeyboardCombDesign:
             raise ValueError("require cutoff_eli in (0,1) and 0 <= safety_offset < cutoff_eli")
         if not isinstance(self.extra_safe, (bool, np.bool_)):
             raise ValueError("extra_safe must be boolean")
+        if not isinstance(self.movement_algorithm, str) or self.movement_algorithm not in (
+            "key1",
+            "key2",
+            "key3",
+            "key4",
+        ):
+            raise ValueError("movement_algorithm must be one of 'key1', 'key2', 'key3', or 'key4'")
         if self.early_stop_patients is not None:
             stop = scalar(self.early_stop_patients, "early_stop_patients")
             if stop != int(stop) or stop < 1:
@@ -356,6 +366,48 @@ class KeyboardCombDesign:
             values.append((score + n[i, j] * 0.0005, (i, j)))
         return values
 
+    def _paper_neighbor_masses(
+        self,
+        n: FloatArray,
+        y: FloatArray,
+        candidates: list[tuple[int, int]],
+        state: BoolMatrix,
+    ) -> tuple[tuple[DoseCombination, ...], FloatArray]:
+        """Return safe neighbors and Beta(1,1)-prior posterior target-key masses."""
+        lower = self.target - self.margin_left
+        upper = self.target + self.margin_right
+        doses: list[DoseCombination] = []
+        masses: list[float] = []
+        for i, j in candidates:
+            if state[i, j]:
+                continue
+            a, b = y[i, j] + 1.0, n[i, j] - y[i, j] + 1.0
+            cdf_upper = float(betainc(a, b, upper))
+            cdf_lower = float(betainc(a, b, lower))
+            if cdf_upper <= 0.5:
+                mass = cdf_upper - cdf_lower
+            else:
+                mass = float(betaincc(a, b, lower) - betaincc(a, b, upper))
+            if not np.isfinite(mass):
+                raise ArithmeticError("paper Keyboard neighbor posterior mass is not finite")
+            doses.append((i + 1, j + 1))
+            masses.append(max(0.0, mass))
+        return tuple(doses), np.asarray(masses, dtype=np.float64)
+
+    @staticmethod
+    def _normalized_candidate_weights(masses: FloatArray) -> FloatArray:
+        """Scale before summing to avoid overflow and preserve small ratios."""
+        if masses.size == 0:
+            return _owned(masses)
+        maximum = float(np.max(masses))
+        if not np.isfinite(maximum) or maximum <= 0:
+            raise ArithmeticError("paper Keyboard candidate posterior masses have zero total")
+        scaled = masses / maximum
+        total = float(np.sum(scaled))
+        if not np.isfinite(total) or total <= 0:
+            raise ArithmeticError("paper Keyboard candidate posterior weights are unresolved")
+        return _owned(scaled / total)
+
     def next_dose(
         self,
         patients: ArrayLike,
@@ -385,6 +437,8 @@ class KeyboardCombDesign:
             eliminated,
             extra_safe_stop=(i == 0 and j == 0),
         )
+        candidate_doses: tuple[DoseCombination, ...] = ()
+        candidate_probabilities: FloatArray | None = None
         if state[0, 0]:
             action, next_dose = "stop_safety", None
         elif self.early_stop_patients is not None and n[i, j] >= self.early_stop_patients:
@@ -394,34 +448,82 @@ class KeyboardCombDesign:
             move = 1 if y[i, j] <= escalate else -1 if y[i, j] >= deescalate else 0
             if state[i, j] or int(y[i, j]) >= eliminate_here:
                 move = -1
-            candidates = (
-                [(i + 1, j), (i, j + 1)]
-                if move > 0
-                else [(i - 1, j), (i, j - 1)]
-                if move < 0
-                else []
-            )
-            candidates = [
-                (a, b) for a, b in candidates if 0 <= a < n.shape[0] and 0 <= b < n.shape[1]
-            ]
-            scored = self._neighbor_scores(n, y, candidates, state)
-            if scored:
-                generator = np.random.default_rng(rng)
-                maximum = max(score for score, _ in scored)
-                tied = [candidate for score, candidate in scored if score == maximum]
-                next_zero = tied[int(generator.integers(len(tied)))]
-                next_dose = (next_zero[0] + 1, next_zero[1] + 1)
-                action = "escalate" if move > 0 else "deescalate"
-            else:
-                if state[i, j]:
+            if self.movement_algorithm == "key1":
+                # Keep the audited CRAN-compatible behavior and RNG calls intact.
+                candidates = (
+                    [(i + 1, j), (i, j + 1)]
+                    if move > 0
+                    else [(i - 1, j), (i, j - 1)]
+                    if move < 0
+                    else []
+                )
+                candidates = [
+                    (a, b) for a, b in candidates if 0 <= a < n.shape[0] and 0 <= b < n.shape[1]
+                ]
+                scored = self._neighbor_scores(n, y, candidates, state)
+                if scored:
+                    generator = np.random.default_rng(rng)
+                    maximum = max(score for score, _ in scored)
+                    tied = [candidate for score, candidate in scored if score == maximum]
+                    next_zero = tied[int(generator.integers(len(tied)))]
+                    next_dose = (next_zero[0] + 1, next_zero[1] + 1)
+                    action = "escalate" if move > 0 else "deescalate"
+                elif state[i, j]:
                     # The R code can fall through to the current cell when
-                    # both lower neighbors are unavailable.  Re-enrolling at
-                    # an eliminated cell violates the safety invariant, so
-                    # terminate instead.
+                    # both lower neighbors are unavailable. Re-enrolling at
+                    # an eliminated cell violates the safety invariant.
                     next_dose, action = None, "stop_safety"
                 else:
                     next_dose, action = dose, "stay"
-        return KeyboardCombDecision(action, next_dose, state, overdose)
+            else:
+                if self.movement_algorithm == "key2":
+                    up, down = [(i + 1, j), (i, j + 1)], [(i - 1, j), (i, j - 1), (i - 1, j - 1)]
+                elif self.movement_algorithm == "key3":
+                    up, down = (
+                        [(i + 1, j), (i, j + 1), (i + 1, j + 1)],
+                        [(i - 1, j), (i, j - 1), (i - 1, j - 1)],
+                    )
+                else:
+                    up, down = [(i + 1, j), (i, j + 1)], [(i - 1, j), (i, j - 1)]
+                candidates = up if move > 0 else down if move < 0 else []
+                candidates = [
+                    (a, b) for a, b in candidates if 0 <= a < n.shape[0] and 0 <= b < n.shape[1]
+                ]
+                candidate_doses, masses = self._paper_neighbor_masses(n, y, candidates, state)
+                candidate_probabilities = None
+                if masses.size:
+                    generator = np.random.default_rng(rng)
+                    if self.movement_algorithm == "key4":
+                        candidate_probabilities = self._normalized_candidate_weights(masses)
+                        selected = int(
+                            generator.choice(len(candidate_doses), p=candidate_probabilities)
+                        )
+                    else:
+                        if float(np.max(masses)) <= 0:
+                            raise ArithmeticError(
+                                "paper Keyboard candidate posterior masses have zero total"
+                            )
+                        top = np.flatnonzero(masses == np.max(masses))
+                        candidate_probabilities = np.zeros(masses.size, dtype=np.float64)
+                        candidate_probabilities[top] = 1.0 / top.size
+                        selected = int(generator.choice(top))
+                    next_dose = candidate_doses[selected]
+                    action = "escalate" if move > 0 else "deescalate"
+                elif state[i, j]:
+                    # Re-enrolling at an eliminated cell would violate safety.
+                    next_dose, action = None, "stop_safety"
+                else:
+                    next_dose, action = dose, "stay"
+        if self.movement_algorithm == "key1":
+            return KeyboardCombDecision(action, next_dose, state, overdose)
+        return KeyboardCombDecision(
+            action,
+            next_dose,
+            state,
+            overdose,
+            candidate_doses,
+            None if candidate_probabilities is None else _owned(candidate_probabilities),
+        )
 
     def select_mtd(
         self,
