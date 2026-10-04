@@ -4957,12 +4957,17 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/K-COMPASS/",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/K-COMPASS/",
-      "references": [],
+      "references": [
+        "https://doi.org/10.1016/j.eururo.2026.01.004",
+        "https://ascopubs.org/doi/10.1200/JCO.2026.44.7_suppl.537"
+      ],
       "downloads": [],
       "retrieval_error": null,
       "status": "pending",
       "implemented_features": [],
-      "validation": []
+      "validation": [
+        "Independent primary records identify an elastic-net-selected six-variable Weibull model for systemic therapy-free survival, but the final coefficients, covariate coding, intercept/shape and uncertainty calculations were not recovered. No calculator implementation or native numerical validation is claimed; research/k-compass-source-status.md."
+      ]
     },
     {
       "id": 170,
