@@ -6,27 +6,42 @@ for the existing likelihood and posterior fit. All episode, administration,
 follow-up, horizon and adjudication times use one common relative time origin
 per patient.
 
-The paper's example treats a grade-2 toxicity that is not therapeutically
-resolved within two weeks of onset, or one that requires dose reduction, as a
-dose-limiting toxicity at its initial onset. The helper does not decide
-persistence, dose reduction, or when adjudication occurs. Supply
-`qualifies=True` only once the caller's study rule determines that the episode
-qualifies. Set both `adjudication_time` and `qualifies` to `None` while the
-episode remains unresolved.
+The paper's example treats a grade-2 toxicity that cannot be therapeutically
+resolved within two weeks of onset, or one that necessitates dose reduction,
+as a dose-limiting toxicity at its initial onset. Use
+`adjudicate_dose_schedule_grade2` to apply this source rule to an explicit
+as-of snapshot. A dose-reduction time must be explicitly attributed to the
+episode by the caller; no attribution is inferred from the administration
+history.
+
+The function's timing convention is a Python choice, not established native
+parity. It treats resolution known at or before the 14-day deadline as
+nonqualifying, and an episode still unresolved at the deadline as qualifying.
+The paper says “resolved by day 24” for an onset at day 10, but does not settle
+automatic adjudication of observations exactly at the 14-day boundary. The
+caller supplies the time unit through `day_length` (default 1 means one unit
+per day). Recreate the episode at every new `as_of`; later information can
+change an earlier nonqualifying snapshot. A future onset is rejected, and
+future resolution/reduction times do not affect the current result.
 
 ```python
 import numpy as np
 from mdanderson_stats import (
     DoseSchedulePrior,
-    DoseScheduleToxicityEpisode,
+    adjudicate_dose_schedule_grade2,
     fit_dose_schedule,
     observe_dose_schedule_patient,
 )
 
-# At day 24, the caller has determined that dose reduction is required.
-episode = DoseScheduleToxicityEpisode(onset_time=10, adjudication_time=24, qualifies=True)
+# Day 10 onset, unresolved at day 23: the two-week rule is still pending.
+pending = adjudicate_dose_schedule_grade2(onset_time=10, as_of=23)
+assert pending.qualifies is None
+
+# By day 24 it remains unresolved, so it qualifies and is scored at day 10.
+episode = adjudicate_dose_schedule_grade2(onset_time=10, as_of=24)
+assert episode.qualifies is True and episode.adjudication_time == 24
 interim = observe_dose_schedule_patient(
-    [episode],
+    [pending],
     as_of=23,
     horizon=30,
     administration_times=[2, 10, 11],
@@ -74,7 +89,8 @@ episode whose onset is by the horizon. A known event can be final earlier if
 no pending earlier onset could move it back. Episodes after the horizon remain
 visible when observed but do not delay risk-horizon finality.
 
-The helper does not generate low-grade episodes, infer the clinical
-adjudication, or implement within-patient dose modification. It provides a
-reproducible information boundary for callers who already have onset,
-adjudication, and actual administration histories.
+The helper does not generate low-grade episodes, infer whether a dose
+reduction was caused by the episode, or implement within-patient dose
+modification. It provides reproducible adjudication from supplied onset,
+resolution, reduction and as-of times. The paper does not specify a low-grade
+incidence or resolution-time distribution for simulating these episodes.

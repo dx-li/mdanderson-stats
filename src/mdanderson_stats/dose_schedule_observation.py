@@ -32,12 +32,11 @@ def _freeze_indices(values: NDArray[np.int64]) -> NDArray[np.int64]:
 
 @dataclass(frozen=True)
 class DoseScheduleToxicityEpisode:
-    """A toxicity onset and caller-adjudicated qualification status.
+    """A toxicity onset and qualification status at an adjudication time.
 
     ``qualifies`` and ``adjudication_time`` are both ``None`` while the
-    episode is unresolved. The caller applies the study's clinical rule,
-    including persistence or dose-reduction criteria; this class does not
-    infer either from grade, duration, or dosing history.
+    episode is unresolved. This value records a caller's adjudication; it does
+    not infer toxicity grade, persistence, or dose-reduction causality.
     """
 
     onset_time: float
@@ -66,6 +65,72 @@ class DoseScheduleToxicityEpisode:
         object.__setattr__(self, "onset_time", onset)
         object.__setattr__(self, "adjudication_time", adjudicated_at)
         object.__setattr__(self, "qualifies", qualification)
+
+
+def adjudicate_dose_schedule_grade2(
+    onset_time: float,
+    *,
+    as_of: float,
+    resolution_time: float | None = None,
+    dose_reduction_time: float | None = None,
+    day_length: float = 1.0,
+) -> DoseScheduleToxicityEpisode:
+    """Apply the paper's 14-day grade-2 persistence/dose-reduction rule.
+
+    Times use a common origin and unit; ``day_length`` converts one day to
+    that unit. A dose reduction must be explicitly attributed to this episode
+    by the caller. Future resolution and reduction times are ignored until
+    ``as_of`` reaches them. The onset must already be known at ``as_of``.
+
+    An episode qualifies when an attributable dose reduction is known, or
+    when it remains unresolved at the end of the 14-day window. A qualifying
+    episode is recorded at its onset, while ``adjudication_time`` is the
+    earliest trigger known as of the snapshot. Resolution by the deadline
+    without a known attributable reduction is nonqualifying. Recreate the
+    episode for each new ``as_of`` snapshot: a later dose reduction can change
+    an earlier nonqualifying result.
+    """
+    onset = _time(onset_time, "onset_time")
+    observation_time = _time(as_of, "as_of")
+    unit = _time(day_length, "day_length", positive=True)
+    if onset > observation_time:
+        raise ValueError("onset_time must be known at as_of")
+    resolution = None if resolution_time is None else _time(resolution_time, "resolution_time")
+    reduction = (
+        None if dose_reduction_time is None else _time(dose_reduction_time, "dose_reduction_time")
+    )
+    if resolution is not None and resolution < onset:
+        raise ValueError("resolution_time cannot precede onset_time")
+    if reduction is not None and reduction < onset:
+        raise ValueError("dose_reduction_time cannot precede onset_time")
+
+    maximum = np.finfo(float).max
+    if unit > maximum / 14.0:
+        raise ValueError("14-day adjudication window exceeds floating-point range")
+    delay = 14.0 * unit
+    if onset > maximum - delay:
+        raise ValueError("14-day adjudication deadline exceeds floating-point range")
+    deadline = onset + delay
+    if deadline <= onset:
+        raise ValueError("14-day adjudication deadline is below floating-point resolution")
+
+    known_reduction = reduction if reduction is not None and reduction <= observation_time else None
+    known_resolution = (
+        resolution if resolution is not None and resolution <= observation_time else None
+    )
+    triggers: list[float] = []
+    if known_reduction is not None:
+        triggers.append(known_reduction)
+    unresolved_at_deadline = observation_time >= deadline and (
+        known_resolution is None or known_resolution > deadline
+    )
+    if unresolved_at_deadline:
+        triggers.append(deadline)
+    if triggers:
+        return DoseScheduleToxicityEpisode(onset, min(triggers), True)
+    if known_resolution is not None and known_resolution <= deadline:
+        return DoseScheduleToxicityEpisode(onset, known_resolution, False)
+    return DoseScheduleToxicityEpisode(onset)
 
 
 @dataclass(frozen=True)
