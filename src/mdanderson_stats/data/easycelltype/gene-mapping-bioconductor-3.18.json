@@ -1,0 +1,35 @@
+{
+  "annotation_release": "Bioconductor 3.18",
+  "database_source_date": "2023-Sep11",
+  "license": "Artistic-2.0",
+  "order": "ascending gene_info._id",
+  "package_version": "3.18.0",
+  "packages": {
+    "Human": {
+      "archive_sha256": "41dc753ed5f4d31dcf0d645ef32b6339b1b70cc48b7c4c4673767643b129c5ca",
+      "archive_url": "https://bioconductor.org/packages/3.18/data/annotation/src/contrib/org.Hs.eg.db_3.18.0.tar.gz",
+      "author": "Marc Carlson",
+      "compressed_bytes": 978354,
+      "database_source_date": "2023-Sep11",
+      "db_file": "org.Hs.eg.sqlite",
+      "mapping_file": "org.Hs.eg.db-3.18.0-symbol-entrez.tsv.gz",
+      "package_license": "Artistic-2.0",
+      "pair_count": 191179,
+      "sha256": "4ea1382c90a4cd221394f5508c1653e14ad608e6ad4ec92df20e79dca86b0da0",
+      "sqlite_sha256": "cdbf757774fdc358fb65b7947a935d6c5f5ace1446cd047e178102d07303f01a"
+    },
+    "Mouse": {
+      "archive_sha256": "41ab6c87f6a8c2a13718f7b1d1bdfde37dcaf61bc34915cc3a8e2348a96b6544",
+      "archive_url": "https://bioconductor.org/packages/3.18/data/annotation/src/contrib/org.Mm.eg.db_3.18.0.tar.gz",
+      "author": "Marc Carlson",
+      "compressed_bytes": 564926,
+      "database_source_date": "2023-Sep11",
+      "db_file": "org.Mm.eg.sqlite",
+      "mapping_file": "org.Mm.eg.db-3.18.0-symbol-entrez.tsv.gz",
+      "package_license": "Artistic-2.0",
+      "pair_count": 102092,
+      "sha256": "81a4f6722758396c9054c7c50ffde39e58fb17c1b1ae8c35d369e2c73759b2d0",
+      "sqlite_sha256": "c52ab0837038b08203f8f40f0b64def3a007b764ddaf2443e653806d6fc80486"
+    }
+  }
+}
