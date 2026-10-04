@@ -31,3 +31,7 @@ list provided the citation without a manuscript or source download. The Wiley
 article remained unavailable to the reader. No institutional app was requested:
 a saved browser permission currently blocks the MD Anderson domain. The primary
 method and its numerical constants therefore remain unrecovered.
+
+The [October 4 recovery audit](compas-source-recovery-audit.md) checked an
+independent Indiana University dissertation. It cites ComPAS but develops
+different designs, so it does not establish the missing ComPAS model contract.

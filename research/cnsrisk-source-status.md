@@ -19,3 +19,8 @@ No generic model has been presented as the CNSRISK calculator. Recovery of the
 actual fitted model or a complete mathematical specification remains necessary.
 
 The denied application domain was not accessed during this review.
+
+The [October 4 primary-source audit](cnsrisk-primary-source-recovery-audit.md)
+records the development/validation cohorts and published calibration and
+discrimination summaries. These do not supply the missing individual-risk
+equation; the implementation status is unchanged.
