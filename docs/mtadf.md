@@ -111,7 +111,7 @@ early-stop summaries, per-dose means and per-trial stopping reasons. At most
 budget is 200,000 decisions, including each initial review; it can be increased
 explicitly up to 1,000,000 with `max_total_decisions`.
 
-## Validation and remaining coverage
+## Validation and recovered author workflows
 
 Independent base-R references use the min-max characterization of weighted
 isotonic regression and direct-alpha prior calibration. They provide a separate
@@ -120,8 +120,8 @@ Focused decision and small simulation checks cover the dose policy and count
 conservation. See the [audit](../research/mtadf-audit.md) and
 [source record](mtadf-sources.json).
 
-Catalog entry 114 remains partial. The full author R reference was recovered
-on 2026-10-04. Its [isotonic policy](mtadf-author.md) and
+Catalog entry 114 covers the recovered method family. The full author R
+reference was recovered on 2026-10-04. Its [isotonic policy](mtadf-author.md) and
 [trial replay and simulation](mtadf-author-simulation.md) are available through
 separate APIs. They use fixed prior calibration, inclusive safety boundaries,
 forced retention of the lowest dose, equal dose weights and rightmost efficacy
@@ -132,6 +132,16 @@ stop.
 
 The paper's [global and local logistic designs](mtadf-logistic.md) and
 [logistic simulations](mtadf-logistic-simulation.md) are available. The recovered
-author code uses additional global coefficient-mode and local-window conduct
-choices that remain to be implemented separately. Exact live-app settings,
-native outputs and random-sequence equivalence remain unverified.
+author's [local logistic policy](mtadf-author-local.md) and
+[local trial replay and simulation](mtadf-author-local-simulation.md) are also
+available. They preserve its globally standardized adjacent-dose windows,
+slope-probability gates and lowest-dose override; independent numerical
+integration checks posterior probabilities and fitted efficacy.
+The [author global coefficient fit and decision](mtadf-author-global.md) and
+[global replay and simulation](mtadf-author-global-simulation.md) preserve the
+recovered variance-adjusted prior updates, centered intercept prior,
+patient-weighted scaling and lagged simulation cap. Direct R dependency
+references check coefficients and predictions. A mathematically flat fit
+when only one dose is observed is made exact in Python to stabilize ties.
+Exact live-app settings, native outputs and random-sequence equivalence
+remain unverified.

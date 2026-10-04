@@ -6,8 +6,8 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 87 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 43 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 88 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 42 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -114,13 +114,13 @@ some legacy adaptations retain commercial-use restrictions.
 | Time-to-Event Keyboard Design for Phase I Clinical Trials | [online #135](https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD) | [Guide](tite-keyboard.md) |
 | Dose Optimization with Backfill and Adaptive Randomization (BARD) | [online #165](https://biostatistics.mdanderson.org/shinyapps/BARD) | [Stage two](bard.md), [BF-BLRM model](bard-blrm.md), [BF-BOIN trials](bard-bf-boin-trial.md), [BF-BLRM trials](bard-blrm-stochastic.md), [BF-BOIN OC](bard-bf-boin-simulation.md), [BF-BLRM OC](bard-blrm-simulation.md), [Saved studies](bard-study.md), [Reports](bard-report.md) |
 | Backfill Bayesian Optimal Interval (BF-BOIN) Design for Phase I Clinical Trials | [online #162](https://biostatistics.mdanderson.org/shinyapps/BF-BOIN/) | See catalog feature and validation notes |
+| A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents | [online #114](https://biostatistics.mdanderson.org/shinyapps/MTADF/) | [Isotonic and logistic workflows](mtadf.md), including recovered author decisions, replay and simulation |
 
 ## Partially implemented
 
 | Program | Source entry | Python documentation |
 | --- | --- | --- |
 | 1+2+3: to find the optimal biological dose for rare diseases | [online #172](https://biostatistics.mdanderson.org/shinyapps/1plus2plus3) | [Guide](rare-disease-123.md) |
-| A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents | [online #114](https://biostatistics.mdanderson.org/shinyapps/MTADF/) | [Isotonic](mtadf.md) and [logistic](mtadf-logistic.md) methods |
 | Adaptive Randomization | [desktop #62](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62) | [Posterior](arand.md), [calendar](arand-calendar.md), [simulation](arand-simulation.md) |
 | Bayes Factor TTE | [desktop #89](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/89) | [Guide](bayes-factor-survival.md) |
 | Bayesian Adaptive Randomization and Efficacy Monitoring with Posterior Probability | [online #130](https://biostatistics.mdanderson.org/shinyapps/BARPO/) | [Guide](barpo-reference.md) |

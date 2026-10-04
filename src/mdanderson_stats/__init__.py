@@ -1072,6 +1072,28 @@ from .mtadf import (
     mtadf_toxicity_prior,
 )
 from .mtadf_author import MTADFAuthorDecision, mtadf_author_decision
+from .mtadf_author_global import (
+    MTADFAuthorGlobalDecision,
+    MTADFAuthorGlobalFit,
+    mtadf_author_global_decision,
+    mtadf_author_global_fit,
+)
+from .mtadf_author_global_simulation import (
+    MTADFAuthorGlobalSimulation,
+    MTADFAuthorGlobalTrialResult,
+    replay_mtadf_author_global_trial,
+    simulate_mtadf_author_global,
+)
+from .mtadf_author_local import (
+    MTADFAuthorLocalDecision,
+    mtadf_author_local_decision,
+    mtadf_author_local_posterior,
+)
+from .mtadf_author_local_simulation import (
+    MTADFAuthorLocalTrialResult,
+    replay_mtadf_author_local_trial,
+    simulate_mtadf_author_local,
+)
 from .mtadf_author_simulation import (
     MTADFAuthorTrialResult,
     replay_mtadf_author_trial,
@@ -3088,6 +3110,20 @@ __all__ = [
     "MTPISimulation",
     "simulate_mtpi",
     "MTADFAuthorDecision",
+    "MTADFAuthorGlobalDecision",
+    "MTADFAuthorGlobalFit",
+    "MTADFAuthorGlobalSimulation",
+    "MTADFAuthorGlobalTrialResult",
+    "mtadf_author_global_decision",
+    "mtadf_author_global_fit",
+    "replay_mtadf_author_global_trial",
+    "simulate_mtadf_author_global",
+    "MTADFAuthorLocalDecision",
+    "MTADFAuthorLocalTrialResult",
+    "mtadf_author_local_decision",
+    "mtadf_author_local_posterior",
+    "replay_mtadf_author_local_trial",
+    "simulate_mtadf_author_local",
     "MTADFAuthorTrialResult",
     "mtadf_author_decision",
     "replay_mtadf_author_trial",

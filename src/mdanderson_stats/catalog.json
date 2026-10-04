@@ -3774,20 +3774,24 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Double-sided isotonic efficacy estimation with patient-count PAVA weights, unweighted split scores and distinct split/peak indices.",
         "Calibrated common Beta toxicity prior, pooled posterior overdose probabilities, strict admissibility and complete-outcome interim/final OBD decisions.",
         "Observed-dose mapping, lowest-dose efficacy ties, safe exploration, safety overrides and stopping when no dose is admissible.",
         "Bounded serial isotonic cohort simulation with compact per-trial counts, dose selection, early stopping, no-selection probabilities and Monte Carlo errors; docs/mtadf.md.",
         "Global quadratic and local linear logistic efficacy models with Cauchy priors, bounded serial posterior fitting, safety-first dose decisions, slope thresholds, retained next-window fits and chain diagnostics; docs/mtadf-logistic.md. Bounded complete-cohort simulation for both logistic methods includes replayable per-trial outcome/sampler seeds, compact selection/allocation summaries and explicit independent-marginal outcome generation; docs/mtadf-logistic-simulation.md.",
-        "Recovered author-reference isotonic decisions and complete-cohort replay/serial simulation: fixed Beta prior, inclusive floor-one safety, equal-dose-weight efficacy fitting, rightmost ties, all-dose final epsilon rates and explicit fresh versus lagged safety-cap timing; docs/mtadf-author.md and docs/mtadf-author-simulation.md."
+        "Recovered author-reference isotonic decisions and complete-cohort replay/serial simulation: fixed Beta prior, inclusive floor-one safety, equal-dose-weight efficacy fitting, rightmost ties, all-dose final epsilon rates and explicit fresh versus lagged safety-cap timing; docs/mtadf-author.md and docs/mtadf-author-simulation.md.",
+        "Recovered author local logistic posterior, decision and complete-cohort replay/simulation: globally standardized adjacent windows, zero-count neighbors, source ce1/ce2 gates, cap-one pre-cohort override, lagged cap otherwise, author isotonic final selection, uint64 replay seeds and compact sampling diagnostics; docs/mtadf-author-local.md and docs/mtadf-author-local-simulation.md.",
+        "Recovered author global logistic fit, decision, observed-tape replay and serial operating-characteristic simulation: patient-weighted predictor scaling, centered intercept prior, variance-adjusted IRLS, stable QR, source rightmost-peak decisions, lagged simulation safety, per-cohort fitting and compact replay records; docs/mtadf-author-global.md and docs/mtadf-author-global-simulation.md."
       ],
       "validation": [
         "Independent base-R min-max isotonic reference for seven curves, plus five calibrated priors and 20 posterior-tail cases; tests/test_mtadf_reference.py.",
         "Focused weighted fitting, noncontiguous observed-dose mapping, untried final exclusion, all-unsafe stopping and serial simulation checks; tests/test_mtadf.py.",
         "Independent global and local transformed-Cauchy quadrature references; seeded logistic posterior and safety-first conduct checks with warnings as errors; research/mtadf-logistic-audit.md. Global/local simulation checks cover seed-pair replay, cohort conservation, safety stops and work/storage preflight; research/mtadf-logistic-simulation-audit.md.",
-        "Paper-policy APIs remain explicit. Full author R source recovered 2026-10-04; independent base-R reference and era-matched Iso source review support the separate author isotonic workflow. Singleton fitting and tight prior calibration are documented Python numerical conventions. Author global coefficient-mode and local-window logistic conduct remain incomplete; native app runtime, output and random-sequence equivalence are unverified; docs/mtadf-author-sources.json."
+        "Paper-policy APIs remain explicit. Full author R source recovered 2026-10-04; independent base-R reference and era-matched Iso source review support the separate author isotonic workflow. Singleton fitting and tight prior calibration are documented Python numerical conventions. Native app runtime, output and random-sequence equivalence are unverified; docs/mtadf-author-sources.json.",
+        "Independent local posterior quadrature covers both orientations of an unobserved neighbor and a fully observed pair; source gate-boundary cases, bounded uncertainty/chain-disagreement checks, cap-one replay, exact uint64 seed replay and preflight checks pass. See research/mtadf-author-local-reference-audit.md.",
+        "Direct cached arm 1.6-06.01 R fits match Python coefficients, full-grid efficacy, prior scales, deviance and iterations on four cases within 2e-12. Global source-order checks cover the lagged cap and fitting at cap one; observed-tape replay and resource preflight pass. One-observed-dose global fits use exact mathematical flatness to avoid QR rounding-dependent ties. All recovered MTADF method-family workflows are covered; exact live-app dependencies, native byte outputs and R random streams remain compatibility limits; research/mtadf-author-global-audit.md."
       ]
     },
     {

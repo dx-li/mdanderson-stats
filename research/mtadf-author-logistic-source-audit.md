@@ -118,3 +118,12 @@ algorithm. Implementing the global author route requires this recovered
 fitting contract or an explicitly different numerical method with a verified
 comparison. This was a source inspection, not a numerical validation or a
 new implementation.
+
+## Implementation follow-through
+
+The separate [author-local](mtadf-author-local-audit.md) and
+[author-global](mtadf-author-global-audit.md) implementations now cover these
+contracts, with replay and serial simulation for each. Independent local
+posterior integration and direct cached R global fits provide numerical
+references. The earlier implementation-boundary notes above record source
+discovery, not the current coverage status.

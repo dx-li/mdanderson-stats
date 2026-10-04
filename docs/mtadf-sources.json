@@ -3,7 +3,7 @@
     114
   ],
   "retrieved_at": "2026-09-26",
-  "scope": "MTADF double-sided isotonic and global/local logistic efficacy models, beta-binomial toxicity monitoring, adaptive dose decisions and isotonic serial simulation; recovered author-reference isotonic decision, replay and serial simulation",
+  "scope": "MTADF paper-policy isotonic and global/local logistic methods, decisions and complete-cohort simulations; recovered author-reference isotonic, local logistic and global logistic decision, replay and serial simulation workflows",
   "sources": [
     {
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4239216/",
@@ -25,9 +25,15 @@
     },
     {
       "url": "https://odin.mdacc.tmc.edu/~yyuan/Software/TargetAgent/targetAgentDF.r",
-      "role": "Full primary author reference recovered (20,787 bytes). Isotonic functions define fixed prior calibration, inclusive safety with a floor of one dose, equal-weight efficacy fits, rightmost ties and a lagged simulator safety cap. The global coefficient-mode and local-window logistic variants remain separate coverage gaps.",
+      "role": "Full primary author reference recovered (20,787 bytes). Separate isotonic, local logistic and global logistic APIs preserve fixed safety calibration and source-specific decisions, final selection and cohort conduct. Local fits use full-grid adjacent windows and source slope gates; global fits use the recovered arm variance-adjusted IRLS coefficient procedure.",
       "retrieved_at": "2026-10-04",
       "sha256": "e27be5581fdcb7c71a7739a4f1b25026dc054896fcbf7134ff9b1a1c8960caac"
+    },
+    {
+      "url": "https://cran.r-project.org/src/contrib/Archive/arm/arm_1.6-06.01.tar.gz",
+      "version": "1.6-06.01",
+      "sha256": "31009fc9ce175358a1f982d9c022498b1f6246307c2edc32ba904e929037302d",
+      "role": "Era-matched primary dependency source for patient-expanded predictor scaling, centered intercept prior, variance-adjusted IRLS and convergence. Direct private-fit R reference checks four datasets; exact historical app dependency version is unknown."
     }
   ],
   "implementation_choices": [
@@ -41,7 +47,9 @@
     "Global/local logistic models use explicit supplied dose coding and bounded serial random-walk Metropolis with warmup-only adaptation, acceptance rates, split R-hat and batch-means MCSE.",
     "Global decisions rank posterior mean efficacy, including model-predicted untried doses at final selection. Local decisions use initial ramp, slope thresholds and the next-window bounce guard, with isotonic final selection.",
     "Logistic safety-only actions precede efficacy fitting; boundary clamping, lowest-dose ties and low-boundary local windows are explicit Python conduct choices.",
-    "Explicit author-reference isotonic APIs preserve the recovered R decision and simulator policies; the paper-policy APIs remain unchanged. A tight prior root and a scalar unimodal-fit convention are documented Python numerical choices."
+    "Explicit author-reference isotonic APIs preserve the recovered R decision and simulator policies; the paper-policy APIs remain unchanged. A tight prior root and a scalar unimodal-fit convention are documented Python numerical choices.",
+    "Author local logistic APIs permit an unobserved adjacent neighbor, apply the recovered ce1/ce2 slope gates and use bounded explicit Python MCMC. Replay preserves the source cap-one override, otherwise lagged cap, and author isotonic final selection; exact uint64 outcome/sampler seed pairs support reproducibility.",
+    "Author global fitting uses grouped-count QR algebra preserving the expanded Bernoulli first step, patient-replicated prior scaling and variance-adjusted prior updates. A one-observed-dose fit is made exactly flat to prevent rounding-dependent peak selection. Simulation fits after every cohort, moves under the previous safety cap, refreshes safety and selects from the last fit under the fresh cap. Nonconverged fits cannot drive decisions."
   ],
-  "limitations": "The author-reference isotonic workflow is implemented against the recovered R source and an era-matched Iso source contract; the exact historical dependency version and live-app runtime remain unknown. Author global logistic coefficient-mode fitting and local adjacent-window conduct are not covered by that workflow. Existing paper logistic models, decisions and simulations retain explicit Python sampling and conduct policies. Native output and random-sequence equivalence remain unverified."
+  "limitations": "The recovered isotonic, local logistic and global logistic workflows are implemented and numerically checked. Python uses tight prior calibration, a mathematically defined singleton isotonic fit and an exactly flat global fit with one observed dose. Local MCMC exposes convergence diagnostics and differs from native metrop proposals/randomness. Historical dependency versions and live-app settings remain unknown; identical native outputs and random streams are not claimed. Paper-policy APIs retain their documented independent choices."
 }

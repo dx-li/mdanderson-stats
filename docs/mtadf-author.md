@@ -60,4 +60,7 @@ This is an author-reference isotonic policy, not a claim that the live app uses
 every line of the retrieved R file unchanged. In particular, the file's
 simulation code and actual-trial function use different cap timing. See the
 [source audit](../research/mtadf-author-audit.md). The separate global and
-local logistic methods remain documented at [MTADF logistic](mtadf-logistic.md).
+local paper-policy methods are documented at [MTADF logistic](mtadf-logistic.md).
+The recovered author [local](mtadf-author-local.md) and
+[global](mtadf-author-global.md) logistic workflows are also available,
+with their own replay and simulation guides.

@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-87 implemented, 43 partial, and 8 pending. Each method's guide explains its
+88 implemented, 42 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -1649,6 +1649,18 @@ The recovered [author-reference isotonic policy](docs/mtadf-author.md) and
 [trial replay and simulation](docs/mtadf-author-simulation.md) add the original
 fixed prior, inclusive safety cap, equal-weight fits and rightmost ties. The
 simulator's delayed cap update is explicit; paper-policy behavior is preserved.
+The [author local logistic policy](docs/mtadf-author-local.md) and
+[local trial simulator](docs/mtadf-author-local-simulation.md) add globally
+standardized adjacent-dose fits, the original slope gates, and the source's
+lowest-dose override. Independent numerical integration checks sparse and
+fully observed posterior windows; replay seeds and sampling diagnostics are
+retained for reproducibility.
+The [author global logistic fit](docs/mtadf-author-global.md) preserves its
+variance-adjusted prior updates, patient-weighted scaling and centered
+intercept prior. [Global replay and simulation](docs/mtadf-author-global-simulation.md)
+add the original cohort order and delayed safety cap. Direct R references
+check fitted coefficients and curves; an explicit flat-curve convention
+stabilizes selection when only one dose has observations.
 
 [UAROET ordinal dose finding](docs/uaroet.md) adds continuation-logit outcome
 models joined by a Gaussian copula, explicit-prior posterior fitting and

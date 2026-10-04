@@ -3,7 +3,7 @@
 The cached primary author file is
 `research/raw/mtadf-author-reference/targetAgentDF.r` (SHA-256
 `e27be5581fdcb7c71a7739a4f1b25026dc054896fcbf7134ff9b1a1c8960caac`). Its
-local `df.logistic` function is at lines 313–409; its serial local simulation
+local `df.llogistic` function is at lines 313–409; its serial local simulation
 is at lines 184–310. The likelihood and prior are declared at lines 199–205
 and again at 345–351: a two-parameter linear logit with independent Cauchy
 priors, intercept scale 10 and slope scale 2.5. The author uses `metrop`
@@ -18,7 +18,7 @@ entries from this full-grid vector. The response counts are expanded by
 patient counts (simulation lines 251–280; real-trial lines 371–400). A
 zero-count neighbor contributes no response rows, but the observed neighbor
 keeps its full-grid coordinate. The likelihood is therefore not recentered
-or rescaled to the observed subset. `df.logistic` also does not require every
+or rescaled to the observed subset. `df.llogistic` also does not require every
 window dose to have positive enrollment; it passes the possibly empty
 neighbor rows through `rep(..., n)` to the posterior fitter.
 
@@ -48,7 +48,7 @@ nonpositive probability is `<=1-ce2` and the forward positive probability is
 `>1-ce1`; otherwise stay (lines 273–285, 393–404). Thus equality at the
 upper threshold can permit an increase, while equality at `ce1` cannot.
 
-Both the simulation and `df.logistic` short-circuit when the admissible-dose
+Both the simulation and `df.llogistic` short-circuit when the admissible-dose
 count is one: force dose 1 and do not fit a local efficacy posterior
 (simulation lines 240–246; function lines 367–370). The accompanying gate
 fixture records this safety-only path along with threshold-equality and
