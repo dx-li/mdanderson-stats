@@ -4,8 +4,13 @@
 `na_action="omit"` for complete-case fitting or `na_action="impute"` for the
 single-pass tree-local imputation workflow. The chosen policy and a fingerprint
 of the original input are recorded in the fit. OOB results expose
-`row_indices`, mapping each OOB row back to the caller's input. Complete-data
-calls retain their existing behavior and random-number path.
+`row_indices`, mapping each OOB row back to the caller's input. The fit records
+`requested_trees` and the effective `n_trees`; bootstrap trees with no observed
+response donors are skipped, so these counts can differ. For a fit where
+imputation was performed, OOB concordance is unavailable:
+`concordance_available` is false, `concordance_error` is NaN, and
+`comparable_pairs` is zero. Complete-data calls retain their existing behavior
+and random-number path.
 
 ```python
 import numpy as np
@@ -82,6 +87,5 @@ from an imputed fit; a profile containing missing values requires the
 prediction imputation path and an explicit `random_state`.
 
 The implementation follows the inspected randomForestSRC missing-value
-workflow independently. See the [source audit](../research/random-survival-forest-audit.md)
-and the pinned sources in `research/raw/randomForestSRC/` for provenance and
-the remaining semantic limits.
+workflow independently. See the committed [missing-data reference audit](../research/random-survival-missing-reference-audit.md)
+for source provenance, source-version details, and remaining semantic limits.
