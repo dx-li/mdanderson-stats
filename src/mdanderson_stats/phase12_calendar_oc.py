@@ -96,6 +96,44 @@ def _scaled_time_summary(values: FloatArray) -> tuple[float, float]:
     return mean, mcse
 
 
+def _source_duration_summary(
+    durations_days: FloatArray,
+) -> tuple[float, float, NDArray[np.int64], FloatArray]:
+    """Return the C++ month-scale mean, population variance and indexed rows."""
+    months = durations_days * (12.0 / 365.0)
+    if not np.all(np.isfinite(months)):
+        raise ArithmeticError("calendar duration summary is not representable in months")
+    scale = float(np.max(np.abs(months)))
+    if scale == 0.0:
+        mean = variance = 0.0
+    else:
+        normalized = months / scale
+        mean = scale * float(np.mean(normalized))
+        with np.errstate(over="ignore", invalid="ignore"):
+            standard_deviation = scale * float(np.std(normalized, ddof=0))
+            variance = standard_deviation * standard_deviation
+    if not np.isfinite(mean) or not np.isfinite(variance):
+        raise ArithmeticError("calendar duration summary is not representable in months")
+    count = months.size
+    indices = np.asarray(
+        [
+            count // 40,
+            count // 20,
+            count // 4,
+            count // 2,
+            count - count // 4,
+            count - count // 20,
+            count - count // 40,
+        ],
+        dtype=np.int64,
+    )
+    statistics = np.full(indices.shape, np.nan)
+    ordered = np.sort(months)
+    available = indices < count
+    statistics[available] = ordered[indices[available]]
+    return mean, variance, indices, statistics
+
+
 def _pooled_rate(
     events: NDArray[np.int64],
     exposure: NDArray[np.int64],
@@ -700,30 +738,12 @@ def simulate_phase12_calendar_oc(
         trial_count,
     )
     mean_duration, duration_mcse = _scaled_time_summary(durations)
-    duration_months = durations * (12.0 / 365.0)
-    duration_mean_months = float(np.mean(duration_months))
-    duration_variance_months2 = float(np.var(duration_months, ddof=0))
-    if not np.isfinite(duration_mean_months) or not np.isfinite(duration_variance_months2):
-        raise ArithmeticError("calendar duration summary is not representable in months")
-    # These reproduce the C++ zero-based indices, not interpolated quantiles.
-    # For small simulation counts an index can equal/exceed n; expose that
-    # source-defined value as unavailable instead of clipping it.
-    duration_order_indices = np.asarray(
-        [
-            trial_count // 40,
-            trial_count // 20,
-            trial_count // 4,
-            trial_count // 2,
-            trial_count - trial_count // 4,
-            trial_count - trial_count // 20,
-            trial_count - trial_count // 40,
-        ],
-        dtype=np.int64,
-    )
-    duration_order_statistics = np.full(duration_order_indices.shape, np.nan)
-    sorted_duration_months = np.sort(duration_months)
-    available = duration_order_indices < trial_count
-    duration_order_statistics[available] = sorted_duration_months[duration_order_indices[available]]
+    (
+        duration_mean_months,
+        duration_variance_months2,
+        duration_order_indices,
+        duration_order_statistics,
+    ) = _source_duration_summary(durations)
     if final_times:
         mean_final_time: float | None
         final_time_mcse: float | None

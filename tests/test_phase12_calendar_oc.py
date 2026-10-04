@@ -3,7 +3,10 @@ import pytest
 
 from mdanderson_stats.parallel_phase12_calendar import simulate_phase12_calendar
 from mdanderson_stats.parallel_phase12_model import phase12_snapshot
-from mdanderson_stats.phase12_calendar_oc import simulate_phase12_calendar_oc
+from mdanderson_stats.phase12_calendar_oc import (
+    _source_duration_summary,
+    simulate_phase12_calendar_oc,
+)
 
 
 def test_seeded_aggregate_matches_independent_calendar_replays():
@@ -101,6 +104,16 @@ def test_observed_endpoint_denominators_are_distinct_and_one_trial_mcse_is_undef
     assert int(result.observed_toxicity_denominator.sum()) <= int(result.total_enrollment)
     assert result.mcmc_fit_count == 1
     assert result.max_mcmc_split_rhat is not None
+
+
+def test_source_duration_summary_is_stable_for_large_constant_times():
+    mean, variance, indices, order_statistics = _source_duration_summary(np.asarray([1e300, 1e300]))
+    expected = 1e300 * (12.0 / 365.0)
+    assert mean == pytest.approx(expected)
+    assert variance == 0.0
+    assert indices.tolist() == [0, 0, 0, 1, 2, 2, 2]
+    np.testing.assert_allclose(order_statistics[:4], expected)
+    assert np.isnan(order_statistics[4:]).all()
 
 
 def test_observed_count_and_pooled_rate_mcse_match_replayed_trial_ledgers():
