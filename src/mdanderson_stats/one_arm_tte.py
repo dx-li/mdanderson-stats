@@ -256,9 +256,22 @@ def _observed(enrollment: np.ndarray, durations: np.ndarray, now: float) -> tupl
 
 
 def one_arm_tte_trial(
-    design: OneArmTTEDesign, enrollment_time: ArrayLike, event_time: ArrayLike
+    design: OneArmTTEDesign,
+    enrollment_time: ArrayLike,
+    event_time: ArrayLike,
+    *,
+    max_monitoring_checks: int = 10_000,
 ) -> OneArmTTETrial:
-    """Run a deterministic calendar trace; ``event_time`` contains durations."""
+    """Run a deterministic calendar trace; ``event_time`` contains durations.
+
+    ``max_monitoring_checks`` bounds accrual-phase checks only; the final
+    assessment is always performed separately.
+    """
+    if isinstance(max_monitoring_checks, (bool, np.bool_)):
+        raise ValueError("max_monitoring_checks must be an integer in [0,10000]")
+    check_limit = scalar(max_monitoring_checks, "max_monitoring_checks")
+    if int(check_limit) != check_limit or not 0 <= check_limit <= 10_000:
+        raise ValueError("max_monitoring_checks must be an integer in [0,10000]")
     enrollment = finite(enrollment_time, "enrollment_time")
     duration = finite(event_time, "event_time")
     if (
@@ -300,8 +313,8 @@ def one_arm_tte_trial(
         periodic = next_period is not None and next_period <= arrival
         if periodic:
             assert next_period is not None and design.periodic_interval is not None
-            if check_count >= 10_000:
-                raise ValueError("monitoring calendar exceeds 10000 checks")
+            if check_count >= check_limit:
+                raise ValueError("monitoring calendar exceeds max_monitoring_checks")
             now = float(next_period)
             d, t = _observed(enrollment[:enrolled], duration[:enrolled], now)
             result = one_arm_tte_monitor(design, enrolled, d, t)
@@ -317,8 +330,8 @@ def one_arm_tte_trial(
             next_period = candidate
             continue
         if design.monitor_at_accrual and enrolled >= design.minimum_patients:
-            if check_count >= 10_000:
-                raise ValueError("monitoring calendar exceeds 10000 checks")
+            if check_count >= check_limit:
+                raise ValueError("monitoring calendar exceeds max_monitoring_checks")
             d, t = _observed(enrollment[:enrolled], duration[:enrolled], arrival)
             result = one_arm_tte_monitor(design, enrolled, d, t)
             history.append((arrival, result))

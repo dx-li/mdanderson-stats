@@ -38,6 +38,7 @@ class OneArmTTESimulation:
     early_superior: np.ndarray
     final_inferior: np.ndarray
     final_superior: np.ndarray
+    total_monitoring_checks: int = 0
 
 
 def simulate_one_arm_tte(
@@ -48,12 +49,15 @@ def simulate_one_arm_tte(
     *,
     seed: int | None = None,
     credible_level: float = 0.95,
+    max_monitoring_checks: int = 100_000,
 ) -> OneArmTTESimulation:
     """Simulate independent exponential durations and Poisson arrivals.
 
     ``true_tte`` and ``accrual_rate`` use the same caller-selected time unit.
     Results use central credible_level quantiles. Arrays are kept
-    per trial only, with a total patient budget of 100,000.
+    per trial only, with a total patient budget of 100,000. Accrual-phase
+    monitor checks are bounded by ``max_monitoring_checks`` and counted in the
+    returned result; final assessments are not included in that count.
     """
     if not isinstance(design, OneArmTTEDesign):
         raise TypeError("design must be a OneArmTTEDesign")
@@ -73,6 +77,11 @@ def simulate_one_arm_tte(
         )
     if not 0 < level < 1:
         raise ValueError("credible_level must be in (0,1)")
+    if isinstance(max_monitoring_checks, (bool, np.bool_)):
+        raise ValueError("max_monitoring_checks must be an integer in [0,100000]")
+    check_limit = scalar(max_monitoring_checks, "max_monitoring_checks")
+    if int(check_limit) != check_limit or not 0 <= check_limit <= 100_000:
+        raise ValueError("max_monitoring_checks must be an integer in [0,100000]")
     reps_int = int(reps)
     if reps_int * design.max_patients > 100_000:
         raise ValueError("total simulated patients cannot exceed 100000")
@@ -99,10 +108,14 @@ def simulate_one_arm_tte(
         gaps = generator.exponential(interarrival_mean, design.max_patients)
         enrollment: np.ndarray = np.cumsum(gaps)
         event_duration = generator.exponential(duration_mean, design.max_patients)
-        trial = one_arm_tte_trial(design, enrollment, event_duration)
+        remaining_checks = int(check_limit) - total_checks
+        trial = one_arm_tte_trial(
+            design,
+            enrollment,
+            event_duration,
+            max_monitoring_checks=min(10_000, remaining_checks),
+        )
         total_checks += len(trial.monitor_history)
-        if total_checks > 100_000:
-            raise ValueError("total simulated monitoring checks cannot exceed 100000")
         sample_sizes[i] = trial.final_monitor.patients
         events[i] = trial.final_monitor.events
         exposures[i] = trial.final_monitor.total_time
@@ -146,4 +159,5 @@ def simulate_one_arm_tte(
         _readonly(early_superior),
         _readonly(final_inferior),
         _readonly(final_superior),
+        total_checks,
     )
