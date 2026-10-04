@@ -13,13 +13,13 @@ from ._validation import FloatArray
 from .random_survival_forest import (
     _MAX_OOB_WORK,
     RandomSurvivalForestFit,
-    _forest_data,
     _forest_fingerprint,
     _freeze_index,
     _integer,
     fit_random_survival_forest,
     predict_random_survival_forest,
 )
+from .random_survival_forest_missing_adapters import _adapter_training_data
 
 _MAX_BRIER_CELLS = 2_000_000
 
@@ -44,6 +44,7 @@ class RandomSurvivalForestOOBBrier:
     censor_model: str = "km"
     censor_random_state: int | None = None
     censor_forest_fit: RandomSurvivalForestFit | None = None
+    row_indices: np.ndarray | None = None
 
 
 def _censor_survival(time: FloatArray, event: FloatArray, grid: FloatArray) -> FloatArray:
@@ -282,9 +283,9 @@ def random_survival_forest_oob_brier_score(
         else None
     )
 
-    t, e, x = _forest_data(time, event, covariates)
-    if x.shape[1] != fit.covariate_count:
-        raise ValueError("training covariate count does not match the OOB fit")
+    t, e, x, row_indices = _adapter_training_data(
+        fit, time, event, covariates, adapter="OOB Brier score"
+    )
     levels = fit.categorical_levels
     if levels and len(levels) != x.shape[1]:
         raise ValueError("fit contains inconsistent categorical level metadata")
@@ -353,6 +354,7 @@ def random_survival_forest_oob_brier_score(
             censor_model=censor_model,
             censor_random_state=censor_seed,
             censor_forest_fit=censor_forest_fit,
+            row_indices=_freeze_index(row_indices, np.dtype(np.int64)),
         )
 
     event_grid_count = np.searchsorted(grid, t, side="right")
@@ -397,4 +399,5 @@ def random_survival_forest_oob_brier_score(
         censor_model=censor_model,
         censor_random_state=censor_seed,
         censor_forest_fit=censor_forest_fit,
+        row_indices=_freeze_index(row_indices, np.dtype(np.int64)),
     )

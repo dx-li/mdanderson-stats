@@ -33,8 +33,11 @@ Inputs are aligned nonnegative observation times, binary `event` indicators
 and finite numeric covariates. Event 1 denotes a failure and event 0 right
 censoring. All training rows censored is unidentifiable and rejected; an
 individual sampled leaf with no events has survival one and cumulative hazard
-zero. Missing values and categorical encodings are not inferred. Declare
-unordered categorical columns explicitly with `categorical_features`.
+zero. Missing values are rejected by default. `na_action="omit"` fits the
+complete rows and records their original row indices; `na_action="impute"`
+uses the source-style single-pass, tree-local donor workflow described in the
+[missing-data guide](random-survival-forest-missing.md). Declare unordered
+categorical columns explicitly with `categorical_features`.
 
 ## Fitting and reproducibility
 
@@ -140,9 +143,11 @@ output limits reject oversized requests. These bounds limit individual
 operations; they do not guarantee total application memory use.
 
 This interface covers ordinary right-censored survival with continuous and
-explicitly declared categorical predictors. Competing risks, missing-value
-imputation and split rules beyond log-rank, Hothorn–Lausen, Brier-gradient and
-random splitting remain separate work.
+explicitly declared categorical predictors. Competing risks, multiple
+imputation, and split rules beyond log-rank, Hothorn–Lausen, Brier-gradient and
+random splitting remain separate work. See the
+[missing-data guide](random-survival-forest-missing.md) for downstream adapter
+limits.
 It does not claim to
 reproduce the entire randomForestSRC
 package or native random stream. Catalog entry 166 remains partial.

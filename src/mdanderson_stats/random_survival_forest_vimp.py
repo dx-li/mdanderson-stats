@@ -12,13 +12,13 @@ from ._validation import FloatArray
 from .random_survival_forest import (
     RandomSurvivalForestFit,
     _encode_profiles,
-    _forest_data,
     _forest_fingerprint,
     _integer,
     _oob_concordance_error,
     _PackedTree,
     _tree_goes_left,
 )
+from .random_survival_forest_missing_adapters import _adapter_training_data
 
 _MAX_IMPORTANCE_WORK = 100_000_000
 _MAX_IMPORTANCE_CELLS = 2_000_000
@@ -224,9 +224,9 @@ def permutation_random_survival_forest_importance(
         assert rng is not None
         generator = rng
     work_limit = _integer(max_work, "max_work", 1, _MAX_IMPORTANCE_WORK)
-    t, e, raw_x = _forest_data(time, event, covariates)
-    if raw_x.shape[1] != fit.covariate_count:
-        raise ValueError("training covariate count does not match the OOB fit")
+    t, e, raw_x, _ = _adapter_training_data(
+        fit, time, event, covariates, adapter="permutation VIMP"
+    )
     selected = _feature_selection(feature_indices, fit.covariate_count)
     if selected.size == 0:
         raise ValueError("permutation importance requires at least one fitted covariate")
@@ -368,9 +368,9 @@ def anti_split_random_survival_forest_importance(
         raise TypeError("rng must be a numpy Generator")
     threshold = _threshold(vimp_threshold)
     work_limit = _integer(max_work, "max_work", 1, _MAX_IMPORTANCE_WORK)
-    t, e, raw_x = _forest_data(time, event, covariates)
-    if raw_x.shape[1] != fit.covariate_count:
-        raise ValueError("training covariate count does not match the OOB fit")
+    t, e, raw_x, _ = _adapter_training_data(
+        fit, time, event, covariates, adapter="anti-split VIMP"
+    )
     selected = _feature_selection(feature_indices, fit.covariate_count)
     if selected.size == 0:
         raise ValueError("anti-split importance requires at least one fitted covariate")
@@ -602,9 +602,9 @@ def random_split_random_survival_forest_importance(
         raise TypeError("rng must be a numpy Generator")
     threshold = _threshold(vimp_threshold)
     work_limit = _integer(max_work, "max_work", 1, _MAX_IMPORTANCE_WORK)
-    t, e, raw_x = _forest_data(time, event, covariates)
-    if raw_x.shape[1] != fit.covariate_count:
-        raise ValueError("training covariate count does not match the OOB fit")
+    t, e, raw_x, _ = _adapter_training_data(
+        fit, time, event, covariates, adapter="random-split VIMP"
+    )
     selected = _feature_selection(feature_indices, fit.covariate_count)
     if block_size is None:
         size = fit.n_trees

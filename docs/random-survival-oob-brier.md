@@ -26,10 +26,14 @@ print(result.crps, result.crps_standardized)
 
 This is a full-training OOB evaluator. Pass the original times, event
 indicators, covariates, and row order used to fit the forest. A fingerprint
-check rejects different or reordered training data. All training outcomes
-contribute to the censoring distribution; only rows with at least one OOB
-prediction contribute to score means. A row without OOB contributors remains
-NaN in `brier`. `valid_row_count` reports the number of rows with OOB curves.
+check rejects different or reordered training data. For `na_action="omit"`,
+the evaluator filters by the fit's retained row map before scoring; `row_indices`
+maps its Brier rows back to the original input. For `na_action="impute"` with
+actual missing values, it raises because missing-specific Brier semantics are
+not implemented. All analyzed training outcomes contribute to the censoring
+distribution; only rows with at least one OOB prediction contribute to score
+means. A row without OOB contributors remains NaN in `brier`.
+`valid_row_count` reports the number of analyzed rows with OOB curves.
 `score_row_count` reports the number of rows that contribute a defined value
 at each time point. For the default KM model, these counts agree. If no rows
 contribute at a time, that score and the integrated summaries are NaN.
@@ -58,7 +62,7 @@ arithmetic work before allocating the row-by-time result.
 
 The default `censor_model="km"` path uses the source's global censoring
 estimate and preserves the original behavior. Set `censor_model="rfsrc"` to
-fit a separate censoring forest from the complete training cohort. That model
+fit a separate censoring forest from the analyzed training rows. That model
 uses censoring as its event, all original training predictors, 50 trees,
 `nsplit=1`, random splitting, and the source `set.nodesize` rule; it predicts
 curves for each original training row. Pass `censor_random_state` to make this
@@ -76,9 +80,9 @@ print(forest_scores.score_row_count, forest_scores.crps)
 ```
 
 The source fits with `na.action="na.omit"` by default but separately overlays
-stored imputed covariates for prediction. This Python route requires finite
-complete inputs and does not guess the native missing-value/imputation
-workflow. Zero censor-survival values are not clipped. Literal source weighting
+stored imputed covariates for prediction. This Python route applies the fit's
+explicit omission row map and does not guess the native imputed Brier workflow.
+Zero censor-survival values are not clipped. Literal source weighting
 can yield NaN for an inactive `0/0` term; those row/time contributions are
 omitted from that time's mean and reflected in `score_row_count`. A positive
 weight that produces an infinite contribution raises an arithmetic error;
