@@ -270,12 +270,12 @@ def test_rfsrc_censor_forest_end_to_end_is_seeded_and_keeps_categories():
     n = 60
     time = np.arange(1, n + 1, dtype=float)
     event = np.where(np.arange(n) % 3 == 0, 0.0, 1.0)
-    covariates = np.column_stack((np.sin(time / 4), np.arange(n) % 3)).astype(float)
+    covariates = np.column_stack((np.sin(time / 4), np.arange(n) % 3, np.ones(n))).astype(float)
     fit = fit_random_survival_forest(
         time,
         event,
         covariates,
-        categorical_features=[1],
+        categorical_features=[1, 2],
         n_trees=24,
         nodesize=1,
         compute_oob=True,
@@ -304,12 +304,14 @@ def test_rfsrc_censor_forest_end_to_end_is_seeded_and_keeps_categories():
     assert first.censor_forest_fit.split_rule == "random"
     assert first.censor_forest_fit.random_state == 37
     assert first.censor_forest_fit.categorical_levels[1] is not None
+    assert first.censor_forest_fit.categorical_levels[2] is not None
     assert first.censor_random_state == 37
     assert first.censor_model == "rfsrc"
     assert first.censor_survival.shape == first.brier.shape == (n, first.time_grid.size)
     assert_allclose(first.censor_survival, second.censor_survival)
     assert_allclose(first.brier, second.brier, equal_nan=True)
     assert first.score_row_count is not None
+    assert first.score_row_count.dtype.kind in "iu"
     assert first.score_row_count.shape == first.time_grid.shape
     assert np.all(first.score_row_count <= first.valid_row_count)
 
@@ -328,9 +330,7 @@ def test_rfsrc_no_censor_uses_g_one_without_fitting_and_preflights_extra_matrix(
     assert result.censor_random_state == 9
     assert np.all(result.censor_survival == 1)
     legacy_cells = (
-        3 * time.size * result.time_grid.size
-        + 10 * time.size
-        + 5 * result.time_grid.size
+        3 * time.size * result.time_grid.size + 10 * time.size + 5 * result.time_grid.size
     )
     with pytest.raises(ValueError, match="max_cells"):
         random_survival_forest_oob_brier_score(

@@ -432,5 +432,25 @@ Full-training out-of-bag Brier scores and integrated CRPS now follow the pinned
 RF-SRC helper's actual censoring, tied-time and reduced-grid conventions.
 Independent unchanged-R-helper references cover four cases and compare every
 row contribution as well as censor survival, mean scores and integrated values.
-The censoring forest and native subset behavior remain outside this evaluator;
-entry 166 stays partial. See [the guide](../docs/random-survival-oob-brier.md).
+The evaluator now also fits the source-configured 50-tree random-split censoring
+forest, retaining categorical predictors and projecting ordinary training-row
+predictions to the outcome grid. Literal zero-denominator arithmetic preserves
+undefined contributions and per-time usable counts. The no-censoring case uses
+G=1 to correct a native dimension error. Source-driven numeric/categorical
+random splits and fixed-curve unchanged-R-helper references support this route;
+native subset behavior and whole-forest random-stream parity remain outside its
+claim. Entry 166 stays partial. See [the guide](../docs/random-survival-oob-brier.md)
+and [reference scope](../tools/reference_random_survival_censoring_brier.md).
+
+## U-BOIN delayed-response source gap
+
+The cached paper describes scaled-logistic efficacy imputation from a promptly
+observed immune response, posterior draws and multiple completed datasets.
+However, the cached text and BioC record omit the posterior/pooling and
+immune-screen equations, and the cached supplement is an HTML challenge page
+rather than a usable PDF. The app labels the immune-response option as under
+development. A single ordinary check of the paper page also returned a browser
+challenge; it was not retried. These records do not resolve the full imputation
+and screening contract. Entry 142 remains partial, with complete-outcome
+monitoring, simulation and accelerated titration available; no guessed
+immune criterion or averaged-count substitute is presented as the missing port.

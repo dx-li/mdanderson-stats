@@ -1633,8 +1633,9 @@ and contours from fitted forests. Sequential tree growth, sparse leaf curves
 and explicit work limits bound computation. Optional [out-of-bag diagnostics](docs/random-survival-oob.md)
 report held-out survival/hazard curves, contributor counts and concordance error.
 [OOB Brier scores and integrated CRPS](docs/random-survival-oob-brier.md)
-add source-defined censoring weights, per-observation contributions and
-prediction-error curves, including the native event-grid and tie conventions.
+add either the source's global censoring estimate or a separately fitted
+50-tree censoring forest, per-observation contributions and prediction-error
+curves, including the native event-grid and tie conventions.
 Permutation, anti-split and [random-routing importance](docs/random-survival-forest-random-importance.md)
 add per-tree OOB perturbations and
 blockwise error increases, with explicit counts for usable blocks and omitted
@@ -1646,6 +1647,9 @@ bootstrap multiplicities. The existing log-rank rule remains the default.
 The optional [Brier-gradient split rule](docs/random-survival-forest-brier.md)
 follows RF-SRC's scalar event-grid and censor-weight conventions, validated
 against its original C helpers, with linear-size node workspace.
+The [random split rule](docs/random-survival-forest-random-split.md) draws one
+continuous cut or categorical partition on the first usable selected feature;
+the censoring-forest Brier workflow uses this rule with the source's settings.
 [Interval-censored proportional-hazards models](docs/interval-survival.md)
 fit mixed exact, interval, left- and right-censored observations with a
 nonparametric Turnbull baseline. Predictions and continuous-covariate contours

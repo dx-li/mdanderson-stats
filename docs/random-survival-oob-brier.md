@@ -66,6 +66,15 @@ additional fit reproducible. The result then exposes a row-by-time
 `censor_survival` matrix and the fitted `censor_forest_fit`; when there are no
 censored observations, it skips the fit and returns an all-one matrix.
 
+```python
+forest_scores = random_survival_forest_oob_brier_score(
+    fit, time, event, x, censor_model="rfsrc", censor_random_state=52
+)
+assert forest_scores.censor_forest_fit.n_trees == 50
+assert forest_scores.censor_survival.shape == forest_scores.brier.shape
+print(forest_scores.score_row_count, forest_scores.crps)
+```
+
 The source fits with `na.action="na.omit"` by default but separately overlays
 stored imputed covariates for prediction. This Python route requires finite
 complete inputs and does not guess the native missing-value/imputation

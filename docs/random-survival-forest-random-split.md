@@ -15,6 +15,7 @@ fit = fit_random_survival_forest(
     time,
     event,
     features,
+    categorical_features=[1],
     split_rule="random",
     nodesize=1,
     mtry=1,
@@ -48,7 +49,7 @@ replacement; `mtry=1` remains a random feature draw, even when only one feature
 is available. The NumPy stream is deterministic for a supplied seed but does
 not reproduce RF-SRC's R/C random stream.
 
-This option exposes the random split kernel, not the full
-`get.brier.survival(cens.model="rfsrc")` workflow. That caller separately
-chooses 50 trees and a sample-size-dependent `nodesize`; supply settings
-explicitly for a comparable fit. See the [source audit](../research/random-survival-forest-random-split-audit.md).
+The [censoring-forest Brier evaluator](random-survival-oob-brier.md) uses this
+rule with 50 trees and the source helper's sample-size-dependent `nodesize`.
+See the [source audit](../research/random-survival-forest-random-split-audit.md)
+for the split contract and its native source locations.

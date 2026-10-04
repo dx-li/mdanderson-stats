@@ -95,3 +95,14 @@ RSS, and reported zero swaps; no full suite or installation was run.
 Root integration repeated these comparisons alongside the affected GAO
 workflow checks: 18 checks passed in 5.653 seconds, with 148.03 MiB process
 peak RSS and zero swaps. Root targeted Ruff, format and mypy checks pass.
+## Root integration validation
+
+The combined forest, native-routing, random-split and Brier run passes all
+39 focused checks with warnings treated as errors. It took 2.156 seconds,
+used 153.58 MiB process peak RSS and reported zero swaps. This includes both
+censoring models, source-reference arithmetic, declared constant categories,
+integer per-time contributor counts, and the no-censor output-copy bound.
+Root Ruff checks, formatting and targeted mypy pass. No full local suite or
+new CI workflow was added. The implementation worker also completed a bounded
+500-row, 10-predictor end-to-end case with 50 censor trees, 2,970 nodes and
+880,661 split-work units in 5.35 seconds at 125.28 MiB peak RSS, with zero swaps.

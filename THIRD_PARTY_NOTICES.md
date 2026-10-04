@@ -1108,7 +1108,8 @@ and compiled objects are not redistributed. An independent deterministic tree
 driver uses those kernels for additional fixtures, without executing the
 complete native forest engine. Categorical subset splitting, OOB diagnostics,
 permutation importance, anti-split routing and represented-count-weighted
-random routing and the scalar Brier-gradient split criterion were checked
+random routing, the scalar Brier-gradient criterion and the one-candidate
+random split rule were checked
 against the same pinned source. The Brier reference harness compiles unchanged
 C helper bodies from an independently supplied source cache; those bodies and
 compiled objects are not redistributed. The contour contract also follows the original
@@ -1119,9 +1120,14 @@ kernel scope and remaining native features.
 
 `random_survival_forest_brier.py` independently implements the same revision's
 full-training OOB Brier/CRPS helper with its exponential censor-hazard estimate,
-event-grid projection and tied-time conventions. The reference harness loads
+optional 50-tree random-split censoring forest, event-grid projection and
+tied-time conventions. The reference harness loads
 the unchanged `get.brier.survival` R helper from a caller-supplied cache;
-upstream R function bodies are not redistributed. See
+upstream R function bodies are not redistributed. The censoring-forest
+reference uses deterministic fit/prediction boundary stubs to verify the
+helper's data flow and arithmetic, without claiming native whole-forest parity.
+The no-censoring path corrects the original helper's vector/matrix indexing
+defect through the explicit mathematical convention G(t)=1. See
 `research/random-survival-oob-brier-audit.md` for the exact supported scope.
 
 `interval_survival.py` independently implements the nonparametric
