@@ -1,7 +1,8 @@
 # Community publication checkpoint — 2026-09-28
 
-Latest verified package checkpoint: `ed17c77` adds the bCRM extreme-dose
-allocation correction and U-BOIN Stage-I accelerated titration. The final
+Latest verified package checkpoint: `128fa72` adds generalized categorical
+BOP2-DC workflows and KeyboardComb key2/key3/key4 movement variants alongside
+the bCRM allocation correction and U-BOIN accelerated titration. The final
 section records validation; earlier sections preserve checkpoint history.
 Published `4e69098` has passed all hosted quality and
 Python 3.12/3.13/3.14 checks in
@@ -2716,3 +2717,48 @@ retained and three focused allocation tests pass (1.560 seconds, 144.50 MiB
 peak RSS, zero swaps). Hosted tests were skipped after the type-check failure;
 they were not reported as passed. The previous `4e69098` remains the most
 recent completely passed hosted checkpoint until a later run completes.
+
+## October 3: generalized BOP2-DC and KeyboardComb variants
+
+BOP2-DC now supports explicit binary indicator rows over joint categorical
+outcomes, including more than two decision endpoints. The workflow covers
+single-arm and fixed-allocation randomized monitoring, mixed favorable
+directions, any/all endpoint decisions, absorbing replay, serial simulation,
+and finite candidate calibration under both published objectives. Candidate
+feasibility is explicitly a Monte Carlo estimate, with uncertainty and trial
+seeds available for independent confirmation.
+
+Seven focused integration tests pass, including preservation of a tiny positive
+complement prior when every observed outcome selects an endpoint. Independent
+base-R probabilities, decisions, replay and paired-model reduction agree in
+36 posterior comparisons; maximum absolute discrepancy is `6.30114e-10`,
+within the Python numerical-error estimate plus the reference allowance.
+Independent reconstruction from seeds checks two candidates across two truths,
+terminal rates, MCSEs, enrollment, feasibility and both objective selections.
+The combined integration/reference run used 1.748 seconds and 147.11 MiB peak
+RSS, with zero swaps. Review corrected the reference's interim information
+fraction and serialization order before the final comparison.
+
+KeyboardComb key2/key3/key4 implement the paper's candidate movement sets and
+raw Beta(1,1) target-key posterior masses. They retain the existing controller's
+documented safety and final-selection conventions. The default native key1
+scoring and random-number calls are unchanged. Five independent base-R input
+configurations verify diagonal choices, proportional weights, candidate
+exclusions, boundaries and ties across all three variants. Fourteen focused
+tests pass, with about 136.4 MiB peak RSS and zero swaps. Key5 and automatic
+scenario generation retain explicit source contradictions; no substitute is
+claimed as a faithful port.
+
+Root Ruff checks and targeted mypy with imported types retained pass across
+all seven changed numerical modules. NumPy scalar normalization and optional
+arm-tape comparisons were made explicit for the shipped type definitions.
+Cached builds and isolated package verification pass at `128fa72`: all 613
+committed package files match both archives, all 1,717 exports resolve, retained
+license notices are present, and six examples across the four newly extended
+guides execute. This package check used 12.402 seconds, 119.78 MiB peak RSS and
+zero swaps. There was no full local numerical-suite run or new CI workflow.
+
+The source-catalog counts remain unchanged. The stable branches receive these
+validated components; ongoing GAO adaptive-precision implementation stays in
+its isolated development checkout. Remote SHAs and artifact hashes are recorded
+after independent publication verification.
