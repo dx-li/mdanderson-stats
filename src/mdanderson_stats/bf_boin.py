@@ -13,7 +13,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 from ._validation import count, scalar
-from .boin import BOINDecision, BOINDesign, BOINSelection, _owned
+from .boin import BOINBoundaryTable, BOINDecision, BOINDesign, BOINSelection, _owned
 
 
 @dataclass(frozen=True)
@@ -68,15 +68,26 @@ class BFBOINDesign:
     extra_safe: bool = False
     safety_offset: float = 0.05
     bound_mtd: bool = False
+    stay_at_one_of_three: bool = False
     _boin: BOINDesign = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
+        target = scalar(self.target, "target")
+        for name in ("extra_safe", "bound_mtd", "stay_at_one_of_three"):
+            if not isinstance(getattr(self, name), (bool, np.bool_)):
+                raise ValueError(f"{name} must be boolean")
+        if self.stay_at_one_of_three and target != 0.25:
+            raise ValueError("the BF-BOIN 1/3 modification requires target == 0.25")
         base = BOINDesign(
-            self.target,
+            target,
             elimination_probability=self.elimination_probability,
-            extra_safe=self.extra_safe,
+            # The native BF-BOIN guide requires more than three patients for
+            # its extra-safe stop.  Apply that BF-specific rule in _state;
+            # ordinary BOIN retains its own n>=3 behavior.
+            extra_safe=False,
             safety_offset=self.safety_offset,
-            bound_mtd=self.bound_mtd,
+            bound_mtd=False,
+            stay_at_one_of_three=self.stay_at_one_of_three,
         )
         cap = scalar(self.n_cap, "n_cap")
         if cap != int(cap) or cap < 1:
@@ -86,7 +97,49 @@ class BFBOINDesign:
             raise ValueError("n_stop must be a positive integer or None")
         object.__setattr__(self, "n_cap", int(cap))
         object.__setattr__(self, "n_stop", None if stop is None else int(stop))
+        object.__setattr__(self, "target", base.target)
+        object.__setattr__(self, "extra_safe", bool(self.extra_safe))
+        object.__setattr__(self, "bound_mtd", bool(self.bound_mtd))
+        object.__setattr__(self, "stay_at_one_of_three", bool(self.stay_at_one_of_three))
+        object.__setattr__(self, "elimination_probability", base.elimination_probability)
+        object.__setattr__(self, "safety_offset", base.safety_offset)
         object.__setattr__(self, "_boin", base)
+
+    def _state(
+        self, patients: ArrayLike, toxicities: ArrayLike, eliminated: ArrayLike | None
+    ) -> tuple[np.ndarray, np.ndarray, NDArray[np.bool_], np.ndarray]:
+        """Return BF-specific cumulative exclusions and safety probabilities."""
+        n, y, excluded, posterior = self._boin._state(patients, toxicities, eliminated)
+        if (
+            self.extra_safe
+            and n[0] > 3
+            and posterior[0] > self.elimination_probability - self.safety_offset
+        ):
+            excluded = np.array(excluded, copy=True)
+            excluded[0] = True
+            excluded = np.maximum.accumulate(excluded)
+        return n, y, excluded, posterior
+
+    def boundary_table(self, max_patients: int = 30) -> BOINBoundaryTable:
+        """Return BOIN movement/elimination cutoffs and BF extra-safe cutoff."""
+        table = self._boin.boundary_table(max_patients)
+        lowest = np.array(table.lowest_stop_min, copy=True)
+        if self.extra_safe:
+            extra = self._boin._safety_boundary(
+                table.patients, self.elimination_probability - self.safety_offset
+            )
+            lowest = np.where(
+                table.patients > 3,
+                np.minimum(table.eliminate_min, extra),
+                table.eliminate_min,
+            )
+        return BOINBoundaryTable(
+            table.patients,
+            table.escalate_max,
+            table.deescalate_min,
+            table.eliminate_min,
+            _owned(lowest),
+        )
 
     @property
     def escalation_boundary(self) -> float:
@@ -143,7 +196,7 @@ class BFBOINDesign:
         if observed.shape != n.shape or observed.dtype != np.bool_:
             raise ValueError("response_observed must be a matching boolean vector")
         observed = np.maximum.accumulate(observed)
-        safety = self._boin._state(n, y, eliminated)[2]
+        _, _, safety, _ = self._state(n, y, eliminated)
         closed = self._closed(n, y) | (a >= self.n_cap) | safety
         eligible: NDArray[np.bool_] = np.zeros(len(n), dtype=bool)
         for j in range(c - 1):
@@ -176,7 +229,8 @@ class BFBOINDesign:
             bf = np.asarray(backfilled)
             if bf.shape != n.shape or bf.dtype != np.bool_:
                 raise ValueError("backfilled must be a matching boolean vector")
-        decision = self._boin.next_dose(n, y, c, eliminated=eliminated)
+        _, _, excluded, _ = self._state(n, y, eliminated)
+        decision = self._boin.next_dose(n, y, c, eliminated=excluded)
         if response_observed is None:
             eligibility = BFBOINBackfill(
                 _owned(np.zeros(n.shape, dtype=bool)),
@@ -195,6 +249,8 @@ class BFBOINDesign:
             1,
             np.where(rates > self.deescalation_boundary, -1, 0),
         )
+        if self.stay_at_one_of_three:
+            individual[(n == 3) & (y == 1)] = 0
         lower_conflict = np.flatnonzero(
             bf[:current]
             & (
@@ -246,7 +302,28 @@ class BFBOINDesign:
         self, patients: ArrayLike, toxicities: ArrayLike, *, eliminated: ArrayLike | None = None
     ) -> BOINSelection:
         """Reuse BOIN's safety-filtered isotonic MTD selection."""
-        n, y = count(patients, "patients"), count(toxicities, "toxicities")
+        n, y, excluded, _ = self._state(patients, toxicities, eliminated)
         if n.ndim != 1 or n.shape != y.shape:
             raise ValueError("patients and toxicities must be matching 1D vectors")
-        return self._boin.select_mtd(n, y, eliminated=eliminated)
+        result = self._boin.select_mtd(n, y, eliminated=excluded)
+        admissible = (n > 0) & ~excluded
+        if self.bound_mtd:
+            admissible &= result.selection_mean < self.deescalation_boundary
+        indices = np.flatnonzero(admissible)
+        selected = None
+        if indices.size:
+            distance = np.abs(result.selection_mean[indices] - self.target)
+            tied = indices[np.isclose(distance, distance.min(), rtol=0, atol=1e-14)]
+            selected_index = (
+                tied[-1] if np.all(result.selection_mean[tied] < self.target) else tied[0]
+            )
+            selected = int(selected_index) + 1
+        return BOINSelection(
+            selected,
+            _owned(excluded),
+            result.isotonic_mean,
+            result.selection_mean,
+            result.isotonic_interval,
+            result.report_overdose_probability,
+            result.safety_overdose_probability,
+        )
