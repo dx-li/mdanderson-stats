@@ -58,3 +58,12 @@ and printed Table 3 rates is `0.0004946`; recalibrating from three-decimal
 Table 3 rates differs from rounded S1 intercepts by at most `0.01121`.
 The first discrepancy is consistent with the two tables' displayed precision;
 the intercept discrepancy is recorded rather than tuned away.
+
+The full-precision CSV output was compared with Python core commit `0c98e0e8`.
+Across all 40 source scenario/dose predictions, the largest Python-to-R rate
+difference was `4.45e-16`; recalibrated intercepts differed by at most
+`8.93e-14`, and Python's largest marginal residual was `8.99e-15`. In the
+correlated 2x3 case, the Python intercept was `-0.9637837289014297` versus
+R's `-0.9637837289014656`; the conditional and marginal ORs agreed to below
+`1e-14`. This independently checks the numerical calibration and profile
+mapping, not native software behavior.

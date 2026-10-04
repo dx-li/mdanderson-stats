@@ -159,6 +159,7 @@ run_reference_checks <- function() {
   source_offsets <- profile_offsets(source_profiles, source_or)
   reconstructed <- matrix(NA_real_, nrow(intercepts), ncol(intercepts))
   recalibrated <- reconstructed
+  recalibrated_rates <- reconstructed
   for (scenario in seq_len(nrow(intercepts))) {
     for (dose in seq_len(ncol(intercepts))) {
       reconstructed[scenario, dose] <- population_response(
@@ -167,22 +168,45 @@ run_reference_checks <- function() {
       recalibrated[scenario, dose] <- calibrate_intercept(
         table3_response[scenario, dose], source_offsets, source_weights
       )
+      recalibrated_rates[scenario, dose] <- population_response(
+        recalibrated[scenario, dose], source_offsets, source_weights
+      )
     }
   }
-  stopifnot(max(abs(reconstructed - table3_response)) < 0.0011)
-  stopifnot(max(abs(recalibrated - intercepts)) < 0.012)
+  # Three-decimal publication rounding contributes at most .0005 to each
+  # displayed value; rounded intercepts contribute at most .0005*.25=.000125
+  # to a logistic probability. Allow a small numerical root-solve cushion.
+  stopifnot(max(abs(reconstructed - table3_response)) < 0.000625 + 1e-12)
+  stopifnot(max(abs(recalibrated_rates - table3_response)) < 1e-12)
+  published_reference <- data.frame(
+    scenario = rep(seq_len(nrow(intercepts)), each = ncol(intercepts)),
+    dose = rep(seq_len(ncol(intercepts)), times = nrow(intercepts)),
+    target_rate = as.vector(t(table3_response)),
+    source_intercept = as.vector(t(intercepts)),
+    source_rate = as.vector(t(reconstructed)),
+    recalibrated_intercept = as.vector(t(recalibrated)),
+    recalibrated_rate = as.vector(t(recalibrated_rates))
+  )
   list(
     binary_intercept = binary_intercept,
     correlated_intercept = intercept,
     conditional_or = or_results$conditional,
     marginal_or = or_results$marginal,
+    published_reference = published_reference,
+    source_rates = reconstructed,
+    recalibrated_intercepts = recalibrated,
     source_rate_max_error = max(abs(reconstructed - table3_response)),
     source_intercept_max_error = max(abs(recalibrated - intercepts))
   )
 }
 
 if (sys.nframe() == 0) {
+  options(digits = 17)
   result <- run_reference_checks()
+  csv_path <- Sys.getenv("BARD_REFERENCE_CSV", unset = "")
+  if (nzchar(csv_path)) {
+    write.csv(result$published_reference, csv_path, row.names = FALSE)
+  }
   cat("BARD independent response reference checks passed\n")
   print(result)
 }
