@@ -84,6 +84,8 @@ _METHOD_LABELS = {
 }
 _MAX_CALCULATIONS = 100
 _MAX_FIXED_EVENT_ROWS = 129
+# Hazard-range searches allow 1,025 grid points and can return many intervals.
+_MAX_RESULT_VALUES = 1_025
 _MAX_REPORT_BYTES = 2_000_000
 
 
@@ -138,7 +140,7 @@ def _result_snapshot(value: object, *, depth: int = 0) -> object:
     if isinstance(value, np.generic):
         return _result_snapshot(value.item(), depth=depth + 1)
     if isinstance(value, np.ndarray):
-        if value.size > _MAX_FIXED_EVENT_ROWS:
+        if value.size > _MAX_RESULT_VALUES:
             raise ValueError("result array exceeds the report row limit")
         return {
             "shape": tuple(value.shape),
@@ -154,7 +156,7 @@ def _result_snapshot(value: object, *, depth: int = 0) -> object:
             raise ValueError("result mappings exceed the report limits")
         return {key: _result_snapshot(item, depth=depth + 1) for key, item in value.items()}
     if isinstance(value, (list, tuple)):
-        if len(value) > _MAX_FIXED_EVENT_ROWS:
+        if len(value) > _MAX_RESULT_VALUES:
             raise ValueError("result sequence exceeds the report row limit")
         return tuple(_result_snapshot(item, depth=depth + 1) for item in value)
     raise TypeError(f"Unsupported result type for report: {type(value).__name__}")
