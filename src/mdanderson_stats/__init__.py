@@ -1565,6 +1565,10 @@ from .u2oet_gao2010_fit import (
     fit_u2oet_gao2010,
     u2oet_gao2010_parameter_names,
 )
+from .u2oet_gao_adaptive_precision import (
+    U2OETGAOAdaptivePrecisionResult,
+    fit_u2oet_gao_adaptive_precision,
+)
 from .u2oet_gao_fit import U2OETGAOFit, fit_u2oet_gao, u2oet_gao_parameter_names
 from .u2oet_gao_simulation import U2OETGAOTrial, simulate_u2oet_gao_trial
 from .u2oet_patients import (
@@ -2264,6 +2268,8 @@ __all__ = [
     "u2oet_gao_probabilities",
     "U2OETGAOFit",
     "fit_u2oet_gao",
+    "U2OETGAOAdaptivePrecisionResult",
+    "fit_u2oet_gao_adaptive_precision",
     "u2oet_gao_parameter_names",
     "U2OETGAOTrial",
     "simulate_u2oet_gao_trial",

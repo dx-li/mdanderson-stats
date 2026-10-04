@@ -14,9 +14,7 @@ from mdanderson_stats import (
 )
 
 names = u2oet_gao_parameter_names(2, 2)
-prior_mean = np.array(
-    [-1.0, -0.2, 0.4, 0.7, 0.0, -0.2, 0.3, 0.2, 0.3, 0.0, np.log(1.2), 0.0]
-)
+prior_mean = np.array([-1.0, -0.2, 0.4, 0.7, 0.0, -0.2, 0.3, 0.2, 0.3, 0.0, np.log(1.2), 0.0])
 prior_sd = np.zeros(len(names))
 prior_sd[0] = 0.7
 counts = np.zeros((2, 2, 2, 2))

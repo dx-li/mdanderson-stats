@@ -409,3 +409,13 @@ exclusions, boundaries and ties. The paper's key5 paragraph conflicts with its
 three-member candidate-set definition, and its random-scenario generator gives
 unattainable proper-Beta moments; these remain explicit unresolved contracts.
 Entry 121 stays partial. See [the audit](keyboard-combination-variants-audit.md).
+
+## GAO adaptive posterior precision
+
+The cached U2OET guide's per-chain, four-corner utility MCSE/SD criterion now
+has a standalone wrapper for the 2017 explicit-prior GAO fitter. Warmup runs
+once; complete coordinate vectors resume each chain. The wrapper enforces
+cumulative actual likelihood/work budgets and conservative live-array bounds,
+and reports target attainment separately from split-Rhat. Native prior
+interpretation, calibration and adaptive GAO calendar integration remain open;
+entry 77 stays partial. See [the audit](u2oet-gao-adaptive-precision-audit.md).

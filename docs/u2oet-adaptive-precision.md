@@ -78,8 +78,9 @@ other dose-pair utilities, toxicity/efficacy risks, or downstream probabilities.
 
 The sampler currently supports PDS, CMI and PDS+CMI with 2–16 chains. The native
 guide lists 1–20 chains; one-chain PSRF is undefined and this implementation
-inherits the sampler's narrower range. GAO uses a separate sampler and is not
-covered by this adaptive wrapper. A preflight bounds cumulative worst-case
+inherits the sampler's narrower range. The separate
+[GAO adaptive fitter](u2oet-gao-adaptive-precision.md) applies the same corner
+criterion to the 2017 GAO sampler. This wrapper's preflight bounds cumulative worst-case
 likelihood work and the retained joint posterior; requests beyond those caps
 are rejected before consuming the Generator. The combined live-cell estimate
 allows for chunk retention and concatenation/freeze copies, corner traces,

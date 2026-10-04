@@ -1141,6 +1141,9 @@ recorded diagnostics and explicit failure if the draw cap is insufficient.
 raw-dose coefficients, a shared interaction and Gaussian-copula likelihoods;
 [GAO posterior fitting](docs/u2oet-gao-fit.md) adds explicit normal-prior
 coordinates, complete/partial outcomes and retained chain diagnostics.
+[Adaptive GAO precision](docs/u2oet-gao-adaptive-precision.md) continues those
+chains toward a supplied four-corner utility MCSE/SD target and reports
+whether the target was reached within bounded draws and work.
 [GAO calendar trials](docs/u2oet-gao-trials.md) connect that fitter to pending
 outcomes, cohort allocation and final selection, with cumulative work limits
 and replay inputs. Native prior interpretation and GAO calibration remain open.

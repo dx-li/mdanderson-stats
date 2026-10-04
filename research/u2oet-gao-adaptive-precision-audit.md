@@ -54,6 +54,8 @@ aggregate-work overrun before RNG state changes, and check that constant
 corner utilities cannot pass. They also exercise a four-chain free-coordinate
 run with 500 warmup and 500 retained draws per chain, plus explicit exhaustion
 during a slice update under a nearly minimum runtime budget. The focused run
-took 2.24 seconds.
-Ruff format/check and module-scoped mypy with silent imports pass. No native
-executable comparison or RSS measurement was performed.
+took 2.24 seconds in the worker checkout. Root integration repeated these five
+tests in 2.323 seconds, with 147.03 MiB process peak RSS and zero reported swaps.
+Ruff format/check and module-scoped mypy with silent imports pass in the root
+environment. Independent read-only review found no remaining material budget
+or live-array-accounting gap. No native executable comparison was performed.

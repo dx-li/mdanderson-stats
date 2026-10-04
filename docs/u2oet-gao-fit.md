@@ -104,7 +104,9 @@ existing `u2oet_posterior` and allocation functions consume the fitted
 probabilities. The fit also retains names, prior settings, counts and actual
 likelihood work. The [GAO calendar trial driver](u2oet-gao-trials.md) connects
 this fitter to pending-outcome trial conduct and aggregate summaries. GAO
-prior calibration remains open.
+prior calibration remains open. The [adaptive precision wrapper](u2oet-gao-adaptive-precision.md)
+continues these chains toward an explicit per-chain, four-corner utility
+MCSE/SD target, with cumulative work and memory limits.
 
 Blocked elliptical slice sampling updates the free normal-prior coordinates.
 Shape and retained-storage checks precede large allocations. Likelihood
