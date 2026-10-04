@@ -1459,7 +1459,9 @@ logistic CRM, bounded asymptotes and deterministic uniform-slope posterior
 summaries. It separates mean probabilities from probabilities at the mean
 slope, with independent R checks of ordinary and concentrated posteriors.
 Single-outcome allocation supports target selection, an escalation cap and
-cohort stopping rules with explicit probability estimates.
+cohort stopping rules with explicit probability estimates. The guide-defined
+extreme-dose extra-allocation correction is also available as a stable
+scalar/vector probability calculation.
 The bivariate association model and full native simulation workflow remain open.
 
 [BMA-CRM and ordinary power-model CRM](docs/bmacrm.md) add posterior model

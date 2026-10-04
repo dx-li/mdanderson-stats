@@ -130,6 +130,16 @@ fractions may lie in `[0, 1]`. Correction is finite and nonnegative. This
 returns a randomization probability only: it does not select a dose, adjust an
 efficacy estimate, or reproduce the native trial controller.
 
+Inputs are scalars or bounded one-dimensional vectors with at most 200,000
+values. The probability for each extreme dose is calculated separately.
+
+```python
+from mdanderson_stats import bcrm_extreme_allocation_probability
+
+allocation = bcrm_extreme_allocation_probability(0.2, [0.1, 0.2, 0.3])
+assert allocation[0] > 0.2 > allocation[2]
+```
+
 ## Coverage and evidence
 
 The original 1.1.3 archive was retrieved and inspected without running its

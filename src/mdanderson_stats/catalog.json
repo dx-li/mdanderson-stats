@@ -351,13 +351,15 @@
         "Single-outcome fixed-intercept logistic CRM with dose skeleton transformation, fixed asymptotes and stable grouped log likelihood",
         "Bounded uniform-slope posterior integration with slope moments, equal-tailed intervals, posterior mean probabilities and distinct mean-slope plugin probabilities",
         "Explicit single-outcome below/nearest/above target selection, starting dose, highest-tried escalation cap and cohort/enrollment stopping rules",
-        "Bivariate association model, two-stage conduct, extra allocation, futility, four-parameter post-trial fit, full simulations and native files remain pending; see docs/bcrm.md"
+        "Bivariate association model, two-stage conduct, extra allocation, futility, four-parameter post-trial fit, full simulations and native files remain pending; see docs/bcrm.md",
+        "Guide-defined efficacy-mode extra allocation probability for an extreme dose, with target/observed allocation correction, source [0.1,0.5] clipping, stable log thresholds and bounded scalar/vector evaluation; does not implement the complete two-stage controller"
       ],
       "validation": [
         "Independent base-R posterior integrals for the official Goodman skeleton, bounded asymptotes and concentrated or boundary posteriors with 10000 observations",
         "Focused checks of skeleton mapping, stable log tails, grouped likelihood, batch shape, interval order and bounded allocations",
         "Deterministic decision checks for target modes and ties, unattainable fallbacks, starting allocation, escalation and minimum/maximum enrollment",
-        "Original 1.1.3 archive inspected without executing installer or native engine; no native numerical or random-seed parity claim"
+        "Original 1.1.3 archive inspected without executing installer or native engine; no native numerical or random-seed parity claim",
+        "Seven focused decision/allocation checks pass, including an independent 50-digit Decimal reference, correction direction, extreme finite correction and pre-conversion resource rejection; docs/bcrm.md and research/bcrm-extreme-allocation-audit.md"
       ]
     },
     {

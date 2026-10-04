@@ -1,5 +1,7 @@
 {
-  "catalog_ids": [15],
+  "catalog_ids": [
+    15
+  ],
   "retrieved_at": "2026-09-26",
   "application": {
     "name": "bCRM",
@@ -21,7 +23,7 @@
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/bCRM/bCrm-SUG-Defining-and-Running-Simulations-v1r4m0.pdf",
       "version": "V1.R4.M0, October 11, 2005",
-      "role": "Pages 13-20: single/both-outcome modes, target selection, logistic curve family, slope prior, fixed asymptotes, shared dose transformation when both outcomes are active, escalation cap and stopping criteria."
+      "role": "Pages 13-20: single/both-outcome modes, target selection, logistic curve family, slope prior, fixed asymptotes, shared dose transformation when both outcomes are active, escalation cap and stopping criteria. Page21 section3.2.4 specifies corrected extreme-dose extra-allocation probabilities and clipping."
     },
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/bCRM/bCRM-Test-Results-v1r3m0.pdf",

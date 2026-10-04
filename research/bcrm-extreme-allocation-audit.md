@@ -20,3 +20,13 @@ without an overflowing power.
 The helper returns only this randomization probability. It does not implement
 the bCRM controller, dose/endpoint logic, futility rule, bivariate posterior,
 or native MCMC behavior.
+
+
+Root integration passes all seven focused decision/allocation tests, including
+a 50-digit Decimal reference. Four further cases span the smallest positive
+float, a target immediately below one, and maximal finite correction, with
+overflow, invalid arithmetic and divide-by-zero set to raise. All produce the
+source-clipped probabilities. The combined checks used 0.163 seconds after
+imports, 147.23 MiB peak RSS and no process swaps. Ruff/format checks passed;
+targeted mypy passed in the implementation checkout. No new CI or dependency
+was added. The guide example imports the helper from the public package.

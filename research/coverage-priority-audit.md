@@ -1,5 +1,12 @@
 # Statistical coverage priority audit — September 28, 2026
 
+October 3 bCRM update: the simulation guide's extreme-dose extra-allocation
+probability is now available with its feedback correction and [0.1,0.5]
+clipping. Stable log thresholds handle extreme finite correction factors;
+scalar/vector inputs are bounded before conversion. This closes the documented
+probability calculation while the bivariate model and full controller remain
+source-dependent.
+
 October 3 PerfectMatch update: per-probeset observed/fitted log-intensity
 correlation now summarizes existing PDNN fits. Pearson correlation, undefined
 constant/singleton groups and use of all supplied rows are explicit Python

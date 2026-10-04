@@ -161,7 +161,7 @@ from .bayesian_monitoring import (
 from .bchm import BCHMBorrowResult, BCHMCluster, BCHMFit, bchm_borrow, bchm_cluster, bchm_fit
 from .bchm_clustering import BCHMClusterResult
 from .bchm_plot import plot_bchm_cluster, plot_bchm_density, plot_bchm_posterior
-from .bcrm_decision import BCRMDecision, bcrm_decision
+from .bcrm_decision import BCRMDecision, bcrm_decision, bcrm_extreme_allocation_probability
 from .bcrm_model import (
     BCRMCurve,
     BCRMPosterior,
@@ -1802,6 +1802,7 @@ __all__ = [
     "dacrm_decision",
     "BCRMDecision",
     "bcrm_decision",
+    "bcrm_extreme_allocation_probability",
     "BCRMCurve",
     "BCRMPosterior",
     "bcrm_probabilities",
