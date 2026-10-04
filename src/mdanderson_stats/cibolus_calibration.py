@@ -21,6 +21,7 @@ from .cibolus import (
     cibolus_toxicity,
 )
 from .cibolus_fit import fit_cibolus
+from .cibolus_scenarios import _joint_grid
 from .uaroet import _integer
 
 _MAX_REPETITIONS = 1_000
@@ -56,22 +57,6 @@ def _grid(
     utility = np.zeros((endpoint_count + 2, 2), dtype=float)
     c, q, e, _ = _prediction_inputs(concentrations, bolus_fractions, endpoints, utility)
     return c, q, e
-
-
-def _joint_grid(value: ArrayLike, expected: tuple[int, ...]) -> FloatArray:
-    raw = np.asarray(value)
-    if raw.size > _MAX_RETAINED_CELLS:
-        raise ValueError("joint probability grid exceeds the retained-cell limit")
-    if raw.dtype.kind not in "iuf" or raw.shape != expected:
-        raise ValueError(f"joint probabilities must have shape {expected} and real values")
-    result = np.array(raw, dtype=float, copy=True)
-    if np.any(~np.isfinite(result)) or np.any(result < 0):
-        raise ValueError("joint probabilities must be finite and nonnegative")
-    totals = result.sum(axis=(-2, -1))
-    if np.any(np.abs(totals - 1.0) > 1e-12):
-        raise ValueError("joint probabilities must sum to one for every regimen")
-    result /= totals[..., None, None]
-    return _freeze_dtype(result, np.dtype(float))
 
 
 def _moment_triplet(samples: FloatArray) -> tuple[FloatArray, FloatArray, FloatArray]:
