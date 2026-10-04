@@ -30,7 +30,6 @@ prepared = curve.prepare()
 ipd = reconstruct_ipd(
     prepared.time,
     prepared.survival,
-    patients=120,
     risk_time=[0, 12, 24, 36, 48],
     at_risk=[120, 91, 65, 40, 18],
 )
