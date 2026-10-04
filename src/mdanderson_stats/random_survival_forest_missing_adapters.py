@@ -20,9 +20,10 @@ def _adapter_training_data(
     covariates: ArrayLike | None,
     *,
     adapter: str,
+    allow_imputed_predictors: bool = False,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Validate raw inputs, then return the exact rows represented by an OOB fit."""
-    if fit.imputation_performed:
+    if fit.imputation_performed and not allow_imputed_predictors:
         raise ValueError(
             f"{adapter} does not yet define missing-data semantics for imputed forests"
         )
@@ -66,6 +67,39 @@ def _adapter_training_data(
         or np.unique(row_indices).size != row_indices.size
     ):
         raise ValueError("fit contains an invalid original training row map")
+    if fit.imputation_performed and allow_imputed_predictors:
+        if fit.na_action != "impute":
+            raise ValueError("imputed fit has inconsistent missing-data metadata")
+        all_values_missing = (
+            ~np.isfinite(original_time)
+            & ~np.isfinite(original_event)
+            & np.all(~np.isfinite(original_x), axis=1)
+        )
+        expected_rows = np.flatnonzero(~all_values_missing)
+        if not np.array_equal(row_indices, expected_rows):
+            raise ValueError("fit row map does not match missing-row preprocessing")
+        if row_indices.size == original_time.size and np.array_equal(
+            row_indices, np.arange(original_time.size)
+        ):
+            retained_time, retained_event, retained_x = (
+                original_time,
+                original_event,
+                original_x,
+            )
+        else:
+            retained_time = original_time[row_indices]
+            retained_event = original_event[row_indices]
+            retained_x = original_x[row_indices]
+        if (
+            not np.all(np.isfinite(retained_time))
+            or not np.all(np.isfinite(retained_event))
+            or not np.any(~np.isfinite(retained_x))
+        ):
+            raise ValueError(
+                "this adapter supports imputation only for missing predictors "
+                "among rows retained by the fit"
+            )
+        return retained_time, retained_event, retained_x, row_indices
     if row_indices.size == original_time.size and np.array_equal(
         row_indices, np.arange(original_time.size)
     ):

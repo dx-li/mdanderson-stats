@@ -262,9 +262,11 @@ def random_survival_forest_oob_brier_score(
     """Compute the pinned RF-SRC OOB IPCW Brier score and integrated CRPS.
 
     This API deliberately supports the complete training population only:
-    native subset handling in the cached helper is ambiguous. The censoring
-    distribution uses all supplied training outcomes, while rows with no OOB
-    forest prediction are omitted from per-time score averages. The default
+    native subset handling in the cached helper is ambiguous. Predictor-only
+    imputed fits are supported with the global KM censor model because that
+    estimator depends only on complete outcomes. The censoring distribution
+    uses all supplied training outcomes, while rows with no OOB forest
+    prediction are omitted from per-time score averages. The default
     ``censor_model="km"`` preserves the source's global Nelson--Aalen
     censoring estimate. ``censor_model="rfsrc"`` fits a separate source-sized
     random-split forest and accepts an explicit reproducible seed.
@@ -277,6 +279,8 @@ def random_survival_forest_oob_brier_score(
     work_limit = _integer(max_work, "max_work", 1, _MAX_OOB_WORK)
     if not isinstance(censor_model, str) or censor_model not in ("km", "rfsrc"):
         raise ValueError("censor_model must be 'km' or 'rfsrc'")
+    if fit.imputation_performed and censor_model == "rfsrc":
+        raise ValueError("censor_model='rfsrc' does not support predictor-imputed forests")
     censor_seed = (
         _integer(censor_random_state, "censor_random_state", 0, np.iinfo(np.int32).max)
         if censor_model == "rfsrc"
@@ -284,17 +288,30 @@ def random_survival_forest_oob_brier_score(
     )
 
     t, e, x, row_indices = _adapter_training_data(
-        fit, time, event, covariates, adapter="OOB Brier score"
+        fit,
+        time,
+        event,
+        covariates,
+        adapter="OOB Brier score",
+        allow_imputed_predictors=censor_model == "km",
     )
     levels = fit.categorical_levels
     if levels and len(levels) != x.shape[1]:
         raise ValueError("fit contains inconsistent categorical level metadata")
-    has_categories = any(level is not None for level in levels)
-    fingerprint = _forest_fingerprint(t, e, x, levels if has_categories else ())
-    if fingerprint != fit.training_fingerprint:
-        raise ValueError("training data values or row order do not match the OOB fit")
+    if not fit.imputation_performed:
+        has_categories = any(level is not None for level in levels)
+        fingerprint = _forest_fingerprint(t, e, x, levels if has_categories else ())
+        if fingerprint != fit.training_fingerprint:
+            raise ValueError("training data values or row order do not match the OOB fit")
 
     oob = fit.oob
+    if oob.row_indices is None:
+        if fit.na_action != "raise" or not np.array_equal(
+            row_indices, np.arange(t.size, dtype=np.int64)
+        ):
+            raise ValueError("fit OOB row map is missing for a nonidentity training map")
+    elif not np.array_equal(np.asarray(oob.row_indices), row_indices):
+        raise ValueError("fit OOB row map does not match the validated training row map")
     grid = np.asarray(oob.time_grid)
     survival = np.asarray(oob.survival)
     contributors = np.asarray(oob.contributor_count)

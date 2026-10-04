@@ -69,11 +69,9 @@ def test_omitted_brier_rows_keep_original_mapping_and_verify_raw_input() -> None
         )
 
 
-def test_imputed_oob_diagnostics_reject_undefined_missing_semantics() -> None:
+def test_imputed_vimp_rejects_undefined_missing_semantics() -> None:
     time, event, x = _survival_data(missing="impute")
     fit = _fit(time, event, x, "impute")
-    with pytest.raises(ValueError, match="does not yet define missing-data semantics"):
-        random_survival_forest_oob_brier_score(fit, time, event, x)
     with pytest.raises(ValueError, match="does not yet define missing-data semantics"):
         permutation_random_survival_forest_importance(
             fit, time, event, x, feature_indices=[0], random_state=37
