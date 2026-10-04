@@ -1492,9 +1492,13 @@ five-dose and three-dose inputs. [Complete BF-BOIN trial simulation](docs/bard-b
 carries eligible stage-one patients into stage-two minimization and both OBD
 analyses. [Repeated-trial summaries](docs/bard-bf-boin-simulation.md) report
 enrollment, duration, allocation and factor balance, and correct selection with
-explicit denominators, retaining only one trial at a time. The
+explicit denominators, retaining only one trial at a time.
+[Saved study inputs](docs/bard-study.md) capture the full scenario and seed for
+replay; [protocol and OC reports](docs/bard-report.md) save its settings,
+boundaries and results as self-contained HTML. The
 [remaining-work crosswalk](research/bard-remaining-simulation-audit.md)
-records the saved-report gap and explicit timing/quota conventions.
+distinguishes this app-advertised BF-BOIN workflow from the paper's separate
+BF-BLRM simulation study and records explicit timing/quota conventions.
 
 [TITE-BOIN12 AL methods](docs/tite-boin12.md) add patient-level handling of
 pending toxicity and efficacy, joint utility posteriors, interim dose conduct

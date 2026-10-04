@@ -64,13 +64,25 @@ An optional dose-by-profile joint toxicity/response table specifies association;
 omission selects conditional independence. These choices are documented, not
 claimed to reconstruct hidden native settings.
 
-No additional advertised statistical calculation was identified in this
-bounded cached-source review. Guide Section 3 (printed page 15) also offers a
-saved trial protocol, and Section 2 offers saved OC output. A portable BARD
-protocol/results report remains useful unfinished community functionality.
-Native document layouts and UI behavior are separate compatibility boundaries.
-The catalog remains partial while the reporting gap and source-contract
-uncertainties remain explicit.
+Guide Section 3 (printed page 15) also offers a saved trial protocol, and
+Section 2 offers saved OC output. The [captured study specification](../docs/bard-study.md)
+now saves and reloads the complete BF-BOIN scenario, explicit seed and work
+budget. The [protocol/OC report](../docs/bard-report.md) saves readable settings,
+stage-one boundaries, truth and operating characteristics with explicit
+denominators. Native document layouts and UI behavior remain separate
+compatibility boundaries.
+
+The guide's Section 1 explicitly identifies BF-BOIN as the application's
+stage-one design; its Section 2 advertises the corresponding OC workflow.
+The paper separately evaluates stochastic BARD-BLRM trials, including 30,000
+replicates per scenario and sample size, duration, balance and both PCS
+metrics (cached paper lines 791–823). The existing BF-BLRM calendar replay and
+supplied-outcome stage-two continuation do not generate and summarize that
+study. A stochastic BF-BLRM workflow is therefore a concrete remaining
+paper-method extension, rather than a missing feature advertised by the
+current app guide. Catalog 165 remains partial under the broader method
+coverage objective; the BF-BOIN saved workflow does not claim to complete
+that separate simulation study or recover hidden native conventions.
 
 ## Response-model integration
 

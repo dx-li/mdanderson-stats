@@ -143,8 +143,10 @@ from .bard_blrm_trial import (
     run_bard_blrm_trial,
 )
 from .bard_integrated import BARDBLRMStage2Patient, BARDBLRMStage2Result, continue_bard_trial
+from .bard_report import BARDDesignReport, bard_design_report
 from .bard_response import BARDResponseModel, bard_response_model, bard_response_probabilities
 from .bard_response_scenarios import BARDResponseScenario, bard_response_scenario
+from .bard_study import BARDStudySpecification
 from .barpo import BarpoMonitoring, BarpoPosterior, barpo_allocation, barpo_monitor, barpo_posterior
 from .barpo_simulation import BarpoSimulation, simulate_barpo
 from .barpo_trial import BarpoTrialLook, BarpoTrialResult, run_barpo_trial
@@ -2211,6 +2213,9 @@ __all__ = [
     "BARDStageOneSettings",
     "BARDStageTwoDesign",
     "run_bard_bf_boin_trial",
+    "BARDStudySpecification",
+    "BARDDesignReport",
+    "bard_design_report",
     "BARDResponseModel",
     "bard_response_model",
     "bard_response_probabilities",

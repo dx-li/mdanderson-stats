@@ -110,9 +110,13 @@ now retain patient covariates, automatically carry eligible patients into
 stage two, and return both final OBD analyses. The
 [streaming simulator](bard-bf-boin-simulation.md) summarizes enrollment,
 duration, arm and factor balance, and both correct-selection probabilities.
-Saved BARD protocol/OC reports remain open. Stage-two timing, the joint endpoint
-law and the native per-arm quota interpretation use explicit Python policies;
-clinical eligibility and the dose pair remain protocol inputs. See the
+[Saved study inputs](bard-study.md) capture the complete BF-BOIN scenario and
+seed for replay. [Protocol and OC reports](bard-report.md) present those settings,
+boundaries and summaries in a self-contained HTML document. Stage-two timing,
+the joint endpoint law and the native per-arm quota interpretation use explicit
+Python policies; clinical eligibility and the dose pair remain protocol inputs.
+The paper's separate stochastic BF-BLRM study is not reproduced by the existing
+supplied-outcome BF-BLRM replay. See the
 [remaining simulation crosswalk](../research/bard-remaining-simulation-audit.md).
 
 ## Numerical validation and sources

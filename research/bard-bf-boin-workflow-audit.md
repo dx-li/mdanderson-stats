@@ -49,10 +49,13 @@ target of 40 has a conservative 130-patient bound per trial. The paper's
 the default 100,000,000-patient-work budget without collecting all histories.
 No large local simulation was used for validation.
 
-No further advertised statistical calculation was identified in this bounded
-cached-source review. A portable saved BARD protocol/OC report remains open,
-and the source-contract choices above remain explicit. This checkpoint does
-not promote the catalog to complete or claim native application parity.
+At this trial/OC checkpoint a portable saved BARD protocol/OC report remained
+open. The subsequent [saved-study](bard-study-audit.md) and
+[report](bard-report-audit.md) work supplies that workflow. The
+[remaining-scope crosswalk](bard-remaining-simulation-audit.md) distinguishes
+the guide's BF-BOIN app from the paper's separate stochastic BF-BLRM study,
+which is still beyond the supplied-outcome replay. The source-contract choices
+above remain explicit; catalog 165 remains partial.
 
 ## Validation
 
