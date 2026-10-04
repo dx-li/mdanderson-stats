@@ -1,6 +1,6 @@
 # Statistical coverage priority review
 
-This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard, OneArmTTE and BOIN subsequently completed their Python workflows, leaving 59 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
+This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard, OneArmTTE, BOIN, Pinnacle and EasyCellType subsequently completed their Python workflows, leaving 57 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
 
 A deeper cached-source review subsequently identified omitted overdose-allocation
 risk statistics in BOIN and Keyboard. Both are now implemented with their strict
@@ -14,7 +14,7 @@ in Python. Its optional modifier's precedence with conflicting backfill data is
 not explicit in the recovered guide, so the Python composition is documented and
 BF-BOIN has moved to section A.
 
-The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 43 entries in section A and 16 in section B.
+The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 44 entries in section A and 13 in section B, after the Parallel phase I/II source-output review identified unresolved kernel summaries and a native comparator.
 
 ## A. Statistical or source-contract uncertainty remains
 
@@ -36,6 +36,7 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 | U2OET (#77) | Explicit models, fitting, calibration and trial workflows exist; native prior interpretation, calibration and full operating-characteristic validation are unresolved. | [U2OET guide](../docs/u2oet.md); [source records](../docs/u2oet-sources.json) |
 | Proportional density (#78) | Unequal-censoring treatment-effect null calibration is mentioned, but null generation and restricted-fit procedure are absent. | [full-bootstrap audit](proportional-density-full-bootstrap-audit.md) |
 | BMA CRM (#81) | Native prior files, automatic skeleton calibration and conduct conventions remain. | [BMA CRM guide](../docs/bmacrm.md) |
+| Parallel phase I/II (#85) | Four-arm input/report workflows and source-indexed calendar durations are covered. C++ posterior-kernel summaries depend on an incompletely recovered probability-vector/variance contract and include stale no-fit parameter tallies; native DF3+3 comparison remains outside current coverage. | [source/output crosswalk](parallel-phase12-scenario-report-audit.md); [duration audit](phase12-calendar-duration-audit.md) |
 | CiBolus (#86) | Mathematical model and supplied joint-truth simulation are covered, but calendar and pending-outcome conduct remain source-underspecified. | [CiBolus guide](../docs/cibolus.md) |
 | UAROET (#92) | Native prior files, pseudo-trial/ESS calibration, delayed-outcome simulation and reporting remain unresolved. | [UAROET sources](../docs/uaroet-sources.json); [UAROET guide](../docs/uaroet.md) |
 | BOIN desktop (#99) | Desktop-specific combination titration/run-in and integration remain uncertain; installer/help rules were not numerically inspected. | [desktop guide](../docs/boin-desktop.md) |
@@ -70,9 +71,7 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 | --- | --- | --- |
 | PerfectMatch (#7) | PDNN fitting/expression, normalization, per-probeset correlations and the five-quantile chip summary are covered. Native parameter/data/output/rescaling, unspecified QC metrics and display workflows remain. | [PerfectMatch guide](../docs/perfectmatch.md); [quantile profile](../docs/perfectmatch-quantile-profile.md) |
 | Multc Lean (#12) | Statistical rules/calendar are covered; native input, report and timing conventions remain. | [Multc guide](../docs/multc.md) |
-| Parallel phase I/II (#85) | C-design and six-dose calendar workflow are implemented; native configurable input, report and full parity remain. | [parallel phase guide](../docs/parallel-phase12.md) |
 | Bayes Factor TTE (#89) | Monitoring, boundaries, calendar replay, simulation and saved Python scenario reports are covered. Reports distinguish terminal stopping from later follow-up. Native integer-day boundaries, text input and calendar timing are not established. | [Bayes Factor survival guide](../docs/bayes-factor-survival.md) |
-| Pinnacle (#95) | Peak-detection algorithm is covered; unsupported TIFF encodings, project ingestion, interactive editing and reports remain. | [Pinnacle guide](../docs/pinnacle.md) |
 | BOP2 online (#112) | Documented binary, ordinal/multiple, joint, survival, calendar, calibration and sample-size workflows are covered; saved Python protocols cover all six endpoints; native formats, animation and optimizer equivalence remain. | [BOP2 sources](../docs/bop2-sources.json); [binary guide](../docs/bop2-binary.md); [survival guide](../docs/bop2-survival.md) |
 | CRM Suite (#132) | CRM/BMA/DA posterior, pending look-ahead, calendar, cohort simulation and OC are implemented; native files/reports and older conduct differences remain. | [CRM conduct](../docs/crm-conduct.md); [CRM simulation](../docs/crm-simulation.md) |
 | TOP (#134) | Joint monitoring, calendar simulation, finite-grid optimization and holdout validation exist; native optimizer grids/report/app-version parity remain. | [TOP guide](../docs/top-endpoints.md); [calibration guide](../docs/top-endpoints-calibration.md) |
@@ -82,7 +81,6 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 | BOP2-DC (#156) | Documented advertised workflows are covered; optional extensions are not automatically missing app methods. | [remaining-methods audit](bop2-dc-remaining-methods.md) |
 | CondiS (#157) | Eight refinement learners are implemented. The separate vignette example uses target-derived inputs and pre-split imputation, so it does not establish future-subject prediction behavior. | [workflow audit](condis-workflow-audit.md) |
 | BCHM (#158) | No additional advertised mathematical workflow was identified; file/report workflows and direct JAGS parity remain. | [BCHM guide](../docs/bchm.md) |
-| EasyCellType (#159) | Versioned gene-ID mapping and plot workflow remain. | [EasyCellType guide](../docs/easycelltype.md) |
 | PoP (#175) | Boundaries, selection, operating characteristics and saved HTML protocols are implemented. Native Word/plot/scenario-file parity remains. Plot prose advertises intervals absent from the executable selector/plot, and cached comparison-pane hooks lack a recovered control or algorithm; neither establishes an additional calculation to infer. | [PoP guide](../docs/pop-design.md); [report audit](pop-protocol-report-audit.md) |
 
 The classifications above are review findings, not status changes. A source-contract uncertainty should be resolved before adding a purported native method; input and presentation work can still be useful community functionality without being described as statistical coverage.
@@ -102,4 +100,8 @@ The classifications above are review findings, not status changes. A source-cont
 
 - BOIN (#120): the completed boundary, conduct, titration, 3+3 comparison, allocation-risk and saved protocol workflows meet the same functional Python standard as Keyboard. Animation and native Word/session formats remain documented compatibility limits. See the [completion audit](boin-workflow-completion-audit.md).
 
-These eight entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.
+- Pinnacle (#95): supported TIFF or aligned arrays connect to detection, exact peak edits, streamed quantification and portable CSV export. Native project files and GUI coordinate semantics are not reproduced. See the [workflow crosswalk](pinnacle-peak-selection-audit.md).
+
+- EasyCellType (#159): pinned marker references, explicit versioned Human/Mouse gene conversion, Fisher/GSEA inference, hard/soft selection and optional result figures now form the Python workflow. Native Shiny aesthetics and unpinned dependency versions are not claimed. See the [mapping audit](easycelltype-gene-mapping-audit.md) and [plot audit](easycelltype-annotation-plots-audit.md).
+
+These ten entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.

@@ -77,6 +77,20 @@ loads three packaged reference tables from EasyCellType 1.5.4 at commit
 and compressed without changing the rows, fields or order. The converted
 tables retain applicable upstream terms and are not relicensed as MIT.
 
+`easycelltype_gene_mapping.py` additionally uses compact symbol/Entrez tables
+derived from Marc Carlson's `org.Hs.eg.db` and `org.Mm.eg.db` 3.18.0 packages,
+distributed by Bioconductor under Artistic-2.0. This project explicitly chooses
+the Bioconductor 3.18 annotation release; the author's EasyCellType dependency
+version was not pinned. The databases identify NCBI Entrez Gene data dated
+2023-Sep11. `tools/export_easycelltype_gene_mappings.py` extracts ordered
+`gene_info`/`genes` pairs into compressed TSV files; these derived tables keep
+their upstream terms. The original source archives and full SQLite databases
+are not bundled. Official archive URLs, original and derived SHA-256 hashes,
+row counts and the selected ordering are preserved in
+`src/mdanderson_stats/data/easycelltype/gene-mapping-bioconductor-3.18.json`.
+See the [mapping audit](research/easycelltype-gene-mapping-audit.md) and the
+preserved [Artistic-2.0 license](notices/Artistic-2.0.txt).
+
 fgsea is copyright 2016–2019 Alexey Sergushichev and distributed under MIT terms,
 preserved in [notices/fgsea-MIT.txt](notices/fgsea-MIT.txt). DOSE and
 clusterProfiler, by Guangchuang Yu and contributors, and EasyCellType, by its

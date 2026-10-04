@@ -81,6 +81,8 @@ stopping, seed replay, all-trial denominators and trial-clustered rate errors.
 At most 10,000 trials and one million worst-case patient assignments are
 allowed per call. Posterior comparison caches are local to one trial.
 
-Native configurable input/report workflows, the six-dose native integrator and
-full published operating-characteristic replication remain open. Entry 85
-remains partial.
+The [named scenario report](parallel-phase12-scenario-report.md) captures inputs,
+seeds and operating characteristics, and parses the native eight-probability
+input order. The separate six-dose native kernel summaries, its DF3+3 comparison
+and full published operating-characteristic replication remain open. Entry 85
+remains partial; see the [crosswalk](../research/parallel-phase12-scenario-report-audit.md).

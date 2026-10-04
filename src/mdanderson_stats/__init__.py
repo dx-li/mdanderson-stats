@@ -742,7 +742,12 @@ from .easycelltype import (
     easycelltype_fisher,
     easycelltype_labels,
 )
+from .easycelltype_annotation_plots import (
+    plot_easycelltype_annotation_dots,
+    plot_easycelltype_candidates,
+)
 from .easycelltype_builtin_reference import easycelltype_builtin_reference
+from .easycelltype_gene_mapping import EasyCellTypeGeneMapping, easycelltype_gene_mapping
 from .easycelltype_gsea import (
     EasyCellTypeGSEACluster,
     EasyCellTypeGSEAResult,
@@ -1093,6 +1098,13 @@ from .parallel_phase12_progression import (
     phase12_accrual_ready,
     phase12_phase_one,
 )
+from .parallel_phase12_scenarios import (
+    ParallelPhase12Scenario,
+    ParallelPhase12ScenarioBatch,
+    ParallelPhase12ScenarioSummary,
+    parallel_phase12_scenario_from_native_input,
+    simulate_parallel_phase12_scenarios,
+)
 from .parameter_distribution import ParameterDistribution
 from .parameter_solver import solve_distribution_moments, solve_distribution_quantiles
 from .parametric_survival import (
@@ -1131,6 +1143,12 @@ from .pinnacle import (
     pinnacle_detect_peaks,
     pinnacle_mean_image,
     pinnacle_quantify,
+)
+from .pinnacle_peak_selection import (
+    PinnaclePeakSelection,
+    PinnacleSelectionAnalysis,
+    quantify_selected_peaks,
+    write_pinnacle_selection_csv,
 )
 from .pinnacle_pipeline import PinnacleAnalysis, run_pinnacle
 from .pinnacle_tiff import PinnacleTiffFrame, PinnacleTiffSource
@@ -1808,6 +1826,10 @@ __all__ = [
     "EasyCellTypeReference",
     "easycelltype_reference",
     "easycelltype_builtin_reference",
+    "EasyCellTypeGeneMapping",
+    "easycelltype_gene_mapping",
+    "plot_easycelltype_annotation_dots",
+    "plot_easycelltype_candidates",
     "STPLANHistoricalAllocationPlan",
     "stplan_historical_allocation_plan",
     "STPLANMatchedPairsInitialSize",
@@ -1898,7 +1920,9 @@ __all__ = [
     "PinnacleDenoiseResult",
     "PinnacleDenoiseSettings",
     "PinnaclePeaks",
+    "PinnaclePeakSelection",
     "PinnacleQuantification",
+    "PinnacleSelectionAnalysis",
     "PinnacleTiffFrame",
     "PinnacleTiffSource",
     "PinnacleWaveletTransform",
@@ -1910,6 +1934,8 @@ __all__ = [
     "pinnacle_quantify",
     "pinnacle_rdwt",
     "run_pinnacle",
+    "quantify_selected_peaks",
+    "write_pinnacle_selection_csv",
     "DoseSchedulePatient",
     "DoseScheduleEpisodeStatus",
     "DoseSchedulePatientObservation",
@@ -2341,6 +2367,11 @@ __all__ = [
     "phase12_response_loglikelihood",
     "ParallelPhase12OC",
     "simulate_parallel_phase12_oc",
+    "ParallelPhase12Scenario",
+    "ParallelPhase12ScenarioBatch",
+    "ParallelPhase12ScenarioSummary",
+    "parallel_phase12_scenario_from_native_input",
+    "simulate_parallel_phase12_scenarios",
     "ParallelPhase12Result",
     "parallel_phase12_replay",
     "simulate_parallel_phase12",

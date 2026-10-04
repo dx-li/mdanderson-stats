@@ -90,6 +90,9 @@ all organs), while `selected_tissues` records the actual retained organs in
 source order. Tissue names are validated after species filtering; any unknown
 requested name raises. Empty tissue lists mean all organs. The table's genes
 are EntrezIDs; symbol conversion is not guessed or performed by the loader.
+Use the separate [versioned gene converter](easycelltype-gene-mapping.md)
+for Human or Mouse symbols, applying its retained row indices to clusters and
+scores together.
 Blank source `organ` values are retained for an unfiltered selection and can
 be selected explicitly with `tissues=[""]`.
 Input limits are 100 MB on disk, 32 MB expanded text, 65,536 characters per
@@ -151,9 +154,13 @@ contributing genes and hard/soft label selection, plus the separate
 [ranked-enrichment workflow](easycelltype-gsea.md), including its probability
 outputs. The local reference loader applies source database/species/tissue
 selection to caller-supplied author-format tables; the bundled loader supplies
-the pinned author snapshot. Symbol/Entrez conversion and native plots remain open;
-the catalog entry stays
-partial. See the [local-reference source audit](../research/easycelltype-reference-audit.md)
+the pinned author snapshot. [Symbol/Entrez conversion](easycelltype-gene-mapping.md)
+uses an explicit offline Bioconductor 3.18 annotation release and exposes
+ambiguous mappings. [Candidate bars and annotation dots](easycelltype-annotation-plots.md)
+display the selected Fisher or GSEA results with explicit Python visual conventions.
+Catalog entry 159 is implemented as a Python workflow. Exact Shiny interfaces,
+unrecorded native annotation versions and incidental ambiguous-key ordering
+are not reproduced. See the [local-reference source audit](../research/easycelltype-reference-audit.md)
 for provenance, blank-organ handling and input bounds.
 
 Nine independent original-R cases check row multiplicity, overlap ordering,

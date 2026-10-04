@@ -402,6 +402,9 @@ MCMC budget and diagnostic values are recorded; it is a workflow check, not a
 published operating-characteristic replication or proof of precision near decision
 thresholds. [Six-dose operating-characteristic summaries](phase12-calendar-oc.md)
 now provide bounded serial multi-trial reporting, replay seeds, separate
-generated/observed endpoints and trial-level Monte Carlo errors. Native
-input/report workflows and full published operating-characteristic replication
-remain pending.
+generated/observed endpoints, trial-level Monte Carlo errors and source-indexed
+duration summaries. The separate four-arm C workflow now has a
+[native probability-input parser and saved scenario reports](parallel-phase12-scenario-report.md).
+The [source crosswalk](../research/parallel-phase12-scenario-report-audit.md)
+identifies unresolved C++ posterior-kernel summaries and the native DF3+3
+comparison. Full published operating-characteristic replication remains open.

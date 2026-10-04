@@ -31,5 +31,5 @@
     "Optional independent per-gel denoising during quantification requires explicit filter, threshold and paper/RWT convention; detection still uses the denoised raw average.",
     "Background radius can be a (row, column) pair. Peak/background measurements use the optionally denoised crop; image-volume normalization uses the raw crop. This processing order is a Python convention pending executable confirmation."
   ],
-  "limitations": "Native TIFF/project-file ingestion, interactive peak editing, reports and Pinnacle executable equivalence remain open."
+  "limitations": "Unsupported TIFF variants, native project files, GUI snapping and native report/executable equivalence are not reproduced. Explicit Python coordinate editing and CSV export are documented in pinnacle-peak-selection.md."
 }

@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-71 implemented, 59 partial, and 8 pending. Each method's guide explains its
+73 implemented, 57 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -1211,6 +1211,10 @@ closure, efficacy/futility stopping, final selection and replayable simulation.
 [Serial operating-characteristic summaries](docs/parallel-phase12-oc.md) add
 selection, stopping, enrollment and pooled outcome rates with trial-level
 Monte Carlo errors and reproducible per-trial seeds.
+[Named scenario reports](docs/parallel-phase12-scenario-report.md) retain
+those inputs and support the native four-arm probability-file order. Six-dose
+calendar results also provide source-indexed duration summaries with an explicit
+population-variance label for the native output misnamed standard deviation.
 Python replay matches 24 native C decision histories, with independent R checks
 of 179 posterior comparisons. The later six-dose C++ variant now has an integrated
 calendar simulator combining the shared logistic response posterior, beta toxicity
@@ -1632,6 +1636,8 @@ normalization. A replayable TIFF source reads aligned grayscale gels one at a
 time, preserves numerical intensity samples and makes multi-frame selection
 explicit. It feeds the same verified analysis pipeline and retains file/frame
 identifiers for matching the result rows to input images.
+[Exact peak editing and CSV export](docs/pinnacle-peak-selection.md) let users
+revise selected coordinates and re-quantify the same streamed images.
 Explicit resource limits bound image processing. Independent R
 calculations and original Rice Wavelet Toolbox C outputs provide numerical
 references. Unsupported TIFF variants, native project formats and application workflow equivalence
@@ -1650,7 +1656,10 @@ GSEA hard/soft labels preserve ties and DOSE contributing genes.
 author-format CSV or gzip tables by species and tissue while preserving source
 rows and recording a file checksum. [Bundled reference tables](docs/easycelltype-builtin-reference.md)
 provide the pinned EasyCellType 1.5.4 CellMarker, Clustermole and Panglao snapshots
-without R or a download. Gene-ID conversion and native plots remain open.
+without R or a download. [Gene-ID conversion](docs/easycelltype-gene-mapping.md)
+adds explicit versioned Human/Mouse mappings, and
+[annotation plots](docs/easycelltype-annotation-plots.md) display selected
+Fisher/GSEA candidates with documented Python visual conventions.
 
 [SurvivalContour Cox surfaces](docs/survival-contour.md) fits ordinary or
 stratified Efron/Breslow models for right-censored data and returns survival

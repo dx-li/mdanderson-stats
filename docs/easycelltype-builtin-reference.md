@@ -21,8 +21,9 @@ print(reference.selected_rows, result.clusters[0].cluster)
 ```
 
 The identifiers are Entrez IDs. This loader does not map symbols, download
-updates, or start R. Symbol conversion still requires a separately versioned
-mapping chosen by the caller. The bundled files are the tables embedded in
+updates, or start R. The separate [gene converter](easycelltype-gene-mapping.md)
+provides offline Human/Mouse symbol conversion with a documented Bioconductor
+3.18 annotation snapshot. The bundled marker files are the tables embedded in
 EasyCellType 1.5.4; that snapshot did not record the individual upstream
 database release versions. They are reproducible snapshots, not claims to be
 the current live databases. See the [source and validation audit](../research/easycelltype-builtin-reference-audit.md)

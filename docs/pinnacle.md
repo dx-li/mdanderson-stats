@@ -260,6 +260,11 @@ This product includes software developed by Rice University, Houston, Texas
 and its contributors. The complete conditions are in the
 [preserved license](../notices/rice-wavelet-LICENSE.txt).
 
-Unsupported TIFF encoding combinations, native project-file ingestion,
-interactive peak editing and native report equivalence remain open. No original
-Pinnacle executable, source archive or article PDF is bundled.
+The [peak-selection workflow](pinnacle-peak-selection.md) accepts automatically
+detected or caller-selected coordinates, supports exact add/remove edits,
+re-quantifies streamed gels and saves a CSV with measurements and settings.
+Catalog entry 95 is implemented as a Python workflow; see the
+[functional crosswalk](../research/pinnacle-peak-selection-audit.md).
+Unsupported TIFF encodings, native project files, GUI snapping and native
+report formats remain documented compatibility limits. No original Pinnacle
+executable, source archive or article PDF is bundled.

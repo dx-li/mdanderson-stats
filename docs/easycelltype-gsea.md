@@ -159,8 +159,12 @@ budget and retained-gene limits. Work-budget exhaustion raises an error rather
 than returning incomplete tail estimates. Larger inputs can reach that budget
 before these individual limits. Current and duplicated splitting samples
 together are capped at two million stored positions before allocation.
-No marker databases, gene-ID conversion or
-native plots are bundled by this extension. Entry 159 remains partial.
+The separate [bundled references](easycelltype-builtin-reference.md),
+[versioned gene converter](easycelltype-gene-mapping.md) and
+[annotation plots](easycelltype-annotation-plots.md) complete the Python input
+and result workflows. Entry 159 is implemented with these documented choices;
+exact native annotation versions, Shiny interfaces and plot aesthetics are not
+claimed.
 
 Native base-R fixtures cover thirty observed set/core scores. Separate native
 fixtures cover 66 cumulative C++ pilot scores, 66 R single-set pilot scores

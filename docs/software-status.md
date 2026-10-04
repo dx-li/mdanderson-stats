@@ -6,8 +6,8 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 71 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 59 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 73 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 57 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -98,6 +98,8 @@ some legacy adaptations retain commercial-use restrictions.
 | Keyboard: a novel Bayesian toxicity probability interval design for phase I clinical trial | [online #127](https://biostatistics.mdanderson.org/shinyapps/Keyboard) | [Guide](keyboard.md) |
 | One Arm Time to Event Simulator | [desktop #98](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/98) | [Guide](one-arm-tte.md) · [Reports](one-arm-tte-report.md) |
 | Bayesian Optimal Interval (BOIN) Design for Phase I Clinical Trials | [online #120](https://biostatistics.mdanderson.org/shinyapps/BOIN/) | [Guide](boin.md) |
+| Pinnacle | [desktop #95](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/95) | [Guide](pinnacle.md) |
+| EasyCellType: Automatic annotation tool designed for Sing-cell RNA sequencing data | [online #159](https://biostatistics.mdanderson.org/shinyapps/EasyCellType/) | [Fisher guide](easycelltype.md), [ranked scores](easycelltype-gsea.md), [bundled references](easycelltype-builtin-reference.md) |
 
 ## Partially implemented
 
@@ -132,7 +134,6 @@ some legacy adaptations retain commercial-use restrictions.
 | CRM Suite | [desktop #132](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132) | See catalog feature and validation notes |
 | Dose Optimization with Backfill and Adaptive Randomization (BARD) | [online #165](https://biostatistics.mdanderson.org/shinyapps/BARD) | [Stage two](bard.md), [BF-BLRM model](bard-blrm.md) |
 | Dose Schedule Finder | [desktop #75](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75) | [Model](dose-schedule.md), [calendar trials](dose-schedule-trials.md) |
-| EasyCellType: Automatic annotation tool designed for Sing-cell RNA sequencing data | [online #159](https://biostatistics.mdanderson.org/shinyapps/EasyCellType/) | [Fisher guide](easycelltype.md), [ranked scores](easycelltype-gsea.md), [bundled references](easycelltype-builtin-reference.md) |
 | EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Guide](efftox.md), [trinary calibration](efftox-trinary-calibration.md) |
 | Find optimal biological dose (OBD) for targeted and immune therapies | [online #142](https://biostatistics.mdanderson.org/shinyapps/UBOIN) | [Guide](uboin.md) |
 | IPDfromKM: Reconstruct Individual Patient Data (IPD) From Kaplan-Meier Survival Curve | [online #151](https://biostatistics.mdanderson.org/shinyapps/IPDfromKM) | [Guide](ipdfromkm.md), [reconstruction diagnostics](ipdfromkm-diagnostics.md) |
@@ -143,7 +144,6 @@ some legacy adaptations retain commercial-use restrictions.
 | Multc99 | [desktop #3](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/3) | See catalog feature and validation notes |
 | Parallel phase I and II design | [desktop #85](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85) | [Guide](parallel-phase12.md), [importance calendar](parallel-phase12-importance-calendar.md), [six-dose simulation](phase12-calendar-oc.md) |
 | PerfectMatch | [desktop #7](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/7) | [Guide](perfectmatch.md) |
-| Pinnacle | [desktop #95](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/95) | [Guide](pinnacle.md) |
 | Platform Design of Bayesian Adaptive Randomization with Posterior Probability | [online #137](https://biostatistics.mdanderson.org/shinyapps/PLBARPO/) | [Control monitoring](plbarpo-control.md), [active allocation](plbarpo-allocation.md), [no-control trials](plbarpo-trials.md), [control trials](plbarpo-control-trials.md) |
 | Posterior Predictive Design for Phase I Clinical Trials | [online #175](https://biostatistics.mdanderson.org/shinyapps/PoPdesign/) | See catalog feature and validation notes |
 | Proportional density | [desktop #78](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/78) | [Guide](proportional-density.md) |

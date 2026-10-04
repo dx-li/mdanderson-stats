@@ -3028,7 +3028,9 @@
         "Bounded six-dose mixture importance posterior: full mixture-density weighting, native evidence-plus-60-component adaptive stopping, analytic mode/Hessian proposal, separate raw-integral and posterior-ratio errors, and source-decision interoperability; docs/parallel-phase12-importance.md",
         "Optional importance backend for six-dose calendar interim/final analyses: observed-tally fit reuse, separate data/posterior streams, pre-seed aggregate integration/mode budgets, actual uncached work counts and per-analysis evidence/error/convergence diagnostics; docs/parallel-phase12-importance-calendar.md.",
         "Bounded serial six-dose calendar operating-characteristic summaries for both posterior backends: direct per-trial seed replay, early/future/no-selection partitions, source ineligible-selection flags, generated and observed endpoint counts with separate denominators, trial-clustered rate errors, enrollment/time summaries and cached-fit convergence/work diagnostics; docs/phase12-calendar-oc.md.",
-        "Remaining: native optimizer/proposal and RNG equivalence, input/report workflows and full published operating-characteristic replication."
+        "Remaining: C++ posterior-kernel summaries, native DF3+3 comparison and full published operating-characteristic replication; native optimizer/proposal and RNG parity are not claimed.",
+        "Six-dose calendar duration mean and population variance in months, exact seven source-indexed order statistics and explicit small-sample availability",
+        "Native four-arm efficacy-first eight-probability input parser and bounded named scenario batches with captured seeds/truths, MCSEs and atomic text reports"
       ],
       "validation": [
         "Python replay matches final selection and all outcome/enrollment counts for 24 trials run through original C control flow; numerical and RNG callbacks replace missing/platform-specific dependencies and are explicitly disclosed",
@@ -3042,7 +3044,9 @@
         "research/parallel-phase12-oc-audit.md",
         "Five focused importance tests: prior evidence and contrast checks, replay, paired-ratio Monte Carlo error, source-decision interoperability and work preflight. New 10000-draw importance response means agree with independent R estimates within 1.04 combined Monte Carlo errors (maximum absolute difference 0.0010111); research/parallel-phase12-importance-audit.md. No exact native optimizer/RNG parity is claimed.",
         "Ten focused calendar/operating-characteristic checks pass, including actual importance interim/final decisions, pending endpoint masking, explicit unchanged-tally cache reuse, uncached component-work accounting, seeded replay and pre-seed budget rejection. Integrated check: 2.601 seconds, 145.95 MiB RSS, zero swaps; research/parallel-phase12-importance-calendar-audit.md.",
-        "Ten focused new/existing calendar checks pass, including direct seed derivation, exact replayed selection/enrollment/generated counts, observed endpoint denominators and nondegenerate pooled-response Monte Carlo errors reconstructed from per-trial residuals. The public 20-trial example executes. Worker peak 143605760 bytes RSS, zero swaps; research/phase12-calendar-oc-audit.md. Full native operating-characteristic replication is not claimed."
+        "Ten focused new/existing calendar checks pass, including direct seed derivation, exact replayed selection/enrollment/generated counts, observed endpoint denominators and nondegenerate pooled-response Monte Carlo errors reconstructed from per-trial residuals. The public 20-trial example executes. Worker peak 143605760 bytes RSS, zero swaps; research/phase12-calendar-oc-audit.md. Full native operating-characteristic replication is not claimed.",
+        "Calendar seed replay, source-index order/units, huge-constant duration stability and named-scenario input/report equivalence; 9 focused tests, Ruff and mypy pass; research/phase12-calendar-duration-audit.md",
+        "Source crosswalk identifies remaining C++ posterior-kernel printouts, stale no-fit tally behavior and DF3+3 comparison scope; research/parallel-phase12-scenario-report-audit.md"
       ]
     },
     {
@@ -3278,14 +3282,14 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Streaming aligned-gel average, region-aware peak detection, per-gel maxima, four background modes and four normalization modes",
         "Periodic redundant Daubechies transform, inverse reconstruction and explicit paper/RWT hard-threshold denoising conventions with bounded memory",
         "Replayable two-pass workflow with raw-gel averaging before denoising, full-image peak coordinates and streamed input identity checks",
         "Optional sequential per-gel wavelet denoising with explicit settings, rectangular local backgrounds and raw-volume normalization; combined pipeline and per-gel memory bounds",
         "Replayable bounded grayscale TIFF input with explicit page selection, orientation-normalized stored intensities, immutable source metadata and one-frame-at-a-time decoding through optional Pillow",
-        "Native project formats, unsupported TIFF variants, interactive editing, reporting and executable equivalence remain open"
+        "Immutable exact-coordinate peak selection, add/remove edits, dimension-checked streamed re-quantification and atomic CSV export of measurements and effective settings"
       ],
       "validation": [
         "tests/test_pinnacle.py",
@@ -3304,7 +3308,9 @@
         "research/pinnacle-audit.md",
         "tests/test_pinnacle_tiff_reference.py",
         "tests/helpers/pinnacle_tiff_writer.py",
-        "research/pinnacle-tiff-reference-audit.md"
+        "research/pinnacle-tiff-reference-audit.md",
+        "16 focused selection/core/wavelet tests pass with warnings as errors, scoped Ruff and mypy; tests/test_pinnacle_peak_selection.py",
+        "Functional Python workflow crosswalk and explicit native GUI/project/TIFF compatibility limits; research/pinnacle-peak-selection-audit.md"
       ]
     },
     {
@@ -4695,7 +4701,7 @@
       ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Source-compatible modified greater-tail Fisher annotation from explicit marker lists and caller-supplied cell-type associations; preserves reference/query row multiplicity and unique gene overlap.",
         "Per-cluster BH adjustment over tested types, stable matched-score means, ordered contributing genes, explicit untested records and up to five labels including one hard label.",
@@ -4705,7 +4711,9 @@
         "GSEA hard/soft cell-type labels using raw-p minimum/fifth-position cutoffs with all ties, source DOSE ordering, hard precedence and separate cluster identities.",
         "easycelltype_reference loads bounded local CSV/gzip author-format tables, filters Human/Mouse and species-specific tissues, preserves association order/duplicates including blank organs, and records file SHA-256 plus caller provenance; docs/easycelltype-reference.md.",
         "easycelltype_builtin_reference supplies pinned EasyCellType 1.5.4 CellMarker, Clustermole and PanglaoDB references without R or network access, with source/gzip hashes, species/tissue filtering and preserved row multiplicity; docs/easycelltype-builtin-reference.md.",
-        "Remaining: gene-ID conversion, native plots and app workflow parity."
+        "Native Shiny visuals, unpinned annotation releases and incidental ambiguous-key ordering are not reproduced.",
+        "Offline Human/Mouse symbol-to-Entrez and reverse mapping using explicit Bioconductor 3.18 snapshots, all ambiguous candidates, stable selected order and aligned keep/drop/error handling",
+        "Optional Fisher/GSEA candidate bars and cluster-by-cell-type dot plots preserve selected labels and expose score, p-value mode, hard/soft membership and contributing-gene size with bounded rendering"
       ],
       "validation": [
         "Nine original-R author-source cases, including duplicates, ties, top-five ranking, strict enrichment gate, empty overlap and a 1.84e-31 tail; tools/reference_easycelltype.R.",
@@ -4715,7 +4723,11 @@
         "66 native C++ cumulative scores, 66 unchanged R single-set scores and 22 native splitter score pairs; bounded twelve-seed adaptive tail comparison, deterministic replay and explicit resource/undefined-weight checks; research/easycelltype-gsea-audit.md.",
         "Source-backed GSEA label tests cover minimum/fifth-position ties, cross-cluster hard ordering, unavailable rows and malformed evidence; public inference-to-label example passes.",
         "Reference loading preserves all 236,219 author association rows across the three tables and matches six independent R species/tissue selections exactly; four focused checks, synthetic installed-package example and compressed-line resource guard pass; research/easycelltype-reference-audit.md.",
-        "Nine focused bundled/local-reference and Fisher checks pass; all 236,219 bundled rows decompress byte-for-byte to the cached author CSV exports, with original R-object, plain CSV and compressed-asset hashes verified; research/easycelltype-builtin-reference-audit.md."
+        "Nine focused bundled/local-reference and Fisher checks pass; all 236,219 bundled rows decompress byte-for-byte to the cached author CSV exports, with original R-object, plain CSV and compressed-asset hashes verified; research/easycelltype-builtin-reference-audit.md.",
+        "Direct source SQLite duplicate-symbol witness, Human/Mouse and reverse mappings, repeated-row/unmapped alignment; 3 focused tests, Ruff and mypy pass; tests/test_easycelltype_gene_mapping.py",
+        "Source SQLite exporter reproduces both compressed mapping files and manifest byte-for-byte; research/easycelltype-gene-mapping-audit.md",
+        "10 focused annotation/plot tests and executed guide pass with warnings as errors; plot geometry, score signs, p-value selection and zero-probability display; research/easycelltype-annotation-plots-audit.md",
+        "Functional workflow covers source table selection, offline gene conversion, Fisher/GSEA inference, hard/soft labels and optional result figures; native Shiny aesthetics and unpinned annotation dependency versions are not claimed"
       ]
     },
     {

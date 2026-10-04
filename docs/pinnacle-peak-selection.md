@@ -51,9 +51,7 @@ assert analysis.quantification.raw[:, 0].tolist() == [11.0, 15.0]
 assert analysis.quantification.coordinates.tolist() == [[3, 2], [4, 6]]
 
 with TemporaryDirectory() as directory:
-    output = write_pinnacle_selection_csv(
-        analysis, Path(directory) / "selected-peaks.csv"
-    )
+    output = write_pinnacle_selection_csv(analysis, Path(directory) / "selected-peaks.csv")
     assert output.is_file()
 ```
 
