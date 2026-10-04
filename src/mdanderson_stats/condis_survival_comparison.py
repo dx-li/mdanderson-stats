@@ -143,6 +143,7 @@ def plot_condis_survival_comparison(
             zorder=3,
         )
     curve_ax.set(xlabel="Follow-up time", ylabel="Survival probability", ylim=(0, 1.02))
+    curve_ax.tick_params(axis="x", labelbottom=True)
     curve_ax.legend()
     risk_ax.axis("off")
     header = [f"{value:g}" for value in comparison.risk_times]
