@@ -248,7 +248,7 @@ def simulate_mtadf_author(
         raise ValueError("requested simulation exceeds max_total_decisions")
     if potential_work > potential_limit:
         raise ValueError("requested simulation exceeds max_total_potential_cells")
-    # Validate the deterministic fixed source prior before touching RNG.
+    # Validate conduct limits before touching RNG.
     phi = _scalar(toxicity_limit, "toxicity_limit")
     cutoff = _scalar(safety_cutoff, "safety_cutoff")
     if not 0 < phi < 1 or not 0 < cutoff < 1:

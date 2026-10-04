@@ -4,7 +4,10 @@
     "path": "research/raw/mtadf-author-reference/targetAgentDF.r",
     "sha256": "e27be5581fdcb7c71a7739a4f1b25026dc054896fcbf7134ff9b1a1c8960caac",
     "file_date": "2013-08-12",
-    "role": "Primary author R reference for isotonic operating-characteristic simulation and real-trial dose decisions."
+    "role": "Primary author R reference for isotonic operating-characteristic simulation and real-trial dose decisions.",
+    "url": "https://odin.mdacc.tmc.edu/~yyuan/Software/TargetAgent/targetAgentDF.r",
+    "retrieved_at": "2026-10-04T20:53:46Z",
+    "file_date_evidence": "Author directory listing modification date; no date appears in the R file header."
   },
   "dependency": {
     "package": "Iso",

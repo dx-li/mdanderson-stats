@@ -67,6 +67,36 @@ provide baseline-survival confidence surfaces either. The
 implemented target and remaining uncertainty scope. No prediction or
 confidence-interval calculation was executed or added during this source review.
 
+## Dependency contract review
+
+A subsequent October 4 review checked the official
+[`mets::phreg` documentation](https://search.r-project.org/CRAN/refmans/mets/html/phreg.html)
+and [author implementation](https://github.com/kkholst/mets/blob/master/R/phreg.R).
+The inspected implementation reads a two-column survival response as exit time
+and event status, and a three-column response as entry, exit and status. It
+does not branch on the `Surv` censoring-type attribute before passing those
+values into its Cox risk-set/partial-likelihood calculation. This does not
+establish support for an interval-censored likelihood. The similarly named
+`IC.phreg` concerns influence-function decompositions, not interval censoring.
+Context7 did not index this R package; the review used primary CRAN/author
+material and did not install it. Exact historical dependency source remains
+unverified, so this finding does not establish behavior of every old release
+or the deployed app.
+
+The wrapper's own table and `Surv(lower, upper, type="interval2")` example
+explicitly describe interval-censored input. Its separate `CI3D` flag requests
+confidence surfaces. Thus the advertised interval route cannot be resolved by
+interpreting “interval” as only a confidence-interval option. A three-column
+shape accepted by the dependency is not a valid conversion between these
+different response contracts. This is evidence of an estimator mismatch in
+the inspected source path, rather than a recovered interval-data mapping.
+
+The remaining statistical work is a justified baseline-survival uncertainty
+procedure for the genuine interval-censored model. Current support-location
+bounds and coefficient bootstraps must not be relabeled as the advertised
+sampling confidence surfaces. No counting-process variance formula or
+unverified historical behavior has been substituted into that model.
+
 The cache contains the package wrapper, not the deployed Shiny server. It
 therefore cannot establish the live site's complete user workflow or report
 contract. Options supported by `randomForestSRC` but not selected or surfaced

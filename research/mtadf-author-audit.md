@@ -64,3 +64,15 @@ the author logistic code has additional source-level choices (including
 `arm::bayesglm`, scaled dose coding and lagged safety) and is not covered by
 this isotonic kernel. Neither this audit nor this implementation claims full
 MTADF method-family or live-app parity.
+
+## Checkpoint validation
+
+Ten focused implementation checks passed across the author kernel, cohort
+replay/simulator and existing paper isotonic policy. The kernel is compared
+with the independent base-R fit and decision fixture; simulator checks cover
+the hand-enumerated lagged-cap ledger, count conservation, untried final ties,
+seeded repetition and rejection of excessive work before randomness is used.
+Redundant checks that only compared fixture contents to hardcoded constants
+were removed after implementation comparisons were added. Scoped Ruff and
+mypy checks passed. Numerical jobs ran serially with single-thread BLAS; no
+full local suite, dependency installation or CI expansion was needed.

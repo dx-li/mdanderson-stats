@@ -84,3 +84,21 @@ GitHub publication still has the previously observed approval-required write
 restriction under this session's never-approve policy. No alternate write
 transport was attempted. The overall goal remains active and incomplete because
 scientific coverage can continue locally.
+
+## Full author-reference recovery, 2026-10-04
+
+The full 20,787-byte author R file was recovered in one direct retrieval after
+the earlier DNS limitation. Its SHA-256 is
+`e27be5581fdcb7c71a7739a4f1b25026dc054896fcbf7134ff9b1a1c8960caac`.
+The new [author-reference audit](mtadf-author-audit.md) and
+[dependency/reference audit](mtadf-author-reference-audit.md) supersede the
+raw-source limitation above for the isotonic workflow. The independent Python
+kernel and bounded replay/simulator preserve its fixed prior, inclusive
+floor-one safety, equal-weight efficacy fitting, rightmost ties, all-dose
+final epsilon rates and distinct fresh/lagged safety-cap timing.
+
+Entry 114 remains partial: the author global `arm::bayesglm` coefficient-mode
+rule and local adjacent-window conduct differ from the existing paper-policy
+logistic APIs and require separate coverage. The retrieved file is evidence
+for that reference program; it does not establish the current live app's exact
+runtime or hidden defaults.

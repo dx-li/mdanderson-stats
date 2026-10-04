@@ -14,6 +14,25 @@ not state how the modifiers compose with backfill conflicts, so that ordering
 remains an explicit Python policy rather than a native-parity claim.
 
 The separate [BARD workflow audit](bard-remaining-simulation-audit.md) records
-the still-missing source-advertised complete two-stage operating-characteristic
-simulation and distinguishes that method work from unresolved native quota and
-calendar conventions. This modifier change does not close BARD as a whole.
+the now-completed BF-BOIN two-stage operating-characteristic workflow, saved
+studies and reports, plus the paper's BF-BLRM stochastic route. Native quota,
+calendar and source-prior limitations remain explicit.
+
+## BF-BOIN completion review
+
+The October 4 review cross-checked the cached BF-BOIN guide's Figure 15 against
+the calendar simulator and saved protocol report. Dose truth, selection,
+treatment share, total enrollment, early-stopping summaries and duration are
+available, with explicit Python denominators and Monte Carlo errors. The
+guide does not define a different native aggregation formula that could be
+implemented from the inspected evidence. The recovered decision, boundary,
+final-selection, titration and simulation methods are also covered.
+
+The modifier convention applies to each dose's hypothetical individual
+action, including lower doses with backfill, before conflict detection and
+pooled-data resolution. The guide phrases the options at the current dose
+and does not define this composition. This remains an explicit Python rule,
+not a claim about hidden app ordering. Native report layout, random streams
+and undefined aggregation choices are compatibility boundaries. No additional
+source-defined calculation was identified; the recovered BF-BOIN workflow is
+functionally implemented.

@@ -120,12 +120,18 @@ Focused decision and small simulation checks cover the dose policy and count
 conservation. See the [audit](../research/mtadf-audit.md) and
 [source record](mtadf-sources.json).
 
-Catalog entry 114 remains partial. The app's visible cutoff description and the
-rendered author R program use an inclusive boundary, while the paper prints a
-strict one. The rendered program also uses fixed prior calibration and retains
-at least the lowest dose. This implementation follows the documented paper
-policy and allows a complete safety stop. Hidden app settings, native output,
-full raw-source comparison and random-sequence equivalence remain unverified.
-The paper's [global and local logistic designs](mtadf-logistic.md) are also
-available through separate posterior and decision functions. The serial
-simulator described here continues to use the isotonic design.
+Catalog entry 114 remains partial. The full author R reference was recovered
+on 2026-10-04. Its [isotonic policy](mtadf-author.md) and
+[trial replay and simulation](mtadf-author-simulation.md) are available through
+separate APIs. They use fixed prior calibration, inclusive safety boundaries,
+forced retention of the lowest dose, equal dose weights and rightmost efficacy
+ties. The author simulator also delays the safety-cap update by one cohort;
+its actual-trial decision function uses the fresh cap. The paper-policy API
+described here retains its documented behavior and permits a complete safety
+stop.
+
+The paper's [global and local logistic designs](mtadf-logistic.md) and
+[logistic simulations](mtadf-logistic-simulation.md) are available. The recovered
+author code uses additional global coefficient-mode and local-window conduct
+choices that remain to be implemented separately. Exact live-app settings,
+native outputs and random-sequence equivalence remain unverified.

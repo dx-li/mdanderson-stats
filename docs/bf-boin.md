@@ -21,8 +21,8 @@ the threshold. It is separate from the per-dose backfill cap `n_cap`.
 `BFBOINDesign(stay_at_one_of_three=True)` enables the guide's optional 1-DLT-of-3
 rule for targets from 0.20 through 0.279: at exactly three patients, 0/3
 escalates, 1/3 stays, and at least 2/3 de-escalates. Python applies this
-modification to individual dose actions before resolving backfill conflicts
-with the usual pooled-rate rule.
+modification to each hypothetical individual dose action, including lower
+backfilled doses, before resolving conflicts with the usual pooled-rate rule.
 `BFBOINDesign(deescalate_at_two_of_six=True)` enables the separate guide option
 for targets from 0.28 through 0.33: at exactly six patients, at most 1/6
 escalates and at least 2/6 de-escalates. The latter is applied as an explicit
@@ -59,6 +59,9 @@ implements the fixed `c - 1` continuation documented for BARD's BF-BOIN path.
 Optional [accelerated titration](bf-boin-titration.md) follows BF-BOIN Guide
 Remarks 2 and is available in the calendar simulator. [Saved protocol reports](bf-boin-protocol-report.md)
 capture the actual design, calendar choices, scenario truths and compact
-simulation summaries. Native document templates and unspecified native summary
-formulas remain separate scope. This decision layer does not manage enrollment
-clocks or automatically determine cohort completion.
+simulation summaries. The recovered statistical workflow is implemented;
+native document templates, random streams and unspecified native summary
+aggregations remain explicit compatibility boundaries. See the
+[completion review](../research/bf-boin-bard-modifiers-audit.md#bf-boin-completion-review).
+This decision layer does not manage enrollment clocks or automatically
+determine cohort completion.

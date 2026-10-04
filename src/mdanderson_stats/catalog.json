@@ -3780,13 +3780,14 @@
         "Calibrated common Beta toxicity prior, pooled posterior overdose probabilities, strict admissibility and complete-outcome interim/final OBD decisions.",
         "Observed-dose mapping, lowest-dose efficacy ties, safe exploration, safety overrides and stopping when no dose is admissible.",
         "Bounded serial isotonic cohort simulation with compact per-trial counts, dose selection, early stopping, no-selection probabilities and Monte Carlo errors; docs/mtadf.md.",
-        "Global quadratic and local linear logistic efficacy models with Cauchy priors, bounded serial posterior fitting, safety-first dose decisions, slope thresholds, retained next-window fits and chain diagnostics; docs/mtadf-logistic.md. Bounded complete-cohort simulation for both logistic methods includes replayable per-trial outcome/sampler seeds, compact selection/allocation summaries and explicit independent-marginal outcome generation; docs/mtadf-logistic-simulation.md."
+        "Global quadratic and local linear logistic efficacy models with Cauchy priors, bounded serial posterior fitting, safety-first dose decisions, slope thresholds, retained next-window fits and chain diagnostics; docs/mtadf-logistic.md. Bounded complete-cohort simulation for both logistic methods includes replayable per-trial outcome/sampler seeds, compact selection/allocation summaries and explicit independent-marginal outcome generation; docs/mtadf-logistic-simulation.md.",
+        "Recovered author-reference isotonic decisions and complete-cohort replay/serial simulation: fixed Beta prior, inclusive floor-one safety, equal-dose-weight efficacy fitting, rightmost ties, all-dose final epsilon rates and explicit fresh versus lagged safety-cap timing; docs/mtadf-author.md and docs/mtadf-author-simulation.md."
       ],
       "validation": [
         "Independent base-R min-max isotonic reference for seven curves, plus five calibrated priors and 20 posterior-tail cases; tests/test_mtadf_reference.py.",
         "Focused weighted fitting, noncontiguous observed-dose mapping, untried final exclusion, all-unsafe stopping and serial simulation checks; tests/test_mtadf.py.",
         "Independent global and local transformed-Cauchy quadrature references; seeded logistic posterior and safety-first conduct checks with warnings as errors; research/mtadf-logistic-audit.md. Global/local simulation checks cover seed-pair replay, cohort conservation, safety stops and work/storage preflight; research/mtadf-logistic-simulation-audit.md.",
-        "Paper-based policies; native hidden prior/settings, inclusive cutoff convention, complete raw-source comparison, reports, calendar timing and random-sequence equivalence remain unverified; docs/mtadf-sources.json."
+        "Paper-policy APIs remain explicit. Full author R source recovered 2026-10-04; independent base-R reference and era-matched Iso source review support the separate author isotonic workflow. Singleton fitting and tight prior calibration are documented Python numerical conventions. Author global coefficient-mode and local-window logistic conduct remain incomplete; native app runtime, output and random-sequence equivalence are unverified; docs/mtadf-author-sources.json."
       ]
     },
     {
@@ -4821,7 +4822,7 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "BF-BOIN backfill eligibility with observed activity at or below dose, assigned-count caps and reversible empirical toxicity closure",
         "Conflict-aware pooled escalation decisions with posterior safety exclusions and conditional assigned-count stopping",
@@ -4830,7 +4831,8 @@
         "Optional post-escalation expansion at one dose below the last actually treated escalation cohort, assigned-count cap and first toxicity closure, separate expansion counts/end reasons/times and complete follow-up; source-defined target/stops with explicit calendar choices. docs/bard-expansion.md.",
         "Optional accelerated titration: one-patient dose progression, first-DLT/second-grade-2 exits, highest-dose top-up and lower-cap full-next-cohort transitions; explicit conditional grade-2 probabilities and assessment delay, cohort-budget accounting, titration exit diagnostics and complete follow-up. docs/bf-boin-titration.md.",
         "Guide-specific optional 1/3 stay action for targets 0.20..0.279 and 2/6 de-escalation for targets 0.28..0.33, strict lowest-dose extra-safe count n>3 with ordinary elimination retained at n>=3, strict final-MTD bound, and effective BF boundary tables. Safety exclusions take precedence; modified individual actions precede pooled-conflict resolution as an explicit Python policy. Native modifier/backfill-conflict precedence remains unspecified; docs/bf-boin.md.",
-        "Saved HTML design reports run bounded scenarios serially from a recorded seed, capture actual truth and calendar settings, and summarize selection/MCSE, allocation, DLTs, stop reasons, duration, expansion and titration. Allocation-share and early-stopping labels distinguish explicit Python quantities from unspecified native aggregation; docs/bf-boin-protocol-report.md."
+        "Saved HTML design reports run bounded scenarios serially from a recorded seed, capture actual truth and calendar settings, and summarize selection/MCSE, allocation, DLTs, stop reasons, duration, expansion and titration. Allocation-share and early-stopping labels distinguish explicit Python quantities from unspecified native aggregation; docs/bf-boin-protocol-report.md.",
+        "Recovered BF-BOIN decision, titration, calendar simulation and saved-report workflows are complete. Modifiers apply to each hypothetical individual dose action, including lower backfilled doses, before conflict pooling; native precedence and undefined report aggregation remain explicit compatibility boundaries. research/bf-boin-bard-modifiers-audit.md#bf-boin-completion-review."
       ],
       "validation": [
         "35 independent CRAN BOIN boundary rows agree with Python",
@@ -4840,7 +4842,8 @@
         "Twelve focused BF-BOIN checks pass. All existing fields match 80 published no-expansion trials exactly; 60 expansion trials verify fixed-dose targeting, cap accounting, chronology and termination, including two independently reconstructed first toxicity closures. research/bard-expansion-audit.md.",
         "Accelerated titration: 11 focused checks pass; all existing fields reproduce 80 published trials with titration disabled. Sixty independent patient ledgers cover all four exit reasons, observation chronology, grade-2 counts at exit, cohort budgets and full follow-up. Numerical checks below 129 MiB, zero swaps. research/bf-boin-accelerated-titration-audit.md.",
         "22 focused BF guide-rule, conduct, calendar, titration and report tests pass; report summaries reproduce serial direct simulation from captured settings. Integrated checks add exact Beta tails 243/256 and 63/64 across the extra-safe count boundary, final-selection propagation, ordinary BOIN preservation, strict fitted-bound equality, and BARD callers. The combined TPI/PoP/BF batch passed 48 focused tests at 158 MiB with zero swaps; research/bf-boin-protocol-report-audit.md.",
-        "BARD cached guide Remarks 4–5 recover both modifier target ranges. Thirty-two focused affected checks pass, including hand-enumerated n=3/n=6 actions, range endpoints, eliminated destinations, conflict pooling, ordinary BOIN preservation and captured report settings. research/bf-boin-bard-modifiers-audit.md."
+        "BARD cached guide Remarks 4–5 recover both modifier target ranges. Thirty-two focused affected checks pass, including hand-enumerated n=3/n=6 actions, range endpoints, eliminated destinations, conflict pooling, ordinary BOIN preservation and captured report settings. research/bf-boin-bard-modifiers-audit.md.",
+        "October 4 source-scope review cross-checks cached guide Figure 15 against the existing report: truth, selection, treatment share, total enrollment, early stopping and duration are represented with explicit denominators. No additional source-defined calculation was identified; no algorithm or prior validation was changed for this status update."
       ]
     },
     {

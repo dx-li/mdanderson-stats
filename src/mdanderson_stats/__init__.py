@@ -1071,6 +1071,12 @@ from .mtadf import (
     mtadf_decision,
     mtadf_toxicity_prior,
 )
+from .mtadf_author import MTADFAuthorDecision, mtadf_author_decision
+from .mtadf_author_simulation import (
+    MTADFAuthorTrialResult,
+    replay_mtadf_author_trial,
+    simulate_mtadf_author,
+)
 from .mtadf_logistic import (
     MTADFLocalLogisticDecision,
     MTADFLocalLogisticPosterior,
@@ -3081,6 +3087,11 @@ __all__ = [
     "MTPITable",
     "MTPISimulation",
     "simulate_mtpi",
+    "MTADFAuthorDecision",
+    "MTADFAuthorTrialResult",
+    "mtadf_author_decision",
+    "replay_mtadf_author_trial",
+    "simulate_mtadf_author",
     "MTADFDecision",
     "MTADFIsotonicFit",
     "MTADFLocalLogisticDecision",

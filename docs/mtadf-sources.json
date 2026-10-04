@@ -1,7 +1,9 @@
 {
-  "catalog_ids": [114],
+  "catalog_ids": [
+    114
+  ],
   "retrieved_at": "2026-09-26",
-  "scope": "MTADF double-sided isotonic and global/local logistic efficacy models, beta-binomial toxicity monitoring, adaptive dose decisions and isotonic serial simulation",
+  "scope": "MTADF double-sided isotonic and global/local logistic efficacy models, beta-binomial toxicity monitoring, adaptive dose decisions and isotonic serial simulation; recovered author-reference isotonic decision, replay and serial simulation",
   "sources": [
     {
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4239216/",
@@ -23,7 +25,9 @@
     },
     {
       "url": "https://odin.mdacc.tmc.edu/~yyuan/Software/TargetAgent/targetAgentDF.r",
-      "role": "Rendered source exposes a fixed prior calibration, inclusive safety cutoff, forced retention of at least the lowest dose and independent marginal outcome generation. The complete raw source could not be obtained; truncated expressions are not treated as a specification."
+      "role": "Full primary author reference recovered (20,787 bytes). Isotonic functions define fixed prior calibration, inclusive safety with a floor of one dose, equal-weight efficacy fits, rightmost ties and a lagged simulator safety cap. The global coefficient-mode and local-window logistic variants remain separate coverage gaps.",
+      "retrieved_at": "2026-10-04",
+      "sha256": "e27be5581fdcb7c71a7739a4f1b25026dc054896fcbf7134ff9b1a1c8960caac"
     }
   ],
   "implementation_choices": [
@@ -36,7 +40,8 @@
     "Simulation uses independent binary toxicity and efficacy margins, complete cohort ascertainment, serial trials and bounded work; simulate_mtadf remains isotonic only.",
     "Global/local logistic models use explicit supplied dose coding and bounded serial random-walk Metropolis with warmup-only adaptation, acceptance rates, split R-hat and batch-means MCSE.",
     "Global decisions rank posterior mean efficacy, including model-predicted untried doses at final selection. Local decisions use initial ramp, slope thresholds and the next-window bounce guard, with isotonic final selection.",
-    "Logistic safety-only actions precede efficacy fitting; boundary clamping, lowest-dose ties and low-boundary local windows are explicit Python conduct choices."
+    "Logistic safety-only actions precede efficacy fitting; boundary clamping, lowest-dose ties and low-boundary local windows are explicit Python conduct choices.",
+    "Explicit author-reference isotonic APIs preserve the recovered R decision and simulator policies; the paper-policy APIs remain unchanged. A tight prior root and a scalar unimodal-fit convention are documented Python numerical choices."
   ],
-  "limitations": "Native application prior, boundary conventions, full raw R behavior, output files and random-sequence parity remain unverified. Logistic models and decisions are independent implementations of the paper; their sampling settings and unspecified conduct choices are explicit Python policies. Separate global/local logistic trial simulation uses complete cohorts, independent marginal outcome generation and replayable outcome/sampler seed pairs; calendar timing and native simulation parity remain unverified."
+  "limitations": "The author-reference isotonic workflow is implemented against the recovered R source and an era-matched Iso source contract; the exact historical dependency version and live-app runtime remain unknown. Author global logistic coefficient-mode fitting and local adjacent-window conduct are not covered by that workflow. Existing paper logistic models, decisions and simulations retain explicit Python sampling and conduct policies. Native output and random-sequence equivalence remain unverified."
 }

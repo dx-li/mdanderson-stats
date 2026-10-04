@@ -16,7 +16,7 @@ unconstrained mode algorithm visits half-index peak candidates in order,
 evaluates squared error, and retains the first candidate at an equal minimum.
 At those half-index modes, the historical routine fits the rising prefix and
 falling suffix independently with PAVA. This is exactly the candidate split
-operation represented by the independent left/right PAVA reference. Iso also
+operation used by the Python kernel. Iso also
 has a distinct branch for a fixed integer mode: it combines both side fits
 with the observed peak and applies pooling across them. The author calls omit
 `lmode`, so they use the half-index search, not the integer-mode branch. PAVA

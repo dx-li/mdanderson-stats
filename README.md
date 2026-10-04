@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-86 implemented, 44 partial, and 8 pending. Each method's guide explains its
+87 implemented, 43 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -1645,6 +1645,10 @@ posterior diagnostics. [Logistic trial simulation](docs/mtadf-logistic-simulatio
 adds complete-cohort trials, replayable outcome/sampler seeds and compact
 operating-characteristic summaries for both designs. Independent R calculations and numerical integration
 check the models; native application settings and output equivalence remain open.
+The recovered [author-reference isotonic policy](docs/mtadf-author.md) and
+[trial replay and simulation](docs/mtadf-author-simulation.md) add the original
+fixed prior, inclusive safety cap, equal-weight fits and rightmost ties. The
+simulator's delayed cap update is explicit; paper-policy behavior is preserved.
 
 [UAROET ordinal dose finding](docs/uaroet.md) adds continuation-logit outcome
 models joined by a Gaussian copula, explicit-prior posterior fitting and
