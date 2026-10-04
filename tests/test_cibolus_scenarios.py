@@ -30,7 +30,7 @@ def test_s_shaped_profiles_and_regimen_broadcasting() -> None:
         [0.1, 0.2],
         [0.0, 0.5],
         [0.25, 0.5, 0.75, 1.0],
-        response_zero=[[0.05], [0.1]],
+        response_zero=[np.array([0.05]), np.array([0.1])],
         response_one=[0.65, 0.85],
         toxicity_zero=0.1,
         toxicity_one=[[0.5], [0.7]],

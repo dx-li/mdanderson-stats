@@ -24,8 +24,14 @@ def _joint_grid(value: ArrayLike, expected: tuple[int, ...]) -> FloatArray:
     if isinstance(value, (list, tuple)):
 
         def check_nested(item: object, axis: int) -> None:
+            if isinstance(item, np.ndarray):
+                if item.shape != expected[axis:]:
+                    raise ValueError(
+                        f"joint probabilities must have shape {expected} and real values"
+                    )
+                return
             if axis == len(expected):
-                if isinstance(item, (list, tuple, np.ndarray)):
+                if isinstance(item, (list, tuple)):
                     raise ValueError(
                         f"joint probabilities must have shape {expected} and real values"
                     )
@@ -74,6 +80,10 @@ def _regimen_probability(value: ArrayLike, name: str, shape: tuple[int, int]) ->
         def inspect(item: object, depth: int) -> tuple[tuple[int, ...], int]:
             if depth > 2:
                 raise ValueError(f"{name} must be scalar or at most two-dimensional")
+            if isinstance(item, np.ndarray):
+                if item.ndim + depth > 2 or item.size > 400:
+                    raise ValueError(f"{name} must be bounded real probability data")
+                return item.shape, int(item.size)
             if not isinstance(item, (list, tuple)):
                 return (), 1
             if len(item) > 400:
