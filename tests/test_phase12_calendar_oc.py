@@ -27,6 +27,7 @@ def test_seeded_aggregate_matches_independent_calendar_replays():
     assert not result.per_trial_seeds.flags.writeable
 
     replay_selections = []
+    replay_durations_months = []
     replay_enrollment = np.zeros(6, dtype=np.int64)
     replay_tox = np.zeros(6, dtype=np.int64)
     replay_response = np.zeros(6, dtype=np.int64)
@@ -46,6 +47,7 @@ def test_seeded_aggregate_matches_independent_calendar_replays():
         replay_selections.append(
             trial.early_selected if trial.early_selected is not None else trial.future_selected
         )
+        replay_durations_months.append(trial.stop_time * (12.0 / 365.0))
         for row in trial.records:
             dose = int(row[0])
             replay_enrollment[dose] += 1
@@ -62,6 +64,17 @@ def test_seeded_aggregate_matches_independent_calendar_replays():
     np.testing.assert_array_equal(result.generated_toxicity_total, replay_tox)
     assert result.selection_probability.sum() + result.no_selection_probability == pytest.approx(1)
     assert not np.isnan(result.mcse_total_enrollment)
+    duration_months = np.asarray(replay_durations_months)
+    np.testing.assert_allclose(result.duration_mean_months, duration_months.mean())
+    np.testing.assert_allclose(
+        result.duration_population_variance_months_squared, duration_months.var(ddof=0)
+    )
+    assert result.duration_order_indices.tolist() == [0, 0, 0, 1, 2, 2, 2]
+    expected = np.sort(duration_months)[[0, 0, 0, 1]]
+    np.testing.assert_allclose(result.duration_order_statistics_months[:4], expected)
+    assert np.isnan(result.duration_order_statistics_months[4:]).all()
+    assert not result.duration_order_indices.flags.writeable
+    assert not result.duration_order_statistics_months.flags.writeable
 
 
 def test_observed_endpoint_denominators_are_distinct_and_one_trial_mcse_is_undefined():

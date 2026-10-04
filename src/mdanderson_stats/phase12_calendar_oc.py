@@ -254,6 +254,13 @@ class Phase12CalendarOC:
     importance_component_evaluations: int
     importance_mode_iterations: int
     mcmc_configured_transition_slots: int
+    # The C++ program reports durations in months and uses a source-specific
+    # set of order-statistic indices.  These fields are additive: the existing
+    # mean/MCSE above remain in the caller's day units.
+    duration_mean_months: float
+    duration_population_variance_months_squared: float
+    duration_order_indices: NDArray[np.int64]
+    duration_order_statistics_months: FloatArray
 
 
 def simulate_phase12_calendar_oc(
@@ -693,6 +700,30 @@ def simulate_phase12_calendar_oc(
         trial_count,
     )
     mean_duration, duration_mcse = _scaled_time_summary(durations)
+    duration_months = durations * (12.0 / 365.0)
+    duration_mean_months = float(np.mean(duration_months))
+    duration_variance_months2 = float(np.var(duration_months, ddof=0))
+    if not np.isfinite(duration_mean_months) or not np.isfinite(duration_variance_months2):
+        raise ArithmeticError("calendar duration summary is not representable in months")
+    # These reproduce the C++ zero-based indices, not interpolated quantiles.
+    # For small simulation counts an index can equal/exceed n; expose that
+    # source-defined value as unavailable instead of clipping it.
+    duration_order_indices = np.asarray(
+        [
+            trial_count // 40,
+            trial_count // 20,
+            trial_count // 4,
+            trial_count // 2,
+            trial_count - trial_count // 4,
+            trial_count - trial_count // 20,
+            trial_count - trial_count // 40,
+        ],
+        dtype=np.int64,
+    )
+    duration_order_statistics = np.full(duration_order_indices.shape, np.nan)
+    sorted_duration_months = np.sort(duration_months)
+    available = duration_order_indices < trial_count
+    duration_order_statistics[available] = sorted_duration_months[duration_order_indices[available]]
     if final_times:
         mean_final_time: float | None
         final_time_mcse: float | None
@@ -799,4 +830,8 @@ def simulate_phase12_calendar_oc(
         importance_component_evaluations,
         importance_mode_iterations,
         mcmc_transition_slots,
+        duration_mean_months,
+        duration_variance_months2,
+        _immutable_int(duration_order_indices),
+        _freeze(duration_order_statistics),
     )

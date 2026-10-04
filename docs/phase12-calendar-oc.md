@@ -56,6 +56,20 @@ follow-up duration. Setting `complete_followup=True` changes the
 calendar trial's final follow-up behavior where applicable; it does not alter
 the separate generated-truth totals.
 
+The result also includes `duration_mean_months`,
+`duration_population_variance_months_squared`, and
+`duration_order_statistics_months`. These summarize each trial's enrollment
+stop time, including early stops, after conversion from days using 12/365.
+The seven entries use the archived C++ zero-based sorted indices
+`n//40`, `n//20`, `n//4`, `n//2`, `n-n//4`, `n-n//20`, and `n-n//40`.
+Their corresponding `duration_order_indices` make the convention inspectable;
+an index at or above the number of trials is returned as NaN rather than being
+clipped or replaced with an interpolated quantile. The C++ variable printed as
+"Std" is actually calculated as the population variance
+`E[D²] - E[D]²`; the Python field names it as variance. Existing duration mean
+and MCSE remain in days. Source paths and the exact index/unit mapping are
+recorded in the [duration audit](../research/phase12-calendar-duration-audit.md).
+
 The optional `posterior_backend="importance"` uses the calendar's bounded
 adaptive importance fit. Its summaries report fit counts, nonconvergence,
 maximum ratio MCSE, raw component evaluations, and mode iterations. The
@@ -83,8 +97,10 @@ default total work budgets are suitable for small checks; larger runs require
 explicitly increased budgets within hard ceilings. No automatic parallelism is
 used.
 
-The archived C++ source includes simulation cases and aggregate selection
-reporting, but this Python wrapper is not a reproduction of the archived
-multi-replicate report or its complete scenario suite. It summarizes the
-existing Python calendar implementation and exposes caller-specified scenario
-probabilities and optional optimal-dose sets.
+The archived C++ source also reports Laplace posterior-parameter summaries and
+integrated posterior-probability summaries. Those require its final-fit
+Hessian/mode and a source-specific probability-vector integration; the
+existing Python calendar OC does not retain that same kernel output, so this
+wrapper does not claim those summaries. See the
+[source audit](../research/parallel-phase12-scenario-report-audit.md) for the
+exact boundary.
