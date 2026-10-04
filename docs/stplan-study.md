@@ -8,7 +8,7 @@ results as JSON or standalone HTML. The workflow composes the existing
 ```python
 from pathlib import Path
 
-from mdanderson_stats.stplan_study import (
+from mdanderson_stats import (
     STPLANForwardCase,
     STPLANInverseCase,
     STPLANStudySpecification,
@@ -18,12 +18,17 @@ spec = STPLANStudySpecification(
     "phase II planning",
     (
         STPLANForwardCase(
-            "current design", "stplan_normal_one_sample_power",
+            "current design",
+            "stplan_normal_one_sample_power",
             {"difference": 0.5, "sd": 1.0, "sample_size": 30, "alpha": 0.05},
         ),
         STPLANInverseCase(
-            "target design", "stplan_normal_one_sample_power", "sample_size",
-            target_power=0.8, bounds=(2, 1000), parameters={"difference": 0.5, "sd": 1.0},
+            "target design",
+            "stplan_normal_one_sample_power",
+            "sample_size",
+            target_power=0.8,
+            bounds=(2, 1000),
+            parameters={"difference": 0.5, "sd": 1.0},
         ),
     ),
 )

@@ -6,8 +6,8 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 81 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 49 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 82 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 48 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -29,6 +29,7 @@ some legacy adaptations retain commercial-use restrictions.
 | --- | --- | --- |
 | CONFINT | [desktop #64](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/64) | [Guide](confint.md) |
 | CID2BP | [desktop #38](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/38) | [Guide](cid2bp.md) |
+| STPLAN | [desktop #41](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/41) | [Guide](stplan.md) |
 | TTEConduct | [desktop #63](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/63) | [Guide](tteconduct.md) |
 | ACCFLF | [desktop #16](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/16) | See catalog feature and validation notes |
 | ANOVA DDP | [desktop #67](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/67) | [Guide](anovaddp.md) |
@@ -150,7 +151,6 @@ some legacy adaptations retain commercial-use restrictions.
 | Proportional density | [desktop #78](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/78) | [Guide](proportional-density.md) |
 | PRT | [desktop #69](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/69) | See catalog feature and validation notes |
 | Single arm phase II monitoring using Bayes factor with iMOM prior for binary outcome | [online #143](https://biostatistics.mdanderson.org/shinyapps/BFMonitor) | [Guide](bfmonitor.md) |
-| STPLAN | [desktop #41](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/41) | [Guide](stplan.md) |
 | SurvivalContour: Show Survival Prediction in Contour Plot | [online #166](https://biostatistics.mdanderson.org/shinyapps/survivalContour/) | [Guide](survival-contour.md), [forest rank splits](random-survival-forest-logrankscore.md), [Brier splits](random-survival-forest-brier.md) |
 | SYNERGY | [desktop #18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18) | [Guide](interaction-index.md) |
 | Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials | [online #129](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/) | [Guide](tite-boin.md) |

@@ -44,9 +44,9 @@ inferred from one routine's ranges.
 
 ## Classification
 
-STPLAN remains catalog-partial. For statistical coverage triage, it belongs in
-“no additional calculation identified; remaining work is input, output, or
-application parity.” The source defines proportional K-group planning with
-fractional counts, and the bounded inverse API covers the available forward
-methods. Neither integer proportional allocation nor a separate unimplemented
-inverse statistical procedure is established by the reviewed source.
+This source audit identified no missing statistical calculation. The subsequent
+[saved-study workflow](stplan-study-workflow-audit.md) provides portable study
+specifications, replay and JSON/HTML results, completing STPLAN's community
+Python workflow. The catalog now marks this scope implemented. Native automatic
+search defaults and exact session/report formats remain documented compatibility
+differences; integer proportional allocation is not a source-defined procedure.

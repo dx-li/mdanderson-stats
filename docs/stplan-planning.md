@@ -182,8 +182,9 @@ The inverse APIs cover the available forward methods, but callers supply bounds
 that select one search bracket and, when relevant, one branch. Native
 per-method automatic bound defaults and branch conventions are not reproduced;
 these are interface/search differences rather than missing power calculations.
-Native session/report workflows also remain open. No native integer allocation
-rule exists for proportional K-group totals. See the
+Portable saved studies provide replay and JSON/HTML results; native session and
+report formats are not reproduced. No native integer allocation rule exists for
+proportional K-group totals. See the
 [coverage boundary audit](../research/stplan-coverage-boundary-audit.md).
 For reusable named forward and bounded-inverse cases with portable JSON and
 HTML output, see the [saved community study workflow](stplan-study.md).

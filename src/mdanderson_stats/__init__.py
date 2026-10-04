@@ -1499,6 +1499,13 @@ from .stplan_matched_pairs import (
 )
 from .stplan_planning import STPLAN_METHODS, STPLANMethod, STPLANSolution, stplan_solve
 from .stplan_poisson import stplan_poisson_two_sample_power
+from .stplan_study import (
+    STPLANCaseResult,
+    STPLANForwardCase,
+    STPLANInverseCase,
+    STPLANStudy,
+    STPLANStudySpecification,
+)
 from .stplan_survival import (
     stplan_censored_exponential_one_sample_power,
     stplan_george_desu_survival_power,
@@ -1900,6 +1907,11 @@ __all__ = [
     "STPLANMethod",
     "STPLANSolution",
     "stplan_solve",
+    "STPLANCaseResult",
+    "STPLANForwardCase",
+    "STPLANInverseCase",
+    "STPLANStudy",
+    "STPLANStudySpecification",
     "stplan_censored_exponential_one_sample_power",
     "stplan_george_desu_survival_power",
     "stplan_historical_survival_power",

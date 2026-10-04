@@ -1606,17 +1606,18 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
-        "Eight STPLAN 4.5 continuous/correlation power procedures: unknown-variance normal one sample, pooled and Welch normal two sample, common-CV lognormal, uncensored exponential one/two sample, and corrected Fisher-transform correlation one/two sample. Native dominant-tail convention, fractional planning sizes, bounded broadcasting, and independent mathematical implementation. Native automatic inverse planning workflows remain open.",
-        "Nine discrete-outcome procedures: two-binomial arcsine and median-split approximations; historical-control and conservative-responder approximations; K-sample noncentral chi-square with native two-group significance convention; subject-retention probabilities; native Fisher-test planning approximation; exact one-sample binomial and Poisson powers. Integer-tail selection and explicit empty-region power zero replace native failure sentinels. Other native inverse workflows and reports remain open.",
+        "Eight STPLAN 4.5 continuous/correlation power procedures: unknown-variance normal one sample, pooled and Welch normal two sample, common-CV lognormal, uncensored exponential one/two sample, and corrected Fisher-transform correlation one/two sample. Native dominant-tail convention, fractional planning sizes, bounded broadcasting, and independent mathematical implementation.",
+        "Nine discrete-outcome procedures: two-binomial arcsine and median-split approximations; historical-control and conservative-responder approximations; K-sample noncentral chi-square with native two-group significance convention; subject-retention probabilities; native Fisher-test planning approximation; exact one-sample binomial and Poisson powers. Integer-tail selection and explicit empty-region power zero replace native failure sentinels.",
         "Unmatched case-control power with current disease-risk parameterization; exact matched discordance mixture with corrected null/alternative argument order and fixed upper-tail direction; two-sample Poisson conditional-test mixture with an explicit truncation bound, replacing the native 99% renormalized sum and large-mean substitution. Bounded broadcast inputs and aggregate support work; independent R finite-sum references.",
-        "All five current censored-survival forward procedures: one-sample Poisson-event mixture, George–Desu randomized exponential model, randomized information-time model, fixed historical controls with optional continued follow-up, and corrected piecewise-exponential event integration. This completes the 25 active main-menu forward power/retention calculations. Native automatic inverse planning and session/report workflows remain open.",
-        "Bounded inverse planning across all 25 active forward methods and the legacy matched-pairs method for sample sizes, effects, probabilities, SD/CV, significance, and study timing. Verified continuous roots; exhaustive smallest/largest integer attainment; equal-group tied sizes; K-group total allocation and indexed parameter solving; immutable completed designs. Native automatic branch/bound discovery and proportional integer allocation remain open.",
+        "All five current censored-survival forward procedures: one-sample Poisson-event mixture, George–Desu randomized exponential model, randomized information-time model, fixed historical controls with optional continued follow-up, and corrected piecewise-exponential event integration. This completes the 25 active main-menu forward power/retention calculations.",
+        "Bounded inverse planning across all 25 active forward methods and the legacy matched-pairs method for sample sizes, effects, probabilities, SD/CV, significance, and study timing. Verified continuous roots; exhaustive smallest/largest integer attainment; equal-group tied sizes; K-group total allocation and indexed parameter solving; immutable completed designs. Bounds and branch are explicit caller choices; proportional K-group planning returns source-defined fractional counts without an inferred integer-allocation rule.",
         "Exponential median/mean/survival-point and historical person-time hazard conversions; two-point survival curves with specified hazard-change time and three-point curves with inferred change time. Bounded batch broadcasting, stable log differences, curve reconstruction checks, and explicit constant-hazard nonidentifiability.",
         "Historical-control survival planning jointly searches bounded accrual duration and new-control allocation using the existing fixed-history power model, explicit endpoint comparisons, a shared evaluation budget, and final achieved-power verification. Independent R and original Fortran references include both native manual examples.",
         "Exact one-sided binomial and Poisson inverse significance planning by bounded integer critical-region selection, with actual alpha/power and explicit unattainable-target status under the native significance cap; adaptive Poisson tail bracketing avoids truncating tiny requested powers.",
-        "Archived Miettinen matched-pairs binary power with fixed pilot-table dependence, bounded broadcasting and stable normalized variance calculations; effect, sample-size and significance inversion through stplan_solve. Source no-pilot group-proportion and default initial-size heuristics report unrounded preliminary sizes and verify attained power, rejecting spurious squared roots. This legacy routine is inactive in the native main menu and is distinct from matched case-control planning."
+        "Archived Miettinen matched-pairs binary power with fixed pilot-table dependence, bounded broadcasting and stable normalized variance calculations; effect, sample-size and significance inversion through stplan_solve. Source no-pilot group-proportion and default initial-size heuristics report unrounded preliminary sizes and verify attained power, rejecting spurious squared roots. This legacy routine is inactive in the native main menu and is distinct from matched case-control planning.",
+        "Saved community planning studies over all 26 registered forward methods and bounded inverse cases, with immutable inputs, effective defaults, deterministic JSON replay, atomic JSON/HTML reports, requested/achieved power, completed fractional group sizes, solver controls and integer-attainment evidence. Structural/schema and aggregate resource preflight bounds 20 cases, 100 groups, 20,000 inverse evaluations and five million estimated terms. Method-specific domains remain validated during execution; exact native session formats and automatic search defaults are not claimed."
       ],
       "validation": [
         "tests/test_stplan_discrete.py",
@@ -1676,7 +1677,12 @@
         "tools/reference_stplan_matched_pairs.f90",
         "tools/reference_stplan_matched_pairs.R",
         "research/stplan-matched-pairs-audit.md",
-        "research/stplan-matched-pairs-reference-audit.md"
+        "research/stplan-matched-pairs-reference-audit.md",
+        "src/mdanderson_stats/stplan_study.py",
+        "tests/test_stplan_study.py",
+        "docs/stplan-study.md",
+        "research/stplan-study-workflow-audit.md",
+        "research/stplan-coverage-boundary-audit.md"
       ]
     },
     {

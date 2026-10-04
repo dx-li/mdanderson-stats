@@ -1,13 +1,13 @@
 # STPLAN study planning
 
 STPLAN 4.5 (catalog entry 41) combines power and inverse planning procedures for
-binary, count, continuous, survival, and correlation outcomes. Python coverage is
-partial. All 25 power and retention procedures in the current main menu have
-independent Python implementations, checked against original Fortran output and
+binary, count, continuous, survival, and correlation outcomes. Python implements
+all 25 power and retention procedures in the current main menu, checked against
+original Fortran output and
 independent probability sums or integration. Bounded inverse planning is also
-available across these methods. Partial status reflects native per-method
-automatic bounds/branch selection and session/report workflows, not an
-unimplemented power formula.
+available across these methods. [Saved community studies](stplan-study.md) capture
+named calculations, replay JSON specifications and produce JSON/HTML results.
+Python callers specify inverse bounds and branch choices explicitly.
 The archive's inactive [matched-pairs binary procedure](stplan-matched-pairs.md)
 also has a Python power calculation and planning interface. It is separate from
 the 25 active menu procedures and from the matched case-control mixture.
@@ -192,8 +192,9 @@ procedures, with explicit treatment of the two native empty-region sentinels.
 The second probe is `tools/reference_stplan_discrete.f90`. Original software and
 source files are not redistributed.
 
-Still open: native per-method automatic bound/branch conventions and session/report
-workflows. Proportional K-group totals are a defined fractional planning procedure;
+The Python workflow uses explicit inverse bounds and branch choices and its own
+saved-study format; native automatic defaults and session/report formats are not
+reproduced. Proportional K-group totals are a defined fractional planning procedure;
 integer enrollment allocation is not defined by the native source. See the
 [coverage boundary audit](../research/stplan-coverage-boundary-audit.md).
 The old matched-pairs option is implemented and documented separately because

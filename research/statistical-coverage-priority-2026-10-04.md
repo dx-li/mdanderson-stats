@@ -1,6 +1,6 @@
 # Statistical coverage priority review
 
-This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard, OneArmTTE, BOIN, Pinnacle, EasyCellType, BOP2 online/retired desktop, BCHM, PoP, aPCoA and BOP2-DC, TOP and IPDfromKM subsequently completed their Python workflows, leaving 49 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
+This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard, OneArmTTE, BOIN, Pinnacle, EasyCellType, BOP2 online/retired desktop, BCHM, PoP, aPCoA and BOP2-DC, TOP, IPDfromKM and STPLAN subsequently completed their Python workflows, leaving 48 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
 
 A deeper cached-source review subsequently identified omitted overdose-allocation
 risk statistics in BOIN and Keyboard. Both are now implemented with their strict
@@ -14,7 +14,7 @@ in Python. Its optional modifier's precedence with conflicting backfill data is
 not explicit in the recovered guide, so the Python composition is documented and
 BF-BOIN has moved to section A.
 
-The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 48 entries in section A and one in section B, after the Parallel phase I/II source-output review identified unresolved kernel summaries. Its existing DF3+3 decisions and newly added phase-I tally outputs are covered. The Multc Lean saved-study review also distinguishes its unresolved native timing laws from ordinary file-format compatibility, moving that entry to section A. Review of Bayes Factor TTE, CRM Suite and CondiS likewise separates unresolved timing, decision precedence and prediction contracts from ordinary display or file compatibility; these entries also belong in section A. The PerfectMatch scaling review recovered its array-average-500 calculation but confirmed unresolved QC definitions, so that entry has moved to section A as well.
+The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. Report review identified unresolved native OC column definitions, so TITE-Keyboard has returned to section A. This leaves 48 entries in section A and none in section B, after the Parallel phase I/II source-output review identified unresolved kernel summaries. Its existing DF3+3 decisions and newly added phase-I tally outputs are covered. The Multc Lean saved-study review also distinguishes its unresolved native timing laws from ordinary file-format compatibility, moving that entry to section A. Review of Bayes Factor TTE, CRM Suite and CondiS likewise separates unresolved timing, decision precedence and prediction contracts from ordinary display or file compatibility; these entries also belong in section A. The PerfectMatch scaling review recovered its array-average-500 calculation but confirmed unresolved QC definitions, so that entry has moved to section A as well.
 
 ## A. Statistical or source-contract uncertainty remains
 
@@ -71,9 +71,11 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 
 ## B. No additional calculation identified; remaining work is input, output, or application parity
 
-| Program | Remaining work | Evidence |
-| --- | --- | --- |
-| STPLAN (#41) | Bounded inverse APIs cover the available power methods. Native per-method automatic bounds/branch defaults and session/report workflows remain differences. Proportional K-group totals are source-defined fractional counts; the native source provides no integer allocation or rounding procedure. | [planning guide](../docs/stplan-planning.md); [coverage-boundary audit](stplan-coverage-boundary-audit.md) |
+No entries remain in this category after the saved STPLAN study workflow was
+completed. Its explicit-bound inverse APIs and fractional proportional planning
+already covered the calculations; portable inputs, replay and reports now
+provide the community workflow. Native automatic defaults and file formats
+remain documented compatibility differences.
 
 The classifications above are review findings, not status changes. A source-contract uncertainty should be resolved before adding a purported native method; input and presentation work can still be useful community functionality without being described as statistical coverage.
 
