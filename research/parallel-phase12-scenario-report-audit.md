@@ -58,14 +58,45 @@ parameter summary arrays; `TrialDesign.h::Clear` resets current probabilities
 but not `m_vPostMeans`/`m_vPostVars`, so these values can be stale after an
 early stop. Python does not imitate this behavior.
 
-For kernel probability vectors, `Kernel::Integrate` pushes the per-fit vector
-to `m_vvrtTot` (`DFKernel.cpp`, line 261), and `Kernel::PrintResults` prints
-each component's running mean and variance (`DFKernel.cpp`, lines 78–89).
-The implementation of `VectorValuedRunningVariance` is absent from the cached
-archive, and the current Python fit result does not expose the same integrated
-vector. Consequently neither its variance convention nor a faithful probability
-vector crosswalk can be asserted. Importance-backend and MCMC summaries are
-not relabeled as this native Laplace/integral output.
+For kernel probability vectors, `TrialDesign::SetupTrial` allocates
+`3*nDoses + nDoses*nDoses + nDoses` summaries: for six doses this is 60
+components (`TrialDesign.cpp`, lines 85–90). `Kernel::operator()` defines their
+order and indicators (`DFKernel.h`, lines 328–356): six reference-superiority
+values (the first is fixed at 0.5, the rest compare each dose strictly against
+dose one), six efficacy indicators using `>= U`, six future-study indicators
+using `> FU`, 36 strict ordered pairwise response comparisons in dose-major,
+then comparator-major order, and six squared response probabilities. The
+analytic toxicity exceedance vector is separate. `FullIntegrand.cpp`, lines
+38–66, places evidence in component zero and indicator integrals in components
+1–60; `Kernel::Integrate`, lines 225–261, divides each numerator by evidence
+and pushes the resulting 60-vector after a successful integration.
+
+The accumulator implementation is present in the cached BiostatGeneral
+dependency at
+`research/raw/P12Xuelin/extracted/Map_L_drive_here/BiostatGeneral/v8.1/StatUtilities/`.
+`VectorValuedRunningVariance.cpp`, lines 13–31, applies a scalar running
+variance to each component. `RunningVariance.cpp`, lines 12–50, uses Welford's
+update for centered sums of squares, returns arithmetic mean `sum/n`, and
+sample variance `M2/(n-1)` (zero for fewer than two values). `DFKernel.h`,
+lines 146–153, clears this accumulator per scenario. `TrialDesign.cpp`, lines
+591–597 and 642–648, shows that analysis calls originate in both winner
+selection and stopping-rule evaluation; the summary population is successful
+analysis calls, not one final fit per trial. `Kernel::PrintResults`, lines
+80–92, displays the 60 means and variances as ten unlabelled rows of six.
+
+Python `fit_phase12_importance` already exposes the per-fit values for these
+components, their paired-ratio MC standard errors, and the six posterior
+response-probability second moments. The new
+`summarize_phase12_importance_fits` callable streams a caller-selected iterable
+of those fits and returns componentwise means and sample variances in native
+order, along with the analysis-call count and number of nonconverged fits.
+Nonconverged estimates are included rather than silently filtered, matching
+the native cap-return behavior. It does not claim an independence or MC-error
+interpretation, alter the calendar to retain all analysis calls, or reproduce
+the native integration/random-number implementation. The mean uses streaming
+Welford updates rather than native `sum/n`, so last-bit differences are
+possible. See [`parallel-phase12-probability-summary.md`](../docs/parallel-phase12-probability-summary.md)
+for the explicit scope and example.
 
 The six-dose DF3+3 progression comparator is implemented in
 `parallel_phase12_progression.py` and checked against the extracted decision,
@@ -82,6 +113,8 @@ reported Monte Carlo errors are Python OC additions. The existing
 final-trial admissibility summary remains separate and includes paths that
 were interrupted before the native tally point.
 
-Unresolved work is limited to the C++ posterior-kernel printouts and exact
-native RNG parity. The kernel's posterior mode/covariance and probability-vector
-summaries are not relabeled as MCMC or importance-backend outputs.
+Unresolved work includes exact native RNG and adaptive integration parity, plus
+the C++ posterior-parameter accumulator's stale-value behavior on no-fit trial
+paths. The Python probability summary operates on explicitly supplied
+importance-backend fits and is not relabeled as the native posterior-mode or
+MCMC output.
