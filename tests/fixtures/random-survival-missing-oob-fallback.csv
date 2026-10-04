@@ -1,0 +1,5 @@
+"case","pool","field_type","values","uniform","result"
+"oob_tree_terminal_pool_nonempty","tree_terminal_values","continuous","2;8",NA,5
+"oob_tree_terminal_pool_nonempty_categorical","tree_terminal_values","categorical","2;8;8",0.75,8
+"oob_tree_terminal_pool_empty_predictor","full_data_observed","continuous","4;6",0.25,4
+"oob_tree_terminal_pool_empty_outcome","none","outcome","",NA,NA

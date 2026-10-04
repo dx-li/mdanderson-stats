@@ -1,0 +1,4 @@
+"case","event_time","at_risk","events","hazard_increment","survival_after_step","original_missing_outcomes_excluded_from_split","completed_outcomes_in_terminal_summary"
+"completed_terminal_km_counts",1,5,1,0.2,0.8,1,1
+"completed_terminal_km_counts",2,4,1,0.25,0.6,1,1
+"completed_terminal_km_counts",3,2,1,0.5,0.3,1,1

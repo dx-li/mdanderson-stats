@@ -1,0 +1,5 @@
+"case","result","value","outc_type_enabled"
+"internal_no_local_observed_donor","retain_parent_value",7,FALSE
+"terminal_no_observed_donor_parent_values_available","summarize_completed_originally_missing_inbag_values",9,FALSE
+"terminal_no_donor_anywhere_default","fatal_native_error",NA,FALSE
+"terminal_no_donor_anywhere_outc_type","write_NaN",NA,TRUE

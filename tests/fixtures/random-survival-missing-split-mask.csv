@@ -1,0 +1,7 @@
+"row_id","original_x_missing","original_y_missing","imputed_x_for_routing","eligible_for_first_pass_candidate_and_score","candidate_x_values"
+1,FALSE,FALSE,1,TRUE,1
+2,FALSE,FALSE,2,TRUE,2
+3,FALSE,TRUE,3,FALSE,NA
+4,FALSE,FALSE,4,TRUE,4
+5,TRUE,FALSE,5,FALSE,NA
+6,FALSE,FALSE,6,TRUE,6

@@ -1,0 +1,3 @@
+"case","value","lower_distance","upper_distance","uniform","snapped_time"
+"near_left_prefers_lower_regardless_of_tape",2.4999999996,0.4999999996,0.5000000004,0.75,2
+"near_right_tie_band_uses_tape",2.5000000004,0.5000000004,0.4999999996,0.25,2

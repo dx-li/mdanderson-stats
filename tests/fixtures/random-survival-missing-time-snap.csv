@@ -1,0 +1,3 @@
+"case","unsnapped_mean","observed_inbag_times","mean_time","lower_distance","upper_distance","tie_uniform","snapped_time"
+"terminal_time_mean_snap_asymmetric_tie",2.5,"1;2;3;4",2.5,0.5,0.5,0.25,2
+"terminal_time_mean_snap_asymmetric_tie",2.5,"1;2;3;4",2.5,0.5,0.5,0.75,3

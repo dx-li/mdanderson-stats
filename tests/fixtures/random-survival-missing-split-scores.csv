@@ -1,0 +1,4 @@
+"cut","score","selected","candidate_n","candidate_rows"
+1,1.73205080756888,TRUE,4,"1;2;4;6"
+2,1,FALSE,4,"1;2;4;6"
+4,1.13389341902768,FALSE,4,"1;2;4;6"
