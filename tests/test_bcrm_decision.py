@@ -1,5 +1,6 @@
 """Compact checks for bCRM's explicit one-outcome decision rules."""
 
+import numpy as np
 import pytest
 
 from mdanderson_stats.bcrm_decision import bcrm_decision, bcrm_extreme_allocation_probability
@@ -105,3 +106,11 @@ def test_extreme_allocation_probability_validates_fraction_contract():
         bcrm_extreme_allocation_probability(0.25, 0.25, correction=-1)
     with pytest.raises(ValueError, match="equal lengths"):
         bcrm_extreme_allocation_probability([0.2, 0.3], [0.2, 0.3, 0.4])
+    with pytest.raises(ValueError, match="real-valued"):
+        bcrm_extreme_allocation_probability(complex(0.25, 1), 0.25)
+    with pytest.raises(ValueError, match="real-valued"):
+        bcrm_extreme_allocation_probability(0.25, 0.25, correction=np.complex128(2 + 1j))
+    with pytest.raises(ValueError, match="exceeds"):
+        bcrm_extreme_allocation_probability(range(200_001), 0.25)
+    with pytest.raises(TypeError, match="bounded one-dimensional"):
+        bcrm_extreme_allocation_probability(iter([0.25]), 0.25)

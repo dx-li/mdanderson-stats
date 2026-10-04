@@ -1,5 +1,6 @@
 """Explicit single-outcome bCRM dose-selection and stopping rules."""
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 import numpy as np
@@ -62,6 +63,15 @@ def bcrm_extreme_allocation_probability(
     """
     target = _allocation_fraction(target_fraction, "target_fraction")
     allocated = _allocation_fraction(allocated_fraction, "allocated_fraction")
+    if isinstance(correction, np.ndarray):
+        if correction.ndim != 0:
+            raise ValueError("correction must be a scalar")
+        if np.iscomplexobj(correction):
+            raise ValueError("correction must be real-valued")
+    elif not np.isscalar(correction):
+        raise ValueError("correction must be a scalar")
+    elif np.iscomplexobj(correction):
+        raise ValueError("correction must be real-valued")
     gamma = scalar(correction, "correction")
     if np.any((target <= 0) | (target >= 1)):
         raise ValueError("target_fraction must lie strictly inside (0, 1)")
@@ -102,15 +112,20 @@ def _allocation_fraction(value: ArrayLike, name: str) -> np.ndarray:
             )
         if np.iscomplexobj(value):
             raise ValueError(f"{name} must be real-valued")
-    elif isinstance(value, (list, tuple)):
+    elif isinstance(value, Sequence):
         if len(value) > _MAX_ALLOCATION_VALUES:
             raise ValueError(f"{name} exceeds {_MAX_ALLOCATION_VALUES} values")
-        if any(isinstance(item, (list, tuple, np.ndarray)) for item in value):
+        if any(not np.isscalar(item) for item in value):
             raise ValueError(f"{name} must be one-dimensional")
         if any(np.iscomplexobj(item) for item in value):
             raise ValueError(f"{name} must be real-valued")
-    elif np.iscomplexobj(value):
-        raise ValueError(f"{name} must be real-valued")
+    elif np.isscalar(value):
+        if np.iscomplexobj(value):
+            raise ValueError(f"{name} must be real-valued")
+    else:
+        raise TypeError(
+            f"{name} must be a scalar, NumPy array, or bounded one-dimensional sequence"
+        )
     array = finite(value, name)
     if array.ndim not in (0, 1):
         raise ValueError(f"{name} must be a scalar or one-dimensional vector")
