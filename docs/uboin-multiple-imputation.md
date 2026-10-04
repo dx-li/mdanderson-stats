@@ -61,6 +61,14 @@ escalation check. Their efficacy completions contribute only to the posterior
 functionals. The existing ordering remains in effect: lowest-dose safety stop,
 patient and `s2` stops, B1 escalation, then B2 admissibility/allocation.
 
+Dose indices in the pending ledgers, `current_dose`, and returned conduct
+fields are one-based. Pass the persistent boolean `eliminated` mask returned
+by the preceding Stage-I decision; the evaluator does not reconstruct safety
+history from counts. A true lowest-dose entry stops for safety, and other true
+entries are excluded from selection. As in ordinary conduct, `candidate_scope`
+controls whether B2 can allocate only to tried doses or to every configured
+dose; posterior admissibility and the elimination mask still apply.
+
 At least five predictive rows are required, following the paper's stated
 minimum; its simulation used 20. Limits are 1,000 imputations, 1,000 pending
 patients, 100,000 predictive probabilities, and 2,000,000 posterior category
