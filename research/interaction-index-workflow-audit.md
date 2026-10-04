@@ -10,6 +10,7 @@ simulation-study scripts. Its original archive was not inspected.
 | `CI.delta`, Section 3 | Fixed-ray log-delta intervals using the separate fitted coefficient covariances |
 | `CI.simulation`, Section 3 | Normal-coefficient Monte Carlo comparator with retained draws and slope-reversal diagnostics |
 | Median-effect plots and case studies | Optional plot helpers and executable Table 2/3 examples with saved figures and numerical records |
+| `Simulation1_3_drugs.ssc` | Bounded serial three-drug simulation with captured inputs, raw/log-delta coverage, interval lengths and classification rates |
 
 The case-study data come from Section 4.2, Tables 2/3 and Figures 4/5 of
 [Lee and Kong (2009)](https://doi.org/10.1198/sbr.2009.0001). The cached BioC
@@ -31,13 +32,17 @@ square used by Python. It does not establish an undocumented native pooling
 denominator: the independent calculation intentionally uses the same stated
 statistical convention. No covariance is pooled for the fixed-ray method.
 
-## Remaining advertised simulation work
+## Simulation studies and remaining scope
 
-The cached Section 4.1 describes a three-drug repeated-sampling study in enough
-detail to implement its generation, raw/log-delta coverage, interval lengths
-and classification summaries. Its printed `1.67` interaction index and `0.625`
+The [three-drug study](../docs/interaction-index-study.md) implements the
+generation and summaries specified in cached Section 4.1. It streams one
+19-observation dataset at a time, records its replayable seed and bounds the
+total workload. A separate base-R reference checks all summary metrics for
+three five-replicate cells, including a negative raw-delta lower limit.
+Its printed `1.67` interaction index and `0.625`
 response do not establish the exact unrounded constant used by the original
-script; a Python study must record the value actually used.
+script. The Python default uses the printed index literally and records it;
+callers can explicitly supply `5/3` instead.
 
 For the second, fixed-ray simulation, the cached text omits the composition
 ratio from inline mathematics. The marginal and mixture models alone cannot

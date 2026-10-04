@@ -902,6 +902,8 @@ using an explicit residual-df pooling convention on the logit-effect scale.
 median-effect lines and pointwise interaction intervals. The
 [published case studies](docs/interaction-index-case-studies.md) reproduce both
 paper datasets with saved figures and numerical results.
+The [three-drug simulation study](docs/interaction-index-study.md) adds
+bounded coverage and interval-length comparisons with captured settings.
 SYNERGY also provides a
 [semiparametric response surface](docs/synergy-surface.md) with raw/log-dose
 baselines and REML thin-plate smoothing. Its

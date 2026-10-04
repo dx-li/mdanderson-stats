@@ -2439,12 +2439,14 @@
         "Fixed-ray interaction curves with uncertainty from independent component and combination regressions",
         "Normal-coefficient Monte Carlo comparison with paper RMS formula, retained draws and slope-reversal diagnostics",
         "Observed-combination no-replicate pooled logit-error fallback with residual-df-weighted MSE, stable transformed-scale propagation and unchanged independent coefficient covariances",
-        "Optional median-effect and pointwise interaction-index figures, with bounded inputs and extreme-index log display; two published case-study datasets with saved figures and numerical outputs"
+        "Optional median-effect and pointwise interaction-index figures, with bounded inputs and extreme-index log display; two published case-study datasets with saved figures and numerical outputs",
+        "Bounded serial three-drug simulation study with captured replayable seed, raw/log-delta coverage, interval-length and classification summaries"
       ],
       "validation": [
         "Eight focused tests: regression, published three-drug identity, delta variances, exact Monte Carlo RMS reconstruction, small-noise agreement and unstable-slope diagnostics; tests/test_interaction_index.py and tests/test_interaction_monte_carlo.py",
         "Published Tables 2/3 regression and interaction-index references, independent base-R delta calculations, and plot coordinate/stability checks; docs/interaction-index-case-studies.md and docs/interaction-index-plots.md. Native pooling denominator and file/report compatibility remain unverified.",
-        "Independent block-covariance delta oracle, unequal residual degrees of freedom, zero residual variance and tiny-effect stability; native pooling denominator remains unspecified. See docs/interaction-index-pooled-error.md."
+        "Independent block-covariance delta oracle, unequal residual degrees of freedom, zero residual variance and tiny-effect stability; native pooling denominator remains unspecified. See docs/interaction-index-pooled-error.md.",
+        "Independent base-R seeded study references check all eight summaries across three five-replicate scenarios; source fixed-ray simulation ratio remains unrecovered. See docs/interaction-index-study.md and research/interaction-index-workflow-audit.md."
       ]
     },
     {

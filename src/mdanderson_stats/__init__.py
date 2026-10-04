@@ -886,6 +886,11 @@ from .inequality import InequalityProbability, inequality_probability
 from .interaction_index import InteractionIndex, interaction_index, interaction_index_ray
 from .interaction_index_plot import plot_interaction_index, plot_median_effect
 from .interaction_index_pooled import interaction_index_pooled_error
+from .interaction_index_study import (
+    InteractionIndexStudyCell,
+    InteractionIndexStudySummary,
+    simulate_interaction_index_three_drug_study,
+)
 from .interaction_monte_carlo import InteractionMonteCarlo, interaction_index_monte_carlo
 from .interval_competing_risk import (
     IntervalCompetingRiskFit,
@@ -2988,6 +2993,9 @@ __all__ = [
     "interaction_index_ray",
     "plot_interaction_index",
     "plot_median_effect",
+    "InteractionIndexStudyCell",
+    "InteractionIndexStudySummary",
+    "simulate_interaction_index_three_drug_study",
     "MedianEffectFit",
     "fit_median_effect",
     "quantile_normalize",

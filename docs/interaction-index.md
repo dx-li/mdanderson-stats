@@ -118,9 +118,13 @@ The [optional plotting helpers](interaction-index-plots.md) display median-effec
 fits and pointwise interaction intervals, including log-scale output when raw
 indices cannot be represented. The [published case studies](interaction-index-case-studies.md)
 use both paper datasets and save two-panel figures and numerical results.
+The [three-drug simulation study](interaction-index-study.md) evaluates
+raw/log-delta coverage, interval lengths and classifications with bounded
+serial sampling and a saved replayable seed.
 
 **Both catalog entries remain partial.** CI of Interaction Index retains an
-unresolved native pooling denominator and native file/report compatibility.
+unresolved composition ratio for the paper's second simulation study, native
+pooling-denominator details and native file/report compatibility.
 SYNERGY also supports the [semiparametric response-surface
 fit](synergy-surface.md), with raw/log-dose baselines and REML smoothing.
 Its other parametric surfaces, wild-bootstrap intervals and associated

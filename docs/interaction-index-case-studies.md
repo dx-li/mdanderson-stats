@@ -51,7 +51,10 @@ cases = [
         "dose_unit": "μM",
         "components": ["SCH66336", "4-HPR"],
         "single_doses": [[0.1, 0.5, 1, 2, 4], [0.1, 0.5, 1, 2]],
-        "single_responses": [[0.6701, 0.6289, 0.5577, 0.4550, 0.3755], [0.7666, 0.5833, 0.5706, 0.4934]],
+        "single_responses": [
+            [0.6701, 0.6289, 0.5577, 0.4550, 0.3755],
+            [0.7666, 0.5833, 0.5706, 0.4934],
+        ],
         "combination_total_dose": [0.2, 1, 2, 4],
         "combination_response": [0.6539, 0.4919, 0.3551, 0.2341],
         "ray": [1, 1],
@@ -63,7 +66,10 @@ cases = [
         "dose_unit": None,
         "components": ["o-Phenanthroline", "ADP"],
         "single_doses": [[8.7, 17.4, 26.1, 34.8, 43.5], [0.5, 1, 1.5, 2, 2.5]],
-        "single_responses": [[0.132, 0.267, 0.411, 0.476, 0.548], [0.175, 0.400, 0.492, 0.542, 0.592]],
+        "single_responses": [
+            [0.132, 0.267, 0.411, 0.476, 0.548],
+            [0.175, 0.400, 0.492, 0.542, 0.592],
+        ],
         "combination_total_dose": [9.2, 18.4, 27.6, 36.8, 46],
         "combination_response": [0.507, 0.769, 0.872, 0.919, 0.944],
         "ray": [17.4, 1],
@@ -84,9 +90,7 @@ for case in cases:
     components = np.asarray(case["combination_total_dose"])[:, None] * (
         np.asarray(case["ray"]) / sum(case["ray"])
     )
-    observed = interaction_index_pooled_error(
-        single_fits, components, case["combination_response"]
-    )
+    observed = interaction_index_pooled_error(single_fits, components, case["combination_response"])
 
     fig, (median_ax, index_ax) = plt.subplots(1, 2, figsize=(11, 4.5), constrained_layout=True)
     for label, fit, dose, response in zip(
@@ -104,8 +108,11 @@ for case in cases:
 
     plot_interaction_index(effects, ray, ax=index_ax, label="Fixed-ray curve")
     plot_interaction_index(
-        case["combination_response"], observed, ax=index_ax,
-        label="Observed (pooled error)", kind="points",
+        case["combination_response"],
+        observed,
+        ax=index_ax,
+        label="Observed (pooled error)",
+        kind="points",
     )
     index_ax.set_xlabel(case["response_label"])
     index_ax.legend(fontsize="small", loc="upper left")
@@ -145,7 +152,9 @@ for case in cases:
             "confidence": observed.confidence,
         },
     }
-    (output / f"{case['id']}.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+    (output / f"{case['id']}.json").write_text(
+        json.dumps(record, indent=2) + "\n", encoding="utf-8"
+    )
 ```
 
 The source data and rounded printed fit summaries are also recorded in
