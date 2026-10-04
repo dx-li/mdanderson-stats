@@ -1,9 +1,11 @@
 """Published trial-prefix timing, causal replay and simulated timing distributions."""
 
 import numpy as np
+import pytest
 from numpy.testing import assert_allclose, assert_array_equal
 
 from mdanderson_stats import KeyboardDesign, run_tite_keyboard_trial, simulate_tite_keyboard
+from mdanderson_stats.tite_keyboard_simulation import _allocation_risks
 
 
 def test_staggered_safe_cohorts_wait_for_two_ascertained_patients():
@@ -94,3 +96,26 @@ def test_conditional_event_timing_and_arrival_generator():
         arrival="exponential",
     )
     assert abs(arrivals.duration.mean() - 0.5005) < 6 * 0.5 / np.sqrt(2000)
+
+
+def test_keyboard_paper_allocation_risks_use_strict_cutoffs_and_actual_enrollment():
+    patients = np.asarray(
+        [
+            [0, 3, 0, 3],  # Exactly half above MTD: not overdose.
+            [0, 5, 0, 4],  # Five at MTD; four of nine above is below half.
+            [0, 6, 0, 4],  # Exactly four of ten above MTD: not overdose.
+            [0, 6, 0, 7],  # Seven of thirteen above MTD: overdose.
+        ],
+        dtype=np.int64,
+    )
+    risks = _allocation_risks(patients, 2)
+    assert risks is not None
+    assert risks.poor_allocation_count == 2
+    assert risks.poor_allocation_probability == 0.5
+    assert risks.poor_allocation_mcse == pytest.approx(0.25)
+    assert risks.overdose_count == 1
+    assert risks.overdose_probability == 0.25
+    assert risks.overdose_mcse == pytest.approx(np.sqrt(0.25 * 0.75 / 4))
+    assert _allocation_risks(patients, None) is None
+    with pytest.raises(ValueError, match="true_mtd"):
+        _allocation_risks(patients, 0)

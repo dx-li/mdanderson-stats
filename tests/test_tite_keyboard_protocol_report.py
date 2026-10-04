@@ -15,7 +15,7 @@ def _request(**overrides):
     values = {
         "trial_name": "Study <A & B>",
         "design": KeyboardDesign(target=0.30),
-        "scenarios": (report_module.TITEKeyboardScenario("low <truth>", [0.05, 0.20, 0.35]),),
+        "scenarios": (report_module.TITEKeyboardScenario("low <truth>", [0.05, 0.20, 0.35], 2),),
         "window": 30,
         "accrual_rate": 1 / 10,
         "cohorts": 2,
@@ -41,6 +41,7 @@ def test_report_replays_captured_scenario_and_renders_boundaries(tmp_path):
         cohort_size=2,
         trials=30,
         rng=scenario.scenario_seed,
+        true_mtd=2,
     )
     np.testing.assert_array_equal(scenario.selection_probability, direct.selection_probability)
     np.testing.assert_array_equal(scenario.selection_mcse, direct.selection_mcse)
@@ -51,12 +52,15 @@ def test_report_replays_captured_scenario_and_renders_boundaries(tmp_path):
     assert sum(row[1] for row in scenario.stop_reason_probability) == pytest.approx(1)
     assert scenario.true_toxicity.flags.writeable is False
     assert scenario.selection_probability.flags.writeable is False
+    assert scenario.allocation_risks == direct.allocation_risks
+    assert scenario.allocation_risks is not None
 
     content = report.to_html(digits=17)
     assert "Study &lt;A &amp; B&gt;" in content
     assert "low &lt;truth&gt;" in content
     assert "effective non-DLT counts immediately below and at" in content
-    assert "native correct-selection/regret estimand" in content
+    assert "native report-layout parity is not asserted" in content
+    assert "Risk of &lt;6 patients at true MTD (dose 2)" in content
     path = tmp_path / "report.html"
     report.write_html(path, digits=17)
     assert path.read_text(encoding="utf-8") == content
@@ -104,7 +108,7 @@ def test_adaptive_report_records_child_seeds_diagnostics_and_work():
     report = report_module.run_tite_keyboard_protocol(
         _request(
             design=KeyboardDesign(target=0.2),
-            scenarios=(report_module.TITEKeyboardScenario("adaptive", [0.1, 0.2]),),
+            scenarios=(report_module.TITEKeyboardScenario("adaptive", [0.1, 0.2], 1),),
             cohorts=2,
             cohort_size=3,
             trials=2,
@@ -114,6 +118,8 @@ def test_adaptive_report_records_child_seeds_diagnostics_and_work():
         )
     )
     result = report.scenarios[0]
+    assert result.allocation_risks is not None
+    assert result.allocation_risks.true_mtd == 1
     assert result.adaptive_fit_count > 0
     assert result.adaptive_diagnostics_passed == result.adaptive_fit_count
     assert result.outcome_seed is not None

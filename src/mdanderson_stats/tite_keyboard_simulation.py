@@ -17,6 +17,19 @@ from .tite_keyboard_trial import (
 
 
 @dataclass(frozen=True)
+class TITEKeyboardAllocationRisks:
+    """Source-defined per-trial allocation risks for an explicit true MTD."""
+
+    true_mtd: int
+    poor_allocation_count: int
+    poor_allocation_probability: float
+    poor_allocation_mcse: float | None
+    overdose_count: int
+    overdose_probability: float
+    overdose_mcse: float | None
+
+
+@dataclass(frozen=True)
 class TITEKeyboardSimulation(CalendarSimulation):
     adaptive_work_units: int = 0
     adaptive_fit_count: int = 0
@@ -25,6 +38,59 @@ class TITEKeyboardSimulation(CalendarSimulation):
     max_adaptive_weight_mcse: float | None = None
     outcome_seed: int | None = None
     sampler_seed: int | None = None
+    allocation_risks: TITEKeyboardAllocationRisks | None = None
+
+
+def _allocation_risks(
+    patients: np.ndarray, true_mtd: int | None
+) -> TITEKeyboardAllocationRisks | None:
+    if true_mtd is None:
+        return None
+    if isinstance(true_mtd, (bool, np.bool_)) or not isinstance(true_mtd, (int, np.integer)):
+        raise ValueError("true_mtd must be a one-based integer dose index or None")
+    mtd = int(true_mtd)
+    if not 1 <= mtd <= patients.shape[1]:
+        raise ValueError("true_mtd must identify a dose in the simulated scenario")
+    enrolled = patients.sum(axis=1)
+    poor_count = int(np.count_nonzero(patients[:, mtd - 1] < 6))
+    above_mtd = patients[:, mtd:].sum(axis=1)
+    overdose_count = int(np.count_nonzero(2 * above_mtd > enrolled))
+    trials = int(patients.shape[0])
+    poor_probability = poor_count / trials
+    overdose_probability = overdose_count / trials
+    if trials > 1:
+        poor_mcse: float | None = float(np.sqrt(poor_probability * (1 - poor_probability) / trials))
+        overdose_mcse: float | None = float(
+            np.sqrt(overdose_probability * (1 - overdose_probability) / trials)
+        )
+    else:
+        poor_mcse = None
+        overdose_mcse = None
+    return TITEKeyboardAllocationRisks(
+        mtd,
+        poor_count,
+        poor_probability,
+        poor_mcse,
+        overdose_count,
+        overdose_probability,
+        overdose_mcse,
+    )
+
+
+def _validate_true_mtd(true_mtd: int | None, true_toxicity: ArrayLike) -> None:
+    if true_mtd is None:
+        return
+    if isinstance(true_mtd, (bool, np.bool_)) or not isinstance(true_mtd, (int, np.integer)):
+        raise ValueError("true_mtd must be a one-based integer dose index or None")
+    dose_count = (
+        int(true_toxicity.size)
+        if isinstance(true_toxicity, np.ndarray) and true_toxicity.ndim == 1
+        else len(true_toxicity)
+        if isinstance(true_toxicity, (list, tuple))
+        else 0
+    )
+    if not 1 <= int(true_mtd) <= dose_count:
+        raise ValueError("true_mtd must identify a dose in the simulated scenario")
 
 
 def simulate_tite_keyboard(
@@ -45,6 +111,7 @@ def simulate_tite_keyboard(
     pending_fraction_limit: float | None = 0.5,
     rng: int | np.random.Generator | None = None,
     adaptive_timing: TITEKeyboardAdaptiveSettings | None = None,
+    true_mtd: int | None = None,
 ) -> TITEKeyboardSimulation:
     """Simulate binary DLT incidence and conditional DLT time separately.
 
@@ -55,6 +122,8 @@ def simulate_tite_keyboard(
     Weibull/log-logistic scenarios use late_probability to calibrate the fraction
     of DLTs in the late half of the window, independently of analysis weights.
     """
+
+    _validate_true_mtd(true_mtd, true_toxicity)
 
     outcome_rng: int | np.random.Generator | None
     sampler_rng: np.random.Generator | None
@@ -139,6 +208,7 @@ def simulate_tite_keyboard(
         outcome_rng,
         max_output_cells=2_000_000 if adaptive_timing is not None else None,
     )
+    allocation_risks = _allocation_risks(result.patients, true_mtd)
     return TITEKeyboardSimulation(
         result.patients,
         result.toxicities,
@@ -155,6 +225,7 @@ def simulate_tite_keyboard(
         max_weight_mcse if aggregate_fits else None,
         None if adaptive_seeds is None else adaptive_seeds[0],
         None if adaptive_seeds is None else adaptive_seeds[1],
+        allocation_risks,
     )
 
 

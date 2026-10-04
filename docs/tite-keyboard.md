@@ -210,9 +210,11 @@ calendar = simulate_tite_keyboard(
     accrual_rate=2,
     trials=1000,
     rng=135,
+    true_mtd=3,
 )
 print(calendar.selection_probability)
 print(calendar.duration.mean(), calendar.suspension_time.mean())
+print(calendar.allocation_risks)
 ```
 
 Potential DLT delays have shape `(planned_patients,doses)` and are measured from
@@ -221,6 +223,12 @@ means no DLT in the window. Only the assigned-dose outcome is observed, and only
 once its event time is reached. Unassigned potential outcomes cannot influence
 conduct. Arrival gaps are nonnegative, with the first gap measured from trial time
 zero. Planned enrollment must comprise complete cohorts and cannot exceed 200.
+With a one-based `true_mtd` index, simulation results also include the paper's
+per-trial proportions allocating fewer than six patients to the MTD and
+allocating more than half of actual enrolled patients above it. Early-stopped
+trials use their actual enrollment as the denominator. Counts, proportions,
+and binomial MCSE are included (`MCSE=None` for one trial); the true MTD is never
+inferred when the argument is omitted.
 
 The calendar engine uses the following explicit conventions:
 

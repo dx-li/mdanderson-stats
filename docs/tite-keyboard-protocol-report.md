@@ -19,8 +19,8 @@ report = run_tite_keyboard_protocol(
         trial_name="Dose escalation example",
         design=KeyboardDesign(target=0.30),
         scenarios=(
-            TITEKeyboardScenario("below target", [0.05, 0.15, 0.25, 0.40]),
-            TITEKeyboardScenario("above target", [0.10, 0.30, 0.45, 0.60]),
+            TITEKeyboardScenario("below target", [0.05, 0.15, 0.25, 0.40], true_mtd=3),
+            TITEKeyboardScenario("above target", [0.10, 0.30, 0.45, 0.60], true_mtd=2),
         ),
         window=90,
         accrual_rate=1 / 15,
@@ -32,7 +32,19 @@ report = run_tite_keyboard_protocol(
 )
 report.write_html("tite-keyboard-protocol.html")
 print(report.scenarios[0].selection_probability)
+print(report.scenarios[0].allocation_risks)
 ```
+
+When `true_mtd` is present, the simulation reports the proportion of trials
+allocating fewer than six patients to that dose and the proportion allocating
+more than half of each trial's enrolled patients above it. The denominator is
+the actual enrollment in that trial, including trials stopped early. Both
+strict cutoffs follow Section 4.1 of the paper (`research/raw/TITE-KEYBOARD/paper.txt`,
+pp. 18–19 in the cached text). The true-MTD index is supplied explicitly; the
+report does not infer a correct dose from the toxicity vector. These per-trial
+allocation metrics are not available when `true_mtd=None`. Their MCSE is
+reported when the simulation has at least two trials. Multiply the returned
+proportions by 100 to express them as the paper's percentages.
 
 The report includes the captured target interval and posterior key, extra-safe
 settings, the decision order, posterior effective-follow-up transition
@@ -65,8 +77,8 @@ split-R-hat, and pending-weight MCSE summaries. Diagnostic thresholds are
 empirical checks, not guarantees of convergence.
 
 The saved file is a Python report format. It does not reproduce the app's native
-HTML/Word files or exact Figure 1/Table 1 layout. The cached app page exposes an
-Operating Characteristics pane but not its column definitions, so this report
-does not claim native correct-selection, regret, or overdose estimand parity.
+HTML/Word files, exact Figure 1/Table 1 layout, or native random streams. The
+two allocation risks follow the paper's definitions with caller-supplied true
+MTD; native report-layout parity is not asserted.
 See the [source and coverage audit](../research/tite-keyboard-protocol-report-audit.md)
 and the existing [TITE-Keyboard methods guide](tite-keyboard.md).

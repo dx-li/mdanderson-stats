@@ -20,7 +20,11 @@ from .boin import _owned
 from .keyboard import KeyboardDesign
 from .tite_keyboard_adaptive_calendar import TITEKeyboardAdaptiveSettings
 from .tite_keyboard_boundaries import TITEKeyboardBoundaries, tite_keyboard_boundaries
-from .tite_keyboard_simulation import TITEKeyboardSimulation, simulate_tite_keyboard
+from .tite_keyboard_simulation import (
+    TITEKeyboardAllocationRisks,
+    TITEKeyboardSimulation,
+    simulate_tite_keyboard,
+)
 from .toxicity_timing import toxicity_time_quantile
 
 _MAX_SCENARIOS = 20
@@ -39,6 +43,7 @@ class TITEKeyboardScenario:
 
     name: str
     true_toxicity: ArrayLike
+    true_mtd: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -92,6 +97,7 @@ class TITEKeyboardScenarioSummary:
     max_adaptive_split_rhat: float | None
     max_adaptive_weight_mcse: float | None
     adaptive_work_budget: int
+    allocation_risks: TITEKeyboardAllocationRisks | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -336,6 +342,24 @@ class TITEKeyboardProtocolReport:
                     f"<tr><td>Dose {dose}: mean DLTs</td>"
                     f"<td>{number(float(toxicities))}</td><td>{number(float(toxicities_se))}</td></tr>"
                 )
+            if scenario.allocation_risks is not None:
+                risks = scenario.allocation_risks
+                poor_mcse = (
+                    "—"
+                    if risks.poor_allocation_mcse is None
+                    else number(risks.poor_allocation_mcse)
+                )
+                overdose_mcse = "—" if risks.overdose_mcse is None else number(risks.overdose_mcse)
+                lines.append(
+                    f"<tr><td>Risk of &lt;6 patients at true MTD (dose {risks.true_mtd})</td>"
+                    f"<td>{number(risks.poor_allocation_probability)}</td>"
+                    f"<td>{poor_mcse}</td></tr>"
+                )
+                lines.append(
+                    f"<tr><td>Risk of &gt;half enrolled above true MTD (dose {risks.true_mtd})</td>"
+                    f"<td>{number(risks.overdose_probability)}</td>"
+                    f"<td>{overdose_mcse}</td></tr>"
+                )
             lines.extend(
                 [
                     f"<tr><td>Mean trial duration ({html.escape(self.time_unit)})</td>"
@@ -396,9 +420,9 @@ class TITEKeyboardProtocolReport:
                 (
                     "<p>This self-contained Python HTML and decision-flow summary do not "
                     "reproduce native HTML/Word files, exact Figure 1/Table 1 formatting, "
-                    "random streams, or the hidden operating-characteristic table. Its "
-                    "column definitions are not exposed by the cached app page; no native "
-                    "correct-selection/regret estimand is asserted.</p>"
+                    "or native random streams. The two allocation risks use the paper's "
+                    "definitions and caller-supplied true MTD; native report-layout parity "
+                    "is not asserted.</p>"
                 ),
                 "</body></html>",
             ]
@@ -582,7 +606,7 @@ def run_tite_keyboard_protocol(
         raise ValueError("unsupported event_distribution")
     dose_count: int | None = None
     names: set[str] = set()
-    scenario_inputs: list[tuple[str, object]] = []
+    scenario_inputs: list[tuple[str, object, int | None]] = []
     total_patient_replicates = 0
     for scenario in request.scenarios:
         if not isinstance(scenario, TITEKeyboardScenario):
@@ -598,6 +622,11 @@ def run_tite_keyboard_protocol(
         if scenario.name in names:
             raise ValueError("scenario names must be unique")
         names.add(scenario.name)
+        true_mtd = (
+            None
+            if scenario.true_mtd is None
+            else _integer(scenario.true_mtd, f"scenario {scenario.name} true_mtd", 1, _MAX_DOSES)
+        )
         raw = scenario.true_toxicity
         if isinstance(raw, np.ndarray):
             if raw.ndim != 1 or not 2 <= raw.size <= _MAX_DOSES or raw.dtype.kind not in "iuf":
@@ -618,7 +647,9 @@ def run_tite_keyboard_protocol(
         if trials * current_doses > _MAX_TRIAL_DOSE_CELLS:
             raise ValueError("trial-by-dose output exceeds the per-scenario cell limit")
         total_patient_replicates += trials * maximum_patients
-        scenario_inputs.append((scenario.name, raw))
+        if true_mtd is not None and true_mtd > current_doses:
+            raise ValueError(f"scenario {scenario.name} true_mtd exceeds its dose count")
+        scenario_inputs.append((scenario.name, raw, true_mtd))
     assert dose_count is not None
     if total_patient_replicates > _MAX_PATIENT_REPLICATES:
         raise ValueError("aggregate simulated patient replications exceed the configured limit")
@@ -674,12 +705,12 @@ def run_tite_keyboard_protocol(
             )
         )
     scenarios = [
-        (name, _vector(values, f"scenario {name} true_toxicity", size=dose_count))
-        for name, values in scenario_inputs
+        (name, _vector(values, f"scenario {name} true_toxicity", size=dose_count), true_mtd)
+        for name, values, true_mtd in scenario_inputs
     ]
-    if any(np.any((values < 0) | (values > 1)) for _, values in scenarios):
+    if any(np.any((values < 0) | (values > 1)) for _, values, _ in scenarios):
         raise ValueError("true_toxicity probabilities must be in [0,1]")
-    for _, values in scenarios:
+    for _, values, _ in scenarios:
         toxicity_time_quantile(
             0.5,
             values,
@@ -698,7 +729,7 @@ def run_tite_keyboard_protocol(
     scenario_seeds = _scenario_seed_words(seed, len(scenarios))
     summaries: list[TITEKeyboardScenarioSummary] = []
     adaptive_work_remaining = aggregate_work_budget
-    for index, ((name, true_toxicity), scenario_seed) in enumerate(
+    for index, ((name, true_toxicity, true_mtd), scenario_seed) in enumerate(
         zip(scenarios, scenario_seeds, strict=True)
     ):
         simulation_settings = adaptive_settings
@@ -736,6 +767,7 @@ def run_tite_keyboard_protocol(
             pending_fraction_limit=pending_limit,
             adaptive_timing=simulation_settings,
             rng=scenario_seed,
+            true_mtd=true_mtd,
         )
         selection = _owned(simulation.selection_probability)
         selection_mcse = _owned(simulation.selection_mcse)
@@ -803,6 +835,7 @@ def run_tite_keyboard_protocol(
                 simulation.max_adaptive_split_rhat if adaptive_settings is not None else None,
                 simulation.max_adaptive_weight_mcse if adaptive_settings is not None else None,
                 scenario_work_budget,
+                simulation.allocation_risks,
             )
         )
         del simulation

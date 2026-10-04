@@ -31,12 +31,19 @@ reported. Adaptive timing and caller-supplied trimester analysis masses are
 mutually exclusive.
 
 The app page establishes that an OC table exists, but its empty HTML output
-placeholder does not establish definitions for correct selection, regret,
-overdose selection, or any other OC column. The report therefore gives the
-available Python simulator's selection probabilities (including no MTD),
-enrollment/DLT means, duration, suspension time, and stop-reason frequencies
-without assigning unverified native estimands. Exact native random-stream
-parity and HTML/Word/Figure 1/Table 1 file parity are presentation/engine gaps,
-not claimed statistical parity. No additional advertised decision or simulation
-calculation remains uncovered by the composed Python workflow; the native OC
-column definitions remain the specific unresolved source contract.
+placeholder does not establish the native report schema or every column
+definition. The paper does explicitly
+define two trial-level allocation risks in Section 4.1: fewer than six patients
+allocated to the MTD, and more than half of patients treated above the MTD.
+The Python simulator now reports these when a caller supplies the true MTD
+index. It counts patients above that dose against each trial's actual enrolled
+total, including early-stopped trials. This provides the paper's defined
+community metrics without claiming the app's hidden true-MTD convention.
+Without an explicit true-MTD index, the report continues to give selection
+probabilities (including no MTD), enrollment/DLT means, duration, suspension
+time, and stop-reason frequencies without assigning unverified estimands.
+Together these summaries and the two paper-defined risks cover the identified
+community simulation calculations. Exact native random-stream parity and
+HTML/Word/Figure 1/Table 1 file parity remain presentation/engine differences.
+The app's exact OC column layout and remaining native conventions are not
+recoverable from the cached placeholder page.
