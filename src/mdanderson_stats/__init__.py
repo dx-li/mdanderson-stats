@@ -847,6 +847,7 @@ from .iboin_trial import IBOINTrialDecision, IBOINTrialReplay, replay_iboin_tria
 from .imom_prior import IMOMBinaryPrior
 from .inequality import InequalityProbability, inequality_probability
 from .interaction_index import InteractionIndex, interaction_index, interaction_index_ray
+from .interaction_index_pooled import interaction_index_pooled_error
 from .interaction_monte_carlo import InteractionMonteCarlo, interaction_index_monte_carlo
 from .interval_competing_risk import (
     IntervalCompetingRiskFit,
@@ -1576,7 +1577,20 @@ from .tite_keyboard_adaptive import (
     tite_keyboard_adaptive_decision,
     tite_keyboard_adaptive_weights,
 )
+from .tite_keyboard_adaptive_calendar import (
+    TITEKeyboardAdaptiveFitDiagnostics,
+    TITEKeyboardAdaptiveSettings,
+    TITEKeyboardAdaptiveStep,
+    TITEKeyboardAdaptiveTrial,
+)
 from .tite_keyboard_boundaries import TITEKeyboardBoundaries, tite_keyboard_boundaries
+from .tite_keyboard_protocol_report import (
+    TITEKeyboardProtocolReport,
+    TITEKeyboardProtocolRequest,
+    TITEKeyboardScenario,
+    TITEKeyboardScenarioSummary,
+    run_tite_keyboard_protocol,
+)
 from .tite_keyboard_simulation import TITEKeyboardSimulation, simulate_tite_keyboard
 from .tite_keyboard_trial import TITEKeyboardStep, TITEKeyboardTrial, run_tite_keyboard_trial
 from .top_binary import TOPBinaryBoundaries, TOPBinaryDecision, TOPBinaryDesign
@@ -2819,6 +2833,7 @@ __all__ = [
     "interaction_index_monte_carlo",
     "InteractionIndex",
     "interaction_index",
+    "interaction_index_pooled_error",
     "interaction_index_ray",
     "MedianEffectFit",
     "fit_median_effect",
@@ -2968,12 +2983,21 @@ __all__ = [
     "simulate_tite_keyboard",
     "TITEKeyboardBoundaries",
     "tite_keyboard_boundaries",
+    "TITEKeyboardProtocolReport",
+    "TITEKeyboardProtocolRequest",
+    "TITEKeyboardScenario",
+    "TITEKeyboardScenarioSummary",
+    "run_tite_keyboard_protocol",
     "TITEEffectiveSampleSize",
     "TITEKeyboardDecision",
     "toxicity_followup_weights",
     "tite_effective_sample_size",
     "tite_keyboard_decision",
     "TITEKeyboardAdaptiveDecision",
+    "TITEKeyboardAdaptiveFitDiagnostics",
+    "TITEKeyboardAdaptiveSettings",
+    "TITEKeyboardAdaptiveStep",
+    "TITEKeyboardAdaptiveTrial",
     "TITEKeyboardAdaptiveWeights",
     "tite_keyboard_adaptive_decision",
     "tite_keyboard_adaptive_weights",

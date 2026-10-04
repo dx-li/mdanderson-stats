@@ -30,6 +30,13 @@ explicitly the variance of the supplied **mean effect**; divide replicate varian
 by replicate count when appropriate. Zero treats the effect as known. No pooled
 variance is substituted when replication is absent.
 
+For the paper's no-replicate fallback, use
+[`interaction_index_pooled_error`](interaction-index-pooled-error.md).
+It pools the single-agent residual mean squares on the logit-effect scale and
+propagates that response uncertainty directly, preserving each fitted
+coefficient covariance. Its residual-df pooling denominator is an explicit
+Python convention; the recovered prose does not specify the native denominator.
+
 `interaction_index_ray(models, combination, proportions, effect)` estimates the
 index along a fixed composition. Fit `combination` against **total dose**; its
 coefficient uncertainty is included. Positive proportions are normalized in log
@@ -112,5 +119,6 @@ median-effect plots, source case-study fixtures and native
 workflow audit. SYNERGY also supports the [semiparametric response-surface
 fit](synergy-surface.md), with raw/log-dose baselines and REML smoothing.
 Its other parametric surfaces, wild-bootstrap intervals and associated
-workflows remain open. Pooled measurement-error
-estimation and native file/report conventions have not been silently inferred.
+workflows remain open. The observed-combination pooled-error fallback is
+available with its documented variance convention; native file/report behavior
+remains unverified.

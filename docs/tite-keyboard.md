@@ -5,7 +5,9 @@ is partially implemented for its ESS calculator, informative trimester weights,
 approximate posterior-key calculations and interim dose decisions with pending
 outcomes. Calendar-time replay and simulation with uniform/piecewise-uniform DLT
 timing, numerical effective-follow-up boundaries and lookup tables are available.
-Calibrated Weibull/log-logistic timing is available; flowcharts and integrated reports remain pending.
+Calibrated Weibull/log-logistic timing, adaptive timing in calendar trials, and
+saved Python protocol reports are available. Native operating-characteristic
+column definitions and document/random-stream parity remain unverified.
 
 The app snapshot identifies version 1.2.2.0, updated December 15, 2025. Its technical
 PDFs and the authors' [methodological paper](https://arxiv.org/abs/1807.08393) are
@@ -169,8 +171,8 @@ The result also includes `enrolled_patients` (1 through the planned maximum),
 overdose safety. A threshold of n+1 means it is impossible at enrollment n.
 Posterior boundaries **do not override safety, suspension, dose-range or precision
 rules**. Continue to use `tite_keyboard_decision` for a complete interim assignment.
-The tables expose numerical thresholds; formatted flowcharts and integrated reports
-remain pending.
+The [protocol report](tite-keyboard-protocol-report.md) includes these numerical
+thresholds, safety tables, the decision flow and simulated scenario summaries.
 
 Validation reproduces the published thresholds for one through four DLTs and
 checks one-DLT likelihood crossings using an independent closed-form Beta(2,b)
@@ -266,6 +268,13 @@ day-165 delayed-DLT decision, checks invariance to unobserved future events, con
 final follow-up after precision stopping, and checks conditional timing and arrival
 distributions against their known laws. Fixed/exponential 300-trial runs exercised
 full multi-dose timelines. No native calendar-simulation equivalence is claimed.
+
+Optional [adaptive calendar timing](tite-keyboard-adaptive-calendar.md) fits the
+shared timing model from observed DLT ages and pending follow-up at each interim.
+It separates outcome and sampler random streams, retains compact diagnostics,
+and bounds work across suspension reevaluations and trials. Saved
+[protocol reports](tite-keyboard-protocol-report.md) support ordinary and
+adaptive timing, with explicit settings and Monte Carlo uncertainty.
 
 
 ## Calibrated Weibull and log-logistic scenarios

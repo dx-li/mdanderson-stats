@@ -2427,11 +2427,13 @@
         "Median-effect dose-response OLS with covariance and stable inverse prediction",
         "Loewe interaction indices and log-delta Student-t intervals for observed combination effects with explicit measurement variance",
         "Fixed-ray interaction curves with uncertainty from independent component and combination regressions",
-        "Normal-coefficient Monte Carlo comparison with paper RMS formula, retained draws and slope-reversal diagnostics"
+        "Normal-coefficient Monte Carlo comparison with paper RMS formula, retained draws and slope-reversal diagnostics",
+        "Observed-combination no-replicate pooled logit-error fallback with residual-df-weighted MSE, stable transformed-scale propagation and unchanged independent coefficient covariances"
       ],
       "validation": [
         "Eight focused tests: regression, published three-drug identity, delta variances, exact Monte Carlo RMS reconstruction, small-noise agreement and unstable-slope diagnostics; tests/test_interaction_index.py and tests/test_interaction_monte_carlo.py",
-        "Pending plots, source case studies and native workflow audit; docs/interaction-index.md"
+        "Pending plots, source case studies and native workflow audit; docs/interaction-index.md",
+        "Independent block-covariance delta oracle, unequal residual degrees of freedom, zero residual variance and tiny-effect stability; native pooling denominator remains unspecified. See docs/interaction-index-pooled-error.md."
       ]
     },
     {
@@ -4085,12 +4087,13 @@
       "implemented_features": [
         "Uniform and informative three-piece conditional time-to-DLT weights and batched effective sample-size calculator",
         "Interim TITE-Keyboard posterior decisions using the effective beta-likelihood approximation, with enrolled-count overdose control, sticky exclusions, pending-fraction suspension and two-observed-patient escalation requirement",
-        "Flowcharts and integrated reports remain pending",
         "Precomputed effective non-DLT follow-up transition brackets and batched ordinary-decision lookup, with enrolled-count safety tables",
         "Calendar-time trial replay with potential outcomes, staggered fixed-dose cohorts, event-driven accrual suspension, final follow-up and auditable interim histories",
         "Calendar-time simulations with fixed/exponential arrival gaps and uniform/piecewise-uniform conditional DLT timing, separated from analysis timing weights",
         "Vectorized window-censored Weibull/log-logistic event quantiles calibrated to dose toxicity and late-half probabilities, integrated into calendar simulation",
-        "Adaptive shared-Beta timing posterior from observed DLT times and pending survival, with exact positive-mixture marginalization of dose toxicity probabilities, explicit Gamma priors, bounded serial sampling and diagnostics-gated approximate Keyboard decisions."
+        "Adaptive shared-Beta timing posterior from observed DLT times and pending survival, with exact positive-mixture marginalization of dose toxicity probabilities, explicit Gamma priors, bounded serial sampling and diagnostics-gated approximate Keyboard decisions.",
+        "Adaptive timing in causal calendar replay and serial simulation, with separate outcome/sampler streams, compact per-fit diagnostics and cumulative work limits",
+        "Saved HTML protocol and scenario reports capturing actual design/timing settings, exact seeds, decision flow, effective-follow-up and safety tables, selection/allocation/duration summaries and Monte Carlo errors"
       ],
       "validation": [
         "Published ESS and delayed-outcome examples; independent piecewise weights and fractional-beta interval identity",
@@ -4099,7 +4102,9 @@
         "Published one-to-four-DLT follow-up thresholds, independent fractional-beta crossings, adjacent-endpoint checks and 10000 posterior/table comparisons",
         "Published staggered-cohort/day-165 trial prefix, future-outcome causality, precision-stop follow-up, timing/arrival distribution checks and full fixed/exponential multi-dose runs",
         "Independent 340-digit quantile calculations, half-window calibration, extreme probability/time scaling and one-patient incidence/late-fraction Monte Carlo checks",
-        "Independent nuisance-probability integration and refined two-dimensional timing-posterior quadrature check the adaptive weights; time-rescaling and existing controller checks preserve effective-likelihood and safety conventions. See docs/tite-keyboard-adaptive.md and research/tite-keyboard-adaptive-posterior-audit.md."
+        "Independent nuisance-probability integration and refined two-dimensional timing-posterior quadrature check the adaptive weights; time-rescaling and existing controller checks preserve effective-likelihood and safety conventions. See docs/tite-keyboard-adaptive.md and research/tite-keyboard-adaptive-posterior-audit.md.",
+        "Future-outcome perturbation leaves earlier fitted summaries unchanged; seeded stream replay, cumulative work accounting and normal-threshold adaptive guide simulation. See docs/tite-keyboard-adaptive-calendar.md.",
+        "Saved report scenario replay, exact settings and seeds, timing-option validation and bounded aggregate execution. Native OC column definitions and document/RNG parity remain unverified; see research/tite-keyboard-protocol-report-audit.md."
       ]
     },
     {

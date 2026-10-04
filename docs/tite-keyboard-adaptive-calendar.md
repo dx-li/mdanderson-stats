@@ -59,6 +59,11 @@ bound before consuming its Generator; aggregate work is checked before every
 subsequent fit. Adaptive simulation limits retained trial-by-dose output to two
 million cells.
 
+When a safety action or pending-fraction suspension makes fitting unnecessary,
+the step has `adaptive_fit=None`. Its ordinary decision object contains uniform
+weight ESS/key diagnostics; these do not determine that action and are not
+adaptive timing estimates.
+
 Adaptive simulation requires an integer seed. It deterministically derives
 separate outcome and sampler seeds and returns both, along with aggregate fit
 work and maximum observed diagnostics. The timing stream generates one explicit

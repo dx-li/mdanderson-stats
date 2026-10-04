@@ -60,3 +60,9 @@ not an exact posterior decision over dose toxicity probabilities. The paper
 recommends uniform and piecewise-uniform weights for general use because its
 adaptive version showed minimal improvement in sparse phase-I timing data; this
 extension does not change any default.
+
+[Calendar replay and simulation](tite-keyboard-adaptive-calendar.md) now fit
+these weights using only information observed at each interim. They retain
+compact diagnostics and enforce a cumulative sampling-work limit.
+[Saved protocol reports](tite-keyboard-protocol-report.md) record the design,
+scenario settings, random seeds, boundaries and operating characteristics.

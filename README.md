@@ -781,7 +781,12 @@ without rounded cutoffs. Calendar-time replay and simulation support staggered
 enrollment and outcome-driven pauses, with calibrated Weibull/log-logistic toxicity
 timing scenarios. [Adaptive timing weights](docs/tite-keyboard-adaptive.md)
 use shared timing inference with observed-event and pending-survival information,
-explicit priors, and sampling diagnostics. Flowcharts and integrated reports remain pending.
+explicit priors, and sampling diagnostics.
+[Adaptive calendar simulation](docs/tite-keyboard-adaptive-calendar.md) fits
+these weights at each interim using only observed information, with separate
+outcome and sampler random streams and cumulative work limits.
+[Saved protocol reports](docs/tite-keyboard-protocol-report.md) capture settings,
+decision flow, numerical boundaries and scenario summaries with Monte Carlo errors.
 
 
 ## TITE-BOIN
@@ -884,7 +889,11 @@ while retaining its fixed loss calibration.
 [CI of Interaction Index and SYNERGY](docs/interaction-index.md) share median-effect
 regression and Loewe interaction indices with log-delta confidence intervals for
 observed combinations and fixed-ratio curves, plus the normal-coefficient Monte
-Carlo comparator with retained draws. SYNERGY also provides a
+Carlo comparator with retained draws. The
+[pooled-error fallback](docs/interaction-index-pooled-error.md) estimates
+observed-combination uncertainty when replicate measurements are unavailable,
+using an explicit residual-df pooling convention on the logit-effect scale.
+SYNERGY also provides a
 [semiparametric response surface](docs/synergy-surface.md) with raw/log-dose
 baselines and REML thin-plate smoothing. Its
 [wild-bootstrap workflow](docs/synergy-surface-bootstrap.md) generates Mammen
