@@ -177,3 +177,8 @@ profile, output formats, native rescaling conventions,
 and gene/image/scatter displays remain pending. Synthetic parameter-learning checks
 do not validate an end-to-end microarray analysis against real array data. No native
 optimization or display parity is claimed.
+
+The manual describes additional `.pdn` QC fields, but does not fully define
+`err_T`, `crossPM`, or the averaging/subset convention for `avg_Affynity`;
+`P_size` is already represented by `PDNNExpression.probes_used`. See the
+[source-definition audit](../research/perfectmatch-qc-definitions-audit.md).
