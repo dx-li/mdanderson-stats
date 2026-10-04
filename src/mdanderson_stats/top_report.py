@@ -59,17 +59,25 @@ def _mean_mcse(values: ArrayLike) -> tuple[float, float | None]:
     return mean, mcse
 
 
+def _is_scalar_value(value: object) -> bool:
+    return np.isscalar(value) or (isinstance(value, np.ndarray) and value.ndim == 0)
+
+
 def _bounded_shape(value: ArrayLike, expected: tuple[int, ...], name: str) -> None:
     """Reject wrong list/array shapes before coercing values to NumPy arrays."""
     if isinstance(value, np.ndarray):
         actual = value.shape
     elif isinstance(value, (list, tuple)):
         if len(expected) == 1:
-            actual = (len(value),) if all(np.ndim(item) == 0 for item in value) else ()
+            actual = (
+                expected
+                if len(value) == expected[0] and all(_is_scalar_value(item) for item in value)
+                else ()
+            )
         elif len(value) == expected[0] and all(
             isinstance(row, (list, tuple, np.ndarray))
             and len(row) == expected[1]
-            and all(np.ndim(item) == 0 for item in row)
+            and all(_is_scalar_value(item) for item in row)
             for row in value
         ):
             actual = expected
@@ -495,7 +503,7 @@ def _truth_timing(
         elif (
             isinstance(value, (list, tuple))
             and len(value) == 3
-            and not any(np.ndim(item) != 0 for item in value)
+            and all(_is_scalar_value(item) for item in value)
         ):
             shape = (3,)
         elif (
@@ -504,7 +512,7 @@ def _truth_timing(
             and all(
                 isinstance(row, (list, tuple, np.ndarray))
                 and len(row) == 3
-                and all(np.ndim(item) == 0 for item in row)
+                and all(_is_scalar_value(item) for item in row)
                 for row in value
             )
         ):
