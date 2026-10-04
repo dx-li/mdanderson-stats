@@ -249,6 +249,54 @@ def test_importance_backend_reports_real_interim_fits_and_preflight():
     assert result.max_importance_ratio_mcse is not None
     assert result.mean_final_analysis_time_days is not None
     assert result.final_analysis_trial_count == 1
+    assert result.posterior_probability_summary is not None
+    assert result.posterior_probability_summary.analysis_call_count >= result.posterior_refit_count
+    assert result.posterior_refit_count == result.importance_fit_count
+    assert result.posterior_parameter_fit_trial_count == 1
+    assert result.posterior_parameter_no_fit_trial_count == 0
+    assert result.posterior_mode_mean is not None
+    assert result.posterior_mode_laplace_mixture_variance is not None
+
+    trial = simulate_phase12_calendar(
+        [0.0] * 6,
+        [0.0] * 6,
+        max_patients=24,
+        max_attempts=100,
+        posterior_backend="importance",
+        importance_max_integrations=100,
+        importance_max_mode_iterations=100,
+        rng=np.random.default_rng(int(result.per_trial_seeds[0])),
+    )
+    assert trial.posterior_probability_summary is not None
+    assert result.posterior_probability_summary.analysis_call_count == (
+        trial.posterior_probability_summary.analysis_call_count
+    )
+    np.testing.assert_allclose(result.posterior_mode_mean, trial.last_fit.posterior_mode)
+    np.testing.assert_allclose(
+        result.posterior_mode_laplace_mixture_variance,
+        np.diag(trial.last_fit.proposal_covariance),
+    )
+    assert result.posterior_parameter_nonconverged_fit_trial_count == int(
+        not trial.last_fit.converged
+    )
+
+    no_fit = simulate_phase12_calendar_oc(
+        [1.0] * 6,
+        [0.0] * 6,
+        n_trials=1,
+        seed=8551,
+        max_patients=18,
+        max_attempts=100,
+        posterior_backend="importance",
+        importance_max_integrations=100,
+        importance_max_mode_iterations=100,
+    )
+    assert no_fit.posterior_probability_summary is None
+    assert no_fit.posterior_refit_count == 0
+    assert no_fit.posterior_parameter_fit_trial_count == 0
+    assert no_fit.posterior_parameter_no_fit_trial_count == 1
+    assert no_fit.posterior_mode_mean is None
+    assert no_fit.posterior_mode_laplace_mixture_variance is None
 
     with pytest.raises(ValueError, match="worst-case importance component"):
         simulate_phase12_calendar_oc(

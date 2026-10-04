@@ -10,8 +10,10 @@ from numpy.typing import ArrayLike, NDArray
 from ._cdflib import _freeze
 from ._validation import FloatArray, finite, scalar
 from .parallel_phase12_calendar import simulate_phase12_calendar
+from .parallel_phase12_importance import Phase12ImportanceFit
 from .parallel_phase12_importance import _settings as _importance_settings
 from .parallel_phase12_model import _MEAN, _SD, phase12_snapshot
+from .parallel_phase12_summary import Phase12ProbabilitySummary, _Phase12ProbabilityMoments
 
 _MAX_TRIALS = 10_000
 _MAX_TOTAL_PATIENT_ASSIGNMENTS = 5_000_000
@@ -204,6 +206,32 @@ def _diagnostic_update(current: float | None, values: ArrayLike) -> float | None
     return maximum if current is None else max(current, maximum)
 
 
+class _LaplaceParameterMoments:
+    """Stable available-fit moments for posterior modes and Hessian diagonals."""
+
+    def __init__(self) -> None:
+        self.count = 0
+        self.nonconverged_count = 0
+        self.mode_mean = np.zeros(4)
+        self.mode_m2 = np.zeros(4)
+        self.conditional_variance_mean = np.zeros(4)
+
+    def add(self, fit: Phase12ImportanceFit) -> None:
+        self.count += 1
+        self.nonconverged_count += int(not fit.converged)
+        delta = fit.posterior_mode - self.mode_mean
+        self.mode_mean += delta / self.count
+        self.mode_m2 += delta * (fit.posterior_mode - self.mode_mean)
+        self.conditional_variance_mean += (
+            np.diag(fit.proposal_covariance) - self.conditional_variance_mean
+        ) / self.count
+
+    def mixture_variance(self) -> FloatArray:
+        if self.count == 0:
+            raise ValueError("at least one available fit is required")
+        return self.conditional_variance_mean + self.mode_m2 / self.count
+
+
 @dataclass(frozen=True)
 class Phase12CalendarOC:
     """Compact trial-level operating characteristics for the six-dose calendar.
@@ -311,6 +339,13 @@ class Phase12CalendarOC:
     duration_population_variance_months_squared: float
     duration_order_indices: NDArray[np.int64]
     duration_order_statistics_months: FloatArray
+    posterior_probability_summary: Phase12ProbabilitySummary | None = None
+    posterior_refit_count: int = 0
+    posterior_parameter_fit_trial_count: int | None = None
+    posterior_parameter_no_fit_trial_count: int | None = None
+    posterior_parameter_nonconverged_fit_trial_count: int | None = None
+    posterior_mode_mean: FloatArray | None = None
+    posterior_mode_laplace_mixture_variance: FloatArray | None = None
 
 
 def simulate_phase12_calendar_oc(
@@ -542,6 +577,10 @@ def simulate_phase12_calendar_oc(
     importance_nonconverged_fit_count = importance_nonconverged_trial_count = 0
     importance_component_evaluations = importance_mode_iterations = 0
     mcmc_transition_slots = 0
+    probability_moments = _Phase12ProbabilityMoments(max_count=trial_count * (patient_cap // 5 + 1))
+    probability_refit_count = 0
+    parameter_fit_trial_count = parameter_no_fit_trial_count = 0
+    parameter_moments = _LaplaceParameterMoments()
 
     for trial_index in range(trial_count):
         trial_seed = int(
@@ -580,6 +619,15 @@ def simulate_phase12_calendar_oc(
             raise RuntimeError(
                 f"calendar returned an unrecognized stopping reason: {result.reason}"
             )
+        if result.posterior_probability_summary is not None:
+            probability_moments.merge(result.posterior_probability_summary)
+        probability_refit_count += result.posterior_refit_count
+        if posterior_backend == "importance":
+            if isinstance(result.last_fit, Phase12ImportanceFit):
+                parameter_fit_trial_count += 1
+                parameter_moments.add(result.last_fit)
+            else:
+                parameter_no_fit_trial_count += 1
         stopping_counts[_STOP_REASONS.index(result.reason)] += 1
         admissible_counts += np.asarray(result.phase_one_admissible, dtype=np.int64)
 
@@ -836,6 +884,23 @@ def simulate_phase12_calendar_oc(
         for name in phase_one_tally_means
     }
 
+    probability_summary = probability_moments.to_summary(allow_empty=True)
+    if posterior_backend == "importance" and parameter_fit_trial_count > 0:
+        mode_mean_result: FloatArray | None = _freeze(parameter_moments.mode_mean)
+        mode_variance_result: FloatArray | None = _freeze(parameter_moments.mixture_variance())
+        parameter_fit_count_result: int | None = parameter_fit_trial_count
+        parameter_no_fit_count_result: int | None = parameter_no_fit_trial_count
+        parameter_nonconverged_count_result: int | None = parameter_moments.nonconverged_count
+    elif posterior_backend == "importance":
+        mode_mean_result = mode_variance_result = None
+        parameter_fit_count_result = 0
+        parameter_no_fit_count_result = parameter_no_fit_trial_count
+        parameter_nonconverged_count_result = 0
+    else:
+        mode_mean_result = mode_variance_result = None
+        parameter_fit_count_result = parameter_no_fit_count_result = None
+        parameter_nonconverged_count_result = None
+
     return Phase12CalendarOC(
         trial_count,
         _immutable_int(seeds, dtype=np.dtype(np.uint64)),
@@ -935,4 +1000,11 @@ def simulate_phase12_calendar_oc(
         duration_variance_months2,
         _immutable_int(duration_order_indices),
         _freeze(duration_order_statistics),
+        probability_summary,
+        probability_refit_count,
+        parameter_fit_count_result,
+        parameter_no_fit_count_result,
+        parameter_nonconverged_count_result,
+        mode_mean_result,
+        mode_variance_result,
     )

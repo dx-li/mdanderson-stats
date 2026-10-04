@@ -54,9 +54,11 @@ means and variances from MCMC draws. The trial aggregator computes the across-
 dataset mean of modes and the mixture variance
 `E[conditional_variance + mode²]−E[mode]²`
 (`TrialDesign.cpp`, lines 216–224 and 275–281). No-fit trials still tally the
-parameter summary arrays; `TrialDesign.h::Clear` resets current probabilities
-but not `m_vPostMeans`/`m_vPostVars`, so these values can be stale after an
-early stop. Python does not imitate this behavior.
+parameter summary arrays; `TrialDesign.h::Clear` calls `Kernel::Clear`, whose
+`InitMode` path does not reset `m_vPostMeans`/`m_vPostVars`. A trial with no
+subsequent successful integration can therefore tally values left by an
+earlier trial. Python excludes and counts trials with no available final fit
+instead of imitating stale values.
 
 For kernel probability vectors, `TrialDesign::SetupTrial` allocates
 `3*nDoses + nDoses*nDoses + nDoses` summaries: for six doses this is 60
@@ -86,17 +88,28 @@ analysis calls, not one final fit per trial. `Kernel::PrintResults`, lines
 
 Python `fit_phase12_importance` already exposes the per-fit values for these
 components, their paired-ratio MC standard errors, and the six posterior
-response-probability second moments. The new
+response-probability second moments. The
 `summarize_phase12_importance_fits` callable streams a caller-selected iterable
-of those fits and returns componentwise means and sample variances in native
-order, along with the analysis-call count and number of nonconverged fits.
-Nonconverged estimates are included rather than silently filtered, matching
-the native cap-return behavior. It does not claim an independence or MC-error
-interpretation, alter the calendar to retain all analysis calls, or reproduce
-the native integration/random-number implementation. The mean uses streaming
-Welford updates rather than native `sum/n`, so last-bit differences are
-possible. See [`parallel-phase12-probability-summary.md`](../docs/parallel-phase12-probability-summary.md)
-for the explicit scope and example.
+of those fits. The calendar now also captures every successful importance
+analysis invocation, including calls that reuse an unchanged-tally fit, and
+the multi-trial OC pools them without retaining histories. It reports actual
+posterior refits separately. Cached repeated estimates preserve the posterior
+quantity but omit the fresh-integration noise the native executable would
+contribute on each invocation; these summaries describe the Python call
+stream and make no independence or MC-error claim. Nonconverged estimates are
+included and counted. Welford means may differ in last bits from native
+`sum/n`.
+
+For the importance backend, the OC also reports mean posterior modes and the
+Laplace mixture marginal variance over trials with an available final fit:
+`E[diag(H⁻¹) + mode²] - E[mode]²`, calculated stably as the mean diagonal of
+the inverse-Hessian covariance plus population variance of fitted modes. Included, no-fit-excluded,
+and nonconverged-final-fit trial counts are explicit. This corrects the native
+no-fit stale-value behavior instead of reproducing it; MCMC does not expose the
+matching mode/Hessian pair. See
+[`phase12-calendar-oc.md`](../docs/phase12-calendar-oc.md) and
+[`parallel-phase12-probability-summary.md`](../docs/parallel-phase12-probability-summary.md)
+for scope and examples.
 
 The six-dose DF3+3 progression comparator is implemented in
 `parallel_phase12_progression.py` and checked against the extracted decision,
@@ -113,8 +126,8 @@ reported Monte Carlo errors are Python OC additions. The existing
 final-trial admissibility summary remains separate and includes paths that
 were interrupted before the native tally point.
 
-Unresolved work includes exact native RNG and adaptive integration parity, plus
-the C++ posterior-parameter accumulator's stale-value behavior on no-fit trial
-paths. The Python probability summary operates on explicitly supplied
-importance-backend fits and is not relabeled as the native posterior-mode or
-MCMC output.
+Remaining parity limits are the native random stream, optimizer and adaptive
+integration details, formatted native output, and full published OC
+replication. The Python workflow supplies the mathematically defined
+probability and available-fit Laplace summaries without claiming bitwise or
+stale-value parity.

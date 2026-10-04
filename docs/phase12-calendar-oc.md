@@ -113,10 +113,25 @@ default total work budgets are suitable for small checks; larger runs require
 explicitly increased budgets within hard ceilings. No automatic parallelism is
 used.
 
-The archived C++ source also reports Laplace posterior-parameter summaries and
-integrated posterior-probability summaries. Those require its final-fit
-Hessian/mode and a source-specific probability-vector integration; the
-existing Python calendar OC does not retain that same kernel output, so this
-wrapper does not claim those summaries. See the
+For the importance backend, `posterior_probability_summary` reports the
+source kernel's 60 componentwise means and sample variances across successful
+analysis invocations. It includes repeated invocations on an unchanged tally;
+the calendar reuses the cached Python fit for those calls rather than paying
+for another integration. `posterior_refit_count` reports actual posterior fit
+calls separately. Repeating the cached estimate preserves the posterior
+quantity but removes the fresh-integration noise that the native executable
+would contribute on each call. The summary describes this Python call stream,
+not native Monte Carlo output. MCMC trials have no probability-vector summary.
+
+The importance backend also reports the number of trials with an available
+final Laplace fit, without one, and with a nonconverged final fit, plus
+`posterior_mode_mean` and `posterior_mode_laplace_mixture_variance`. These use
+each trial's last available fit once, including a fit from an early-stop
+analysis even when the trial has no terminal analysis. The variance is the
+mean diagonal of the inverse-Hessian covariance plus the population variance of
+fitted modes, over available-fit trials. No-fit trials are excluded and
+counted, rather than carrying stale parameter values forward as the native
+`Clear` path can do. For MCMC, these Laplace fields are `None`; posterior draw
+summaries are a different quantity. See the
 [source audit](../research/parallel-phase12-scenario-report-audit.md) for the
-exact boundary.
+source call sites and remaining native-parity limits.

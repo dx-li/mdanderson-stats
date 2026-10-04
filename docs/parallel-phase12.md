@@ -407,5 +407,8 @@ duration summaries. The separate four-arm C workflow now has a
 [native probability-input parser and saved scenario reports](parallel-phase12-scenario-report.md).
 The [source crosswalk](../research/parallel-phase12-scenario-report-audit.md)
 records the completed six-dose DF3+3 progression comparison and phase-I tally
-crosswalk. C++ posterior-kernel summaries, exact native RNG parity, and full
-published operating-characteristic replication remain open.
+crosswalk. The six-dose importance-backend OC now also reports streamed
+posterior probability-vector summaries and available-fit Laplace parameter
+moments. Exact native RNG/optimizer/integration parity, native formatting, and
+full published operating-characteristic replication remain outside the Python
+workflow.

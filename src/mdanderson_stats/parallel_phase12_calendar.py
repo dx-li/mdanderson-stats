@@ -29,6 +29,7 @@ from .parallel_phase12_model import (
     phase12_snapshot,
 )
 from .parallel_phase12_progression import phase12_accrual_ready, phase12_phase_one
+from .parallel_phase12_summary import Phase12ProbabilitySummary, _Phase12ProbabilityMoments
 
 _MAX_TOTAL_IMPORTANCE_COMPONENT_EVALUATIONS = 100_000_000
 _MAX_TOTAL_MODE_ITERATIONS = 2_100_000
@@ -70,6 +71,8 @@ class Phase12CalendarTrial:
     posterior_seed: int
     posterior_component_evaluations: int = 0
     posterior_mode_iterations: int = 0
+    posterior_probability_summary: Phase12ProbabilitySummary | None = None
+    posterior_refit_count: int = 0
 
 
 def _integer(value: int, name: str, low: int, high: int) -> int:
@@ -207,12 +210,15 @@ def simulate_phase12_calendar(
     cached_tally: FloatArray | None = None
     posterior_component_evaluations = 0
     posterior_mode_iterations = 0
+    posterior_refit_count = 0
+    probability_moments = _Phase12ProbabilityMoments(max_count=maximum // 5 + 1)
 
     def analyze(
         at: float,
     ) -> tuple[Phase12Snapshot, Phase12ModelFit | Phase12ImportanceFit]:
         nonlocal last_fit, cached_tally
         nonlocal posterior_component_evaluations, posterior_mode_iterations
+        nonlocal posterior_refit_count
         snapshot = phase12_snapshot(records, time=at)
         if cached_tally is None or not np.array_equal(snapshot.tally, cached_tally):
             if posterior_backend == "mcmc":
@@ -240,7 +246,12 @@ def simulate_phase12_calendar(
                 if posterior_mode_iterations > _MAX_TOTAL_MODE_ITERATIONS:
                     raise RuntimeError("calendar posterior mode iteration budget exhausted")
             cached_tally = snapshot.tally
+            posterior_refit_count += 1
         assert last_fit is not None
+        if isinstance(last_fit, Phase12ImportanceFit):
+            # Capture every successful analysis invocation, even if its
+            # unchanged-tally fit was reused from the cache.
+            probability_moments.add_fit(last_fit)
         return snapshot, last_fit
 
     def analysis_record(
@@ -371,4 +382,6 @@ def simulate_phase12_calendar(
         int(seeds[1]),
         posterior_component_evaluations,
         posterior_mode_iterations,
+        probability_moments.to_summary(allow_empty=True),
+        posterior_refit_count,
     )

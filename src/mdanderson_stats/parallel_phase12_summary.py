@@ -43,6 +43,74 @@ class Phase12ProbabilitySummary:
     component_sample_variances: FloatArray
 
 
+class _Phase12ProbabilityMoments:
+    """Fixed-size streaming/merge accumulator used by the calendar workflow."""
+
+    def __init__(self, *, max_count: int | None = None) -> None:
+        self._max_count = max_count
+        self.count = 0
+        self.nonconverged_count = 0
+        self.mean = np.zeros(_COMPONENTS)
+        self.m2 = np.zeros(_COMPONENTS)
+
+    def _add(self, observation: np.ndarray, nonconverged: bool) -> None:
+        if self._max_count is not None and self.count >= self._max_count:
+            raise ValueError("analysis-call summary exceeds its bounded limit")
+        self.count += 1
+        self.nonconverged_count += int(nonconverged)
+        delta = observation - self.mean
+        self.mean += delta / self.count
+        self.m2 += delta * (observation - self.mean)
+
+    def add_fit(self, fit: Phase12ImportanceFit) -> None:
+        observation, nonconverged = _fit_vector(fit)
+        self._add(observation, nonconverged)
+
+    def merge(self, summary: Phase12ProbabilitySummary) -> None:
+        if not isinstance(summary, Phase12ProbabilitySummary):
+            raise TypeError("summary must be a Phase12ProbabilitySummary")
+        if summary.analysis_call_count < 1:
+            raise ValueError("summary must contain at least one analysis call")
+        if summary.component_labels != _COMPONENT_LABELS:
+            raise ValueError("summary component labels do not match the six-dose kernel")
+        if summary.component_means.shape != (
+            _COMPONENTS,
+        ) or summary.component_sample_variances.shape != (_COMPONENTS,):
+            raise ValueError("summary component arrays must each have 60 values")
+        n_b = summary.analysis_call_count
+        if self._max_count is not None and self.count + n_b > self._max_count:
+            raise ValueError("analysis-call summary exceeds its bounded limit")
+        if self.count == 0:
+            self.count = n_b
+            self.nonconverged_count = summary.nonconverged_analysis_call_count
+            self.mean = np.array(summary.component_means, copy=True)
+            self.m2 = np.array(summary.component_sample_variances, copy=True) * max(n_b - 1, 0)
+            return
+        n_a = self.count
+        n = n_a + n_b
+        delta = summary.component_means - self.mean
+        self.mean += delta * (n_b / n)
+        self.m2 += np.asarray(summary.component_sample_variances) * max(
+            n_b - 1, 0
+        ) + delta * delta * (n_a * n_b / n)
+        self.count = n
+        self.nonconverged_count += summary.nonconverged_analysis_call_count
+
+    def to_summary(self, *, allow_empty: bool = False) -> Phase12ProbabilitySummary | None:
+        if self.count == 0:
+            if allow_empty:
+                return None
+            raise ValueError("at least one analysis call is required")
+        variance = self.m2 / (self.count - 1) if self.count > 1 else np.zeros(_COMPONENTS)
+        return Phase12ProbabilitySummary(
+            self.count,
+            self.nonconverged_count,
+            _COMPONENT_LABELS,
+            _freeze(self.mean),
+            _freeze(variance),
+        )
+
+
 def _probability_vector(value: object, shape: tuple[int, ...], name: str) -> np.ndarray:
     if (
         not isinstance(value, np.ndarray)
@@ -103,27 +171,11 @@ def summarize_phase12_importance_fits(
     except TypeError as exc:
         raise TypeError("fits must be an iterable of Phase12ImportanceFit objects") from exc
 
-    mean = np.zeros(_COMPONENTS)
-    m2 = np.zeros(_COMPONENTS)
-    count = 0
-    nonconverged_count = 0
+    moments = _Phase12ProbabilityMoments(max_count=limit)
     for fit in iterator:
-        if count == limit:
+        if moments.count == limit:
             raise ValueError(f"fits exceeds the bounded limit of {limit} analysis calls")
-        observation, nonconverged = _fit_vector(fit)
-        count += 1
-        nonconverged_count += int(nonconverged)
-        delta = observation - mean
-        mean += delta / count
-        m2 += delta * (observation - mean)
-
-    if count == 0:
-        raise ValueError("fits must contain at least one Phase12ImportanceFit")
-    sample_variance = m2 / (count - 1) if count > 1 else np.zeros(_COMPONENTS)
-    return Phase12ProbabilitySummary(
-        count,
-        nonconverged_count,
-        _COMPONENT_LABELS,
-        _freeze(mean),
-        _freeze(sample_variance),
-    )
+        moments.add_fit(fit)
+    summary = moments.to_summary()
+    assert summary is not None
+    return summary
