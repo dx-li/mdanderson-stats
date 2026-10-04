@@ -551,6 +551,7 @@ from .cibolus_calibration import (
 )
 from .cibolus_decision import CiBolusDecision, cibolus_decision
 from .cibolus_fit import CiBolusFit, fit_cibolus
+from .cibolus_scenarios import cibolus_interpolated_truth
 from .cibolus_simulation import (
     CiBolusOperatingCharacteristics,
     simulate_cibolus_operating_characteristics,
@@ -1771,6 +1772,7 @@ __all__ = [
     "cibolus_loglikelihood",
     "cibolus_parameter_names",
     "cibolus_predict",
+    "cibolus_interpolated_truth",
     "cibolus_published_prior",
     "cibolus_response",
     "cibolus_toxicity",

@@ -20,6 +20,9 @@ pair and the observation endpoints. Response categories are immediate bolus
 response, successive detection intervals and failure to respond by time one;
 toxicity columns are absent and present. Each regimen's table sums to one.
 The routine does not guess an interpolation from a few elicited probabilities.
+The separate [scenario constructor](cibolus-scenarios.md) can build an input
+table from explicit endpoint probabilities and caller-selected response and
+toxicity curves, using the four profiles in the paper's simulation study.
 
 Each pseudo sample has the same configured number of patients per regimen.
 Interval observations preserve the upper-endpoint treatment and toxicity

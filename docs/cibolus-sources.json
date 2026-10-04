@@ -10,8 +10,11 @@
     },
     {
       "url": "https://odin.mdacc.tmc.edu/~pfthall/main/Biometrics_IAtPA_2011.pdf",
-      "role": "Author-hosted published paper identifying the response/toxicity model, observed-interval likelihood, utility criterion, prior and allocation constraints.",
-      "citation": "Thall PF, Szabo A, Nguyen HQ, Amlie-Lefond C, Zaidat OO (2011). Optimizing the Concentration and Bolus of a Drug Delivered by Continuous Infusion. Biometrics 67:1638–1646. doi:10.1111/j.1541-0420.2011.01580.x."
+      "role": "Author-hosted published paper defining the response/toxicity model, interval likelihood, utility criterion, prior and allocation constraints; Section 5 specifies four interpolated truth profiles for simulation.",
+      "citation": "Thall PF, Szabo A, Nguyen HQ, Amlie-Lefond C, Zaidat OO (2011). Optimizing the Concentration and Bolus of a Drug Delivered by Continuous Infusion. Biometrics 67:1638\u20131646. doi:10.1111/j.1541-0420.2011.01580.x.",
+      "retrieved_date": "2026-10-04",
+      "sha256": "8d01f95c39a57e6a23bc9feffafd6eb69ad21e96313f7e4518a109be98d5e96f",
+      "text_sha256": "b035cd433aa2f84b00eb534b838505d46f83ee505fa1b8b85b0dfd16ca5da45f"
     },
     {
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3137757/",
@@ -26,5 +29,5 @@
     "Explicit independent normal priors on log parameters; fixed coordinates are a Python extension for reduced models. The published prior is study-specific.",
     "Serial posterior computation and lexicographic selection ties are Python implementation choices; native random streams and executable decisions have not been compared."
   ],
-  "limitations": "Prior elicitation/calibration, calendar/pending-outcome conduct, native input/report workflows and executable parity remain to be covered. Complete-outcome cohort and serial aggregate simulation are available with explicit truth, prior and sampling settings."
+  "limitations": "Automatic prior-variance selection, calendar/pending-outcome conduct, native input/report workflows and executable parity remain open. Complete-outcome cohort and aggregate simulation, explicit joint truth scenarios and balanced pseudo-data calibration are available; prior variances and sampling settings remain caller-supplied."
 }

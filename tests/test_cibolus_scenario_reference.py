@@ -7,6 +7,7 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+
 from mdanderson_stats.cibolus_scenarios import cibolus_interpolated_truth
 
 _FIXTURES = Path(__file__).parent / "fixtures"

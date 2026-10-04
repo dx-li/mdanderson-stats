@@ -6,6 +6,9 @@ Delivered by Continuous Infusion,” *Biometrics* 67 (2011), 1638–1646,
 doi:10.1111/j.1541-0420.2011.01580.x. The cached source used here is
 `research/raw/CiBolus/paper.pdf` and its extracted text
 `research/raw/CiBolus/paper.txt`.
+The [author-hosted PDF](https://odin.mdacc.tmc.edu/~pfthall/main/Biometrics_IAtPA_2011.pdf)
+was retrieved on 2026-10-04; its SHA-256 is
+`8d01f95c39a57e6a23bc9feffafd6eb69ad21e96313f7e4518a109be98d5e96f`.
 
 The paper defines response-time probability from cumulative response
 probabilities at zero and at standardized time one. Its interpolation
@@ -25,8 +28,9 @@ directly in base R and emits small synthetic, irregular-grid fixtures for all
 concentrations, bolus fractions 0, an interior value, and 1, and include an
 endpoint at the S-curve join `s=0.5`. The endpoint-probability arrays are
 explicit test inputs, not inferred clinical scenarios. The paper's reported
-scenario summaries do not fully specify all scenario endpoint probabilities,
-so these fixtures do not claim to reproduce its six simulation scenarios.
+scenario summaries in the inspected PDF do not fully specify all scenario
+endpoint probabilities; the paper refers to separate Web Tables 1–6. These
+fixtures do not claim to reproduce its six simulation scenarios.
 
 The independent comparisons cover every joint cell, reconstructed response
 marginals, category boundaries (bolus, open-left/closed-right intervals, and

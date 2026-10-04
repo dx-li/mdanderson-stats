@@ -55,12 +55,49 @@ expected_utility = np.einsum("cqkt,kt->cq", joint, utility)
 assert np.allclose(joint.sum(axis=(-2, -1)), 1.0)
 ```
 
+Pass this scenario to the [trial simulator](cibolus-trials.md) with `None`
+in place of model truth parameters. Continuing the example:
+
+```python
+from mdanderson_stats import CiBolusPrior, simulate_cibolus_trial
+
+prior_mean = np.log([0.5, 0.7, 0.8, 0.08, 1.4, 1.6, 0.03, 0.9, 0.12, 0.25, 0.2])
+trial = simulate_cibolus_trial(
+    None,
+    CiBolusPrior(prior_mean, np.zeros(11)),
+    concentrations=[0.3, 0.5],
+    bolus_fractions=[0.1],
+    endpoints=[0.5, 1.0],
+    utility=utility,
+    truth_joint_probabilities=joint,
+    n_patients=2,
+    cohort_size=2,
+    toxicity_limit=0.8,
+    toxicity_cutoff=0.9,
+    efficacy_limit=0.01,
+    efficacy_cutoff=0.9,
+    draws=8,
+    warmup=0,
+    chains=2,
+    rng=np.random.default_rng(8604),
+)
+assert len(trial.patients) == 2
+```
+
+The fixed prior and two patients keep this interface example small. Actual
+design evaluation requires an elicited prior, adequate posterior sampling and
+enough simulation replicates. The same `truth_joint_probabilities` argument
+is available in `simulate_cibolus_operating_characteristics`. Generated
+outcomes follow the supplied scenario; posterior fitting still uses the
+CiBolus parameter model.
+
 The paper does not define these interpolation profiles as fitted response or
 toxicity models. Choosing among profiles and supplying endpoint values remain
 scenario assumptions made by the caller. The implementation uses stable
 profile increments when constructing interval masses and validates that each
 regimen's joint cells form a probability distribution.
 
-Source: Thall et al., “Optimizing the Concentration and Bolus of a Drug
-Delivered by Continuous Infusion,” *Biometrics* 67 (2011), Section 5 and Eqs.
-7–8; cached source: `research/raw/CiBolus/paper.pdf` and `paper.txt`.
+Source: [Thall et al., “Optimizing the Concentration and Bolus of a Drug
+Delivered by Continuous Infusion”](https://odin.mdacc.tmc.edu/~pfthall/main/Biometrics_IAtPA_2011.pdf),
+*Biometrics* 67 (2011), Section 5 and Eqs. 7–8. The
+[source record](cibolus-sources.json) identifies the inspected document.

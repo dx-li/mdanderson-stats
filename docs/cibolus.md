@@ -187,6 +187,9 @@ the checks actually completed.
 joint response/toxicity cells, fits after each cohort and applies the allocation
 and final-selection rules. Aggregate simulation reports selection/stopping,
 allocation, pooled outcome rates, Monte Carlo errors and replayable seeds.
+[Scenario construction](cibolus-scenarios.md) supplies the paper's four
+interpolation profiles and joint response/toxicity tables. Both simulation
+interfaces accept these tables independently of the model used for fitting.
 [Prior calibration](cibolus-calibration.md) accepts full joint elicitation tables,
 averages balanced pseudo-posterior log means and reports prior probability
 moments and beta ESS under caller-selected variances. Automatic variance

@@ -1558,6 +1558,10 @@ response/toxicity categories, update after each cohort and apply concentration
 no-skip and unrestricted final selection, with replayable outcome inputs and
 cumulative work limits. Serial aggregate simulation reports selection and
 observed-outcome rates, Monte Carlo errors and per-trial replay seeds.
+[Interpolated scenarios](docs/cibolus-scenarios.md) construct joint truth from
+response and toxicity probabilities using the paper's four curve shapes.
+Trial and aggregate simulations accept these tables independently of the
+fitted model, supporting model-misspecification studies.
 [Prior calibration](docs/cibolus-calibration.md) adds balanced pseudo data,
 posterior-mean averaging, prior probability moments and beta ESS, with explicit
 joint elicitation tables and prior variances. Automatic variance selection,

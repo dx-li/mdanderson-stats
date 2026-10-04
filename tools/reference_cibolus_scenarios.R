@@ -1,6 +1,6 @@
 # Independent base-R reference for CiBolus scenario interpolation.
-# The paper did not publish inputs for reproducing full scenarios 1--6; these
-# fixtures use an explicit synthetic endpoint-probability grid instead.
+# These synthetic endpoint grids check the published formulas; they do not
+# reproduce scenarios 1--6 from the paper's separate Web Tables.
 options(warn = 2, digits = 17)
 
 args <- commandArgs(trailingOnly = TRUE)
