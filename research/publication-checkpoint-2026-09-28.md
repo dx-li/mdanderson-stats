@@ -2947,3 +2947,39 @@ The cached help specifies the PID objective and candidate range, but not the
 native optimizer. These are independently validated Python search conventions.
 Full catalog coverage remains active. The local publication manifest records
 independently verified remote branch SHAs and artifact hashes for this batch.
+
+## 2026-10-04: CiBolus independent scenario simulation
+
+CiBolus now constructs joint response/toxicity scenarios from the four
+interpolation profiles in the paper's Section 5. Both trial and aggregate
+simulation accept supplied joint probabilities independently of the model
+used for posterior fitting, enabling model-misspecification studies. The
+constructor preserves the bolus atom, interval endpoint convention and
+explicit failure toxicity, and computes stable interval and rare-event cells.
+Validated joint inputs are retained as immutable snapshots; simulation remains
+serial with cumulative work and storage bounds and replayable trial seeds.
+
+Three Luna agents supplied the constructor, simulation integration and
+independent base-R references. Those references cover all 16 response/toxicity
+curve pairs across six regimens and seven response categories, including
+joint probabilities, marginals and expected utility. They use explicit
+synthetic endpoint values and do not claim to reproduce the paper's separate
+Web Tables. Root review preserved nested-array input compatibility, added the
+public export and end-to-end example, and verified existing trial replay.
+
+All 25 affected checks pass with warnings as errors in 3.089 seconds, with
+136.92 MiB process peak RSS and zero swaps. Scoped Ruff, formatting and mypy
+checks pass. Cached builds at `424e967` pass isolated wheel/source verification:
+all 619 committed package files match both archives, all 1,728 public exports
+resolve, license notices are retained, and four examples across the two guides
+execute from the wheel. This verification took 11.554 seconds, with 129.52 MiB
+peak RSS and zero swaps. Numerical, static and packaging processes remained
+sequential with single-threaded numerical libraries. No full local suite,
+installation or new CI workflow was added.
+
+The previous published `6953a5f` checkpoint has passed hosted quality and all
+Python 3.12/3.13/3.14 checks in run `37175412591`. Entry 86 remains partial:
+automatic variance selection, pending-outcome/calendar conduct and native
+input/report/executable parity remain open. Full catalog coverage remains
+active; the local manifest records the new remote SHAs and artifact hashes
+after independent publication verification.
