@@ -24,3 +24,26 @@ def test_correlation_is_invariant_to_positive_intensity_rescaling():
     baseline = pdnn_fit_correlations(observed, fitted, ids).correlation
     shifted = pdnn_fit_correlations(observed * 1e100, fitted * 1e-100, ids).correlation
     np.testing.assert_allclose(shifted, baseline, atol=2e-15)
+
+
+def test_interleaved_constant_and_near_equal_large_intensity_groups():
+    observed = np.array([3.0, 1e200, 3.0, 1e200 + 4e184, 3.0, 1e200 + 8e184])
+    fitted = np.array([2.0, 5e200, 2.0, 5e200 + 8e184, 2.0, 5e200 + 16e184])
+    ids = np.array([7, 2, 7, 2, 7, 2])
+    result = pdnn_fit_correlations(observed, fitted, ids)
+    assert np.isnan(result.correlation[1])  # exactly constant intensities
+    assert result.correlation[0] > 0.99
+
+
+def test_oversized_sequence_is_rejected_before_conversion():
+    class Oversized:
+        def __len__(self):
+            return 500_001
+
+        def __array__(self, *args, **kwargs):
+            raise AssertionError("oversized input must be rejected before conversion")
+
+    import pytest
+
+    with pytest.raises(ValueError, match="workspace limit"):
+        pdnn_fit_correlations(Oversized(), [], [])

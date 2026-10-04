@@ -10,4 +10,5 @@ The manual does not define a correlation variant or degenerate-group behavior.
 The implementation makes those choices explicit: singleton groups and groups
 constant in either log signal have undefined correlation, represented by NaN.
 It summarizes existing fitted signals and does not refit, filter probes, or
-claim the rest of native quality-control parity.
+claim the rest of native quality-control parity. Inputs are capped at 500,000
+probes before conversion to keep the temporary workspace bounded.
