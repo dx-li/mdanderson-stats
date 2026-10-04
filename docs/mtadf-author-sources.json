@@ -1,0 +1,52 @@
+{
+  "scope": "Source contract for the cached 2013 MTADF isotonic author reference and its Iso dependency",
+  "author_reference": {
+    "path": "research/raw/mtadf-author-reference/targetAgentDF.r",
+    "sha256": "e27be5581fdcb7c71a7739a4f1b25026dc054896fcbf7134ff9b1a1c8960caac",
+    "file_date": "2013-08-12",
+    "role": "Primary author R reference for isotonic operating-characteristic simulation and real-trial dose decisions."
+  },
+  "dependency": {
+    "package": "Iso",
+    "version": "0.0-15",
+    "published": "2013-04-18",
+    "url": "https://cran.r-project.org/src/contrib/Archive/Iso/Iso_0.0-15.tar.gz",
+    "cached_path": "research/raw/mtadf-author-reference/Iso/Iso_0.0-15.tar.gz",
+    "sha256": "8628a25884f22e013a875fd6a00539df5afa3204629d9de10e72e9dec5392fa2",
+    "role": "Era-matched primary CRAN source inspected without installation or execution; exact app runtime dependency version remains unknown.",
+    "inspected_files": [
+      "Iso/R/ufit.R",
+      "Iso/R/pava.R",
+      "Iso/src/ufit.f",
+      "Iso/src/unimode.f",
+      "Iso/src/pava.f"
+    ]
+  },
+  "contract": [
+    "ufit(type='b') uniquely abbreviates type='both'; the second list component is the fitted response vector.",
+    "The author's ufit calls omit weights, so each observed dose-rate point receives unit weight, regardless of its patient count.",
+    "The unconstrained mode search visits half-index candidate peaks in order and keeps the first candidate attaining the strict minimum squared-error score.",
+    "For a chosen split, Iso's unimodal routine joins the increasing/decreasing side fits with the peak and applies isotonic pooling; this is not merely two independent PAVA fits separated at every observed dose.",
+    "PAVA defaults to equal weights and increasing order; the Fortran routine pools strict violations only (previous fitted value greater than next).",
+    "The MTADF author simulator uses an admissibility value computed before the current cohort to cap that cohort's next assignment, then recomputes admissibility after the assignment. df.isotonic recomputes admissibility before its decision.",
+    "The simulator's final efficacy fit divides response counts by subjects plus 0.0001 at every dose, including untried doses; tail(which(fit == max(fit))) chooses the rightmost tied maximum, then safety caps that index."
+  ],
+  "independent_reference": {
+    "script": "tools/reference_mtadf_author.R",
+    "fixture": "tests/fixtures/mtadf-author-reference.csv",
+    "method": "Base-R exhaustive enumeration of contiguous constant-block partitions, independently minimizing squared error over feasible unimodal fitted vectors; small deterministic ledger examples use the recovered author decision order.",
+    "not_claimed": [
+      "Execution parity with Iso's compiled Fortran routines",
+      "The exact Iso version installed by the historical app",
+      "Complete random-sequence or full operating-characteristic parity"
+    ]
+  },
+  "current_release_comparison": {
+    "version": "0.0-21",
+    "published": "2023-10-02",
+    "url": "https://cran.r-project.org/src/contrib/Iso_0.0-21.tar.gz",
+    "cached_path": "research/raw/mtadf-author-reference/Iso/Iso_0.0-21.tar.gz",
+    "sha256": "b6842ae1c7b629ebb63355f50bb2e5d96e5696fa59590807ac6028b6dce28fa6",
+    "role": "Comparison only; not used to assert the 2013 app's dependency version."
+  }
+}
