@@ -10,7 +10,6 @@ import numpy as np
 from mdanderson_stats.bop2_dc_categorical import bop2_dc_categorical_design
 from mdanderson_stats.bop2_dc_paired import bop2_dc_paired_design
 
-
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "tests" / "fixtures"
 TOL = 2e-7
@@ -76,14 +75,11 @@ def _probability_rows() -> dict[tuple[str, str, str, str], dict[str, str]]:
 
 
 def main() -> None:
-    configs = {
-        row["case"]: row for row in _rows(FIXTURES / "bop2-dc-categorical-config.csv")
-    }
+    configs = {row["case"]: row for row in _rows(FIXTURES / "bop2-dc-categorical-config.csv")}
     references = _probability_rows()
-    decisions = {
-        row["case"]: row for row in _rows(FIXTURES / "bop2-dc-categorical-decisions.csv")
-    }
+    decisions = {row["case"]: row for row in _rows(FIXTURES / "bop2-dc-categorical-decisions.csv")}
     compared = 0
+    max_posterior_error = 0.0
     for case, config in configs.items():
         design = _build(config)
         for stage in ("final", "interim"):
@@ -100,9 +96,7 @@ def main() -> None:
                 expected_action = decisions[case]["action_interim"]
             action = str(np.asarray(state.decision).item())
             if action != expected_action:
-                raise AssertionError(
-                    f"{case}/{stage}: {action} != {expected_action}"
-                )
+                raise AssertionError(f"{case}/{stage}: {action} != {expected_action}")
             endpoint_names = {
                 "single_any": ["endpoint_a", "endpoint_b", "endpoint_c"],
                 "randomized_all": ["endpoint_a", "endpoint_b", "endpoint_c"],
@@ -118,6 +112,14 @@ def main() -> None:
                         float(reference["probability"]),
                         f"{case}/{stage}/{endpoint}/{criterion}",
                     )
+                    error = abs(
+                        float(state.posterior_probability[j, q]) - float(reference["probability"])
+                    )
+                    if error > float(state.absolute_error[j, q]) + 2e-11:
+                        raise AssertionError(
+                            "posterior discrepancy exceeds numerical error allowance"
+                        )
+                    max_posterior_error = max(max_posterior_error, error)
                     compared += 1
 
     # The K=4 indicator mapping (both, first-only, second-only, neither)
@@ -128,16 +130,18 @@ def main() -> None:
     paired = bop2_dc_paired_design(
         4,
         "multiple_efficacy",
-        [.25, .40],
-        [.45, .60],
-        lambda_lrv=[.65, .65],
-        lambda_cmv=[.45, .45],
-        gamma_lrv=[.5, .5],
-        gamma_cmv=[.5, .5],
+        [0.25, 0.40],
+        [0.45, 0.60],
+        lambda_lrv=[0.65, 0.65],
+        lambda_cmv=[0.45, 0.45],
+        gamma_lrv=[0.5, 0.5],
+        gamma_cmv=[0.5, 0.5],
         prior=_vector(config["prior_experimental"]),
         looks=[2, 4],
     ).monitor(counts)
-    if not np.allclose(categorical.posterior_probability, paired.marginal_posterior, rtol=TOL, atol=TOL):
+    if not np.allclose(
+        categorical.posterior_probability, paired.marginal_posterior, rtol=TOL, atol=TOL
+    ):
         raise AssertionError("K=4 categorical marginals disagree with paired two-endpoint design")
     # The paired module exposes `no-go`, while the categorical module uses `no_go`.
     paired_labels = np.char.replace(paired.endpoint_decision, "-", "_")
@@ -164,7 +168,8 @@ def main() -> None:
         raise AssertionError("replay terminal action disagrees with base-R reference")
     print(
         "BOP2 categorical reference check passed "
-        f"({compared} posterior probabilities, decisions, replay, paired reduction)."
+        f"({compared} posterior probabilities, decisions, replay, paired reduction; "
+        f"maximum absolute posterior error {max_posterior_error:.6g})."
     )
 
 

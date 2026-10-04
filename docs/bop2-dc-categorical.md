@@ -51,6 +51,9 @@ all-upper corners of the endpoint probability/error intervals. Since each
 combined rule is monotone in favorable endpoint probabilities, those two
 corners bound all intermediate combinations without enumerating `4**M`
 corners. The reported quadrature errors are estimates, not formal error bounds.
+Individual endpoint labels describe the point estimates; the numerical-error
+check protects the combined decision. Designs support up to 16 endpoint rows
+and 256 categories, subject to the workflow's additional work limits.
 
 Supply both `control_prior` and `arm_assignments` to select randomized mode.
 The allocation tape is fixed before outcomes are generated; zero denotes
@@ -101,9 +104,7 @@ from mdanderson_stats import (
 
 truth_futile = (0.10, 0.10, 0.10, 0.35, 0.35)
 truth_effective = (0.35, 0.25, 0.10, 0.15, 0.15)
-simulation = simulate_bop2_dc_categorical(
-    design, truth_effective, n_trials=20, rng=20261003
-)
+simulation = simulate_bop2_dc_categorical(design, truth_effective, n_trials=20, rng=20261003)
 candidate = bop2_dc_categorical_design(
     6,
     indicators,

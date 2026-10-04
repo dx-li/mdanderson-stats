@@ -1234,7 +1234,10 @@ when evaluating or calibrating many cutoffs.
 posterior safety monitoring, weighted two-dimensional isotonic MTD selection and
 seeded cohort simulation with Monte Carlo errors. Independent R references cover
 movement, selection and the numerical fit; source discrepancies are documented.
-Generated trial protocols and the paper's other movement variants remain open.
+The published key2/key3/key4 movement options add diagonal candidates and
+posterior-proportional randomization with auditable candidate probabilities.
+The default native key1 behavior is preserved. Generated protocols and
+source-ambiguous key5/scenario generation remain open.
 
 [BOINComb](docs/boin-combination.md) adds ordinary combination dose decisions,
 posterior safety monitoring, final MTD and contour selection, and waterfall
@@ -1301,6 +1304,13 @@ Dirichlet arm models for multiple efficacy or efficacy/toxicity, combined
 monitoring and absorbing replay, exact conditional operating characteristics
 and finite-grid calibration. Bounded serial simulation supports larger designs
 while retaining endpoint association and per-trial replay seeds.
+
+[General categorical endpoints](docs/bop2-dc-categorical.md) extend these
+workflows to more than two decision endpoints. Explicit binary indicators over
+joint categories support single-arm and randomized designs, mixed efficacy and
+toxicity directions, monitoring, absorbing replay and serial simulation.
+Finite candidate calibration reports false-decision rates, enrollment and
+Monte Carlo uncertainty under both correct-go and futile-enrollment objectives.
 
 [BARPO](docs/barpo.md) adds binary posterior monitoring with or without a control
 and four adaptive allocation methods: BARCP, BARN2N, BARMTV and explicit-target

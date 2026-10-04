@@ -75,7 +75,7 @@ class BOP2DCCategoricalCalibration:
 def _limits(value: float, name: str) -> float:
     if not np.isscalar(value) or np.iscomplexobj(value):
         raise ValueError(f"{name} must be a probability scalar")
-    result = scalar(value, name)
+    result = scalar(float(np.asarray(value, dtype=np.float64)), name)
     if not 0 <= result <= 1:
         raise ValueError(f"{name} must lie in [0,1]")
     return result
@@ -84,6 +84,13 @@ def _limits(value: float, name: str) -> float:
 def _same_candidate_family(candidates: tuple[BOP2DCCategoricalDesign, ...]) -> None:
     reference = candidates[0]
     for candidate in candidates[1:]:
+        same_assignments = (
+            candidate.arm_assignments is None and reference.arm_assignments is None
+        ) or (
+            candidate.arm_assignments is not None
+            and reference.arm_assignments is not None
+            and np.array_equal(candidate.arm_assignments, reference.arm_assignments)
+        )
         fixed = (
             candidate.max_subjects == reference.max_subjects
             and np.array_equal(candidate.indicators, reference.indicators)
@@ -93,7 +100,7 @@ def _same_candidate_family(candidates: tuple[BOP2DCCategoricalDesign, ...]) -> N
             and np.array_equal(candidate.cmv, reference.cmv)
             and candidate.prior == reference.prior
             and candidate.control_prior == reference.control_prior
-            and np.array_equal(candidate.arm_assignments, reference.arm_assignments)
+            and same_assignments
             and np.array_equal(candidate.looks, reference.looks)
             and candidate.graduate_at_interim == reference.graduate_at_interim
             and candidate.comparison_tolerance == reference.comparison_tolerance

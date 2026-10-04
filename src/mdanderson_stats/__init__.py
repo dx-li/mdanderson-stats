@@ -299,6 +299,21 @@ from .bop2_dc import (
     BOP2DCState,
     bop2_dc_design,
 )
+from .bop2_dc_categorical import (
+    BOP2DCCategoricalDesign,
+    BOP2DCCategoricalReplay,
+    BOP2DCCategoricalState,
+    bop2_dc_categorical_design,
+)
+from .bop2_dc_categorical_calibration import (
+    BOP2DCCategoricalCalibration,
+    BOP2DCCategoricalInfeasibleError,
+    calibrate_bop2_dc_categorical,
+)
+from .bop2_dc_categorical_simulation import (
+    BOP2DCCategoricalSimulation,
+    simulate_bop2_dc_categorical,
+)
 from .bop2_dc_normal import (
     BOP2DCNormalDesign,
     BOP2DCNormalSimulation,
@@ -2079,6 +2094,15 @@ __all__ = [
     "BOP2DCPairedState",
     "bop2_dc_paired_design",
     "BOP2DCDesign",
+    "BOP2DCCategoricalDesign",
+    "BOP2DCCategoricalReplay",
+    "BOP2DCCategoricalState",
+    "bop2_dc_categorical_design",
+    "BOP2DCCategoricalCalibration",
+    "BOP2DCCategoricalInfeasibleError",
+    "calibrate_bop2_dc_categorical",
+    "BOP2DCCategoricalSimulation",
+    "simulate_bop2_dc_categorical",
     "BOP2DCOperatingCharacteristics",
     "BOP2DCState",
     "bop2_dc_design",

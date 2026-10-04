@@ -34,7 +34,7 @@ def _freeze(value: ArrayLike, dtype: np.dtype | type = np.float64) -> NDArray:
 def _positive_int(value: int, name: str, maximum: int) -> int:
     if not np.isscalar(value) or np.iscomplexobj(value):
         raise ValueError(f"{name} must be an integer scalar")
-    raw = scalar(value, name)
+    raw = scalar(float(np.asarray(value, dtype=np.float64)), name)
     integer = int(raw)
     if raw != integer or not 1 <= integer <= maximum:
         raise ValueError(f"{name} must be an integer in [1,{maximum}]")

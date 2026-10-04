@@ -26,7 +26,6 @@ simulation = simulate_keyboard_combination(
 )
 print(simulation.selection_probability)
 print(simulation.selection_mcse)
-
 ```
 
 To inspect paper key3 or key4 movement probabilities directly, pass the
@@ -42,9 +41,7 @@ patients[0, 0] = 1
 
 for algorithm in ("key3", "key4"):
     design = KeyboardCombDesign(target=0.3, movement_algorithm=algorithm)
-    decision = design.next_dose(
-        patients, toxicities, current_dose=(1, 1), rng=121
-    )
+    decision = design.next_dose(patients, toxicities, current_dose=(1, 1), rng=121)
     print(algorithm, decision.candidate_doses, decision.candidate_probabilities)
 ```
 

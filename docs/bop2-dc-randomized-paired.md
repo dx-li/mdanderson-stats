@@ -225,7 +225,9 @@ and truth probabilities into their four indicator combinations above. Dirichlet
 aggregation preserves the posterior and trial likelihood relevant to these
 indicators exactly. Do not substitute arbitrary real-valued utility weights
 for binary indicators; that is a different posterior calculation. More than
-two decision endpoints require a separate generalized workflow.
+two decision endpoints are supported by the
+[general categorical workflow](bop2-dc-categorical.md), with explicit indicator
+rows, serial simulation and finite candidate calibration.
 
 All calculations are conditional on the caller's allocation tape and assume
 complete paired observations at each scheduled analysis. Native randomization,

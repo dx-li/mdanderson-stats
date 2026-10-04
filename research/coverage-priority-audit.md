@@ -384,3 +384,28 @@ inferring moderate toxicity from a binary DLT flag. Focused source-ledger checks
 cover these transitions, and no-effect settings preserve the ordinary random
 path. Delayed-outcome imputation and native reports remain open; entry 142 stays
 partial. See [the audit](uboin-titration-audit.md).
+
+## BOP2-DC beyond two decision endpoints
+
+The primary paper's binary indicator projection of a joint Dirichlet model
+now has a generalized workflow for single-arm and fixed-allocation randomized
+designs. Explicit endpoint directions and any/all decision composition support
+more than two outcomes without enumerating an exponential joint state lattice.
+Monitoring, absorbing replay, serial simulation and finite candidate calibration
+retain joint-category dependence and report numerical or Monte Carlo error.
+The source's correct-go and futile-enrollment objectives are implemented;
+automatic native grid/report/RNG equivalence remains unverified. Entry 156
+stays partial. See [the guide](../docs/bop2-dc-categorical.md) and
+[independent reference audit](bop2-dc-categorical-reference-audit.md).
+
+## KeyboardComb published movement variants
+
+The cached primary paper supplies the key2/key3/key4 candidate sets and
+selection rules. They are now available through `KeyboardCombDesign` and
+its existing simulator, with raw Beta(1,1) target-key posterior masses. The
+default key1 retains the separately audited native scoring and random calls.
+Independent base-R references cover diagonal choices, proportional weights,
+exclusions, boundaries and ties. The paper's key5 paragraph conflicts with its
+three-member candidate-set definition, and its random-scenario generator gives
+unattainable proper-Beta moments; these remain explicit unresolved contracts.
+Entry 121 stays partial. See [the audit](keyboard-combination-variants-audit.md).

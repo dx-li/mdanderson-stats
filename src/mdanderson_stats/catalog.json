@@ -3794,12 +3794,14 @@
         "Posterior overdose elimination, retained conduct masks, extra-safe lowest-dose stopping and enrollment stopping; integer boundary tables",
         "Weighted bivariate isotonic final MTD selection with weak-prior untreated-cell contributions and source selection adjustment",
         "Fully evaluated binary-cohort simulations with trial histories, final selections, mean enrollment/toxicities and Monte Carlo standard errors",
-        "Remaining: generated trial protocols/reports and other published movement variants; native low-count errors and fixed RNG behavior are not reproduced"
+        "Published key2/key3/key4 movement variants: diagonal-capable candidate sets, maximum raw Beta(1,1) posterior target-key mass or proportional randomization, explicit candidate probabilities and reuse by complete-outcome simulation; default native key1 remains unchanged.",
+        "Remaining: generated protocols/reports, source-ambiguous key5 and random-matrix scenario generation; native low-count errors and fixed RNG behavior are not reproduced."
       ],
       "validation": [
         "Original Keyboard0.1.3 boundary, conduct, selection and bounded simulation fixtures retained with source discrepancy audit",
         "Independent unrounded Iso::biviso reference fixtures for16 nonmonotone unequal-weight matrices and low-target posterior safety reference cases",
-        "Focused real-design simulation checks for all-safe/all-toxic paths, seeded ties and nontrivial Monte Carlo errors; source RNG parity is not claimed"
+        "Focused real-design simulation checks for all-safe/all-toxic paths, seeded ties and nontrivial Monte Carlo errors; source RNG parity is not claimed",
+        "Five independent base-R configurations across key2/key3/key4 verify eligible candidate ordering, diagonal choices, raw Beta masses, proportional weights, exclusions, boundaries and uniform ties. Fourteen focused tests pass, including default key1 seeded compatibility; docs/keyboard-combination.md and research/keyboard-combination-variants-reference.md."
       ]
     },
     {
@@ -4539,7 +4541,9 @@
         "Randomized survival finite-grid calibration with arm-specific medians, common arrival/event paths, cached posterior differences, candidate counts/MCSEs and independent holdout arm event/exposure summaries",
         "Randomized paired multiple-efficacy and efficacy/toxicity models with independent four-cell Dirichlet arm priors, marginal Beta risk-difference comparisons, combined OR/AND decisions, optional composed interim graduation and absorbing fixed-allocation replay",
         "Randomized paired exact operating characteristics and finite-grid calibration preserve joint endpoint association across both arms, cache marginal comparisons and retain all-candidate per-look probabilities with CGR/futile-ESS selection",
-        "Randomized paired serial Monte Carlo operating characteristics with joint-category draws, bounded marginal-posterior caches, per-trial replay seeds, terminal enrollment/actions and Monte Carlo errors"
+        "Randomized paired serial Monte Carlo operating characteristics with joint-category draws, bounded marginal-posterior caches, per-trial replay seeds, terminal enrollment/actions and Monte Carlo errors",
+        "Generalized M-by-K binary indicator endpoints under joint Dirichlet priors, including more than two decision endpoints, mixed favorable directions, single-arm and fixed-allocation randomized monitoring, any/all decision composition, absorbing replay and bounded serial categorical simulation.",
+        "Finite categorical candidate calibration for correct-go probability or futile expected sample size, with explicit joint truths, false-go/no-go/optional-consider constraints, full candidate Monte Carlo summaries and replayable trial seeds."
       ],
       "validation": [
         "Five independent base-R posterior and decision cases match Python",
@@ -4555,12 +4559,13 @@
         "Independent base-R Normal calibration replay verifies 18 candidates and 836 probability/enrollment/MCSE summaries across both objectives and holdouts. A 4% calibration false-go constraint passes at 2/64 and fails on independent validation at 3/48 without reselection; large-offset candidate results are unchanged. docs/bop2-dc-normal-calibration.md",
         "Independent base-R Beta polynomial integration and 64 response paths across four randomized-binary designs verify 100 analyses and 336 summaries, including 12 exact OC scenarios, unequal allocation, signed margins, early graduation and strict equality; largest posterior discrepancy 1.094e-10 is within reported numerical error. docs/bop2-dc-randomized-binary.md",
         "Independent R Student-t density integration and Cauchy identities verify 12 randomized Normal cases, 21 reached analyses, and 48 simulated trials with 78 looks: 263 numeric summaries agree, including early graduation, strict equality, unequal/empty arms, 1e15 offsets and unit changes. Maximum posterior discrepancy 6.273e-10 is within reported error. docs/bop2-dc-randomized-normal.md",
-        "Independent R Gamma-density integration and calendar calculations verify 10 randomized survival tapes/17 looks and 48 fixed/Poisson-accrual trials/71 looks: 763 summaries agree, including 24 graduations, zero-duration events, pending censoring, allocation asymmetry and 1e±100 units. Largest posterior discrepancy 4.922e-11 is within reported error. docs/bop2-dc-randomized-survival.md",
+        "Independent R Gamma-density integration and calendar calculations verify 10 randomized survival tapes/17 looks and 48 fixed/Poisson-accrual trials/71 looks: 763 summaries agree, including 24 graduations, zero-duration events, pending censoring, allocation asymmetry and 1e\u00b1100 units. Largest posterior discrepancy 4.922e-11 is within reported error. docs/bop2-dc-randomized-survival.md",
         "Independent R Beta integration and full response-path enumeration verify 66 binary candidate configurations and 1980 numeric summaries, distinct CGR/ESS winners, stable ties and infeasibility. research/bop2-dc-randomized-binary-calibration-audit.md",
         "Independent R Student-t density integration verifies 36 Normal candidate configurations and 1092 summaries, distinct CGR/ESS winners and a calibration-pass/holdout-fail case without reselection. research/bop2-dc-randomized-normal-calibration-audit.md",
         "Independent R Gamma-density integration/calendar replay verifies 36 survival candidate configurations and 1791 summaries, fixed/Poisson accrual, signed margins, different objective winners and held-out arm events/exposure. research/bop2-dc-randomized-survival-audit.md",
         "Independent R Beta integration and exhaustive joint-category paths verify 388 case-specific posterior states, 27104 reached path/look decisions, 64 randomized paired candidates, 256 OC rows, both objective selections and 24 public replays. Largest tail discrepancy 6.251e-10 is within reported quadrature error; candidate and OC discrepancies are at most 1.333e-15. Ten focused tests pass. research/bop2-dc-randomized-paired-oc-audit.md",
-        "Randomized paired simulation reproduces seeded public replays and deterministic joint truths; a 40-patient/100-trial example takes 0.687 seconds with 103.47 MiB peak RSS and no swaps. More than two decision endpoints, native reports/RNG/optimizer parity and supplementary-table settings remain outside verified scope. docs/bop2-dc-randomized-paired.md"
+        "Randomized paired simulation reproduces seeded public replays and deterministic joint truths; a 40-patient/100-trial example takes 0.687 seconds with 103.47 MiB peak RSS and no swaps. Native reports/RNG/optimizer parity and supplementary-table settings remain outside verified scope; more than two decision endpoints are now supported by the general categorical workflow. docs/bop2-dc-randomized-paired.md",
+        "Independent base-R Beta tails and direct Beta-difference integration verify 36 categorical posterior probabilities, any/all and mixed-direction decisions, absorbing fixed-arm replay and reduction to the existing paired model. Two candidates across two joint truths are independently reaggregated from seeded public replays, including rates, MCSEs, expected sample size, feasibility and both objectives. docs/bop2-dc-categorical.md and research/bop2-dc-categorical-reference-audit.md."
       ]
     },
     {
