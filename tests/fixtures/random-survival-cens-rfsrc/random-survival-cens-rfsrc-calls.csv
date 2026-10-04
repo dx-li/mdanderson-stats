@@ -1,0 +1,4 @@
+"case","n_train","n_covariates","ntree","nsplit","splitrule","nodesize","perf_type","formula"
+"grow_projection",6,2,50,1,"random",5,"none","Surv(time, cens) ~ ."
+"predict_reduced_grid",4,2,50,1,"random",5,"none","Surv(time, cens) ~ ."
+"zero_censor_survival",4,2,50,1,"random",5,"none","Surv(time, cens) ~ ."

@@ -1,0 +1,15 @@
+"case","prediction_row","curve_id","marker"
+"grow_projection",1,1,-2
+"grow_projection",2,2,-1
+"grow_projection",3,3,0
+"grow_projection",4,4,1
+"grow_projection",5,5,2
+"grow_projection",6,6,3
+"predict_reduced_grid",1,4,400
+"predict_reduced_grid",2,3,300
+"predict_reduced_grid",3,2,200
+"predict_reduced_grid",4,1,100
+"zero_censor_survival",1,1,1
+"zero_censor_survival",2,2,2
+"zero_censor_survival",3,3,3
+"zero_censor_survival",4,4,4
