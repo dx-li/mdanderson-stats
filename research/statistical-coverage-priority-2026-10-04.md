@@ -52,7 +52,7 @@ This bounded review originally covered 67 partial-program entries. TTEConduct, C
 
 | Program | Remaining work seen in the inspected evidence | Evidence |
 | --- | --- | --- |
-| PerfectMatch (#7) | Mathematical calculations are covered; native parameter/data/output/rescaling, QC, plots and display workflows remain. | [PerfectMatch guide](../docs/perfectmatch.md) |
+| PerfectMatch (#7) | PDNN fitting/expression, normalization, per-probeset correlations and the five-quantile chip summary are covered. Native parameter/data/output/rescaling, unspecified QC metrics and display workflows remain. | [PerfectMatch guide](../docs/perfectmatch.md); [quantile profile](../docs/perfectmatch-quantile-profile.md) |
 | Multc Lean (#12) | Statistical rules/calendar are covered; native input, report and timing conventions remain. | [Multc guide](../docs/multc.md) |
 | ASYPOW (#33) | LR/SMO families and source-defined vector sample-size inversions are covered; remaining items are interactive/native reporting workflows. | [ASYPOW guide](../docs/asypow.md); [vector inversion audit](asypow-vector-inversion-audit.md) |
 | Parallel phase I/II (#85) | C-design and six-dose calendar workflow are implemented; native configurable input, report and full parity remain. | [parallel phase guide](../docs/parallel-phase12.md) |

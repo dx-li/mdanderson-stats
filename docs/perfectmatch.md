@@ -19,6 +19,11 @@ The manual does not document native tie handling; this deterministic convention
 is explicit. Untied samples acquire the same empirical distribution. No missing
 values are imputed and no CEL cells are selected automatically.
 
+[`pdnn_array_quantiles`](perfectmatch-quantile-profile.md) returns the manual's
+separate per-array intensity profile at 2%, 25%, 50%, 75% and 98%. It uses an
+explicit linear interpolation convention and preserves sample labels. Profiles
+are descriptive; the manual supplies no automatic chip-rejection threshold.
+
 `pdnn_binding_energy` evaluates paper equations (2) and (3) for 25-base probes:
 the energy is the weighted sum of the 24 adjacent-base stacking energies. Inputs
 are a 4-by-4 stacking matrix with both axes ordered A,C,G,T, and 24 position
@@ -144,7 +149,8 @@ error `2.7e-15`. These are local measurements, not cross-machine guarantees.
 
 **Catalog status is partial.** Native parameter-file formats,
 Affymetrix text/binary CEL and binCEL workflows, probe sequence/annotation files,
-quality-control statistics beyond the §4 per-probeset correlation, output formats, native rescaling conventions,
+quality-control statistics beyond the §4 per-probeset correlation and §2 five-quantile
+profile, output formats, native rescaling conventions,
 and gene/image/scatter displays remain pending. Synthetic parameter-learning checks
 do not validate an end-to-end microarray analysis against real array data. No native
 optimization or display parity is claimed.

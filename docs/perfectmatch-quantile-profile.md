@@ -10,15 +10,13 @@ columns, the same orientation as [`quantile_normalize`](perfectmatch.md).
 import numpy as np
 from mdanderson_stats import pdnn_array_quantiles
 
-decoded_intensities = np.array(
-    [[120, 180], [150, 175], [210, 250], [400, 330]], dtype=float
-)
+decoded_intensities = np.array([[120, 180], [150, 175], [210, 250], [400, 330]], dtype=float)
 profile = pdnn_array_quantiles(
     decoded_intensities,
     sample_names=("control.CEL", "treated.CEL"),
 )
 print(profile.probabilities)  # (0.02, 0.25, 0.5, 0.75, 0.98)
-print(profile.values)         # one row per sample, one column per percentile
+print(profile.values)  # one row per sample, one column per percentile
 ```
 
 Quantiles use linear interpolation at `(n_probes - 1) * p`, matching NumPy's
