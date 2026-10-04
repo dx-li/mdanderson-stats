@@ -1573,10 +1573,16 @@ from .u2oet_decision import (
 from .u2oet_fit import U2OETFit, fit_u2oet, u2oet_parameter_names
 from .u2oet_gao import U2OETGAOMarginal, u2oet_gao_probabilities
 from .u2oet_gao2010 import U2OETGAO2010Marginal, u2oet_gao2010_probabilities
+from .u2oet_gao2010_decision import U2OETGAO2010Decision, u2oet_gao2010_decision
 from .u2oet_gao2010_fit import (
     U2OETGAO2010Fit,
     fit_u2oet_gao2010,
     u2oet_gao2010_parameter_names,
+)
+from .u2oet_gao2010_trial import (
+    U2OETGAO2010Look,
+    U2OETGAO2010Trial,
+    simulate_u2oet_gao2010_trial,
 )
 from .u2oet_gao_adaptive_precision import (
     U2OETGAOAdaptivePrecisionResult,
@@ -2286,6 +2292,11 @@ __all__ = [
     "U2OETGAO2010Fit",
     "fit_u2oet_gao2010",
     "u2oet_gao2010_parameter_names",
+    "U2OETGAO2010Decision",
+    "u2oet_gao2010_decision",
+    "U2OETGAO2010Look",
+    "U2OETGAO2010Trial",
+    "simulate_u2oet_gao2010_trial",
     "u2oet_gao_probabilities",
     "U2OETGAOFit",
     "fit_u2oet_gao",

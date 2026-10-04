@@ -1158,6 +1158,10 @@ and complete/toxicity-only likelihoods. Its separate
 coordinates jointly restricted to the valid dose-grid domain and a uniform
 association prior. Elicited prior calibration and native mapping remain open;
 its parameters are distinct from the 2017 comparison model.
+[Original-model cohort trials](docs/u2oet-gao2010-trials.md) apply posterior
+utility selection, the paper's global all-dose toxicity stopping rule and
+upper-neighbor escalation limits. Explicit truth and evaluability inputs
+support complete and toxicity-only observations with replayable outcomes.
 
 [CATBUB](docs/catbub.md) provides categorical-utility posterior comparisons,
 Dirichlet Monte Carlo, a success-only binary comparator, sequential multinomial
@@ -1545,7 +1549,9 @@ report selection, stopping, allocation, observed toxicity and duration with
 Monte Carlo errors and replayable event/sampler seed pairs.
 [Delayed-toxicity observations](docs/dose-schedule-observation.md) apply explicit
 adjudications as they become known, backdate qualifying events to onset, and
-separate delivered treatment from likelihood exposure. Automatic calibration,
+separate delivered treatment from likelihood exposure. Grade-2 snapshots apply
+the paper's persistence or attributed-dose-reduction rule to supplied episode
+histories, with an explicit deadline convention. Automatic calibration,
 generated low-grade episodes and native workflows remain open.
 
 [CiBolus](docs/cibolus.md) models immediate and subsequent response to a bolus

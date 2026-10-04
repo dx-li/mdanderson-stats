@@ -45,12 +45,13 @@ Regenerate the small CSV fixtures with:
 Rscript tools/reference_u2oet_gao2010_conduct.R tests/fixtures
 ```
 
-Root integration validation passed all 19 affected probability, fitter and
-conduct checks with warnings as errors: 2.475 seconds, 137.89 MiB process
+Root integration validation passed all 20 affected probability, fitter and
+conduct checks with warnings as errors: 2.174 seconds, 139.47 MiB process
 peak RSS and zero swaps. The four supplied-draw cases contain 2,304 joint
 cells and 36 grid-summary rows; numeric comparisons use absolute tolerance
 2e-12 and no relative tolerance. The cohort checks run the actual fitter
 with fixed parameters and supplied outcome tapes, including toxicity-only
-observations and invalid-start rejection before random-state consumption.
+observations, malformed tape width rejection and invalid-start rejection
+before random-state consumption.
 These checks complement the existing independent posterior-quadrature audit;
 they do not establish native executable or operating-characteristic parity.

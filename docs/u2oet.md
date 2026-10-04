@@ -116,7 +116,8 @@ Remaining coverage includes:
 
 - Native GAO prior interpretation, elicited prior calibration and original-model
   calendar integration. The [original 2010 GAO probability kernel](u2oet-gao2010.md),
-  its [explicit-input posterior fitter](u2oet-gao2010-fit.md), and the separate
+  its [explicit-input posterior fitter](u2oet-gao2010-fit.md),
+  [cohort conduct workflow](u2oet-gao2010-trials.md), and the separate
   2017 explicit-prior GAO fitter are available.
 - Validation of complete trial operating characteristics.
   Explicit-prior fitting, pseudo-trial centers and prior ESS are supplied below.

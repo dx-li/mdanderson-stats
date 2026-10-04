@@ -80,12 +80,15 @@ a larger one.
 separate probability model for evaluability. Thus it does not fit or model the
 paper's `zeta` parameter or informative evaluability mechanism.
 
-This module does not implement the paper's prior calibration, native
-posterior sampler, dose-selection rule or clinical trial workflow. The paper
+The separate [cohort conduct workflow](u2oet-gao2010-trials.md) adds posterior
+utility selection, global toxicity stopping and upper-neighbor allocation,
+with complete and toxicity-only outcomes. Elicited prior calibration, the
+native posterior sampler and calendar conduct remain open. The paper
 states normal priors for the linear coefficients and interactions, lognormal
 priors for endpoint link shapes, and a uniform prior for the copula correlation;
 validity constraints couple negative interactions to coefficients and the
 dose grid. The elicited prior-center calculation and the native application's
-parameter-file coordinate ordering remain unresolved. Use the separate
-[2017 explicit-prior GAO fitter](u2oet-gao-fit.md) only for its documented
-2017 parameterization.
+parameter-file coordinate ordering remain unresolved. The
+[original-model fitter](u2oet-gao2010-fit.md) uses an explicit joint-support
+prior convention. The separate [2017 fitter](u2oet-gao-fit.md) uses its
+documented 2017 parameterization.

@@ -69,5 +69,6 @@ and the minimum evaluations. Hard ceilings are 20 million retained scalar
 cells, 100 million dose/category work units, and 1 million likelihood
 evaluations. Elliptical slice updates also have a bounded 1,000-step bracket
 search. Increase runtime cautiously; the Gaussian-copula rectangle kernel has
-its own numerical work limit. This fits supplied grouped data; it does not
-simulate or conduct trials.
+its own numerical work limit. The [cohort trial driver](u2oet-gao2010-trials.md)
+uses this fitter after each cohort, retaining compact decisions and shared
+work limits. Its pure decision function also accepts `fit.joint` directly.
