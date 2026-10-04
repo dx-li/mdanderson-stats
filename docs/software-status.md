@@ -6,8 +6,8 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 68 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 62 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 69 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 61 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -93,6 +93,7 @@ some legacy adaptations retain commercial-use restrictions.
 | WINDOWS | [desktop #61](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/61) | [Guide](windows.md) |
 | ASYPOW | [desktop #33](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/33) | [Guide](asypow.md) |
 | Sample Size Determination for Decentralized Clinical Trials (DCTs) | [online #164](https://biostatistics.mdanderson.org/shinyapps/DCTs) | [Guide](dct-normal.md) |
+| Keyboard: a novel Bayesian toxicity probability interval design for phase I clinical trial | [online #127](https://biostatistics.mdanderson.org/shinyapps/Keyboard) | [Guide](keyboard.md) |
 
 ## Partially implemented
 
@@ -132,7 +133,6 @@ some legacy adaptations retain commercial-use restrictions.
 | EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Guide](efftox.md), [trinary calibration](efftox-trinary-calibration.md) |
 | Find optimal biological dose (OBD) for targeted and immune therapies | [online #142](https://biostatistics.mdanderson.org/shinyapps/UBOIN) | [Guide](uboin.md) |
 | IPDfromKM: Reconstruct Individual Patient Data (IPD) From Kaplan-Meier Survival Curve | [online #151](https://biostatistics.mdanderson.org/shinyapps/IPDfromKM) | [Guide](ipdfromkm.md), [reconstruction diagnostics](ipdfromkm-diagnostics.md) |
-| Keyboard: a novel Bayesian toxicity probability interval design for phase I clinical trial | [online #127](https://biostatistics.mdanderson.org/shinyapps/Keyboard) | [Guide](keyboard.md) |
 | KeyboardComb: the Keyboard Design for Drug Combination Trials | [online #121](https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/) | See catalog feature and validation notes |
 | MDS-HOPE: An interactive risk assessment tool for patients treated with HMA | [online #171](https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/) | [Guide](mds-hope.md) |
 | MERIT: Multiple-dose Randomized Phase II Trial Design for Dose Optimization and Sample Size Determination | [online #160](https://biostatistics.mdanderson.org/shinyapps/MERIT/) | [Guide](merit.md) |

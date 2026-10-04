@@ -24,9 +24,11 @@ nonmonotone truth profiles as well. It does not infer target doses or planned
 enrollment. If the exact-target gate is absent, all risk estimates are
 explicitly unavailable.
 
-The cached native calculation also uses `rowSums` after subsetting above-target
-columns, which drops to a vector for one selected column and errors for none;
-the helper handles both cases. The source R documentation says “or more” in
-its prose, while the implementation and returned metric names use strict
-“more than”; this port follows the executable comparisons (`> 0.6*npts` and
-`> 0.8*npts`).
+The cached native calculation chooses between direct comparisons and `rowSums`
+using the exact-target dose index. That assumes an ordered truth profile.
+For nonmonotone truth, a single selected above-target column can reach `rowSums`
+after R drops the matrix dimension; conversely, zero or multiple columns can
+reach the direct-comparison branch. The helper always sums each trial's
+above-target counts before comparing, including empty selections. The source
+R documentation says “or more” in its prose, while the executable comparisons
+are strict (`> 0.6*npts` and `> 0.8*npts`); this port follows the latter.

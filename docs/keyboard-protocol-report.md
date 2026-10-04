@@ -19,8 +19,7 @@ which remains a separate `KeyboardDesign.select_mtd` calculation. The simulated
 selection probabilities do include each simulated trial's MTD estimate.
 
 ```python
-from mdanderson_stats.keyboard import KeyboardDesign
-from mdanderson_stats.keyboard_report import keyboard_protocol_report
+from mdanderson_stats import KeyboardDesign, keyboard_protocol_report
 
 report = keyboard_protocol_report(
     KeyboardDesign(target=0.3, extra_safe=True),

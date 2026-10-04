@@ -291,7 +291,26 @@ The enrollment limit is 200, matching the source application. All outcomes are
 assumed evaluable before decisions. Supply the same cohort and titration settings
 used in simulation. This output is statistical methods text, not a complete
 clinical protocol or a reproduction of the site's Word/HTML layout. It does not
-invent operating-characteristic results: append results from the simulation and
-comparison APIs separately. Animation and integrated report export remain pending.
+invent operating-characteristic results. The [integrated HTML report](boin-protocol-report.md)
+now computes scenario simulations from its recorded settings and combines their
+summaries with this methods text. Animation and native Word-template parity remain outside
+the available Python workflow.
 Both language variants are checked for exact numeric boundaries and safety-table
 values, including the custom-boundary integer-rounding regression.
+
+## Overdose allocation risks
+
+`dose_allocation_risks` summarizes the source-defined risks of assigning **more
+than** 60% or 80% of planned enrollment to doses whose true toxicity probability
+exceeds the target. Supply the trial-by-dose patient counts, true toxicity vector,
+target and planned enrollment. These probabilities use the planned denominator
+even when a trial stops early; they are distinct from selecting an overly toxic dose.
+The result contains event counts, probabilities and Bernoulli Monte Carlo standard
+errors. Probabilities are fractions, while the native printout uses percentages.
+
+As in BOIN 2.7.2, the summary is available only if at least one scenario dose has
+true toxicity exactly equal to the target. Otherwise its estimates are `None`
+with an explicit reason. Python handles multiple exact-target doses and zero,
+one or several above-target columns without the native R indexing errors.
+The strict comparisons follow executable source despite the looser “or more”
+wording in its documentation. See the [source audit](../research/dose-allocation-risk-audit.md).

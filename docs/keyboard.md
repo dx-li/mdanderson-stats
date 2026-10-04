@@ -1,9 +1,9 @@
 # Keyboard dose finding
 
 Catalog entry **127**, [Keyboard](https://biostatistics.mdanderson.org/shinyapps/Keyboard/),
-has its single-agent statistical core implemented: posterior keys, dose decisions,
-overdose safety, integer tables, isotonic MTD selection and batched trial simulation.
-The entry remains **partial** for integrated protocol/report output. [Combination](keyboard-combination.md) and [time-to-event](tite-keyboard.md)
+has its single-agent workflow implemented: posterior keys, dose decisions,
+overdose safety, integer tables, isotonic MTD selection, batched trial simulation
+and [saved protocol reports](keyboard-protocol-report.md). [Combination](keyboard-combination.md) and [time-to-event](tite-keyboard.md)
 Keyboard implementations are documented separately.
 
 Sources include the app's technical PDFs, the authors'
@@ -103,6 +103,14 @@ with 1,000 trials. Returned trial-level patient/toxicity arrays have shape
 `(trials,doses)`. Selection index zero means no MTD. Probability and Monte Carlo
 standard-error bins are `[no MTD, dose 1, ..., dose J]`. Stop reasons distinguish
 safety, precision and maximum enrollment. NumPy random draws differ from R seeds.
+
+The protocol report computes these summaries from captured design settings and
+scenario inputs, retains compact results, and writes a self-contained HTML file.
+It includes the shared [overdose-allocation risks](boin.md#overdose-allocation-risks):
+strictly more than 60% or 80% of planned enrollment at above-target doses, available
+only when a scenario contains an exact-target dose. An unavailable result is
+distinct from a zero estimated risk. The report uses Python's documented random
+stream and HTML layout; native Word templates and saved app sessions are not reproduced.
 
 ## Reference discrepancies and validation
 

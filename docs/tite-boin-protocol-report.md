@@ -9,8 +9,8 @@ and compact operating-characteristic summaries. It does not accept a detached
 simulation result with caller-asserted metadata.
 
 ```python
-from mdanderson_stats.boin import BOINDesign
-from mdanderson_stats.tite_boin_protocol_report import (
+from mdanderson_stats import (
+    BOINDesign,
     TITEBOINProtocolRequest,
     TITEBOINScenario,
     run_tite_boin_protocol,
@@ -36,6 +36,7 @@ report = run_tite_boin_protocol(
 )
 html_text = report.to_html()
 print(html_text[:300])
+report.write_html("tite-boin-protocol.html")
 ```
 
 Scenarios run serially. A `SeedSequence` derives and records a 128-bit integer
@@ -43,8 +44,9 @@ seed for each scenario in request order; each existing simulation consumes its
 recorded seed. Re-running the report with the same request reproduces those
 streams. For Weibull and log-logistic event timing, the effective default
 late-onset probability is 0.5 at each dose; it is unused for uniform event
-timing. With no event-time trimester masses, event times are uniform over the
-full window. Analysis weights separately default to uniform conditional
+timing. Under uniform event timing with no event-time trimester masses, event
+times are uniform over the full window. Trimester masses are unused for
+Weibull and log-logistic event generation. Analysis weights separately default to uniform conditional
 time-to-DLT masses of `(1/3, 1/3, 1/3)`. The former controls simulated event
 times; the latter controls interim STFT weights. The input unit label applies
 to the assessment window, accrual rate, duration and suspension summaries; it

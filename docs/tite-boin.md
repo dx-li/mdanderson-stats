@@ -9,8 +9,17 @@ Accelerate Phase I Trials*, DOI 10.1158/1078-0432.CCR-18-0246.
 The implementation provides vectorized single-mean imputation, ordinary follow-up
 thresholds, and interim dose decisions. Calendar replay, simulation and optional
 3+3 modifications are supported. A [Rolling Six comparison and Markdown report](boin-time-comparison.md)
-are available; flowcharts and integrated protocol reports remain pending. Final selection is available through
+are available. A [reproducible protocol report](tite-boin-protocol-report.md) now
+records the effective timing/design settings, decision sequence and newly
+computed scenario summaries in saved HTML. Final selection is available through
 `BOINDesign.select_mtd` once all outcomes are ascertained.
+
+The entry remains partial: source labels for correct/overdose selection and
+allocation and “regretful trials” do not establish all native evaluation conventions
+in the inspected material. The report therefore preserves the full selection
+distribution and per-dose mean allocations, without inventing a correct-MTD or
+regret classification. Native document templates and scheduler/RNG parity also
+remain unverified. See the [report crosswalk](../research/tite-boin-protocol-report-audit.md).
 
 ## Imputation and follow-up thresholds
 

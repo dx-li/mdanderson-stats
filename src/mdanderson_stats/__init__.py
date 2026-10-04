@@ -272,6 +272,12 @@ from .boin12_two_stage import (
 )
 from .boin_combination import BOINCombDecision, BOINCombDesign, BOINCombSelection
 from .boin_combination_simulation import BOINCombinationSimulation, simulate_boin_combination
+from .boin_design_report import (
+    BOINDesignReport,
+    BOINReportScenario,
+    BOINScenarioSummary,
+    boin_design_report,
+)
 from .boin_protocol import boin_protocol
 from .boin_simulation import BOINSimulation, simulate_boin
 from .boin_time_comparison import (
@@ -677,6 +683,7 @@ from .diagnostic_population import (
     diagnostic_population,
     diagnostic_population_from_counts,
 )
+from .dose_allocation_risk import DoseAllocationRisks, dose_allocation_risks
 from .dose_schedule import (
     DoseSchedulePatient,
     dose_schedule_cumulative_hazard,
@@ -895,6 +902,11 @@ from .keyboard_combination import (
 from .keyboard_combination_simulation import (
     KeyboardCombinationSimulation,
     simulate_keyboard_combination,
+)
+from .keyboard_report import (
+    KeyboardProtocolReport,
+    KeyboardScenarioSummary,
+    keyboard_protocol_report,
 )
 from .keyboard_simulation import KeyboardSimulation, simulate_keyboard
 from .kphaz import KPHazard, kphaz
@@ -1506,6 +1518,13 @@ from .tite_boin12_simulation import (
     TITEBOIN12Simulation,
     simulate_tite_boin12,
     tite_boin12_gumbel_probabilities,
+)
+from .tite_boin_protocol_report import (
+    TITEBOINProtocolReport,
+    TITEBOINProtocolRequest,
+    TITEBOINScenario,
+    TITEBOINScenarioSummary,
+    run_tite_boin_protocol,
 )
 from .tite_boin_simulation import TITEBOINSimulation, simulate_tite_boin
 from .tite_boin_trial import TITEBOINStep, TITEBOINTrial, run_tite_boin_trial
@@ -2881,6 +2900,20 @@ __all__ = [
     "KeyboardSimulation",
     "simulate_keyboard",
     "boin_protocol",
+    "BOINDesignReport",
+    "BOINReportScenario",
+    "BOINScenarioSummary",
+    "boin_design_report",
+    "KeyboardProtocolReport",
+    "KeyboardScenarioSummary",
+    "keyboard_protocol_report",
+    "TITEBOINProtocolReport",
+    "TITEBOINProtocolRequest",
+    "TITEBOINScenario",
+    "TITEBOINScenarioSummary",
+    "run_tite_boin_protocol",
+    "DoseAllocationRisks",
+    "dose_allocation_risks",
     "BOINThreePlusThreeComparison",
     "ThreePlusThreeSimulation",
     "compare_boin_three_plus_three",

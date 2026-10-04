@@ -6,15 +6,16 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-68 implemented, 62 partial, and 8 pending. Each method's guide explains its
+69 implemented, 61 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. These labels cover
 complete software workflows: a partial entry can already include every
 advertised statistical endpoint while report or native-compatibility gaps remain.
 The [remaining-work review](research/statistical-coverage-priority-2026-10-04.md)
 separates unresolved statistical specifications from input, report and
-application-compatibility work across the partial entries. ASYPOW and DCT now
-include complete calculation/report workflows; PerfectMatch adds chip quantile
-summaries and aPCoA adds sample-ID-aware CSV/TSV inputs.
+application-compatibility work across the partial entries. Keyboard now includes
+its saved protocol workflow. BOIN and Keyboard add source-defined overdose-allocation
+risks, while BOIN and TITE-BOIN add reproducible scenario reports. TITE-BOIN's
+remaining uncertainty about native evaluation labels is recorded explicitly.
 
 Validated community checkpoints are published on
 [`master`](https://github.com/dx-li/mdanderson-stats/tree/master); `main`
@@ -751,8 +752,9 @@ with conservative and joint-normal equivalence options.
 [BOIN](docs/boin.md) provides single-agent dose decisions, overdose safeguards,
 weighted isotonic MTD selection and trial simulation with accelerated titration. Published
 boundaries and original R results validate the core. This catalog entry remains
-partial while animation and integrated report export are pending. English and
-Chinese statistical protocol text includes the numerical decision table. Custom rate cutoffs
+partial for animation and native application parity. A [saved HTML report](docs/boin-protocol-report.md)
+combines English or Chinese methods text, the numerical decision table and newly
+computed scenario summaries, including source-defined overdose-allocation risks. Custom rate cutoffs
 can be entered directly, with numerically checked inversion to BOIN alternatives.
 The conventional 3+3 comparator supports cohort expansion and matching BOIN
 enrollment caps to realized 3+3 sample sizes.
@@ -765,7 +767,9 @@ delayed-toxicity and combination capabilities to the corresponding Python APIs.
 isotonic MTD selection and batched simulation. The paper's complete-key convention
 and the R package's adjusted endpoint convention are explicit. Native R comparisons
 and independent exact interval probabilities validate the statistical core;
-integrated reports remain pending.
+the [integrated HTML report](docs/keyboard-protocol-report.md) now connects
+captured design settings, integer boundaries, scenario simulations and
+overdose-allocation risks in a saved community workflow.
 
 ## TITE-Keyboard interim decisions
 
@@ -786,8 +790,11 @@ completion and minimum-follow-up suspension rules. Calendar replay and simulatio
 include releases at minimum-follow-up thresholds and calibrated toxicity timing.
 Optional 3+3 modifications follow the app’s pending-outcome rules. A
 [Rolling Six comparison](docs/boin-time-comparison.md) supplies shared scenario
-inputs, numerical summaries and a Markdown report. Integrated protocol exports
-remain pending.
+inputs, numerical summaries and a Markdown report. The new
+[protocol report](docs/tite-boin-protocol-report.md) records effective settings,
+replayable scenario seeds, the decision sequence and saved HTML results.
+Native correct-MTD/regret evaluation conventions remain unresolved; the report
+preserves selection probabilities and mean per-dose allocations without inventing those labels.
 
 
 ## Rolling Six

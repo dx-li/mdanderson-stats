@@ -416,7 +416,7 @@ def _capture_design(requested: BOINDesign) -> BOINDesign:
     for name in ("escalation_boundary", "deescalation_boundary"):
         original = float(getattr(requested, name))
         reconstructed = float(getattr(captured, name))
-        if abs(reconstructed - original) > tolerance * original:
+        if not math.isfinite(original) or abs(reconstructed - original) > tolerance * original:
             raise ValueError(f"design {name} is inconsistent with its probability alternatives")
         object.__setattr__(captured, name, original)
     return captured
@@ -532,7 +532,11 @@ def run_tite_boin_protocol(request: TITEBOINProtocolRequest) -> TITEBOINProtocol
         if late.size == 1:
             late = _owned(np.full(dose_count, late[0]))
     event_masses_defaulted = request.event_trimester_probabilities is None
-    effective_event_masses = _owned(np.full(3, 1 / 3)) if event_masses_defaulted else event_masses
+    effective_event_masses = (
+        (_owned(np.full(3, 1 / 3)) if event_masses_defaulted else event_masses)
+        if request.event_distribution == "uniform"
+        else None
+    )
     analysis_masses_defaulted = request.trimester_probabilities is None
     effective_analysis_masses = (
         _owned(np.full(3, 1 / 3)) if analysis_masses_defaulted else analysis_masses

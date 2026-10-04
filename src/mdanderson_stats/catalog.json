@@ -3787,7 +3787,9 @@
         "Accelerated single-patient titration with DLT/second grade-2 stopping, lower dose caps, cohort completion and strict total enrollment cap",
         "Vectorized conventional 3+3 trials and BOIN comparison with MTD expansion or per-trial BOIN enrollment caps matched to realized 3+3 sample sizes",
         "Direct escalation/de-escalation cutoff input with stable inverse indifference probabilities, forward validation and inclusive integer table/conduct agreement",
-        "Independent English/Chinese statistical protocol text with exact rate cutoffs, all selected conduct options and complete integer decision tables; integrated HTML/Word reports and animation remain pending"
+        "Independent English/Chinese statistical protocol text with exact rate cutoffs, all selected conduct options and complete integer decision tables",
+        "Source-defined strict 60%/80% planned-enrollment overdose-allocation risks with exact-target availability, trial event counts and Monte Carlo standard errors",
+        "Bounded reproducible HTML protocol reports with captured settings, serial scenario simulations and compact operating-characteristic summaries; animation and native Word/application parity remain pending"
       ],
       "validation": [
         "Six published boundary pairs and .30-target cohort table; rational posterior safety identities",
@@ -3797,7 +3799,9 @@
         "10000-trial original R accelerated-titration comparison; exact competing-event duration probabilities and deterministic transition/enrollment paths",
         "Independent analytical two-dose selection probabilities in three 100000-trial scenarios; deterministic six-patient confirmation and de-escalation paths; trial-level matching conservation",
         "Independent 80-digit decimal likelihood identities, eight default-probability round trips, tiny alternatives and explicit floating-point resolution limits",
-        "Both protocol language variants preserve exact custom boundaries and safety table values; optional modification/precision/titration descriptions verified"
+        "Both protocol language variants preserve exact custom boundaries and safety table values; optional modification/precision/titration descriptions verified",
+        "Exact strict-threshold/planned-enrollment witnesses, unavailable and multiple-target cases, nonmonotone truths and bounded integer risk calculations; research/dose-allocation-risk-audit.md",
+        "Report-to-simulation seed replay, exact custom-cutoff preservation, complete metadata, bounded preflight and escaped atomic HTML; docs/boin-protocol-report.md"
       ]
     },
     {
@@ -3838,18 +3842,22 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Single-agent posterior Keyboard decisions with custom target interval, complete-key and rescaled endpoint conventions, and inclusive integer decision tables",
         "Posterior overdose elimination, sticky higher-dose exclusions, extra-safe lowest-dose stopping and unconditional precision stopping",
         "Weak-prior weighted isotonic MTD selection, native marginal reporting intervals and separate reporting/safety overdose probabilities",
-        "Batched complete-outcome Keyboard simulation honoring nondefault intervals and safety settings; integrated reports remain pending"
+        "Batched complete-outcome Keyboard simulation honoring nondefault intervals and safety settings",
+        "Source-defined strict 60%/80% planned-enrollment overdose-allocation risks with exact-target availability and Monte Carlo standard errors",
+        "Reproducible saved HTML protocol with captured design and cohort settings, full integer boundaries, serial scenario simulations, selection/allocation/toxicity/stop summaries and overdose-allocation risks"
       ],
       "validation": [
         "Six original Keyboard 0.1.3 full decision tables; 64 native MTD selections and reporting estimates",
         "10000-trial native default simulation comparison and independent rational beta/binomial key probabilities",
         "Custom-interval simulation forwarding, bounded extreme counts and safety/precision precedence",
-        "docs/keyboard.md"
+        "docs/keyboard.md",
+        "Exact strict-threshold/planned-enrollment witnesses and corrected native target/column indexing edge cases; research/dose-allocation-risk-audit.md",
+        "Direct serial seed replay including a no-target scenario, bounded-work preflight and escaped atomic UTF-8 report; docs/keyboard-protocol-report.md"
       ]
     },
     {
@@ -3900,10 +3908,11 @@
         "Broadcast single-mean imputation and coherent STFT escalation/de-escalation thresholds using the published weak prior with mean target/2",
         "Interim conduct with informative trimester weights, enrolled-count overdose control, sticky exclusions, current completion/minimum-follow-up suspension rules and precision stopping",
         "Final complete-data MTD selection through BOINDesign.select_mtd",
-        "Common-scenario TITE-BOIN/Rolling Six simulations with preserved per-trial results/statuses, numerical summaries and Markdown comparison report; flowcharts and integrated protocol exports remain pending",
+        "Common-scenario TITE-BOIN/Rolling Six simulations with preserved per-trial results/statuses, numerical summaries and Markdown comparison report",
         "Calendar replay and simulation with outcome/minimum-follow-up accrual releases, final complete-data selection, fixed/exponential arrivals and calibrated uniform/Weibull/log-logistic timing",
         "Optional complete-outcome 1/3 stay and pending-inclusive 2/6 de-escalation, including completion-suspension override, available in conduct/replay/simulation",
-        "Rolling Six comparator conduct, calendar replay and calibrated simulation, with explicit strict-completion variant and terminal MTD/highest-dose interpretation"
+        "Rolling Six comparator conduct, calendar replay and calibrated simulation, with explicit strict-completion variant and terminal MTD/highest-dose interpretation",
+        "Reproducible saved HTML protocol with effective timing/design settings, exact cutoffs, decision sequence, recorded per-scenario seeds and compact selection/allocation/duration summaries; native correct-MTD/regret evaluation conventions and document/scheduler parity remain unresolved"
       ],
       "validation": [
         "Twelve rounded Table S1 thresholds, independent rational imputation for all valid counts through n=12, complete-data BOIN reduction, safety/suspension precedence and weighted/time-rescaled follow-up",
@@ -3911,7 +3920,8 @@
         "Deterministic follow-up release before next outcome, intervening toxicity with causal history, time scaling, toxicity extremes and existing shared TITE-Keyboard calendar/timing checks",
         "Live app 2.5.4.0 decision-row capture for both optional 3+3 modifications, guide screenshot, complete-data modified-BOIN reduction, pending counts and safety precedence",
         "Published Rolling Six decision-table states, downward completion, six-patient capacity, deterministic calendars and shared scheduling checks; docs/rolling-six.md",
-        "Bounded comparison safety/highest-dose cases, seed replay, RNG-preserving preflight, independent aggregation/MCSE, time-unit rescaling and overflow-safe duration means; docs/boin-time-comparison.md"
+        "Bounded comparison safety/highest-dose cases, seed replay, RNG-preserving preflight, independent aggregation/MCSE, time-unit rescaling and overflow-safe duration means; docs/boin-time-comparison.md",
+        "Direct replay of recorded scenario seeds, exact custom-cutoff and effective timing preservation, bounded-work preflight and escaped atomic UTF-8 report; docs/tite-boin-protocol-report.md"
       ]
     },
     {
