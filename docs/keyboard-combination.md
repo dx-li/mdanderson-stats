@@ -27,8 +27,25 @@ simulation = simulate_keyboard_combination(
 print(simulation.selection_probability)
 print(simulation.selection_mcse)
 
-# Select a separately published movement rule; default key1 remains unchanged.
-paper_variant = KeyboardCombDesign(target=0.3, movement_algorithm="key3")
+```
+
+To inspect paper key3 or key4 movement probabilities directly, pass the
+algorithm in the design and read the candidates recorded on the decision:
+
+```python
+import numpy as np
+from mdanderson_stats import KeyboardCombDesign
+
+patients = np.zeros((3, 3), dtype=int)
+toxicities = np.zeros_like(patients)
+patients[0, 0] = 1
+
+for algorithm in ("key3", "key4"):
+    design = KeyboardCombDesign(target=0.3, movement_algorithm=algorithm)
+    decision = design.next_dose(
+        patients, toxicities, current_dose=(1, 1), rng=121
+    )
+    print(algorithm, decision.candidate_doses, decision.candidate_probabilities)
 ```
 
 ## Decisions and safety
