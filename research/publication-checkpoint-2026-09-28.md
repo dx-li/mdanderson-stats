@@ -3029,3 +3029,37 @@ Both catalog entries remain partial. Full catalog coverage stays active;
 RF-SRC missing-data semantics are traced to the pinned native source for the
 next implementation batch. The local manifest records independently verified
 publication branch SHAs and artifact hashes.
+
+## 2026-10-04: Survival-forest missing-data workflows
+
+Random survival forests now support complete-case omission and one-pass
+node-local imputation of predictors and outcomes. Original missingness controls
+candidate-specific split construction, observed in-bag donors retain bootstrap
+multiplicity, completed outcomes enter terminal curves, and OOB prediction
+reuses recorded tree routes. Prediction supports omission with original-row
+maps or seeded missing-profile completion from retained training donors.
+Requested and effective tree counts expose donor-less rejected bootstraps.
+Complete-data seeded behavior is preserved, and predictor-only imputation
+retains OOB concordance when outcomes are complete. Missing-outcome concordance,
+imputed-fit Brier/VIMP and repeated imputation remain explicitly unfinished.
+
+Three Luna agents supplied the engine, adapter integration, independent base-R
+references and source review. Root review corrected OOB membership and profile
+copying, preserved the generic random-feature rule with missing values, added
+prediction omission and verified categorical integration. All 64 affected
+checks pass with warnings as errors in 3.140 seconds, with 148.80 MiB peak RSS
+and zero swaps. Additional categorical/missing-prediction checks pass at
+128.02 MiB peak RSS and zero swaps. Scoped Ruff, formatting and mypy checks
+pass. The fixed-tape R ledgers verify donor, split-mask, terminal and time-grid
+rules; they do not claim native whole-forest random-stream parity.
+
+Cached builds at `e7925cc` pass isolated package verification: all 622 committed
+package files match both archives, all 1,734 public exports resolve, license
+notices remain present, and the missing-data guide runs from the wheel. The
+check took 18.436 seconds, peaked at 107.34 MiB RSS and reported zero swaps.
+Numerical, static, build and package jobs remained serial and bounded. No full
+local suite, installation or new CI workflow was added. The previous published
+`8e9642a` checkpoint passed all hosted quality and Python 3.12/3.13/3.14 checks
+in run `37178837952`. Entry 166 and full catalog coverage remain unfinished;
+the next missing-outcome and repeated-imputation source contracts are recorded.
+The local manifest records independently verified remote SHAs and artifacts.
