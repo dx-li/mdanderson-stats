@@ -59,8 +59,6 @@ def _adapter_training_data(
 
     if fit.training_row_indices is None:
         raise ValueError("fit is missing its original training row map")
-    if fit.training_row_indices is None:
-        raise ValueError("fit is missing its original training row map")
     row_indices = np.asarray(fit.training_row_indices, dtype=np.int64)
     if (
         row_indices.ndim != 1
