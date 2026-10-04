@@ -6,6 +6,9 @@ import numpy as np
 from numpy.typing import ArrayLike
 
 from ._validation import count, finite, scalar
+from .beta_binomial import _owned
+
+_MAX_ALLOCATION_VALUES = 200_000
 
 
 @dataclass(frozen=True)
@@ -39,6 +42,81 @@ def _target_index(probabilities: np.ndarray, target: float, selection: str) -> t
         tied = np.flatnonzero(distances <= minimum + 8 * np.finfo(float).eps)
         return int(tied[0]), True
     raise ValueError("selection must be 'below', 'nearest', or 'above'")
+
+
+def bcrm_extreme_allocation_probability(
+    target_fraction: ArrayLike,
+    allocated_fraction: ArrayLike,
+    *,
+    correction: float = 2.0,
+) -> np.ndarray:
+    """Return the guide-defined probability for extra extreme-dose allocation.
+
+    For target fraction ``p_T`` and the fraction already allocated ``p_o``,
+    the guide uses ``p_T ** (1 + correction * (p_o - p_T))`` and constrains
+    the result to ``[0.1, 0.5]``. Fractions may be scalars or broadcast
+    one-dimensional vectors; target fractions lie in (0, 1), allocated
+    fractions in [0, 1]. Correction is a finite nonnegative scalar. This is a
+    randomization probability, not an efficacy estimate or a treatment-success
+    probability.
+    """
+    target = _allocation_fraction(target_fraction, "target_fraction")
+    allocated = _allocation_fraction(allocated_fraction, "allocated_fraction")
+    gamma = scalar(correction, "correction")
+    if np.any((target <= 0) | (target >= 1)):
+        raise ValueError("target_fraction must lie strictly inside (0, 1)")
+    if np.any((allocated < 0) | (allocated > 1)):
+        raise ValueError("allocated_fraction must lie in [0, 1]")
+    if gamma < 0:
+        raise ValueError("correction must be nonnegative")
+    if (
+        target.ndim == allocated.ndim == 1
+        and target.size not in (1, allocated.size)
+        and allocated.size != 1
+    ):
+        raise ValueError("fraction vectors must have equal lengths or be scalar")
+    target, allocated = np.broadcast_arrays(target, allocated)
+    if target.size > _MAX_ALLOCATION_VALUES:
+        raise ValueError(f"broadcast result exceeds {_MAX_ALLOCATION_VALUES} values")
+    exponent = 1.0 + gamma * (allocated - target)
+    log_target = np.log(target)
+    log_lower, log_upper = np.log(0.1), np.log(0.5)
+    # Since log_target < 0, threshold comparisons avoid multiplying an
+    # extreme finite exponent by a large-magnitude log target.
+    lower_exponent = log_lower / log_target
+    upper_exponent = log_upper / log_target
+    low = exponent >= lower_exponent
+    high = exponent <= upper_exponent
+    result = np.full(target.shape, 0.5, dtype=np.float64)
+    result[low] = 0.1
+    middle = ~(low | high)
+    result[middle] = np.exp(exponent[middle] * log_target[middle])
+    return _owned(result)
+
+
+def _allocation_fraction(value: ArrayLike, name: str) -> np.ndarray:
+    if isinstance(value, np.ndarray):
+        if value.ndim not in (0, 1) or value.size > _MAX_ALLOCATION_VALUES:
+            raise ValueError(
+                f"{name} must be a scalar or vector of at most {_MAX_ALLOCATION_VALUES}"
+            )
+        if np.iscomplexobj(value):
+            raise ValueError(f"{name} must be real-valued")
+    elif isinstance(value, (list, tuple)):
+        if len(value) > _MAX_ALLOCATION_VALUES:
+            raise ValueError(f"{name} exceeds {_MAX_ALLOCATION_VALUES} values")
+        if any(isinstance(item, (list, tuple, np.ndarray)) for item in value):
+            raise ValueError(f"{name} must be one-dimensional")
+        if any(np.iscomplexobj(item) for item in value):
+            raise ValueError(f"{name} must be real-valued")
+    elif np.iscomplexobj(value):
+        raise ValueError(f"{name} must be real-valued")
+    array = finite(value, name)
+    if array.ndim not in (0, 1):
+        raise ValueError(f"{name} must be a scalar or one-dimensional vector")
+    if array.size == 0:
+        raise ValueError(f"{name} must be nonempty")
+    return array
 
 
 def bcrm_decision(

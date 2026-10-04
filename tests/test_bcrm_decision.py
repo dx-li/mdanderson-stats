@@ -2,7 +2,7 @@
 
 import pytest
 
-from mdanderson_stats.bcrm_decision import bcrm_decision
+from mdanderson_stats.bcrm_decision import bcrm_decision, bcrm_extreme_allocation_probability
 
 
 def test_target_modes_equality_ties_and_unattainable_fallbacks():
@@ -72,3 +72,36 @@ def test_invalid_nonmonotone_probability_and_noncohort_history():
         bcrm_decision([0.2, 0.1], [0, 0], target=0.2, max_subjects=12)
     with pytest.raises(ValueError, match="cohort multiple"):
         bcrm_decision([0.1, 0.2], [1, 0], target=0.2, max_subjects=12)
+
+
+def test_guide_extreme_allocation_probability_matches_decimal_reference():
+    from decimal import Decimal, localcontext
+
+    with localcontext() as context:
+        context.prec = 50
+        p_target, p_observed, gamma = map(Decimal, ("0.25", "0.40", "2"))
+        expected = p_target ** (Decimal(1) + gamma * (p_observed - p_target))
+    actual = bcrm_extreme_allocation_probability(0.25, 0.40, correction=2.0)
+    assert actual.item() == pytest.approx(float(expected), abs=1e-15)
+    assert bcrm_extreme_allocation_probability(0.25, 0.25, correction=0).item() == 0.25
+
+
+def test_extreme_allocation_correction_and_probability_clipping():
+    probabilities = bcrm_extreme_allocation_probability([0.25, 0.25], [0.0, 0.5], correction=2.0)
+    assert probabilities[0] > 0.25 > probabilities[1]
+    clipped = bcrm_extreme_allocation_probability([0.25, 0.25], [0.0, 0.5], correction=1e308)
+    assert clipped.tolist() == [0.5, 0.1]
+    assert not clipped.flags.writeable
+
+
+def test_extreme_allocation_probability_validates_fraction_contract():
+    with pytest.raises(ValueError, match="target_fraction"):
+        bcrm_extreme_allocation_probability(1.01, 0.25)
+    with pytest.raises(ValueError, match="target_fraction"):
+        bcrm_extreme_allocation_probability(0, 0.25)
+    with pytest.raises(ValueError, match="allocated_fraction"):
+        bcrm_extreme_allocation_probability(0.25, -0.01)
+    with pytest.raises(ValueError, match="nonnegative"):
+        bcrm_extreme_allocation_probability(0.25, 0.25, correction=-1)
+    with pytest.raises(ValueError, match="equal lengths"):
+        bcrm_extreme_allocation_probability([0.2, 0.3], [0.2, 0.3, 0.4])

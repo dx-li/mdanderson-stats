@@ -118,6 +118,18 @@ enrollment at the current target also stops it. This count is not required to
 come from consecutive cohorts. Subject counts and sample-size limits must be
 whole cohorts. The helper handles only single-outcome/stage-one decisions.
 
+For optional extra allocation to an extreme dose, the simulation guide gives
+`bcrm_extreme_allocation_probability(target_fraction, allocated_fraction,
+correction=2)`. It evaluates
+`p_T ** (1 + correction * (p_o - p_T))`, where `p_T` is the requested allocation
+fraction and `p_o` is the observed allocation fraction at that dose. The result
+is clipped to `[0.1, 0.5]`; setting correction to zero returns the target after
+clipping. The target is required to lie strictly inside `(0, 1)` because the
+source formula is undefined for some zero-target cases; observed allocation
+fractions may lie in `[0, 1]`. Correction is finite and nonnegative. This
+returns a randomization probability only: it does not select a dose, adjust an
+efficacy estimate, or reproduce the native trial controller.
+
 ## Coverage and evidence
 
 The original 1.1.3 archive was retrieved and inspected without running its
@@ -129,9 +141,9 @@ vectors. Two separately fitted scalar models therefore do not reproduce the
 documented bivariate program.
 
 The joint toxicity/efficacy likelihood and association prior, two-stage trial
-conduct, extra allocation at extreme doses, futility monitoring, post-trial
-four-parameter logistic fit, native file formats and full simulation workflow
-remain pending. No native random-seed or numerical output parity is claimed.
+conduct, futility monitoring, post-trial four-parameter logistic fit, native
+file formats and full simulation workflow remain pending. No native random-seed
+or numerical output parity is claimed.
 
 Independent [base-R reference calculations](../tools/reference_bcrm.R) integrate
 the same scalar posterior for the official Goodman skeleton, bounded
