@@ -50,10 +50,9 @@ error rather than receiving a fabricated expression value.
 
 The result contains sorted integer probeset IDs, natural-log expression, fitted
 signals, an inclusion mask and usable-probe counts. Expression estimates are not
-automatically rescaled: the paper's array-average-500 scaling and the manual's
-software output conventions require a further workflow audit. Parameters must
-be calibrated for the relevant array; these functions do not supply universal
-energy parameters.
+automatically rescaled by `pdnn_expression`; use `pdnn_scale_expression` for the
+paper's subsequent array-average-500 operation. Parameters must be calibrated for
+the relevant array; these functions do not supply universal energy parameters.
 
 ```python
 import numpy as np
@@ -71,6 +70,30 @@ signal = pdnn_signal(
 )
 fit = pdnn_expression(signal, ids, energy, noise_energy, nonspecific_amount=50, background=10)
 np.testing.assert_allclose(np.exp(fit.log_expression), [100, 200])
+```
+
+The paper states after equation (5) that expression values are scaled so the
+average on an array is 500 (Zhang, Miles and Aldape, 2003, p. 4). Given the
+expression estimates for one array, `pdnn_scale_expression` applies that common
+multiplicative factor using only log values:
+`log_scaled[j] = log_expression[j] + log(500) - logmeanexp(log_expression)`.
+It preserves sorted probeset IDs and returns the log scale factor without
+mutating the input `PDNNExpression` or its probe-level fitted signals. The mean
+is taken across every probeset in the supplied result; the source does not specify
+a broader gene-selection or missing-gene policy. This reproduces the stated
+numeric normalization but does not read or write native parameter, `.pdn`, or
+expression-output files.
+
+```python
+from mdanderson_stats.pdnn_expression_scaling import pdnn_scale_expression
+
+scaled = pdnn_scale_expression(fit)
+print(scaled.log_scale_factor, scaled.log_expression)
+assert abs(
+    np.logaddexp.reduce(scaled.log_expression)
+    - np.log(len(scaled.log_expression))
+    - np.log(500)
+) < 1e-12
 ```
 
 ## Learning parameters

@@ -13,5 +13,5 @@
       "sha256": "2b73fe05ceb4087de63a3ecde4ba50f25c903a31941c86385d59ce662d98326f"
     }
   ],
-  "scope": "Quantile normalization, paper equations 1-5, staged analytic-gradient local parameter fitting, conditional expression with explicit outlier inputs and manual section 4 observed/fitted lnPM correlation with explicit Python Pearson and row-selection conventions. Native file, other QC and display workflows remain pending."
+  "scope": "Quantile normalization, paper equations 1-5, staged analytic-gradient local parameter fitting, conditional expression with explicit outlier inputs, the paper's array-average-500 expression rescaling, and manual section 4 observed/fitted lnPM correlation with explicit Python Pearson and row-selection conventions. Native file, other QC and display workflows remain pending."
 }
