@@ -1,0 +1,8 @@
+"category_index","category","no_toxicity_utility","toxicity_utility"
+0,"bolus",100,7
+1,"interval_1",94,6
+2,"interval_2",86,5
+3,"interval_3",74,3
+4,"interval_4",58,1
+5,"interval_5",39,0
+6,"failure",12,-8
