@@ -69,3 +69,6 @@ and bounded serial simulation for multiple efficacy or efficacy/toxicity.
 Generated app reports and native compatibility remain open. See
 [source notes](bop2-dc-source.md) and the
 [independent numerical references](bop2-dc-reference.md).
+The Python-defined, reusable static report workflow is documented in
+[BOP2-DC community reports](bop2-dc-community-report.md); it does not claim
+native report-file parity.
