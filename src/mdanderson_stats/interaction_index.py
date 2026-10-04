@@ -88,15 +88,46 @@ def interaction_index(
     supplied mean effect, not the variance of individual replicates. Zero means
     a known effect. Curves and combination effects must be independently estimated.
     """
+    return _interaction_index(
+        models,
+        doses,
+        effect,
+        effect_variance=effect_variance,
+        logit_effect_variance=None,
+        confidence=confidence,
+    )
+
+
+def _interaction_index(
+    models: Sequence[MedianEffectFit],
+    doses: ArrayLike,
+    effect: ArrayLike,
+    *,
+    effect_variance: ArrayLike | None,
+    logit_effect_variance: ArrayLike | None,
+    confidence: float,
+) -> InteractionIndex:
+    if (effect_variance is None) == (logit_effect_variance is None):
+        raise ValueError("supply exactly one response-variance representation")
     fits = _models(models)
     d = finite(doses, "doses")
     if d.ndim < 1 or d.shape[-1] != len(fits) or np.any(d < 0) or np.any(np.all(d == 0, axis=-1)):
         raise ValueError(
             "require nonnegative doses with one final-axis component per drug and a positive total"
         )
-    y, v = np.broadcast_arrays(finite(effect, "effect"), finite(effect_variance, "effect_variance"))
-    if np.any(v < 0):
-        raise ValueError("effect_variance must be nonnegative")
+    y = finite(effect, "effect")
+    if effect_variance is not None:
+        y, v = np.broadcast_arrays(y, finite(effect_variance, "effect_variance"))
+        if np.any(v < 0):
+            raise ValueError("effect_variance must be nonnegative")
+        with np.errstate(over="ignore", divide="ignore", invalid="ignore"):
+            response_se = np.sqrt(v) / y / (1 - y)
+    else:
+        assert logit_effect_variance is not None
+        y, logit_v = np.broadcast_arrays(y, finite(logit_effect_variance, "logit_effect_variance"))
+        if np.any(logit_v < 0):
+            raise ValueError("logit_effect_variance must be nonnegative")
+        response_se = np.sqrt(logit_v)
     log_inverse = np.stack([fit.log_dose(y) for fit in fits], axis=-1)
     with np.errstate(divide="ignore"):
         terms = np.log(d) - log_inverse
@@ -110,9 +141,7 @@ def interaction_index(
         variance += _variance(fit, gradient)
         response_gradient -= g
     with np.errstate(over="ignore", invalid="ignore"):
-        # Divide standard error, rather than variance, before squaring.
-        effect_se = np.sqrt(v) / y / (1 - y)
-        variance += (response_gradient * effect_se) ** 2
+        variance += (response_gradient * response_se) ** 2
     return _result(log_index, variance, sum(f.observations - 2 for f in fits), confidence)
 
 

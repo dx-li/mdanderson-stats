@@ -1,0 +1,20 @@
+Primary source excerpt transcription (normalized)
+Retrieved: 2026-10-04
+Source: https://pmc.ncbi.nlm.nih.gov/articles/PMC2796809/
+Location: Section 2, equations (8) and (9), web lines 131-136.
+
+The paper gives the delta relation
+
+    Var(logit(y)) ~= Var(y) / [y * (1-y)]^2.
+
+For a combination effect without replicate variance, it says to substitute the
+average squared residuals from all involved single-agent median-effect fits for
+this transformed-scale variance, assuming common variance for single-agent and
+combination effects. The log-index interval uses t degrees of freedom n-2k,
+where n is the total single-agent observation count and there are 2k fitted
+single-agent coefficients.
+
+This is a normalized paraphrase and equation transcription for audit
+reproducibility, not a copy of the article source file. The residual-DF-weighted
+pooling denominator used by the Python addition is an explicit implementation
+convention because the source prose does not state the denominator separately.
