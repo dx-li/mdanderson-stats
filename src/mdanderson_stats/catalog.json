@@ -2723,6 +2723,7 @@
         "Bounded calendar trial replay with inverse cumulative-hazard events, as-of-arrival posterior updates, actual administration histories, permanent interim termination, complete final follow-up and full replay tapes",
         "Serial aggregate operating characteristics with replayable event/sampler seed pairs, selection and stopping rates, mean allocation/enrollment/duration, pooled observed toxicity, trial-clustered Monte Carlo errors and cumulative work bounds",
         "As-of toxicity episode adjudication with qualifying onset backdating, masked future decisions, separate actual-delivery and likelihood histories, and explicit final-ascertainment readiness; docs/dose-schedule-observation.md.",
+        "Grade-2 toxicity snapshots apply the paper's 14-day persistence or episode-attributed dose-reduction qualification rule, backdate qualifying events to onset and mask future resolution/reduction information; exact-deadline ascertainment is an explicit Python convention.",
         "Automatic calibration, generated low-grade episode processes, within-patient adaptation policies and native file/report equivalence remain pending."
       ],
       "validation": [
@@ -2740,7 +2741,8 @@
         "docs/dose-schedule-sources.json",
         "research/dose-schedule-audit.md",
         "Three focused aggregate checks verify recorded-seed replay, count and clustered-error reconstruction, shared-budget rejection before RNG use and duration scaling by 1e200; tests/test_dose_schedule_simulation.py, docs/dose-schedule-simulation.md and research/dose-schedule-aggregate-audit.md",
-        "Thirteen focused observation/core checks plus 14 hand-calculated as-of ledgers at three extreme time scales; exact two-administration event likelihood, future-information masking, horizon/finality rules and integer history immutability; tests/test_dose_schedule_observation.py and research/dose-schedule-adjudication-audit.md."
+        "Thirteen focused observation/core checks plus 14 hand-calculated as-of ledgers at three extreme time scales; exact two-administration event likelihood, future-information masking, horizon/finality rules and integer history immutability; tests/test_dose_schedule_observation.py and research/dose-schedule-adjudication-audit.md.",
+        "Ten grade-2/existing observation checks cover persistence and resolution at the declared deadline, episode-attributed reduction, future-information masking, time-unit conversion and unrepresentable deadlines; tests/test_dose_schedule_grade2.py."
       ]
     },
     {

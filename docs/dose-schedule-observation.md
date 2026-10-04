@@ -94,3 +94,8 @@ reduction was caused by the episode, or implement within-patient dose
 modification. It provides reproducible adjudication from supplied onset,
 resolution, reduction and as-of times. The paper does not specify a low-grade
 incidence or resolution-time distribution for simulating these episodes.
+
+Source: Braun et al., [“Simultaneously optimizing dose and schedule of a new
+cytotoxic agent”](https://odin.mdacc.tmc.edu/~pfthall/main/ClinTrials%20dose-sched%202007.pdf),
+*Clinical Trials* 4 (2007), page 116. The [source record](dose-schedule-sources.json)
+identifies the inspected document and the Python timing convention.

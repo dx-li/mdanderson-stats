@@ -11,7 +11,10 @@
     },
     {
       "url": "https://odin.mdacc.tmc.edu/~pfthall/main/ClinTrials%20dose-sched%202007.pdf",
-      "role": "Published author-hosted paper: triangular administration hazards, actual-history likelihood, approximate lognormal prior elicitation, posterior safety and nearest-target allocation."
+      "role": "Published author-hosted paper: triangular administration hazards, actual-history likelihood, approximate lognormal prior elicitation, posterior safety and nearest-target allocation; page 116 defines grade-2 persistence or attributed dose-reduction qualification with event time at onset.",
+      "retrieved_date": "2026-10-04",
+      "sha256": "05dc2d107f75ad3a4255bf256760b4b35ce9bdddd91f16a92b36aa8549e84663",
+      "text_sha256": "7b684cb7b0f57d538cfc6c155bb572f64d65636035274506a8daf7474daed0db"
     }
   ],
   "implementation_choices": [
@@ -23,7 +26,8 @@
     "Safety uses a strict toxicity-tail event and a strict upper probability cutoff. Exact selection ties use lowest dose then shortest schedule.",
     "No-skip policies are explicit Python conventions for ambiguous histories: coordinate_max uses separate largest tried coordinates; observed_pair requires a candidate to be at most one level above both coordinates of a tried pair.",
     "The first assignment defaults to the lowest pair and bypasses posterior exclusion while retaining the computed safety mask. An alternative starting pair is a Python extension. Final selection requires prior treatment and removes no-skip restrictions; the caller ensures completed follow-up.",
-    "Delayed toxicity conduct takes explicit episode adjudication times and qualification decisions. Only available adjudications enter an as-of fit; qualifying events are backdated to onset, actual delivered doses remain separately visible, and unresolved earlier onsets prevent final readiness. The paper does not specify a stochastic low-grade episode process or settle an exact day-14 automatic adjudication policy."
+    "Delayed toxicity conduct takes explicit episode adjudication times and qualification decisions. Only available adjudications enter an as-of fit; qualifying events are backdated to onset, actual delivered doses remain separately visible, and unresolved earlier onsets prevent final readiness.",
+    "The grade-2 helper applies the paper's persistence-or-attributed-dose-reduction rule using caller-supplied observed resolution/reduction times. Exact-deadline ascertainment is an explicit Python convention: resolution at or before 14 days is nonqualifying absent an attributed reduction; still unresolved at the deadline qualifies. Snapshots must be recomputed at each analysis. The paper does not specify a stochastic low-grade episode process or an automatic native adjudication clock."
   ],
-  "limitations": "Native files/settings/report and executable equivalence, automatic calibration, generated low-grade episodes and within-patient adaptation policies remain open. Calendar trial replay, aggregate operating characteristics and explicit adjudication-based observations are implemented. The distinct 2013 within-patient adaptation method is not substituted."
+  "limitations": "Native files/settings/report and executable equivalence, automatic calibration, generated low-grade episodes and within-patient adaptation policies remain open. Calendar trial replay, aggregate operating characteristics, explicit adjudication-based observations and rule-based grade-2 snapshots are implemented. The distinct 2013 within-patient adaptation method is not substituted."
 }

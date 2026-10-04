@@ -676,6 +676,7 @@ from .dose_schedule_observation import (
     DoseScheduleEpisodeStatus,
     DoseSchedulePatientObservation,
     DoseScheduleToxicityEpisode,
+    adjudicate_dose_schedule_grade2,
     observe_dose_schedule_patient,
 )
 from .dose_schedule_prior import DoseSchedulePrior, dose_schedule_moment_prior
@@ -1811,6 +1812,7 @@ __all__ = [
     "DoseSchedulePatientObservation",
     "DoseScheduleToxicityEpisode",
     "observe_dose_schedule_patient",
+    "adjudicate_dose_schedule_grade2",
     "DoseSchedulePrior",
     "DoseScheduleFit",
     "DoseScheduleDecision",

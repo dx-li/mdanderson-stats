@@ -54,3 +54,27 @@ The combined BaCIS/observation integration check took .148 seconds, peaked at
 121.50 MiB resident memory and reported zero swaps. Targeted Ruff, formatting
 and mypy pass. The exact public guide is checked again from the built wheel;
 no broad local suite or new CI workflow is required by this addition.
+
+## Grade-2 rule snapshots — October 4, 2026
+
+`adjudicate_dose_schedule_grade2` now classifies caller-supplied episode
+histories using the persistence-or-attributed-dose-reduction rule on page 116
+of the 2007 paper. Qualification is scored at onset. Future resolution or
+reduction information does not affect the current snapshot, and callers
+recompute snapshots when new information arrives. The exact-deadline policy
+is explicit: observed resolution by the deadline is nonqualifying unless
+there is an attributed reduction; still unresolved at the deadline qualifies.
+This ascertainment convention does not claim native timing equivalence.
+
+The author PDF is now cached at `research/raw/DoseScheduleFinder/paper.pdf`,
+SHA-256 `05dc2d107f75ad3a4255bf256760b4b35ce9bdddd91f16a92b36aa8549e84663`.
+The source record and guide link to the public document. Incidence and
+resolution-time distributions, clinical attribution and dose-change policies
+are not inferred.
+
+All ten focused grade-2/existing observation checks pass with warnings as
+errors after integration, in 1.866 seconds with 133.73 MiB peak RSS and zero
+swaps. They cover the published day-10/day-24 example, resolution at the
+deadline, attributed reduction, future-information masking, unit conversion
+and unrepresentable deadlines. Scoped Ruff/format/mypy checks pass. This
+validates the declared snapshot rule and its existing observation boundary.

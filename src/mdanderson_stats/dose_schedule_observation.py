@@ -108,9 +108,13 @@ def adjudicate_dose_schedule_grade2(
     if unit > maximum / 14.0:
         raise ValueError("14-day adjudication window exceeds floating-point range")
     delay = 14.0 * unit
+    if not isfinite(delay):
+        raise ValueError("14-day adjudication window exceeds floating-point range")
     if onset > maximum - delay:
         raise ValueError("14-day adjudication deadline exceeds floating-point range")
     deadline = onset + delay
+    if not isfinite(deadline):
+        raise ValueError("14-day adjudication deadline exceeds floating-point range")
     if deadline <= onset:
         raise ValueError("14-day adjudication deadline is below floating-point resolution")
 
