@@ -95,6 +95,7 @@ RSS, and reported zero swaps; no full suite or installation was run.
 Root integration repeated these comparisons alongside the affected GAO
 workflow checks: 18 checks passed in 5.653 seconds, with 148.03 MiB process
 peak RSS and zero swaps. Root targeted Ruff, format and mypy checks pass.
+
 ## Root integration validation
 
 The combined forest, native-routing, random-split and Brier run passes all

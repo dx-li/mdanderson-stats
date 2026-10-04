@@ -2832,3 +2832,43 @@ and zero swaps. Catalog statuses remain unchanged because completed components
 do not imply every native feature or source contract is covered. Stable and
 development remote SHAs and artifact hashes are recorded after independent
 publication verification in the local manifest.
+
+## 2026-10-04: Random splitting and censoring-forest Brier workflow
+
+The survival forest now offers the pinned RF-SRC random split rule for both
+continuous and nominal predictors. It uses the first usable selected feature,
+one continuous cut or complementary categorical partition, and the native
+constant-feature and full-mtry selection conventions. Existing split modes
+retain their scoring and random paths.
+
+The OOB Brier evaluator now optionally fits the source-configured 50-tree
+censoring forest, predicts on the original training rows and projects each
+curve to the outcome event grid. It returns the censor fit, row-specific
+weights and integer per-time contribution counts. Literal inactive zero-G
+division remains undefined and is excluded from the corresponding mean;
+the explicit no-censor G=1 case repairs the native helper's dimension error.
+Complete finite training inputs and a reproducible Python seed are required;
+native missing-data, arbitrary subsets and whole-forest RNG parity are not
+claimed. Joint resource limits cover sampling, actual split/prediction work,
+forest storage, prediction workspace and both returned-matrix copies.
+
+Four fixed-curve base-R cases validate the unchanged helper's wiring and
+arithmetic through deterministic fit/prediction boundary stubs. Root validation
+passed 39 affected checks with warnings as errors in 2.156 seconds, with
+153.58 MiB process peak RSS and zero swaps. A separate 500-row, 10-predictor
+end-to-end run succeeded in 5.35 seconds at 125.28 MiB peak RSS, with zero
+swaps. Targeted Ruff, formatting and mypy pass. No full local suite, additional
+CI workflow or installation was used.
+
+Cached wheel/source builds at `ebed84f` pass isolated verification: all 615
+package files match the committed source in both archives, all 1,721 exports
+resolve, notices are retained, and three public examples across the two
+changed guides execute. This took 12.421 seconds at 121.25 MiB peak RSS, with
+zero swaps. The previous published `6071c0b` checkpoint has now passed hosted
+quality checks and all Python 3.12/3.13/3.14 jobs in run `37169759372`; that
+result is distinct from the checks on this newer source revision.
+
+Catalog statuses remain unchanged. Full coverage still requires unresolved
+source contracts, including U-BOIN delayed-response equations absent from the
+cached records. The local publication manifest records independently checked
+remote SHAs, artifact hashes and the newer hosted run separately.
