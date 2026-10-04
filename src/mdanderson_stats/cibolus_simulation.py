@@ -7,6 +7,7 @@ from numpy.typing import ArrayLike
 
 from ._validation import FloatArray
 from .cibolus import CiBolusPrior, _prediction_inputs, cibolus_predict
+from .cibolus_scenarios import _joint_grid
 from .cibolus_trial import (
     _MAX_PATIENTS,
     _MAX_RETAINED_CELLS,
@@ -129,7 +130,7 @@ class CiBolusOperatingCharacteristics:
 
 
 def simulate_cibolus_operating_characteristics(
-    truth_log_parameters: ArrayLike,
+    truth_log_parameters: ArrayLike | None,
     prior: CiBolusPrior,
     concentrations: ArrayLike,
     bolus_fractions: ArrayLike,
@@ -148,6 +149,7 @@ def simulate_cibolus_operating_characteristics(
     warmup: int,
     chains: int,
     rng: np.random.Generator,
+    truth_joint_probabilities: ArrayLike | None = None,
     max_total_evaluations: int = 500_000,
     max_total_work: int = 20_000_000,
 ) -> CiBolusOperatingCharacteristics:
@@ -195,15 +197,25 @@ def simulate_cibolus_operating_characteristics(
     )
     step_bound = (n + cohort - 1) // cohort
     truth_cells = 3 * grid_cells * category_count + 5 * grid_cells
+    persistent_joint_cells = (
+        2 * grid_cells * category_count if truth_joint_probabilities is not None else 0
+    )
     if (
-        retained_cells + step_bound * grid_cells * 5 + per_fit_cells + truth_cells
+        retained_cells
+        + step_bound * grid_cells * 5
+        + per_fit_cells
+        + truth_cells
+        + persistent_joint_cells
         > _MAX_RETAINED_CELLS
     ):
         raise ValueError("aggregate summaries, trial fit and history exceed two million cells")
 
     minimum_evaluations = chain_count * (1 + warmup_count + draw_count)
     first_cohort = min(n, cohort)
-    per_trial_truth_work = grid_cells * category_count + n
+    truth_cell_work = (
+        (2 if truth_joint_probabilities is not None else 1) * grid_cells * category_count
+    )
+    per_trial_truth_work = truth_cell_work + n
     per_trial_minimum_work = (
         per_trial_truth_work
         + minimum_evaluations * first_cohort
@@ -214,9 +226,13 @@ def simulate_cibolus_operating_characteristics(
     if trial_count * per_trial_minimum_work > work_limit:
         raise ValueError("max_total_work cannot fit the first cohort of every trial")
 
-    truth_shape = np.asarray(truth_log_parameters).shape
-    if truth_shape != (11,):
-        raise ValueError("truth_log_parameters must contain eleven coordinates")
+    if (truth_log_parameters is None) == (truth_joint_probabilities is None):
+        raise ValueError("supply exactly one of truth_log_parameters or truth_joint_probabilities")
+    if truth_joint_probabilities is None:
+        assert truth_log_parameters is not None
+        truth_shape = np.asarray(truth_log_parameters).shape
+        if truth_shape != (11,):
+            raise ValueError("truth_log_parameters must contain eleven coordinates")
     start_raw = np.asarray(starting)
     if start_raw.shape != (2,) or start_raw.dtype.kind not in "iu" or start_raw.dtype.kind == "b":
         raise ValueError("starting must be an integer (concentration, bolus) pair")
@@ -235,20 +251,28 @@ def simulate_cibolus_operating_characteristics(
     if any(not 0 <= value <= 1 for value in threshold_values):
         raise ValueError("toxicity/efficacy limits and cutoffs must be finite values in [0,1]")
 
-    validation_work = grid_cells * category_count
+    validation_work = truth_cell_work
     if validation_work + trial_count * per_trial_minimum_work > work_limit:
         raise ValueError("max_total_work cannot cover truth validation and each first cohort")
     # Validate the truth parameters and their actual grid calculations before
     # advancing the caller's RNG. This extra prediction work is included in the
     # reported total and the cumulative work budget.
-    truth_check = cibolus_predict(
-        truth_log_parameters,
-        concentration_grid,
-        bolus_grid,
-        endpoint_grid,
-        utility=utility_grid,
-    )
-    del truth_check
+    validated_truth_joint: FloatArray | None = None
+    if truth_joint_probabilities is None:
+        assert truth_log_parameters is not None
+        truth_check = cibolus_predict(
+            truth_log_parameters,
+            concentration_grid,
+            bolus_grid,
+            endpoint_grid,
+            utility=utility_grid,
+        )
+        del truth_check
+    else:
+        validated_truth_joint = _joint_grid(
+            truth_joint_probabilities,
+            (*grid_shape, category_count, 2),
+        )
 
     # Derive independent replayable trial seeds only after all lower-bound and
     # storage checks pass. The generated uint32 entropy has a fixed layout.
@@ -302,6 +326,7 @@ def simulate_cibolus_operating_characteristics(
             warmup=warmup_count,
             chains=chain_count,
             rng=np.random.default_rng(int(seed_value)),
+            truth_joint_probabilities=validated_truth_joint,
             max_total_evaluations=remaining_evaluations,
             max_total_work=remaining_work,
         )

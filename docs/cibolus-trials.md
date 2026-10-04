@@ -63,6 +63,17 @@ an early stop. Subsequent random draws drive the posterior fits. Reusing an
 outcome vector permits comparisons without changing the random outcome inputs;
 different selected regimens can still produce different observations.
 
+Both simulation functions also accept `truth_joint_probabilities` in place of
+the positional `truth_log_parameters`; pass `None` for that positional
+argument. Supply exactly one truth source. The joint array has shape
+`(n_concentrations, n_bolus_fractions, n_endpoints + 2, 2)`. Its response axis
+is bolus response, response in each endpoint interval, then failure by time
+one; its last axis is toxicity absent/present. Every regimen row must be a
+finite, nonnegative probability distribution. This path simulates from
+scenario-supplied cells outside the fitted model, while the same CiBolus model
+and prior still analyze each cohort. It does not imply native application
+parity.
+
 The last cohort can be smaller than `cohort_size` to reach `n_patients` exactly.
 One fit is performed after each completed cohort, and the last fit directly
 supports final selection. If an interim decision has no eligible regimen,
@@ -94,6 +105,8 @@ large-population validation and prior calibration remain separate.
 `simulate_cibolus_operating_characteristics` repeats the same complete-outcome
 trial serially, discards patient and posterior histories between replicates,
 and returns selection, stopping, enrollment and observed-outcome summaries.
+It accepts the same `truth_joint_probabilities` keyword; its returned
+`trial_seeds` replay trials when paired with the same joint truth array.
 For example, continuing with `truth` from above:
 
 ```python

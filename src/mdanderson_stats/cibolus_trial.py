@@ -21,6 +21,7 @@ from .cibolus import (
 )
 from .cibolus_decision import CiBolusDecision, cibolus_decision
 from .cibolus_fit import CiBolusFit, fit_cibolus
+from .cibolus_scenarios import _joint_grid
 from .hierarchical_binomial import ChainSummary
 from .uaroet import _integer
 
@@ -183,7 +184,7 @@ def _fit_boundary(
 
 
 def simulate_cibolus_trial(
-    truth_log_parameters: ArrayLike,
+    truth_log_parameters: ArrayLike | None,
     prior: CiBolusPrior,
     concentrations: ArrayLike,
     bolus_fractions: ArrayLike,
@@ -202,12 +203,13 @@ def simulate_cibolus_trial(
     chains: int,
     rng: np.random.Generator,
     outcome_uniforms: ArrayLike | None = None,
+    truth_joint_probabilities: ArrayLike | None = None,
     max_total_evaluations: int = 500_000,
     max_total_work: int = 20_000_000,
 ) -> CiBolusTrial:
     """Simulate complete observed outcome cells and conduct adaptive cohorts.
 
-    Each patient's outcome is drawn from the model's observed-data joint cell
+    Each patient's outcome is drawn from observed-data joint cell
     probabilities at their assigned regimen: bolus response, response in an
     observation interval, or failure by time one, crossed with toxicity. This
     matches the paper's interval likelihood convention, including toxicity at
@@ -221,10 +223,15 @@ def simulate_cibolus_trial(
     real application assessed toxicity later than efficacy, so this has no
     calendar or pending-outcome parity. A supplied uniform tape is used for
     outcome cells and returned in full for exact replay; otherwise ``rng``
-    generates that tape before posterior sampling. The same explicit
-    ``Generator`` then drives serial MCMC fits. These short/long chain settings
-    are caller-controlled; convergence is not implied.
+    generates that tape before posterior sampling. Exactly one truth source is
+    required: model log parameters or explicit joint response-category/toxicity
+    probabilities on the regimen grid. Explicit joint truth supports scenarios
+    defined outside the fitted parameter model and does not change that model.
+    The same explicit ``Generator`` then drives serial MCMC fits. These
+    short/long chain settings are caller-controlled; convergence is not implied.
     """
+    if (truth_log_parameters is None) == (truth_joint_probabilities is None):
+        raise ValueError("supply exactly one of truth_log_parameters or truth_joint_probabilities")
     if not isinstance(prior, CiBolusPrior):
         raise ValueError("prior must be a CiBolusPrior")
     if not isinstance(rng, np.random.Generator):
@@ -238,12 +245,14 @@ def simulate_cibolus_trial(
         max_total_evaluations, "max_total_evaluations", 1, _MAX_TOTAL_EVALUATIONS
     )
     work_limit = _integer(max_total_work, "max_total_work", 1, _MAX_TOTAL_WORK)
-    truth_raw = np.asarray(truth_log_parameters)
-    if truth_raw.shape != (11,) or truth_raw.dtype.kind not in "iuf":
-        raise ValueError("truth_log_parameters must be eleven finite real log parameters")
-    truth = np.array(truth_raw, dtype=float, copy=True)
-    if np.any(~np.isfinite(truth)):
-        raise ValueError("truth_log_parameters must be finite")
+    truth: FloatArray | None = None
+    if truth_log_parameters is not None:
+        truth_raw = np.asarray(truth_log_parameters)
+        if truth_raw.shape != (11,) or truth_raw.dtype.kind not in "iuf":
+            raise ValueError("truth_log_parameters must be eleven finite real log parameters")
+        truth = np.array(truth_raw, dtype=float, copy=True)
+        if np.any(~np.isfinite(truth)):
+            raise ValueError("truth_log_parameters must be finite")
     c_grid, q_grid, endpoint_grid, utility_grid = _prediction_inputs(
         concentrations, bolus_fractions, endpoints, utility
     )
@@ -285,7 +294,7 @@ def simulate_cibolus_trial(
         raise ValueError("retained fit and cohort decision history exceed two million cells")
     minimum_evaluations = chain_count * (1 + warmup_count + draw_count)
     initial_n = min(n, cohort)
-    truth_work = grid_cells * categories + n
+    truth_work = (2 if truth_joint_probabilities is not None else 1) * grid_cells * categories + n
     minimum_work = (
         truth_work
         + minimum_evaluations * initial_n
@@ -297,8 +306,15 @@ def simulate_cibolus_trial(
         raise ValueError("max_total_work is below the minimum first-cohort fit work")
 
     # Validate truth before outcome RNG is consumed. The retained truth surface
-    # is just the model's bounded regimen/category/toxicity grid.
-    truth_prediction = cibolus_predict(truth, c_grid, q_grid, endpoint_grid, utility=utility_grid)
+    # is just the model's bounded regimen/category/toxicity grid. The supplied
+    # joint path uses the same fixed outcome cells without fitting its own model.
+    if truth_joint_probabilities is None:
+        assert truth is not None
+        truth_joint = cibolus_predict(
+            truth, c_grid, q_grid, endpoint_grid, utility=utility_grid
+        ).joint
+    else:
+        truth_joint = _joint_grid(truth_joint_probabilities, (*grid_shape, categories, 2))
     tape = _uniform_tape(n, rng, outcome_uniforms)
     counts = np.zeros(grid_shape, dtype=np.int64)
     patients: list[CiBolusTrialPatient] = []
@@ -318,7 +334,7 @@ def simulate_cibolus_trial(
         regimen = next_regimen
         first_patient = len(patients)
         cohort_n = min(cohort, n - first_patient)
-        probability_cells = np.asarray(truth_prediction.joint[regimen])
+        probability_cells = np.asarray(truth_joint[regimen])
         for offset in range(cohort_n):
             patient_index = first_patient + offset
             cell_category, toxicity_index = _sample_cell(
