@@ -10,6 +10,9 @@ The [software coverage index](docs/software-status.md) lists all 138 entries:
 supported scope, validation and remaining limitations. These labels cover
 complete software workflows: a partial entry can already include every
 advertised statistical endpoint while report or native-compatibility gaps remain.
+The [remaining-work review](research/statistical-coverage-priority-2026-10-04.md)
+separates unresolved statistical specifications from input, report and
+application-compatibility work across the 67 partial entries.
 
 Validated community checkpoints are published on
 [`master`](https://github.com/dx-li/mdanderson-stats/tree/master); `main`
