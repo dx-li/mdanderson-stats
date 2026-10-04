@@ -1,6 +1,6 @@
 # Statistical coverage priority review
 
-This bounded review originally covered 67 partial-program entries. TTEConduct and CID2BP subsequently completed their report workflows, leaving 65 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed.
+This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP and CONFINT subsequently completed their report workflows, leaving 64 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed.
 
 ## A. Statistical or source-contract uncertainty remains
 
@@ -54,8 +54,7 @@ This bounded review originally covered 67 partial-program entries. TTEConduct an
 | --- | --- | --- |
 | PerfectMatch (#7) | Mathematical calculations are covered; native parameter/data/output/rescaling, QC, plots and display workflows remain. | [PerfectMatch guide](../docs/perfectmatch.md) |
 | Multc Lean (#12) | Statistical rules/calendar are covered; native input, report and timing conventions remain. | [Multc guide](../docs/multc.md) |
-| ASYPOW (#33) | Core LR/SMO families are covered; remaining items are interactive/native workflows. | [ASYPOW guide](../docs/asypow.md) |
-| CONFINT (#64) | Mathematical assurance methods are covered; native session/report workflows remain. | [CONFINT guide](../docs/confint.md) |
+| ASYPOW (#33) | LR/SMO families and source-defined vector sample-size inversions are covered; remaining items are interactive/native reporting workflows. | [ASYPOW guide](../docs/asypow.md); [vector inversion audit](asypow-vector-inversion-audit.md) |
 | Parallel phase I/II (#85) | C-design and six-dose calendar workflow are implemented; native configurable input, report and full parity remain. | [parallel phase guide](../docs/parallel-phase12.md) |
 | Bayes Factor TTE (#89) | Monitoring, boundaries, calendar replay and simulation are covered; native integer-day/text/HTML reports and timing are not established. | [Bayes Factor survival guide](../docs/bayes-factor-survival.md) |
 | Pinnacle (#95) | Peak-detection algorithm is covered; unsupported TIFF encodings, project ingestion, interactive editing and reports remain. | [Pinnacle guide](../docs/pinnacle.md) |
@@ -84,4 +83,6 @@ The classifications above are review findings, not status changes. A source-cont
 - TTEConduct (#63): the static HTML report echoes design inputs and boundaries, saves atomically and reopens for viewing. Continuous caller-unit values and an explicit search cap are documented substitutions for native rounded-day presentation. See [report guide](../docs/tteconduct-report.md).
 - CID2BP (#38): bounded repeated comparisons support both count-entry modes, changing confidence/methods and cumulative reports for all nine numerical options. See [session guide](../docs/cid2bp-session.md).
 
-Both entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.
+- CONFINT (#64): the repeated-calculation log records all eight source menu families, defaults and complete diagnostics in readable saved reports. See [report guide](../docs/confint-session.md) and [source crosswalk](report-workflow-completion-audit.md).
+
+These three entries retain their independent numerical reference checks. Focused workflow checks cover their saved reports and validation boundaries; exact terminal or HTML formatting is not the completion criterion.

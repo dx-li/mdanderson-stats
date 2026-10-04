@@ -6,8 +6,8 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 65 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 65 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 66 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 64 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -25,6 +25,7 @@ some legacy adaptations retain commercial-use restrictions.
 
 | Program | Source entry | Python documentation |
 | --- | --- | --- |
+| CONFINT | [desktop #64](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/64) | [Guide](confint.md) |
 | CID2BP | [desktop #38](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/38) | [Guide](cid2bp.md) |
 | TTEConduct | [desktop #63](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/63) | [Guide](tteconduct.md) |
 | ACCFLF | [desktop #16](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/16) | See catalog feature and validation notes |
@@ -123,7 +124,6 @@ some legacy adaptations retain commercial-use restrictions.
 | CI of Interaction Index | [desktop #65](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/65) | [Guide](interaction-index.md) |
 | CiBolus | [desktop #86](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86) | [Guide](cibolus.md), [Prior calibration](cibolus-calibration.md) |
 | CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis | [online #157](https://biostatistics.mdanderson.org/shinyapps/CondiS/) | [Guide](condis.md) |
-| CONFINT | [desktop #64](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/64) | [Guide](confint.md) |
 | CRM Suite | [desktop #132](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132) | See catalog feature and validation notes |
 | Dose Optimization with Backfill and Adaptive Randomization (BARD) | [online #165](https://biostatistics.mdanderson.org/shinyapps/BARD) | [Stage two](bard.md), [BF-BLRM model](bard-blrm.md) |
 | Dose Schedule Finder | [desktop #75](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75) | [Model](dose-schedule.md), [calendar trials](dose-schedule-trials.md) |

@@ -271,8 +271,14 @@ vector calls return a read-only array. At most 10,000 inversions are allowed per
 call. This is an asymptotic calculation, not finite-sample exact power.
 
 ```python
+import numpy as np
+from mdanderson_stats import asypow_group_information, asypow_information
+
+information = asypow_group_information([0.2, 0.4], model="binomial")
+design = asypow_information([0.2, 0.4], information, [1, -1])
 sizes = design.sample_size(power=[0.8, 0.9], significance=0.05)
 achieved = design.power(sizes, significance=0.05)
+assert np.allclose(achieved, [0.8, 0.9], rtol=0, atol=1e-12)
 ```
 
 `design.significance(sample_size, power=0.8)` inverts power for significance,

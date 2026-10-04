@@ -3138,3 +3138,28 @@ features do not define additional demonstrated app requirements. Entry 166
 and full catalog coverage remain unfinished, with no status promotion or
 native random-stream parity claim. The local manifest records verified
 publication SHAs and artifact hashes.
+
+## 2026-10-04: Saved reports and vector sample-size planning
+
+Three Luna workers implemented and independently reviewed the TTEConduct HTML
+snapshot, CID2BP repeated-comparison report, CONFINT calculation log and ASYPOW
+vector sample-size inversion. Root integration corrected report escaping,
+preflight limits, method labels, immutable snapshots and scalar/vector typing.
+The [source workflow audit](report-workflow-completion-audit.md) maps the three
+reporting additions to the original programs; their catalog entries are now
+implemented. Coverage is 66 implemented, 64 partial and 8 pending.
+
+ASYPOW's LR and SMO methods now accept paired target vectors with scalar
+expansion and preserve scalar return behavior, source degrees-of-freedom
+conventions and existing numerical caps. Independent R inversions and forward
+power checks validate the extension. ASYPOW remains partial for its remaining
+native reporting workflows.
+
+All 38 affected checks pass with warnings as errors. The combined tests and
+scoped static checks took 6.386 seconds and peaked at 173.31 MiB child-process
+RSS, with zero process swaps. Numerical and packaging jobs remain sequential
+with single-threaded numerical libraries. No full local suite, dependency
+installation or CI workflow was added. The previous published checkpoint
+`7156d2c` passed quality and all Python 3.12/3.13/3.14 jobs in hosted run
+`37185841695`. The local community manifest records the built-package checks,
+publication SHAs, artifact hashes and the new hosted run separately.

@@ -183,7 +183,7 @@ def _method_label(procedure: str, inputs: Mapping[str, object]) -> str:
 
 
 def _none_label(procedure: str) -> str:
-    if procedure == "confint_binomial_event_limit":
+    if procedure in {"confint_binomial_event_limit", "confint_binomial_difference_event_limit"}:
         return "No event-probability range attains the requested assurance at this design."
     if procedure == "confint_poisson_rate_limit":
         return "No Poisson rate attains the requested assurance at this design."

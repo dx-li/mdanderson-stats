@@ -604,6 +604,7 @@ from .confint_poisson import (
     confint_poisson_probability,
     confint_poisson_rate_limit,
 )
+from .confint_session import ConfintSession
 from .confint_survival import (
     CONFINTSurvivalAssurance,
     confint_survival_fixed_events,
@@ -2562,6 +2563,7 @@ __all__ = [
     "ReconstructedIPD",
     "reconstruct_ipd",
     "CONFINTSurvivalHazardRange",
+    "ConfintSession",
     "confint_survival_hazard_range",
     "CONFINTSurvivalSolution",
     "confint_survival_solve",

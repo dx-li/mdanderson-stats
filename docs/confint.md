@@ -467,4 +467,9 @@ assert abs(high - 0.840906351881) < 1e-9
 assert not result.lower_clipped and not result.upper_clipped
 ```
 
-**Catalog status is partial.** Native session/report workflows remain pending.
+**Catalog 64 is implemented under the documented Python conventions.** The
+[calculation log](confint-session.md) records repeated calls across all eight
+source menu families, including effective defaults and complete result fields,
+and saves a readable report. Repeated explicit settings reproduce the source
+properties tables. Python arguments replace the terminal menu; exact Fortran
+formatting and the documented native numerical defects are not reproduced.

@@ -1398,7 +1398,8 @@
         "Ordinal cumulative-probability information and logistic/cloglog ordinal regression designs with linear/quadratic shared slopes and multiple independent groups.",
         "General design-matrix logistic and multiplicative-binomial log-linear information, plus delta-method information reparameterization using a supplied Jacobian.",
         "Original S-plus multinomial information for free category probabilities, corrected to include the implicit final category contribution.",
-        "SMO binomial, Poisson, multinomial, ordinal and censored exponential-survival fixed-null and all-groups-equal tests, with optional df subtraction, stable expected-log-likelihood divergence and power/sample-size/significance inversion. Mixed fixed/equality constraints for binomial, Poisson and exponential-survival groups, with connected equality components and independent restriction counts. Partial fixed multinomial/ordinal nulls with corrected expected-likelihood redistribution of unconstrained category mass; general categorical fixed/equality components fitted by a positive-interior concave likelihood solver. Generic bounded expected-log-likelihood SMO with optional analytic gradients, fixed/equality components and convergence/cancellation checks. Logistic, complementary-log-log, Poisson and censored exponential-survival linear/quadratic regression SMO with mixed coefficient constraints, multiple groups and normalized design allocations. Explicit design-matrix SMO for multivariable logistic and the shared cloglog/Poisson/exponential families, plus multiplicative-binomial log-linear SMO with positive-scale coefficient constraints. Logistic/cloglog ordinal regression SMO with ordered intercepts, linear/quadratic shared slopes, multiple groups and mixed coefficient constraints."
+        "SMO binomial, Poisson, multinomial, ordinal and censored exponential-survival fixed-null and all-groups-equal tests, with optional df subtraction, stable expected-log-likelihood divergence and power/sample-size/significance inversion. Mixed fixed/equality constraints for binomial, Poisson and exponential-survival groups, with connected equality components and independent restriction counts. Partial fixed multinomial/ordinal nulls with corrected expected-likelihood redistribution of unconstrained category mass; general categorical fixed/equality components fitted by a positive-interior concave likelihood solver. Generic bounded expected-log-likelihood SMO with optional analytic gradients, fixed/equality components and convergence/cancellation checks. Logistic, complementary-log-log, Poisson and censored exponential-survival linear/quadratic regression SMO with mixed coefficient constraints, multiple groups and normalized design allocations. Explicit design-matrix SMO for multivariable logistic and the shared cloglog/Poisson/exponential families, plus multiplicative-binomial log-linear SMO with positive-scale coefficient constraints. Logistic/cloglog ordinal regression SMO with ordered intercepts, linear/quadratic shared slopes, multiple groups and mixed coefficient constraints.",
+        "LR and SMO sample-size inversion for paired target vectors with scalar/singleton expansion, read-only results, retained scalar return behavior and bounded serial roots; docs/asypow.md."
       ],
       "validation": [
         "tests/test_asypow.py",
@@ -1420,7 +1421,8 @@
         "tests/test_asypow_smo_cloglog.py",
         "tests/test_asypow_smo_design.py",
         "tests/test_asypow_smo_loglinear.py",
-        "tests/test_asypow_smo_ordinal_regression.py"
+        "tests/test_asypow_smo_ordinal_regression.py",
+        "Independent base-R noncentral chi-square inversions, forward-power round trips, scalar compatibility, degrees-of-freedom modes, input-shape/resource guards and unrepresentable-size handling; tests/test_asypow_vector_sample_size.py and research/asypow-vector-inversion-audit.md."
       ]
     },
     {
@@ -2371,7 +2373,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Normal CI-length assurance for one-sample mean, one-sample SD, and independent equal-variance mean difference",
         "Vectorized population-SD limits and minimal integer sample-size planning, with log-scale numerical evaluation",
@@ -2381,17 +2383,19 @@
         "Independent binomial-difference Wald-width assurance, event-probability inversion, and first qualifying balanced sample size with complete tail accounting",
         "Exponential-survival hazard/mean CI-width assurance for fixed event counts and Poisson accrual, with stable expected events and explicit summation truncation bounds",
         "Bracketed survival inversions for interval-length quantiles, accrual rate/duration, follow-up and either hazard branch, with achieved assurance and truncation metadata",
-        "Automatic numerical hazard-peak and admissible-range search within explicit bounds, including crossing refinement, clipped endpoints and mean-survival targets"
+        "Automatic numerical hazard-peak and admissible-range search within explicit bounds, including crossing refinement, clipped endpoints and mean-survival targets",
+        "Immutable repeated-calculation log for all 18 named APIs across eight source menu families, with effective defaults, method-specific labels, complete structured diagnostics and atomic readable text output; docs/confint-session.md."
       ],
       "validation": [
         "Manual worked examples, independent R probabilities, normal-data simulation, inversion minimality and extreme unit/tail checks; tests/test_confint_normal.py",
-        "Pending native session/report workflows; docs/confint.md",
+        "All source menu families and source properties-table calculations mapped to existing APIs; repeated calculation/report workflow implemented under documented Python conventions; docs/confint.md and research/report-workflow-completion-audit.md.",
         "Independent R enumeration, all-count probability checks, discontinuous length inversion, and nonmonotone sample-size examples; tests/test_confint_binomial.py",
         "Independent R gamma/Poisson calculations, zero/one-count corrections, full count sums, exposure-threshold minimality and extreme unit scaling; tests/test_confint_poisson.py",
         "Independent R joint enumeration, midpoint upper-tail correction, sample/complement symmetries and balanced-search minimum; tests/test_confint_binomial_difference.py",
         "Independent R full-mixture reference, exponential-sample conditional widths, reciprocal interval relation, unit scaling and underflow-resistant expected counts; tests/test_confint_survival.py",
         "Independent R roots for both interval targets and hazard branches, impossible quantiles and extreme time-unit changes; tests/test_confint_survival_inverse.py",
-        "Independent R peak/crossings, mean-target range, clipping and empty cases, grid refinement and extreme time-unit scaling; tests/test_confint_survival_range.py"
+        "Independent R peak/crossings, mean-target range, clipping and empty cases, grid refinement and extreme time-unit scaling; tests/test_confint_survival_range.py",
+        "Representative calculations across all eight families, default/search settings, survival diagnostics, immutable snapshots, unattainable limits, bounded input and file-preserving render failure; tests/test_confint_session.py."
       ]
     },
     {

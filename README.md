@@ -6,14 +6,14 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-65 implemented, 65 partial, and 8 pending. Each method's guide explains its
+66 implemented, 64 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. These labels cover
 complete software workflows: a partial entry can already include every
 advertised statistical endpoint while report or native-compatibility gaps remain.
 The [remaining-work review](research/statistical-coverage-priority-2026-10-04.md)
 separates unresolved statistical specifications from input, report and
-application-compatibility work across the partial entries. TTEConduct and CID2BP
-now include their saved report workflows.
+application-compatibility work across the partial entries. TTEConduct, CID2BP
+and CONFINT now include their saved report workflows.
 
 Validated community checkpoints are published on
 [`master`](https://github.com/dx-li/mdanderson-stats/tree/master); `main`
@@ -978,7 +978,8 @@ information criterion analytically, avoiding Monte Carlo noise and patient loops
 
 [CID2BP](docs/cid2bp.md) adds all nine confidence-interval menu options for independent
 binomial differences, including Cox–Snell profile likelihood and native boundary
-adjustments and exact binomial-tail inversion. Session/report interfaces remain pending.
+adjustments and exact binomial-tail inversion. [Repeated comparison sessions](docs/cid2bp-session.md)
+support both count-entry modes, per-case settings and cumulative reports.
 
 [CONFINT](docs/confint.md) adds CI-length assurance, population-SD limits, and
 minimum integer sample sizes for normal means, normal SDs, and independent
@@ -989,7 +990,8 @@ qualifying exposure. Binomial-difference Wald-width planning includes full
 probabilities, event-probability limits and balanced sample sizes. Survival
 hazard/mean width assurance is available for fixed counts and Poisson accrual;
 bracketed survival quantile/design inversions and automatic hazard-range
-searches are also available. Native reporting remains pending.
+searches are also available. An immutable [calculation log](docs/confint-session.md)
+records repeated analyses, complete settings and diagnostics in a saved report.
 
 [IPDfromKM](docs/ipdfromkm.md) reconstructs approximate patient survival records
 from Kaplan–Meier coordinates, with native coordinate cleaning, optional reported
@@ -1355,7 +1357,8 @@ Delayed outcomes remain open.
 [TTEConduct](docs/tteconduct.md) adds single-arm exponential survival monitoring
 against an uncertain historical standard, with an additive improvement margin
 and continuous total-time-on-test stopping boundaries. Independent R integration
-checks the published guide example; native HTML report handling remains open.
+checks the published guide example. [Saved HTML reports](docs/tteconduct-report.md)
+echo the design and boundaries in explicit caller-selected time units.
 
 [One Arm Time to Event Simulator](docs/one-arm-tte.md) adds mean/median survival
 priors, separate inferiority and superiority rules, and calendar simulation.

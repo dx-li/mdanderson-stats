@@ -30,6 +30,8 @@ the interval API. A session is limited to 1,000 calculations. Requests must be
 a sized sequence, and all inputs and aggregate limits are validated before
 any confidence interval is calculated. Calculations run serially; an invalid
 request fails the session instead of silently skipping a row.
+The calculation limit bounds the number of results, not elapsed time: repeated
+exact or Peskun calculations retain each method's cost and per-call limits.
 
 The tab-separated report has one row per requested calculation, including the
 sample counts and rates, confidence, estimate, requested and resolved methods,
