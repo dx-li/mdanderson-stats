@@ -2908,3 +2908,42 @@ review found no complete missing mathematical contract in the cached material
 for ComPAS, BLESS, CNSRISK, K-COMPASS, MDS-DPSS or RMC-COMPASS. Full catalog
 coverage remains an active objective. The local manifest records the new
 publication SHAs and artifact hashes after independent remote verification.
+
+## 2026-10-04: Automatic success-cutoff calibration
+
+The success-calibration APIs now select cutoffs automatically for single-arm
+binary, one- and two-arm normal, and fixed-event survival models. The binary
+search represents every finite response-count decision state and uses the
+model's monotone PID ordering to locate the smallest feasible state. It uses
+O(n) storage and O(n log n) work, preserves strict posterior cutoff ties, and
+reports unresolved total success mass explicitly. A 10,000-patient run used
+eight probes and took 0.046 seconds, with 117.52 MiB peak RSS and zero swaps.
+The continuous searches return a feasible cutoff and an infeasible/feasible
+bracket, with bounded evaluations and explicit numerical failures. The bracket
+width is a cutoff tolerance, not an operating-characteristic error bound.
+
+Three Luna agents supplied the two implementations and independent base-R
+references. Root review integrated the public exports and guides, enforced the
+reference comparisons' absolute tolerances, and corrected fixed-length prior
+typing. All 18 affected checks pass with warnings as errors in 2.013 seconds,
+with 168.53 MiB process peak RSS and zero swaps. Scoped Ruff/format/mypy checks
+pass. The references enumerate binary decision states independently and use
+conditional-normal integration, asymmetric priors, direction reflection and
+survival information rescaling. Cross-language beta-tail rounding is handled
+through interior probes plus an exactly representable strict-tie identity.
+
+Cached builds at `756ae2e` pass isolated wheel/source verification: all 618
+committed package files match both archives, all 1,727 public exports resolve,
+notices are retained and both new guide examples execute from the wheel.
+The check took 12.289 seconds, peaked at 114.61 MiB RSS and reported zero swaps.
+Numerical, static and packaging jobs remained serial, with single-threaded
+numerical libraries. No full local suite, installation or new CI workflow was
+added. The prior published `2687fbf` checkpoint has passed hosted quality and
+Python 3.12/3.13/3.14 checks in run `37173700681`.
+
+Entry 173 remains partial: two-arm binary calibration still uses an explicit
+grid, and native optimizer, rounding, reports and plots are not reproduced.
+The cached help specifies the PID objective and candidate range, but not the
+native optimizer. These are independently validated Python search conventions.
+Full catalog coverage remains active. The local publication manifest records
+independently verified remote branch SHAs and artifact hashes for this batch.
