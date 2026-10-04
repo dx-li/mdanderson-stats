@@ -264,8 +264,16 @@ one; total noncentrality is limited to `1e8`.
 `design.sample_size(power=0.8, significance=0.05)` returns the **continuous**
 solution. Round up for an integer total, then check allocation rounding for the
 actual design. It returns zero if requested power is no greater than significance;
-positive power gain is unattainable when `w=0`. Scalar targets are supported.
-This is an asymptotic calculation, not finite-sample exact power.
+positive power gain is unattainable when `w=0`. Power and significance may be
+scalars or paired one-dimensional vectors; a scalar expands to the vector length,
+and two vectors must have equal lengths. Scalar calls still return a float;
+vector calls return a read-only array. At most 10,000 inversions are allowed per
+call. This is an asymptotic calculation, not finite-sample exact power.
+
+```python
+sizes = design.sample_size(power=[0.8, 0.9], significance=0.05)
+achieved = design.power(sizes, significance=0.05)
+```
 
 `design.significance(sample_size, power=0.8)` inverts power for significance,
 using the design's degrees of freedom. Inputs broadcast.
@@ -301,7 +309,8 @@ The default correction gives noncentrality `nu=n*w-df`; `subtract_df=False` uses
 reject nonpositive nu. It is not clamped to zero. Sample-size inversion returns
 a continuous value, requires requested power above significance, and rejects
 an exactly null alternative. Power/significance inputs broadcast; sample-size
-targets are scalar. The shared noncentrality limit of `1e8` also applies.
+inversion accepts the paired scalar-or-vector targets described above. The shared
+noncentrality limit of `1e8` also applies.
 
 The original example p=(0.4,0.3), allocation=(10,9), has null probability
 0.35263157894736841 and w=0.01097409068025511. At significance 0.05 and power 0.8,
@@ -313,9 +322,9 @@ chi-square wrapper supplied its distribution calculations; statistical formulas
 were unchanged. Inversion was independently checked with a tighter R root.
 
 The significance inverse uses actual df, correcting the original `self.sig.s`
-hardcoded df=1, just as the LR inverse does. Remaining regression families are pending; generic expected-likelihood fitting
-is described below. These tests are asymptotic approximations, not
-finite-sample exact binomial tests.
+hardcoded df=1, just as the LR inverse does. Generic expected-likelihood fitting
+is described below. These tests are asymptotic approximations, not finite-sample
+exact binomial tests.
 
 ## SMO Poisson designs
 

@@ -1,13 +1,14 @@
 """SMO expected-log-likelihood power from original ASYPOW S-plus."""
 
 from dataclasses import dataclass
+from typing import overload
 
 import numpy as np
 from numpy.typing import ArrayLike
 from scipy.special import logsumexp
 
-from ._validation import FloatArray, finite, scalar
-from .asypow import AsymptoticPower, _probability
+from ._validation import FloatArray, finite
+from .asypow import AsymptoticPower, _paired_sample_size_targets, _probability
 from .asypow_constraints import _group_null
 from .boin import _owned
 from .cdflib_elementary import rlog1
@@ -45,21 +46,33 @@ class SMOPower:
         """Invert SMO power using the actual constraint degrees of freedom."""
         return self._unit().significance(self._noncentrality(sample_size), power)
 
-    def sample_size(self, power: float = 0.8, significance: float = 0.05) -> float:
-        """Continuous sample size; requested power must exceed significance."""
-        requested = float(_probability(scalar(power, "power"), "power"))
-        alpha = float(_probability(scalar(significance, "significance"), "significance"))
-        if requested <= alpha or self.divergence_per_observation == 0:
+    @overload
+    def sample_size(self, power: float = 0.8, significance: float = 0.05) -> float: ...
+
+    @overload
+    def sample_size(
+        self, power: ArrayLike = 0.8, significance: ArrayLike = 0.05
+    ) -> float | FloatArray: ...
+
+    def sample_size(
+        self, power: ArrayLike = 0.8, significance: ArrayLike = 0.05
+    ) -> float | FloatArray:
+        """Continuous size; scalar calls return float, vectors pair elementwise."""
+        requested, alpha, scalar_result = _paired_sample_size_targets(power, significance)
+        if np.any(requested <= alpha) or self.divergence_per_observation == 0:
             raise ValueError(
                 "SMO inversion requires power above significance and a non-null alternative"
             )
-        nu = self._unit().sample_size(requested, alpha)
-        n = (
-            nu + (self.degrees_of_freedom if self.subtract_df else 0)
-        ) / self.divergence_per_observation
-        if not np.isfinite(n):
+        nu = np.asarray(self._unit().sample_size(requested, alpha), dtype=np.float64)
+        with np.errstate(over="ignore", divide="ignore", invalid="ignore"):
+            n = (
+                nu + (self.degrees_of_freedom if self.subtract_df else 0)
+            ) / self.divergence_per_observation
+        if np.any(~np.isfinite(n)):
             raise ArithmeticError("required sample size is not representable")
-        return float(n)
+        if scalar_result:
+            return float(n[0])
+        return _owned(n)
 
 
 def asypow_smo_binomial(
