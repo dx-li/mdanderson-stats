@@ -104,6 +104,7 @@ success probabilities, Monte Carlo uncertainty, enrollment and duration.
 
 [Finite-grid calibration](top-endpoints-calibration.md) searches explicit joint
 null scenarios and one alternative with common random numbers and an independent
-holdout. It does not claim error control outside the supplied scenarios. Entry
-134 remains partial: native optimizer grids, reports, and app-version parity
-remain unimplemented.
+holdout. It does not claim error control outside the supplied scenarios. The
+[named-scenario community report](top-community-report.md) records designs and
+simulated joint-outcome cases. Native optimizer grids, protocol-template parity,
+and app-version parity remain unverified.

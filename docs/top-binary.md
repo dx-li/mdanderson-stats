@@ -225,5 +225,7 @@ has different thresholds; this implementation targets the published table.
 monitoring](top-endpoints.md) now supports separate endpoint assessment windows
 and mixture-uniform timing weights, with [calendar replay and joint-outcome
 simulation](top-endpoints-simulation.md). Multiple-endpoint calibration, native
-tuning grids, reports and app version parity remain pending. Original PDFs and
-application files are not redistributed.
+tuning grids, protocol-template parity and app version parity remain pending.
+The [named-scenario community report](top-community-report.md) saves binary and
+two-endpoint operating-characteristic summaries; it is not a native protocol
+template. Original PDFs and application files are not redistributed.
