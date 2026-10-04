@@ -1,4 +1,4 @@
-"""Posterior intervals after isotonic transformation for mTPI dose estimates.
+"""Isotonic-transformed beta-posterior intervals used by mTPI and TPI adapters.
 
 The paper proposes drawing each dose probability independently from its beta
 posterior, applying an isotonic transformation to each joint draw, and then
@@ -7,6 +7,7 @@ the isotonic weights, Monte Carlo size, or empirical quantile convention; this
 module makes those choices explicit.
 """
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 from math import ceil, log2
 
@@ -14,7 +15,7 @@ import numpy as np
 from numpy.typing import ArrayLike
 from scipy.optimize import isotonic_regression
 
-from ._validation import FloatArray, scalar
+from ._validation import FloatArray, finite, scalar
 from .boin import _owned
 from .mtpi import MTPIDesign
 
@@ -67,7 +68,9 @@ def mtpi_isotonic_posterior_intervals(
     The Monte Carlo size, Generator, confidence level and empirical linear
     quantile rule are explicit. A retained transformed sample is optional, but
     the internally retained sample matrix is always needed for exact empirical
-    quantiles. Bounds are checked before the first random draw.
+    quantiles. The intervals summarize the transformed-draw distribution; they
+    are not a posterior conditioned on monotonicity. Bounds are checked before
+    the first random draw.
     """
     if not isinstance(design, MTPIDesign):
         raise TypeError("design must be an MTPIDesign")
@@ -76,6 +79,39 @@ def mtpi_isotonic_posterior_intervals(
     if not isinstance(retain_draws, (bool, np.bool_)):
         raise ValueError("retain_draws must be Boolean")
 
+    if np.iscomplexobj(patients) or np.iscomplexobj(toxicities):
+        raise ValueError("patients and toxicities must be real counts")
+    n, y, _, _ = design._state(patients, toxicities, None)
+    alpha = y + design.prior_alpha
+    beta = n - y + design.prior_beta
+    return _isotonic_beta_posterior_intervals(
+        alpha,
+        beta,
+        draws=draws,
+        rng=rng,
+        confidence=confidence,
+        weights=weights,
+        retain_draws=retain_draws,
+        max_work=max_work,
+    )
+
+
+def _isotonic_beta_posterior_intervals(
+    alpha: ArrayLike,
+    beta: ArrayLike,
+    *,
+    draws: int,
+    rng: np.random.Generator,
+    confidence: float,
+    weights: ArrayLike | None,
+    retain_draws: bool,
+    max_work: int,
+) -> MTPIIsotonicPosteriorIntervals:
+    """Shared bounded beta-draw and weighted-isotonic interval kernel."""
+    if not isinstance(rng, np.random.Generator):
+        raise TypeError("rng must be an explicit numpy Generator")
+    if not isinstance(retain_draws, (bool, np.bool_)):
+        raise ValueError("retain_draws must be Boolean")
     draw_value = scalar(draws, "draws")
     confidence_value = scalar(confidence, "confidence")
     work_value = scalar(max_work, "max_work")
@@ -94,43 +130,34 @@ def mtpi_isotonic_posterior_intervals(
         raise ValueError("confidence cannot be represented by interior quantile levels")
     if work_value != int(work_value) or not 1 <= work_value <= _MAX_WORK:
         raise ValueError(f"max_work must be an integer in 1..{_MAX_WORK}")
+    alpha_values = finite(alpha, "posterior alpha")
+    beta_values = finite(beta, "posterior beta")
+    if (
+        alpha_values.ndim != 1
+        or beta_values.shape != alpha_values.shape
+        or not 1 <= alpha_values.size <= _MAX_DOSES
+        or np.any(alpha_values <= 0)
+        or np.any(beta_values <= 0)
+    ):
+        raise ValueError("posterior beta shapes must be positive vectors for 1..100 doses")
     draw_count = int(draw_value)
     work_limit = int(work_value)
-    if np.iscomplexobj(patients) or np.iscomplexobj(toxicities):
-        raise ValueError("patients and toxicities must be real counts")
-    n, y, _, _ = design._state(patients, toxicities, None)
-    doses = n.size
+    doses = alpha_values.size
     cells = draw_count * doses
-    if doses > _MAX_DOSES or cells > _MAX_CELLS:
+    if cells > _MAX_CELLS:
         raise ValueError(f"posterior draw matrix exceeds {_MAX_CELLS} cells")
-    # Beta generation and isotonic fitting are linear in cells; the extra
-    # logarithmic factor conservatively budgets per-dose empirical quantiles.
     work_required = cells * (2 + ceil(log2(draw_count + 1)))
     if work_required > work_limit:
         raise ValueError("max_work is below the required beta-draw/isotonic work")
 
-    if weights is None:
-        isotonic_weights = np.ones(doses, dtype=float)
-    else:
-        raw_weights = np.asarray(weights)
-        if np.iscomplexobj(raw_weights):
-            raise ValueError("weights must be real")
-        isotonic_weights = np.asarray(raw_weights, dtype=float)
-        if (
-            isotonic_weights.shape != (doses,)
-            or not np.isfinite(isotonic_weights).all()
-            or np.any(isotonic_weights <= 0)
-        ):
-            raise ValueError("weights must be a positive finite vector matching the dose grid")
+    isotonic_weights = _weights_vector(weights, doses)
     normalized_weights = isotonic_weights / isotonic_weights.max()
     if np.any(normalized_weights <= 0):
         raise ArithmeticError("relative isotonic weights cannot be represented")
 
     transformed = np.empty((draw_count, doses), dtype=float)
-    alpha = y + design.prior_alpha
-    beta = n - y + design.prior_beta
     for index in range(draw_count):
-        sample = rng.beta(alpha, beta)
+        sample = rng.beta(alpha_values, beta_values)
         transformed[index] = isotonic_regression(sample, weights=normalized_weights).x
 
     lower, median, upper = np.quantile(
@@ -147,3 +174,28 @@ def mtpi_isotonic_posterior_intervals(
         _owned(isotonic_weights),
         retained,
     )
+
+
+def _weights_vector(weights: ArrayLike | None, doses: int) -> FloatArray:
+    if weights is None:
+        return np.ones(doses, dtype=float)
+    if isinstance(weights, np.ndarray):
+        if (
+            np.iscomplexobj(weights)
+            or weights.dtype.kind not in "biuf"
+            or weights.ndim != 1
+            or weights.size != doses
+        ):
+            raise ValueError("weights must be a positive finite vector matching the dose grid")
+    elif isinstance(weights, Sequence):
+        if len(weights) != doses or any(
+            isinstance(value, (list, tuple, np.ndarray)) or np.iscomplexobj(value)
+            for value in weights
+        ):
+            raise ValueError("weights must be a positive finite vector matching the dose grid")
+    else:
+        raise ValueError("weights must be a bounded one-dimensional vector")
+    values = finite(weights, "weights")
+    if values.shape != (doses,) or np.any(values <= 0):
+        raise ValueError("weights must be a positive finite vector matching the dose grid")
+    return values
