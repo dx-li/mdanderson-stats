@@ -60,3 +60,39 @@ The source cache is under
 companion `model.matrix.bayes.R` shows the numeric predictor columns retained
 in the formula matrix. The cached author file remains the primary evidence
 for response expansion and the actual call.
+
+## Author-local conduct: next implementation boundary
+
+The recovered `df.llogistic` code (lines 321–409) uses
+`logit(p)=beta0+beta1*xs`, with full-grid ordinal coordinates
+`xs=(1:ndose-mean(1:ndose))/(2*sd(1:ndose))` and independent Cauchy scales
+10 and 2.5. Its neighboring two-dose likelihood permits a zero-count neighbor.
+The source defaults are `thetaf=ce1=.3`, `thetab1=1-ce2=.6` and
+`thetab2=1-ce1=.7`. With a fresh admissible cap greater than one:
+
+- At the lowest dose, escalate when the forward positive-slope probability
+  exceeds `.3`.
+- At the highest dose, de-escalate when the backward nonpositive-slope
+  probability exceeds `.7`.
+- At an interior dose with an untried next level, use the backward pair:
+  de-escalate above `.7`, escalate at or below `.6`, otherwise stay.
+- If the next level has been tried, escalate only when the backward
+  nonpositive probability is at or below `.6` and the forward positive
+  probability exceeds `.3`; de-escalate when the backward probability
+  exceeds `.7`; otherwise stay.
+
+A cap of one forces the lowest dose. The author-local simulator first treats
+one cohort at the lowest dose, then starts at dose two if the refreshed cap
+permits it. Later moves use the lagged cap, and the cap is refreshed after
+movement. Final selection uses the all-dose epsilon rates, equal-weight
+unimodal fit, rightmost maximum and fresh cap (lines 184–309).
+
+The existing paper-policy local API uses caller-supplied dose coding,
+configurable windows, different gates/bounce behavior and strictly observed
+window doses. Independent Cauchy priors make the dose recoding material to
+the posterior. An author-local implementation should reuse bounded sampler
+and diagnostic machinery while fitting the exact adjacent pair(s), rather
+than wrapping that public paper-policy decision function. The source's
+Metropolis settings do not establish random-stream equivalence for a Python
+sampler. No new logistic model or numerical validation is claimed by this
+source-only handoff.
