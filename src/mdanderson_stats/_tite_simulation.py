@@ -39,6 +39,7 @@ def simulate_calendar[S](
     late_probability: ArrayLike | None,
     event_trimester_probabilities: ArrayLike | None,
     rng: int | np.random.Generator | None,
+    max_output_cells: int | None = None,
 ) -> CalendarSimulation:
     p = finite(true_toxicity, "true_toxicity")
     if p.ndim != 1 or not 2 <= p.size <= 100 or np.any((p < 0) | (p > 1)):
@@ -53,6 +54,12 @@ def simulate_calendar[S](
     maximum = nc * size
     if maximum > 200 or repetitions > 100000 or start > p.size:
         raise ValueError("require at most 200 patients, 100000 trials and a valid start dose")
+    if max_output_cells is not None:
+        output_limit = scalar(max_output_cells, "max_output_cells")
+        if output_limit != int(output_limit) or output_limit < 1:
+            raise ValueError("max_output_cells must be a positive integer")
+        if repetitions * p.size > output_limit:
+            raise ValueError("calendar simulation exceeds max_output_cells")
     if arrival not in ("fixed", "exponential"):
         raise ValueError("arrival must be 'fixed' or 'exponential'")
     toxicity_followup_weights([], duration, trimester_probabilities=event_trimester_probabilities)

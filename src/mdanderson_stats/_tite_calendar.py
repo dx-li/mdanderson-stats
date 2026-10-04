@@ -61,6 +61,7 @@ def run_calendar_trial[D: InterimDecision, S](
     decide: Callable[[ArrayLike, ArrayLike, list[FloatArray], int, ArrayLike], D],
     make_step: Callable[[float, int, D], S],
     minimum_pending_followup: float = 0,
+    on_observed_events: Callable[[tuple[FloatArray, ...]], None] | None = None,
 ) -> CalendarTrial[S]:
     """Fixed-dose staggered cohorts with outcome and follow-up event scheduling."""
     gaps = finite(interarrival, "interarrival")
@@ -114,6 +115,13 @@ def run_calendar_trial[D: InterimDecision, S](
                     clock - enrolled[:total][pending & (assigned[:total] == dose)]
                     for dose in range(1, levels + 1)
                 ]
+                if on_observed_events is not None:
+                    observed_ages = tuple(
+                        events[:total][observed & (assigned[:total] == dose)]
+                        - enrolled[:total][observed & (assigned[:total] == dose)]
+                        for dose in range(1, levels + 1)
+                    )
+                    on_observed_events(observed_ages)
                 decision = decide(n, y, times, current, excluded)
                 steps.append(make_step(clock, current, decision))
                 excluded = decision.eliminated
