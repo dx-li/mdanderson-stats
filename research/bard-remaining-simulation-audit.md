@@ -1,4 +1,4 @@
-# Remaining BARD simulation workflow
+# BARD simulation coverage and remaining work
 
 The cached official BARD guide and complete paper, including its supplement,
 identify work beyond the implemented allocation and final-selection functions.
@@ -38,9 +38,13 @@ replay, patient-wise minimization, OBD selection, and a supplied-outcome
 BF-BLRM continuation. The [response model](../docs/bard-response.md) now
 calibrates conditional response probabilities under an explicit joint factor
 distribution; [published scenario records](../docs/bard-response-scenarios.md)
-preserve the recovered table inputs. These do not yet provide the guide's
-complete BF-BOIN two-stage scenario simulation with retained patient covariates,
-automatic stage-one carryover, both final OBD summaries and balance metrics.
+preserve the recovered table inputs. The [full trial runner](../docs/bard-bf-boin-trial.md)
+now connects the existing BF-BOIN calendar to patient covariates, automatic
+eligible carryover, stage-two minimization and both final OBD analyses. Its
+[streaming operating-characteristic wrapper](../docs/bard-bf-boin-simulation.md)
+reports total enrollment, duration, allocation and factor imbalance, and
+correct selection under supplied method-specific true OBD labels. All modeled
+factors are reported even when only a subset enters minimization.
 
 Clinical eligibility and the dose pair are partly protocol inputs. The paper
 explicitly permits eligibility to differ between stages and selects the pair
@@ -52,11 +56,23 @@ The guide asks for a target count per arm, while the paper's general formula
 specifies a combined target including stage-one carryover. Neither inspected
 description gives a full hard-quota enforcement algorithm. Stage-two calendar
 timing and native joint outcome-generation conventions also need explicit
-policies or stronger evidence. Those source uncertainties are separate from
-the unfinished integration and operating-characteristic outputs. BARD remains
-partial.
+policies or stronger evidence. The Python workflow uses the paper's combined
+target, retains all mandatory carryover even when it exceeds the target, and
+begins stage two after complete stage-one follow-up. New profiles are drawn
+from an explicit joint distribution conditioned on the eligibility mask.
+An optional dose-by-profile joint toxicity/response table specifies association;
+omission selects conditional independence. These choices are documented, not
+claimed to reconstruct hidden native settings.
 
-## Response-model component and next integration
+No additional advertised statistical calculation was identified in this
+bounded cached-source review. Guide Section 3 (printed page 15) also offers a
+saved trial protocol, and Section 2 offers saved OC output. A portable BARD
+protocol/results report remains useful unfinished community functionality.
+Native document layouts and UI behavior are separate compatibility boundaries.
+The catalog remains partial while the reporting gap and source-contract
+uncertainties remain explicit.
+
+## Response-model integration
 
 The response-model calibration API solves each dose's logistic intercept so
 that its profile-weighted conditional response probabilities match the entered
@@ -67,7 +83,11 @@ caller convention because the guide does not specify dependence.
 The paper's printed intercept table provides a separate numerical cross-check,
 with tolerance for its rounded coefficients. This component does not determine
 the joint toxicity/response law, which remains an explicit simulator input or
-policy. The next integration must retain each generated patient's factors and
-conditional response probability through stage-one assignment, carryover and
-stage-two minimization, without changing existing stage-one random streams
-when the new model is absent.
+policy. The integrated runner retains each patient's factors and conditional
+response probabilities through stage-one assignment, carryover and stage-two
+minimization. The optional stage-one hook preserves existing result fields
+and random streams when the model is absent. Safety exclusions persist across
+the stage transition; no-MTD and unavailable-pair trials remain in the
+unconditional correct-selection denominator. Arm-count imbalance remains
+defined with an empty arm, while factor-proportion imbalance reports its
+smaller, explicit denominator requiring both arms to have patients.

@@ -138,7 +138,7 @@ some legacy adaptations retain commercial-use restrictions.
 | CiBolus | [desktop #86](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86) | [Guide](cibolus.md), [Prior calibration](cibolus-calibration.md) |
 | CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis | [online #157](https://biostatistics.mdanderson.org/shinyapps/CondiS/) | [Guide](condis.md), [curve comparison](condis-survival-comparison.md) |
 | CRM Suite | [desktop #132](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132) | See catalog feature and validation notes |
-| Dose Optimization with Backfill and Adaptive Randomization (BARD) | [online #165](https://biostatistics.mdanderson.org/shinyapps/BARD) | [Stage two](bard.md), [BF-BLRM model](bard-blrm.md) |
+| Dose Optimization with Backfill and Adaptive Randomization (BARD) | [online #165](https://biostatistics.mdanderson.org/shinyapps/BARD) | [Stage two](bard.md), [BF-BLRM model](bard-blrm.md), [Full trials](bard-bf-boin-trial.md), [OC summaries](bard-bf-boin-simulation.md) |
 | Dose Schedule Finder | [desktop #75](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75) | [Model](dose-schedule.md), [calendar trials](dose-schedule-trials.md) |
 | EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Guide](efftox.md), [trinary calibration](efftox-trinary-calibration.md) |
 | Find optimal biological dose (OBD) for targeted and immune therapies | [online #142](https://biostatistics.mdanderson.org/shinyapps/UBOIN) | [Guide](uboin.md) |

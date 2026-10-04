@@ -1488,10 +1488,13 @@ continues enrollment at the fixed lower dose. The
 [response model](docs/bard-response.md) calibrates conditional response
 probabilities from population rates, categorical profiles and odds ratios.
 [Published scenarios](docs/bard-response-scenarios.md) preserve the paper's
-five-dose and three-dose inputs. The complete BF-BOIN two-stage scenario
-simulator and balance/OBD summaries remain open; the
+five-dose and three-dose inputs. [Complete BF-BOIN trial simulation](docs/bard-bf-boin-trial.md)
+carries eligible stage-one patients into stage-two minimization and both OBD
+analyses. [Repeated-trial summaries](docs/bard-bf-boin-simulation.md) report
+enrollment, duration, allocation and factor balance, and correct selection with
+explicit denominators, retaining only one trial at a time. The
 [remaining-work crosswalk](research/bard-remaining-simulation-audit.md)
-records the unresolved timing/quota conventions.
+records the saved-report gap and explicit timing/quota conventions.
 
 [TITE-BOIN12 AL methods](docs/tite-boin12.md) add patient-level handling of
 pending toxicity and efficacy, joint utility posteriors, interim dose conduct

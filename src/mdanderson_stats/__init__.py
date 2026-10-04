@@ -106,6 +106,21 @@ from .bacis_simulation import BaCISOperatingCharacteristics, simulate_bacis_oc
 from .bacis_theta import BaCISThetaPosterior, bacis_theta_posterior, sample_bacis_theta
 from .bacis_trial import BaCISOneTrialResult, bacis_one_trial
 from .bard import BARDMinimizationResult, BARDSelectionResult, bard_minimization, bard_select_obd
+from .bard_bf_boin_simulation import (
+    BARDBFBOINSimulation,
+    BARDCategoryFrequency,
+    BARDMeanEstimate,
+    BARDProportion,
+    BARDSelectionAccuracy,
+    simulate_bard_bf_boin,
+)
+from .bard_bf_boin_trial import (
+    BARDBFBOINStage2Patient,
+    BARDBFBOINTrialResult,
+    BARDStageOneSettings,
+    BARDStageTwoDesign,
+    run_bard_bf_boin_trial,
+)
 from .bard_blrm import (
     BARDLogisticFit,
     BARDLogisticPrior,
@@ -2185,6 +2200,17 @@ __all__ = [
     "BARDSelectionResult",
     "bard_minimization",
     "bard_select_obd",
+    "BARDBFBOINSimulation",
+    "BARDCategoryFrequency",
+    "BARDMeanEstimate",
+    "BARDProportion",
+    "BARDSelectionAccuracy",
+    "simulate_bard_bf_boin",
+    "BARDBFBOINStage2Patient",
+    "BARDBFBOINTrialResult",
+    "BARDStageOneSettings",
+    "BARDStageTwoDesign",
+    "run_bard_bf_boin_trial",
     "BARDResponseModel",
     "bard_response_model",
     "bard_response_probabilities",

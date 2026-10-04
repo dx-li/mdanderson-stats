@@ -59,6 +59,8 @@ finite or infinite, but not NaN.
 
 Bounds are 100 doses, five factors, 20 levels per factor, 100,000 profiles,
 1,000,000 output cells, and 100,000,000 calibration profile-iterations.
-These are Python resource limits, not BARD application limits. This is a
-source-based response-model component; it does not implement BARD's full
-two-stage operating-characteristic simulation or claim native GUI parity.
+These are Python resource limits, not BARD application limits. The model feeds
+[BF-BOIN response-profile simulation](bf-boin-response-profiles.md),
+[complete two-stage trials](bard-bf-boin-trial.md), and
+[operating-characteristic summaries](bard-bf-boin-simulation.md).
+Native GUI or random-stream parity is not claimed.

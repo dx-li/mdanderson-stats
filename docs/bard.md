@@ -105,10 +105,14 @@ grade-2 probabilities and observation timing. The
 [response model](bard-response.md) provides covariate-dependent probabilities
 and marginal-rate calibration under an explicit joint factor distribution.
 [Published scenario records](bard-response-scenarios.md) preserve the
-paper's five-dose and three-dose inputs. The guide's complete two-stage
-BF-BOIN simulation and balance/correct-OBD summaries remain open.
-Stage-two timing, native per-arm quota interpretation, broader design calibration and
-reports also need explicit policies or further source evidence. See the
+paper's five-dose and three-dose inputs. [Complete BF-BOIN trials](bard-bf-boin-trial.md)
+now retain patient covariates, automatically carry eligible patients into
+stage two, and return both final OBD analyses. The
+[streaming simulator](bard-bf-boin-simulation.md) summarizes enrollment,
+duration, arm and factor balance, and both correct-selection probabilities.
+Saved BARD protocol/OC reports remain open. Stage-two timing, the joint endpoint
+law and the native per-arm quota interpretation use explicit Python policies;
+clinical eligibility and the dose pair remain protocol inputs. See the
 [remaining simulation crosswalk](../research/bard-remaining-simulation-audit.md).
 
 ## Numerical validation and sources
