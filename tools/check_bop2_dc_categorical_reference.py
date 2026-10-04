@@ -36,8 +36,7 @@ def _close(actual: float, expected: float, label: str) -> None:
 
 def _build(config: dict[str, str]):
     max_n = int(config["max_n"])
-    interim_n = int(config["interim_n"])
-    looks = [max_n] if interim_n == 0 else sorted({interim_n, max_n})
+    looks = _vector(config["looks"]).astype(int).tolist()
     kwargs = dict(
         max_subjects=max_n,
         indicators=_matrix(config["indicators"]),
@@ -53,7 +52,7 @@ def _build(config: dict[str, str]):
         gamma_cmv=float(config["gamma_cmv"]),
     )
     if config["arm"] == "randomized":
-        assignments = np.asarray([0, 0, 1, 1, 0, 0, 1, 1], dtype=int)
+        assignments = _vector(config["arm_assignments"]).astype(int)[:max_n]
         kwargs.update(
             control_prior=_vector(config["prior_control"]),
             arm_assignments=assignments,
@@ -140,7 +139,9 @@ def main() -> None:
     ).monitor(counts)
     if not np.allclose(categorical.posterior_probability, paired.marginal_posterior, rtol=TOL, atol=TOL):
         raise AssertionError("K=4 categorical marginals disagree with paired two-endpoint design")
-    if np.asarray(categorical.endpoint_decisions).tolist() != paired.endpoint_decision.tolist():
+    # The paired module exposes `no-go`, while the categorical module uses `no_go`.
+    paired_labels = np.char.replace(paired.endpoint_decision, "-", "_")
+    if np.asarray(categorical.endpoint_decisions).tolist() != paired_labels.tolist():
         raise AssertionError("K=4 categorical endpoint decisions disagree with paired design")
 
     randomized = _build(configs["randomized_all"])
@@ -161,7 +162,10 @@ def main() -> None:
         raise AssertionError("first reached replay endpoint actions disagree with base-R reference")
     if str(np.asarray(replay.terminal_decision).item()) != replay_reference["action"]:
         raise AssertionError("replay terminal action disagrees with base-R reference")
-    print(f"BOP2 categorical reference check passed ({compared} posterior probabilities + paired reduction).")
+    print(
+        "BOP2 categorical reference check passed "
+        f"({compared} posterior probabilities, decisions, replay, paired reduction)."
+    )
 
 
 if __name__ == "__main__":

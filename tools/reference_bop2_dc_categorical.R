@@ -179,8 +179,8 @@ for (case_name in names(cases)) {
   }, character(1))
   n_interim <- z$interim_n
   if (n_interim > 0 && z$max_n > 0) {
-    l1 <- z$lambda_lrv * (z$max_n / n_interim)^z$gamma_lrv
-    l2 <- z$lambda_cmv * (z$max_n / n_interim)^z$gamma_cmv
+    l1 <- z$lambda_lrv * (n_interim / z$max_n)^z$gamma_lrv
+    l2 <- z$lambda_cmv * (n_interim / z$max_n)^z$gamma_cmv
   } else {
     l1 <- z$lambda_lrv
     l2 <- z$lambda_cmv
@@ -208,6 +208,7 @@ for (case_name in names(cases)) {
     case = case_name, arm = z$arm, combination = z$combination,
     indicators = paste(apply(z$indicators, 1, paste, collapse = ""), collapse = "|"),
     direction = paste(z$direction, collapse = ";"),
+    lrv = paste(z$lrv, collapse = ";"), cmv = paste(z$cmv, collapse = ";"),
     prior_experimental = paste(z$prior_e, collapse = ";"),
     counts_experimental_final = paste(z$count_e, collapse = ";"),
     counts_experimental_interim = paste(interim_e, collapse = ";"),
@@ -216,6 +217,8 @@ for (case_name in names(cases)) {
     counts_control_interim = if (z$arm == "randomized") paste(interim_c, collapse = ";") else "",
     lambda_lrv = z$lambda_lrv, lambda_cmv = z$lambda_cmv,
     gamma_lrv = z$gamma_lrv, gamma_cmv = z$gamma_cmv,
+    looks = if (case_name == "randomized_all") "2;4;6;8" else if (z$interim_n > 0) paste(unique(c(z$interim_n, z$max_n)), collapse = ";") else as.character(z$max_n),
+    arm_assignments = if (z$arm == "randomized") paste(c(0, 0, 1, 1, 0, 0, 1, 1)[seq_len(z$max_n)], collapse = ";") else "",
     max_n = z$max_n, interim_n = z$interim_n,
     stringsAsFactors = FALSE
   )
@@ -260,8 +263,8 @@ for (n in c(2L, 4L, 6L, 8L)) {
     )
   }
   if (n < current$max_n) {
-    l1 <- current$lambda_lrv * (current$max_n / n)^current$gamma_lrv
-    l2 <- current$lambda_cmv * (current$max_n / n)^current$gamma_cmv
+    l1 <- current$lambda_lrv * (n / current$max_n)^current$gamma_lrv
+    l2 <- current$lambda_cmv * (n / current$max_n)^current$gamma_cmv
     acts <- vapply(seq_len(m), function(j) endpoint_action(probs[j, ], l1, l2, interim = TRUE), character(1))
     combined <- combine_action(acts, current$combination, interim = TRUE)
   } else {
@@ -271,7 +274,7 @@ for (n in c(2L, 4L, 6L, 8L)) {
   replay_rows[[length(replay_rows) + 1L]] <- data.frame(
     look_n = n, count_control = paste(counts_c, collapse = ";"),
     count_experimental = paste(counts_e, collapse = ";"),
-    posterior_probabilities = paste(formatC(probs, digits = 16, format = "fg"), collapse = ";"),
+    posterior_probabilities = paste(formatC(as.vector(t(probs)), digits = 16, format = "fg"), collapse = ";"),
     endpoint_actions = paste(acts, collapse = ";"),
     action = combined,
     stringsAsFactors = FALSE

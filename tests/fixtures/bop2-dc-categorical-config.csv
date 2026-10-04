@@ -1,6 +1,6 @@
-"case","arm","combination","indicators","direction","prior_experimental","counts_experimental_final","counts_experimental_interim","prior_control","counts_control_final","counts_control_interim","lambda_lrv","lambda_cmv","gamma_lrv","gamma_cmv","max_n","interim_n"
-"single_any","single","any","11001|01100|00111","greater;less;greater","0.4;0.8;0.3;0.6;0.9","3;1;1;1;2","2;1;0;1;1","","","",0.7,0.55,0.5,0.4,8,5
-"randomized_all","randomized","all","11001|01100|00111","greater;less;greater","0.7;0.3;0.5;0.2;0.4","2;0;1;0;1","1;0;1;0;0","0.2;0.6;0.4;0.5;0.3","0;2;0;1;1","0;1;0;0;1",0.7,0.55,0.5,0.4,8,4
-"two_endpoint_any","single","any","1100|1010","greater;greater","0.2;0.3;0.4;0.5","1;2;0;1","1;0;0;1","","","",0.65,0.45,0.5,0.5,4,2
-"prior_only_equal_single","single","all","10","greater","1;1","0;0","0;0","","","",0.6,0.5,0,0,4,0
-"prior_only_equal_randomized","randomized","all","10","greater","1;1","0;0","0;0","1;1","0;0","0;0",0.5,0.32,0,0,4,0
+"case","arm","combination","indicators","direction","lrv","cmv","prior_experimental","counts_experimental_final","counts_experimental_interim","prior_control","counts_control_final","counts_control_interim","lambda_lrv","lambda_cmv","gamma_lrv","gamma_cmv","looks","arm_assignments","max_n","interim_n"
+"single_any","single","any","11001|01100|00111","greater;less;greater","0.3;0.5;0.4","0.55;0.35;0.7","0.4;0.8;0.3;0.6;0.9","3;1;1;1;2","2;1;0;1;1","","","",0.7,0.55,0.5,0.4,"5;8","",8,5
+"randomized_all","randomized","all","11001|01100|00111","greater;less;greater","0.05;-0.1;0.1","0.15;-0.2;0.2","0.7;0.3;0.5;0.2;0.4","2;0;1;0;1","1;0;1;0;0","0.2;0.6;0.4;0.5;0.3","0;2;0;1;1","0;1;0;0;1",0.7,0.55,0.5,0.4,"2;4;6;8","0;0;1;1;0;0;1;1",8,4
+"two_endpoint_any","single","any","1100|1010","greater;greater","0.25;0.4","0.45;0.6","0.2;0.3;0.4;0.5","1;2;0;1","1;0;0;1","","","",0.65,0.45,0.5,0.5,"2;4","",4,2
+"prior_only_equal_single","single","all","10","greater","0.4","0.5","1;1","0;0","0;0","","","",0.6,0.5,0,0,"4","",4,0
+"prior_only_equal_randomized","randomized","all","10","greater","0","0.2","1;1","0;0","0;0","1;1","0;0","0;0",0.5,0.32,0,0,"4","0;0;1;1",4,0
