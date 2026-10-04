@@ -28,12 +28,48 @@ the column mean over rows with OOB survival predictions. CRPS integrates this
 score on the supplied event-interest grid without inserting zero.
 
 The Python contract narrows native behavior deliberately: only the complete
-training cohort is accepted, because cached subset indexing is ambiguous; only
-the `km` censoring path is implemented, not a separate censor forest. The fit's
-training fingerprint and row order are checked before scoring. Rows with zero
-OOB contributors stay NaN and are excluded only from score averages. The
-singleton-grid policy is explicit: zero trapezoid area, with standardized
-score NaN when its sole time is zero. Full native forest/RNG parity is not claimed.
+training cohort is accepted, because cached subset indexing is ambiguous. The
+default `km` path remains unchanged. An explicit `rfsrc` path fits the
+source-configured censoring forest; it is a Python implementation of the
+specified fit and projection contract, not a claim of native tree/RNG parity.
+The fit's training fingerprint and row order are checked before scoring. Rows
+with zero OOB contributors stay NaN. The singleton-grid policy is explicit:
+zero trapezoid area, with standardized score NaN when its sole time is zero.
+
+## Separate censoring-forest contract
+
+For `cens.model="rfsrc"`, cached `get.brier.survival` fits `Surv(time,cens)~.`
+to a data frame containing the original grow `time`, `cens = 1*(event==0)`,
+and every original grow predictor. The call fixes `ntree=50`, `nsplit=1`,
+`splitrule="random"`, `nodesize=set.nodesize(n,p)`, and `perf.type="none"`;
+other arguments, including `na.action`, retain `rfsrc` defaults. `set.nodesize`
+returns 2 when `n<=300,p>n`, 5 when `n<=300,p<=n`, 10 when `300<n<=2000`,
+and `n/200` otherwise (truncated by the native integer interface). Predictions
+are made for each requested row's original predictor vector. Source
+`sIndex(x,y)=sum(x<=y)` projects each row's censor-forest curve to the outcome
+grid, selecting the last censor-model time no greater than the outcome time
+and supplying 1 before its first time. The resulting source matrix is
+time-by-row; Python exposes the same values row-by-time for consistency with
+its OOB prediction layout.
+
+The original helper computes both IPCW terms literally for every row/time.
+Consequently an inactive `0/0` term can turn a contribution into NaN, and its
+`colMeans(..., na.rm=TRUE)` then omits that row only at that time. Python reports
+both total OOB contributor count and per-time defined score count, preserves
+these NaNs, and does not clip zero censor survival. Infinite positive
+contributions fail explicitly; literal `0 * Inf` NaNs remain undefined and
+are omitted as the source does. For no censor observations, the unchanged helper
+skips model fitting but returns a vector that later receives matrix indexing;
+Python uses the direct all-one censor-survival matrix, the natural `G(t)=1`
+extension.
+
+The source fit defaults to `na.action="na.omit"`, while the helper overlays
+stored imputed predictors for prediction when available. Python requires
+finite complete training data and does not attempt to reproduce that mixed
+missingness behavior. Validation uses fixed-curve R references for the
+contribution/projection/score layer and separately checks the 50-tree Python
+fit and row prediction metadata; it does not compare random tree structures
+or random streams across languages.
 
 ## Implementation and validation
 

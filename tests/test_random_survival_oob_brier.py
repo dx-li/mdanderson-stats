@@ -11,8 +11,12 @@ from mdanderson_stats.random_survival_forest import (
     RandomSurvivalForestFit,
     RandomSurvivalForestOOB,
     _forest_fingerprint,
+    fit_random_survival_forest,
 )
 from mdanderson_stats.random_survival_forest_brier import (
+    _project_censor_survival,
+    _rfsrc_brier_components,
+    _source_nodesize,
     _trapz_over_source_grid,
     random_survival_forest_oob_brier_score,
 )
@@ -166,3 +170,169 @@ def test_crps_integration_preserves_close_gaps_at_large_time_scale():
     assert area > 0
     assert_allclose(area, expected, rtol=1e-14)
     assert_allclose(standardized, expected / third, rtol=1e-14)
+
+
+def test_rfsrc_censor_projection_and_literal_ipcw_match_base_r_fixtures():
+    inputs = _read_csv("random-survival-cens-rfsrc/random-survival-cens-rfsrc-input.csv")
+    projections = _read_csv("random-survival-cens-rfsrc/random-survival-cens-rfsrc-projection.csv")
+    predicted = _read_csv(
+        "random-survival-cens-rfsrc/random-survival-cens-rfsrc-predicted-curves.csv"
+    )
+    terms = _read_csv("random-survival-cens-rfsrc/random-survival-cens-rfsrc-terms.csv")
+    scores = _read_csv("random-survival-cens-rfsrc/random-survival-cens-rfsrc-score.csv")
+    calls = _read_csv("random-survival-cens-rfsrc/random-survival-cens-rfsrc-calls.csv")
+    assert all(row["ntree"] == "50" and row["nsplit"] == "1" for row in calls)
+    assert all(row["splitrule"] == "random" and row["perf_type"] == "none" for row in calls)
+    assert [_source_nodesize(6, 2), _source_nodesize(301, 2), _source_nodesize(2001, 2)] == [
+        5,
+        10,
+        10,
+    ]
+
+    for case in sorted({row["case"] for row in inputs}):
+        source_rows = [row for row in inputs if row["case"] == case]
+        observation_ids = sorted({int(row["observation"]) for row in source_rows})
+        grid_ids = sorted({int(row["event_grid_index"]) for row in source_rows})
+        times = np.array(
+            [
+                float(next(row["time"] for row in source_rows if int(row["observation"]) == i))
+                for i in observation_ids
+            ]
+        )
+        events = np.array(
+            [
+                float(next(row["event"] for row in source_rows if int(row["observation"]) == i))
+                for i in observation_ids
+            ]
+        )
+        grid = np.array(
+            [
+                float(
+                    next(
+                        row["event_grid_time"]
+                        for row in source_rows
+                        if int(row["event_grid_index"]) == j
+                    )
+                )
+                for j in grid_ids
+            ]
+        )
+        survival = np.full((len(observation_ids), len(grid_ids)), np.nan)
+        for row in source_rows:
+            survival[int(row["observation"]) - 1, int(row["event_grid_index"]) - 1] = _float(
+                row["forest_survival"]
+            )
+        valid = np.all(np.isfinite(survival), axis=1)
+
+        prediction_rows = [row for row in predicted if row["case"] == case]
+        if prediction_rows:
+            censor_times = sorted({float(row["censor_grid_time"]) for row in prediction_rows})
+            censor_by_row = np.full((len(observation_ids), len(censor_times)), np.nan)
+            for row in prediction_rows:
+                censor_by_row[
+                    int(row["prediction_row"]) - 1,
+                    censor_times.index(float(row["censor_grid_time"])),
+                ] = float(row["censor_survival"])
+            projected_check = _project_censor_survival(
+                np.asarray(censor_times), censor_by_row, grid
+            )
+        else:
+            projected_check = np.ones((len(observation_ids), len(grid)))
+        expected_projection = np.full_like(projected_check, np.nan)
+        for row in projections:
+            if row["case"] == case:
+                expected_projection[
+                    int(row["observation"]) - 1, int(row["event_grid_index"]) - 1
+                ] = float(row["censor_survival"])
+        assert_allclose(projected_check, expected_projection, rtol=1e-14, atol=1e-14)
+
+        brier, score, counts = _rfsrc_brier_components(
+            times, events, grid, survival, expected_projection, valid
+        )
+        expected_brier = np.full_like(brier, np.nan)
+        for row in terms:
+            if row["case"] == case:
+                expected_brier[int(row["observation"]) - 1, int(row["event_grid_index"]) - 1] = (
+                    _float(row["reference_contribution"])
+                )
+        assert_allclose(brier, expected_brier, rtol=1e-13, atol=1e-14, equal_nan=True)
+        expected_scores = [row for row in scores if row["case"] == case]
+        assert_allclose(score, [_float(row["reference_score"]) for row in expected_scores])
+        assert counts.tolist() == [int(row["finite_contributors"]) for row in expected_scores]
+        reference_crps = _float(expected_scores[0]["reference_crps"])
+        reference_std = _float(expected_scores[0]["reference_crps_std"])
+        crps, standardized = _trapz_over_source_grid(grid, score)
+        assert_allclose(crps, reference_crps, rtol=1e-13, atol=1e-14)
+        assert_allclose(standardized, reference_std, rtol=1e-13, atol=1e-14)
+
+
+def test_rfsrc_censor_forest_end_to_end_is_seeded_and_keeps_categories():
+    n = 60
+    time = np.arange(1, n + 1, dtype=float)
+    event = np.where(np.arange(n) % 3 == 0, 0.0, 1.0)
+    covariates = np.column_stack((np.sin(time / 4), np.arange(n) % 3)).astype(float)
+    fit = fit_random_survival_forest(
+        time,
+        event,
+        covariates,
+        categorical_features=[1],
+        n_trees=24,
+        nodesize=1,
+        compute_oob=True,
+        random_state=91,
+    )
+    first = random_survival_forest_oob_brier_score(
+        fit,
+        time,
+        event,
+        covariates,
+        censor_model="rfsrc",
+        censor_random_state=37,
+    )
+    second = random_survival_forest_oob_brier_score(
+        fit,
+        time,
+        event,
+        covariates,
+        censor_model="rfsrc",
+        censor_random_state=37,
+    )
+    assert first.censor_forest_fit is not None
+    assert first.censor_forest_fit.n_trees == 50
+    assert first.censor_forest_fit.nodesize == 5
+    assert first.censor_forest_fit.nsplit == 1
+    assert first.censor_forest_fit.split_rule == "random"
+    assert first.censor_forest_fit.random_state == 37
+    assert first.censor_forest_fit.categorical_levels[1] is not None
+    assert first.censor_random_state == 37
+    assert first.censor_model == "rfsrc"
+    assert first.censor_survival.shape == first.brier.shape == (n, first.time_grid.size)
+    assert_allclose(first.censor_survival, second.censor_survival)
+    assert_allclose(first.brier, second.brier, equal_nan=True)
+    assert first.score_row_count is not None
+    assert first.score_row_count.shape == first.time_grid.shape
+    assert np.all(first.score_row_count <= first.valid_row_count)
+
+
+def test_rfsrc_no_censor_uses_g_one_without_fitting_and_preflights_extra_matrix():
+    time = np.arange(1, 13, dtype=float)
+    event = np.ones(time.size)
+    x = np.arange(time.size, dtype=float)[:, None]
+    fit = fit_random_survival_forest(
+        time, event, x, n_trees=8, nodesize=1, compute_oob=True, random_state=3
+    )
+    result = random_survival_forest_oob_brier_score(
+        fit, time, event, x, censor_model="rfsrc", censor_random_state=9
+    )
+    assert result.censor_forest_fit is None
+    assert result.censor_random_state == 9
+    assert np.all(result.censor_survival == 1)
+    legacy_cells = (
+        3 * time.size * result.time_grid.size
+        + 10 * time.size
+        + 5 * result.time_grid.size
+    )
+    with pytest.raises(ValueError, match="max_cells"):
+        random_survival_forest_oob_brier_score(
+            fit, time, event, x, censor_model="rfsrc", max_cells=legacy_cells
+        )

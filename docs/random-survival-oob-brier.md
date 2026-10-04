@@ -29,8 +29,10 @@ indicators, covariates, and row order used to fit the forest. A fingerprint
 check rejects different or reordered training data. All training outcomes
 contribute to the censoring distribution; only rows with at least one OOB
 prediction contribute to score means. A row without OOB contributors remains
-NaN in `brier`. `valid_row_count` reports the number of rows used at every
-time point. If it is zero, the score and integrated summaries are NaN.
+NaN in `brier`. `valid_row_count` reports the number of rows with OOB curves.
+`score_row_count` reports the number of rows that contribute a defined value
+at each time point. For the default KM model, these counts agree. If no rows
+contribute at a time, that score and the integrated summaries are NaN.
 
 Let `tau_i` be observed time, `delta_i` be one for an event, and `S_i(t)` be
 the OOB survival estimate. At each grid time `t`, a still-at-risk row
@@ -54,9 +56,28 @@ undefined and returned as NaN. A score that cannot be represented raises an
 arithmetic error. The implementation bounds output/workspace cells and
 arithmetic work before allocating the row-by-time result.
 
-The cached helper also supports arbitrary subsets and a separately fit censor
-forest. This Python function intentionally leaves both options out: native
-subset handling is ambiguous, and only the source's default `cens.model="km"`
-path is ported. Native full-forest random-stream parity is not claimed. The
+The default `censor_model="km"` path uses the source's global censoring
+estimate and preserves the original behavior. Set `censor_model="rfsrc"` to
+fit a separate censoring forest from the complete training cohort. That model
+uses censoring as its event, all original training predictors, 50 trees,
+`nsplit=1`, random splitting, and the source `set.nodesize` rule; it predicts
+curves for each original training row. Pass `censor_random_state` to make this
+additional fit reproducible. The result then exposes a row-by-time
+`censor_survival` matrix and the fitted `censor_forest_fit`; when there are no
+censored observations, it skips the fit and returns an all-one matrix.
+
+The source fits with `na.action="na.omit"` by default but separately overlays
+stored imputed covariates for prediction. This Python route requires finite
+complete inputs and does not guess the native missing-value/imputation
+workflow. Zero censor-survival values are not clipped. Literal source weighting
+can yield NaN for an inactive `0/0` term; those row/time contributions are
+omitted from that time's mean and reflected in `score_row_count`. A positive
+weight that produces an infinite contribution raises an arithmetic error;
+literal `0 * Inf` results remain NaN and are omitted as in the source. The native
+no-censoring `rfsrc` branch has a vector/matrix shape defect; Python returns
+the direct `G(t)=1` result in that case.
+
+Arbitrary subsets remain unsupported because cached native subset handling is
+ambiguous. Native forest/RNG parity is not claimed. The
 [source audit](../research/random-survival-oob-brier-audit.md) records
 the pinned equations and validation evidence.
