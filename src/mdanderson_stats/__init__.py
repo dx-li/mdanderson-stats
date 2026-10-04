@@ -155,6 +155,11 @@ from .bayes_factor_survival_calendar import (
     bayes_factor_survival_trial,
     simulate_bayes_factor_survival,
 )
+from .bayes_factor_survival_report import (
+    BayesFactorSurvivalReport,
+    BayesFactorSurvivalScenarioSummary,
+    bayes_factor_survival_report,
+)
 from .bayesian_chi_square import (
     BayesianChiSquare,
     ExponentialBayesianGOF,
@@ -461,6 +466,17 @@ from .bop2_paired import (
     bop2_paired_design,
 )
 from .bop2_paired_optimization import BOP2PairedOptimization, optimize_bop2_paired
+from .bop2_protocol_report import (
+    BOP2ProtocolReport,
+    BOP2ProtocolScenario,
+    BOP2ProtocolScenarioSummary,
+    bop2_binary_efficacy_report,
+    bop2_binary_toxicity_report,
+    bop2_efftox_report,
+    bop2_multiple_report,
+    bop2_ordinal_report,
+    bop2_survival_report,
+)
 from .bop2_sample_size import BOP2BinarySampleSizeOptimization, optimize_bop2_binary_sample_size
 from .bop2_survival import BOP2SurvivalDesign, BOP2SurvivalState, bop2_survival_design
 from .bop2_survival_optimization import (
@@ -1036,6 +1052,12 @@ from .one_arm_tte import (
     one_arm_tte_design,
     one_arm_tte_monitor,
     one_arm_tte_trial,
+)
+from .one_arm_tte_report import (
+    OneArmTTEScenario,
+    OneArmTTEScenarioReport,
+    OneArmTTEScenarioSummary,
+    simulate_one_arm_tte_scenarios,
 )
 from .one_arm_tte_simulation import OneArmTTESimulation, simulate_one_arm_tte
 from .onesample import OneSampleTest, binomial_test, poisson_test
@@ -2055,6 +2077,10 @@ __all__ = [
     "rbop2_binary_design",
     "Rbop2BinaryCalibration",
     "calibrate_rbop2_binary",
+    "OneArmTTEScenario",
+    "OneArmTTEScenarioSummary",
+    "OneArmTTEScenarioReport",
+    "simulate_one_arm_tte_scenarios",
     "OneArmTTEDesign",
     "OneArmTTEMonitor",
     "OneArmTTESimulation",
@@ -2819,6 +2845,9 @@ __all__ = [
     "pdnn_binding_energy",
     "pdnn_signal",
     "pdnn_expression",
+    "BayesFactorSurvivalReport",
+    "BayesFactorSurvivalScenarioSummary",
+    "bayes_factor_survival_report",
     "BayesFactorSurvivalState",
     "BayesFactorSurvivalBoundaries",
     "bayes_factor_survival",
@@ -2883,6 +2912,15 @@ __all__ = [
     "bop2_paired_design",
     "BOP2PairedOptimization",
     "optimize_bop2_paired",
+    "BOP2ProtocolScenario",
+    "BOP2ProtocolReport",
+    "BOP2ProtocolScenarioSummary",
+    "bop2_binary_efficacy_report",
+    "bop2_binary_toxicity_report",
+    "bop2_ordinal_report",
+    "bop2_multiple_report",
+    "bop2_efftox_report",
+    "bop2_survival_report",
     "BOP2BinaryOptimization",
     "bop2_binary_design",
     "optimize_bop2_binary",

@@ -4,7 +4,9 @@ BOP2 catalog **112** now includes specified-parameter survival monitoring,
 follow-up-time boundaries, calendar replay, and Monte Carlo operating
 characteristics, plus Monte Carlo grid calibration with independent validation.
 Expected-enrollment and minimax sample-size searches are also available.
-Integrated reports and native optimizer parity remain open. The archived app
+[Saved reports](bop2-protocol-reports.md) include effective settings,
+time-on-test boundaries and seeded operating characteristics. Native optimizer
+parity remains open. The archived app
 advertises a single-arm time-to-event endpoint; two-arm and joint-survival
 models would be extensions beyond that advertised endpoint set.
 

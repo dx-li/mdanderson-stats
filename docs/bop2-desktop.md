@@ -15,8 +15,10 @@ catalog entry **112**.
 | Time to event | [Single-arm survival monitoring, calendar simulation and calibration](bop2-survival.md) |
 | Sample-size selection | [Expected-enrollment and minimax searches](bop2-sample-size.md) |
 
-Both entries remain partial. Protocol/report formats, animation and native
-optimizer equivalence are not covered. The original desktop binary is no
+[Saved Python protocol reports](bop2-protocol-reports.md) connect all six
+successor endpoint families to captured settings, boundaries and operating
+characteristics. Both entries remain partial: native report formats, animation
+and native optimizer equivalence are not covered. The original desktop binary is no
 longer supplied by its catalog page and has not been audited for equivalence.
 Successor features added after 2020 are not evidence that the retired desktop
 had those same options.

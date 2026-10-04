@@ -5,7 +5,8 @@ is partially implemented for binary efficacy and toxicity: specified-parameter m
 exact operating characteristics, and power-maximizing finite-grid calibration.
 [Ordinal and multiple efficacy](bop2-paired.md) and
 [joint efficacy/toxicity](bop2-efftox.md) are also available. [Survival monitoring and Monte Carlo calibration](bop2-survival.md) are available;
-integrated reports remain pending. Categorical [sample-size optimization](bop2-sample-size.md)
+[Saved specified-design reports](bop2-protocol-reports.md) connect effective
+inputs, boundaries and operating characteristics. Categorical [sample-size optimization](bop2-sample-size.md)
 is available.
 
 The retired [desktop entry 144](bop2-desktop.md) explicitly points to this

@@ -6,8 +6,8 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 69 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 61 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 70 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 60 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 8 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -94,6 +94,7 @@ some legacy adaptations retain commercial-use restrictions.
 | ASYPOW | [desktop #33](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/33) | [Guide](asypow.md) |
 | Sample Size Determination for Decentralized Clinical Trials (DCTs) | [online #164](https://biostatistics.mdanderson.org/shinyapps/DCTs) | [Guide](dct-normal.md) |
 | Keyboard: a novel Bayesian toxicity probability interval design for phase I clinical trial | [online #127](https://biostatistics.mdanderson.org/shinyapps/Keyboard) | [Guide](keyboard.md) |
+| One Arm Time to Event Simulator | [desktop #98](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/98) | [Guide](one-arm-tte.md) · [Reports](one-arm-tte-report.md) |
 
 ## Partially implemented
 
@@ -138,7 +139,6 @@ some legacy adaptations retain commercial-use restrictions.
 | MERIT: Multiple-dose Randomized Phase II Trial Design for Dose Optimization and Sample Size Determination | [online #160](https://biostatistics.mdanderson.org/shinyapps/MERIT/) | [Guide](merit.md) |
 | Multc Lean | [desktop #12](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12) | [Monitoring and calendar replay](multc.md) |
 | Multc99 | [desktop #3](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/3) | See catalog feature and validation notes |
-| One Arm Time to Event Simulator | [desktop #98](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/98) | See catalog feature and validation notes |
 | Parallel phase I and II design | [desktop #85](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85) | [Guide](parallel-phase12.md), [importance calendar](parallel-phase12-importance-calendar.md), [six-dose simulation](phase12-calendar-oc.md) |
 | PerfectMatch | [desktop #7](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/7) | [Guide](perfectmatch.md) |
 | Pinnacle | [desktop #95](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/95) | [Guide](pinnacle.md) |

@@ -101,7 +101,10 @@ check times and a final time. Simulation returns early/final stopping proportion
 Monte Carlo standard errors and patient-count summaries under documented Python
 timing rules. The guide lists an accrual rate but does not fully specify native
 arrival generation, observation checks or final follow-up. Native calendar parity,
-integer-day boundaries, text input and the HTML report remain unverified or
-unimplemented; the Python simulation does not claim to reproduce that report.
+integer-day boundaries and native text input remain unverified.
+[Saved Python reports](bayes-factor-survival-report.md) record the effective
+inputs, reproducible scenarios, enrollment summaries and optional continuous
+boundaries. They distinguish the terminal stopping decision from later
+follow-up classification and disclose the explicit Python timing policy.
 
 Archive retrieval was checked on September 10, 2026: the [version 1.1 download](https://biostatistics.mdanderson.org/SoftwareDownload/FileDownloader/Index/401) requires email, organization and occupation registration.

@@ -3149,11 +3149,13 @@
       "implemented_features": [
         "Exponential survival with normalized one-sided iMOM prior: broadcast posterior monitoring from event counts and total time on test",
         "Continuous total-time-on-test stopping boundaries with strict cutoffs, explicit median-to-mean conversion and dimensionless log-space integration",
-        "Explicit arrival/event/censor calendar replay with inclusive event/look ties, fixed final follow-up after early stopping and bounded serial exponential simulation with separate accrual/outcome seeds, replayable trials, early/final stopping probabilities, Monte Carlo errors and patient-count quantiles."
+        "Explicit arrival/event/censor calendar replay with inclusive event/look ties, fixed final follow-up after early stopping and bounded serial exponential simulation with separate accrual/outcome seeds, replayable trials, early/final stopping probabilities, Monte Carlo errors and patient-count quantiles.",
+        "Bounded serial multi-scenario HTML reports capture effective settings, child seeds, terminal stopping probabilities distinct from early/final classifications, MCSEs, patient-count summaries and optional continuous boundary rows; docs/bayes-factor-survival-report.md."
       ],
       "validation": [
         "Independent original-mean-coordinate integration, all displayed guide boundary rows within 1.5 days, root residuals, extreme evidence and unit invariance; tests/test_bayes_factor_survival.py",
-        "Focused event/censor/timing and seed-replay checks, representability guards and work/memory preflight; tests/test_bayes_factor_survival_calendar.py. Native arrival/check/final-time conventions, day discretization and input/report parity remain open; docs/bayes-factor-survival-calendar.md."
+        "Focused event/censor/timing and seed-replay checks, representability guards and work/memory preflight; tests/test_bayes_factor_survival_calendar.py. Native arrival/check/final-time conventions, day discretization and native input/report parity remain open; docs/bayes-factor-survival-calendar.md.",
+        "Focused report checks cover deterministic child-seed replay, early-first terminal classification, aggregate resource preflight and escaped atomic HTML. Native timing and integer-day numerical conventions remain unresolved; research/bayes-factor-survival-report-audit.md."
       ]
     },
     {
@@ -3381,17 +3383,19 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "one_arm_tte_design/monitor: independent inverse-gamma mean or median survival priors; larger- or smaller-is-better goals; separate signed margins and strict inferiority/superiority rules, including simultaneous flags.",
         "one_arm_tte_trial: deterministic Poisson-grid-compatible calendar conduct, minimum enrollment, pre-accrual and periodic monitoring, maximum enrollment, post-accrual follow-up and separate final classification.",
         "simulate_one_arm_tte: bounded sequential exponential-event/Poisson-arrival simulation with compact per-replication summaries, Monte Carlo standard errors and configurable central sample quantiles.",
-        "Existing inverse-gamma moment/two-quantile elicitation supports prior specification. Native scenario editor, report history and HTML save/reopen remain open; RNG, exact ties and quantile interpolation use documented Python conventions. See docs/one-arm-tte.md."
+        "Existing inverse-gamma moment/two-quantile elicitation supports prior specification. RNG, exact ties and quantile interpolation use documented Python conventions; docs/one-arm-tte.md.",
+        "Ordered multi-scenario simulation with independently reset exact integer seeds, captured effective settings, compact early/final outcomes and quantiles, cumulative actual monitoring-work limits and atomically saved HTML; docs/one-arm-tte-report.md."
       ],
       "validation": [
         "Version 3.0.9 embedded installer help extracted without executing the installer; source SHA-256 records in docs/one-arm-tte-sources.json.",
         "Independent base-R integration checks both goals, both parameterizations and negative/zero/positive margins; hand-calculated calendar examples check pre-accrual event ties, periodic stopping and changed final follow-up classification.",
-        "Focused bounded simulation checks include Poisson-accrual expected calendar duration, reproducibility and numerical input/resource guards."
+        "Focused bounded simulation checks include Poisson-accrual expected calendar duration, reproducibility and numerical input/resource guards.",
+        "Four focused report checks cover seeded replay including seeds above 2**53, aggregate work preflight/enforcement, final-only zero-monitor budgets and escaped saved output. All 14 affected model/reference/report tests pass. The cached version 3.0.9 help crosswalk identifies no remaining statistical calculation; native UI/session restoration and random streams are not claimed; research/one-arm-tte-report-audit.md."
       ]
     },
     {
@@ -3691,7 +3695,8 @@
         "Joint efficacy/toxicity monitoring with separate assessment schedules, exact correlated operating characteristics and power calibration under three null error constraints",
         "Binary, ordinal/multiple efficacy and joint efficacy/toxicity expected-sample-size and minimax searches with exact null-error and power constraints",
         "Single-arm exponential/inverse-gamma survival posterior monitoring, follow-up-time boundaries, calendar replay and vectorized Monte Carlo operating characteristics",
-        "Monte Carlo survival parameter calibration for power or expected enrollment, with independent validation and separate informative analysis prior; survival expected-enrollment/minimax size searches with recorded per-size streams; integrated reports and native optimizer parity remain open. Two-arm/joint survival would extend the advertised single-arm endpoint scope"
+        "Monte Carlo survival parameter calibration for power or expected enrollment, with independent validation and separate informative analysis prior; survival expected-enrollment/minimax size searches with recorded per-size streams; native optimizer parity remains open. Two-arm/joint survival would extend the advertised single-arm endpoint scope",
+        "Saved protocol reports for binary efficacy, binary toxicity, ordinal, multiple efficacy, joint efficacy/toxicity and single-arm survival: actual constructor settings, boundary tables, serial compact operating characteristics and explicit exact versus Monte Carlo summaries; docs/bop2-protocol-reports.md."
       ],
       "validation": [
         "Exact rational beta-binomial tails in both endpoint directions, cutoff equality, complete binary-path enumeration, reflected efficacy/toxicity grid calibration and separation of informative analysis prior",
@@ -3699,7 +3704,8 @@
         "Exact Dirichlet marginal identities and complete ordinal/multiple outcome enumeration; docs/bop2-paired.md",
         "Joint efficacy/toxicity rational posterior checks, all-path enumeration, independent error identity and three-null grid optimum; docs/bop2-efftox.md",
         "Independent full size/parameter grid enumeration for all five categorical endpoint types and both sample-size objectives; docs/bop2-sample-size.md",
-        "High-precision Erlang posterior identity, time-unit invariance, censored calendar replay, analytic single-look survival OC, full size/parameter-grid simulation optimum, independent calibration holdout and per-size stream isolation; docs/bop2-survival.md"
+        "High-precision Erlang posterior identity, time-unit invariance, censored calendar replay, analytic single-look survival OC, full size/parameter-grid simulation optimum, independent calibration holdout and per-size stream isolation; docs/bop2-survival.md",
+        "Endpoint-specific report checks compare existing exact/seeded kernels and verify probability directions, joint dependence, final failure accounting and bounded input/output workflows; research/bop2-protocol-reports-audit.md. Reports describe specified designs and do not claim native optimization provenance."
       ]
     },
     {
@@ -4279,7 +4285,8 @@
       "implemented_features": [
         "Retired desktop distribution: the official entry explicitly directs users to online BOP2 (catalog 112); shared successor coverage is documented in docs/bop2-desktop.md",
         "Existing successor methods cover binary efficacy/toxicity, ordinal/multiple efficacy, joint efficacy/toxicity and single-arm survival monitoring, operating characteristics, calibration and sample-size searches",
-        "Retired desktop numerical equivalence, native protocol/report formats and animation remain unverified; later successor features are not attributed to the 2020 desktop build"
+        "Retired desktop numerical equivalence, native protocol/report formats and animation remain unverified; later successor features are not attributed to the 2020 desktop build",
+        "All six successor endpoint families have saved Python protocol reports with captured specified-design settings, boundaries and operating characteristics; no historical desktop equivalence claim; docs/bop2-protocol-reports.md."
       ],
       "validation": [
         "Official desktop retirement notice verified 2026-09-27 UTC: version 1.3.6.1, dated 2020-04-15, points to the online BOP2 application",

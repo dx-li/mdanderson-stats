@@ -87,13 +87,17 @@ Designs support at most 1,000 patients. Each trial permits at most 10,000
 accrual-phase monitoring checks. A simulation is bounded to 100,000 potential
 patients and 100,000 accrual-phase checks across its repetitions; exceeding a
 work limit raises an error rather than returning truncated trial results.
+`max_monitoring_checks` can lower the trial or simulation ceiling; the simulation
+returns `total_monitoring_checks`, excluding the separate final assessments.
 Zero margins use an analytic beta identity. Nonzero margins use checked
 one-dimensional quadrature with estimated errors for each probability.
 The requested `absolute_tolerance` is not silently relaxed when an integral
 fails to converge, and it does not change the strict stopping comparisons.
 
-The package provides numerical results rather than the desktop scenario editor,
-interactive report history, or HTML save/reopen interface. The independent R
+[Multi-scenario reports](one-arm-tte-report.md) capture the design, independent
+scenario seeds, early/final outcomes, and central quantiles in saved HTML.
+Reports reopen for viewing; desktop editing and session restoration are separate
+application features. The independent R
 reference checks both goals, signed margins, and both parameterizations;
 deterministic calendar examples check stopping, follow-up, and final
 reclassification without relying on random simulations alone.

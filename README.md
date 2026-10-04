@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-69 implemented, 61 partial, and 8 pending. Each method's guide explains its
+70 implemented, 60 partial, and 8 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. These labels cover
 complete software workflows: a partial entry can already include every
 advertised statistical endpoint while report or native-compatibility gaps remain.
@@ -823,7 +823,10 @@ expected enrollment or minimum maximum sample size under error and power constra
 [Survival monitoring](docs/bop2-survival.md) adds exponential/inverse-gamma
 posterior decisions, calendar replay, simulation and Monte Carlo parameter
 calibration with independent validation, plus expected-enrollment and minimax
-sample-size searches. Two-arm/joint survival models and integrated reports remain pending.
+sample-size searches. [Saved protocol reports](docs/bop2-protocol-reports.md)
+cover all six advertised endpoint families with captured settings and exact or
+simulated operating characteristics. Native optimizer equivalence remains open;
+two-arm/joint survival is outside the advertised single-arm endpoint scope.
 
 [Beta Binomial Distribution Demo](docs/beta-binomial-demo.md) combines sequential
 updating, credible sets, cohort simulation and prior/posterior history plots.
@@ -856,8 +859,9 @@ and native protocol/export coverage remain pending.
 monitoring and continuous time-on-test boundaries. Its
 [calendar extension](docs/bayes-factor-survival-calendar.md) adds explicit event
 and censoring tapes plus bounded serial simulation with replayable seeds and
-early/final operating characteristics. Native timing parity and input/report
-workflows remain pending.
+early/final operating characteristics. [Saved scenario reports](docs/bayes-factor-survival-report.md)
+distinguish terminal stopping from later follow-up and include optional continuous
+boundaries. Native timing, integer-day boundaries and input parity remain open.
 
 [PerfectMatch](docs/perfectmatch.md) adds quantile normalization and PDNN energy,
 signal and conditional gene-expression calculations, plus joint fitting of stacking
@@ -1380,6 +1384,8 @@ priors, separate inferiority and superiority rules, and calendar simulation.
 Periodic and pre-accrual monitoring, minimum enrollment, and final follow-up
 follow the extracted native help. Simulations retain compact per-trial summaries
 with Monte Carlo errors and central sample quantiles.
+[Multi-scenario reports](docs/one-arm-tte-report.md) capture effective inputs,
+independent seeds and compact results in saved HTML.
 
 [rBOP2 binary designs](docs/rbop2-binary.md) add two-arm efficacy and toxicity
 monitoring with signed margins, supplied look-specific cutoffs, boundary tables,
