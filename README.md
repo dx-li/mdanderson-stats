@@ -877,6 +877,8 @@ boundaries. Native timing, integer-day boundaries and input parity remain open.
 signal and conditional gene-expression calculations, plus joint fitting of stacking
 energies, position weights, expression and background. A grouped log-intensity
 correlation summary compares observed and fitted probes within each probeset.
+The paper's array-wide mean-500 expression scaling uses stable log arithmetic
+and preserves probeset identifiers.
 Native CEL/file workflows, other QC outputs and displays remain pending.
 
 [Toxicity Probability Intervals](docs/mtpi.md) adds mTPI decision tables, paper

@@ -160,14 +160,16 @@
         "Position-weighted nearest-neighbor PDNN energies, stable predicted signals and conditional probeset expression with explicit exclusion rules",
         "Analytic-gradient staged local PDNN fitting of stacking energies, position weights, log expression and array-wide nonspecific amount/background",
         "Per-probeset Pearson correlation of observed and fitted natural-log intensities using original probe-row IDs, stable relative logs, explicit undefined constant/singleton groups and a bounded no-refit workflow; Pearson and row selection are documented Python conventions",
-        "Per-array 2%, 25%, 50%, 75% and 98% intensity profile with explicit linear interpolation, preserved sample labels and bounded serial column partitions; docs/perfectmatch-quantile-profile.md."
+        "Per-array 2%, 25%, 50%, 75% and 98% intensity profile with explicit linear interpolation, preserved sample labels and bounded serial column partitions; docs/perfectmatch-quantile-profile.md.",
+        "Paper-defined array-average-500 expression rescaling in centered log space, preserving probeset IDs and the original fit; docs/perfectmatch.md."
       ],
       "validation": [
         "Six focused tests: normalization, energies, conditional expression, extreme scales, finite-difference gradient agreement, amplitude recovery and joint-fit error reduction",
         "200000-probe/20000-probeset performance and synthetic recovery audit; see docs/perfectmatch.md",
-        "Pending CEL/parameter/annotation formats, full QC/export/display workflows, real-array/native optimizer audit and native scaling conventions",
+        "Pending CEL/parameter/annotation formats, full QC/export/display workflows, real-array/native optimizer audit and native output scaling conventions",
         "Four focused grouped-correlation checks cover scale invariance, interleaved groups, exact constants, nearby large signals and pre-conversion resource rejection; docs/perfectmatch.md and research/perfectmatch-correlation-audit.md. Native correlation variant and outlier subset remain unverified.",
-        "Three focused quantile-profile checks cover independent NumPy linear quantiles, ties, single probes, large finite intensities and pre-conversion bounds; native interpolation and automatic chip-rejection thresholds are unspecified."
+        "Three focused quantile-profile checks cover independent NumPy linear quantiles, ties, single probes, large finite intensities and pre-conversion bounds; native interpolation and automatic chip-rejection thresholds are unspecified.",
+        "Four scaling checks cover an analytic two-gene example, translation invariance, common log offsets of 1e16 and extreme expression spread; 12 focused scaling, expression and correlation tests passed together."
       ]
     },
     {

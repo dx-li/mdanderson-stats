@@ -1148,6 +1148,7 @@ from .parametric_survival import (
 )
 from .parametric_survival_contour import ParametricSurvivalContour, parametric_survival_contour
 from .pdnn import PDNNExpression, pdnn_binding_energy, pdnn_expression, pdnn_signal
+from .pdnn_expression_scaling import PDNNScaledExpression, pdnn_scale_expression
 from .pdnn_fit import PDNNConvergenceError, PDNNFit, PDNNParameters, fit_pdnn
 from .pdnn_fit_correlation import PDNNFitCorrelations, pdnn_fit_correlations
 from .pdnn_quantile_profile import PDNNArrayQuantiles, pdnn_array_quantiles
@@ -2978,6 +2979,8 @@ __all__ = [
     "pdnn_binding_energy",
     "pdnn_signal",
     "pdnn_expression",
+    "PDNNScaledExpression",
+    "pdnn_scale_expression",
     "BayesFactorSurvivalReport",
     "BayesFactorSurvivalScenarioSummary",
     "bayes_factor_survival_report",
