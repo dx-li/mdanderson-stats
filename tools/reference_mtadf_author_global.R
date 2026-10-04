@@ -76,6 +76,11 @@ fit_case <- function(case) {
 }
 
 result <- do.call(rbind, lapply(cases, fit_case))
+# Format explicitly: write.table's numeric serialization need not honor the
+# display digits option. Preserve round-trip precision in the reference file.
+result[] <- lapply(result, function(column) {
+  if (is.numeric(column)) sprintf("%.17g", column) else column
+})
 output <- file.path("tests", "fixtures", "mtadf-author-global-reference.csv")
 dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
 write.csv(result, output, row.names = FALSE, quote = TRUE)

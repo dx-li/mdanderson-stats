@@ -17,12 +17,8 @@ responses = [0, 3, 8, 0, 0]
 toxicities = [0, 0, 1, 0, 0]
 
 fit = mtadf_author_global_fit(subjects, responses)
-next_dose = mtadf_author_global_decision(
-    subjects, toxicities, responses, current_dose=1, fit=fit
-)
-obd = mtadf_author_global_decision(
-    subjects, toxicities, responses, final=True, fit=fit
-)
+next_dose = mtadf_author_global_decision(subjects, toxicities, responses, current_dose=1, fit=fit)
+obd = mtadf_author_global_decision(subjects, toxicities, responses, final=True, fit=fit)
 print(fit.coefficients, fit.converged, next_dose.dose, obd.dose)
 ```
 
@@ -61,3 +57,9 @@ output, or random-stream parity. The
 [source audit](../research/mtadf-author-global-audit.md) and
 [independent reference](../tools/reference_mtadf_author_global.R) document
 the recovered contract and fixture regeneration.
+
+When only one dose has observations, the model's fitted curve is mathematically
+flat. Python sets both non-intercept coefficients to exactly zero in this
+case, preventing QR roundoff from changing the rightmost-peak decision. This
+explicit numerical convention agrees with the inspected one-dose R reference;
+it does not apply a tolerance to other peak comparisons.

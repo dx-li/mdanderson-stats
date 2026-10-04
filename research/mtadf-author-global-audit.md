@@ -104,3 +104,13 @@ final adaptive scales, deviance, iterations, and convergence.
 This validates the coefficient and decision contracts against a recovered
 version of the dependency. It does not establish exact app-version identity,
 byte-identical output, or random-stream parity for source simulations.
+
+For one observed dose, the observed design row equals the centered intercept
+prior row. The other two prior rows therefore give exactly zero slope and
+quadratic coefficients in the mathematical weighted least-squares solution.
+Python removes QR roundoff in those coefficients after fitting and returns an
+exactly flat curve. The direct R fixture's rightmost peak is the highest grid
+dose in the inspected case; an uncorrected Python QR fit selected the lowest
+dose because of coefficients on the order of `1e-16`. This is an explicit
+numerical convention for the one-observed-dose case, not a general tie
+tolerance or a claim that all native platforms emit identical rounding.
