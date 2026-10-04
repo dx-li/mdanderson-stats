@@ -884,6 +884,7 @@ from .iboin_trial import IBOINTrialDecision, IBOINTrialReplay, replay_iboin_tria
 from .imom_prior import IMOMBinaryPrior
 from .inequality import InequalityProbability, inequality_probability
 from .interaction_index import InteractionIndex, interaction_index, interaction_index_ray
+from .interaction_index_plot import plot_interaction_index, plot_median_effect
 from .interaction_index_pooled import interaction_index_pooled_error
 from .interaction_monte_carlo import InteractionMonteCarlo, interaction_index_monte_carlo
 from .interval_competing_risk import (
@@ -2985,6 +2986,8 @@ __all__ = [
     "interaction_index",
     "interaction_index_pooled_error",
     "interaction_index_ray",
+    "plot_interaction_index",
+    "plot_median_effect",
     "MedianEffectFit",
     "fit_median_effect",
     "quantile_normalize",

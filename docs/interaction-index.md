@@ -114,9 +114,14 @@ Three additional Monte Carlo tests reproduce the printed RMS formula directly
 from retained draws, compare small-uncertainty results to the delta method, check
 zero covariance and seeded replay, and retain reversed slopes and negative limits.
 
-**Both catalog entries remain partial.** CI of Interaction Index still needs its
-median-effect plots, source case-study fixtures and native
-workflow audit. SYNERGY also supports the [semiparametric response-surface
+The [optional plotting helpers](interaction-index-plots.md) display median-effect
+fits and pointwise interaction intervals, including log-scale output when raw
+indices cannot be represented. The [published case studies](interaction-index-case-studies.md)
+use both paper datasets and save two-panel figures and numerical results.
+
+**Both catalog entries remain partial.** CI of Interaction Index retains an
+unresolved native pooling denominator and native file/report compatibility.
+SYNERGY also supports the [semiparametric response-surface
 fit](synergy-surface.md), with raw/log-dose baselines and REML smoothing.
 Its other parametric surfaces, wild-bootstrap intervals and associated
 workflows remain open. The observed-combination pooled-error fallback is

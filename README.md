@@ -898,6 +898,10 @@ Carlo comparator with retained draws. The
 [pooled-error fallback](docs/interaction-index-pooled-error.md) estimates
 observed-combination uncertainty when replicate measurements are unavailable,
 using an explicit residual-df pooling convention on the logit-effect scale.
+[Optional figures](docs/interaction-index-plots.md) display the fitted
+median-effect lines and pointwise interaction intervals. The
+[published case studies](docs/interaction-index-case-studies.md) reproduce both
+paper datasets with saved figures and numerical results.
 SYNERGY also provides a
 [semiparametric response surface](docs/synergy-surface.md) with raw/log-dose
 baselines and REML thin-plate smoothing. Its

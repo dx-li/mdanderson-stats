@@ -1,19 +1,22 @@
 # Median-effect and interaction-index plots
 
 The optional plotting helpers display existing calculations; they do not fit
-models or recompute interaction indices. Install the plotting extra with
-`pip install 'mdanderson-stats[plot]'` if Matplotlib is not already available.
+models or recompute interaction indices. They require the optional plotting
+extra described in the [installation instructions](../README.md).
 
 ```python
 import numpy as np
-from mdanderson_stats import fit_median_effect
-from mdanderson_stats.interaction_index_plot import plot_median_effect
+from matplotlib import pyplot as plt
+
+from mdanderson_stats import fit_median_effect, plot_median_effect
 
 dose = np.array([1, 2, 4, 8, 16], dtype=float)
 effect = np.array([0.12, 0.22, 0.39, 0.61, 0.78])
 fit = fit_median_effect(dose, effect)
 ax = plot_median_effect(fit, dose, effect, label="Drug A")
 ax.legend()
+ax.figure.savefig("median-effect.png", dpi=120)
+plt.close(ax.figure)
 ```
 
 `plot_median_effect` displays the supplied observations at `log(dose)` and
@@ -29,8 +32,7 @@ the log scale. Fixed-ray intervals are pointwise delta-method intervals, not
 simultaneous bands.
 
 ```python
-from mdanderson_stats import MedianEffectFit, interaction_index_ray
-from mdanderson_stats.interaction_index_plot import plot_interaction_index
+from mdanderson_stats import MedianEffectFit, interaction_index_ray, plot_interaction_index
 
 curves = [
     MedianEffectFit(0.0, -1.0, np.eye(2) * 0.001, 12, 0.01),
@@ -41,6 +43,8 @@ effects = np.array([0.2, 0.4, 0.6, 0.8])
 ray = interaction_index_ray(curves, combination, [1, 2], effects)
 ax = plot_interaction_index(effects, ray, label="1:2 composition")
 ax.legend()
+ax.figure.savefig("interaction-index.png", dpi=120)
+plt.close(ax.figure)
 ```
 
 Inputs are limited to 10,000 plotted points and must be finite; median-effect
