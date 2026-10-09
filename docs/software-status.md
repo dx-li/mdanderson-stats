@@ -6,8 +6,8 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 90 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 42 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 91 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 41 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 6 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -115,8 +115,9 @@ some legacy adaptations retain commercial-use restrictions.
 | Dose Optimization with Backfill and Adaptive Randomization (BARD) | [online #165](https://biostatistics.mdanderson.org/shinyapps/BARD) | [Stage two](bard.md), [BF-BLRM model](bard-blrm.md), [BF-BOIN trials](bard-bf-boin-trial.md), [BF-BLRM trials](bard-blrm-stochastic.md), [BF-BOIN OC](bard-bf-boin-simulation.md), [BF-BLRM OC](bard-blrm-simulation.md), [Saved studies](bard-study.md), [Reports](bard-report.md) |
 | Backfill Bayesian Optimal Interval (BF-BOIN) Design for Phase I Clinical Trials | [online #162](https://biostatistics.mdanderson.org/shinyapps/BF-BOIN/) | See catalog feature and validation notes |
 | A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents | [online #114](https://biostatistics.mdanderson.org/shinyapps/MTADF/) | [Isotonic and logistic workflows](mtadf.md), including recovered author decisions, replay and simulation |
-
 | FLECS90 | [desktop #43](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/43) | [Translator guide](flecs90.md) |
+| Multc Lean | [desktop #12](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12) | [Native saved studies](multc-lean-model.md); [Monitoring](multc.md) |
+| Multc99 | [desktop #3](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/3) | [General study workflows](multc99.md) |
 
 ## Partially implemented
 
@@ -147,7 +148,6 @@ some legacy adaptations retain commercial-use restrictions.
 | KeyboardComb: the Keyboard Design for Drug Combination Trials | [online #121](https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/) | See catalog feature and validation notes |
 | MDS-HOPE: An interactive risk assessment tool for patients treated with HMA | [online #171](https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/) | [Guide](mds-hope.md) |
 | MERIT: Multiple-dose Randomized Phase II Trial Design for Dose Optimization and Sample Size Determination | [online #160](https://biostatistics.mdanderson.org/shinyapps/MERIT/) | [Guide](merit.md) |
-| Multc Lean | [desktop #12](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12) | [Monitoring and calendar replay](multc.md) |
 | PerfectMatch | [desktop #7](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/7) | [Guide](perfectmatch.md) |
 | Platform Design of Bayesian Adaptive Randomization with Posterior Probability | [online #137](https://biostatistics.mdanderson.org/shinyapps/PLBARPO/) | [Control monitoring](plbarpo-control.md), [active allocation](plbarpo-allocation.md), [no-control trials](plbarpo-trials.md), [control trials](plbarpo-control-trials.md) |
 | Proportional density | [desktop #78](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/78) | [Guide](proportional-density.md) |
@@ -177,9 +177,9 @@ some legacy adaptations retain commercial-use restrictions.
 | Predicting survival for patients with malignant pleural effusions using the BLESS models | [online #149](https://biostatistics.mdanderson.org/shinyapps/BLESS) | See catalog feature and validation notes |
 | Risk of CNS Metastasis in Clinically Localized Melanoma | [online #161](https://biostatistics.mdanderson.org/shinyapps/CNSRISK) | See catalog feature and validation notes |
 
-October 9 continuation: Multc Lean now adds automatic compact boundaries,
-recovered cohort/minimum/prior precedence and bounded legacy batch simulation
-with native-defined means/PMF and replayable Python seeds. Its guide identifies
-substituted posterior predicates and remaining native integrator/file/default/
-protocol workflow gaps. Counts are unchanged; see the
+October 9 continuation: Multc Lean's recovered native model/default and saved-study
+workflow completes entry #12, with exact count estimates kept separate from
+legacy Monte Carlo duration/balk means. The audit records original control
+references and explicit numerical/CLR/RNG/layout differences. The snapshot is
+now 91 implemented, 41 partial and 6 pending; see the
 [current continuation record](../research/source-recovery-2026-10-09.md).

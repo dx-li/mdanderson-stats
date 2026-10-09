@@ -1173,6 +1173,16 @@ from .multc_core import (
     MultcState,
     multc_lean_design,
 )
+from .multc_lean_model import (
+    MultcLeanEndpointInput,
+    MultcLeanModel,
+    MultcLeanScenario,
+    MultcLeanScenarioResult,
+    MultcLeanStudy,
+    parse_multc_lean_model,
+    read_multc_lean_model,
+    replay_multc_lean_study,
+)
 from .multc_legacy_boundaries import (
     MultcLegacyBoundaries,
     multc_legacy_boundaries,
@@ -1972,6 +1982,14 @@ from .windows import (
 )
 
 __all__ = [
+    "MultcLeanEndpointInput",
+    "MultcLeanModel",
+    "MultcLeanScenario",
+    "MultcLeanScenarioResult",
+    "MultcLeanStudy",
+    "parse_multc_lean_model",
+    "read_multc_lean_model",
+    "replay_multc_lean_study",
     "MultcLegacyDurationSummary",
     "MultcLegacySimulation",
     "simulate_multc_legacy_duration",

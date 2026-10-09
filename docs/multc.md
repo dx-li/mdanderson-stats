@@ -1,6 +1,7 @@
 # Multc Lean and Multc99 Phase IIa
 
-Catalog entry **12 (Multc Lean)** remains partial. Entry **3 (Multc99)** now
+Catalog entry **12 (Multc Lean)** now completes its recovered Python workflow;
+see [native saved models and studies](multc-lean-model.md). Entry **3 (Multc99)** now
 provides its [complete recovered general workflow](multc99.md). The existing
 Python APIs in this guide provide marginal response/toxicity monitoring, full and reachable stopping
 boundaries, sequential decisions, exact joint operating characteristics, and
@@ -55,10 +56,10 @@ positive toxicity margins cannot be combined, following the
 [user guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcUsersGuide.pdf).
 
 `pretrial_check=True` applies the guide's prior-only rejection screen at zero
-enrollment. Its interaction with minimum enrollment is not completely specified
-in the guide. Python treats it as a separate screen; use `False` when minimum
-enrollment must be guaranteed. This choice also applies to reachability and
-operating characteristics.
+enrollment. Recovered native control confirms that this screen precedes minimum
+enrollment. The native-model workflow requires it; the general monitoring API
+also permits `False` for an explicitly different study policy. This choice
+applies to reachability and operating characteristics.
 
 ## Monitoring and boundaries
 
@@ -322,8 +323,10 @@ replayed = MultcStudySpecification.from_json(
 The report puts exact scenario operating characteristics apart from Monte Carlo
 duration estimates, includes full and reachable stopping boundaries, and echoes
 the settings. JSON inputs are data rather than executable code. Saved-input and
-report layouts are community Python conventions; native Multc Lean configuration
-and report files remain unsupported. The optional simulation uses the same
+report layouts are community Python conventions. The separate
+[native-model workflow](multc-lean-model.md) reads/writes the original desktop
+configuration schema and provides portable HTML reports and editable protocols.
+The optional simulation uses the same
 explicit Python calendar assumptions above and does not claim native timing or
 random-stream parity. JSON uses a versioned schema and rejects inputs larger
 than 1 MiB. Scenarios are limited to 100 per study; a 50-million default
@@ -358,8 +361,11 @@ The native
 [accrual logistics](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcLogistics.pdf)
 allow accrual to continue while outcomes are pending when they cannot change the
 next decision; the replay and simulation above implement that decision logic. Native
-configuration/report formats, protocol documents, and
-the native input/default workflow remain open. The general Multc99 multiple-event
+input/default conversion, saved model files, legacy simulation and
+protocol/report workflow are now covered by the separate
+[native-model study API](multc-lean-model.md). Original CLR formatting, GUI,
+Windows RNG and Word-template layout remain compatibility differences. The general
+Multc99 multiple-event
 workflow is covered in its [separate guide](multc99.md). Parameter
 elicitation and distribution inequalities already have separate package APIs:
 `solve_distribution_moments`, `solve_distribution_quantiles`, and

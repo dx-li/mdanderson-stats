@@ -1,6 +1,7 @@
 # Remaining source leads
 
-The October 8 catalog checkpoint is 90 implemented, 42 partial and six pending.
+The October 9 catalog checkpoint is 91 implemented, 41 partial and six pending.
+The earlier October 8 checkpoint was 90 implemented, 42 partial and six pending.
 The [source-recovery record](source-recovery-2026-10-08.md) documents recovered
 archives, current blockers and validation. Historical reader failures below
 are not evidence that direct archive downloads are still unavailable.
@@ -382,7 +383,9 @@ Eight synthetic native initializations verify the inverse-gamma mapping, now
 implemented in Python; see [the native-prior audit](wfmm-native-prior-audit.md).
 The native MOM/profile optimizer, automatic proposals and other transform/file
 workflows remain distinct gaps. The pancreatic example's fitted workflow has
-not been rerun.
+not been rerun. The October 9
+[initializer source triage](wfmm-native-initialization-leads.md) records concrete
+MOM/likelihood/optimizer addresses and the profile-ML versus Python-REML distinction.
 
 Multc99's original C source now defines and validates the general-outcome,
 historical-mixture, calibration, trial and saved-study workflows; entry #3 is
@@ -391,9 +394,11 @@ The separate Multc Lean MSI is recovered. Bounded x86 references now establish
 its legacy clipping/shared follow-up, latent-count/balked-arrival clock,
 compact-boundary control, cohort/minimum/prior precedence and study means/PMF.
 The boundary predicates use independently generated base-R tails, so native
-posterior-integrator parity is not established. Native saved files/defaults,
-protocol/report workflow and full Windows execution remain open; see the
-[boundary/aggregation audit](multc-native-boundaries-audit.md).
+posterior-integrator parity is not established. Original managed save/restore
+control and installed defaults now verify native-model conversion; composed
+exact/legacy studies, HTML reports, editable protocols and PMF/CDF figures
+complete entry #12. See the [workflow audit](multc-lean-model-audit.md) for the
+functional crosswalk and retained CLR/GUI/RNG/layout differences.
 
 SYNERGY's original S-PLUS/R archive is recovered. Its four parametric models
 now provide fits, parameter inference and figures, checked against the author

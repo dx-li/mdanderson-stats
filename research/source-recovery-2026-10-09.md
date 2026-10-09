@@ -1,69 +1,97 @@
-# October 9 continuation: native boundaries and replayable studies
+# October 9 continuation: native boundaries, models and replayable studies
 
-The bundled 138-entry snapshot remains **90 implemented / 42 partial / 6 pending**.
-A fresh complete official-site inventory is not established because its
-metadata endpoints return HTTP 500. Full functional coverage remains the goal.
-The [coverage guide](../docs/software-status.md) and
-[42-entry contract review](statistical-coverage-priority-2026-10-04.md) track
-completed and remaining scope. Six clinical/design calculators still require
-source methods or exact fitted constants; they are not replaced with guesses.
+The bundled 138-entry snapshot is now **91 implemented / 41 partial / 6 pending**.
+Multc Lean #12 completes its recovered functional Python workflow. Both official
+catalog metadata endpoints were checked again and returned HTTP 500; these
+counts do not establish a fresh complete live-site inventory. Full coverage
+remains the goal. The [coverage index](../docs/software-status.md),
+[41-entry remaining-contract review](statistical-coverage-priority-2026-10-04.md)
+and [source leads](remaining-source-leads.md) track completed and remaining scope.
+Six clinical/design calculators still require source methods or exact fitted
+constants; no replacement coefficients/priors are guessed.
 
-## Newly resolved Multc Lean contracts
+## Completed Multc Lean workflow
 
-Entry 12 now provides `multc_legacy_boundaries`, automatic design-duration
-replay, native-defined study summaries and bounded legacy Monte Carlo studies.
-The native prior screen precedes minimum enrollment. Toxicity vectors count
-nontoxicities; disabled endpoints still carry a cap placeholder. The duration
-kernel preserves latent counts, clipped/shared follow-up and balked arrivals.
-Batch outputs include duration/enrollment/response/toxicity/balk means, the
-sample-size PMF, additional MCSEs and replayable Python PCG64 child seeds.
+Original x86 references established compact-boundary/cohort/minimum/prior
+control, legacy timing and native-defined means/PMF. The native prior screen
+precedes minimum enrollment, toxicity vectors count nontoxicities, and disabled
+endpoints still carry cap placeholders. Timing preserves latent counts,
+clipped/shared follow-up and balked arrivals. The
+[boundary/aggregation audit](multc-native-boundaries-audit.md) distinguishes
+22 original control/complement designs with substituted independent R posterior
+predicates (7,496 probabilities), 54 original duration replays and 22 original
+study-wrapper runs. Original numerical-integrator/RNG identity is not claimed.
 
-The new [audit](multc-native-boundaries-audit.md) distinguishes native machine
-instructions from substituted services: 22 compact-boundary/complement designs
-use independent base-R posterior predicates (7,496 saved probabilities), 54
-duration replays execute the original kernel with the resulting vectors, and
-22 original study-wrapper runs verify means/PMF and prior-screen exits. The
-original numerical integrator is not run. All original DLLs/installers remain
-ignored local research inputs under their upstream redistribution restriction.
+The subsequent [managed-model/workflow audit](multc-lean-model-audit.md) verifies
+native saved-input order, installed reset defaults, active/inactive historical
+fields and the original 10,000-repetition default. Eight original managed
+save/restore profiles execute in a bounded authored CIL interpreter, with
+CLR/IO/UI/conversion/clock services substituted. Nine Python exports also pass
+through the original restore control, including a 17-digit shape. This verifies
+schema/control/default selection, not original CLR formatting or GUI execution.
 
-Entry 12 remains partial: native posterior-integrator/full-application parity,
-saved files/defaults and protocol/report workflow remain unverified. The
-existing saved Python study uses its explicit observation-aware calendar
-policy; the new legacy API preserves the recovered historical simulation.
+`MultcLeanModel` reads/writes native model text and composes exact scenarios
+with optional legacy timing. The original runner enables simulation only when
+both timing fields are positive, then copies only average duration and balks;
+count estimates remain exact. Python preserves that distinction. Atomic model,
+JSON and HTML exports, editable protocols, exact PMF/CDF figures and explicit
+study/replicate seed replay complete the advertised functional workflow. See
+[the guide](../docs/multc-lean-model.md) for bounds and compatibility differences.
+The coverage index also restores the previously omitted implemented Multc99
+row; all 138 rows now match catalog status and every partial entry appears in
+the 41-entry remaining-contract review.
 
-## Validation and delivery
+Native numerical-integrator/CLR/GUI/RNG and Word/template/report-byte identity
+remain compatibility differences under the project's functional coverage
+criterion. Independent posterior/R/tutorial evidence remains separate from
+substituted native predicate references. The general observation-aware calendar
+study retains its explicit policy alongside recovered latent-count timing.
+Original program binaries/config/templates and research runtimes remain ignored
+and excluded under the upstream redistribution restriction.
 
-The preceding committed baseline passed the complete **33,726-test** suite
-with warnings treated as errors in **881.01 seconds**. This run used a frozen
-snapshot of commit `50630e2`; it does not include the additions above. All
-**214** focused legacy duration/boundary/simulation tests pass, including native
-references, analytic duration/MCSE, replicate replay, immutable inputs,
-stream exhaustion and work/storage preflight. Final affected regression and
-packaging results are recorded below.
+## Current validation
 
-The final affected Multc/WFMM regression passes **519 tests** in 17.08 seconds
-with warnings as errors. Ruff, formatting (2,392 files) and mypy (693 source
-modules) pass. Wheel/sdist build and isolated-wheel byte checks cover all 693
-modules, catalog, license and notices, and exclude original research binaries.
-All **11** Python examples in the WFMM and legacy-duration guides execute from
-the isolated wheel. Complete collection contains **33,870 tests**; the new
-144 tests supplement the frozen full baseline, rather than claiming a second
-whole-suite run. The latest continuation/start instructions are saved in the
-environment configuration draft; Review/Publish activates that draft.
+The whole numerical suite passed **33,934 tests** with warnings treated as
+errors in **770.64 seconds** (Python 3.13.5). That run began before the final
+float64 representability guard and its one additional test: an extended-precision
+finite value can overflow on conversion in an inactive history field. The final
+affected Multc/WFMM run passes **584 tests** in **14.25 seconds**, including that
+fix. The final 65-test native-model file also checks all four timing combinations.
+Current total collection is **33,935 tests**; a second whole-suite run is not
+claimed. Native managed-reference regeneration and all nine codec interoperability
+checks pass after the guard.
 
-The baseline is committed and pushed to `codex/native-software-coverage`.
-GitHub API read/create requests return `Forbidden`, including the actual
-pull-request creation request. No PR is claimed to be open. The prepared branch
-can be reviewed and submitted through
+Ruff, formatting (2,398 files), mypy (694 source modules) and wheel/sdist build
+pass. Isolated-wheel checks cover all 694 source modules, catalog, license and
+notices, excluding original binaries/research artifacts. All **14** Python
+examples in the native-model, legacy-duration and WFMM guides execute from the
+installed wheel. Catalog/status tables, all 41 remaining contracts and new guide
+links are checked for agreement. Runtime/lockfile dependencies are unchanged;
+`dnfile==0.18.0` and `dncil==1.0.2` are research-only regeneration tools.
+
+Earlier checkpoints remain useful history: the whole **33,726-test** run at
+`50630e2` passed in 881.01 seconds. The compact-boundary checkpoint `511b262`
+added 144 tests, passed 519 affected tests and collected 33,870 tests. The current
+native-model addition provides 65 further tests and the broader whole run above.
+
+## Delivery and next source work
+
+Delivery continues on `codex/native-software-coverage`, based on unchanged main
+`c45e678`. Earlier branch checkpoints are pushed. GitHub API read/create requests
+returned `Forbidden`, including an actual PR creation request; no PR is confirmed.
+The branch can be reviewed through
 [GitHub's PR creation page](https://github.com/dx-li/mdanderson-stats/pull/new/codex/native-software-coverage).
+The updated setup/continuation instructions are saved through the environment
+configuration draft; saving a draft does not apply it.
 
-## Next source work
-
-Continue with the recovered original bundles and the primary supplements in
-the contract review. Multc Lean's managed/native conversion and study file
-reader are the next concrete local leads. WFMM's native MOM/profile optimizer,
-automatic proposals, extended wavelet layouts and pass/file workflows remain
-separate gaps. SYNERGY's semiparametric bootstrap interval convention and
-iBOIN's final isotonic weights/ties/defaults still require primary evidence.
-The six pending calculators require their recorded likelihoods/priors or exact
-fitted parameters/baselines; repeated blocked downloads provide no new proof.
+Continue with WFMM #70's native MOM/profile estimator, automatic proposals,
+extended transform layouts and pass/file workflows. The
+[new initializer triage](wfmm-native-initialization-leads.md) identifies native
+MOM/likelihood/optimizer addresses and documents profile ML versus Python REML;
+one intercept-only probe does not validate the general estimator. SYNERGY's
+semiparametric bootstrap interval convention and iBOIN's final isotonic
+weights/ties/defaults still need primary evidence. The six pending calculators
+require their recorded likelihoods/priors or exact fitted parameters/baselines.
+Use those concrete leads and the other 41 contracts; avoid repeating retrievals
+that provide no new source evidence or treating an available generic statistical
+formula as proof of a source-specific implementation.

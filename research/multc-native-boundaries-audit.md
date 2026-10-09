@@ -78,9 +78,10 @@ separate outcome/exponential streams and does not claim original RNG parity.
 
 ## Remaining scope
 
-Catalog entry 12 remains partial. Native posterior-integrator compatibility,
-managed/native input conversion and undocumented defaults, native saved files,
-protocol memo/report workflow and full Windows/RNG execution remain unverified.
+The subsequent [managed-model/workflow audit](multc-lean-model-audit.md) resolves
+native saved files/defaults and the composed protocol/report workflow, completing
+entry 12. Native posterior-integrator, CLR/GUI and Windows RNG identity remain
+compatibility differences rather than missing advertised Python calculations.
 The existing saved Python study's calendar simulation keeps its explicit
 observation-aware policy; the new legacy batch uses recovered latent-count
 and balked-arrival behavior. No silent change of that study engine is made.

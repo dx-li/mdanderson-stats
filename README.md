@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-90 implemented, 42 partial, and 6 pending. Each method's guide explains its
+91 implemented, 41 partial, and 6 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -105,6 +105,10 @@ in Python and checked against native C and compiled Fortran outputs.
 iBOIN now provides [saved simulation reports and exact-seed replay](docs/iboin-report.md).
 Its unresolved native final-selection conventions remain documented, and its
 catalog status remains partial.
+
+Multc Lean now completes its recovered [native-model study workflow](docs/multc-lean-model.md),
+including original saved inputs/defaults, exact scenarios, legacy timing, HTML reports,
+editable protocols and replayable Python seeds.
 
 ## Numerical API
 

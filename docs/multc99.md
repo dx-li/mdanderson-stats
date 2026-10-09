@@ -10,7 +10,8 @@ streams and undefined C behavior are not reproduced.
 
 The fixed-reference Phase IIa subset remains available through the
 [existing Multc guide](multc.md). Multc Lean is a separate version contract
-and remains partial because its generated endpoint-timing rules are unresolved.
+and now completes its separately recovered [native-model study workflow](multc-lean-model.md),
+including the legacy generated endpoint-timing rules.
 
 ## Define elementary outcomes and events
 

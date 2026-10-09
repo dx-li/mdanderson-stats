@@ -7,8 +7,9 @@ stopping reasons. `multc_legacy_boundaries` now constructs those vectors from a
 `MultcLeanDesign`, and `run_multc_legacy_design_duration` applies the mandatory
 native prior screen. `simulate_multc_legacy_duration` adds bounded batch
 simulation, native-defined study means and replayable Python seeds. Catalog
-entry **12 remains partial**: native numerical-integrator/full-application
-parity, saved native files/defaults and protocol/report workflow remain open.
+entry **12 is implemented** after completing its
+[native saved-model/default and study workflow](multc-lean-model.md). Native
+numerical-integrator/CLR/GUI/RNG and document-layout identity are not claimed.
 
 The kernel was verified by running its original x86 instructions in an emulator,
 with controlled external random draws and vector-access helpers. This verifies

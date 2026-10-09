@@ -20,7 +20,7 @@
       "download": "Multc99_V2.1.zip"
     }
   ],
-  "evidence": "The existing Multc Lean/Phase IIa subset uses independently implemented published probability rules. The Multc99 2.1 institutional archive was recovered on October 8, 2026, and its unchanged C kernel now supplies boundary, elicitation and planning references for the general Python workflow; see docs/multc99-source.json and research/multc99-audit.md. Multc Lean native duration timing is now recovered and verified through original x86 instructions with explicit boundaries/draws; see docs/multc-legacy-duration-source.json. Native boundary conversion and full workflow remain open. No original binary or C source is bundled.",
+  "evidence": "The existing Multc Lean/Phase IIa subset uses independently implemented published probability rules. The Multc99 2.1 institutional archive was recovered on October 8, 2026, and its unchanged C kernel now supplies boundary, elicitation and planning references for the general Python workflow; see docs/multc99-source.json and research/multc99-audit.md. Multc Lean native duration timing is now recovered and verified through original x86 instructions with explicit boundaries/draws; see docs/multc-legacy-duration-source.json. October 9 original boundary/complement/aggregation and managed model/default control references now complete the Multc Lean native-model study workflow; see research/multc-lean-model-audit.md. Independently validated numerical integration, PCG64 RNG and original CLR/GUI/document layout differences remain explicit. No original binary or C source is bundled.",
   "sources": [
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12",
@@ -59,10 +59,11 @@
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcLean_V2.1.0_WithFX4.0.zip",
       "sha256": "be4ddfcaa7f442a1fa6895e31e379146fda4cff23775df291ff1b597b10d5120",
-      "role": "Recovered Multc Lean DLL, guide and redistribution terms; bounded x86 duration references with external RNG/vector services substituted."
+      "role": "Recovered Multc Lean DLL/EXE/config, guides and redistribution terms; bounded x86 duration/control/aggregation and managed model/default references with external services substituted. Original posterior integrator/CLR/RNG not executed."
     }
   ],
   "method_reference": "Thall, Simon and Estey (1995), Bayesian sequential monitoring designs for single-arm clinical trials with multiple outcomes, Statistics in Medicine 14:357-379.",
   "validation_reference": "tools/reference_multc.R generates independent direct beta integrals, fixed-reference boundaries and full paired-outcome path enumeration. tools/reference_multc_calendar.R adds five explicit-timing replay examples using direct beta tails and enumeration of hypothetical pending completions. Neither script contains native program source.",
-  "multc99_source_recovered_at": "2026-10-08"
+  "multc99_source_recovered_at": "2026-10-08",
+  "multc_lean_workflow_completed_at": "2026-10-09"
 }

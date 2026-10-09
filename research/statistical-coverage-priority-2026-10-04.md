@@ -1,6 +1,6 @@
 # Statistical coverage priority review
 
-This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard, OneArmTTE, BOIN, Pinnacle, EasyCellType, BOP2 online/retired desktop, BCHM, PoP, aPCoA and BOP2-DC, TOP, IPDfromKM, STPLAN, Parallel phase I/II, Success calibration, TITE-Keyboard, BARD, BFBOIN and MTADF subsequently completed their Python workflows, leaving 42 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
+This bounded review originally covered 67 partial-program entries. TTEConduct, CID2BP, CONFINT, ASYPOW, DCT, Keyboard, OneArmTTE, BOIN, Pinnacle, EasyCellType, BOP2 online/retired desktop, BCHM, PoP, aPCoA and BOP2-DC, TOP, IPDfromKM, STPLAN, Parallel phase I/II, Success calibration, TITE-Keyboard, BARD, BFBOIN, MTADF and Multc Lean subsequently completed their Python workflows, leaving 41 partial entries in this review. It distinguishes unresolved statistical contracts from cases where no additional calculation was identified and the remaining work is input, reporting, or native-application parity. The classifications alone do not promote catalog statuses, estimate completion percentages, or claim complete site coverage. References point to the inspected local guides and audits; no new native execution or live application inspection was performed for this classification.
 
 A deeper cached-source review subsequently identified omitted overdose-allocation
 risk statistics in BOIN and Keyboard. Both are now implemented with their strict
@@ -15,7 +15,7 @@ that every recovered statistical output is present. The explicit modifier/confli
 composition and undefined native aggregation remain compatibility boundaries;
 BF-BOIN has completed the recovered workflow.
 
-The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. The paper-defined poor-allocation and overdose risk metrics now complete the TITE-Keyboard workflow; native document layout and random streams remain compatibility differences. After these additions, the Parallel phase I/II summaries and Success calibration searches, this review has 42 entries in section A and none in section B. The Multc Lean saved-study review also distinguishes its unresolved native timing laws from ordinary file-format compatibility, moving that entry to section A. Review of Bayes Factor TTE, CRM Suite and CondiS likewise separates unresolved timing, decision precedence and prediction contracts from ordinary display or file compatibility; these entries also belong in section A. The PerfectMatch scaling review recovered its array-average-500 calculation but confirmed unresolved QC definitions, so that entry has moved to section A as well.
+The adaptive TITE-Keyboard review recovered the joint timing model, including pending survival and observed DLT times. Calendar simulation and saved protocol reports now compose that model with the trial workflow. The paper-defined poor-allocation and overdose risk metrics now complete the TITE-Keyboard workflow; native document layout and random streams remain compatibility differences. After these additions, the Parallel phase I/II summaries and Success calibration searches, this review initially had 42 entries in section A and none in section B. The Multc Lean saved-study review also distinguishes its unresolved native timing laws from ordinary file-format compatibility, moving that entry to section A. Review of Bayes Factor TTE, CRM Suite and CondiS likewise separates unresolved timing, decision precedence and prediction contracts from ordinary display or file compatibility; these entries also belong in section A. The PerfectMatch scaling review recovered its array-average-500 calculation but confirmed unresolved QC definitions, so that entry has moved to section A as well.
 
 The recovered MTADF isotonic, local logistic and global logistic workflows now include decisions, trial replay and serial simulation. Independent posterior quadrature and direct cached R dependency comparisons validate the new fits. Its explicit numerical conventions and unknown live-app runtime remain documented compatibility limits.
 
@@ -23,7 +23,10 @@ October 8: RMC-COMPASS (#174) moved from pending to partial after recovery of
 its live rounded model panel and independent prediction observations. The
 RMC-COMPASS exact fit and uncertainty recovery remain open. Subsequent recovery
 of Multc99 C source and completion of its general workflows removes #3 from
-the remaining-work table, which now has 42 partial entries.
+the remaining-work table, which then had 42 partial entries. The October 9 managed-model/workflow review
+subsequently completes Multc Lean (#12), leaving 41 entries in section A and none
+in section B. Native integrator/CLR/GUI/RNG identity is distinguished from the
+independently validated advertised calculations and usable Python workflows.
 
 ## A. Statistical or source-contract uncertainty remains
 
@@ -31,7 +34,6 @@ the remaining-work table, which now has 42 partial entries.
 | --- | --- | --- |
 | EffTox (#2) | Legacy contour-fitting objective and trinary calibration/native behavior remain unverified. Existing binary/trinary mathematical APIs do not resolve these source choices. | [legacy contour audit](efftox-legacy-contour-audit.md); [trinary calibration audit](efftox-trinary-calibration-audit.md) |
 | PerfectMatch (#7) | The paper's array-mean-500 scaling now joins PDNN fitting, conditional expression, normalization, correlations and chip quantiles. Several manual QC outputs and the native correlation convention remain undefined; array parameters and native file workflows are also unresolved. | [PerfectMatch guide](../docs/perfectmatch.md); [source records](../docs/perfectmatch-sources.json) |
-| Multc Lean (#12) | Saved Python studies, exact scenarios and calendar reports are covered. Recovered legacy duration, compact boundaries, cohort/minimum/prior precedence and native-defined batch means/PMF now have instruction references. Native posterior integrator, saved-file/default and protocol/report/full-application workflow remain unverified; substituted predicates and Python RNG are explicit. | [Multc guide](../docs/multc.md); [boundary/aggregation audit](multc-native-boundaries-audit.md) |
 | ToxFinder (#14) | Physician-prior elicitation now solves and independently checks the published equations; the Table 1 discrepancy is documented. Stage-2 information criterion is unresolved; the guide’s second-derivative substitute does not establish the native Eq. 12 rule. | [ToxFinder guide](../docs/toxfinder.md) |
 | bCRM (#15) | High-level stage controls and zero-gap futility are documented. Joint two-outcome likelihood/association prior, exact transition rules, positive-gap futility cutoff and post-trial four-parameter logistic estimator remain unresolved. | [bCRM guide](../docs/bcrm.md); [source records](../docs/bcrm-sources.json) |
 | SYNERGY (#18) | The four original parametric models now provide native-validated fits, uncertainty and plots. The separate semiparametric bootstrap interval convention remains unresolved. | [parametric audit](synergy-parametric-audit.md); [bootstrap audit](synergy-wild-bootstrap-audit.md) |
@@ -137,4 +139,11 @@ composition is explicitly documented; see the
   historical mixtures, elicitation/planning, cohort/period-count and randomized
   trials, manual boundaries, curve exports and saved study replay. Identified
   native defects are corrected and upstream terms retained; see the
-  [completion audit](multc99-audit.md). Multc Lean remains a separate partial entry.
+  [completion audit](multc99-audit.md). Multc Lean subsequently completes its separately recovered workflow; see below.
+
+- Multc Lean (#12): original managed saved-model control and installed reset
+  defaults complete input conversion. Native-model studies now compose exact
+  count estimates with optional recovered legacy timing, HTML/JSON/model exports,
+  editable protocols and exact PMF/CDF plots. Native integrator/CLR/GUI/RNG and
+  template layout remain explicit compatibility differences; see the
+  [functional crosswalk](multc-lean-model-audit.md#functional-coverage-review).

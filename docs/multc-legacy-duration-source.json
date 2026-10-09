@@ -15,11 +15,22 @@
   "base_r_posterior_table_sha256": "8054cb906aa01a19feab23b59e030b9a9c11999d1201406b126aa3b7d77b3c87",
   "boundary_reference_scope": "Original control/complement instructions with independent base-R posterior predicate substituted; 22 designs and 54 composed original duration runs. Native posterior integrator is not executed.",
   "aggregation_reference_scope": "22 original study-wrapper runs with external validation/vector/seed/boundary/trial calls substituted; trial outputs come from original duration instructions. Prior exits leave native PMF empty; Python returns a point mass at zero.",
-  "status": "partial",
-  "remaining": [
-    "native numerical-integrator/full-application parity",
-    "native saved-file/default and protocol/report workflow",
-    "original random generator compatibility"
+  "status": "implemented",
+  "redistribution": "Original installers/DLLs remain ignored research inputs; only independent Python, authored harness and synthetic numerical facts ship.",
+  "compatibility_limits": [
+    "Original numerical integrator, CLR/GUI and random generator identity are not claimed.",
+    "Native file schema and defaults are covered; byte-identical numeric/timestamp/report/Word-template formatting is not claimed."
   ],
-  "redistribution": "Original installers/DLLs remain ignored research inputs; only independent Python, authored harness and synthetic numerical facts ship."
+  "managed_exe_sha256": "a9d8b5b8e3e0f6d2d30e93c550cda8253c00b0777dd6e5a3a77322eba553c69d",
+  "managed_config_sha256": "4c6fdc133739a4dd935212df4392e3194e13bd0eb7e56a88a50ec82ce1b4c58d",
+  "managed_model_reference_sha256": "dc20ff1e03705a2ea638f502ab2e75cc1f7ec1999b8d7be3c40cec216d726f76",
+  "managed_model_reference_scope": "Eight original managed save/restore controls and original reset field-selection control with configured values. Authored bounded CIL interpretation substitutes CLR/IO/UI/conversion/formatting/clock services; no native formatting or numerical integrator execution. Nine Python exports checked through original restore control.",
+  "managed_control_rvas": {
+    "constructor": "0x2508",
+    "restore_model": "0x863c",
+    "save_model": "0x8ad4",
+    "reset_model": "0xa860",
+    "run_scenarios": "0xd378"
+  },
+  "workflow_audit": "research/multc-lean-model-audit.md"
 }

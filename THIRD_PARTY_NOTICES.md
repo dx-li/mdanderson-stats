@@ -1423,7 +1423,11 @@ duration replay. The authored research harness runs original x86 instructions
 with controlled external variates and vector helpers; it distributes no
 original executable, DLL, installer or runtime. The original License.rtf
 restricts redistribution of the original program. Numerical fixtures are
-wholly synthetic factual outputs. See `research/multc-native-duration-audit.md`.
+wholly synthetic factual outputs. Additional original managed save/restore and
+reset-default control references substitute CLR/IO/UI services; only the authored
+interpreter and synthetic factual fixtures ship. The archive, EXE, DLL, config,
+original protocol template and research runtimes remain excluded. See
+`research/multc-native-duration-audit.md` and `research/multc-lean-model-audit.md`.
 
 The recovered WFMM executable also supplies five Haar transform and 46
 compression/bypass/error references for the independent Python compression

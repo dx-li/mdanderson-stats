@@ -5,7 +5,9 @@ exponential response times, shared paired follow-up and balked arrivals.
 [The native duration audit](multc-native-duration-audit.md) records 34 executable
 references. The historical uncertainty below is resolved for that separate
 compatibility kernel; the existing observation-aware calendar policy remains
-explicit. Multc99 #3 is now implemented; Multc Lean #12 remains partial.
+explicit. The October 9 [managed-model/workflow audit](multc-lean-model-audit.md)
+subsequently completes Multc Lean #12, alongside implemented Multc99 #3.
+The older source-uncertainty statements below describe the earlier calendar review.
 
 This addition composes the existing paired-binary calendar replay with serial
 random generation and bounded duration summaries. The tutorial represents

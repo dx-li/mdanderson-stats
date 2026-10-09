@@ -94,8 +94,9 @@ difference curve data, immutable arrays and captured-input/report replay.
 These are identifiable source defects or explicit numerical/interface
 differences, not unknown statistical specifications. All recovered usable
 general workflows have Python equivalents. Entry 3 moves to implemented;
-entry 12 stays partial because this older C source does not establish the
-different Multc Lean generated endpoint-time law or pending-outcome controller.
+this older C source alone does not establish the different Multc Lean timing
+law or controller. Subsequent separate DLL/managed control recovery completes
+entry 12; see its [functional audit](multc-lean-model-audit.md).
 
 ## Licensing
 

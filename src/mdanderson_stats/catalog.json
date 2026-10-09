@@ -275,7 +275,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Multc Lean response/toxicity monitoring with beta or fixed historical rates and additive margins; strict posterior cutoffs with exact support handling",
         "Continuous/cohort monitoring, minimum enrollment, explicit prior-only screen and sequential first-stop outcomes",
@@ -284,10 +284,12 @@
         "Bounded single-trial calendar replay with separately supplied endpoint availability, look-ahead suspension, frozen accrual-open clock and complete follow-up",
         "Serial joint-outcome calendar simulation with explicit clipped/conditional response timing, caller-supplied toxicity delay, replayable child seeds and duration/decision/enrollment summaries with Monte Carlo error",
         "Saved versioned JSON study inputs and atomic text reports capture full/reachable boundaries, exact named-scenario OCs, explicit timing assumptions, scenario seeds and calendar means/decision counts/probabilities/MCSEs. Aggregate work/storage are checked before computation; docs/multc.md.",
-        "Native numerical-integrator/full-application parity, saved native files/defaults and protocol memo/report workflow remain unverified.",
         "Recovered native duration compatibility replay with explicit compact response/nontoxicity stopping vectors, clipped response times, shared follow-up, latent outcome counts, balked arrivals, distinct decision/follow-up clocks and controlled external variates; docs/multc-legacy-duration.md.",
         "Automatic compact boundary construction with native cohort/minimum precedence, mandatory prior screening and cap placeholders; design-based zero-enrollment/ordinary duration replay.",
-        "Bounded replayable PCG64 legacy batch simulation, native-defined duration/enrollment/outcome/balk means and sample-size PMF, additional Monte Carlo errors and owned replicate summaries; patient ledgers reconstructed from captured child seeds."
+        "Bounded replayable PCG64 legacy batch simulation, native-defined duration/enrollment/outcome/balk means and sample-size PMF, additional Monte Carlo errors and owned replicate summaries; patient ledgers reconstructed from captured child seeds.",
+        "Recovered native desktop .model read/write schema, inactive historical fields and installed reset defaults; original scenario conversion preserves all four joint categories and independently optional timing fields; docs/multc-lean-model.md.",
+        "Captured native-model studies compose exact enrollment/outcome estimates with optional legacy duration/balk simulation, the original 10000-repetition default, explicit PCG64 seeds and aggregate work/storage preflight. Atomic native-model/JSON/HTML exports, editable protocol and exact PMF/CDF figures complete the advertised Python workflow.",
+        "Compatibility differences remain explicit: independent validated posterior integrator, 17-digit float export, stricter joint-probability tolerance, bounded work, Markdown protocol layout, Python RNG and zero-enrollment prior-rejection PMF. Native CLR/GUI/RNG and byte-identical report/template execution are not claimed."
       ],
       "validation": [
         "Official N=30 statistical tutorial full/potential boundaries before the sample cap",
@@ -299,7 +301,9 @@
         "Saved-study tests check JSON replay, exact fixed-enrollment OCs, captured seeds, simulation work/storage preflight and malformed input handling; source numerical references remain those of the existing monitoring/calendar engines.",
         "Thirty-four original x86 duration-kernel references executed through bounded Unicorn emulation with external draws/vector helpers substituted; exact counts and draw consumption, durations within 2e-15 relative / 1e-14 absolute; 70 focused tests; research/multc-native-duration-audit.md. Full Windows app/RNG parity not claimed.",
         "Twenty-two original compact-boundary/complement control references with independent base-R posterior predicates (7496 saved probabilities), 54 composed native duration replays and 22 native study-aggregation/prior-screen references. Native posterior integrator is substituted, not validated; research/multc-native-boundaries-audit.md.",
-        "Simulation checks cover replicate replay/ownership, analytic fixed-enrollment duration mean and MCSE, prior rejection, one-replicate undefined MCSE, explicit stream exhaustion, input/work/storage preflight and large finite duration summaries."
+        "Simulation checks cover replicate replay/ownership, analytic fixed-enrollment duration mean and MCSE, prior rejection, one-replicate undefined MCSE, explicit stream exhaustion, input/work/storage preflight and large finite duration summaries.",
+        "Eight original managed model save/restore control references and installed configuration defaults executed with bounded authored CIL interpretation, substituted CLR/UI/IO services and checksum-verified EXE/config. Nine Python exports pass through the original restore control; native CLR formatting is not executed; research/multc-lean-model-audit.md.",
+        "65 native-model workflow tests cover original file order/defaults, independent R path-enumeration OCs after import, mixed optional timings, exact/MC separation, seeded study/trial replay, report escaping, exact CDF/PMF figures, atomic exports, malformed text/JSON and preflight before RNG."
       ]
     },
     {

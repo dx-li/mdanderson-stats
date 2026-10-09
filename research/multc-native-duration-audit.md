@@ -57,9 +57,10 @@ The native wrapper screens zero-enrollment boundaries before calling this
 kernel. The low-level explicit-boundary API requires callers to handle that
 separately. The October 9 [boundary/aggregation continuation](multc-native-boundaries-audit.md)
 now supplies an automatic design adapter, recovered cohort/minimum/prior
-precedence and bounded legacy batch summaries. Native numerical-integrator,
-default/file/protocol/full-application and RNG parity remain open; entry 12
-remains partial.
+precedence and bounded legacy batch summaries. The subsequent
+[managed-model/workflow audit](multc-lean-model-audit.md) completes saved-model,
+default and protocol/report workflows and entry 12. Native integrator, CLR/GUI,
+Windows RNG and original document-layout identity remain compatibility limits.
 
 The original License.rtf prohibits redistributing the original program.
 All original installers, DLLs and inspection runtimes stay in ignored local
