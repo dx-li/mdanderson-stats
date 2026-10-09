@@ -1,0 +1,17 @@
+{
+  "catalog_id": 12,
+  "retrieved_at": "2026-10-08",
+  "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcLean_V2.1.0_WithFX4.0.zip",
+  "archive_sha256": "be4ddfcaa7f442a1fa6895e31e379146fda4cff23775df291ff1b597b10d5120",
+  "dll_sha256": "8ac45568e87530d4bb6732eb8807a22e4e8c5de52a5557a14f750c24867fa807",
+  "reference_fixture_sha256": "8816a8ca67ba3190bb1ca171c3a9948f1a3b7398a7ff2e69f10cab6eef16e045",
+  "reference_method": "Bounded execution of original x86 duration instructions, external RNG and vector services substituted; original exponential-mean multiplication remains intact.",
+  "native_entry_rva": "0x64d0",
+  "status": "partial",
+  "remaining": [
+    "posterior-to-compact-boundary conversion",
+    "cohort/minimum-enrollment and pretrial precedence",
+    "full native default/file/report workflow and RNG"
+  ],
+  "redistribution": "Original installers/DLLs remain ignored research inputs; only independent Python, authored harness and synthetic numerical facts ship."
+}

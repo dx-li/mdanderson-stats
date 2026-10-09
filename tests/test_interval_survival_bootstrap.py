@@ -126,7 +126,8 @@ def test_covariance_rescaling_rejects_unrepresentable_values() -> None:
 
 
 def test_pinned_icenreg_prescribed_bootstrap_coefficients_and_covariance() -> None:
-    inputs = list(csv.DictReader((_FIXTURES / "interval-survival-inputs.csv").open(newline="")))
+    with (_FIXTURES / "interval-survival-inputs.csv").open(newline="") as source:
+        inputs = list(csv.DictReader(source))
     resamples = _rows("resamples")
     coefficients = _rows("coefficients")
     covariance = _rows("covariance")

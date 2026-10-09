@@ -1,0 +1,283 @@
+{
+  "source_url": "https://biostatistics.mdanderson.org/shinyapps/RMC-COMPASS/",
+  "observed_at": "2026-10-08",
+  "app_version": "V1.0.2.0",
+  "native_probabilities_rounded_to": 0.001,
+  "native_medians_rounded_to_months": 0.1,
+  "capture_sha256": "90e73ec852e78c0fc8e0c873924a1ee58af419dbe091710653a4ca4e43563c0f",
+  "cases": [
+    {
+      "requested_ui_changes": {},
+      "ecog": 1,
+      "sites": 0,
+      "nlr": 3.3333333333333335,
+      "corrected_calcium_mg_dl": 9.5,
+      "times_months": [
+        6,
+        12,
+        18,
+        24,
+        36
+      ],
+      "survival_probabilities": [
+        0.935,
+        0.754,
+        0.579,
+        0.442,
+        0.264
+      ],
+      "median_months": 21.3,
+      "risk_group": "Intermediate"
+    },
+    {
+      "requested_ui_changes": {
+        "ecog": "0"
+      },
+      "ecog": 0,
+      "sites": 0,
+      "nlr": 3.3333333333333335,
+      "corrected_calcium_mg_dl": 9.5,
+      "times_months": [
+        6,
+        12,
+        18,
+        24,
+        36
+      ],
+      "survival_probabilities": [
+        0.9740000000000001,
+        0.866,
+        0.733,
+        0.609,
+        0.41700000000000004
+      ],
+      "median_months": 30.2,
+      "risk_group": "Low"
+    },
+    {
+      "requested_ui_changes": {
+        "ecog": "3"
+      },
+      "ecog": 3,
+      "sites": 0,
+      "nlr": 3.3333333333333335,
+      "corrected_calcium_mg_dl": 9.5,
+      "times_months": [
+        6,
+        12,
+        18,
+        24,
+        36
+      ],
+      "survival_probabilities": [
+        0.75,
+        0.43700000000000006,
+        0.26,
+        0.161,
+        0.07
+      ],
+      "median_months": 10.5,
+      "risk_group": "High"
+    },
+    {
+      "requested_ui_changes": {
+        "ecog": "4"
+      },
+      "ecog": 4,
+      "sites": 0,
+      "nlr": 3.3333333333333335,
+      "corrected_calcium_mg_dl": 9.5,
+      "times_months": [
+        6,
+        12,
+        18,
+        24,
+        36
+      ],
+      "survival_probabilities": [
+        0.599,
+        0.281,
+        0.14300000000000002,
+        0.079,
+        0.028999999999999998
+      ],
+      "median_months": 7.4,
+      "risk_group": "High"
+    },
+    {
+      "requested_ui_changes": {
+        "anc": "0"
+      },
+      "ecog": 1,
+      "sites": 0,
+      "nlr": 0.0,
+      "corrected_calcium_mg_dl": 9.5,
+      "times_months": [
+        6,
+        12,
+        18,
+        24,
+        36
+      ],
+      "survival_probabilities": [
+        0.9440000000000001,
+        0.775,
+        0.606,
+        0.47,
+        0.287
+      ],
+      "median_months": 22.5,
+      "risk_group": "Intermediate"
+    },
+    {
+      "requested_ui_changes": {
+        "anc": "40"
+      },
+      "ecog": 1,
+      "sites": 0,
+      "nlr": 26.666666666666668,
+      "corrected_calcium_mg_dl": 9.5,
+      "times_months": [
+        6,
+        12,
+        18,
+        24,
+        36
+      ],
+      "survival_probabilities": [
+        0.84,
+        0.565,
+        0.373,
+        0.252,
+        0.124
+      ],
+      "median_months": 13.7,
+      "risk_group": "Intermediate"
+    },
+    {
+      "requested_ui_changes": {
+        "total_ca": "7"
+      },
+      "ecog": 1,
+      "sites": 0,
+      "nlr": 3.3333333333333335,
+      "corrected_calcium_mg_dl": 7.0,
+      "times_months": [
+        6,
+        12,
+        18,
+        24,
+        36
+      ],
+      "survival_probabilities": [
+        0.968,
+        0.847,
+        0.705,
+        0.5770000000000001,
+        0.385
+      ],
+      "median_months": 28.2,
+      "risk_group": "Low"
+    },
+    {
+      "requested_ui_changes": {
+        "total_ca": "13"
+      },
+      "ecog": 1,
+      "sites": 0,
+      "nlr": 3.3333333333333335,
+      "corrected_calcium_mg_dl": 13.0,
+      "times_months": [
+        6,
+        12,
+        18,
+        24,
+        36
+      ],
+      "survival_probabilities": [
+        0.85,
+        0.581,
+        0.389,
+        0.265,
+        0.133
+      ],
+      "median_months": 14.2,
+      "risk_group": "Intermediate"
+    },
+    {
+      "requested_ui_changes": {
+        "albumin": "2"
+      },
+      "ecog": 1,
+      "sites": 0,
+      "nlr": 3.3333333333333335,
+      "corrected_calcium_mg_dl": 11.1,
+      "times_months": [
+        6,
+        12,
+        18,
+        24,
+        36
+      ],
+      "survival_probabilities": [
+        0.857,
+        0.5920000000000001,
+        0.4,
+        0.275,
+        0.139
+      ],
+      "median_months": 14.6,
+      "risk_group": "Intermediate"
+    },
+    {
+      "requested_ui_changes": {
+        "albumin": "5"
+      },
+      "ecog": 1,
+      "sites": 0,
+      "nlr": 3.3333333333333335,
+      "corrected_calcium_mg_dl": 8.7,
+      "times_months": [
+        6,
+        12,
+        18,
+        24,
+        36
+      ],
+      "survival_probabilities": [
+        0.9590000000000001,
+        0.8190000000000001,
+        0.665,
+        0.532,
+        0.342
+      ],
+      "median_months": 25.7,
+      "risk_group": "Low"
+    },
+    {
+      "requested_ui_changes": {
+        "metastases": true
+      },
+      "ecog": 1,
+      "sites": 11,
+      "nlr": 3.3333333333333335,
+      "corrected_calcium_mg_dl": 9.5,
+      "times_months": [
+        6,
+        12,
+        18,
+        24,
+        36
+      ],
+      "survival_probabilities": [
+        0.585,
+        0.268,
+        0.135,
+        0.07400000000000001,
+        0.026000000000000002
+      ],
+      "median_months": 7.2,
+      "risk_group": "High"
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 """Bounded time-series transforms used by WFMM.
 
 Wavelet transforms use periodic decimation with a documented Python packing
-convention: ``[a_J, d_J, ..., d_1]``.  Coefficients are generated with the
-package's minimum-phase Daubechies taps; this layer does not claim native
-WFMM binary coefficient ordering or boundary-mode parity.
+convention: ``[a_J, d_J, ..., d_1]``. Coefficients use the package's minimum-phase
+Daubechies taps. Five periodic Haar cases match native extended-mode outputs;
+other native wavelets and extension modes remain separate from this layer.
 """
 
 from __future__ import annotations

@@ -1,0 +1,46 @@
+{
+  "source_url": "https://biostatistics.mdanderson.org/shinyapps/RMC-COMPASS/",
+  "observed_at": "2026-10-08",
+  "pid": 1189,
+  "version": "V1.0.2.0",
+  "updated_on": "2026-09-15",
+  "public_equation": {
+    "distribution": "log-normal AFT",
+    "time_unit": "months",
+    "intercept": 5.7273,
+    "sigma": 0.8334,
+    "shrinkage": 0.895,
+    "unshrunken_coefficients": {
+      "ecog": -0.3932,
+      "disease_sites": -0.1104,
+      "nlr": -0.0261,
+      "corrected_calcium_mg_dl": -0.2636
+    }
+  },
+  "displayed_development_ranges": {
+    "ecog": [
+      0,
+      3
+    ],
+    "disease_sites": [
+      0,
+      7
+    ],
+    "nlr": [
+      0.84,
+      22
+    ],
+    "corrected_calcium_mg_dl": [
+      8.3,
+      11.2
+    ]
+  },
+  "verified_public_ui_capture_sha256": "90e73ec852e78c0fc8e0c873924a1ee58af419dbe091710653a4ca4e43563c0f",
+  "native_reference_fixture_sha256": "c356a20c1e0ecf427db994c38d50e8b20df072690b0ac95531b77fdb29981395",
+  "status": "partial",
+  "missing": [
+    "unrounded parameters and clamp bounds",
+    "fitted uncertainty and interval algorithm",
+    "complete raw-input validation and output workflow"
+  ]
+}

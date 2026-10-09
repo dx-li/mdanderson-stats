@@ -207,8 +207,11 @@ reduction to ordinary BOIN at ESS zero, and prior-independent safety stopping.
 original-ESS and robust-effective-ESS rates, explicit isotonic weights,
 candidate eligibility, ties and optional final bounds. Bounded serial simulation
 reuses the conduct engine and reports selection, allocation and event summaries
-with Monte Carlo uncertainty. Native isotonic defaults, some final-selection
-conventions and report generation remain unverified or unimplemented.
+with Monte Carlo uncertainty. The
+[captured-input reporting workflow](iboin-report.md) now saves complete settings,
+exact trial seeds and operating characteristics as HTML and replayable
+JSON. Native isotonic defaults, some final-selection conventions and native
+report parity remain unverified.
 
 The official [final-selection help](https://biostatistics.mdanderson.org/shinyapps/iBOIN/iBOINprior_for_MTD.pdf)
 specifies isotonic regression of `y/n` without prior borrowing, or

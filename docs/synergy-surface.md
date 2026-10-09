@@ -6,7 +6,8 @@ in [MD Anderson SYNERGY](https://biostatistics.mdanderson.org/SoftwareDownload/S
 It fits the additive baseline from single-drug observations, then estimates
 departure from that baseline with a natural bivariate thin-plate spline.
 The separate [interaction-index functions](interaction-index.md) provide the
-median-effect/Loewe index calculations and their intervals.
+median-effect/Loewe index calculations and their intervals. The recovered
+[parametric surfaces](synergy-parametric.md) provide the other four author models.
 
 Supply the already transformed response `Y=g(E)`. The library does not select
 a response transformation or back-transform fitted values. Baseline, departure

@@ -1,5 +1,14 @@
 # WFMM implementation handoff
 
+October 8 update: the original Linux bundle and example are recovered. Eight
+synthetic native initializations establish the inverse-gamma `delta_omega`
+mapping; see [the native-prior audit](wfmm-native-prior-audit.md). Earlier
+access failures below describe the historical review. Native MOM/profile
+variance estimation, proposal calibration and other transform/file workflows
+remain separate gaps. Automatic energy compression now has 46 native runs
+and five periodic Haar transform references; see the
+[native compression audit](wfmm-native-compression-audit.md).
+
 Entry 70 is partial: the explicit-prior coefficient model, orthogonal transforms
 and reconstructed posterior summaries are available. Primary mathematical source:
 [Morris and Carroll (2006)](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/Morris%26Carroll2006.pdf),
@@ -35,10 +44,10 @@ The [official guide](https://biostatistics.mdanderson.org/SoftwareDownload/Softw
 documents data matrices, fixed/random-effect designs, residual strata,
 compression, wavelet and other transforms, and posterior summaries. It also
 specifies an inverse-gamma variance prior controlled by `delta_omega`, but the
-exact native shape/rate mapping is not established by the current audit.
-Explicit user-supplied priors would be an honest initial API; guessed native
-defaults would not. Output fields `prior_omega_a` and `prior_omega_b` may allow
-later native comparison. The guide fixes between-function correlations to
+exact native shape/scale mapping is now established by the October 8 audit.
+The explicit user-supplied variance mapping uses
+`a=delta_omega*component_count`, `b=a*variance`. It was verified against
+native output fields `prior_omega_a` and `prior_omega_b`. The guide fixes between-function correlations to
 identity matrices; `C` groups functions sharing residual covariance, permitting
 different wavelet residual variances across strata without cross-function
 residual correlation. The paper's covariance model is more general.
@@ -140,7 +149,7 @@ This short example validates the public workflow, not convergence for
 scientific use or behavior on the inaccessible native pancreatic example.
 
 Remaining coverage includes automatic variance and
-proposal initialization, the native `delta_omega` mapping, additional transform
+proposal initialization, additional transform
 families and boundary conventions, compression, prediction workflows
 and native files. The catalog remains partial until these gaps are resolved.
 

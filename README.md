@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-88 implemented, 42 partial, and 8 pending. Each method's guide explains its
+90 implemented, 42 partial, and 6 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -62,6 +62,8 @@ shrinkage calibration is available conditional on supplied variance estimates.
 [Posterior prediction](docs/wfmm-prediction.md) covers future latent curves and
 replicates, with explicit existing/new random-effect designs and shared-level
 dependence propagated through posterior variance draws.
+Native-verified energy compression reports curve votes and actual retained
+energy, with explicit handling of split ties and empty selections.
 Explicit coefficient or wavelet-band selection preserves original positions
 for reconstruction after fitting a reduced model.
 A bounded REML initializer estimates starting random-effect and residual
@@ -96,6 +98,13 @@ the active workflow is `.github/workflows/validation.yml`.
 Refresh the catalog with `uv run python tools/inventory.py`. Original downloads
 and research snapshots are kept under the ignored `research/raw/` directory;
 source URLs and validation evidence are recorded separately.
+
+The public-domain [FLECS90 source translator](docs/flecs90.md) is now implemented
+in Python and checked against native C and compiled Fortran outputs.
+
+iBOIN now provides [saved simulation reports and exact-seed replay](docs/iboin-report.md).
+Its unresolved native final-selection conventions remain documented, and its
+catalog status remains partial.
 
 ## Numerical API
 
@@ -911,8 +920,11 @@ SYNERGY also provides a
 baselines and REML thin-plate smoothing. Its
 [wild-bootstrap workflow](docs/synergy-surface-bootstrap.md) generates Mammen
 resamples and refits each marginal baseline and spline, returning departure
-draws and descriptive sample standard deviations. Other parametric surfaces,
-the original bootstrap interval convention and native workflows remain pending.
+draws and descriptive sample standard deviations. The recovered
+[parametric models](docs/synergy-parametric.md) add Greco, Machado–Robinson,
+Plummer–Short and Carter fitting, parameter uncertainty and curve/contour figures,
+checked against the original author scripts. The semiparametric bootstrap
+interval convention and its native workflow remain pending.
 
 [Decentralized trial planning](docs/dct-normal.md) adds continuous and binary
 sample sizes with onsite/offsite heterogeneity, unequal arm variances and repeated
@@ -1865,3 +1877,11 @@ The archive's [legacy matched-pairs binary method](docs/stplan-matched-pairs.md)
 adds pilot-based power and inverse planning, plus preliminary-size recommendations
 when pilot observations are unavailable. Its two-sided approximation retains only
 the rejection tail in the direction of the effect, as in the original routine.
+
+[RMC-COMPASS](docs/rmc-compass.md) now provides explicitly approximate point
+predictions from its rounded public model panel. Exact fitted parameters and
+confidence intervals remain open.
+
+[General Multc99 workflows](docs/multc99.md) now cover compound/conditional
+outcomes, historical mixtures, elicitation/planning, randomized trials and
+portable study replay, checked against recovered C and high-precision references.

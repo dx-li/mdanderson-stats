@@ -2,7 +2,9 @@
 
 This is an opt-in likelihood-based initializer for the covariance model used
 by :mod:`wfmm_model`. It does not infer the native ``delta_omega`` inverse-
-gamma prior or claim parity with the unavailable Windows initialization.
+gamma prior or claim parity with native MOM/profile initialization. See
+:func:`wfmm_variance_prior.wfmm_variance_prior` for the separately verified
+shape/scale mapping.
 """
 
 from __future__ import annotations

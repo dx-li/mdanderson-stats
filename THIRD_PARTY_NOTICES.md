@@ -1,5 +1,30 @@
 # Third-party notices
 
+## Multc99 general outcome workflows
+
+The `multc99` Python modules follow Peter F. Thall and Hsi-Guang Sung's
+Multc99 2.1 C workflow, recovered from the institutional archive on October 8,
+2026. Its source extraction/adaptation permission is limited to noncommercial
+use; commercial use requires written permission from the upstream department.
+Those terms remain applicable to adapted portions. The complete original
+[README notice](notices/mdanderson-multc99-readme.txt) accompanies this port,
+re-encoded from Windows-1252 to UTF-8 without changing its content. Source
+hashes and corrected native defects are recorded in `docs/multc99-source.json`
+and `research/multc99-audit.md`. Original C files and binaries are reference
+inputs and are not bundled or required at runtime. This component is not an
+unrestricted MIT relicense.
+
+## FLECS90 source translator
+
+`flecs90.py` follows the MD Anderson FLECS90 C source archive, retrieved on
+October 8, 2026. Its README states: “This code is placed in the public domain.
+Enjoy.” The original introduction, author contact, public-domain declaration
+and warranty terms are preserved verbatim in
+[notices/mdanderson-flecs90-readme.txt](notices/mdanderson-flecs90-readme.txt).
+Archive/source hashes and reference-build adaptations are recorded in
+`docs/flecs90-source.json`. Original C files are reference inputs and are not
+bundled or required at runtime.
+
 ## IPDfromKM reconstruction diagnostics
 
 `ipdfromkm_diagnostics.py` follows the report calculations in IPDfromKM 0.1.10,
@@ -1369,3 +1394,38 @@ compiled locally for Gaussian fitting and prediction, together with its
 original R helpers. `research/condis-gbm-sources.json` records source pins,
 and `research/condis-gbm-audit.md` describes the reference scope and checks.
 Original gbm source and compiled objects are not distributed.
+
+## SYNERGY parametric verification sources
+
+The original institutional SYNERGY V3 S-PLUS/R listings are by J. Jack Lee,
+Maiying Kong, G. Dan Ayers and Reuben Lotan. They implement Greco et al. (1990),
+Machado and Robinson (1994), Plummer and Short (1990), and Carter et al. (1988).
+The recovered original listings and readme contain no express source license;
+they are used locally for numerical verification and are excluded from this
+distribution. The Python modules independently implement the mathematical
+equations in NumPy/SciPy. Source pins, citations and reference scope appear in
+`docs/synergy-parametric-source.json` and `research/synergy-parametric-audit.md`.
+
+## WFMM native variance-prior verification
+
+Jeffrey S. Morris and Raymond J. Carroll's WFMM 3.1 Linux program provides
+external numerical references for the inverse-gamma prior mapping. Eight
+wholly synthetic initializations were run with the original executable. The
+executable, bundled libraries and example observations are excluded from this
+distribution. The Python helper implements the verified shape/scale equations;
+see `research/wfmm-native-prior-audit.md` for provenance and validation limits.
+
+## Multc Lean native behavior references
+
+John Cook and John Venier's Multc Lean 2.1 institutional Windows calculation
+DLL supplies external references for the independently implemented legacy
+duration replay. The authored research harness runs original x86 instructions
+with controlled external variates and vector helpers; it distributes no
+original executable, DLL, installer or runtime. The original License.rtf
+restricts redistribution of the original program. Numerical fixtures are
+wholly synthetic factual outputs. See `research/multc-native-duration-audit.md`.
+
+The recovered WFMM executable also supplies five Haar transform and 46
+compression/bypass/error references for the independent Python compression
+rule; original executables/libraries remain excluded. See
+`research/wfmm-native-compression-audit.md`.

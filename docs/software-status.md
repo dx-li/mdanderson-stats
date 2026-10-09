@@ -6,9 +6,9 @@ implemented features, validation evidence and source provenance for each entry.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 88 | The cataloged scope is implemented and has recorded numerical validation. |
+| Implemented | 90 | The cataloged scope is implemented and has recorded numerical validation. |
 | Partial | 42 | Documented Python methods are available; some methods or workflows remain open. |
-| Pending | 8 | No implementation is yet recorded. |
+| Pending | 6 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
 Implemented entries provide usable Python workflows and recorded validation;
@@ -116,6 +116,8 @@ some legacy adaptations retain commercial-use restrictions.
 | Backfill Bayesian Optimal Interval (BF-BOIN) Design for Phase I Clinical Trials | [online #162](https://biostatistics.mdanderson.org/shinyapps/BF-BOIN/) | See catalog feature and validation notes |
 | A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents | [online #114](https://biostatistics.mdanderson.org/shinyapps/MTADF/) | [Isotonic and logistic workflows](mtadf.md), including recovered author decisions, replay and simulation |
 
+| FLECS90 | [desktop #43](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/43) | [Translator guide](flecs90.md) |
+
 ## Partially implemented
 
 | Program | Source entry | Python documentation |
@@ -129,13 +131,13 @@ some legacy adaptations retain commercial-use restrictions.
 | Bayesian hierarchical classification and information sharing for clinical trials with subgroups and binary outcomes | [online #153](https://biostatistics.mdanderson.org/shinyapps/BaCIS) | [Guide](bacis.md) |
 | Bayesian Model Averaging Continuous Reassessment Method | [online #133](https://biostatistics.mdanderson.org/shinyapps/BMACRM) | See catalog feature and validation notes |
 | Bayesian Optimal Interval Design (BOIN) for Drug Combination Trials | [online #128](https://biostatistics.mdanderson.org/shinyapps/BOINComb/) | [Guide](boin-combination-source.md) |
-| Bayesian Optimal Interval Design with Informative Prior (iBOIN) for Phase I Clinical Trials | [online #145](https://biostatistics.mdanderson.org/shinyapps/iBOIN) | [Guide](iboin.md) |
+| Bayesian Optimal Interval Design with Informative Prior (iBOIN) for Phase I Clinical Trials | [online #145](https://biostatistics.mdanderson.org/shinyapps/iBOIN) | [Guide](iboin.md), [saved reports and replay](iboin-report.md) |
 | Bayesian Phase 2 Design with Delayed Outcomes | [online #141](https://biostatistics.mdanderson.org/shinyapps/Phase2Delay) | See catalog feature and validation notes |
 | bCRM | [desktop #15](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/15) | See catalog feature and validation notes |
 | BMA CRM | [desktop #81](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/81) | See catalog feature and validation notes |
 | BOIN Design Desktop Program | [desktop #99](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99) | See catalog feature and validation notes |
 | BOIN12: Bayesian Optimal Interval Phase I/II Trial Design for Utility-Based Dose Finding | [online #148](https://biostatistics.mdanderson.org/shinyapps/BOIN12) | [Guide](boin12.md) |
-| CI of Interaction Index | [desktop #65](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/65) | [Guide](interaction-index.md) |
+| CI of Interaction Index | [desktop #65](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/65) | [Interaction indices](interaction-index.md); [parametric models](synergy-parametric.md); [semiparametric method](synergy-surface.md) |
 | CiBolus | [desktop #86](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86) | [Guide](cibolus.md), [Prior calibration](cibolus-calibration.md) |
 | CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis | [online #157](https://biostatistics.mdanderson.org/shinyapps/CondiS/) | [Guide](condis.md), [curve comparison](condis-survival-comparison.md) |
 | CRM Suite | [desktop #132](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132) | See catalog feature and validation notes |
@@ -146,14 +148,13 @@ some legacy adaptations retain commercial-use restrictions.
 | MDS-HOPE: An interactive risk assessment tool for patients treated with HMA | [online #171](https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/) | [Guide](mds-hope.md) |
 | MERIT: Multiple-dose Randomized Phase II Trial Design for Dose Optimization and Sample Size Determination | [online #160](https://biostatistics.mdanderson.org/shinyapps/MERIT/) | [Guide](merit.md) |
 | Multc Lean | [desktop #12](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12) | [Monitoring and calendar replay](multc.md) |
-| Multc99 | [desktop #3](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/3) | See catalog feature and validation notes |
 | PerfectMatch | [desktop #7](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/7) | [Guide](perfectmatch.md) |
 | Platform Design of Bayesian Adaptive Randomization with Posterior Probability | [online #137](https://biostatistics.mdanderson.org/shinyapps/PLBARPO/) | [Control monitoring](plbarpo-control.md), [active allocation](plbarpo-allocation.md), [no-control trials](plbarpo-trials.md), [control trials](plbarpo-control-trials.md) |
 | Proportional density | [desktop #78](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/78) | [Guide](proportional-density.md) |
 | PRT | [desktop #69](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/69) | See catalog feature and validation notes |
 | Single arm phase II monitoring using Bayes factor with iMOM prior for binary outcome | [online #143](https://biostatistics.mdanderson.org/shinyapps/BFMonitor) | [Guide](bfmonitor.md) |
 | SurvivalContour: Show Survival Prediction in Contour Plot | [online #166](https://biostatistics.mdanderson.org/shinyapps/survivalContour/) | [Guide](survival-contour.md), [forest rank splits](random-survival-forest-logrankscore.md), [Brier splits](random-survival-forest-brier.md) |
-| SYNERGY | [desktop #18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18) | [Guide](interaction-index.md) |
+| SYNERGY | [desktop #18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18) | [Interaction indices](interaction-index.md); [parametric models](synergy-parametric.md); [semiparametric method](synergy-surface.md) |
 | Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials | [online #129](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/) | [Guide](tite-boin.md) |
 | TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | [online #152](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12) | [AL and final selection](tite-boin12.md); [BDA](tite-boin12-bda.md) |
 | ToxFinder | [desktop #14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14) | [Guide](toxfinder.md); [prior elicitation](toxfinder-prior-elicitation.md) |
@@ -163,15 +164,21 @@ some legacy adaptations retain commercial-use restrictions.
 | UAROET | [desktop #92](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/92) | [Guide](uaroet.md), [trial simulation](uaroet-trials.md) |
 | WFMM | [desktop #70](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/70) | [Guide](wfmm.md) |
 
+| RMC-COMPASS: Renal Medullary Carcinoma - Clinical and Outcomes Model for Prognostic Assessment and Survival Stratification | [online #174](https://biostatistics.mdanderson.org/shinyapps/RMC-COMPASS/) | [Rounded public model](rmc-compass.md) |
+
 ## Pending
 
 | Program | Source entry | Python documentation |
 | --- | --- | --- |
 | A Bayesian Phase II Platform Trial Design for Drug Combinations | [online #140](https://biostatistics.mdanderson.org/shinyapps/ComPAS) | See catalog feature and validation notes |
 | Bayesian Survival Function Posterior Estimates | [online #146](https://biostatistics.mdanderson.org/shinyapps/BayesianSurvival) | [Guide](bayesian-survival-source-status.md) |
-| FLECS90 | [desktop #43](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/43) | See catalog feature and validation notes |
 | K-COMPASS: Estimate systemic-therapy free survival following MDT for oligometastatic clear cell RCC | [online #169](https://biostatistics.mdanderson.org/shinyapps/K-COMPASS/) | See catalog feature and validation notes |
 | MDS-DPSS: An Interactive Dynamic Prognostic Scoring System Tool for MDS | [online #170](https://biostatistics.mdanderson.org/shinyapps/MDS-DPSS/) | See catalog feature and validation notes |
 | Predicting survival for patients with malignant pleural effusions using the BLESS models | [online #149](https://biostatistics.mdanderson.org/shinyapps/BLESS) | See catalog feature and validation notes |
 | Risk of CNS Metastasis in Clinically Localized Melanoma | [online #161](https://biostatistics.mdanderson.org/shinyapps/CNSRISK) | See catalog feature and validation notes |
-| RMC-COMPASS: Renal Medullary Carcinoma - Clinical and Outcomes Model for Prognostic Assessment and Survival Stratification | [online #174](https://biostatistics.mdanderson.org/shinyapps/RMC-COMPASS/) | See catalog feature and validation notes |
+
+October 8 continuation: WFMM now includes native-verified energy compression,
+and Multc Lean includes the recovered legacy duration kernel for explicit
+boundaries/draws. Their guides distinguish these supported contracts from
+remaining native initialization/transform and boundary/workflow gaps. Counts
+are unchanged; see the [continuation record](../research/source-recovery-2026-10-08.md).

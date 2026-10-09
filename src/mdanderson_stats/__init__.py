@@ -894,6 +894,12 @@ from .fine_gray_contour import (
     plot_fine_gray_contour_3d,
 )
 from .fisher_design import fisher_power, fisher_sample_size
+from .flecs90 import (
+    FLECS90SyntaxError,
+    FLECS90Translation,
+    translate_flecs90,
+    translate_flecs90_file,
+)
 from .generalized_gamma import (
     GeneralizedGammaFit,
     GeneralizedGammaPrediction,
@@ -911,6 +917,7 @@ from .hierarchical_binomial import (
 from .hierarchical_normal import HierarchicalNormalFit, hierarchical_normal
 from .iboin import IBOINBoundaries, IBOINDesign
 from .iboin_final import IBOINSelection, select_iboin_mtd, select_iboin_trial_mtd
+from .iboin_report import IBOINSimulationReport, replay_iboin_report, simulate_iboin_report
 from .iboin_simulation import (
     IBOINOperatingCharacteristics,
     IBOINSimulatedTrial,
@@ -1137,6 +1144,26 @@ from .muhaz_mse import MuhazMSE, muhaz_mse
 from .muhaz_neighbors import NeighborBandwidths, muhaz_neighbor_bandwidths
 from .muhaz_plot import plot_kphaz, plot_muhaz, plot_pehaz
 from .muhaz_summary import MuhazSummary, summarize_muhaz
+from .multc99 import Multc99Design, Multc99Event, Multc99Probability, Multc99State, multc99_design
+from .multc99_boundaries import (
+    Multc99ProbabilityCurve,
+    multc99_probability_curve,
+    multc99_with_boundaries,
+)
+from .multc99_calibration import (
+    Multc99PrecisionSampleSize,
+    Multc99PriorCalibration,
+    multc99_precision_sample_size,
+    multc99_prior_from_interval,
+)
+from .multc99_randomized import (
+    Multc99RandomizedSimulation,
+    Multc99RandomizedTrial,
+    run_multc99_randomized_trial,
+    simulate_multc99_randomized,
+)
+from .multc99_report import Multc99StudyReport, multc99_study_report, replay_multc99_study
+from .multc99_trial import Multc99Simulation, Multc99Trial, run_multc99_trial, simulate_multc99
 from .multc_calendar import MultcCalendarLook, MultcCalendarTrial, run_multc_calendar_trial
 from .multc_core import (
     MultcBoundaries,
@@ -1145,6 +1172,11 @@ from .multc_core import (
     MultcPotentialBoundaries,
     MultcState,
     multc_lean_design,
+)
+from .multc_legacy_duration import (
+    MultcLegacyDuration,
+    MultcLegacyDurationPatient,
+    run_multc_legacy_duration,
 )
 from .multc_simulation import (
     MultcSimulationConfig,
@@ -1414,6 +1446,7 @@ from .regression_ess_simulation import (
 )
 from .response_survival import ResponseSurvivalPosterior, response_survival_posterior
 from .response_survival_simulation import ResponseSurvivalSimulation, simulate_response_survival
+from .rmc_compass import RMCCompassReportedPrediction, rmc_compass_reported_prediction
 from .rolling_six import RollingSixDecision, RollingSixDesign, RollingSixSelection
 from .rolling_six_simulation import RollingSixSimulation, simulate_rolling_six
 from .rolling_six_trial import RollingSixStep, RollingSixTrial, run_rolling_six_trial
@@ -1659,6 +1692,13 @@ from .survival_spline import (
     predict_survival_spline,
 )
 from .survival_uncertainty import ParametricSurvivalMCPrediction, predict_parametric_survival_mc
+from .synergy_parametric import (
+    SynergyParametricFit,
+    fit_synergy_parametric,
+    predict_synergy_parametric,
+    synergy_parametric_response,
+)
+from .synergy_parametric_plot import plot_synergy_parametric
 from .synergy_surface import (
     SynergySurfaceFit,
     SynergySurfacePrediction,
@@ -1902,6 +1942,7 @@ from .weibull_unknown_shape_gof import (
     weibull_unknown_shape_bayesian_gof,
 )
 from .wfmm_basis import WFMMBasis, WFMMTransformed, wfmm_basis, wfmm_inverse, wfmm_transform
+from .wfmm_compression import WFMMCompression, wfmm_compress_coefficients
 from .wfmm_covariance import WFMMCovarianceSummary, wfmm_covariance, wfmm_summarize_covariance
 from .wfmm_empirical_bayes import WFMMShrinkage, calibrate_wfmm_shrinkage
 from .wfmm_model import WFMMCoefficientFit, WFMMPrior, fit_wfmm_coefficients
@@ -1909,6 +1950,7 @@ from .wfmm_posterior import WFMMPosteriorSummary, wfmm_summarize
 from .wfmm_prediction import wfmm_predict_coefficients
 from .wfmm_selection import WFMMSelection, wfmm_restore_coefficients, wfmm_select_coefficients
 from .wfmm_variance_init import WFMMVarianceInitialization, initialize_wfmm_variances
+from .wfmm_variance_prior import wfmm_variance_prior
 from .windows import (
     WindowCrossValidation,
     WindowNeighborCrossValidation,
@@ -1919,6 +1961,34 @@ from .windows import (
 )
 
 __all__ = [
+    "MultcLegacyDuration",
+    "MultcLegacyDurationPatient",
+    "run_multc_legacy_duration",
+    "Multc99Design",
+    "Multc99Event",
+    "Multc99Probability",
+    "Multc99State",
+    "multc99_design",
+    "Multc99ProbabilityCurve",
+    "multc99_probability_curve",
+    "multc99_with_boundaries",
+    "Multc99PrecisionSampleSize",
+    "Multc99PriorCalibration",
+    "multc99_precision_sample_size",
+    "multc99_prior_from_interval",
+    "Multc99RandomizedSimulation",
+    "Multc99RandomizedTrial",
+    "run_multc99_randomized_trial",
+    "simulate_multc99_randomized",
+    "Multc99StudyReport",
+    "multc99_study_report",
+    "replay_multc99_study",
+    "Multc99Simulation",
+    "Multc99Trial",
+    "run_multc99_trial",
+    "simulate_multc99",
+    "RMCCompassReportedPrediction",
+    "rmc_compass_reported_prediction",
     "MDSHopeCovariates",
     "MDSHopeRiskClassification",
     "MDSHopeScore",
@@ -1930,6 +2000,8 @@ __all__ = [
     "wfmm_basis",
     "wfmm_transform",
     "wfmm_inverse",
+    "WFMMCompression",
+    "wfmm_compress_coefficients",
     "WFMMSelection",
     "wfmm_select_coefficients",
     "wfmm_restore_coefficients",
@@ -1937,6 +2009,7 @@ __all__ = [
     "calibrate_wfmm_shrinkage",
     "WFMMVarianceInitialization",
     "initialize_wfmm_variances",
+    "wfmm_variance_prior",
     "WFMMPrior",
     "WFMMCoefficientFit",
     "fit_wfmm_coefficients",
@@ -1946,6 +2019,11 @@ __all__ = [
     "WFMMCovarianceSummary",
     "wfmm_covariance",
     "wfmm_summarize_covariance",
+    "SynergyParametricFit",
+    "fit_synergy_parametric",
+    "predict_synergy_parametric",
+    "synergy_parametric_response",
+    "plot_synergy_parametric",
     "SynergySurfaceFit",
     "SynergySurfacePrediction",
     "fit_synergy_surface",
@@ -2958,6 +3036,10 @@ __all__ = [
     "SurvivalPriorESS",
     "survival_prior_ess",
     "conjugate_prior_ess",
+    "FLECS90SyntaxError",
+    "FLECS90Translation",
+    "translate_flecs90",
+    "translate_flecs90_file",
     "IBOINBoundaries",
     "IBOINDesign",
     "IBOINTrialDecision",
@@ -2970,6 +3052,9 @@ __all__ = [
     "IBOINSimulatedTrial",
     "simulate_iboin",
     "simulate_iboin_trial",
+    "IBOINSimulationReport",
+    "simulate_iboin_report",
+    "replay_iboin_report",
     "RareDisease123Decision",
     "RareDisease123Design",
     "RareDisease123Simulation",

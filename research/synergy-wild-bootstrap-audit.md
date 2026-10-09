@@ -52,7 +52,7 @@ the source SD convention is unresolved.
 
 ## Remaining limits
 
-The four 2007 parametric response surfaces, source interval convention, native
+The separately audited parametric surfaces are now covered. The source interval convention, native
 random stream, case-study reproduction, and native reports/plots remain
 unimplemented. This addition alone does not complete SYNERGY catalog entry 18.
 

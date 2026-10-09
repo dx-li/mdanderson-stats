@@ -1,0 +1,36 @@
+{
+  "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/FLECS90/FLECS90_V1.tar.gz",
+  "retrieved_date": "2026-10-08",
+  "bytes": 35436,
+  "sha256": "82eb73ef0b6e8e27c850fae8a9d1fc5b7b8e1a4505a729e0476267e9efc39c29",
+  "license": "Public domain, with retained NO WARRANTY statement in source/readme",
+  "source_files": {
+    "flecs90.1": "9aab9a50501e1aa646602d5b4e3723aa2f3a37a00545783ee91b94984c1d3e00",
+    "flecs90.c": "c73139822ea6befdce1cbab47dfca5d9e87fbaedb0cb7c9c0411b5fa37d881b5",
+    "flecs90.h": "044f2dfc14b35822f02ce8a70ad0757ee142beb9b1c59badfaba84268d4f5c3f",
+    "flecs90.ps": "1c13c6fb136172795c7ca5835d5edd578c43966286ba5661ee3c9d945ffaa799",
+    "getopt.c": "fce423b4e6dc25cf3c429f8e76dcc909db57df78b58b93101fdcd14d5456fc5c",
+    "readme": "61a692f6bf76d42de3aafd6caec80a6c07926f7557ba22e841ed14febc74f367",
+    "util.c": "141aaa16c6cfc591fd80435f8b65e71b1448a085c9625d0f7363d2480ef42cfa",
+    "work.c": "81c282e7916f4dc265de039155a595f9635a9fb634c1d03a400e9632d40bdc19"
+  },
+  "reference_build": {
+    "compiler": "gcc 14.2.0",
+    "flags": [
+      "-std=c99",
+      "-fcommon",
+      "-O0"
+    ],
+    "adaptations": [
+      "Rename local getline to flecs_getline to avoid modern stdio signature collision",
+      "Initialize work.c flecs_in pointer to NULL before first free",
+      "Initialize work.c qotherwise flag to zero before INSTANCE classification"
+    ]
+  },
+  "validation": {
+    "native_translation_outputs": 144,
+    "compiled_fortran_outputs": 144,
+    "executed_reference_programs": 136,
+    "executed_corrected_edge_programs": 2
+  }
+}

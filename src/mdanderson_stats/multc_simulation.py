@@ -66,11 +66,11 @@ class MultcSimulationConfig:
     """Explicit timing assumptions for one supported Multc Lean design.
 
     Positive response times follow an exponential law calibrated to have 95%
-    probability by ``response_window``. ``response_timing`` makes the unresolved
-    meaning of native truncation explicit: conditional truncation or clipping at
-    the window. Nonresponse becomes known at the window. Toxicity availability
-    uses the caller-supplied fixed delay because the guide does not specify its
-    time law. The calendar replay's accrual-open-clock convention is retained.
+    probability by ``response_window``. ``response_timing`` explicitly chooses
+    conditional truncation or clipping. The recovered legacy duration kernel
+    clips and shares follow-up for both endpoints; this calendar configuration
+    retains the caller-supplied toxicity delay and accrual-open-clock policy.
+    Nonresponse becomes known at the window. See the separate legacy replay.
     """
 
     design: MultcLeanDesign

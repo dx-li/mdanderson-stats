@@ -1,4 +1,9 @@
-# SYNERGY remaining response surfaces
+# SYNERGY response-surface coverage audit
+
+October 8 update: the original institutional archive is recovered. All four
+parametric models now provide verified fits, parameter uncertainty and figures;
+see [the parametric audit](synergy-parametric-audit.md). Earlier retrieval
+failures below describe the historical review, not current source availability.
 
 The [official catalog entry 18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18)
 lists four one-parameter response surfaces from Lee et al. (2007),
@@ -7,7 +12,8 @@ DOI `10.1080/10543400701199593`, and the 2008 semiparametric method. Existing
 The semiparametric fit and source-defined wild-bootstrap generation/refitting
 are now available. The [resampling audit](synergy-wild-bootstrap-audit.md)
 separates that workflow from the unresolved native interval convention. The
-four parametric surfaces and native wild-bootstrap intervals remain open.
+native semiparametric wild-bootstrap intervals remain open. The parametric
+surfaces are now implemented.
 
 ## Semiparametric source contract
 
@@ -73,12 +79,12 @@ do not silently adopt a secondary transcription's fitted-center RMS formula.
 ## Source availability
 
 Catalog metadata records `SYNERGY_V3.zip`, download 293/version 154, 25 KB.
-No original archive is present locally. The official download endpoint returned
+The original archive was absent during the initial review. The official download endpoint returned
 a web cache miss, and the shell download attempt failed DNS resolution.
 Direct PMC retrieval returned a browser challenge; indexed primary full text
 provided the mathematical evidence above. These retrieval limits do not
 establish native code behavior, reproduction of case studies or archive terms.
-The four 2007 parametric models still need their own exact source contracts.
+The recovered October 8 archive now establishes the four parametric contracts.
 
 The [2007 primary abstract](https://pubmed.ncbi.nlm.nih.gov/17479394/) confirms
 four one-parameter Loewe-based surfaces and accompanying S-PLUS/R listings,

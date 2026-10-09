@@ -1,0 +1,48 @@
+{
+  "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/SYNERGY/SYNERGY_V3.zip",
+  "retrieved_date": "2026-10-08",
+  "bytes": 26499,
+  "sha256": "23ce39811739b1f856910d0974403815bdaf423eb994db34f0496960460daa51",
+  "source_members": {
+    "nl22B2.txt": {
+      "bytes": 411,
+      "sha256": "4f954287f01e46f0f2926896bf3d409f6dae1e182cc79e1adbeb9bac50e94754"
+    },
+    "readme.doc": {
+      "bytes": 51712,
+      "sha256": "eb9c4ba4bdd1b43ec729d273174ca93edb2b2868dd6fd97fe615380c9c8cb99f"
+    },
+    "synergy_example.SSC": {
+      "bytes": 3167,
+      "sha256": "d0e3dcd9f68cdad1b5a0abc7ed0d33fee32c7ad2a20c5485c16f659a4a5f3ec0"
+    },
+    "chou8491.SSC": {
+      "bytes": 12307,
+      "sha256": "1a739bfafcc56c74207e21061ab1f136e503412f5441d242e2aca8380d832219"
+    },
+    "greco90.ssc": {
+      "bytes": 8738,
+      "sha256": "b5ea66d1ad8c9a2b9f1b996c040787732e3a8c40398410cf4527430184071924"
+    },
+    "machado94.SSC": {
+      "bytes": 9020,
+      "sha256": "280a9daf454d0e92e20edbb7e4b7114e88e4033b08664148b8c1e0483eb12dd1"
+    },
+    "plummer90.SSC": {
+      "bytes": 8878,
+      "sha256": "ce9065cf8df4e6eda870fe7ea13612089336a451737836d483858d33d76791ca"
+    },
+    "carter88.SSC": {
+      "bytes": 7459,
+      "sha256": "6ae2541a753350e7cbbd351c92cfe0f7a8ec83958b758a8e27399d6b4a74171d"
+    }
+  },
+  "reference_runtime": "GNU R 4.5.0, base stats, unmodified mathematical/fitting kernels; plot callbacks suppressed",
+  "original_license_record": "No express source license found in the archive scripts/readme; original scripts and binary documents are retained only as ignored external numerical references. Python equations are implemented independently.",
+  "validation": {
+    "native_kernel_predictions": 138,
+    "native_model_fits": 9,
+    "kernel_max_absolute_response_error": 1.2490009027033011e-15,
+    "test_count": 36
+  }
+}

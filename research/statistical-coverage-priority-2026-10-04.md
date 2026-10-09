@@ -19,22 +19,27 @@ The adaptive TITE-Keyboard review recovered the joint timing model, including pe
 
 The recovered MTADF isotonic, local logistic and global logistic workflows now include decisions, trial replay and serial simulation. Independent posterior quadrature and direct cached R dependency comparisons validate the new fits. Its explicit numerical conventions and unknown live-app runtime remain documented compatibility limits.
 
+October 8: RMC-COMPASS (#174) moved from pending to partial after recovery of
+its live rounded model panel and independent prediction observations. The
+RMC-COMPASS exact fit and uncertainty recovery remain open. Subsequent recovery
+of Multc99 C source and completion of its general workflows removes #3 from
+the remaining-work table, which now has 42 partial entries.
+
 ## A. Statistical or source-contract uncertainty remains
 
 | Program | Unresolved contract | Evidence |
 | --- | --- | --- |
 | EffTox (#2) | Legacy contour-fitting objective and trinary calibration/native behavior remain unverified. Existing binary/trinary mathematical APIs do not resolve these source choices. | [legacy contour audit](efftox-legacy-contour-audit.md); [trinary calibration audit](efftox-trinary-calibration-audit.md) |
 | PerfectMatch (#7) | The paper's array-mean-500 scaling now joins PDNN fitting, conditional expression, normalization, correlations and chip quantiles. Several manual QC outputs and the native correlation convention remain undefined; array parameters and native file workflows are also unresolved. | [PerfectMatch guide](../docs/perfectmatch.md); [source records](../docs/perfectmatch-sources.json) |
-| Multc99 (#3) | Broader multiple-event scope was identified, but the archive/source was not recovered; only the fixed Phase-IIa contract is validated. | [Multc source records](../docs/multc-sources.json) |
-| Multc Lean (#12) | Saved study inputs, exact scenarios and calendar reports are covered. Native response-time truncation, toxicity ascertainment, suspension clock and pretrial/minimum-enrollment interaction remain unresolved; Python exposes explicit timing choices. | [Multc guide](../docs/multc.md); [simulation audit](multc-simulation-audit.md) |
+| Multc Lean (#12) | Saved study inputs, exact scenarios and calendar reports are covered. Recovered native duration references establish clipping, shared follow-up, balks and latent-count scheduling. Compact boundary construction, cohort/pretrial/minimum-enrollment precedence and full native workflow remain unresolved; observation-aware Python timing remains explicit. | [Multc guide](../docs/multc.md); [simulation audit](multc-simulation-audit.md) |
 | ToxFinder (#14) | Physician-prior elicitation now solves and independently checks the published equations; the Table 1 discrepancy is documented. Stage-2 information criterion is unresolved; the guide’s second-derivative substitute does not establish the native Eq. 12 rule. | [ToxFinder guide](../docs/toxfinder.md) |
 | bCRM (#15) | High-level stage controls and zero-gap futility are documented. Joint two-outcome likelihood/association prior, exact transition rules, positive-gap futility cutoff and post-trial four-parameter logistic estimator remain unresolved. | [bCRM guide](../docs/bcrm.md); [source records](../docs/bcrm-sources.json) |
-| SYNERGY (#18) | The four 2007 parametric response surfaces and fitting procedures remain unavailable; the inspected PMC, publisher, and archive routes were exhausted. | [response-surface audit](synergy-response-surface-audit.md) |
+| SYNERGY (#18) | The four original parametric models now provide native-validated fits, uncertainty and plots. The separate semiparametric bootstrap interval convention remains unresolved. | [parametric audit](synergy-parametric-audit.md); [bootstrap audit](synergy-wild-bootstrap-audit.md) |
 | Adaptive Randomization (#62) | Explicit Python controller policies exist; native scheduler/control ordering, floors and RNG conventions remain unspecified. | [controller audit](arand-controller-audit.md); [calendar guide](../docs/arand-calendar.md) |
 | CI of Interaction Index (#65) | Inference, plots, both published case studies and the three-drug simulation study are covered. The second simulation study's fixed-ray ratio is absent from recovered mathematics. Native pooling-denominator and file/report details remain unverified; the Python variance convention is explicit. | [workflow audit](interaction-index-workflow-audit.md); [case studies](../docs/interaction-index-case-studies.md); [three-drug study](../docs/interaction-index-study.md) |
 | Bayesian Chi-Square TTE (#66) | Rounded interval-likelihood fitting now covers all seven families with explicit proper Gaussian parameter priors and paired randomized CDF diagnostics. Censored diagnostics, native fitting/priors, fallback priors, Rychlik rank/trim convention, sorting, and reports remain uncertain. No BIC/DIC output contract was established. | [Bayesian chi-square guide](../docs/bayesian-chi-square.md); [rounded-time guide](../docs/rounded-tte-bayesian-gof.md) |
 | PRT (#69) | The published covariance-weighted isotonic projection can materially leave [0,1]; original executable behavior is unresolved. | [PRT guide](../docs/prt.md) |
-| WFMM (#70) | Native prior/proposal defaults, `delta_omega` mapping, other transforms, compression and files remain unresolved. | [WFMM audit](wfmm-audit.md); [prediction guide](../docs/wfmm-prediction.md) |
+| WFMM (#70) | Native MOM/profile variance and proposal initialization, other extended transforms/boundaries, pass filtering and files remain unresolved. The inverse-gamma `delta_omega` mapping and energy compression are now native-verified, with five periodic Haar transforms checked. | [native-prior audit](wfmm-native-prior-audit.md); [WFMM audit](wfmm-audit.md); [prediction guide](../docs/wfmm-prediction.md) |
 | TPI (#72) | Scenario-based tuning remains underspecified and unimplemented; this is distinct from the available TPI/mTPI rules and informative priors. | [TPI guide](../docs/tpi.md) |
 | Dose Schedule Finder (#75) | Automatic calibration, synthetic low-grade episode generation and within-patient adaptation are listed as open, but the inspected contract does not give complete procedures. | [Dose Schedule Finder guide](../docs/dose-schedule.md) |
 | U2OET (#77) | Explicit models, fitting, calibration and trial workflows exist; native prior interpretation, calibration and full operating-characteristic validation are unresolved. | [U2OET guide](../docs/u2oet.md); [source records](../docs/u2oet-sources.json) |
@@ -52,7 +57,7 @@ The recovered MTADF isotonic, local logistic and global logistic workflows now i
 | Phase2Delay (#141) | Native priors, sampler, calibration and continuous-monitoring rules are unknown. | [Phase2Delay guide](../docs/phase2delay.md) |
 | U-BOIN (#142) | Multiple-imputation evaluation and stage-II conduct now accept supplied predictive probabilities. The scaled-logistic prediction fit and standardization contract remain unresolved. | [U-BOIN guide](../docs/uboin.md); [imputation audit](uboin-imputation-evaluation-audit.md) |
 | BFMonitor (#143) | ESS-to-shape calibration rule is unspecified. | [BFMonitor guide](../docs/bfmonitor.md) |
-| iBOIN (#145) | Isotonic weights, tie handling and final-selection defaults are unknown. | [iBOIN guide](../docs/iboin.md); [selection audit](iboin-selection-audit.md) |
+| iBOIN (#145) | Captured-input HTML reports and exact-seed JSON replay are implemented. Native isotonic weights, tie handling and final-selection defaults remain unknown. | [iBOIN guide](../docs/iboin.md); [selection audit](iboin-selection-audit.md) |
 | BOIN12 (#148) | Run-in precedence is unspecified; multilevel behavior is under development. | [two-stage audit](boin12-two-stage-audit.md) |
 | Two-arm BOP2 / rBOP2 (#150) | Binary monitoring and explicit-grid calibration are implemented, but native automatic-grid and allocation-rounding conventions are unspecified. Paired-endpoint decision rules are unresolved; cached help also gives inconsistent Dirichlet formulas for endpoint marginals. | [rBOP2 binary guide](../docs/rbop2-binary.md); [calibration guide](../docs/rbop2-calibration.md); [source audit](../docs/rbop2-binary-source.md) |
 | TITE-BOIN12 (#152) | Cited supplement sections S7/S2 were unavailable, leaving their rules unresolved. | [TITE-BOIN12 guide](../docs/tite-boin12.md) |
@@ -65,6 +70,7 @@ The recovered MTADF isotonic, local logistic and global logistic workflows now i
 | Bayes Factor TTE (#89) | Monitoring, continuous boundaries, explicit-calendar simulation and saved reports are covered. Native arrival law, monitoring/final-analysis schedule and integer-day boundary convention remain unresolved; timing choices can change stopping probabilities and expected enrollment. | [calendar contract](../docs/bayes-factor-survival-calendar.md); [boundary precision](../docs/bayes-factor-survival.md) |
 | CRM Suite (#132) | CRM/BMA/DA inference, look-ahead and explicit-policy trial simulation are covered. Native precedence between the DA insufficient-observation wait and raw-rate restriction, and internal suspension scheduling remain unspecified; these can affect assignments and operating characteristics. Older desktop behavior is a separate version contract. | [DA decisions](../docs/dacrm.md); [simulation scheduling](../docs/crm-simulation.md) |
 | CondiS (#157) | Base imputation, all eight refiners and descriptive survival comparison are covered. The prediction example includes a target-derived input and performs imputation before splitting; it does not define a future-subject prediction or valid evaluation contract. Reactive app summary and prediction behavior were not recovered. | [workflow audit](condis-workflow-audit.md) |
+| RMC-COMPASS (#174) | Rounded public coefficients now support approximate point predictions and explicit rounding envelopes. Exact parameters/bounds, uncertainty, raw-input rules and output workflows remain unavailable. | [Guide](../docs/rmc-compass.md); [live-model audit](rmc-compass-audit.md) |
 
 ## B. No additional calculation identified; remaining work is input, output, or application parity
 
@@ -126,3 +132,9 @@ BFBOIN's recovered decision, titration, calendar and saved-report methods are
 complete after cross-checking the guide's OC outputs. Its modifier/conflict
 composition is explicitly documented; see the
 [completion review](bf-boin-bard-modifiers-audit.md#bf-boin-completion-review).
+
+- Multc99 (#3): recovered C source now validates compound/conditional outcomes,
+  historical mixtures, elicitation/planning, cohort/period-count and randomized
+  trials, manual boundaries, curve exports and saved study replay. Identified
+  native defects are corrected and upstream terms retained; see the
+  [completion audit](multc99-audit.md). Multc Lean remains a separate partial entry.

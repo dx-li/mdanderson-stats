@@ -1,7 +1,9 @@
-# Remaining source leads after EasyCellType
+# Remaining source leads
 
-This is research triage, not implemented coverage. It supplements the executable
-catalog and does not change pending status without a verified public workflow.
+The October 8 catalog checkpoint is 90 implemented, 42 partial and six pending.
+The [source-recovery record](source-recovery-2026-10-08.md) documents recovered
+archives, current blockers and validation. Historical reader failures below
+are not evidence that direct archive downloads are still unavailable.
 
 ## SurvivalContour parametric models
 
@@ -323,6 +325,22 @@ baseline survival and prediction instructions in e-Appendix 1/e-Tables 1–8.
 Those baselines are essential: rounded hazard ratios from the main tables alone
 cannot reproduce absolute survival probabilities.
 
+October 8 update: the official BLESS instruction and variable-definition PDFs
+now download successfully and define input units/coding. Neither contains
+fitted coefficients or baseline curves. The app shell is also accessible.
+The old PDF reader failures below are superseded; the essential supplementary
+fit/baseline evidence remains unavailable in the current runtime. Added
+publication hosts are saved in the environment draft for later access testing.
+
+Further October 8 recheck: the full PMC article is readable at
+`https://pmc.ncbi.nlm.nih.gov/articles/PMC8449006/?pdf=render` (HTML, not PDF).
+Its exact appendix link is
+`https://pmc.ncbi.nlm.nih.gov/articles/instance/8449006/bin/mmc1.pdf`.
+That link returns a download gateway or browser challenge instead of a PDF.
+The normal Chromium HTTPS browser did not obtain the attachment. Elsevier
+and Europe PMC still returned HTTP 403. This advances the source location,
+but does not recover baseline survival or fitted constants.
+
 The indexed supplement is named `mmc1.pdf` and described as about 1.2 MB.
 The live PMC page returned a browser challenge, the publisher full-text endpoint
 returned 403, and the app's instruction/variable PDFs returned reader cache
@@ -340,7 +358,7 @@ showed a browser challenge. These attempts did not recover the required model
 constants or baseline survival. Do not repeat them without new access or a new
 source lead.
 
-## WFMM and FLECS90
+## Recovered legacy sources: WFMM, FLECS90, Multc99 and SYNERGY
 
 WFMM's [archived institutional page](https://bioinformatics.mdanderson.org/public-software/archive/wfmm/)
 describes the wavelet functional mixed-model MCMC program and an older C++
@@ -351,10 +369,31 @@ posterior sampler or the catalog's newer version 3.1 is covered. Existing
 Pinnacle wavelet code is a potential numerical primitive, not a replacement
 for the functional mixed model.
 
-The FLECS90 detail page remains unavailable to the reader. Search results point
-to a FLECS-to-Fortran-90 translator; that secondary description is insufficient
-to implement its grammar. Retrieve the catalog archive or another primary
-source before deciding its full parser/translation contract.
+October 8 update: the catalog detail route still returns HTTP 500, but the
+institutional FLECS90_V1.tar.gz archive was recovered successfully. Its
+public-domain C source defines the translator grammar. The Python translation,
+file/CLI workflows and all four output options are now implemented and
+validated against 144 C outputs and GNU Fortran execution; see the
+[FLECS90 guide](../docs/flecs90.md) and [audit](flecs90-audit.md). Entry 43 is
+implemented. The unsupported secondary description is no longer the source basis.
+
+WFMM's original Linux bundle and example now also download successfully.
+Eight synthetic native initializations verify the inverse-gamma mapping, now
+implemented in Python; see [the native-prior audit](wfmm-native-prior-audit.md).
+The native MOM/profile optimizer, automatic proposals and other transform/file
+workflows remain distinct gaps. The pancreatic example's fitted workflow has
+not been rerun.
+
+Multc99's original C source now defines and validates the general-outcome,
+historical-mixture, calibration, trial and saved-study workflows; entry #3 is
+implemented. See [the audit](multc99-audit.md) and retained licensing terms.
+The separate Multc Lean MSI is recovered, but its timing backend is native
+Windows machine code and the time-law/clock contract remains unverified.
+
+SYNERGY's original S-PLUS/R archive is recovered. Its four parametric models
+now provide fits, parameter inference and figures, checked against the author
+kernels and nine R fits. See [the audit](synergy-parametric-audit.md). The
+separate semiparametric bootstrap interval convention remains unresolved.
 
 ## ComPAS platform design
 
@@ -374,6 +413,11 @@ only a JavaScript shell. A targeted GitHub source search for the DOI returned
 no matches. The exact likelihood, model-selection priors, posterior algorithm,
 operating rules and native references still need retrieval before implementation;
 entry 140 remains pending.
+
+October 8: direct app-shell and official flowchart retrieval succeeded.
+The flowchart names the adaptive borrowing/model choices but does not give
+the complete likelihood, priors or posterior algorithm. It does not resolve
+the missing statistical contract.
 
 ## CNSRISK primary-publication lead
 

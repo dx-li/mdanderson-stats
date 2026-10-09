@@ -11,13 +11,18 @@ from mdanderson_stats.boin_combination import BOINCombDesign, _biviso
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
+def _rows(filename: str) -> list[dict[str, str]]:
+    with (FIXTURES / filename).open(newline="") as source:
+        return list(csv.DictReader(source))
+
+
 def _matrix(row: dict[str, str], field: str) -> np.ndarray:
     shape = (int(row["nrow"]), int(row["ncol"]))
     return np.asarray([int(v) for v in row[field].split(";")]).reshape(shape)
 
 
 def test_native_boundary_table_matches_all_patient_counts():
-    rows = list(csv.DictReader((FIXTURES / "boin-combination-boundaries.csv").open()))
+    rows = _rows("boin-combination-boundaries.csv")
     design = BOINCombDesign(extra_safe=True)
     table = design.boundary_table(max_patients=int(rows[-1]["n"]))
     assert [int(v["n"]) for v in rows] == table.patients.tolist()
@@ -33,7 +38,7 @@ def test_native_boundary_table_matches_all_patient_counts():
 
 
 def test_native_movement_cases_preserve_axis_neighbors_and_safety():
-    rows = list(csv.DictReader((FIXTURES / "boin-combination-movements.csv").open()))
+    rows = _rows("boin-combination-movements.csv")
     for row in rows:
         design = BOINCombDesign(
             extra_safe="extra_safe" in row["case"],
@@ -75,10 +80,7 @@ def test_native_unrounded_biviso_fits_match():
 
 
 def test_selection_uses_native_rounded_fit_and_cross_closure():
-    rows = {
-        row["case"]: row
-        for row in csv.DictReader((FIXTURES / "boin-combination-selection.csv").open())
-    }
+    rows = {row["case"]: row for row in _rows("boin-combination-selection.csv")}
     design = BOINCombDesign()
 
     row = rows["cross_elimination_closure"]
@@ -101,7 +103,7 @@ def test_selection_uses_native_rounded_fit_and_cross_closure():
 
 
 def test_contour_matches_all_native_rows():
-    rows = list(csv.DictReader((FIXTURES / "boin-combination-selection.csv").open()))
+    rows = _rows("boin-combination-selection.csv")
     row = next(r for r in rows if r["case"] == "package_documented_contour")
     result = BOINCombDesign().select_mtd(
         _matrix(row, "patients"), _matrix(row, "toxicities"), mtd_contour=True
@@ -115,9 +117,7 @@ def test_contour_matches_all_native_rows():
 
 def test_all_toxic_lowest_dose_is_a_clean_no_mtd_result():
     row = next(
-        r
-        for r in csv.DictReader((FIXTURES / "boin-combination-selection.csv").open())
-        if r["case"] == "all_doses_overly_toxic"
+        r for r in _rows("boin-combination-selection.csv") if r["case"] == "all_doses_overly_toxic"
     )
     result = BOINCombDesign().select_mtd(_matrix(row, "patients"), _matrix(row, "toxicities"))
     assert result.dose is None

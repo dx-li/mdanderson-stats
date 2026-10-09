@@ -6,7 +6,7 @@ Python supports orthogonal wavelets and supplied custom transform pairs,
 coefficient-specific Bayesian mixed models, reconstruction, posterior curve
 summaries and [future-curve prediction](wfmm-prediction.md). An explicit Python REML
 initializer supplies starting variance estimates. Catalog entry 70 is
-**partial**: native initialization/prior defaults, other transform families and
+**partial**: native variance/proposal initialization, other transform families and
 native file workflows remain open.
 
 ## Transform and reconstruct curves
@@ -31,8 +31,11 @@ The coefficient order is `[a_J,d_J,...,d_1]`: coarsest approximation followed
 by details from coarse to fine. Filtering samples even indices with forward
 tap offsets and periodic wrapping. `coefficient_partition` separates the
 approximation and each detail band; `coefficient_scale` records its level.
-These are explicit Python conventions, not a claim to reproduce native WFMM
-binary ordering or boundary-extension modes.
+Five synthetic periodic Haar (`filter_length=2`) transforms match native WFMM
+3.1 with `extended_mode=1` at 16–64 points and one–four decomposition levels.
+This does not establish other native wavelets or extension modes: native db4
+with 64 points/two levels retains 77 coordinates, while the Python orthogonal
+transform retains 64. See the [compression audit](../research/wfmm-native-compression-audit.md).
 
 Use `transform="identity"` to retain the original columns. For
 `transform="custom"`, provide either a square `custom_matrix` with orthonormal
@@ -40,9 +43,9 @@ columns, or separate square `analysis_matrix` and `synthesis_matrix` numerical
 inverses. The former keeps transpose reconstruction; the latter uses the
 guide's explicit forward and reverse products. See the
 [paired custom-transform guide](wfmm-custom-transform.md) for validation and
-covariance interpretation. Custom transforms do not center the input. PCA, energy
-compression, alternate boundary modes and multidimensional transforms remain
-open.
+covariance interpretation. Custom transforms do not center the input. PCA,
+alternate boundary modes and multidimensional transforms remain open. Energy
+compression of supplied coefficients is now native-verified below.
 
 Transforms return readonly arrays and reject nonfinite values. They support
 at most 4,096 time points and 2,000,000 input cells. Work estimates are checked
@@ -114,15 +117,57 @@ Selection and restoration preserve arbitrary leading dimensions and bound
 input/output arrays to 2,000,000 cells. Restoration also supports coefficient
 variance arrays; zero-filled variances describe the retained subspace only.
 The native guide records retained indices as `DIndex` and their count as
-`Kstar`. Its automatic energy filtering and native high/low-pass flag
-conventions remain unverified; this API uses explicit indices or bands.
+`Kstar`. Explicit selection remains available; automatic energy compression
+now has a separate verified API.
+
+### Compress by the native energy rule
+
+`wfmm_compress_coefficients(coefficients, basis, alpha=..., t=...)` ranks squared
+coefficients within each curve. A column receives a vote when cumulative energy
+**including that coefficient** is strictly below `alpha` times total energy.
+Retain columns with **more than `t` votes**. This native rule excludes the
+crossing coefficient, so it can retain less than the requested energy.
+`alpha=1` bypasses compression and retains every column, regardless of `t`.
+
+```python
+import numpy as np
+from mdanderson_stats import wfmm_basis, wfmm_compress_coefficients, wfmm_restore_coefficients
+
+basis = wfmm_basis(4, transform="identity")
+compressed = wfmm_compress_coefficients(
+    [[3, 1, 1, 1], [1, 3, 1, 1], [3, 1, 1, 1]],
+    basis,
+    alpha=0.8,
+    t=1,
+)
+assert compressed.selection.retained_indices.tolist() == [0]
+assert compressed.vote_counts.tolist() == [2, 1, 0, 0]
+np.testing.assert_allclose(compressed.energy_fraction, [0.75, 1 / 12, 0.75])
+restored = wfmm_restore_coefficients(compressed.selection.coefficients, compressed.selection)
+assert restored.shape == (3, 4)
+```
+
+The result's `selection` feeds existing fitting/restoration APIs; it preserves
+original scale/partition identities. `energy_fraction` reports actual retained
+energy per curve, with zero for a zero-energy curve. `vote_counts` covers all
+original columns, or is `None` when alpha=1 bypasses voting. Inputs and outputs
+remain bounded at 2,000,000 cells; sorting uses one row of temporaries.
+
+Native C++ sorting does not guarantee stable ties. Python rejects a threshold
+that splits equal-energy coefficients by default. `tie_policy="original_index"`
+explicitly chooses smaller indices first, without promising that ordering for
+all native inputs. An empty selection raises a clear error. Numerical rescaling
+handles coefficients as small/large as 1e±300; exact floating-point threshold
+parity is not claimed. Native high/low-pass flags, other extended transforms
+and their file representations remain open. See the
+[native compression audit](../research/wfmm-native-compression-audit.md).
 
 ## Initialize variance components from the data
 
 `initialize_wfmm_variances` estimates random-effect and residual variances
 separately for each transformed coefficient under the Gaussian mixed model.
-It is an optional Python policy. The recovered sources do not specify the
-native initializer or its inverse-gamma prior calibration.
+It is an optional Python policy. The recovered native MOM/profile initializer
+is distinct; its inverse-gamma prior mapping is verified in the next section.
 
 ```python
 import numpy as np
@@ -331,6 +376,43 @@ the supplied variance estimates or estimated shrinkage hyperparameters.
 Partition labels must be nonnegative integers; no native coarse-scale
 exception, `minT` floor or `bigT` constant is silently applied.
 
+## Verified native variance-prior mapping
+
+`wfmm_variance_prior` combines supplied fixed-effect mixture parameters with
+WFMM 3.1's inverse-gamma mapping. Supply positive two-dimensional variance
+matrices, with rows for random-effect levels or residual strata and columns
+for coefficients. `random_effect_counts` gives the number of columns of Z at
+each level; `residual_stratum_sizes` gives the number of curves in each stratum.
+The mapping is `a = delta_omega * count`, `b = a * variance`, with density
+proportional to `v**(-a-1) * exp(-b/v)`. Wavelet partition size does not enter.
+The native default `delta_omega` is `1e-4`.
+
+```python
+from mdanderson_stats import wfmm_variance_prior
+
+prior = wfmm_variance_prior(
+    inclusion_probability=0.5,
+    slab_variance=10.0,
+    random_variance=[[0.2, 0.3]],
+    random_effect_counts=[4],
+    residual_variance=[[1.0, 1.5]],
+    residual_stratum_sizes=[8],
+    delta_omega=0.1,
+)
+```
+
+Pass this prior to `fit_wfmm_coefficients`, with explicit starting variances
+and proposal SDs. To use empirical-Bayes fixed effects, pass the calibration
+prior's `inclusion_probability` and `slab_variance` to this helper. The mapping
+centers **precision**: `E[1/v] = 1/variance`. The mean of v is infinite when
+`a <= 1`; the supplied variance is neither its mean nor its mode.
+
+Eight wholly synthetic original-Linux-program initializations verify this
+mapping, including two random-effect levels, unequal residual strata and
+wavelet partitions. The helper does not run the native MOM/profile optimizer;
+supplying Python REML estimates is an explicit alternative centering choice.
+See the [native-prior audit](../research/wfmm-native-prior-audit.md).
+
 ## Reconstructed posterior inference
 
 `wfmm_summarize` accepts `(chain,draw,effect,K)` coefficients and reconstructs
@@ -427,7 +509,8 @@ references, a conjugate inverse-gamma variance posterior and hand-calculated
 contrast/band summaries. Native MCMC random-number parity is not claimed.
 
 Native variance initialization and
-proposal selection, native inverse-gamma defaults, additional transforms and
-boundary rules, compression and native prediction/file
-formats remain open. The [source and implementation audit](../research/wfmm-audit.md)
+proposal selection, additional transforms and
+boundary rules, pass filtering and native prediction/file
+formats remain open. Energy compression of explicit coefficient matrices is
+now verified against the original program. The [source and implementation audit](../research/wfmm-audit.md)
 tracks these gaps and the independent references.

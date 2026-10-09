@@ -1,0 +1,55 @@
+{
+  "catalog_id": 3,
+  "source_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/Multc99/Multc99_V2.1.zip",
+  "retrieved_at": "2026-10-08",
+  "version": "2.1",
+  "archive_sha256": "0fb107937ca619681539a5eee9db09cd549f42ba8ccbe7961cc7794691af6f6c",
+  "archive_bytes": 450705,
+  "source_files": {
+    "BuildMe_PID685.pdf": "20c3de14dd9467163905008d322c1ddf0e2739080368ab6cded0222a9df7118b",
+    "Example.txt": "3b1d222e6ae7cb57ef3dadf3c7a6aa57af5ae8fb38777b167bf109c1c7467ffa",
+    "Multc99.exe": "6fa221cccee134a433a23cfea436c00422d68e11c1896871b50e30b3e2f6769c",
+    "README.txt": "bd5d081c8adb0c3a719634983a56e68a4a97c69b26e44ee4a71fe0e4819b0fb8",
+    "Source/Multc99.sln": "a8c41d91e291cbf43a6cf9d3a59d82742df65d31f273a9a322dfaa8f56ee1451",
+    "Source/Multc99.vcxproj": "90692628aa7e9d15242324348bbf4401cc192bb739089f268abae8566608d413",
+    "Source/boundary.c": "d4f27017280a12c5a5b0be3de10b9f537e9445d0064e3c1a6e541798b7aa4400",
+    "Source/cdflib.c": "326c8c7d30731f96d5dbb3c9562fd9886b90a1bf24d62aa5ca6fac32f9863e9a",
+    "Source/cdflib.h": "8f3e5b8176213907baba93293319b70b16eb1ce387566e3471e28c2c3bca3512",
+    "Source/compute.c": "8439d7c981e61c71a19ff200193288979f56bb03d79af171ed0db48798fea27b",
+    "Source/header.h": "bc4583411df5ef4ca00efc08fa5f5ad76d083d8ade36200c8ad26ab90e8365ba",
+    "Source/main.c": "cf89f047128c3a68340e6cb0cba35a33c41827a03fa9126c487103ef18c628c1",
+    "Source/menu.c": "f25c82413effe584a376286bd9453c7e9042e372fe6aaf31be27d2ccef049d5b",
+    "Source/random.trial.c": "62dafec93a5caf5ebe44281b2238db6f2da046cbad2629f407d78d9587916509",
+    "Source/ranlib.c": "64895e4d434cbb70931a50be6218cde10d7e55399e5b7db915fe8fcb782babdf",
+    "Source/ranlib.h": "c5f1434f5ac0ccbf9f24b1cfc304c083723f3e1a065eb61fd7210cd718c3216c",
+    "Source/simulate.c": "1068bff734c9e3ba18eafafd57629894122b3e33b9795820a32efd542e4a56e6",
+    "Source/struct.c": "bb1dfd178db36865e20985e5198b68ffb347748a96bf9ee03a44e4fe1d02f75a",
+    "Source/utility.c": "e0a9cc8bc5028b0420cae05f6fc8f96756951add35b65fb1dc229ffcf884751c",
+    "Source/zrorj.c": "dbda5d4f830f522ddfa02e72a18a7d140710879d07b5aca8758c432cdbe91bdb",
+    "Source/zrorj.h": "059b285c801c0bb1bd0bf496c12259cc6141cd3f08cc6209263ef3208c2cc644"
+  },
+  "reference_build": {
+    "compiler": "GCC 14.2.0",
+    "source_changes": [],
+    "flags": [
+      "-std=c99",
+      "-fcommon",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-O0",
+      "-Wl,--gc-sections"
+    ]
+  },
+  "reference_fixtures": {
+    "tests/fixtures/multc99-native-reference.json": "503c59c3a7eca6932788ef1beed975d6b6ebbe6101ff7d9257dacb3164e1ff30",
+    "tests/fixtures/multc99-high-precision-reference.json": "373f13db855a5f630d78924bc2a053099e31ad6be3e56c23b94a1caf9461395a"
+  },
+  "licensing": "Upstream noncommercial source-use conditions retained; commercial source use requires written permission. Original README re-encoded Windows-1252 to UTF-8 without content changes.",
+  "notice_sha256": "0f6cb4bfe0310f505850f8623fa5daf5b2831d52a646d1f981c362f3398bd958",
+  "status": "implemented",
+  "compatibility_boundaries": [
+    "corrected native numerical and memory defects; see audit",
+    "native random stream and menu/file layouts not reproduced",
+    "this source does not resolve Multc Lean endpoint-timing rules"
+  ]
+}

@@ -1,5 +1,12 @@
 # Multc Lean timing simulation audit
 
+October 8 recovery update: native duration instructions establish clipped
+exponential response times, shared paired follow-up and balked arrivals.
+[The native duration audit](multc-native-duration-audit.md) records 34 executable
+references. The historical uncertainty below is resolved for that separate
+compatibility kernel; the existing observation-aware calendar policy remains
+explicit. Multc99 #3 is now implemented; Multc Lean #12 remains partial.
+
 This addition composes the existing paired-binary calendar replay with serial
 random generation and bounded duration summaries. The tutorial represents
 response/toxicity truth by the four joint categories (both, response only,
@@ -35,5 +42,5 @@ Root integration exposes both simulation functions and result/configuration
 types. All four public guide blocks run successfully, including a 32-trial
 example with mean duration 6.432968328 and MCSE 0.1991564651. The integrated
 guide check took 1.922 seconds, peaked at 123.22 MiB RSS and reported zero
-swaps. Native timing and random-stream parity remain open; entries 3 and 12
-stay partial.
+swaps. At that checkpoint native timing and random-stream parity were open. The
+October 8 update above supersedes the timing uncertainty and catalog counts.

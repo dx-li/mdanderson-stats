@@ -1,0 +1,1586 @@
+[
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      IF (.NOT.(A.LT.0)) THEN\n      A=A+1\n      END IF\n      IF (A.GT.1) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF (A.GT.2) THEN\n      A=5\n      ELSE\n      A=6\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      IF (.NOT.(A.LT.0)) THEN\n      A=A+1\n      END IF\n      IF (A.GT.1) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF (A.GT.2) THEN\n      A=5\n      ELSE\n      A=6\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      IF (.NOT.(A.LT.0)) THEN\n      A=A+1\n      END IF\n      IF (A.GT.1) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF (A.GT.2) THEN\n      A=5\n      ELSE\n      A=6\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      IF (.NOT.(A.LT.0)) THEN\n      A=A+1\n      END IF\n      IF (A.GT.1) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF (A.GT.2) THEN\n      A=5\n      ELSE\n      A=6\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00002\n      INTEGER I,A                                                        00003\n      A=0                                                                00004\n      IF (A.EQ.0) A=1                                                    00005\n      IF (.NOT.(A.LT.0)) THEN                                            00006\n      A=A+1                                                              00007\n      END IF                                                             00008\n      IF (A.GT.1) THEN                                                   00009\n      A=3                                                                00009\n      ELSE                                                               00010\n      A=4                                                                00010\n      END IF                                                             00010\n      IF (A.GT.2) THEN                                                   00011\n      A=5                                                                00012\n      ELSE                                                               00014\n      A=6                                                                00015\n      END IF                                                             00016\n      PRINT *,A                                                          00017\n      END                                                                00018\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00002\n      INTEGER I,A                                                        00003\n      A=0                                                                00004\n      IF (A.EQ.0) A=1                                                    00005\n      IF (.NOT.(A.LT.0)) THEN                                            00006\n      A=A+1                                                              00007\n      END IF                                                             00008\n      IF (A.GT.1) THEN                                                   00009\n      A=3                                                                00009\n      ELSE                                                               00010\n      A=4                                                                00010\n      END IF                                                             00010\n      IF (A.GT.2) THEN                                                   00011\n      A=5                                                                00012\n      ELSE                                                               00014\n      A=6                                                                00015\n      END IF                                                             00016\n      PRINT *,A                                                          00017\n      END                                                                00018\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00002\n      INTEGER I,A                                                        00003\n      A=0                                                                00004\n      IF (A.EQ.0) A=1                                                    00005\n      IF (.NOT.(A.LT.0)) THEN                                            00006\n      A=A+1                                                              00007\n      END IF                                                             00008\n      IF (A.GT.1) THEN                                                   00009\n      A=3                                                                00009\n      ELSE                                                               00010\n      A=4                                                                00010\n      END IF                                                             00010\n      IF (A.GT.2) THEN                                                   00011\n      A=5                                                                00012\n      ELSE                                                               00014\n      A=6                                                                00015\n      END IF                                                             00016\n      PRINT *,A                                                          00017\n      END                                                                00018\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00002\n      INTEGER I,A                                                        00003\n      A=0                                                                00004\n      IF (A.EQ.0) A=1                                                    00005\n      IF (.NOT.(A.LT.0)) THEN                                            00006\n      A=A+1                                                              00007\n      END IF                                                             00008\n      IF (A.GT.1) THEN                                                   00009\n      A=3                                                                00009\n      ELSE                                                               00010\n      A=4                                                                00010\n      END IF                                                             00010\n      IF (A.GT.2) THEN                                                   00011\n      A=5                                                                00012\n      ELSE                                                               00014\n      A=6                                                                00015\n      END IF                                                             00016\n      PRINT *,A                                                          00017\n      END                                                                00018\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      IF (.NOT.(A.LT.0)) THEN\n      A=A+1\n      END IF\n      IF (A.GT.1) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF (A.GT.2) THEN\n      A=5\n      ELSE\n      A=6\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      IF (.NOT.(A.LT.0)) THEN\n      A=A+1\n      END IF\n      IF (A.GT.1) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF (A.GT.2) THEN\n      A=5\n      ELSE\n      A=6\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      IF (.NOT.(A.LT.0)) THEN\n      A=A+1\n      END IF\n      IF (A.GT.1) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF (A.GT.2) THEN\n      A=5\n      ELSE\n      A=6\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      IF (.NOT.(A.LT.0)) THEN\n      A=A+1\n      END IF\n      IF (A.GT.1) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF (A.GT.2) THEN\n      A=5\n      ELSE\n      A=6\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "C translator fixture                                                     00001\n      PROGRAM DEMO                                                       00002\n      INTEGER I,A                                                        00003\n      A=0                                                                00004\n      IF (A.EQ.0) A=1                                                    00005\n      IF (.NOT.(A.LT.0)) THEN                                            00006\n      A=A+1                                                              00007\n      END IF                                                             00008\n      IF (A.GT.1) THEN                                                   00009\n      A=3                                                                00009\n      ELSE                                                               00010\n      A=4                                                                00010\n      END IF                                                             00010\n      IF (A.GT.2) THEN                                                   00011\n      A=5                                                                00012\n      ELSE                                                               00014\n      A=6                                                                00015\n      END IF                                                             00016\n      PRINT *,A                                                          00017\n      END                                                                00018\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "C translator fixture                                                     00001\n      PROGRAM DEMO                                                       00002\n      INTEGER I,A                                                        00003\n      A=0                                                                00004\n      IF (A.EQ.0) A=1                                                    00005\n      IF (.NOT.(A.LT.0)) THEN                                            00006\n      A=A+1                                                              00007\n      END IF                                                             00008\n      IF (A.GT.1) THEN                                                   00009\n      A=3                                                                00009\n      ELSE                                                               00010\n      A=4                                                                00010\n      END IF                                                             00010\n      IF (A.GT.2) THEN                                                   00011\n      A=5                                                                00012\n      ELSE                                                               00014\n      A=6                                                                00015\n      END IF                                                             00016\n      PRINT *,A                                                          00017\n      END                                                                00018\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "C translator fixture                                                     00001\n      PROGRAM DEMO                                                       00002\n      INTEGER I,A                                                        00003\n      A=0                                                                00004\n      IF (A.EQ.0) A=1                                                    00005\n      IF (.NOT.(A.LT.0)) THEN                                            00006\n      A=A+1                                                              00007\n      END IF                                                             00008\n      IF (A.GT.1) THEN                                                   00009\n      A=3                                                                00009\n      ELSE                                                               00010\n      A=4                                                                00010\n      END IF                                                             00010\n      IF (A.GT.2) THEN                                                   00011\n      A=5                                                                00012\n      ELSE                                                               00014\n      A=6                                                                00015\n      END IF                                                             00016\n      PRINT *,A                                                          00017\n      END                                                                00018\n"
+  },
+  {
+    "name": "basic",
+    "source": "C translator fixture\n      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      IF (A.EQ.0) A=1\n      UNLESS (A.LT.0)\n      A=A+1\n      FIN\n      WHEN (A.GT.1) A=3\n      ELSE A=4\n      WHEN (A.GT.2)\n      A=5\n      FIN\n      ELSE\n      A=6\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "C translator fixture                                                     00001\n      PROGRAM DEMO                                                       00002\n      INTEGER I,A                                                        00003\n      A=0                                                                00004\n      IF (A.EQ.0) A=1                                                    00005\n      IF (.NOT.(A.LT.0)) THEN                                            00006\n      A=A+1                                                              00007\n      END IF                                                             00008\n      IF (A.GT.1) THEN                                                   00009\n      A=3                                                                00009\n      ELSE                                                               00010\n      A=4                                                                00010\n      END IF                                                             00010\n      IF (A.GT.2) THEN                                                   00011\n      A=5                                                                00012\n      ELSE                                                               00014\n      A=6                                                                00015\n      END IF                                                             00016\n      PRINT *,A                                                          00017\n      END                                                                00018\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO I=1,3\n      A=A+1\n      END DO\n      DO I=1,3\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      END DO\n      DO WHILE (A.LT.20)\n      A=A+1\n      END DO\n      DO WHILE (.NOT.(A.GE.25))\n      A=A+1\n      END DO\n      DO\n      A=A+1\n      IF (.NOT.(A.LT.30)) EXIT\n      END DO\n      DO\n      A=A+1\n      IF (A.GE.35) EXIT\n      END DO\n      DO\n      A=A+1\n      IF (A.GE.40) EXIT\n      END DO\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      FLECS_LOOP_1: DO I=1,3\n      A=A+1\n      END DO FLECS_LOOP_1\n      FLECS_LOOP_2: DO I=1,3\n      IF (I.EQ.2) CYCLE FLECS_LOOP_2\n      A=A+I\n      END DO FLECS_LOOP_2\n      FLECS_LOOP_3: DO WHILE (A.LT.20)\n      A=A+1\n      END DO FLECS_LOOP_3\n      FLECS_LOOP_4: DO WHILE (.NOT.(A.GE.25))\n      A=A+1\n      END DO FLECS_LOOP_4\n      FLECS_LOOP_5: DO\n      A=A+1\n      IF (.NOT.(A.LT.30)) EXIT FLECS_LOOP_5\n      END DO FLECS_LOOP_5\n      FLECS_LOOP_6: DO\n      A=A+1\n      IF (A.GE.35) EXIT FLECS_LOOP_6\n      END DO FLECS_LOOP_6\n      FLECS_LOOP_7: DO\n      A=A+1\n      IF (A.GE.40) EXIT FLECS_LOOP_7\n      END DO FLECS_LOOP_7\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO I=1,3\n      A=A+1\n      END DO\n      DO I=1,3\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      END DO\n      DO WHILE (A.LT.20)\n      A=A+1\n      END DO\n      DO WHILE (.NOT.(A.GE.25))\n      A=A+1\n      END DO\n      DO\n      A=A+1\n      IF (.NOT.(A.LT.30)) EXIT\n      END DO\n      DO\n      A=A+1\n      IF (A.GE.35) EXIT\n      END DO\n      DO\n      A=A+1\n      IF (A.GE.40) EXIT\n      END DO\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      FLECS_LOOP_1: DO I=1,3\n      A=A+1\n      END DO FLECS_LOOP_1\n      FLECS_LOOP_2: DO I=1,3\n      IF (I.EQ.2) CYCLE FLECS_LOOP_2\n      A=A+I\n      END DO FLECS_LOOP_2\n      FLECS_LOOP_3: DO WHILE (A.LT.20)\n      A=A+1\n      END DO FLECS_LOOP_3\n      FLECS_LOOP_4: DO WHILE (.NOT.(A.GE.25))\n      A=A+1\n      END DO FLECS_LOOP_4\n      FLECS_LOOP_5: DO\n      A=A+1\n      IF (.NOT.(A.LT.30)) EXIT FLECS_LOOP_5\n      END DO FLECS_LOOP_5\n      FLECS_LOOP_6: DO\n      A=A+1\n      IF (A.GE.35) EXIT FLECS_LOOP_6\n      END DO FLECS_LOOP_6\n      FLECS_LOOP_7: DO\n      A=A+1\n      IF (A.GE.40) EXIT FLECS_LOOP_7\n      END DO FLECS_LOOP_7\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,A                                                        00002\n      A=0                                                                00003\n      DO I=1,3                                                           00004\n      A=A+1                                                              00004\n      END DO                                                             00004\n      DO I=1,3                                                           00005\n      IF (I.EQ.2) CYCLE                                                  00006\n      A=A+I                                                              00007\n      END DO                                                             00008\n      DO WHILE (A.LT.20)                                                 00009\n      A=A+1                                                              00009\n      END DO                                                             00009\n      DO WHILE (.NOT.(A.GE.25))                                          00010\n      A=A+1                                                              00011\n      END DO                                                             00012\n      DO                                                                 00013\n      A=A+1                                                              00013\n      IF (.NOT.(A.LT.30)) EXIT                                           00013\n      END DO                                                             00013\n      DO                                                                 00014\n      A=A+1                                                              00015\n      IF (A.GE.35) EXIT                                                  00016\n      END DO                                                             00016\n      DO                                                                 00017\n      A=A+1                                                              00018\n      IF (A.GE.40) EXIT                                                  00019\n      END DO                                                             00020\n      PRINT *,A                                                          00021\n      END                                                                00022\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,A                                                        00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO I=1,3                                             00004\n      A=A+1                                                              00004\n      END DO FLECS_LOOP_1                                                00004\n      FLECS_LOOP_2: DO I=1,3                                             00005\n      IF (I.EQ.2) CYCLE FLECS_LOOP_2                                     00006\n      A=A+I                                                              00007\n      END DO FLECS_LOOP_2                                                00008\n      FLECS_LOOP_3: DO WHILE (A.LT.20)                                   00009\n      A=A+1                                                              00009\n      END DO FLECS_LOOP_3                                                00009\n      FLECS_LOOP_4: DO WHILE (.NOT.(A.GE.25))                            00010\n      A=A+1                                                              00011\n      END DO FLECS_LOOP_4                                                00012\n      FLECS_LOOP_5: DO                                                   00013\n      A=A+1                                                              00013\n      IF (.NOT.(A.LT.30)) EXIT FLECS_LOOP_5                              00013\n      END DO FLECS_LOOP_5                                                00013\n      FLECS_LOOP_6: DO                                                   00014\n      A=A+1                                                              00015\n      IF (A.GE.35) EXIT FLECS_LOOP_6                                     00016\n      END DO FLECS_LOOP_6                                                00016\n      FLECS_LOOP_7: DO                                                   00017\n      A=A+1                                                              00018\n      IF (A.GE.40) EXIT FLECS_LOOP_7                                     00019\n      END DO FLECS_LOOP_7                                                00020\n      PRINT *,A                                                          00021\n      END                                                                00022\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,A                                                        00002\n      A=0                                                                00003\n      DO I=1,3                                                           00004\n      A=A+1                                                              00004\n      END DO                                                             00004\n      DO I=1,3                                                           00005\n      IF (I.EQ.2) CYCLE                                                  00006\n      A=A+I                                                              00007\n      END DO                                                             00008\n      DO WHILE (A.LT.20)                                                 00009\n      A=A+1                                                              00009\n      END DO                                                             00009\n      DO WHILE (.NOT.(A.GE.25))                                          00010\n      A=A+1                                                              00011\n      END DO                                                             00012\n      DO                                                                 00013\n      A=A+1                                                              00013\n      IF (.NOT.(A.LT.30)) EXIT                                           00013\n      END DO                                                             00013\n      DO                                                                 00014\n      A=A+1                                                              00015\n      IF (A.GE.35) EXIT                                                  00016\n      END DO                                                             00016\n      DO                                                                 00017\n      A=A+1                                                              00018\n      IF (A.GE.40) EXIT                                                  00019\n      END DO                                                             00020\n      PRINT *,A                                                          00021\n      END                                                                00022\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,A                                                        00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO I=1,3                                             00004\n      A=A+1                                                              00004\n      END DO FLECS_LOOP_1                                                00004\n      FLECS_LOOP_2: DO I=1,3                                             00005\n      IF (I.EQ.2) CYCLE FLECS_LOOP_2                                     00006\n      A=A+I                                                              00007\n      END DO FLECS_LOOP_2                                                00008\n      FLECS_LOOP_3: DO WHILE (A.LT.20)                                   00009\n      A=A+1                                                              00009\n      END DO FLECS_LOOP_3                                                00009\n      FLECS_LOOP_4: DO WHILE (.NOT.(A.GE.25))                            00010\n      A=A+1                                                              00011\n      END DO FLECS_LOOP_4                                                00012\n      FLECS_LOOP_5: DO                                                   00013\n      A=A+1                                                              00013\n      IF (.NOT.(A.LT.30)) EXIT FLECS_LOOP_5                              00013\n      END DO FLECS_LOOP_5                                                00013\n      FLECS_LOOP_6: DO                                                   00014\n      A=A+1                                                              00015\n      IF (A.GE.35) EXIT FLECS_LOOP_6                                     00016\n      END DO FLECS_LOOP_6                                                00016\n      FLECS_LOOP_7: DO                                                   00017\n      A=A+1                                                              00018\n      IF (A.GE.40) EXIT FLECS_LOOP_7                                     00019\n      END DO FLECS_LOOP_7                                                00020\n      PRINT *,A                                                          00021\n      END                                                                00022\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO I=1,3\n      A=A+1\n      END DO\n      DO I=1,3\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      END DO\n      DO WHILE (A.LT.20)\n      A=A+1\n      END DO\n      DO WHILE (.NOT.(A.GE.25))\n      A=A+1\n      END DO\n      DO\n      A=A+1\n      IF (.NOT.(A.LT.30)) EXIT\n      END DO\n      DO\n      A=A+1\n      IF (A.GE.35) EXIT\n      END DO\n      DO\n      A=A+1\n      IF (A.GE.40) EXIT\n      END DO\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      FLECS_LOOP_1: DO I=1,3\n      A=A+1\n      END DO FLECS_LOOP_1\n      FLECS_LOOP_2: DO I=1,3\n      IF (I.EQ.2) CYCLE FLECS_LOOP_2\n      A=A+I\n      END DO FLECS_LOOP_2\n      FLECS_LOOP_3: DO WHILE (A.LT.20)\n      A=A+1\n      END DO FLECS_LOOP_3\n      FLECS_LOOP_4: DO WHILE (.NOT.(A.GE.25))\n      A=A+1\n      END DO FLECS_LOOP_4\n      FLECS_LOOP_5: DO\n      A=A+1\n      IF (.NOT.(A.LT.30)) EXIT FLECS_LOOP_5\n      END DO FLECS_LOOP_5\n      FLECS_LOOP_6: DO\n      A=A+1\n      IF (A.GE.35) EXIT FLECS_LOOP_6\n      END DO FLECS_LOOP_6\n      FLECS_LOOP_7: DO\n      A=A+1\n      IF (A.GE.40) EXIT FLECS_LOOP_7\n      END DO FLECS_LOOP_7\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO I=1,3\n      A=A+1\n      END DO\n      DO I=1,3\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      END DO\n      DO WHILE (A.LT.20)\n      A=A+1\n      END DO\n      DO WHILE (.NOT.(A.GE.25))\n      A=A+1\n      END DO\n      DO\n      A=A+1\n      IF (.NOT.(A.LT.30)) EXIT\n      END DO\n      DO\n      A=A+1\n      IF (A.GE.35) EXIT\n      END DO\n      DO\n      A=A+1\n      IF (A.GE.40) EXIT\n      END DO\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      FLECS_LOOP_1: DO I=1,3\n      A=A+1\n      END DO FLECS_LOOP_1\n      FLECS_LOOP_2: DO I=1,3\n      IF (I.EQ.2) CYCLE FLECS_LOOP_2\n      A=A+I\n      END DO FLECS_LOOP_2\n      FLECS_LOOP_3: DO WHILE (A.LT.20)\n      A=A+1\n      END DO FLECS_LOOP_3\n      FLECS_LOOP_4: DO WHILE (.NOT.(A.GE.25))\n      A=A+1\n      END DO FLECS_LOOP_4\n      FLECS_LOOP_5: DO\n      A=A+1\n      IF (.NOT.(A.LT.30)) EXIT FLECS_LOOP_5\n      END DO FLECS_LOOP_5\n      FLECS_LOOP_6: DO\n      A=A+1\n      IF (A.GE.35) EXIT FLECS_LOOP_6\n      END DO FLECS_LOOP_6\n      FLECS_LOOP_7: DO\n      A=A+1\n      IF (A.GE.40) EXIT FLECS_LOOP_7\n      END DO FLECS_LOOP_7\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,A                                                        00002\n      A=0                                                                00003\n      DO I=1,3                                                           00004\n      A=A+1                                                              00004\n      END DO                                                             00004\n      DO I=1,3                                                           00005\n      IF (I.EQ.2) CYCLE                                                  00006\n      A=A+I                                                              00007\n      END DO                                                             00008\n      DO WHILE (A.LT.20)                                                 00009\n      A=A+1                                                              00009\n      END DO                                                             00009\n      DO WHILE (.NOT.(A.GE.25))                                          00010\n      A=A+1                                                              00011\n      END DO                                                             00012\n      DO                                                                 00013\n      A=A+1                                                              00013\n      IF (.NOT.(A.LT.30)) EXIT                                           00013\n      END DO                                                             00013\n      DO                                                                 00014\n      A=A+1                                                              00015\n      IF (A.GE.35) EXIT                                                  00016\n      END DO                                                             00016\n      DO                                                                 00017\n      A=A+1                                                              00018\n      IF (A.GE.40) EXIT                                                  00019\n      END DO                                                             00020\n      PRINT *,A                                                          00021\n      END                                                                00022\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,A                                                        00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO I=1,3                                             00004\n      A=A+1                                                              00004\n      END DO FLECS_LOOP_1                                                00004\n      FLECS_LOOP_2: DO I=1,3                                             00005\n      IF (I.EQ.2) CYCLE FLECS_LOOP_2                                     00006\n      A=A+I                                                              00007\n      END DO FLECS_LOOP_2                                                00008\n      FLECS_LOOP_3: DO WHILE (A.LT.20)                                   00009\n      A=A+1                                                              00009\n      END DO FLECS_LOOP_3                                                00009\n      FLECS_LOOP_4: DO WHILE (.NOT.(A.GE.25))                            00010\n      A=A+1                                                              00011\n      END DO FLECS_LOOP_4                                                00012\n      FLECS_LOOP_5: DO                                                   00013\n      A=A+1                                                              00013\n      IF (.NOT.(A.LT.30)) EXIT FLECS_LOOP_5                              00013\n      END DO FLECS_LOOP_5                                                00013\n      FLECS_LOOP_6: DO                                                   00014\n      A=A+1                                                              00015\n      IF (A.GE.35) EXIT FLECS_LOOP_6                                     00016\n      END DO FLECS_LOOP_6                                                00016\n      FLECS_LOOP_7: DO                                                   00017\n      A=A+1                                                              00018\n      IF (A.GE.40) EXIT FLECS_LOOP_7                                     00019\n      END DO FLECS_LOOP_7                                                00020\n      PRINT *,A                                                          00021\n      END                                                                00022\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,A                                                        00002\n      A=0                                                                00003\n      DO I=1,3                                                           00004\n      A=A+1                                                              00004\n      END DO                                                             00004\n      DO I=1,3                                                           00005\n      IF (I.EQ.2) CYCLE                                                  00006\n      A=A+I                                                              00007\n      END DO                                                             00008\n      DO WHILE (A.LT.20)                                                 00009\n      A=A+1                                                              00009\n      END DO                                                             00009\n      DO WHILE (.NOT.(A.GE.25))                                          00010\n      A=A+1                                                              00011\n      END DO                                                             00012\n      DO                                                                 00013\n      A=A+1                                                              00013\n      IF (.NOT.(A.LT.30)) EXIT                                           00013\n      END DO                                                             00013\n      DO                                                                 00014\n      A=A+1                                                              00015\n      IF (A.GE.35) EXIT                                                  00016\n      END DO                                                             00016\n      DO                                                                 00017\n      A=A+1                                                              00018\n      IF (A.GE.40) EXIT                                                  00019\n      END DO                                                             00020\n      PRINT *,A                                                          00021\n      END                                                                00022\n"
+  },
+  {
+    "name": "loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,A\n      A=0\n      DO (I=1,3) A=A+1\n      FOR (I=1,3)\n      IF (I.EQ.2) CYCLE\n      A=A+I\n      FIN\n      WHILE (A.LT.20) A=A+1\n      UNTIL (A.GE.25)\n      A=A+1\n      FIN\n      REPEAT WHILE (A.LT.30) A=A+1\n      REPEAT UNTIL (A.GE.35)\n      A=A+1\n      FIN\n      LOOP\n      A=A+1\n      IF (A.GE.40) EXIT\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,A                                                        00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO I=1,3                                             00004\n      A=A+1                                                              00004\n      END DO FLECS_LOOP_1                                                00004\n      FLECS_LOOP_2: DO I=1,3                                             00005\n      IF (I.EQ.2) CYCLE FLECS_LOOP_2                                     00006\n      A=A+I                                                              00007\n      END DO FLECS_LOOP_2                                                00008\n      FLECS_LOOP_3: DO WHILE (A.LT.20)                                   00009\n      A=A+1                                                              00009\n      END DO FLECS_LOOP_3                                                00009\n      FLECS_LOOP_4: DO WHILE (.NOT.(A.GE.25))                            00010\n      A=A+1                                                              00011\n      END DO FLECS_LOOP_4                                                00012\n      FLECS_LOOP_5: DO                                                   00013\n      A=A+1                                                              00013\n      IF (.NOT.(A.LT.30)) EXIT FLECS_LOOP_5                              00013\n      END DO FLECS_LOOP_5                                                00013\n      FLECS_LOOP_6: DO                                                   00014\n      A=A+1                                                              00015\n      IF (A.GE.35) EXIT FLECS_LOOP_6                                     00016\n      END DO FLECS_LOOP_6                                                00016\n      FLECS_LOOP_7: DO                                                   00017\n      A=A+1                                                              00018\n      IF (A.GE.40) EXIT FLECS_LOOP_7                                     00019\n      END DO FLECS_LOOP_7                                                00020\n      PRINT *,A                                                          00021\n      END                                                                00022\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      IF (A.LT.0) THEN\n      A=-1\n      ELSE IF (A.EQ.2) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF ((1).EQ.(A)) THEN\n      A=10\n      ELSE IF ((3).EQ.(A)) THEN\n      A=30\n      ELSE\n      A=0\n      END IF\n      IF (A.EQ.30) THEN\n      A=31\n      ELSE\n      A=32\n      END IF\n      IF ((31).EQ.(A)) THEN\n      A=33\n      ELSE\n      A=34\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      IF (A.LT.0) THEN\n      A=-1\n      ELSE IF (A.EQ.2) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF ((1).EQ.(A)) THEN\n      A=10\n      ELSE IF ((3).EQ.(A)) THEN\n      A=30\n      ELSE\n      A=0\n      END IF\n      IF (A.EQ.30) THEN\n      A=31\n      ELSE\n      A=32\n      END IF\n      IF ((31).EQ.(A)) THEN\n      A=33\n      ELSE\n      A=34\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      IF (A.LT.0) THEN\n      A=-1\n      ELSE IF (A.EQ.2) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      SELECT CASE (A)\n      CASE(1)\n      A=10\n      CASE(3)\n      A=30\n      CASE DEFAULT\n      A=0\n      END SELECT\n      IF (A.EQ.30) THEN\n      A=31\n      ELSE\n      A=32\n      END IF\n      SELECT CASE (A)\n      CASE(31)\n      A=33\n      CASE DEFAULT\n      A=34\n      END SELECT\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      IF (A.LT.0) THEN\n      A=-1\n      ELSE IF (A.EQ.2) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      SELECT CASE (A)\n      CASE(1)\n      A=10\n      CASE(3)\n      A=30\n      CASE DEFAULT\n      A=0\n      END SELECT\n      IF (A.EQ.30) THEN\n      A=31\n      ELSE\n      A=32\n      END IF\n      SELECT CASE (A)\n      CASE(31)\n      A=33\n      CASE DEFAULT\n      A=34\n      END SELECT\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=2                                                                00003\n      IF (A.LT.0) THEN                                                   00005\n      A=-1                                                               00005\n      ELSE IF (A.EQ.2) THEN                                              00006\n      A=3                                                                00007\n      ELSE                                                               00009\n      A=4                                                                00009\n      END IF                                                             00010\n      IF ((1).EQ.(A)) THEN                                               00012\n      A=10                                                               00012\n      ELSE IF ((3).EQ.(A)) THEN                                          00013\n      A=30                                                               00013\n      ELSE                                                               00014\n      A=0                                                                00015\n      END IF                                                             00017\n      IF (A.EQ.30) THEN                                                  00019\n      A=31                                                               00019\n      ELSE                                                               00020\n      A=32                                                               00020\n      END IF                                                             00021\n      IF ((31).EQ.(A)) THEN                                              00023\n      A=33                                                               00023\n      ELSE                                                               00024\n      A=34                                                               00024\n      END IF                                                             00025\n      PRINT *,A                                                          00026\n      END                                                                00027\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=2                                                                00003\n      IF (A.LT.0) THEN                                                   00005\n      A=-1                                                               00005\n      ELSE IF (A.EQ.2) THEN                                              00006\n      A=3                                                                00007\n      ELSE                                                               00009\n      A=4                                                                00009\n      END IF                                                             00010\n      IF ((1).EQ.(A)) THEN                                               00012\n      A=10                                                               00012\n      ELSE IF ((3).EQ.(A)) THEN                                          00013\n      A=30                                                               00013\n      ELSE                                                               00014\n      A=0                                                                00015\n      END IF                                                             00017\n      IF (A.EQ.30) THEN                                                  00019\n      A=31                                                               00019\n      ELSE                                                               00020\n      A=32                                                               00020\n      END IF                                                             00021\n      IF ((31).EQ.(A)) THEN                                              00023\n      A=33                                                               00023\n      ELSE                                                               00024\n      A=34                                                               00024\n      END IF                                                             00025\n      PRINT *,A                                                          00026\n      END                                                                00027\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=2                                                                00003\n      IF (A.LT.0) THEN                                                   00005\n      A=-1                                                               00005\n      ELSE IF (A.EQ.2) THEN                                              00006\n      A=3                                                                00007\n      ELSE                                                               00009\n      A=4                                                                00009\n      END IF                                                             00010\n      SELECT CASE (A)                                                    00011\n      CASE(1)                                                            00012\n      A=10                                                               00012\n      CASE(3)                                                            00013\n      A=30                                                               00013\n      CASE DEFAULT                                                       00014\n      A=0                                                                00015\n      END SELECT                                                         00017\n      IF (A.EQ.30) THEN                                                  00019\n      A=31                                                               00019\n      ELSE                                                               00020\n      A=32                                                               00020\n      END IF                                                             00021\n      SELECT CASE (A)                                                    00022\n      CASE(31)                                                           00023\n      A=33                                                               00023\n      CASE DEFAULT                                                       00024\n      A=34                                                               00024\n      END SELECT                                                         00025\n      PRINT *,A                                                          00026\n      END                                                                00027\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=2                                                                00003\n      IF (A.LT.0) THEN                                                   00005\n      A=-1                                                               00005\n      ELSE IF (A.EQ.2) THEN                                              00006\n      A=3                                                                00007\n      ELSE                                                               00009\n      A=4                                                                00009\n      END IF                                                             00010\n      SELECT CASE (A)                                                    00011\n      CASE(1)                                                            00012\n      A=10                                                               00012\n      CASE(3)                                                            00013\n      A=30                                                               00013\n      CASE DEFAULT                                                       00014\n      A=0                                                                00015\n      END SELECT                                                         00017\n      IF (A.EQ.30) THEN                                                  00019\n      A=31                                                               00019\n      ELSE                                                               00020\n      A=32                                                               00020\n      END IF                                                             00021\n      SELECT CASE (A)                                                    00022\n      CASE(31)                                                           00023\n      A=33                                                               00023\n      CASE DEFAULT                                                       00024\n      A=34                                                               00024\n      END SELECT                                                         00025\n      PRINT *,A                                                          00026\n      END                                                                00027\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      IF (A.LT.0) THEN\n      A=-1\n      ELSE IF (A.EQ.2) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF ((1).EQ.(A)) THEN\n      A=10\n      ELSE IF ((3).EQ.(A)) THEN\n      A=30\n      ELSE\n      A=0\n      END IF\n      IF (A.EQ.30) THEN\n      A=31\n      ELSE\n      A=32\n      END IF\n      IF ((31).EQ.(A)) THEN\n      A=33\n      ELSE\n      A=34\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      IF (A.LT.0) THEN\n      A=-1\n      ELSE IF (A.EQ.2) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      IF ((1).EQ.(A)) THEN\n      A=10\n      ELSE IF ((3).EQ.(A)) THEN\n      A=30\n      ELSE\n      A=0\n      END IF\n      IF (A.EQ.30) THEN\n      A=31\n      ELSE\n      A=32\n      END IF\n      IF ((31).EQ.(A)) THEN\n      A=33\n      ELSE\n      A=34\n      END IF\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      IF (A.LT.0) THEN\n      A=-1\n      ELSE IF (A.EQ.2) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      SELECT CASE (A)\n      CASE(1)\n      A=10\n      CASE(3)\n      A=30\n      CASE DEFAULT\n      A=0\n      END SELECT\n      IF (A.EQ.30) THEN\n      A=31\n      ELSE\n      A=32\n      END IF\n      SELECT CASE (A)\n      CASE(31)\n      A=33\n      CASE DEFAULT\n      A=34\n      END SELECT\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      IF (A.LT.0) THEN\n      A=-1\n      ELSE IF (A.EQ.2) THEN\n      A=3\n      ELSE\n      A=4\n      END IF\n      SELECT CASE (A)\n      CASE(1)\n      A=10\n      CASE(3)\n      A=30\n      CASE DEFAULT\n      A=0\n      END SELECT\n      IF (A.EQ.30) THEN\n      A=31\n      ELSE\n      A=32\n      END IF\n      SELECT CASE (A)\n      CASE(31)\n      A=33\n      CASE DEFAULT\n      A=34\n      END SELECT\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=2                                                                00003\n      IF (A.LT.0) THEN                                                   00005\n      A=-1                                                               00005\n      ELSE IF (A.EQ.2) THEN                                              00006\n      A=3                                                                00007\n      ELSE                                                               00009\n      A=4                                                                00009\n      END IF                                                             00010\n      IF ((1).EQ.(A)) THEN                                               00012\n      A=10                                                               00012\n      ELSE IF ((3).EQ.(A)) THEN                                          00013\n      A=30                                                               00013\n      ELSE                                                               00014\n      A=0                                                                00015\n      END IF                                                             00017\n      IF (A.EQ.30) THEN                                                  00019\n      A=31                                                               00019\n      ELSE                                                               00020\n      A=32                                                               00020\n      END IF                                                             00021\n      IF ((31).EQ.(A)) THEN                                              00023\n      A=33                                                               00023\n      ELSE                                                               00024\n      A=34                                                               00024\n      END IF                                                             00025\n      PRINT *,A                                                          00026\n      END                                                                00027\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=2                                                                00003\n      IF (A.LT.0) THEN                                                   00005\n      A=-1                                                               00005\n      ELSE IF (A.EQ.2) THEN                                              00006\n      A=3                                                                00007\n      ELSE                                                               00009\n      A=4                                                                00009\n      END IF                                                             00010\n      IF ((1).EQ.(A)) THEN                                               00012\n      A=10                                                               00012\n      ELSE IF ((3).EQ.(A)) THEN                                          00013\n      A=30                                                               00013\n      ELSE                                                               00014\n      A=0                                                                00015\n      END IF                                                             00017\n      IF (A.EQ.30) THEN                                                  00019\n      A=31                                                               00019\n      ELSE                                                               00020\n      A=32                                                               00020\n      END IF                                                             00021\n      IF ((31).EQ.(A)) THEN                                              00023\n      A=33                                                               00023\n      ELSE                                                               00024\n      A=34                                                               00024\n      END IF                                                             00025\n      PRINT *,A                                                          00026\n      END                                                                00027\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=2                                                                00003\n      IF (A.LT.0) THEN                                                   00005\n      A=-1                                                               00005\n      ELSE IF (A.EQ.2) THEN                                              00006\n      A=3                                                                00007\n      ELSE                                                               00009\n      A=4                                                                00009\n      END IF                                                             00010\n      SELECT CASE (A)                                                    00011\n      CASE(1)                                                            00012\n      A=10                                                               00012\n      CASE(3)                                                            00013\n      A=30                                                               00013\n      CASE DEFAULT                                                       00014\n      A=0                                                                00015\n      END SELECT                                                         00017\n      IF (A.EQ.30) THEN                                                  00019\n      A=31                                                               00019\n      ELSE                                                               00020\n      A=32                                                               00020\n      END IF                                                             00021\n      SELECT CASE (A)                                                    00022\n      CASE(31)                                                           00023\n      A=33                                                               00023\n      CASE DEFAULT                                                       00024\n      A=34                                                               00024\n      END SELECT                                                         00025\n      PRINT *,A                                                          00026\n      END                                                                00027\n"
+  },
+  {
+    "name": "choices",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=2\n      CONDITIONAL\n      (A.LT.0) A=-1\n      (A.EQ.2)\n      A=3\n      FIN\n      (OTHERWISE) A=4\n      FIN\n      SELECT (A)\n      (1) A=10\n      (3) A=30\n      (OTHERWISE)\n      A=0\n      FIN\n      FIN\n      CASE\n      (A.EQ.30) A=31\n      (OTHERWISE) A=32\n      FIN\n      CASE (A)\n      (31) A=33\n      (OTHERWISE) A=34\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=2                                                                00003\n      IF (A.LT.0) THEN                                                   00005\n      A=-1                                                               00005\n      ELSE IF (A.EQ.2) THEN                                              00006\n      A=3                                                                00007\n      ELSE                                                               00009\n      A=4                                                                00009\n      END IF                                                             00010\n      SELECT CASE (A)                                                    00011\n      CASE(1)                                                            00012\n      A=10                                                               00012\n      CASE(3)                                                            00013\n      A=30                                                               00013\n      CASE DEFAULT                                                       00014\n      A=0                                                                00015\n      END SELECT                                                         00017\n      IF (A.EQ.30) THEN                                                  00019\n      A=31                                                               00019\n      ELSE                                                               00020\n      A=32                                                               00020\n      END IF                                                             00021\n      SELECT CASE (A)                                                    00022\n      CASE(31)                                                           00023\n      A=33                                                               00023\n      CASE DEFAULT                                                       00024\n      A=34                                                               00024\n      END SELECT                                                         00025\n      PRINT *,A                                                          00026\n      END                                                                00027\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      CALL ADD_TWO\n      IF (A.EQ.3) CALL ADD_ONE\n      PRINT *,A\n      CONTAINS\n      SUBROUTINE ADD_TWO\n      A=A+2\n      IF (A.GT.3) RETURN\n      END SUBROUTINE\n      SUBROUTINE ADD_ONE\n      A=A+1\n      END SUBROUTINE\n      END\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      CALL ADD_TWO\n      IF (A.EQ.3) CALL ADD_ONE\n      PRINT *,A\n      CONTAINS\n      SUBROUTINE ADD_TWO\n      A=A+2\n      IF (A.GT.3) RETURN\n      END SUBROUTINE\n      SUBROUTINE ADD_ONE\n      A=A+1\n      END SUBROUTINE\n      END\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      CALL ADD_TWO\n      IF (A.EQ.3) CALL ADD_ONE\n      PRINT *,A\n      CONTAINS\n      SUBROUTINE ADD_TWO\n      A=A+2\n      IF (A.GT.3) RETURN\n      END SUBROUTINE\n      SUBROUTINE ADD_ONE\n      A=A+1\n      END SUBROUTINE\n      END\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      CALL ADD_TWO\n      IF (A.EQ.3) CALL ADD_ONE\n      PRINT *,A\n      CONTAINS\n      SUBROUTINE ADD_TWO\n      A=A+2\n      IF (A.GT.3) RETURN\n      END SUBROUTINE\n      SUBROUTINE ADD_ONE\n      A=A+1\n      END SUBROUTINE\n      END\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      CALL ADD_TWO                                                       00004\n      IF (A.EQ.3) CALL ADD_ONE                                           00005\n      PRINT *,A                                                          00006\n      CONTAINS                                                           00007\n      SUBROUTINE ADD_TWO                                                 00007\n      A=A+2                                                              00008\n      IF (A.GT.3) RETURN                                                 00009\n      END SUBROUTINE                                                     00010\n      SUBROUTINE ADD_ONE                                                 00011\n      A=A+1                                                              00011\n      END SUBROUTINE                                                     00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      CALL ADD_TWO                                                       00004\n      IF (A.EQ.3) CALL ADD_ONE                                           00005\n      PRINT *,A                                                          00006\n      CONTAINS                                                           00007\n      SUBROUTINE ADD_TWO                                                 00007\n      A=A+2                                                              00008\n      IF (A.GT.3) RETURN                                                 00009\n      END SUBROUTINE                                                     00010\n      SUBROUTINE ADD_ONE                                                 00011\n      A=A+1                                                              00011\n      END SUBROUTINE                                                     00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      CALL ADD_TWO                                                       00004\n      IF (A.EQ.3) CALL ADD_ONE                                           00005\n      PRINT *,A                                                          00006\n      CONTAINS                                                           00007\n      SUBROUTINE ADD_TWO                                                 00007\n      A=A+2                                                              00008\n      IF (A.GT.3) RETURN                                                 00009\n      END SUBROUTINE                                                     00010\n      SUBROUTINE ADD_ONE                                                 00011\n      A=A+1                                                              00011\n      END SUBROUTINE                                                     00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      CALL ADD_TWO                                                       00004\n      IF (A.EQ.3) CALL ADD_ONE                                           00005\n      PRINT *,A                                                          00006\n      CONTAINS                                                           00007\n      SUBROUTINE ADD_TWO                                                 00007\n      A=A+2                                                              00008\n      IF (A.GT.3) RETURN                                                 00009\n      END SUBROUTINE                                                     00010\n      SUBROUTINE ADD_ONE                                                 00011\n      A=A+1                                                              00011\n      END SUBROUTINE                                                     00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      CALL ADD_TWO\n      IF (A.EQ.3) CALL ADD_ONE\n      PRINT *,A\n      CONTAINS\n      SUBROUTINE ADD_TWO\n      A=A+2\n      IF (A.GT.3) RETURN\n      END SUBROUTINE\n      SUBROUTINE ADD_ONE\n      A=A+1\n      END SUBROUTINE\n      END\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      CALL ADD_TWO\n      IF (A.EQ.3) CALL ADD_ONE\n      PRINT *,A\n      CONTAINS\n      SUBROUTINE ADD_TWO\n      A=A+2\n      IF (A.GT.3) RETURN\n      END SUBROUTINE\n      SUBROUTINE ADD_ONE\n      A=A+1\n      END SUBROUTINE\n      END\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      CALL ADD_TWO\n      IF (A.EQ.3) CALL ADD_ONE\n      PRINT *,A\n      CONTAINS\n      SUBROUTINE ADD_TWO\n      A=A+2\n      IF (A.GT.3) RETURN\n      END SUBROUTINE\n      SUBROUTINE ADD_ONE\n      A=A+1\n      END SUBROUTINE\n      END\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      CALL ADD_TWO\n      IF (A.EQ.3) CALL ADD_ONE\n      PRINT *,A\n      CONTAINS\n      SUBROUTINE ADD_TWO\n      A=A+2\n      IF (A.GT.3) RETURN\n      END SUBROUTINE\n      SUBROUTINE ADD_ONE\n      A=A+1\n      END SUBROUTINE\n      END\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      CALL ADD_TWO                                                       00004\n      IF (A.EQ.3) CALL ADD_ONE                                           00005\n      PRINT *,A                                                          00006\n      CONTAINS                                                           00007\n      SUBROUTINE ADD_TWO                                                 00007\n      A=A+2                                                              00008\n      IF (A.GT.3) RETURN                                                 00009\n      END SUBROUTINE                                                     00010\n      SUBROUTINE ADD_ONE                                                 00011\n      A=A+1                                                              00011\n      END SUBROUTINE                                                     00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      CALL ADD_TWO                                                       00004\n      IF (A.EQ.3) CALL ADD_ONE                                           00005\n      PRINT *,A                                                          00006\n      CONTAINS                                                           00007\n      SUBROUTINE ADD_TWO                                                 00007\n      A=A+2                                                              00008\n      IF (A.GT.3) RETURN                                                 00009\n      END SUBROUTINE                                                     00010\n      SUBROUTINE ADD_ONE                                                 00011\n      A=A+1                                                              00011\n      END SUBROUTINE                                                     00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      CALL ADD_TWO                                                       00004\n      IF (A.EQ.3) CALL ADD_ONE                                           00005\n      PRINT *,A                                                          00006\n      CONTAINS                                                           00007\n      SUBROUTINE ADD_TWO                                                 00007\n      A=A+2                                                              00008\n      IF (A.GT.3) RETURN                                                 00009\n      END SUBROUTINE                                                     00010\n      SUBROUTINE ADD_ONE                                                 00011\n      A=A+1                                                              00011\n      END SUBROUTINE                                                     00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "procedures",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      ADD-TWO\n      IF (A.EQ.3) ADD-ONE\n      PRINT *,A\n      TO ADD-TWO\n      A=A+2\n      IF (A.GT.3) REVERT\n      FIN\n      TO ADD-ONE A=A+1\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      CALL ADD_TWO                                                       00004\n      IF (A.EQ.3) CALL ADD_ONE                                           00005\n      PRINT *,A                                                          00006\n      CONTAINS                                                           00007\n      SUBROUTINE ADD_TWO                                                 00007\n      A=A+2                                                              00008\n      IF (A.GT.3) RETURN                                                 00009\n      END SUBROUTINE                                                     00010\n      SUBROUTINE ADD_ONE                                                 00011\n      A=A+1                                                              00011\n      END SUBROUTINE                                                     00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND. A.LT.2) THEN\n      A=A+1\n      END IF\n      PRINT *,\n     +   A\n      END\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND. A.LT.2) THEN\n      A=A+1\n      END IF\n      PRINT *,\n     +   A\n      END\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND. A.LT.2) THEN\n      A=A+1\n      END IF\n      PRINT *,\n     +   A\n      END\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND. A.LT.2) THEN\n      A=A+1\n      END IF\n      PRINT *,\n     +   A\n      END\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      IF (A.GT.0 .AND. A.LT.2) THEN                                      00004\n      A=A+1                                                              00006\n      END IF                                                             00007\n      PRINT *,                                                           00008\n     +   A                                                               00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      IF (A.GT.0 .AND. A.LT.2) THEN                                      00004\n      A=A+1                                                              00006\n      END IF                                                             00007\n      PRINT *,                                                           00008\n     +   A                                                               00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      IF (A.GT.0 .AND. A.LT.2) THEN                                      00004\n      A=A+1                                                              00006\n      END IF                                                             00007\n      PRINT *,                                                           00008\n     +   A                                                               00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      IF (A.GT.0 .AND. A.LT.2) THEN                                      00004\n      A=A+1                                                              00006\n      END IF                                                             00007\n      PRINT *,                                                           00008\n     +   A                                                               00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND. A.LT.2) THEN\n      A=A+1\n      END IF\n      PRINT *,\n     +   A\n      END\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND. A.LT.2) THEN\n      A=A+1\n      END IF\n      PRINT *,\n     +   A\n      END\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND. A.LT.2) THEN\n      A=A+1\n      END IF\n      PRINT *,\n     +   A\n      END\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND. A.LT.2) THEN\n      A=A+1\n      END IF\n      PRINT *,\n     +   A\n      END\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      IF (A.GT.0 .AND. A.LT.2) THEN                                      00004\n      A=A+1                                                              00006\n      END IF                                                             00007\n      PRINT *,                                                           00008\n     +   A                                                               00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      IF (A.GT.0 .AND. A.LT.2) THEN                                      00004\n      A=A+1                                                              00006\n      END IF                                                             00007\n      PRINT *,                                                           00008\n     +   A                                                               00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      IF (A.GT.0 .AND. A.LT.2) THEN                                      00004\n      A=A+1                                                              00006\n      END IF                                                             00007\n      PRINT *,                                                           00008\n     +   A                                                               00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "continuations",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=1\n      IF (A.GT.0 .AND.\n     +    A.LT.2)\n      A=A+1\n      FIN\n      PRINT *,\n     +   A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=1                                                                00003\n      IF (A.GT.0 .AND. A.LT.2) THEN                                      00004\n      A=A+1                                                              00006\n      END IF                                                             00007\n      PRINT *,                                                           00008\n     +   A                                                               00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      DO\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      END DO\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      FLECS_LOOP_1: DO\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT FLECS_LOOP_1\n   10 CONTINUE\n      END DO FLECS_LOOP_1\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      DO\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      END DO\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      FLECS_LOOP_1: DO\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT FLECS_LOOP_1\n   10 CONTINUE\n      END DO FLECS_LOOP_1\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,J,A                                                      00002\n      A=0                                                                00003\n      DO                                                                 00004\n      DO 10 I=1,3                                                        00005\n      A=A+1                                                              00006\n      IF (I.EQ.2) EXIT                                                   00007\n   10 CONTINUE                                                           00008\n      END DO                                                             00009\n      PRINT *,A                                                          00010\n      END                                                                00011\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,J,A                                                      00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      DO 10 I=1,3                                                        00005\n      A=A+1                                                              00006\n      IF (I.EQ.2) EXIT FLECS_LOOP_1                                      00007\n   10 CONTINUE                                                           00008\n      END DO FLECS_LOOP_1                                                00009\n      PRINT *,A                                                          00010\n      END                                                                00011\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,J,A                                                      00002\n      A=0                                                                00003\n      DO                                                                 00004\n      DO 10 I=1,3                                                        00005\n      A=A+1                                                              00006\n      IF (I.EQ.2) EXIT                                                   00007\n   10 CONTINUE                                                           00008\n      END DO                                                             00009\n      PRINT *,A                                                          00010\n      END                                                                00011\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,J,A                                                      00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      DO 10 I=1,3                                                        00005\n      A=A+1                                                              00006\n      IF (I.EQ.2) EXIT FLECS_LOOP_1                                      00007\n   10 CONTINUE                                                           00008\n      END DO FLECS_LOOP_1                                                00009\n      PRINT *,A                                                          00010\n      END                                                                00011\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      DO\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      END DO\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      FLECS_LOOP_1: DO\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT FLECS_LOOP_1\n   10 CONTINUE\n      END DO FLECS_LOOP_1\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      DO\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      END DO\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      FLECS_LOOP_1: DO\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT FLECS_LOOP_1\n   10 CONTINUE\n      END DO FLECS_LOOP_1\n      PRINT *,A\n      END\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,J,A                                                      00002\n      A=0                                                                00003\n      DO                                                                 00004\n      DO 10 I=1,3                                                        00005\n      A=A+1                                                              00006\n      IF (I.EQ.2) EXIT                                                   00007\n   10 CONTINUE                                                           00008\n      END DO                                                             00009\n      PRINT *,A                                                          00010\n      END                                                                00011\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,J,A                                                      00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      DO 10 I=1,3                                                        00005\n      A=A+1                                                              00006\n      IF (I.EQ.2) EXIT FLECS_LOOP_1                                      00007\n   10 CONTINUE                                                           00008\n      END DO FLECS_LOOP_1                                                00009\n      PRINT *,A                                                          00010\n      END                                                                00011\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,J,A                                                      00002\n      A=0                                                                00003\n      DO                                                                 00004\n      DO 10 I=1,3                                                        00005\n      A=A+1                                                              00006\n      IF (I.EQ.2) EXIT                                                   00007\n   10 CONTINUE                                                           00008\n      END DO                                                             00009\n      PRINT *,A                                                          00010\n      END                                                                00011\n"
+  },
+  {
+    "name": "nested-loops",
+    "source": "      PROGRAM DEMO\n      INTEGER I,J,A\n      A=0\n      LOOP\n      DO 10 I=1,3\n      A=A+1\n      IF (I.EQ.2) EXIT\n   10 CONTINUE\n      FIN\n      PRINT *,A\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER I,J,A                                                      00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      DO 10 I=1,3                                                        00005\n      A=A+1                                                              00006\n      IF (I.EQ.2) EXIT FLECS_LOOP_1                                      00007\n   10 CONTINUE                                                           00008\n      END DO FLECS_LOOP_1                                                00009\n      PRINT *,A                                                          00010\n      END                                                                00011\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1) THEN\n      A=A+1\n  101 END IF\n  200 DO WHILE (A.LT.3)\n      A=A+1\n  201 END DO\n      END\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1) THEN\n      A=A+1\n  101 END IF\n  200 FLECS_LOOP_1: DO WHILE (A.LT.3)\n      A=A+1\n  201 END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1) THEN\n      A=A+1\n  101 END IF\n  200 DO WHILE (A.LT.3)\n      A=A+1\n  201 END DO\n      END\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1) THEN\n      A=A+1\n  101 END IF\n  200 FLECS_LOOP_1: DO WHILE (A.LT.3)\n      A=A+1\n  201 END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n  100 IF (A.LT.1) THEN                                                   00004\n      A=A+1                                                              00005\n  101 END IF                                                             00006\n  200 DO WHILE (A.LT.3)                                                  00007\n      A=A+1                                                              00008\n  201 END DO                                                             00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n  100 IF (A.LT.1) THEN                                                   00004\n      A=A+1                                                              00005\n  101 END IF                                                             00006\n  200 FLECS_LOOP_1: DO WHILE (A.LT.3)                                    00007\n      A=A+1                                                              00008\n  201 END DO FLECS_LOOP_1                                                00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n  100 IF (A.LT.1) THEN                                                   00004\n      A=A+1                                                              00005\n  101 END IF                                                             00006\n  200 DO WHILE (A.LT.3)                                                  00007\n      A=A+1                                                              00008\n  201 END DO                                                             00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n  100 IF (A.LT.1) THEN                                                   00004\n      A=A+1                                                              00005\n  101 END IF                                                             00006\n  200 FLECS_LOOP_1: DO WHILE (A.LT.3)                                    00007\n      A=A+1                                                              00008\n  201 END DO FLECS_LOOP_1                                                00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1) THEN\n      A=A+1\n  101 END IF\n  200 DO WHILE (A.LT.3)\n      A=A+1\n  201 END DO\n      END\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1) THEN\n      A=A+1\n  101 END IF\n  200 FLECS_LOOP_1: DO WHILE (A.LT.3)\n      A=A+1\n  201 END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1) THEN\n      A=A+1\n  101 END IF\n  200 DO WHILE (A.LT.3)\n      A=A+1\n  201 END DO\n      END\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1) THEN\n      A=A+1\n  101 END IF\n  200 FLECS_LOOP_1: DO WHILE (A.LT.3)\n      A=A+1\n  201 END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n  100 IF (A.LT.1) THEN                                                   00004\n      A=A+1                                                              00005\n  101 END IF                                                             00006\n  200 DO WHILE (A.LT.3)                                                  00007\n      A=A+1                                                              00008\n  201 END DO                                                             00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n  100 IF (A.LT.1) THEN                                                   00004\n      A=A+1                                                              00005\n  101 END IF                                                             00006\n  200 FLECS_LOOP_1: DO WHILE (A.LT.3)                                    00007\n      A=A+1                                                              00008\n  201 END DO FLECS_LOOP_1                                                00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n  100 IF (A.LT.1) THEN                                                   00004\n      A=A+1                                                              00005\n  101 END IF                                                             00006\n  200 DO WHILE (A.LT.3)                                                  00007\n      A=A+1                                                              00008\n  201 END DO                                                             00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "labelled",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n  100 IF (A.LT.1)\n      A=A+1\n  101 FIN\n  200 WHILE (A.LT.3)\n      A=A+1\n  201 FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n  100 IF (A.LT.1) THEN                                                   00004\n      A=A+1                                                              00005\n  101 END IF                                                             00006\n  200 FLECS_LOOP_1: DO WHILE (A.LT.3)                                    00007\n      A=A+1                                                              00008\n  201 END DO FLECS_LOOP_1                                                00009\n      END                                                                00010\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      DO\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      END IF\n      EXIT\n      END DO\n      END\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      FLECS_LOOP_1: DO\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      END IF\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      DO\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      END IF\n      EXIT\n      END DO\n      END\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      FLECS_LOOP_1: DO\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      END IF\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      DO                                                                 00004\n      IF (A.EQ.0) THEN                                                   00005\n      A=1                                                                00006\n      ELSE                                                               00007\n      A=2                                                                00008\n      END IF                                                             00009\n      EXIT                                                               00010\n      END DO                                                             00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      IF (A.EQ.0) THEN                                                   00005\n      A=1                                                                00006\n      ELSE                                                               00007\n      A=2                                                                00008\n      END IF                                                             00009\n      EXIT FLECS_LOOP_1                                                  00010\n      END DO FLECS_LOOP_1                                                00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      DO                                                                 00004\n      IF (A.EQ.0) THEN                                                   00005\n      A=1                                                                00006\n      ELSE                                                               00007\n      A=2                                                                00008\n      END IF                                                             00009\n      EXIT                                                               00010\n      END DO                                                             00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      IF (A.EQ.0) THEN                                                   00005\n      A=1                                                                00006\n      ELSE                                                               00007\n      A=2                                                                00008\n      END IF                                                             00009\n      EXIT FLECS_LOOP_1                                                  00010\n      END DO FLECS_LOOP_1                                                00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      DO\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      END IF\n      EXIT\n      END DO\n      END\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      FLECS_LOOP_1: DO\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      END IF\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      DO\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      END IF\n      EXIT\n      END DO\n      END\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      FLECS_LOOP_1: DO\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      END IF\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      DO                                                                 00004\n      IF (A.EQ.0) THEN                                                   00005\n      A=1                                                                00006\n      ELSE                                                               00007\n      A=2                                                                00008\n      END IF                                                             00009\n      EXIT                                                               00010\n      END DO                                                             00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      IF (A.EQ.0) THEN                                                   00005\n      A=1                                                                00006\n      ELSE                                                               00007\n      A=2                                                                00008\n      END IF                                                             00009\n      EXIT FLECS_LOOP_1                                                  00010\n      END DO FLECS_LOOP_1                                                00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      DO                                                                 00004\n      IF (A.EQ.0) THEN                                                   00005\n      A=1                                                                00006\n      ELSE                                                               00007\n      A=2                                                                00008\n      END IF                                                             00009\n      EXIT                                                               00010\n      END DO                                                             00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "blocks",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      IF (A.EQ.0) THEN\n      A=1\n      ELSE\n      A=2\n      ENDIF\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      IF (A.EQ.0) THEN                                                   00005\n      A=1                                                                00006\n      ELSE                                                               00007\n      A=2                                                                00008\n      END IF                                                             00009\n      EXIT FLECS_LOOP_1                                                  00010\n      END DO FLECS_LOOP_1                                                00011\n      END                                                                00012\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      DO\n      A=A+1\n      EXIT\n      END DO\n      END\n      SUBROUTINE SECOND\n      DO\n      EXIT\n      END DO\n      END\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      FLECS_LOOP_1: DO\n      A=A+1\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n      SUBROUTINE SECOND\n      FLECS_LOOP_1: DO\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      DO\n      A=A+1\n      EXIT\n      END DO\n      END\n      SUBROUTINE SECOND\n      DO\n      EXIT\n      END DO\n      END\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      FLECS_LOOP_1: DO\n      A=A+1\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n      SUBROUTINE SECOND\n      FLECS_LOOP_1: DO\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      DO                                                                 00004\n      A=A+1                                                              00005\n      EXIT                                                               00006\n      END DO                                                             00007\n      END                                                                00008\n      SUBROUTINE SECOND                                                  00009\n      DO                                                                 00010\n      EXIT                                                               00011\n      END DO                                                             00012\n      END                                                                00013\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      A=A+1                                                              00005\n      EXIT FLECS_LOOP_1                                                  00006\n      END DO FLECS_LOOP_1                                                00007\n      END                                                                00008\n      SUBROUTINE SECOND                                                  00009\n      FLECS_LOOP_1: DO                                                   00010\n      EXIT FLECS_LOOP_1                                                  00011\n      END DO FLECS_LOOP_1                                                00012\n      END                                                                00013\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      DO                                                                 00004\n      A=A+1                                                              00005\n      EXIT                                                               00006\n      END DO                                                             00007\n      END                                                                00008\n      SUBROUTINE SECOND                                                  00009\n      DO                                                                 00010\n      EXIT                                                               00011\n      END DO                                                             00012\n      END                                                                00013\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": false,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      A=A+1                                                              00005\n      EXIT FLECS_LOOP_1                                                  00006\n      END DO FLECS_LOOP_1                                                00007\n      END                                                                00008\n      SUBROUTINE SECOND                                                  00009\n      FLECS_LOOP_1: DO                                                   00010\n      EXIT FLECS_LOOP_1                                                  00011\n      END DO FLECS_LOOP_1                                                00012\n      END                                                                00013\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      DO\n      A=A+1\n      EXIT\n      END DO\n      END\n      SUBROUTINE SECOND\n      DO\n      EXIT\n      END DO\n      END\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      FLECS_LOOP_1: DO\n      A=A+1\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n      SUBROUTINE SECOND\n      FLECS_LOOP_1: DO\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      DO\n      A=A+1\n      EXIT\n      END DO\n      END\n      SUBROUTINE SECOND\n      DO\n      EXIT\n      END DO\n      END\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": false,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      FLECS_LOOP_1: DO\n      A=A+1\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n      SUBROUTINE SECOND\n      FLECS_LOOP_1: DO\n      EXIT FLECS_LOOP_1\n      END DO FLECS_LOOP_1\n      END\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      DO                                                                 00004\n      A=A+1                                                              00005\n      EXIT                                                               00006\n      END DO                                                             00007\n      END                                                                00008\n      SUBROUTINE SECOND                                                  00009\n      DO                                                                 00010\n      EXIT                                                               00011\n      END DO                                                             00012\n      END                                                                00013\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": false,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      A=A+1                                                              00005\n      EXIT FLECS_LOOP_1                                                  00006\n      END DO FLECS_LOOP_1                                                00007\n      END                                                                00008\n      SUBROUTINE SECOND                                                  00009\n      FLECS_LOOP_1: DO                                                   00010\n      EXIT FLECS_LOOP_1                                                  00011\n      END DO FLECS_LOOP_1                                                00012\n      END                                                                00013\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": false
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      DO                                                                 00004\n      A=A+1                                                              00005\n      EXIT                                                               00006\n      END DO                                                             00007\n      END                                                                00008\n      SUBROUTINE SECOND                                                  00009\n      DO                                                                 00010\n      EXIT                                                               00011\n      END DO                                                             00012\n      END                                                                00013\n"
+  },
+  {
+    "name": "multi-units",
+    "source": "      PROGRAM DEMO\n      INTEGER A\n      A=0\n      LOOP\n      A=A+1\n      EXIT\n      FIN\n      END\n      SUBROUTINE SECOND\n      LOOP\n      EXIT\n      FIN\n      END\n",
+    "options": {
+      "echo_comments": true,
+      "line_numbers": true,
+      "select_case": true,
+      "label_loops": true
+    },
+    "fortran_source": "      PROGRAM DEMO                                                       00001\n      INTEGER A                                                          00002\n      A=0                                                                00003\n      FLECS_LOOP_1: DO                                                   00004\n      A=A+1                                                              00005\n      EXIT FLECS_LOOP_1                                                  00006\n      END DO FLECS_LOOP_1                                                00007\n      END                                                                00008\n      SUBROUTINE SECOND                                                  00009\n      FLECS_LOOP_1: DO                                                   00010\n      EXIT FLECS_LOOP_1                                                  00011\n      END DO FLECS_LOOP_1                                                00012\n      END                                                                00013\n"
+  }
+]

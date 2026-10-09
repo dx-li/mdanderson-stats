@@ -1,11 +1,26 @@
 {
-  "catalog_ids": [12, 3],
+  "catalog_ids": [
+    12,
+    3
+  ],
   "retrieved_at": "2026-09-26",
   "applications": [
-    {"id": 12, "name": "Multc Lean", "version": "2.1.0", "modified_at": "2013-07-25", "download": "MultcLean_V2.1.0_WithFX4.0.zip"},
-    {"id": 3, "name": "Multc99", "version": "2.1", "modified_at": "2012-05-03", "download": "Multc99_V2.1.zip"}
+    {
+      "id": 12,
+      "name": "Multc Lean",
+      "version": "2.1.0",
+      "modified_at": "2013-07-25",
+      "download": "MultcLean_V2.1.0_WithFX4.0.zip"
+    },
+    {
+      "id": 3,
+      "name": "Multc99",
+      "version": "2.1",
+      "modified_at": "2012-05-03",
+      "download": "Multc99_V2.1.zip"
+    }
   ],
-  "evidence": "Independent implementation of published probability rules and reference examples. No native Windows/DOS kernel execution or binary parity claim. Archive retrieval was unavailable because shell DNS resolution failed; general Multc99 source coverage remains unaudited.",
+  "evidence": "The existing Multc Lean/Phase IIa subset uses independently implemented published probability rules. The Multc99 2.1 institutional archive was recovered on October 8, 2026, and its unchanged C kernel now supplies boundary, elicitation and planning references for the general Python workflow; see docs/multc99-source.json and research/multc99-audit.md. Multc Lean native duration timing is now recovered and verified through original x86 instructions with explicit boundaries/draws; see docs/multc-legacy-duration-source.json. Native boundary conversion and full workflow remain open. No original binary or C source is bundled.",
   "sources": [
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12",
@@ -35,8 +50,19 @@
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcLogistics.pdf",
       "role": "Minimum/cohort enrollment rules and suspension only when pending outcomes could change the decision. The calendar replay implements this logic with explicit endpoint delays and a documented accrual-open-clock convention; native generated timing and aggregate duration parity remain outside its scope."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/Multc99/Multc99_V2.1.zip",
+      "sha256": "0fb107937ca619681539a5eee9db09cd549f42ba8ccbe7961cc7794691af6f6c",
+      "role": "Recovered general Multc99 C implementation, README terms and example transcript; source-kernel reference execution and corrected Python workflows."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcLean_V2.1.0_WithFX4.0.zip",
+      "sha256": "be4ddfcaa7f442a1fa6895e31e379146fda4cff23775df291ff1b597b10d5120",
+      "role": "Recovered Multc Lean DLL, guide and redistribution terms; bounded x86 duration references with external RNG/vector services substituted."
     }
   ],
   "method_reference": "Thall, Simon and Estey (1995), Bayesian sequential monitoring designs for single-arm clinical trials with multiple outcomes, Statistics in Medicine 14:357-379.",
-  "validation_reference": "tools/reference_multc.R generates independent direct beta integrals, fixed-reference boundaries and full paired-outcome path enumeration. tools/reference_multc_calendar.R adds five explicit-timing replay examples using direct beta tails and enumeration of hypothetical pending completions. Neither script contains native program source."
+  "validation_reference": "tools/reference_multc.R generates independent direct beta integrals, fixed-reference boundaries and full paired-outcome path enumeration. tools/reference_multc_calendar.R adds five explicit-timing replay examples using direct beta tails and enumeration of hypothetical pending completions. Neither script contains native program source.",
+  "multc99_source_recovered_at": "2026-10-08"
 }

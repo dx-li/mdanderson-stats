@@ -1,11 +1,13 @@
 # Multc Lean and Multc99 Phase IIa
 
-Catalog entries **12 (Multc Lean)** and **3 (Multc99)** are partial. Python
-provides marginal response/toxicity monitoring, full and reachable stopping
+Catalog entry **12 (Multc Lean)** remains partial. Entry **3 (Multc99)** now
+provides its [complete recovered general workflow](multc99.md). The existing
+Python APIs in this guide provide marginal response/toxicity monitoring, full and reachable stopping
 boundaries, sequential decisions, exact joint operating characteristics, and
 calendar simulation with explicit endpoint timing.
 This includes the fixed-reference Phase IIa rules described for Multc99;
-Multc99's broader multiple-event designs remain pending. The official
+Multc99's compound/conditional, mixture-prior, calibration and randomized
+workflows are documented in its [general guide](multc99.md). The official
 [Multc Lean catalog](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12)
 describes that relationship. [Source provenance](multc-sources.json) records the
 versions and inspected documents. No original program code or binaries are
@@ -165,7 +167,7 @@ current clock time are available, including zero-delay observations.
 The first arrival is zero. Arrival intervals measure time while accrual is
 open: a pause freezes this clock, and the next interval starts at resumption.
 No arrivals are discarded or queued. This is an explicit Python convention;
-the native guides do not fully specify suspension queue behavior. Positive
+the separately recovered legacy duration kernel discards arrivals as balks. Positive
 intervals/delays that cannot advance the floating-point clock are rejected.
 
 `stop_response` and `stop_toxicity` identify a guaranteed cause, not an exclusive
@@ -184,10 +186,12 @@ at 12 million units; stopping boundaries are reused rather than reintegrated
 at each calendar event.
 
 The [user guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcUsersGuide.pdf)
-specifies exponential arrival times and a truncated-exponential response-time
-model, but it does not specify a distinct toxicity ascertainment-time law.
-This API therefore requires explicit timing inputs. It does not claim native
-duration or random-stream parity. Five independent R examples
+specifies exponential arrivals and a truncated-exponential response-time
+model. The recovered native duration kernel now establishes clipping and a
+shared follow-up time, with discarded balked arrivals. See the separate
+[legacy duration compatibility guide](multc-legacy-duration.md).
+This calendar API retains its explicit timing inputs and observation-aware
+policy. It does not claim native duration or random-stream parity. Five independent R examples
 verify calendar paths using direct beta tails and enumeration of hypothetical
 pending completions; see the [audit](../research/multc-calendar-audit.md).
 
@@ -265,7 +269,10 @@ trial. Default preflight limits are 500 million work units and 512 million
 estimated storage bytes; callers can lower them. These bounds cover retained
 summaries and estimated live simulation storage, not the interpreter or
 imported libraries. No native random-stream or duration-distribution parity
-is claimed. See the [simulation audit](../research/multc-simulation-audit.md).
+is claimed. See the [simulation audit](../research/multc-simulation-audit.md). The recovered
+native timing policy is available separately through
+[`run_multc_legacy_duration`](multc-legacy-duration.md), with explicit compact
+boundaries and controlled random variates.
 
 ## Save a Python study input and scenario report
 

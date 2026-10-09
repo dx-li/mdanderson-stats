@@ -11,6 +11,11 @@ from mdanderson_stats.boin12 import BOIN12Design, rank_desirability
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
+def _rows(filename: str) -> list[dict[str, str]]:
+    with (FIXTURES / filename).open(newline="") as source:
+        return list(csv.DictReader(source))
+
+
 def _outcomes(text: str, ndoses: int = 5):
     n = np.zeros(ndoses, dtype=int)
     t = np.zeros(ndoses, dtype=int)
@@ -25,7 +30,7 @@ def _outcomes(text: str, ndoses: int = 5):
 
 def test_posterior_fixture_matches_quasi_beta_reference():
     design = BOIN12Design(toxicity_limit=0.35, efficacy_limit=0.25)
-    rows = list(csv.DictReader((FIXTURES / "boin12-posterior.csv").open()))
+    rows = _rows("boin12-posterior.csv")
     for row in rows:
         result = design.posterior(
             [int(row["patients"])],
@@ -75,9 +80,7 @@ def test_rds_fixture_matches_all_native_rows_by_outcome_key():
 
 def test_decision_fixture_covers_exploration_stay_and_deescalation():
     design = BOIN12Design(toxicity_limit=0.35, efficacy_limit=0.25)
-    expected = {
-        row["case"]: row for row in csv.DictReader((FIXTURES / "boin12-decisions.csv").open())
-    }
+    expected = {row["case"]: row for row in _rows("boin12-decisions.csv")}
     for name in ("extra_exploration_at_nine", "stay_interval_rds", "deescalate_toxic_current"):
         row = expected[name]
         n = [int(v) for v in row["patients_by_dose"].split(";")]
@@ -91,7 +94,7 @@ def test_decision_fixture_covers_exploration_stay_and_deescalation():
 
 def test_final_obd_fixture_matches_isotonic_toxicity_and_utility_selection():
     design = BOIN12Design(toxicity_limit=0.35, efficacy_limit=0.25)
-    rows = list(csv.DictReader((FIXTURES / "boin12-obd.csv").open()))
+    rows = _rows("boin12-obd.csv")
     for row in rows:
         n, t, e = _outcomes(row["outcomes"])
         result = design.select_obd(n, t, e)

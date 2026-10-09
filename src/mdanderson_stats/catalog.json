@@ -84,16 +84,21 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Documented Multc99 Phase IIa fixed-historical-rate marginal stopping rules via multc_lean_design; native lower response cutoff mapped to complementary upper cutoff",
         "Response-only, toxicity-only or combined monitoring with explicit cutoff-one disabling; Python exact joint trial probabilities extend the native Phase IIa subset",
         "Explicit paired-endpoint calendar replay and serial duration simulation are available for the supported Phase IIa mapping; native timing and RNG parity are not claimed",
-        "General Multc99 multiple-event workflows, native source/archive audit and file/report interfaces remain pending; see docs/multc.md"
+        "Fixed-reference Phase IIa workflow remains available through docs/multc.md; the recovered general Multc99 workflow is documented in docs/multc99.md.",
+        "General elementary Dirichlet outcomes, compound and conditional Beta aggregation, independent historical rates and fixed-weight historical Dirichlet mixtures; source lower-strict/upper-inclusive boundaries and minimum-enrollment conduct.",
+        "Bounded prior-interval elicitation and posterior-width sample-size planning; corrected complete-outcome cohort/Poisson-period trials and OCs, balanced randomized arms, reassignment and conditional final selection with uniform ties.",
+        "Manual boundary editing with consistent early prefixes, explicit-grid delta/probability CSV, atomic captured-result HTML and versioned complete-input JSON replay for cohort, period-count and randomized studies. Source noncommercial terms retained; docs/multc99.md."
       ],
       "validation": [
         "Official Multc99-versus-Multc-Lean N=15 fixed-reference example and independent base-R beta-CDF boundary calculation",
-        "Mathematical subset verified; native final-cap placeholders and exact floating-point cutoff parity are not claimed"
+        "Mathematical subset verified; native final-cap placeholders and exact floating-point cutoff parity are not claimed",
+        "Recovered institutional Multc99_V2.1.zip, SHA-256 0fb107937ca619681539a5eee9db09cd549f42ba8ccbe7961cc7794691af6f6c; unchanged C kernel supplies eight boundary tables, three prior-elicitation examples and nine planning sample sizes.",
+        "85 independent mpmath 45-digit comparison integrals, exact binary potential-tape enumeration, simulation/conditional/reassignment/tie checks and complete saved-input replay: 137 focused checks. Native integration, indexing, cap-outcome and plotting defects are corrected explicitly; research/multc99-audit.md."
       ]
     },
     {
@@ -279,7 +284,8 @@
         "Bounded single-trial calendar replay with separately supplied endpoint availability, look-ahead suspension, frozen accrual-open clock and complete follow-up",
         "Serial joint-outcome calendar simulation with explicit clipped/conditional response timing, caller-supplied toxicity delay, replayable child seeds and duration/decision/enrollment summaries with Monte Carlo error",
         "Saved versioned JSON study inputs and atomic text reports capture full/reachable boundaries, exact named-scenario OCs, explicit timing assumptions, scenario seeds and calendar means/decision counts/probabilities/MCSEs. Aggregate work/storage are checked before computation; docs/multc.md.",
-        "Native response-time truncation, toxicity ascertainment law, suspension-clock and pretrial/minimum-enrollment conventions remain unresolved. Native file formats and protocol memo layout are not reproduced."
+        "Native response-time truncation, toxicity ascertainment law, suspension-clock and pretrial/minimum-enrollment conventions remain unresolved. Native file formats and protocol memo layout are not reproduced.",
+        "Recovered native duration compatibility replay with explicit compact response/nontoxicity stopping vectors, clipped response times, shared follow-up, latent outcome counts, balked arrivals, distinct decision/follow-up clocks and controlled external variates; docs/multc-legacy-duration.md."
       ],
       "validation": [
         "Official N=30 statistical tutorial full/potential boundaries before the sample cap",
@@ -288,7 +294,8 @@
         "Five independent R direct-beta/pending-completion calendar scenarios: 18 patient rows and 12 look rows; tools/reference_multc_calendar.R and tests/fixtures/multc-calendar-*.csv",
         "Calendar checks for no future-outcome use, suspension/resumption, cap-bound metadata and unrepresentable positive time increments; research/multc-calendar-audit.md",
         "Eight focused calendar/simulation checks including analytic fixed-enrollment duration mean/MCSE, joint outcome truth, seed replay, extreme timing representation and work/storage preflight; research/multc-simulation-audit.md",
-        "Saved-study tests check JSON replay, exact fixed-enrollment OCs, captured seeds, simulation work/storage preflight and malformed input handling; source numerical references remain those of the existing monitoring/calendar engines."
+        "Saved-study tests check JSON replay, exact fixed-enrollment OCs, captured seeds, simulation work/storage preflight and malformed input handling; source numerical references remain those of the existing monitoring/calendar engines.",
+        "Thirty-four original x86 duration-kernel references executed through bounded Unicorn emulation with external draws/vector helpers substituted; exact counts and draw consumption, durations within 2e-15 relative / 1e-14 absolute; 70 focused tests; research/multc-native-duration-audit.md. Full Windows app/RNG/boundary conversion not claimed."
       ]
     },
     {
@@ -429,14 +436,16 @@
         "Normal-coefficient Monte Carlo comparison with paper RMS formula, retained draws and slope-reversal diagnostics",
         "Semiparametric raw-dose common-intercept and log-dose varying-potency baselines, natural thin-plate spline departure with REML smoothing and BLUP predictions on an explicit transformed-response scale.",
         "Repeated-dose observations, original-knot affine constraints, explicit smoothing parameters, competing-minimum screening, optimizer/boundary diagnostics and bounded prediction chunks.",
-        "Source-defined two-stage Mammen wild-bootstrap resampling with half/double-lambda anchors, fresh marginal-baseline and REML refits, optional retained training-row departure draws and stable descriptive sample SD; bounded serial work, replay tapes and refit diagnostics. Native interval convention remains unverified; docs/synergy-surface-bootstrap.md."
+        "Source-defined two-stage Mammen wild-bootstrap resampling with half/double-lambda anchors, fresh marginal-baseline and REML refits, optional retained training-row departure draws and stable descriptive sample SD; bounded serial work, replay tapes and refit diagnostics. Native interval convention remains unverified; docs/synergy-surface-bootstrap.md.",
+        "Recovered Greco, Machado-Robinson, Plummer-Short and Carter normalized fraction-surviving response functions, author-initialized logit least-squares fitting, parameter covariance/SE/t tests, residual diagnostics, fixed-ratio dose curves and contour figures; explicit root/domain/numerical bounds."
       ],
       "validation": [
         "Eight focused tests: regression, published three-drug identity, delta variances, exact Monte Carlo RMS reconstruction, small-noise agreement and unstable-slope diagnostics; tests/test_interaction_index.py and tests/test_interaction_monte_carlo.py",
         "Three focused surface tests check marginal fits, inverse-dose additivity, constrained penalized equations, REML and exact-fit rejection; tests/test_synergy_surface.py.",
         "Independent base-R augmented spline solves and full-covariance REML agree with surface predictions and smoothing; research/synergy-response-surface-audit.md.",
-        "Pending four 2007 parametric surfaces, wild-bootstrap intervals, plots, source case studies and native workflows; docs/interaction-index.md and docs/synergy-surface.md.",
-        "Five independent base-R fixed-tape bootstrap references compare synthetic responses, half/double-lambda anchors, fresh REML refits and departure summaries; ten focused tests pass. Response-unit invariance at 1e-200 and 1e200 is checked with bounded memory; research/synergy-wild-bootstrap-audit.md. Descriptive sample SD does not claim the original normal-interval convention."
+        "Pending the separate semiparametric wild-bootstrap interval convention and its native workflow. Four author-defined parametric surfaces now have native references and Python plots; docs/synergy-parametric.md and docs/synergy-surface-bootstrap.md.",
+        "Five independent base-R fixed-tape bootstrap references compare synthetic responses, half/double-lambda anchors, fresh REML refits and departure summaries; ten focused tests pass. Response-unit invariance at 1e-200 and 1e200 is checked with bounded memory; research/synergy-wild-bootstrap-audit.md. Descriptive sample SD does not claim the original normal-interval convention.",
+        "Original institutional S-PLUS/R archive recovered and checksum-pinned. 138 unmodified response-kernel predictions and nine native-wrapper R fits verify parameters/uncertainty/residuals, including antagonistic Greco; 36 focused method/plot tests; research/synergy-parametric-audit.md."
       ]
     },
     {
@@ -1611,7 +1620,7 @@
         "Eight STPLAN 4.5 continuous/correlation power procedures: unknown-variance normal one sample, pooled and Welch normal two sample, common-CV lognormal, uncensored exponential one/two sample, and corrected Fisher-transform correlation one/two sample. Native dominant-tail convention, fractional planning sizes, bounded broadcasting, and independent mathematical implementation.",
         "Nine discrete-outcome procedures: two-binomial arcsine and median-split approximations; historical-control and conservative-responder approximations; K-sample noncentral chi-square with native two-group significance convention; subject-retention probabilities; native Fisher-test planning approximation; exact one-sample binomial and Poisson powers. Integer-tail selection and explicit empty-region power zero replace native failure sentinels.",
         "Unmatched case-control power with current disease-risk parameterization; exact matched discordance mixture with corrected null/alternative argument order and fixed upper-tail direction; two-sample Poisson conditional-test mixture with an explicit truncation bound, replacing the native 99% renormalized sum and large-mean substitution. Bounded broadcast inputs and aggregate support work; independent R finite-sum references.",
-        "All five current censored-survival forward procedures: one-sample Poisson-event mixture, George–Desu randomized exponential model, randomized information-time model, fixed historical controls with optional continued follow-up, and corrected piecewise-exponential event integration. This completes the 25 active main-menu forward power/retention calculations.",
+        "All five current censored-survival forward procedures: one-sample Poisson-event mixture, George\u2013Desu randomized exponential model, randomized information-time model, fixed historical controls with optional continued follow-up, and corrected piecewise-exponential event integration. This completes the 25 active main-menu forward power/retention calculations.",
         "Bounded inverse planning across all 25 active forward methods and the legacy matched-pairs method for sample sizes, effects, probabilities, SD/CV, significance, and study timing. Verified continuous roots; exhaustive smallest/largest integer attainment; equal-group tied sizes; K-group total allocation and indexed parameter solving; immutable completed designs. Bounds and branch are explicit caller choices; proportional K-group planning returns source-defined fractional counts without an inferred integer-allocation rule.",
         "Exponential median/mean/survival-point and historical person-time hazard conversions; two-point survival curves with specified hazard-change time and three-point curves with inferred change time. Bounded batch broadcasting, stable log differences, curve reconstruction checks, and explicit constant-hazard nonidentifiability.",
         "Historical-control survival planning jointly searches bounded accrual duration and new-control allocation using the existing fixed-history power model, explicit endpoint comparisons, a shared evaluation budget, and final achieved-power verification. Independent R and original Fortran references include both native manual examples.",
@@ -1727,9 +1736,17 @@
         }
       ],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "implemented",
+      "implemented_features": [
+        "Pure-Python fixed-form FLECS-to-Fortran translator covering all recovered alternation, repetition, branch and internal-procedure structures, source continuations and program-unit resets; docs/flecs90.md.",
+        "Native comment, source-number, SELECT CASE and loop-name options; line provenance, bounded strict syntax diagnostics, atomic input-preserving file conversion and multi-file/check-only CLI.",
+        "Explicit corrections for quoted text, ordinary Fortran IF/ELSE, finished-loop transfer targets and empty conditionals; native malformed-input error recovery is not reproduced."
+      ],
+      "validation": [
+        "144 translations across nine source programs and all 16 option combinations agree exactly with the pinned C reference; tests/fixtures/flecs90-reference.json and tools/reference_flecs90.py.",
+        "GNU Fortran 14.2.0 compiled all 144 output programs; 136 executed with expected results and two corrected edge programs executed. Eight documented unlabelled-loop variants would loop indefinitely and were not executed; research/flecs90-audit.md.",
+        "Focused native-reference, quoted-text, transfer-target, fixed-form mapping, strict-diagnostic, resource-limit, atomic-file and CLI checks; tests/test_flecs90.py."
+      ]
     },
     {
       "id": 44,
@@ -2214,11 +2231,11 @@
       "retrieval_error": null,
       "status": "implemented",
       "implemented_features": [
-        "Multi-group log-rank and Gehan–Breslow survival comparisons, optional stratification, tied-event hypergeometric covariance, scores and effective-rank chi-square tests.",
-        "Kaplan–Meier life table, Greenwood standard errors, risk-based Simon–Lee pointwise confidence limits, native interpolated quantiles and confidence-interval status flags, including censor times.",
+        "Multi-group log-rank and Gehan\u2013Breslow survival comparisons, optional stratification, tied-event hypergeometric covariance, scores and effective-rank chi-square tests.",
+        "Kaplan\u2013Meier life table, Greenwood standard errors, risk-based Simon\u2013Lee pointwise confidence limits, native interpolated quantiles and confidence-interval status flags, including censor times.",
         "Multivariable binary logistic regression with optional intercept, information covariance, one/two-sided coefficient p-values, nested likelihood-ratio tests and scaled prediction through the existing logistic kernel.",
         "Multivariable static-covariate Cox regression with Breslow ties, likelihood-ratio and coefficient inference, scaled log-relative-hazard prediction, stable risk moments and sparse monotone-likelihood detection.",
-        "Kalbfleisch–Prentice baseline survivor estimates and profile prediction from supplied Cox linear predictors; tied-failure roots, native alpha/hazard probabilities and log-domain reference scaling.",
+        "Kalbfleisch\u2013Prentice baseline survivor estimates and profile prediction from supplied Cox linear predictors; tied-failure roots, native alpha/hazard probabilities and log-domain reference scaling.",
         "Frequency distributions with exact/default or native approximate grouping, plus stable descriptive statistics and an explicit legacy standard-error field. All seven advertised calculation families covered; see docs/survan-coverage.md for scope and interface differences."
       ],
       "validation": [
@@ -2325,7 +2342,7 @@
         "Exact polynomial beta and exchangeability identities, posterior counts/censored exposure, mean/median conversion, 1e200/1e-200 time-unit invariance and unresolved-tail rejection; existing two-arm inequality checks reused",
         "One measured reference pass reduced from 2.62 to 1.12 seconds by vectorizing competing-arm CDFs; no native controller or numerical-engine parity claim",
         "Eleven focused calendar scenarios cover initial allocation, binary/exponential outcomes, delayed and exact-deadline availability, suspension/reactivation, strict monitoring gates, all-futile/no-winner, suspended final winners, incomplete follow-up, terminal clipping, scheduled looks after the last arrival and zero-enrollment duration termination; tests/test_arand_calendar.py",
-        "Controller rules reviewed against local version 5.2 guide sections 3.1–3.4; unresolved native conventions exposed as required Python policy; research/arand-controller-audit.md",
+        "Controller rules reviewed against local version 5.2 guide sections 3.1\u20133.4; unresolved native conventions exposed as required Python policy; research/arand-controller-audit.md",
         "Executable guide examples independently check Beta(4,1) versus Beta(1,4) final best-arm probability 69/70 and reconstruct exponential event/exposure totals; docs/arand-calendar.md",
         "Fifteen posterior/calendar/simulation tests, three seeded mean-versus-median trial comparisons, a 512-trial Poisson expected-enrollment/zero-enrollment check and the executable simulation guide; docs/arand-simulation.md and research/arand-simulation-audit.md. Native RNG and desktop report equivalence remain open."
       ]
@@ -2630,7 +2647,9 @@
         "Coefficient-variance and data-space variance-function posterior summaries, optional posterior mean covariance/plugin correlation and bounded retained covariance draws with the original inverse-transform orientation.",
         "Explicit coefficient-index or wavelet-partition selection preserving original labels and packed positions, with bounded zero-filled posterior coefficient/variance restoration before inverse reconstruction.",
         "Opt-in per-coefficient REML variance initialization: analytic single-residual model, bounded serial mixed-model optimization, structural identifiability checks and explicit raw/start/floor/boundary/convergence diagnostics; native initialization is not inferred.",
-        "Posterior predictive coefficient draws for explicit future fixed designs, retained existing random levels, shared new levels and optional independent residual rows; variance-stratum mapping and bounded work/storage precede RNG use; existing curve reconstruction/summary applies; docs/wfmm-prediction.md."
+        "Posterior predictive coefficient draws for explicit future fixed designs, retained existing random levels, shared new levels and optional independent residual rows; variance-stratum mapping and bounded work/storage precede RNG use; existing curve reconstruction/summary applies; docs/wfmm-prediction.md.",
+        "Verified WFMM 3.1 inverse-gamma variance-prior mapping: a=delta_omega*component count, b=a*supplied variance; random counts are columns per level and residual counts are curves per stratum. Explicit supplied estimates do not infer the native MOM/profile optimizer.",
+        "Native-verified cumulative-energy compression with strict per-curve votes, original-position retention/restoration, actual energy diagnostics, alpha=1 bypass and explicit split-tie/empty-selection handling; docs/wfmm.md."
       ],
       "validation": [
         "Hand-computed Haar coefficients, scalar db4 calculations, energy/reconstruction checks and 12-point non-power-of-two input; tests/test_wfmm_basis.py.",
@@ -2641,9 +2660,11 @@
         "Haar covariance identity/PSD, nonsymmetric custom-basis orientation, posterior variance summaries and oversized retained-output rejection; tests/test_wfmm_covariance.py.",
         "Selected partition/order and zero-fill identities, posterior-shaped restoration and allocation preflight; tests/test_wfmm_selection.py. Public selected-coefficient calibration/fit/reconstruction example executed with noncontiguous partition labels.",
         "Independent base-R residual-only and balanced random-intercept REML references, fixed-design scale/likelihood checks, numerical-zero and nonidentifiable boundaries, strict evaluation budgets and initializer-to-sampler workflow; research/wfmm-variance-init-audit.md.",
-        "Pending native variance/proposal initialization, inverse-gamma defaults, additional transforms/boundaries/compression and native prediction-file/kernel parity.",
+        "Pending native variance/proposal initialization, additional extended transforms/boundaries/pass filtering and native prediction-file/kernel parity.",
         "Five independent base-R supplied-matrix cases compare 1199 coefficients, reconstructed curves, posterior summaries and covariance/variance-function values; maximum scaled discrepancy 5.49e-15. Ill-conditioned inverse pairs are rejected and reciprocal uniform scales through 1e\u00b1200 are checked; tools/reference_wfmm_custom_transforms.R, tools/check_wfmm_custom_transforms.py, research/wfmm-custom-transform-audit.md.",
-        "Five focused prediction tests pass. Independent base-R finite-mixture calculations verify 192 deterministic conditional curve values and 168 predictive means/covariances, including shared-level cross-row dependence, varying posterior variances and nonorthogonal reconstruction. Maximum stochastic discrepancy 2.081 estimated Monte Carlo errors; tools/reference_wfmm_prediction.R, tools/check_wfmm_prediction.py, research/wfmm-prediction-audit.md."
+        "Five focused prediction tests pass. Independent base-R finite-mixture calculations verify 192 deterministic conditional curve values and 168 predictive means/covariances, including shared-level cross-row dependence, varying posterior variances and nonorthogonal reconstruction. Maximum stochastic discrepancy 2.081 estimated Monte Carlo errors; tools/reference_wfmm_prediction.R, tools/check_wfmm_prediction.py, research/wfmm-prediction-audit.md.",
+        "Eight wholly synthetic native Linux WFMM1 initializations verify shape/scale outputs across delta/sample-size changes, unequal residual strata, two random levels and wavelet partitions; tests/test_wfmm_variance_prior.py and research/wfmm-native-prior-audit.md.",
+        "Five original Linux WFMM1 periodic Haar transforms and 46 native compression/bypass/error runs, including two legacy zero-column failures; 79 focused checks; tools/reference_wfmm_compression.py and research/wfmm-native-compression-audit.md."
       ]
     },
     {
@@ -2861,7 +2882,7 @@
       "retrieval_error": null,
       "status": "partial",
       "implemented_features": [
-        "proportional_density: offset-likelihood estimation of alpha/beta/alpha_star, reverse Kaplan–Meier censoring, incidence and Greenwood errors, observed-failure and disease-conditional masses and survival; tied times pooled.",
+        "proportional_density: offset-likelihood estimation of alpha/beta/alpha_star, reverse Kaplan\u2013Meier censoring, incidence and Greenwood errors, observed-failure and disease-conditional masses and survival; tied times pooled.",
         "proportional_density_pepe: archived unit-weight right-endpoint squared-curve area statistic; no bootstrap p-value.",
         "Explicit equal-censoring model with pooled reverse KM and asymptotic LR calibration; default unequal-censoring fit leaves LR p-value uncalibrated. Archive incidence Wald statistic retained.",
         "proportional_density_bootstrap: section 3.1 failure-only observed-density goodness-of-fit test, fixed censoring offsets, exact step integral to common follow-up, seeded resampling, Monte Carlo p-value and explicit bounds for failed replicate fits.",
@@ -3006,7 +3027,7 @@
       "retrieval_error": null,
       "status": "implemented",
       "implemented_features": [
-        "Lee–Liu strict predictive futility/efficacy and final posterior stopping rules, complete response-path monitoring and exact Bernoulli operating characteristics",
+        "Lee\u2013Liu strict predictive futility/efficacy and final posterior stopping rules, complete response-path monitoring and exact Bernoulli operating characteristics",
         "Constrained sample-size and cutoff-grid searches maximizing power or minimizing null expected enrollment, deduplicated boundaries and equivalent discrete threshold pairs"
       ],
       "validation": [
@@ -3361,7 +3382,7 @@
         "Optional staged prior/posterior history plots with cohort summaries and disconnected credible regions; docs/beta-binomial-demo.md"
       ],
       "validation": [
-        "Guide pages 10–11 posterior sequence, corrected posterior mean denominator, existing exact beta identities, credible-set geometry, simulation moments and continuation; tests/test_beta_binomial.py",
+        "Guide pages 10\u201311 posterior sequence, corrected posterior mean denominator, existing exact beta identities, credible-set geometry, simulation moments and continuation; tests/test_beta_binomial.py",
         "Rendered worked-example and U-shaped prior plots; docs/beta-binomial-demo-source.json"
       ]
     },
@@ -4369,13 +4390,15 @@
         "Optional stricter safety stopping with the documented lowest-dose count greater than three, separate ordinary elimination state, and count-based precision stopping when the next assignment stays.",
         "Patient-level accelerated-titration replay with cumulative grade-2/DLT triggers, lower-cap handoff, cohort top-up, persistent exclusions, auditable decisions and explicit terminal enrollment budgets.",
         "Final MTD estimation using raw, original-ESS or robust-effective-ESS rates, weighted isotonic fitting, explicit candidate/tie policies, optional final de-escalation bounds and terminal safety suppression; select_iboin_mtd and select_iboin_trial_mtd.",
-        "Bounded serial complete-outcome simulation reuses the patient-level conduct engine, supports exact trial-seed replay and reports selection/stopping probabilities, dose-level enrollment and toxicity means, enrollment quantiles and Monte Carlo errors; docs/iboin-final-simulation.md."
+        "Bounded serial complete-outcome simulation reuses the patient-level conduct engine, supports exact trial-seed replay and reports selection/stopping probabilities, dose-level enrollment and toxicity means, enrollment quantiles and Monte Carlo errors; docs/iboin-final-simulation.md.",
+        "Captured-input HTML simulation reports and versioned JSON replay preserve complete design/selection/conduct settings, original/effective ESS, exact trial seeds and Monte Carlo summaries; docs/iboin-report.md."
       ],
       "validation": [
         "100 published and 120 live default boundary cells, native safety thresholds, independent prior sums, extreme ESS, zero-information BOIN equivalence and safety; tests/test_iboin.py",
         "Strict lowest-dose count threshold, exact uniform-prior safety-tail references, preserved ordinary elimination and stay-only precision stopping; tests/test_iboin.py and public guide examples.",
         "Official-guide titration/cap transitions, public patient traces, and safety/precision precedence at the enrollment budget; bounded pending-cohort state and immutable history; tests/test_iboin_trial.py.",
-        "Focused final-rate, weighted isotonic, eligibility/tie/safety, shared-conduct, seed-replay, mutually exclusive severity and numerical preflight checks; tests/test_iboin_final_simulation.py. Native final-selection defaults and reporting parity remain open."
+        "Focused final-rate, weighted isotonic, eligibility/tie/safety, shared-conduct, seed-replay, mutually exclusive severity and numerical preflight checks; tests/test_iboin_final_simulation.py. Native final-selection defaults and reporting parity remain open.",
+        "Captured-input replay, direct trial aggregation, exact uint64 seeds, HTML escaping, atomic saves, undefined single-trial MCSE, schema and resource-limit checks; tests/test_iboin_report.py."
       ]
     },
     {
@@ -4505,7 +4528,7 @@
       "implemented_features": [
         "Modified iterative KM reconstruction from cleaned coordinates, with optional risk table and total-event input; patient records, fitted curve and unrounded error diagnostics. Native coordinate cleaning with outlier deletion, cumulative-minimum correction, duplicate reduction and provenance.",
         "Two-arm Efron Cox comparison: log hazard ratio, model standard error, Wald interval and native Cox score test. ",
-        "Survival summaries: Greenwood log confidence intervals, Nelson–Aalen cumulative hazard/SE, landmark probabilities, midpoint plateau quantiles and inverted confidence limits.",
+        "Survival summaries: Greenwood log confidence intervals, Nelson\u2013Aalen cumulative hazard/SE, landmark probabilities, midpoint plateau quantiles and inverted confidence limits.",
         "Source-report reconstruction diagnostics: R-compatible three-decimal rounding, native n-1 RMSE and signed maximum with a separate true maximum absolute error; paired missing-value omission with provenance; exact tied-label or asymptotic KS discrepancy and explicitly uncalibrated nominal p-value; docs/ipdfromkm-diagnostics.md.",
         "Bounded JPEG/PNG/BMP/TIFF input, explicit axis calibration and manual curve-point acquisition, stable pixel-to-data mapping, image/coordinate provenance, image previews and full KM/risk/coordinate-difference plots; optional interactive picker and lazy image/plot dependencies. Native styling and export-byte parity are not claimed."
       ],
@@ -4599,7 +4622,7 @@
         "Explicit information/native gamma-exponential conventions to distinguish equivalent count from native prior-exposure output",
         "Analytic expectation of native censored-exponential/inverse-gamma survival ESS, with log-stable continuous root and native interpolation grid",
         "Normal/logistic regression ESS with direct expected information or original uniform-covariate cumulative simulation, arbitrary parameter subsets, stable log-curvature gains and explicit first-crossing/not-reached results.",
-        "Complete-outcome empiric CRM adaptive simulation with posterior-mean plug-in dose assignment, Rao–Blackwell expected-subset information, continuous and native-grid ESS, explicit full/native posterior moments, reproducible outcome tapes and bounded sequential integration.",
+        "Complete-outcome empiric CRM adaptive simulation with posterior-mean plug-in dose assignment, Rao\u2013Blackwell expected-subset information, continuous and native-grid ESS, explicit full/native posterior moments, reproducible outcome tapes and bounded sequential integration.",
         "Scalar-start TITE-CRM prior ESS with fixed/Poisson accrual, delayed toxicity, as-of observed follow-up or explicit legacy arrival-time criteria, signed expected-subset information, full/native moments, replay tapes and bounded sequential quadrature; docs/tite-crm-prior-ess.md."
       ],
       "validation": [
@@ -4664,7 +4687,7 @@
         "Independent base-R Normal calibration replay verifies 18 candidates and 836 probability/enrollment/MCSE summaries across both objectives and holdouts. A 4% calibration false-go constraint passes at 2/64 and fails on independent validation at 3/48 without reselection; large-offset candidate results are unchanged. docs/bop2-dc-normal-calibration.md",
         "Independent base-R Beta polynomial integration and 64 response paths across four randomized-binary designs verify 100 analyses and 336 summaries, including 12 exact OC scenarios, unequal allocation, signed margins, early graduation and strict equality; largest posterior discrepancy 1.094e-10 is within reported numerical error. docs/bop2-dc-randomized-binary.md",
         "Independent R Student-t density integration and Cauchy identities verify 12 randomized Normal cases, 21 reached analyses, and 48 simulated trials with 78 looks: 263 numeric summaries agree, including early graduation, strict equality, unequal/empty arms, 1e15 offsets and unit changes. Maximum posterior discrepancy 6.273e-10 is within reported error. docs/bop2-dc-randomized-normal.md",
-        "Independent R Gamma-density integration and calendar calculations verify 10 randomized survival tapes/17 looks and 48 fixed/Poisson-accrual trials/71 looks: 763 summaries agree, including 24 graduations, zero-duration events, pending censoring, allocation asymmetry and 1e±100 units. Largest posterior discrepancy 4.922e-11 is within reported error. docs/bop2-dc-randomized-survival.md",
+        "Independent R Gamma-density integration and calendar calculations verify 10 randomized survival tapes/17 looks and 48 fixed/Poisson-accrual trials/71 looks: 763 summaries agree, including 24 graduations, zero-duration events, pending censoring, allocation asymmetry and 1e\u00b1100 units. Largest posterior discrepancy 4.922e-11 is within reported error. docs/bop2-dc-randomized-survival.md",
         "Independent R Beta integration and full response-path enumeration verify 66 binary candidate configurations and 1980 numeric summaries, distinct CGR/ESS winners, stable ties and infeasibility. research/bop2-dc-randomized-binary-calibration-audit.md",
         "Independent R Student-t density integration verifies 36 Normal candidate configurations and 1092 summaries, distinct CGR/ESS winners and a calibration-pass/holdout-fail case without reselection. research/bop2-dc-randomized-normal-calibration-audit.md",
         "Independent R Gamma-density integration/calendar replay verifies 36 survival candidate configurations and 1791 summaries, fixed/Poisson accrual, signed margins, different objective winners and held-out arm events/exposure. research/bop2-dc-randomized-survival-audit.md",
@@ -4848,7 +4871,7 @@
         "Twelve focused BF-BOIN checks pass. All existing fields match 80 published no-expansion trials exactly; 60 expansion trials verify fixed-dose targeting, cap accounting, chronology and termination, including two independently reconstructed first toxicity closures. research/bard-expansion-audit.md.",
         "Accelerated titration: 11 focused checks pass; all existing fields reproduce 80 published trials with titration disabled. Sixty independent patient ledgers cover all four exit reasons, observation chronology, grade-2 counts at exit, cohort budgets and full follow-up. Numerical checks below 129 MiB, zero swaps. research/bf-boin-accelerated-titration-audit.md.",
         "22 focused BF guide-rule, conduct, calendar, titration and report tests pass; report summaries reproduce serial direct simulation from captured settings. Integrated checks add exact Beta tails 243/256 and 63/64 across the extra-safe count boundary, final-selection propagation, ordinary BOIN preservation, strict fitted-bound equality, and BARD callers. The combined TPI/PoP/BF batch passed 48 focused tests at 158 MiB with zero swaps; research/bf-boin-protocol-report-audit.md.",
-        "BARD cached guide Remarks 4–5 recover both modifier target ranges. Thirty-two focused affected checks pass, including hand-enumerated n=3/n=6 actions, range endpoints, eliminated destinations, conflict pooling, ordinary BOIN preservation and captured report settings. research/bf-boin-bard-modifiers-audit.md.",
+        "BARD cached guide Remarks 4\u20135 recover both modifier target ranges. Thirty-two focused affected checks pass, including hand-enumerated n=3/n=6 actions, range endpoints, eliminated destinations, conflict pooling, ordinary BOIN preservation and captured report settings. research/bf-boin-bard-modifiers-audit.md.",
         "October 4 source-scope review cross-checks cached guide Figure 15 against the existing report: truth, selection, treatment share, total enrollment, early stopping and duration are represented with explicit denominators. No additional source-defined calculation was identified; no algorithm or prior validation was changed for this status update."
       ]
     },
@@ -4919,7 +4942,7 @@
         "Nine focused calendar/titration checks pass, including highest-dose immediate top-up, lower-cap full next cohort, singleton delayed-grade-2 transitions and overdose-boundary precedence. Three integrated guide examples pass in 1.492 seconds, 114.73 MiB peak RSS, zero swaps; research/bard-accelerated-titration-audit.md.",
         "BF-BOIN expansion guide SHA-256 pinned in docs/bard-sources.json. Twelve affected design/simulation checks pass; 80 no-expansion trials reproduce published outputs exactly and 60 expansion trials satisfy source-rule ledgers. Root combined audit 108.52 MiB RSS, zero swaps; research/bard-expansion-audit.md.",
         "Accelerated titration: 11 focused checks pass; all existing fields reproduce 80 published trials with titration disabled. Sixty independent patient ledgers cover all four exit reasons, observation chronology, grade-2 counts at exit, cohort budgets and full follow-up. Numerical checks below 129 MiB, zero swaps. research/bf-boin-accelerated-titration-audit.md.",
-        "BARD guide Remarks 4–5 reviewed against BF-BOIN modifier decision and boundary code; the 32 focused BF-BOIN checks pass. Source crosswalk distinguishes implemented calculations from unspecified native timing/quota policies; research/bard-remaining-simulation-audit.md.",
+        "BARD guide Remarks 4\u20135 reviewed against BF-BOIN modifier decision and boundary code; the 32 focused BF-BOIN checks pass. Source crosswalk distinguishes implemented calculations from unspecified native timing/quota policies; research/bard-remaining-simulation-audit.md.",
         "Nine focused response-model/scenario checks pass, including tiny and degenerate margins, finite-precision plateau rejection, source-table capture and rounded-margin consistency. An independent base-R quadratic/monotone reference and correlated profile example validate conditional and marginalized odds ratios. Across 40 published scenario/dose cases, Python-to-R response rates differ by less than 5e-16 and calibrated intercepts by at most 8.93e-14; marginal residuals are at most 8.99e-15. research/bard-response-reference-audit.md and tools/reference_bard_response.R.",
         "Fourteen distinct affected BF-BOIN/trial/OC checks pass, including canonical joint-probability bounds, eligible carryover, no-MTD handling and streaming replay. An independent four-trial audit reconstructs 55 patient records and 20 minimization assignments; posterior utilities agree within 1.42e-14. Legacy ordinary/expansion/titration outputs and next RNG draws match published base06 without the model. A documented 100-trial OC workflow runs with explicit denominators; research/bard-bf-boin-workflow-audit.md.",
         "Five focused saved-study/report checks pass, with scoped mypy and final Ruff/format validation. Additional nondefault endpoint-association/titration/expansion and zero/one-response studies survive JSON transport and reproduce every summary field, including the maximum uint64 seed; 133.06 MiB peak process RSS, zero swaps. research/bard-saved-workflow-audit.md.",
@@ -5038,7 +5061,7 @@
       "status": "implemented",
       "implemented_features": [
         "One- and two-stage normal and exact binomial ROSE design searches, unequal allocation and rounded interim enrollment",
-        "O’Brien–Fleming interim spending, strict high-dose boundaries with exact decimal tie handling and low-dose final ties",
+        "O\u2019Brien\u2013Fleming interim spending, strict high-dose boundaries with exact decimal tie handling and low-dose final ties",
         "Exact operating characteristics for specified designs and seeded stage-wise binary simulations with Monte Carlo standard errors",
         "Primary application method scope; supplementary free/joint interim-boundary optimization is not exposed; no original backend or RNG parity claim"
       ],
@@ -5173,9 +5196,14 @@
       "references": [],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "rmc_compass_reported_prediction: explicitly approximate log-normal AFT point predictions in months from the live V1.0.2.0 public panel; displayed input clamping, visible extrapolation, median and 24-month risk group, immutable outputs and conditional parameter-rounding envelopes.",
+        "Exact hidden coefficients/bounds, fitted confidence intervals, raw-input rules and native output workflows remain open; docs/rmc-compass.md. Parameter-rounding envelopes are not statistical confidence intervals."
+      ],
+      "validation": [
+        "Eleven fresh public-calculator responses: 55 displayed survival probabilities, eleven medians and groups are consistent with reported parameter precision; 29 focused tests cover source observations and input/output limits. research/rmc-compass-audit.md."
+      ]
     },
     {
       "id": 175,
