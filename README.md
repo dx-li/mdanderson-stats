@@ -1601,7 +1601,13 @@ Serial duration simulation provides replay seeds and Monte Carlo errors.
 [Saved studies](docs/multc.md#save-a-python-study-input-and-scenario-report)
 capture design and timing settings, named truths, exact operating characteristics
 and calendar summaries in portable JSON inputs and readable reports.
-Native timing conventions and general Multc99 designs remain unresolved.
+The [recovered legacy duration workflow](docs/multc-legacy-duration.md) adds
+automatic compact boundaries, mandatory prior screening, controlled-variate
+replay and bounded batch simulation with native-defined means and sample-size
+probabilities. It preserves latent counts, clipped/shared follow-up and balked
+arrivals, with explicit Python RNG differences. Native saved-file/default and
+protocol/report compatibility remain open. General Multc99 designs are covered
+in the [Multc99 guide](docs/multc99.md).
 
 [ToxFinder two-agent dose finding](docs/toxfinder.md) adds its six-parameter
 toxicity surface, explicit gamma priors and Bayesian posterior fitting with

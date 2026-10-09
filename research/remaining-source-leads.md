@@ -387,8 +387,13 @@ not been rerun.
 Multc99's original C source now defines and validates the general-outcome,
 historical-mixture, calibration, trial and saved-study workflows; entry #3 is
 implemented. See [the audit](multc99-audit.md) and retained licensing terms.
-The separate Multc Lean MSI is recovered, but its timing backend is native
-Windows machine code and the time-law/clock contract remains unverified.
+The separate Multc Lean MSI is recovered. Bounded x86 references now establish
+its legacy clipping/shared follow-up, latent-count/balked-arrival clock,
+compact-boundary control, cohort/minimum/prior precedence and study means/PMF.
+The boundary predicates use independently generated base-R tails, so native
+posterior-integrator parity is not established. Native saved files/defaults,
+protocol/report workflow and full Windows execution remain open; see the
+[boundary/aggregation audit](multc-native-boundaries-audit.md).
 
 SYNERGY's original S-PLUS/R archive is recovered. Its four parametric models
 now provide fits, parameter inference and figures, checked against the author

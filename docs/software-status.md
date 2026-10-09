@@ -177,8 +177,9 @@ some legacy adaptations retain commercial-use restrictions.
 | Predicting survival for patients with malignant pleural effusions using the BLESS models | [online #149](https://biostatistics.mdanderson.org/shinyapps/BLESS) | See catalog feature and validation notes |
 | Risk of CNS Metastasis in Clinically Localized Melanoma | [online #161](https://biostatistics.mdanderson.org/shinyapps/CNSRISK) | See catalog feature and validation notes |
 
-October 8 continuation: WFMM now includes native-verified energy compression,
-and Multc Lean includes the recovered legacy duration kernel for explicit
-boundaries/draws. Their guides distinguish these supported contracts from
-remaining native initialization/transform and boundary/workflow gaps. Counts
-are unchanged; see the [continuation record](../research/source-recovery-2026-10-08.md).
+October 9 continuation: Multc Lean now adds automatic compact boundaries,
+recovered cohort/minimum/prior precedence and bounded legacy batch simulation
+with native-defined means/PMF and replayable Python seeds. Its guide identifies
+substituted posterior predicates and remaining native integrator/file/default/
+protocol workflow gaps. Counts are unchanged; see the
+[current continuation record](../research/source-recovery-2026-10-09.md).

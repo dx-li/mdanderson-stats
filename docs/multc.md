@@ -270,9 +270,10 @@ estimated storage bytes; callers can lower them. These bounds cover retained
 summaries and estimated live simulation storage, not the interpreter or
 imported libraries. No native random-stream or duration-distribution parity
 is claimed. See the [simulation audit](../research/multc-simulation-audit.md). The recovered
-native timing policy is available separately through
-[`run_multc_legacy_duration`](multc-legacy-duration.md), with explicit compact
-boundaries and controlled random variates.
+native timing policy is available separately through the
+[legacy duration guide](multc-legacy-duration.md), with automatic compact
+boundaries, prior screening, controlled-variate replay and bounded batch
+simulation. That batch preserves the recovered latent-count and balk behavior.
 
 ## Save a Python study input and scenario report
 
@@ -358,7 +359,8 @@ The native
 allow accrual to continue while outcomes are pending when they cannot change the
 next decision; the replay and simulation above implement that decision logic. Native
 configuration/report formats, protocol documents, and
-the general Multc99 multiple-event workflow are also pending. Parameter
+the native input/default workflow remain open. The general Multc99 multiple-event
+workflow is covered in its [separate guide](multc99.md). Parameter
 elicitation and distribution inequalities already have separate package APIs:
 `solve_distribution_moments`, `solve_distribution_quantiles`, and
 `compare_beta_difference`.

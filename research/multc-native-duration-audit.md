@@ -54,9 +54,12 @@ and exposes a patient ledger and separate decision time. It does not replace
 the existing calendar engine's explicit and observation-aware policy.
 
 The native wrapper screens zero-enrollment boundaries before calling this
-kernel. Python requires callers to handle that separately. Posterior-to-vector
-conversion, cohort/minimum-enrollment precedence, default study behavior and
-native random generator/report parity remain open; entry 12 remains partial.
+kernel. The low-level explicit-boundary API requires callers to handle that
+separately. The October 9 [boundary/aggregation continuation](multc-native-boundaries-audit.md)
+now supplies an automatic design adapter, recovered cohort/minimum/prior
+precedence and bounded legacy batch summaries. Native numerical-integrator,
+default/file/protocol/full-application and RNG parity remain open; entry 12
+remains partial.
 
 The original License.rtf prohibits redistributing the original program.
 All original installers, DLLs and inspection runtimes stay in ignored local

@@ -1173,10 +1173,21 @@ from .multc_core import (
     MultcState,
     multc_lean_design,
 )
+from .multc_legacy_boundaries import (
+    MultcLegacyBoundaries,
+    multc_legacy_boundaries,
+    run_multc_legacy_design_duration,
+)
 from .multc_legacy_duration import (
     MultcLegacyDuration,
     MultcLegacyDurationPatient,
     run_multc_legacy_duration,
+)
+from .multc_legacy_simulation import (
+    MultcLegacyDurationSummary,
+    MultcLegacySimulation,
+    simulate_multc_legacy_duration,
+    summarize_multc_legacy_durations,
 )
 from .multc_simulation import (
     MultcSimulationConfig,
@@ -1961,6 +1972,13 @@ from .windows import (
 )
 
 __all__ = [
+    "MultcLegacyDurationSummary",
+    "MultcLegacySimulation",
+    "simulate_multc_legacy_duration",
+    "summarize_multc_legacy_durations",
+    "MultcLegacyBoundaries",
+    "multc_legacy_boundaries",
+    "run_multc_legacy_design_duration",
     "MultcLegacyDuration",
     "MultcLegacyDurationPatient",
     "run_multc_legacy_duration",

@@ -17,6 +17,17 @@ from ._validation import FloatArray
 _LOG_TWENTY = 2.99573227355399  # Value stored by Multc Lean 2.1's native DLL.
 _MAX_DRAWS = 1_000_000
 
+type MultcLegacyDecision = Literal[
+    "stop_response",
+    "stop_toxicity",
+    "stop_both",
+    "cap_complete",
+    "prior_response",
+    "prior_toxicity",
+    "prior_both",
+]
+type MultcLegacyPriorDecision = Literal["prior_response", "prior_toxicity", "prior_both"]
+
 
 @dataclass(frozen=True)
 class MultcLegacyDurationPatient:
@@ -47,7 +58,7 @@ class MultcLegacyDuration:
     balks: int
     duration: float
     decision_time: float
-    decision: Literal["stop_response", "stop_toxicity", "stop_both", "cap_complete"]
+    decision: MultcLegacyDecision
     uniforms_consumed: int
     exponentials_consumed: int
 
@@ -122,6 +133,30 @@ def run_multc_legacy_duration(
     streams, overflow and positive increments lost to clock rounding raise
     explicit errors instead of returning a truncated trial.
     """
+    return _run_multc_legacy_duration(
+        max_subjects,
+        response_stop_at=response_stop_at,
+        nontoxicity_stop_at=nontoxicity_stop_at,
+        joint_probabilities=joint_probabilities,
+        mean_interarrival=mean_interarrival,
+        response_window=response_window,
+        uniforms=uniforms,
+        unit_exponentials=unit_exponentials,
+    )
+
+
+def _run_multc_legacy_duration(
+    max_subjects: int,
+    *,
+    response_stop_at: ArrayLike,
+    nontoxicity_stop_at: ArrayLike,
+    joint_probabilities: ArrayLike,
+    mean_interarrival: float,
+    response_window: float,
+    uniforms: ArrayLike,
+    unit_exponentials: ArrayLike,
+    prior_decision: MultcLegacyPriorDecision | None = None,
+) -> MultcLegacyDuration:
     if (
         isinstance(max_subjects, (bool, np.bool_))
         or not isinstance(max_subjects, (int, np.integer))
@@ -146,6 +181,10 @@ def run_multc_legacy_duration(
         raise ValueError("uniforms must be in (0,1)")
     if np.any(exponential < 0):
         raise ValueError("unit_exponentials must be nonnegative")
+    if prior_decision is not None:
+        if prior_decision not in ("prior_response", "prior_toxicity", "prior_both"):
+            raise ValueError("invalid prior decision")
+        return MultcLegacyDuration((), 0, 0, 0, 0.0, 0.0, prior_decision, 0, 0)
     cumulative = np.cumsum(probabilities)
     # Native comparisons are inclusive at category boundaries.
     cumulative[-1] = 1.0
@@ -177,7 +216,7 @@ def run_multc_legacy_duration(
     patients: list[MultcLegacyDurationPatient] = []
     response_count = nontoxicity_count = balks = 0
     clock = last_followup = 0.0
-    decision: Literal["stop_response", "stop_toxicity", "stop_both", "cap_complete"]
+    decision: MultcLegacyDecision
     decision = "cap_complete"
     for size in range(1, cap + 1):
         possible = hits(response, response_count, size) or hits(

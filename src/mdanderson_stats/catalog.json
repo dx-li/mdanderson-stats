@@ -284,18 +284,22 @@
         "Bounded single-trial calendar replay with separately supplied endpoint availability, look-ahead suspension, frozen accrual-open clock and complete follow-up",
         "Serial joint-outcome calendar simulation with explicit clipped/conditional response timing, caller-supplied toxicity delay, replayable child seeds and duration/decision/enrollment summaries with Monte Carlo error",
         "Saved versioned JSON study inputs and atomic text reports capture full/reachable boundaries, exact named-scenario OCs, explicit timing assumptions, scenario seeds and calendar means/decision counts/probabilities/MCSEs. Aggregate work/storage are checked before computation; docs/multc.md.",
-        "Native response-time truncation, toxicity ascertainment law, suspension-clock and pretrial/minimum-enrollment conventions remain unresolved. Native file formats and protocol memo layout are not reproduced.",
-        "Recovered native duration compatibility replay with explicit compact response/nontoxicity stopping vectors, clipped response times, shared follow-up, latent outcome counts, balked arrivals, distinct decision/follow-up clocks and controlled external variates; docs/multc-legacy-duration.md."
+        "Native numerical-integrator/full-application parity, saved native files/defaults and protocol memo/report workflow remain unverified.",
+        "Recovered native duration compatibility replay with explicit compact response/nontoxicity stopping vectors, clipped response times, shared follow-up, latent outcome counts, balked arrivals, distinct decision/follow-up clocks and controlled external variates; docs/multc-legacy-duration.md.",
+        "Automatic compact boundary construction with native cohort/minimum precedence, mandatory prior screening and cap placeholders; design-based zero-enrollment/ordinary duration replay.",
+        "Bounded replayable PCG64 legacy batch simulation, native-defined duration/enrollment/outcome/balk means and sample-size PMF, additional Monte Carlo errors and owned replicate summaries; patient ledgers reconstructed from captured child seeds."
       ],
       "validation": [
         "Official N=30 statistical tutorial full/potential boundaries before the sample cap",
         "Independent base-R direct shifted-beta integrations and complete 4^6 paired-outcome path enumeration for cohort sizes 1 and 2 with different associations",
-        "Focused checks for support endpoints, tail underflow, strict symmetry ties, pretrial rejection and allocation caps; no native binary execution",
+        "Analytic checks for support endpoints, tail underflow, strict symmetry ties, pretrial rejection and allocation caps",
         "Five independent R direct-beta/pending-completion calendar scenarios: 18 patient rows and 12 look rows; tools/reference_multc_calendar.R and tests/fixtures/multc-calendar-*.csv",
         "Calendar checks for no future-outcome use, suspension/resumption, cap-bound metadata and unrepresentable positive time increments; research/multc-calendar-audit.md",
         "Eight focused calendar/simulation checks including analytic fixed-enrollment duration mean/MCSE, joint outcome truth, seed replay, extreme timing representation and work/storage preflight; research/multc-simulation-audit.md",
         "Saved-study tests check JSON replay, exact fixed-enrollment OCs, captured seeds, simulation work/storage preflight and malformed input handling; source numerical references remain those of the existing monitoring/calendar engines.",
-        "Thirty-four original x86 duration-kernel references executed through bounded Unicorn emulation with external draws/vector helpers substituted; exact counts and draw consumption, durations within 2e-15 relative / 1e-14 absolute; 70 focused tests; research/multc-native-duration-audit.md. Full Windows app/RNG/boundary conversion not claimed."
+        "Thirty-four original x86 duration-kernel references executed through bounded Unicorn emulation with external draws/vector helpers substituted; exact counts and draw consumption, durations within 2e-15 relative / 1e-14 absolute; 70 focused tests; research/multc-native-duration-audit.md. Full Windows app/RNG parity not claimed.",
+        "Twenty-two original compact-boundary/complement control references with independent base-R posterior predicates (7496 saved probabilities), 54 composed native duration replays and 22 native study-aggregation/prior-screen references. Native posterior integrator is substituted, not validated; research/multc-native-boundaries-audit.md.",
+        "Simulation checks cover replicate replay/ownership, analytic fixed-enrollment duration mean and MCSE, prior rejection, one-replicate undefined MCSE, explicit stream exhaustion, input/work/storage preflight and large finite duration summaries."
       ]
     },
     {

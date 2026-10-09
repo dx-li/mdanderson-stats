@@ -1,17 +1,25 @@
 {
   "catalog_id": 12,
   "retrieved_at": "2026-10-08",
+  "continued_at": "2026-10-09",
   "archive_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/MultcLean/MultcLean_V2.1.0_WithFX4.0.zip",
   "archive_sha256": "be4ddfcaa7f442a1fa6895e31e379146fda4cff23775df291ff1b597b10d5120",
   "dll_sha256": "8ac45568e87530d4bb6732eb8807a22e4e8c5de52a5557a14f750c24867fa807",
   "reference_fixture_sha256": "8816a8ca67ba3190bb1ca171c3a9948f1a3b7398a7ff2e69f10cab6eef16e045",
   "reference_method": "Bounded execution of original x86 duration instructions, external RNG and vector services substituted; original exponential-mean multiplication remains intact.",
   "native_entry_rva": "0x64d0",
+  "boundary_control_rva": "0x7480",
+  "toxicity_complement_rva": "0x59b0",
+  "study_aggregation_rva": "0x75b0",
+  "boundary_reference_fixture_sha256": "647430dabdaf3175c99897e9b177480707c1ceec3aac06c285f31af5f55500b2",
+  "base_r_posterior_table_sha256": "8054cb906aa01a19feab23b59e030b9a9c11999d1201406b126aa3b7d77b3c87",
+  "boundary_reference_scope": "Original control/complement instructions with independent base-R posterior predicate substituted; 22 designs and 54 composed original duration runs. Native posterior integrator is not executed.",
+  "aggregation_reference_scope": "22 original study-wrapper runs with external validation/vector/seed/boundary/trial calls substituted; trial outputs come from original duration instructions. Prior exits leave native PMF empty; Python returns a point mass at zero.",
   "status": "partial",
   "remaining": [
-    "posterior-to-compact-boundary conversion",
-    "cohort/minimum-enrollment and pretrial precedence",
-    "full native default/file/report workflow and RNG"
+    "native numerical-integrator/full-application parity",
+    "native saved-file/default and protocol/report workflow",
+    "original random generator compatibility"
   ],
   "redistribution": "Original installers/DLLs remain ignored research inputs; only independent Python, authored harness and synthetic numerical facts ship."
 }

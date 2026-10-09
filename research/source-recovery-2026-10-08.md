@@ -1,5 +1,10 @@
 # October 8 source recovery and continuation record
 
+The [October 9 continuation](source-recovery-2026-10-09.md) now resolves the
+compact-boundary lead below and records a fresh 33,726-test full-suite pass.
+Earlier validation counts and open leads on this page describe their original
+checkpoints; the linked continuation is the current state.
+
 The prepared environment uses pinned Python 3.13, locked uv dependencies and
 the plotting extra. Reusable setup/start instructions and research domains
 are saved in the environment draft. Publication is a separate user action;
