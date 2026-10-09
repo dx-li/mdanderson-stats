@@ -77,8 +77,9 @@ native-model addition provides 65 further tests and the broader whole run above.
 ## Delivery and next source work
 
 Delivery continues on `codex/native-software-coverage`, based on unchanged main
-`c45e678`. Earlier branch checkpoints are pushed. GitHub API read/create requests
-returned `Forbidden`, including an actual PR creation request; no PR is confirmed.
+`c45e678`. Native-model implementation commit `01c448a` is pushed and its
+remote branch hash was independently verified. A renewed actual GitHub API PR
+creation request returned `Forbidden`; no PR is confirmed.
 The branch can be reviewed through
 [GitHub's PR creation page](https://github.com/dx-li/mdanderson-stats/pull/new/codex/native-software-coverage).
 The updated setup/continuation instructions are saved through the environment
