@@ -131,3 +131,15 @@ The prepared PR describes the complete branch, including FLECS90, Multc99,
 Multc Lean, WFMM/SYNERGY recovery and this checkpoint. GitHub API PR creation was
 previously Forbidden; publication and the latest API result are recorded after
 attempting delivery. No merge to main/master is implied by a feature-branch push.
+
+Implementation commit `f08343dd756ae89a5bdf11c5795b19118f5dae81` is pushed;
+`git ls-remote` independently confirms the identical feature-branch hash.
+The renewed actual GitHub API PR request returned **Forbidden**, so no PR is
+confirmed. The [prepared description](pull-request-native-software-coverage.md)
+is saved for review through [GitHub's creation page](https://github.com/dx-li/mdanderson-stats/pull/new/codex/native-software-coverage).
+
+The environment continuation instructions were saved successfully to draft
+`48b5d94b-1de8-4ac7-b190-383e740ebe19~cecfgdraft_6ac916fb397c819180b5c6cc5c33946e`.
+The backend reports `requires_publish=true`: review/save the environment settings,
+then publish to activate the draft. Existing setup script, network and credential
+requirements were preserved; saving did not apply or publish configuration.
