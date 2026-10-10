@@ -444,3 +444,13 @@ Breslow thickness and mitotic rate. Consequently the older initial model must
 not be substituted for the reduced calculator. The abstract supplies neither
 exact coefficients nor baseline cumulative incidence, so it does not yet support
 implementing absolute-risk predictions. No clinical model values were inferred.
+
+## October 10 recovered archive continuation
+
+CI of Interaction Index and BayesFactorTTE source recovery now completes their
+functional workflows. The catalog is 93 implemented / 39 partial / 6 pending.
+The [October 10 checkpoint](source-recovery-2026-10-10.md) records eight newly
+recovered official archives/checksums, extracted scientific entry addresses,
+TPI's recovered final-selection differences, six live-app source gaps and seven
+concrete candidates toward the requested 100. Original artifacts stay ignored;
+source availability alone is not a status promotion.

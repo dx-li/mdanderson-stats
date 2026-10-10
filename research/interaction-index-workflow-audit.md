@@ -1,52 +1,70 @@
 # Interaction-index workflow coverage
 
-The cached `research/raw/CIInteractionIndex/ReadmeCI.pdf` advertises three
-inferential routines, median-effect plots, two case-study scripts and two
-simulation-study scripts. Its original archive was not inspected.
+October 10, 2026: catalog entry 65 completes the recovered functional workflow.
+The official [CIInteractionIndex_V2.0.1source.zip](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CIInteractionIndex/CIInteractionIndex_V2.0.1source.zip)
+was retrieved and inspected; SHA-256 is
+`e69f045d6c15595cc67e5055c94cc8ad119230e07e334a2def11708a0f1712f1`.
+Original source/documents remain ignored research inputs and are not shipped.
+The original archive contains the three inference routines, median-effect
+plots, case studies and two simulation scripts.
 
 | Source routine or example | Community implementation |
 | --- | --- |
-| `CI.known.effect`, Section 2 | Observed-combination log-delta inference, with explicit response variance or the documented pooled-error fallback |
-| `CI.delta`, Section 3 | Fixed-ray log-delta intervals using the separate fitted coefficient covariances |
-| `CI.simulation`, Section 3 | Normal-coefficient Monte Carlo comparator with retained draws and slope-reversal diagnostics |
-| Median-effect plots and case studies | Optional plot helpers and executable Table 2/3 examples with saved figures and numerical records |
-| `Simulation1_3_drugs.ssc` | Bounded serial three-drug simulation with captured inputs, raw/log-delta coverage, interval lengths and classification rates |
+| `CI.known.effect`, Section 2 | Observed-combination log-delta inference with explicit response variance or native-verified residual-df pooled fallback |
+| `CI.delta`, Section 3 | Correct fixed-ray coefficient-gradient log-delta intervals; the native mixture-variance defect is recorded below |
+| `CI.simulation`, Section 3 | Normal-coefficient RMS comparator with retained coefficient tapes; source-study reporting floors the lower limit at .0001 |
+| Median-effect plots and case studies | Optional figures and executable Table 2/3 examples with saved numerical records |
+| `Simulation1_3_drugsV2.SSC` | Bounded three-drug generation and all eight summaries; exact source scenario constants, optional retained index/log-index QQ panels and saved JSON |
+| `Simulation2_fixed_ratioV2.SSC` | Recovered ratio 2, dose/model/SD/grid defaults, all three interval comparisons, observed/MC length ratios, figures and saved replayable inputs/results |
 
-The case-study data come from Section 4.2, Tables 2/3 and Figures 4/5 of
-[Lee and Kong (2009)](https://doi.org/10.1198/sbr.2009.0001). The cached BioC
-table passages retain their embedded MathML, including the mixture-total-dose
-convention. Table 2 models fractional survival; Table 3 models fractional
-inhibition. The examples preserve those responses and use total mixture doses.
+## Original-function validation
 
-`tools/reference_interaction_index_cases.R` independently fits the six curves
-with base R and propagates their coefficient covariances. Python agrees with
-these full-precision references within absolute tolerance `1e-11`; the six
-published fitted coefficients, median doses and residual standard deviations
-agree within `0.0005`. The four published Table 2 observed indices and confidence
-intervals agree within `0.001`. In particular, the first lower limit is
-`0.202556...` from the printed observations versus the reported `0.202`.
-The rounded source numbers do not support claiming exact equality.
+`tools/reference_interaction_index_native.py` verifies the archive checksum and
+runs the author's unchanged `CI_IIV2.SSC` function bodies under base R. Its
+recording wrapper observes base-R normal draws; a separate calculation
+reconstructs the actual coefficient tapes. Neither harness imports production
+Python. Nine committed CSV tables use two synthetic designs, including unequal
+5/6/4 curve sample sizes and ratios 2/.7. They retain native fitted indices,
+log-delta limits, observed-combination limits, MC RMS/limits and true Scenario 2
+indices. Python matches the original pooled/MC outputs within absolute and
+relative tolerance `1e-12` with the same actual coefficient tapes.
 
-This comparison supports the explicit residual-degree-of-freedom pooled mean
-square used by Python. It does not establish an undocumented native pooling
-denominator: the independent calculation intentionally uses the same stated
-statistical convention. No covariance is pooled for the fixed-ray method.
+The native residual pool is exactly total single-agent residual sum of squares
+divided by total residual degrees of freedom. This independently verifies the
+Python pooling choice, rather than a reference intentionally sharing an
+unverified convention.
 
-## Simulation studies and remaining scope
+Original `CI.delta` has a defect: its final variance term is proportional to
+`(1/D1 + ratio/D2)^2`, but needs inverse mixture dose squared as well. An
+independent base-R covariance quadratic form computes the corrected intervals;
+Python matches those within `1e-12`. The unchanged native limits remain in the
+fixtures and tests require their substantive difference. Reproducing the native
+defect would change the scientific result and is not the completion criterion.
 
-The [three-drug study](../docs/interaction-index-study.md) implements the
-generation and summaries specified in cached Section 4.1. It streams one
-19-observation dataset at a time, records its replayable seed and bounds the
-total workload. A separate base-R reference checks all summary metrics for
-three five-replicate cells, including a negative raw-delta lower limit.
-Its printed `1.67` interaction index and `0.625`
-response do not establish the exact unrounded constant used by the original
-script. The Python default uses the printed index literally and records it;
-callers can explicitly supply `5/3` instead.
+## Published and simulation validation
 
-For the second, fixed-ray simulation, the cached text omits the composition
-ratio from inline mathematics. The marginal and mixture models alone cannot
-determine it. Its exact source-specific demonstration therefore remains
-unimplemented. The general fixed-ray and Monte Carlo APIs already accept
-explicit proportions; choosing those proportions would not recover the
-missing demonstration contract. Catalog entry 65 remains partial.
+The case-study data are Section 4.2 Tables 2/3 and Figures 4/5 of
+[Lee and Kong (2009)](https://doi.org/10.1198/sbr.2009.0001). Base-R references
+validate the fitted curves and propagated uncertainty. Published coefficients,
+median doses and residual SDs agree within .0005; printed Table 2 intervals
+within .001. These rounded published values do not support exact equality.
+
+An independent base-R study reference checks all eight Scenario 1 summaries
+across three five-replicate cells, including a negative raw-delta lower limit.
+The archive resolves the seventh index as `1/.6`; it sets a QQ title to `1.67`
+only after simulation. Existing paper-based defaults remain unchanged, with
+`INTERACTION_INDEX_SOURCE_SCENARIOS` providing exact recovered inputs. Original
+QQ panels use normal `ppoints`; retained bounded samples now provide those
+panels. Python includes endpoints in coverage, while the original continuous
+simulation uses strict inclusion; random generation is continuous and exact
+endpoint equality has probability zero. This convention remains explicit.
+
+Scenario 2 defaults run all 14 datasets and validate its 43 true indices against
+original `Solve.II`. Focused checks cover numerical replay, saved records,
+read-only arrays, plotting and preflight controls. All 73 affected interaction
+and BayesFactorTTE checks pass together with warnings treated as errors.
+
+PCG64 streams, corrected native defects, native script filenames, page artwork
+and file bytes remain compatibility differences. Every recovered calculation
+and diagnostic has a usable Python workflow. SYNERGY #18 remains partial for
+its separate semiparametric bootstrap contract.

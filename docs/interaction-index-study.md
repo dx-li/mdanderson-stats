@@ -62,8 +62,13 @@ representable, the run fails with the affected cell and replicate; responses
 are never clipped, retried, or dropped. NumPy seed behavior is the community
 API's reproducibility contract, not a claim of native random-stream identity.
 
-The cached source specifies the generation model, settings, and summary
-definitions, but does not make the R/S-Plus random-number stream or seed
-available. The printed candidate-to-effect mapping rounds `1.67` to `0.625`.
-The separate fixed-ratio simulation is not included because its ray ratio is
-missing from the cached paper's extracted MathML; no ratio is inferred here.
+The original archive was recovered on October 10, 2026. Its seventh true index
+is `1/.6`; use `INTERACTION_INDEX_SOURCE_SCENARIOS` for the recovered values.
+The existing printed `1.67` default remains unchanged. Set `retain_samples=True`
+to retain bounded per-cell estimates for `.plot_qq(cell)` index/log-index panels,
+and use `.write_json(path)` for captured settings, summaries and optional samples.
+
+The separate [fixed-ray study](interaction-index-fixed-ray-study.md) now uses
+the recovered ratio 2. The [workflow audit](../research/interaction-index-workflow-audit.md)
+records original-function validation and the corrected native variance defect.
+Python seeds reproduce Python streams, rather than the original S-Plus/R stream.

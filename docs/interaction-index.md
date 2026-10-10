@@ -122,12 +122,13 @@ The [three-drug simulation study](interaction-index-study.md) evaluates
 raw/log-delta coverage, interval lengths and classifications with bounded
 serial sampling and a saved replayable seed.
 
-**Both catalog entries remain partial.** CI of Interaction Index retains an
-unresolved composition ratio for the paper's second simulation study, native
-pooling-denominator details and native file/report compatibility.
-SYNERGY also supports the [semiparametric response-surface
-fit](synergy-surface.md), with raw/log-dose baselines and REML smoothing.
-Its other parametric surfaces, wild-bootstrap intervals and associated
-workflows remain open. The observed-combination pooled-error fallback is
-available with its documented variance convention; native file/report behavior
-remains unverified.
+**CI of Interaction Index is implemented.** The recovered archive resolves its
+fixed-ray ratio and pooling denominator. Both simulation studies, saved records
+and QQ diagnostics are covered in the [recovered-study guide](interaction-index-fixed-ray-study.md).
+The original fixed-ray variance defect is corrected and documented.
+
+SYNERGY remains partial for its separate semiparametric bootstrap convention.
+Its four [parametric surfaces](synergy-parametric.md) have independently validated
+fits, uncertainty and plots; its [semiparametric response surface](synergy-surface.md)
+has explicit fitting/normalization conventions. Native file formats and random
+streams remain compatibility differences.

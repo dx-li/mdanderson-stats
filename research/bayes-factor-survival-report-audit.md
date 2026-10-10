@@ -35,3 +35,9 @@ boundary rows are bounded by an explicit requested-row cap. Boundary quadrature
 and root-solving costs are adaptive and the current kernel does not expose an
 exact evaluation counter, so the row cap is not represented as an exact CPU
 budget.
+
+October 10 update: original managed control resolves the previously unknown
+native timing and integer-day contract. The [recovered enrollment workflow](../docs/bayes-factor-survival-enrollment.md)
+implements it separately; this explicit-calendar workflow and its saved reports
+retain their documented caller-selected timing. See the
+[native-control audit](../research/bayes-factor-tte-native-control-audit.md).

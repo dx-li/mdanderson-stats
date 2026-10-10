@@ -2446,7 +2446,8 @@
       "detail_url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/65",
       "application_url": null,
       "references": [
-        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CIInteractionIndex/ReadmeCI.pdf"
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CIInteractionIndex/ReadmeCI.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/CIInteractionIndex/CIInteractionIndex_V2.0.1source.zip"
       ],
       "downloads": [
         {
@@ -2457,7 +2458,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Median-effect dose-response OLS with covariance and stable inverse prediction",
         "Loewe interaction indices and log-delta Student-t intervals for observed combination effects with explicit measurement variance",
@@ -2465,13 +2466,17 @@
         "Normal-coefficient Monte Carlo comparison with paper RMS formula, retained draws and slope-reversal diagnostics",
         "Observed-combination no-replicate pooled logit-error fallback with residual-df-weighted MSE, stable transformed-scale propagation and unchanged independent coefficient covariances",
         "Optional median-effect and pointwise interaction-index figures, with bounded inputs and extreme-index log display; two published case-study datasets with saved figures and numerical outputs",
-        "Bounded serial three-drug simulation study with captured replayable seed, raw/log-delta coverage, interval-length and classification summaries"
+        "Bounded serial three-drug simulation study with captured replayable seed, raw/log-delta coverage, interval-length and classification summaries",
+        "Recovered Scenario 2 fixed-ray ratio/model/dose defaults, log-delta/normal-coefficient/observed-combination comparisons, native MC lower-floor reporting, length ratios, captured-input JSON and optional figures; docs/interaction-index-fixed-ray-study.md.",
+        "Exact recovered Scenario 1 index presets, optional bounded retained index/log-index QQ samples using original ppoints normal quantiles and saved study records.",
+        "External validated coefficient tapes replay original-function Monte Carlo outputs without claiming native RNG identity."
       ],
       "validation": [
         "Eight focused tests: regression, published three-drug identity, delta variances, exact Monte Carlo RMS reconstruction, small-noise agreement and unstable-slope diagnostics; tests/test_interaction_index.py and tests/test_interaction_monte_carlo.py",
-        "Published Tables 2/3 regression and interaction-index references, independent base-R delta calculations, and plot coordinate/stability checks; docs/interaction-index-case-studies.md and docs/interaction-index-plots.md. Native pooling denominator and file/report compatibility remain unverified.",
-        "Independent block-covariance delta oracle, unequal residual degrees of freedom, zero residual variance and tiny-effect stability; native pooling denominator remains unspecified. See docs/interaction-index-pooled-error.md.",
-        "Independent base-R seeded study references check all eight summaries across three five-replicate scenarios; source fixed-ray simulation ratio remains unrecovered. See docs/interaction-index-study.md and research/interaction-index-workflow-audit.md."
+        "Published Tables 2/3 regression and interaction-index references, independent base-R delta calculations, and plot coordinate/stability checks; docs/interaction-index-case-studies.md and docs/interaction-index-plots.md. Native pooling is now independently verified; native file bytes remain a compatibility difference.",
+        "Independent block-covariance delta oracle, unequal residual degrees of freedom, zero residual variance and tiny-effect stability; native pooling denominator is now independently verified. See docs/interaction-index-pooled-error.md.",
+        "Independent base-R seeded study references check all eight summaries across three five-replicate scenarios; the recovered fixed-ray ratio is 2. See docs/interaction-index-study.md and research/interaction-index-workflow-audit.md.",
+        "Checksum-verified unchanged original R functions validate pooled residual-df and MC inference for two unequal-size synthetic designs; independent base-R gradients validate corrected fixed-ray intervals within 1e-12. Original CI.delta omits inverse mixture dose squared: native and corrected references are retained. All 14 source-default fixed-ray datasets, true indices, QQ positions and exports are checked; research/interaction-index-workflow-audit.md."
       ]
     },
     {
@@ -3195,7 +3200,8 @@
       "references": [
         "http://www.bepress.com/mdandersonbiostat/paper47/",
         "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/421",
-        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BayesFactorTTE/UsersGuide_BayesFactorTTE.pdf"
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BayesFactorTTE/UsersGuide_BayesFactorTTE.pdf",
+        "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BayesFactorTTE/BayesFactorTTE_V1.1_NoFX4.0.zip"
       ],
       "downloads": [
         {
@@ -3206,17 +3212,21 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Exponential survival with normalized one-sided iMOM prior: broadcast posterior monitoring from event counts and total time on test",
         "Continuous total-time-on-test stopping boundaries with strict cutoffs, explicit median-to-mean conversion and dimensionless log-space integration",
         "Explicit arrival/event/censor calendar replay with inclusive event/look ties, fixed final follow-up after early stopping and bounded serial exponential simulation with separate accrual/outcome seeds, replayable trials, early/final stopping probabilities, Monte Carlo errors and patient-count quantiles.",
-        "Bounded serial multi-scenario HTML reports capture effective settings, child seeds, terminal stopping probabilities distinct from early/final classifications, MCSEs, patient-count summaries and optional continuous boundary rows; docs/bayes-factor-survival-report.md."
+        "Bounded serial multi-scenario HTML reports capture effective settings, child seeds, terminal stopping probabilities distinct from early/final classifications, MCSEs, patient-count summaries and optional continuous boundary rows; docs/bayes-factor-survival-report.md.",
+        "Recovered v1.1 integer-day exponential arrival/event generation, enrollment checks, strict event/look ties, no extra final follow-up, chronological replay and bounded seeded native-scheduled simulation; docs/bayes-factor-survival-enrollment.md.",
+        "Original sorted-index patient quantiles, full-precision stopping/enrollment summaries, replayable trial seeds/tapes and atomic JSON study records.",
+        "Integer-day first-noninferiority/first-superiority boundaries from independently validated continuous roots; native finite scan cap and int32 overflow are replaced by explicit bounds/failures."
       ],
       "validation": [
         "Independent original-mean-coordinate integration, all displayed guide boundary rows within 1.5 days, root residuals, extreme evidence and unit invariance; tests/test_bayes_factor_survival.py",
-        "Focused event/censor/timing and seed-replay checks, representability guards and work/memory preflight; tests/test_bayes_factor_survival_calendar.py. Native arrival/check/final-time conventions, day discretization and native input/report parity remain open; docs/bayes-factor-survival-calendar.md.",
-        "Focused report checks cover deterministic child-seed replay, early-first terminal classification, aggregate resource preflight and escaped atomic HTML. Native timing and integer-day numerical conventions remain unresolved; research/bayes-factor-survival-report-audit.md."
+        "Focused event/censor/timing and seed-replay checks, representability guards and work/memory preflight; tests/test_bayes_factor_survival_calendar.py. This explicit-calendar workflow retains its caller-selected timing; docs/bayes-factor-survival-calendar.md.",
+        "Focused report checks cover deterministic child-seed replay, early-first terminal classification, aggregate resource preflight and escaped atomic HTML. Recovered native timing is a separate validated workflow; research/bayes-factor-survival-report-audit.md.",
+        "Original managed trial loop, arrival truncation, ledger, stopping rule and integer search execute unchanged with substituted external RNG/BF services. Three controller cases and independent monotone-BF integer-boundary references, actual iMOM boundary neighbors, positive-exposure kernel comparisons, replay and resource guards pass; research/bayes-factor-tte-native-control-audit.md. CLR integrator/RNG/input/report-byte identity remains a compatibility limit."
       ]
     },
     {

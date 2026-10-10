@@ -185,6 +185,14 @@ from .bayes_factor_survival_calendar import (
     bayes_factor_survival_trial,
     simulate_bayes_factor_survival,
 )
+from .bayes_factor_survival_enrollment import (
+    BayesFactorEnrollmentLook,
+    BayesFactorEnrollmentStudy,
+    BayesFactorEnrollmentTrial,
+    bayes_factor_survival_day_boundaries,
+    bayes_factor_survival_enrollment_trial,
+    simulate_bayes_factor_survival_enrollment,
+)
 from .bayes_factor_survival_report import (
     BayesFactorSurvivalReport,
     BayesFactorSurvivalScenarioSummary,
@@ -928,6 +936,12 @@ from .iboin_trial import IBOINTrialDecision, IBOINTrialReplay, replay_iboin_tria
 from .imom_prior import IMOMBinaryPrior
 from .inequality import InequalityProbability, inequality_probability
 from .interaction_index import InteractionIndex, interaction_index, interaction_index_ray
+from .interaction_index_fixed_ray_study import (
+    INTERACTION_INDEX_SOURCE_SCENARIOS,
+    InteractionFixedRayReplicate,
+    InteractionFixedRayStudy,
+    simulate_interaction_index_fixed_ray_study,
+)
 from .interaction_index_plot import plot_interaction_index, plot_median_effect
 from .interaction_index_pooled import interaction_index_pooled_error
 from .interaction_index_study import (
@@ -1982,6 +1996,16 @@ from .windows import (
 )
 
 __all__ = [
+    "BayesFactorEnrollmentLook",
+    "BayesFactorEnrollmentStudy",
+    "BayesFactorEnrollmentTrial",
+    "bayes_factor_survival_day_boundaries",
+    "bayes_factor_survival_enrollment_trial",
+    "simulate_bayes_factor_survival_enrollment",
+    "INTERACTION_INDEX_SOURCE_SCENARIOS",
+    "InteractionFixedRayReplicate",
+    "InteractionFixedRayStudy",
+    "simulate_interaction_index_fixed_ray_study",
     "MultcLeanEndpointInput",
     "MultcLeanModel",
     "MultcLeanScenario",

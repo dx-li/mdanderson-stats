@@ -1,0 +1,275 @@
+{
+  "dll_sha256": "baa2915f31d1edb617b656a8dbc4eee78ed8629373715b88654fd68a2a00af8f",
+  "cases": [
+    {
+      "exponential_values": [
+        1.9,
+        0.8,
+        0.2,
+        2.9,
+        3.7,
+        1.2,
+        2.0,
+        4.9
+      ],
+      "probabilities": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "result": {
+        "hypothesis": 3,
+        "patients": 4
+      },
+      "ledger": {
+        "timeEnrollDays": [
+          0,
+          0,
+          2,
+          3
+        ],
+        "timeEventDays": [
+          1,
+          0,
+          5,
+          5
+        ],
+        "patientsTreated": 4,
+        "numEvents": 2,
+        "totalTimeOnTestDays": 2
+      },
+      "calls": [
+        {
+          "mean": 100.0,
+          "value": 1.9
+        },
+        {
+          "mean": 15.21875,
+          "value": 0.8
+        },
+        {
+          "mean": 100.0,
+          "value": 0.2
+        },
+        {
+          "mean": 15.21875,
+          "value": 2.9
+        },
+        {
+          "mean": 100.0,
+          "value": 3.7
+        },
+        {
+          "mean": 15.21875,
+          "value": 1.2
+        },
+        {
+          "mean": 100.0,
+          "value": 2.0
+        },
+        {
+          "mean": 15.21875,
+          "value": 4.9
+        }
+      ],
+      "history": [
+        {
+          "events": 0,
+          "exposure_days": 0,
+          "patients": 2,
+          "probability": 0.5
+        },
+        {
+          "events": 2,
+          "exposure_days": 1,
+          "patients": 3,
+          "probability": 0.5
+        },
+        {
+          "events": 2,
+          "exposure_days": 2,
+          "patients": 4,
+          "probability": 0.5
+        }
+      ]
+    },
+    {
+      "exponential_values": [
+        1.9,
+        0.8,
+        0.2,
+        2.9,
+        3.7,
+        1.2,
+        2.0,
+        4.9
+      ],
+      "probabilities": [
+        0.1
+      ],
+      "result": {
+        "hypothesis": 0,
+        "patients": 2
+      },
+      "ledger": {
+        "timeEnrollDays": [
+          0,
+          0,
+          2,
+          3
+        ],
+        "timeEventDays": [
+          1,
+          0,
+          5,
+          5
+        ],
+        "patientsTreated": 2,
+        "numEvents": 0,
+        "totalTimeOnTestDays": 0
+      },
+      "calls": [
+        {
+          "mean": 100.0,
+          "value": 1.9
+        },
+        {
+          "mean": 15.21875,
+          "value": 0.8
+        },
+        {
+          "mean": 100.0,
+          "value": 0.2
+        },
+        {
+          "mean": 15.21875,
+          "value": 2.9
+        },
+        {
+          "mean": 100.0,
+          "value": 3.7
+        },
+        {
+          "mean": 15.21875,
+          "value": 1.2
+        },
+        {
+          "mean": 100.0,
+          "value": 2.0
+        },
+        {
+          "mean": 15.21875,
+          "value": 4.9
+        }
+      ],
+      "history": [
+        {
+          "events": 0,
+          "exposure_days": 0,
+          "patients": 2,
+          "probability": 0.1
+        }
+      ]
+    },
+    {
+      "exponential_values": [
+        1.9,
+        0.8,
+        0.2,
+        2.9,
+        3.7,
+        1.2,
+        2.0,
+        4.9
+      ],
+      "probabilities": [
+        0.5,
+        0.9
+      ],
+      "result": {
+        "hypothesis": 2,
+        "patients": 3
+      },
+      "ledger": {
+        "timeEnrollDays": [
+          0,
+          0,
+          2,
+          3
+        ],
+        "timeEventDays": [
+          1,
+          0,
+          5,
+          5
+        ],
+        "patientsTreated": 3,
+        "numEvents": 2,
+        "totalTimeOnTestDays": 1
+      },
+      "calls": [
+        {
+          "mean": 100.0,
+          "value": 1.9
+        },
+        {
+          "mean": 15.21875,
+          "value": 0.8
+        },
+        {
+          "mean": 100.0,
+          "value": 0.2
+        },
+        {
+          "mean": 15.21875,
+          "value": 2.9
+        },
+        {
+          "mean": 100.0,
+          "value": 3.7
+        },
+        {
+          "mean": 15.21875,
+          "value": 1.2
+        },
+        {
+          "mean": 100.0,
+          "value": 2.0
+        },
+        {
+          "mean": 15.21875,
+          "value": 4.9
+        }
+      ],
+      "history": [
+        {
+          "events": 0,
+          "exposure_days": 0,
+          "patients": 2,
+          "probability": 0.5
+        },
+        {
+          "events": 2,
+          "exposure_days": 1,
+          "patients": 3,
+          "probability": 0.9
+        }
+      ]
+    }
+  ],
+  "synthetic_bf_boundary_rule": "BF=exposure_days/(events+1)",
+  "integer_boundaries": {
+    "inferiority": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "superiority": [
+      5,
+      9,
+      13,
+      17
+    ]
+  }
+}

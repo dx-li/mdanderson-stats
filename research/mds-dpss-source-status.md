@@ -20,3 +20,11 @@ distinct models and cannot substitute for MDS-DPSS. No score or survival
 probability has been inferred from them. Completing this entry requires an
 independently available author implementation or an implementation-complete
 manuscript and fitted model specification.
+
+October 10 update: the public MDS-DPSS interface is reachable and identifies
+PID 1183, version 1.0.0, updated November 21, 2025. Its document title says
+MDS-HOPE, while its visible UI says MDS-DPSS; this does not establish equivalence
+with the separate MDS-HOPE entry. Inputs include five diagnosis-time categories,
+blasts, hemoglobin, platelets, neutrophils, age, cytogenetics and ten gene mutation
+statuses. DPSS/IPSS-R/IPSS-M panels are present, but the exact dynamic regression,
+calibration and outputs were not recovered. Entry 170 remains pending.

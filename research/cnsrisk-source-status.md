@@ -24,3 +24,9 @@ The [October 4 primary-source audit](cnsrisk-primary-source-recovery-audit.md)
 records the development/validation cohorts and published calibration and
 discrimination summaries. These do not supply the missing individual-risk
 equation; the implementation status is unchanged.
+
+October 10 update: the public app (PID 1138, version 1.0.0.0, updated May 31,
+2023) returned cumulative risks .02/.06/.10 at 2/5/10 years for scalp,
+superficial-spreading melanoma, Breslow 1.43 and mitotic rate 0–1. These rounded
+outputs confirm the application is live, but do not recover the exact
+competing-risk coefficients/baselines. Entry 161 remains pending.

@@ -64,3 +64,9 @@ round or convert them to days. The native day discretization and root
 approximation remain unresolved. This report is a static snapshot; reopening
 the HTML displays the saved values and does not restore an editable session or
 rerun calculations.
+
+October 10 update: original managed control resolves the previously unknown
+native timing and integer-day contract. The [recovered enrollment workflow](../docs/bayes-factor-survival-enrollment.md)
+implements it separately; this explicit-calendar workflow and its saved reports
+retain their documented caller-selected timing. See the
+[native-control audit](../research/bayes-factor-tte-native-control-audit.md).

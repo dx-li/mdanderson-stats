@@ -88,23 +88,20 @@ verify cutoff residuals and final decisions, check time-unit scaling by `1e-200`
 and `1e200`, and exercise log Bayes factors above 300. The guide's integer-day
 table differs by up to about 1.3 days from these continuous roots when using
 365.25/12 days per month. Tests allow 1.5 days for that rounded native reference;
-independent numerical integration is checked much more tightly. The native
-program's day discretization/root approximation is not yet established, and
-exact integer-day parity is not claimed.
+independent numerical integration is checked much more tightly. The recovered [integer-day workflow](bayes-factor-survival-enrollment.md)
+establishes day discretization separately. Original CLR quadrature identity
+is not claimed.
 
-## Remaining catalog coverage
+## Catalog coverage
 
-**Catalog status is partial.** Posterior monitoring, continuous exposure
-boundaries, [explicit calendar replay and bounded serial simulation](bayes-factor-survival-calendar.md)
-are implemented. Replay accepts supplied arrivals, events, independent censoring,
-check times and a final time. Simulation returns early/final stopping proportions,
-Monte Carlo standard errors and patient-count summaries under documented Python
-timing rules. The guide lists an accrual rate but does not fully specify native
-arrival generation, observation checks or final follow-up. Native calendar parity,
-integer-day boundaries and native text input remain unverified.
-[Saved Python reports](bayes-factor-survival-report.md) record the effective
-inputs, reproducible scenarios, enrollment summaries and optional continuous
-boundaries. They distinguish the terminal stopping decision from later
-follow-up classification and disclose the explicit Python timing policy.
+**Catalog status is implemented.** Posterior monitoring and continuous boundaries
+connect to [explicit-calendar replay/simulation](bayes-factor-survival-calendar.md),
+[saved scenario reports](bayes-factor-survival-report.md), and the recovered
+[native integer-day enrollment workflow](bayes-factor-survival-enrollment.md).
+The latter supplies source-defined arrivals, checks, event ties, final timing,
+integer boundaries and patient-count quantiles with replayable saved studies.
 
-Archive retrieval was checked on September 10, 2026: the [version 1.1 download](https://biostatistics.mdanderson.org/SoftwareDownload/FileDownloader/Index/401) requires email, organization and occupation registration.
+Native numerical integration, GUI, random streams and text/report bytes remain
+compatibility differences. The registration download previously blocked on
+September 10 was superseded by direct official archive recovery on October 10;
+see the [original-control audit](../research/bayes-factor-tte-native-control-audit.md).

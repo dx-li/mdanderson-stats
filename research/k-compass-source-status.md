@@ -27,3 +27,10 @@ The DOI reader could not retrieve the full article; the PubMed landing-page
 read returned no article content. Neither route was retried through an alternate
 transport. The restricted institutional application was not requested, and no
 native numeric outputs or author code were recovered in this review.
+
+October 10 update: the public app now serves PID 1178 v1.4.2.0 (April 15,
+2026). Its default illustrative profile produces an estimated STFS of 52 months,
+95% interval 37–77 and Intermediate risk, with a warning that omitting KIM-1 and
+ctDNA reduces model robustness. This is a rounded public-app observation, not
+recovery of the exact regression/intercept/shape/covariance. Entry 169 remains
+pending; clinical predictions are not reconstructed from fitted screenshot curves.

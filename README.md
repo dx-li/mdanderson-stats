@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-91 implemented, 41 partial, and 6 pending. Each method's guide explains its
+93 implemented, 39 partial, and 6 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -109,6 +109,11 @@ catalog status remains partial.
 Multc Lean now completes its recovered [native-model study workflow](docs/multc-lean-model.md),
 including original saved inputs/defaults, exact scenarios, legacy timing, HTML reports,
 editable protocols and replayable Python seeds.
+
+CI of Interaction Index now completes both recovered simulation studies and QQ
+diagnostics; Bayes Factor TTE now includes its original integer-day enrollment
+workflow. [October 10 progress and source leads](research/source-recovery-2026-10-10.md)
+record the 100-entry goal and remaining evidence gaps.
 
 ## Numerical API
 

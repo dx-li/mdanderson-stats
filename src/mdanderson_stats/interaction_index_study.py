@@ -2,15 +2,21 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+import json
+from dataclasses import asdict, dataclass, field
+from pathlib import Path
+from typing import Any
 
 import numpy as np
 from numpy.typing import ArrayLike
 from scipy.special import expit
-from scipy.stats import t
+from scipy.stats import norm, t
 
+from ._validation import FloatArray
+from .boin import _owned
 from .interaction_index_pooled import interaction_index_pooled_error
 from .median_effect import MedianEffectFit, fit_median_effect
+from .multc_study import _atomic_write
 
 _TRUE_MEDIAN_DOSES = (1.0, 2.0, 4.0)
 _DOSE_COUNT = 6
@@ -60,6 +66,7 @@ class InteractionIndexStudySummary:
     combination_doses: tuple[float, float, float]
     observations_per_trial: int
     cells: tuple[InteractionIndexStudyCell, ...]
+    estimated_indices: FloatArray | None = field(default=None, compare=False, repr=False)
 
     @property
     def simulated_trials(self) -> int:
@@ -68,6 +75,54 @@ class InteractionIndexStudySummary:
     @property
     def cell_count(self) -> int:
         return len(self.interaction_indices) * len(self.error_sd)
+
+    def to_json(self) -> str:
+        """Capture settings, summaries and optionally the bounded QQ samples."""
+        value = {
+            key: item
+            for key, item in self.__dict__.items()
+            if key not in ("cells", "estimated_indices")
+        }
+        value["format_version"] = 1
+        value["cells"] = [asdict(cell) for cell in self.cells]
+        value["estimated_indices"] = (
+            None if self.estimated_indices is None else self.estimated_indices.tolist()
+        )
+        return json.dumps(value, indent=2, allow_nan=False) + "\n"
+
+    def write_json(self, path: str | Path) -> Path:
+        return _atomic_write(path, self.to_json())
+
+    def plot_qq(self, cell: int = 0) -> Any:
+        """Normal QQ panels for the index and log index, as in original Scenario 1."""
+        if self.estimated_indices is None:
+            raise ValueError("QQ plots require retain_samples=True when running the study")
+        if isinstance(cell, (bool, np.bool_)) or not isinstance(cell, (int, np.integer)):
+            raise ValueError("cell must be an integer within the study cells")
+        if not 0 <= cell < len(self.cells):
+            raise ValueError("cell must be an integer within the study cells")
+        import matplotlib.pyplot as plt
+
+        ordered = np.sort(self.estimated_indices[cell])
+        n = ordered.size
+        # R/S-Plus qqnorm uses ppoints, rather than scipy.probplot's Filliben positions.
+        a = 0.375 if n <= 10 else 0.5
+        quantiles = norm.ppf((np.arange(1, n + 1) - a) / (n + 1 - 2 * a))
+        figure, axes = plt.subplots(1, 2)
+        for axis, values, label in zip(
+            axes,
+            (ordered, np.log(ordered)),
+            ("Interaction index", "Log interaction index"),
+            strict=True,
+        ):
+            axis.scatter(quantiles, values)
+            axis.set(xlabel="Normal quantile", ylabel=label)
+        settings = self.cells[cell]
+        figure.suptitle(
+            f"True index {settings.true_interaction_index:g}; error SD {settings.error_sd:g}"
+        )
+        figure.tight_layout()
+        return figure
 
 
 def _bounded_numeric_tuple(value: ArrayLike, name: str, *, maximum: int) -> tuple[float, ...]:
@@ -127,6 +182,7 @@ def simulate_interaction_index_three_drug_study(
     error_sd: ArrayLike = (0.1, 0.4),
     replicates: int = 1000,
     rng: int | None = None,
+    retain_samples: bool = False,
 ) -> InteractionIndexStudySummary:
     """Run the source-defined three-drug, single-combination-dose study.
 
@@ -165,6 +221,11 @@ def simulate_interaction_index_three_drug_study(
         raise ValueError(
             f"total study cells ({total_trials}) exceed the {_MAX_TOTAL_REPLICATES} replicate cap"
         )
+    if not isinstance(retain_samples, (bool, np.bool_)):
+        raise ValueError("retain_samples must be boolean")
+    estimates = (
+        np.empty((len(tau_values) * len(sd_values), repetitions)) if retain_samples else None
+    )
     seed = _validate_seed(rng)
     generator = np.random.default_rng(seed)
 
@@ -242,6 +303,8 @@ def simulate_interaction_index_three_drug_study(
                         f"replicate={replicate}/{repetitions}: {exc}"
                     ) from exc
 
+                if estimates is not None:
+                    estimates[len(cells), replicate - 1] = estimate
                 means[0] = _update_mean(means[0], estimate, replicate)
                 means[1] = _update_mean(means[1], raw_length, replicate)
                 means[2] = _update_mean(means[2], log_length, replicate)
@@ -281,4 +344,5 @@ def simulate_interaction_index_three_drug_study(
         combination_doses,
         _OBSERVATIONS_PER_TRIAL,
         tuple(cells),
+        None if estimates is None else _owned(estimates),
     )

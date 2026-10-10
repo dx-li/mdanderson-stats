@@ -72,3 +72,32 @@ def test_independent_base_r_reference_summaries_match_all_reported_metrics():
         assert study.seed == reference["seed"]
         for name in metric_names:
             assert getattr(cell, name) == pytest.approx(expected[name], rel=0, abs=1e-11)
+
+
+def test_source_qq_samples_and_saved_study(tmp_path):
+    import numpy as np
+    from scipy.stats import norm
+
+    study = simulate_interaction_index_three_drug_study(
+        interaction_indices=(5 / 3,), error_sd=(0.1,), replicates=8, rng=65, retain_samples=True
+    )
+    assert not study.estimated_indices.flags.writeable
+    np.testing.assert_allclose(study.estimated_indices.mean(), study.cells[0].mean_estimated_index)
+    saved = json.loads(study.write_json(tmp_path / "scenario1.json").read_text())
+    np.testing.assert_array_equal(saved["estimated_indices"], study.estimated_indices)
+    pytest.importorskip("matplotlib")
+    import matplotlib.pyplot as plt
+
+    figure = study.plot_qq()
+    raw = np.asarray(figure.axes[0].collections[0].get_offsets())
+    np.testing.assert_allclose(raw[:, 0], norm.ppf((np.arange(1, 9) - 0.375) / (8 + 0.25)))
+    np.testing.assert_array_equal(raw[:, 1], np.sort(study.estimated_indices[0]))
+    plt.close(figure)
+    for bad in (True, -1, 1, 0.5):
+        with pytest.raises(ValueError):
+            study.plot_qq(bad)
+    without = simulate_interaction_index_three_drug_study(
+        interaction_indices=(1,), error_sd=(0.1,), replicates=1, rng=65
+    )
+    with pytest.raises(ValueError, match="retain_samples"):
+        without.plot_qq()

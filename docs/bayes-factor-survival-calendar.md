@@ -123,3 +123,9 @@ Python conventions. The implementation does not claim native accrual,
 monitoring, final-follow-up, report, or Monte Carlo parity. See the
 [source audit](../research/bayes-factor-survival-calendar-audit.md) and the
 base [posterior/boundary guide](bayes-factor-survival.md) for model details.
+
+October 10 update: original managed control resolves the previously unknown
+native timing and integer-day contract. The [recovered enrollment workflow](../docs/bayes-factor-survival-enrollment.md)
+implements it separately; this explicit-calendar workflow and its saved reports
+retain their documented caller-selected timing. See the
+[native-control audit](../research/bayes-factor-tte-native-control-audit.md).

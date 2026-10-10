@@ -35,3 +35,9 @@ regression for positive follow-up that is lost at a very large calendar
 horizon. An independent three-patient ledger also verifies exact event counts
 and time-on-test at three interims and the final look, including an event/censor
 tie. Ruff check/format, targeted mypy and diff checks passed.
+
+October 10 update: original managed control resolves the previously unknown
+native timing and integer-day contract. The [recovered enrollment workflow](../docs/bayes-factor-survival-enrollment.md)
+implements it separately; this explicit-calendar workflow and its saved reports
+retain their documented caller-selected timing. See the
+[native-control audit](../research/bayes-factor-tte-native-control-audit.md).

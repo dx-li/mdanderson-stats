@@ -35,3 +35,32 @@ A 100-by-100 probability grid had finite scores increasing with efficacy and
 decreasing with toxicity. Vectorized scoring took 0.0071 seconds; the combined
 reference/example/grid process peaked at 112.5 MiB RSS with no process swaps.
 These timings describe the measured small workload, not all possible inputs.
+
+## October 10 recovered objective lead
+
+The official v5.2.3.0 archive now exposes managed C++/CLI bodies for the legacy
+contour objective and solver. The checksum-verified `Efftox2Calculations.dll`
+hash is `7570fa52e5c03c4818ae8c4f17913bd75a2f036ebac844aa6c86e2ce3a183fd0`.
+This supersedes the unavailable-objective statement above, but does not yet
+validate a Python optimizer or original optimizer results.
+
+Static decoding of `ContourObjective.()` at RVA `0xb144` identifies parameters
+`(a,b,c)`, curve `g(x)=a+b/x+c/x²` and reference efficacy `x*=targets[2,0]`.
+Writing `N(v)=max(-v,0)` and `D=b²-4ac`, its objective is:
+
+```text
+sum_i w_i * (g(x_i)-t_i)^2
++ 1000 * (N(g'(x*)) + N(g(x*)) + N(1-g(x*)))
++ (1000 * (c-D) if c>0 and D<0 else 0)
+```
+
+The first and last target have weight 4; interior targets have weight 1.
+`NegativePart` at `0xab08` confirms `N`; `SetTargets` at `0xab84` requires two
+columns and at least three rows. Solver `0xec94` invokes Nelder–Mead at the
+call site with tolerance/control values .001 and .05; their exact parameter
+meanings, initial simplex, acceptance checks and output still need execution
+references. This objective uses penalties, not exact interpolation or a fully
+constrained monotone fit. Preserve that distinction when adding a native-fit API.
+The objective/solver's original instruction bodies remain ignored research
+inputs. The existing exact interpolation API and its mathematical references
+remain unchanged; EffTox also retains its separate trinary calibration gap.

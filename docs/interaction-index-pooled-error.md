@@ -50,3 +50,7 @@ Interaction”](https://pmc.ncbi.nlm.nih.gov/articles/PMC2796809/). The cached
 software readme lists its corresponding native routine as `CI.known.effect`.
 This API implements the equation, not the original S-Plus/R interface or
 random-number behavior.
+
+October 10 original-archive validation confirms this exact residual-df pooling
+formula. The author's unchanged `CI.known.effect` agrees on unequal-size
+synthetic designs; see the [workflow audit](../research/interaction-index-workflow-audit.md).

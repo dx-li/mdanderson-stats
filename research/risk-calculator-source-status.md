@@ -65,3 +65,12 @@ September 29. No alternate transport was used to bypass that denial; the
 implementation uses the previously retrieved publisher supplement and local
 source records. Static K-COMPASS and RMC-COMPASS pages retrieved before the
 denial still did not expose their exact fitted parameter sets.
+
+October 10 BLESS update: both linked public instructions PDFs were recovered
+from the live Shiny app with normal HTTPS verification. SHA-256 values are
+`5486769f88e0ecdc057b2942f5506a6594ff57e3a4388de6be6caa087a9f029b`
+(Instructions_for_BLESS_online_calculator.pdf) and
+`bef6c84ff879e0589fafffb8f18229e9f5c1292af09c3426f67dacf20fa40a1a`
+(BLESS_Variable_definitions.pdf). They establish variable units, clinical scope,
+four model choices and survival tables in days. They do not supply the Cox
+coefficient vectors or baseline-survival tables needed for entry 149.

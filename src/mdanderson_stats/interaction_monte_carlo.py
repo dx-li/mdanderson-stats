@@ -36,6 +36,7 @@ def interaction_index_monte_carlo(
     confidence: float = 0.95,
     critical_distribution: str = "t",
     rng: int | np.random.Generator | None = None,
+    coefficient_draws: ArrayLike | None = None,
 ) -> InteractionMonteCarlo:
     """Untransformed pointwise interval centered on the fitted Loewe index.
 
@@ -44,6 +45,8 @@ def interaction_index_monte_carlo(
     coefficient draws are not truncated; reversed slopes remain in the sample.
     Near-zero slopes can make the method unstable; unrepresentable results raise.
     coefficient_draws has shape (samples, drugs+1, 2), combination last.
+    An explicit coefficient tape of that shape enables external/source replay;
+    it cannot be combined with rng and is validated before copying or RNG use.
     """
     fits = _models(models)
     point = interaction_index_ray(fits, combination, proportions, effect, confidence=confidence)
@@ -59,10 +62,23 @@ def interaction_index_monte_carlo(
     if critical_distribution not in ("t", "normal"):
         raise ValueError("critical_distribution must be t or normal")
     all_fits = (*fits, combination)
-    generator = np.random.default_rng(rng)
-    draws = generator.standard_normal((n, len(all_fits), 2))
-    for i, fit in enumerate(all_fits):
-        draws[:, i] = draws[:, i] @ _covariance_factor(fit).T + [fit.intercept, fit.slope]
+    if coefficient_draws is None:
+        generator = np.random.default_rng(rng)
+        draws = generator.standard_normal((n, len(all_fits), 2))
+        for i, fit in enumerate(all_fits):
+            draws[:, i] = draws[:, i] @ _covariance_factor(fit).T + [fit.intercept, fit.slope]
+    else:
+        if rng is not None:
+            raise ValueError("coefficient_draws and rng cannot be combined")
+        raw = np.asarray(coefficient_draws)
+        if raw.shape != (n, len(all_fits), 2) or raw.dtype.kind not in "iuf":
+            raise ValueError("coefficient_draws must have shape (samples, drugs+1, 2)")
+        if not np.isfinite(raw).all():
+            raise ValueError("coefficient_draws must be finite")
+        limit = np.finfo(np.float64).max
+        if np.any(raw > limit) or np.any(raw < -limit):
+            raise ValueError("coefficient_draws must be representable as float64")
+        draws = np.array(raw, dtype=np.float64, copy=True)
     if np.any(~np.isfinite(draws)) or np.any(draws[..., 1] == 0):
         raise ArithmeticError("coefficient sample contains nonfinite values or a zero slope")
     reversal = np.mean(np.sign(draws[..., 1]) != np.sign([f.slope for f in all_fits]), axis=0)
