@@ -7,6 +7,7 @@ import numpy as np
 import pytest
 
 from mdanderson_stats import uaroet_logits, uaroet_probabilities
+from mdanderson_stats.uaroet_desktop_study import uaroet_desktop_prior_coordinates
 
 REFERENCE = json.loads(
     (Path(__file__).parent / "fixtures/uaroet-desktop-marginals.json").read_text()
@@ -22,9 +23,14 @@ def native_coordinates(case, levels):
         active[:, 1:] = (
             np.exp(active[:, 1:]) if case["lognormal"] else np.maximum(active[:, 1:], 1e-10)
         )
-        parts.extend(active[:, 0])
-        parts.extend(active[:, 1:].T.ravel())
-    return parts
+        parts.extend(active.ravel())
+    mapped, _ = uaroet_desktop_prior_coordinates(
+        [*parts, case["parameters"][-1]],
+        dose_count=case["doses"],
+        efficacy_levels=levels,
+        toxicity_levels=levels,
+    )
+    return mapped
 
 
 @pytest.mark.parametrize("case", REFERENCE["eta"])

@@ -1,0 +1,5676 @@
+{
+  "executable_sha256": "b953affb6cd3968c389d5a35020e594cd25fef3ff61825db8aa282d8216a3eaf",
+  "scope": "Native final selection with supplied posterior summaries and zero refit iterations",
+  "cases": [
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": -1,
+        "highest_allowed": 1,
+        "status": [
+          -2,
+          -2,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          -1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": -1,
+        "highest_allowed": 1,
+        "status": [
+          -2,
+          -2,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          -1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": -1,
+        "highest_allowed": 1,
+        "status": [
+          -2,
+          -2,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          -1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            0,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 1,
+        "status": [
+          1,
+          1,
+          -5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          -2,
+          -2
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          -1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          -2,
+          -2
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          -1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          -2,
+          -2
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          -1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            1,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            -1,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            -1
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          -2
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 1,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          -1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          -2
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          -1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          -2
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            0,
+            3
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          -1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          20,
+          40,
+          60
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 2,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          60,
+          40,
+          20
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0.9,
+          0.9,
+          0.9
+        ],
+        "eff_tails": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "patients": [
+          [
+            1,
+            0,
+            3,
+            0
+          ],
+          [
+            2,
+            2,
+            3,
+            0
+          ]
+        ],
+        "utility": [
+          40,
+          40,
+          40
+        ],
+        "tox_tails": [
+          0,
+          0,
+          0
+        ],
+        "eff_tails": [
+          0.9,
+          0.9,
+          0.9
+        ]
+      },
+      "result": {
+        "selected": 0,
+        "highest_allowed": 2,
+        "status": [
+          1,
+          1,
+          1
+        ]
+      }
+    }
+  ]
+}

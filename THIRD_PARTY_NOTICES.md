@@ -1498,3 +1498,8 @@ randomization, cohort bookkeeping, parser spellings and ESS moment reduction.
 Original software and guide files remain excluded from distribution. These
 reference-only assets do not replace or relax any existing component notices;
 source compatibility, numerical correctness and clinical validity remain distinct.
+
+The UAROET saved-study adapter and count/escalation probes are independently
+authored. Synthetic count fixtures exercise externally supplied original code;
+no original example bundle or guide is included. Input repair notes identify
+explicit deviations from the original parser and missing example utility file.

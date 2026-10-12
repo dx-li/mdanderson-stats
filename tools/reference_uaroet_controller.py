@@ -127,7 +127,11 @@ def trial(first=3, new=2, old=3, utility_sequence=None, status_sequence=None):
 
 cases = []
 for first, new, old in ((1, 1, 1), (3, 1, 1), (3, 2, 3), (2, 3, 1), (1, 2, 4)):
-    for utility_sequence in ([[20, 60, 40]] * 10, [[60, 20, 40], [20, 60, 40], [40, 20, 60]] * 4):
+    for utility_sequence in (
+        [[20, 60, 40]] * 10,
+        [[60, 20, 40], [20, 60, 40], [40, 20, 60]] * 4,
+        [[40, 40, 40]] * 10,
+    ):
         for status_sequence in (
             [[1, 1, 1]] * 12,
             [[-2, -2, -2]] * 12,

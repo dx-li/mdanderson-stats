@@ -2169,6 +2169,14 @@ from .uaroet import (
     uaroet_probabilities,
 )
 from .uaroet_decision import UAROETAllocation, uaroet_allocation
+from .uaroet_desktop_study import (
+    UAROETDesktopCounts,
+    UAROETDesktopScenario,
+    UAROETDesktopStudy,
+    read_uaroet_desktop_bundle,
+    read_uaroet_desktop_study,
+    uaroet_desktop_prior_coordinates,
+)
 from .uaroet_fit import UAROETFit, fit_uaroet
 from .uaroet_simulation import (
     UAROETSimulation,
@@ -3023,6 +3031,12 @@ __all__ = [
     "catbub_thresholds",
     "catbub_operating_characteristics",
     "UAROETAllocation",
+    "UAROETDesktopCounts",
+    "UAROETDesktopScenario",
+    "UAROETDesktopStudy",
+    "read_uaroet_desktop_bundle",
+    "read_uaroet_desktop_study",
+    "uaroet_desktop_prior_coordinates",
     "UAROETFit",
     "UAROETProbabilities",
     "UAROETSimulation",

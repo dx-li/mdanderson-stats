@@ -145,7 +145,7 @@ Posterior-summary probe `tools/reference_uaroet_summary.py` adds81 cases at
 40bc0–4101a. Probability evaluation is replaced by supplied joint/marginal
 probabilities and utilities; original tail indicators and summary packing run.
 Toxicity uses strict risk>limit and efficacy futility strict risk<minimum. The
-per-draw best-utility indicator credits the first exact tie, whereas greedy
+per-draw best-utility indicator credits the first exact tie, whereas hybrid
 mean-utility allocation credits the last eligible exact tie. These distinct
 rules must not be collapsed into one tie convention. This also independently
 confirms the13-coordinate marginal/utility summary layout consumed by native ESS.
@@ -156,3 +156,59 @@ Python0.6028582115231264, absolute difference0.00031867010070141255, risk MCSE
 0.003512511715158312 and split R-hat1.0018513400749691. This is a one-dose binary
 fixed-independence reference case, not validation of all higher-dimensional
 correlated fits. The example intentionally uses short chains and prints diagnostics.
+
+## Saved-study integration and count/escalation recovery
+
+The original text bundle now imports through `uaroet_desktop_study.py`, with
+versioned JSON reopening, active-coordinate prior mapping, copied immutable
+arrays, selected utilities, all scenarios, explicit input repairs and disjoint
+complete/toxicity-only observation accounting. The original three-dose example
+selects nonexistent utility2 while supplying utility1; this requires an explicit
+utility override and is recorded. Both original example bundles were imported
+with the documented explicit repairs and reopened byte-identically (eight
+scenarios each). No original input bundle is redistributed.
+
+New generator `tools/reference_uaroet_counts.py` produces184 cases. It executes
+52a40–52c4b for observed counts and5d341–5d38d for highest-dose selection, including
+actual data getters35e80/35e90/35fa0 and highest-assigned routine35ea0. Model
+likelihood counts are supplied; prior/posterior inference is not executed. Utility
+reporting is disabled using its native flag (getter2efd0 returns zero).
+
+Recovered arrays distinguish post18d4 (assigned),18e8 (complete both endpoints),
+and18fc (likelihood-contributing count copied from model108). Complete-case
+marginal arrays17d0/1834 exclude partial outcomes. Native no-skip code opens the
+next level only when18fc is positive at the highest assigned dose. Thus a
+toxicity-only record can change escalation readiness and posterior inference
+without satisfying complete-case observed-toxicity/futility gates. The production
+study counts match all184 native cases. The portable generator independently
+reproduces the committed fixture; original executable bytes remain excluded.
+
+This closes saved-input and count contracts, not UAROET92's full workflow.
+Continue prior calibration/ESS and precision, controller defaults/final selection
+and saved-history replay, then conduct/calendar simulations and report acceptance.
+Do not apply the paper controller as an undocumented substitute for current1.8.
+
+Final selection is now separately executed by `reference_uaroet_final.py`:
+135 cases enter5ec80, execute actual acceptability/highest-assigned/greedy code,
+and stop at5ed74 before report export. Posterior refitting is disabled by setting
+its iteration limit to zero and posterior summaries/counts are supplied. Final
+selection initially opens all doses, but acceptability recomputes the no-skip
+ceiling. The plain greedy helper5fb00 keeps the **first** exact utility tie;
+hybrid5eeb0 keeps the **last**. Earlier descriptions of a generic greedy-last rule
+must not be transferred to plain/final selection. These fixtures use explicitly
+supplied observation gates, not inferred application defaults.
+
+`reference_uaroet_replay.py` executes5e150 and native data getters for1,092
+fresh-selector histories, including every three-dose sequence of length0–5 at
+three cohort-size settings. Replay classifies a cohort as new only if the **last
+record** is the first assignment at that dose; otherwise it uses the old-cohort
+size. It tests trailing run length modulo that size. This is distinct from live
+cohort state; no posterior computation/next assignment is claimed by the replay
+probe. Preserve these defects in explicit compatibility behavior.
+
+Static transfer review additionally locates minimum-total-toxicity default3 at
+1f889 (parameter+d0), transferred through10f9f/5fd40 to selector154. Minimum
+complete observations default3 at1fda8 (parameter+1e8e8) transfers through
+11017/5fd30 to selector15c. Parser24d0d can override the latter. Selector158's
+futility gate initializes to3 at5e0dd. This narrows the previous default-transfer
+gap but is not a full executed application initialization trace.
