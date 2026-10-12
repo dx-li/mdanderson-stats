@@ -1,0 +1,136 @@
+{
+  "scope": "PRT69 complete recovered guide workflow: saved conduct/simulation, explicit native calendar/controller profiles, numerical-quality holds, generated trials, replay and unconditional operating-characteristic reports.",
+  "implementation_commit": "d9445c1ee490ed53617b0fd162d94727124ebd29",
+  "full_suite": {
+    "passed": 76279,
+    "seconds": 511.6,
+    "log_sha256": "c2084d405365dfc99d7b7177e08922dea3099e29742687938bf60afb62243586",
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "workers": 4,
+    "production_python_files": 770,
+    "production_unchanged_during_acceptance": true,
+    "snapshot_sha256": "f0e0273b485f71a26530d67edc5a5cb7763977e2ef85f5530e72ecd37a5aacda"
+  },
+  "installed_wheel": {
+    "focused": {
+      "passed": 5187,
+      "seconds": 9.0,
+      "log_sha256": "4e3b41d11a8e980bc6703ab0b48d8257a63939d871c4b65ebc53cc241fb8fd5f"
+    },
+    "broader": {
+      "passed": 9347,
+      "seconds": 40.9,
+      "log_sha256": "af8d6c6427a2d18d6ec370d89fc59ce8191429cc6127201539f6a5440ded17b7"
+    },
+    "extras": {
+      "passed": 28,
+      "seconds": 5.51,
+      "log_sha256": "4d85b915dd76e7f184696dfa9927d6ed7442895589815c634a14ee48927c0f88"
+    },
+    "outside_checkout": true,
+    "examples": [
+      "prt_simulation.py",
+      "prt_conduct.py",
+      "bless_published.py",
+      "compas_explicit.py"
+    ],
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "dependency_check": "passed"
+  },
+  "source_references": {
+    "prt_byte_identical_files": 21,
+    "startup_precision_bits": 53,
+    "calendar_precision_cases": 111,
+    "composed_enrollment_steps": 72,
+    "simulation_controller_cases": 963,
+    "final_selector_cases": 144,
+    "screening_cases": 208,
+    "fixture_sha256": {
+      "prt-desktop-arrivals.json": "a34869611592cee2e7dceccefa19deb99dac169a26adb5e9f57252fb698370c0",
+      "prt-desktop-calendar-control.json": "d4d3f85cfb164cf3ce7307c0b5dd4f635c3ad0fe2f931d355b3fb4c3407f3f64",
+      "prt-desktop-calendar-precision.json": "eade8f97db40d8022b9d80f300aa9852f999c000db7f8c3e200c7d82cfea0870",
+      "prt-desktop-calendar.json": "0c0392797fe6777e71259e1255fb76509859324e30347be90f34855092de808a",
+      "prt-desktop-conduct-rules.json": "af974675eedc222f6ce9f839af51a0ccf71050db7bb9408bdb17ca0d1b242edc",
+      "prt-desktop-controller.json": "49ba950303771cbc300642e08f9da1417070533148cd087a85f8311b2ab5eb41",
+      "prt-desktop-counts.json": "fe9213358135cc504164ff70b5a435d889fdeab7a037fab5d7aac5c13b43fb81",
+      "prt-desktop-endpoints.json": "2902a8f4834f5c82a0850658ba3c5613e1dfac473b0bfc5b99b986564d5eaf71",
+      "prt-desktop-enrollment.json": "ed76f3d3ddbce5b4b8b5635b72bb8ae6fc6acdfa8ea711b37f38e7125bb24375",
+      "prt-desktop-final.json": "a8250e766cc1f23389822f3ffda9459f8b8d0e6d74756c3362852572f2d47409",
+      "prt-desktop-fpu.json": "b27c835a1c25193635d65c7df53b3514040d4c6dff5d4fd94747059fd0ff9be7",
+      "prt-desktop-hazard.json": "b40eb10f91a6ca5e3078ebe60055f03a1067e47e4c682164c9511bb7848345a8",
+      "prt-desktop-moments.json": "0e52eb5177bf3a90d9e757061a620b981a394a6c5e3c33747164e51045b5f406",
+      "prt-desktop-negligible.json": "6fc54cefcba10a7cfb6f4c9fe5f91cc5ff8c925ec321372d378a4c6d66eeaefd",
+      "prt-desktop-output-dispatch.json": "dc9aaa042c59df438fa40f4d46b1b61578697a9a6da2b1e2d4cbc918a1887035",
+      "prt-desktop-pending.json": "4c8fee122dd594194a24ad3e1e55aebde1f8befb0ae8b3b516b2a432822bc3e5",
+      "prt-desktop-posterior.json": "053047f7b2760069988d76eda51cd90edf3287720f8c6fdad068b7b06c0704b4",
+      "prt-desktop-predictive.json": "16327f784e5fa1f6d30000d4096ff4bcc2a2e67d86f91ea934f4de3add242459",
+      "prt-desktop-projection.json": "b71768af34fb9cfb815cbb42c3841d5f2ca42fa53aee10e88e3cd9710008fb79",
+      "prt-desktop-screening.json": "3d54d6afb356417c544f64724ec101ef2f63f5e6014719a9df64ea64ec464c87",
+      "prt-desktop-simulation-rules.json": "bebef521ad6e1dc1f86ef2ed6f837a6390c519af350c62713916bab236cc14ed"
+    }
+  },
+  "real_posterior_trial": {
+    "status": "selected",
+    "selected_dose": 0,
+    "assigned": [
+      3,
+      3
+    ],
+    "duration_days": 110.0,
+    "max_rhat": 1.0003540357473122,
+    "max_mcse": 0.00023765820608399898
+  },
+  "generated_pilot": {
+    "repetitions": 2,
+    "selected_dose_counts": [
+      2,
+      0
+    ],
+    "assigned_means": [
+      3,
+      3
+    ],
+    "observed_event_means": [
+      0,
+      1
+    ],
+    "mean_duration_days": 163.09235458149664,
+    "exact_saved_tape_replay": true,
+    "precision_claim": false
+  },
+  "artifact_audit": {
+    "source_wheel_byte_matched_files": 774,
+    "notices_identical": true,
+    "raw_binaries_excluded": true,
+    "wheel_sha256": "12ea7c18e0b8ee34d4c2d97a8529feb2a2b985f8bf9b0bd9d700329be9b77ef8",
+    "sdist_sha256": "1dd1bdd2031660633a2ecdf91e357e68fc10b7226ee6e25d1ab01e3f576d14c2"
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "2758 files already formatted",
+    "mypy": "Success: no issues found in 770 source files",
+    "build": "passed",
+    "retained_notice_files": 29
+  },
+  "catalog": {
+    "entries": 138,
+    "implemented": 103,
+    "partial": 31,
+    "pending": 4
+  },
+  "limits": "Native arithmetic compatibility is separate from mathematical correctness and clinical validity. Python posterior sampler/RNG is independent. Invalid or unstable inference and skipped final inference remain unresolved, never silent dose selections.",
+  "remaining": {
+    "next": "WFMM70 exact initialization/proposal, transforms and saved end-to-end workflow.",
+    "models": [
+      "BayesianSurvival",
+      "CNSRISK",
+      "K-COMPASS",
+      "MDS-DPSS"
+    ],
+    "bless": "Exact deployed daily/full-precision/uncertainty contracts",
+    "compas": "Original group/model priors and dynamic platform contracts",
+    "release": "Mixed-license distribution decision; prior PR creation Forbidden. No merge/release/deploy/outreach/settings changes authorized."
+  }
+}

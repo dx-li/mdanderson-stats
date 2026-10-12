@@ -821,3 +821,13 @@ A real two-stage trial and two generated pilots select successfully while all
 quality holds remain active. Native skipped-final inference is explicitly
 unresolved. See prt-simulation-complete-checkpoint-2026-10-12.md; full tests and
 clean artifacts must pass before reporting the contingent69 promotion complete.
+
+PRT69 final acceptance passed on implementationd9445c1e:76,279 full all-extras
+warnings-as-errors tests in511.60s on770 unchanged production Python files.
+Final fresh wheel5,187 PRT tests,9,347 broader regressions,28 extras, four installed
+examples and dependency checks pass. All21 native PRT fixtures regenerate
+byte-identically;774 package files match wheel/sdist,29 notices remain, original
+binaries are excluded. Ruff/format/mypy/build pass. Catalog103/31/4 is now verified.
+See prt-simulation-validation-2026-10-12.json for hashes and exact evidence.
+Continue WFMM70 from the recovered original initialization outputs and existing
+native leads; no unavailable fitted-model, licensing or PR blocker was bypassed.

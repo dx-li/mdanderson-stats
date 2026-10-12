@@ -4,8 +4,9 @@ The recovered PRT1.0 Python workflow now includes original conduct/simulation
 settings import, saved JSON/edit/reopen, posterior analysis, separate conduct and
 simulation controllers, generated timing, complete calendar paths, batch
 operating characteristics and JSON/CSV reports. The final acceptance manifest
-is `prt-simulation-validation-2026-10-12.json`; the catalog promotion is contingent
-on its final-code and installed-artifact checks passing.
+is `prt-simulation-validation-2026-10-12.json`:76,279 full tests,5,187 final-wheel
+PRT tests,9,347 broader regressions,28 extras and all four installed examples pass.
+Catalog69 is implemented for this declared scope; current totals are103/31/4.
 
 | Guide contract | Python workflow and evidence |
 |---|---|
