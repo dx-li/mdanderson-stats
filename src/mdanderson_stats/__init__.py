@@ -2293,7 +2293,7 @@ from .weibull_unknown_shape_gof import (
     weibull_unknown_shape_bayesian_gof,
 )
 from .wfmm_basis import WFMMBasis, WFMMTransformed, wfmm_basis, wfmm_inverse, wfmm_transform
-from .wfmm_boundary import wfmm_extended_wavelet_basis
+from .wfmm_boundary import wfmm_extended_wavelet_basis, wfmm_named_wavelet_basis
 from .wfmm_compression import WFMMCompression, wfmm_compress_coefficients
 from .wfmm_conditional import WFMMConditionalVariance, fit_wfmm_conditional_variances
 from .wfmm_covariance import WFMMCovarianceSummary, wfmm_covariance, wfmm_summarize_covariance
@@ -2325,6 +2325,7 @@ from .windows import (
 
 __all__ = [
     "wfmm_extended_wavelet_basis",
+    "wfmm_named_wavelet_basis",
     "PRTLegacyProjection",
     "PRTLegacyMoments",
     "PRTLegacyPredictive",

@@ -28,21 +28,42 @@ adopt the original integer-truncated/grid-based SimBaS as a scientific default.
 Python's existing exact empirical convention assigns one to a constant zero
 function and zero to a constant nonzero function.
 
-## Unresolved native random-function variance
+## Native random-function variance: cause recovered
 
 The controlled random-effects case supplies Q=.3 and S=.5, two independent
 random levels with four rows each, and fixed beta draws. The Gaussian
 conditional variance is (1/Q + 4/S)^(-1) = .08823529411764705. Standardizing the
 native U innovations using that conditional mean and variance produces sample
-variance about .241 across 1,280 values, rather than near one. This is a material
-unresolved discrepancy; no native conditional-variance agreement is claimed.
+variance about .241 across 1,280 values, rather than near one. The discrepancy was subsequently traced to an integer-absolute-value defect,
+as detailed below; Python conditional-variance agreement with this behavior is
+not claimed.
 
 A child-only ptrace probe of the pinned WFMM3 constructor at 0x4a6040 found the
 correct 2-by-2 diagonal covariance .08823529411764705 and mean
 (.9612927822255699, 1.1591428574549474) on the first call for the controlled
-scratch input. That localizes further investigation beyond the initial Gaussian
-conditional covariance calculation. Scratch trace and disassembly are preserved
+scratch input. That confirms the initial Gaussian conditional covariance calculation. Scratch trace and disassembly are preserved
 at /tmp/wfmm-report-edges. The production Python sampler is independently tested
 against conditional Gaussian mathematics and has not been changed to match this
-unresolved native output. Follow-up should trace the multivariate generator and
-subsequent stored U mapping before assigning a cause.
+native output. Subsequent tracing resolved the cause below.
+
+
+The `WFMM::Abs(Matrix)` helper at 0x42c190 converts each double to a signed
+integer at 0x42c220 before integer absolute value. `UpdateU` at 0x469ed0 uses
+this helper to test whether its covariance and mean are negligible (calls at
+0x46bd84 and 0x46bf9d). For this covariance, all entries truncate to zero. If
+both conditional means also have magnitude below one, it returns the mean
+instead of sampling. Exactly 472 of 640 coefficient/iteration vectors satisfy
+that condition in the controlled fixture; their standardized innovations are
+zero to 1.9e-15. The remaining 168 vectors draw noise. A child-only ptrace probe
+at `GetNormalVector` (0x4a6b40) counted 336 standard-normal values (two per vector),
+with sample variance .9187322086009039. Those same sampled innovations have
+variance .9187322086009035 after independent reconstruction. Across all vectors,
+including the 472 deterministic substitutes, variance falls to .24072699626998414.
+
+The reproducible edge generator now asserts the mean-only mask and records
+both counts and conditional innovation statistics. The covariance factor itself
+was also traced and equals diag(.2970442628930023), the correct square root.
+Thus this observation does not implicate the normal generator: the defect is
+the integer-truncated near-zero decision. Python keeps the mathematically
+specified positive-variance conditional draw, and does not add this defect as
+a default or a claimed scientific compatibility requirement.

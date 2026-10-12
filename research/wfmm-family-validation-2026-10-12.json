@@ -1,0 +1,75 @@
+{
+  "base_commit": "38b1cbf7fdc6af927f81bac8405d19e61a8fca1c",
+  "scope": "Named Symlet/Coiflet extended 1D transforms and resolved native conditional-U defect; WFMM partial",
+  "full_suite": {
+    "passed": 76983,
+    "seconds": 471.17,
+    "workers": 4,
+    "warnings_as_errors": true,
+    "all_extras": true,
+    "production_python_files": 777,
+    "test_and_fixture_files": 1604,
+    "tested_files_unchanged": true,
+    "log_sha256": "142488c560ab3bd2f4ff1e523e9c279376e7474ad121e57e00070759e449e985",
+    "production_filter_table_unchanged": true
+  },
+  "focused": {
+    "passed": 851,
+    "seconds": 32.78,
+    "log_sha256": "4dfaa5838d3039ccfe1f725f9667a42db174cc3fb597d3493d402ffa35756a7f"
+  },
+  "installed_wheel": {
+    "passed": 879,
+    "seconds": 37.08,
+    "wfmm": 851,
+    "extras": 28,
+    "outside_checkout": true,
+    "examples": [
+      "wfmm_reporting.py",
+      "wfmm_study.py",
+      "wfmm_automatic.py",
+      "wfmm_initialization.py"
+    ],
+    "dependencies": "passed",
+    "log_sha256": "f45980859ca7b87e70ffe37505c654f480180f6282672959bd159164a1060a33"
+  },
+  "artifact_audit": {
+    "package_files": 782,
+    "retained_notices": 29,
+    "source_bytes_equal": true,
+    "notices_equal": true,
+    "original_binaries_excluded": true,
+    "hashes": {
+      "mdanderson_stats-0.1.0-py3-none-any.whl": "24a82577acf911cc61109a7c74f7d4339cd0d97c97df691ae7fc3cea327f7703",
+      "mdanderson_stats-0.1.0.tar.gz": "71c084d3aae375bdf735ec557793536db061428b503a86056b74c51e0ffe4eca"
+    }
+  },
+  "artifact_scope": "Built before final evidence and native edge research; production package and retained notice bytes match source.",
+  "native_report_edges": {
+    "cases": 5,
+    "byte_identical_regeneration": true,
+    "sha256": "72eb7acb6207027ac4e5df44935c1337dfed279beb2226bfde7c049a2cf9eb06",
+    "conditional_u_variance_agreement": "Native integer Abs defect suppresses 472 of 640 conditional draws; remaining 168 vectors have expected normal variance. Scientific Python sampler unchanged."
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "mypy_source_files": 777,
+    "build": "passed"
+  },
+  "catalog": {
+    "entries": 138,
+    "implemented": 103,
+    "partial": 31,
+    "pending": 4
+  },
+  "native_named_families": {
+    "cases": 72,
+    "families": 12,
+    "fixture_sha256": "76a5dfec8e9f8b09caa2fab6e31a25277282275449021a64251835d1cef2df2d",
+    "filter_table_sha256": "1c6516f21a4829eb88fcfef8fe8b597cb81fcdc8a9a8a0b1b66176b9c8a97066",
+    "byte_identical_regeneration": true,
+    "analysis_max_error": 0.0,
+    "synthesis_max_error": 2.220446049250313e-16
+  }
+}

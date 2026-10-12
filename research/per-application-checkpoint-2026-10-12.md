@@ -208,3 +208,18 @@ Native quantile/zero-SD defects and an unresolved conditional-U variance
 discrepancy are documented in wfmm-report-edges-audit-2026-10-12.md. Remaining
 advertised families/boundaries/dimensions and hyperparameter contracts keep
 WFMM partial. No changes to notices, permissions or distribution restrictions.
+
+
+WFMM70 named sym2–sym8 and coif1–coif5 extended 1D families now have 72
+checksum-pinned native analysis/synthesis references, independently regenerated
+filter facts, moment/orthogonality checks and short/deep reconstruction tests.
+Native coif5 precision is explicitly bounded, not described as machine exact.
+76,983 full tests / 471.17s, 851 focused and 879 installed-wheel checks plus four
+examples pass; 777 production Python files, 1,604 test/fixture files and the
+filter table stayed unchanged. See wfmm-family-validation-2026-10-12.json.
+The prior conditional-U discrepancy is resolved: the native integer Abs
+negligibility check skips normal draws for 472 of 640 conditional vectors.
+The remaining innovations and covariance factor agree; Python retains correct
+conditional sampling. See the revised wfmm-report-edges audit. WFMM remains
+partial; interval/reduced boundaries, multidimensional transforms and remaining
+hyperparameter/sampler contracts still need closure. Catalog remains 103/31/4.

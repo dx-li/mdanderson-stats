@@ -5629,9 +5629,14 @@
         ]
       ],
       "conditional_variance_investigation": {
-        "status": "unresolved; native conditional-variance agreement is not claimed",
+        "status": "resolved: integer-truncated WFMM::Abs suppresses conditional noise",
+        "gaussian_variance": 0.08823529411764705,
         "standardized_mean": 0.0056435725732618125,
-        "standardized_variance": 0.24072699626998414
+        "standardized_variance": 0.24072699626998414,
+        "mean_only_vectors": 472,
+        "sampled_vectors": 168,
+        "sampled_standardized_variance": 0.9187322086009035,
+        "scope": "Observed native defect; not a scientific Python sampling target"
       }
     },
     {

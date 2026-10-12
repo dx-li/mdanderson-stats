@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+import json
+from dataclasses import replace
+from functools import lru_cache
+from importlib.resources import files
+
 import numpy as np
 
 from ._cdflib import _freeze
@@ -29,12 +34,69 @@ def wfmm_extended_wavelet_basis(
     Dense matrix storage bounds this constructor to 512 time points and two
     million live matrix cells. Legacy periodic-decimation bases are unchanged.
     """
-    n = _setting(time_count, "time_count", 2, 512)
-    depth = _setting(levels, "levels", 1, 12)
     length = _setting(filter_length, "filter_length", 2, 20)
-    budget = _setting(max_work, "max_work", 1, 200_000_000)
     if length % 2:
         raise ValueError("filter_length must be even")
+    low, high = pinnacle_daubechies_filter(length)
+    return _extended_pair(time_count, levels, low, high, boundary, max_work)
+
+
+@lru_cache(maxsize=12)
+def _named_filters(name: str):
+    data = json.loads(files("mdanderson_stats").joinpath("_wfmm_filters.json").read_text())
+    low = np.array(data["filters"][name], dtype=float)
+    high = low[::-1] * ((-1.0) ** np.arange(low.size))
+    return _freeze(low), _freeze(high)
+
+
+def wfmm_named_wavelet_basis(
+    time_count: int,
+    *,
+    wavelet: str = "db4",
+    levels: int = 1,
+    boundary: str = "periodic",
+    max_work: int = 200_000_000,
+) -> WFMMBasis:
+    """Native-convention db1..db10, sym2..sym8 or coif1..coif5 matrix pairs.
+
+    Manual aliases haar, d4..d20, s4..s16 and c6..c30 are accepted. Named
+    Symlet/Coiflet taps are factual native impulse-response measurements;
+    finite precision, especially coif5, limits orthogonality to about 1e-8
+    in tested two-level cases. No exact arithmetic or clinical claim follows.
+    """
+    aliases = {"haar": "db1"}
+    aliases.update({f"d{2 * i}": f"db{i}" for i in range(2, 11)})
+    aliases.update({f"s{2 * i}": f"sym{i}" for i in range(2, 9)})
+    aliases.update({f"c{6 * i}": f"coif{i}" for i in range(1, 6)})
+    allowed = {
+        *(f"db{i}" for i in range(1, 11)),
+        *(f"sym{i}" for i in range(2, 9)),
+        *(f"coif{i}" for i in range(1, 6)),
+    }
+    if not isinstance(wavelet, str):
+        raise ValueError("wavelet must name a supported family")
+    name = aliases.get(wavelet, wavelet)
+    if name not in allowed:
+        raise ValueError("wavelet must be db1..db10, sym2..sym8 or coif1..coif5")
+    if name.startswith("db"):
+        result = wfmm_extended_wavelet_basis(
+            time_count,
+            levels=levels,
+            filter_length=2 * int(name[2:]),
+            boundary=boundary,
+            max_work=max_work,
+        )
+    else:
+        low, high = _named_filters(name)
+        result = _extended_pair(time_count, levels, low, high, boundary, max_work)
+    return replace(result, wavelet_name=name)
+
+
+def _extended_pair(time_count, levels, low, high, boundary, max_work):
+    n = _setting(time_count, "time_count", 2, 512)
+    depth = _setting(levels, "levels", 1, 12)
+    length = len(low)
+    budget = _setting(max_work, "max_work", 1, 200_000_000)
     if boundary not in ("periodic", "zero", "reflection"):
         raise ValueError("boundary must be periodic, zero or reflection")
     widths = [n]
@@ -43,7 +105,6 @@ def wfmm_extended_wavelet_basis(
     k = widths[-1] + sum(widths[1:])
     if 6 * max(n, k) ** 2 > 2_000_000 or 4 * (n + k) * k * length > budget:
         raise ValueError("extended basis exceeds bounded matrix/work limits")
-    low, high = pinnacle_daubechies_filter(length)
     current = np.eye(n)
     bands = []
     for old, width in zip(widths[:-1], widths[1:], strict=True):

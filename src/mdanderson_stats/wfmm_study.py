@@ -14,7 +14,7 @@ from numpy.typing import ArrayLike
 from ._cdflib import _freeze
 from .hierarchical_binomial import summarize_chains
 from .wfmm_basis import WFMMBasis, _setting, wfmm_basis, wfmm_transform
-from .wfmm_boundary import wfmm_extended_wavelet_basis
+from .wfmm_boundary import wfmm_extended_wavelet_basis, wfmm_named_wavelet_basis
 from .wfmm_compression import TiePolicy, WFMMCompression, wfmm_compress_coefficients
 from .wfmm_covariance import WFMMCovarianceSummary, wfmm_summarize_covariance
 from .wfmm_initialization import WFMMInitialization, initialize_wfmm
@@ -103,6 +103,7 @@ class WFMMStudy:
     prediction_residual: bool = False
     prediction_strata: ArrayLike | None = None
     boundary: str = "periodic"
+    wavelet_name: str | None = None
     summarize_random_effects: bool = False
     include_covariance: bool = False
     effect_contrast: ArrayLike | None = None
@@ -153,7 +154,15 @@ class WFMMStudy:
             raise ValueError("unsupported boundary convention")
         if self.transform != "extended_wavelet" and self.boundary != "periodic":
             raise ValueError("nonperiodic boundary requires extended_wavelet")
-        if self.transform == "extended_wavelet":
+        if self.wavelet_name is not None:
+            if self.transform != "extended_wavelet" or self.filter_length != 2:
+                raise ValueError(
+                    "wavelet_name requires extended_wavelet and the default filter_length"
+                )
+            wfmm_named_wavelet_basis(
+                t, wavelet=self.wavelet_name, levels=self.levels, boundary=self.boundary
+            )
+        elif self.transform == "extended_wavelet":
             wfmm_extended_wavelet_basis(
                 t, levels=self.levels, filter_length=self.filter_length, boundary=self.boundary
             )
@@ -339,6 +348,7 @@ def read_wfmm_study(text: str) -> WFMMStudy:
             # Version 1 studies saved before extended boundaries used periodic defaults.
             for name, default in {
                 "boundary": "periodic",
+                "wavelet_name": None,
                 "summarize_random_effects": False,
                 "include_covariance": False,
                 "effect_contrast": None,
@@ -485,6 +495,10 @@ def run_wfmm_study(study: WFMMStudy) -> WFMMStudyResult:
             transform="custom",
             analysis_matrix=study.analysis_matrix,
             synthesis_matrix=study.synthesis_matrix,
+        )
+    elif study.transform == "extended_wavelet" and study.wavelet_name is not None:
+        basis = wfmm_named_wavelet_basis(
+            t, wavelet=study.wavelet_name, levels=study.levels, boundary=study.boundary
         )
     elif study.transform == "extended_wavelet":
         basis = wfmm_extended_wavelet_basis(

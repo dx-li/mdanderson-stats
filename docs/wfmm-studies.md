@@ -183,3 +183,19 @@ predicted-curve file interface. These explicit prediction targets follow the
 published model. Python reports keep real-valued standardized deviations,
 empirical-tail SimBaS and linear quantiles; they do not copy the native
 [integer-truncation defect](../research/wfmm-postprocess-audit-2026-10-12.md).
+
+## Named wavelet families
+
+`wfmm_named_wavelet_basis(..., wavelet="sym4")` supports `db1`–`db10`,
+`sym2`–`sym8` and `coif1`–`coif5` with the same extended boundary conventions.
+The manual aliases `haar`, `d4`–`d20`, `s4`–`s16` and `c6`–`c30` are accepted.
+For saved studies, select `transform="extended_wavelet"` and
+`wavelet_name="sym4"` (or another supported name), leaving `filter_length` at its
+study default. Conflicting named/length controls are rejected.
+
+The Symlet/Coiflet tap table contains numerical impulse responses, not original
+executable code. Native filter precision is preserved: coif5 reconstruction error
+reaches approximately `7e-9` in the two-level source comparisons and `2.1e-8` in
+short-signal/deep-level mathematical checks. Tests bound these cases at `5e-8`;
+machine-precision orthogonality is not claimed. db transforms keep their existing
+filter construction. See [the family checkpoint](../research/wfmm-family-checkpoint-2026-10-12.md).

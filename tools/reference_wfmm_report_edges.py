@@ -157,10 +157,20 @@ for label, random, chains in [
         variance = 1 / (1 / 0.3 + 4 / 0.5)
         mean = np.einsum("nm,dnk->dmk", model["Z"], analysis(y)[None] - d) / 0.5 * variance
         innovations = (analysis(u) - mean) / np.sqrt(variance)
+        # Source WFMM::Abs casts to int before taking absolute value. With
+        # this covariance below one, means below one suppress the normal draw.
+        skipped = np.max(np.abs(mean), axis=1) < 1.0
+        by_vector = np.moveaxis(innovations, 1, 2)
+        np.testing.assert_allclose(by_vector[skipped], 0.0, rtol=0, atol=3e-15)
         record["conditional_variance_investigation"] = dict(
-            status="unresolved; native conditional-variance agreement is not claimed",
+            status="resolved: integer-truncated WFMM::Abs suppresses conditional noise",
+            gaussian_variance=variance,
             standardized_mean=float(innovations.mean()),
             standardized_variance=float(innovations.var(ddof=1)),
+            mean_only_vectors=int(skipped.sum()),
+            sampled_vectors=int((~skipped).sum()),
+            sampled_standardized_variance=float(by_vector[~skipped].var(ddof=1)),
+            scope="Observed native defect; not a scientific Python sampling target",
         )
     records.append(record)
 args.output.write_text(

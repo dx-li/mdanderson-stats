@@ -67,6 +67,7 @@ class WFMMBasis:
     max_work: int
     custom_synthesis_matrix: FloatArray | None = None
     extended_boundary: str | None = None
+    wavelet_name: str | None = None
 
     @property
     def coefficient_count(self) -> int:
