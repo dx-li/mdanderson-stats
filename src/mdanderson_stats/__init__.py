@@ -1149,6 +1149,7 @@ from .mtpi_isotonic_posterior import (
     MTPIIsotonicPosteriorIntervals,
     mtpi_isotonic_posterior_intervals,
 )
+from .mtpi_legacy_selection import MTPILegacySelection, select_mtpi_legacy_mtd
 from .mtpi_simulation import MTPISimulation, simulate_mtpi
 from .muhaz import MuhazFixed, muhaz_fixed
 from .muhaz_global import MuhazGlobal, muhaz_global
@@ -3253,6 +3254,8 @@ __all__ = [
     "fit_median_effect",
     "quantile_normalize",
     "MTPIDesign",
+    "MTPILegacySelection",
+    "select_mtpi_legacy_mtd",
     "MTPIIsotonicPosteriorIntervals",
     "mtpi_isotonic_posterior_intervals",
     "MTPIPosterior",

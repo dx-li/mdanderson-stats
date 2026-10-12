@@ -1,6 +1,9 @@
 # Remaining source leads
 
-The October 9 catalog checkpoint is 91 implemented, 41 partial and six pending.
+The current October 12 checkpoint remains 93 implemented, 39 partial and six pending.
+The recovered mTPI final estimator is recorded in [its audit](mtpi-legacy-selection-audit.md);
+its controller/report gaps remain open. Live catalog membership was rechecked.
+The October 9 catalog checkpoint was 91 implemented, 41 partial and six pending.
 The earlier October 8 checkpoint was 90 implemented, 42 partial and six pending.
 The [source-recovery record](source-recovery-2026-10-08.md) documents recovered
 archives, current blockers and validation. Historical reader failures below

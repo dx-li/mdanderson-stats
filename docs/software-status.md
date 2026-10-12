@@ -3,6 +3,10 @@
 This page summarizes the 138 desktop and online entries in the bundled
 [source catalog](../src/mdanderson_stats/catalog.json). The catalog retains
 implemented features, validation evidence and source provenance for each entry.
+Both official lists were [rechecked on October 12, 2026](../research/catalog-membership-2026-10-12.json):
+80 desktop and 58 online entries, no changed membership. The
+[per-application checkpoint](../research/per-application-checkpoint-2026-10-12.md)
+links current scope and each remaining statistical contract.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
@@ -31,7 +35,7 @@ some legacy adaptations retain commercial-use restrictions.
 | CID2BP | [desktop #38](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/38) | [Guide](cid2bp.md) |
 | STPLAN | [desktop #41](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/41) | [Guide](stplan.md) |
 | TTEConduct | [desktop #63](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/63) | [Guide](tteconduct.md) |
-| ACCFLF | [desktop #16](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/16) | See catalog feature and validation notes |
+| ACCFLF | [desktop #16](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/16) | [Guide](accflf.md) |
 | ANOVA DDP | [desktop #67](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/67) | [Guide](anovaddp.md) |
 | Bayes Factor Binary | [desktop #94](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/94) | [Guide](bayes-factor-binary.md) |
 | Bayesian Efficacy Monitoring Via Posterior Probability | [online #109](https://biostatistics.mdanderson.org/shinyapps/BEMPO/) | [Guide](bayesian-monitoring.md) |
@@ -43,9 +47,9 @@ some legacy adaptations retain commercial-use restrictions.
 | Bayesian Update for a Normal Distribution with Known and Unknown Variance | [online #103](https://biostatistics.mdanderson.org/shinyapps/BNORM/) | [Guide](normal-updating.md) |
 | Bayesian Update for Two Beta-Binomial Distributions | [online #102](https://biostatistics.mdanderson.org/shinyapps/BU2BB/) | [Guide](beta-updating.md) |
 | BERDS | [desktop #35](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/35) | [Guide](berds.md) |
-| Beta Binomial Distribution Demo | [desktop #96](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/96) | See catalog feature and validation notes |
+| Beta Binomial Distribution Demo | [desktop #96](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/96) | [Guide](beta-binomial-demo.md) |
 | BLIP | [desktop #36](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/36) | [Guide](blip.md) |
-| BlockARAND | [desktop #90](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/90) | See catalog feature and validation notes |
+| BlockARAND | [desktop #90](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/90) | [Guide](blockarand.md) |
 | BP1CI | [desktop #74](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/74) | [Guide](bp1ci.md) |
 | CATBUB Design | [desktop #97](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/97) | [Guide](catbub.md) |
 | CDFLIB90 | [desktop #21](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/21) | [Guide](cdflib90.md) |
@@ -64,7 +68,7 @@ some legacy adaptations retain commercial-use restrictions.
 | KSBIN1 | [desktop #25](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/25) | [Guide](ksbin1.md) |
 | KSBIN2 | [desktop #24](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/24) | [Guide](ksbin2.md) |
 | KWRANGE | [desktop #48](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/48) | [Guide](range-tests.md) |
-| Misclib | [desktop #87](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/87) | See catalog feature and validation notes |
+| Misclib | [desktop #87](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/87) | [Guide](misclib.md) |
 | MUHAZ | [desktop #49](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/49) | [Guide](muhaz.md) |
 | MULTI | [desktop #50](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/50) | [Guide](multi-session.md) |
 | MULTINOMPOW | [desktop #19](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/19) | [Guide](multinomial-power.md) |
@@ -76,8 +80,8 @@ some legacy adaptations retain commercial-use restrictions.
 | RANDLIB | [desktop #27](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/27) | [Guide](randlib.md) |
 | RANGE2 | [desktop #53](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/53) | [Guide](range-tests.md) |
 | RANLIST | [desktop #29](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/29) | [Guide](ranlist.md) |
-| Response and Survival | [desktop #82](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/82) | See catalog feature and validation notes |
-| ROSE: randomized optimal selection design for dose optimization | [online #168](https://biostatistics.mdanderson.org/shinyapps/ROSE) | See catalog feature and validation notes |
+| Response and Survival | [desktop #82](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/82) | [Guide](response-survival.md) |
+| ROSE: randomized optimal selection design for dose optimization | [online #168](https://biostatistics.mdanderson.org/shinyapps/ROSE) | [Guide](rose.md) |
 | Sample Size Calculation - Binary Endpoint | [online #139](https://biostatistics.mdanderson.org/shinyapps/Nbinary) | [Guide](binary-sample-size.md) |
 | Sample Size Calculation - Continuous Endpoint | [online #119](https://biostatistics.mdanderson.org/shinyapps/Nnormal/) | [Guide](continuous-sample-size.md) |
 | Sample Size Calculation - Time-to-event Endpoint | [online #138](https://biostatistics.mdanderson.org/shinyapps/Nsurvival) | [Guide](survival-sample-size.md) |
@@ -85,13 +89,13 @@ some legacy adaptations retain commercial-use restrictions.
 | Simon's Two-Stage Design | [online #113](https://biostatistics.mdanderson.org/shinyapps/Simon2S/) | [Guide](simon-two-stage.md) |
 | SINGLE | [desktop #55](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/55) | [Guide](single-coverage.md) |
 | SOGS | [desktop #56](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/56) | [Guide](sogs.md) |
-| SORTF90 | [desktop #57](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/57) | See catalog feature and validation notes |
+| SORTF90 | [desktop #57](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/57) | [Guide](sortf90.md) |
 | SPPCR | [desktop #26](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/26) | [Guide](sppcr-research.md) |
 | STATTAB | [desktop #23](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/23) | [Guide](stattab-research.md) |
 | STUKEL | [desktop #58](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/58) | [Guide](stukel.md) |
-| SURVAN | [desktop #59](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/59) | See catalog feature and validation notes |
+| SURVAN | [desktop #59](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/59) | [Guide](survan.md) |
 | TDTASP | [desktop #20](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/20) | [Guide](tdtasp.md) |
-| TRAX | [desktop #60](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/60) | See catalog feature and validation notes |
+| TRAX | [desktop #60](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/60) | [Guide](trax.md) |
 | Varying Cut-Point and Parameter Estimation of the ROC Curve Analysis | [online #105](https://biostatistics.mdanderson.org/shinyapps/DTROC/) | [Guide](diagnostic-and-roc.md) |
 | WINDOWS | [desktop #61](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/61) | [Guide](windows.md) |
 | ASYPOW | [desktop #33](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/33) | [Guide](asypow.md) |
@@ -113,7 +117,7 @@ some legacy adaptations retain commercial-use restrictions.
 | Parallel phase I and II design | [desktop #85](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/85) | [Guide](parallel-phase12.md), [importance calendar](parallel-phase12-importance-calendar.md), [six-dose simulation](phase12-calendar-oc.md), [probability summary](parallel-phase12-probability-summary.md) |
 | Time-to-Event Keyboard Design for Phase I Clinical Trials | [online #135](https://biostatistics.mdanderson.org/shinyapps/TITE-KEYBOARD) | [Guide](tite-keyboard.md) |
 | Dose Optimization with Backfill and Adaptive Randomization (BARD) | [online #165](https://biostatistics.mdanderson.org/shinyapps/BARD) | [Stage two](bard.md), [BF-BLRM model](bard-blrm.md), [BF-BOIN trials](bard-bf-boin-trial.md), [BF-BLRM trials](bard-blrm-stochastic.md), [BF-BOIN OC](bard-bf-boin-simulation.md), [BF-BLRM OC](bard-blrm-simulation.md), [Saved studies](bard-study.md), [Reports](bard-report.md) |
-| Backfill Bayesian Optimal Interval (BF-BOIN) Design for Phase I Clinical Trials | [online #162](https://biostatistics.mdanderson.org/shinyapps/BF-BOIN/) | See catalog feature and validation notes |
+| Backfill Bayesian Optimal Interval (BF-BOIN) Design for Phase I Clinical Trials | [online #162](https://biostatistics.mdanderson.org/shinyapps/BF-BOIN/) | [Guide](bf-boin.md) |
 | A Phase I/II Design to Identify Optimal Biological Dose for Molecularly Targeted Agents | [online #114](https://biostatistics.mdanderson.org/shinyapps/MTADF/) | [Isotonic and logistic workflows](mtadf.md), including recovered author decisions, replay and simulation |
 | FLECS90 | [desktop #43](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/43) | [Translator guide](flecs90.md) |
 | Multc Lean | [desktop #12](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/12) | [Native saved studies](multc-lean-model.md); [Monitoring](multc.md) |
@@ -131,27 +135,27 @@ some legacy adaptations retain commercial-use restrictions.
 | Bayesian Chi Square TTE fit | [desktop #66](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/66) | [Guide](bayesian-chi-square.md) |
 | Bayesian Effective Sample Size Calculator | [online #154](https://biostatistics.mdanderson.org/shinyapps/BayesESS) | [Guide](conjugate-ess.md) |
 | Bayesian hierarchical classification and information sharing for clinical trials with subgroups and binary outcomes | [online #153](https://biostatistics.mdanderson.org/shinyapps/BaCIS) | [Guide](bacis.md) |
-| Bayesian Model Averaging Continuous Reassessment Method | [online #133](https://biostatistics.mdanderson.org/shinyapps/BMACRM) | See catalog feature and validation notes |
+| Bayesian Model Averaging Continuous Reassessment Method | [online #133](https://biostatistics.mdanderson.org/shinyapps/BMACRM) | [Guide](bmacrm.md) |
 | Bayesian Optimal Interval Design (BOIN) for Drug Combination Trials | [online #128](https://biostatistics.mdanderson.org/shinyapps/BOINComb/) | [Guide](boin-combination-source.md) |
 | Bayesian Optimal Interval Design with Informative Prior (iBOIN) for Phase I Clinical Trials | [online #145](https://biostatistics.mdanderson.org/shinyapps/iBOIN) | [Guide](iboin.md), [saved reports and replay](iboin-report.md) |
-| Bayesian Phase 2 Design with Delayed Outcomes | [online #141](https://biostatistics.mdanderson.org/shinyapps/Phase2Delay) | See catalog feature and validation notes |
-| bCRM | [desktop #15](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/15) | See catalog feature and validation notes |
-| BMA CRM | [desktop #81](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/81) | See catalog feature and validation notes |
-| BOIN Design Desktop Program | [desktop #99](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99) | See catalog feature and validation notes |
+| Bayesian Phase 2 Design with Delayed Outcomes | [online #141](https://biostatistics.mdanderson.org/shinyapps/Phase2Delay) | [Guide](phase2delay.md) |
+| bCRM | [desktop #15](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/15) | [Guide](bcrm.md) |
+| BMA CRM | [desktop #81](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/81) | [Guide](bmacrm.md) |
+| BOIN Design Desktop Program | [desktop #99](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99) | [Guide](boin-desktop.md) |
 | BOIN12: Bayesian Optimal Interval Phase I/II Trial Design for Utility-Based Dose Finding | [online #148](https://biostatistics.mdanderson.org/shinyapps/BOIN12) | [Guide](boin12.md) |
 | CiBolus | [desktop #86](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86) | [Guide](cibolus.md), [Prior calibration](cibolus-calibration.md) |
 | CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis | [online #157](https://biostatistics.mdanderson.org/shinyapps/CondiS/) | [Guide](condis.md), [curve comparison](condis-survival-comparison.md) |
-| CRM Suite | [desktop #132](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132) | See catalog feature and validation notes |
+| CRM Suite | [desktop #132](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132) | [Guide](crm-conduct.md) |
 | Dose Schedule Finder | [desktop #75](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75) | [Model](dose-schedule.md), [calendar trials](dose-schedule-trials.md) |
 | EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Guide](efftox.md), [trinary calibration](efftox-trinary-calibration.md) |
 | Find optimal biological dose (OBD) for targeted and immune therapies | [online #142](https://biostatistics.mdanderson.org/shinyapps/UBOIN) | [Guide](uboin.md) |
-| KeyboardComb: the Keyboard Design for Drug Combination Trials | [online #121](https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/) | See catalog feature and validation notes |
+| KeyboardComb: the Keyboard Design for Drug Combination Trials | [online #121](https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/) | [Guide](keyboard-combination.md) |
 | MDS-HOPE: An interactive risk assessment tool for patients treated with HMA | [online #171](https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/) | [Guide](mds-hope.md) |
 | MERIT: Multiple-dose Randomized Phase II Trial Design for Dose Optimization and Sample Size Determination | [online #160](https://biostatistics.mdanderson.org/shinyapps/MERIT/) | [Guide](merit.md) |
 | PerfectMatch | [desktop #7](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/7) | [Guide](perfectmatch.md) |
 | Platform Design of Bayesian Adaptive Randomization with Posterior Probability | [online #137](https://biostatistics.mdanderson.org/shinyapps/PLBARPO/) | [Control monitoring](plbarpo-control.md), [active allocation](plbarpo-allocation.md), [no-control trials](plbarpo-trials.md), [control trials](plbarpo-control-trials.md) |
 | Proportional density | [desktop #78](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/78) | [Guide](proportional-density.md) |
-| PRT | [desktop #69](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/69) | See catalog feature and validation notes |
+| PRT | [desktop #69](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/69) | [Guide](prt.md) |
 | Single arm phase II monitoring using Bayes factor with iMOM prior for binary outcome | [online #143](https://biostatistics.mdanderson.org/shinyapps/BFMonitor) | [Guide](bfmonitor.md) |
 | SurvivalContour: Show Survival Prediction in Contour Plot | [online #166](https://biostatistics.mdanderson.org/shinyapps/survivalContour/) | [Guide](survival-contour.md), [forest rank splits](random-survival-forest-logrankscore.md), [Brier splits](random-survival-forest-brier.md) |
 | SYNERGY | [desktop #18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18) | [Interaction indices](interaction-index.md); [parametric models](synergy-parametric.md); [semiparametric method](synergy-surface.md) |
@@ -159,7 +163,7 @@ some legacy adaptations retain commercial-use restrictions.
 | TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | [online #152](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12) | [AL and final selection](tite-boin12.md); [BDA](tite-boin12-bda.md) |
 | ToxFinder | [desktop #14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14) | [Guide](toxfinder.md); [prior elicitation](toxfinder-prior-elicitation.md) |
 | Toxicity Probability Intervals | [desktop #72](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/72) | [Guide](mtpi.md) |
-| Two-arm BOP2: Bayesian Optimal Phase II two-arm Design | [online #150](https://biostatistics.mdanderson.org/shinyapps/rBOP2) | See catalog feature and validation notes |
+| Two-arm BOP2: Bayesian Optimal Phase II two-arm Design | [online #150](https://biostatistics.mdanderson.org/shinyapps/rBOP2) | [Guide](rbop2-binary.md) |
 | U2OET | [desktop #77](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/77) | [PDS/CMI and trials](u2oet.md), [GAO probabilities](u2oet-gao.md), [GAO trials](u2oet-gao-trials.md) |
 | UAROET | [desktop #92](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/92) | [Guide](uaroet.md), [trial simulation](uaroet-trials.md) |
 | WFMM | [desktop #70](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/70) | [Guide](wfmm.md) |

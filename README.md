@@ -72,6 +72,9 @@ remain explicit; native initialization and additional native workflows remain op
 
 ## Development
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for source provenance, independent
+validation, licensing and clean-install expectations.
+
 ```
 uv sync --locked --group dev --extra plot
 uv run ruff check .
@@ -903,7 +906,10 @@ Native CEL/file workflows, other QC outputs and displays remain pending.
 
 [Toxicity Probability Intervals](docs/mtpi.md) adds mTPI decision tables, paper
 safety rules, isotonic final selection and batched trial simulation. Original TPI
-calibration and native software workflow audits remain pending.
+calibration and native controller/report workflows remain pending. The separate
+[recovered R final estimator](docs/mtpi-legacy-selection.md) uses Beta(.005,.005),
+inverse-variance weights and native dose offsets, with original-R and exact
+rational numerical references.
 [Posterior isotonic intervals](docs/mtpi-isotonic-posterior.md) add the paper's
 draw-then-transform uncertainty estimates, with bounded sampling and optional
 joint draws across the supplied dose grid.
@@ -1883,8 +1889,9 @@ including corrected matched/Poisson mixtures and piecewise-survival integrals.
 effects, significance, and timing, with integer attainment searches and K-group
 allocation. [Exact count-test significance planning](docs/stplan-significance.md)
 selects binomial and Poisson critical regions with explicit power attainment.
-Native automatic planning workflows, other discrete inverse questions,
-and reporting remain open. [Survival input conversions](docs/stplan-survival-inputs.md)
+[Saved studies](docs/stplan-study.md) combine forward calculations and bounded
+inverse plans with portable JSON specifications and HTML reports. Native
+interactive menus and automatic bracket choices remain compatibility limits. [Survival input conversions](docs/stplan-survival-inputs.md)
 cover medians, survival percentages, historical person-time, and piecewise curves.
 The [historical-control planner](docs/stplan-historical-planning.md) also finds
 accrual duration and new-control allocation jointly, including boundary solutions.

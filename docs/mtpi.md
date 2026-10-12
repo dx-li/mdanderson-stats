@@ -39,8 +39,11 @@ Final selection fits monotone posterior means across all tried doses, then finds
 the closest admissible dose to the target. Equal-distance ties prefer the highest
 at/below target, otherwise the lowest. Equal isotonic weights are the Python
 default; `select_mtd(..., weights=...)` accepts a specified alternative. The
-paper does not fully specify these weights, and the native archive has not been
-audited. Untried dose estimates are NaN, and no admissible dose returns `None`.
+paper does not fully specify these weights. Untried dose estimates are NaN,
+and no admissible dose returns `None`. The separately recovered R estimator is
+available as [`select_mtpi_legacy_mtd`](mtpi-legacy-selection.md); it uses a
+different estimation prior, weighting and eligibility contract. It does not
+change this paper-based API or the simulation defaults.
 
 ## Usage
 
@@ -103,9 +106,11 @@ posterior means and optional joint draws. The supplied dose grid includes
 untried-dose prior draws; weights, grid scope and empirical quantiles are
 explicit Python choices. This inference does not change final MTD selection.
 
-**Catalog status remains partial.** TPI tuning, native archive/source and
-isotonic-weight audit, prior-specific penalty recalibration and native
-spreadsheet/report workflows remain pending. The paper describes penalty
+**Catalog status remains partial.** The archived R final-selection prior,
+weights and offsets are now independently checked. Native R controller safety
+inconsistencies, Excel/XLL agreement, TPI tuning, prior-specific penalty
+recalibration and native spreadsheet/report workflows remain unresolved.
+The paper describes penalty
 recalibration as ongoing research; its Table 3 fixed-loss prior sensitivity
 is available. The published screenshot validates the checked default mTPI
 decisions; it does not establish parity for all software features.

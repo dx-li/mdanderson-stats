@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-12",
+  "interpretation": "Static Python import dependencies for packaging review, NOT license inheritance or legal clearance. Excludes __init__ from closure; its eager exports must also change for separation. Dynamic imports and external dependencies require separate review.",
+  "explicit_adaptation_families": {
+    "multc99": [
+      "multc99",
+      "multc99_boundaries",
+      "multc99_calibration",
+      "multc99_randomized",
+      "multc99_report",
+      "multc99_trial"
+    ],
+    "range_legacy": [
+      "ranges"
+    ],
+    "multi": [
+      "_multi_lexer",
+      "multi_input",
+      "multi_session",
+      "multi_report",
+      "multiplicity",
+      "schweder",
+      "pvalue_models",
+      "nonparametric",
+      "nonparametric_testing",
+      "beta_mixture",
+      "beta_mixture_fit",
+      "beta_mixture_ml",
+      "beta_mixture_bootstrap",
+      "beta_mixture_selection",
+      "beta_mixture_testing",
+      "schweder_output"
+    ],
+    "blip": [
+      "blip"
+    ],
+    "sogs": [
+      "sogs",
+      "sogs_simulation",
+      "sogs_reporting"
+    ]
+  },
+  "seed_modules": 27,
+  "additional_import_dependents": [
+    "blip_custom"
+  ],
+  "root_exports_depend_on_seed_modules": [
+    "beta_mixture",
+    "beta_mixture_bootstrap",
+    "beta_mixture_fit",
+    "beta_mixture_ml",
+    "beta_mixture_selection",
+    "beta_mixture_testing",
+    "blip",
+    "multc99",
+    "multc99_boundaries",
+    "multc99_calibration",
+    "multc99_randomized",
+    "multc99_report",
+    "multc99_trial",
+    "multi_input",
+    "multi_session",
+    "multiplicity",
+    "nonparametric",
+    "nonparametric_testing",
+    "pvalue_models",
+    "ranges",
+    "schweder",
+    "schweder_output",
+    "sogs",
+    "sogs_reporting",
+    "sogs_simulation"
+  ],
+  "ambiguous_notice_families_for_separate_review": [
+    "kstage_binomial",
+    "cta*",
+    "ranlist*"
+  ]
+}

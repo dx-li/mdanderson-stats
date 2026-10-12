@@ -2709,7 +2709,8 @@
         "Explicit dose-specific Beta-prior extension for original TPI posterior summaries, safety/decision tables, dose conduct, isotonic point selection and batched simulation; compact lookup tables share identical priors. Source common-prior defaults are unchanged; docs/tpi-informative-priors.md.",
         "mTPI posterior isotonic intervals from independent beta draws transformed across the supplied dose grid, with marginal means/medians/equal-tailed bounds, explicit weights, bounded storage and optional joint draws; docs/mtpi-isotonic-posterior.md",
         "Table-3 fixed-loss common Beta-prior sensitivity applied consistently to mTPI UPM decisions, overdose safety, isotonic point selection, batched trial simulation and posterior interval draws; docs/mtpi-prior-sensitivity.md",
-        "Isotonic-transformed posterior intervals apply the mTPI paper's beta-draw inference procedure to original TPI common or explicit dose-specific priors, including untried doses; bounded shared kernel, explicit weights/RNG/quantiles and optional retained draws. This is not recovered original-TPI software behavior or tuning; docs/tpi-isotonic-posterior.md."
+        "Isotonic-transformed posterior intervals apply the mTPI paper's beta-draw inference procedure to original TPI common or explicit dose-specific priors, including untried doses; bounded shared kernel, explicit weights/RNG/quantiles and optional retained draws. This is not recovered original-TPI software behavior or tuning; docs/tpi-isotonic-posterior.md.",
+        "Separate recovered mTPI R final estimator: Beta(.005,.005), inverse-variance isotonic weighting, dose-index offsets and explicit historical exclusion/stop state; original controller and Excel/XLL parity remain open."
       ],
       "validation": [
         "Exact rational beta-polynomial probabilities and extreme tails; published Excel screenshot columns at n=3,6,12,30",
@@ -2719,7 +2720,8 @@
         "Dose-axis and scalar-dose summaries, explicit per-dose tables, common-prior regression and seeded heterogeneous-prior simulation; tests/test_tpi_informative_priors.py. Dose-varying shapes are a Python conjugate generalization, not recovered native defaults.",
         "Isotonic posterior inference: one-dose beta quantiles and exact two-uniform-dose projected means/CDF, immutable monotone joint draws, pre-RNG work/tail rejection; tests/test_mtpi_isotonic_posterior.py. Full supplied-grid scope, weights and empirical quantiles are explicit Python choices, not recovered native defaults.",
         "21 focused mTPI, prior-sensitivity and isotonic-interval tests pass: exact integer-beta CDF identities, fractional-prior density quadrature, nonuniform posterior selection/draws, default screenshot decisions and seeded simulation replay; research/mtpi-prior-sensitivity-audit.md. Common shapes are bounded to >=1e-6 with sum <=1e6.",
-        "22 focused TPI/mTPI posterior checks pass, including direct heterogeneous-prior beta/PAVA replay, untried-dose priors, unchanged mTPI draws, exact projected-uniform identities and rejection before RNG consumption; research/tpi-isotonic-posterior-audit.md."
+        "22 focused TPI/mTPI posterior checks pass, including direct heterogeneous-prior beta/PAVA replay, untried-dose priors, unchanged mTPI draws, exact projected-uniform identities and rejection before RNG consumption; research/tpi-isotonic-posterior-audit.md.",
+        "Ten original-R terminal-state references and 60 exact-rational max-min weighted-isotonic configurations; 38 focused mTPI tests pass (October 12, 2026)."
       ]
     },
     {

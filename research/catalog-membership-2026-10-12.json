@@ -1,0 +1,20 @@
+{
+  "snapshots": [
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/api/Softwares/GetAll?IsOnline=false",
+      "sha256": "b2c3bdc6558c026a803c73123bb3a5107c4ef5ecdaef58f2fb7d40c260b47a33",
+      "count": 80
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/api/Softwares/GetAll?IsOnline=true",
+      "sha256": "c7926e4eda95585b5d012f04c949b1a17332e2bbe9dd40a3dbb59ca67fd0ccea",
+      "count": 58
+    }
+  ],
+  "preserved_entries": 138,
+  "live_entries": 138,
+  "added": [],
+  "missing": [],
+  "duplicate_ids": 0,
+  "verified_date": "2026-10-12"
+}
