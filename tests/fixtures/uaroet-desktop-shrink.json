@@ -1,0 +1,5525 @@
+{
+  "executable_sha256": "b953affb6cd3968c389d5a35020e594cd25fef3ff61825db8aa282d8216a3eaf",
+  "cases": [
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 6,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 11,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 12,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 0,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 5,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 5,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 5,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 6,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 7,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 7,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 7,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 11,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 12,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 1,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 3,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 3,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 3,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 4,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 4,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 4,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 5,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 5,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 5,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 6,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 7,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 7,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 7,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 8,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 8,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 8,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 9,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 9,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 9,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 11,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 12,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 2,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 2,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 2,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 2,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 3,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 66.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 3,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 41.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 3,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 4,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 66.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 4,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 41.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 4,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 6,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 8,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 8,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 8,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 9,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 9,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 9,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 10,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 10,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 10,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 11,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 12,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 3,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 90.9090909090909
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 47.72727272727273
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 2,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 81.81818181818181
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 2,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 45.45454545454545
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 2,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 45.45454545454545
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 6,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 36.36363636363636
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 10,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 9.090909090909092
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 10,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 27.272727272727273
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 10,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 11,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 12,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 11,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 6,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 11,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 12,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 12,
+        "steps": 12,
+        "observed": 12,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 29,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 0,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 14,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 14,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 14,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 16,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 16,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 16,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 29,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 1,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 9,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 9,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 9,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 10,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 10,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 10,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 11,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 19,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 19,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 19,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 20,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 20,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 20,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 21,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 21,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 21,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 29,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 2,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 6,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 7,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 66.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 7,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 41.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 7,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 8,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 66.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 8,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 41.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 8,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 20,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 20,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 20,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 21,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 21,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 21,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 22,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 22,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 22,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 29,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 3,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 96.55172413793103
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 49.13793103448276
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 2,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 93.10344827586206
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 2,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 48.275862068965516
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 2,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 48.275862068965516
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.06896551724138
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 28,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 3.4482758620689653
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 28,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.862068965517242
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 28,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 29,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 29,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 29,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 30,
+        "steps": 30,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 31,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 0,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 14,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 14,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 14,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 16,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 16,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 16,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 31,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 1,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 9,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 9,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 9,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 10,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 10,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 10,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 11,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 11,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 19,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 19,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 19,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 20,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 20,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 20,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 21,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 21,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 21,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 31,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 2,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 6,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 6,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 7,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 66.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 7,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 41.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 7,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 8,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 66.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 8,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 41.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 8,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 20,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 20,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 20,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 21,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 21,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 21,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 22,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 22,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 22,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 31,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 3,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 96.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 49.16666666666667
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 2,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 93.33333333333333
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 2,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 48.33333333333333
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 2,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 3.3333333333333335
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 29,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.833333333333332
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 29,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 31,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 30,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 15,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 15,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 30,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 30,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 31,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 31,
+        "steps": 31,
+        "observed": 31,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 250,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 499,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 500,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 0,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 249,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 249,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 249,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 250,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 251,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 251,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 251,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 499,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 500,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 1,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 165,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 165,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 165,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 166,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 166,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 166,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 167,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 167,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 167,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 250,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 331,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 331,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.5
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 331,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 332,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 332,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 332,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 333,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 333,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 333,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 499,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 500,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 2,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 124,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 124,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 124,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 125,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 66.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 125,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 41.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 125,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 126,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 66.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 126,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 41.66666666666667
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 126,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 250,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 374,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 374,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 33.333333333333336
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 374,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 375,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 375,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 375,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 376,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 376,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 376,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 499,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 500,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 3,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 50.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 99.79959919839679
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 49.949899799599194
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 2,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 99.59919839679358
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 2,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 49.899799599198396
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 2,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 49.899799599198396
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 250,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 37.4749498997996
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 498,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.20040080160320642
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 498,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.050100200400802
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 498,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 499,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 500,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 499,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 0,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 0,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 1,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 1,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 250,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 250,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 499,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 499,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 0
+      },
+      "result": 0.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 500,
+        "initial_cutoff": 50,
+        "final_cutoff": 25
+      },
+      "result": 25.0
+    },
+    {
+      "inputs": {
+        "planned": 500,
+        "steps": 500,
+        "observed": 500,
+        "initial_cutoff": 100,
+        "final_cutoff": 100
+      },
+      "result": 100.0
+    }
+  ]
+}

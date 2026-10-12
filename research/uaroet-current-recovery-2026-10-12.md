@@ -289,3 +289,22 @@ for a one-dose SD100 posterior gives mean0.5 versus0.49966905944552925, referenc
 variance0.0024752376238021956 versus0.0023863751899066963, MCSE0.0009108578301867319,
 and split R-hat1.0008402589096432. This is a fixed-independence reference case,
 not a claim of higher-dimensional calibration or per-chain precision acceptance.
+
+The cutoff schedule now has552 portable native cases in
+`reference_uaroet_shrink.py`, executing5d38d–5d40d with supplied likelihood counts.
+This confirms the integer-block schedule and immediate final cutoff when K=N.
+The summary generator adds45 native good-set masks at575e8–5769a (actual utility
+getters): utility equal to MinUtilityGoodSet **is included**. Four additional
+576e5–57746 cases establish the monitored middle dose as zero-based floor(D/2),
+so the upper middle is used for even dose counts. These601 new reference cases
+were added after the running inference regression collected its tests.
+
+A second diffuse-prior accuracy check uses independent two-dimensional integration
+in ordered probability coordinates, including the normal-prior density and logit
+Jacobian. For two doses at fixed independence, posterior reference toxicity means
+are0.47189630406707916/0.5281038092889756; Python0.4709821586543367/0.52938278487613.
+Absolute errors0.0009141/0.0012790 are comparable to MCSE0.0012919/0.0009675;
+utility-independent probability split R-hat1.00641/1.00421 and maximum parameter
+R-hat1.01198. See the reproducible monotone-diffuse quality tool and JSON. This
+validates the positive-increment diffuse-prior kernel in a separate reference case,
+not the full correlated/high-dimensional calibration workflow.

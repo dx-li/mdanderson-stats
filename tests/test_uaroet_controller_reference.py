@@ -202,3 +202,32 @@ def test_native_distribution_keyword_aliases_and_value_bounds(case):
     matched = case["word"] in ("DistributionSave", "DistributionSaveOption")
     expected = case["value"] if matched and 0 <= case["value"] <= 4 else case["initial_option"]
     assert case["result"] == dict(matched=matched, option=expected)
+
+
+SHRINK = json.loads((ROOT / "uaroet-desktop-shrink.json").read_text())
+
+
+@pytest.mark.parametrize("case", SHRINK["cases"])
+def test_native_integer_utility_cutoff_schedule_and_zero_width(case):
+    x = case["inputs"]
+    steps = x["steps"]
+    width = x["planned"] // (steps + 1)
+    if steps == 0:
+        expected = x["initial_cutoff"]
+    else:
+        completed = min(steps, x["observed"] // width) if width else steps
+        expected = (
+            x["initial_cutoff"] - (x["initial_cutoff"] - x["final_cutoff"]) * completed / steps
+        )
+    assert case["result"] == pytest.approx(expected, abs=2e-14)
+
+
+@pytest.mark.parametrize("case", SUMMARY["good_set_cases"])
+def test_native_good_set_includes_utility_cutoff_equality(case):
+    assert case["result"] == [[int(v >= case["cutoff"]) for v in row] for row in case["utility"]]
+
+
+@pytest.mark.parametrize("case", SUMMARY["monitored_doses"])
+def test_native_middle_monitor_uses_upper_middle_for_even_dose_count(case):
+    d = case["doses"]
+    assert case["result"] == dict(middle=d // 2, last=d - 1)

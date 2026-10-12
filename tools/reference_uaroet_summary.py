@@ -17,7 +17,14 @@ from pathlib import Path
 import numpy as np
 import pefile
 from unicorn import UC_ARCH_X86, UC_HOOK_CODE, UC_MODE_32, Uc
-from unicorn.x86_const import UC_X86_REG_ECX, UC_X86_REG_EIP, UC_X86_REG_ESP, UC_X86_REG_XMM0
+from unicorn.x86_const import (
+    UC_X86_REG_EBX,
+    UC_X86_REG_ECX,
+    UC_X86_REG_EIP,
+    UC_X86_REG_ESI,
+    UC_X86_REG_ESP,
+    UC_X86_REG_XMM0,
+)
 
 path = Path(sys.argv[1])
 if (
@@ -131,8 +138,57 @@ for D in (2, 3, 5):
                     good_mask=good_mask,
                 )
                 cases.append(dict(inputs=kw, result=summaries(**kw)))
+
+
+def good_set(utility, cutoff):
+    E, T = len(utility), len(utility[0])
+    u.context_restore(initial)
+    u.mem_write(obj, b"\0" * 0x60000)
+    u.mem_write(model, b"\0" * 0x60000)
+    for off, value in [(0x725C, E), (0x7260, T), (0x728C, model)]:
+        pack(obj + off, "i", value)
+    for e in range(E):
+        for t in range(T):
+            pack(model + 0x3E8 + (e * 4 + t) * 8, "d", utility[e][t])
+    pack(model + 0x490, "d", cutoff)
+    u.reg_write(UC_X86_REG_EBX, obj)
+    u.reg_write(UC_X86_REG_ESP, stack)
+    u.emu_start(base + 0x575E8, base + 0x5769A, count=100000)
+    assert u.reg_read(UC_X86_REG_EIP) == base + 0x5769A
+    return [
+        list(struct.unpack("<" + "i" * T, u.mem_read(obj + 0x6BE0 + e * 16, T * 4)))
+        for e in range(E)
+    ]
+
+
+def monitored_doses(D):
+    u.context_restore(initial)
+    u.mem_write(obj, b"\0" * 0x60000)
+    u.reg_write(UC_X86_REG_ESI, D)
+    u.reg_write(UC_X86_REG_EBX, obj)
+    u.reg_write(UC_X86_REG_ESP, stack)
+    u.emu_start(base + 0x576E5, base + 0x57746, count=100000)
+    assert u.reg_read(UC_X86_REG_EIP) == base + 0x57746
+    middle, last = struct.unpack("<ii", u.mem_read(obj + 0x6A94, 8))
+    return dict(middle=middle, last=last)
+
+
+good_set_cases = []
+for E in (2, 3, 4):
+    for T in (2, 3, 4):
+        utility = [[50 * (e / (E - 1) + 1 - t / (T - 1)) for t in range(T)] for e in range(E)]
+        for cutoff in (0, 25, 50, 75, 100):
+            good_set_cases.append(
+                dict(utility=utility, cutoff=cutoff, result=good_set(utility, cutoff))
+            )
 print(
     json.dumps(
-        dict(executable_sha256=hashlib.sha256(path.read_bytes()).hexdigest(), cases=cases), indent=2
+        dict(
+            executable_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+            cases=cases,
+            good_set_cases=good_set_cases,
+            monitored_doses=[dict(doses=D, result=monitored_doses(D)) for D in (2, 3, 4, 5)],
+        ),
+        indent=2,
     )
 )

@@ -82,3 +82,11 @@ selection and saved-history replay as well. Next canonicalize the guide's
 DistributionSave alias, integrate prior ESS/calibration, and implement precision
 using per-chain utility MCSE ratios. Preserve first-tie plain/final selection
 versus last-tie hybrid selection and distinct live versus saved-history cohorts.
+
+UAROET prior ESS, documented distribution-keyword alias and robust explicit
+initialization are integrated; the actual native Gaussian joint law is recovered
+with an explicitly measured legacy numerical tolerance. Two independent diffuse-
+prior posterior checks pass. Next implement continuous per-chain precision and
+pseudo-trial calibration, preserving the core sampler's accepted likelihood.
+The current sampler's retained-cell/work caps need a bounded continuation workflow;
+source-required targets must not be claimed from pooled diagnostics or short fits.

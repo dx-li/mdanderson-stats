@@ -1,0 +1,28 @@
+{
+  "scope": "two-dose binary ordered diffuse-prior posterior, fixed independence",
+  "reference_means": [
+    0.47189630406707916,
+    0.5281038092889756
+  ],
+  "posterior_means": [
+    0.4709821586543367,
+    0.52938278487613
+  ],
+  "mean_absolute_errors": [
+    0.0009141454127424842,
+    0.0012789755871543962
+  ],
+  "mcse": [
+    0.0012918746043267726,
+    0.000967504955337207
+  ],
+  "split_rhat": [
+    1.0064121147093912,
+    1.0042104186275709
+  ],
+  "maximum_parameter_rhat": 1.0119848487797174,
+  "draws": 3000,
+  "chains": 4,
+  "warmup": 1000,
+  "clinical_validation": false
+}
