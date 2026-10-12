@@ -24,8 +24,24 @@ becomes an explicit Python error. This does not claim Windows process parity.
 For pending outcomes, the CRM Suite profile now waits after a DA safety signal,
 matching recovered desktop branches; complete-information and paper-profile
 safety stops remain available. Executable controller references and calendar
-replay tests distinguish these cases. Native arrival scheduling and full trial
-simulation parity remain open.
+replay tests distinguish these cases. The next batch adds explicit native arrival-tape scheduling, hazard-prior
+endpoint safeguards, original HTML/XML saved-study reading, all-scenario
+simulation and HTML reports for CRM/BMA/DA studies. Settings survive semantic
+round-trips; native adaptive-MCMC/RNG and old report-layout identity remain open.
+
+ToxFinder now has a source-recovered native profile: bounded two-pass MAP,
+observed-information determinant with native eigenvalue flooring, both advertised
+allocation modes, exact grid/tie behavior, pending-aware observed recommendations,
+paired-cohort simulation, explicit legacy/refit final posterior policy, TMML/CSV
+readers and reports. Original x86 references and independent high-precision
+calculations validate the contract. Recorded posterior draws reproduce all three
+final contour pairs for all 250 archived trials exactly. Original Java confirms
+posterior sample SD and reveals across-trial GUI columns mislabeled SD that
+actually report SEM; Python labels its summaries correctly.
+
+The native ToxFinder lower-boundary out-of-bounds case becomes a safe lowest-dose
+choice. Native prior-solver/MCMC/RNG identity and full original file/GUI parity
+remain explicit limitations.
 
 Live catalog membership still matches all 138 preserved entries. Coverage remains
 93 implemented, 39 partial and six pending. Updated guides, 19 repaired guide

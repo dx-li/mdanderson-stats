@@ -1,0 +1,33 @@
+{
+  "jar_sha256": "39e72d4b535595f548b6602496227bc92a6d9107fbb3ce5560973342fd39897a",
+  "rows": [
+    {
+      "count": 3,
+      "mean": 2.0,
+      "native_mean_sd": 0.5773502691896257,
+      "posterior_variance": 1.0,
+      "known_mean_variance": 0.6666666666666666
+    },
+    {
+      "count": 2,
+      "mean": 2.0,
+      "native_mean_sd": 1.0,
+      "posterior_variance": 2.0,
+      "known_mean_variance": 1.0
+    },
+    {
+      "count": 3,
+      "mean": 2.0,
+      "native_mean_sd": 1e-05,
+      "posterior_variance": 0.0,
+      "known_mean_variance": 0.0
+    },
+    {
+      "count": 1,
+      "mean": 2.0,
+      "native_mean_sd": 10000000000.0,
+      "posterior_variance": null,
+      "known_mean_variance": 0.0
+    }
+  ]
+}

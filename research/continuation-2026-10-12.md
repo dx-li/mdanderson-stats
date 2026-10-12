@@ -150,3 +150,42 @@ alone is not a full regression run. See validation addendum below.
 
 The feature branch remains the publication boundary. No PR creation retry,
 merge, workflow activation, release or author contact was performed.
+
+## CRM desktop and ToxFinder workflow batches
+
+The CRM desktop batch (`4147ad7`) completed native HTML/XML study reading,
+scenario simulation and reports, desktop candidate-arrival scheduling, DA prior
+endpoint safeguards, and exact-residual original-R mTPI tie verification. Its
+whole suite passed **34,044 tests in 806.61 seconds**; isolated-wheel tests,
+original saved studies, lint/types and packaging also passed.
+
+The subsequent ToxFinder batch resolves the native information-method blocker
+and delivers named observed-history, complete two-stage simulation, repeated-trial
+report and native file-reading workflows. The original core is C with Fortran
+LAPACK runtime, correcting the earlier whole-core Fortran description above.
+See [native recovery](toxfinder-native-recovery-2026-10-12.md) and
+[usage guide](../docs/toxfinder-native-workflow.md). Original Java report probes
+also establish the native SD/SEM label discrepancy; Python labels them correctly.
+
+Its 75 affected tests and 75 tests in a newly created Python 3.13 environment
+passed. Six original x86 fixture sets regenerated exactly as JSON values; native
+Java summary fixtures also regenerate. Independent 40-digit Hessians and 60-digit
+archived report calculations passed. From the installed wheel, all five original
+TMML scenarios completed 60-patient smoke simulations with low draw counts and
+settings round-trips. More strongly, all **250 archived trials** reproduced all
+three final contour pairs exactly from their recorded posterior draws. This
+checks the final decision calculation, not native MCMC/RNG identity.
+
+The full ToxFinder-batch regression is recorded below when complete. Its
+production code and tests were frozen before the run; subsequent changes were
+source evidence, reference tools and documentation only. Remaining work follows
+the [dependency-ordered roadmap](completion-roadmap-2026-10-12.md), not the stale
+recovery leads in earlier checkpoint sections. No coverage label was promoted.
+
+### ToxFinder batch final validation
+
+The complete warnings-as-errors suite passed **34,091 tests in 815.12 seconds**
+on the frozen production code and test set. Ruff lint/format (2,442 files), mypy
+(703 source files), build, local documentation links and all 138 catalog/status
+rows passed. The fresh installed-wheel checks and native/independent numerical
+references above supplement this full run. No head-specific hosted CI is claimed.

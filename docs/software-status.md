@@ -161,7 +161,7 @@ some legacy adaptations retain commercial-use restrictions.
 | SYNERGY | [desktop #18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18) | [Interaction indices](interaction-index.md); [parametric models](synergy-parametric.md); [semiparametric method](synergy-surface.md) |
 | Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials | [online #129](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/) | [Guide](tite-boin.md) |
 | TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | [online #152](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12) | [AL and final selection](tite-boin12.md); [BDA](tite-boin12-bda.md) |
-| ToxFinder | [desktop #14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14) | [Guide](toxfinder.md); [prior elicitation](toxfinder-prior-elicitation.md) |
+| ToxFinder | [desktop #14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14) | [Guide](toxfinder.md); [prior elicitation](toxfinder-prior-elicitation.md); [native workflow](toxfinder-native-workflow.md) |
 | Toxicity Probability Intervals | [desktop #72](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/72) | [Guide](mtpi.md) |
 | Two-arm BOP2: Bayesian Optimal Phase II two-arm Design | [online #150](https://biostatistics.mdanderson.org/shinyapps/rBOP2) | [Guide](rbop2-binary.md) |
 | U2OET | [desktop #77](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/77) | [PDS/CMI and trials](u2oet.md), [GAO probabilities](u2oet-gao.md), [GAO trials](u2oet-gao-trials.md) |

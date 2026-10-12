@@ -134,18 +134,18 @@ lower endpoint is returned. A root with excessive toxicity residual raises an
 error rather than reporting convergence from dose tolerance alone. This supplies
 contour geometry; it does not implement native second-stage selection.
 
-## Remaining coverage
+## Recovered native workflow
 
-The native second-stage information criterion, full trial simulations, and
-TMML/CSV/GUI parity remain open.
+[Native workflow guide](toxfinder-native-workflow.md) documents the new named
+entry points for observed-patient recommendations, both advertised stage-two
+allocation modes, paired-cohort trials, repeated simulations, reports and
+TMML/patient/archived-simulation CSV readers. The information criterion is now
+recovered from the original executable: expected determinant of observed
+negative-log-posterior Hessians with eigenvalues floored at 0.1. The existing
+paper helper above remains unchanged.
 
-The second-stage information criterion requires further source clarification.
-As written, equation12 in the paper is a six-dimensional outer product, with
-rank at most one; equation13's single-patient log determinant cannot give a finite
-ranking. This is our mathematical inference from the displayed formula. The
-software guide explicitly substitutes second derivatives, but does not provide
-enough detail to reproduce its calculation. The Python implementation does not
-silently add a ridge or claim an alternative criterion reproduces ToxFinder.
+Native prior-solver/MCMC/RNG identity, full original file/GUI parity remain unverified; the recovered GUI SD/SEM discrepancy is documented. No missing coefficients or substitute
+information criterion have been invented.
 
 ## Numerical evidence and resource bounds
 
@@ -153,7 +153,8 @@ silently add a ridge or claim an alternative criterion reproduces ToxFinder.
 the four official case-study surfaces and zero-alpha scenarios, integrate a
 one-dimensional nonconjugate posterior, and calculate analytic log-gamma moments.
 These independent references supplement focused checks of zero doses, log tails,
-posterior sampling and input limits. No original executable has been run.
+posterior sampling and input limits. The later native recovery additionally executes bounded original x86 routines
+with disclosed runtime substitutions; see the native workflow guide.
 
 Prediction is limited to 100 dose pairs and 200,000 parameter-dose combinations.
 Fitting uses at most 100 grouped rows, 10,000 subjects and four chains, with

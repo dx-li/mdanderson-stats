@@ -1875,6 +1875,36 @@ from .toxfinder_model import (
     toxfinder_probabilities,
     toxfinder_standardize,
 )
+from .toxfinder_native_decision import (
+    ToxFinderNativeAllocation,
+    toxfinder_native_allocation,
+    toxfinder_native_stage1,
+)
+from .toxfinder_native_information import (
+    ToxFinderNativeInformation,
+    ToxFinderNativeMAP,
+    fit_toxfinder_native_map,
+    toxfinder_native_hessian,
+    toxfinder_native_information,
+)
+from .toxfinder_native_io import (
+    ToxFinderArchivedSimulation,
+    ToxFinderNativeStudy,
+    ToxFinderObservedRecommendation,
+    ToxFinderPatientRecord,
+    read_toxfinder_simulations_csv,
+    read_toxfinder_subject_csv,
+    read_toxfinder_tmml,
+    recommend_toxfinder_native,
+)
+from .toxfinder_native_trial import (
+    ToxFinderNativeCohort,
+    ToxFinderNativeSimulation,
+    ToxFinderNativeTrial,
+    simulate_toxfinder_native,
+    simulate_toxfinder_native_trial,
+    toxfinder_native_surface,
+)
 from .toxicity_timing import toxicity_time_quantile
 from .tpi import TPIDesign, TPIPosterior
 from .tpi_isotonic_posterior import tpi_isotonic_posterior_intervals
@@ -2270,6 +2300,28 @@ __all__ = [
     "bcrm_log_probabilities",
     "bcrm_log_likelihood",
     "fit_bcrm",
+    "ToxFinderNativeMAP",
+    "ToxFinderNativeInformation",
+    "fit_toxfinder_native_map",
+    "toxfinder_native_hessian",
+    "toxfinder_native_information",
+    "ToxFinderNativeAllocation",
+    "toxfinder_native_stage1",
+    "toxfinder_native_allocation",
+    "ToxFinderNativeCohort",
+    "ToxFinderNativeTrial",
+    "ToxFinderNativeSimulation",
+    "toxfinder_native_surface",
+    "simulate_toxfinder_native_trial",
+    "simulate_toxfinder_native",
+    "ToxFinderPatientRecord",
+    "ToxFinderObservedRecommendation",
+    "ToxFinderArchivedSimulation",
+    "ToxFinderNativeStudy",
+    "read_toxfinder_subject_csv",
+    "recommend_toxfinder_native",
+    "read_toxfinder_simulations_csv",
+    "read_toxfinder_tmml",
     "ToxFinderContour",
     "ToxFinderStage1Result",
     "toxfinder_contour",

@@ -1632,8 +1632,11 @@ It also supplies first-stage dose decisions and posterior target contours.
 published probability and odds-moment constraints with independent integration
 checks; the documented Table 1 discrepancy is preserved.
 Independent base-R calculations verify published scenario surfaces and a reduced
-posterior. Native second-stage information selection and full simulations remain
-open; the documentation records the source ambiguity.
+posterior. The [recovered native workflow](docs/toxfinder-native-workflow.md) adds
+both stage-two allocation modes, observed-patient recommendations, paired-cohort
+simulations, TMML/CSV readers and reports. Original executable fixtures establish
+the information criterion; native prior-solver/MCMC/RNG and full GUI/file identity
+remain explicit limits.
 
 [bCRM single-outcome dose finding](docs/bcrm.md) adds the fixed-intercept
 logistic CRM, bounded asymptotes and deterministic uniform-slope posterior

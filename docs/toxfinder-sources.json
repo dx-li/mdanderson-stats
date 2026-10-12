@@ -1,13 +1,15 @@
 {
-  "catalog_ids": [14],
-  "retrieved_at": "2026-09-26",
+  "catalog_ids": [
+    14
+  ],
+  "retrieved_at": "2026-10-12",
   "application": {
     "name": "ToxFinder",
     "version": "1.1.1",
     "modified_at": "2005-10-30",
     "download": "ToxFinder_V1.1.1.zip"
   },
-  "evidence": "Independent implementation from the primary paper and official guides. The guides describe version 1.0.0 under author review, earlier than the catalog's 1.1.1. Original source/archive retrieval was unavailable; no native simulator execution or random-seed parity is claimed.",
+  "evidence": "Primary paper/guides plus recovered official 1.1.1 archive. Hash-pinned original x86 routines executed with disclosed runtime substitutions; independent Python sampler, no native RNG or prior-solver identity claim.",
   "sources": [
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14",
@@ -34,8 +36,13 @@
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ToxFinder/ToxFinder-SUG-case-study-v1.r2.m1.pdf",
       "version": "V1.R2.M1, June 8, 2005",
       "role": "Four named truth surfaces; revised beta3 prior with mean1 and variance0.9, distinct from the paper's mean0.05 and variance3."
+    },
+    {
+      "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/ToxFinder/ToxFinder_V1.1.1.zip",
+      "role": "Original 1.1.1 executable, configuration and bundled 2004 example data; recovered MAP, observed information, allocation and controller contracts.",
+      "executable_sha256": "3951dc95cdfaaad0da0526cfb25d28b7f970d4d82a6836203da4a469282d8070"
     }
   ],
-  "stage_two_limitation": "Our mathematical audit finds that the paper's equation12 is a six-dimensional outer product, so its single-patient information matrix has rank at most one. Equation13 therefore cannot supply a finite log-determinant ranking as written. The guide substitutes second derivatives without enough detail for a faithful implementation. No silent regularization or substitute information criterion is used.",
-  "validation_reference": "tools/reference_toxfinder.R independently evaluates official example surfaces, integrates a nonconjugate scalar posterior, and calculates analytic log-gamma prior moments in base R. The script contains no original program source."
+  "stage_two_limitation": "Resolved for advertised modes 1 and 4: original code uses expected determinant of observed negative-log-posterior Hessians with eigenvalue floor 0.1, at the original-history MAP. This differs from the paper/guide simplification. Native solver/MCMC/RNG identity, full GUI/file parity and the documented GUI SD/SEM discrepancy remain separate limits.",
+  "validation_reference": "tools/reference_toxfinder.R independently evaluates official example surfaces, integrates a nonconjugate scalar posterior, and calculates analytic log-gamma prior moments in base R. The script contains no original program source. tools/reference_toxfinder_native.py executes original bounded optimizer, full information chain, stage-one and grid controllers and bilinear surface. Original archived trial-zero report calculations checked independently at 60 decimal digits."
 }

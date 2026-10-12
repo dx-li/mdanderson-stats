@@ -5,14 +5,16 @@ Catalog membership was rechecked against both official API lists: 80 desktop +
 No entry was added or dropped. See [membership evidence](catalog-membership-2026-10-12.json).
 
 Counts remain **93 implemented / 39 partial / 6 pending**. This continuation
-closes the bounded mTPI R final-estimator gap, without promoting application #72.
+adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
+study/controller workflow, and ToxFinder native allocation/simulation workflow,
+without promoting their application coverage labels.
 It does not re-certify every historical numerical reference or installed example.
 The validation report identifies exactly which checks were rerun.
 
 “Implemented” means the cataloged recovered workflow, subject to its guide’s
 numerical and compatibility limits. It does not mean native GUI/RNG/file identity,
-clinical validity, or an unrestricted license. “Partial” entries below all retain
-statistical/source-contract gaps. License scope is tracked separately in the
+clinical validity, or an unrestricted license. “Partial” entries below retain the specific statistical, source-contract or
+workflow gaps listed in their rows. License scope is tracked separately in the
 [community licensing path](community-license-path-2026-10-12.md).
 
 | ID | Application | Status | Remaining boundary / evidence |
@@ -24,7 +26,7 @@ statistical/source-contract gaps. License scope is tracked separately in the
 | 9 | Inequality Calculator | implemented | Declared recovered workflow implemented; [Guide](../docs/inequality-calculator.md) retains scope and compatibility limits. |
 | 10 | Predictive Probabilities | implemented | Declared recovered workflow implemented; [Guide](../docs/predictive-binary.md) retains scope and compatibility limits. |
 | 12 | Multc Lean | implemented | Declared recovered workflow implemented; [Catalog](../src/mdanderson_stats/catalog.json) retains scope and compatibility limits. |
-| 14 | ToxFinder | partial | Physician-prior elicitation now solves and independently checks the published equations; the Table 1 discrepancy is documented. Stage-2 information criterion is unresolved; the guide’s second-derivative substitute does not establish the native Eq. 12 rule. [ToxFinder guide](../docs/toxfinder.md) |
+| 14 | ToxFinder | partial | Published prior elicitation plus recovered native MAP, information criterion, both allocation modes, observed-history recommendations, paired-cohort simulations, TMML/CSV readers and reports. Remaining native prior-solver/MCMC identity, full original file/GUI parity and the documented GUI SD/SEM discrepancy are explicit. [Workflow guide](../docs/toxfinder-native-workflow.md) |
 | 15 | bCRM | partial | High-level stage controls and zero-gap futility are documented. Joint two-outcome likelihood/association prior, exact transition rules, positive-gap futility cutoff and post-trial four-parameter logistic estimator remain unresolved. [bCRM guide](../docs/bcrm.md); [source records](../docs/bcrm-sources.json) |
 | 16 | ACCFLF | implemented | Declared recovered workflow implemented; [Guide](../docs/accflf.md) retains scope and compatibility limits. |
 | 18 | SYNERGY | partial | The four original parametric models now provide native-validated fits, uncertainty and plots. The separate semiparametric bootstrap interval convention remains unresolved. [parametric audit](synergy-parametric-audit.md); [bootstrap audit](synergy-wild-bootstrap-audit.md) |

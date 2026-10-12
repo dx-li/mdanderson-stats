@@ -1332,7 +1332,14 @@ MD Anderson's official ToxFinder guides. The Python sampling algorithm differs
 from the original implementation. Base-R mathematical calculations provide
 independent references. Original source, executable and guide assets are not
 redistributed. See `docs/toxfinder.md` and `docs/toxfinder-sources.json` for
-provenance, numerical scope and the unresolved second-stage criterion.
+provenance and numerical scope. The `toxfinder_native_*` modules are independent
+Python implementations of contracts recovered through bounded inspection and
+execution of the original 1.1.1 executable. Their own reference harness is
+`tools/reference_toxfinder_native.py`; it requires a separately supplied,
+hash-pinned executable. Numeric fixtures include a bounded excerpt of recorded
+posterior draws from the official 2004 example archive. No original executable,
+program source, installer or guide is redistributed. No new rights in original
+assets or unrestricted licensing of retained upstream material are asserted.
 
 ## CondiS and CondiS-X learners
 

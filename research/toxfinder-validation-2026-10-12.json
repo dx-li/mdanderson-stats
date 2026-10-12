@@ -1,0 +1,248 @@
+{
+  "date": "2026-10-12",
+  "scope": "ToxFinder native workflow batch",
+  "affected_tests": 75,
+  "fresh_wheel_tests": 75,
+  "python": "3.13.5",
+  "fresh_numpy": "2.5.4",
+  "fresh_scipy": "1.18.1",
+  "original_study_smoke_settings": {
+    "draws": 8,
+    "warmup": 0,
+    "chains": 2,
+    "final_policy": "legacy",
+    "prior": "Published elicitation equations with explicit case-study interaction means [1,1], variances [3,.9]"
+  },
+  "original_study_smoke_results": [
+    {
+      "scenario": 1,
+      "subjects": 60,
+      "toxicities": 19,
+      "posterior_subjects": 56,
+      "sampler_evaluations": 276874,
+      "seconds": 3.633665581999594,
+      "final_doses": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5
+        ],
+        [
+          0.3333333333333333,
+          0.8
+        ]
+      ]
+    },
+    {
+      "scenario": 2,
+      "subjects": 60,
+      "toxicities": 16,
+      "posterior_subjects": 56,
+      "sampler_evaluations": 275884,
+      "seconds": 3.8238187739998466,
+      "final_doses": [
+        [
+          0.8333333333333334,
+          0.8333333333333334
+        ],
+        [
+          0.8666666666666667,
+          0.8333333333333334
+        ],
+        [
+          0.8333333333333334,
+          0.8666666666666667
+        ]
+      ]
+    },
+    {
+      "scenario": 3,
+      "subjects": 60,
+      "toxicities": 18,
+      "posterior_subjects": 56,
+      "sampler_evaluations": 302764,
+      "seconds": 3.801290768999934,
+      "final_doses": [
+        [
+          0.26666666666666666,
+          0.26666666666666666
+        ],
+        [
+          0.9,
+          0.03333333333333333
+        ],
+        [
+          0.0,
+          0.9333333333333333
+        ]
+      ]
+    },
+    {
+      "scenario": 4,
+      "subjects": 60,
+      "toxicities": 18,
+      "posterior_subjects": 56,
+      "sampler_evaluations": 280122,
+      "seconds": 3.825518626000303,
+      "final_doses": [
+        [
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        [
+          0.9333333333333333,
+          0.0
+        ],
+        [
+          0.03333333333333333,
+          0.9666666666666667
+        ]
+      ]
+    },
+    {
+      "scenario": 5,
+      "subjects": 60,
+      "toxicities": 25,
+      "posterior_subjects": 56,
+      "sampler_evaluations": 282598,
+      "seconds": 3.7770109310004045,
+      "final_doses": [
+        [
+          0.5333333333333333,
+          0.5333333333333333
+        ],
+        [
+          0.5333333333333333,
+          0.5333333333333333
+        ],
+        [
+          0.5333333333333333,
+          0.5333333333333333
+        ]
+      ]
+    }
+  ],
+  "archived_recorded_draw_contours": [
+    {
+      "scenario": 1,
+      "trials": 50,
+      "maximum_absolute_dose_error": 0.0,
+      "exact_matches": 50
+    },
+    {
+      "scenario": 2,
+      "trials": 50,
+      "maximum_absolute_dose_error": 0.0,
+      "exact_matches": 50
+    },
+    {
+      "scenario": 3,
+      "trials": 50,
+      "maximum_absolute_dose_error": 0.0,
+      "exact_matches": 50
+    },
+    {
+      "scenario": 4,
+      "trials": 50,
+      "maximum_absolute_dose_error": 0.0,
+      "exact_matches": 50
+    },
+    {
+      "scenario": 5,
+      "trials": 50,
+      "maximum_absolute_dose_error": 0.0,
+      "exact_matches": 50
+    }
+  ],
+  "independent_math": {
+    "information": [
+      {
+        "candidate": [
+          0.3,
+          0.5
+        ],
+        "maximum_hessian_error": 1.7763568394002505e-15,
+        "relative_information_error": 1.1102230246251565e-15
+      },
+      {
+        "candidate": [
+          0.7,
+          0.2
+        ],
+        "maximum_hessian_error": 8.881784197001252e-16,
+        "relative_information_error": 2.1094237467877974e-15
+      },
+      {
+        "candidate": [
+          0.0,
+          0.8
+        ],
+        "maximum_hessian_error": 1.7763568394002505e-15,
+        "relative_information_error": 4.440892098500626e-16
+      }
+    ],
+    "archive": [
+      {
+        "posterior_mean": "0.288402127601935149322421845746745063357736359622053837418591",
+        "posterior_sd_sample": "0.0611489864896308410085457805753072635304002229514721595759931",
+        "mean_reference_error": "1.55575381946528542678601601344503106014756304218029178327528e-61",
+        "sd_reference_error": "2.43086534291450847935315002100786103148056725340670591136762e-62"
+      },
+      {
+        "posterior_mean": "0.298725971722710560633077123405703313600007783949616819848211",
+        "posterior_sd_sample": "0.0609797052839047847578182217154716273150088815773144129515886",
+        "mean_reference_error": "1.55575381946528542678601601344503106014756304218029178327528e-61",
+        "sd_reference_error": "9.72346137165803391741260008403144412592226901362682364547049e-63"
+      },
+      {
+        "posterior_mean": "0.297116110938830499984572180114126343335116450204814172054881",
+        "posterior_sd_sample": "0.0612415580521623938190850604724258201959259298324861095181426",
+        "mean_reference_error": "0.0",
+        "sd_reference_error": "2.91703841149741017522378002520943323777668070408804709364115e-62"
+      }
+    ]
+  },
+  "original_x86_fixture_regeneration": {
+    "toxfinder-native-surface.json": {
+      "equal_json_values": true,
+      "fixture_sha256": "3192c88d0180e102ad606d8ccedf9247181ad9ab3fc31c38868f50b04922d1d1"
+    },
+    "toxfinder-native-allocation30.json": {
+      "equal_json_values": true,
+      "fixture_sha256": "2fed86b4d2c595166e962dcbf76018e8ae9a31cf1287030097be51cd98311a63"
+    },
+    "toxfinder-native-stage1.json": {
+      "equal_json_values": true,
+      "fixture_sha256": "ca364fd6968e98a7aeaee6e16c89a56aac7f87cd4a96845527ad5116b7a6263c"
+    },
+    "toxfinder-native-information.json": {
+      "equal_json_values": true,
+      "fixture_sha256": "3ae6ff0c53589639a0606bb36f25a28c7914dfccb46471359927285b9eaaedb5"
+    },
+    "toxfinder-native-map.json": {
+      "equal_json_values": true,
+      "fixture_sha256": "66bb302fc74c10b373456e383830cdf358a5f0c8e8fe2482e06060751bfcc2cc"
+    },
+    "toxfinder-native-simplex.json": {
+      "equal_json_values": true,
+      "fixture_sha256": "e4eb625032d865d886a5856fc26b00026de49fb25331784f33e5326b50d48fa9"
+    }
+  },
+  "packaging": "Wheel/sdist exclude original EXE/DLL/MSI and research/raw; guide example executed from installed wheel",
+  "full_regression": {
+    "passed": 34091,
+    "seconds": 815.12,
+    "warnings": "errors",
+    "production_and_tests_frozen_before_run": true
+  },
+  "quality": {
+    "ruff": "passed",
+    "formatted_files": 2442,
+    "mypy_source_files": 703,
+    "catalog_rows_checked": 138,
+    "changed_documentation_missing_links": 0
+  }
+}
