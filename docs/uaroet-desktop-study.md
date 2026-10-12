@@ -207,3 +207,15 @@ unavailable for one replication. A zero empirical MCSE does not establish a zero
 population error or clinical validity. These are documented portable Python
 formats, not native report byte replicas. An interrupted callback/job produces
 no accepted batch; any partial external output is diagnostic only.
+
+`UAROETPosteriorHistograms(study, profile="safe")` is another bounded `on_chunk`
+callback. It collects 100 bins for each marginal category, utility, acceptable
+efficacy probability and unacceptable toxicity probability at every dose.
+Call `validate_complete(chains=..., draws_per_chain=...)` after the accepted fit,
+then `to_csv(dose)` for a dose's histogram. Aggregate endpoint probabilities are
+summed within each posterior draw before binning. Safe bins follow the guide's
+lower-edge convention, with 100 included in the last bin. Explicit `legacy_1_8`
+reproduces the executable's different nearest-integer binning, capped at99.
+Fourteen original-instruction boundary cases verify that distinction. Both use
+percentages for probability quantities. Raw per-draw distribution export remains
+available through `UAROETDistributionWriter`.

@@ -2214,6 +2214,7 @@ from .uaroet_desktop_study import (
     uaroet_desktop_prior_coordinates,
 )
 from .uaroet_fit import UAROETFit, fit_uaroet
+from .uaroet_histograms import UAROETPosteriorHistograms
 from .uaroet_precision import UAROETPrecisionFit, fit_uaroet_desktop
 from .uaroet_reports import (
     UAROETDistributionWriter,
@@ -3081,6 +3082,7 @@ __all__ = [
     "UAROETCalendarTrial",
     "UAROETSimulationHold",
     "run_uaroet_desktop_trial",
+    "UAROETPosteriorHistograms",
     "UAROETTimedPatient",
     "uaroet_outcome_delays",
     "uaroet_study_as_of",

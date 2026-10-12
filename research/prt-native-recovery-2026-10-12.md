@@ -48,3 +48,23 @@ Remaining scope: explicit projection compatibility/validity policy; exact native
 patient-input conversion; calibrated hazard/event-time generator and accrual/
 suspension timing; full saved study, conduct/simulation/report workflows and
 independent acceptance. No application promotion from these source findings.
+
+`tools/reference_prt_hazard.py` now executes the actual grid, calibration and
+event-time generation blocks.24 calibrations and288 supplied-variate event cases
+are portable. The grid is0 through t* in98 intervals, with the last endpoint
+repeated; density locations are1/101 through100/101. Native calibration integrates
+only the first98 rates and searches scale starting at1 with step10, reducing the
+step by10 after overshooting, within a float32(1e-5) probability tolerance.
+Independent SciPy beta densities and scalar search reproduce this grid.
+
+Generation has two further compatibility defects: category selection uses one
+uniform, a second uniform is drawn but discarded, and the first is reused within
+the chosen category. The inversion also uses the next rate relative to the
+corresponding CDF interval. All288 event transforms independently reproduce these
+arithmetic choices. Tail event times may be extremely large; calendar conversion
+must distinguish events beyond the assessment window from within-window events.
+No Python simulation default is changed based on these defects.
+
+Arrival code2e8c–2ed3 draws800 uniforms on[0,800*mean_interarrival] and sorts them;
+it does not sample independent exponential inter-arrivals. This has been located
+in source but still requires executable fixtures and calendar/controller recovery.

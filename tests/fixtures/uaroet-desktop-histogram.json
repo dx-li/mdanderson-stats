@@ -1,0 +1,62 @@
+{
+  "executable_sha256": "b953affb6cd3968c389d5a35020e594cd25fef3ff61825db8aa282d8216a3eaf",
+  "scope": "native rounded probability histogram index",
+  "cases": [
+    {
+      "probability": 0.0,
+      "bin": 0
+    },
+    {
+      "probability": 0.0001,
+      "bin": 0
+    },
+    {
+      "probability": 0.0049,
+      "bin": 0
+    },
+    {
+      "probability": 0.005,
+      "bin": 1
+    },
+    {
+      "probability": 0.0051,
+      "bin": 1
+    },
+    {
+      "probability": 0.0099,
+      "bin": 1
+    },
+    {
+      "probability": 0.01,
+      "bin": 1
+    },
+    {
+      "probability": 0.4949,
+      "bin": 49
+    },
+    {
+      "probability": 0.495,
+      "bin": 50
+    },
+    {
+      "probability": 0.5,
+      "bin": 50
+    },
+    {
+      "probability": 0.9949,
+      "bin": 99
+    },
+    {
+      "probability": 0.995,
+      "bin": 99
+    },
+    {
+      "probability": 0.9999,
+      "bin": 99
+    },
+    {
+      "probability": 1.0,
+      "bin": 99
+    }
+  ]
+}

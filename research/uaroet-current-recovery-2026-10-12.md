@@ -419,3 +419,14 @@ Follow-up/decision time1.332825953550636. See the preserved calendar-quality JSO
 and reproducible tool. This is computational workflow evidence, not an operating-
 characteristic study or clinical validation. All14 native reference files match
 fresh regeneration. Final-code full-suite/wheel checks are underway.
+
+Final distribution audit found the guide's100-bin histogram workflow beyond raw
+sample CSV export. It is now integrated as a bounded on_chunk accumulator for
+all marginal categories, utility and per-draw summed acceptable efficacy/toxicity
+risk. Native49c3f–49c5b computes trunc(100*p+.5), capped99; utility uses the same
++.5 at49dee. Fourteen executed boundary cases establish the source's nearest-bin
+behavior, distinct from the guide's lower-edge labels. Safe mode follows guide
+bins, legacy mode preserves native rounding. Seventeen tests cover native
+boundaries, independently computed histograms, aggregate risks and stream
+coverage. The earlier calendar regression predates this addition; final-code
+acceptance must use the new full run, not silently reuse the older snapshot.
