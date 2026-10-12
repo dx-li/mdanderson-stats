@@ -78,3 +78,20 @@ is zero. The guide's C therefore counts assessed intervals in these inputs;
 do not silently treat its column as the paper's current Y category.
 Independent count/arrival checks pass94 cases. The arrival and hazard files still
 do not establish exact native suspension/reconsideration or full trial parity.
+
+Native conduct posterior pilots now execute213b–434c, including fixed source
+seeds,10000 Gibbs iterations with5000burn-in, raw risk retention, covariance
+transformation and lower safeguarding. Three synthetic histories cover two-dose/
+three-interval moderate priors and six-dose/six-interval guide-sized diffuse priors.
+All three pilot projections remain in[0,1]; this does not erase the independent
+counterexamples above. The extra two seed-looking lines in the shipped conduct
+settings file are not read: source214f/2159 sets seeds76849/13456 directly.
+
+Two reduced posterior cases are independently checked by100/160-node tensor
+Gauss-Hermite integration per interval, using the random-walk prior and count
+likelihood. Quadrature changes are below2.3e-15. Both native5000-draw means and
+independent Python four-chain4000-draw means lie within six respective batch
+MCSEs of the integrals; maximum Python R-hat1.0006571. The native six-dose pilot's
+batch errors are materially larger and are reported rather than presented as
+precision-qualified clinical inference. See posterior fixture, native generator,
+`tools/check_prt_native_posterior.py` and the dated quality JSON.
