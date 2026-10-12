@@ -1,0 +1,61 @@
+{
+  "constructor_rva": "0x17b48",
+  "vtable_field": "0x040006f6",
+  "vtable_rva": "0x395538",
+  "report_slot": 12,
+  "report_thunk_rva": "0x57b60",
+  "base_report_method_rva": "0x57b68",
+  "actual_wrapper_entry_rva": "0x18d3e0",
+  "derived_vtable_field": "0x04000524",
+  "derived_vtable_rva": "0x395e18",
+  "derived_vtable_assignment_xml_offset": 410,
+  "accumulation_entry_shared": true,
+  "wrapper_start_rva": "0xbe19c",
+  "wrapper_call_offset": 459,
+  "comparisons": [
+    {
+      "name": "report",
+      "prior_rva": "0x60a14",
+      "noncovariate_rva": "0x57b68",
+      "instructions": 2083,
+      "class_layout_substitutions": {
+        "1194": [
+          1560,
+          720
+        ]
+      },
+      "metadata_token_substitution_offsets": [
+        1297
+      ]
+    },
+    {
+      "name": "accumulation",
+      "prior_rva": "0x62894",
+      "noncovariate_rva": "0x59ac0",
+      "instructions": 473,
+      "class_layout_substitutions": {
+        "26": [
+          1552,
+          712
+        ],
+        "58": [
+          1552,
+          712
+        ],
+        "88": [
+          1552,
+          712
+        ]
+      },
+      "metadata_token_substitution_offsets": [
+        314,
+        451,
+        506,
+        774
+      ]
+    }
+  ],
+  "limitations": [
+    "Bounded percentile execution and dispatch/layout inspection; base candidate only; derived x86 override is not fully executed."
+  ]
+}

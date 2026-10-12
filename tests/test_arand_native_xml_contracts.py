@@ -116,3 +116,137 @@ def test_original_batch_initialization_and_reset(case):
 def test_undefined_native_batch_schedules_are_rejected(args):
     with pytest.raises(ValueError):
         arand_native_batch_monitor(*args)
+
+
+def test_per_arm_parameter_thresholds_against_distribution_cdfs():
+    import numpy as np
+    from scipy.stats import beta, invgamma
+
+    from mdanderson_stats.arand_posterior import arand_binary_posterior, arand_survival_posterior
+
+    prior = np.array([[2.0, 3.0], [4.0, 5.0], [1.0, 2.0]])
+    binary = arand_binary_posterior([0, 0, 0], [0, 0, 0], prior=prior, threshold=(0, 0.7, 1))
+    np.testing.assert_allclose(
+        binary.exceedance_probability, beta.sf([0, 0.7, 1], prior[:, 0], prior[:, 1]), atol=1e-14
+    )
+    survival = arand_survival_posterior([0, 0, 0], [0, 0, 0], prior=prior, threshold=(0, 2, 100))
+    np.testing.assert_allclose(
+        survival.exceedance_probability,
+        invgamma.sf([0, 2, 100], prior[:, 0], scale=prior[:, 1]),
+        atol=1e-14,
+    )
+    assert survival.threshold == (0, 2, 100)
+    with pytest.raises(ValueError, match="one value per arm"):
+        arand_binary_posterior([0, 0], [0, 0], prior=prior[:2], threshold=(0.5,))
+
+
+def test_per_arm_study_delay_and_threshold_roundtrip():
+    from mdanderson_stats.arand_native_study import (
+        ArandNativeStudy,
+        arand_native_study_json,
+        read_arand_native_study,
+        simulate_arand_native_trial,
+    )
+
+    study = ArandNativeStudy(
+        rules=ArandNativeRules(
+            (ArandNativeArmLimits(),) * 2,
+            maximum_enrollment=4,
+            lower=(0, 0),
+            upper=(1, 1),
+            futility_cutoff=(0, 0),
+        ),
+        monitor=ArandNativeMonitor(0),
+        prior=((1, 1), (1, 1)),
+        true_parameters=(0.4, 0.6),
+        accrual_rate=2,
+        binary_delay=(0, 3),
+        futility_threshold=(0.1, 0.3),
+        max_candidates=10,
+    )
+    restored = read_arand_native_study(arand_native_study_json(study))
+    assert restored == study
+    trial = simulate_arand_native_trial(restored, seed=123)
+    for observation in trial.records:
+        assert observation.record_time - observation.arrival == pytest.approx(
+            (0, 3)[observation.arm]
+        )
+
+
+@pytest.mark.parametrize("family", ["binary", "tte"])
+def test_original_managed_xml_to_python_simulation(family):
+    from mdanderson_stats import read_arand_native_xml
+    from mdanderson_stats.arand_native_study import simulate_arand_native_trial
+
+    xml = (ROOT / "managed-studies" / (family + ".xml")).read_text()
+    document = read_arand_native_xml(xml, max_candidates=30)
+    assert document.source_xml == xml
+    assert document.has_patient_history
+    assert document.seed == 12345
+    assert document.replications == (100,)
+    assert document.arm_names == ("Arm1", "Arm2")
+    study = document.studies[0]
+    assert study.rules.lower == (0.05, 0.05)
+    assert study.rules.upper == (0.95, 0.95)
+    assert study.rules.gates.trial_minimum
+    assert not study.rules.gates.arm_minimum
+    assert (
+        study.prior == ((2, 2), (2, 2)) if family == "binary" else study.prior == ((2, 3), (2, 3))
+    )
+    result = simulate_arand_native_trial(study, seed=101)
+    assert len(result.records) <= 6
+    assert result.final.reason != "allocate"
+    # Roundtrip is the original text including its original history/metadata.
+    restored = read_arand_native_xml(document.source_xml, max_candidates=30)
+    assert restored == document
+
+
+def test_raw_xml_missing_flags_and_actions_keep_native_defaults():
+    import xml.etree.ElementTree as ET
+
+    from mdanderson_stats import read_arand_native_xml
+
+    root = ET.fromstring((ROOT / "managed-studies/binary.xml").read_text())
+    stop = root.find("./trial_details/stopping_rule")
+    stop.attrib.clear()
+    for child in list(stop):
+        stop.remove(child)
+    document = read_arand_native_xml(ET.tostring(root, encoding="unicode"))
+    rules = document.studies[0].rules
+    assert not any(vars(rules.gates).values())
+    assert rules.min_action == rules.max_action == 2
+    assert rules.lower == (0, 0)
+    assert rules.upper == (1, 1)
+    assert rules.final_cutoff == (0, 0)
+
+
+@pytest.mark.parametrize(
+    "before,after",
+    [
+        ('name="Binary"', 'name="BinaryCovariates"'),
+        ('prior_dist="Beta"', 'prior_dist="Normal"'),
+        ('group_name="No Groups"', 'group_name="Other"'),
+        ('enforce_min_pred_prob="false"', 'enforce_min_pred_prob="true"'),
+        ('name="ProbSuccess"', 'name="Unknown"'),
+        ('monitoring_type="continuous"', 'monitoring_type="Unknown"'),
+        ('min_pats_per_arm="false"', 'min_pats_per_arm="maybe"'),
+    ],
+)
+def test_xml_unsupported_semantics_fail(before, after):
+    from mdanderson_stats import read_arand_native_xml
+
+    xml = (ROOT / "managed-studies/binary.xml").read_text().replace(before, after)
+    with pytest.raises(ValueError):
+        read_arand_native_xml(xml)
+
+
+def test_xml_time_units_are_not_silently_relabelled():
+    from mdanderson_stats import read_arand_native_xml
+
+    xml = (
+        (ROOT / "managed-studies/binary.xml")
+        .read_text()
+        .replace("<time_type>Months</time_type>", "<time_type>Days</time_type>")
+    )
+    with pytest.raises(ValueError, match="Months"):
+        read_arand_native_xml(xml)

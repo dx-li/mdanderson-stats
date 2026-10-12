@@ -148,3 +148,46 @@ the entire application. Original XML/defaults, native report semantics, stochast
 wrapper policy, and the batch-construction/reset boundary remain separately
 tracked. Scientific validity, original compatibility and clinical validation are
 separate claims; no clinical validation or catalog promotion is made here.
+
+## Original desktop simulation files
+
+`read_arand_native_xml(text)` maps supported original binary/TTE simulation
+inputs into `ArandNativeDocument.studies`, retaining the complete input text in
+`source_xml`. Arm order is the native name-sorted map order. Named independent
+constraint flags, per-arm stopping/futility thresholds and binary response
+delays are honored. Original normalized serializer fixtures demonstrate binary
+and TTE parsing and execution. The supported XML time unit is explicitly Months;
+other units fail rather than being relabeled in Python reports.
+
+```python
+from pathlib import Path
+from mdanderson_stats import read_arand_native_xml, simulate_arand_native
+
+# Supply your original ARAND simulation file.
+# document = read_arand_native_xml(Path("study.xml").read_text())
+# summary = simulate_arand_native(document.studies[0], trials=100, seed=2026)
+# Path("preserved-study.xml").write_text(document.source_xml)
+```
+
+This is a fresh-simulation importer. `has_patient_history` explicitly identifies
+saved clinical records; they remain in the retained original XML and are not
+reinterpreted as synthetic observations. Clinical-history recommendations and
+editing/re-serialization of native documents remain unfinished. Unsupported
+covariate/group/endpoint/predictive/fixed-treatment branches fail explicitly.
+The NumPy seed is supplied explicitly; native wrapper random-stream identity is
+not implied by importing its stored seed.
+
+`ArandNativeGates` controls each minimum/maximum independently. Explicit Python
+rules retain enabled gates by default; missing native XML gates map to false.
+Scalar probability cutoffs and parameter thresholds may instead contain one
+value per arm. All four native closure actions are available. Missing or unknown
+native XML action strings retain original code 2, distinct from the desktop's
+explicit serialized defaults.
+
+`arand_native_batch_monitor(a, b, maximum_enrollment, reset=False)` reproduces
+native XML construction; `reset=True` reproduces replication reset and is used
+for imported simulation studies. For fractional `a`, initial enrollment is
+`ceil(a)` during XML load versus `int(a)` after reset, while the increment list
+is built from `ceil(a)` in both cases. This legacy disagreement is explicit.
+Empty/zero-increment/overflow schedules fail instead of inheriting undefined
+native behavior.

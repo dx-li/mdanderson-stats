@@ -106,6 +106,7 @@ from .arand_native_trial import (
     arand_native_decide,
     arand_native_replay,
 )
+from .arand_native_xml import ArandNativeDocument, read_arand_native_xml
 from .arand_posterior import (
     ArandBestProbability,
     ArandPosterior,
@@ -2794,6 +2795,8 @@ __all__ = [
     "ArandNativeTrial",
     "arand_native_replay",
     "ArandNativeStudy",
+    "ArandNativeDocument",
+    "read_arand_native_xml",
     "arand_native_study_json",
     "read_arand_native_study",
     "simulate_arand_native_trial",

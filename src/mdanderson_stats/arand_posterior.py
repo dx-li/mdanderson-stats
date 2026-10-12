@@ -195,7 +195,7 @@ class ArandPosterior:
     best: ArandBestProbability
     allocation_probability: FloatArray
     exceedance_probability: FloatArray | None
-    threshold: float | None
+    threshold: float | tuple[float, ...] | None
     tuning: float
     parameter: str
 
@@ -205,7 +205,7 @@ def _posterior(
     family: str,
     maximize: bool,
     tuning: float,
-    threshold: float | None,
+    threshold: float | tuple[float, ...] | None,
     tolerance: float,
     parameter: str,
 ) -> ArandPosterior:
@@ -229,30 +229,25 @@ def _posterior(
         allocation = weights / weights.sum()
     exceedance = None
     if threshold is not None:
-        threshold = scalar(threshold, "threshold")
-        if family == "beta":
-            if not 0 <= threshold <= 1:
-                raise ValueError("binary threshold must be in [0,1]")
-            if threshold in (0, 1):
-                exceedance = np.full(len(parameters), 1 - threshold)
-            else:
-                t = float(np.log(threshold) - np.log1p(-threshold))
-                exceedance = np.array(
-                    [_tail(float(a), float(b), t, family, False) for a, b in parameters]
-                )
+        thresholds = finite(threshold, "threshold")
+        if thresholds.ndim == 0:
+            thresholds = np.full(len(parameters), float(thresholds))
+        elif thresholds.shape == (len(parameters),):
+            threshold = tuple(float(t) for t in thresholds)
         else:
-            if threshold < 0:
-                raise ValueError("time threshold must be nonnegative")
-            exceedance = (
-                np.ones(len(parameters))
-                if threshold == 0
-                else np.array(
-                    [
-                        _tail(float(a), float(b), float(np.log(threshold)), family, False)
-                        for a, b in parameters
-                    ]
-                )
-            )
+            raise ValueError("threshold must be scalar or have one value per arm")
+        if np.any(thresholds < 0) or (family == "beta" and np.any(thresholds > 1)):
+            raise ValueError("binary thresholds must be in [0,1]; time thresholds nonnegative")
+        tails = []
+        for (a, b), t in zip(parameters, thresholds, strict=True):
+            if t == 0:
+                tails.append(1.0)
+            elif family == "beta" and t == 1:
+                tails.append(0.0)
+            else:
+                transformed = np.log(t) - np.log1p(-t) if family == "beta" else np.log(t)
+                tails.append(_tail(float(a), float(b), float(transformed), family, False))
+        exceedance = np.asarray(tails)
         exceedance = _freeze(exceedance)
     return ArandPosterior(
         _freeze(parameters), best, _freeze(allocation), exceedance, threshold, tuning, parameter
@@ -266,7 +261,7 @@ def arand_binary_posterior(
     prior: ArrayLike,
     maximize: bool = True,
     tuning: float = 0.5,
-    threshold: float | None = None,
+    threshold: float | tuple[float, ...] | None = None,
     absolute_tolerance: float = 1e-9,
 ) -> ArandPosterior:
     """Update observed binary outcomes and compute best-arm allocation targets.
@@ -292,7 +287,7 @@ def arand_survival_posterior(
     parameter: str = "mean",
     maximize: bool = True,
     tuning: float = 0.5,
-    threshold: float | None = None,
+    threshold: float | tuple[float, ...] | None = None,
     absolute_tolerance: float = 1e-9,
 ) -> ArandPosterior:
     """Exponential likelihood with inverse-gamma prior on mean or median time.

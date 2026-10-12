@@ -309,7 +309,7 @@ def arand_native_replay(
     family: str = "binary",
     parameter: str = "mean",
     maximize: bool = True,
-    futility_threshold: float | None = None,
+    futility_threshold: float | tuple[float, ...] | None = None,
     absolute_tolerance: float = 1e-9,
 ) -> ArandNativeTrial:
     """Replay candidate-by-arm outcome tapes through the native controller.

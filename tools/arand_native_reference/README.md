@@ -112,3 +112,32 @@ zero-leading weights. The caller still determines whether the vector is the
 eligible population or the all-arm forced population. `supplement-manifest.json`
 records hashes and scope for all27 supplementary probes, separate from the
 original98-fixture manifest.
+
+## Extended desktop contracts
+
+`verify_constraints.py` now executes 1,000 original limit comparisons with
+independent enable flags; `verify_minimum_gates.py` adds 500 original minima
+comparisons. `generate_gate_fixtures.py` preserves all256 flag combinations.
+`verify_arm_rules.py` exercises the actual native per-arm map/getter paths with
+1,800 status/whole/group selection comparisons and retains60 portable cases.
+Services supply arm-specific field getters, not replacement transition logic.
+`arand_batch_reference.py` executes original initialization/reset slices at
+0xb3818 and0xb418c; six fixtures capture fractional-a differences.
+
+`managed_studies.py` runs a separately provided Mono compiler/runtime against
+three hash-pinned original managed assemblies. It creates synthetic binary/TTE
+studies, invokes original validation and serializer/deserializer round trips,
+and normalizes only the wall-clock current_time. It does not run the native
+mixed-mode engine. Original binaries and Mono are not redistributed here.
+
+`verify_report_dispatch.py` resolves the noncovariate BASE report candidate via the
+constructor at0x17b48, vtable field0x040006f6 and slot12, reached by wrapper
+StartSimulation at0xbe19c/IL459. Its report body is0x57b68; accumulation is0x59ac0.
+Metadata truncates these long template names. The wrapper then REPLACES the
+vtable at XMLPopulate0x23fa8/IL410 with field0x04000524: slot12 is native x86
+0x18d3e0, not the base report. Accumulation slot28 remains shared. Instruction layout matches the
+previous covariate-instantiation probes except class offsets and metadata tokens;
+all12 percentile probes also execute at the BASE noncovariate report RVA.
+This establishes the override boundary and bounded base arithmetic, not the actual
+application HTML/CSV report. `arand_accumulate_reference.py` executes the shared
+original accumulation body with explicit counter-sink services (12 fixtures).

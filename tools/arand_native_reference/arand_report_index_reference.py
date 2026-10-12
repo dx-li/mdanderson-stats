@@ -11,10 +11,10 @@ import math
 from arand_il import CilMethodBody, CilMethodBodyReaderBytes, p
 
 
-def run(size):
+def run(size, *, rva=0x60A14):
     if not isinstance(size, int) or not 0 <= size <= 10000:
         raise ValueError("size must be an integer in 0..10000")
-    instructions = CilMethodBody(CilMethodBodyReaderBytes(p.get_data(0x60A14, 100000))).instructions
+    instructions = CilMethodBody(CilMethodBodyReaderBytes(p.get_data(rva, 100000))).instructions
     selected = [i for i in instructions if 927 <= i.offset < 1093]
     memory = {1240: 10000, 1244: 10000 + 8 * size}
     memory.update({10000 + 8 * i: float(i) for i in range(size)})

@@ -236,3 +236,51 @@ will follow. Remaining work: native XML mapping and safe history semantics,
 per-arm parameter thresholds/delays, wrapper scenario reset/seeding and full
 native report aggregation/dispatch. Batch construction and enable-flag primitive
 contracts above are closed; the complete app is not promoted.
+
+### Original simulation XML and further report recovery
+
+The strict `read_arand_native_xml` reader maps the original managed Binary/TTE
+single-group simulation schema into runnable studies, preserving the entire
+source text and a `has_patient_history` flag. It supports per-arm probability and
+parameter thresholds, binary response delays and enabled limit mapping. Only
+explicit Months units are accepted. Simulation starts fresh; this is **not** a
+clinical-history recommendation/import/editor. The four managed serializer
+fixtures round-trip through the Python document and run binary/TTE simulations.
+A separate independent beta/inverse-gamma CDF check validates vector thresholds.
+
+The original metadata truncates long instantiated method names. The base
+noncovariate report candidate is RVA0x57b68, reached through base constructor
+0x17b48's vtable field0x040006f6. Its arithmetic/control layout matches the earlier
+covariate report, apart from class offsets and metadata token substitutions.
+However, wrapper XMLPopulate0x23fa8/IL410 **replaces** that vtable with field
+0x04000524. Its slot12 is native x86 **0x18d3e0**, not the base report candidate.
+Therefore the 12 base-report percentile probes do not establish the advertised
+wrapper's final report. `verify_report_dispatch.py` now records the complete
+base/derived boundary; full derived report execution remains open. An interim
+name-based interpretation was corrected before committing this evidence.
+
+Accumulation slot28 is shared. `arand_accumulate_reference.py` executes the full
+original noncovariate accumulation body at0x59ac0 using final-record services and
+counter sinks; 12 fixtures cover all status families, absent/present winners,
+early selection and completion. It records per-arm enrollment/final status,
+selected/selected-early counters, duration moments and whether any final status
+is1 or2. Integrating those fields into a separately named native-report profile
+remains next work. Existing Python reports keep their declared conventions.
+
+Native history investigation: original managed patient setters/validation emit
+zero outcome times in the synthetic histories. A pending TTE query with arrival7,
+record time0 and now8 reaches an unsupported native path in the bounded x86
+harness (unmapped fetch), so no negative-exposure or exception-result fixture is
+claimed. The importer retains those records without silently using them as
+clinical data. Resolve original history setter/getter/date conversion and that
+native path before enabling history recommendations.
+
+Current checks: lint/format, mypy708 modules, wheel/sdist build, 712 packaged
+Python/JSON files byte-identical to checkout, notices retained and original
+binary/raw exclusions pass. Fresh installed wheel/extras checks:464 tests pass;
+installed guide plus binary/TTE XML simulation/report examples pass. Initial
+isolated-test attempts lacked copied test fixtures/helpers, and the old example
+asserted its previous environment path; these harness issues were corrected.
+Full final-code regression is running. Two earlier follow-on regressions were
+stopped because implementation was still changing; neither is counted as a pass.
+No application promotion, release, merge, PR bypass, or license change.

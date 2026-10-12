@@ -268,3 +268,15 @@ See the continuing section of the integration checkpoint and new reference
 runners. No app promotion. Continue through XML/history, per-arm parameter
 thresholds/delays, wrapper scenario and native-report contracts; do not stop at
 this intermediate checkpoint. Existing license/PR restrictions remain unchanged.
+
+### XML simulation checkpoint and actual report override
+
+Original binary/TTE XML now maps to fresh simulation studies, preserving source
+text/history metadata. Per-arm parameter thresholds and response delays are
+integrated. Clinical-history import/editing is deliberately still open.
+IMPORTANT: base noncovariate report0x57b68 is overridden by native x86 entry
+0x18d3e0 through vtable field0x04000524 assigned at wrapper XMLPopulate IL410.
+Do not claim actual report parity from the base percentile fixtures. Shared
+accumulation0x59ac0 now has12 full-body original fixtures. See the integration
+checkpoint's new section for exact evidence, harness issues and next contracts.
+Full final-code tests are running; only completed final results may be reported.

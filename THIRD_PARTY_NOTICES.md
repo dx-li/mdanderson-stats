@@ -1443,7 +1443,8 @@ rule; original executables/libraries remain excluded. See
 
 ### ARAND native-profile continuation (October 12, 2026)
 
-`arand_native.py`, `arand_native_trial.py`, and `arand_native_study.py` are newly
+`arand_native.py`, `arand_native_trial.py`, `arand_native_study.py`, and
+`arand_native_xml.py` are newly
 authored Python implementations of recovered controller behavior, connected to
 the existing independent posterior mathematics. Source evidence includes bounded
 execution and inspection of the hash-pinned ARAND 5.2.2 library; reference tools

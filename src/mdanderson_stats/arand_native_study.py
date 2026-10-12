@@ -35,10 +35,10 @@ class ArandNativeStudy:
     accrual_rate: float
     family: str = "binary"
     parameter: str = "mean"
-    binary_delay: float = 1
+    binary_delay: float | tuple[float, ...] = 1
     censor_time: float | None = None
     maximize: bool = True
-    futility_threshold: float | None = None
+    futility_threshold: float | tuple[float, ...] | None = None
     absolute_tolerance: float = 1e-9
     max_candidates: int = 1000
 
@@ -58,8 +58,17 @@ class ArandNativeStudy:
         rate = scalar(self.accrual_rate, "accrual_rate")
         if rate <= 0 or not np.isfinite(1 / rate):
             raise ValueError("accrual_rate must be positive with a finite reciprocal")
-        if scalar(self.binary_delay, "binary_delay") < 0:
-            raise ValueError("binary_delay must be nonnegative")
+        delays = finite(self.binary_delay, "binary_delay")
+        if delays.ndim > 1 or (delays.ndim == 1 and delays.shape != (k,)) or np.any(delays < 0):
+            raise ValueError("binary_delay must be nonnegative scalar or one value per arm")
+        if delays.ndim == 1:
+            object.__setattr__(self, "binary_delay", tuple(float(x) for x in delays))
+        if self.futility_threshold is not None and np.asarray(self.futility_threshold).ndim == 1:
+            object.__setattr__(
+                self,
+                "futility_threshold",
+                tuple(float(x) for x in np.asarray(self.futility_threshold)),
+            )
         if self.censor_time is not None and scalar(self.censor_time, "censor_time") <= 0:
             raise ValueError("censor_time must be positive")
         object.__setattr__(
@@ -157,7 +166,7 @@ def simulate_arand_native_trial(study: ArandNativeStudy, *, seed: int) -> ArandN
     u = assignment_rng.random(n)
     if study.family == "binary":
         values = (outcome_rng.random((n, k)) < np.asarray(study.true_parameters)).astype(int)
-        delays = np.full((n, k), study.binary_delay)
+        delays = np.broadcast_to(np.asarray(study.binary_delay), (n, k)).copy()
     else:
         means = np.asarray(study.true_parameters) / (
             np.log(2) if study.parameter == "median" else 1

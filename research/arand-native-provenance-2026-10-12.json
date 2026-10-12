@@ -1,11 +1,11 @@
 {
-  "scope": "New ARAND native-profile production files only; not a license certification of the full bundle",
+  "scope": "Affected ARAND production files only; not a license certification of the full bundle",
   "files": [
     {
       "path": "src/mdanderson_stats/arand_native.py",
-      "sha256": "cae16f0e1579c47e99c920804da3175b26a6b6686ec6a624dc1eaf6623a92716",
+      "sha256": "3df5f695b2109660cc4d794c79fb54379afc4e16206ce11433d953c214823463",
       "authorship": "newly authored source-informed compatibility implementation; not a clean-room claim",
-      "evidence": "research/arand-controller-recovery-2026-10-12.md",
+      "evidence": "research/arand-native-integration-2026-10-12.md",
       "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",
       "original_artifacts_bundled": false,
       "direct_relative_imports": [
@@ -17,9 +17,9 @@
     },
     {
       "path": "src/mdanderson_stats/arand_native_trial.py",
-      "sha256": "e8eab9a266655acb9262239c248156ff3771b07cdebc03fc120167f3770b08ba",
+      "sha256": "72110bffa05d208034cd564e8dc200fcbfe7d480cc5265bf21533926e48539ed",
       "authorship": "newly authored source-informed compatibility implementation; not a clean-room claim",
-      "evidence": "research/arand-controller-recovery-2026-10-12.md",
+      "evidence": "research/arand-native-integration-2026-10-12.md",
       "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",
       "original_artifacts_bundled": false,
       "direct_relative_imports": [
@@ -33,9 +33,9 @@
     },
     {
       "path": "src/mdanderson_stats/arand_native_study.py",
-      "sha256": "1463842f60611887b3db291e59ffa2bb8e060a6499df5a9c8e9abc841f381142",
+      "sha256": "f0ec0a5d24d85ad3b75d2d27387b0f165fa8ce5aa97f3b045b08bdadc552c7a3",
       "authorship": "newly authored source-informed compatibility implementation; not a clean-room claim",
-      "evidence": "research/arand-controller-recovery-2026-10-12.md",
+      "evidence": "research/arand-native-integration-2026-10-12.md",
       "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",
       "original_artifacts_bundled": false,
       "direct_relative_imports": [
@@ -45,6 +45,38 @@
         "arand_native_trial",
         "arand_posterior",
         "arand_simulation"
+      ],
+      "transitive_explicit_restricted_seed_matches": [],
+      "static_import_scope": "Relative module imports only; excludes eager package-root imports, external dependencies and dynamic imports. No legal clearance inferred."
+    },
+    {
+      "path": "src/mdanderson_stats/arand_native_xml.py",
+      "sha256": "e79407f05579efa49640a7f765adc63d66f6701f1b781fadc2761ea3627051de",
+      "authorship": "newly authored source-informed compatibility implementation; not a clean-room claim",
+      "evidence": "research/arand-native-integration-2026-10-12.md",
+      "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",
+      "original_artifacts_bundled": false,
+      "direct_relative_imports": [
+        "arand_native",
+        "arand_native_study",
+        "arand_native_trial"
+      ],
+      "transitive_explicit_restricted_seed_matches": [],
+      "static_import_scope": "Relative module imports only; excludes eager package-root imports, external dependencies and dynamic imports. No legal clearance inferred."
+    },
+    {
+      "path": "src/mdanderson_stats/arand_posterior.py",
+      "sha256": "7779d56cb3f295e85e2ffc3a7f6203c661e0947c7a8b222aeeb3e46db4c3a89b",
+      "authorship": "existing independent mathematics extended with arm-specific thresholds",
+      "evidence": "research/arand-native-integration-2026-10-12.md",
+      "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",
+      "original_artifacts_bundled": false,
+      "direct_relative_imports": [
+        "_cdflib",
+        "_validation",
+        "beta_comparison",
+        "inequality",
+        "parameter_distribution"
       ],
       "transitive_explicit_restricted_seed_matches": [],
       "static_import_scope": "Relative module imports only; excludes eager package-root imports, external dependencies and dynamic imports. No legal clearance inferred."
