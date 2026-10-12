@@ -49,3 +49,13 @@ no inferred corrections are silently substituted.
 License notices remain unchanged. Mathematical validation, source compatibility,
 full application completion and clinical validity remain distinct claims.
 Final-code full-suite and installed-artifact acceptance is recorded separately.
+
+Final acceptance:73,227 full tests passed in986.11 seconds, both extras and
+warnings-as-errors, with all767 production Python files unchanged. A fresh
+wheel/extras environment passed755 focused tests and28 plotting/TIFF tests;
+9,347 broader installed-wheel checks passed. Both ComPAS and BLESS examples ran
+outside the checkout. Both independent reference fixtures regenerated
+byte-identically. Ruff, formatting, mypy, wheel/sdist build and the771-file
+package-byte audit passed;29 licensing files remain and raw assets are excluded.
+See compas-published-validation-2026-10-12.json. Artifact hashes are retained in
+the final preservation commit message. No full ComPAS platform promotion is made.

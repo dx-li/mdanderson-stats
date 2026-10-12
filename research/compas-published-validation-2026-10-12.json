@@ -1,0 +1,66 @@
+{
+  "scope": "ComPAS explicitly configured published hierarchy and saved inference workflow; catalog140 partial, counts102/32/4",
+  "implementation_commit": "ae43f68a80b45fc3004e878bd7520e316e8e2b0e",
+  "full_suite": {
+    "passed": 73227,
+    "seconds": 986.11,
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "log_sha256": "b3ec76258f977241328f7199b8cfe23828f53b4cb6cba28c2bf3794189bd5ce8",
+    "production_python_files": 767,
+    "production_unchanged_during_acceptance": true,
+    "snapshot_sha256": "00eacc315ab766f042e255752ffaec115a42f6c163d6532ef4b24ed92733fd6f"
+  },
+  "installed_wheel": {
+    "fresh_environment_focused_tests": 755,
+    "broader_regression_tests": 9347,
+    "fresh_environment_extras_tests": 28,
+    "extras": [
+      "plot",
+      "image"
+    ],
+    "examples": [
+      "compas_explicit.py",
+      "bless_published.py"
+    ],
+    "outside_checkout": true
+  },
+  "source_references": {
+    "independent_two_arm_marginal_prior_cases": 15,
+    "independent_three_arm_Gaussian_quadrature_cases": 5,
+    "reference_files_byte_identically_regenerated": 2,
+    "two_arm_fixture_sha256": "a82fd3b01c5a67dec3606ab718e443147419286c4b032779b2988db3402225d1",
+    "three_arm_fixture_sha256": "b1e4e191b3016d353df326a5b73edf4d719fe62eba0cedf8f613b7160f41d55a",
+    "source_specification_sha256": "b7a5cef6c4a0a8114aa1abd7ba00ca1f96c98dafbca297a123401b0bd1cfe894"
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "2737 files formatted",
+    "mypy": "767 source files passed"
+  },
+  "artifacts": {
+    "package_python_json_files_byte_matched_wheel_and_sdist": 771,
+    "notice_files_retained": 29,
+    "raw_original_assets_excluded": true,
+    "hash_location": "final preservation commit message"
+  },
+  "remaining": {
+    "ComPAS": "original model prior/group defaults and dynamic replacement/retention/final/allocation/cross-cohort contracts",
+    "PRT": "legacy/core/controller workflow integration in isolated development, not included in this checkpoint",
+    "pending_models": [
+      "BayesianSurvival",
+      "CNSRISK",
+      "K-COMPASS",
+      "MDS-DPSS"
+    ],
+    "release": "mixed-license distribution decision and prior PR Forbidden remain; no merge/release/deploy/outreach"
+  },
+  "logs": {
+    "lint": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "format": "92451e973a2dc72d09b1f20dd56e86b3081550665189307ed8432344e1836ac5",
+    "mypy": "02655d862c95cbd8f166f5c618e9926c58f30d6396adf97800ee0e6f1c52d548",
+    "clean-tests": "3d99c2415c01d4a4d435dcd64d9eac6e510f402814a05220abeea2de08af6781",
+    "wheel-regression": "450a1db07143645e544825dc5a3ccf7855c1d9f752850ef5f0419376f4dba57f",
+    "clean-extras": "b5d0565070e8ca9a64b845e1bab2790b2ea762c138c3035e4706d9ea8b3ddbd6"
+  }
+}
