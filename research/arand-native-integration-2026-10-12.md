@@ -134,3 +134,22 @@ excluded arm in ordinary allocation, but can select a zero-deficit first arm in
 the forced population under the original `<=` rule. Both cases have regressions.
 The first full-suite attempt was deliberately interrupted for this correction
 and is not reported as a pass. A new final-code run supersedes it.
+
+Seven additional original GetTreat instruction probes now confirm the `<=`
+inverse-CDF boundary itself, with supplied uniform/vector services and no RNG
+identity claim. Exact0 with weights(0,.5,.5) chooses index0; the next representable
+positive uniform chooses index1. The caller's eligibility/population dispatch is
+established by the separate source path above. All27 supplementary action,
+percentile and assignment probes are hash-recorded in
+`fixtures/arand-native/supplement-manifest.json`, separate from the original98.
+
+### Interim executor status requested by parent
+
+Environment ready; exact e74b1ef parent recovered. Implementation preservation
+commit `3732fde7c6d4b69653da379509aa862722cd1e03` is pushed and remote-verified.
+No executor, repository-access or tool blocker prevents continued work. Corrected
+code passes89 affected tests and120 isolated-wheel tests including plot/image
+extras; the guide example, lint, types, build and provenance checks pass. The
+restarted full regression is still running and is not yet counted as a pass.
+Do not duplicate ARAND implementation while that verification is active. The
+final validation section below will supersede this interim status.

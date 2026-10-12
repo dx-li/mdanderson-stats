@@ -104,3 +104,11 @@ original ordered arm/group constraint instructions, using the same library and
 installed Python package. Cases include conflicting limits, closed statuses,
 start/duration equality and reopening; trial limits are not reached. Together
 with `verify_python.py` there are1,200 differential comparisons.
+
+`arand_assignment_reference.py` executes GetTreat's original inverse-CDF loop
+(RVA0x6ccb4), substituting only the uniform and bounded vector services. Seven
+cases in `assignment-supplement.jsonl` cover exact/adjacent cumulative ties and
+zero-leading weights. The caller still determines whether the vector is the
+eligible population or the all-arm forced population. `supplement-manifest.json`
+records hashes and scope for all27 supplementary probes, separate from the
+original98-fixture manifest.
