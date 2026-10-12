@@ -184,7 +184,25 @@ independent logistic-normal posteriors, providing a direct integration reference
 for posterior moments. See the [audit](../research/uaroet-audit.md) and
 [source record](uaroet-sources.json) for validation results and conventions.
 
-The original executable has not been run for parity. Native prior files,
+Bounded native instruction references now cover selected contracts; full Windows
+execution and native-inference/RNG parity are not claimed. Native prior files,
 automatic pseudo-trial/ESS calibration, adaptive posterior precision control,
 delayed-outcome simulation and native report formats remain separate work. Original
 vendor code, executable files and papers are not bundled.
+
+## Toxicity observed while efficacy is pending
+
+`fit_uaroet(..., toxicity_only_counts=...)` accepts an additional dose-by-toxicity
+count matrix. These patients contribute their marginal toxicity likelihood. Do
+not also include them in the complete joint `counts` tensor. Efficacy-only and
+wholly pending patients contribute no likelihood under the recovered current
+desktop contract; keep them separately in allocation histories. This low-level
+fit does not decide whether an outcome is known at a given calendar time.
+
+The native likelihood references cover480 patient/time/partial-mode cases. A
+separate four-chain partial-data posterior agrees with independent scalar
+integration. Complete and partial counts jointly obey the existing10000-patient
+bound and invalid inputs are rejected before random draws. The source screening,
+cohort, hybrid-randomization, parser and prior-ESS contracts are recovered but
+remain separate from a completed current-desktop workflow. See the
+[continuation evidence](../research/uaroet-current-recovery-2026-10-12.md).

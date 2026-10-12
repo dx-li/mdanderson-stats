@@ -1,0 +1,149 @@
+{
+  "executable_sha256": "b953affb6cd3968c389d5a35020e594cd25fef3ff61825db8aa282d8216a3eaf",
+  "cases": [
+    {
+      "word": "UseHybridGreedyArandAssignment",
+      "value": 0,
+      "initial_flag": false,
+      "result": {
+        "matched": true,
+        "flag": false
+      }
+    },
+    {
+      "word": "UseHybridGreedyArandAssignment",
+      "value": 0,
+      "initial_flag": true,
+      "result": {
+        "matched": true,
+        "flag": false
+      }
+    },
+    {
+      "word": "UseHybridGreedyArandAssignment",
+      "value": 1,
+      "initial_flag": false,
+      "result": {
+        "matched": true,
+        "flag": true
+      }
+    },
+    {
+      "word": "UseHybridGreedyArandAssignment",
+      "value": 1,
+      "initial_flag": true,
+      "result": {
+        "matched": true,
+        "flag": true
+      }
+    },
+    {
+      "word": "UseHybridGreedyARandAssignment",
+      "value": 0,
+      "initial_flag": false,
+      "result": {
+        "matched": true,
+        "flag": false
+      }
+    },
+    {
+      "word": "UseHybridGreedyARandAssignment",
+      "value": 0,
+      "initial_flag": true,
+      "result": {
+        "matched": true,
+        "flag": false
+      }
+    },
+    {
+      "word": "UseHybridGreedyARandAssignment",
+      "value": 1,
+      "initial_flag": false,
+      "result": {
+        "matched": true,
+        "flag": true
+      }
+    },
+    {
+      "word": "UseHybridGreedyARandAssignment",
+      "value": 1,
+      "initial_flag": true,
+      "result": {
+        "matched": true,
+        "flag": true
+      }
+    },
+    {
+      "word": "UseHybridGreedyArandAlgorithm",
+      "value": 0,
+      "initial_flag": false,
+      "result": {
+        "matched": false,
+        "flag": false
+      }
+    },
+    {
+      "word": "UseHybridGreedyArandAlgorithm",
+      "value": 0,
+      "initial_flag": true,
+      "result": {
+        "matched": false,
+        "flag": true
+      }
+    },
+    {
+      "word": "UseHybridGreedyArandAlgorithm",
+      "value": 1,
+      "initial_flag": false,
+      "result": {
+        "matched": false,
+        "flag": false
+      }
+    },
+    {
+      "word": "UseHybridGreedyArandAlgorithm",
+      "value": 1,
+      "initial_flag": true,
+      "result": {
+        "matched": false,
+        "flag": true
+      }
+    },
+    {
+      "word": "useHybridGreedyArandAssignment",
+      "value": 0,
+      "initial_flag": false,
+      "result": {
+        "matched": false,
+        "flag": false
+      }
+    },
+    {
+      "word": "useHybridGreedyArandAssignment",
+      "value": 0,
+      "initial_flag": true,
+      "result": {
+        "matched": false,
+        "flag": true
+      }
+    },
+    {
+      "word": "useHybridGreedyArandAssignment",
+      "value": 1,
+      "initial_flag": false,
+      "result": {
+        "matched": false,
+        "flag": false
+      }
+    },
+    {
+      "word": "useHybridGreedyArandAssignment",
+      "value": 1,
+      "initial_flag": true,
+      "result": {
+        "matched": false,
+        "flag": true
+      }
+    }
+  ]
+}

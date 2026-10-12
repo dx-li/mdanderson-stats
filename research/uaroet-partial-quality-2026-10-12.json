@@ -1,0 +1,13 @@
+{
+  "scope": "one-dose binary partial-only posterior at fixed zero association",
+  "reference_risk_mean": 0.6031768816238278,
+  "posterior_risk_mean": 0.6028582115231264,
+  "absolute_difference": 0.00031867010070141255,
+  "risk_split_rhat": 1.0018513400749691,
+  "risk_mcse": 0.003512511715158312,
+  "maximum_parameter_rhat": 1.0018608062955754,
+  "draws_per_chain": 1500,
+  "chains": 4,
+  "warmup_per_chain": 500,
+  "clinical_validation": false
+}

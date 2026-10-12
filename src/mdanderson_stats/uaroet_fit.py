@@ -98,6 +98,7 @@ def fit_uaroet(
     *,
     prior_mean: ArrayLike,
     prior_sd: ArrayLike,
+    toxicity_only_counts: ArrayLike | None = None,
     monotone_efficacy: bool = True,
     monotone_toxicity: bool = True,
     association: float | None = None,
@@ -109,7 +110,12 @@ def fit_uaroet(
 ) -> UAROETFit:
     """Fit UAROET using explicit independent normal priors and uniform rho.
 
-    ``counts`` axes are dose, efficacy category, toxicity category. Every
+    ``counts`` axes are dose, efficacy category, toxicity category. Optional
+    ``toxicity_only_counts`` has dose-by-toxicity axes and counts additional
+    patients whose toxicity is observed while efficacy is pending. These
+    patients contribute the marginal toxicity likelihood and must not also
+    appear in ``counts``. Efficacy-only and wholly pending patients contribute
+    no likelihood under the current desktop observation contract. Every
     monotone increment has a normal prior truncated below at zero; other
     normal coordinates are untruncated. If association is omitted, rho has
     the Uniform(-1,1) prior and an independent-uniform Metropolis update. With
@@ -118,6 +124,22 @@ def fit_uaroet(
     if not isinstance(rng, np.random.Generator):
         raise ValueError("rng must be an explicit NumPy Generator")
     observed = _counts(counts)
+    if toxicity_only_counts is None:
+        partial = np.zeros((observed.shape[0], observed.shape[2]), dtype=np.int64)
+    else:
+        raw_partial = _real_matrix(toxicity_only_counts, "toxicity_only_counts")
+        if (
+            raw_partial.shape != (observed.shape[0], observed.shape[2])
+            or np.any(raw_partial < 0)
+            or np.any(raw_partial != np.floor(raw_partial))
+            or np.any(raw_partial >= 2**53)
+            or raw_partial.sum() + observed.sum() > _MAX_SUBJECTS
+        ):
+            raise ValueError(
+                "toxicity_only_counts must be dose-by-toxicity nonnegative integers; "
+                f"combined patient count must not exceed {_MAX_SUBJECTS}"
+            )
+        partial = raw_partial.astype(np.int64)
     if not isinstance(monotone_efficacy, (bool, np.bool_)) or not isinstance(
         monotone_toxicity, (bool, np.bool_)
     ):
@@ -151,7 +173,7 @@ def fit_uaroet(
     retained_cells = chain_count * draw_count * int(observed.size)
     if retained_cells > _MAX_RETAINED:
         raise ValueError("retained joint posterior exceeds 2 million cells")
-    direct = not bool(np.any(observed))
+    direct = not bool(np.any(observed) or np.any(partial))
     minimum_likelihood_calls = chain_count * (
         draw_count
         if direct
@@ -207,6 +229,8 @@ def fit_uaroet(
                 )
             return -np.inf, joint
         likelihood = float(np.sum(observed[observed_mask] * log_joint[observed_mask]))
+        partial_mask = partial > 0
+        likelihood += float(np.sum(partial[partial_mask] * log_t[partial_mask]))
         if not np.isfinite(likelihood):
             if likelihood == -np.inf:
                 return likelihood, joint

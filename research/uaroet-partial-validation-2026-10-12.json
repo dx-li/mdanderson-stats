@@ -1,0 +1,61 @@
+{
+  "scope": "UAROET92 partial-outcome posterior inference and current1.8 source-contract recovery; application remains partial",
+  "full_suite": {
+    "passed": 63535,
+    "seconds": 924.38,
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "production_python_sha256": "e194dbc77e4122d25c2bfb162be9fde00ff852934d5fb24afc58b3281491d402",
+    "log_sha256": "a69596aafc92d8739e5625e11044419517394fafa63691ea3ef4a70e89700a10"
+  },
+  "additional_reference_tests": 163,
+  "fresh_wheel": {
+    "UAROET_tests": 2510,
+    "plot_image_tests": 100,
+    "example_passed": true,
+    "independent_partial_posterior_accuracy_check_passed": true,
+    "import_location": "/tmp/uaroet-partial-env/lib/python3.13/site-packages/mdanderson_stats/__init__.py"
+  },
+  "source_references": {
+    "eight_native_files_regenerated_byte_identically": true,
+    "eta_cases": 360,
+    "marginal_cases": 360,
+    "screening_cases": 484,
+    "randomization_cases": 648,
+    "patient_likelihood_cases": 480,
+    "live_cohort_paths": 30,
+    "parser_cases": 16,
+    "ESS_cases": 36,
+    "summary_cases": 81,
+    "independent_R_files": 3,
+    "R_byte_identical_files": 1,
+    "R_maximum_absolute_numeric_difference": 4.973799150320701e-13
+  },
+  "qualifications": [
+    "Supplied posterior summaries isolate source controller behavior; no native posterior fit or RNG-stream identity claim",
+    "Live cohort fixtures do not establish saved-history reconstruction equivalence",
+    "No catalog promotion; full current saved-study, calibrated-prior, adaptive-precision, conduct/calendar and report integration remains open",
+    "Default fit remains mathematically correct paper prior; native increment floor/lognormal alternative not silently adopted",
+    "Independent scalar accuracy case is fixed-independence one-dose binary, not general clinical validation",
+    "Short example chains demonstrate interface and report diagnostics"
+  ],
+  "artifacts": {
+    "package_Python_JSON_files": 754,
+    "notice_files_retained": 29,
+    "original_assets_excluded": true,
+    "hashes": "Recorded in preservation commit message"
+  },
+  "post_full_suite_changes": "Only catalog92 scope/evidence metadata changed in production package; Python hashes verified unchanged. Additional163 source-reference tests checked separately.",
+  "lint": "passed",
+  "types": "750 source files passed",
+  "catalog": {
+    "implemented": 101,
+    "partial": 31,
+    "pending": 6
+  },
+  "remaining": [
+    "Complete UAROET current desktop workflow against recovered contracts",
+    "PRT original conduct/simulation executables are recovered; covariance-isotonic safeguards and event-law/calendar/report contracts remain",
+    "Six exact fitted models unavailable; mixed-license distribution decision and Forbidden PR creation remain separate blockers"
+  ]
+}

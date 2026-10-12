@@ -589,3 +589,10 @@ original archives are recovered. UAROET current-guide efficacy futility, calibra
 partial outcomes, cohorts and saved workflows require explicit integration beyond
 the paper API. Preserve the separate web-app128/129 and six unavailable-fit blockers.
 Mixed-license distribution and Forbidden PR creation remain parent decisions.
+
+UAROET92 current1.8 contracts now have eight portable native reference files.
+Toxicity-only posterior inference is integrated and independently checked; status
+remains partial, counts101/31/6 unchanged. See uaroet-current-recovery-2026-10-12.md
+and the pending-data validation manifest. Next integrate saved-study/prior mapping,
+then the complete calibrated-prior, precision, conduct/calendar and report workflow.
+Native live-cohort defects and distinct tie rules must remain explicit profiles.

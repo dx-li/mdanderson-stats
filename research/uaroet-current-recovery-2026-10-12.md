@@ -74,3 +74,85 @@ PRT original Fortran executables and bundled settings are also available. Read
 research/prt-calendar-audit.md before recovering the exact covariance-isotonic
 out-of-range safeguards, early/late event law and saved-file/report behavior.
 No PRT instruction probe has yet run in this continuation.
+
+## Extended executed contracts and integrated pending-data inference
+
+Following DSF preservation c6578863dacee0ba1fa8bad4d13990a8c2b7eb08, the
+following independently authored generators execute additional bounded1.8
+instruction contracts. Inputs are synthetic; no native source/binary is bundled.
+
+| Generator / fixture suffix | Cases | Executed scope and services |
+| --- | ---: | --- |
+| reference_uaroet_acceptability.py / acceptability |484| Native5d40d–5d6a5, including actual posterior-summary getters. Supplied tail probabilities, utility summaries and observed category counts; highest allowed dose supplied. No posterior fit. |
+| reference_uaroet_randomization.py / randomization |648| Native5eeb0 hybrid/weighted selection with supplied summaries, counts and uniforms. Ranking service bypassed; rank restriction flags disabled, supplied ranks unused for unrestricted weighting. No RNG-stream identity. |
+| reference_uaroet_likelihood.py / likelihood |480| Native3a8a0, supplied complete joint probabilities and patient clocks/outcomes; host CRT log/exp. Complete, toxicity-only, efficacy-only, wholly pending and time-masked records. |
+| reference_uaroet_controller.py / controller |30 paths| Native5e520 live cohort bookkeeping and greedy selection. Acceptability summaries supplied, refit service disabled, highest permitted dose supplied. This is not saved-history reconstruction or a posterior-driven trial. |
+| reference_uaroet_keyword.py / keyword |16| Native24e22 parser comparisons29910/29970 and assignment25177. No string-comparison substitution. |
+| reference_uaroet_ess.py / ess |36| Native43dc0–44483 reduction with synthetic marginal-draw moment accumulators. Original mean84080 and sample variance84170 execute. No original prior sampler. |
+
+Screening accepts equality at posterior cutoffs. Above-cutoff toxicity excludes a
+dose only when that dose has observed toxicity or a lower dose was already
+excluded for toxicity. Propagation still requires the higher dose's posterior
+tail to exceed its cutoff. Futility also has an observed-failure gate. Utility
+filters have a minimum-observation gate, and a separate minimum-total-toxicity
+fallback can reinstate the lowest dose after all doses were excluded. These are
+compatibility contracts, not safe default recommendations. Selector initialization
+5e0d0/5e0dd/5e0ed sets the three gate fields to3; application setters may override
+these defaults and their complete transfer still needs review.
+
+Hybrid selection chooses the highest-index exact mean-utility tie. It remains
+greedy unless the best dose also has the highest allocation and its surplus over
+the second-highest allocation reaches the requested threshold. Weighted sampling
+uses mean utility or supplied good-outcome probabilities; equality at cumulative
+probability boundaries selects the earlier acceptable dose. Zero total weight is
+not covered by these fixtures and must not silently produce an arbitrary dose.
+
+Live cohort code bypasses posterior screening before the first-cohort count.
+Old-cohort closure at5e752 reads the new-cohort size field, even though opening an
+old cohort checks its own size. With first/new/old sizes3/2/3 this can extend the
+starting-dose run to four assignments. Guide-correct safe behavior must remain
+separate. Saved-history reconstruction at5e150 and subsequent conduct may differ
+from the live stateful simulation and need their own traces.
+
+The guide spelling UseHybridGreedyArandAssignment and its ARand capitalization
+variant are accepted. The bundled-file spelling UseHybridGreedyArandAlgorithm is
+not accepted by that parser branch. A current importer must expose this discrepancy,
+not silently claim original parser equivalence after repairing it.
+
+ESS reduction covers all active marginal categories (the sample vector stores
+category zero separately at indices11/12 and higher categories at0–5). It computes
+m*(1-m)/sample_variance-1, using n-1 in variance; endpoint means and overall
+mean/min/max aggregate active categories. The source probability calculation and
+moment reduction are independently checked, but a calibrated-prior workflow is
+not yet complete.
+
+`fit_uaroet` now accepts additional toxicity_only_counts, disjoint from complete
+joint counts. The likelihood adds the marginal toxicity term, and partial-only
+data correctly triggers posterior sampling rather than direct-prior draws. A
+four-chain1500-draw independent scalar-integration check and mixed-data likelihood
+reconstruction pass. Efficacy-only records remain outside the likelihood, as the
+current guide and native clock/outcome references specify. The low-level function
+does not itself decide whether calendar outcomes are observed.
+
+Next: complete original study/prior mapping and input diagnostics; connect a safe
+current-guide controller with explicit legacy alternatives; calibrate pseudo-trial
+prior means and expose prior ESS; add adaptive posterior precision, as-of conduct,
+calendar simulations, all-scenario/batch reports and captured-input exports.
+UAROET92 remains partial. Keep PRT69's recovered original assets available for its
+remaining covariance-isotonic safeguards and calendar/report contract.
+
+Posterior-summary probe `tools/reference_uaroet_summary.py` adds81 cases at
+40bc0–4101a. Probability evaluation is replaced by supplied joint/marginal
+probabilities and utilities; original tail indicators and summary packing run.
+Toxicity uses strict risk>limit and efficacy futility strict risk<minimum. The
+per-draw best-utility indicator credits the first exact tie, whereas greedy
+mean-utility allocation credits the last eligible exact tie. These distinct
+rules must not be collapsed into one tie convention. This also independently
+confirms the13-coordinate marginal/utility summary layout consumed by native ESS.
+
+The pending-data accuracy check is reproducible with
+`tools/check_uaroet_partial_quality.py`: reference risk mean0.6031768816238278,
+Python0.6028582115231264, absolute difference0.00031867010070141255, risk MCSE
+0.003512511715158312 and split R-hat1.0018513400749691. This is a one-dose binary
+fixed-independence reference case, not validation of all higher-dimensional
+correlated fits. The example intentionally uses short chains and prints diagnostics.

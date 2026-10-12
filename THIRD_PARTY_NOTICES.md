@@ -1490,3 +1490,11 @@ harnesses are independently authored; synthetic numeric/saved-study fixtures do
 not include the original DLL, executable, installer or guide. The original
 no-redistribution terms and all existing repository notices remain unchanged.
 See research/dose-schedule-desktop-recovery-2026-10-12.md for hashes and scope.
+
+UAROET1.8 reference recovery uses an externally supplied original executable and
+its guide. Independently authored bounded instruction probes produce synthetic
+numerical fixtures for marginal probabilities, patient likelihood, screening,
+randomization, cohort bookkeeping, parser spellings and ESS moment reduction.
+Original software and guide files remain excluded from distribution. These
+reference-only assets do not replace or relax any existing component notices;
+source compatibility, numerical correctness and clinical validity remain distinct.
