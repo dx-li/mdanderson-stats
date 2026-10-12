@@ -13,6 +13,7 @@ def run(
     min_action=1,
     max_action=2,
     *,
+    arm_rules=None,
     event_log=None,
     share_statuses=False,
 ):
@@ -31,7 +32,7 @@ def run(
         1008: 2500,
         1032: 0,
         1072: upper,
-        1115: 0,
+        1115: int(arm_rules is not None),
         1164: 0,
         1064: lower,
         1040: 0.2,
@@ -56,6 +57,11 @@ def run(
     for i in range(no):
         nxt[3400 + 100 * i] = 3400 + 100 * (i + 1) if i + 1 < no else 3300
         strings[3416 + 100 * i] = str(i)
+    if arm_rules is not None:
+        for i in range(na):
+            mem[20040 + 100 * i] = 30000
+        for offset in (4, 8, 12, 16, 20, 24):
+            mem[30000 + offset] = 30000 + offset
     stack = []
     calls = event_log if event_log is not None else []
     pc = 0
@@ -97,6 +103,10 @@ def run(
         elif op.startswith("stind"):
             a, b = popn(2)
             mem[a] = b
+        elif op == "cpblk":
+            a, b, size = popn(3)
+            assert size == 4
+            mem[a] = mem[b]
         elif op == "ldsflda":
             stack.append(8000)
         elif op == "dup":
@@ -143,6 +153,11 @@ def run(
                 stack.append(1)
             elif n.endswith(".SetStopTrial"):
                 calls.append(["stop", popn(2)[1]])
+            elif n.startswith("std._Tree") and n.endswith(".find"):
+                tree, a, g = popn(3)
+                assert tree == 1168
+                mem[a] = 20000 + 100 * int(strings[g])
+                stack.append(a)
             elif n.endswith(".GetOutcomeMapPtr"):
                 stack.pop()
                 stack.append(3200)
@@ -180,6 +195,9 @@ def run(
             elif n.startswith("std.basic_string") and n.endswith(".compare"):
                 a, b = popn(2)
                 stack.append(int(strings[a] != strings[b]))
+            elif n.endswith(".GetPerGroupStoppingRule"):
+                stack.pop()
+                stack.append(0)
             elif n.endswith(".GetProbabilityBest"):
                 _, a, g, o = popn(4)
                 stack.append(probabilities[int(strings[o])][int(strings[a])])
@@ -200,9 +218,21 @@ def run(
                 raise ValueError((op, n))
         elif op == "calli":
             target = stack.pop()
-            t, threshold, a, g, o = popn(5)
-            assert target == 2700
-            stack.append(futility[int(strings[a])])
+            if target in (30004, 30008, 30012, 30016, 30020, 30024):
+                arm = (stack.pop() - 20040) // 100
+                key = {
+                    30004: "upper",
+                    30008: "lower",
+                    30012: "cutoff",
+                    30016: "threshold",
+                    30020: "futility_cutoff",
+                    30024: "enforce",
+                }[target]
+                stack.append(arm_rules[arm][key])
+            else:
+                t, threshold, a, g, o = popn(5)
+                assert target == 2700
+                stack.append(futility[int(strings[a])])
         elif op == "ret":
             return {"calls": calls, "statuses": statuses}
         elif op == "nop":

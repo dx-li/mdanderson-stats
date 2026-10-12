@@ -1,4 +1,4 @@
-"""300 seeded original-instruction single-group constraint comparisons.
+"""1000 seeded original-instruction single-group constraint comparisons.
 
 Set ARAND_REFERENCE_LIBRARY; requires installed mdanderson-stats plus the
 reference harness dependencies. Trial limits are not reached in these probes.
@@ -8,10 +8,14 @@ import random
 
 import arand_minmax_reference as mm
 
-from mdanderson_stats.arand_native import ArandNativeArmLimits, arand_native_constraints
+from mdanderson_stats.arand_native import (
+    ArandNativeArmLimits,
+    ArandNativeGates,
+    arand_native_constraints,
+)
 
 rng = random.Random(314)
-for _ in range(300):
+for _ in range(1000):
     k = rng.randint(1, 4)
     statuses = [rng.choice([0, 1, 2, 3, 4, 5, 9]) for _ in range(k)]
     n = [rng.randint(0, 8) for _ in range(k)]
@@ -22,7 +26,9 @@ for _ in range(300):
     start = [rng.choice([0, 5, 10]) for _ in range(k)]
     dur = [rng.choice([0, 5]) for _ in range(k)]
     now = rng.choice([0, 5, 10, 15, 20])
+    gates = ArandNativeGates(*(rng.choice([False, True]) for _ in range(8)))
     cfg = dict(
+        gates=tuple(getattr(gates, name) for name in gates.__dataclass_fields__),
         statuses=statuses,
         now=now,
         arm_count=n,
@@ -36,6 +42,6 @@ for _ in range(300):
     )
     expected = mm.run(**cfg)["statuses"]
     limits = tuple(ArandNativeArmLimits(*a) for a in zip(lo, hi, gl, gh, start, dur))
-    actual = arand_native_constraints(tuple(statuses), tuple(n), limits, now=now)
+    actual = arand_native_constraints(tuple(statuses), tuple(n), limits, now=now, gates=gates)
     assert tuple(expected) == actual, (cfg, expected, actual)
-print("300 original ordered arm/group constraint comparisons passed")
+print("1000 original ordered arm/group constraint comparisons passed")

@@ -194,3 +194,45 @@ existing feature branch; the final validation/provenance commit follows them.
 The parent can continue from the current remote head using the five precise
 remaining ARAND contracts above. No executor/tool blocker remains, and no
 verified task URL was exposed by this environment.
+
+## Continuing native desktop integration (after 37a1f7d)
+
+This is an intermediate preservation checkpoint; application #62 is still partial.
+The independent constraint gates now control trial/arm/group minima/maxima and
+trial duration. The original native paths passed 1,000 randomized ordered-limit
+comparisons and 500 randomized minimum-gate comparisons. Portable fixtures cover
+all 256 combinations of eight flags. Scalar defaults preserve existing explicit
+Python rules; omitted native XML flags must still be mapped to false by the
+future native XML reader.
+
+Per-arm lower/upper/final/futility probability cutoffs now flow through the
+controller and Python JSON studies. Original per-arm native instruction paths
+passed 1,800 status/whole/group-selector comparisons; 60 portable cases are
+retained. All four native action codes (including open) are explicit. A zero
+per-arm futility cutoff disables that arm's futility check; per-arm *parameter*
+thresholds still require posterior/study integration.
+
+`arand_native_batch_monitor` reproduces original construction and replication
+reset. Six original-instruction fixtures establish `ceil(a)` versus `int(a)`
+initial thresholds, with the same precomputed exponential increments. The reset
+option is explicit; empty schedules, zero increments, overflow and excessive
+bounds fail safely instead of inheriting undefined native operations.
+
+An isolated, locally extracted Mono runtime successfully executed the original
+managed assemblies, without installing system packages or running original
+installers. `tools/arand_native_reference/managed_studies.py` hash-pins all three
+original assemblies, compiles a synthetic-input probe, checks original IsValid,
+and executes original Serialize/Deserialize round trips for binary and TTE
+studies with histories. Four XML outputs and their manifest are retained under
+`research/fixtures/arand-native/managed-studies`. Only wall-clock current_time is
+normalized. The managed getters/validator rewrite history metadata, outcome time
+and group capitalization; these fixtures are source evidence, not yet a Python
+native-file importer or proof of valid clinical histories. The original mixed-mode
+native engine has not been loaded into Mono, and no such identity is claimed.
+
+Targeted portable contract tests: 328 passed. Existing 74 native workflow tests
+passed before the batch helper; final combined/artifact/regression validation
+will follow. Remaining work: native XML mapping and safe history semantics,
+per-arm parameter thresholds/delays, wrapper scenario reset/seeding and full
+native report aggregation/dispatch. Batch construction and enable-flag primitive
+contracts above are closed; the complete app is not promoted.

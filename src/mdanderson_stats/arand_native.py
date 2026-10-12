@@ -7,6 +7,7 @@ clinical recommendations. Independent posterior integration lives in
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, replace
 from enum import IntEnum
 
@@ -126,6 +127,39 @@ class ArandNativeMonitor:
         object.__setattr__(self, "targets", tuple(float(x) for x in t))
 
 
+def arand_native_batch_monitor(
+    a: float, b: float, maximum_enrollment: int, *, reset: bool = False
+) -> ArandNativeMonitor:
+    """Initialize the original batch schedule, with explicit reset compatibility.
+
+    XML loading starts at ceil(a), while the native replication reset starts at
+    int(a). Both use increments ceil(a * exp(-b * cumulative enrollment)) built
+    from ceil(a). This disagreement for fractional a is a legacy behavior.
+    Undefined empty schedules, overflow and zero increments are rejected.
+    """
+    a, b = scalar(a, "a"), scalar(b, "b")
+    maximum = _integer(maximum_enrollment, "maximum_enrollment", 1)
+    if a <= 0 or maximum > 10000 or not isinstance(reset, bool):
+        raise ValueError("a must be positive, maximum at most 10000, and reset boolean")
+    current = math.ceil(a)
+    initial = current
+    increments: list[float] = []
+    while current < maximum:
+        try:
+            increment = math.ceil(a * math.exp(-b * current))
+        except (OverflowError, ValueError) as exc:
+            raise ValueError("native batch increment overflow") from exc
+        if not 1 <= increment <= 2**31 - 1:
+            raise ValueError("native batch increment is zero or outside int32")
+        increments.append(float(increment))
+        current += increment
+    if not increments:
+        raise ValueError("native batch schedule is empty at the enrollment maximum")
+    return ArandNativeMonitor(
+        mode=4, next_enrollment=int(a) if reset else initial, targets=tuple(increments)
+    )
+
+
 @dataclass(frozen=True)
 class ArandNativeMonitorResult:
     monitor: ArandNativeMonitor
@@ -230,28 +264,40 @@ def arand_native_statistics(
     )
 
 
+def _arm_units(value: float | tuple[float, ...], n: int, name: str) -> tuple[float, ...]:
+    """Normalize an explicit scalar or one probability cutoff per arm."""
+    values = np.asarray(value)
+    if values.ndim == 0:
+        return (_unit(float(values), name),) * n
+    if values.shape != (n,):
+        raise ValueError(f"{name} must be scalar or have one value per arm")
+    return tuple(_unit(v, name) for v in values)
+
+
 def arand_native_statuses(
     probabilities: ArrayLike,
     statuses: tuple[int, ...],
     *,
-    lower: float = 0.1,
-    upper: float = 0.95,
+    lower: float | tuple[float, ...] = 0.1,
+    upper: float | tuple[float, ...] = 0.95,
     futility: ArrayLike | None = None,
-    futility_cutoff: float = 0.2,
+    futility_cutoff: float | tuple[float, ...] = 0.2,
     min_action: int = 1,
     max_action: int = 2,
 ) -> tuple[int, ...]:
     """Ordered single-endpoint posterior status transition, including native overrides."""
     p = _probabilities(probabilities)
     s = _statuses(statuses, len(p))
-    lower, upper = _unit(lower, "lower"), _unit(upper, "upper")
-    cutoff = _unit(futility_cutoff, "futility_cutoff")
-    if min_action not in (1, 3) or max_action not in (1, 2, 3):
+    lowers = _arm_units(lower, len(p), "lower")
+    uppers = _arm_units(upper, len(p), "upper")
+    cutoffs = _arm_units(futility_cutoff, len(p), "futility_cutoff")
+    if min_action not in (0, 1, 2, 3) or max_action not in (0, 1, 2, 3):
         raise ValueError("unsupported closure action")
     f = None if futility is None else _probabilities(futility)
     if f is not None and len(f) != len(p):
         raise ValueError("futility probabilities require one value per arm")
     for i, probability in enumerate(p):
+        lower, upper, cutoff = lowers[i], uppers[i], cutoffs[i]
         status = s[i]
         if f is not None and status != 3 and cutoff > 0 and f[i] < cutoff:
             s[i], status, probability = min_action, min_action, -1
@@ -276,17 +322,19 @@ def arand_native_select(
     probabilities: ArrayLike,
     statuses: tuple[int, ...],
     *,
-    cutoff: float = 0.5,
-    upper: float = 0.95,
+    cutoff: float | tuple[float, ...] = 0.5,
+    upper: float | tuple[float, ...] = 0.95,
     completed: bool = True,
     group: bool = False,
 ) -> ArandNativeSelection:
     """Native whole-trial or group final selector; later arms win exact ties."""
     p = _probabilities(probabilities)
     s = _statuses(statuses, len(p))
-    cutoff, upper = _unit(cutoff, "cutoff"), _unit(upper, "upper")
+    cutoffs = _arm_units(cutoff, len(p), "cutoff")
+    uppers = _arm_units(upper, len(p), "upper")
     winner, best, early = None, -1.0, False
     for i, probability in enumerate(p):
+        cutoff, upper = cutoffs[i], uppers[i]
         if s[i] not in ((0,) if group else (0, 4)):
             continue
         if probability >= best and probability > cutoff:
@@ -317,12 +365,31 @@ class ArandNativeArmLimits:
                 raise ValueError(f"{name} must be nonnegative")
 
 
+@dataclass(frozen=True)
+class ArandNativeGates:
+    """Independent native enable flags; omitted native XML flags are false."""
+
+    group_minimum: bool = True
+    group_maximum: bool = True
+    arm_minimum: bool = True
+    arm_maximum: bool = True
+    trial_minimum: bool = True
+    trial_maximum: bool = True
+    duration_minimum: bool = True
+    duration_maximum: bool = True
+
+    def __post_init__(self) -> None:
+        if any(not isinstance(getattr(self, name), bool) for name in self.__dataclass_fields__):
+            raise ValueError("native constraint gates must be boolean")
+
+
 def arand_native_constraints(
     statuses: tuple[int, ...],
     enrolled: tuple[int, ...],
     limits: tuple[ArandNativeArmLimits, ...],
     *,
     now: float,
+    gates: ArandNativeGates = ArandNativeGates(),
 ) -> tuple[int, ...]:
     """Apply arm then group maxima/minima and finally start/duration gates.
 
@@ -335,13 +402,13 @@ def arand_native_constraints(
     if n.shape != (len(s),) or now < 0:
         raise ValueError("invalid counts or time")
     for i, a in enumerate(limits):
-        if n[i] >= a.maximum:
+        if gates.arm_maximum and n[i] >= a.maximum:
             s[i] = 4
-        if n[i] < a.minimum and now >= a.start:
+        if gates.arm_minimum and n[i] < a.minimum and now >= a.start:
             s[i] = 0
-        if n[i] >= a.group_maximum:
+        if gates.group_maximum and n[i] >= a.group_maximum:
             s[i] = 4
-        if n[i] < a.group_minimum:
+        if gates.group_minimum and n[i] < a.group_minimum:
             s[i] = 0
         if a.duration > 0:
             if now < a.start:

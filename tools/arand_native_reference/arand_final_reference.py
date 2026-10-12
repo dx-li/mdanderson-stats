@@ -3,7 +3,7 @@ import json
 from arand_il import CilMethodBody, CilMethodBodyReaderBytes, p
 
 
-def run(probabilities, statuses, cutoff=0.5, upper=0.95, completed=True):
+def run(probabilities, statuses, cutoff=0.5, upper=0.95, completed=True, arm_rules=None):
     ins = CilMethodBody(CilMethodBodyReaderBytes(p.get_data(460944, 100000))).instructions
     positions = {v.offset: k for k, v in enumerate(ins)}
     if isinstance(probabilities[0], (int, float)):
@@ -18,7 +18,7 @@ def run(probabilities, statuses, cutoff=0.5, upper=0.95, completed=True):
         1008: 2500,
         1032: cutoff,
         1072: upper,
-        1115: 0,
+        1115: int(arm_rules is not None),
         1164: int(completed),
         3200: 3300,
         3300: 3400,
@@ -35,6 +35,11 @@ def run(probabilities, statuses, cutoff=0.5, upper=0.95, completed=True):
     for i in range(no):
         nxt[3400 + 100 * i] = 3400 + 100 * (i + 1) if i + 1 < no else 3300
         strings[3416 + 100 * i] = str(i)
+    if arm_rules is not None:
+        for i in range(na):
+            mem[20040 + 100 * i] = 30000
+        for offset in (4, 8, 12, 16, 20, 24):
+            mem[30000 + offset] = 30000 + offset
     stack = []
     calls = []
     pc = 0
@@ -76,6 +81,10 @@ def run(probabilities, statuses, cutoff=0.5, upper=0.95, completed=True):
         elif op.startswith("stind"):
             a, b = popn(2)
             mem[a] = b
+        elif op == "cpblk":
+            a, b, size = popn(3)
+            assert size == 4
+            mem[a] = mem[b]
         elif op == "ldsflda":
             stack.append(8000)
         elif op == "dup":
@@ -122,6 +131,11 @@ def run(probabilities, statuses, cutoff=0.5, upper=0.95, completed=True):
                 stack.append(1)
             elif n.endswith(".SetStopTrial"):
                 calls.append(["stop", popn(2)[1]])
+            elif n.startswith("std._Tree") and n.endswith(".find"):
+                tree, a, g = popn(3)
+                assert tree == 1168
+                mem[a] = 20000 + 100 * int(strings[g])
+                stack.append(a)
             elif n.endswith(".GetOutcomeMapPtr"):
                 stack.pop()
                 stack.append(3200)
@@ -159,6 +173,9 @@ def run(probabilities, statuses, cutoff=0.5, upper=0.95, completed=True):
             elif n.startswith("std.basic_string") and n.endswith(".compare"):
                 a, b = popn(2)
                 stack.append(int(strings[a] != strings[b]))
+            elif n.endswith(".GetPerGroupStoppingRule"):
+                stack.pop()
+                stack.append(0)
             elif n.endswith(".GetProbabilityBest"):
                 _, a, g, o = popn(4)
                 stack.append(probabilities[int(strings[o])][int(strings[a])])
@@ -170,6 +187,21 @@ def run(probabilities, statuses, cutoff=0.5, upper=0.95, completed=True):
                 calls.append(["winner", strings[g], strings[w], e])
             else:
                 raise ValueError((op, n))
+        elif op == "calli":
+            target = stack.pop()
+            if target in (30004, 30008, 30012, 30016, 30020, 30024):
+                arm = (stack.pop() - 20040) // 100
+                key = {
+                    30004: "upper",
+                    30008: "lower",
+                    30012: "cutoff",
+                    30016: "threshold",
+                    30020: "futility_cutoff",
+                    30024: "enforce",
+                }[target]
+                stack.append(arm_rules[arm][key])
+            else:
+                raise ValueError(target)
         elif op == "ret":
             return calls
         elif op == "nop":

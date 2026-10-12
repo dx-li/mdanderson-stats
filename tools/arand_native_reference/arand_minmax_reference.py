@@ -21,6 +21,7 @@ def run(
     group_max=None,
     start=None,
     duration=None,
+    gates=None,
     *,
     event_log=None,
     share_statuses=False,
@@ -56,6 +57,9 @@ def run(
     }
     for k in range(104, 112):
         mem[1000 + k] = 1
+    if gates is not None:
+        for offset, enabled in zip(range(104, 112), gates):
+            mem[1000 + offset] = int(enabled)
     strings = {5216: "group"}
     nxt = {5200: 5100}
     for i in range(na):

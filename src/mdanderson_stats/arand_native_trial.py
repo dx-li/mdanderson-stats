@@ -12,9 +12,11 @@ from ._cdflib import _freeze
 from ._validation import FloatArray, finite, scalar
 from .arand_native import (
     ArandNativeArmLimits,
+    ArandNativeGates,
     ArandNativeMonitor,
     ArandNativeObservation,
     ArandNativeSelection,
+    _arm_units,
     _integer,
     _probabilities,
     _statuses,
@@ -44,16 +46,17 @@ class ArandNativeRules:
     maximum_duration: float = 1e300
     final_followup: float = 0
     stop_when_one_arm: bool = True
-    lower: float = 0.1
-    upper: float = 0.95
-    final_cutoff: float = 0.5
-    futility_cutoff: float = 0.2
+    lower: float | tuple[float, ...] = 0.1
+    upper: float | tuple[float, ...] = 0.95
+    final_cutoff: float | tuple[float, ...] = 0.5
+    futility_cutoff: float | tuple[float, ...] = 0.2
     min_action: int = 1
     max_action: int = 2
     power: float = 0.5
     floor: float = 0.1
     runin: int = 0
     force_equal: bool = True
+    gates: ArandNativeGates = ArandNativeGates()
 
     def __post_init__(self) -> None:
         if not 1 <= len(self.arms) <= 10 or any(
@@ -63,18 +66,32 @@ class ArandNativeRules:
         object.__setattr__(self, "arms", tuple(self.arms))
         for name in ("minimum_enrollment", "maximum_enrollment", "runin"):
             object.__setattr__(self, name, _integer(getattr(self, name), name))
-        if self.maximum_enrollment < self.minimum_enrollment:
+        if not isinstance(self.gates, ArandNativeGates):
+            raise ValueError("gates must be ArandNativeGates")
+        if (
+            self.gates.trial_maximum
+            and self.gates.trial_minimum
+            and self.maximum_enrollment < self.minimum_enrollment
+        ):
             raise ValueError("maximum enrollment must be at least the minimum")
         for name in ("minimum_duration", "maximum_duration", "final_followup", "power"):
             if scalar(getattr(self, name), name) < 0:
                 raise ValueError(f"{name} must be nonnegative")
-        if self.maximum_duration < self.minimum_duration:
+        if (
+            self.gates.duration_maximum
+            and self.gates.duration_minimum
+            and self.maximum_duration < self.minimum_duration
+        ):
             raise ValueError("maximum duration must be at least the minimum")
-        for name in ("lower", "upper", "final_cutoff", "futility_cutoff", "floor"):
-            _unit(getattr(self, name), name)
+        for name in ("lower", "upper", "final_cutoff", "futility_cutoff"):
+            value = getattr(self, name)
+            normalized = _arm_units(value, len(self.arms), name)
+            if np.asarray(value).ndim != 0:
+                object.__setattr__(self, name, normalized)
+        _unit(self.floor, "floor")
         if self.floor * len(self.arms) > 1:
             raise ValueError("infeasible allocation floor")
-        if self.min_action not in (1, 3) or self.max_action not in (1, 2, 3):
+        if self.min_action not in (0, 1, 2, 3) or self.max_action not in (0, 1, 2, 3):
             raise ValueError("unsupported closure action")
         if not isinstance(self.stop_when_one_arm, bool) or not isinstance(self.force_equal, bool):
             raise ValueError("controller switches must be boolean")
@@ -164,11 +181,23 @@ def arand_native_decide(
             max_action=rules.max_action,
         )
 
-    trial_minimum = total >= rules.minimum_enrollment and now >= rules.minimum_duration
+    gates = rules.gates
+    trial_minimum = (not gates.trial_minimum or total >= rules.minimum_enrollment) and (
+        not gates.duration_minimum or now >= rules.minimum_duration
+    )
     # Native minima use ANY arm and OR between the arm/group conditions.
     arm_minimum = any(n >= a.minimum for n, a in zip(counts, rules.arms, strict=True))
     group_minimum = any(n >= a.group_minimum for n, a in zip(counts, rules.arms, strict=True))
-    if trial_minimum and (arm_minimum or group_minimum):
+    minimum_met = (
+        (arm_minimum or group_minimum)
+        if gates.arm_minimum and gates.group_minimum
+        else arm_minimum
+        if gates.arm_minimum
+        else group_minimum
+        if gates.group_minimum
+        else True
+    )
+    if trial_minimum and minimum_met:
         look = arand_native_monitor(
             monitor, now=now, enrolled=total, observed=observed, pending=pending
         )
@@ -178,17 +207,22 @@ def arand_native_decide(
         if look.analyze:
             evaluate(now)
     completed = trial_minimum and (
-        now > rules.maximum_duration or total >= rules.maximum_enrollment
+        (gates.duration_maximum and now > rules.maximum_duration)
+        or (gates.trial_maximum and total >= rules.maximum_enrollment)
     )
     group_selection = None
     if completed:
-        reason = "maximum_duration" if now > rules.maximum_duration else "maximum_enrollment"
+        reason = (
+            "maximum_duration"
+            if gates.duration_maximum and now > rules.maximum_duration
+            else "maximum_enrollment"
+        )
         now += rules.final_followup
         if not np.isfinite(now):
             raise ArithmeticError("final analysis time overflow")
         evaluate(now)
     else:
-        statuses = arand_native_constraints(statuses, counts, rules.arms, now=now)
+        statuses = arand_native_constraints(statuses, counts, rules.arms, now=now, gates=gates)
         active = statuses.count(0)
         stop_one = rules.stop_when_one_arm and trial_minimum and active <= 1
         if stop_one:

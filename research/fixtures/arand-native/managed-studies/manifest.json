@@ -1,0 +1,25 @@
+{
+  "profile": "original-managed-serializer",
+  "libraries": {
+    "ARand.Design.dll": "297cd5439341950cae09ed94e0e9f19bde0c1b9767cde3b5cd82b4fa3c76675d",
+    "ARandSimulation.dll": "b42ec25836c7a0543c224b1778b73d90ca91163bd45c5a08c69fffc750a994a7",
+    "ARand.Util.dll": "83c502f62d63594baa776c76492e97782edc6d34f48f57165dd0bb09b92af632"
+  },
+  "outputs": {
+    "binary-roundtrip.xml": "99a5a344bc631c8a7d201c6e7b0fb1e5759b90060a8f73a377366aa496cb4b93",
+    "binary.xml": "99a5a344bc631c8a7d201c6e7b0fb1e5759b90060a8f73a377366aa496cb4b93",
+    "tte-roundtrip.xml": "b98b57042d2c59f766bae8a209d02ea51d205de3b51e382c3ebcbf8195c74572",
+    "tte.xml": "b98b57042d2c59f766bae8a209d02ea51d205de3b51e382c3ebcbf8195c74572"
+  },
+  "validation": [
+    "binary valid=True ",
+    "tte valid=True "
+  ],
+  "normalization": [
+    "trial_details/current_time only"
+  ],
+  "limitations": [
+    "Does not execute mixed-mode native trial engine.",
+    "Synthetic history fields exhibit original managed setter/validator behavior."
+  ]
+}

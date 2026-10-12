@@ -1,0 +1,94 @@
+<simulation xmlns:ns0="http://www.MDAnderson.org" ProgID="270813C0-49C7-4f80-9230-F4477F11E51C" FileVersion="3.0.0.0" name="Synthetic binary reference" seed="12345">
+  <MyProperty>0</MyProperty>
+  <trial_details min_trial_length="-1" max_trial_length="20" min_qty_pats_in_trial="2" max_qty_pats_in_trial="6" min_pats_per_arm="-1" max_pats_per_arm="-1" min_pats_per_group="-1" max_pats_per_group="-1" monitoring_type="continuous" monitor_times="[]" qty_pats_betw_eval="-1" a="-1" b="-1">
+    <BinStatModel>BINARY_NO_COVARIATES</BinStatModel>
+    <current_time>NORMALIZED_WALL_CLOCK</current_time>
+    <time_type>Months</time_type>
+    <arm name="Arm1" description="Arm1 Description">
+      <arm_group name="No Groups" description="No Groups" />
+    </arm>
+    <arm name="Arm2" description="Arm2 Description">
+      <arm_group name="No Groups" description="No Groups" />
+    </arm>
+    <calculator name="Binary" var_cov_matrix="" means="" var="" min_sample="" max_sample="" qty_pats_b4_update="0" qty_pats_btw_update="1" burn_in="2500" chain_length="20000" qty_chains="4" max_or_min="max" use_delta_futility="false" delta="0" calc_tte_meth="NA">
+      <calc_outcome name="Outcome" prior_dist="Beta">
+        <calc_parameters arm_name="Arm1" group_name="No Groups" param1="2" param2="2">
+          <CalculationMethod />
+          <InputParameter1 />
+          <InputParameter2 />
+          <LowerX />
+          <UpperX />
+          <LowerQ>0.025</LowerQ>
+          <UpperQ>0.975</UpperQ>
+          <Mean />
+          <Variance />
+          <VarOrSD>Variance</VarOrSD>
+        </calc_parameters>
+        <calc_parameters arm_name="Arm2" group_name="No Groups" param1="2" param2="2">
+          <CalculationMethod />
+          <InputParameter1 />
+          <InputParameter2 />
+          <LowerX />
+          <UpperX />
+          <LowerQ>0.025</LowerQ>
+          <UpperQ>0.975</UpperQ>
+          <Mean />
+          <Variance />
+          <VarOrSD>Variance</VarOrSD>
+        </calc_parameters>
+      </calc_outcome>
+    </calculator>
+    <outcome name="Outcome">
+      <outcomelevel>
+        <Description>Outcome Level 1</Description>
+        <Value>0</Value>
+      </outcomelevel>
+      <outcomelevel>
+        <Description>Outcome Level 2</Description>
+        <Value>0</Value>
+      </outcomelevel>
+    </outcome>
+    <current_patients>
+      <patient patient_id="synthetic-observed" start_time="1" arm="Arm1" group="No groups">
+        <ns0:patient_outcome value="1" name="Outcome" type="double" time="0">
+          <ns0:OutcomeText>Pending</ns0:OutcomeText>
+          <ns0:CutoffForResponse>-1</ns0:CutoffForResponse>
+          <ns0:TimeBetweenRandAndResp>-1</ns0:TimeBetweenRandAndResp>
+          <ns0:TimeOfOutcome>0</ns0:TimeOfOutcome>
+          <ns0:Verification>Pending</ns0:Verification>
+        </ns0:patient_outcome>
+      </patient>
+      <patient patient_id="synthetic-pending" start_time="7" arm="Arm2" group="No groups">
+        <ns0:patient_outcome value="-1" name="Outcome" type="double" time="0">
+          <ns0:OutcomeText>Pending</ns0:OutcomeText>
+          <ns0:CutoffForResponse>-1</ns0:CutoffForResponse>
+          <ns0:TimeBetweenRandAndResp>-1</ns0:TimeBetweenRandAndResp>
+          <ns0:TimeOfOutcome>0</ns0:TimeOfOutcome>
+          <ns0:Verification>Pending</ns0:Verification>
+        </ns0:patient_outcome>
+      </patient>
+    </current_patients>
+    <randomizer force_equal_qty_pats="true" qty_pats_enroll_b4_adapt="4" tunning_parameter="0.5" min_rand_prob="0.1" use_ballancing="false" a="0" epsilon="0" />
+    <stopping_rule max_prob_best="1" min_prob_best="0" max_trial_length="true" min_pats_in_trial="true" max_pats_in_trial="true" min_pats_per_arm="false" max_pats_per_arm="false" min_pats_per_group="false" max_pats_per_group="false" stop_when_one_treat="true" additional_fu="2" min_prob_action="tmp_close" max_prob_action="close_early" final_max_prob_best="0.5" pats_between_pred_probs="-1" initial_pred_prob_check="-1" pu_trm="0" power="0" a="0" max_prob_equivalance="0" max_prob_futility="0" min_prob_futility="0">
+      <stopping_rule_arm name="Arm1" pu="0.95" pl="0.05" pu_final="0.5" enforce_comp_min_param_value="false" enforce_min_pred_prob="false" enforce_max_pred_prob="false" comp_min_param_value="0.5" comp_min_param_prob="0.05" min_pred_prob="0" max_pred_prob="0" />
+      <stopping_rule_arm name="Arm2" pu="0.95" pl="0.05" pu_final="0.5" enforce_comp_min_param_value="false" enforce_min_pred_prob="false" enforce_max_pred_prob="false" comp_min_param_value="0.5" comp_min_param_prob="0.05" min_pred_prob="0" max_pred_prob="0" />
+    </stopping_rule>
+  </trial_details>
+  <scenario qty_reps="100">
+    <sim_details>
+      <accrual>
+        <accrual_group name="No Groups" acc="4" />
+      </accrual>
+      <sim_outcome name="Outcome" sim_type="Binary">
+        <param_set arm="Arm1" group="No Groups" type="double">
+          <param name="ProbSuccess" value="0.1" />
+          <param name="TimeBetweenEvals" value="1" />
+        </param_set>
+        <param_set arm="Arm2" group="No Groups" type="double">
+          <param name="ProbSuccess" value="0.1" />
+          <param name="TimeBetweenEvals" value="1" />
+        </param_set>
+      </sim_outcome>
+    </sim_details>
+  </scenario>
+</simulation>

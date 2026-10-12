@@ -1,0 +1,3434 @@
+[
+  {
+    "probabilities": [
+      0.1,
+      0.5,
+      0
+    ],
+    "statuses": [
+      4,
+      1,
+      0
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.1,
+      0.1,
+      1
+    ],
+    "min_action": 0,
+    "max_action": 2,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.1,
+      0.05,
+      0.95,
+      0.95
+    ],
+    "statuses": [
+      5,
+      9,
+      2,
+      5
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      1,
+      0,
+      0,
+      1
+    ],
+    "min_action": 0,
+    "max_action": 0,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.9,
+      0,
+      1,
+      0
+    ],
+    "statuses": [
+      4,
+      4,
+      4,
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.1,
+      0.1,
+      0.1,
+      1
+    ],
+    "min_action": 0,
+    "max_action": 0,
+    "completed": false,
+    "expected_statuses": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        2,
+        true
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.1,
+      1,
+      0.5,
+      0.1
+    ],
+    "statuses": [
+      0,
+      9,
+      1,
+      0
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.1,
+      0.5,
+      0.5,
+      0.1
+    ],
+    "min_action": 0,
+    "max_action": 3,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      1,
+      0.9,
+      0,
+      1
+    ],
+    "statuses": [
+      2,
+      2,
+      5,
+      1
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      1,
+      0.1,
+      0,
+      0.1
+    ],
+    "min_action": 3,
+    "max_action": 3,
+    "completed": false,
+    "expected_statuses": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.95,
+      0
+    ],
+    "statuses": [
+      5,
+      4
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.5,
+      0.5
+    ],
+    "min_action": 0,
+    "max_action": 1,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      1,
+      0.9,
+      0
+    ],
+    "statuses": [
+      0,
+      1,
+      4
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0,
+      1,
+      1
+    ],
+    "min_action": 2,
+    "max_action": 0,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      0,
+      2
+    ],
+    "expected_selections": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        true
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0.5,
+      0.95
+    ],
+    "statuses": [
+      3,
+      1,
+      0
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      1,
+      1,
+      1
+    ],
+    "min_action": 3,
+    "max_action": 2,
+    "completed": true,
+    "expected_statuses": [
+      2,
+      2,
+      0
+    ],
+    "expected_selections": [
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        true
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.9
+    ],
+    "statuses": [
+      3
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      1
+    ],
+    "min_action": 1,
+    "max_action": 3,
+    "completed": true,
+    "expected_statuses": [
+      3
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0.1,
+      0.9,
+      0.5
+    ],
+    "statuses": [
+      1,
+      9,
+      3,
+      5
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.1,
+      1,
+      1,
+      1
+    ],
+    "min_action": 3,
+    "max_action": 1,
+    "completed": true,
+    "expected_statuses": [
+      3,
+      0,
+      3,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.95,
+      0.9
+    ],
+    "statuses": [
+      0,
+      2
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.5,
+      0
+    ],
+    "min_action": 2,
+    "max_action": 2,
+    "completed": true,
+    "expected_statuses": [
+      2,
+      2
+    ],
+    "expected_selections": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.5,
+      1
+    ],
+    "statuses": [
+      0,
+      0
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.1,
+      0.5
+    ],
+    "min_action": 1,
+    "max_action": 3,
+    "completed": false,
+    "expected_statuses": [
+      3,
+      0
+    ],
+    "expected_selections": [
+      [
+        1,
+        true
+      ],
+      [
+        1,
+        true
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.95,
+      0.1,
+      0.95,
+      0.1
+    ],
+    "statuses": [
+      4,
+      1,
+      1,
+      3
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.5,
+      0,
+      0,
+      0.1
+    ],
+    "min_action": 2,
+    "max_action": 2,
+    "completed": false,
+    "expected_statuses": [
+      2,
+      2,
+      1,
+      2
+    ],
+    "expected_selections": [
+      [
+        0,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.95,
+      0.95,
+      0.9
+    ],
+    "statuses": [
+      1,
+      3,
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      1,
+      0.1,
+      0
+    ],
+    "min_action": 2,
+    "max_action": 0,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      3,
+      2
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0,
+      1
+    ],
+    "statuses": [
+      2,
+      2,
+      3
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0,
+      1,
+      0.5
+    ],
+    "min_action": 3,
+    "max_action": 2,
+    "completed": false,
+    "expected_statuses": [
+      2,
+      2,
+      3
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      1
+    ],
+    "statuses": [
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0
+    ],
+    "min_action": 0,
+    "max_action": 3,
+    "completed": false,
+    "expected_statuses": [
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.1
+    ],
+    "statuses": [
+      0
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      1
+    ],
+    "min_action": 0,
+    "max_action": 1,
+    "completed": false,
+    "expected_statuses": [
+      0
+    ],
+    "expected_selections": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      1,
+      1,
+      0.5,
+      0
+    ],
+    "statuses": [
+      2,
+      0,
+      1,
+      5
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0,
+      0.1,
+      0,
+      1
+    ],
+    "min_action": 3,
+    "max_action": 2,
+    "completed": true,
+    "expected_statuses": [
+      2,
+      3,
+      0,
+      3
+    ],
+    "expected_selections": [
+      [
+        1,
+        false
+      ],
+      [
+        1,
+        true
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05
+    ],
+    "statuses": [
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      1
+    ],
+    "min_action": 0,
+    "max_action": 0,
+    "completed": true,
+    "expected_statuses": [
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.9,
+      0.9
+    ],
+    "statuses": [
+      3,
+      1
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      1,
+      0.1
+    ],
+    "min_action": 3,
+    "max_action": 1,
+    "completed": false,
+    "expected_statuses": [
+      3,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05
+    ],
+    "statuses": [
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0
+    ],
+    "min_action": 2,
+    "max_action": 0,
+    "completed": false,
+    "expected_statuses": [
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.9
+    ],
+    "statuses": [
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.5
+    ],
+    "min_action": 3,
+    "max_action": 1,
+    "completed": true,
+    "expected_statuses": [
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0.9
+    ],
+    "statuses": [
+      9,
+      1
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.5,
+      1
+    ],
+    "min_action": 3,
+    "max_action": 2,
+    "completed": true,
+    "expected_statuses": [
+      3,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.95,
+      0.95,
+      0.1
+    ],
+    "statuses": [
+      2,
+      4,
+      4
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.1,
+      1,
+      1
+    ],
+    "min_action": 2,
+    "max_action": 0,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      4,
+      0
+    ],
+    "expected_selections": [
+      [
+        1,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.9,
+      1,
+      1
+    ],
+    "statuses": [
+      1,
+      1,
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.1,
+      0.5,
+      0.1
+    ],
+    "min_action": 0,
+    "max_action": 1,
+    "completed": false,
+    "expected_statuses": [
+      1,
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.95
+    ],
+    "statuses": [
+      2
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      1
+    ],
+    "min_action": 0,
+    "max_action": 2,
+    "completed": false,
+    "expected_statuses": [
+      2
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.1
+    ],
+    "statuses": [
+      5
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      1
+    ],
+    "min_action": 1,
+    "max_action": 2,
+    "completed": false,
+    "expected_statuses": [
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.9,
+      0.9
+    ],
+    "statuses": [
+      3,
+      4
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0,
+      1
+    ],
+    "min_action": 0,
+    "max_action": 3,
+    "completed": false,
+    "expected_statuses": [
+      3,
+      0
+    ],
+    "expected_selections": [
+      [
+        1,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.1,
+      1,
+      0,
+      0.95
+    ],
+    "statuses": [
+      4,
+      4,
+      3,
+      4
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.5,
+      0,
+      0.5,
+      0.1
+    ],
+    "min_action": 1,
+    "max_action": 2,
+    "completed": false,
+    "expected_statuses": [
+      1,
+      1,
+      3,
+      0
+    ],
+    "expected_selections": [
+      [
+        1,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.95,
+      0.5,
+      0.05,
+      0.9
+    ],
+    "statuses": [
+      5,
+      5,
+      0,
+      5
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      1,
+      0.1,
+      0.5,
+      0.5
+    ],
+    "min_action": 0,
+    "max_action": 3,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.5,
+      1,
+      1,
+      0.5
+    ],
+    "statuses": [
+      5,
+      2,
+      2,
+      5
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.5,
+      0.5,
+      0.1,
+      0
+    ],
+    "min_action": 3,
+    "max_action": 3,
+    "completed": true,
+    "expected_statuses": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.9,
+      0.9,
+      0.5
+    ],
+    "statuses": [
+      0,
+      2,
+      5
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.1,
+      0.5,
+      0.5
+    ],
+    "min_action": 0,
+    "max_action": 1,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        true
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0.9,
+      0.9,
+      0.05
+    ],
+    "statuses": [
+      1,
+      5,
+      0,
+      5
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.1,
+      0.5,
+      1,
+      0.5
+    ],
+    "min_action": 1,
+    "max_action": 3,
+    "completed": true,
+    "expected_statuses": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.9
+    ],
+    "statuses": [
+      3
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.5
+    ],
+    "min_action": 0,
+    "max_action": 2,
+    "completed": false,
+    "expected_statuses": [
+      3
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.5,
+      0,
+      0,
+      1
+    ],
+    "statuses": [
+      9,
+      2,
+      5,
+      2
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      1,
+      0.5,
+      1,
+      0.1
+    ],
+    "min_action": 2,
+    "max_action": 3,
+    "completed": true,
+    "expected_statuses": [
+      3,
+      3,
+      3,
+      2
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      1
+    ],
+    "statuses": [
+      9,
+      0
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.5,
+      0.1
+    ],
+    "min_action": 1,
+    "max_action": 0,
+    "completed": false,
+    "expected_statuses": [
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        1,
+        true
+      ],
+      [
+        1,
+        true
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.1,
+      1,
+      1,
+      0.9
+    ],
+    "statuses": [
+      0,
+      2,
+      9,
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      1,
+      0.1,
+      0.5,
+      0.5
+    ],
+    "min_action": 0,
+    "max_action": 2,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      2,
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0.9,
+      0.05
+    ],
+    "statuses": [
+      9,
+      3,
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      1,
+      0.5,
+      1
+    ],
+    "min_action": 2,
+    "max_action": 2,
+    "completed": true,
+    "expected_statuses": [
+      2,
+      3,
+      2
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0,
+      1
+    ],
+    "statuses": [
+      4,
+      2
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.5,
+      0
+    ],
+    "min_action": 3,
+    "max_action": 1,
+    "completed": true,
+    "expected_statuses": [
+      3,
+      3
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0.1,
+      0.95
+    ],
+    "statuses": [
+      0,
+      5,
+      1
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      1,
+      0.1,
+      1
+    ],
+    "min_action": 2,
+    "max_action": 3,
+    "completed": true,
+    "expected_statuses": [
+      2,
+      2,
+      0
+    ],
+    "expected_selections": [
+      [
+        0,
+        false
+      ],
+      [
+        0,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0
+    ],
+    "statuses": [
+      2,
+      0
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.5,
+      0.5
+    ],
+    "min_action": 0,
+    "max_action": 0,
+    "completed": false,
+    "expected_statuses": [
+      2,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.9
+    ],
+    "statuses": [
+      5
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.5
+    ],
+    "min_action": 1,
+    "max_action": 2,
+    "completed": false,
+    "expected_statuses": [
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0,
+      0.5
+    ],
+    "statuses": [
+      9,
+      0
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0,
+      0.1
+    ],
+    "min_action": 0,
+    "max_action": 2,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05
+    ],
+    "statuses": [
+      1
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.5
+    ],
+    "min_action": 2,
+    "max_action": 1,
+    "completed": false,
+    "expected_statuses": [
+      2
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0,
+      0.9,
+      0
+    ],
+    "statuses": [
+      4,
+      4,
+      2
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      1,
+      1,
+      1
+    ],
+    "min_action": 2,
+    "max_action": 3,
+    "completed": false,
+    "expected_statuses": [
+      0,
+      0,
+      2
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0,
+      0,
+      0.1
+    ],
+    "statuses": [
+      1,
+      5,
+      1
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.5,
+      0.1,
+      1
+    ],
+    "min_action": 2,
+    "max_action": 0,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      0,
+      2
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0.1,
+      0
+    ],
+    "statuses": [
+      4,
+      2,
+      1
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.5,
+      0,
+      0.1
+    ],
+    "min_action": 3,
+    "max_action": 3,
+    "completed": true,
+    "expected_statuses": [
+      3,
+      3,
+      3
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.9,
+      0.95,
+      0.95
+    ],
+    "statuses": [
+      1,
+      4,
+      1
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.5,
+      0.1,
+      0.1
+    ],
+    "min_action": 2,
+    "max_action": 0,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      2,
+      2
+    ],
+    "expected_selections": [
+      [
+        1,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0.5,
+      0.95,
+      0
+    ],
+    "statuses": [
+      2,
+      9,
+      1,
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0.1,
+      1,
+      0,
+      0
+    ],
+    "min_action": 1,
+    "max_action": 0,
+    "completed": false,
+    "expected_statuses": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.5,
+      0.5,
+      0.9
+    ],
+    "statuses": [
+      5,
+      0,
+      0
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.1,
+      0,
+      0.1
+    ],
+    "min_action": 1,
+    "max_action": 1,
+    "completed": false,
+    "expected_statuses": [
+      0,
+      0,
+      1
+    ],
+    "expected_selections": [
+      [
+        2,
+        false
+      ],
+      [
+        2,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.1
+    ],
+    "statuses": [
+      4
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      1
+    ],
+    "min_action": 2,
+    "max_action": 3,
+    "completed": true,
+    "expected_statuses": [
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.5,
+      0
+    ],
+    "statuses": [
+      1,
+      0
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      1,
+      0
+    ],
+    "min_action": 2,
+    "max_action": 2,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      2
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0.9,
+      1
+    ],
+    "statuses": [
+      4,
+      4,
+      2
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0,
+      1,
+      0.1
+    ],
+    "min_action": 3,
+    "max_action": 2,
+    "completed": false,
+    "expected_statuses": [
+      2,
+      4,
+      3
+    ],
+    "expected_selections": [
+      [
+        1,
+        true
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0.95,
+      1
+    ],
+    "statuses": [
+      9,
+      4,
+      4
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.5,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0,
+      0.5,
+      0.5
+    ],
+    "min_action": 1,
+    "max_action": 3,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      1,
+      1
+    ],
+    "expected_selections": [
+      [
+        2,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.95,
+      0.9,
+      0
+    ],
+    "statuses": [
+      0,
+      0,
+      3
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0,
+      1,
+      0.1
+    ],
+    "min_action": 2,
+    "max_action": 2,
+    "completed": false,
+    "expected_statuses": [
+      0,
+      0,
+      3
+    ],
+    "expected_selections": [
+      [
+        1,
+        false
+      ],
+      [
+        1,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.95,
+      0.5,
+      0.1
+    ],
+    "statuses": [
+      2,
+      5,
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0,
+      0.1,
+      0.1
+    ],
+    "min_action": 0,
+    "max_action": 0,
+    "completed": false,
+    "expected_statuses": [
+      0,
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.5,
+      1,
+      0.1,
+      0.05
+    ],
+    "statuses": [
+      1,
+      5,
+      4,
+      2
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      }
+    ],
+    "futility": [
+      0,
+      0,
+      0,
+      0.5
+    ],
+    "min_action": 1,
+    "max_action": 1,
+    "completed": false,
+    "expected_statuses": [
+      1,
+      0,
+      1,
+      1
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      1,
+      1,
+      0
+    ],
+    "statuses": [
+      0,
+      5,
+      1
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      },
+      {
+        "upper": 1,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.1,
+      0.5,
+      1
+    ],
+    "min_action": 0,
+    "max_action": 2,
+    "completed": false,
+    "expected_statuses": [
+      0,
+      0,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.9,
+      1,
+      0.5,
+      1
+    ],
+    "statuses": [
+      5,
+      4,
+      1,
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      },
+      {
+        "upper": 0.5,
+        "lower": 0.1,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 0.2,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0,
+      0,
+      1,
+      0.5
+    ],
+    "min_action": 1,
+    "max_action": 3,
+    "completed": true,
+    "expected_statuses": [
+      3,
+      3,
+      3,
+      0
+    ],
+    "expected_selections": [
+      [
+        1,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  },
+  {
+    "probabilities": [
+      0.05,
+      0.95,
+      0.95
+    ],
+    "statuses": [
+      5,
+      2,
+      9
+    ],
+    "arm_rules": [
+      {
+        "upper": 0.95,
+        "lower": 0.1,
+        "cutoff": 0.5,
+        "threshold": 0.5,
+        "futility_cutoff": 0,
+        "enforce": 0
+      },
+      {
+        "upper": 0.95,
+        "lower": 0.5,
+        "cutoff": 1,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 0
+      },
+      {
+        "upper": 1,
+        "lower": 0.5,
+        "cutoff": 0,
+        "threshold": 0.5,
+        "futility_cutoff": 1,
+        "enforce": 1
+      }
+    ],
+    "futility": [
+      0.1,
+      0,
+      0.1
+    ],
+    "min_action": 0,
+    "max_action": 0,
+    "completed": true,
+    "expected_statuses": [
+      0,
+      2,
+      0
+    ],
+    "expected_selections": [
+      [
+        null,
+        false
+      ],
+      [
+        null,
+        false
+      ]
+    ]
+  }
+]

@@ -257,3 +257,14 @@ for the interrupted attempt, allocation-population correction, exact evidence
 boundaries and next source contracts. Code was pushed at 3732fde7; supplementary
 assignment evidence was pushed at 78653d44; final validation follows on the same
 feature branch. No merge, release, outreach, PR bypass or license change occurred.
+
+### Continued ARAND native desktop work
+
+After 37a1f7d, constraint switches, per-arm stopping/selection cutoffs and native
+batch construction/reset were integrated with independent original-instruction
+checks. Original managed serialization now runs in an isolated local Mono tree;
+valid synthetic binary/TTE XML plus exact normalized round trips are preserved.
+See the continuing section of the integration checkpoint and new reference
+runners. No app promotion. Continue through XML/history, per-arm parameter
+thresholds/delays, wrapper scenario and native-report contracts; do not stop at
+this intermediate checkpoint. Existing license/PR restrictions remain unchanged.

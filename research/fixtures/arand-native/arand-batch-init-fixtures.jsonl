@@ -1,0 +1,6 @@
+{"a": 3, "b": 0, "batch_index": 0, "increments": [3, 3, 3], "initial": 3, "maximum": 12, "reset": 3}
+{"a": 3.5, "b": 0, "batch_index": 0, "increments": [4, 4], "initial": 4, "maximum": 12, "reset": 3}
+{"a": 5, "b": 0.1, "batch_index": 0, "increments": [4, 3, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "initial": 5, "maximum": 30, "reset": 5}
+{"a": 0.5, "b": 0, "batch_index": 0, "increments": [1, 1, 1, 1, 1], "initial": 1, "maximum": 6, "reset": 0}
+{"a": 10, "b": 0.03, "batch_index": 0, "increments": [8, 6, 5, 5, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "initial": 10, "maximum": 100, "reset": 10}
+{"a": 2, "b": -0.1, "batch_index": 0, "increments": [3, 4, 5, 9], "initial": 2, "maximum": 20, "reset": 2}

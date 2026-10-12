@@ -21,6 +21,7 @@ def run(
     group_max=None,
     start=None,
     duration=None,
+    gates=None,
     check_arm_min=True,
     check_group_min=True,
 ):
@@ -57,6 +58,9 @@ def run(
         mem[1000 + k] = 1
     mem[1106] = int(check_arm_min)
     mem[1104] = int(check_group_min)
+    if gates is not None:
+        for offset, enabled in zip(range(104, 112), gates):
+            mem[1000 + offset] = int(enabled)
     strings = {5216: "group"}
     nxt = {5200: 5100}
     for i in range(na):

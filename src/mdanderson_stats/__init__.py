@@ -73,6 +73,7 @@ from .arand_calendar import (
 )
 from .arand_native import (
     ArandNativeArmLimits,
+    ArandNativeGates,
     ArandNativeMonitor,
     ArandNativeMonitorResult,
     ArandNativeObservation,
@@ -80,6 +81,7 @@ from .arand_native import (
     ArandNativeStatistics,
     ArandNativeStatus,
     arand_native_allocation,
+    arand_native_batch_monitor,
     arand_native_constraints,
     arand_native_monitor,
     arand_native_select,
@@ -2771,6 +2773,7 @@ __all__ = [
     "prt_final_selection",
     "ArandNativeStatus",
     "arand_native_allocation",
+    "arand_native_batch_monitor",
     "ArandNativeMonitor",
     "ArandNativeMonitorResult",
     "arand_native_monitor",
@@ -2781,6 +2784,7 @@ __all__ = [
     "ArandNativeSelection",
     "arand_native_select",
     "ArandNativeArmLimits",
+    "ArandNativeGates",
     "arand_native_constraints",
     "ArandNativeRules",
     "ArandNativeEvidence",

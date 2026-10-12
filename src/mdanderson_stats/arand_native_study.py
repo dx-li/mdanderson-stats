@@ -14,7 +14,13 @@ import numpy as np
 
 from ._cdflib import _freeze
 from ._validation import FloatArray, finite, scalar
-from .arand_native import ArandNativeArmLimits, ArandNativeMonitor, _integer, _unit
+from .arand_native import (
+    ArandNativeArmLimits,
+    ArandNativeGates,
+    ArandNativeMonitor,
+    _integer,
+    _unit,
+)
 from .arand_native_trial import ArandNativeRules, ArandNativeTrial, arand_native_replay
 from .arand_posterior import arand_binary_posterior, arand_survival_posterior
 from .arand_simulation import _nonnegative_seed, _trial_seed_streams
@@ -127,6 +133,8 @@ def read_arand_native_study(text: str) -> ArandNativeStudy:
         data = obj["study"]
         rules = data.pop("rules")
         rules["arms"] = tuple(ArandNativeArmLimits(**a) for a in rules["arms"])
+        if "gates" in rules:
+            rules["gates"] = ArandNativeGates(**rules["gates"])
         data["rules"] = ArandNativeRules(**rules)
         data["monitor"] = ArandNativeMonitor(**data["monitor"])
         return ArandNativeStudy(**data)
