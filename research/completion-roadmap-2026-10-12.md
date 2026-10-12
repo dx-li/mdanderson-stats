@@ -20,3 +20,8 @@ do block claiming all138 applications are fully implemented and unrestricted.
 The independent acceptance review is closed by [targeted corrections](acceptance-review-fixes-2026-10-12.md): ARAND unresolved-tail allocation safety, CRM final-consensus uncertainty, and ToxFinder budget preflight/MAP diagnostic propagation. Meaningful default-quality and independent six-dimensional posterior checks supplement the small workflow smoke runs. Next continue the EffTox current-version integration contracts above.
 Exact RNG/GUI identity alone is not a missing statistical method; advertised
 input choices and conduct semantics still need their own evidence.
+
+EffTox current-version integration now includes saved-file conduct, calibration,
+simulation and reports, with738 original-instruction cases and an explicit
+negative-slope summary compatibility profile. Finish all-scenario/batch and
+precision acceptance before a status promotion; see the linked current contracts.

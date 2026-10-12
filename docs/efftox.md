@@ -512,3 +512,7 @@ current-desktop admissibility and pending rules that differ from the generic
 `efftox_decision` profile above; see the
 [current workflow contract](../research/efftox-current-workflow-contracts-2026-10-12.md).
 The generic defaults have not been silently changed to these compatibility rules.
+
+
+Current six-coefficient saved-study conduct, simulation and reports are documented
+in [the desktop workflow guide](efftox-desktop.md), with explicit legacy profiles.

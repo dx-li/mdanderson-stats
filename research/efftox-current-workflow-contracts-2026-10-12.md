@@ -208,3 +208,81 @@ New fixtures are `current-cohort-prefix.json`, `current-controller.json` and
 instruction cases (500 selection/admissibility,21 pending loop,33 cohort prefix,
 32 outer status,8 Rselect). Inference/completion-stream substitutions remain
 explicit; these are not594 independent posterior validations.
+
+## Integrated current workflows and negative-slope discovery
+
+The next implementation adds `efftox_desktop_controller.py`,
+`efftox_desktop_inference.py`, `efftox_desktop_patients.py`,
+`efftox_desktop_calibration.py`, `efftox_desktop_simulation.py` and
+`efftox_desktop_report.py`. See [the public workflow guide](../docs/efftox-desktop.md).
+These close the previously missing completed-prefix/pending integration, explicit
+bounded inference service, patient add/edit/delete/clear, calibrated-prior
+precedence, complete-outcome simulation and HTML reporting paths. They do not
+promote the application or assert native numerical posterior identity.
+
+The 86 original cohort/controller/pending cases now validate production control
+flow. Independently enumerated individual pending outcomes agree exactly with
+all aggregated sufficient-statistic completions tested. Bounds are checked before
+inference. A pending disagreement releases no dose. The safe capacity profile
+analyzes the full final history; the named legacy profile retains the original
+nonmultiple-capacity defect, but the patient-add API independently forbids
+excess accrual. Prior calibration cannot change an accruing trial's design.
+Simulation always reanalyzes after the final/partial cohort or an early stop.
+
+### Original posterior integrand, not merely a fitted-value comparison
+
+`tools/reference_efftox_current_integrand.py` now executes **the complete original
+wrapper integrand RVA0x20b50**, including native Gaussian density arithmetic.
+Supplied host services are checked integer/double container access, exp, logistic
+and integer power. All outcome-cell arithmetic, likelihood multiplication,
+negative-slope branches, tail indicators and output weighting execute original
+instructions. Explicit prior objects contain their means, SDs and Gaussian
+normalization. No original DLL is redistributed. The wrapper SHA256 remains
+`6b266b3927bec98fd6d64f5767a1110cfccc3fe6bd18c7d438b9cfd538e4479c`.
+
+The 81 cases in `fixtures/efftox-native/current-integrand.json` cover negative,
+zero and positive slopes; negative/zero/positive association; empty and two
+nonempty histories; and three Gaussian priors. Independently calculated joint
+probabilities and Gaussian likelihood weights agree. The installed Python model
+also agrees, checked by `tools/check_efftox_current_integrand.py`, with maximum
+relative posterior-weight error `6.871784649697795e-15`.
+
+This resolves the **integrand's prior convention**: negative toxicity slopes have
+ordinary, nonzero untruncated Gaussian density. The likelihood uses the raw
+logistic toxicity at each dose. It does not resolve original adaptive integration
+limits/tolerances or certify that every finite-precision native integration result
+matches an independently sampled full posterior.
+
+Crucially, RVA0x20cca..0x20ce6 substitutes first-dose toxicity into **summary**
+means and toxicity-tail indicators whenever beta_T<0. At RVA0x20d94 the likelihood
+still loads raw current-dose toxicity from its separate stack slot. This is a
+legacy summary inconsistency, not evidence of a positive-truncated prior.
+`tools/reference_efftox_current_negative_slope.py` independently isolates 48
+original summary cases and 15 native normal-log-density cases. Fixtures are in
+`current-negative-slope.json`. The current source set now totals **738 cases**
+(594 previous +63 isolated summary/density +81 complete integrand).
+
+The Python option `toxicity_summary_profile="desktop_legacy"` reproduces the
+summary inconsistency without altering the likelihood; its default `"model"`
+keeps dose-specific modeled probabilities. The actual slope-prior distribution is
+an independent explicit `monotone_toxicity` choice. No generic scientific default
+was silently changed. Calibration profile metadata prevents reopening a Python
+calibration under a different slope distribution.
+
+Current native `AutoScaleDoses` MethodDef130/RVA0x7e38 also confirms the existing
+centered-log-dose convention: if the first physical dose is zero, add the second
+physical dose to every dose before logging, then subtract the mean log dose.
+This source inspection agrees with the already implemented stable Python helper;
+it is not an additional executed fixture claim.
+
+### Remaining acceptance boundaries
+
+Finish all-scenario and distinct-seed batch aggregation/reporting convenience,
+compare operating-characteristic precision under explicit profiles, and audit
+current help against the final public API before promotion. In particular,
+posterior MCMC diagnostics must remain visible; running a patient workflow alone
+is not evidence of adequate mixing or clinical validity. The initial installed
+original-default example completed two 39-patient trials at 1000 draws/500 warmup/
+4 chains, with maximum split R-hat1.074 across its fits. A higher-precision check
+is being recorded separately. Historical trinary/legacy-utility scope remains
+separate. Do not relabel the other 35 partial rows as simple interface work.

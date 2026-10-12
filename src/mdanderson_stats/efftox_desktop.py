@@ -179,7 +179,8 @@ def read_efftox_desktop_xml(document: str) -> EffToxDesktopStudy:
     efftox_standardize(doses)
     means = _vector(design, "PriorMeans/MVal", 6)
     sds = _vector(design, "PriorStdDevs/SVal", 6)
-    EffToxPrior(np.asarray(means), np.asarray(sds))
+    # Parsing must not silently impose an unresolved slope-distribution profile.
+    EffToxPrior(np.asarray(means), np.asarray(sds), monotone_toxicity=False)
     raw_contour = _text(design, "BivariateBinaryContourPoints")
     if not raw_contour.startswith("[") or not raw_contour.endswith("]"):
         raise ValueError("invalid EffTox contour vector")

@@ -6,6 +6,7 @@ tolerance. Native posterior integrator and RNG identity are not asserted.
 """
 
 from dataclasses import dataclass
+from typing import Literal
 
 import numpy as np
 
@@ -46,6 +47,20 @@ def _select(
     return int(candidates[np.argmax(utility[candidates])])
 
 
+def _toxicity_summary(
+    fit: EffToxFit, profile: Literal["model", "desktop_legacy"]
+) -> tuple[FloatArray, FloatArray]:
+    if profile not in {"model", "desktop_legacy"}:
+        raise ValueError("unknown toxicity_summary_profile")
+    if profile == "model":
+        return fit.toxicity_logits, fit.toxicity_probabilities
+    negative = fit.parameters[:, :, 1, None] < 0
+    return (
+        np.where(negative, fit.toxicity_logits[:, :, :1], fit.toxicity_logits),
+        np.where(negative, fit.toxicity_probabilities[:, :, :1], fit.toxicity_probabilities),
+    )
+
+
 @dataclass(frozen=True)
 class EffToxDesktopDecision:
     """Zero-based current-desktop dose and captured posterior summaries.
@@ -70,6 +85,7 @@ def efftox_desktop_decision(
     toxicity_limit: float,
     efficacy_probability: float,
     toxicity_probability: float,
+    toxicity_summary_profile: Literal["model", "desktop_legacy"] = "model",
 ) -> EffToxDesktopDecision:
     """Apply current desktop selection to a supplied Python binary posterior.
 
@@ -79,7 +95,14 @@ def efftox_desktop_decision(
     selection. An unobserved starting dose is selected unconditionally, matching
     the original selector. These compatibility rules are explicit, not clinical
     recommendations or changes to ``efftox_decision`` defaults.
+
+    ``toxicity_summary_profile="desktop_legacy"`` replaces negative-slope
+    toxicity summaries with the first-dose value, as in the original integrand.
+    The default "model" preserves each dose's modeled toxicity. Neither option
+    changes the fitted likelihood.
     """
+    # The named legacy option reproduces the native negative-slope summary clamp
+    # without changing the supplied posterior likelihood or generic defaults.
     if not isinstance(fit, EffToxFit) or not isinstance(contour, EffToxContour):
         raise TypeError("current desktop selection requires a binary EffToxFit and Lp contour")
     start = _integer(starting_dose_index, "starting_dose_index", 0, len(fit.doses) - 1)
@@ -89,11 +112,12 @@ def efftox_desktop_decision(
     t_cutoff = _probability(toxicity_probability, "toxicity_probability")
     counts = fit.counts.sum(axis=(1, 2))
     p_e = _tail_probability(fit.efficacy_logits, e_limit, upper=True)
-    p_t = _tail_probability(fit.toxicity_logits, t_limit, upper=False)
+    toxicity_logits, toxicity_probabilities = _toxicity_summary(fit, toxicity_summary_profile)
+    p_t = _tail_probability(toxicity_logits, t_limit, upper=False)
     acceptable = _admissible(counts, p_t, p_e, start, t_cutoff, e_cutoff)
     utility = contour.utility(
         fit.efficacy_probabilities.mean(axis=(0, 1)),
-        fit.toxicity_probabilities.mean(axis=(0, 1)),
+        toxicity_probabilities.mean(axis=(0, 1)),
     )
     selected = _select(counts, acceptable, utility, start)
     acceptable.flags.writeable = False

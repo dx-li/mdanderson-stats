@@ -398,3 +398,36 @@ Counts remain97 implemented/35 partial/6 pending. No status is promoted from
 source recovery alone. Six missing fitted-model contracts, mixed-license
 restrictions and the earlier Forbidden PR creation remain unchanged. No release,
 merge, outreach, licensing split or permissions/settings change is authorized.
+
+## EffTox integrated workflow preservation (validation in progress)
+
+Current XML conduct, bounded pending completion, explicit posterior service,
+patient add/edit/ID correction/delete/clear, prior-calibration precedence,
+complete-outcome simulation and reports are now implemented. The focused suite
+passes **680 tests**. The native-reference set is **738 cases**, including81
+complete posterior-integrand cases matching independent Python likelihood/prior
+weights within `6.871784649697795e-15` relative error. A recovered negative-slope
+toxicity-summary inconsistency is isolated in `desktop_legacy`; scientific
+model-based summaries remain the default. See
+[workflow guide](../docs/efftox-desktop.md) and
+[exact contracts](efftox-current-workflow-contracts-2026-10-12.md).
+
+This is a preservation checkpoint, **not completed final validation or catalog
+promotion**. The final behavioral code's full suite is running in
+`/tmp/efftox-current-final-suite-v3.log`; installed-wheel verification is in
+`/tmp/efftox-current-wheel-tests-v3.log`. Earlier v1/v2 full-suite runs were
+terminated when the source-driven scope added the explicit summary profile and
+patient deletion/accrual guard; do not mistake those logs for completed checks.
+The installed precision comparison is running from
+`/tmp/efftox-installed-precision.py`, with output
+`/tmp/efftox-current-installed-precision.json` and `.log`. It compares default
+model summaries, 3x draws/warmup, and explicit legacy summaries on two39-patient
+trials each. All5 original scenarios had previously completed smoke execution;
+those low-draw runs do not establish mixing quality. The default-quality model
+run reached39patients in both trials, selected zero-based dose3 twice, and had
+maximum split R-hat1.074 across fits.
+
+Complete final verification and preserve the evidence, then continue all-scenario/
+batch aggregation and precision acceptance. Counts stay97/35/6. The6 unavailable
+contracts and distribution/PR restrictions are unchanged. No release, merge,
+permission change, outreach or license split has been performed.
