@@ -706,3 +706,14 @@ Ruff/format/mypy/build and retained-notice/raw-asset audits pass. See
 bless-published-validation-2026-10-12.json. Implementation b1722d6f524d1ee87410499087f336763022a224
 was independently verified at the remote feature branch. ComPAS development is
 still isolated in /tmp at this checkpoint and is not included in these claims.
+
+BLESS acceptance is preserved at2247a3225d9711bd5ad730b43557b1d3ce627243, verified
+at the remote feature branch. ComPAS explicit published core is now integrated:
+proper normalized five-model inference, caller-supplied groups/model priors,
+variance calibration plus literal PNOC tuples, saved input/reopen, strict
+selected-model decisions, uncertainty holds and reports. All72 focused tests pass
+(29.10s). Two-arm independent marginal-prior references agree within5e-13; separate
+three-arm Gaussian quadrature evidence converges within7e-12. Catalog140 partial,
+counts102/32/4. Dynamic platform/default contracts remain in docs/compas.md.
+Full final-code acceptance is running; do not confuse it with the completed
+BLESS-only checkpoint. Next recover/integrate PRT controller/calendar/reports.

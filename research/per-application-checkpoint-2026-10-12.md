@@ -4,7 +4,7 @@ Catalog membership was rechecked against both official API lists: 80 desktop +
 58 online entries, with identical response hashes to the preserved inventory.
 No entry was added or dropped. See [membership evidence](catalog-membership-2026-10-12.json).
 
-Current counts are **102 implemented / 31 partial / 5 pending**. ARAND62 now
+Current counts are **102 implemented / 32 partial / 4 pending**. ARAND62 now
 meets the guide-defined simulation workflow; see its scope crosswalk below. This continuation
 adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
 study/controller workflow, ToxFinder native allocation/simulation workflow, and
@@ -127,7 +127,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 137 | Platform Design of Bayesian Adaptive Randomization with Posterior Probability | partial | Complete-outcome platform conduct is covered, but no sufficiently complete delayed-response controller contract was found. [BARPO trials](../docs/plbarpo-trials.md); [BARPO control](../docs/plbarpo-control.md) |
 | 138 | Sample Size Calculation - Time-to-event Endpoint | implemented | Declared recovered workflow implemented; [Guide](../docs/survival-sample-size.md) retains scope and compatibility limits. |
 | 139 | Sample Size Calculation - Binary Endpoint | implemented | Declared recovered workflow implemented; [Guide](../docs/binary-sample-size.md) retains scope and compatibility limits. |
-| 140 | A Bayesian Phase II Platform Trial Design for Drug Combinations | pending | Adaptive-shrinkage joint model, priors, posterior decision and simulation contract or author code. [Evidence](source-recovery-2026-10-10.md#six-pending-software-contracts). |
+| 140 | ComPAS | partial | Recovered five-model hierarchy, explicit groups/model priors, evidence/MAP inference, strict decisions, numerical holds and saved reports. Original defaults and dynamic platform retention/replacement/final/allocation contracts remain unresolved. [Guide](../docs/compas.md); [source and scope](compas-published-core-2026-10-12.md). |
 | 141 | Bayesian Phase 2 Design with Delayed Outcomes | partial | Native priors, sampler, calibration and continuous-monitoring rules are unknown. [Phase2Delay guide](../docs/phase2delay.md) |
 | 142 | Find optimal biological dose (OBD) for targeted and immune therapies | partial | Multiple-imputation evaluation and stage-II conduct now accept supplied predictive probabilities. The scaled-logistic prediction fit and standardization contract remain unresolved. [U-BOIN guide](../docs/uboin.md); [imputation audit](uboin-imputation-evaluation-audit.md) |
 | 143 | Single arm phase II monitoring using Bayes factor with iMOM prior for binary outcome | partial | ESS-to-shape calibration rule is unspecified. [BFMonitor guide](../docs/bfmonitor.md) |

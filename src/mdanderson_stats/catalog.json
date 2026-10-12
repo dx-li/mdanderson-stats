@@ -4311,14 +4311,20 @@
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/ComPAS",
       "references": [
         "https://doi.org/10.1002/sim.8026",
-        "https://pubmed.ncbi.nlm.nih.gov/30419609/"
+        "https://pubmed.ncbi.nlm.nih.gov/30419609/",
+        "https://euclinicaltrials.eu/ctis-public/view/2023-507598-16-00"
       ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
+      "status": "partial",
+      "implemented_features": [
+        "PNOC022 explicit hierarchy: five logit-normal/binomial candidate models, proper diffuse group-mean priors, caller-supplied groups and model prior weights, normalized evidence and MAP model selection.",
+        "Design-constant variance calibration and separate literal PNOC variance profiles preserve published discrepancies.",
+        "Immutable saved study/reopen, selected-model strict decisions with explicit equality policy, numerical uncertainty holds and complete JSON reports."
+      ],
       "validation": [
-        "Primary abstract verified; exact model, priors and platform operating rules remain unavailable. No implementation or native output validation; research/compas-source-status.md."
+        "72 focused tests pass, including 15 independent two-arm marginal-prior references and five three-arm Gaussian-quadrature evidence references; analytic no-data, complementarity, factorization, permutation and protocol-size extremes.",
+        "Remaining: original model-weight/group defaults, dynamic arm replacement/retention, final selection, minimization allocation and optional cross-cohort borrowing. docs/compas.md; research/compas-published-core-2026-10-12.md."
       ]
     },
     {

@@ -788,6 +788,16 @@ from .cibolus_trial import (
 )
 from .cid2bp import BinomialDifferenceInterval, cid2bp_interval
 from .cid2bp_session import CID2BPRecord, CID2BPRequest, CID2BPSession, cid2bp_session
+from .compas import (
+    COMPAS_PROFILE,
+    COMPAS_SHRINKAGE_WEIGHTS,
+    ComPASFit,
+    ComPASStudy,
+    compas_decisions,
+    compas_pnoc022_variances,
+    compas_variances,
+    fit_compas,
+)
 from .condis import CondiSImputation, condis_impute
 from .condis_boosting import CondiSBoostingRefinement, condis_boosting_refine
 from .condis_forest import (
@@ -2279,6 +2289,14 @@ from .windows import (
 )
 
 __all__ = [
+    "COMPAS_PROFILE",
+    "COMPAS_SHRINKAGE_WEIGHTS",
+    "ComPASStudy",
+    "ComPASFit",
+    "compas_variances",
+    "compas_pnoc022_variances",
+    "compas_decisions",
+    "fit_compas",
     "BLESS_PROFILE",
     "BLESS_TIME_DAYS",
     "BLESSPublishedStudy",

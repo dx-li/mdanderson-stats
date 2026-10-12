@@ -1,6 +1,13 @@
 # ComPAS source status
 
-Catalog entry 140 remains pending. Its primary citation is Tang R, Shen J,
+Catalog entry140 is now **partial**. The source history below is superseded
+for the recovered hierarchy by the [PNOC022 v3.0 extraction](compas-pnoc022-specification-2026-10-12.json)
+and [implemented explicit core](../docs/compas.md). Original app defaults and
+full dynamic platform contracts remain unavailable.
+
+## Earlier source history
+
+ Its primary citation is Tang R, Shen J,
 and Yuan Y, *ComPAS: A Bayesian drug combination platform trial design with
 adaptive shrinkage*, Statistics in Medicine 38(7):1120–1134 (2019),
 [DOI 10.1002/sim.8026](https://doi.org/10.1002/sim.8026),

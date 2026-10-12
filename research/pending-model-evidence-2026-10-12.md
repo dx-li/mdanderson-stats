@@ -45,3 +45,12 @@ that they omit coefficients is justified. CNSRISK's final2023 abstract explicitl
 has no full-text component and refines the2021 model. Detailed current app inputs
 and remaining targets are in their respective source-status files. No outreach
 is authorized; research and implementation may continue without it.
+
+## Current recovered-core update
+
+BLESS149 and ComPAS140 now have source-backed published workflows and are partial,
+not pending. Current counts102 implemented/32 partial/4 pending. Their remaining
+deployed/full-platform contracts are documented in docs/bless.md and docs/compas.md.
+The four pending applications are BayesianSurvival, CNSRISK, K-COMPASS and MDS-DPSS;
+no missing fitted parameters were replaced by approximations. Earlier six-model
+tables above are historical evidence of the initial source boundary.
