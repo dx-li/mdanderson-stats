@@ -859,3 +859,16 @@ Next close native frozen-component sampling, saved full studies/reports and
 remaining transforms. Native PC/PCw/wPC probes are available under
 /tmp/wfmm-pca-probe; alphaPC=1 fails on the basic synthetic input. Do not silently
 copy that failure into a mathematical default or claim full native transform parity.
+
+
+Replacement-executor recovery verified 071f2694 at the actual remote branch;
+the predecessor subsequently confirmed 76,423 full tests / 455.17s on 774 unchanged
+production files and relinquished writer ownership. The new explicit zero-proposal
+freeze sampler has 303 focused WFMM tests and independently regenerated native
+reference evidence. Final new-code acceptance passed 76,435 full tests in 453.62s with all extras
+and warnings as errors; all 774 production files stayed unchanged. Fresh wheel
+331 tests, both examples, lint/types/build and source/notice/exclusion audits pass.
+See wfmm-frozen-sampling-validation-2026-10-12.json for exact evidence.
+See wfmm-frozen-sampling-checkpoint-2026-10-12.md. The private PCA ZIP download
+failed twice through the supported Library flow; its untracked files and seven
+provisional failures have not been integrated. No status promotion.

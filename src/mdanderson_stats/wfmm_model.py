@@ -372,6 +372,7 @@ class WFMMCoefficientFit:
     estimate_variances: bool
     variance_acceptance: FloatArray
     likelihood_evaluations: int
+    variance_proposals: FloatArray | None = None
 
 
 def fit_wfmm_coefficients(
@@ -388,6 +389,7 @@ def fit_wfmm_coefficients(
     coefficient_scale: ArrayLike | None = None,
     estimate_variances: bool = True,
     proposal_sd: tuple[ArrayLike | None, ArrayLike] | None = None,
+    zero_proposal_policy: str = "error",
     draws: int = 1000,
     warmup: int = 500,
     chains: int = 2,
@@ -402,12 +404,21 @@ def fit_wfmm_coefficients(
     Random and residual variances are supplied as starting values. They are
     sampled only with ``estimate_variances=True``; then positive-truncated
     normal proposals and inverse-gamma priors are used. ``proposal_sd`` is a
-    pair ``(random, residual)`` in that order. The model uses independent
+    pair ``(random, residual)`` in that order. Explicit
+    ``zero_proposal_policy="freeze"`` conditions on components with zero proposal
+    SD; they retain their positive starting values and consume no proposal draws.
+    The default rejects zero SDs. Frozen components have zero proposal counts,
+    not evidence of failed mixing. Variance priors remain required for this mode.
+    The model uses independent
     random-effect levels and independent residual rows, with coefficient-
     specific variance components. This fits the wavelet-domain model, not a
     generic mixed model; input transforms and empirical-Bayes defaults are
     intentionally outside this API.
     """
+    if zero_proposal_policy not in ("error", "freeze"):
+        raise ValueError("zero_proposal_policy must be error or freeze")
+    if zero_proposal_policy != "error" and not estimate_variances:
+        raise ValueError("zero_proposal_policy requires estimate_variances=True")
     if not isinstance(prior, WFMMPrior):
         raise ValueError("prior must be a WFMMPrior")
     if not isinstance(rng, np.random.Generator):
@@ -524,15 +535,17 @@ def fit_wfmm_coefficients(
             proposal_sd[0],
             (random_group_count, coefficient_count),
             "random proposal_sd",
-            positive=True,
+            positive=zero_proposal_policy == "error",
             default_empty=random_group_count == 0,
         )
         s_proposal = _component_array(
             proposal_sd[1],
             (residual_group_count, coefficient_count),
             "residual proposal_sd",
-            positive=True,
+            positive=zero_proposal_policy == "error",
         )
+        if np.any(q_proposal < 0.0) or np.any(s_proposal < 0.0):
+            raise ValueError("proposal SDs must be nonnegative under freeze policy")
     else:
         if proposal_sd is not None:
             raise ValueError("proposal_sd is only used when estimate_variances=True")
@@ -679,6 +692,8 @@ def fit_wfmm_coefficients(
                     )
                     likelihood_evaluations += 1
                     for group in range(random_group_count):
+                        if q_proposal[group, k] == 0.0:
+                            continue
                         proposals[group, k] += 1
                         old = float(q_chain[group, k])
                         new = _propose_positive(old, float(q_proposal[group, k]), rng)
@@ -710,6 +725,8 @@ def fit_wfmm_coefficients(
                             current_ll = candidate_ll
                             acceptance[group, k] += 1
                     for group in range(residual_group_count):
+                        if s_proposal[group, k] == 0.0:
+                            continue
                         proposals[random_group_count + group, k] += 1
                         old = float(s_chain[group, k])
                         new = _propose_positive(old, float(s_proposal[group, k]), rng)
@@ -785,4 +802,5 @@ def fit_wfmm_coefficients(
         bool(estimate_variances),
         _owned(acceptance_rate),
         likelihood_evaluations,
+        _owned(proposals),
     )

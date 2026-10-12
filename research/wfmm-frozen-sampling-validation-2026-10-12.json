@@ -1,0 +1,81 @@
+{
+  "base_commit": "071f2694c8fd4b3b88409c9fef58b3779d028c4b",
+  "scope": "Explicit zero-proposal conditional variance sampling; WFMM remains partial",
+  "full_suite": {
+    "passed": 76435,
+    "seconds": 453.62,
+    "workers": 4,
+    "warnings_as_errors": true,
+    "all_extras": true,
+    "production_python_files": 774,
+    "production_unchanged": true,
+    "log_sha256": "44a07227ede2717690745df08dc0e1cd232be3501e32880aa1d41feaaf468244"
+  },
+  "focused": {
+    "passed": 303,
+    "seconds": 18.64
+  },
+  "installed_wheel": {
+    "passed": 331,
+    "seconds": 59.02,
+    "wfmm": 303,
+    "extras": 28,
+    "outside_checkout": true,
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "examples": [
+      "wfmm_automatic.py",
+      "wfmm_initialization.py"
+    ],
+    "dependencies": "passed",
+    "log_sha256": "a7c88823b8e428cc1e39c2157664b5c3256f6379891b104839c764ebd8037ba4"
+  },
+  "supplemental": {
+    "reason": "Six invalid-policy/scale tests now use otherwise-valid draws=8 rather than draws=2; production unchanged.",
+    "source_passed": 12,
+    "source_seconds": 14.08,
+    "wheel_validation_passed": 6,
+    "wheel_validation_seconds": 1.75
+  },
+  "source_references": {
+    "existing_byte_identical_files": 6,
+    "new_byte_identical_files": 1,
+    "new_cases": 4,
+    "frozen_values": 1024,
+    "fixture_sha256": "d52a247634a5369023c44dcd3c9617cb9b28e95a5e75d8469961fcab7750ba51"
+  },
+  "artifact_audit": {
+    "package_files": 778,
+    "notices": 27,
+    "source_bytes_equal": true,
+    "notices_equal": true,
+    "original_binaries_excluded": true,
+    "hashes": {
+      "mdanderson_stats-0.1.0-py3-none-any.whl": "17e9461b87a70c72e2a3b20ba8f8030d191e225ec0da0cff3339e3b6d030c139",
+      "mdanderson_stats-0.1.0.tar.gz": "589e6f4d9d6199888789af19c5e4937b819e4feb862c17ea4edfcb85219be885"
+    }
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "mypy_source_files": 774,
+    "build": "passed",
+    "local_links": "passed",
+    "retained_notice_files": 29
+  },
+  "catalog": {
+    "entries": 138,
+    "implemented": 103,
+    "partial": 31,
+    "pending": 4
+  },
+  "transfer": {
+    "library_file_id": "libfile_11857c0175608191bd24dee75b3772e0",
+    "materialized": false,
+    "error": "library file transfer failed: download failed",
+    "attempts": 2
+  },
+  "production_sha256": {
+    "src/mdanderson_stats/wfmm_model.py": "3db64f47de04c1a5d13cae4c31fa9819383e512625f5a6221cd8f8505b8b739e"
+  }
+}

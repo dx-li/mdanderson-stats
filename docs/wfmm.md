@@ -7,8 +7,8 @@ coefficient-specific Bayesian mixed models, reconstruction, posterior curve
 summaries and [future-curve prediction](wfmm-prediction.md). An explicit Python REML
 initializer supplies REML starts. `initialize_wfmm` now composes MOM, shrinkage,
 conditional covariance fitting and prior/proposal calibration. Catalog entry70
-is **partial**: additional transform families, native zero-proposal/fixed-component
-sampling and complete saved file workflows remain open.
+is **partial**: additional transform families, complete native sampling and
+complete saved file workflows remain open.
 
 ## Transform and reconstruct curves
 
@@ -310,7 +310,17 @@ SDs are ordered `(random,residual)`; for a fixed-effects-only model, use
 The sampler integrates out `U` while updating fixed effects and variances,
 then optionally draws `U` from its Gaussian conditional. It uses sequential
 chains, Cholesky solves and positive-truncated normal variance proposals
-with the Hastings correction. Set `estimate_variances=False` to condition
+with the Hastings correction. Explicit `zero_proposal_policy="freeze"` allows
+zero proposal SDs: these components retain their positive starting values, and
+consume no proposal RNG draws. Negative scales still fail. The default policy
+is `"error"`, so accidental zero scales cannot silently freeze a parameter.
+Variance priors remain required when `estimate_variances=True`, including
+this conditional mode. `fit.variance_proposals` counts attempted updates across
+chains, including warmup; frozen components have zero counts and zero acceptance
+rates. Those zeros are not mixing diagnostics. Four original WFMM2 reference
+runs verify the native zero-scale floor components stay fixed; active-chain
+parity, above-floor native freezes and exact RNG identity are not established.
+Set `estimate_variances=False` to condition
 on the supplied variances; in that mode, omit `proposal_sd` and variance
 priors. Conditioning omits variance-estimation uncertainty.
 
@@ -545,8 +555,9 @@ EM implementation without these native compatibility policies.
 
 Native WFMM2 traces also establish that `propvar_omega` multiplies `se_omega`
 as a **proposal standard deviation**, despite the guide's variance wording.
-Zero native scales remain zero. This evidence does not authorize silently
-substituting zero proposal scales into the current Python sampler.
+Zero native scales remain zero. Zero scales require the explicit `zero_proposal_policy="freeze"` sampler option;
+the default still rejects them. This conditions on those starting variances,
+not their posterior uncertainty.
 
 These components underpin the automatic initializer described below. Remaining
 transforms, native frozen-component sampling and the saved WFMM1/WFMM2/WFMM3

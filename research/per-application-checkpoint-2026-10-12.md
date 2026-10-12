@@ -176,3 +176,9 @@ Nine original full initializations and analytic covariance optima validate the
 composition; native Brent rounding is not claimed. Next contracts remain native
 frozen-component sampling, PCA/hybrid/remaining transforms and saved full studies,
 postprocessing/prediction/reports. Status remains partial.
+
+WFMM70 conditional sampling: zero proposal scales can now be frozen explicitly
+with proposal-count diagnostics; the default still rejects zeros. Four original
+WFMM2 cases verify unchanged floor components, while independent conditional
+posterior tests check the Python sampler. Native RNG/full-chain equivalence is
+not claimed. See wfmm-frozen-sampling-checkpoint-2026-10-12.md. Status stays partial.
