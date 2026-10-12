@@ -275,3 +275,8 @@ projection, moment-fallback, endpoint-jitter or last-three-follow-up defects.
 This evidence composes enrollment and as-of conversion, not posterior/controller
 or whole-trial execution. The saved-conduct implementation and its frozen769-file
 acceptance snapshot do not include a generated native simulation runner yet.
+
+A bounded cross-check of the two other tools explicitly setting0x37f found no
+UAROET calendar fixture change at53-bit precision, and only2.78e-17 maximum change
+across six ToxFinder interpolation-surface cases. No other application's default
+or status was changed; this checks those captured cases, not all runtime paths.

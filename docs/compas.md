@@ -89,10 +89,12 @@ borrowing. The protocol's rounded500-run tables are not exact numerical fixtures
 No original protocol PDF is distributed and existing licensing restrictions are
 unchanged. See the [newly authored factual source specification](../research/compas-pnoc022-specification-2026-10-12.json).
 
-A further independent six-dimensional marginal-prior integral checks six arms
-with100 completed/50 successes and shared variance1000. Evidence is invariant
-across five null-response thresholds from.000001 through.999999 and agrees with
-the refined reference within1.4e-12 for the originally reported case. The proposed
-missing-positive-half quadrature error was not reproduced. This adds a regression;
-it does not turn adaptive error estimates into rigorous bounds. See
-[the executed review](../research/review-followup-2026-10-12.md).
+Additional stress tests exposed loss of outer normalizing mass when a response
+threshold placed the posterior mode beside a very long integration interval.
+The integrator now inserts fixed local splits around the standardized mode as
+well as threshold transitions, retaining the full real integration domain.
+Six-arm sparse and near-pooled cases are checked with independent fixed-node
+integration, order/domain refinements and threshold-invariance regressions.
+A separate six-dimensional marginal-prior reference checks the originally
+reported balanced case. These tests do not turn adaptive error estimates into
+rigorous bounds. See [the executed review](../research/review-followup-2026-10-12.md).

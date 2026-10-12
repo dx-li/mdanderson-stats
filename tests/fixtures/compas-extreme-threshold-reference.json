@@ -1,0 +1,87 @@
+{
+  "method": "fixed Gauss-Legendre/normal integration of normalized hierarchical likelihood; no response threshold or production imports",
+  "cases": [
+    {
+      "completed": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "successes": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "variance": 1000.0,
+      "refinements": [
+        {
+          "order": 256,
+          "mu_limit": 256.0,
+          "log_evidence": -30.530581264333485
+        },
+        {
+          "order": 512,
+          "mu_limit": 256.0,
+          "log_evidence": -30.530580136738628
+        },
+        {
+          "order": 768,
+          "mu_limit": 256.0,
+          "log_evidence": -30.53058013673929
+        },
+        {
+          "order": 1024,
+          "mu_limit": 320.0,
+          "log_evidence": -30.530580136738802
+        }
+      ]
+    },
+    {
+      "completed": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "successes": [
+        50,
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "variance": 1e-06,
+      "refinements": [
+        {
+          "order": 256,
+          "mu_limit": 4.0,
+          "log_evidence": -24.597977081979643
+        },
+        {
+          "order": 512,
+          "mu_limit": 4.0,
+          "log_evidence": -24.597977081979582
+        },
+        {
+          "order": 768,
+          "mu_limit": 4.0,
+          "log_evidence": -24.597977081979668
+        },
+        {
+          "order": 1024,
+          "mu_limit": 5.0,
+          "log_evidence": -24.5979770819796
+        }
+      ]
+    }
+  ]
+}

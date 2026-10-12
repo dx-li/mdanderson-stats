@@ -142,10 +142,12 @@ def compas_group_integral(
         return math.exp(logval - peak) * (1.0 if index is None else tails[index])
 
     # Explicit transition splits prevent a diffuse group prior from hiding a
-    # narrow arm-tail boundary. The mode split also protects concentrated data.
+    # narrow arm-tail boundary. Fixed local scale splits are also necessary:
+    # one forced QUADPACK bisection can still miss a mode beside a very distant
+    # threshold split while reporting tiny error. Keep the peak in short panels.
     points = sorted(
         set(
-            [0.0]
+            [-12.0, -4.0, -1.0, 0.0, 1.0, 4.0, 12.0]
             + [
                 (threshold + variance * (n * null_response - y) + k * math.sqrt(variance) - mode)
                 / scale

@@ -1,30 +1,38 @@
 # Executed follow-up to independent static review
 
-## ComPAS outer quadrature
+## ComPAS outer quadrature — confirmed narrower cases fixed
 
-The reported six-arm case was executed before any production change: each arm
-has100 completed/50 successes, shared variance1000, tolerance1e-7. Log evidence
-was-49.900093693853286 at null_response=.5 and-49.900093693853265 at.999, a
-2.1e-14 difference. The proposed log(2) discrepancy is not reproduced.
-Instrumenting the finite positive outer interval[0,3858.668285855197] returned
-mass1.253314508371801; the negative interval returned1.2533142827139578. Thus
-the positive half was not omitted in this executed case.
+The initial six-arm50/100, variance1000, null.999 concern was not reproduced:
+log evidence differed2.1e-14 from null.5, agreed with independent six-dimensional
+Gaussian integration within1.4e-12, and passed on SciPy1.14.1 and1.18.1. The
+reviewer withdrew that specific claim after accounting for QUADPACK's initial
+endpoint-spike safeguard. That safeguard does not close every distant-split case.
 
-An independent six-dimensional integral of the marginal Gaussian logit prior,
-without any response threshold, gives log evidence:
+Two subsequent bounded hypotheses were executed and **did reproduce** substantial
+normalizing-mass loss despite tiny reported numerical errors:
 
-| Gaussian order per dimension | Log evidence |
-| --- | --- |
-| 8 | -49.90009369866118 |
-| 10 | -49.900093693925214 |
-| 12 | -49.900093693854615 |
+| Six identical arms | Variance | Null | Before log evidence | Corrected log evidence |
+| --- | --- | --- | --- | --- |
+| 1/100 | 1000 | .5 | -30.530580136738973 | -30.530580136738973 |
+| 1/100 | 1000 | .95 | -31.22371908456235 | -30.530580136738973 |
+| 1/100 | 1000 | .999 | -31.223719084562838 | -30.530580136738973 |
+| 50/100 | .000001 | .5 | -24.597977081979586 | -24.597977081979593 |
+| 50/100 | .000001 | 5e-324 | -25.291124262539576 | -24.597977081979597 |
 
-Orders10/12 differ7.06e-11; production agrees within1.4e-12. Five thresholds
-(.000001,.001,.5,.999,.999999) each agree with this reference within1e-9. This
-is an explicit threshold-invariance regression, not a global proof against every
-possible adaptive-quadrature failure. Existing error estimates remain estimates.
-No ComPAS production algorithm change was made. Reproduce with
-`tools/reference_compas_six_arm.py` and `tests/test_compas.py`.
+The outer integrator now always includes standardized local mode splits
+-12,-4,-1,0,1,4,12 as well as the response-threshold transitions. This prevents
+these extreme transitions from placing essentially all posterior mass in a thin
+edge of an enormous finite interval. The integration domain remains the entire
+real line; no posterior/prior tail is truncated by this change.
+
+A separate fixed-node Gauss-Legendre/normal integral uses neither adaptive
+quadrature, a mode finder, a response threshold nor production imports. Order
+512/768/1024 and domain refinements agree within7e-13 in the sparse case and
+1e-13 in the near-pooled case. Corrected production evidence agrees within1e-12.
+See `tools/reference_compas_extreme_thresholds.py` and its portable fixture.
+Five added regressions cover the confirmed cases, alongside the five-threshold
+six-dimensional reference regression. The bounded review is closed by executed
+evidence; numerical error estimates still are not certified bounds or clinical CIs.
 
 ## BLESS cancellation
 
@@ -55,8 +63,10 @@ in git history as alternate-precision diagnostics, not default desktop claims.
 
 ## Acceptance boundary
 
-Combined focused tests:5,635 passed in51.89s. Ruff, formatting and769-file mypy
-checks pass. The earlier combined full run was interrupted at66,529 passing
+Earlier combined focused tests:5,635 passed before the narrower ComPAS cases.
+The corrected quadrature is undergoing new focused and full-code acceptance. The earlier combined full run was interrupted at66,529 passing
 tests when the BLESS review fix changed production code; it is not final
-acceptance. A fresh full run uses all final code and corrected reference fixtures.
+acceptance. The subsequent full run was also interrupted at64,814 passes when the ComPAS
+defect was confirmed. Neither interrupted run is final acceptance. A fresh run
+will include the corrected quadrature and all reference fixtures.
 Do not promote PRT69, BLESS149 or ComPAS140 from partial on these results.

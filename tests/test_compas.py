@@ -319,3 +319,23 @@ def test_six_arm_evidence_is_threshold_invariant_against_independent_reference(t
     assert result[0] == pytest.approx(refinement[-1]["log_evidence"], abs=1e-9)
     if threshold == 0.5:
         assert result[1] == pytest.approx((0.5,) * 6, abs=1e-12)
+
+
+@pytest.mark.parametrize(
+    "case_index,threshold", [(0, 0.5), (0, 0.95), (0, 0.999), (1, 0.5), (1, 5e-324)]
+)
+def test_distant_threshold_splits_cannot_hide_outer_mode_mass(case_index, threshold):
+    from mdanderson_stats._compas_quadrature import compas_group_integral
+
+    case = json.loads(
+        (Path(__file__).parent / "fixtures/compas-extreme-threshold-reference.json").read_text()
+    )["cases"][case_index]
+    refs = case["refinements"]
+    # Fixed-node order and domain refinements independently check the denominator.
+    assert abs(refs[-1]["log_evidence"] - refs[-2]["log_evidence"]) < 1e-10
+    result = compas_group_integral(
+        tuple(case["completed"]), tuple(case["successes"]), case["variance"], threshold, 1e-7
+    )
+    assert result[0] == pytest.approx(refs[-1]["log_evidence"], abs=1e-9)
+    if case_index == 1 and threshold == 5e-324:
+        assert result[1] == pytest.approx((1.0,) * 6, abs=1e-12)

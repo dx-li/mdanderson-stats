@@ -780,3 +780,11 @@ suite is running with769 source files and all corrected PRT fixtures frozen:
 /tmp/review-final-full-suite.log and /tmp/review-final-tested-python.json.
 See review-followup-2026-10-12.md. No catalog promotion. A simulation-analysis
 refactor draft remains isolated under /tmp/prt-simulation-draft and is not accepted.
+
+Follow-up ComPAS hypotheses reproduced real mass loss: six1/100 arms,var1000,
+null.95/.999 lose aboutlog(2); six50/100,var1e-6,null5e-324 lose exactlylog(2).
+Fixed local standardized outer splits(-12,-4,-1,0,1,4,12) correct both. Independent
+fixed-node, expanded-domain references agree within1e-12. Five regressions added.
+The previous full run stopped at64,814 passes/766.33s because production changed;
+it is not accepted. Final acceptance will use corrected code; no further speculative
+review expansion is needed. Source counts remain769; catalog unchanged102/32/4.
