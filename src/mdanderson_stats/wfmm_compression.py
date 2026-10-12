@@ -33,6 +33,7 @@ class WFMMCompression:
     tie_policy: TiePolicy
     vote_counts: NDArray[np.int64] | None
     energy_fraction: FloatArray
+    eligible_indices: NDArray[np.int64] | None = None
 
 
 def wfmm_compress_coefficients(
@@ -42,6 +43,7 @@ def wfmm_compress_coefficients(
     alpha: float = 1.0,
     t: int = 0,
     tie_policy: TiePolicy = "reject_split",
+    eligible_indices: ArrayLike | None = None,
 ) -> WFMMCompression:
     """Apply WFMM 3.1's strict cumulative-energy / curve-vote rule.
 
@@ -62,13 +64,16 @@ def wfmm_compress_coefficients(
     total energy. Floating-point boundary decisions need not be bit-identical
     to the legacy binary. Transform, boundary extension and pass filtering
     are separate operations; supplied coefficient order determines identity.
+    Optional eligible_indices restrict energy ranking to an earlier pass-filter
+    selection. Returned indices/votes retain original identities; energy fractions
+    then refer to eligible energy, not energy removed by pass filtering.
     """
     if not isinstance(basis, WFMMBasis):
         raise ValueError("basis must be a WFMMBasis")
     raw = np.asarray(coefficients)
     if (
         raw.ndim != 2
-        or raw.shape[1] != basis.time_count
+        or raw.shape[1] != basis.coefficient_count
         or raw.dtype.kind not in "iuf"
         or raw.size == 0
         or raw.size > _MAX_CELLS
@@ -93,13 +98,19 @@ def wfmm_compress_coefficients(
     if not np.all(np.isfinite(values)):
         raise ValueError("coefficients must contain only finite values")
 
-    votes = np.zeros(basis.time_count, dtype=np.int64)
+    candidates = (
+        np.arange(basis.coefficient_count)
+        if eligible_indices is None
+        else wfmm_select_coefficients(values, basis, indices=eligible_indices).retained_indices
+    )
+    eligible_values = values[:, candidates]
+    votes = np.zeros(candidates.size, dtype=np.int64)
     if fraction == 1:
-        indices = np.arange(basis.time_count)
+        indices = np.arange(candidates.size)
         vote_counts = None
     else:
         # One curve of temporaries rather than full sorting/cumulative matrices.
-        for row in values:
+        for row in eligible_values:
             maximum = float(np.max(np.abs(row)))
             if maximum == 0:
                 continue
@@ -117,10 +128,12 @@ def wfmm_compress_coefficients(
         indices = np.flatnonzero(votes > int(t))
         if indices.size == 0:
             raise ValueError("compression retained no coefficients; increase alpha or reduce t")
-        vote_counts = _frozen_int(votes)
+        all_votes = np.zeros(basis.coefficient_count, dtype=np.int64)
+        all_votes[candidates] = votes
+        vote_counts = _frozen_int(all_votes)
 
     actual = np.zeros(curves, dtype=np.float64)
-    for i, row in enumerate(values):
+    for i, row in enumerate(eligible_values):
         maximum = float(np.max(np.abs(row)))
         if maximum > 0:
             if fraction == 1:
@@ -129,5 +142,13 @@ def wfmm_compress_coefficients(
                 with np.errstate(under="ignore"):
                     energy = np.square(row / maximum)
                 actual[i] = min(1.0, float(energy[indices].sum() / energy.sum()))
-    selection = wfmm_select_coefficients(values, basis, indices=indices)
-    return WFMMCompression(selection, fraction, int(t), tie_policy, vote_counts, _freeze(actual))
+    selection = wfmm_select_coefficients(values, basis, indices=candidates[indices])
+    return WFMMCompression(
+        selection,
+        fraction,
+        int(t),
+        tie_policy,
+        vote_counts,
+        _freeze(actual),
+        _frozen_int(candidates),
+    )

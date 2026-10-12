@@ -14,7 +14,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 from ._validation import FloatArray, finite
-from .wfmm_basis import WFMMBasis
+from .wfmm_basis import WFMMBasis, _setting
 
 _MAX_INPUT_CELLS = 2_000_000
 _MAX_RECONSTRUCTED_CELLS = 2_000_000
@@ -62,6 +62,33 @@ class WFMMSelection:
     original_coefficient_count: int
 
 
+def wfmm_pass_filter(
+    coefficients: ArrayLike,
+    basis: WFMMBasis,
+    *,
+    highpass: int = 0,
+    lowpass: int = 0,
+) -> WFMMSelection:
+    """Apply the native pass flags to a complete packed periodic wavelet basis.
+
+    Source behavior reverses the guide's descriptions: positive highpass h
+    removes the approximation and the h coarsest detail bands; lowpass l
+    removes the l finest detail bands. Zero highpass removes nothing.
+    Invalid/empty selections raise ValueError instead of native indexing or
+    zero-column failures. Returned metadata retain original coefficient IDs.
+    This operation precedes any separately requested energy compression.
+    """
+    if not isinstance(basis, WFMMBasis) or basis.transform != "wavelet":
+        raise ValueError("pass filtering requires a complete periodic wavelet basis")
+    high = _setting(highpass, "highpass", 0, basis.levels)
+    low = _setting(lowpass, "lowpass", 0, basis.levels)
+    first = high + 1 if high else 0
+    last = basis.levels - low
+    if first > last:
+        raise ValueError("pass flags retain no coefficients")
+    return wfmm_select_coefficients(coefficients, basis, partitions=np.arange(first, last + 1))
+
+
 def wfmm_select_coefficients(
     coefficients: ArrayLike,
     basis: WFMMBasis,
@@ -81,14 +108,14 @@ def wfmm_select_coefficients(
     if (indices is None) == (partitions is None):
         raise ValueError("supply exactly one of indices or partitions")
     raw = np.asarray(coefficients)
-    if raw.ndim < 1 or raw.shape[-1] != basis.time_count or raw.dtype.kind not in "iuf":
+    if raw.ndim < 1 or raw.shape[-1] != basis.coefficient_count or raw.dtype.kind not in "iuf":
         raise ValueError("coefficients must be a real array ending in the basis coefficient count")
     if raw.size == 0 or raw.size > _MAX_INPUT_CELLS:
         raise ValueError("coefficient array must be nonempty and within the input-cell limit")
     values = finite(raw, "coefficients")
     if indices is not None:
-        requested = _selector_values(indices, "indices", basis.time_count)
-        if np.any(requested < 0) or np.any(requested >= basis.time_count):
+        requested = _selector_values(indices, "indices", basis.coefficient_count)
+        if np.any(requested < 0) or np.any(requested >= basis.coefficient_count):
             raise ValueError("coefficient indices must lie within the original basis")
         selected = np.sort(requested)
     else:
@@ -106,7 +133,7 @@ def wfmm_select_coefficients(
         _frozen_int(selected),
         _frozen_int(basis.coefficient_scale[selected]),
         _frozen_int(basis.coefficient_partition[selected]),
-        basis.time_count,
+        basis.coefficient_count,
     )
 
 

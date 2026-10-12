@@ -68,6 +68,13 @@ class WFMMBasis:
     custom_synthesis_matrix: FloatArray | None = None
 
     @property
+    def coefficient_count(self) -> int:
+        """Number of analysis coordinates, including rectangular PCA bases."""
+        if self.transform == "custom" and self.custom_matrix is not None:
+            return int(self.custom_matrix.shape[1])
+        return self.time_count
+
+    @property
     def synthesis_matrix(self) -> FloatArray:
         """Custom inverse matrix, or the legacy orthogonal transpose."""
         if self.custom_synthesis_matrix is not None:
@@ -251,20 +258,26 @@ def wfmm_basis(
     )
 
 
-def _validate_curves(curves: ArrayLike, basis: WFMMBasis) -> FloatArray:
+def _validate_curves(curves: ArrayLike, basis: WFMMBasis, *, inverse: bool = False) -> FloatArray:
     if not isinstance(basis, WFMMBasis):
         raise ValueError("basis must be a WFMMBasis")
     raw = np.asarray(curves)
-    if raw.ndim != 2 or raw.shape[1] != basis.time_count or raw.shape[0] < 1:
+    width = basis.coefficient_count if inverse else basis.time_count
+    output_width = basis.time_count if inverse else basis.coefficient_count
+    if raw.ndim != 2 or raw.shape[1] != width or raw.shape[0] < 1:
         raise ValueError("curves must be a nonempty (curves,time_points) matrix matching basis")
-    if raw.dtype.kind not in "iuf" or raw.size > _MAX_INPUT_CELLS:
+    if (
+        raw.dtype.kind not in "iuf"
+        or raw.size > _MAX_INPUT_CELLS
+        or raw.shape[0] * output_width > _MAX_INPUT_CELLS
+    ):
         raise ValueError("curves must be real and within the bounded input-cell limit")
     if basis.transform == "wavelet":
         if basis.filter_length is None:
             raise ValueError("wavelet basis is missing its filter length")
         work = 2 * raw.shape[0] * basis.time_count * basis.filter_length * basis.levels
     elif basis.transform == "custom":
-        work = raw.shape[0] * basis.time_count * basis.time_count
+        work = raw.shape[0] * basis.time_count * basis.coefficient_count
     else:
         work = raw.size
     if work > basis.max_work:
@@ -324,14 +337,16 @@ def wfmm_transform(curves: ArrayLike, basis: WFMMBasis) -> WFMMTransformed:
             current, detail = _analysis_pair(current, basis.scaling_filter, basis.wavelet_filter)
             detail_bands.append(detail)
         result = np.concatenate((current, *detail_bands[::-1]), axis=1)
-    if result.shape != values.shape or not np.all(np.isfinite(result)):
+    if result.shape != (values.shape[0], basis.coefficient_count) or not np.all(
+        np.isfinite(result)
+    ):
         raise ArithmeticError("WFMM transform produced invalid coefficients")
     return WFMMTransformed(_freeze(result), basis.coefficient_scale, basis.coefficient_partition)
 
 
 def wfmm_inverse(coefficients: ArrayLike, basis: WFMMBasis) -> FloatArray:
     """Invert row-wise transformed curves using the same packed convention."""
-    values = _validate_curves(coefficients, basis)
+    values = _validate_curves(coefficients, basis, inverse=True)
     if basis.transform == "identity":
         result = values.copy()
     elif basis.transform == "custom":
@@ -351,6 +366,6 @@ def wfmm_inverse(coefficients: ArrayLike, basis: WFMMBasis) -> FloatArray:
                 current, details[level], basis.scaling_filter, basis.wavelet_filter
             )
         result = current
-    if result.shape != values.shape or not np.all(np.isfinite(result)):
+    if result.shape != (values.shape[0], basis.time_count) or not np.all(np.isfinite(result)):
         raise ArithmeticError("WFMM inverse produced invalid curves")
     return _freeze(result)

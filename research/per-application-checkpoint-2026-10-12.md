@@ -182,3 +182,9 @@ with proposal-count diagnostics; the default still rejects zeros. Four original
 WFMM2 cases verify unchanged floor components, while independent conditional
 posterior tests check the Python sampler. Native RNG/full-chain equivalence is
 not claimed. See wfmm-frozen-sampling-checkpoint-2026-10-12.md. Status stays partial.
+
+WFMM70 adds uncentered PCA/hybrid bases, source pass filtering before compression,
+and versioned Python saved studies with qualified initialization, MCMC, curve/
+covariance summaries and population prediction reports. Native boundaries,
+multidimensional transforms, original file/report interoperability and remaining
+sampling/hyperparameter contracts are still open. Entry70 stays partial.

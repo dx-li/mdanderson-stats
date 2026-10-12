@@ -8,7 +8,9 @@ summaries and [future-curve prediction](wfmm-prediction.md). An explicit Python 
 initializer supplies REML starts. `initialize_wfmm` now composes MOM, shrinkage,
 conditional covariance fitting and prior/proposal calibration. Catalog entry70
 is **partial**: additional transform families, complete native sampling and
-complete saved file workflows remain open.
+native file/report interoperability remain open. The versioned
+[Python saved-study workflow](wfmm-studies.md) now composes initialization,
+sampling, summaries and prediction, including PCA/hybrid bases and pass filtering.
 
 ## Transform and reconstruct curves
 
@@ -44,8 +46,9 @@ columns, or separate square `analysis_matrix` and `synthesis_matrix` numerical
 inverses. The former keeps transpose reconstruction; the latter uses the
 guide's explicit forward and reverse products. See the
 [paired custom-transform guide](wfmm-custom-transform.md) for validation and
-covariance interpretation. Custom transforms do not center the input. PCA,
-alternate boundary modes and multidimensional transforms remain open. Energy
+covariance interpretation. Custom transforms do not center the input.
+[PCA/hybrid bases](wfmm-studies.md) now support rectangular coordinates; alternate
+boundary modes and multidimensional transforms remain open. Energy
 compression of supplied coefficients is now native-verified below.
 
 Transforms return readonly arrays and reject nonfinite values. They support
@@ -159,8 +162,9 @@ that splits equal-energy coefficients by default. `tie_policy="original_index"`
 explicitly chooses smaller indices first, without promising that ordering for
 all native inputs. An empty selection raises a clear error. Numerical rescaling
 handles coefficients as small/large as 1e±300; exact floating-point threshold
-parity is not claimed. Native high/low-pass flags, other extended transforms
-and their file representations remain open. See the
+parity is not claimed. [Native pass flags and their composition with compression](wfmm-studies.md)
+are now recovered; other extended transforms and native file representations
+remain open. See the
 [native compression audit](../research/wfmm-native-compression-audit.md).
 
 ## Initialize variance components from the data
@@ -519,10 +523,10 @@ reconstruction/energy identities, independent exact Gaussian-mixture posterior
 references, a conjugate inverse-gamma variance posterior and hand-calculated
 contrast/band summaries. Native MCMC random-number parity is not claimed.
 
-Native variance initialization and
-proposal selection, additional transforms and
-boundary rules, pass filtering and native prediction/file
-formats remain open. Energy compression of explicit coefficient matrices is
+Automatic initialization, explicit variance freezing, PCA/hybrid transforms,
+pass filtering and saved Python workflows are available. Additional transform/
+boundary rules, native prediction/file formats, hyperparameter updates and full
+native sampling compatibility remain open. Energy compression of explicit coefficient matrices is
 now verified against the original program. The [source and implementation audit](../research/wfmm-audit.md)
 tracks these gaps and the independent references.
 
@@ -603,5 +607,5 @@ analytic checks validate identity and balanced mixed-model optima. Numerical
 values differ from native Brent outputs by up to.0011 in variance and.006 in
 final slab-to-sampling ratios on these fixtures; first shrunken coefficients
 agree within1e-6. These are bounded reference results, not universal error bounds
-or clinical validation. Saved study/MCMC/postprocessing integration and broader
-transform coverage remain open.
+or clinical validation. The [saved Python workflow](wfmm-studies.md) integrates
+these stages; broader native transform and file/sampling contracts remain open.

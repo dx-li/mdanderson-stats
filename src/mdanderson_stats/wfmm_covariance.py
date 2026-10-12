@@ -46,8 +46,8 @@ def _validate_variances(variances: ArrayLike, basis: WFMMBasis) -> FloatArray:
     if not isinstance(basis, WFMMBasis):
         raise ValueError("basis must be a WFMMBasis")
     raw = np.asarray(variances)
-    if raw.ndim < 1 or raw.shape[-1] != basis.time_count or raw.size > _MAX_INPUT_CELLS:
-        raise ValueError("variances must end in K=time_count and fit the bounded input size")
+    if raw.ndim < 1 or raw.shape[-1] != basis.coefficient_count or raw.size > _MAX_INPUT_CELLS:
+        raise ValueError("variances must end in K=coefficient_count and fit the bounded input size")
     if raw.dtype.kind not in "iuf":
         raise ValueError("variances must be real-valued")
     values = np.asarray(raw, dtype=np.float64)
@@ -62,7 +62,7 @@ def _per_basis_row_work(basis: WFMMBasis) -> int:
             raise ValueError("wavelet basis is missing its filter length")
         return 2 * basis.time_count * basis.filter_length * basis.levels
     if basis.transform == "custom":
-        return basis.time_count * basis.time_count
+        return basis.time_count * basis.coefficient_count
     return basis.time_count
 
 
@@ -111,18 +111,22 @@ def wfmm_covariance(variances: ArrayLike, basis: WFMMBasis) -> FloatArray:
     covariance_work = (
         vector_count * time_count**2
         if basis.transform == "identity"
-        else vector_count * time_count**3
+        else vector_count * basis.coefficient_count * time_count**2
     )
     basis_work = time_count * _per_basis_row_work(basis) if basis.transform == "wavelet" else 0
     work = covariance_work + basis_work
     if work > _MAX_WORK:
         raise ValueError("WFMM covariance reconstruction exceeds the work limit")
-    workspace_cells = 0 if basis.transform == "identity" else 3 * time_count * time_count
+    workspace_cells = (
+        0
+        if basis.transform == "identity"
+        else 3 * max(basis.coefficient_count, time_count) * time_count
+    )
     live_cells = 2 * values.size + 2 * output_cells + workspace_cells
     if live_cells > _MAX_LIVE_CELLS:
         raise ValueError("WFMM covariance reconstruction exceeds the live-cell limit")
 
-    flattened = values.reshape(vector_count, time_count)
+    flattened = values.reshape(vector_count, basis.coefficient_count)
     output = np.empty((vector_count, time_count, time_count), dtype=np.float64)
     if basis.transform == "identity":
         output.fill(0.0)
@@ -147,7 +151,7 @@ def _draw_variance_functions(variances: FloatArray, basis: WFMMBasis) -> FloatAr
     """Apply only the covariance diagonal transform, without dense draws."""
     chains, draws, components, coefficient_count = variances.shape
     sample_count = chains * draws
-    output = np.empty((sample_count, components, coefficient_count), dtype=np.float64)
+    output = np.empty((sample_count, components, basis.time_count), dtype=np.float64)
     flattened = variances.reshape(sample_count, components, coefficient_count)
     if basis.transform == "identity":
         output[:] = flattened
@@ -251,7 +255,7 @@ def wfmm_summarize_covariance(
         + retained_covariance_cells
     )
     maximum_basis_cells = (
-        3 * time_count * time_count
+        3 * max(coefficient_count, time_count) * time_count
         if include_covariance
         else 0
         if basis.transform == "identity"
@@ -290,7 +294,7 @@ def wfmm_summarize_covariance(
     matrix_work = (
         0
         if basis.transform == "identity" or not include_covariance
-        else covariance_multiplicity * time_count**3
+        else covariance_multiplicity * coefficient_count * time_count**2
     )
     if basis_generation_work + variance_function_work + matrix_work > _MAX_WORK:
         raise ValueError("WFMM covariance summary exceeds the 250000000-operation limit")

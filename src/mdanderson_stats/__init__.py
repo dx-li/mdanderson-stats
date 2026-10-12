@@ -2301,9 +2301,16 @@ from .wfmm_initialization import WFMMInitialization, initialize_wfmm
 from .wfmm_model import WFMMCoefficientFit, WFMMPrior, fit_wfmm_coefficients
 from .wfmm_mom import WFMMMomentInitialization, wfmm_mom_initialization
 from .wfmm_native_eb import WFMMNativeEmpiricalBayes, wfmm_native_empirical_bayes
+from .wfmm_pca import WFMMPCTransform, wfmm_pca_basis
 from .wfmm_posterior import WFMMPosteriorSummary, wfmm_summarize
 from .wfmm_prediction import wfmm_predict_coefficients
-from .wfmm_selection import WFMMSelection, wfmm_restore_coefficients, wfmm_select_coefficients
+from .wfmm_selection import (
+    WFMMSelection,
+    wfmm_pass_filter,
+    wfmm_restore_coefficients,
+    wfmm_select_coefficients,
+)
+from .wfmm_study import WFMMStudy, WFMMStudyResult, read_wfmm_study, run_wfmm_study
 from .wfmm_variance_init import WFMMVarianceInitialization, initialize_wfmm_variances
 from .wfmm_variance_prior import wfmm_variance_prior
 from .windows import (
@@ -2409,6 +2416,12 @@ __all__ = [
     "mds_hope_score",
     "mds_hope_standardized_risk_groups",
     "WFMMBasis",
+    "WFMMStudy",
+    "WFMMStudyResult",
+    "read_wfmm_study",
+    "run_wfmm_study",
+    "WFMMPCTransform",
+    "wfmm_pca_basis",
     "WFMMTransformed",
     "wfmm_basis",
     "wfmm_transform",
@@ -2418,6 +2431,7 @@ __all__ = [
     "WFMMSelection",
     "wfmm_select_coefficients",
     "wfmm_restore_coefficients",
+    "wfmm_pass_filter",
     "WFMMShrinkage",
     "calibrate_wfmm_shrinkage",
     "WFMMNativeEmpiricalBayes",

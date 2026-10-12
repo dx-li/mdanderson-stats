@@ -106,7 +106,7 @@ def wfmm_summarize(
         chain_count < 1
         or draw_count < 2
         or not 1 <= effect_count <= _MAX_EFFECTS
-        or coefficient_count != basis.time_count
+        or coefficient_count != basis.coefficient_count
         or raw.size > _MAX_INPUT_CELLS
     ):
         raise ValueError("coefficient dimensions exceed supported WFMM summary bounds")
@@ -198,7 +198,7 @@ def wfmm_summarize(
     if basis.transform == "wavelet":
         per_row_work = 2 * basis.time_count * int(basis.filter_length or 1) * basis.levels
     elif basis.transform == "custom":
-        per_row_work = basis.time_count * basis.time_count
+        per_row_work = basis.time_count * basis.coefficient_count
     else:
         per_row_work = basis.time_count
     inverse_work = rows_to_inverse * per_row_work

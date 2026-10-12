@@ -872,3 +872,16 @@ See wfmm-frozen-sampling-validation-2026-10-12.json for exact evidence.
 See wfmm-frozen-sampling-checkpoint-2026-10-12.md. The private PCA ZIP download
 failed twice through the supported Library flow; its untracked files and seven
 provisional failures have not been integrated. No status promotion.
+
+
+PCA text handoff was recovered through authenticated Library reads; all three
+embedded files match their hashes. The provisional Haar reference signs were
+corrected without changing production Haar; all 23 native references pass and
+regenerate byte-identically. PCA/hybrid rectangular transforms, 108 native pass/
+compression references and versioned saved Python studies with reporting and
+prediction passed acceptance: 76,651 full tests / 371.41s, 519 focused and 547
+fresh-wheel checks plus three examples. All 776 production files and 1,599
+test/fixture files stayed unchanged. See
+wfmm-transform-study-checkpoint-2026-10-12.md. No WFMM promotion: boundary/
+multidimensional transforms, native files/reports and remaining sampling
+contracts remain open.
