@@ -308,3 +308,13 @@ utility-independent probability split R-hat1.00641/1.00421 and maximum parameter
 R-hat1.01198. See the reproducible monotone-diffuse quality tool and JSON. This
 validates the positive-increment diffuse-prior kernel in a separate reference case,
 not the full correlated/high-dimensional calibration workflow.
+
+Inference acceptance checkpoint:66,131 full tests passed with all extras and
+warnings as errors in929.73s;601 later-added native reference cases separately
+pass in the installed-wheel suite. Fresh outside-checkout wheel testing passed
+5,572 tests plus both UAROET examples. All13 native files regenerated identically;
+independent R posterior/trial files matched, probability error below5e-13.
+Ruff, formatting2,665files, mypy753sourcefiles and wheel/sdist build pass.
+All757 packaged Python/JSON files and29 licensing files match the checkout;
+original assets remain excluded. See uaroet-inference-validation-2026-10-12.json.
+No status promotion; continuous per-chain precision is the immediate next gate.

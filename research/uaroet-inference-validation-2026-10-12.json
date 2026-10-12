@@ -1,0 +1,58 @@
+{
+  "scope": "UAROET prior ESS and robust diffuse-prior inference; application92 remains partial",
+  "code_commit": "1c6ea76948bcdf518894ac94cf4b7206df3a4d14",
+  "full_suite": {
+    "passed": 66131,
+    "seconds": 929.73,
+    "warnings_as_errors": true,
+    "all_extras": true,
+    "additional_native_reference_cases_after_collection": 601
+  },
+  "installed_wheel": {
+    "passed": 5572,
+    "outside_checkout": true,
+    "extras": [
+      "plot",
+      "image"
+    ],
+    "examples": [
+      "uaroet_pending.py",
+      "uaroet_saved_study.py"
+    ]
+  },
+  "native_reference_files_regenerated_identically": 13,
+  "independent_R": {
+    "posterior_identical": true,
+    "trial_looks_identical": true,
+    "trial_patients_identical": true,
+    "probabilities_max_difference": 4.973799150320701e-13,
+    "logits_max_difference": 9.992007221626409e-16
+  },
+  "static_checks": {
+    "ruff": true,
+    "formatted_files": 2665,
+    "mypy_source_files": 753
+  },
+  "artifacts": {
+    "source_wheel_byte_matched_files": 757,
+    "notices_identical": true,
+    "raw_binaries_excluded": true,
+    "wheel_sha256": "6862636cf3f256850275c952a22035fb66130e9f4ceb3546784d751ba93bc6ec",
+    "sdist_sha256": "d60d1dd1cf9a510a966d5d6651a26d4af6cac23037394b9fd08665c61f9d1799"
+  },
+  "licensing_files_retained": 29,
+  "production_files_hash_verified": 753,
+  "production_snapshot_sha256": "3c27edc310cf2298061f9b6c7a693517a4bb225f7535810565d601c84b72629b",
+  "quality_references": [
+    "uaroet-prior-ess-quality-2026-10-12.json",
+    "uaroet-diffuse-prior-quality-2026-10-12.json",
+    "uaroet-monotone-diffuse-quality-2026-10-12.json"
+  ],
+  "remaining": [
+    "Continuous per-chain precision",
+    "Pseudo-trial calibration",
+    "Safe and legacy conduct controllers",
+    "Delayed calendar simulation, aggregation and reports"
+  ],
+  "clinical_validation": false
+}
