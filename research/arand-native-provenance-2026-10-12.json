@@ -1,0 +1,30 @@
+{
+  "scope": "New ARAND native-profile production files only; not a license certification of the full bundle",
+  "files": [
+    {
+      "path": "src/mdanderson_stats/arand_native.py",
+      "sha256": "cae16f0e1579c47e99c920804da3175b26a6b6686ec6a624dc1eaf6623a92716",
+      "authorship": "newly authored source-informed compatibility implementation; not a clean-room claim",
+      "evidence": "research/arand-controller-recovery-2026-10-12.md",
+      "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",
+      "original_artifacts_bundled": false
+    },
+    {
+      "path": "src/mdanderson_stats/arand_native_trial.py",
+      "sha256": "e8eab9a266655acb9262239c248156ff3771b07cdebc03fc120167f3770b08ba",
+      "authorship": "newly authored source-informed compatibility implementation; not a clean-room claim",
+      "evidence": "research/arand-controller-recovery-2026-10-12.md",
+      "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",
+      "original_artifacts_bundled": false
+    },
+    {
+      "path": "src/mdanderson_stats/arand_native_study.py",
+      "sha256": "1463842f60611887b3db291e59ffa2bb8e060a6499df5a9c8e9abc841f381142",
+      "authorship": "newly authored source-informed compatibility implementation; not a clean-room claim",
+      "evidence": "research/arand-controller-recovery-2026-10-12.md",
+      "notice": "THIRD_PARTY_NOTICES.md#arand-native-profile-continuation-october-12-2026",
+      "original_artifacts_bundled": false
+    }
+  ],
+  "distribution": "Existing mixed-license terms retained; no split or relicensing performed"
+}

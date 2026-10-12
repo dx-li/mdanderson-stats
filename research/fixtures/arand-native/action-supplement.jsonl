@@ -1,0 +1,8 @@
+{"action": "open", "initial": 2, "status": 0}
+{"action": "tmp_close", "initial": 2, "status": 1}
+{"action": "close_early", "initial": 2, "status": 2}
+{"action": "close", "initial": 2, "status": 3}
+{"action": "", "initial": 2, "status": 2}
+{"action": "unknown", "initial": 2, "status": 2}
+{"action": "OPEN", "initial": 2, "status": 2}
+{"action": "", "initial": 1, "status": 1}

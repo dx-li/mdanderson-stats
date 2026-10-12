@@ -118,3 +118,8 @@ before drawing seeds or candidate arrays. `max_total_work` and
 `max_total_storage_bytes` may tighten aggregate limits; the controller's own
 look and storage caps also apply. Trials run one at a time. Only seeds,
 patient-count data needed for percentiles and compact summaries are retained.
+
+The separately named [ARAND native controller workflow](arand-native-workflow.md)
+now supports recovered candidate-time rules, censor indicators, Python saved
+studies, reproducible simulation and explicit reports. Existing policy APIs remain
+unchanged; full original XML/RNG/report identity remains unclaimed.

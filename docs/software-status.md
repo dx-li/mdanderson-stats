@@ -130,7 +130,7 @@ some legacy adaptations retain commercial-use restrictions.
 | Program | Source entry | Python documentation |
 | --- | --- | --- |
 | 1+2+3: to find the optimal biological dose for rare diseases | [online #172](https://biostatistics.mdanderson.org/shinyapps/1plus2plus3) | [Guide](rare-disease-123.md) |
-| Adaptive Randomization | [desktop #62](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62) | [Posterior](arand.md), [calendar](arand-calendar.md), [simulation](arand-simulation.md) |
+| Adaptive Randomization | [desktop #62](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62) | [Posterior](arand.md), [calendar](arand-calendar.md), [simulation](arand-simulation.md), [native controller/studies](arand-native-workflow.md) |
 | Bayesian Adaptive Randomization and Efficacy Monitoring with Posterior Probability | [online #130](https://biostatistics.mdanderson.org/shinyapps/BARPO/) | [Guide](barpo-reference.md) |
 | Bayesian Chi Square TTE fit | [desktop #66](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/66) | [Guide](bayesian-chi-square.md) |
 | Bayesian Effective Sample Size Calculator | [online #154](https://biostatistics.mdanderson.org/shinyapps/BayesESS) | [Guide](conjugate-ess.md) |

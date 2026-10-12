@@ -6,7 +6,8 @@ No entry was added or dropped. See [membership evidence](catalog-membership-2026
 
 Counts remain **93 implemented / 39 partial / 6 pending**. This continuation
 adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
-study/controller workflow, and ToxFinder native allocation/simulation workflow,
+study/controller workflow, ToxFinder native allocation/simulation workflow, and
+the named ARAND native supplied-calendar/Python-study workflow,
 without promoting their application coverage labels.
 It does not re-certify every historical numerical reference or installed example.
 The validation report identifies exactly which checks were rerun.
@@ -68,7 +69,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 59 | SURVAN | implemented | Declared recovered workflow implemented; [Guide](../docs/survan.md) retains scope and compatibility limits. |
 | 60 | TRAX | implemented | Declared recovered workflow implemented; [Guide](../docs/trax.md) retains scope and compatibility limits. |
 | 61 | WINDOWS | implemented | Declared recovered workflow implemented; [Guide](../docs/windows.md) retains scope and compatibility limits. |
-| 62 | Adaptive Randomization | partial | Explicit Python controller policies exist. Native scheduler/status/floor/final-selection contracts and integrated control fixtures are now recovered; their named Python workflow, original simulation/report integration and RNG equivalence remain incomplete. [Recovery audit](arand-controller-recovery-2026-10-12.md); [calendar guide](../docs/arand-calendar.md) |
+| 62 | Adaptive Randomization | partial | Named native single-endpoint controller, all-arm posterior replay with censor indicators, fixed-delay/survival simulation, versioned Python studies and reports are implemented and independently checked. Remaining native XML/defaults/disabled-gate mapping, batch construction/reset, full native report integration and wrapper RNG policy; original report percentile arithmetic now has bounded probes. [Native workflow](../docs/arand-native-workflow.md); [integration checkpoint](arand-native-integration-2026-10-12.md) |
 | 63 | TTEConduct | implemented | Declared recovered workflow implemented; [Guide](../docs/tteconduct.md) retains scope and compatibility limits. |
 | 64 | CONFINT | implemented | Declared recovered workflow implemented; [Guide](../docs/confint.md) retains scope and compatibility limits. |
 | 65 | CI of Interaction Index | implemented | Declared recovered workflow implemented; [Catalog](../src/mdanderson_stats/catalog.json) retains scope and compatibility limits. |

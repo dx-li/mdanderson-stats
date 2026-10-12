@@ -1440,3 +1440,15 @@ The recovered WFMM executable also supplies five Haar transform and 46
 compression/bypass/error references for the independent Python compression
 rule; original executables/libraries remain excluded. See
 `research/wfmm-native-compression-audit.md`.
+
+### ARAND native-profile continuation (October 12, 2026)
+
+`arand_native.py`, `arand_native_trial.py`, and `arand_native_study.py` are newly
+authored Python implementations of recovered controller behavior, connected to
+the existing independent posterior mathematics. Source evidence includes bounded
+execution and inspection of the hash-pinned ARAND 5.2.2 library; reference tools
+require a separately supplied original and ship no original instructions,
+binaries, installer or manual. This is source-informed compatibility work, not a
+claim of clean-room authorship or a new grant for the original program. Its
+original redistribution prohibition and all existing package notices remain.
+Native/XML/RNG/report identity limits are documented in the workflow guide.

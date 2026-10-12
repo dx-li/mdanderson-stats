@@ -140,3 +140,8 @@ Python policies. The [simulation workflow](arand-simulation.md) provides
 per-arm selection, patient-count and status summaries. Native random streams,
 exact native control semantics and original report formatting remain open. No native numerical-engine or full
 trial-controller parity is claimed.
+
+The separately named [ARAND native controller workflow](arand-native-workflow.md)
+now supports recovered candidate-time rules, censor indicators, Python saved
+studies, reproducible simulation and explicit reports. Existing policy APIs remain
+unchanged; full original XML/RNG/report identity remains unclaimed.

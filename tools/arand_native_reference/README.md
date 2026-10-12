@@ -69,3 +69,38 @@ all arms then stops through original minmax and final control flow.
 TTE sufficient-stat fixtures independently distinguish visible censor0 from event1.
 Before record time both yield event0 and accumulating exposure; at/after record
 time exposure is capped, but only event1 increments the failure count.
+
+## Python compatibility differential checks
+
+After installing the Python package, the deterministic bounded comparison can be
+run alongside the original-reference dependencies:
+
+```sh
+ARAND_REFERENCE_LIBRARY=/path/to/ARand.Calcs.dll python verify_python.py
+```
+
+It performs 300 status transitions and 600 group/whole selection comparisons
+using seed 123, including threshold equalities, permanent closures and conflicting
+posterior values. These deliberately include non-normalized supplied best-arm
+scores to test controller branches; they do not validate a posterior estimator.
+The fixture runner and this check are research tools, excluded from the wheel.
+
+`arand_report_index_reference.py` is a separate 12-case supplement. It executes
+only the report's original duration-percentile branch/index/read instructions
+(RVA0x60a14, IL927..1092) with supplied sorted vector memory and Math.Ceiling.
+The original 98-fixture manifest is unchanged. Invoke with the same library env
+variable and compare JSONL to `report-index-supplement.jsonl`. This does not run
+the complete report, enrollment sorting or GUI rendering.
+
+`arand_action_reference.py` separately executes original SetAction IL
+(RVA0x6f5a4) with supplied string comparison and a status cell. Its eight cases
+are preserved in `action-supplement.jsonl`. Original constructor inspection
+establishes initial min/max action cells of2; empty/unrecognized action strings
+leave the supplied cell untouched. The probe does not execute XML parsing or
+claim a complete saved-study loader.
+
+`verify_constraints.py` adds 300 deterministic comparisons (seed314) against the
+original ordered arm/group constraint instructions, using the same library and
+installed Python package. Cases include conflicting limits, closed statuses,
+start/duration equality and reopening; trial limits are not reached. Together
+with `verify_python.py` there are1,200 differential comparisons.

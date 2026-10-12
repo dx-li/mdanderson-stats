@@ -187,3 +187,8 @@ suspension, minimum-enrollment gates, strict cutoffs, terminal eligibility and
 duration/follow-up limits. [Serial simulation](arand-simulation.md) generates
 these tapes and summarizes operating characteristics. Native random streams,
 native control-order/floor parity and the full desktop workflow remain open.
+
+The separately named [ARAND native controller workflow](arand-native-workflow.md)
+now supports recovered candidate-time rules, censor indicators, Python saved
+studies, reproducible simulation and explicit reports. Existing policy APIs remain
+unchanged; full original XML/RNG/report identity remains unclaimed.

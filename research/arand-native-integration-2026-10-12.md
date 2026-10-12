@@ -1,0 +1,136 @@
+# ARAND native-profile integration checkpoint
+
+Recovered remote parent: `e74b1ef82904a8d0587442abd17d53242e0cf183` on
+`codex/community-completion-2026-10-12`. No reset or forced update occurred.
+No AGENTS.md or repository `.agents/skills` were present in this environment.
+Repository contribution instructions and the continuation/roadmap/license records
+were read before implementation.
+
+## Scope closed
+
+The [native workflow guide](../docs/arand-native-workflow.md) documents the new
+single-endpoint supplied-calendar controller and the complete explicitly defined
+Python study workflow: validated inputs → controller/posterior replay → fixed-delay
+binary or censored exponential scenario generation → repeated simulation →
+selection/enrollment/duration summary → saved JSON and self-contained HTML report.
+All-arm ranking reuses the independently tested beta/inverse-gamma mathematics.
+Original-order monitoring, status transitions, trial/arm limits, proportional
+allocation floors, group and whole selection remain separate from the preexisting
+required-policy controller. Native behaviors that can stop pending trials, reopen
+closed arms or allocate during forced run-in are explicit compatibility rules.
+
+Production additions: `arand_native.py`, `arand_native_trial.py`,
+`arand_native_study.py`, with root exports. No existing statistical implementation
+was replaced. Original artifacts remain ignored and excluded from distributions.
+The new notice documents source-informed authorship and does not assert a new
+permission, clean-room status, unrestricted bundle or clinical validation.
+
+## Independent evidence
+
+- Official archive downloaded directly; SHA-256 still
+  `ff9c4d490a8876e1b3197d6fcb809bd8d001761be13f083a667e0e7db34fc877`.
+  Locally extracted library hash matches the existing reference harness.
+- All **98** original-instruction fixtures across **13** families regenerate with
+  identical parsed JSON values. This is fixture durability, not 98 full Python
+  integrations. Dormant predictive and latent multi-endpoint/group paths remain
+  outside the advertised single-endpoint implementation.
+- All six original integrated controller outcomes agree with Python: statuses,
+  stopping/allocation, analysis times, completion time and final winner. Component
+  fixtures check floors, monitoring thresholds, observations/censoring, status
+  transitions, constraints and both final selectors.
+- `tools/arand_native_reference/verify_python.py` executes **900** deterministic
+  original-instruction comparisons: 300 status transitions plus 600 whole/group
+  selectors. Random seed123 covers exact cutoffs, permanent closures, action
+  overrides and deliberately inconsistent supplied posterior scores. This checks
+  controller logic, not posterior inference.
+- Exact beta polynomial integration gives5/6 after a success/failure history;
+  independent reciprocal-Gamma ordering gives11/16 for a censor/event history.
+  Seeded mean/median trials agree. A512-replicate one-arm simulation agrees within
+  six analytical MCSEs with Poisson(.5) enrollment and .75-month expected stopping
+  time, including exponential candidate overshoot beyond the .25-month horizon.
+
+## Additional report-source recovery
+
+Original `PrintSimulationSummary` at RVA0x60a14 contains a duration-vector guard
+at IL offsets927–949: percentile reads execute only for at least100 values.
+The zero-based indices then use `int(ceil(n*p - 1) + 1)` for p=.025/.975, not
+NumPy type7. A new bounded original-IL slice runner preserves12 fixtures in
+`fixtures/arand-native/report-index-supplement.jsonl`. It supplies sorted vector
+memory and Math.Ceiling, executes the original branch/arithmetic/read instructions,
+and fails on out-of-range reads. Below100 it records no read and untouched zero
+locals; it does **not** claim what the complete GUI renders in those cases.
+At100 the indices are3 and98; at1000 they are25 and975. Enrollment-array sections
+also contain the same arithmetic, but their complete output branches have not
+been executed by this new slice probe. The existing98-fixture manifest remains
+unchanged; these12 probes are a separately scoped supplement.
+
+`AccumulateSimulationStatistics` RVA0x62894 records final status per group,
+selected count and early-selected count. `SimulationDirector.SetSeed` RVA0x2c60
+passes base seed plus scenario index through the scenario vtable. This is a
+source-path observation, not a completed source-reference fixture for report
+aggregation or wrapper RNG. Do not relabel the current Python streams or report
+as original-identical on this evidence alone.
+
+## Precise remaining application contracts
+
+1. Original managed saved-study XML mapping, including explicit versus omitted
+   values and enabled/disabled constraint flags. Current Python rules enable
+   their declared limits and expose explicit defaults; they are not a general
+   native-XML loader. Original ARand.Design.dll includes separate booleans for
+   trial/arm/group maxima/minima that must be mapped without guessing.
+2. Native exponential-batch construction versus reset (ceil(a) versus int(a)),
+   including initialization and scenario reset. Current supplied monitor states
+   reproduce transitions without assuming how an omitted initial state was built.
+3. End-to-end original report aggregation, final-status/drop labels, sorted
+   percentile selection, small-replicate output branches, and report dispatch
+   through the exposed noncovariate wrapper. Bounded percentile evidence above
+   narrows this contract but does not close it.
+4. Wrapper scenario and replicate seeding/reset policy. NumPy streams are an
+   explicitly supported independent alternative; no original random-sequence or
+   native posterior-integrator identity is claimed or required for that profile.
+5. Original persisted nonempty patient histories and GUI file round trips remain
+   distinct from Python JSON input round trips.
+
+Coverage stays **93 implemented /39 partial /6 pending**. ARAND #62 stays partial.
+No approximate model was supplied for the six externally blocked applications.
+The mixed-license distribution decision and previous PR Forbidden remain with
+the parent; no bypass, merge, registry release, deployment, settings change or
+third-party contact was attempted. No verified task URL was exposed.
+
+## Validation
+
+Final-code full regression and artifact evidence are appended below when complete.
+
+### Missing XML closure-action default narrowed
+
+Inspection of original constructor RVA0x19704 shows status cells at offsets116
+and120 initialized to2. XMLPopulate RVA0x6e05c reads `min_prob_action` and
+`max_prob_action` with empty-string defaults, then calls SetAction. The original
+SetAction method at RVA0x6f5a4 maps case-sensitive `open`→0, `tmp_close`→1,
+`close_early`→2 and `close`→3; empty or unrecognized strings retain the cell's
+existing value. A second bounded original-IL runner,
+`arand_action_reference.py`, preserves eight probes in
+`fixtures/arand-native/action-supplement.jsonl`, including missing, unknown and
+uppercase strings. Thus a fresh native stopping-rule object's absent action
+attributes retain2; a reused object's value is state-dependent. This resolves
+that narrow missing-action question, not the full saved-study loader, enabled
+flags, desktop serialization/default precedence or nonempty patient histories.
+The current explicit Python profile continues to use its documented supported
+actions and does not silently assume those XML defaults.
+
+A further300 deterministic original-instruction comparisons (seed314,
+`verify_constraints.py`) agree on ordered arm/group constraints, including
+conflicting maxima/minima, closed-arm reopening and exact start/duration
+boundaries. Total supplementary differential comparisons: **1,200**.
+
+### Allocation-population review correction
+
+Review of original AdaptiveRandomizer.GetTreatment RVA0x6bcbc confirms that an
+ordinary allocation samples the eligible-arm map, the single-eligible-arm branch
+selects that arm directly, and ForceEqualNumberOfPatients RVA0x6c1ac visits all
+arms. Replay now retains `assignment_arms` separately from its full-length
+allocation display vector. An exactly zero supplied uniform cannot select an
+excluded arm in ordinary allocation, but can select a zero-deficit first arm in
+the forced population under the original `<=` rule. Both cases have regressions.
+The first full-suite attempt was deliberately interrupted for this correction
+and is not reported as a pass. A new final-code run supersedes it.

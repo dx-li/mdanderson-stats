@@ -229,3 +229,17 @@ fitted models and distribution licensing still block a complete, unrestricted
 community release. No head-specific hosted CI, original RNG identity or verified
 task URL is claimed. No PR permission-denial workaround, merge, registry release,
 settings activation or third-party contact was performed.
+
+## ARAND native-profile integration continuation
+
+The feature branch was recovered at `e74b1ef82904a8d0587442abd17d53242e0cf183`.
+The next [integration checkpoint](arand-native-integration-2026-10-12.md) closes
+a named single-endpoint native supplied-calendar/Python-study workflow, including
+controller ordering, all-arm posterior integration, censor-aware simulation,
+versioned JSON and explicit reports. The existing policy API remains available.
+All98 original fixtures regenerate; all six integrated controller cases agree;
+1,200 additional original-instruction comparisons pass. New bounded report-index
+and missing-action probes narrow the next native saved-study/report gates.
+Coverage remains93 implemented/39 partial/6 pending. Consult that checkpoint's
+final validation and remaining contracts before continuing; do not treat the
+source-recovery-only next steps above as still unimplemented Python work.
