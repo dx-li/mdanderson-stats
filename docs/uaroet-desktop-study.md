@@ -4,8 +4,9 @@
 filenames to their text contents. It validates the documented saturated ordinal
 model, prior means/SDs, selected utility, trial settings, scenarios and optional
 patient records. It does not read arbitrary paths, execute the original program,
-or infer missing scientific settings. The current desktop workflow remains
-**partial**; this interface is a saved-input and counting contract.
+or infer missing scientific settings. The current desktop workflow integrates
+these inputs with calibration, precision-qualified conduct, calendar simulation
+and portable reports. See the [declared acceptance scope](../research/uaroet-desktop-complete-checkpoint-2026-10-12.md).
 
 ```python
 from pathlib import Path
@@ -67,9 +68,9 @@ differ from one by at most `1e-12`; transient normalization is used only when
 computing Gaussian-copula scenario probabilities, preserving exact JSON round trips.
 
 Simulation target MCSE settings are stored and validated, **not satisfied by
-importing a file or running a fixed short chain**. Remaining current-version scope
-includes prior calibration/ESS, precision-controlled inference, safe and explicit
-legacy controllers, as-of conduct, calendars, simulation aggregation and reports.
+importing a file or running a fixed short chain**. The APIs below integrate
+prior calibration/ESS, precision-controlled inference, explicit controller
+profiles, as-of conduct, calendars, simulation aggregation and reports.
 See [recovery evidence](../research/uaroet-current-recovery-2026-10-12.md).
 
 ## Prior effective sample size
@@ -91,8 +92,9 @@ check support these calculations.
 
 Both native-recognized distribution keywords, `DistributionSave` and
 `DistributionSaveOption`, now canonicalize to the latter. Supplying both is an
-error; no preference is silently chosen. Capturing an export setting still does
-not imply that the complete desktop export workflow is implemented.
+error; no preference is silently chosen. Use the explicit distribution or
+histogram callbacks below to capture an export; importing settings alone writes
+no files.
 
 Continuous posterior precision is available through `fit_uaroet_desktop(study,
  rng=..., conduct=False)`. Simulation uses TargetMCSERatio (default0.03);

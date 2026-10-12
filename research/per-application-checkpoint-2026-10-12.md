@@ -4,7 +4,7 @@ Catalog membership was rechecked against both official API lists: 80 desktop +
 58 online entries, with identical response hashes to the preserved inventory.
 No entry was added or dropped. See [membership evidence](catalog-membership-2026-10-12.json).
 
-Current counts are **101 implemented / 31 partial / 6 pending**. ARAND62 now
+Current counts are **102 implemented / 30 partial / 6 pending**. ARAND62 now
 meets the guide-defined simulation workflow; see its scope crosswalk below. This continuation
 adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
 study/controller workflow, ToxFinder native allocation/simulation workflow, and
@@ -92,7 +92,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 87 | Misclib | implemented | Declared recovered workflow implemented; [Guide](../docs/misclib.md) retains scope and compatibility limits. |
 | 89 | Bayes Factor TTE | implemented | Declared recovered workflow implemented; [Guide](../docs/bayes-factor-survival.md) retains scope and compatibility limits. |
 | 90 | BlockARAND | implemented | Declared recovered workflow implemented; [Guide](../docs/blockarand.md) retains scope and compatibility limits. |
-| 92 | UAROET | partial | Current1.8 probability, likelihood, screening, hybrid, cohort, parser and ESS native contracts are recovered. Toxicity-only posterior inference is integrated and independently checked. Original saved-study/prior mapping and disjoint observation accounting are integrated; saved-history/final-selection native contracts are recovered. Prior ESS and robust diffuse-prior initialization are integrated. Pseudo-trial calibration, per-chain precision, explicit conduct profiles and streamed reports are integrated. Full delayed calendar simulation/aggregation and final workflow acceptance remain open. [Recovery](uaroet-current-recovery-2026-10-12.md); [guide](../docs/uaroet.md). |
+| 92 | UAROET | implemented | Current1.8 saved study, calibration/ESS, continuous precision, explicit safe/legacy conduct, delayed calendar trials, compatible job aggregation and portable reports/histograms are complete within declared contracts. [Acceptance](uaroet-desktop-complete-checkpoint-2026-10-12.md); [guide](../docs/uaroet-desktop-study.md). |
 | 94 | Bayes Factor Binary | implemented | Declared recovered workflow implemented; [Guide](../docs/bayes-factor-binary.md) retains scope and compatibility limits. |
 | 95 | Pinnacle | implemented | Declared recovered workflow implemented; [Guide](../docs/pinnacle.md) retains scope and compatibility limits. |
 | 96 | Beta Binomial Distribution Demo | implemented | Declared recovered workflow implemented; [Guide](../docs/beta-binomial-demo.md) retains scope and compatibility limits. |

@@ -596,3 +596,13 @@ remains partial, counts101/31/6 unchanged. See uaroet-current-recovery-2026-10-1
 and the pending-data validation manifest. Next integrate saved-study/prior mapping,
 then the complete calibrated-prior, precision, conduct/calendar and report workflow.
 Native live-cohort defects and distinct tie rules must remain explicit profiles.
+
+## UAROET92 current-workflow acceptance
+
+Declared current1.8 Python scope is closed; counts102 implemented/30 partial/6 pending.
+See [acceptance](uaroet-desktop-complete-checkpoint-2026-10-12.md) and its validation
+manifest:70,589 full tests,9,347 installed-wheel tests,15 regenerated native files.
+Continue PRT69 through saved study, explicit native profiles, controller/calendar,
+simulation and reports before promotion. Native projection/hazard/calendar defects
+must remain explicit. Six unavailable fits, separate web contracts, mixed-license
+distribution and Forbidden PR creation remain unchanged blockers.

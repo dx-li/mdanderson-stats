@@ -1,0 +1,63 @@
+{
+  "scope": "UAROET92 current1.8 declared Python workflow",
+  "production_code_commit": "3a57287e61d494a29e8cbceef0d4c61b42940d35",
+  "full_suite": {
+    "passed": 70589,
+    "seconds": 957.81,
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "log_sha256": "cf0c463e8cb7a8c79dbf37391b95fa327eca2df32d8857d90872be16837fd100",
+    "production_python_files": 762,
+    "production_python_snapshot_sha256": "7e1749d5893cad62ce12519ef9727ada3ffbbf641bc188fd689e4832a3cb3f45"
+  },
+  "fresh_wheel": {
+    "tests": 9347,
+    "extras": [
+      "plot",
+      "image"
+    ],
+    "examples": [
+      "uaroet_pending.py",
+      "uaroet_saved_study.py",
+      "uaroet_calendar.py"
+    ],
+    "outside_checkout": true,
+    "final_rebuilt_tests_seconds": 28.74,
+    "log_sha256": "8a71be80ce113453856c7c838f65b405bac69abd900239677570f7168c1fc27e"
+  },
+  "source_reference": {
+    "native_files_regenerated_byte_identically": 15,
+    "R_files": 5,
+    "R_byte_identical_files": 3,
+    "R_maximum_numeric_difference": 4.973799150320701e-13
+  },
+  "independent_quality": {
+    "calibration_manifest": "uaroet-calibration-quality-2026-10-12.json",
+    "calendar_manifest": "uaroet-calendar-quality-2026-10-12.json",
+    "calibration_maximum_parameter_mean_difference": 0.009648274822141811,
+    "calendar_final_maximum_Rhat": 1.00082034205
+  },
+  "qualifications": [
+    "Source compatibility, mathematical correctness and clinical validity are separate claims.",
+    "Safe and legacy_1_8 profiles deliberately differ; native defects are explicit.",
+    "One calibration replicate is exploratory, not the recommended 1000-repetition final design evaluation.",
+    "The original Windows GUI/template layout and bitwise RNG identity are outside the declared Python scope.",
+    "Simulation hold is a computational failure, never a clinical stopping result.",
+    "One-chain Rhat is unavailable; precision and convergence remain distinct gates."
+  ],
+  "artifacts": {
+    "package_Python_JSON_files": 766,
+    "notice_files_retained": 29,
+    "raw_original_assets_excluded": true,
+    "hashes": "Final rebuilt artifact hashes recorded in preservation commit message"
+  },
+  "lint": "passed",
+  "types": "762 source files passed",
+  "catalog": {
+    "implemented": 102,
+    "partial": 30,
+    "pending": 6
+  },
+  "post_full_suite_change": "Only catalog metadata and documentation changed; all 762 production Python files verified unchanged. PRT source-only tests added later are checked separately.",
+  "format": "2704 files formatted before later PRT calendar test"
+}

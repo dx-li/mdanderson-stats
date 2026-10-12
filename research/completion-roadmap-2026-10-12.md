@@ -100,3 +100,13 @@ check, then source-validated safe/legacy controller primitives, saved conduct,
 delayed calendar simulation and report/aggregation workflows. The1000-repetition
 recommendation applies to final calibrated trial designs, not a one-trial pilot.
 No application status promotion:101 implemented/31 partial/6 pending.
+
+## UAROET92 current-workflow acceptance
+
+Declared current1.8 Python scope is closed; counts102 implemented/30 partial/6 pending.
+See [acceptance](uaroet-desktop-complete-checkpoint-2026-10-12.md) and its validation
+manifest:70,589 full tests,9,347 installed-wheel tests,15 regenerated native files.
+Continue PRT69 through saved study, explicit native profiles, controller/calendar,
+simulation and reports before promotion. Native projection/hazard/calendar defects
+must remain explicit. Six unavailable fits, separate web contracts, mixed-license
+distribution and Forbidden PR creation remain unchanged blockers.

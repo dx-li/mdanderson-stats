@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-101 implemented, 31 partial, and 6 pending. Each method's guide explains its
+102 implemented, 30 partial, and 6 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -1709,7 +1709,10 @@ allocation weights. [Complete-outcome trial replay and simulation](docs/uaroet-t
 add explicit analysis schedules, patient-level randomization and compact
 selection/allocation summaries with bounded serial posterior fits. Independent
 R integration checks the model, a reduced posterior and reference trial paths.
-Prior calibration, delayed outcomes and native workflow equivalence remain open.
+The [current desktop workflow](docs/uaroet-desktop-study.md) adds saved studies,
+prior calibration/ESS, per-chain precision, delayed calendar trials, mergeable jobs
+and streamed reports/histograms with explicit safe and legacy profiles. Native RNG
+or report byte identity and clinical validity are not claimed.
 
 [Dose Schedule Finder](docs/dose-schedule.md) adds a time-to-toxicity model for
 choosing dose and administration schedule together. Triangular hazards account

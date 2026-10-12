@@ -5,8 +5,9 @@ utilities, and Bayesian adaptive randomization. The [official desktop entry](htt
 identifies the [Thall and Nguyen (2012) method](https://odin.mdacc.tmc.edu/~pfthall/main/JBS_AR_Utility2012.pdf).
 This is an independent implementation of its logistic continuation model and
 Gaussian copula, with [complete-outcome trial simulation](uaroet-trials.md).
-Catalog entry 92 remains partial while prior calibration and native input/output
-workflows remain open.
+Catalog entry92 implements the declared current1.8 Python workflow; see
+[saved studies, calibration, conduct and simulation](uaroet-desktop-study.md) and
+[acceptance scope](../research/uaroet-desktop-complete-checkpoint-2026-10-12.md).
 
 ## Probability model
 
@@ -188,8 +189,9 @@ Bounded native instruction references now cover selected contracts; full Windows
 execution and native-inference/RNG parity are not claimed. Dedicated current-desktop
 APIs now integrate saved priors, pseudo-trial calibration/ESS, per-chain precision,
 explicit safe/legacy conduct and portable reports; see [saved studies](uaroet-desktop-study.md).
-Calendar simulation/aggregation and final workflow acceptance remain open. Original
-vendor code, executable files and papers are not bundled.
+Delayed calendar simulation, compatible job aggregation and posterior histograms
+complete that declared workflow. Original vendor code, executable files and papers
+are not bundled. Clinical validity is not claimed.
 
 ## Toxicity observed while efficacy is pending
 
@@ -203,9 +205,9 @@ fit does not decide whether an outcome is known at a given calendar time.
 The native likelihood references cover480 patient/time/partial-mode cases. A
 separate four-chain partial-data posterior agrees with independent scalar
 integration. Complete and partial counts jointly obey the existing10000-patient
-bound and invalid inputs are rejected before random draws. The source screening,
-cohort, hybrid-randomization, parser and prior-ESS contracts are recovered but
-remain separate from a completed current-desktop workflow. See the
+bound and invalid inputs are rejected before random draws. The dedicated desktop
+APIs integrate recovered screening, cohort, hybrid-randomization, parser and
+prior-ESS contracts. See the
 [continuation evidence](../research/uaroet-current-recovery-2026-10-12.md).
 
 ## Diffuse-prior initialization

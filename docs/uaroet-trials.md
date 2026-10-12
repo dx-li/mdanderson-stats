@@ -125,9 +125,9 @@ no-selection. At fixed zero association, scalar integration provides posterior
 utility references. See the [simulation contract](../research/uaroet-simulation-audit.md)
 and `tools/reference_uaroet_trial.R`.
 
-This is a complete-outcome Python scheduler. Delayed observations, native prior
-files, pseudo-trial/ESS elicitation, adaptive posterior precision and native
-report/executable parity remain outside this extension. Catalog entry 92 remains
-partial. The separate [current-desktop APIs](uaroet-desktop-study.md) now integrate
-saved files, calibration/ESS, per-chain precision, conduct and portable reports;
-calendar simulation/aggregation and final workflow acceptance remain open.
+This is the separate paper-based complete-outcome scheduler. The
+[current-desktop APIs](uaroet-desktop-study.md) integrate delayed observations,
+original prior files, calibration/ESS, continuous precision, conduct, calendar
+simulation, compatible job aggregation and portable reports/histograms.
+Catalog92's implemented status applies to that declared Python workflow;
+native executable/RNG/report byte identity and clinical validity are not claimed.
