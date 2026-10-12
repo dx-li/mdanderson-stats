@@ -1,6 +1,9 @@
 # Next EffTox current-version workflow contracts
 
-This is a source checkpoint, not an implementation/status promotion. The current
+This record preserves successive source checkpoints. Current binary workflow
+acceptance is now complete: see the [scope crosswalk](efftox-current-scope-2026-10-12.md)
+and [validation manifest](efftox-current-validation-2026-10-12.json). Earlier
+remaining-work paragraphs below are historical and superseded by that acceptance. The current
 5.2.3.0 archive was retrieved again and matches SHA256
 `84fc159c00bb825d0e28c18d095a77a98a8fd97e17c8b2451f9e03e3484b5c47`.
 The ignored extraction is `research/raw/efftox-2026-10-12/extracted`.

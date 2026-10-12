@@ -51,8 +51,10 @@ Entry 99 is partial. Combination titration/run-in
 workflows, combination and TITE-specific protocol generation, native Word/HTML
 layouts and saved-project interoperability remain open.
 
-The desktop installer and its embedded help have not been executed or inspected
-for numerical equivalence. The Python APIs follow the cited methods and audited
+The official1.1.0 installer has now been inspected and78 original R reference
+cases executed; [source recovery](../research/boin-desktop-source-recovery-2026-10-12.md)
+records active entry points, different run-in rules and legacy titration defects.
+The remaining desktop workflows are not yet integrated. The Python APIs follow the cited methods and audited
 R/web contracts, whose defaults and scheduling conventions can differ from
 desktop version 1.1.0. No desktop executable, native project file or unverified
 simulation result is bundled.

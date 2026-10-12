@@ -4,7 +4,7 @@ Catalog membership was rechecked against both official API lists: 80 desktop +
 58 online entries, with identical response hashes to the preserved inventory.
 No entry was added or dropped. See [membership evidence](catalog-membership-2026-10-12.json).
 
-Current counts are **97 implemented / 35 partial / 6 pending**. ARAND62 now
+Current counts are **98 implemented / 34 partial / 6 pending**. ARAND62 now
 meets the guide-defined simulation workflow; see its scope crosswalk below. This continuation
 adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
 study/controller workflow, ToxFinder native allocation/simulation workflow, and
@@ -21,7 +21,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 
 | ID | Application | Status | Remaining boundary / evidence |
 | ---: | --- | --- | --- |
-| 2 | EffTox | partial | Current5.2.3 saved-prior/calibration, bounded pending conduct, patient edits/deletion, simulation and reports are integrated. Source references total738 cases, including81 complete native posterior-integrand cases; negative-slope summary inconsistency is an explicit legacy option. Final all-scenario/batch and precision acceptance remains before promotion. Historical trinary/legacy scopes remain separate. [Current contracts](efftox-current-workflow-contracts-2026-10-12.md); [recovered fitter](../docs/efftox-native-contour.md); [trinary audit](efftox-trinary-calibration-audit.md). |
+| 2 | EffTox | implemented | Current5.2.3 saved-prior/calibration, bounded pending conduct, patient edits/deletion, simulation and reports are integrated. Source references total738 cases, including81 complete native posterior-integrand cases; negative-slope summary inconsistency is an explicit legacy option. All-scenario/batch, original saved-file and qualified precision acceptance are complete; [declared current-binary scope](efftox-current-scope-2026-10-12.md). Historical trinary/legacy scopes remain separate. [Current contracts](efftox-current-workflow-contracts-2026-10-12.md); [recovered fitter](../docs/efftox-native-contour.md); [trinary audit](efftox-trinary-calibration-audit.md). |
 | 3 | Multc99 | implemented | Declared recovered workflow implemented; [Catalog](../src/mdanderson_stats/catalog.json) retains scope and compatibility limits. |
 | 6 | ParameterSolver | implemented | Declared recovered workflow implemented; [Guide](../docs/parameter-solver.md) retains scope and compatibility limits. |
 | 7 | PerfectMatch | partial | The paper's array-mean-500 scaling now joins PDNN fitting, conditional expression, normalization, correlations and chip quantiles. Several manual QC outputs and the native correlation convention remain undefined; array parameters and native file workflows are also unresolved. [PerfectMatch guide](../docs/perfectmatch.md); [source records](../docs/perfectmatch-sources.json) |
@@ -98,7 +98,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 96 | Beta Binomial Distribution Demo | implemented | Declared recovered workflow implemented; [Guide](../docs/beta-binomial-demo.md) retains scope and compatibility limits. |
 | 97 | CATBUB Design | implemented | Declared recovered workflow implemented; [Guide](../docs/catbub.md) retains scope and compatibility limits. |
 | 98 | One Arm Time to Event Simulator | implemented | Declared recovered workflow implemented; [Guide](../docs/one-arm-tte.md) retains scope and compatibility limits. |
-| 99 | BOIN Design Desktop Program | partial | Desktop-specific combination titration/run-in and integration remain uncertain; installer/help rules were not numerically inspected. [desktop guide](../docs/boin-desktop.md) |
+| 99 | BOIN Design Desktop Program | partial | Official 1.1.0 installer recovered; 78 original startup/boundary/full-wrapper references expose distinct single-MTD/contour rules and legacy titration defects. Interactive conduct, saved-project/protocol integration and compatible implementation remain; [source checkpoint](boin-desktop-source-recovery-2026-10-12.md). [desktop guide](../docs/boin-desktop.md) |
 | 100 | Bayesian Toxicity Monitoring | implemented | Declared recovered workflow implemented; [Guide](../docs/bayesian-monitoring.md) retains scope and compatibility limits. |
 | 101 | Bayesian Update for a Beta-Binomial Distribution | implemented | Declared recovered workflow implemented; [Guide](../docs/beta-updating.md) retains scope and compatibility limits. |
 | 102 | Bayesian Update for Two Beta-Binomial Distributions | implemented | Declared recovered workflow implemented; [Guide](../docs/beta-updating.md) retains scope and compatibility limits. |

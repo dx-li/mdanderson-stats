@@ -10,8 +10,8 @@ links current scope and each remaining statistical contract.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 97 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 35 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 98 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 34 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 6 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -128,6 +128,8 @@ some legacy adaptations retain commercial-use restrictions.
 | Multc99 | [desktop #3](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/3) | [General study workflows](multc99.md) |
 | Bayes Factor TTE | [desktop #89](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/89) | [Guide](bayes-factor-survival.md); [Native schedule](bayes-factor-survival-enrollment.md) |
 | CI of Interaction Index | [desktop #65](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/65) | [Interaction indices](interaction-index.md); [Recovered studies](interaction-index-fixed-ray-study.md) |
+| EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Current workflow](efftox-desktop.md), [Guide](efftox.md), [native legacy fitter](efftox-native-contour.md), [trinary calibration](efftox-trinary-calibration.md) |
+
 
 ## Partially implemented
 
@@ -148,7 +150,6 @@ some legacy adaptations retain commercial-use restrictions.
 | CiBolus | [desktop #86](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86) | [Guide](cibolus.md), [Prior calibration](cibolus-calibration.md) |
 | CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis | [online #157](https://biostatistics.mdanderson.org/shinyapps/CondiS/) | [Guide](condis.md), [curve comparison](condis-survival-comparison.md) |
 | Dose Schedule Finder | [desktop #75](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75) | [Model](dose-schedule.md), [calendar trials](dose-schedule-trials.md) |
-| EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Guide](efftox.md), [native legacy fitter](efftox-native-contour.md), [trinary calibration](efftox-trinary-calibration.md) |
 | Find optimal biological dose (OBD) for targeted and immune therapies | [online #142](https://biostatistics.mdanderson.org/shinyapps/UBOIN) | [Guide](uboin.md) |
 | KeyboardComb: the Keyboard Design for Drug Combination Trials | [online #121](https://biostatistics.mdanderson.org/shinyapps/KeyboardComb/) | [Guide](keyboard-combination.md) |
 | MDS-HOPE: An interactive risk assessment tool for patients treated with HMA | [online #171](https://biostatistics.mdanderson.org/shinyapps/MDS-HOPE/) | [Guide](mds-hope.md) |

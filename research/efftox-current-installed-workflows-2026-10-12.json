@@ -1,0 +1,95 @@
+{
+  "package": "/tmp/completion-review-wheel-env/lib/python3.13/site-packages/mdanderson_stats/__init__.py",
+  "source_sha256": "f6ad7cc3119eace21ebbd65b1dce9c6b9a4c355af0a8e350de371b98c63a7b79",
+  "workflow_smoke_only": true,
+  "draws": 32,
+  "warmup": 16,
+  "chains": 2,
+  "scenarios": [
+    {
+      "scenario": 0,
+      "seeds": [
+        6025823050944315981,
+        3397130549104293713
+      ],
+      "patients": [
+        39,
+        39
+      ],
+      "selected": [
+        4,
+        4
+      ],
+      "rselect": 1.0
+    },
+    {
+      "scenario": 1,
+      "seeds": [
+        8823951174396000268,
+        4568740719895754229
+      ],
+      "patients": [
+        15,
+        39
+      ],
+      "selected": [
+        -1,
+        4
+      ],
+      "rselect": 0.5585729130525722
+    },
+    {
+      "scenario": 2,
+      "seeds": [
+        6686168829655118044,
+        4093739276392260101
+      ],
+      "patients": [
+        39,
+        39
+      ],
+      "selected": [
+        1,
+        2
+      ],
+      "rselect": 0.49095734435686134
+    },
+    {
+      "scenario": 3,
+      "seeds": [
+        5603565438486224781,
+        4103592346584937829
+      ],
+      "patients": [
+        18,
+        15
+      ],
+      "selected": [
+        -1,
+        -1
+      ],
+      "rselect": 0.0
+    },
+    {
+      "scenario": 4,
+      "seeds": [
+        1315959384508308889,
+        1590967746124396558
+      ],
+      "patients": [
+        27,
+        39
+      ],
+      "selected": [
+        -1,
+        4
+      ],
+      "rselect": 1.0
+    }
+  ],
+  "pending_status": "wait",
+  "pending_possible_completions": 20,
+  "pending_analyses": 2,
+  "patient_edit_delete_clear_roundtrip": true,
+  "reports_created": true
+}

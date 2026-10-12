@@ -458,3 +458,27 @@ Its official installer contains active readable R wrappers and managed conduct
 code;30 original startup/run-in cases are now preserved. This is research only,
 not a BOIN implementation/status promotion. Its original-program redistribution
 restriction is recorded; no original assets are bundled.
+
+### EffTox acceptance closed; continuation target BOIN desktop
+
+The final unchanged behavioral revision passed **35,394 tests in862.38seconds**
+(`uv run --all-extras pytest -q -W error`). The final installed-wheel suite
+passed1,567 in124.44seconds; lint/format/mypy/build and wheel/sdist byte/provenance
+checks passed. The rebuilt/installed catalog confirms **98 implemented /34 partial
+/6 pending**. [Final EffTox scope](efftox-current-scope-2026-10-12.md) and
+[durable manifest](efftox-current-validation-2026-10-12.json) supersede previous
+pending-acceptance notes. Default/higher-precision diagnostics remain qualified;
+clinical validity and native numerical/RNG identity are not asserted.
+
+BOIN desktop99 is next:78 original startup/run-in/full-wrapper cases and216
+interactive boundary rows now preserved. The144 GUI-valid rows (432values)
+match the installed existing Python core. Interactive contour conduct modifies
+n=3 only; waterfall simulation modifies n=3 and n=6. Recover managed pending/
+cohort/titration rules and project/protocol fields next, then integrate these
+mode-specific contracts. Keep phantom enrollment, endpoint jump and cross-trial
+state defects under explicit compatibility profiles, never scientific defaults.
+No BOIN status promotion or original program redistribution occurred.
+
+Six pending fitted models remain externally blocked; licensing/distribution
+choices and previous Forbidden PR creation remain parent decisions. No merge,
+release, deployment, outreach, permission change or license split occurred.

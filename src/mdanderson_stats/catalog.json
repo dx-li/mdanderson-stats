@@ -37,7 +37,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Bivariate binary Gumbel efficacy/toxicity model, centered log doses, explicit Gaussian priors with optional positive toxicity slope, and bounded posterior fitting.",
         "Modern Lp contour, posterior-mean utility, strict admissibility, explicit exploration and no-skipping policies, and interim/final dose selection.",
@@ -48,7 +48,9 @@
         "Binary-model prior calibration from elicited probability means and separate efficacy/toxicity beta-moment ESS targets, full curvature uncertainty, explicit slope conditioning, adaptive integration and optimizer diagnostics.",
         "Trinary Lp contour elicitation on the probability triangle, analytical toxicity scales above one, and shared dose decisions using marginal efficacy rather than conditional efficacy.",
         "Shared binary/trinary completed-outcome simulation with explicit cell ordering, model-specific posterior fits and work bounds, compact outcome summaries and retained model identity.",
-        "Trinary induced probability moments and explicit toxicity-first prior elicitation from marginal efficacy/toxicity means and separate beta-moment ESS targets, preserving independent-block uncertainty and stable rare-event complements; achieved residuals and optimizer diagnostics are returned."
+        "Trinary induced probability moments and explicit toxicity-first prior elicitation from marginal efficacy/toxicity means and separate beta-moment ESS targets, preserving independent-block uncertainty and stable rare-event complements; achieved residuals and optimizer diagnostics are returned.",
+        "Current EffTox 5.2.3 six-coefficient binary saved-study workflow: explicit prior resolution, patient editing and bounded pending conduct, safe capacity handling, all-scenario and distinct-seed batch simulation, and diagnostic HTML reports.",
+        "Explicit desktop_legacy toxicity-summary compatibility profile preserves recovered negative-slope inconsistency separately from model-consistent scientific defaults."
       ],
       "validation": [
         "Independent base-R joint likelihood, concave/convex contour and posterior integration references; official tutorial utilities; tests/test_efftox_reference.py.",
@@ -59,8 +61,10 @@
         "Independent base-R prior moments at 34 outcome/dose combinations, including conditioned toxicity slopes and near-fixed probabilities; tests/test_efftox_calibration.py and research/efftox-prior-calibration-audit.md.",
         "48 independent base-R trinary contour values, endpoint precision checks, marginal-efficacy admissibility and interim/final skipping rules; tests/test_efftox_trinary_contour_decision.py.",
         "Independent seeded multinomial trinary cells, patient conservation, nonfixed posterior refits and preserved binary simulation behavior; tests/test_efftox_trinary_simulation.py.",
-        "Recovered native legacy approximate contour fitting with instruction-reference fixtures and radial bridge; native files/reports, historical trinary behavior and direct Windows-kernel parity remain partial; docs/efftox-native-contour.md.",
-        "Twelve independent base-R dose/prior moment references, fixed/near-fixed priors, extreme logits, separate ESS targets, incompatible means and recomputed fit objective; seven focused tests and a converged default three-dose public example. docs/efftox-trinary-calibration.md and research/efftox-trinary-calibration-audit.md; no native calibration objective/parity claim."
+        "Recovered native legacy approximate contour fitting with instruction-reference fixtures and radial bridge; historical trinary GUI behavior and direct Windows-kernel parity are separate unclaimed compatibility scopes; docs/efftox-native-contour.md.",
+        "Twelve independent base-R dose/prior moment references, fixed/near-fixed priors, extreme logits, separate ESS targets, incompatible means and recomputed fit objective; seven focused tests and a converged default three-dose public example. docs/efftox-trinary-calibration.md and research/efftox-trinary-calibration-audit.md; no native calibration objective/parity claim.",
+        "738 current original-instruction references, including 81 complete posterior integrands with maximum relative weight error 6.88e-15; 691 focused workflow tests. research/efftox-current-scope-2026-10-12.md.",
+        "Original distributed study exercised across all five scenarios and two batches, pending patient updates/deletion and reports; installed-wheel acceptance and qualified default versus higher-precision comparison. research/efftox-current-validation-2026-10-12.json. Native numerical optimizer/integrator and RNG identity, historical XML migration and clinical validity are not claimed."
       ]
     },
     {

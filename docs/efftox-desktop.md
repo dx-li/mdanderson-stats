@@ -10,8 +10,7 @@ separate APIs in [the mathematical guide](efftox.md).
 This is independently maintained Python inference with recovered desktop control
 flow. Source-compatible behavior, numerical accuracy and clinical validity are
 separate claims. Native posterior integration, optimizer and random-number
-identity are not promised. The catalog remains partial pending final acceptance
-of the complete declared workflow scope.
+identity are not promised. The current binary workflow is complete within the [declared scope](../research/efftox-current-scope-2026-10-12.md); [acceptance evidence](../research/efftox-current-validation-2026-10-12.json) retains numerical qualifications.
 
 ## Read and resolve a prior
 
@@ -171,7 +170,7 @@ or distinct-seed batches. Tiny-draw runs are workflow smoke tests only. Posterio
 R-hat/MCSE and simulation Monte Carlo error address different uncertainty sources;
 neither certifies clinical validity.
 
-## Evidence and remaining acceptance
+## Evidence and scope
 
 The current source references contain 738 executed cases: 500 selection/
 admissibility, 86 cohort/pending/controller, 8 Rselect, 48 negative-slope summary,
@@ -183,9 +182,10 @@ hash-pinned, ignored reference inputs; they are not distributed or needed at run
 See [source contracts and checkpoint](../research/efftox-current-workflow-contracts-2026-10-12.md)
 for exact execution boundaries. Integration limits, native posterior numerical
 identity and native calibration optimizer identity remain distinct from these
-executed integrand/control-flow results. Full workflow acceptance, including
-all-scenario/batched operating-characteristic reporting and precision sensitivity,
-remains open before catalog promotion.
+executed integrand/control-flow results. Current binary workflow acceptance includes all-scenario/batch reporting and
+a qualified precision comparison; see the [scope crosswalk](../research/efftox-current-scope-2026-10-12.md).
+Two replications do not establish operating-characteristic accuracy or universal
+MCMC convergence.
 
 ## All scenarios and unequal batches
 

@@ -1,0 +1,51 @@
+{
+  "scope": "EffTox5.2.3 current six-coefficient binary workflow",
+  "code_commit": "a4f861ecba6478ffec78520eeeb99b75bd4b30a7",
+  "full_suite": {
+    "passed": 35394,
+    "seconds": 862.38,
+    "command": "uv run --all-extras pytest -q -W error",
+    "code_unchanged_during_run": true
+  },
+  "focused_tests": 691,
+  "installed_wheel_tests": {
+    "passed": 1567,
+    "seconds": 124.44
+  },
+  "source_reference_cases": 738,
+  "integrand": {
+    "cases": 81,
+    "max_relative_weight_error": 6.871784649697795e-15,
+    "negative_slope_likelihood_uses_raw_toxicity": true,
+    "untruncated_normal_integrand_matches": true
+  },
+  "precision_evidence": "efftox-current-precision-2026-10-12.json",
+  "installed_workflow_evidence": "efftox-current-installed-workflows-2026-10-12.json",
+  "limitations": [
+    "Two precision replications do not establish accurate operating characteristics or unqualified convergence.",
+    "Native integrator/optimizer/RNG identity and historical GUI migration are unclaimed.",
+    "Clinical validity is separate from software acceptance."
+  ],
+  "artifact_audit": {
+    "source_wheel_byte_matched_files": 724,
+    "notices_identical": true,
+    "raw_binaries_excluded": true,
+    "wheel_sha256": "736397883e55136bfe766cc443e999861c1b3db28e27608c179d27b88bab81d3",
+    "sdist_sha256": "0b3fe705154ed9fcf565a1e8016b9f6e5e4bc2c4e0f8f550e0611d21a45f9f35"
+  },
+  "final_catalog": {
+    "implemented": 98,
+    "partial": 34,
+    "pending": 6
+  },
+  "lint": "ruff check: pass",
+  "format": "2544 files formatted at acceptance",
+  "types": "mypy: 720 source files pass",
+  "installed_extras": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "Pillow": "12.3.0"
+  },
+  "artifact_audit_scope": "Built after catalog promotion; later source-only reference/docs changes do not change wheel production files. Hashes identify that audited build, not a registry release."
+}

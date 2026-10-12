@@ -21,14 +21,16 @@ loads `R/Functions for BOIN_Comb.R` and selects `get.oc.comb_MTDcontour` or
 `32a967c9ae89d10445174252a8401c534aee2c41a18b0690d63694f98e62d192`.
 
 Interactive conduct instead uses `BOIN_Calculations.dll`,
-BOINtrialConductor.ProcessListOfLookaheadOutcomes RVA0x2df8. It loads
-`next.comb2_for_winApp.R`, invokes `next.comb2_for_winAPP`, and forwards
-`boDoThreePlusThreeRunIn`. The contour helper is `next.subtrial2_for_winApp.R`.
+BOINtrialConductor.ProcessListOfLookaheadOutcomes RVA0x2df8. It loads `get.boundary.R` for both modes. With FindContours=true it loads
+`next.comb2_for_winApp.R`, invokes `next.comb2_for_winAPP`, and uses
+`next.subtrial2_for_winApp.R`; otherwise it loads/invokes `next.comb.R`/`next.comb`.
+Both paths forward `boDoThreePlusThreeRunIn`.
 Do not silently use the simulation's rules for this separate conduct path.
 
 TrialDesign.get_ThreePlusThreeRunIn_Allowed RVA0x305d allows the GUI option only
-when target=.25 **and cohort size=3**. The lower-level R functions test target=.25
-and their supplied RunIn flag. GUI cap choices in
+when target=.25 **and cohort size=3**. The simulation wrappers test target=.25
+and their supplied RunIn flag; the interactive boundary function changes n=3
+for any target if directly called with the flag, outside GUI validation. GUI cap choices in
 MainForm.Refresh_cmbTitrationCap_DrugA RVA0xd598 range from
 min(starting DrugA dose+1, number of DrugA doses) to the number of DrugA doses.
 These source-inspected UI constraints are separate from the lower-level R probes.
@@ -73,3 +75,39 @@ cohort/titration rules, current saved-project fields and advertised protocol/rep
 inputs. Check source defects under explicit compatibility profiles and preserve
 actual patient counts in scientific defaults. The shipped TITE/3+3/Rolling6 R
 scripts and embedded help are additional actionable leads, not completed ports.
+
+## Full-wrapper deterministic references
+
+`tools/reference_boin_desktop_simulation.R` now executes48 complete original
+simulation-wrapper requests: single MTD/contour, caps2/3, titration off/on,
+run-in off/on, and three truth matrices on a2x3 grid. Each request runs two
+replications. `fixtures/boin-desktop/simulation.csv` retains numeric selection,
+allocation, toxicity and enrollment outputs; all48 complete without errors.
+The two wrappers expose different return-field names, mapped explicitly.
+
+The original external R is hash-pinned. Host services supply constant outcome
+uniforms, axis-direction draws, and the independently authored exhaustive
+six-cell isotonic oracle already used by the waterfall references. GUI
+notification commands are disabled. This validates deterministic wrapper
+contracts, not native random-stream identity, general-grid isotonic identity,
+clinical validity or Python integration. Original program report text and
+source are not redistributed. Together with the startup/boundary probes this
+is78 original-reference cases; BOIN desktop remains partial.
+
+
+## Interactive boundary contract
+
+`tools/reference_boin_desktop_boundaries.R` executes the hash-pinned active
+`get.boundary.R`, producing216 rows in `fixtures/boin-desktop/interactive-boundaries.csv`.
+Targets .2/.25/.3, run-in off/on and extra-safe off/on cover n=1..18. The144
+GUI-valid rows (432 boundary values) agree exactly with the installed Python
+`BOINDesign` using its explicit one-of-three modification. The72 direct-R
+out-of-GUI rows remain reference probes, not supported GUI-input claims.
+`tools/check_boin_desktop_boundaries.py` independently checks that correspondence.
+
+Crucially, interactive contour conduct changes n=3 only, while the simulation
+waterfall subtrial changes n=3 and n=6. The simulation behavior must not silently
+replace interactive conduct. Managed ProcessListOfLookaheadOutcomes IL105..357
+confirms shared boundary loading and the mode-specific next.comb/next.comb2
+entry points. This closes the boundary-source question, not pending-patient
+controller integration, saved files or protocol generation.
