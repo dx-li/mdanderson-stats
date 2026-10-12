@@ -1,7 +1,9 @@
 # ToxFinder: two-agent toxicity modelling
 
 Catalog entry [14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14)
-is **partially implemented**. The package provides the six-parameter toxicity
+is **implemented for the declared Python workflow**; see the
+[saved-study workflow](toxfinder-saved-study.md) and
+[scope crosswalk](../research/toxfinder-saved-study-2026-10-12.md). The package provides the six-parameter toxicity
 surface, grouped likelihood, physician-prior elicitation, Bayesian posterior
 fitting, first-stage decisions and target-contour calculations. Priors are explicit;
 there is no universal default prior. Source details and the distinction between

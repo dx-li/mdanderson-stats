@@ -1,0 +1,17 @@
+[
+  {
+    "stored": 0.25,
+    "displayed_sd": 0.5,
+    "saved": 0.25
+  },
+  {
+    "stored": 0.81,
+    "displayed_sd": 0.9,
+    "saved": 0.81
+  },
+  {
+    "stored": 3.0,
+    "displayed_sd": 1.7320508075688772,
+    "saved": 2.9999999999999996
+  }
+]

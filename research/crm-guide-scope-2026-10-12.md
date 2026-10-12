@@ -3,8 +3,8 @@
 Scope: CRM Suite 1.0.0 (entry132) and BMA-CRM 2.2.4 (entry81), using independent
 Python posterior integration/sampling with recovered desktop control rules.
 This is not online entry133's automatic skeleton calibration, Windows executable
-identity, or a clinical validation claim. Final catalog promotion requires the
-completed regression/artifact checkpoint.
+identity, or a clinical validation claim. Entries81/132 are implemented for this declared scope after the
+[completed regression/artifact checkpoint](crm-conduct-validation-2026-10-12.json).
 
 | Guide contract | Python workflow and independent evidence |
 | --- | --- |

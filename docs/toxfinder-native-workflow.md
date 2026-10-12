@@ -97,8 +97,10 @@ Native physician inputs can be used with either explicitly named formulation:
 `elicit_toxfinder_prior` solves published equations;
 `elicit_toxfinder_native_prior` uses the recovered stochastic native contract,
 with independent RNG and a separate assessment of calibration quality.
-The TMML reader preserves native elicitation and MCMC controls as metadata and
-never silently maps them to a different solver or sampler.
+The [saved-study workflow](toxfinder-saved-study.md) maps physician elicitation
+inputs explicitly, including stored variances. Native MCMC controls remain metadata;
+Python sampler settings are explicit. It also supplies patient CSV writing and
+captured recommendation reports.
 
 `read_toxfinder_subject_csv(text, reference_doses=...)` reads ten-field native
 patient records. Dates and times remain literal identifiers. Outcome `2` means

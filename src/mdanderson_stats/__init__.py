@@ -1953,6 +1953,14 @@ from .toxfinder_native_trial import (
     simulate_toxfinder_native_trial,
     toxfinder_native_surface,
 )
+from .toxfinder_study import (
+    ToxFinderStudyRecommendation,
+    ToxFinderStudyRun,
+    elicit_toxfinder_study_prior,
+    recommend_toxfinder_study,
+    simulate_toxfinder_study,
+    write_toxfinder_subject_csv,
+)
 from .toxicity_timing import toxicity_time_quantile
 from .tpi import TPIDesign, TPIPosterior
 from .tpi_isotonic_posterior import tpi_isotonic_posterior_intervals
@@ -4176,4 +4184,13 @@ __all__ += [
     "CRMDesktopRun",
     "read_crm_desktop_html",
     "simulate_crm_desktop_study",
+]
+
+__all__ += [
+    "ToxFinderStudyRecommendation",
+    "ToxFinderStudyRun",
+    "elicit_toxfinder_study_prior",
+    "recommend_toxfinder_study",
+    "simulate_toxfinder_study",
+    "write_toxfinder_subject_csv",
 ]

@@ -1,8 +1,20 @@
-# Next bounded native-workflow completion contracts
+# Native workflow completion checkpoint
 
-ARAND's guide-defined simulation crosswalk is separate from the following work.
-This note identifies concrete checks for the next implementation pass; it does
-not promote CRM/BMA-CRM or ToxFinder and does not claim new native execution.
+Desktop CRM81/132 and ToxFinder14 now close their declared Python scientific/user
+workflows. See [CRM crosswalk](crm-guide-scope-2026-10-12.md) and
+[ToxFinder crosswalk](toxfinder-saved-study-2026-10-12.md). The historical checklist
+below records the questions resolved by this continuation; it is not a current
+blocker list. Native RNG/GUI identity and clinical validity remain separate claims.
+
+Current next work is the remaining35 partial entries in the
+[per-application checkpoint](per-application-checkpoint-2026-10-12.md), prioritizing
+source-recoverable complete workflows. Online CRM133's calibration equation,
+intercept and simulation-based candidate selection remain distinct from the
+closed desktop contracts. EffTox's native files/reports, historical utility and
+trinary contracts also remain separate. Preserve the six unavailable fitted-model
+and distribution/permission boundaries below.
+
+## Historical bounded contracts (resolved as scoped above)
 
 ## CRM Suite132 and BMA-CRM81
 

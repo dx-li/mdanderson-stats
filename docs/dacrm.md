@@ -169,12 +169,13 @@ The paper's Table 3 posterior means independently check its published adjacent
 dose-allocation sequence; focused policy cases distinguish pending and observed
 counts, waiting, raw-rate restrictions and final selection.
 
-This adds DA posterior inference to the partial implementations of BMA-CRM
+This supplies DA posterior inference for the implemented desktop workflows of BMA-CRM
 Simulator and CRM Suite (catalog 81 and 132), together with paper and desktop
 dose-decision policies. [Calendar decisions](crm-conduct.md) provide record
 replay and automatic complete-data routing. [Trial simulation](crm-simulation.md)
 adds cohort scheduling and operating characteristics. [Native saved studies, reports and calendar scheduling](crm-desktop.md) are now available;
-adaptive-MCMC shortcuts and populated native patient-file reopening remain unverified.
+[populated patient files and conduct](crm-desktop-conduct.md) are also available.
+Independent inference replaces native adaptive-MCMC/completion-bound shortcuts explicitly.
 The current desktop uses six hazard intervals; the paper's simulation study
 uses nine. Online entry 133 has partial [model-selection coverage](crm-model-selection.md),
 with native conventions and automatic skeleton calibration still open. See

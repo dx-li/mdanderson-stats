@@ -4,12 +4,12 @@ Catalog membership was rechecked against both official API lists: 80 desktop +
 58 online entries, with identical response hashes to the preserved inventory.
 No entry was added or dropped. See [membership evidence](catalog-membership-2026-10-12.json).
 
-Current counts are **94 implemented / 38 partial / 6 pending**. ARAND62 now
+Current counts are **97 implemented / 35 partial / 6 pending**. ARAND62 now
 meets the guide-defined simulation workflow; see its scope crosswalk below. This continuation
 adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
 study/controller workflow, ToxFinder native allocation/simulation workflow, and
-the complete ARAND guide-defined simulation workflow. Only ARAND is promoted
-in this continuation; other application labels remain unchanged.
+the complete ARAND guide-defined simulation workflow. ARAND, desktop CRM81/132 and ToxFinder14 are promoted
+for their declared completed workflows; other application labels remain unchanged.
 It does not re-certify every historical numerical reference or installed example.
 The validation report identifies exactly which checks were rerun.
 
@@ -28,7 +28,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 9 | Inequality Calculator | implemented | Declared recovered workflow implemented; [Guide](../docs/inequality-calculator.md) retains scope and compatibility limits. |
 | 10 | Predictive Probabilities | implemented | Declared recovered workflow implemented; [Guide](../docs/predictive-binary.md) retains scope and compatibility limits. |
 | 12 | Multc Lean | implemented | Declared recovered workflow implemented; [Catalog](../src/mdanderson_stats/catalog.json) retains scope and compatibility limits. |
-| 14 | ToxFinder | partial | Published and recovered native stochastic prior elicitation plus native MAP, information criterion, both allocation modes, observed-history recommendations, paired-cohort simulations, TMML/CSV readers and reports. Remaining original stochastic-stream/MCMC identity, full original file/GUI parity and the documented GUI SD/SEM discrepancy are explicit. [Workflow guide](../docs/toxfinder-native-workflow.md) |
+| 14 | ToxFinder | implemented | Physician-input calibration, TMML, native allocation, patient CSV edit/reopen, simulation and diagnostic reports are complete under explicit profiles. Final refit is the study default; legacy final posterior is opt-in. [Scope/evidence](toxfinder-saved-study-2026-10-12.md); [guide](../docs/toxfinder-saved-study.md). |
 | 15 | bCRM | partial | High-level stage controls and zero-gap futility are documented. Joint two-outcome likelihood/association prior, exact transition rules, positive-gap futility cutoff and post-trial four-parameter logistic estimator remain unresolved. [bCRM guide](../docs/bcrm.md); [source records](../docs/bcrm-sources.json) |
 | 16 | ACCFLF | implemented | Declared recovered workflow implemented; [Guide](../docs/accflf.md) retains scope and compatibility limits. |
 | 18 | SYNERGY | partial | The four original parametric models now provide native-validated fits, uncertainty and plots. The separate semiparametric bootstrap interval convention remains unresolved. [parametric audit](synergy-parametric-audit.md); [bootstrap audit](synergy-wild-bootstrap-audit.md) |
@@ -84,7 +84,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 77 | U2OET | partial | Explicit models, fitting, calibration and trial workflows exist; native prior interpretation, calibration and full operating-characteristic validation are unresolved. [U2OET guide](../docs/u2oet.md); [source records](../docs/u2oet-sources.json) |
 | 78 | Proportional density | partial | Unequal-censoring treatment-effect null calibration is mentioned, but null generation and restricted-fit procedure are absent. [full-bootstrap audit](proportional-density-full-bootstrap-audit.md) |
 | 80 | ESS Regresssion | implemented | Declared recovered workflow implemented; [Guide](../docs/regression-ess.md) retains scope and compatibility limits. |
-| 81 | BMA CRM | partial | Native Suite study import/reporting and desktop scheduling recovered. Exact adaptive-MCMC shortcuts, legacy populated conduct-file reopening and online defaults remain unverified. [BMA CRM guide](../docs/bmacrm.md) |
+| 81 | BMA CRM | implemented | Saved studies, explicit-date patient conduct, original cohort replay, simulation and captured reports are complete under independent inference. [Scope](crm-guide-scope-2026-10-12.md); [validation](crm-conduct-validation-2026-10-12.json). Native RNG/GUI identity and clinical validity are not claimed. |
 | 82 | Response and Survival | implemented | Declared recovered workflow implemented; [Guide](../docs/response-survival.md) retains scope and compatibility limits. |
 | 84 | Phase II Predictive Probability | implemented | Declared recovered workflow implemented; [Guide](../docs/phase2-predictive.md) retains scope and compatibility limits. |
 | 85 | Parallel phase I and II design | implemented | Declared recovered workflow implemented; [Guide](../docs/parallel-phase12.md) retains scope and compatibility limits. |
@@ -119,7 +119,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 128 | Bayesian Optimal Interval Design (BOIN) for Drug Combination Trials | partial | App-specific titration caps, moderate-toxicity stopping and 3+3 run-in lack a complete inspected contract; do not infer wrapper rules from `next.comb`. Standard/waterfall decisions and titration are already implemented. [BOIN combination guide](../docs/boin-combination.md); [source guide](../docs/boin-combination-source.md) |
 | 129 | Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials | partial | Conduct, timing, calendar simulation and saved protocol reports are covered. The paper defines MTD-relative summaries and regret from failure to de-escalate when two of the first three patients at a dose have DLT, but the continuous-accrual evaluation timing remains unresolved. The report preserves full selection probabilities and per-dose allocation summaries. [TITE-BOIN guide](../docs/tite-boin.md); [report crosswalk](tite-boin-protocol-report-audit.md) |
 | 130 | Bayesian Adaptive Randomization and Efficacy Monitoring with Posterior Probability | partial | The DBCD desired-target vector construction is unknown; explicit vectors exist, but simultaneous-floor parity and reporting remain unresolved. [BARPO guide](../docs/barpo.md); [trial guide](../docs/barpo-trials.md); [source guide](../docs/barpo-source.md) |
-| 132 | CRM Suite | partial | Native HTML/XML study import, scenario simulation/reporting, safety waits, hazard prior and desktop scheduling are covered. Exact adaptive-MCMC shortcuts, populated native patient-file reopening and generated-report comparison remain unverified. [Desktop workflow](../docs/crm-desktop.md) |
+| 132 | CRM Suite | implemented | Saved studies, explicit-date patient conduct, original cohort replay, simulation and captured reports are complete under independent inference. [Scope](crm-guide-scope-2026-10-12.md); [validation](crm-conduct-validation-2026-10-12.json). Native RNG/GUI identity and clinical validity are not claimed. |
 | 133 | Bayesian Model Averaging Continuous Reassessment Method | partial | Automatic skeleton calibration remains blocked by unresolved displayed Q, regression intercept and candidate-selection conventions. [CRM model-selection guide](../docs/crm-model-selection.md); [source records](../docs/bmacrm-sources.json) |
 | 134 | TOP: Time-to-Event Bayesian Optimal Phase II Trial Design | implemented | Declared recovered workflow implemented; [Guide](../docs/top-endpoints.md) retains scope and compatibility limits. |
 | 135 | Time-to-Event Keyboard Design for Phase I Clinical Trials | implemented | Declared recovered workflow implemented; [Guide](../docs/tite-keyboard.md) retains scope and compatibility limits. |

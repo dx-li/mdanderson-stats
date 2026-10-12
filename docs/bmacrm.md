@@ -111,12 +111,13 @@ a tiny prior model weight rescued by strongly informative data.
 The skeleton in the first eight scenarios comes from the official guide;
 the patient counts are synthetic audit cases, not native simulation output.
 
-This is partial coverage of catalog entries 81 and 132. [DA-CRM](dacrm.md)
+Catalog entries81 and132 now have complete declared desktop workflows. [DA-CRM](dacrm.md)
 handles delayed outcomes, and [calendar decisions](crm-conduct.md) add bounded
 pending-outcome look-ahead and time-specific record replay.
 [Trial simulation](crm-simulation.md) provides cohort scheduling and operating
-characteristics. Native file/report workflows and older-version conduct
-differences remain separate work. Online entry 133 now has partial coverage
+characteristics. [Saved studies and reports](crm-desktop.md) and
+[explicit-date patient conduct](crm-desktop-conduct.md) complete their guide workflows;
+see the [scope crosswalk](../research/crm-guide-scope-2026-10-12.md). Online entry 133 now has partial coverage
 through [model selection](crm-model-selection.md); automatic skeleton calibration
 and hidden native conventions remain open. No Windows executable parity or
 random-seed parity is claimed.

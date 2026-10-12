@@ -1,6 +1,7 @@
 # Community completion continuation — October 12, 2026
 
-Latest checkpoint: ARAND62 now meets its guide-defined simulation workflow.
+Latest workflow scope: ARAND62, desktop CRM81/132 and ToxFinder14 now meet their
+declared Python workflows. The final ToxFinder status checkpoint is being validated.
 See the final ARAND section below and the [next native contracts](next-native-completion-contracts-2026-10-12.md). Earlier dated sections retain historical counts and evidence.
 
 ## Recovered checkout and scope
@@ -18,7 +19,7 @@ The original scope is every desktop and online application, with an intermediate
 target of at least 100 implemented and no pending entries. Live membership was
 rechecked: both API response hashes match the preserved September inventory,
 80 desktop plus 58 online entries. This does not assert a fresh version-specific
-audit of every app. The current count is **94 implemented / 38 partial / 6 pending**;
+audit of every app. The current count is **97 implemented / 35 partial / 6 pending**;
 the intermediate and full-project goals remain unmet.
 
 ## Completed in this continuation

@@ -10,8 +10,8 @@ links current scope and each remaining statistical contract.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 94 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 38 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 97 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 35 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 6 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -31,6 +31,9 @@ some legacy adaptations retain commercial-use restrictions.
 
 | Program | Source entry | Python documentation |
 | --- | --- | --- |
+| BMA CRM | [desktop #81](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/81) | [Guide](bmacrm.md) |
+| CRM Suite | [desktop #132](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132) | [Guide](crm-conduct.md), [desktop workflow](crm-desktop.md) |
+| ToxFinder | [desktop #14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14) | [Guide](toxfinder.md); [prior elicitation](toxfinder-prior-elicitation.md); [native workflow](toxfinder-native-workflow.md) |
 | Adaptive Randomization | [desktop #62](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/62) | [Posterior](arand.md), [calendar](arand-calendar.md), [simulation](arand-simulation.md), [native controller/studies](arand-native-workflow.md) |
 | CONFINT | [desktop #64](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/64) | [Guide](confint.md) |
 | CID2BP | [desktop #38](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/38) | [Guide](cid2bp.md) |
@@ -140,12 +143,10 @@ some legacy adaptations retain commercial-use restrictions.
 | Bayesian Optimal Interval Design with Informative Prior (iBOIN) for Phase I Clinical Trials | [online #145](https://biostatistics.mdanderson.org/shinyapps/iBOIN) | [Guide](iboin.md), [saved reports and replay](iboin-report.md) |
 | Bayesian Phase 2 Design with Delayed Outcomes | [online #141](https://biostatistics.mdanderson.org/shinyapps/Phase2Delay) | [Guide](phase2delay.md) |
 | bCRM | [desktop #15](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/15) | [Guide](bcrm.md) |
-| BMA CRM | [desktop #81](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/81) | [Guide](bmacrm.md) |
 | BOIN Design Desktop Program | [desktop #99](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99) | [Guide](boin-desktop.md) |
 | BOIN12: Bayesian Optimal Interval Phase I/II Trial Design for Utility-Based Dose Finding | [online #148](https://biostatistics.mdanderson.org/shinyapps/BOIN12) | [Guide](boin12.md) |
 | CiBolus | [desktop #86](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/86) | [Guide](cibolus.md), [Prior calibration](cibolus-calibration.md) |
 | CondiS: Imputation of Censored Lifetimes for Machine Learning-Based Survival Analysis | [online #157](https://biostatistics.mdanderson.org/shinyapps/CondiS/) | [Guide](condis.md), [curve comparison](condis-survival-comparison.md) |
-| CRM Suite | [desktop #132](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/132) | [Guide](crm-conduct.md), [desktop workflow](crm-desktop.md) |
 | Dose Schedule Finder | [desktop #75](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/75) | [Model](dose-schedule.md), [calendar trials](dose-schedule-trials.md) |
 | EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Guide](efftox.md), [native legacy fitter](efftox-native-contour.md), [trinary calibration](efftox-trinary-calibration.md) |
 | Find optimal biological dose (OBD) for targeted and immune therapies | [online #142](https://biostatistics.mdanderson.org/shinyapps/UBOIN) | [Guide](uboin.md) |
@@ -161,7 +162,6 @@ some legacy adaptations retain commercial-use restrictions.
 | SYNERGY | [desktop #18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18) | [Interaction indices](interaction-index.md); [parametric models](synergy-parametric.md); [semiparametric method](synergy-surface.md) |
 | Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials | [online #129](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/) | [Guide](tite-boin.md) |
 | TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | [online #152](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12) | [AL and final selection](tite-boin12.md); [BDA](tite-boin12-bda.md) |
-| ToxFinder | [desktop #14](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/14) | [Guide](toxfinder.md); [prior elicitation](toxfinder-prior-elicitation.md); [native workflow](toxfinder-native-workflow.md) |
 | Toxicity Probability Intervals | [desktop #72](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/72) | [Guide](mtpi.md) |
 | Two-arm BOP2: Bayesian Optimal Phase II two-arm Design | [online #150](https://biostatistics.mdanderson.org/shinyapps/rBOP2) | [Guide](rbop2-binary.md) |
 | U2OET | [desktop #77](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/77) | [PDS/CMI and trials](u2oet.md), [GAO probabilities](u2oet-gao.md), [GAO trials](u2oet-gao-trials.md) |
