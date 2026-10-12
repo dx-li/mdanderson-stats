@@ -683,3 +683,17 @@ not a successful binary download. BLESS JSON SHA256 is
 00e01b5a6f522ac02e3e9c9f8fc7c28050192ba1ab1ae58d8b029c8a7b59a855.
 Proceed to the parent's requested published-grid BLESS integration after preserving
 this PRT increment; do not claim original deployed full-precision parity.
+
+BLESS published-table scope is integrated: all four rounded models, strict exact
+seven-day grid, saved inputs/reopen, audited JSON and curve CSV, source-choice
+warnings. All499 focused BLESS tests pass against458 independent60-digit Decimal
+references; combined current PRT hazard/study and BLESS tests683 pass. Catalog149
+is partial, counts102/31/5; unknown daily/full-precision/uncertainty contracts are
+not claimed. Full final-code acceptance is now being run.
+
+Parent-authored ComPAS PNOC022 factual specification v1 is reconstructed from
+complete Library text (not an original protocol download):26673 bytes, SHA256
+b7a5cef6c4a0a8114aa1abd7ba00ca1f96c98dafbca297a123401b0bd1cfe894.
+Preserved at research/compas-pnoc022-specification-2026-10-12.json. First author is
+Rui Tang. Published core is actionable with explicit group/model weights and
+independently validated integration; original PDF is not redistributed.

@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-102 implemented, 30 partial, and 6 pending. Each method's guide explains its
+102 implemented, 31 partial, and 5 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -1923,3 +1923,6 @@ spreadsheet inputs, monitoring, explicit safe/legacy trial controllers, every
 scenario and reopenable reports. Original XLL/R references and all20,000 cached
 trials support the declared current application scope; original-TPI tuning and
 prior-specific recalibration retain their separate documented limits.
+
+BLESS provides four [published-table survival models](docs/bless.md), with saved
+inputs and auditable reports on the seven published days.

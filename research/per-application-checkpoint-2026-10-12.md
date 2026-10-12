@@ -4,7 +4,7 @@ Catalog membership was rechecked against both official API lists: 80 desktop +
 58 online entries, with identical response hashes to the preserved inventory.
 No entry was added or dropped. See [membership evidence](catalog-membership-2026-10-12.json).
 
-Current counts are **102 implemented / 30 partial / 6 pending**. ARAND62 now
+Current counts are **102 implemented / 31 partial / 5 pending**. ARAND62 now
 meets the guide-defined simulation workflow; see its scope crosswalk below. This continuation
 adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
 study/controller workflow, ToxFinder native allocation/simulation workflow, and
@@ -135,7 +135,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 146 | Bayesian Survival Function Posterior Estimates | pending | Fitted oropharyngeal regression/posterior, prediction and uncertainty model. [Evidence](source-recovery-2026-10-10.md#six-pending-software-contracts). |
 | 147 | aPCoA: Covariate Adjusted Principal Coordinates Analysis | implemented | Declared recovered workflow implemented; [Guide](../docs/apcoa.md) retains scope and compatibility limits. |
 | 148 | BOIN12: Bayesian Optimal Interval Phase I/II Trial Design for Utility-Based Dose Finding | partial | Run-in precedence is unspecified; multilevel behavior is under development. [two-stage audit](boin12-two-stage-audit.md) |
-| 149 | Predicting survival for patients with malignant pleural effusions using the BLESS models | pending | Four fitted coefficient vectors and baseline survival tables/eAppendix. [Evidence](source-recovery-2026-10-10.md#six-pending-software-contracts). |
+| 149 | BLESS | partial | Four published rounded models, exact seven-day grid, saved inputs and audited reports. Deployed daily baseline, full-precision fit and additional uncertainty contracts remain unknown. [Guide](../docs/bless.md); [recovery](bless-published-recovery-2026-10-12.md). |
 | 150 | Two-arm BOP2: Bayesian Optimal Phase II two-arm Design | partial | Binary monitoring and explicit-grid calibration are implemented, but native automatic-grid and allocation-rounding conventions are unspecified. Paired-endpoint decision rules are unresolved; cached help also gives inconsistent Dirichlet formulas for endpoint marginals. [rBOP2 binary guide](../docs/rbop2-binary.md); [calibration guide](../docs/rbop2-calibration.md); [source audit](../docs/rbop2-binary-source.md) |
 | 151 | IPDfromKM: Reconstruct Individual Patient Data (IPD) From Kaplan-Meier Survival Curve | implemented | Declared recovered workflow implemented; [Guide](../docs/ipdfromkm.md) retains scope and compatibility limits. |
 | 152 | TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | partial | Cited supplement sections S7/S2 were unavailable, leaving their rules unresolved. [TITE-BOIN12 guide](../docs/tite-boin12.md) |

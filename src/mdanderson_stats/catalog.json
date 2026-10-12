@@ -4540,12 +4540,20 @@
       "kind": "online",
       "detail_url": "https://biostatistics.mdanderson.org/shinyapps/BLESS",
       "application_url": "https://biostatistics.mdanderson.org/shinyapps/BLESS",
-      "references": [],
+      "references": [
+        "https://doi.org/10.1016/j.chest.2021.03.059"
+      ],
       "downloads": [],
       "retrieval_error": null,
-      "status": "pending",
-      "implemented_features": [],
-      "validation": []
+      "status": "partial",
+      "implemented_features": [
+        "BLESS published_tables_2021: all four rounded models and seven published baseline times with strict model-specific inputs and stable Cox prediction.",
+        "Immutable saved-study JSON, reload, prediction and JSON/CSV reports with source choices, precision and limitations. No daily interpolation, uncertainty or deployed-app parity claim."
+      ],
+      "validation": [
+        "458 independent 60-digit Decimal source-expression references across categories/interactions and all four examples; breast example inconsistency preserved.",
+        "499 focused BLESS tests pass. docs/bless.md; research/bless-published-parameters-audit.json. Remaining: deployed daily baseline, full-precision fits and additional uncertainty contracts."
+      ]
     },
     {
       "id": 150,

@@ -1,0 +1,719 @@
+{
+  "artifact": "BLESS published numerical specification, transcription and calculation audit",
+  "generated_utc": "2026-10-12",
+  "source": {
+    "doi": "10.1016/j.chest.2021.03.059",
+    "article_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8449006/",
+    "supplement_url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/8449006/bin/mmc1.pdf",
+    "filename": "mmc1.pdf",
+    "bytes": 1227045,
+    "pages": 47,
+    "sha256": "089787cdb4ae270ff645523e0bb1fab70f95fc467acc3c1bbf3ce5547e2b9744",
+    "verification": "Text extraction plus visual inspection of PDF pages 15-19 for every coefficient, HR, CI, p-value, baseline and example cell."
+  },
+  "numerical_precision": "Displayed decimal strings preserved. These are published rounded values, not recovered full-precision fitted artifacts.",
+  "predictor_conventions": {
+    "indicators": "1 when true, 0 otherwise; use ecog categories exactly as model specifies",
+    "cytology": "benign=1; malignant=0",
+    "cancer": "exactly one of lung/breast/hematologic is 1",
+    "laterality": "unilateral=1-bilateral",
+    "ldh": "pleural-fluid LDH in U/L; divide by 100 before subtracting center",
+    "protein": "pleural-fluid protein in g/dL",
+    "nlr": "blood neutrophil count divided by lymphocyte count, same units",
+    "time": "days from first thoracentesis; study endpoint/censoring horizon 180 days"
+  },
+  "equation": "eta=sum(coefficient_j*term_j); S(t|x) = S_reference(t) ^ exp(eta)",
+  "time_days": [
+    0,
+    30,
+    60,
+    90,
+    120,
+    150,
+    180
+  ],
+  "restrictions": [
+    "Use only the seven explicitly published grid times unless a separate interpolation convention is clearly labeled as new and unvalidated.",
+    "No assumption that a 30-day grid is the full Cox baseline step function.",
+    "No validated extrapolation beyond 180 days.",
+    "No covariance or baseline variance supplied in these tables; marginal HR intervals cannot recover joint survival uncertainty.",
+    "Do not use this source alone to claim bit-level or full functional parity with the deployed Shiny app.",
+    "Not validated for clinical decisions. All examples are the publication's illustrations, not real-patient advice."
+  ],
+  "models": {
+    "lung": {
+      "source_tables": [
+        1,
+        2
+      ],
+      "pdf_page": 15,
+      "terms": [
+        {
+          "term": "ecog==1",
+          "coefficient": "0.51",
+          "hr": "1.67",
+          "hr_ci95": [
+            "0.45",
+            "6.14"
+          ],
+          "p": "0.44"
+        },
+        {
+          "term": "ecog==2",
+          "coefficient": "1.32",
+          "hr": "3.76",
+          "hr_ci95": [
+            "1.11",
+            "12.66"
+          ],
+          "p": "0.03"
+        },
+        {
+          "term": "ecog==3",
+          "coefficient": "1.23",
+          "hr": "3.44",
+          "hr_ci95": [
+            "0.96",
+            "12.24"
+          ],
+          "p": "0.06"
+        },
+        {
+          "term": "ecog==4",
+          "coefficient": "1.49",
+          "hr": "4.45",
+          "hr_ci95": [
+            "1.09",
+            "18.11"
+          ],
+          "p": "0.04"
+        },
+        {
+          "term": "surgery_within_30_days",
+          "coefficient": "0.806",
+          "hr": "2.24",
+          "hr_ci95": [
+            "0.77",
+            "6.53"
+          ],
+          "p": "0.14"
+        },
+        {
+          "term": "bilateral",
+          "coefficient": "0.812",
+          "hr": "2.25",
+          "hr_ci95": [
+            "1.44",
+            "3.53"
+          ],
+          "p": "<.001"
+        },
+        {
+          "term": "benign_cytology",
+          "coefficient": "-0.621",
+          "hr": "0.54",
+          "hr_ci95": [
+            "0.33",
+            "0.88"
+          ],
+          "p": "0.01"
+        },
+        {
+          "term": "ldh_U_L/100 - 7.19",
+          "coefficient": "0.018",
+          "hr": "1.02",
+          "hr_ci95": [
+            "1.004",
+            "1.03"
+          ],
+          "p": "0.01"
+        },
+        {
+          "term": "protein_g_dL - 3.7",
+          "coefficient": "-0.558",
+          "hr": "0.57",
+          "hr_ci95": [
+            "0.43",
+            "0.76"
+          ],
+          "p": "<.001"
+        }
+      ],
+      "reference": {
+        "ecog": 0,
+        "surgery_within_30_days": 0,
+        "bilateral": 0,
+        "benign_cytology": 0,
+        "ldh_U_L": 719,
+        "protein_g_dL": 3.7
+      },
+      "baseline": [
+        "1",
+        "0.933",
+        "0.879",
+        "0.849",
+        "0.800",
+        "0.791",
+        "0.768"
+      ],
+      "example": {
+        "input": {
+          "ecog": 3,
+          "surgery_within_30_days": 0,
+          "bilateral": 1,
+          "benign_cytology": 0,
+          "ldh_U_L": 763,
+          "protein_g_dL": 2
+        },
+        "printed_lp": "2.99852",
+        "printed_exp_lp": "20.06",
+        "printed_survival": [
+          "1.00",
+          "0.249",
+          "0.075",
+          "0.038",
+          "0.011",
+          "0.009",
+          "0.005"
+        ],
+        "recalculated_lp": 2.99852,
+        "recalculated_exp_lp": 20.055832315373216,
+        "recalculated_survival": [
+          1,
+          0.24885782285910982,
+          0.07527491446301582,
+          0.037513238363121815,
+          0.011386467986042545,
+          0.00907495807359936,
+          0.005021388829433103
+        ],
+        "absolute_difference_from_printed": [
+          0,
+          0.00014217714089018174,
+          0.00027491446301582123,
+          0.00048676163687818436,
+          0.00038646798604254594,
+          0.00007495807359936095,
+          0.00002138882943310272
+        ]
+      },
+      "warnings": [
+        "Earlier prose centers LDH/100 at 7.31 and protein at 3.8. Equation and e-Tables 1-2 instead use 7.19 and 3.7; these exactly reproduce the printed linear predictor. This is evidence supporting table-specific centering, not evidence of exact deployed coding."
+      ]
+    },
+    "breast": {
+      "source_tables": [
+        3,
+        4
+      ],
+      "pdf_page": 16,
+      "terms": [
+        {
+          "term": "ecog in {2,3,4}",
+          "coefficient": "0.648",
+          "hr": "1.91",
+          "hr_ci95": [
+            "1.04",
+            "3.52"
+          ],
+          "p": "0.038"
+        },
+        {
+          "term": "benign_cytology",
+          "coefficient": "-0.987",
+          "hr": "0.37",
+          "hr_ci95": [
+            "0.15",
+            "0.94"
+          ],
+          "p": "0.036"
+        },
+        {
+          "term": "nlr - 5.398",
+          "coefficient": "0.054",
+          "hr": "1.06",
+          "hr_ci95": [
+            "1.02",
+            "1.09"
+          ],
+          "p": "0.001"
+        },
+        {
+          "term": "ldh_U_L/100 - 6.91",
+          "coefficient": "0.011",
+          "hr": "1.01",
+          "hr_ci95": [
+            "1.00",
+            "1.02"
+          ],
+          "p": "0.021"
+        },
+        {
+          "term": "protein_g_dL - 3.8",
+          "coefficient": "-0.379",
+          "hr": "0.68",
+          "hr_ci95": [
+            "0.51",
+            "0.93"
+          ],
+          "p": "0.014"
+        }
+      ],
+      "reference": {
+        "ecog": [
+          0,
+          1
+        ],
+        "benign_cytology": 0,
+        "nlr": 5.398,
+        "ldh_U_L": 691,
+        "protein_g_dL": 3.8
+      },
+      "baseline": [
+        "1",
+        "0.882",
+        "0.796",
+        "0.705",
+        "0.646",
+        "0.601",
+        "0.582"
+      ],
+      "example": {
+        "input": {
+          "ecog": 3,
+          "benign_cytology": 0,
+          "nlr": 10,
+          "ldh_U_L": 900,
+          "protein_g_dL": 2.8
+        },
+        "printed_lp": "1.298",
+        "printed_exp_lp": "3.66",
+        "printed_survival": [
+          "1.00",
+          "0.644",
+          "0.446",
+          "0.290",
+          "0.214",
+          "0.165",
+          "0.147"
+        ],
+        "recalculated_lp": 1.298498,
+        "recalculated_exp_lp": 3.6637895209269913,
+        "recalculated_survival": [
+          1,
+          0.6312601492191469,
+          0.4334772763469059,
+          0.27784134819227213,
+          0.2017120708430089,
+          0.15482554153262432,
+          0.13763449526432148
+        ],
+        "absolute_difference_from_printed": [
+          0,
+          0.012739850780853157,
+          0.012522723653094092,
+          0.01215865180772785,
+          0.01228792915699109,
+          0.010174458467375691,
+          0.009365504735678515
+        ]
+      },
+      "warnings": [
+        "The equation and e-Table 3 use NLR center 5.398; e-Table 4 footnote uses 5.389. Preserve both, prefer equation/table for a declared published-parameter implementation.",
+        "The printed example survival probabilities are inconsistent with its printed baseline probabilities and linear predictor by more than normal displayed-value rounding. Do not fit or silently change parameters to match them."
+      ]
+    },
+    "hematologic": {
+      "source_tables": [
+        5,
+        6
+      ],
+      "pdf_page": 17,
+      "terms": [
+        {
+          "term": "ecog in {2,3,4}",
+          "coefficient": "0.84",
+          "hr": "2.31",
+          "hr_ci95": [
+            "1.33",
+            "4.03"
+          ],
+          "p": "0.003"
+        },
+        {
+          "term": "high_clinical_suspicion_pneumonia",
+          "coefficient": "0.50",
+          "hr": "1.65",
+          "hr_ci95": [
+            "1.10",
+            "2.48"
+          ],
+          "p": "0.016"
+        },
+        {
+          "term": "bilateral",
+          "coefficient": "-0.53",
+          "hr": "0.59",
+          "hr_ci95": [
+            "0.39",
+            "0.88"
+          ],
+          "p": "0.010"
+        },
+        {
+          "term": "benign_cytology",
+          "coefficient": "-0.73",
+          "hr": "0.48",
+          "hr_ci95": [
+            "0.33",
+            "0.71"
+          ],
+          "p": "<.001"
+        },
+        {
+          "term": "protein_g_dL - 2.8",
+          "coefficient": "-0.41",
+          "hr": "0.67",
+          "hr_ci95": [
+            "0.52",
+            "0.85"
+          ],
+          "p": "0.001"
+        }
+      ],
+      "reference": {
+        "ecog": [
+          0,
+          1
+        ],
+        "high_clinical_suspicion_pneumonia": 0,
+        "bilateral": 0,
+        "benign_cytology": 0,
+        "protein_g_dL": 2.8
+      },
+      "baseline": [
+        "1",
+        "0.801",
+        "0.707",
+        "0.593",
+        "0.520",
+        "0.467",
+        "0.461"
+      ],
+      "example": {
+        "input": {
+          "ecog": 3,
+          "high_clinical_suspicion_pneumonia": 0,
+          "bilateral": 1,
+          "benign_cytology": 1,
+          "protein_g_dL": 3
+        },
+        "printed_lp": "-0.49662",
+        "printed_exp_lp": "0.609",
+        "printed_survival": [
+          "1.000",
+          "0.874",
+          "0.810",
+          "0.728",
+          "0.672",
+          "0.629",
+          "0.624"
+        ],
+        "recalculated_lp": -0.5020000000000001,
+        "recalculated_exp_lp": 0.6053188106462242,
+        "recalculated_survival": [
+          1,
+          0.8743130269153421,
+          0.810682389009625,
+          0.7288291545319224,
+          0.6731184300431544,
+          0.6307122809183043,
+          0.6257946473335341
+        ],
+        "absolute_difference_from_printed": [
+          0,
+          0.00031302691534207394,
+          0.0006823890096249174,
+          0.0008291545319224491,
+          0.0011184300431543726,
+          0.001712280918304332,
+          0.0017946473335340718
+        ]
+      },
+      "warnings": [
+        "Rounded two-decimal coefficients produce LP -0.502 rather than printed -0.49662. The difference can be explained by coefficient rounding but does not establish any missing full-precision coefficients.",
+        "The prose says 'malignancy cytology = 0' while describing a reference case; the equation and e-Table 6 footnote establish benign=1 and malignant=0."
+      ]
+    },
+    "gcmm": {
+      "source_tables": [
+        7,
+        8
+      ],
+      "pdf_pages": [
+        18,
+        19
+      ],
+      "terms": [
+        {
+          "term": "ecog==0",
+          "coefficient": "-1.485",
+          "hr": "0.23",
+          "hr_ci95": [
+            "0.09",
+            "0.56"
+          ],
+          "p": "0.001"
+        },
+        {
+          "term": "ecog==1",
+          "coefficient": "-0.631",
+          "hr": "0.53",
+          "hr_ci95": [
+            "0.36",
+            "0.78"
+          ],
+          "p": ".001"
+        },
+        {
+          "term": "ecog==3",
+          "coefficient": "-0.033",
+          "hr": "0.97",
+          "hr_ci95": [
+            "0.72",
+            "1.30"
+          ],
+          "p": "0.83"
+        },
+        {
+          "term": "ecog==4",
+          "coefficient": "0.269",
+          "hr": "1.31",
+          "hr_ci95": [
+            "0.87",
+            "1.98"
+          ],
+          "p": "0.20"
+        },
+        {
+          "term": "benign_cytology",
+          "coefficient": "-0.649",
+          "hr": "0.52",
+          "hr_ci95": [
+            "0.39",
+            "0.70"
+          ],
+          "p": "<0.001"
+        },
+        {
+          "term": "lung*(nlr-6.11)",
+          "coefficient": "0.009",
+          "hr": "1.01",
+          "hr_ci95": [
+            "0.99",
+            "1.03"
+          ],
+          "p": "0.284"
+        },
+        {
+          "term": "hematologic*(nlr-6.11)",
+          "coefficient": "0.002",
+          "hr": "1.00",
+          "hr_ci95": [
+            "0.99",
+            "1.01"
+          ],
+          "p": "0.616"
+        },
+        {
+          "term": "breast*(nlr-6.11)",
+          "coefficient": "0.051",
+          "hr": "1.05",
+          "hr_ci95": [
+            "1.02",
+            "1.08"
+          ],
+          "p": "0.001"
+        },
+        {
+          "term": "lung*bilateral",
+          "coefficient": "0.825",
+          "hr": "2.28",
+          "hr_ci95": [
+            "1.48",
+            "3.53"
+          ],
+          "p": "<0.001"
+        },
+        {
+          "term": "hematologic*unilateral",
+          "coefficient": "0.556",
+          "hr": "1.74",
+          "hr_ci95": [
+            "1.06",
+            "2.87"
+          ],
+          "p": "0.03"
+        },
+        {
+          "term": "hematologic*bilateral",
+          "coefficient": "-0.026",
+          "hr": "0.97",
+          "hr_ci95": [
+            "0.60",
+            "1.57"
+          ],
+          "p": "0.92"
+        },
+        {
+          "term": "breast*unilateral",
+          "coefficient": "0.407",
+          "hr": "1.50",
+          "hr_ci95": [
+            "0.87",
+            "2.59"
+          ],
+          "p": "0.14"
+        },
+        {
+          "term": "breast*bilateral",
+          "coefficient": "-0.047",
+          "hr": "0.95",
+          "hr_ci95": [
+            "0.57",
+            "1.60"
+          ],
+          "p": "0.86"
+        },
+        {
+          "term": "lung*(ldh_U_L/100-5.89)",
+          "coefficient": "0.016",
+          "hr": "1.02",
+          "hr_ci95": [
+            "1.00",
+            "1.03"
+          ],
+          "p": "0.02"
+        },
+        {
+          "term": "hematologic*(ldh_U_L/100-5.89)",
+          "coefficient": "-0.001",
+          "hr": "1.00",
+          "hr_ci95": [
+            "0.99",
+            "1.00"
+          ],
+          "p": "0.83"
+        },
+        {
+          "term": "breast*(ldh_U_L/100-5.89)",
+          "coefficient": "0.008",
+          "hr": "1.01",
+          "hr_ci95": [
+            "1.00",
+            "1.02"
+          ],
+          "p": "0.08"
+        },
+        {
+          "term": "lung*(protein_g_dL-3.4)",
+          "coefficient": "-0.497",
+          "hr": "0.61",
+          "hr_ci95": [
+            "0.47",
+            "0.79"
+          ],
+          "p": "<0.001"
+        },
+        {
+          "term": "hematologic*(protein_g_dL-3.4)",
+          "coefficient": "-0.420",
+          "hr": "0.66",
+          "hr_ci95": [
+            "0.51",
+            "0.84"
+          ],
+          "p": "0.001"
+        },
+        {
+          "term": "breast*(protein_g_dL-3.4)",
+          "coefficient": "-0.449",
+          "hr": "0.64",
+          "hr_ci95": [
+            "0.46",
+            "0.88"
+          ],
+          "p": "0.007"
+        }
+      ],
+      "reference": {
+        "cancer": "lung",
+        "ecog": 2,
+        "benign_cytology": 0,
+        "nlr": 6.11,
+        "bilateral": 0,
+        "ldh_U_L": 589,
+        "protein_g_dL": 3.4
+      },
+      "baseline": [
+        "1",
+        "0.763",
+        "0.623",
+        "0.51",
+        "0.421",
+        "0.376",
+        "0.352"
+      ],
+      "example": {
+        "input": {
+          "cancer": "lung",
+          "ecog": 3,
+          "benign_cytology": 0,
+          "nlr": 7.6,
+          "bilateral": 1,
+          "ldh_U_L": 763,
+          "protein_g_dL": 2
+        },
+        "inferred_input": [
+          "bilateral=1 is not stated in the example description but is required to reproduce its printed LP"
+        ],
+        "printed_lp": "1.52905",
+        "printed_exp_lp": "4.614",
+        "printed_survival": [
+          "1.000",
+          "0.287",
+          "0.113",
+          "0.045",
+          "0.018",
+          "0.011",
+          "0.008"
+        ],
+        "recalculated_lp": 1.5290499999999998,
+        "recalculated_exp_lp": 4.613791637611125,
+        "recalculated_survival": [
+          1,
+          0.28707322987100886,
+          0.11267061587567703,
+          0.04474965834319483,
+          0.018472083185075493,
+          0.010964914040465136,
+          0.008088022164729064
+        ],
+        "absolute_difference_from_printed": [
+          0,
+          0.00007322987100888412,
+          0.0003293841243229706,
+          0.00025034165680516696,
+          0.00047208318507549474,
+          0.000035085959534863695,
+          0.00008802216472906382
+        ]
+      },
+      "warnings": [
+        "The example does not state unilateral/bilateral status. Bilateral=1 is mathematically required to reproduce LP 1.52905; unilateral gives LP 0.70405.",
+        "Age 61 is mentioned in the reference narrative but no age coefficient occurs in the printed final equation/table. Do not add an age effect.",
+        "e-Table 8 footnote omits '/100' in one LDH expression; e-Table 7 and the equation explicitly use LDH/100."
+      ]
+    }
+  }
+}

@@ -1,0 +1,732 @@
+{
+  "title": "ComPAS mathematical specification recovered from the public PNOC022 protocol",
+  "authored_date": "2026-10-12",
+  "purpose": "Source-backed engineering extraction for an independent mathematical implementation. This is a newly authored factual specification, not a copy of the protocol or a claim of parity with an original software engine.",
+  "status": "Substantial model and decision-rule recovery; original-method default model weights and several trial implementation choices remain unresolved.",
+  "provenance": {
+    "primary_source_title": "PNOC022/CC#200821, Version 3.0 (01-26-2023)",
+    "public_document_title": "D1_ Protocol 2023-507598-16-00_redacted",
+    "trial_id": "2023-507598-16-00",
+    "document_uuid": "95eccd67-0507-4ec7-8c1b-4998d5c71893",
+    "document_type": "Protocol (for publication)",
+    "document_manual_version": "3",
+    "document_system_version": "1",
+    "pages": 259,
+    "retrieval_date_utc": "2026-10-12",
+    "pdf_bytes": 13889021,
+    "pdf_sha256": "fa69432cb8e68abec0b206a3e0f753c7cb2b0e40827651a99fc18411e5c37e80",
+    "official_record_url": "https://euclinicaltrials.eu/ctis-public/view/2023-507598-16-00",
+    "official_metadata_url": "https://euclinicaltrials.eu/ctis-public-api/retrieve/2023-507598-16-00",
+    "official_download_resolver_url": "https://euclinicaltrials.eu/ctis-public-api/documents/2023-507598-16-00/95eccd67-0507-4ec7-8c1b-4998d5c71893/download",
+    "download_instructions": "The public GET endpoint returns JSON containing a download URL. Obtain the current URL through that endpoint. Expiring URLs are deliberately not preserved here.",
+    "visual_verification": "Rendered and inspected PDF pages 83, 84, 86, 87, 89, 91, 92, 93, and 95. PDF page numbers agree with printed page numbers for these pages. Additional text was inspected on pages 85, 90 and 258.",
+    "original_method_reference": {
+      "authors": [
+        "Rui Tang",
+        "Jing Shen",
+        "Ying Yuan"
+      ],
+      "title": "ComPAS: a Bayesian drug combination platform trial design with adaptive shrinkage",
+      "doi": "10.1002/sim.8026",
+      "url": "https://doi.org/10.1002/sim.8026",
+      "protocol_reference_number": 63,
+      "citation_note": "Protocol's prose on page 83 points to reference 64, while page 84's equation cites reference 63; the bibliography identifies 63 as the original ComPAS article. Original full text was not recovered in this pass."
+    },
+    "supporting_primary_article_url": "https://academic.oup.com/neuro-oncology/article/26/Supplement_2/S125/7485712"
+  },
+  "notation_and_recovered_model": {
+    "source_pages": [
+      83,
+      84
+    ],
+    "scope": "The protocol explicitly presents these as the ComPAS Bayesian hierarchical model. This is evidence for a method-level model core as reproduced in this protocol, not independent verification that every detail matches the original article.",
+    "index_definition_as_printed": {
+      "j": "compound",
+      "k": "backbone",
+      "J": "number of compound groups",
+      "K_j": "number of combinations within group j"
+    },
+    "grouping_caveat": "The displayed hierarchy shares mu_j across k; its written index definition therefore groups by compound j. Other protocol prose describes borrowing given the same backbone. Preserve the displayed equations and require explicit grouping instead of silently transposing j and k.",
+    "likelihood": "y_jk | n_jk, p_jk ~ Binomial(n_jk, p_jk)",
+    "link": "logit(p_jk) = mu_jk",
+    "conditional_prior": "mu_jk | mu_j, sigma_l_squared, M_l ~ Normal(mu_j, sigma_l_squared), k=1,...,K_j",
+    "group_mean_prior": "mu_j ~ Normal(0, 10^6), j=1,...,J",
+    "normal_second_parameter_interpretation": "Variance, consistent with the displayed Normal(mu_j, sigma^2) notation. The group-mean variance is 1,000,000, not a standard deviation of 1,000,000.",
+    "likelihood_data_n": "Number treated and available for the relevant binary analysis; distinguish from the maximum sample-size design constant used below.",
+    "prior_candidate_count": 5,
+    "estimated_continuous_variance_hyperprior": false,
+    "fixed_candidate_variance_calibration": {
+      "source_page": 84,
+      "formula": "sigma_l_squared = (1 - w_l) / (N_design * p_alternative * (1 - p_alternative) * w_l)",
+      "weights": [
+        0.999,
+        0.75,
+        0.5,
+        0.25,
+        0.001
+      ],
+      "N_design_meaning": "Maximum sample size for that combination arm.",
+      "p_alternative_meaning": "Response rate under the alternative hypothesis.",
+      "key_interpretation": "The protocol explicitly defines both as design constants. They are not interim observed sample size, observed response proportion, or unknown sampled response parameter in this formula. The original printed symbols n_jk and p_jk are reused, so rename them in code to prevent an empirical-Bayes interpretation.",
+      "values_pre_specified": true,
+      "hyperprior_over_sigma_not_recovered": "There is a finite set of candidate models, not a recovered continuously sampled sigma prior.",
+      "unspecified_heterogeneous_designs": "The protocol does not resolve how a common sigma_l_squared is calibrated when arms have different design maxima or alternative rates."
+    },
+    "candidate_selection": {
+      "source_pages": [
+        84,
+        86
+      ],
+      "rule": "Fit five candidate models with decreasing shrinkage; select the model with the largest posterior model probability.",
+      "model_averaging": false,
+      "model_prior_probabilities": null,
+      "equal_prior_model_weights_supported": false,
+      "posterior_model_probability_numerical_method": null,
+      "tie_breaking_rule": null
+    }
+  },
+  "mathematical_derivations_for_engineering": {
+    "scope": "The following are mathematical consequences of the recovered distributions under the usual conditional-independence interpretation of a hierarchical binomial model. They are not quoted algorithms from the protocol.",
+    "conditional_independence_assumption": "Treat arms as conditionally independent given their latent logits, and group priors as independent. The protocol writes marginal/conditional distributions, not a separate product factorization.",
+    "joint_density": "For candidate l: f(y, theta, mu | M_l) = product_j { NormalPDF(mu_j;0,1e6) * product_k [ BinomialPMF(y_jk;n_jk,logistic(theta_jk)) * NormalPDF(theta_jk;mu_j,sigma_l_squared) ] }.",
+    "evidence": "Z_l = integral f(y, theta, mu | M_l) dtheta dmu.",
+    "explicit_weighted_posterior": "P(M_l|D) = q_l * Z_l / sum_h(q_h * Z_h), where q_l must be supplied explicitly unless a source for the default model priors is recovered.",
+    "selected_model_tail_probability": "For M_opt, integrate the normalized selected-model posterior over theta_jk > logit(p0).",
+    "numerical_method_independence": "Accurate quadrature, integration or a validated sampler can target these densities without matching the original random-number generator. Absence of original source code or sampler settings alone is not proof that an independent mathematical implementation is impossible.",
+    "normalization_warning": "Do not discard variance-dependent Normal normalization constants when comparing marginal likelihoods across models.",
+    "reproducibility_scope": "A calculation with explicit user-supplied group assignments and model priors is mathematically defined. It must not be described as the original ComPAS default profile until the unresolved defaults and grouping ambiguity are addressed."
+  },
+  "protocol_decision_sequence": {
+    "source_pages": [
+      83,
+      84,
+      86
+    ],
+    "stage_indices": [
+      1,
+      2,
+      3
+    ],
+    "includes_final_stage": true,
+    "posterior_probability_symbol": "Q_jk = P(p_jk > p0 | D_s, M_opt)",
+    "ordered_steps": [
+      "Fit candidate models to interim data and choose the highest-posterior model.",
+      "Conditional on that model, evaluate each arm's futility and superiority rules.",
+      "Drop an arm if Q_jk < 0.1.",
+      "Graduate an arm if Q_jk > 0.95.",
+      "After a combination is dropped or graduated, add a new combination if one is available.",
+      "Stop if all combinations have been dropped or graduated and no new combination is available, or if the maximum sample size has been reached.",
+      "Otherwise continue randomization until the next analysis."
+    ],
+    "futility_threshold": 0.1,
+    "superiority_threshold": 0.95,
+    "strict_inequalities": true,
+    "continuation_in_text": "0.1 < Q_jk < 0.95",
+    "exact_boundary_behavior": null,
+    "additional_unspecified_details": [
+      "Selection rule for the most efficacious combinations when the trial stops.",
+      "Ordering or tie-breaking if several replacements are available.",
+      "Whether decisions for all arms are simultaneous or sequentially recomputed.",
+      "Whether data from dropped or graduated arms remain in all later model fits.",
+      "Precise definition of a platform-wide maximum sample size when new arms can be added.",
+      "Final-stage handling of an arm that satisfies neither strict stopping threshold."
+    ],
+    "accrual_during_pending_outcomes": "Page 84 allows continued enrollment while awaiting endpoint assessment; decisions are made once the required number complete follow-up. Do not treat an outcome still pending at interim as a completed failure merely because final endpoint reporting uses a missing-status failure convention."
+  },
+  "pnoc022_specific_profiles": {
+    "scope": "These are version-3.0 PNOC022 settings. Do not label them universal ComPAS defaults or current clinical recommendations.",
+    "cohorts_1_and_2": {
+      "endpoint": "PFS6 from start of maintenance combination therapy",
+      "endpoint_horizon_weeks": 26,
+      "population": "Intention-to-treat, according to arm assignment",
+      "unknown_endpoint_status": "Unknown progression status at 6 months is counted as failure for the PFS6 analysis.",
+      "source_pages": [
+        86,
+        87,
+        89,
+        95
+      ],
+      "null_response": 0.4,
+      "historical_external_rate": 0.39,
+      "historical_external_sample_size": 39,
+      "arm_maximum_n": 33,
+      "interim_n_per_arm": [
+        11,
+        22
+      ],
+      "final_n_per_arm": 33,
+      "initial_arm_count": 3,
+      "initial_total_randomized": 33,
+      "initial_allocation": "Equal allocation across the three arms in the sample-size description; actual protocol randomization also specifies minimization.",
+      "explicit_variances": [
+        0.00012,
+        0.042,
+        0.126,
+        0.379,
+        126.1
+      ],
+      "simon_sizing_p0": 0.4,
+      "simon_sizing_p1": 0.65,
+      "simon_alpha": 0.05,
+      "simon_power": 0.8,
+      "simulation_rate_set_1_p0": 0.4,
+      "simulation_rate_set_1_p1": 0.6,
+      "simulation_rate_set_2_p0": 0.35,
+      "simulation_rate_set_2_p1": 0.65
+    },
+    "cohort_3": {
+      "endpoint": "OS7 from start of maintenance combination therapy",
+      "endpoint_horizon_weeks": 30,
+      "population": "Intention-to-treat, according to arm assignment",
+      "unknown_endpoint_status": "Unknown survival status at 7 months is counted as failure for the OS7 analysis.",
+      "source_pages": [
+        87,
+        91,
+        92,
+        93,
+        95
+      ],
+      "null_response": 0.5,
+      "historical_median_survival_months": 7.1,
+      "arm_maximum_n": 42,
+      "interim_n_per_arm": [
+        14,
+        28
+      ],
+      "final_n_per_arm": 42,
+      "final_n_note": "42 is the stated maximum per arm; the two interim sample sizes are 14 and 28.",
+      "initial_arm_count": 3,
+      "initial_total_randomized": 42,
+      "initial_allocation": "Equal allocation across the three arms in the sample-size description; actual protocol randomization also specifies minimization.",
+      "explicit_variances": [
+        7e-05,
+        0.023,
+        0.068,
+        0.204,
+        67.96
+      ],
+      "simon_sizing_p0": 0.5,
+      "simon_sizing_p1": 0.7,
+      "simon_alpha": 0.05,
+      "simon_power": 0.8,
+      "simulation_rate_set_1_p0": 0.5,
+      "simulation_rate_set_1_p1": 0.7,
+      "simulation_rate_set_2_p0": 0.45,
+      "simulation_rate_set_2_p1": 0.75
+    },
+    "allocation": {
+      "source_page": 95,
+      "method": "Minimization for restricted randomization",
+      "listed_prognostic_factors": [
+        "H3 status",
+        "TP53 status",
+        "Age"
+      ],
+      "unresolved": "No exact minimization objective, factor coding, weight vector, random element, or tie rule is supplied in this statistical section. Cohort labels also appear inconsistent in the prose. Do not turn the illustrative equal-allocation flowchart into a full PNOC022 allocation implementation."
+    },
+    "optional_cross_cohort_borrowing": {
+      "source_pages": [
+        84,
+        85,
+        90,
+        92
+      ],
+      "description": "An optional adaptation borrows heavily across similar maintenance arms and across cohorts 1 and 2 when efficacy categories agree.",
+      "midpoint": "p_H = (p_null + p_alternative)/2",
+      "efficacious": "P(p_jk > p_H | D_s, M_opt) > 0.5",
+      "nonefficacious": "P(p_jk > p_H | D_s, M_opt) < 0.5",
+      "caveats": "The protocol links this adaptation to Shotgun. Exact construction and degree of the additional heavy borrowing, equality handling, and how it modifies the stated hierarchy are not supplied. Keep separate from the recovered ComPAS core."
+    }
+  },
+  "calibration_audit": [
+    {
+      "issue": "Cohorts 1/2 use different alternative rates in the sizing prose and variance/simulation settings.",
+      "source_pages": [
+        84,
+        86,
+        89,
+        91
+      ],
+      "printed_variances": [
+        0.00012,
+        0.042,
+        0.126,
+        0.379,
+        126.1
+      ],
+      "formula_at_n33_p060": [
+        0.00012638901527790427,
+        0.04208754208754208,
+        0.12626262626262624,
+        0.37878787878787873,
+        126.13636363636361
+      ],
+      "formula_at_n33_p065": [
+        0.00013333346666680014,
+        0.04440004440004441,
+        0.13320013320013321,
+        0.3996003996003996,
+        133.06693306693307
+      ],
+      "conclusion": "Published values approximately track p_alt=.60, which is in simulation rate set 1, not the .65 alternative in Simon sizing prose. The first listed variance is truncated/coarsely represented relative to usual rounding. Preserve the explicit tuple and distinguish sizing, simulation and variance-calibration inputs."
+    },
+    {
+      "issue": "Cohort 3's variance tuple does not match the stated n=42,p_alt=.70 calibration.",
+      "source_pages": [
+        84,
+        87,
+        92
+      ],
+      "printed_variances": [
+        7e-05,
+        0.023,
+        0.068,
+        0.204,
+        67.96
+      ],
+      "formula_at_n42_p070": [
+        0.00011349217698424058,
+        0.03779289493575208,
+        0.11337868480725623,
+        0.3401360544217687,
+        113.26530612244898
+      ],
+      "formula_at_n70_p070": [
+        6.809530619054433e-05,
+        0.022675736961451243,
+        0.06802721088435373,
+        0.20408163265306117,
+        67.95918367346937
+      ],
+      "conclusion": "The printed tuple matches approximately n=70,p_alt=.70. This is a diagnostic arithmetic match, not evidence that 70 was actually intended or used. Do not replace 42, replace the printed variances, or assert a correction without further source evidence."
+    },
+    {
+      "issue": "Cohort 3 superiority prose disagrees with its own equation.",
+      "source_page": 93,
+      "equation_threshold": 0.95,
+      "explanatory_prose_threshold": 0.8,
+      "minimal_excerpt": "large probability (>0.8)",
+      "conclusion": "Equation and general rule use .95. Record both; an equation-faithful profile must expressly cite this inconsistency. Do not claim the ambiguity was independently resolved."
+    },
+    {
+      "issue": "Cohort 3's decision-rule prose calls its endpoint PFS6.",
+      "source_pages": [
+        87,
+        93
+      ],
+      "conclusion": "The defined cohort-3 primary endpoint is OS7, while the explanatory decision-rule prose on page 93 uses PFS6. The extracted cohort profile follows the dedicated endpoint definition and flags the discrepancy."
+    },
+    {
+      "issue": "Simulation-rate prose and table differ for the second cohorts-1/2 null rate.",
+      "source_pages": [
+        90,
+        91
+      ],
+      "prose_null_rate": 0.45,
+      "table_null_rate": 0.35,
+      "table_alternative_rate": 0.65,
+      "conclusion": "The actual tabulated efficacy tuples consistently use .35 for cohorts 1/2's second simulation rate set. Do not present the prose value as an unambiguous simulator input."
+    }
+  ],
+  "recovered_simulation_facts": {
+    "source_pages": [
+      90,
+      91,
+      92
+    ],
+    "iterations": 500,
+    "scope": "Rounded published operating characteristics, not deterministic expected outputs or a fully specified executable simulation contract.",
+    "scenarios": "For each rate set and cohort, scenario 1 has two null arms and one alternative arm; scenario 2 has three null arms; scenario 3 has three alternative arms.",
+    "cohorts_1_and_2": {
+      "rate_set_1": {
+        "true_probabilities": [
+          [
+            0.4,
+            0.4,
+            0.6
+          ],
+          [
+            0.4,
+            0.4,
+            0.4
+          ],
+          [
+            0.6,
+            0.6,
+            0.6
+          ]
+        ],
+        "mean_total_n": [
+          78,
+          85,
+          64
+        ],
+        "percent_correct_selection": [
+          86,
+          86,
+          84
+        ],
+        "percent_all_arms_correct": [
+          63,
+          66,
+          60
+        ],
+        "percent_at_least_one_arm_incorrect": [
+          37,
+          34,
+          40
+        ],
+        "table3_graduation_probabilities": [
+          [
+            0.13,
+            0.13,
+            0.84
+          ],
+          [
+            0.14,
+            0.12,
+            0.14
+          ],
+          [
+            0.86,
+            0.83,
+            0.84
+          ]
+        ],
+        "table4_midpoint_rule_probabilities": [
+          [
+            0.34,
+            0.33,
+            0.89
+          ],
+          [
+            0.35,
+            0.33,
+            0.34
+          ],
+          [
+            0.88,
+            0.88,
+            0.89
+          ]
+        ]
+      },
+      "rate_set_2": {
+        "true_probabilities": [
+          [
+            0.35,
+            0.35,
+            0.65
+          ],
+          [
+            0.35,
+            0.35,
+            0.35
+          ],
+          [
+            0.65,
+            0.65,
+            0.65
+          ]
+        ],
+        "mean_total_n": [
+          73,
+          81,
+          55
+        ],
+        "percent_correct_selection": [
+          94,
+          94,
+          93
+        ],
+        "percent_all_arms_correct": [
+          82,
+          84,
+          80
+        ],
+        "percent_at_least_one_arm_incorrect": [
+          18,
+          16,
+          20
+        ],
+        "table3_graduation_probabilities": [
+          [
+            0.06,
+            0.06,
+            0.93
+          ],
+          [
+            0.05,
+            0.05,
+            0.07
+          ],
+          [
+            0.94,
+            0.93,
+            0.92
+          ]
+        ],
+        "table4_midpoint_rule_probabilities": [
+          [
+            0.21,
+            0.2,
+            0.95
+          ],
+          [
+            0.21,
+            0.22,
+            0.21
+          ],
+          [
+            0.94,
+            0.94,
+            0.94
+          ]
+        ]
+      }
+    },
+    "cohort_3": {
+      "rate_set_1": {
+        "true_probabilities": [
+          [
+            0.5,
+            0.5,
+            0.7
+          ],
+          [
+            0.5,
+            0.5,
+            0.5
+          ],
+          [
+            0.7,
+            0.7,
+            0.7
+          ]
+        ],
+        "mean_total_n": [
+          99,
+          109,
+          76
+        ],
+        "percent_correct_selection": [
+          89,
+          88,
+          89
+        ],
+        "percent_all_arms_correct": [
+          70,
+          69,
+          71
+        ],
+        "percent_at_least_one_arm_incorrect": [
+          30,
+          31,
+          29
+        ],
+        "table3_graduation_probabilities": [
+          [
+            0.11,
+            0.1,
+            0.88
+          ],
+          [
+            0.13,
+            0.13,
+            0.11
+          ],
+          [
+            0.91,
+            0.88,
+            0.88
+          ]
+        ],
+        "table4_midpoint_rule_probabilities": [
+          [
+            0.26,
+            0.28,
+            0.92
+          ],
+          [
+            0.26,
+            0.29,
+            0.31
+          ],
+          [
+            0.91,
+            0.93,
+            0.91
+          ]
+        ]
+      },
+      "rate_set_2": {
+        "true_probabilities": [
+          [
+            0.45,
+            0.45,
+            0.75
+          ],
+          [
+            0.45,
+            0.45,
+            0.45
+          ],
+          [
+            0.75,
+            0.75,
+            0.75
+          ]
+        ],
+        "mean_total_n": [
+          91,
+          102,
+          62
+        ],
+        "percent_correct_selection": [
+          95,
+          94,
+          97
+        ],
+        "percent_all_arms_correct": [
+          87,
+          84,
+          92
+        ],
+        "percent_at_least_one_arm_incorrect": [
+          13,
+          16,
+          8
+        ],
+        "table3_graduation_probabilities": [
+          [
+            0.06,
+            0.04,
+            0.97
+          ],
+          [
+            0.07,
+            0.05,
+            0.05
+          ],
+          [
+            0.97,
+            0.98,
+            0.97
+          ]
+        ],
+        "table4_midpoint_rule_probabilities": [
+          [
+            0.16,
+            0.15,
+            0.98
+          ],
+          [
+            0.18,
+            0.16,
+            0.18
+          ],
+          [
+            0.96,
+            0.97,
+            0.97
+          ]
+        ]
+      }
+    },
+    "validation_limits": [
+      "No random seed, RNG, posterior-integration settings, or complete simulation input file accompanies these tables.",
+      "The table labels its graduation quantities as early graduation; the protocol also interprets these as type I error and power. Preserve the reported label rather than inventing final-stage semantics.",
+      "Figure 8 provides bar charts of model selection but not exact numeric values; none were digitized here.",
+      "These coarse results can support sanity checks after resolving missing settings, not exact test assertions."
+    ]
+  },
+  "source_specific_evidence_matrix": [
+    {
+      "source": "PNOC022 v3.0 protocol, pp83-84",
+      "establishes": [
+        "Binomial likelihood",
+        "Logit-normal hierarchy",
+        "Group-mean prior",
+        "Five variance calibration constants",
+        "MAP model-selection description",
+        "Strict posterior decision cutoffs",
+        "High-level replacement order"
+      ],
+      "does_not_establish": [
+        "Prior model weights",
+        "Numerical evidence algorithm",
+        "Model tie rules",
+        "Full dynamic data-retention semantics"
+      ]
+    },
+    {
+      "source": "PNOC022 v3.0 protocol, pp86-87",
+      "establishes": [
+        "Fixed candidate variance tuples",
+        "Binary endpoint horizons",
+        "ITT definitions",
+        "Unknown endpoint-status handling"
+      ],
+      "does_not_establish": [
+        "Resolution of the variance-calibration discrepancies",
+        "Generic original-method defaults"
+      ]
+    },
+    {
+      "source": "PNOC022 v3.0 protocol, pp89-95",
+      "establishes": [
+        "Per-arm sample-size schedules",
+        "Null rates",
+        "Rounded simulation scenarios and output tables",
+        "Restricted-randomization method name"
+      ],
+      "does_not_establish": [
+        "Complete minimization algorithm",
+        "All simulation inputs",
+        "Unambiguous correction of conflicting prose"
+      ]
+    },
+    {
+      "source": "Original ComPAS paper DOI10.1002/sim.8026",
+      "establishes": [
+        "Correct bibliographic identity and primary-method reference"
+      ],
+      "does_not_establish": [
+        "Original full-text equations or supplements in this research pass"
+      ],
+      "access_note": "Bibliographic/abstract records found; no recovered original full text. Do not state that no paper exists."
+    },
+    {
+      "source": "PNOC022 Neuro-Oncology article DOI10.1093/neuonc/noad181",
+      "establishes": [
+        "Published clinical application and endpoint/sample-size context"
+      ],
+      "does_not_establish": [
+        "Complete original method defaults or posterior computation"
+      ]
+    }
+  ],
+  "suggested_implementation_boundary": {
+    "can_implement_with_recovered_evidence": [
+      "A pure design-constant-to-variance calibration function with explicit N_design and p_alternative inputs.",
+      "A source-backed conditional logit-normal/binomial density and posterior target.",
+      "A candidate-model posterior calculation accepting explicit user-supplied model prior probabilities and group assignments.",
+      "A strict decision-rule function acting on selected-model tail probabilities, with explicit caller-selected equality policy if needed.",
+      "A clearly named PNOC022 version-3.0 reported-variance profile, carrying discrepancy warnings.",
+      "Tests of formulas, input constraints, and source-extracted constants."
+    ],
+    "do_not_claim_complete_yet": [
+      "Original ComPAS default model-selection configuration.",
+      "An exact replica of the proprietary/deployed app.",
+      "Full PNOC022 allocation or optional Shotgun-style cross-cohort borrowing.",
+      "A uniquely resolved correction to the published numerical inconsistencies."
+    ],
+    "source_gaps_that_matter_for_independent_method_completeness": [
+      "Recover or explicitly parameterize prior probabilities over the five candidate models.",
+      "Resolve intended borrowing groups and any different original-article index convention.",
+      "Specify supported behavior for boundary/tie/final-stage cases rather than hiding assumptions.",
+      "Specify changing-arm and historical-data retention behavior if delivering a complete platform simulator."
+    ],
+    "not_a_required_gap_for_an_independent_method_implementation": "Matching the original RNG or proprietary implementation is not necessary if the mathematical target and explicit choices are fully specified and independently validated."
+  }
+}
