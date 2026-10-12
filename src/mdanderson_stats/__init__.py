@@ -2179,6 +2179,12 @@ from .uaroet_calibration import (
     uaroet_calibrated_prior_text,
 )
 from .uaroet_decision import UAROETAllocation, uaroet_allocation
+from .uaroet_desktop_batch import (
+    UAROETDesktopBatch,
+    merge_uaroet_desktop_batches,
+    read_uaroet_desktop_batch,
+    simulate_uaroet_desktop,
+)
 from .uaroet_desktop_conduct import UAROETDesktopDecision, recommend_uaroet_desktop
 from .uaroet_desktop_inference import (
     UAROETPriorESS,
@@ -2192,6 +2198,12 @@ from .uaroet_desktop_rules import (
     uaroet_desktop_screen,
     uaroet_replay_cohorts,
     uaroet_utility_cutoff,
+)
+from .uaroet_desktop_simulation import (
+    UAROETCalendarLook,
+    UAROETCalendarTrial,
+    UAROETSimulationHold,
+    run_uaroet_desktop_trial,
 )
 from .uaroet_desktop_study import (
     UAROETDesktopCounts,
@@ -3061,6 +3073,14 @@ __all__ = [
     "catbub_thresholds",
     "catbub_operating_characteristics",
     "UAROETAllocation",
+    "UAROETDesktopBatch",
+    "merge_uaroet_desktop_batches",
+    "read_uaroet_desktop_batch",
+    "simulate_uaroet_desktop",
+    "UAROETCalendarLook",
+    "UAROETCalendarTrial",
+    "UAROETSimulationHold",
+    "run_uaroet_desktop_trial",
     "UAROETTimedPatient",
     "uaroet_outcome_delays",
     "uaroet_study_as_of",

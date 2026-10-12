@@ -1,0 +1,96 @@
+{
+  "scope": "three-patient pending-outcome calendar computational check",
+  "seed": 1092,
+  "target": 0.03,
+  "maximum_rhat": 1.05,
+  "looks": [
+    {
+      "clock": 0.0,
+      "action": "treat",
+      "reason": "initial_cohort",
+      "final": false,
+      "observed_rows": [],
+      "selected": 0,
+      "draws_per_chain": null,
+      "maximum_mcse_ratio": null,
+      "maximum_rhat": null
+    },
+    {
+      "clock": 0.23486381495920858,
+      "action": "treat",
+      "reason": "greedy",
+      "final": false,
+      "observed_rows": [
+        [
+          1,
+          0,
+          -1,
+          -1
+        ]
+      ],
+      "selected": 0,
+      "draws_per_chain": 2000,
+      "maximum_mcse_ratio": 0.02523653165400945,
+      "maximum_rhat": 0.9999566088310218
+    },
+    {
+      "clock": 0.3328259535506358,
+      "action": "treat",
+      "reason": "greedy",
+      "final": false,
+      "observed_rows": [
+        [
+          1,
+          0,
+          -1,
+          -1
+        ],
+        [
+          2,
+          0,
+          -1,
+          -1
+        ]
+      ],
+      "selected": 0,
+      "draws_per_chain": 2000,
+      "maximum_mcse_ratio": 0.025965329400270572,
+      "maximum_rhat": 0.9998517856300063
+    },
+    {
+      "clock": 1.332825953550636,
+      "action": "select",
+      "reason": "greedy",
+      "final": true,
+      "observed_rows": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          1,
+          0
+        ],
+        [
+          3,
+          0,
+          0,
+          0
+        ]
+      ],
+      "selected": 1,
+      "draws_per_chain": 5000,
+      "maximum_mcse_ratio": 0.025345823879652514,
+      "maximum_rhat": 1.0008203420450343
+    }
+  ],
+  "enrollment": 3,
+  "selected": 1,
+  "followup_duration": 1.332825953550636,
+  "decision_time": 1.332825953550636,
+  "clinical_validation": false
+}

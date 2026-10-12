@@ -400,3 +400,22 @@ is constructed at6973b–69759 with mean field230 and vtable4d59d8;68360 calls2a
 which scales the unit-exponential generator at2af13–2af18 without outcome-style
 rounding. These fixtures isolate arithmetic/control contracts, not native RNG
 identity or a full original trial run.
+
+Calendar integration now includes a full single-trial runner using actual saved
+study inference and live state, plus online batch moments, portable JSON/CSV,
+deterministic independent trial-index streams and overlap-safe job merging.
+28 focused tests pass for complete/pending/early-stop/failure paths, suspension,
+partition reproducibility, MCSE and corrupted/duplicate-job rejection. A real
+three-patient precision-qualified pending-outcome run is underway. This is not
+yet the final-code acceptance checkpoint and catalog92 remains partial.
+The original5D4E4T template executes an8-draw smoke fit in0.267s, but utility
+R-hat ranges1.75–12.08; this is execution evidence only, not accepted inference.
+
+Actual three-patient pending-data calendar quality run passes every requested
+simulation gate: two pending-data looks use2000draws/chain, final complete-data
+selection uses5000; maximum ratio0.02596533 and maximum R-hat1.00082034.
+The run selects dose index1 after enrolling three patients at dose index0.
+Follow-up/decision time1.332825953550636. See the preserved calendar-quality JSON
+and reproducible tool. This is computational workflow evidence, not an operating-
+characteristic study or clinical validation. All14 native reference files match
+fresh regeneration. Final-code full-suite/wheel checks are underway.

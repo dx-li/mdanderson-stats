@@ -162,3 +162,48 @@ from a positive sub-day window. Optional CheckAcceptabilityWithinCohort defaults
 to1 and SuspendAccrualForFullEvalOfNewDoseCohort defaults to0. Disabling within-
 cohort safety checks requires the legacy profile. Native suspension semantics
 are documented in the recovery checkpoint; calendar trial integration remains open.
+
+## Calendar trials and mergeable simulation jobs
+
+`run_uaroet_desktop_trial(study, scenario, rng=...)` requires an empty-patient
+study and an explicit NumPy generator. It uses the saved prior, model, live
+cohort rules and precision-qualified assignment controller throughout the trial.
+The first arrival is zero; later inter-arrival times are exponential. Generated
+joint outcomes remain hidden until their respective observation times. Final
+selection uses completed follow-up; interim clinical stopping does not perform
+another selection. `followup_duration` is the last generated patient's outcome
+completion maximum, whereas `decision_time` is the actual stopping/selection
+clock. These can differ after early stopping and under legacy final timing.
+
+The default `safe` profile uses continuous outcome windows. The explicit
+`legacy_1_8` profile retains rounded outcome delays and the recovered optional
+suspension behavior: closing an already open multi-patient new-dose cohort waits
+only for its last patient's completion, discarding earlier arrival epochs.
+A size-one new cohort does not trigger suspension. Safe mode rejects this
+optional suspension flag rather than silently assigning it a new interpretation.
+Neither profile claims original RNG sequence identity.
+
+`UAROETSimulationHold` reports unresolved precision, chain disagreement or zero
+eligible allocation weight. It aborts the simulation; it must never be converted
+into an early clinical stop when estimating operating characteristics. Work and
+discarded-arrival budgets also raise on exhaustion. `on_look(clock, decision)`
+can stream complete assignment reports; the returned trial retains compact look
+records and generated patient outcomes, not every posterior sample.
+
+`simulate_uaroet_desktop` computes online sums and squared sums for one scenario.
+It requires a root `seed` and accepts a zero-based `first_trial` index. Each trial
+uses explicit PCG64 with `SeedSequence([seed, trial_index])`. Disjoint index ranges
+therefore reproduce the same trial streams when split across jobs. The portable
+`UAROETDesktopBatch` JSON stores exact study/scenario/settings, NumPy version,
+stream segments, and a configuration SHA-256. `merge_uaroet_desktop_batches`
+rejects differing configurations or overlapping stream segments, including
+accidental duplicate jobs. Retain original job files for provenance.
+
+`summary()` and `to_csv()` give selection/no-selection probabilities, early-stop
+rate, enrollment, follow-up duration, decision time, discarded arrivals, per-dose
+allocation and joint-outcome counts. Their MCSE is the sample standard deviation
+of the trial metric divided by the square root of the replication count; it is
+unavailable for one replication. A zero empirical MCSE does not establish a zero
+population error or clinical validity. These are documented portable Python
+formats, not native report byte replicas. An interrupted callback/job produces
+no accepted batch; any partial external output is diagnostic only.
