@@ -70,3 +70,8 @@ acceptance. The subsequent full run was also interrupted at64,814 passes when th
 defect was confirmed. Neither interrupted run is final acceptance. A fresh run
 will include the corrected quadrature and all reference fixtures.
 Do not promote PRT69, BLESS149 or ComPAS140 from partial on these results.
+
+Final corrected acceptance:76,136 full tests pass (483.51s),5,640 fresh-wheel
+focused tests,9,347 broader installed tests,28 plotting/TIFF tests and all three
+examples. Corrected ComPAS passes82 tests on SciPy1.14.1 as well. Full evidence
+and artifact hashes are in prt-conduct-and-review-validation-2026-10-12.json.

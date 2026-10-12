@@ -1,0 +1,97 @@
+{
+  "scope": "PRT explicit legacy arithmetic and saved conduct; BLESS decimal-cancellation fix; ComPAS distant-threshold quadrature fix. All three catalog entries remain partial.",
+  "implementation_commit": "60510d54d11786c94db465f03ee7e60e7cfda5f4",
+  "full_suite": {
+    "passed": 76136,
+    "seconds": 483.51,
+    "log_sha256": "843d4c2fcad078b459bbe1e54a5bb7a1c904937df40ca52fd94bded0366ad22c",
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "workers": 4,
+    "production_python_files": 769,
+    "production_unchanged_during_acceptance": true,
+    "snapshot_sha256": "14739ad52e285e4cdc9d301118b0c829c43f6ed9b7e1dd9d96c7d1d58f57984a"
+  },
+  "installed_wheel": {
+    "fresh_focused": {
+      "passed": 5640,
+      "seconds": 88.52,
+      "log_sha256": "2bbb56503b6047726b74232a9553f5b3a1a9808a5d4338f927f066184871b5f1"
+    },
+    "broader": {
+      "passed": 9347,
+      "seconds": 46.13,
+      "log_sha256": "14b23548dfdd378fd8e9ffdf168f8210163be82da3136b5dc66a5a7fbd51838f"
+    },
+    "plot_image_extras": {
+      "passed": 28,
+      "seconds": 6.0,
+      "log_sha256": "3480a25f806c5d6efccef4f152b6c8360343640a572e2aea711e7a660b13dc31"
+    },
+    "examples": [
+      "prt_conduct.py",
+      "bless_published.py",
+      "compas_explicit.py"
+    ],
+    "outside_checkout": true
+  },
+  "minimum_scipy": {
+    "version": "1.14.1",
+    "numpy": "2.1.3",
+    "compas": {
+      "passed": 82,
+      "seconds": 122.25,
+      "log_sha256": "ea0669492d99a6554682cff5744c3f1dd22223bd56557d7c78bbadadaf5bb6de"
+    }
+  },
+  "source_references": {
+    "prt_byte_identical_files": 21,
+    "prt_startup_fpcw": "0x23f",
+    "prt_runtime_initialization_cases": 6,
+    "prt_calendar_precision_cases": 111,
+    "prt_enrollment_trace_steps": 72,
+    "bless_independent_decimal_cases": 458,
+    "compas_two_arm_cases": 15,
+    "compas_three_arm_cases": 5,
+    "compas_six_arm_tensor_case": 1,
+    "compas_extreme_fixed_node_cases": 2
+  },
+  "scientific_limits": "Native compatibility and mathematical numerical validation are separate from clinical validity. Error estimates and chain agreement are not convergence/precision guarantees.",
+  "artifact_audit": {
+    "source_wheel_byte_matched_files": 773,
+    "notices_identical": true,
+    "raw_binaries_excluded": true,
+    "wheel_sha256": "4e7b423105db1f2fd08e239f0297a0d9e4fa5ef6ee98e0b4b4d0088bed38edd0",
+    "sdist_sha256": "eb3f5a7def760db19a3769684f05be2aaad20c62913fda7f745c2beed1aca99c",
+    "notice_files_retained": 29
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "2753 files already formatted",
+    "mypy": "Success: no issues found in 769 source files"
+  },
+  "catalog": {
+    "entries": 138,
+    "implemented": 102,
+    "partial": 32,
+    "pending": 4
+  },
+  "remaining": {
+    "prt": "Generated native calendar, complete simulation/controller composition, batch operating-characteristic reports and acceptance.",
+    "models": [
+      "BayesianSurvival",
+      "CNSRISK",
+      "K-COMPASS",
+      "MDS-DPSS"
+    ],
+    "bless": "Deployed daily/full-precision/uncertainty contracts",
+    "compas": "Original group/model priors and dynamic platform replacement/retention/final/allocation contracts",
+    "release": "Mixed-license distribution decision; prior PR creation Forbidden; no merge/release/deploy/outreach authorized."
+  },
+  "logs": {
+    "lint": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "format": "b0bcaa41a454c4c8bc4cf59329c0afb720af59bbe6b409689243ce2e1b27ee60",
+    "mypy": "566dd11e19c77e8d1f4046606fbdf4e010e8cca7a0de52ad6e8e1d576b4470d5",
+    "build": "f10027f5fae4a49d4f082f13db5eda7f96d255c0495ea96882f5f7068c1b9356"
+  }
+}

@@ -130,3 +130,11 @@ reports. Native compatibility fixtures now cover18 independently regenerated
 files, including full conduct/output-dispatch defects. Entry69 remains partial.
 Next close generated-calendar and simulation batch/operating-characteristic
 reports; do not reuse conduct rule4 or6.0 as a complete simulation controller.
+
+Final PRT conduct/review checkpoint:76,136 full tests pass on final code; fresh
+wheel/extras/examples, independent source references, lint/types/build and retained
+licensing checks pass. See prt-conduct-and-review-validation-2026-10-12.json.
+BLESS decimal cancellation and confirmed ComPAS distant-threshold mass loss are
+fixed and independently verified; no catalog promotion follows from these fixes.
+Continue PRT native generated calendar/controller composition and batch OC reports
+using corrected53-bit startup references; preserve explicit invalid-legacy holds.

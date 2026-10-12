@@ -788,3 +788,27 @@ fixed-node, expanded-domain references agree within1e-12. Five regressions added
 The previous full run stopped at64,814 passes/766.33s because production changed;
 it is not accepted. Final acceptance will use corrected code; no further speculative
 review expansion is needed. Source counts remain769; catalog unchanged102/32/4.
+
+Final corrected acceptance is COMPLETE:76,136 full tests passed483.51s with
+all extras/warnings-as-errors and four workers. All769 production Python files
+were unchanged throughout. Fresh final wheel5,640 focused tests,9,347 broader
+regressions,28 real plotting/TIFF tests and three examples pass. All82 ComPAS
+tests pass separately on SciPy1.14.1/NumPy2.1.3. Ruff/format/mypy/build pass;
+773 package Python/JSON files byte-match wheel/sdist,29 notices retained and raw
+original binaries excluded. Twenty-one PRT source fixtures regenerate identically
+at corrected startup precision. Record:
+prt-conduct-and-review-validation-2026-10-12.json. Artifacts preserved under
+/tmp/review-corrected-accepted-artifacts. Code commit60510d54d11786c94db465f03ee7e60e7cfda5f4
+was verified at the remote feature branch. Earlier interrupted runs are not counted.
+
+Since original handoffe74b1ef, nine declared catalog scopes closed: EffTox2,
+ToxFinder14, ARAND62, mTPI72, Dose Schedule Finder75, BMA CRM81, UAROET92,
+BOIN desktop99 and CRM Suite132. BLESS149/ComPAS140 moved pending to partial
+on explicit published contracts. Counts138 entries:102 implemented/32 partial/4
+pending. PRT69 saved conduct and legacy kernels are accepted but generated native
+calendar, simulation/controller composition and batch OC reports remain next.
+Use the21 portable reference fixtures and startup0x23f evidence. The isolated
+/tmp/prt-simulation-draft refactor has NOT been accepted or integrated; inspect it
+only as scratch. Four fitted-model gaps, remaining partial contracts, mixed-license
+distribution choice and prior PR Forbidden are still open. No merge, registry
+release, deployment, author outreach or permissions changes occurred.
