@@ -66,6 +66,7 @@ class WFMMBasis:
     coefficient_partition: NDArray[np.int64]
     max_work: int
     custom_synthesis_matrix: FloatArray | None = None
+    extended_boundary: str | None = None
 
     @property
     def coefficient_count(self) -> int:

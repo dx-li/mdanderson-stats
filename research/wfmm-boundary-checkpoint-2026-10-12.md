@@ -1,0 +1,82 @@
+# WFMM one-dimensional extended boundary transforms
+
+This checkpoint follows 70a408d5446b3942573958b9bbcd71102b1b8470.
+WFMM remains partial and the catalog remains 103 implemented / 31 partial /
+4 pending. The PCA transfer and provisional Haar sign failures are resolved and
+preserved in wfmm-transform-study-checkpoint-2026-10-12.md, including original
+hashes, the test-only sign correction, and byte-identical fixture regeneration.
+
+## Source and independent checks
+
+The reference generator pins all three original WFMM 3.1 Linux executables by
+SHA-256. The official bundle is
+https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/WFMM/wfmm_v3_1_linux_x86_64.tar.gz
+(archive SHA-256 9bc5003271eebfac4a90e265d08c8f677d72252eccae5ff65c90bc25d5d309f9).
+Original executable bytes remain outside artifacts under ignored research/raw.
+The generator exports only numerical outputs from synthetic impulse inputs.
+WFMM1 transforms identity rows. WFMM2 creates its file layout, after which its
+beta draws are replaced by deterministic unit vectors and zeros. WFMM3 then
+reconstructs those vectors. Random sampled values do not enter the fixture.
+
+Sixty cases cover db1–db10, periodic/zero/reflection boundaries, length 32 with
+one level, and odd length 33 with two levels, all with extended_mode=1. Both
+analysis and synthesis matrices are compared; tests also check arbitrary draws,
+reconstruction, covariance propagation against the native synthesis matrix,
+partition filtering, odd-length analytic Haar values, very short signals and
+higher levels. Independent Haar expectations explicitly distinguish wrap, zero
+padding and endpoint repetition. Saved studies replay the odd-length workflow.
+
+For a level of input length n and filter length L, each band has
+floor((n+L-1)/2) elements. Tap indices are 2*i+tap-(L-2). Periodic wraps modulo n;
+reflection repeats endpoints (symmetric folding with period 2*n); zero masks
+indices outside the input. Packing is [a_J,d_J,...,d_1]. Synthesis overlap-adds
+and crops to each original level length, including odd lengths. It is not the
+analysis transpose for the redundant representation.
+
+The existing package taps are preserved. Their precision differs slightly from
+the original executable: largest observed analysis discrepancy is 1.159e-11
+(db4); largest synthesis discrepancy is 9.817e-12. Matrix comparisons use 2e-11
+absolute tolerance and propagated random/covariance comparisons 2e-10. Separate
+perfect-reconstruction checks use 3e-11 absolute tolerance with zero relative
+tolerance. This is numerical convention compatibility, not bitwise identity.
+
+## Public contract and limits
+
+wfmm_extended_wavelet_basis constructs immutable dense matrix pairs with native
+partition labels and an explicit extended_boundary marker. It uses the existing
+rectangular custom-basis path for transform/inverse/covariance/summaries, while
+pass filtering recognizes its wavelet partitions. The legacy periodic-decimation
+constructor and its phase convention are unchanged. Saved studies accept
+transform="extended_wavelet" and boundary="periodic", "zero", or "reflection".
+
+Dense storage limits this helper to 512 input points, two million estimated live
+matrix cells and a bounded construction-work budget. Independent coefficient
+errors remain an explicit working model under redundant analysis; exact
+reconstruction does not imply an independent-coordinate data likelihood.
+
+Other wavelet families, multidimensional/interval transforms, extended_mode=0,
+original file/report and prediction contracts, hyperparameter updates and full
+native sampling compatibility remain open. No clinical validity claim, notice
+change, packaging split, release, merge, deployment, outreach or permissions
+change is included. Acceptance evidence is recorded in the adjacent manifest.
+
+The optional boundary field preserves previously saved version-1 studies: a
+missing boundary field reopens with the historical periodic default. A regression
+test covers that compatibility path. The initial full run was interrupted when
+this issue was found; only the restarted run on the corrected source counts.
+
+Independent postprocessing recovery also found native integer truncation in
+simultaneous bands and SimBaS. See
+[the postprocessing audit](wfmm-postprocess-audit-2026-10-12.md) for reproducible
+source evidence; production real-valued summaries are deliberately unchanged.
+
+## Acceptance
+
+The corrected source passed 76,739 full tests in 428.39s with warnings as errors,
+607 focused checks and 635 fresh-wheel tests (including 28 plot/TIFF checks).
+All 777 production Python files and 1,601 test/fixture files remained unchanged.
+Three installed examples, dependency checks, lint, formatting, types and build
+passed. Artifacts match 781 package files and 29 notices and exclude originals;
+final research documentation postdates those artifacts. Sixty boundary cases
+and both postprocessing cases regenerated byte-identically. See
+[validation manifest](wfmm-boundary-validation-2026-10-12.json).

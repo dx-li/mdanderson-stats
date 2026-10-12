@@ -132,3 +132,20 @@ transforms, native file/report interoperability, optional native hyperparameter
 updates and complete native sampling compatibility remain open. WFMM70 remains
 partial. The [transform/workflow audit](../research/wfmm-transform-study-checkpoint-2026-10-12.md)
 records independent references and final validation.
+
+## Explicit extended boundary transforms
+
+Use `transform="extended_wavelet"`, `filter_length=2..20` (even), and
+`boundary="periodic"`, `"zero"`, or `"reflection"` in `WFMMStudy` to select the
+native extended-mode one-dimensional db1–db10 convention. Odd lengths are
+supported. Reflection repeats endpoint samples; periodic wraps indices; zero
+pads outside the signal. Each level retains `floor((n+L-1)/2)` approximation and
+detail values. Reconstruction overlap-adds and crops to the original lengths.
+`wfmm_extended_wavelet_basis` exposes the same matrix pair independently.
+
+This dense helper supports up to 512 time points with bounded matrix storage and
+work. The legacy `transform="wavelet"` periodic-decimation convention remains
+unchanged. Redundant coefficients use an explicit independent-coefficient
+working model. Source comparisons establish numerical convention agreement,
+not bitwise filter or RNG identity; details and tolerances are in
+[the boundary checkpoint](../research/wfmm-boundary-checkpoint-2026-10-12.md).

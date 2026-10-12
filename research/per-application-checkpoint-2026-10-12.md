@@ -188,3 +188,11 @@ and versioned Python saved studies with qualified initialization, MCMC, curve/
 covariance summaries and population prediction reports. Native boundaries,
 multidimensional transforms, original file/report interoperability and remaining
 sampling/hyperparameter contracts are still open. Entry70 stays partial.
+
+
+WFMM70 extended 1D db1–db10 transforms now include periodic, zero and
+endpoint-repeating reflection with original-length cropped synthesis, including
+odd lengths. Sixty original WFMM1/3 impulse maps and independent reconstruction
+checks document conventions and filter precision. Saved Python workflows compose
+these pairs with selection, covariance and prediction summaries. See
+wfmm-boundary-checkpoint-2026-10-12.md and its acceptance manifest. Status remains partial.

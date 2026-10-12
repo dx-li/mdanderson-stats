@@ -28,7 +28,7 @@ Each row is a curve on an equally spaced grid. The default is a periodic
 Daubechies db4 transform; even filter lengths 2–20 select db1–db10.
 The default decomposition level is the largest `J` for which `2**J` divides
 the curve length. Supply `levels` to use fewer levels. Odd lengths require
-an identity or custom transform.
+an identity/custom transform or the explicit extended-wavelet helper below.
 
 The coefficient order is `[a_J,d_J,...,d_1]`: coarsest approximation followed
 by details from coarse to fine. Filtering samples even indices with forward
@@ -36,7 +36,8 @@ tap offsets and periodic wrapping. `coefficient_partition` separates the
 approximation and each detail band; `coefficient_scale` records its level.
 Five synthetic periodic Haar (`filter_length=2`) transforms match native WFMM
 3.1 with `extended_mode=1` at 16–64 points and one–four decomposition levels.
-This does not establish other native wavelets or extension modes: native db4
+The separate extended-wavelet helper now covers db1–db10 and three boundary
+modes. The legacy orthogonal constructor differs: native db4
 with 64 points/two levels retains 77 coordinates, while the Python orthogonal
 transform retains 64. See the [compression audit](../research/wfmm-native-compression-audit.md).
 
@@ -48,7 +49,9 @@ guide's explicit forward and reverse products. See the
 [paired custom-transform guide](wfmm-custom-transform.md) for validation and
 covariance interpretation. Custom transforms do not center the input.
 [PCA/hybrid bases](wfmm-studies.md) now support rectangular coordinates; alternate
-boundary modes and multidimensional transforms remain open. Energy
+multidimensional transforms remain open. Explicit extended-mode periodic, zero,
+and endpoint-repeating reflection are available through
+`wfmm_extended_wavelet_basis`; see [saved studies](wfmm-studies.md). Energy
 compression of supplied coefficients is now native-verified below.
 
 Transforms return readonly arrays and reject nonfinite values. They support
@@ -524,8 +527,8 @@ references, a conjugate inverse-gamma variance posterior and hand-calculated
 contrast/band summaries. Native MCMC random-number parity is not claimed.
 
 Automatic initialization, explicit variance freezing, PCA/hybrid transforms,
-pass filtering and saved Python workflows are available. Additional transform/
-boundary rules, native prediction/file formats, hyperparameter updates and full
+pass filtering, 1D extended db1–db10 boundary pairs and saved Python workflows
+are available. Additional transform/boundary rules, native prediction/file formats, hyperparameter updates and full
 native sampling compatibility remain open. Energy compression of explicit coefficient matrices is
 now verified against the original program. The [source and implementation audit](../research/wfmm-audit.md)
 tracks these gaps and the independent references.

@@ -14,6 +14,7 @@ from numpy.typing import ArrayLike
 from ._cdflib import _freeze
 from .hierarchical_binomial import summarize_chains
 from .wfmm_basis import WFMMBasis, _setting, wfmm_basis, wfmm_transform
+from .wfmm_boundary import wfmm_extended_wavelet_basis
 from .wfmm_compression import TiePolicy, WFMMCompression, wfmm_compress_coefficients
 from .wfmm_covariance import WFMMCovarianceSummary, wfmm_summarize_covariance
 from .wfmm_initialization import WFMMInitialization, initialize_wfmm
@@ -100,6 +101,7 @@ class WFMMStudy:
     prediction_design: ArrayLike | None = None
     prediction_residual: bool = False
     prediction_strata: ArrayLike | None = None
+    boundary: str = "periodic"
 
     def __post_init__(self):
         y = _matrix(self.curves, "curves")
@@ -126,8 +128,24 @@ class WFMMStudy:
             object.__setattr__(self, "random_strata", tuple(int(i) for i in labels))
         labels = _strata(self.residual_strata, n, "residual_strata")
         object.__setattr__(self, "residual_strata", tuple(int(i) for i in labels))
-        if self.transform not in ("identity", "wavelet", "custom", "PC", "PCw", "wPC"):
+        if self.transform not in (
+            "identity",
+            "wavelet",
+            "extended_wavelet",
+            "custom",
+            "PC",
+            "PCw",
+            "wPC",
+        ):
             raise ValueError("unsupported study transform")
+        if self.boundary not in ("periodic", "zero", "reflection"):
+            raise ValueError("unsupported boundary convention")
+        if self.transform != "extended_wavelet" and self.boundary != "periodic":
+            raise ValueError("nonperiodic boundary requires extended_wavelet")
+        if self.transform == "extended_wavelet":
+            wfmm_extended_wavelet_basis(
+                t, levels=self.levels, filter_length=self.filter_length, boundary=self.boundary
+            )
         if self.transform == "custom":
             for name in ("analysis_matrix", "synthesis_matrix"):
                 value = _matrix(getattr(self, name), name, rows=t, columns=t)
@@ -153,7 +171,9 @@ class WFMMStudy:
             raise ValueError("2**levels must divide the number of time points")
         if self.filter_length % 2:
             raise ValueError("filter_length must be even")
-        if self.transform != "wavelet" and (self.highpass or self.lowpass):
+        if self.transform not in ("wavelet", "extended_wavelet") and (
+            self.highpass or self.lowpass
+        ):
             raise ValueError("saved pass flags currently require the wavelet transform")
         if self.compression_ties not in ("reject_split", "original_index"):
             raise ValueError("unsupported compression tie policy")
@@ -226,6 +246,9 @@ def read_wfmm_study(text: str) -> WFMMStudy:
 
     try:
         data = json.loads(text, object_pairs_hook=unique, parse_constant=invalid_constant)
+        if isinstance(data, dict):
+            # Version 1 studies saved before extended boundaries used periodic defaults.
+            data.setdefault("boundary", "periodic")
         if (
             not isinstance(data, dict)
             or data.pop("schema", None) != "mdanderson_stats.wfmm.study"
@@ -338,6 +361,10 @@ def run_wfmm_study(study: WFMMStudy) -> WFMMStudyResult:
             analysis_matrix=study.analysis_matrix,
             synthesis_matrix=study.synthesis_matrix,
         )
+    elif study.transform == "extended_wavelet":
+        basis = wfmm_extended_wavelet_basis(
+            t, levels=study.levels, filter_length=study.filter_length, boundary=study.boundary
+        )
     elif study.transform == "wavelet":
         basis = wfmm_basis(t, levels=study.levels, filter_length=study.filter_length)
     else:
@@ -355,7 +382,7 @@ def run_wfmm_study(study: WFMMStudy) -> WFMMStudyResult:
         ).basis
     transformed = wfmm_transform(study.curves, basis).coefficients
     eligible = None
-    if study.transform == "wavelet":
+    if study.transform in ("wavelet", "extended_wavelet"):
         eligible = wfmm_pass_filter(
             transformed, basis, highpass=study.highpass, lowpass=study.lowpass
         ).retained_indices

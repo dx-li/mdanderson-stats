@@ -885,3 +885,24 @@ test/fixture files stayed unchanged. See
 wfmm-transform-study-checkpoint-2026-10-12.md. No WFMM promotion: boundary/
 multidimensional transforms, native files/reports and remaining sampling
 contracts remain open.
+
+
+WFMM70 extended 1D db1–db10 transforms now include periodic, zero and
+endpoint-repeating reflection with original-length cropped synthesis, including
+odd lengths. Sixty original WFMM1/3 impulse maps and independent reconstruction
+checks document conventions and filter precision. Saved Python workflows compose
+these pairs with selection, covariance and prediction summaries. See
+wfmm-boundary-checkpoint-2026-10-12.md and its acceptance manifest. Status remains partial.
+
+Native postprocessing supplied-draw probes now independently reproduce means,
+SDs, contrasts, probabilities and the original integer-truncated band/SimBaS
+behavior. See wfmm-postprocess-audit-2026-10-12.md. Do not silently copy the
+integer absolute-value defect into the scientific default. Next probes cover
+noninteger quantile ranks, zero SDs, multi-file draws and random-effect/prediction
+file contracts. PCA transfer and original sign failures remain resolved and
+documented in the transform-study checkpoint.
+
+Boundary acceptance: 76,739 full tests / 428.39s, 607 focused, 635 installed
+wheel tests and three examples passed. Source/test snapshots stayed unchanged.
+See wfmm-boundary-validation-2026-10-12.json. Interrupted earlier acceptance
+was not counted; the final run includes the legacy saved-schema regression.

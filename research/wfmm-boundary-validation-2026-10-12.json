@@ -1,0 +1,69 @@
+{
+  "base_commit": "70a408d5446b3942573958b9bbcd71102b1b8470",
+  "scope": "1D extended db1-db10 boundary pairs and saved-study integration; WFMM remains partial",
+  "full_suite": {
+    "passed": 76739,
+    "seconds": 428.39,
+    "workers": 4,
+    "warnings_as_errors": true,
+    "all_extras": true,
+    "production_python_files": 777,
+    "test_and_fixture_files": 1601,
+    "tested_files_unchanged": true,
+    "log_sha256": "cbe16d16b01c0759ba7ada8cd55d5e680f221e77c878a8d3c6c2f687c37e1a9d"
+  },
+  "interrupted_run": "Initial full run was stopped after discovering version-1 reader compatibility; not counted as passed.",
+  "focused": {
+    "passed": 607,
+    "seconds": 67.41,
+    "log_sha256": "2792f8d3ce047e504fa67675d1c48a9eb011f62f12e3b62207f7e3cee156de82"
+  },
+  "installed_wheel": {
+    "passed": 635,
+    "seconds": 28.65,
+    "wfmm": 607,
+    "extras": 28,
+    "outside_checkout": true,
+    "examples": [
+      "wfmm_study.py",
+      "wfmm_automatic.py",
+      "wfmm_initialization.py"
+    ],
+    "dependencies": "passed",
+    "log_sha256": "3239db0414cfacf54b6237cf726cde2faa5242dae8f411eb706c603f08223ba3"
+  },
+  "native_references": {
+    "boundary_cases": 60,
+    "boundary_byte_identical_regeneration": true,
+    "boundary_sha256": "d20881cdac128c1b6aa42f0c6deff3821806ff4c19b450eb7070680e9492b226",
+    "postprocess_cases": 2,
+    "postprocess_byte_identical_regeneration": true,
+    "postprocess_sha256": "9f3d46c948eebf07e93798ad712fe7565859e32952b6edb5460d2a60832ceb1e",
+    "postprocess_scope": "Independent research audit; native integer truncation is not a production scientific target."
+  },
+  "artifact_audit": {
+    "package_files": 781,
+    "retained_notices": 29,
+    "source_bytes_equal": true,
+    "notices_equal": true,
+    "original_binaries_excluded": true,
+    "hashes": {
+      "mdanderson_stats-0.1.0-py3-none-any.whl": "402f9cf2140e8041383402e11c7b00d7d3579ef20f1a8e85e0cd24dc186b864b",
+      "mdanderson_stats-0.1.0.tar.gz": "36d1cbfbfe897db5d01bee1eb7de0d7807c627b4b5f984c3982a2a81e55d4ee9"
+    }
+  },
+  "artifact_scope": "Artifacts precede final evidence documentation and postprocessing research. All production package bytes and retained notices match source.",
+  "static_checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "mypy_source_files": 777,
+    "build": "passed",
+    "local_documentation_links": "passed"
+  },
+  "catalog": {
+    "entries": 138,
+    "implemented": 103,
+    "partial": 31,
+    "pending": 4
+  }
+}

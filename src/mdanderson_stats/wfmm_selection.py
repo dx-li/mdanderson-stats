@@ -78,8 +78,10 @@ def wfmm_pass_filter(
     zero-column failures. Returned metadata retain original coefficient IDs.
     This operation precedes any separately requested energy compression.
     """
-    if not isinstance(basis, WFMMBasis) or basis.transform != "wavelet":
-        raise ValueError("pass filtering requires a complete periodic wavelet basis")
+    if not isinstance(basis, WFMMBasis) or (
+        basis.transform != "wavelet" and basis.extended_boundary is None
+    ):
+        raise ValueError("pass filtering requires a complete wavelet basis")
     high = _setting(highpass, "highpass", 0, basis.levels)
     low = _setting(lowpass, "lowpass", 0, basis.levels)
     first = high + 1 if high else 0
