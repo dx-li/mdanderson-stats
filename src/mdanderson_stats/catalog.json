@@ -59,7 +59,7 @@
         "Independent base-R prior moments at 34 outcome/dose combinations, including conditioned toxicity slopes and near-fixed probabilities; tests/test_efftox_calibration.py and research/efftox-prior-calibration-audit.md.",
         "48 independent base-R trinary contour values, endpoint precision checks, marginal-efficacy admissibility and interim/final skipping rules; tests/test_efftox_trinary_contour_decision.py.",
         "Independent seeded multinomial trinary cells, patient conservation, nonfixed posterior refits and preserved binary simulation behavior; tests/test_efftox_trinary_simulation.py.",
-        "Pending historical approximate contour fitting, legacy trinary contours, native trinary prior calibration, native files/reports and direct Windows-kernel parity; docs/efftox.md.",
+        "Recovered native legacy approximate contour fitting with instruction-reference fixtures and radial bridge; native files/reports, historical trinary behavior and direct Windows-kernel parity remain partial; docs/efftox-native-contour.md.",
         "Twelve independent base-R dose/prior moment references, fixed/near-fixed priors, extreme logits, separate ESS targets, incompatible means and recomputed fit objective; seven focused tests and a converged default three-dose public example. docs/efftox-trinary-calibration.md and research/efftox-trinary-calibration-audit.md; no native calibration objective/parity claim."
       ]
     },

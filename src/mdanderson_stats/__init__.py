@@ -4015,3 +4015,11 @@ __all__ = [
     "stukel_probability",
     "write_schweder_data",
 ]
+
+from .efftox_native_contour import (
+    EffToxContourFitRun,
+    EffToxNativeContourFit,
+    fit_efftox_native_contour,
+)
+
+__all__ += ["EffToxContourFitRun", "EffToxNativeContourFit", "fit_efftox_native_contour"]

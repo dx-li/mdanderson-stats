@@ -115,6 +115,8 @@ def dacrm_decision(
     paper profile steps no more than one adjacent level at interim and uses a
     strict 0.96 lowest-dose overdose stop. CRM Suite also supports its
     minimum-observation wait and final first-untried/three-treated rules.
+    With pending outcomes, a Suite interim safety signal means wait for
+    additional information; the complete-information decision can stop.
     """
     if not isinstance(posterior, DACRMPosterior):
         raise TypeError("posterior must be a DACRMPosterior")
@@ -165,8 +167,13 @@ def dacrm_decision(
             raise ValueError("current_dose must have at least one treated patient")
 
     if cutoff < 1 and safety > cutoff:
+        safety_wait = (
+            policy == "crm_suite"
+            and not final_value
+            and np.any(np.asarray(posterior.outcomes) == -1)
+        )
         return DACRMDecision(
-            "stop",
+            "wait" if safety_wait else "stop",
             None,
             unconstrained,
             None,
@@ -174,7 +181,11 @@ def dacrm_decision(
             False,
             False,
             policy,
-            "Stop because lowest-dose posterior overdose probability exceeds safety_cutoff.",
+            (
+                "Wait for pending outcomes after a DA safety signal."
+                if safety_wait
+                else "Stop: lowest-dose posterior overdose probability exceeds safety_cutoff."
+            ),
         )
 
     if policy == "paper":

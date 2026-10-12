@@ -4,7 +4,7 @@
   "application_version": "5.2.3",
   "application_modified_at": "2026-06-24",
   "download_filename": "EffTox_V5.2.3.0.zip",
-  "evidence": "Published mathematical definitions and official tutorial inspected through web retrieval. No native Windows kernel execution or binary parity claim.",
+  "evidence": "Published mathematical definitions and official tutorial inspected through web retrieval. No native Windows kernel execution or binary parity claim. Bounded original managed instruction execution now verifies the legacy contour fitter (15 cases), with runtime-service substitutions documented in docs/efftox-native-contour.md.",
   "sources": [
     {
       "url": "https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2",

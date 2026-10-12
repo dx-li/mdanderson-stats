@@ -178,8 +178,9 @@ Pass `legacy` as the contour to `efftox_decision` or `simulate_efftox`.
 Python interpolates the three supplied points exactly and checks monotonicity
 over their efficacy interval. Incompatible or ill-conditioned points raise an
 error. This is an explicit convention: the historical Windows fitting routine
-could approximate its inputs, and its exact loss and constraints are unavailable.
-The [source audit](../research/efftox-legacy-contour-audit.md) records that gap.
+could approximate its inputs. A separate [recovered native fitter](efftox-native-contour.md)
+now supplies its objective, multistart optimizer, diagnostics and radial bridge.
+The original exact-interpolation API remains unchanged.
 Scoring is vectorized with bounded root iteration and a 200,000-cell limit;
 unrepresentable finite nonideal scores raise an error.
 
@@ -493,6 +494,9 @@ Its toxicity-first objective is an explicit Python policy; it preserves
 uncertainty in both independent prior blocks and reports achieved residuals
 and optimizer convergence.
 
-Remaining scope includes historical approximate contour fitting, legacy
-trinary contours, native trinary calibration and native file/report workflows.
+Remaining scope includes native file/report workflows and historical trinary
+contours/calibration. The current 5.2.3 GUI is binary-only; historical trinary
+fields do not establish a current interactive trinary workflow. The recovered
+legacy fitter closes the missing approximate-fitting algorithm, with its
+bounded instruction-reference and floating-point limitations documented.
 The Windows integration kernel has not been run for direct parity checks.

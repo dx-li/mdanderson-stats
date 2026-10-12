@@ -112,17 +112,16 @@ raw toxicity rates. Final selection applies the first-untried restriction and
 the three-treated-patient fallback. The result records a high-uncertainty flag
 if no suitable lower dose has three treated patients.
 
-For this Python policy, an insufficient-observations wait takes precedence over
-the raw-rate cap. The guide does not specify the order when both apply; native
-branch-order parity is not claimed. An irregular supplied history with an
-untried lower dose also blocks upward movement. Safety stopping precedes these
-post-initial rules; a cutoff of one disables it.
-
-This policy follows the newer CRM Suite guide. The
-[older BMA-CRM Simulator guide](https://biostatistics.mdanderson.org/SoftwareDownload/SoftwareFiles/BMACRM/BMA-CRMSimulatorHelp.pdf)
-instead describes waiting after a DA safety signal until full-information CRM
-can decide whether to stop. That older desktop behavior is not implemented by
-the `crm_suite` profile; native behavior across versions is not claimed identical.
+Native branch execution in desktop BMA-CRM 2.2.4 and CRM Suite 1.0.0
+confirms that safety and minimum-observation waits precede the raw-rate cap.
+With pending outcomes, an interim `crm_suite` safety signal returns `wait`;
+complete-information assessment can return `stop`. The paper profile retains
+its safety stop. A cutoff of one disables the safety rule. An irregular supplied
+history with an untried lower dose also blocks upward movement.
+See [native recovery evidence](../research/native-workflow-recovery-2026-10-12.md).
+This corrects the previous interpretation that the older desktop safety wait
+was absent from the newer Suite. It does not establish native posterior,
+random-number, calendar scheduling, or full simulation parity.
 
 This helper uses the supplied posterior, including any Monte Carlo uncertainty.
 It does not refit, determine cohort completion, advance patient follow-up, or
@@ -174,8 +173,7 @@ This adds DA posterior inference to the partial implementations of BMA-CRM
 Simulator and CRM Suite (catalog 81 and 132), together with paper and desktop
 dose-decision policies. [Calendar decisions](crm-conduct.md) provide record
 replay and automatic complete-data routing. [Trial simulation](crm-simulation.md)
-adds cohort scheduling and operating characteristics. Native files/reports and
-the older desktop safety-wait convention remain separate work.
+adds cohort scheduling and operating characteristics. Native files/reports and exact native calendar scheduling remain separate work.
 The current desktop uses six hazard intervals; the paper's simulation study
 uses nine. Online entry 133 has partial [model-selection coverage](crm-model-selection.md),
 with native conventions and automatic skeleton calibration still open. See

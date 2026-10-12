@@ -103,3 +103,50 @@ response was not retried through another route. A feature-branch push does not
 trigger the active GitHub workflow. Local validation does not establish a green
 GitHub run for the final commit. No verified URL for this continuation task was
 exposed by the execution environment.
+
+
+## Second implementation batch: native workflow recovery
+
+The initial a4d8e57 checkpoint above is preserved. Subsequent work adds the
+[EffTox fitter](../docs/efftox-native-contour.md), fixes pending-data Suite safety
+waits, and records [native workflow evidence](native-workflow-recovery-2026-10-12.md).
+The ToxFinder MSI payload has now been recovered directly from the .WISE section;
+its scientific core is a stripped native Fortran executable, not the GUI JAR.
+The [six-model complementary evidence pass](pending-model-evidence-2026-10-12.md)
+closes none of the six exact fitted contracts. The [licensing proposal](community-license-path-2026-10-12.md#concrete-split-proposal-not-activated)
+now identifies lost APIs, distinct namespaces and compatibility requirements.
+No split, relicensing, release, access change or outreach was activated.
+
+EffTox's recovered exported fitting service is complete within its documented
+finite/nonsingular input bounds. Whole-application status remains partial because
+native files/reports, the legacy utility evaluator and historical trinary behavior
+remain unresolved. ARAND and CRM source recovery reveals controller differences
+that cannot safely be relabeled as already implemented native behavior.
+
+The earlier 33,994-test full regression applies to a4d8e57. The current batch uses
+a focused affected-model regression and installed-wheel verification; collection
+alone is not a full regression run. See validation addendum below.
+
+### Second-batch validation
+
+- Affected EffTox, DA-CRM, CRM calendar/trial/simulation and BMA-CRM regression:
+  **130 passed**, warnings treated as errors. The new suite initially exposed
+  reference-test scope mismatches (raw helper versus adjacent-dose policy) and
+  rounding amplification in an exhausted, unselected optimizer start; the final
+  tests distinguish these contracts explicitly. Final selected-fit coefficient
+  tolerance stays 2e-10; all native iteration/evaluation counts agree.
+- **49 passed** from copied tests outside the checkout against the isolated
+  installed wheel. A fitted-contour simulation also ran there: four trials,
+  16 patients. Installed package resolved under site-packages, not the checkout.
+- Original EffTox instruction runner regenerated the fixture JSON byte-for-byte.
+  Original CRM Suite x86 runner generated hash-pinned branch fixtures, including
+  safety/minimum wait combinations, adjacent and multi-level raw gates, and
+  supplied exponential-wait arithmetic.
+- Ruff, formatting (2,427 files), mypy (698 source files), wheel/sdist build and
+  `git diff --check` passed. Wheel source equality for changed production files
+  and exclusion of original binary assets were checked.
+- Current collection: **34,030 tests**. This is not a claim that the full suite
+  was rerun after this batch; the prior full run was 33,994 passing at a4d8e57.
+
+The feature branch remains the publication boundary. No PR creation retry,
+merge, workflow activation, release or author contact was performed.

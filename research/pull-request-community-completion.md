@@ -1,4 +1,4 @@
-# Recover mTPI final estimation and audit community completion
+# Recover native statistical workflows and audit community completion
 
 Proposed base: `main`. Head: `codex/community-completion-2026-10-12`.
 
@@ -13,6 +13,19 @@ paper-based trial simulation remains unchanged. Original-R synthetic references
 and independent exact-rational isotonic checks validate the new calculation.
 Degenerate native indexing is corrected explicitly; native trial-controller and
 Excel/XLL equivalence are not claimed.
+
+The branch also adds the exported EffTox legacy inverse-quadratic fitter,
+including native multistart/simplex quirks, fallback diagnostics and a bridge to
+published radial utility. Fifteen original-instruction fixtures, exact-rational
+objective checks and installed decision/simulation usage validate the bounded
+contract. Native undefined output when all objectives exceed its initial bound
+becomes an explicit Python error. This does not claim Windows process parity.
+
+For pending outcomes, the CRM Suite profile now waits after a DA safety signal,
+matching recovered desktop branches; complete-information and paper-profile
+safety stops remain available. Executable controller references and calendar
+replay tests distinguish these cases. Native arrival scheduling and full trial
+simulation parity remain open.
 
 Live catalog membership still matches all 138 preserved entries. Coverage remains
 93 implemented, 39 partial and six pending. Updated guides, 19 repaired guide

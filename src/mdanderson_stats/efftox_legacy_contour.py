@@ -4,7 +4,8 @@ Thall and Cook (2004) define the target curve as ``t = a + b/e + c/e**2``
 and score a point by the radial distance ratio from the ideal point ``(1,0)``.
 This exact-interpolation implementation is an explicit extension: the 2006
 report says the former native fit minimized an error criterion, but does not
-provide its objective or constraints.
+provide its objective or constraints. The separate efftox_native_contour
+module now implements the subsequently recovered native fitting service.
 """
 
 from __future__ import annotations

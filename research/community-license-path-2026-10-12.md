@@ -78,3 +78,34 @@ This is distinct from translating and bundling source under changed terms.
 Splitting the package changes the public API and distribution scope. This is a
 consequential project decision to resolve before packaging a new release, not a
 reason to stop source research or independently authored implementation now.
+
+
+## Concrete split proposal (not activated)
+
+Keep an audited `mdanderson-stats` core and a separate `mdanderson-stats-legacy`
+distribution using the **distinct** `mdanderson_stats_legacy` namespace. An
+optional lazy root forwarding layer can preserve selected historical imports
+when the add-on is present; it must not make core-only import fail.
+
+Minimum restricted set: 27 notice-named modules plus `blip_custom`, affecting
+83 root exports: Multc99 (23), MULTI (37), BLiP (9), SOGS (11), and ranges (3).
+Isolating only the restricted `legacy=True` range branches preserves default
+range APIs and reduces unavailable whole exports to 80. This is an import/API
+impact estimate, not a legal conclusion about independent code.
+
+Ambiguous CTA*, RANLIST* and kstage_binomial exclusions would add 17 seed and
+35 dependent modules (52 total), affecting RANDLIB, SPPCR, KSBIN1/2, binomial
+sample-size, Fisher design and diagnostic population workflows. Reduce that
+impact by independently specifying neutral L'Ecuyer–Côté helpers currently in
+ranlist_random, resolving the KStageBinomial recurrence provenance, and auditing
+extsig's CTA Fisher and diagnostic_population's CTA diagnostic dependencies.
+Dependency reachability does not itself establish license inheritance.
+
+Compatibility review must cover eager `__init__`, `__all__`/star imports,
+historical direct submodule imports, moved class pickle identities and version
+compatibility. Exclude restricted files from BOTH wheel and sdist; optional
+dependencies alone do not separate code. Verify core-only and add-on installs,
+including uninstall behavior. Never have two wheels own the same file path.
+GPL/LGPL, unclear EVENTCHART/SORTF90 grants and mixed Misclib provenance need
+separate review. No blanket unrestricted license claim or package split has
+been activated; this remains a consequential distribution decision.

@@ -126,3 +126,26 @@ def test_pending_bmacrm_uses_exact_lookahead_and_pending_dacrm_uses_rng():
     assert da.routing == "data_augmentation"
     assert isinstance(da.posterior, DACRMPosterior)
     assert isinstance(da.decision, DACRMDecision)
+
+
+def test_suite_calendar_safety_wait_then_complete_information_stop():
+    prior = DACRMPrior([0, 1], [1], [1])
+    for time, expected, routing in [(0.5, "wait", "data_augmentation"), (1, "stop", "complete")]:
+        snapshot = crm_calendar_snapshot(
+            [0, 0], [0, 0], [0.1, np.inf], window=1, at=time, dose_count=2
+        )
+        result = crm_calendar_decision(
+            snapshot,
+            [0.1, 0.3],
+            target=0.25,
+            method="dacrm",
+            da_prior=prior,
+            minimum_observed=0,
+            rng=np.random.default_rng(101),
+            draws=8,
+            warmup=0,
+            chains=2,
+            safety_cutoff=0,
+        )
+        assert result.routing == routing
+        assert result.decision.action == expected

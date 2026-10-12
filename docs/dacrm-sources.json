@@ -28,5 +28,5 @@
     }
   ],
   "validation_reference": "tools/reference_dacrm.R integrates the hazards analytically and enumerates small missing-outcome configurations, with independent scalar alpha-space quadrature. Synthetic data are not native simulation output.",
-  "limitations": "The alpha sampling algorithm and precision controls are Python choices. Full calendar conduct and simulations, automatic complete-data routing, hidden native MCMC settings, and native files/reports remain pending. Decision profiles use supplied posterior summaries; native branch-order parity is not claimed."
+  "limitations": "The alpha sampling algorithm and precision controls are Python choices. Calendar conduct, complete-data routing and simulations are available with explicit Python scheduling. Native scheduling, hidden MCMC settings and native files/reports remain partial. Bounded original x86 execution verifies DA safety waits and raw-rate branch ordering; it does not verify the full posterior or simulator."
 }

@@ -139,3 +139,77 @@ def test_suite_requires_minimum_and_rejects_invalid_policy():
         dacrm_decision(posterior, current_dose=0, policy="crm_suite")
     with pytest.raises(ValueError, match="policy"):
         dacrm_decision(posterior, current_dose=0, policy="other")
+
+
+@pytest.mark.parametrize(
+    "policy,pending,final,expected",
+    [
+        ("crm_suite", True, False, "wait"),
+        ("crm_suite", False, False, "stop"),
+        ("crm_suite", True, True, "stop"),
+        ("paper", True, False, "stop"),
+    ],
+)
+def test_native_suite_safety_wait_is_distinct_from_complete_and_paper_stop(
+    policy, pending, final, expected
+):
+    # Native DA flag-to-action fixtures: safety flag -> wait even without
+    # a minimum-observation flag. Complete-data routing can still stop.
+    posterior = _posterior([0, 0], [1, -1 if pending else 0], [0.4, 0.5], [0.99, 0.99])
+    result = dacrm_decision(
+        posterior,
+        current_dose=0,
+        policy=policy,
+        minimum_observed=0,
+        final=final,
+    )
+    assert result.action == expected
+    assert result.dose is None
+    assert not result.raw_rate_limited
+
+
+def test_native_raw_rate_branch_fixtures():
+    import json
+    from pathlib import Path
+
+    fixture = json.loads((Path(__file__).parent / "fixtures/crm-native-branches.json").read_text())
+    for case in fixture["raw"]:
+        current, recommended, events, observed, target = case["input"]
+        # This helper also accepts multi-level moves; the Python DA profile
+        # applies an adjacent-step policy before invoking the raw-rate rule.
+        if abs(recommended - current) != 1:
+            continue
+        doses, outcomes = [], []
+        for dose, (count, total) in enumerate(zip(events, observed, strict=True)):
+            values = [1] * count + [0] * (total - count) if total else [-1]
+            doses.extend([dose] * len(values))
+            outcomes.extend(values)
+        means = [0.05, 0.1, 0.15, 0.2]
+        means[recommended] = target
+        posterior = replace(_posterior(doses, outcomes, means), target=target)
+        decision = dacrm_decision(
+            posterior,
+            current_dose=current,
+            policy="crm_suite",
+            minimum_observed=0,
+            safety_cutoff=1,
+        )
+        assert decision.action == "treat"
+        assert decision.dose == case["native_dose"]
+
+
+@pytest.mark.parametrize("safety_flag,minimum_flag", [(0, 0), (0, 1), (1, 0), (1, 1)])
+def test_native_da_disposition_flags(safety_flag, minimum_flag):
+    import json
+    from pathlib import Path
+
+    fixture = json.loads((Path(__file__).parent / "fixtures/crm-native-branches.json").read_text())
+    posterior = _posterior([0, 0], [0, -1], [0.05, 0.3], [0.99 if safety_flag else 0, 0])
+    result = dacrm_decision(
+        posterior,
+        current_dose=0,
+        policy="crm_suite",
+        minimum_observed=2 if minimum_flag else 0,
+    )
+    native_action = fixture["flags"][f"{safety_flag}{minimum_flag}"][0]
+    assert result.action == {0: "treat", 1: "wait"}[native_action]
