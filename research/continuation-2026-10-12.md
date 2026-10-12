@@ -482,3 +482,22 @@ No BOIN status promotion or original program redistribution occurred.
 Six pending fitted models remain externally blocked; licensing/distribution
 choices and previous Forbidden PR creation remain parent decisions. No merge,
 release, deployment, outreach, permission change or license split occurred.
+
+### Active BOIN implementation after cb99080f
+
+BOIN saved-project reading, single-MTD/contour decisions, managed pending/cohort
+conduct and patient edits are now implemented, with4,055 focused tests passing.
+See [current scope and exact open contracts](boin-desktop-conduct-2026-10-12.md).
+No catalog promotion; full final-code acceptance must follow remaining simulation,
+selection, protocol/report and single/TITE saved-workflow integration. Original
+controller576 cases and each interactive R mode2304 cases are preserved, with
+1728 GUI-valid statistical comparisons per mode. Patient serialization executes
+against the original hash-pinned data assembly under isolated Mono.
+
+All four independent review findings remain fixed and explicitly preserved in
+[acceptance corrections](acceptance-review-fixes-2026-10-12.md) and its linked
+validation manifest: ARAND unresolved-tail rejection, ToxFinder exact resource
+preflight, CRM final-consensus uncertainty reporting, and ToxFinder MAP diagnostic
+propagation. Their7 targeted regression instances were rerun during this BOIN
+work and all passed (ARAND4, CRM1, ToxFinder2). Previous35,394 full-suite acceptance
+covers the last EffTox checkpoint, not unfinished BOIN changes.

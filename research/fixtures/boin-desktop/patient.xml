@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patient xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <PID>41</PID>
+  <Fingerprint>101</Fingerprint>
+  <Cohort>2</Cohort>
+  <DoseIndexA>1</DoseIndexA>
+  <DoseLevelB>3</DoseLevelB>
+  <DoseIndexB>2</DoseIndexB>
+  <OutcomeCode>tslUNKNOWN</OutcomeCode>
+  <DateEntered>10/12/2026</DateEntered>
+  <DateUpdated>10/13/2026</DateUpdated>
+</Patient>
