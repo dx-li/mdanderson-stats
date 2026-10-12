@@ -1,0 +1,58 @@
+[
+  {
+    "selected_trials": 0,
+    "utility_sum": 0,
+    "minimum": -0.5,
+    "maximum": 0.7,
+    "native_rselect": 0.0
+  },
+  {
+    "selected_trials": 1,
+    "utility_sum": 0.7,
+    "minimum": -0.5,
+    "maximum": 0.7,
+    "native_rselect": 1.0
+  },
+  {
+    "selected_trials": 1,
+    "utility_sum": -0.5,
+    "minimum": -0.5,
+    "maximum": 0.7,
+    "native_rselect": 0.0
+  },
+  {
+    "selected_trials": 3,
+    "utility_sum": 0.3,
+    "minimum": -0.5,
+    "maximum": 0.7,
+    "native_rselect": 0.5000000000000001
+  },
+  {
+    "selected_trials": 5,
+    "utility_sum": 1,
+    "minimum": -0.5,
+    "maximum": 0.7,
+    "native_rselect": 0.5833333333333334
+  },
+  {
+    "selected_trials": 0,
+    "utility_sum": 0,
+    "minimum": 0.25,
+    "maximum": 0.25,
+    "native_rselect": 0.0
+  },
+  {
+    "selected_trials": 1,
+    "utility_sum": 0.25,
+    "minimum": 0.25,
+    "maximum": 0.25,
+    "native_rselect": "NaN"
+  },
+  {
+    "selected_trials": 3,
+    "utility_sum": 0.3,
+    "minimum": 0.1,
+    "maximum": 0.1,
+    "native_rselect": "-inf"
+  }
+]

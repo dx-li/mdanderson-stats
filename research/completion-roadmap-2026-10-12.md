@@ -17,7 +17,6 @@ Autonomous work continues in order4 and provenance auditing in6. Neither the
 six unavailable fits nor a future licensing decision blocks those tasks. They
 do block claiming all138 applications are fully implemented and unrestricted.
 
-For the next CRM/BMA-CRM and ToxFinder pass, use the
-[concrete native contracts](next-native-completion-contracts-2026-10-12.md).
+The independent acceptance review is closed by [targeted corrections](acceptance-review-fixes-2026-10-12.md): ARAND unresolved-tail allocation safety, CRM final-consensus uncertainty, and ToxFinder budget preflight/MAP diagnostic propagation. Meaningful default-quality and independent six-dimensional posterior checks supplement the small workflow smoke runs. Next continue the EffTox current-version integration contracts above.
 Exact RNG/GUI identity alone is not a missing statistical method; advertised
 input choices and conduct semantics still need their own evidence.

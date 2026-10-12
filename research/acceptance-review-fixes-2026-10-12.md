@@ -47,6 +47,7 @@ and saved-file tests. Current pending loop21 cases are source evidence with
 explicitly supplied enumeration/inference services, not full conduct closure.
 See `efftox-current-workflow-contracts-2026-10-12.md` for exact remaining contracts.
 
-Full regression, fresh-wheel/extras/examples, reference regeneration and artifact
-checks are being recorded in the subsequent validation checkpoint. No merge,
+Full regression passed35,217 tests; the fresh wheel passed1,390 family/extras tests.
+Installed examples, reference regeneration and artifact checks are recorded in
+`acceptance-review-validation-2026-10-12.json`. No merge,
 release, outreach, license split or settings/permission changes were performed.

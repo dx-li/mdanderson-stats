@@ -172,3 +172,39 @@ all completed analyses agree with each other but differ from baseline correctly
 return false. BBQ conductor constructor0x2b40 initializes its extra pending-gate
 flag at offset8 to false, so that gate does not force unconditional WAIT in the
 current client path.
+
+### Additional original controller and simulation/report evidence
+
+- `reference_efftox_current_cohorts.py` executes managed GetDecision IL12..140
+  before model construction, producing33 original prefix/new-cohort cases,
+  including overfull tails that prove equality (not >=) with cohort size.
+- `reference_efftox_current_controller.py` executes native outer controller
+  RVA0x41c10 for32 supplied-service cases. WAIT on inconsistent pending outcomes
+  takes precedence over selection/cap; otherwise no acceptable dose is STOP_EARLY;
+  otherwise patient count at or above maximum is STOP_TRIALCOMPLETE; otherwise GO.
+  Validation, inference, count collection and descriptive strings are host services.
+- Client maximum-patient validation accepts any integer1..200, not just cohort
+  multiples (RVA0xa4bc). Its Add Patient path uses the returned status without a
+  separate capacity check. Because managed conduct omits a partial last cohort,
+  the nonmultiple-cap conduct case needs an explicit safe policy/source comparison;
+  do not silently allow enrollment beyond capacity as a scientific default.
+- Calculations DLL simulation driver0x8220 calls single-trial simulator0x53b50.
+  The latter fits at each cohort boundary (patient-count modulo cohort size),
+  enrolls patients individually until maximum, and **always calls the native
+  decision engine again at0x54228 after the loop**, including a partial final
+  cohort or early stop. This is static source evidence, not a new native RNG run.
+- Driver0x8220 computes true scenario utility extrema, accumulates utility only
+  for selected trials, and sums selection counts excluding the no-selection bin.
+  Rselect arithmetic0x8d8e..0x8dca is now executed in eight fixtures by
+  `reference_efftox_current_rselect.py`. It is conditional on selection:
+  `(sum_selected_utility - selected_count*minimum) /
+  (selected_count*(maximum-minimum))`. No selected trials returns0. Constant
+  utility with selections can produce NaN or infinity from cancellation/division
+  by zero; preserve those only in explicit compatibility evidence, and report
+  mathematically undefined normalization explicitly in scientific output.
+
+New fixtures are `current-cohort-prefix.json`, `current-controller.json` and
+`current-rselect.json`. Together with prior current probes there are594 original
+instruction cases (500 selection/admissibility,21 pending loop,33 cohort prefix,
+32 outer status,8 Rselect). Inference/completion-stream substitutions remain
+explicit; these are not594 independent posterior validations.

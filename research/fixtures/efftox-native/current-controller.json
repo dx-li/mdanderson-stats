@@ -1,0 +1,458 @@
+[
+  {
+    "patients": 0,
+    "maximum": 3,
+    "pending": false,
+    "consistent": false,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 0,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 0,
+    "maximum": 3,
+    "pending": false,
+    "consistent": false,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 0,
+    "maximum": 3,
+    "pending": false,
+    "consistent": true,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 0,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 0,
+    "maximum": 3,
+    "pending": false,
+    "consistent": true,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 0,
+    "maximum": 3,
+    "pending": true,
+    "consistent": false,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 1,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending"
+    ]
+  },
+  {
+    "patients": 0,
+    "maximum": 3,
+    "pending": true,
+    "consistent": false,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 1,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending"
+    ]
+  },
+  {
+    "patients": 0,
+    "maximum": 3,
+    "pending": true,
+    "consistent": true,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 0,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "pending",
+      "select"
+    ]
+  },
+  {
+    "patients": 0,
+    "maximum": 3,
+    "pending": true,
+    "consistent": true,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending",
+      "select"
+    ]
+  },
+  {
+    "patients": 2,
+    "maximum": 3,
+    "pending": false,
+    "consistent": false,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 0,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 2,
+    "maximum": 3,
+    "pending": false,
+    "consistent": false,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 2,
+    "maximum": 3,
+    "pending": false,
+    "consistent": true,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 0,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 2,
+    "maximum": 3,
+    "pending": false,
+    "consistent": true,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 2,
+    "maximum": 3,
+    "pending": true,
+    "consistent": false,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 1,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending"
+    ]
+  },
+  {
+    "patients": 2,
+    "maximum": 3,
+    "pending": true,
+    "consistent": false,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 1,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending"
+    ]
+  },
+  {
+    "patients": 2,
+    "maximum": 3,
+    "pending": true,
+    "consistent": true,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 0,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "pending",
+      "select"
+    ]
+  },
+  {
+    "patients": 2,
+    "maximum": 3,
+    "pending": true,
+    "consistent": true,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending",
+      "select"
+    ]
+  },
+  {
+    "patients": 3,
+    "maximum": 3,
+    "pending": false,
+    "consistent": false,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 3,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 3,
+    "maximum": 3,
+    "pending": false,
+    "consistent": false,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 3,
+    "maximum": 3,
+    "pending": false,
+    "consistent": true,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 3,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 3,
+    "maximum": 3,
+    "pending": false,
+    "consistent": true,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 3,
+    "maximum": 3,
+    "pending": true,
+    "consistent": false,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 1,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending"
+    ]
+  },
+  {
+    "patients": 3,
+    "maximum": 3,
+    "pending": true,
+    "consistent": false,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 1,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending"
+    ]
+  },
+  {
+    "patients": 3,
+    "maximum": 3,
+    "pending": true,
+    "consistent": true,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 3,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "pending",
+      "select"
+    ]
+  },
+  {
+    "patients": 3,
+    "maximum": 3,
+    "pending": true,
+    "consistent": true,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending",
+      "select"
+    ]
+  },
+  {
+    "patients": 4,
+    "maximum": 3,
+    "pending": false,
+    "consistent": false,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 3,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 4,
+    "maximum": 3,
+    "pending": false,
+    "consistent": false,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 4,
+    "maximum": 3,
+    "pending": false,
+    "consistent": true,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 3,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 4,
+    "maximum": 3,
+    "pending": false,
+    "consistent": true,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "select"
+    ]
+  },
+  {
+    "patients": 4,
+    "maximum": 3,
+    "pending": true,
+    "consistent": false,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 1,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending"
+    ]
+  },
+  {
+    "patients": 4,
+    "maximum": 3,
+    "pending": true,
+    "consistent": false,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 1,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending"
+    ]
+  },
+  {
+    "patients": 4,
+    "maximum": 3,
+    "pending": true,
+    "consistent": true,
+    "selection_stopped": false,
+    "selected": 2,
+    "status": 3,
+    "dose": 2,
+    "calls": [
+      "counts",
+      "pending",
+      "select"
+    ]
+  },
+  {
+    "patients": 4,
+    "maximum": 3,
+    "pending": true,
+    "consistent": true,
+    "selection_stopped": true,
+    "selected": -1,
+    "status": 2,
+    "dose": -1,
+    "calls": [
+      "counts",
+      "pending",
+      "select"
+    ]
+  }
+]

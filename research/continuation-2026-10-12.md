@@ -363,3 +363,38 @@ contracts are in [current workflow recovery](efftox-current-workflow-contracts-2
 Other partial applications retain their own per-entry contracts. The six fitted
 models still need exact unavailable artifacts; no approximate substitution,
 license change, PR bypass, merge, release, deployment or author contact occurred.
+
+
+## Verified acceptance-review checkpoint and current EffTox recovery
+
+All four acceptance findings are corrected: ARAND retains quadrature errors
+through positive-power allocation; CRM final pending consensus retains its
+three-subject uncertainty qualification; ToxFinder rejects provably inadequate
+work/memory budgets before sampling and preserves per-allocation MAP diagnostics.
+Default sampler quality and bounded-work safeguards are retained.
+
+Final production code passed **35,217 tests in927.94 seconds**, warnings as errors.
+A fresh outside-checkout wheel passed **1,390 family/extras tests**. Both installed
+CRM versions' six saved examples/five scenarios each and all five ToxFinder
+examples completed their smoke workflows. A separate installed two60-patient
+ToxFinder execution at500 draws/250 warmup/two chains completed with57,240,270
+counted evaluations in658.81 seconds, maximum final split R-hat1.007575, and all
+MAP passes converged. This is a representative check, not universal mixing or
+clinical validity. The independent six-dimensional importance comparison also
+passed; see the acceptance review evidence and validation manifest.
+
+EffTox remains partial. Current six-coefficient XML/patient interchange and a
+separate desktop decision profile are implemented. Native source now provides
+594 bounded instruction cases:500 selection/admissibility,21 pending-loop,
+33 cohort-prefix,32 outer-status and8 Rselect. Inference/completion callbacks are
+explicit supplied services where noted. Simulation source confirms individual
+patient accrual, cohort-boundary analysis, final refit even for partial last
+cohorts, and Rselect conditional on selection. Conduct's nonmultiple-cap case
+needs a safe explicit correction rather than silently allowing over-enrollment.
+Next integrate those contracts with pending enumeration, saved-prior precedence,
+simulation and complete diagnostic reports; then continue the35 partial rows.
+
+Counts remain97 implemented/35 partial/6 pending. No status is promoted from
+source recovery alone. Six missing fitted-model contracts, mixed-license
+restrictions and the earlier Forbidden PR creation remain unchanged. No release,
+merge, outreach, licensing split or permissions/settings change is authorized.

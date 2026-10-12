@@ -1,0 +1,531 @@
+{
+  "scope": "All four acceptance-review fixes; current EffTox XML/decision profile plus bounded native source recovery, not full EffTox workflow completion",
+  "production_commit": "b75942ede0b4e88a7326eae12cadba601a0b8442",
+  "catalog": {
+    "implemented": 97,
+    "partial": 35,
+    "pending": 6
+  },
+  "full_regression": {
+    "passed": 35217,
+    "seconds": 927.94,
+    "warnings_as_errors": true,
+    "extras": [
+      "plot",
+      "image"
+    ],
+    "log_sha256": "97959eff7509ea6adac53acd5ab1c485956c0e5312ca164a0667ac22df8e61c7"
+  },
+  "installed_wheel": {
+    "passed": 1390,
+    "seconds": 135.39,
+    "fresh_external_environment": true,
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "pillow": "12.3.0"
+  },
+  "installed_examples": {
+    "crm_original_studies": 6,
+    "scenarios_each": 5,
+    "toxfinder_original_scenarios": 5,
+    "toxfinder_smoke_trials_each": 2,
+    "toxfinder_smoke_patients_each": 60,
+    "small_draws_are_plumbing_only": true
+  },
+  "meaningful_toxfinder_execution": {
+    "study": "win-drug-names A B\npi_star .3\nlambda 1\ntl-d_star 1200 600\ntl-nD 3\ntl-D1 120 60 600 300 1200 600\nnD-start 1\nsim-num-points 2 2\nsim-surface 0 .2 .3 .5\nnum-stage1 20\nnum-stage2 40\ncohort 2\ntl-alloc 1\n",
+    "prior_mean": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "prior_variance": [
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25
+    ],
+    "seed": 55,
+    "draws": 500,
+    "warmup": 250,
+    "chains": 2,
+    "seconds": 658.8149936140017,
+    "evaluations": [
+      28573716,
+      28666554
+    ],
+    "patients": [
+      60,
+      60
+    ],
+    "final_parameter_split_rhat": [
+      [
+        0.9998296768536735,
+        1.0010515237637787,
+        1.0053298689269783,
+        1.0054793359372423,
+        1.0015705527300938,
+        1.001296761487302
+      ],
+      [
+        0.9989002922783328,
+        0.9985684761847334,
+        0.9989407428146461,
+        0.9992258850696208,
+        1.007574750884464,
+        1.0050499755582807
+      ]
+    ],
+    "final_parameter_batch_mcse": [
+      [
+        0.01981669417814872,
+        0.014812031089968985,
+        0.0192652229298779,
+        0.014899741615765717,
+        0.01603844352794604,
+        0.012821621615685938
+      ],
+      [
+        0.01763955719323985,
+        0.017250235385896314,
+        0.015822158616376984,
+        0.015114381394129057,
+        0.020085645057201205,
+        0.017154670679502777
+      ]
+    ],
+    "map_convergence_by_cohort": [
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ]
+      ],
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ]
+      ]
+    ]
+  },
+  "independent_joint_posterior_check": {
+    "method": "8 independently scrambled Sobol gamma-prior importance integrals",
+    "points_per_scramble": 32768,
+    "slice_draws_per_chain": 2000,
+    "slice_warmup_per_chain": 1000,
+    "slice_chains": 4,
+    "prior_mean": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "prior_variance": [
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25
+    ],
+    "doses": [
+      [
+        0.15,
+        0.15
+      ],
+      [
+        0.3,
+        0.5
+      ],
+      [
+        0.6,
+        0.3
+      ],
+      [
+        0.8,
+        0.8
+      ]
+    ],
+    "toxicities": [
+      0,
+      1,
+      1,
+      3
+    ],
+    "subjects": [
+      2,
+      3,
+      3,
+      4
+    ],
+    "columns": [
+      "log_alpha1",
+      "log_beta1",
+      "log_alpha2",
+      "log_beta2",
+      "log_alpha3",
+      "log_beta3",
+      "risk1",
+      "risk2",
+      "risk3",
+      "risk4"
+    ],
+    "reference_mean": [
+      -0.22307209588645083,
+      0.03572176077886002,
+      -0.2100771038762092,
+      0.043950046138967816,
+      -0.15256656760864512,
+      -0.04734238588314393,
+      0.2283647142568638,
+      0.43826544848281285,
+      0.4696778143644237,
+      0.6542233862907042
+    ],
+    "reference_standard_error": [
+      4.674674251153173e-05,
+      3.0181831631368033e-05,
+      2.6690059642668337e-05,
+      2.3846626426439392e-05,
+      1.5997060570575322e-05,
+      2.541485402163021e-05,
+      6.513829274440937e-06,
+      1.0201344163933219e-05,
+      8.755032776704002e-06,
+      4.456677820840075e-06
+    ],
+    "slice_mean": [
+      -0.2217938109275027,
+      0.030704352758015533,
+      -0.211409378864153,
+      0.05117960405527172,
+      -0.15431906557439423,
+      -0.03583488282379697,
+      0.2273079810537244,
+      0.43703039890048534,
+      0.46843022064234363,
+      0.6538395055058741
+    ],
+    "slice_batch_mcse": [
+      0.0062899076668923035,
+      0.006465713137171181,
+      0.006534319208099887,
+      0.005185234629650218,
+      0.00664764293400033,
+      0.005894429010533777,
+      0.00120283515592796,
+      0.001042693328032172,
+      0.0009311093082219478,
+      0.0006605238614707562
+    ],
+    "slice_split_rhat": [
+      0.9999504305864548,
+      0.9999190043707746,
+      1.0000472696594567,
+      1.0003670023752955,
+      0.9999623504816413,
+      0.9999065432547497,
+      0.9998717964555675,
+      0.9999438870793218,
+      0.9999094954726244,
+      0.9998234661274955
+    ],
+    "absolute_difference_in_combined_se": [
+      0.2032223245691796,
+      0.7759938077202608,
+      0.20388717353127545,
+      1.394243844323405,
+      0.26362620689957106,
+      1.9522495011793652,
+      0.8785224667895144,
+      1.1844234963844225,
+      1.339841158510136,
+      0.5811630275972292
+    ],
+    "importance_effective_sizes": [
+      23913.68641216668,
+      23909.62910271217,
+      23912.539459010717,
+      23921.718370248065,
+      23910.04817189156,
+      23916.76296538023,
+      23909.018627037272,
+      23911.219259594847
+    ],
+    "objective_evaluations": 450557,
+    "passed": true
+  },
+  "references": {
+    "arand_regenerated_byte_identical_cases": 98,
+    "arand_additional_original_differential_comparisons": 900,
+    "crm_original_cases_each_version": 142,
+    "crm_versions": 2,
+    "toxfinder_original_sets": 8,
+    "toxfinder_fixture_audit": [
+      {
+        "fixture": "toxfinder-native-allocation30.json",
+        "rows": 8,
+        "roundoff_differences": []
+      },
+      {
+        "fixture": "toxfinder-native-elicitation-probability.json",
+        "rows": 3,
+        "roundoff_differences": []
+      },
+      {
+        "fixture": "toxfinder-native-elicitor-control.json",
+        "rows": 5,
+        "roundoff_differences": []
+      },
+      {
+        "fixture": "toxfinder-native-information.json",
+        "rows": 3,
+        "roundoff_differences": [
+          {
+            "path": "/0/native_information",
+            "actual": 249726.2460589843,
+            "expected": 249726.24605898416
+          },
+          {
+            "path": "/1/native_information",
+            "actual": 249864.92278773175,
+            "expected": 249864.9227877317
+          }
+        ]
+      },
+      {
+        "fixture": "toxfinder-native-map.json",
+        "rows": 4,
+        "roundoff_differences": []
+      },
+      {
+        "fixture": "toxfinder-native-simplex.json",
+        "rows": 6,
+        "roundoff_differences": []
+      },
+      {
+        "fixture": "toxfinder-native-stage1.json",
+        "rows": 8,
+        "roundoff_differences": []
+      },
+      {
+        "fixture": "toxfinder-native-surface.json",
+        "rows": 6,
+        "roundoff_differences": []
+      }
+    ],
+    "original_Java_variance_reproduced": true,
+    "efftox_original_admissibility": 250,
+    "efftox_original_selection": 250,
+    "efftox_original_pending_loop_supplied_services": 21,
+    "efftox_original_cohort_prefix": 33,
+    "efftox_original_outer_controller_supplied_services": 32,
+    "efftox_original_rselect_arithmetic": 8
+  },
+  "quality": {
+    "ruff": true,
+    "format": true,
+    "mypy_source_files": 713,
+    "build": true,
+    "diff_check": true
+  },
+  "artifacts": {
+    "source_wheel_byte_matched_files": 717,
+    "notices_identical": true,
+    "raw_binaries_excluded": true,
+    "wheel_sha256": "f7ccbca4ccd825bbcfbae051a8af6b7ecdc04e7298be50f5ce2819141dc56b39",
+    "sdist_sha256": "5bb6725fd52b743f15c02be94784addda62eb2a8cc7f3163eb2d52e64f0ed8f8"
+  },
+  "limits": [
+    "ToxFinder importance comparison is a moderate-data diagnostic case, not universal mixing validation",
+    "Source controller callbacks do not validate posterior inference",
+    "EffTox current conduct/simulation/report integration remains partial",
+    "Six fitted-model contracts remain unavailable",
+    "Mixed-license restrictions retained; no split/relicensing authorized",
+    "Earlier Forbidden PR creation unresolved; no bypass",
+    "No merge, registry release, deployment, outreach or permission/settings change"
+  ],
+  "task_url": "Not exposed by this execution environment",
+  "production_manifest_sha256": "5739f4d2caf556dda98e2393a83811f83428f839ac2b9eaaef4473896a403dab"
+}

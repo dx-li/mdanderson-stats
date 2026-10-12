@@ -1,0 +1,377 @@
+[
+  {
+    "cohorts": [],
+    "size": 1,
+    "prefix": 0,
+    "new_cohort": true,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0
+    ],
+    "size": 1,
+    "prefix": 1,
+    "new_cohort": true,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0,
+      0
+    ],
+    "size": 1,
+    "prefix": 0,
+    "new_cohort": false,
+    "next_cohort": 0
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0
+    ],
+    "size": 1,
+    "prefix": 0,
+    "new_cohort": false,
+    "next_cohort": 0
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "size": 1,
+    "prefix": 0,
+    "new_cohort": false,
+    "next_cohort": 0
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "size": 1,
+    "prefix": 4,
+    "new_cohort": true,
+    "next_cohort": 2
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1,
+      1
+    ],
+    "size": 1,
+    "prefix": 3,
+    "new_cohort": false,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1
+    ],
+    "size": 1,
+    "prefix": 3,
+    "new_cohort": false,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    "size": 1,
+    "prefix": 3,
+    "new_cohort": false,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      3,
+      3,
+      4
+    ],
+    "size": 1,
+    "prefix": 3,
+    "new_cohort": true,
+    "next_cohort": 5
+  },
+  {
+    "cohorts": [
+      3,
+      4,
+      3
+    ],
+    "size": 1,
+    "prefix": 3,
+    "new_cohort": true,
+    "next_cohort": 4
+  },
+  {
+    "cohorts": [],
+    "size": 2,
+    "prefix": 0,
+    "new_cohort": true,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0
+    ],
+    "size": 2,
+    "prefix": 0,
+    "new_cohort": false,
+    "next_cohort": 0
+  },
+  {
+    "cohorts": [
+      0,
+      0
+    ],
+    "size": 2,
+    "prefix": 2,
+    "new_cohort": true,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0
+    ],
+    "size": 2,
+    "prefix": 0,
+    "new_cohort": false,
+    "next_cohort": 0
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "size": 2,
+    "prefix": 0,
+    "new_cohort": false,
+    "next_cohort": 0
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "size": 2,
+    "prefix": 3,
+    "new_cohort": false,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1,
+      1
+    ],
+    "size": 2,
+    "prefix": 5,
+    "new_cohort": true,
+    "next_cohort": 2
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1
+    ],
+    "size": 2,
+    "prefix": 3,
+    "new_cohort": false,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    "size": 2,
+    "prefix": 3,
+    "new_cohort": false,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      3,
+      3,
+      4
+    ],
+    "size": 2,
+    "prefix": 2,
+    "new_cohort": false,
+    "next_cohort": 4
+  },
+  {
+    "cohorts": [
+      3,
+      4,
+      3
+    ],
+    "size": 2,
+    "prefix": 2,
+    "new_cohort": false,
+    "next_cohort": 3
+  },
+  {
+    "cohorts": [],
+    "size": 3,
+    "prefix": 0,
+    "new_cohort": true,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0
+    ],
+    "size": 3,
+    "prefix": 0,
+    "new_cohort": false,
+    "next_cohort": 0
+  },
+  {
+    "cohorts": [
+      0,
+      0
+    ],
+    "size": 3,
+    "prefix": 0,
+    "new_cohort": false,
+    "next_cohort": 0
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0
+    ],
+    "size": 3,
+    "prefix": 3,
+    "new_cohort": true,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "size": 3,
+    "prefix": 0,
+    "new_cohort": false,
+    "next_cohort": 0
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "size": 3,
+    "prefix": 3,
+    "new_cohort": false,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1,
+      1
+    ],
+    "size": 3,
+    "prefix": 3,
+    "new_cohort": false,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1
+    ],
+    "size": 3,
+    "prefix": 6,
+    "new_cohort": true,
+    "next_cohort": 2
+  },
+  {
+    "cohorts": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    "size": 3,
+    "prefix": 3,
+    "new_cohort": false,
+    "next_cohort": 1
+  },
+  {
+    "cohorts": [
+      3,
+      3,
+      4
+    ],
+    "size": 3,
+    "prefix": 2,
+    "new_cohort": false,
+    "next_cohort": 4
+  },
+  {
+    "cohorts": [
+      3,
+      4,
+      3
+    ],
+    "size": 3,
+    "prefix": 2,
+    "new_cohort": false,
+    "next_cohort": 3
+  }
+]
