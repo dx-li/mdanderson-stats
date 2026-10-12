@@ -54,3 +54,10 @@ Keep variance-prior shape/scale mapping, empirical-Bayes shrinkage, compressed
 transform layouts and general pipeline files as separate contracts. Original
 binaries/disassembly and synthetic MATLAB probe files remain ignored local
 research inputs; no original program is redistributed.
+
+October12 follow-up:969 original likelihood evaluations now independently match
+a **fixed shrunken-beta conditional** Gaussian likelihood, not ordinary profile
+ML. The proposal-scale output is a likelihood-bound half-width on the checked
+identity cases. See [new recovery](wfmm-initialization-recovery-2026-10-12.md).
+This supersedes treating the identity discrepancy solely as optimizer behavior:
+there is both a different conditional objective and a smaller numerical error.

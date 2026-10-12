@@ -831,3 +831,13 @@ binaries are excluded. Ruff/format/mypy/build pass. Catalog103/31/4 is now verif
 See prt-simulation-validation-2026-10-12.json for hashes and exact evidence.
 Continue WFMM70 from the recovered original initialization outputs and existing
 native leads; no unavailable fitted-model, licensing or PR blocker was bypassed.
+
+Next-source WFMM70 recovery has969 original likelihood traces across four
+synthetic covariance designs, independently matching dense Gaussian calculations
+within1.78e-13. Its guide-labelled profile MLE actually conditions on fixed
+shrunken MOM coefficients; native proposal-scale output is a likelihood-bound
+half-width on the checked identity cases. Five independent reference tests pass;
+regeneration is byte-identical. No production code changed after the accepted
+PRT checkpoint, and WFMM remains partial. Continue exact MOM/empirical-Bayes/
+conditional optimizer/Metropolis proposal and saved workflow integration; see
+wfmm-initialization-recovery-2026-10-12.md.
