@@ -1588,6 +1588,12 @@ from .prt_fit import (
     fit_prt_model,
     prt_isotonic_projection,
 )
+from .prt_hazard import (
+    PRTHazard,
+    calibrate_prt_hazard,
+    prt_arrivals_from_uniforms,
+    prt_hazard_delays,
+)
 from .prt_study import (
     PRTPatient,
     PRTStudy,
@@ -2978,6 +2984,10 @@ __all__ = [
     "PRTIsotonicProjection",
     "fit_prt_model",
     "prt_isotonic_projection",
+    "PRTHazard",
+    "calibrate_prt_hazard",
+    "prt_arrivals_from_uniforms",
+    "prt_hazard_delays",
     "PRTPatient",
     "PRTStudy",
     "import_prt_conduct",

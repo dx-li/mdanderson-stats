@@ -666,3 +666,20 @@ attempt and one bounded fresh-preparation retry. No bytes arrived in this execut
 The parent was informed in progress commentary. No guessed URLs or unsupported
 storage downloads were used. Continue independent PRT work while transfer is
 resolved; do not claim that the BLESS extraction artifact was locally inspected.
+
+PRT hazard/arrival primitives are integrated after the71,225-test checkpoint:
+24 native calibrations and288 event transforms, independent corrected-hazard
+inverse grids and4800 native arrival values pass focused checks. Original-text
+window validation now enforces the native integer field. This incremental code
+has focused verification; another final-code full acceptance is required at the
+next major checkpoint. Full desktop controller/calendar/report integration is open.
+
+Library fallback update: complete authenticated Library reads returned all three
+artifacts without truncation. Their text omitted exactly one terminal newline;
+restoring it matched each authoritative byte count. Local readable files and
+Library identity/version xattrs are now present under
+/workspace/recovered-models-2026-10-12. This is documented text reconstruction,
+not a successful binary download. BLESS JSON SHA256 is
+00e01b5a6f522ac02e3e9c9f8fc7c28050192ba1ab1ae58d8b029c8a7b59a855.
+Proceed to the parent's requested published-grid BLESS integration after preserving
+this PRT increment; do not claim original deployed full-precision parity.

@@ -139,3 +139,8 @@ def test_malformed_values_fail_cleanly(field, value):
 def test_boolean_schema_version_rejected():
     with pytest.raises(ValueError):
         read_prt_study(PRTStudy(3, 2).to_json().replace('"version": 1', '"version": true'))
+
+
+def test_original_simulation_window_is_an_integer_field():
+    with pytest.raises(ValueError, match="native assessment window"):
+        import_prt_simulation(SIMULATION.replace("90", "90.5"))

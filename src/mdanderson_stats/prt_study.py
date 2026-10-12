@@ -263,6 +263,7 @@ def import_prt_simulation(settings: str) -> PRTStudy:
         raise ValueError("expected four original simulation sections and 17 numeric rows")
     rows = _rows("\n".join(line for i, line in enumerate(lines) if i not in (0, 6, 13, 16)))
     C, D, N, window = (rows[i][0] for i in range(4))
+    _integer(window, "native assessment window", 1, 1000000)
     C = _integer(C, "intervals", 3, 10)
     D = _integer(D, "doses", 2, 10)
     for i, row in enumerate(rows):

@@ -229,3 +229,24 @@ uses a different max-min ordering and floors negative values, but can exceed one
 Its controller, hazard inversion, exact-window calendar conversion and final
 selection also have explicit discrepancies. The published Python APIs retain their
 stated rules. Legacy integration and complete desktop execution remain open.
+
+## Recovered hazard and arrival generators
+
+`calibrate_prt_hazard(probability, window, alpha, beta)` creates the recovered
+100-point beta-density-shaped hazard grid. The default `safe` profile solves the
+cumulative-hazard calibration exactly. `prt_hazard_delays(model, uniforms)` uses
+correct piecewise cumulative-hazard inversion and returns infinity for no event
+within the window. It does not treat event times as beta-distributed.
+
+Explicit `profile="legacy_1_0"` reproduces the native calibration search and
+its shifted-rate/reused-variate inversion. The native second discarded random
+variate is a stream-consumption concern for a replay runner, not an argument to
+this supplied-variate transform. Invalid scale searches fail explicitly. Window
+and shape bounds are1e6 and10000 respectively; all must be positive.
+
+`prt_arrivals_from_uniforms(mean_interarrival, uniforms)` sorts exactly800
+uniform points on `[0,800*mean]`, matching the recovered finite arrival law.
+It is not an exponential inter-arrival generator. These primitives do not yet
+constitute the complete desktop trial runner. Original simulation text import now
+requires its native integer-day assessment window; direct Python study endpoints
+can represent a separate continuous-time extension.
