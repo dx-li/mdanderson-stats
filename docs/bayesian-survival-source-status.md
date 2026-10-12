@@ -24,3 +24,19 @@ before claiming a Python reproduction. A generic exponential posterior or a
 regression built from published marginal hazard-ratio summaries would not
 reproduce this software. No patient predictions or substitute fitted parameters
 have been added to the package.
+
+## October12 technical supplement recovery
+
+Parent research has now retrieved the actual supporting DOCX linked by the
+[primary article](https://pmc.ncbi.nlm.nih.gov/articles/PMC8058232/). It specifies
+seven piecewise-exponential intervals, half-open intervals, independent hazard
+priors (no autoregression), Gamma(shape0.0001, scale0.0001) in its explicit wording,
+and Normal(0, variance1e6) coefficient priors. The shape/scale wording must be
+preserved and investigated rather than silently converted to a rate convention.
+The earlier download challenge was an access limitation, not missing technical
+content. Artifact/hash verification in this executor is pending transfer.
+
+This supplies useful published-method evidence. It does not supply the fitted
+cutpoints or joint posterior needed for the deployed conditional-survival
+predictor. A generic method implementation and exact fitted-tool reproduction
+must remain distinct claims; no application status change has yet occurred.

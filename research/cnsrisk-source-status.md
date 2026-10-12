@@ -30,3 +30,21 @@ October 10 update: the public app (PID 1138, version 1.0.0.0, updated May 31,
 superficial-spreading melanoma, Breslow 1.43 and mitotic rate 0–1. These rounded
 outputs confirm the application is live, but do not recover the exact
 competing-risk coefficients/baselines. Entry 161 remains pending.
+
+## October12 deeper primary-source pass (parent research)
+
+The final2023 ASCO DOI explicitly has no full-text component. It describes a
+refinement after the original model overpredicted risk. The2021 hazard ratios
+therefore cannot stand in for the final fit. A presentation, final nomogram or
+complete model specification remains a useful recovery target; this is not a
+claim that no paper or technical evidence exists.
+
+The live [official application](https://biostatistics.mdanderson.org/shinyapps/CNSRISK/)
+PID1138 v1.0.0.0 uses mitotic bins0–1,2–6,>6/mm², distinct from the2021
+bins0–4,5–9,>9. Sites are Scalp, Head-neck-nonscalp, Upper extremity, Trunk,
+and Lower extremity. Subtypes are Superficial spreading, Nodular, Lentigo maligna,
+Acral lentiginous and Other. Breslow thickness is numeric millimeters. The
+previously recorded default .02/.06/.10 risks remain rounded app observations,
+not an exact fitted equation. Coefficients, reference coding, transformations,
+baselines and any uncertainty algorithm remain required. No status promotion or
+outreach occurred.

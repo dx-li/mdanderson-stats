@@ -34,3 +34,21 @@ October 10 update: the public app now serves PID 1178 v1.4.2.0 (April 15,
 ctDNA reduces model robustness. This is a rounded public-app observation, not
 recovery of the exact regression/intercept/shape/covariance. Entry 169 remains
 pending; clinical predictions are not reconstructed from fitted screenshot curves.
+
+## October12 deeper primary-source pass (parent research)
+
+The publisher explicitly gates the full European Urology article behind login,
+subscription or purchase. Its body and supplements remain **uninspected**, not
+proven devoid of coefficients. Institutional records, the author archive and a
+Myriad archive supplied no alternate copy in this pass. PMID41765697 and the
+ASCO GU537 DOI above identify the primary reports. The primary abstract describes
+24 candidate predictors, five-fold cross-validation repeated100 times, elastic-net
+selection and a six-predictor Weibull refit.
+
+The live [official application](https://biostatistics.mdanderson.org/shinyapps/K-COMPASS/)
+PID1178 v1.4.2.0 exposes lesions1–5, prior systemic lines0–3, ECOG0–2,
+diagnosis-to-metastasis months, optional KIM-1 in pg/mL and optional ctDNA
+(TRUE/FALSE/blank). Missing-biomarker fits/rules are part of the required contract;
+blank biomarkers must not be replaced with zero. Next evidence needed is a lawful
+full article/supplement copy or the actual model specification. No author outreach
+is authorized. No model promotion follows from these input findings.
