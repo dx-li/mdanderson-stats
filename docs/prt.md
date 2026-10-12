@@ -197,8 +197,8 @@ the raw fit's maximum coefficient split-Rhat was 1.002 or less, but the projecti
 produced a minimum of about -0.0153. This is materially below zero, not roundoff.
 The API raises an error rather than clipping or feeding invalid probabilities
 to the predictive criteria. This finding concerns the literal published formula
-with estimated covariance; the original executable's handling remains unverified.
-Its resolution is required before claiming complete end-to-end PRT coverage.
+with estimated covariance; the original executable's separate max-min transform floors negatives but can still exceed one.
+The native ordering and safeguards are now recovered, as documented below; complete desktop integration remains open.
 
 Independent R tensor Gauss-Hermite integration verifies a two-dose posterior,
 refining from 80 to 120 nodes per dimension. Both coefficient and risk means
@@ -207,3 +207,25 @@ A separate R full-covariance min-max calculation verifies 180 transformed values
 prior-only sampling verifies the random-walk covariance. Regenerate both fixtures
 with `Rscript tools/reference_prt_fit.R`. Run
 `uv run python tools/pilot_prt_fit.py` to reproduce the guide-history diagnostic.
+
+## Saved desktop inputs
+
+`import_prt_conduct(settings_text, patient_text)` reads the eight documented
+settings rows and three-column patient records. Doses become zero-based Python
+indices. The third native column is censoring (1), not an event flag. The bundled
+settings add two unused seed-looking lines; pass `allow_unused_seed_lines=True`
+only to acknowledge discarding them. Python random state remains explicit.
+
+`import_prt_simulation(settings_text)` reads the four original labelled sections,
+including interval endpoints, beta-shaped hazard parameters, accrual mean and
+sampler settings. `PRTStudy.to_json()` and `read_prt_study()` provide strict,
+versioned round trips. `prt_study_counts()` returns interval survivor/event counts,
+assigned and assessed totals, and pending counts indexed by completed interval.
+These saved-input APIs do not yet execute the full desktop workflow.
+
+Current native recovery is documented in
+[the source audit](../research/prt-native-recovery-2026-10-12.md). Native projection
+uses a different max-min ordering and floors negative values, but can exceed one.
+Its controller, hazard inversion, exact-window calendar conversion and final
+selection also have explicit discrepancies. The published Python APIs retain their
+stated rules. Legacy integration and complete desktop execution remain open.

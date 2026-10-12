@@ -125,3 +125,86 @@ These are bookkeeping references, not recovery of the statistical suspension
 predicate, native candidate-array exhaustion or the entire loop. The complete
 calendar reference suite now passes157 tests. Full controller integration remains
 open and must not infer untested rules from these bounded blocks.
+
+## Native final selector and conduct boundaries
+
+Final selection97e1–98fe is now executed for144 synthetic summary/count states.
+A dose is eligible only with at least three assessed patients and posterior
+exceedance strictly below the upper cutoff. Lowest-dose exceedance strictly above
+the cutoff stops. The minimum distance is initialized from dose1 even when it is
+ineligible; if no eligible dose matches that minimum the current dose survives.
+Exact ties overwrite in ascending order, selecting the last eligible tie. An
+ineligible current dose can survive this fallback. The paper selector remains
+separate; do not introduce this defect into a scientific default.
+
+Conduct4fc8–5552 has126 portable probes for acceptable/excessive categories using
+supplied predictive criteria. Current-dose exceedance at the upper cutoff triggers
+de-escalation, whereas lowest-dose stopping uses strict greater-than. With pending
+patients in the acceptable category the native code compares PE with1-epsilon,
+not the published epsilon. The no-pending code is5.11. These probes bypass the
+predictive estimator; negligible-category branches and that estimator still need
+separate recovery. No full native controller or trial parity is claimed.
+
+## Saved input integration
+
+`PRTStudy`, `PRTPatient`, `import_prt_conduct`, `import_prt_simulation`,
+`read_prt_study` and `prt_study_counts` now implement bounded immutable studies,
+strict version1 JSON, original labelled simulation sections, explicit discarded
+unused seed lines, native censoring semantics and disjoint likelihood/pending
+counts. Both original bundled inputs round-trip. All88 native count cases agree.
+Simulation studies accept a final partial cohort,3..500 patients and1..100000
+repetitions; C3..10 and D2..10 follow the desktop guides. This module supplies
+inputs, not completion of simulation/conduct execution. PRT remains partial.
+
+Additional conduct predictive probes execute4d3d–4fc8 (48 cases), and the complete
+negligible-category predictive/controller block46ab–5552 (108 cases), from supplied
+proper beta moments and interior patient risks. Independent enumeration reproduces
+all probabilities within1.2e-16. Native categories use strict beta exceedance
+comparisons (<lower and >upper). This confirms the downstream fixed-patient-risk
+product enumeration, not how upstream posterior patient-risk inputs are formed.
+
+The negligible branch hard-codes dose10 as the top dose, even for smaller designs.
+Its late tests use PN against epsilon and next-dose PE against1-epsilon in several
+pending branches. A lower-dimensional top dose can therefore receive an escalation
+code. All156 independent probability/controller checks pass. Native codes retain
+single-precision constant rounding. Boundary0/1 risks trigger native jitter paths,
+which these interior-risk probes deliberately do not claim to validate.
+
+Eighteen additional executable cases3493–35d7 resolve the upstream patient risks:
+these are posterior means of **raw, unprojected** remaining-interval toxicity risks.
+Only censored patients with observed interval belowC enter, preserving input order
+within each dose. Two supplied coefficient draws are accumulated before averaging.
+Independent accurate normal-CDF products agree within3.4975e-7 on the deliberately
+nonmonotone grid; native normal-CDF approximation explains this recorded tolerance,
+which is not a global error bound. The native predictive calculation therefore
+multiplies patient posterior-mean risks. The published Python API instead averages
+products of aligned projected posterior draws and preserves posterior dependence.
+Those are materially distinct estimators, not merely different random streams.
+
+Simulation late-allocation8ff1–97e1 has960 supplied-criteria cases, independently
+checked. Unlike conduct, it uses the configured top dose. The same complemented
+predictive thresholds remain. De-escalation selects the nearest-to-target lower
+dose, not necessarily the highest non-excessive lower dose, with dose1 minimum
+initialization and last matching distance. This probe supplies decreasing distances;
+more arbitrary distance/tie grids remain necessary before integrating that branch.
+
+Simulation pre-inference4674–47fe has208 count-summary probes. It suspends at ten
+or more pending patients at the current dose; also with exactly three assigned and
+no patients observed beyond interval0, or with at most three assigned to dose1 and
+the first patient's interval still0. If at least three are assigned at the current
+dose and none has observed interval>0, a later branch skips inference (suspending
+at maximum enrollment). `observed` here is **any positive observed interval**, not
+an event count; assessed and event counts are separate. These abstract count probes
+exercise branch arithmetic, including combinations not reachable from actual
+patient histories; they do not themselves establish complete trial parity.
+
+Sixteen endpoint-risk probes supply fixed uniforms to the actual RNG call while
+executing the complete negligible predictive/controller block. Native current-dose
+no-event mass at risk1 is1-u*float32(1e-5), while event mass remains1; at risk0,
+event mass becomesu*float32(1e-5) without reducing no-event mass1. Next-dose
+no-event mass at risk1 remains1 and event mass1; risk0 event jitter usesfloat32(1e-7).
+Thus predictive sums are not normalized and can approach4 for two certain-event
+patients. Independent product-mass checks reproduce every result. This is a
+material validity defect, not ordinary Monte Carlo error. Legacy diagnostics may
+expose it, but valid scientific decisions must reject these invalid criteria or
+use the explicitly corrected estimator. No silent normalization is justified.

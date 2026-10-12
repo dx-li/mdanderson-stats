@@ -630,3 +630,39 @@ Original executables are ignored under research/raw/next-desktop-2026-10-12/PRT_
 Source probes pin their hashes. Portable tools and fixtures are committed; scratch
 disassembly is /tmp/prt-sims-disassembly.txt and /tmp/prt-main.txt. No task URL
 was exposed by this execution environment. PR creation remains Forbidden.
+
+## PRT saved-study and controller recovery acceptance
+
+PRT saved conduct/simulation inputs now round-trip, including both original
+bundled studies and88 native count cases. Full production regression passed
+71,225 tests; installed wheel passed2,090 PRT and9,347 broader acceptance tests.
+Fifteen native files regenerate byte-identically; four R references agree within
+8.4e-15. See prt-study-validation-2026-10-12.json. Catalog remains102/30/6.
+
+The source audit now covers final selection, acceptable and negligible conduct
+branches, predictive enumeration and endpoint jitter, raw pending-risk means,
+simulation pre-screening and late allocation. Native defects include complemented
+predictive cutoffs, conduct's hard-coded dose10, unnormalized predictive sums up
+to4, ineligible final fallback, exact-window conversion and last-three final time.
+These must remain explicit legacy diagnostics, never silent scientific defaults.
+
+Next integrate recovered hazard calibration/inversion and arrivals. A checked draft
+is at /tmp/prt_hazard_draft.py:24 native models/288 delays and4800 arrival values
+agree; corrected inverse grids achieve intended event probabilities. It is NOT
+yet package code. Finish validity-bounded projection/predictive profiles, saved
+conduct, complete calendar/batch/reports and precision acceptance before promotion.
+Native finite800-arrival exhaustion must be bounded explicitly. Original simulation
+window is an integer native field; tighten original-text import accordingly while
+keeping any declared continuous Python extension explicit.
+
+Parallel parent research recovered BLESS/BayesianSurvival supplements. Structured
+artifacts await executor transfer; see bless-published-recovery-2026-10-12.md and
+the updated pending-model source notes. Published-model implementation may proceed
+with explicit precision/ambiguity limits once verified. No outreach is authorized.
+
+BLESS transfer update: the three supplied Library records resolved, but the current
+supported materialization helper failed to download each file on both the initial
+attempt and one bounded fresh-preparation retry. No bytes arrived in this executor.
+The parent was informed in progress commentary. No guessed URLs or unsupported
+storage downloads were used. Continue independent PRT work while transfer is
+resolved; do not claim that the BLESS extraction artifact was locally inspected.

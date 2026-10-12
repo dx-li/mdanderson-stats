@@ -1,0 +1,2710 @@
+{
+  "executable_sha256": "52903a7af2e75998bf2a8cbda6e2049e7fa25e0981cf9806317841da13a91b54",
+  "scope": "pre-inference simulation screening from supplied counts only",
+  "cases": [
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 0.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 0.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 0.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 0.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 0.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 0.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 0.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 0.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 0.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 0.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 0.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 0.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 0.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        2.0,
+        3.0
+      ],
+      "assessed": 0.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 0.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        2.0
+      ],
+      "assessed": 0.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        3.0
+      ],
+      "assessed": 1.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 4.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 4.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 4.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 4.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 4.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 4.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 4.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 4.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 4.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 4.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 4.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 4.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 4.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 4.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 4.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 4.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 3.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 3.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        4.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        4.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 12.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 12.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 12.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 12.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 12.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 12.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 12.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 12.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 12.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 12.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 12.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 12.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 12.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 12.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 12.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 12.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 11.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 11.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 11.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 11.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 11.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 11.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 11.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 11.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 11.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 11.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 11.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 11.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 11.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 11.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 11.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 11.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 10.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 10.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 10.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 10.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 10.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 10.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 10.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 10.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 10.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 10.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 10.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 10.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 10.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 10.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 10.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 10.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": true,
+      "suspend": 0
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 2.0,
+      "observed": 0.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 0,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        12.0,
+        3.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 1,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": false,
+      "infer": false,
+      "suspend": 1
+    },
+    {
+      "assigned": [
+        3.0,
+        12.0
+      ],
+      "assessed": 2.0,
+      "observed": 1.0,
+      "first_interval": 1,
+      "current": 2,
+      "final": true,
+      "infer": false,
+      "suspend": 1
+    }
+  ]
+}

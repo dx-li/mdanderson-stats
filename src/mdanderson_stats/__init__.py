@@ -1588,6 +1588,14 @@ from .prt_fit import (
     fit_prt_model,
     prt_isotonic_projection,
 )
+from .prt_study import (
+    PRTPatient,
+    PRTStudy,
+    import_prt_conduct,
+    import_prt_simulation,
+    prt_study_counts,
+    read_prt_study,
+)
 from .pvalue_models import (
     OrderStatisticDiagnostics,
     clustered_pvalues,
@@ -2970,6 +2978,12 @@ __all__ = [
     "PRTIsotonicProjection",
     "fit_prt_model",
     "prt_isotonic_projection",
+    "PRTPatient",
+    "PRTStudy",
+    "import_prt_conduct",
+    "import_prt_simulation",
+    "prt_study_counts",
+    "read_prt_study",
     "PRTDecision",
     "PRTPredictiveRisk",
     "prt_conditional_toxicity",

@@ -1,0 +1,558 @@
+{
+  "executable_sha256": "2943f71ab27e300c1168b2d9f6a93815b75efe753b6af2b543c1370d077a1123",
+  "scope": "native fixed-patient-risk predictive enumeration, interior probabilities",
+  "cases": [
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 1.0
+    },
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.2
+    },
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.2
+    },
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 1.0
+    },
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 1.0
+    },
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.2
+    },
+    {
+      "probabilities": [
+        0.2
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 1.0
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.14
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.7599999999999999
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 0.7599999999999999
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.14
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 0.7599999999999999
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.14
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.7599999999999999
+    },
+    {
+      "probabilities": [
+        0.2,
+        0.7
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 0.8920000000000001
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.37600000000000006
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.8920000000000001
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.03200000000000002
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 0.8920000000000001
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.03200000000000002
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.03200000000000002
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 0.8920000000000001
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.03200000000000002
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.37600000000000006
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.4,
+        0.8
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.03200000000000002
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 0.9495999999999999
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.08880000000000002
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.45620000000000005
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 1.0,
+      "beta": 1.0,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.0054000000000000055
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 0.9495999999999999
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.0054000000000000055
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.08880000000000002
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 2.0,
+      "beta": 5.0,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.0
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.3,
+      "upper": 0.3,
+      "predictive_excessive": 0.9495999999999999
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.3,
+      "upper": 0.9,
+      "predictive_excessive": 0.08880000000000002
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.5,
+      "upper": 0.3,
+      "predictive_excessive": 0.45620000000000005
+    },
+    {
+      "probabilities": [
+        0.1,
+        0.2,
+        0.3,
+        0.9
+      ],
+      "alpha": 0.5,
+      "beta": 0.7,
+      "target": 0.5,
+      "upper": 0.9,
+      "predictive_excessive": 0.0054000000000000055
+    }
+  ]
+}

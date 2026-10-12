@@ -1,0 +1,71 @@
+{
+  "scope": "PRT saved input integration and native controller recovery; application remains partial",
+  "full_suite": {
+    "passed": 71225,
+    "seconds": 978.53,
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "log_sha256": "90dbc91e7246351d6d789059ec3052ab94b89bea6a8bf2df30f0349c424ffa02",
+    "production_python_files": 763,
+    "snapshot_sha256": "ce06fe6836a25b4ec76b28e9cd17bbcf21ad976ffc212c93f450081c9a5b0260"
+  },
+  "installed_wheel": {
+    "PRT_tests": 2090,
+    "PRT_seconds": 3.56,
+    "PRT_log_sha256": "2895815941488ebe7ef8917033df9f2d7895a5c9e736199fe27fcd85b0b1aa9e",
+    "broader_acceptance_tests": 9347,
+    "broader_seconds": 29.76,
+    "outside_checkout": true,
+    "extras": [
+      "plot",
+      "image"
+    ],
+    "example": "prt_saved_study.py passed"
+  },
+  "source_references": {
+    "native_files_byte_identically_regenerated": 15,
+    "R_files": {
+      "prt-calendar-counts.csv": {
+        "byte_identical": true,
+        "max_numeric_difference": 0
+      },
+      "prt-calendar-patients.csv": {
+        "byte_identical": true,
+        "max_numeric_difference": 0
+      },
+      "prt-isotonic-r.csv": {
+        "byte_identical": false,
+        "max_numeric_difference": 9.992007221626409e-16
+      },
+      "prt-fit-r.csv": {
+        "byte_identical": false,
+        "max_numeric_difference": 8.382183835919982e-15
+      }
+    },
+    "original_conduct_and_simulation_studies_round_tripped": true
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "2722 files formatted",
+    "mypy": "763 source files passed"
+  },
+  "artifacts": {
+    "source_wheel_byte_matched_Python_JSON_files": 767,
+    "notice_files_retained": 29,
+    "raw_original_assets_excluded": true,
+    "hashes": "Final rebuilt wheel and sdist hashes recorded in preservation commit message"
+  },
+  "catalog": {
+    "implemented": 102,
+    "partial": 30,
+    "pending": 6
+  },
+  "qualifications": [
+    "Full suite collected before later source-only predictive/simulation fixture tests; all later PRT tests passed in the final installed-wheel run.",
+    "All763 production Python hashes verified unchanged throughout final acceptance.",
+    "Source fixtures exercise bounded blocks; abstract input grids do not imply full native trial parity.",
+    "Native controller thresholds, pending-risk estimator, zero/one jitter, final eligibility and calendars differ from published rules.",
+    "Native predictive sums can exceed one and native projection can exceed one; neither is a valid silent scientific default.",
+    "No PRT end-to-end or clinical validation claim; legacy profile integration, execution and reporting remain open."
+  ]
+}

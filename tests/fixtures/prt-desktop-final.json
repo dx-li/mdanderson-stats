@@ -1,0 +1,2886 @@
+{
+  "executable_sha256": "52903a7af2e75998bf2a8cbda6e2049e7fa25e0981cf9806317841da13a91b54",
+  "scope": "final summary selector only",
+  "cases": [
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        3.0,
+        3.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 0,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 0,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.9,
+        0.9,
+        0.91
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 0,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.2,
+        0.3
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 1,
+      "stopped": 1,
+      "selected": 1
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 2,
+      "stopped": 1,
+      "selected": 2
+    },
+    {
+      "assessed": [
+        4.0,
+        2.0,
+        3.0
+      ],
+      "exceedance": [
+        0.91,
+        0.95,
+        1.0
+      ],
+      "distance": [
+        0.1,
+        0.1,
+        0.2
+      ],
+      "current": 3,
+      "stopped": 1,
+      "selected": 3
+    }
+  ]
+}
