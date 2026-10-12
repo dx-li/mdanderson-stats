@@ -4,7 +4,7 @@ Catalog membership was rechecked against both official API lists: 80 desktop +
 58 online entries, with identical response hashes to the preserved inventory.
 No entry was added or dropped. See [membership evidence](catalog-membership-2026-10-12.json).
 
-Current counts are **99 implemented / 33 partial / 6 pending**. ARAND62 now
+Current counts are **100 implemented / 32 partial / 6 pending**. ARAND62 now
 meets the guide-defined simulation workflow; see its scope crosswalk below. This continuation
 adds the mTPI R final estimator, recovered EffTox contour fitter, CRM desktop
 study/controller workflow, ToxFinder native allocation/simulation workflow, and
@@ -78,7 +78,7 @@ workflow gaps listed in their rows. License scope is tracked separately in the
 | 67 | ANOVA DDP | implemented | Declared recovered workflow implemented; [Guide](../docs/anovaddp.md) retains scope and compatibility limits. |
 | 69 | PRT | partial | The published covariance-weighted isotonic projection can materially leave [0,1]; original executable behavior is unresolved. [PRT guide](../docs/prt.md) |
 | 70 | WFMM | partial | Native MOM/profile variance and proposal initialization, other extended transforms/boundaries, pass filtering and files remain unresolved. The inverse-gamma `delta_omega` mapping and energy compression are now native-verified, with five periodic Haar transforms checked. [native-prior audit](wfmm-native-prior-audit.md); [WFMM audit](wfmm-audit.md); [prediction guide](../docs/wfmm-prediction.md) |
-| 72 | Toxicity Probability Intervals | partial | Recovered R final-estimation prior, inverse-variance weights and dose offsets are now checked independently. Native controller safety inconsistencies, Excel/XLL agreement, scenario-based tuning and reporting remain unresolved. [TPI guide](../docs/tpi.md); [mTPI recovery audit](mtpi-legacy-selection-audit.md) |
+| 72 | Toxicity Probability Intervals | implemented | Current version2.1 monitoring and all-scenario simulation/report workflow is integrated with bounded XLSM/JSON input, paper-default and explicit legacy controller/final ranking, native uniform replay and captured profile/seed. Original2007 TPI tuning and informative-prior recalibration remain separate extension limits. [Acceptance](mtpi-desktop-complete-checkpoint-2026-10-12.md). |
 | 74 | BP1CI | implemented | Declared recovered workflow implemented; [Guide](../docs/bp1ci.md) retains scope and compatibility limits. |
 | 75 | Dose Schedule Finder | partial | Automatic calibration, synthetic low-grade episode generation and within-patient adaptation are listed as open, but the inspected contract does not give complete procedures. [Dose Schedule Finder guide](../docs/dose-schedule.md) |
 | 77 | U2OET | partial | Explicit models, fitting, calibration and trial workflows exist; native prior interpretation, calibration and full operating-characteristic validation are unresolved. [U2OET guide](../docs/u2oet.md); [source records](../docs/u2oet-sources.json) |

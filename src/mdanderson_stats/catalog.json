@@ -2716,7 +2716,7 @@
         }
       ],
       "retrieval_error": null,
-      "status": "partial",
+      "status": "implemented",
       "implemented_features": [
         "Vectorized mTPI unit-probability-mass decisions and full decision table under default uniform or explicit common beta priors, retaining Uniform-calibrated losses",
         "Paper safety rules, persistent exclusions and isotonic posterior-mean MTD selection with explicit weights",
@@ -2726,18 +2726,23 @@
         "mTPI posterior isotonic intervals from independent beta draws transformed across the supplied dose grid, with marginal means/medians/equal-tailed bounds, explicit weights, bounded storage and optional joint draws; docs/mtpi-isotonic-posterior.md",
         "Table-3 fixed-loss common Beta-prior sensitivity applied consistently to mTPI UPM decisions, overdose safety, isotonic point selection, batched trial simulation and posterior interval draws; docs/mtpi-prior-sensitivity.md",
         "Isotonic-transformed posterior intervals apply the mTPI paper's beta-draw inference procedure to original TPI common or explicit dose-specific priors, including untried doses; bounded shared kernel, explicit weights/RNG/quantiles and optional retained draws. This is not recovered original-TPI software behavior or tuning; docs/tpi-isotonic-posterior.md.",
-        "Separate recovered mTPI R final estimator: Beta(.005,.005), inverse-variance isotonic weighting, dose-index offsets and explicit historical exclusion/stop state; original controller and Excel/XLL parity remain open."
+        "Separate recovered R and XLL final estimators preserve their distinct offsets/ties, Beta(.005,.005) inverse-variance isotonic fitting, and explicit historical exclusion/stop state.",
+        "Current version2.1 spreadsheet workflow: bounded numeric XLSM import, separate monitoring/simulation studies, saved JSON, all-scenario simulation and standalone reports with reopenable profile/seed.",
+        "Paper-default controller and explicit desktop_legacy behavior: native priors, malformed next-dose beta shape, carried indicator, exclusion history and whole-cohort overflow. Undefined native highest-dose initialization raises; safe mode supports that start.",
+        "Complete guide-defined current mTPI Python scope. Original2007 TPI multiplier tuning and informative-prior penalty recalibration remain separate extension limits, not current spreadsheet controls; no invented calibration or clinical-validation claim."
       ],
       "validation": [
         "Exact rational beta-polynomial probabilities and extreme tails; published Excel screenshot columns at n=3,6,12,30",
         "Exhaustive small-trial response-path operating characteristics, safety sequence, isotonic ties and seeded replay; tests/test_mtpi.py",
-        "Pending TPI tuning, native source/weight audit, prior-specific penalty recalibration and spreadsheet/report workflows; docs/mtpi.md",
         "Original TPI: published Table 1, independent weighted beta quadrature, safety/selection and exact small-trial path checks; tests/test_tpi.py; limitations in docs/tpi.md",
         "Dose-axis and scalar-dose summaries, explicit per-dose tables, common-prior regression and seeded heterogeneous-prior simulation; tests/test_tpi_informative_priors.py. Dose-varying shapes are a Python conjugate generalization, not recovered native defaults.",
         "Isotonic posterior inference: one-dose beta quantiles and exact two-uniform-dose projected means/CDF, immutable monotone joint draws, pre-RNG work/tail rejection; tests/test_mtpi_isotonic_posterior.py. Full supplied-grid scope, weights and empirical quantiles are explicit Python choices, not recovered native defaults.",
         "21 focused mTPI, prior-sensitivity and isotonic-interval tests pass: exact integer-beta CDF identities, fractional-prior density quadrature, nonuniform posterior selection/draws, default screenshot decisions and seeded simulation replay; research/mtpi-prior-sensitivity-audit.md. Common shapes are bounded to >=1e-6 with sum <=1e6.",
         "22 focused TPI/mTPI posterior checks pass, including direct heterogeneous-prior beta/PAVA replay, untried-dose priors, unchanged mTPI draws, exact projected-uniform identities and rejection before RNG consumption; research/tpi-isotonic-posterior-audit.md.",
-        "Ten original-R terminal-state references and 60 exact-rational max-min weighted-isotonic configurations; 38 focused mTPI tests pass (October 12, 2026)."
+        "Ten original-R terminal-state references and 60 exact-rational max-min weighted-isotonic configurations; 38 focused mTPI tests pass (October 12, 2026).",
+        "2496 original XLL decisions;432 unchanged-R complete trials;2000 original native MT19937 uniforms;6 final-ranking segments;495 cached monitoring cells;20000 cached original trials across ten scenarios. Numerical scope/qualifications: research/mtpi-desktop-recovery-2026-10-12.md.",
+        "Fresh installed wheel:2955 desktop tests,150 existing TPI/mTPI/plot/image tests, both workflow examples and16000 quality trials; six source fixtures regenerate byte-identically. research/mtpi-desktop-complete-validation-2026-10-12.json.",
+        "Final unchanged-production suite: 55745 passed in 897.73s, all extras and warnings as errors. Only catalog status/scope metadata updated afterward; production Python unchanged."
       ]
     },
     {

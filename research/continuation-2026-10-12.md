@@ -566,3 +566,16 @@ also differ. These must not be conflated. Current research lives in
 The original archive is in ignored `research/raw/mtpi-2026-10-12/`. Integrate
 bounded saved inputs, safe/legacy controllers, native final profile and
 scenario/report workflow before any72 promotion. No full mTPI acceptance yet.
+
+## Current mTPI workflow checkpoint
+
+Current mTPI72 version2.1 monitoring/simulation/report scope is complete under
+explicit paper/legacy profiles; counts100 implemented/32 partial/6 pending.
+See mtpi-desktop-complete-checkpoint-2026-10-12.md and its validation manifest.
+All original assets remain ignored. Six regenerated fixtures include native
+controller/rank/RNG evidence and all20,000 cached trials. Original-TPI tuning
+and prior-specific loss recalibration remain separate method-extension limits.
+Continue immediately with recovered Dose Schedule Finder75 and preserve the
+separate web-app contracts128/129; no arbitrary stopping count.
+Six unavailable exact fits, mixed-license distribution decision and Forbidden PR
+creation remain separate blockers. No merge/release/deployment/outreach occurred.

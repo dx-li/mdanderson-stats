@@ -113,5 +113,6 @@ including explicit dose-specific priors. This is separate from the posterior-SD
 intervals used for decisions and from the isotonic point estimate used for final
 selection; it does not establish an original-TPI software feature.
 
-**Entry 72 remains partial.** Scenario-based tuning, native archive audit and
-spreadsheet/report workflows remain pending.
+The current catalog72 mTPI spreadsheet workflow is now [integrated and validated](mtpi-desktop.md).
+This original2007 TPI extension retains the tuning and native weight/tie limits
+above; current mTPI source recovery does not establish original-TPI software parity.

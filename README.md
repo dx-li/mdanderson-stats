@@ -6,7 +6,7 @@ The scope includes all desktop and online entries. A catalog entry is not an
 implementation; `catalog.json` explicitly tracks pending work and validation.
 
 The [software coverage index](docs/software-status.md) lists all 138 entries:
-99 implemented, 33 partial, and 6 pending. Each method's guide explains its
+100 implemented, 32 partial, and 6 pending. Each method's guide explains its
 supported scope, validation and remaining limitations. Implemented means a
 usable, validated Python workflow for the recovered software specification;
 it does not mean identical native interfaces, file bytes or random streams.
@@ -1911,3 +1911,9 @@ confidence intervals remain open.
 [General Multc99 workflows](docs/multc99.md) now cover compound/conditional
 outcomes, historical mixtures, elicitation/planning, randomized trials and
 portable study replay, checked against recovered C and high-precision references.
+
+The [current mTPI desktop workflow](docs/mtpi-desktop.md) now connects original
+spreadsheet inputs, monitoring, explicit safe/legacy trial controllers, every
+scenario and reopenable reports. Original XLL/R references and all20,000 cached
+trials support the declared current application scope; original-TPI tuning and
+prior-specific recalibration retain their separate documented limits.

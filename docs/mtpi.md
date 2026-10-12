@@ -106,11 +106,15 @@ posterior means and optional joint draws. The supplied dose grid includes
 untried-dose prior draws; weights, grid scope and empirical quantiles are
 explicit Python choices. This inference does not change final MTD selection.
 
-**Catalog status remains partial.** The archived R final-selection prior,
-weights and offsets are now independently checked. Native R controller safety
-inconsistencies, Excel/XLL agreement, TPI tuning, prior-specific penalty
-recalibration and native spreadsheet/report workflows remain unresolved.
-The paper describes penalty
-recalibration as ongoing research; its Table 3 fixed-loss prior sensitivity
-is available. The published screenshot validates the checked default mTPI
-decisions; it does not establish parity for all software features.
+**Catalog 72 is implemented for its current version2.1 guide-defined workflow.**
+The [desktop integration](mtpi-desktop.md) adds imported/saved inputs, separate
+paper and native-compatibility controllers, source-specific final ranking,
+all-scenario simulation and captured-input reports. It reproduces the complete
+cached20,000-trial workbook with the original native uniform stream. Bounded
+instruction references are not full Windows/beta-library execution or clinical
+validation. The existing `simulate_mtpi` remains a separate paper implementation.
+
+Original2007 TPI multiplier tuning and prior-specific penalty recalibration are
+separate method extensions, not current spreadsheet inputs. Their documented
+limits remain. The paper describes penalty recalibration as ongoing research;
+Table3 fixed-loss prior sensitivity is available without inventing that procedure.

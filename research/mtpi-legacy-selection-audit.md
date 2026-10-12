@@ -49,9 +49,10 @@ the paper-facing Python controller:
 - At the top dose, posterior Pr(p<pT)>.8 stops with no selection for underdosing.
 - The next-dose indicator may be unset when starting at the top dose and is
   carried from prior iterations at that dose.
-- Separate mutable-dose `if` statements can apply more than one increment in
-  one cohort decision. Native controller parity therefore needs explicit defect
-  decisions, not substitution of a generic mTPI trial simulator.
+- Correction (2026-10-12): strict UPM maxima are mutually exclusive and the
+  outer dose branches are nested. The earlier claim of multiple increments in
+  one cohort was unsupported. Executed XLL and unchanged R decision references
+  agree on 2,496 cases; see the desktop recovery audit.
 - The 2:tdose perturbation loop incorrectly indexes downward for tdose=1.
   Python corrects this and handles empty candidate ranges explicitly.
 
@@ -59,3 +60,12 @@ The ReadMe identifies the Excel XLL as its simulation implementation. R-script
 parity does not establish XLL parity. Scenario-based tuning, native report
 workflows, and informative-prior loss recalibration remain separate gaps.
 No catalog promotion is justified by this bounded recovery.
+
+## Subsequent current-desktop integration
+
+The [desktop recovery](mtpi-desktop-recovery-2026-10-12.md) now resolves the
+current application's controller, XLL differences, seeded cached scenario
+outputs and saved-input/report workflow. The above bounded estimator checkpoint
+is historical; it is not the final current-application coverage statement.
+Original2007 TPI tuning and prior-specific recalibration remain separately
+qualified extensions, not controls of the current version2.1 spreadsheet.

@@ -10,8 +10,8 @@ links current scope and each remaining statistical contract.
 
 | Status | Entries | Meaning |
 | --- | ---: | --- |
-| Implemented | 99 | The cataloged scope is implemented and has recorded numerical validation. |
-| Partial | 33 | Documented Python methods are available; some methods or workflows remain open. |
+| Implemented | 100 | The cataloged scope is implemented and has recorded numerical validation. |
+| Partial | 32 | Documented Python methods are available; some methods or workflows remain open. |
 | Pending | 6 | No implementation is yet recorded. |
 
 These are software-entry counts, not a percentage of remaining engineering work.
@@ -130,6 +130,7 @@ some legacy adaptations retain commercial-use restrictions.
 | CI of Interaction Index | [desktop #65](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/65) | [Interaction indices](interaction-index.md); [Recovered studies](interaction-index-fixed-ray-study.md) |
 | EffTox | [desktop #2](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/2) | [Current workflow](efftox-desktop.md), [Guide](efftox.md), [native legacy fitter](efftox-native-contour.md), [trinary calibration](efftox-trinary-calibration.md) |
 | BOIN Design Desktop Program | [desktop #99](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/99) | [Guide](boin-desktop.md) |
+| Toxicity Probability Intervals | [desktop #72](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/72) | [Guide](mtpi.md) |
 
 ## Partially implemented
 
@@ -162,7 +163,6 @@ some legacy adaptations retain commercial-use restrictions.
 | SYNERGY | [desktop #18](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/18) | [Interaction indices](interaction-index.md); [parametric models](synergy-parametric.md); [semiparametric method](synergy-surface.md) |
 | Time-to-event Bayesian Optimal Interval (TITE-BOIN) Design for Phase I Clinical Trials | [online #129](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN/) | [Guide](tite-boin.md) |
 | TITE-BOIN12: extension of BOIN12 for late-onset toxicity and efficacy | [online #152](https://biostatistics.mdanderson.org/shinyapps/TITE-BOIN12) | [AL and final selection](tite-boin12.md); [BDA](tite-boin12-bda.md) |
-| Toxicity Probability Intervals | [desktop #72](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/72) | [Guide](mtpi.md) |
 | Two-arm BOP2: Bayesian Optimal Phase II two-arm Design | [online #150](https://biostatistics.mdanderson.org/shinyapps/rBOP2) | [Guide](rbop2-binary.md) |
 | U2OET | [desktop #77](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/77) | [PDS/CMI and trials](u2oet.md), [GAO probabilities](u2oet-gao.md), [GAO trials](u2oet-gao-trials.md) |
 | UAROET | [desktop #92](https://biostatistics.mdanderson.org/SoftwareDownload/SingleSoftware/Index/92) | [Guide](uaroet.md), [trial simulation](uaroet-trials.md) |

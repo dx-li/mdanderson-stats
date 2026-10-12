@@ -1264,6 +1264,25 @@ from .mtadf_logistic_simulation import (
 )
 from .mtadf_simulation import MTADFSimulation, simulate_mtadf
 from .mtpi import MTPIDesign, MTPIPosterior, MTPISelection, MTPITable
+from .mtpi_desktop import (
+    MTPIDesktopStudy,
+    MTPIDesktopTableStudy,
+    read_mtpi_desktop_project,
+    read_mtpi_desktop_workbook,
+)
+from .mtpi_desktop_report import (
+    MTPIDesktopReportInputs,
+    mtpi_desktop_monitoring_table,
+    mtpi_desktop_simulation_report,
+    mtpi_desktop_table_report,
+    read_mtpi_desktop_report,
+)
+from .mtpi_desktop_simulation import MTPIDesktopSimulation, simulate_mtpi_desktop
+from .mtpi_desktop_trial import (
+    MTPIDesktopTrial,
+    replay_mtpi_desktop_trial,
+    select_mtpi_desktop_legacy_mtd,
+)
 from .mtpi_isotonic_posterior import (
     MTPIIsotonicPosteriorIntervals,
     mtpi_isotonic_posterior_intervals,
@@ -3474,6 +3493,20 @@ __all__ = [
     "MTPIDesign",
     "MTPILegacySelection",
     "select_mtpi_legacy_mtd",
+    "MTPIDesktopStudy",
+    "MTPIDesktopReportInputs",
+    "read_mtpi_desktop_report",
+    "MTPIDesktopTableStudy",
+    "read_mtpi_desktop_project",
+    "read_mtpi_desktop_workbook",
+    "mtpi_desktop_monitoring_table",
+    "mtpi_desktop_table_report",
+    "mtpi_desktop_simulation_report",
+    "MTPIDesktopSimulation",
+    "simulate_mtpi_desktop",
+    "MTPIDesktopTrial",
+    "replay_mtpi_desktop_trial",
+    "select_mtpi_desktop_legacy_mtd",
     "MTPIIsotonicPosteriorIntervals",
     "mtpi_isotonic_posterior_intervals",
     "MTPIPosterior",

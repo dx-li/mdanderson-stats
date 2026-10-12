@@ -45,3 +45,16 @@ Continue immediately with72 mTPI: current Excel monitoring and XLL/R controller
 contracts are newly recoverable, including distinct final-ranking offsets.
 No arbitrary stopping target follows99 closure. Preserve all six unavailable
 fitted-model contracts and the separate distribution/PR blockers.
+
+Current mTPI72 guide-defined workflow is closed; counts100/32/6. See the
+[mTPI acceptance](mtpi-desktop-complete-checkpoint-2026-10-12.md). Continue the
+BOINComb128/TITE-BOIN129 web-app contracts: refreshed official guides expose
+additional titration/run-in rules, but desktop99 acceptance alone does not prove
+web-app parity. Moderate-toxicity simulation law, web score conventions and
+continuous-accrual regret timing require their own evidence and qualified APIs.
+Do not stop at100 or silently transfer desktop scope to the web applications.
+Dose Schedule Finder75 is now the immediately actionable source path: original
+installer recovered,45 native prior cases and2565 native controller cases;
+managed saved-input schema recovered. Integrate its complete guide workflow,
+keeping native cutoff/exclusion defects explicit. These references alone do
+not promote75.

@@ -62,8 +62,7 @@ study = m.read_boin_desktop_project(Path("my-study.html").read_text())
 batch = m.simulate_boin_desktop_scenarios(study, batches=2, trials=100, seed=2026)
 Path("simulation.html").write_text(m.boin_desktop_simulation_html(batch))
 Path("methods-en.md").write_text(m.boin_desktop_combination_protocol(study))
-Path("methods-zh.md").write_text(
-    m.boin_desktop_combination_protocol(study, language="zh"))
+Path("methods-zh.md").write_text(m.boin_desktop_combination_protocol(study, language="zh"))
 ```
 
 Simulation requires a study without patient-history records. Every batch retains its
@@ -96,8 +95,7 @@ For a saved single-agent/TITE study:
 workflow = m.simulate_boin_desktop_workflow(study, batches=2, trials=100, seed=2026)
 Path("comparison.html").write_text(m.boin_desktop_workflow_html(workflow))
 Path("methods.md").write_text(m.boin_desktop_univariate_protocol(study))
-Path("methods-zh.md").write_text(
-    m.boin_desktop_univariate_protocol(study, language="zh"))
+Path("methods-zh.md").write_text(m.boin_desktop_univariate_protocol(study, language="zh"))
 ```
 
 `desktop_tite_settings` resolves days/months, monthly accrual, pending percentage,

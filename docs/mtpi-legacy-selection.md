@@ -54,7 +54,7 @@ exact-rational max-min characterization checks weighted isotonic fits across all
 60 response configurations with sample sizes (2,3,4). See the
 [audit and reproducible reference command](../research/mtpi-legacy-selection-audit.md).
 These validate the estimator, not the entire native controller, Excel add-in,
-random streams, or clinical validity. Catalog #72 remains partial.
+random streams, or clinical validity. Current catalog72 workflow acceptance is documented in mtpi-desktop.md.
 
 
 Exact residual ties are independently checked by original R fixture case11:
@@ -62,3 +62,8 @@ Exact residual ties are independently checked by original R fixture case11:
 `.5` and `.5000000002` have exactly equal residuals; original R and Python both
 select dose1. Hash-pinned original source line220 selects
 `sort(abs(pp[mindose:tdose]-pT), index.return=T)$ix[1]`, not all minimizers.
+
+The [current desktop workflow](mtpi-desktop.md) now adds the separately named
+XLL estimator, `select_mtpi_desktop_legacy_mtd`, native controller compatibility,
+all-scenario simulation and reopenable reports. This R estimator keeps its
+existing offsets/ties; it is not silently redefined to match the XLL.

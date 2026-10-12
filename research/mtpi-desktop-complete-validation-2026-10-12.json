@@ -1,0 +1,65 @@
+{
+  "scope": "Current mTPI version2.1 guide-defined monitoring and scenario simulation/report workflow; catalog72",
+  "full_suite": {
+    "passed": 55745,
+    "seconds": 897.73,
+    "all_extras": true,
+    "warnings_as_errors": true,
+    "log_sha256": "14d381d15af0d0008863fedf8725b95914701cdab70540a41b59034edb14fc49",
+    "production_python_sha256": "356eb8836bfaa401e31fa5995b0932e54a42124a582d8e3fecb58fcc74e1e471"
+  },
+  "fresh_wheel": {
+    "desktop_tests": 2955,
+    "existing_TPI_mTPI_and_plot_image_tests": 150,
+    "retained_review_regressions": 7,
+    "both_examples": true,
+    "quality_trials": 16000,
+    "maximum_selection_mcse": 0.011178321653987239,
+    "import_location": "/tmp/mtpi-complete-env/lib/python3.13/site-packages/mdanderson_stats/__init__.py"
+  },
+  "source_reference": {
+    "fixtures_regenerated_byte_identically": 6,
+    "original_XLL_decisions": 2496,
+    "original_R_complete_trials": 432,
+    "native_RNG_values": 2000,
+    "native_rank_cases": 6,
+    "cached_table_cells": 495,
+    "cached_complete_trials": 20000,
+    "cached_scenarios": 10,
+    "cached_uniforms_consumed": 577344,
+    "cached_mean_allocation_and_pooled_toxicity_exact": true,
+    "maximum_cached_selection_difference": 1.25e-16
+  },
+  "qualifications": [
+    "Controller probes substitute SciPy beta CDF; ranking probes take fitted means; RNG probes execute native generation",
+    "Cached original outputs are not a fresh Excel execution",
+    "R final estimator and XLL estimator preserve distinct offsets and ties",
+    "Safe paper defaults differ intentionally from explicit desktop_legacy defects",
+    "Undefined native highest-dose initialization raises; safe profile supports it",
+    "Current guide has no automatic original-TPI multiplier or prior-loss recalibration control; extension limits retained",
+    "Source compatibility, mathematical correctness and clinical validity remain separate"
+  ],
+  "artifacts": {
+    "package_Python_JSON_files": 750,
+    "notice_files_retained": 29,
+    "raw_original_assets_excluded": true,
+    "hashes": "Recorded in preservation commit message to avoid a self-referential sdist manifest"
+  },
+  "lint": "passed",
+  "format": "2617 Python/Markdown files passed",
+  "types": "746 source files passed",
+  "catalog": {
+    "implemented": 100,
+    "partial": 32,
+    "pending": 6
+  },
+  "post_full_suite_change": "Only catalog72 status/scope metadata changed in production package; Python byte hashes verified unchanged. Final rebuilt wheel independently tested.",
+  "test_run_note": "First run interrupted after a formatting-only __init__.py change; final all-extras run starts after that final Python byte change.",
+  "remaining": [
+    "Continue dependency-ordered source-recoverable applications, including newly recovered Dose Schedule Finder75 native guide/controller/prior/saved-file contracts",
+    "BOINComb128/TITE-BOIN129 web-specific scope remains distinct from desktop99; public session redirects to unreachable host",
+    "Six unavailable exact fitted-model contracts; no approximations",
+    "Mixed-license distribution remains a parent decision; no packaging split or legal-notice removal",
+    "PR Forbidden unresolved; no bypass, merge, registry release, deployment, outreach or settings changes"
+  ]
+}

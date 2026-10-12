@@ -1471,3 +1471,15 @@ user-supplied, hash-pinned originals and retain synthetic numerical outputs.
 See `research/boin-desktop-source-recovery-2026-10-12.md` and
 `research/boin-desktop-workflow-checkpoint-2026-10-12.md` for exact source versions,
 execution substitutions, numerical qualifications and outstanding scope.
+
+
+### Current mTPI spreadsheet reference evidence
+
+`mtpi_desktop*.py` connects independently authored Python inputs, computations and
+reports for the current mTPI workflow. `tools/reference_mtpi_desktop.py` and its
+reference drivers require user-supplied, hash-pinned original XLSM/XLL/R files;
+they execute bounded original instructions/statements and extract synthetic
+numerical or cached result fixtures. No original binaries, VBA, R program,
+manuscript, guide or report prose is redistributed. The legacy profile exposes
+recovered computational defects explicitly; numerical agreement is not clinical
+validation or new distribution permission. Existing mixed-license terms remain.
